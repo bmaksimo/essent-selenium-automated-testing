@@ -1,0 +1,26 @@
+package com.billinghouse.cucumber.runtime.scenario;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+public class ActiveScenarioProvider {
+
+    private final static ActiveScenarioProvider instance = new ActiveScenarioProvider();
+
+    private Map<String, Object> activeScenario = Collections.synchronizedMap(new HashMap<>());
+
+    private ActiveScenarioProvider() {
+
+    }
+
+    public static ActiveScenarioProvider get() {return instance;};
+
+    public Object getActiveScenario(String name) {
+        return activeScenario.get(name);
+    }
+
+    public void setActiveScenario(String name, Object activeScenario) {
+        this.activeScenario.put(name, activeScenario);
+    }
+}

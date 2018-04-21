@@ -1,0 +1,78 @@
+{
+    "status": 200,
+    "data": [
+        {
+            "label": "Service_Tasks",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "Service_Tasks",
+                "mainMenuKey": "service",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Written",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "Written",
+                "mainMenuKey": "service",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Outbound",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "Outbound",
+                "mainMenuKey": "service",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Accounts",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "accounts_list",
+                "mainMenuKey": "service",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Cheapest products",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "cheapest-products",
+                "mainMenuKey": "service",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Cases",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "cases",
+                "mainMenuKey": "service",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Missing cheapest products",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "missing-cheapest-products",
+                "mainMenuKey": "service",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Segmentation",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "segmentation",
+                "mainMenuKey": "service",
+                "recordId": null
+            }
+        }
+    ],
+    "message": "SUCCESS"
+}

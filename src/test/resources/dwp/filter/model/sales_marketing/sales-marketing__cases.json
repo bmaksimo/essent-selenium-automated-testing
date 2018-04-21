@@ -1,0 +1,205 @@
+{
+  "pageUrl": "https:\/\/devint01.nova.essent.be\/dwp\/#\/sales-marketing\/dashboard\/cases\/",
+  "pageApi": "https:\/\/devint01.nova.essent.be\/nova-crm\/Api\/V8_Custom\/Filter\/all_cases_filter\/Cases",
+  "testDescription": "Test in two steps, first stage on label and type second step is whit the enumValues",
+  "date": "2018-03-26 14:20:24",
+  "user": {
+    "nickname": "essentadmin",
+    "security": [
+      "Business Desk",
+      "ContractingSwitching",
+      "Essent",
+      "Sales_Int_DB"
+    ]
+  },
+  "test": {
+    "enum": [
+      {
+        "label": "Status",
+        "multiple": true,
+        "operator": 1,
+        "enumCount": 5,
+        "enumValues": [
+          {
+            "key": "Open_Open",
+            "value": "Open"
+          },
+          {
+            "key": "Closed_Closed",
+            "value": "Done"
+          },
+          {
+            "key": "Open_Reopened",
+            "value": "Reopened"
+          },
+          {
+            "key": "Closed_Cancelled",
+            "value": "Cancelled"
+          },
+          {
+            "key": "In_Progress",
+            "value": "In Progress"
+          }
+        ]
+      },
+      {
+        "label": "Priority",
+        "multiple": true,
+        "operator": 1,
+        "enumCount": 3,
+        "enumValues": [
+          {
+            "key": "High",
+            "value": "High"
+          },
+          {
+            "key": "Default",
+            "value": "Medium"
+          },
+          {
+            "key": "Low",
+            "value": "Low"
+          }
+        ]
+      },
+      {
+        "label": "Originating instance",
+        "multiple": true,
+        "operator": 1,
+        "enumCount": 9,
+        "enumValues": [
+          {
+            "key": "LAWYER",
+            "value": "Lawyer"
+          },
+          {
+            "key": "BRUGEL",
+            "value": "Brugel"
+          },
+          {
+            "key": "CWAPE",
+            "value": "CWAPE"
+          },
+          {
+            "key": "FOD",
+            "value": "FOD"
+          },
+          {
+            "key": "Ombudsdienst",
+            "value": "Ombudsdienst"
+          },
+          {
+            "key": "POLICE",
+            "value": "Police"
+          },
+          {
+            "key": "TESTAANKOOP",
+            "value": "Testaankoop"
+          },
+          {
+            "key": "VREG",
+            "value": "VREG"
+          },
+          {
+            "key": "NOTARY",
+            "value": "NOTARY"
+          }
+        ]
+      },
+      {
+        "label": "Case type",
+        "multiple": true,
+        "operator": 1,
+        "enumCount": 2,
+        "enumValues": [
+          {
+            "key": "Case",
+            "value": "Case"
+          },
+          {
+            "key": "Move",
+            "value": "Move"
+          }
+        ]
+      },
+      {
+        "label": "Move status",
+        "multiple": "",
+        "operator": 1,
+        "enumCount": 3,
+        "enumValues": [
+          {
+            "key": "registered",
+            "value": "Registered"
+          },
+          {
+            "key": "started",
+            "value": "Started"
+          },
+          {
+            "key": "expired",
+            "value": "expired"
+          }
+        ]
+      }
+    ],
+    "varchar": [
+      {
+        "label": "Case number",
+        "multiple": "",
+        "operator": 1
+      }
+    ],
+    "bool": [
+      {
+        "label": "Sales complaints?",
+        "multiple": "",
+        "operator": 1
+      },
+      {
+        "label": "Official complaints?",
+        "multiple": "",
+        "operator": 1
+      },
+      {
+        "label": "Normal complaints?",
+        "multiple": "",
+        "operator": 1
+      }
+    ],
+    "date": [
+      {
+        "label": "Move date before",
+        "multiple": "",
+        "operator": 1,
+        "enumCount": 3,
+        "enumValues": [
+          {
+            "key": "registered",
+            "value": "Registered"
+          },
+          {
+            "key": "started",
+            "value": "Started"
+          },
+          {
+            "key": "expired",
+            "value": "expired"
+          }
+        ]
+      }
+    ],
+    "selectWithSearch": [
+      {
+        "label": "Created by",
+        "multiple": false,
+        "operator": 1
+      },
+      {
+        "label": "Usergroup",
+        "multiple": true,
+        "operator": 1
+      }
+    ]
+  }
+}

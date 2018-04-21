@@ -1,0 +1,87 @@
+{
+    "status": 200,
+    "data": [
+        {
+            "label": "Failed jobs",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "failed_jobs",
+                "mainMenuKey": "admin",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Job Log",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "job_log",
+                "mainMenuKey": "admin",
+                "recordId": null
+            }
+        },
+        {
+            "label": "DGO/Supplier/BRP",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "DGO_Dashboard",
+                "mainMenuKey": "admin",
+                "recordId": null
+            }
+        },
+        {
+            "label": "FAQs",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "faqs",
+                "mainMenuKey": "admin",
+                "recordId": null
+            }
+        },
+        {
+            "label": "ActivitiProcessInstances",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "ActivitiProcessInstances",
+                "mainMenuKey": "admin",
+                "recordId": null
+            }
+        },
+        {
+            "label": "graylog_errors",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "graylog_errors",
+                "mainMenuKey": "admin",
+                "recordId": null
+            }
+        },
+        {
+            "label": "dealer_agent_oid",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "dealer_agent_oid",
+                "mainMenuKey": "admin",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Documents",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "Documents",
+                "mainMenuKey": "admin",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Users",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "users",
+                "mainMenuKey": "admin",
+                "recordId": null
+            }
+        }
+    ],
+    "message": "SUCCESS"
+}

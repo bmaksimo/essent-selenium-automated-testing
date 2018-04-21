@@ -1,0 +1,195 @@
+{
+    "status": 200,
+    "data": [
+        {
+            "label": "Rejections - internal",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "Rejections_tasks_internal",
+                "mainMenuKey": "tasks",
+                "recordId": null
+            }
+        },
+        {
+            "label": "debit request tasks full view",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "DB_Debit_Tasks_Full_View",
+                "mainMenuKey": "tasks",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Guarantee Tasks full view",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "DB_Guarantee_Tasks_Full_View",
+                "mainMenuKey": "tasks",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Dunning call tasks",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "db_dunning_calls_task_list",
+                "mainMenuKey": "tasks",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Payment Plan Tasks",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "db_paymentplan_tasks",
+                "mainMenuKey": "tasks",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Move",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "Tasks_Contracting_Move",
+                "mainMenuKey": "tasks",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Sales complaints",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "sales_complaints",
+                "mainMenuKey": "tasks",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Customs & duties",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "tasks_custom_duties",
+                "mainMenuKey": "tasks",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Internal complaints",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "internal_complaints",
+                "mainMenuKey": "tasks",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Deduplication",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "tasks_deduplication",
+                "mainMenuKey": "tasks",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Gridfee tasks",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "Gridfee_tasks",
+                "mainMenuKey": "tasks",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Rectification tasks",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "Rectification_tasks",
+                "mainMenuKey": "tasks",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Advance cases/tasks",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "Advance_cases",
+                "mainMenuKey": "tasks",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Soctar",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "soctar_tasks",
+                "mainMenuKey": "tasks",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Official E-mail",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "official_emails",
+                "mainMenuKey": "tasks",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Exceptional invoice cases/tasks",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "Exceptional_invoice_cases",
+                "mainMenuKey": "tasks",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Settlement cases/tasks",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "Settlement_cases",
+                "mainMenuKey": "tasks",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Budget Meter  Tasks",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "budget_meter_tasks",
+                "mainMenuKey": "tasks",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Official Letters",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "official letters",
+                "mainMenuKey": "tasks",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Tasks E+",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "Tasks_eplus",
+                "mainMenuKey": "tasks",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Extra Smile",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "extra_smile",
+                "mainMenuKey": "tasks",
+                "recordId": null
+            }
+        }
+    ],
+    "message": "SUCCESS"
+}
