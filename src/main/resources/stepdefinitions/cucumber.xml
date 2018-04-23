@@ -1,0 +1,38 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+  <bean id="contextService" class="com.essent.testing.context.ContextService"/>
+  <context:component-scan base-package="com.essent.testing;com.essent.automation"/>
+  <aop:aspectj-autoproxy/>
+  <bean id="seleniumDriver" class="com.essent.testing.selenium.SeleniumDriver" />
+  <bean id="qaProps" class="com.essent.testing.util.SystemPropsIncludingPropertiesFactoryBean">
+    <property name="locations">
+      <list>
+        <!--Properties common to all environments go here-->
+        <!--TODO: Move all environment specific properties in test.properties to the environment specific property files (see the bottom of this list)-->
+        <value>classpath:common.properties</value>
+        <!--The Default environment is LOCALHOST-->
+        <value>classpath:environmentspecific/LOCALHOST.properties</value>
+        <!--Put any environment specific properties in the environment specific property files. The environment to be used is the environment specified as system property-->
+        <value>classpath:environmentspecific/#{systemProperties['environment']}.properties</value>
+        <!--Overwrite witch local configuration if needed-->
+        <value>classpath:stepdefinitions/local.properties</value>
+        <!-- Any configuration specific to your user here, like ssh user/passphrase/... -->
+        <value>file:/QAprops/test.properties</value>
+      </list>
+    </property>
+    <property name="ignoreResourceNotFound" value="true"/>
+  </bean>
+  <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+    <property name="customEditors">
+      <map>
+        <entry key="com.essent.testing.config.ConnectionType" value="com.essent.testing.editors.ConnectionTypeEditor"/>
+      </map>
+    </property>
+  </bean>
+</beans>

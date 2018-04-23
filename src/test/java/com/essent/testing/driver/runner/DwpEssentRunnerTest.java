@@ -11,11 +11,8 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Cucumber.class)
 @CucumberOptions(
-
     features = { "src/featurefiles" },
-
     glue = { "stepdefinitions"},
-
     plugin = { "com.billinghouse.cucumber.runtime.formatter.EssentPrettyFormatter",
         "html:target/cucumber-html-report",
         "junit:target/cucumber-junit-report/allcukes.xml",

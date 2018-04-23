@@ -13,12 +13,6 @@ import java.net.MalformedURLException;
 public class ChromeDriverTest {
 
 
-    private static final String GECKO_DRIVER_PROPERTY_KEY = "webdriver.gecko.driver";
-    private static final String FIREFOX_PROFILE_PROPERTY_KEY = "firefox.profile.path";
-
-    private static final String PATH_TO_GECKO_DRIVER = "C:/Users/dmitr/scoop/apps/geckodriver/0.19.1/geckodriver.exe";
-    private static final String PATH_TO_FIREFOX_PROFILE = "C:/Users/dmitr/AppData/Local/Mozilla/Firefox/Profiles/DWP Testing";
-
     public static void main(String[] args) throws MalformedURLException {
 
         ChromeOptions options = new ChromeOptions();
@@ -30,7 +24,7 @@ public class ChromeDriverTest {
         }
         WebDriver driver = new ChromeDriver(options);
         Wait<WebDriver> wait = new WebDriverWait(driver, 3000);
-        final String url = "https://www.google.com/";
+        final String url = "https://www.verbix.com/";
         JavascriptExecutor js = (JavascriptExecutor) driver;
         try {
             driver.navigate().to(url);

@@ -1,4 +1,4 @@
-package dwp.quote;
+package stepdefinitions.dwp.quote;
 
 import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.essent.testing.dwp.DwpScenario;

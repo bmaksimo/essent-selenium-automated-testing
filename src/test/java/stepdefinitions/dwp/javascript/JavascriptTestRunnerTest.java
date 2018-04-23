@@ -1,4 +1,4 @@
-package dwp.javascript;
+package stepdefinitions.dwp.javascript;
 
 import com.billinghouse.javascript.model.Data;
 import com.billinghouse.javascript.model.options.TrMenuHasLinkIdOptions;
