@@ -1,0 +1,42 @@
+{
+    "status": 200,
+    "data": [
+        {
+            "label": "Market Transactions",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "MarketTransactions_Dashboard",
+                "mainMenuKey": "ESS",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Accounts",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "accounts_list",
+                "mainMenuKey": "ESS",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Contracts",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "contract_list",
+                "mainMenuKey": "ESS",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Cases",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "cases",
+                "mainMenuKey": "ESS",
+                "recordId": null
+            }
+        }
+    ],
+    "message": "SUCCESS"
+}

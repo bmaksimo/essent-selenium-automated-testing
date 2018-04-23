@@ -1,0 +1,78 @@
+{
+    "status": 200,
+    "data": [
+        {
+            "label": "MOVE: Send ILC",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "MOVE_Send_ILC",
+                "mainMenuKey": "contracting-switching",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Market Transactions",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "MarketTransactions_Dashboard",
+                "mainMenuKey": "contracting-switching",
+                "recordId": null
+            }
+        },
+        {
+            "label": "MS: Send ILC",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "MS_Send_ILC",
+                "mainMenuKey": "contracting-switching",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Tasks market transaction",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "MarketTransactionTasks_Dashboard",
+                "mainMenuKey": "contracting-switching",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Accounts",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "accounts_list",
+                "mainMenuKey": "contracting-switching",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Quotes",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "quotes_list",
+                "mainMenuKey": "contracting-switching",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Contracts",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "contract_list",
+                "mainMenuKey": "contracting-switching",
+                "recordId": null
+            }
+        },
+        {
+            "label": "Cheapest products",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "cheapest-products",
+                "mainMenuKey": "contracting-switching",
+                "recordId": null
+            }
+        }
+    ],
+    "message": "SUCCESS"
+}

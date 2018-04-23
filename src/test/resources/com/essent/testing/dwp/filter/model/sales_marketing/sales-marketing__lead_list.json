@@ -1,0 +1,199 @@
+{
+  "pageUrl": "https:\/\/devint01.nova.essent.be\/dwp\/#\/sales-marketing\/dashboard\/lead_list\/",
+  "pageApi": "https:\/\/devint01.nova.essent.be\/nova-crm\/Api\/V8_Custom\/Filter\/all_leads\/Leads",
+  "testDescription": "Test in two steps, first stage on label and type second step is whit the enumValues",
+  "date": "2018-03-26 14:20:58",
+  "user": {
+    "nickname": "essentadmin",
+    "security": [
+      "Business Desk",
+      "ContractingSwitching",
+      "Essent",
+      "Sales_Int_DB"
+    ]
+  },
+  "test": {
+    "enum": [
+      {
+        "label": "B2B\/B2C",
+        "multiple": "",
+        "operator": 1,
+        "enumCount": 5,
+        "enumValues": [
+          {
+            "key": "",
+            "value": ""
+          },
+          {
+            "key": "GLN",
+            "value": "GLN"
+          },
+          {
+            "key": "B2B",
+            "value": "B2B"
+          },
+          {
+            "key": "B2C",
+            "value": "B2C"
+          },
+          {
+            "key": "MYS",
+            "value": "MYS"
+          }
+        ]
+      },
+      {
+        "label": "Lead Status",
+        "multiple": "",
+        "operator": 1,
+        "enumCount": 5,
+        "enumValues": [
+          {
+            "key": "",
+            "value": ""
+          },
+          {
+            "key": "Open",
+            "value": "Open"
+          },
+          {
+            "key": "Contacted",
+            "value": "Contacted"
+          },
+          {
+            "key": "Qualified",
+            "value": "Qualified"
+          },
+          {
+            "key": "Unqualified",
+            "value": "Unqualified"
+          }
+        ]
+      },
+      {
+        "label": "Legal form",
+        "multiple": "",
+        "operator": 1,
+        "enumCount": 10,
+        "enumValues": [
+          {
+            "key": "",
+            "value": ""
+          },
+          {
+            "key": "bvba",
+            "value": "bvba \/ sprl"
+          },
+          {
+            "key": "nv",
+            "value": "nv \/ sa"
+          },
+          {
+            "key": "ebvba",
+            "value": "ebvba \/ sprl-s"
+          },
+          {
+            "key": "cvba",
+            "value": "cvba \/ scrlu"
+          },
+          {
+            "key": "vof",
+            "value": "vof \/ snc"
+          },
+          {
+            "key": "gcv",
+            "value": "gcv \/ scs"
+          },
+          {
+            "key": "cva",
+            "value": "cva \/ sca"
+          },
+          {
+            "key": "vzw",
+            "value": "vzw \/ asbl"
+          },
+          {
+            "key": "ivzw",
+            "value": "ivzw \/ aisbl"
+          }
+        ]
+      },
+      {
+        "label": "Language",
+        "multiple": false,
+        "operator": 1,
+        "enumCount": 3,
+        "enumValues": [
+          {
+            "key": "UNKNOWN",
+            "value": "Unknown"
+          },
+          {
+            "key": "nl_BE",
+            "value": "NL"
+          },
+          {
+            "key": "fr_BE",
+            "value": "FR"
+          }
+        ]
+      }
+    ],
+    "varchar": [
+      {
+        "label": "Company name",
+        "multiple": "",
+        "operator": 1
+      },
+      {
+        "label": "Postal code",
+        "multiple": "",
+        "operator": 1
+      },
+      {
+        "label": "Company number",
+        "multiple": "",
+        "operator": 1
+      },
+      {
+        "label": "Phone \/ mobile phone",
+        "multiple": "",
+        "operator": 1
+      },
+      {
+        "label": "E-mail",
+        "multiple": "",
+        "operator": 1
+      },
+      {
+        "label": "Contact person",
+        "multiple": "",
+        "operator": 1
+      }
+    ],
+    "selectWithSearch": [
+      {
+        "label": "NACE",
+        "multiple": true,
+        "operator": 1
+      },
+      {
+        "label": "Assigned dealer",
+        "multiple": true,
+        "operator": 1
+      },
+      {
+        "label": "Assigned user",
+        "multiple": true,
+        "operator": 1
+      }
+    ],
+    "bool": [
+      {
+        "label": "Only \"do not call\"",
+        "multiple": "",
+        "operator": 1
+      }
+    ]
+  }
+}

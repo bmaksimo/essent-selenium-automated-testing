@@ -1,0 +1,15 @@
+{
+    "status": 200,
+    "data": [
+        {
+            "label": "Accounts",
+            "link": "dashboard",
+            "params": {
+                "dashboardId": "accounts_list",
+                "mainMenuKey": "finance",
+                "recordId": null
+            }
+        }
+    ],
+    "message": "SUCCESS"
+}

@@ -1,0 +1,182 @@
+{
+  "user": {
+    "user_name": "essentadmin",
+    "is_admin": true,
+    "status": "Active",
+    "language": "en_BE"
+  },
+  "date": "4/4/2018",
+  "pageUrl": "https://devint01.nova.essent.be/dwp/#/finance/dashboard/accounts_list/",
+  "pageApi": "https://devint01.nova.essent.be/nova-crm/Api/V8_Custom/Filter/accounts_filters_big/Accounts",
+  "tests": {
+    "enum": {
+      "0": {
+        "id": "record_type.default.value",
+        "label": "B2C/B2B",
+        "type": "enum",
+        "operator": "=",
+        "multiple": true,
+        "enumValues": [{
+          "key": "B2C",
+          "value": "B2C"
+        }, {
+          "key": "B2B",
+          "value": "B2B"
+        }]
+      },
+      "1": {
+        "id": "category.default.value",
+        "label": "Category",
+        "type": "enum",
+        "operator": "=",
+        "enumValues": [{
+          "key": "",
+          "value": ""
+        }, {
+          "key": "Small",
+          "value": "Small"
+        }, {
+          "key": "Medium",
+          "value": "Medium"
+        }, {
+          "key": "Large",
+          "value": "Large"
+        }]
+      },
+      "2": {
+        "id": "account_type.default.value",
+        "label": "Customer Type",
+        "type": "enum",
+        "operator": "=",
+        "multiple": true,
+        "enumValues": [{
+          "key": "PROSPECT",
+          "value": "Prospect"
+        }, {
+          "key": "FUTURE CUSTOMER",
+          "value": "Future customer"
+        }, {
+          "key": "CUSTOMER",
+          "value": "Customer"
+        }, {
+          "key": "OLD CUSTOMER",
+          "value": "Old Customer"
+        }]
+      },
+      "3": {
+        "id": "segment.default.value",
+        "label": "Segment",
+        "type": "enum",
+        "operator": "=",
+        "enumValues": [{
+          "key": "",
+          "value": ""
+        }, {
+          "key": "BUSINESS DESK",
+          "value": "BUSINESS DESK"
+        }, {
+          "key": "CALL CENTER",
+          "value": "CALL CENTER"
+        }]
+      }
+    },
+    "varchar": {
+      "0": {
+        "id": "sql_I_aos_contracts_I_aos_products_quotes_I_ean_c.default.value",
+        "label": "EAN",
+        "type": "varchar",
+        "operator": "="
+      },
+      "1": {
+        "id": "account_number_c.default.value",
+        "label": "Account number",
+        "type": "varchar",
+        "operator": "="
+      },
+      "2": {
+        "id": "name.default.value",
+        "label": "Name",
+        "type": "varchar",
+        "operator": "="
+      },
+      "3": {
+        "id": "contatcs_I_person_name.default.value",
+        "label": "Contactperson",
+        "type": "varchar",
+        "operator": "="
+      },
+      "4": {
+        "id": "sql_I_headquarter_I_address_street.default.value",
+        "label": "Headquarter street",
+        "type": "varchar",
+        "operator": "="
+      },
+      "5": {
+        "id": "sql_I_paym_details_I_addresses_I_address_street.default.value",
+        "label": "Invoice street",
+        "type": "varchar",
+        "operator": "="
+      },
+      "6": {
+        "id": "sql_I_aos_contracts_I_aos_products_quotes_I_addresses_I_street.default.value",
+        "label": "Connection street",
+        "type": "varchar",
+        "operator": "="
+      },
+      "7": {
+        "id": "sql_I_paym_details_I_bankaccount_I_iban.default.value",
+        "label": "IBAN",
+        "type": "varchar",
+        "operator": "="
+      },
+      "8": {
+        "id": "like_I_company_number_c.default.value",
+        "label": "Company number",
+        "type": "varchar",
+        "operator": "="
+      },
+      "9": {
+        "id": "sql_I_accounts_contacts_I_contacts_I_birthdate.default.value",
+        "label": "Birthdate",
+        "type": "varchar",
+        "operator": "="
+      },
+      "10": {
+        "id": "sql_I_contacts_I_accounts_contacts_I_contacts_contact_details_I_contact_details_I_email.default.value",
+        "label": "E-mail",
+        "type": "varchar",
+        "operator": "="
+      },
+      "11": {
+        "id": "paym_details_I_billingcustomerid.default.value",
+        "label": "Billing customer nr",
+        "type": "varchar",
+        "operator": "="
+      }
+    },
+    "selectWithSearch": {
+      "0": {
+        "id": "sql_I_dealer.default.value",
+        "label": "Assigned dealer",
+        "type": "selectWithSearch",
+        "operator": "=",
+        "plusButtonTitle": "Select dealer",
+        "modalTitle": "Select",
+        "selectedResultsTitle": "SecurityGroups",
+        "datasourceName": "SecurityGroups - Dealers only",
+        "multiple": true
+      },
+      "1": {
+        "id": "users_I_id.default.value",
+        "label": "Assigned user",
+        "type": "selectWithSearch",
+        "operator": "=",
+        "plusButtonTitle": "Select one agent",
+        "modalTitle": "Select one agent",
+        "selectedResultsTitle": "Selected agent",
+        "datasourceName": "Users_for_primary_group",
+        "multiple": true
+      }
+    }
+  }
+}
