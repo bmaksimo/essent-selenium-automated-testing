@@ -57,6 +57,11 @@ public class AssignmentScenario extends DwpScenario {
         executeJsTest(MenuTests.SELECT_PLUS_MENU_ITEM.getTest(), itemName);
     }
 
+    @When("^Category is ([^\"]*)")
+    public void select_assignment_category(String itemName) throws  Throwable {
+        executeJsTest(MenuTests.SELECT_ASSIGNMENT_CATEGORY.getTest(), itemName);
+    }
+
     @Then("The tab ([^\"]*) is visible and enabled")
     public void tab_is_visible_and_enabled(DwpSalesMarketingTopMenuEnum tab) throws Throwable {
         Model.Execution execution = new Model.Execution();

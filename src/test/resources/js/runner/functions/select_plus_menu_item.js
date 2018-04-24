@@ -23,6 +23,5 @@ TestRunner.prototype.select_plus_menu_item
         if (callback) {
             callback(response);
         }
-        console.log(options);
     }, 5000);
 }
