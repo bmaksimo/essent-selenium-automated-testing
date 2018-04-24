@@ -39,7 +39,7 @@
     <essent.project.version>${project.version}</essent.project.version>
 
     <!-- Essent dependencies -->
-    <common.collections.version>2.24.0-SNAPSHOT</common.collections.version>
+    <common-collections.version>2.40.0-SNAPSHOT</common-collections.version>
 
     <!-- Dependency versions. -->
     <spring.version>4.2.2.RELEASE</spring.version>
@@ -86,7 +86,7 @@
       <dependency>
         <groupId>com.essent.be</groupId>
         <artifactId>common-collections</artifactId>
-        <version>${common.collections.version}</version>
+        <version>${common-collections.version}</version>
       </dependency>
       <dependency>
         <groupId>info.cukes</groupId>
