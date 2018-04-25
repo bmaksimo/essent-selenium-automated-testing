@@ -11,4 +11,5 @@ Feature: Working with assignments
         And Overview is Details
         And Top Action is Plus Menu
         And Plus Menu is Create new assignment
-        And Category is Random
+        And Category is Apparatuur
+        And Assignment is Apparatuur - Alarmsysteem installeren

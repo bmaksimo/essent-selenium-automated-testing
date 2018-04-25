@@ -9,7 +9,8 @@ public enum MenuTests {
     GET_TOP_MENU("var runner = new TestRunner('get_top_menu', {menu: '${value}'}, arguments[arguments.length - 1]);"),
     GET_LEFT_MENU("var runner = new TestRunner('get_left_menu', {menu: '${value}'}, arguments[arguments.length - 1]);"),
     GET_TOP_TAB("var runner = new TestRunner('get_top_tab', {menu: '${value}'}, arguments[arguments.length - 1]);"),
-    SELECT_ASSIGNMENT_CATEGORY("var runner = new TestRunner('select_assignment_category', {category: '${value}'}, arguments[arguments.length - 1]);");
+    SELECT_ASSIGNMENT_CATEGORY("var runner = new TestRunner('select_assignment_category', {category: '${value}'}, arguments[arguments.length - 1]);"),
+    SELECT_ASSIGNMENT_TYPE("var runner = new TestRunner('select_assignment_type', {type: '${value}'}, arguments[arguments.length - 1]);");
 
     private MenuTests(String test) {
         this.test = test;
