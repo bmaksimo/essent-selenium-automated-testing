@@ -5,7 +5,8 @@ public enum Quote {
     PERSONAL_DETAILS("Personal details"),
     PACKAGE_FUEL_TYPE("Select package & fuel type"),
     CONNECTION_DETAILS("Connection details"),
-    BILLING_DETAILS("Billing details");
+    BILLING_DETAILS("Billing details"),
+    QUOTE_OVERVIEW("Quote overview");
     private String text;
     Quote(String text) {
         this.text = text;

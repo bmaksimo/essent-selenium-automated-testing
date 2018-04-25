@@ -1,5 +1,6 @@
 package com.essent.testing.dwp.pageobject.quote.impl;
 
+import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.automation.core.WebDriverWait;
 import com.essent.testing.dwp.pageobject.Component;
@@ -11,19 +12,26 @@ import cucumber.runtime.CucumberException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.tables.BillingInformation;
+import stepdefinitions.dwp.tables.PaymentMethod;
 
-import static com.essent.testing.dwp.DwpTimingParameters.*;
+import static com.essent.testing.dwp.DwpTimingParameters.INPUT;
+import static com.essent.testing.dwp.DwpTimingParameters.NEXT_STEP;
+import static com.essent.testing.dwp.DwpTimingParameters.WAIT_NEXT_PAGE;
+import static com.essent.testing.dwp.elements.BasicElements.NEXT_BUTTON;
 import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.TITLE_SELECTOR_TEMPLATE;
 import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.VIEW_SELECTOR;
-import static com.essent.testing.dwp.quote.elements.B2CQuoteElements.*;
+import static com.essent.testing.dwp.quote.elements.B2CQuoteElements.SIGNATURE_OPTIONS_ACTIVE;
+import static com.essent.testing.dwp.quote.elements.BillingElements.PAYMENT_BIC;
+import static com.essent.testing.dwp.quote.elements.BillingElements.PAYMENT_IBAN;
+import static com.essent.testing.dwp.quote.elements.BillingElements.PAYMENT_METHOD;
 
 public class BillingDetailsView extends Component implements CreateQuoteView, CreateQuoteStepView {
 
 
-    private BillingInformation billingIData;
+    private BillingInformation billingInformation;
 
-    public void setBillingIData(BillingInformation billingIData) {
-        this.billingIData = billingIData;
+    public void setBillingInformation(BillingInformation billingInformation) {
+        this.billingInformation = billingInformation;
     }
 
     public BillingDetailsView(SeleniumDriver seleniumDriver) {
@@ -45,13 +53,26 @@ public class BillingDetailsView extends Component implements CreateQuoteView, Cr
 
     @Override
     public CreateQuoteStepView next() {
-        return null;
+        return new QuoteOverviewView(seleniumDriver);
     }
 
     @Override
     public boolean fillInInputValues() {
         Model.Execution execution = newExecution();
-
+        PaymentMethod paymentMethod = billingInformation.getPaymentMethod();
+        String eban = billingInformation.getEban();
+        String bic = billingInformation.getBic();
+        execution.
+        element(PAYMENT_METHOD.element()).
+            element(PAYMENT_IBAN.element()).
+            element(PAYMENT_BIC.element()).
+            element(NEXT_BUTTON.element()).
+            element(SIGNATURE_OPTIONS_ACTIVE.element()).
+            step(createStep(Action.SELECT).element(PAYMENT_METHOD.name()).value(paymentMethod.getLabel())).
+            step(createStep(Action.TYPING).element(PAYMENT_IBAN.name()).value(eban), INPUT.getSleepInMillis()).
+            step(createStep(Action.TYPING).element(PAYMENT_BIC.name()).value(bic), INPUT.getSleepInMillis()).
+            step(createStep(Action.CLICK).timeoutInSeconds(NEXT_STEP.getWaitInSeconds()).element(NEXT_BUTTON.name())).
+            step(createStep(Action.REQUIRE).timeoutInSeconds(WAIT_NEXT_PAGE.getWaitInSeconds()).element(SIGNATURE_OPTIONS_ACTIVE.name()));
         return execute(execution);
     }
 }

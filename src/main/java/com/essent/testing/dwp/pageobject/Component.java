@@ -13,7 +13,7 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-import static com.essent.testing.dwp.elements.DwpBasicElements.SIBLING_OVERLAYING_ICONS_XPATH;
+import static com.essent.testing.dwp.elements.BasicElements.SIBLING_OVERLAYING_ICONS_XPATH;
 
 public abstract  class Component {
     protected static final String APPLICATION_SELECTOR =  "//dwp-app";

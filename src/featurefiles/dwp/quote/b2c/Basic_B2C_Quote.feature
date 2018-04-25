@@ -8,7 +8,6 @@ Feature: Creating a B2C Quote
       Given I logged in as admin on the DWP Main Page
       Given I optionally discard a previous flow:
 
-
   Scenario: We can create a B2C Quote
     When I start a B2C quote flow:
     And I select Inbound sales channel and accept standard quote type for B2C:
@@ -26,14 +25,7 @@ Feature: Creating a B2C Quote
     And I optionally Close the Electricity meter
     And I optionally Close the Gas meter
     And I confirm Connection details
-#      And I select payment method BankTransfer for IBAN "NL57ABNA0874253356" and bic "123":
-#      And I sign on date DWP_TODAY in location "Antwerpen" with file "/data/dwp/signed-document.md":
-      #And I click on the following Left Menu items:
-      #    | menuItem              |
-      #    | SALES_MARKETING       |
-      #And I click on the following Top Menu items that are defined for 'SALES_MARKETING' Left Item:
-      #    | name                  |
-      #    | QUOTES_LIST           |
-
-    #Then A signed quote is created of type "Sales" and status "Signed - Accepted" and shown in an account for currently created customer with 4 products:
-
+    And I select payment method BankTransfer for IBAN "NL57ABNA0874253356" and bic "123":
+    And I sign on date DWP_TODAY in location "Antwerpen" with file "/data/dwp/signed-document.pdf":
+    Then The system redirects me to account page that has card with "firstName" and "lastName" customer details that I filled in
+    And A quote with type "Sales" and status "Signed - Accepted" is created
