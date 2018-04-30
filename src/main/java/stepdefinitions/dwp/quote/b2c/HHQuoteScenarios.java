@@ -2,6 +2,7 @@ package stepdefinitions.dwp.quote.b2c;
 
 import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
+import com.billinghouse.javascript.testrunner.dwp.menu.MenuTests;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
@@ -27,6 +28,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.runtime.CucumberException;
 import gherkin.formatter.model.DataTableRow;
+import org.apache.commons.lang3.BooleanUtils;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.tables.*;
@@ -36,7 +38,9 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.essent.testing.dwp.DwpDateFormats.TIMESTAMP;
 import static com.essent.testing.dwp.DwpTimingParameters.*;
@@ -210,6 +214,16 @@ public class HHQuoteScenarios extends DwpScenario {
         AccountCard customerAccountCard = new AccountCardImpl(webDriver);
         assertThat(String.format("Customer first name '%s' and last name '%s' were not found on the current web page", customerFirstName, customerLastName),
             customerAccountCard.containsFirstAndLastName(customerFirstName, customerLastName), is(true));
+    }
+
+    @When("^I select the ([^\"]*) element and click on the link in the ([^\"]*) column$")
+    public void iSelectTheStElementAndClickOnTheLinkInTheAccountNumberNameColumn(String ordinal, String column) throws Throwable {
+        //int position = Integer.parseInt(ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", ""));
+        Map<String, String> options = new HashMap<>();
+        options.put("column", column);
+        Map result = executeJavascriptMethod("TrGetColumnIndexList", options);
+        boolean testResult = BooleanUtils.toBoolean((String) result.get("status"), "PASSED", "FAILED");
+        assertThat(testResult, is(true));
     }
 
     @And("^A quote with type \"([^\"]*)\" and status \"([^\"]*)\" is created$")

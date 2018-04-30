@@ -28,4 +28,5 @@ Feature: Creating a B2C Quote
     And I select payment method BankTransfer for IBAN "NL57ABNA0874253356" and bic "123":
     And I sign on date DWP_TODAY in location "Antwerpen" with file "/data/dwp/signed-document.pdf":
     Then The system redirects me to account page that has card with "firstName" and "lastName" customer details that I filled in
-    And A quote with type "Sales" and status "Signed - Accepted" is created
+    When I select the 1st element and click on the link in the Number & Signed contract nr column
+    #And A quote with type "Sales" and status "Signed - Accepted" is created
