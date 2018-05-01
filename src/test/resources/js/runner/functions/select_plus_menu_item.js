@@ -23,5 +23,5 @@ TestRunner.prototype.select_plus_menu_item
         if (callback) {
             callback(response);
         }
-    }, 5000);
+    }, 500);
 }
