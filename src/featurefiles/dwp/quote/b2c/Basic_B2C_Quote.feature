@@ -14,9 +14,10 @@ Feature: Creating a B2C Quote
     And I enter customer details for B2C:
        |firstName       |lastName               |gender|birthDate |phoneNumber|mobile      |email                  |language|street       |houseNr|houseNrAdd |postalCode|city   |
        |Jim             |van D${TIMESTAMP}      |MISTER|09/10/1966|           |+32486761271|jim@billinghouse.nl    |NL      |Vijgenstraat |3      |           |9160      |Lokeren|
+    # TC_${MM_yyyy}_B2C
     And I select tariffsheet and package:
         |tariffSheet       |packageName  |
-        |TC_${MM_yyyy}_B2C |MIG_FLIX_HEAT|
+        |TC_04_2018_B2C |MIG_FLIX_HEAT|
     And I don't detect any price sheet alerts
     And I fill in the electricity and gas meter numbers and their EANs respectively:
          |productType |meterNumber |ean                |
