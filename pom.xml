@@ -75,8 +75,8 @@
     <xmlrpc-client.version>3.1.3</xmlrpc-client.version>
     <xml-apis.version>1.4.01</xml-apis.version>
     <ant-junit.version>1.9.7</ant-junit.version>
-    <nova-autocrat.version>1.0.3-DWP-SNAPSHOT</nova-autocrat.version>
-    <zfj.cloud.api.version>0.9.1-SNAPSHOT</zfj.cloud.api.version>
+    <nova-autocrat.version>1.0.4</nova-autocrat.version>
+    <zfj.cloud.api.version>0.9.1</zfj.cloud.api.version>
     <jira.rest.java.client.core.version>2.0.0-m31</jira.rest.java.client.core.version>
     <ac.play.java.version>0.10.1</ac.play.java.version>
   </properties>
