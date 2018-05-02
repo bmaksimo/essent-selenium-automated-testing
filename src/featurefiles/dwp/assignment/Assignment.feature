@@ -12,3 +12,4 @@ Feature: Working with assignments
         And Top Action is Plus Menu
         And Plus Menu is Create new assignment
         And Category is Random
+        And Assignment is Random
