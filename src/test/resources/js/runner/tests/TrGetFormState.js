@@ -1,4 +1,4 @@
-class TrGetFormState extends TestRunnerBase {
+class TrGetFormState extends TestRunnerDwp {
 
     constructor(options, callback) {
         super(options, callback, 100);
@@ -10,9 +10,7 @@ class TrGetFormState extends TestRunnerBase {
         if($form.size()) {
             this.result.status = 'PASSED';
             this.result.reason = '';
-            this.result.data = {
-                formElements: this.getFormData($form)
-            }
+            this.result.data = this.getFormData($form, true);
         } else {
             this.result.reason = 'The form with selector ' + this.options.selector + ' is not available in the DOM';
         }

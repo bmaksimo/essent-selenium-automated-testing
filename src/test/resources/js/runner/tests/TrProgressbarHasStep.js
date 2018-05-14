@@ -1,4 +1,4 @@
-class TrProgressbarHasStep extends TestRunnerBase {
+class TrProgressbarHasStep extends TestRunnerDwp {
 
     constructor(options, callback) {
         super(options, callback, 100);

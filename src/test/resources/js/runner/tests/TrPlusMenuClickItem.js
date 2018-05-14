@@ -1,4 +1,4 @@
-class TrPlusMenuClickItem extends TestRunnerBase {
+class TrPlusMenuClickItem extends TestRunnerDwp {
 
     /**
      * Checks if a menu-item is present in the DOM
@@ -12,7 +12,6 @@ class TrPlusMenuClickItem extends TestRunnerBase {
 
     constructor(options, callback) {
         super(options, callback, 100);
-
     }
 
     run() {

@@ -1,4 +1,4 @@
-class TrGetUserLanguage extends TestRunnerBase {
+class TrGetUserLanguage extends TestRunnerDwp {
 
     /**
      * Checks and returns the user language value
@@ -20,8 +20,11 @@ class TrGetUserLanguage extends TestRunnerBase {
     run() {
         let result = this.result;
         let options = this.options;
-        let languageKey = options.languageKey;
-        let userLanguage = window.localStorage.getItem(languageKey);
+        let userLanguage = window.localStorage.getItem(options.languageKey);
+        if (userLanguage) {
+            result.status = 'PASSED';
+            result.reason = '';
+        }
         result.userLanguage = userLanguage;
         this.resolveCallback(result);
     }

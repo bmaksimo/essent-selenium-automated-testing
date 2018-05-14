@@ -1,4 +1,4 @@
-class TrMenuHasLinkId extends TestRunnerBase {
+class TrMenuHasLinkId extends TestRunnerDwp {
 
     /**
      * Checks if a menu-item is present in the DOM
@@ -18,10 +18,10 @@ class TrMenuHasLinkId extends TestRunnerBase {
         let result = this.result;
         let options = this.options;
 
-        this.getState();
+        let state = this.getState();
         result.status = 'FAILED';
         result.reason = this.options.linkId + ' not found';
-        this.state[this.options.menu].forEach(function(menuItem){
+        state[this.options.menu].forEach(function(menuItem){
             if (menuItem['link-id'] === options.linkId) {
                 result.data = {menuItem: menuItem};
                 result.status = 'PASSED';
