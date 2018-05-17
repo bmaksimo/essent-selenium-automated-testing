@@ -69,6 +69,12 @@ Feature: Test the passive renewal of business contract.
         Then  Redirect view is UP/TC2 - Passive Renewal quotes
         And   Quotes are 'Not created' for 'SelectedContractsOutParam'
         ##    Optionally - And renewal email with 'ContractNumber' Subject is received
+        And   The number of contracts is same as we submitted before
+        And   I select contracts with '${all}' indices
+        And   I click on 'confirm UP / TK2 / Contract renewal'
+        ## The step has to be parameterized
+        Then  I see previously selected UP/TK2 Passive renewals renewed
+        ## Additionally - verify the receipt of email?
 
 
 
