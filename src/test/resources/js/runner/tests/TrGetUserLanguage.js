@@ -17,9 +17,7 @@ class TrGetUserLanguage extends TestRunnerDwp {
         super(options, callback, 100);
     }
 
-    run() {
-        let result = this.result;
-        let options = this.options;
+    run(options, result) {
         let userLanguage = window.localStorage.getItem(options.languageKey);
         if (userLanguage) {
             result.status = 'PASSED';

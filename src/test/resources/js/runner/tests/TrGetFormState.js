@@ -4,18 +4,18 @@ class TrGetFormState extends TestRunnerDwp {
         super(options, callback, 100);
     }
 
-    run() {
-        let $form = $(this.options.selector);
+    run(options, result) {
+        let $form = $(options.selector);
 
         if($form.size()) {
-            this.result.status = 'PASSED';
-            this.result.reason = '';
-            this.result.data = this.getFormData($form, true);
+            result.status = 'PASSED';
+            result.reason = '';
+            result.data = this.getFormData($form, true);
         } else {
-            this.result.reason = 'The form with selector ' + this.options.selector + ' is not available in the DOM';
+            result.reason = 'The form with selector ' + options.selector + ' is not available in the DOM';
         }
 
-        this.resolveCallback(this.result);
+        this.resolveCallback(result);
     }
 
 }

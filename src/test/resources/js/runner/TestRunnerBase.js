@@ -16,7 +16,7 @@ class TestRunnerBase {
             return;
         }
         setTimeout(() => {
-            this.run();
+            this.run(this.options, this.result);
         }, timeout);
     }
 
@@ -111,6 +111,13 @@ class TestRunnerDwp extends TestRunnerBase {
             attrs['link-id'] = $(this).find('a').attr('id');
             state.subMenu.push(attrs);
         });
+       /* if(window.testRunnerBridge) {
+            Object.keys(window.testRunnerBridge).forEach((k, i) => {
+                if(! k.startsWith('$')) {
+                    state[k] = window.testRunnerBridge[k];
+                }
+            });
+        }*/
         return state;
     }
 

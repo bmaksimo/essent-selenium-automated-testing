@@ -14,10 +14,7 @@ class TrMenuHasLinkId extends TestRunnerDwp {
         super(options, callback, 100);
     }
 
-    run() {
-        let result = this.result;
-        let options = this.options;
-
+    run(options, result) {
         let state = this.getState();
         result.status = 'FAILED';
         result.reason = this.options.linkId + ' not found';

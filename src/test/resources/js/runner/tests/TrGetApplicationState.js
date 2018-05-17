@@ -4,13 +4,13 @@ class TrGetApplicationState extends TestRunnerDwp {
         super(options, callback, 100);
     }
 
-    run() {
+    run(options, result) {
 
-        this.result.status = 'PASSED';
-        this.result.reason = '';
-        this.result.data = this.getState();
+        result.status = 'PASSED';
+        result.reason = '';
+        result.data = this.getState();
 
-        this.resolveCallback(this.result);
+        this.resolveCallback(result);
     }
 
 }
