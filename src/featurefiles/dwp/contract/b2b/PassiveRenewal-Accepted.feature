@@ -47,7 +47,7 @@ Feature: Test of UI DWP workflow that is triggering the passive renewal of busin
         And   I select contracts with '${all}' indices
         And   I click on 'confirm UP / TK2 / Contract renewal'
         ## The step has to be parameterized
-        Then  I see previously selecte UP/TK2 Passive renewals renewed
+        Then  I see previously selected UP/TK2 Passive renewals renewed
         ## Additionally - verify the receipt of email?
 
 
