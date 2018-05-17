@@ -5,7 +5,7 @@
 @REGRESSION
 
 Feature: Test the passive renewal of business contract.
-    Contrary to Active renewal, the Passive renewal process does not involve any interaction with Customer.
+    Contrary to Active renewal, the Passive renewal workflow does not involve any interaction with Customer.
     The User, Business Service Employee, selects the contracts with due date +3 months from current date and triggers "Passive renewal".
     #
     ## Pre-conditions
