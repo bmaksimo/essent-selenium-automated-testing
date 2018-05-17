@@ -2,7 +2,7 @@ package com.essent.testing.dwp.elements;
 
 import com.essent.automation.autocrat.Model;
 
-public enum DwpBasicElements {
+public enum BasicElements {
     SIBLING_OVERLAYING_ICONS_XPATH("XPATH", "../span[contains(@class, 'icon')]"),
     PLUS_BUTTON("SELECTOR", "a.icon-plus", "first"),
     NEXT_BUTTON("SELECTOR", "#primaryButton:not([disabled])"),
@@ -15,12 +15,12 @@ public enum DwpBasicElements {
     private String query;
     private String pick;
 
-    private DwpBasicElements(String searchBy, String query, String pick) {
+    private BasicElements(String searchBy, String query, String pick) {
         this.searchBy = searchBy;
         this.query = query;
         this.pick = pick;
     }
-    private DwpBasicElements(String searchBy, String query) {
+    private BasicElements(String searchBy, String query) {
         this.searchBy = searchBy;
         this.query = query;
     }

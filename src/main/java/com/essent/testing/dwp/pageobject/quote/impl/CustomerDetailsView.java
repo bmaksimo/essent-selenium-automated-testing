@@ -16,9 +16,8 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.tables.CustomerTable;
 
-import static com.essent.testing.dwp.DwpDateFormats.TIMESTAMP;
 import static com.essent.testing.dwp.DwpTimingParameters.*;
-import static com.essent.testing.dwp.elements.DwpBasicElements.NEXT_BUTTON;
+import static com.essent.testing.dwp.elements.BasicElements.NEXT_BUTTON;
 import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.TITLE_SELECTOR_TEMPLATE;
 import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.VIEW_SELECTOR;
 import static com.essent.testing.dwp.quote.elements.B2CQuoteElements.*;
@@ -68,7 +67,6 @@ public class CustomerDetailsView extends Component implements CreateQuoteView, C
     @Override
     public boolean fillInInputValues() {
         Model.Execution initializeFields = newExecution();
-        String lastName = customer.getLastName().replace("${TIMESTAMP}", TIMESTAMP.print());
         initializeFields.
             element(COPY_ADDRESS_CONNECTION_TO_BILLING.element()).
             element(SALUTATION.element()).
@@ -92,7 +90,7 @@ public class CustomerDetailsView extends Component implements CreateQuoteView, C
             step(createStep(Action.TYPING).element(FIRST_NAME.name()).value(customer.getFirstName()), INPUT.getSleepInMillis()).
             step(createStep(Action.CLICK).element(BIRTHDAY.name()), INPUT.getSleepInMillis()).
             step(createStep(Action.TYPING).element(BIRTHDAY.name()).value(customer.getBirthDate()).timeoutInSeconds(4), INPUT.getSleepInMillis()).
-            step(createStep(Action.TYPING).element(LAST_NAME.name()).value(lastName), INPUT.getSleepInMillis()).
+            step(createStep(Action.TYPING).element(LAST_NAME.name()).value(customer.getLastName()), INPUT.getSleepInMillis()).
             step(createStep(Action.TYPING).element(EMAIL.name()).value(customer.getEmail()), INPUT.getSleepInMillis()).
             step(createStep(Action.TYPING).element(MOBILE_NR.name()).value(customer.getMobile()), INPUT.getSleepInMillis());
         if (StringUtils.isNotEmpty(customer.getPhoneNumber())) {
