@@ -42,6 +42,7 @@ rectangle "Atlassian: Zephyr for Jira Cloud" as zephyr {
 }
 
 
+'Testing Landscape
 rectangle "Landscape: Testing" as landscape_t {
 
 'SOAPUI
@@ -54,18 +55,12 @@ end note
 [esnl-automated-testing-soapui] --> mix
 }
 
-
 'jMeter
 rectangle "jMeter: Non-functional Testing" as nft {
 [esnl-automated-testing-performance]
 }
 
 'Java E2E Testing Gherkin and Selenium
-
-rectangle "jMeter: Non-functional Testing" as nft {
-[esnl-automated-testing-performance]
-}
-
 rectangle "Java: UI and E2E Testing" as e2e {
 [esnl-automated-testing-selenium] --> dwp
 [esnl-automated-testing-selenium] --> [esnl-automated-testing-autocrat]
