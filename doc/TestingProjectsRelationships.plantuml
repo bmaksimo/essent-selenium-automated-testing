@@ -14,7 +14,7 @@ rectangle "AngularJS: DWP" as dwp {
 rectangle "Ecosystem: SuiteCRM" as landscape_crm {
 rectangle "Php: SuiteCRM" as crm {
  ({REST Json})  as rest_crm
- [essentbe-suitecrm] <-- rest_crm
+ rest_crm --> [essentbe-suitecrm]
 }
 }
 
@@ -22,7 +22,7 @@ rectangle "Php: SuiteCRM" as crm {
 rectangle "Ecosystem: ServiceMix" as landscape_mix {
 rectangle "Java: ServiceMix" as mix {
  ({REST}) as mix_rest
- [apache-camel-uaasapi] <-- mix_rest
+ mix_rest --> [apache-camel-uaasapi]
 }
 }
 
@@ -37,9 +37,11 @@ rectangle "Java: jBilling" as b {
 rectangle "Ecosystem: Atlassian Cloud" as landscape_atlassian {
 rectangle "Atlassian: Zephyr for Jira Cloud" as zephyr {
 ({Zfj Api}) as zephyr_rest
-[Zephyr for Jira Cloud Plugin] <-- zephyr_rest
+ zephyr_rest --> [Zephyr for Jira Cloud Plugin]
 }
 }
+
+'Testing Landscape
 rectangle "Landscape: Testing" as landscape_t {
 
 'SOAPUI
@@ -51,9 +53,14 @@ end note
 [esnl-automated-testing-soapui] --> crm
 [esnl-automated-testing-soapui] --> mix
 }
+
+'jMeter
 rectangle "jMeter: Non-functional Testing" as nft {
 [esnl-automated-testing-performance]
 }
+
+
+'Java E2E Testing Gherkin and Selenium
 rectangle "Java: UI and E2E Testing" as e2e {
 [esnl-automated-testing-selenium] --> dwp
 [esnl-automated-testing-selenium] --> [esnl-automated-testing-autocrat]
@@ -69,6 +76,8 @@ note bottom of [esnl-automated-testing-zfj-cloud-api]
 Connector to Atlassian Jira Cloud and Zephyr for Jira Cloud API
 end note
 }
+
+'Java jBilling back-end testing Gherkin
 rectangle "Java: JBilling Testing" as be {
 [esnl-automated-testing-gherkin] --> [esnl-automated-testing-zfj-cloud-api]
 [esnl-automated-testing-gherkin] --> [esnl-billing-client-libraries]
