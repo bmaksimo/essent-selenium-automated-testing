@@ -1,0 +1,81 @@
+@startuml
+'look up: http://plantuml.com/component-diagram
+left to right direction
+
+'DWP
+rectangle "Ecosystem: DWP" as ecosystem_dwp {
+rectangle "AngularJS: DWP" as dwp {
+ [esbep-digitalworkplace-angularjs] as angular
+ angular --> crm
+}
+}
+
+'SuiteCRM
+rectangle "Ecosystem: SuiteCRM" as landscape_crm {
+rectangle "Php: SuiteCRM" as crm {
+ ({REST Json})  as rest_crm
+ [essentbe-suitecrm] <-- rest_crm
+}
+}
+
+'Servicemix
+rectangle "Ecosystem: ServiceMix" as landscape_mix {
+rectangle "Java: ServiceMix" as mix {
+ ({REST}) as mix_rest
+ [apache-camel-uaasapi] <-- mix_rest
+}
+}
+
+'Billing
+rectangle "Ecosystem: Billing" as landscape_jb {
+rectangle "Java: jBilling" as b {
+[esnl-billing-client-libraries]
+}
+}
+
+'Atlassian Cloud
+rectangle "Ecosystem: Atlassian Cloud" as landscape_atlassian {
+rectangle "Atlassian: Zephyr for Jira Cloud" as zephyr {
+({Zfj Api}) as zephyr_rest
+[Zephyr for Jira Cloud Plugin] <-- zephyr_rest
+}
+}
+rectangle "Landscape: Testing" as landscape_t {
+
+'SOAPUI
+rectangle "SOAPUI: E2E and UaaS Testing" as uaas {
+[esnl-automated-testing-soapui]
+note bottom of [esnl-automated-testing-soapui]
+UaaS API tests
+end note
+[esnl-automated-testing-soapui] --> crm
+[esnl-automated-testing-soapui] --> mix
+}
+rectangle "jMeter: Non-functional Testing" as nft {
+[esnl-automated-testing-performance]
+}
+rectangle "Java: UI and E2E Testing" as e2e {
+[esnl-automated-testing-selenium] --> dwp
+[esnl-automated-testing-selenium] --> [esnl-automated-testing-autocrat]
+[esnl-automated-testing-selenium] --> [esnl-automated-testing-zfj-cloud-api]
+[esnl-automated-testing-zfj-cloud-api] --> zephyr_rest
+note bottom of [esnl-automated-testing-selenium]
+E2E and UI testing scenarios written in Gherkin language
+end note
+note bottom of [esnl-automated-testing-autocrat]
+Tool for elementary definition of WebDriver workflow
+end note
+note bottom of [esnl-automated-testing-zfj-cloud-api]
+Connector to Atlassian Jira Cloud and Zephyr for Jira Cloud API
+end note
+}
+rectangle "Java: JBilling Testing" as be {
+[esnl-automated-testing-gherkin] --> [esnl-automated-testing-zfj-cloud-api]
+[esnl-automated-testing-gherkin] --> [esnl-billing-client-libraries]
+note bottom of [esnl-automated-testing-gherkin]
+jBilling back end testing scenarios written in Gherkin language
+end note
+}
+}
+
+@enduml
