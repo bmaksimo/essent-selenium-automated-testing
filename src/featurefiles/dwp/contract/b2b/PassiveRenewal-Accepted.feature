@@ -76,7 +76,3 @@ Feature: Test the passive renewal of business contract.
         Then  I see previously selected UP/TK2 Passive renewals renewed
         ## Additionally - verify the receipt of email?
 
-
-
-
-
