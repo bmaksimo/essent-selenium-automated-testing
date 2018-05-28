@@ -26,3 +26,4 @@ Feature: DWP UI: Menu structure, specific menu items
         And These Plus menu items are available at the following positions:
             |position|item|
             |4       |BILLING    |
+        And I click on 'CONTRACT_LIST' Top Menu item
