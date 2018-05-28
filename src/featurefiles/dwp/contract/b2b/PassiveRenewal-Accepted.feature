@@ -4,9 +4,9 @@
 @RENEWAL
 @REGRESSION
 
-Feature: Test of UI DWP workflow that is triggering the passive renewal of business contract.
-    Contrary to Active one, Passive renewal does not assume any actions of Customer.
-    The User, Business Service Employee, selects the contracts with due date +3 monts from current date and trigger "Passive renewal".
+Feature: Test the passive renewal of business contract.
+    Contrary to Active renewal, the Passive renewal process does not involve any interaction with Customer.
+    The User, Business Service Employee, selects the contracts with due date +3 months from current date and triggers "Passive renewal".
     #
     ## Pre-conditions
     #  Given the batch process which imports following data:
@@ -32,10 +32,10 @@ Feature: Test of UI DWP workflow that is triggering the passive renewal of busin
 
     Background:
         Given I execute data import batch that imports Prices
-        And   I logged in as Business Service Desk Employee on the DWP Main Page
+        And   I logged in as 'Business Desk' on the DWP Main Page
     Scenario:
         ## UP TK 2 stands for: Unit Pricing Tarif Kaart 2
-        When  I start Contracting - UP TK2 Flow
+        When  I start Contracting - UP TK2 - 'Passive' renewal
         And   I apply '${today} + 3 monts - 3 days' value to 'End date from' filter element defined for 'CONTRACTING_SWITCHING' Left Menu Item and 'CONTRACT_LIST' Top Menu Item
         And   I apply '${today} + 3 monts + 3 days' value to 'End date from' filter element defined for 'CONTRACTING_SWITCHING' Left Menu Item and 'CONTRACT_LIST' Top Menu Item
         And   I select contracts with '${all}' indices
