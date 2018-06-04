@@ -13,7 +13,7 @@ Feature: Creating a B2C Quote
     And I select Inbound sales channel and accept standard quote type for B2C:
     And I enter customer details for B2C:
        |firstName       |lastName               |gender|birthDate |phoneNumber|mobile      |email                  |language|street       |houseNr|houseNrAdd |postalCode|city   |
-       |Jim             |van D${TIMESTAMP}      |MISTER|09/10/1966|           |+32486761271|jim@billinghouse.nl    |NL      |Vijgenstraat |3      |           |9160      |Lokeren|
+       |Jim             |van D${TIMESTAMP}      |Mr.   |09/10/1966|           |+32486761271|jim@billinghouse.nl    |NL      |Vijgenstraat |3      |           |9160      |Lokeren|
     # TC_${MM_yyyy}_B2C
     And I select tariffsheet and package:
         |tariffSheet       |packageName  |
