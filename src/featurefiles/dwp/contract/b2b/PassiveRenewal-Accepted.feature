@@ -31,24 +31,44 @@ Feature: Test the passive renewal of business contract.
     #   On the contrary, "Accepted" and "Refused" are very straight-forward, and should be therefore automated.
 
     Background:
-        Given I execute data import batch that imports Prices
+        Given Imported data is 'Prices'
         And   I logged in as 'Business Desk' on the DWP Main Page
     Scenario:
         ## UP TK 2 stands for: Unit Pricing Tarif Kaart 2
-        When  I start Contracting - UP TK2 - 'Passive' renewal
-        And   I apply '${today} + 3 monts - 3 days' value to 'End date from' filter element defined for 'CONTRACTING_SWITCHING' Left Menu Item and 'CONTRACT_LIST' Top Menu Item
-        And   I apply '${today} + 3 monts + 3 days' value to 'End date from' filter element defined for 'CONTRACTING_SWITCHING' Left Menu Item and 'CONTRACT_LIST' Top Menu Item
-        And   I select contracts with '${all}' indices
-        And   I click on 'Passive Renewal'
-        Then  I go to 'Contracting UP TK2 Passive renewal Offers'
-        And   I see the UP/TK2 Passive renewals
+        #Start Contracting - UP/TC2 - to renew contracts
+        When Left Tab is Contracting
+        And  Top Tab is Contracts
+        And  Top Action is Plus Menu
+        And  Plus Menu is Contracting - UP/TC2 - to renew contracts
+        And  Top Action is Filter
+        #Valid Parameters are: Accepted,  Refused
+        And  Filter element 'Acceptance status' is 'Accepted'
+        And  Filter element 'End date from' is '${today} + 1 month'
+        And  Filter element 'End date to' is '${today} + 3 months'
+
+         #DC implements this step
+        Then Redirect view is UP-TC2 - to renew contracts
+        #Possible parameters values are: 'all'
+            # or '{comma-separated numbers} where number is: 1st, 2nd, 3rd'
+            # or, optionally, range of numbers: '1st thru 3rd'
+
+        When  I select '1st, 2nd, 3rd' contracts from the list
+        And   I store the selected contracts as 'SelectedContractsOutParam'
+        And   Table action is 'PASSIVE RENEW'
+        And   Redirect view is UP-TC2 - to renew contracts
+        And   Top Action is Plus Menu
+        And   Plus Menu is UP/TC2 - Passive renewal quotes
+        Then  Redirect view is UP/TC2 - Passive Renewal quotes
+
+
         ##  The step has to be parameterized
-        And   The number of contracts is same as we submitted before
-        And   I select contracts with '${all}' indices
-        And   I click on 'confirm UP / TK2 / Contract renewal'
-        ## The step has to be parameterized
-        Then  I see previously selected UP/TK2 Passive renewals renewed
-        ## Additionally - verify the receipt of email?
+        And   Quotes are 'Created' for 'SelectedContractsOutParam'
+        When  I select 'SelectedContractsOutParam'
+        And   Table action is 'CONFIRM PASSIVE RENEW'
+        And   I confirm 'CONFIRM PASSIVE RENEWAL'
+        Then  Redirect view is UP/TC2 - Passive Renewal quotes
+        And   Quotes are 'Not created' for 'SelectedContractsOutParam'
+        ##    Optionally - And renewal email with 'ContractNumber' Subject is received
 
 
 
