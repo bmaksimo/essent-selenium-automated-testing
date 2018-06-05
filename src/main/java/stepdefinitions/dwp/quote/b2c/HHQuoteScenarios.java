@@ -83,7 +83,7 @@ public class HHQuoteScenarios extends DwpScenario {
 
     }
 
-    @And("^I select ([^\"]*) sales channel and accept standard quote type for B2C:$")
+    @And("^B2C sales channel is ([^\"]*) for standard quote type:$")
     public void toggleReguCheckbox(SalesChannel salesChannel) throws Throwable {
         SelectQuoteTypeView selectQuoteTypeView = new SelectQuoteTypeView(webDriver);
         selectQuoteTypeView.setSalesChannel(salesChannel);
@@ -97,7 +97,7 @@ public class HHQuoteScenarios extends DwpScenario {
     @OutputParameter(name = "customer")
     private CustomerTable newCustomer;
 
-    @And("^I enter customer details for B2C:$")
+    @And("^Customer details for B2C are:$")
     public void initializeB2CCustomerDetails(DataTable customerTable) throws Throwable {
         List<CustomerTable> customers = customerTable.asList(CustomerTable.class);
         CustomerTable customer = customers.get(0);
@@ -112,7 +112,7 @@ public class HHQuoteScenarios extends DwpScenario {
             notNullValue());
     }
 
-    @And("^I select tariffsheet and package:$")
+    @And("^Tariffsheet and package are:$")
     public void selectTariffSheetAndPackage(final DataTable tariffTable) throws Throwable {
         List<TariffTable> tariffs = tariffTable.asList(TariffTable.class);
         TariffTable tariff = tariffs.get(0);
@@ -124,18 +124,14 @@ public class HHQuoteScenarios extends DwpScenario {
             notNullValue());
     }
 
-    @And("^I don't detect any price sheet alerts$")
+    @And("^No price sheet alerts popped up$")
     public void verifySelectTariffSheetAndPackage() throws Throwable {
         assertThat("Failure. Tariff sheet alerts were generated although they were not expected.", true,
             is(new VerifyTariffSheetPriceAlert().test(this)));
 
     }
 
-    @And("^I select product \"([^\"]*)\":$")
-    public void i_select_product(String product) throws Throwable {
-    }
-
-    @And("^I fill in the electricity and gas meter numbers and their EANs respectively:$")
+    @And("^Electricity and gas meter numbers and their EANs are:$")
     public void selectMeterIdAndEan(final DataTable connectionTable) throws Throwable {
         List<ConnectionDetails> list = connectionTable.asList(ConnectionDetails.class);
         ConnectionDetails electricityConnectionDetails = list.get(0);
@@ -146,21 +142,21 @@ public class HHQuoteScenarios extends DwpScenario {
         connectionDetailsView.fillInInputValues();
     }
 
-    @And("^I optionally ([^\"]*) the ([^\"]*) meter$")
-    public void setMeterState(final CheckBoxState meterState, final ProductType productType) throws Throwable {
+    @And("^The ([^\"]*) meter is ([^\"]*)$")
+    public void setMeterState(final ProductType productType, final CheckBoxState meterState) throws Throwable {
         ConnectionDetailsView connectionDetailsView = new ConnectionDetailsView(webDriver);
         connectionDetailsView.openMeter(productType, meterState);
     }
 
-    @And("^I confirm Connection details$")
-    public void confirmConnectionDetails() throws Throwable {
+    @And("^I confirm \"([^\"]*)\" details$")
+    public void confirmConnectionDetails(String viewName) throws Throwable {
         ConnectionDetailsView connectionDetailsView = new ConnectionDetailsView(webDriver);
         CreateQuoteStepView next = connectionDetailsView.next();
         assertThat("Failure filling in connection details, check up the log.", next,
             notNullValue());
     }
 
-    @And("^I select payment method ([^\"]*) for IBAN \"([^\"]*)\" and bic \"([^\"]*)\":$")
+    @And("^Payment details are: method: ([^\"]*), IBAN: \"([^\"]*)\" and bic: \"([^\"]*)\":$")
     public void selectPaymentMethod(PaymentMethod paymetnMethod, String iban, String bic) throws Throwable {
         BillingInformation billingInfo = new BillingInformation(paymetnMethod, iban, bic);
         BillingDetailsView billingDetailsView = new BillingDetailsView(webDriver);
@@ -176,7 +172,7 @@ public class HHQuoteScenarios extends DwpScenario {
     @InputParameter(name = "customer")
     private CustomerTable quoteCustomer;
 
-    @And("^I sign on date ([^\"]*) in location \"([^\"]*)\" with file \"([^\"]*)\":$")
+    @And("^Signing contract on date: ([^\"]*) in \"([^\"]*)\" with hand signature file \"([^\"]*)\":$")
     public void submitSignature(DwpDateFormats date, String location, String filePath) throws Throwable {
         String path = ResourceUtils.toPath(filePath);
         File document = new File(path);
@@ -193,8 +189,8 @@ public class HHQuoteScenarios extends DwpScenario {
         quoteOverviewView.next();
     }
 
-    @Then("^The system redirects me to account page that has card with \"([^\"]*)\" and \"([^\"]*)\" customer details that I filled in$")
-    public void iAmRedirectedToAnAccountPageThatHasCardWithAndCustomerDetails(String firstName, String lastName) throws Throwable {
+    @Then("^Redirect view is \"([^\"]*)\" with first name: \"([^\"]*)\" and last name: \"([^\"]*)\" customer details entry$")
+    public void iAmRedirectedToAnAccountPageThatHasCardWithAndCustomerDetails(String redirectView, String firstName, String lastName) throws Throwable {
         String input[] = {firstName, lastName},
                customerFirstName = null,
                customerLastName = null,
@@ -216,7 +212,7 @@ public class HHQuoteScenarios extends DwpScenario {
             customerAccountCard.containsFirstAndLastName(customerFirstName, customerLastName), is(true));
     }
 
-    @When("^I select the ([^\"]*) element and click on the link in the ([^\"]*) column$")
+    @When("^I select the ([^\"]*) element and click the link in the \"([^\"]*)\" column$")
     public void iSelectTheStElementAndClickOnTheLinkInTheAccountNumberNameColumn(String ordinal, String column) throws Throwable {
         //int position = Integer.parseInt(ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", ""));
         Map<String, String> options = new HashMap<>();
