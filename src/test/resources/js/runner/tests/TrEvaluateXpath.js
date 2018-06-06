@@ -16,9 +16,7 @@ class TrEvaluateXpath extends TestRunnerBase {
         super(options, callback, 100);
     }
 
-    run() {
-        let result = this.result;
-        let options = this.options;
+    run(options, result) {
         setTimeout(()=> {
             let xPath = options.xpath;
             let elements = this.evaluateXpath(xPath);

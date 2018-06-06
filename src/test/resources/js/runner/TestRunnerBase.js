@@ -16,7 +16,7 @@ class TestRunnerBase {
             return;
         }
         setTimeout(() => {
-            this.run();
+            this.run(this.options, this.result);
         }, timeout);
     }
 
@@ -62,38 +62,182 @@ class TestRunnerBase {
         }
     };
 
+    getJquerySelector($element) {
+        let selector = $element
+            .parents()
+            .map(function() { return this.tagName; })
+            .get()
+            .reverse()
+            .concat([this.nodeName])
+            .join(">");
+        let id = $element.attr("id");
+        if (id) {
+            selector += "#"+ id;
+        }
+        let classNames = $element.attr("class");
+        if (classNames) {
+            selector += "." + $.trim(classNames).replace(/\s/gi, ".");
+        }
+        return selector;
+    }
 
-    /*
-    todo: move all DWP specific methods to separate class
-    */
+}
+
+/*
+  todo: move to separate js file
+*/
+
+class TestRunnerDwp extends TestRunnerBase {
+
+    constructor(options, callback, timeout = 100) {
+        super(options, callback, timeout)
+    }
 
     getState() {
         const self = this;
-        this.state = {
+        let state = {
+            angularComponents: this.getAngularJsComponents(true),
             currentRoute: location.hash,
             mainMenu: [],
             subMenu: [],
-            angularComponents: [],
-            /*angularAppController: angular.element("dashboard").scope().$parent.dwpAppController*/
         };
-        this.state.angularComponents['top-actions'] = this.getAngularComponentState($('top-actions'));
         $('main-menu-link').each(function(i) {
             let attrs = self.getElementAttributes($(this));
             attrs['link-id'] = $(this).find('a').attr('id');
-            self.state.mainMenu.push(attrs);
+            state.mainMenu.push(attrs);
         });
         $('sub-menu-link').each(function(i) {
             let attrs = self.getElementAttributes($(this));
             attrs['link-id'] = $(this).find('a').attr('id');
-            self.state.subMenu.push(attrs);
+            state.subMenu.push(attrs);
         });
-
-        return this.state;
+       /* if(window.testRunnerBridge) {
+            Object.keys(window.testRunnerBridge).forEach((k, i) => {
+                if(! k.startsWith('$')) {
+                    state[k] = window.testRunnerBridge[k];
+                }
+            });
+        }*/
+        return state;
     }
 
-    getFormData($form) {
+    getAngularComponent($componentElement, jsonEncode = false) {
+        if (!$componentElement.size()) {
+            return {'ERROR': '$componentElement not found'};
+        }
+        let component = {
+            $element: $componentElement,
+            $scope: $componentElement.scope(),
+            scope: {},
+            data: {},
+            tag: $componentElement.prop("tagName").toLowerCase(),
+            selector: this.getJquerySelector($componentElement)
+        };
+
+        if (component.tag.match('form-element')) {
+            component.data.id = component.$scope.id;
+            component.data.name = component.$scope.name;
+            component.data.label = $componentElement.parent().parent().parent().parent().find('label').html();
+            /*console.log(component);*/
+        }
+        if (component.tag === 'top-actions') {
+            component.data.miniGuidanceCanBeOpened = !$componentElement.find("[ng-show*='miniGuidanceCanBeOpened']").hasClass('ng-hide');
+            component.data.filtersCanBeOpened = !$componentElement.find("[ng-show*='filtersCanBeOpened']").hasClass('ng-hide');
+            component.data.plusMenuCanBeOpened = !$componentElement.find("[ng-show*='plusMenuCanBeOpened']").hasClass('ng-hide');
+            component.data.primaryButtonIsVisible = !$componentElement.find("[ng-show*='primaryButtonIsVisible']").hasClass('ng-hide');
+            /*console.log(component);*/
+        }
+
+        if(jsonEncode === true) {
+            return this.jsonEncodeComponent(component);
+        } else {
+            component.scope = component.$scope;
+            return component;
+        }
+
+    }
+
+    getAngularJsComponents(jsonEncode = false) {
         let self = this;
-        let formElements = [];
+        let components = [];
+        $('*').each((i,el) => {
+            let $scope = $(el).scope();
+            if($scope) {
+                let component = self.getAngularComponent($(el), jsonEncode);
+                if(!$.isEmptyObject(component.scope || !$.isEmptyObject(component.data))) {
+                    components.push(self.getAngularComponent($(el), jsonEncode))
+                }
+            }
+        });
+        return components;
+    }
+
+    jsonEncodeComponent(component) {
+        let componentSerialized = {};
+        Object.keys(component).forEach((k) => {
+            if (!k.startsWith('$')) {
+                componentSerialized[k] = component[k];
+            }
+        });
+        Object.keys(component.$scope).forEach((k) => {
+            if (!k.startsWith('$')
+                && !k.endsWith('Controller')
+                && k !== 'fc'
+                && k !== 'form'
+                && k !== 'fields'
+                && k !== 'fieldGroup'
+                && k !== 'loginForm'
+                && k !== 'options'
+                && k !== 'translateNamespace'
+                && k !== 'theFormlyForm'
+                && !k.match('formly')) {
+                /*
+                console.log('--------');
+                console.log(componentSerialized.tag, ': ' + k + '=');
+                */
+                componentSerialized.scope[k] = JSON.parse(JSON.stringify(component.$scope[k]));
+            }
+        });
+        return componentSerialized;
+    }
+
+    setFormData($form, newModel) {
+        let $scope = this.getAngularComponent($form).$scope;
+        let model = $scope.basicFormlyFormController.model;
+        $scope.$apply(() => {
+            angular.extend(model, newModel);
+        });
+    }
+
+    getFormData($form, jsonEncode = false) {
+        let self = this;
+        let controller = self.getAngularComponent($form).$scope.basicFormlyFormController;
+        let data = {
+            formComponent: self.getAngularComponent($form, true),
+            formElements: [],
+            formController: {},
+            formValid: controller.form.$valid,
+            selector: this.getJquerySelector($form)
+        };
+        if (jsonEncode) {
+            let controllerCopy = angular.fromJson(angular.toJson(controller));
+            let fields = controllerCopy.fields;
+            Object.keys(controllerCopy).forEach((k, i) => {
+                if (!k.startsWith('$') && k !== 'form' && k !== 'fields' && k !== 'guidanceObserversAccessor') {
+                    data.formController[k] = controller[k];
+                }
+            });
+            fields.forEach((field) => {
+                field.form = undefined;
+                field.options = undefined;
+            });
+            data.formController.fields = fields;
+            data.formController =  angular.fromJson(angular.toJson(data.formController));
+        }else {
+            data.formController = controller
+        }
+
+        let formElements = data.formElements;
 
         $form.find('select-form-element').each(function(i) {
             let $select = $(this).find('select');
@@ -103,7 +247,7 @@ class TestRunnerBase {
                 options.push(self.getElementAttributes($(this)))
             });
             let formElement = {
-                angularComponent: self.getAngularComponentState($(this)),
+                angularComponent: self.getAngularComponent($(this), true),
                 type: 'select',
                 id: $select.attr('id'),
                 value: $select.val(),
@@ -123,7 +267,7 @@ class TestRunnerBase {
         $form.find('input-form-element').each(function(i) {
             let $input = $(this).find('input');
             let formElement = {
-                angularComponent: self.getAngularComponentState($(this)),
+                angularComponent: self.getAngularComponent($(this), true),
                 type: 'input',
                 id: $input.attr('id'),
                 value: $input.val(),
@@ -139,7 +283,7 @@ class TestRunnerBase {
         });
 
         $form.find('datepicker-form-element').each(function(i) {
-            let componentProps = self.getAngularComponentState($(this));
+            let componentProps = self.getAngularComponent($(this), true);
             $(this).find('input').each(function(i,input){
                 let $input = $(input);
                 let formElement = {
@@ -171,7 +315,7 @@ class TestRunnerBase {
                 value = "on"
             }
             let formElement = {
-                angularComponent: self.getAngularComponentState($(this)),
+                angularComponent: self.getAngularComponent($(this), true),
                 type: 'input',
                 id: $input.attr('id'),
                 value: value,
@@ -183,7 +327,7 @@ class TestRunnerBase {
 
         $form.find('select-with-search-form-element').each(function(i) {
             let formElement = {
-                angularComponent: self.getAngularComponentState($(this)),
+                angularComponent: self.getAngularComponent($(this), true),
                 type: 'input',
                 id: $(this).attr('id'),
                 value: [],
@@ -199,7 +343,7 @@ class TestRunnerBase {
         $form.find('address-form-element').each(function(i) {
             let id = $(this).attr('id');
             let formElement = {
-                angularComponent: self.getAngularComponentState($(this)),
+                angularComponent: self.getAngularComponent($(this), true),
                 type: 'multiple',
                 id: id,
                 value: [],
@@ -232,28 +376,7 @@ class TestRunnerBase {
             formElements.push(formElement);
         });
 
-        return formElements;
-    }
-
-    getAngularComponentState($componentElement) {
-        if (!$componentElement.size()) {
-            return {'ERROR': '$componentElement not found'};
-        }
-        let component = {
-            tag: $componentElement.prop("tagName").toLowerCase(),
-        };
-        if (component.tag.match('form-element')) {
-            component.name = $componentElement.attr('name');
-            component.label = $componentElement.parent().parent().parent().parent().find('label').html();
-        }
-        if (component.tag === 'top-actions') {
-            component.miniGuidanceCanBeOpened = !$componentElement.find("[ng-show*='miniGuidanceCanBeOpened']").hasClass('ng-hide');
-            component.filtersCanBeOpened = !$componentElement.find("[ng-show*='filtersCanBeOpened']").hasClass('ng-hide');
-            component.plusMenuCanBeOpened = !$componentElement.find("[ng-show*='plusMenuCanBeOpened']").hasClass('ng-hide');
-            component.primaryButtonIsVisible = !$componentElement.find("[ng-show*='primaryButtonIsVisible']").hasClass('ng-hide');
-        }
-
-        return component;
+        return data;
     }
 
 }
