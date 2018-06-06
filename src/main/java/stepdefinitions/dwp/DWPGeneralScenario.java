@@ -5,6 +5,7 @@ import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
 import com.essent.automation.autocrat.Model.Flow;
 import com.billinghouse.javascript.model.options.TrGetUserLanguageOptions;
+import com.essent.roles.UserRoles;
 import com.essent.testing.dwp.DwpScenario;
 import com.essent.testing.dwp.pageobject.Window;
 import com.essent.testing.dwp.pageobject.impl.LoginDialog;
@@ -75,12 +76,12 @@ public class DWPGeneralScenario extends DwpScenario {
 
         Autocrat.ExecutionContext getLanguageExecutionContext = new Autocrat.ExecutionContext(webDriver.getDriver());
         Flow getDefaultlanguageFlow = getLanguageExecutionContext.getExecution()
-            .variable("DWP_USER", DWP_USER)
+            .variable("DWP_USER", DWP_USER_ESSENTADMIN)
             .element("DWP_USER", new Model.Element().search("ID").query("username"))
             .flow()
             .steps(
                 new Model.Step().action(Action.GOTO).value(BASE_URL),
-                new Model.Step().action(Action.ACCESS).element("DWP_USER")
+                new Model.Step().action(Action.ACCESS).element("DWP_USER_ESSENTADMIN")
                     .timeoutInSeconds(5)
                     .callback(new GetPreferredLanguage()));
         Autocrat.executeFlow(getLanguageExecutionContext, getDefaultlanguageFlow);
@@ -94,7 +95,7 @@ public class DWPGeneralScenario extends DwpScenario {
         Autocrat.ExecutionContext executionContext = new Autocrat.ExecutionContext(webDriver.getDriver());
 
         Flow dwpLoginFlow = executionContext.getExecution()
-            .variable("DWP_USER", DWP_USER)
+            .variable("DWP_USER", DWP_USER_ESSENTADMIN)
             .variable("DWP_PASS", DWP_PASSWORD)
             .element("DWP_USER", new Model.Element().search("ID").query("username"))
             .element("DWP_PASS", new Model.Element().search("ID").query("password"))
@@ -103,7 +104,7 @@ public class DWPGeneralScenario extends DwpScenario {
             .flow()
             .steps(
                 //new Model.Step().action(Action.GOTO).value(BASE_URL),
-                new Model.Step().action(Action.TYPING).element("DWP_USER").value("{{VAR:DWP_USER}}"),
+                new Model.Step().action(Action.TYPING).element("DWP_USER_ESSENTADMIN").value("{{VAR:DWP_USER_ESSENTADMIN}}"),
                 new Model.Step().action(Action.TYPING).element("DWP_PASS").value("{{VAR:DWP_PASS}}"),
                 new Model.Step().action(Action.SLEEP).sleepInMillis(2000),
                 new Model.Step().action(Action.CLICK).element("DWP_LOGIN"),
@@ -115,12 +116,13 @@ public class DWPGeneralScenario extends DwpScenario {
         assertTrue(Autocrat.executeFlow(executionContext, dwpLoginFlow), "Main DWP Page is expected to be active, but this did not happen");
         injectJavaScriptTestRunner();
     }
-    @Given("^I logged in as admin on the DWP Main Page$")
-    public void loginUsingPageObjects() throws Throwable {
+
+    @Given("^I logged in as ([^\"]*) on the DWP Main Page$")
+    public void loginAs(UserRoles role) throws Throwable {
         LoginDialog login = new LoginDialog(webDriver);
         injectJavaScriptTestRunner();
         retrieveAndInitUserLanguage();
-        Window application = login.login(DWP_USER, DWP_PASSWORD);
+        Window application = login.login(role.getUsername(), role.getPassword());
         retrieveAndInitUserLanguage();
         assertNotNull("DWP application did not appear after a login", application);
     }
@@ -142,7 +144,7 @@ public class DWPGeneralScenario extends DwpScenario {
     public void I_logged_in_as_admin_on_the_DWP() throws Throwable {
 
         Model.Execution execution = new Model.Execution();
-        execution.variable("DWP_USER", DWP_USER);
+        execution.variable("DWP_USER", DWP_USER_ESSENTADMIN);
         execution.variable("DWP_PASS", DWP_PASSWORD);
         execution.element("DWP_USER", new Model.Element().search("ID").query("username"));
         execution.element("DWP_PASS", new Model.Element().search("ID").query("password"));
@@ -156,7 +158,7 @@ public class DWPGeneralScenario extends DwpScenario {
         flow.steps(
             new Model.Step().action(Action.GOTO)
                 .value(BASE_URL + "sales-marketing/dashboard/accounts_list/"),
-            new Model.Step().action(Action.TYPING).element("DWP_USER").value("{{VAR:DWP_USER}}"),
+            new Model.Step().action(Action.TYPING).element("DWP_USER_ESSENTADMIN").value("{{VAR:DWP_USER_ESSENTADMIN}}"),
             new Model.Step().action(Action.TYPING).element("DWP_PASS").value("{{VAR:DWP_PASS}}"),
             new Model.Step().action(Action.CLICK).element("DWP_LOGIN"),
             new Model.Step().action(Action.REQUIRE_ABSENT).element("DWP_LOGIN"));

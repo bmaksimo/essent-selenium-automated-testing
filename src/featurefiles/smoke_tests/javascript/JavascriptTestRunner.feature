@@ -2,7 +2,7 @@
 Feature: Javascript using in DWP testing
 
     Background:
-        Given I logged in as admin on the DWP Main Page
+        Given I logged in as ESSENT_ADMIN on the DWP Main Page
         Given I optionally discard a previous flow:
 
     Scenario: We can access the main filter elements

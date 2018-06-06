@@ -2,7 +2,7 @@ package stepdefinitions.dwp.tables.plus;
 
 public enum CheckBoxState {
     Open,
-    Close,
+    Closed,
     On,
     Off
 }
