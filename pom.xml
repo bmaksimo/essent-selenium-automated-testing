@@ -5,7 +5,7 @@
   <groupId>com.essent.testing</groupId>
   <artifactId>essent-selenium-automated-testing</artifactId>
   <packaging>jar</packaging>
-  <version>0.9-SNAPSHOT</version>
+  <version>0.9.7-SNAPSHOT</version>
   <name>essent-selenium-automated-testing</name>
   <url>http://www.billinghouse.nl</url>
 
@@ -39,7 +39,7 @@
     <essent.project.version>${project.version}</essent.project.version>
 
     <!-- Essent dependencies -->
-    <common.collections.version>2.24.0-SNAPSHOT</common.collections.version>
+    <common-collections.version>2.40.0-SNAPSHOT</common-collections.version>
 
     <!-- Dependency versions. -->
     <spring.version>4.2.2.RELEASE</spring.version>
@@ -54,9 +54,9 @@
     <junit.version>4.12</junit.version>
     <assertj-core.version>3.5.2</assertj-core.version>
     <joda-time.version>2.8.2</joda-time.version>
-    <selenium-firefox-driver.version>3.10.0</selenium-firefox-driver.version>
-    <selenium-server.version>3.10.0</selenium-server.version>
-    <selenium-java.version>3.10.0</selenium-java.version>
+    <selenium-firefox-driver.version>3.12.0</selenium-firefox-driver.version>
+    <selenium-server.version>3.12.0</selenium-server.version>
+    <selenium-java.version>3.12.0</selenium-java.version>
     <jackson-databind.version>2.6.3</jackson-databind.version>
     <jackson-annotations.version>2.7.0</jackson-annotations.version>
     <jackson-module-jaxb-annotations.version>2.6.3</jackson-module-jaxb-annotations.version>
@@ -66,17 +66,17 @@
     <slf4j-api.version>1.7.12</slf4j-api.version>
     <slf4j-log4j12.version>1.7.12</slf4j-log4j12.version>
     <jsch.version>0.1.53</jsch.version>
-    <cucumber-reporting.version>3.15.0</cucumber-reporting.version>
+    <cucumber-reporting.version>3.16.0</cucumber-reporting.version>
     <mysql-connector-java.version>5.1.38</mysql-connector-java.version>
-    <ngwebdriver.version>1.1.2</ngwebdriver.version>
+    <ngwebdriver.version>1.1.3</ngwebdriver.version>
     <fluent-selenium.version>1.19</fluent-selenium.version>
     <liquibase-core.version>3.4.2</liquibase-core.version>
     <postgresql.version>42.1.1</postgresql.version>
     <xmlrpc-client.version>3.1.3</xmlrpc-client.version>
     <xml-apis.version>1.4.01</xml-apis.version>
     <ant-junit.version>1.9.7</ant-junit.version>
-    <nova-autocrat.version>1.0.3-DWP-SNAPSHOT</nova-autocrat.version>
-    <zfj.cloud.api.version>0.9.1-SNAPSHOT</zfj.cloud.api.version>
+    <nova-autocrat.version>1.0.5</nova-autocrat.version>
+    <zfj.cloud.api.version>0.9.2</zfj.cloud.api.version>
     <jira.rest.java.client.core.version>2.0.0-m31</jira.rest.java.client.core.version>
     <ac.play.java.version>0.10.1</ac.play.java.version>
   </properties>
@@ -86,7 +86,7 @@
       <dependency>
         <groupId>com.essent.be</groupId>
         <artifactId>common-collections</artifactId>
-        <version>${common.collections.version}</version>
+        <version>${common-collections.version}</version>
       </dependency>
       <dependency>
         <groupId>info.cukes</groupId>

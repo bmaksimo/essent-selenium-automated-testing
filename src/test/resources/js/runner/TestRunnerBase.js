@@ -11,7 +11,7 @@ class TestRunnerBase {
         };
         if(!this.run) {
             this.result.status = 'FAILED';
-            this.result.reason += ': The Javascript class ' + this.id + ' must have a run method';
+            this.result.reason += ': The Javascript class ' + this.id + ' does not have a run method';
             this.resolveCallback(this.result);
             return;
         }
@@ -72,110 +72,138 @@ class TestRunnerBase {
         this.state = {
             currentRoute: location.hash,
             mainMenu: [],
-            subMenu: []
+            subMenu: [],
+            angularComponents: [],
+            /*angularAppController: angular.element("dashboard").scope().$parent.dwpAppController*/
         };
-        angular.element('main-menu-link').each(function(i) {
+        this.state.angularComponents['top-actions'] = this.getAngularComponentState($('top-actions'));
+        $('main-menu-link').each(function(i) {
             let attrs = self.getElementAttributes($(this));
             attrs['link-id'] = $(this).find('a').attr('id');
             self.state.mainMenu.push(attrs);
         });
-        angular.element('sub-menu-link').each(function(i) {
+        $('sub-menu-link').each(function(i) {
             let attrs = self.getElementAttributes($(this));
             attrs['link-id'] = $(this).find('a').attr('id');
             self.state.subMenu.push(attrs);
         });
+
+        return this.state;
     }
 
     getFormData($form) {
-        let $el = $form;
         let self = this;
         let formElements = [];
-        let $fields = $('div[formly-field]');
-        /*
-        todo: get data for all read-only components
-        */
-        $el.find('select-form-element').each(function(i) {
+
+        $form.find('select-form-element').each(function(i) {
             let $select = $(this).find('select');
             let $options = $select.find('option');
-            let label = $(this).parent().parent().parent().parent().find('label').html();
             let options = [];
             $options.each(function() {
                 options.push(self.getElementAttributes($(this)))
             });
-            /* fixme: angular doesn't set selected property on change */
-            formElements.push({
+            let formElement = {
+                angularComponent: self.getAngularComponentState($(this)),
                 type: 'select',
                 id: $select.attr('id'),
-                label: label,
                 value: $select.val(),
+                label: $select.find('option:selected').text(),
                 options: options,
-                componentType: 'select-form-element',
-            })
+                readOnly: false
+            };
+            if ($select.size() === 0) {
+                let $readOnlyEl = $(this).find('.non-editable-input .ng-binding');
+                formElement.readOnly = true;
+                formElement.id = $readOnlyEl.attr('id');
+                formElement.label = $readOnlyEl.text();
+            }
+            formElements.push(formElement);
         });
-        $el.find('input-form-element').each(function(i) {
+
+        $form.find('input-form-element').each(function(i) {
             let $input = $(this).find('input');
-            let label = $(this).parent().parent().parent().parent().find('label').html();
-            formElements.push({
+            let formElement = {
+                angularComponent: self.getAngularComponentState($(this)),
                 type: 'input',
                 id: $input.attr('id'),
-                label: label,
                 value: $input.val(),
-                componentType: 'input-form-element',
-            })
+                readOnly: false
+            };
+            if ($input.size() === 0) {
+                let $readOnlyEl = $(this).find('.non-editable-input .ng-binding');
+                formElement.readOnly = true;
+                formElement.id = $readOnlyEl.attr('id');
+                formElement.value = $readOnlyEl.text();
+            }
+            formElements.push(formElement);
         });
-        $el.find('datepicker-form-element').each(function(i) {
-            let label = $(this).parent().parent().parent().parent().find('label').html();
-            $(this).find('input').each(function(i){
-                let $input = $(this);
-                formElements.push({
+
+        $form.find('datepicker-form-element').each(function(i) {
+            let componentProps = self.getAngularComponentState($(this));
+            $(this).find('input').each(function(i,input){
+                let $input = $(input);
+                let formElement = {
+                    angularComponent: componentProps,
                     type: 'input',
                     id: $input.attr('id'),
-                    label: label,
                     value: $input.val(),
-                    componentType: 'datepicker-form-element',
-                })
-
+                    readOnly: false
+                };
+                formElements.push(formElement);
             });
+            if ($(this).find('input').size() === 0) {
+                let $readOnlyEl = $(this).find('.non-editable-input .ng-binding');
+                let formElement = {
+                    angularComponent: componentProps,
+                    type: 'input',
+                    id: $readOnlyEl.attr('id'),
+                    value: $readOnlyEl.text(),
+                    readOnly: true
+                };
+                formElements.push(formElement);
+            }
         });
-        $el.find('toggle-form-element').each(function(i) {
+
+        $form.find('toggle-form-element').each(function(i) {
             let $input = $(this).find('input');
-            let label = $(this).parent().parent().parent().parent().find('label').html();
             let value = "off";
             if ($input.hasClass('ng-not-empty')) {
                 value = "on"
             }
-            formElements.push({
+            let formElement = {
+                angularComponent: self.getAngularComponentState($(this)),
                 type: 'input',
                 id: $input.attr('id'),
-                label: label,
                 value: value,
-                componentType: 'toggle-form-element',
-            })
+                readOnly: false
+            };
+            /* todo: check for readonly status */
+            formElements.push(formElement);
         });
-        $el.find('select-with-search-form-element').each(function(i) {
-            let label = $(this).parent().parent().parent().parent().find('label').html();
-            let id = $(this).attr('id');
+
+        $form.find('select-with-search-form-element').each(function(i) {
             let formElement = {
+                angularComponent: self.getAngularComponentState($(this)),
                 type: 'input',
-                id: id,
-                label: label,
+                id: $(this).attr('id'),
                 value: [],
-                componentType: 'select-with-search-form-element'
+                readOnly: false
             };
             $(this).find('.action-list ul li').each((ii, li)=> {
                 formElement.value.push($(li).find('span')[0].innerText)
             });
+            /* todo: check for readonly status */
             formElements.push(formElement);
         });
-        $el.find('address-form-element').each(function(i) {
-            let label = $(this).parent().parent().parent().parent().find('label').html();
+
+        $form.find('address-form-element').each(function(i) {
             let id = $(this).attr('id');
             let formElement = {
+                angularComponent: self.getAngularComponentState($(this)),
                 type: 'multiple',
                 id: id,
-                label: label,
                 value: [],
-                componentType: 'address-form-element'
+                readOnly: false
             };
             $(this).find('fieldset').children().each((ii, subEl)=> {
                 let type = $(subEl).prop("tagName").toLowerCase();
@@ -185,7 +213,7 @@ class TestRunnerBase {
                 let formSubElement = {
                     type: $(subEl).prop("tagName").toLowerCase(),
                     id: $(subEl).attr('field-id'),
-                    label: $(subEl).attr('placeholder'),
+                    componentLabel: $(subEl).attr('placeholder'),
                     value: $(subEl).find('input').val(),
                     componentType: 'address-form-element-sub'
                 };
@@ -200,9 +228,32 @@ class TestRunnerBase {
                 }
                 formElement.value.push(formSubElement)
             });
+            /* todo: check for readonly status */
             formElements.push(formElement);
         });
+
         return formElements;
+    }
+
+    getAngularComponentState($componentElement) {
+        if (!$componentElement.size()) {
+            return {'ERROR': '$componentElement not found'};
+        }
+        let component = {
+            tag: $componentElement.prop("tagName").toLowerCase(),
+        };
+        if (component.tag.match('form-element')) {
+            component.name = $componentElement.attr('name');
+            component.label = $componentElement.parent().parent().parent().parent().find('label').html();
+        }
+        if (component.tag === 'top-actions') {
+            component.miniGuidanceCanBeOpened = !$componentElement.find("[ng-show*='miniGuidanceCanBeOpened']").hasClass('ng-hide');
+            component.filtersCanBeOpened = !$componentElement.find("[ng-show*='filtersCanBeOpened']").hasClass('ng-hide');
+            component.plusMenuCanBeOpened = !$componentElement.find("[ng-show*='plusMenuCanBeOpened']").hasClass('ng-hide');
+            component.primaryButtonIsVisible = !$componentElement.find("[ng-show*='primaryButtonIsVisible']").hasClass('ng-hide');
+        }
+
+        return component;
     }
 
 }

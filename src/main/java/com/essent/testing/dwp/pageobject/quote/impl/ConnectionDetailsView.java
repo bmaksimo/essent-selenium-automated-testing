@@ -16,26 +16,11 @@ import stepdefinitions.dwp.tables.ProductType;
 import stepdefinitions.dwp.tables.plus.CheckBoxState;
 
 import static com.essent.testing.dwp.DwpTimingParameters.*;
-import static com.essent.testing.dwp.DwpTimingParameters.INPUT;
-import static com.essent.testing.dwp.DwpTimingParameters.NEXT_STEP;
-import static com.essent.testing.dwp.DwpTimingParameters.TOGGLE_CHECKBOX;
-import static com.essent.testing.dwp.DwpTimingParameters.WAIT_NEXT_PAGE;
-import static com.essent.testing.dwp.elements.DwpBasicElements.NEXT_BUTTON;
+import static com.essent.testing.dwp.elements.BasicElements.NEXT_BUTTON;
 import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.TITLE_SELECTOR_TEMPLATE;
 import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.VIEW_SELECTOR;
-import static com.essent.testing.dwp.quote.elements.B2CQuoteElements.*;
 import static com.essent.testing.dwp.quote.elements.B2CQuoteElements.BILLING_DETAILS_ACTIVE;
 import static com.essent.testing.dwp.quote.elements.ConnectionElements.*;
-import static com.essent.testing.dwp.quote.elements.ConnectionElements.ELEC_EAN;
-import static com.essent.testing.dwp.quote.elements.ConnectionElements.ELEC_METER_NR;
-import static com.essent.testing.dwp.quote.elements.ConnectionElements.ELEC_METER_OPEN_CHECKBOX;
-import static com.essent.testing.dwp.quote.elements.ConnectionElements.ELEC_MOVE_CHECKBOX;
-import static com.essent.testing.dwp.quote.elements.ConnectionElements.ELEC_OTHEREAN_CHECKBOX;
-import static com.essent.testing.dwp.quote.elements.ConnectionElements.GAS_EAN;
-import static com.essent.testing.dwp.quote.elements.ConnectionElements.GAS_METER_NR;
-import static com.essent.testing.dwp.quote.elements.ConnectionElements.GAS_METER_OPEN_CHECKBOX;
-import static com.essent.testing.dwp.quote.elements.ConnectionElements.GAS_MOVE_CHECKBOX;
-import static com.essent.testing.dwp.quote.elements.ConnectionElements.GAS_OTHEREAN_CHECKBOX;
 
 public class ConnectionDetailsView extends Component implements CreateQuoteView, CreateQuoteStepView {
 

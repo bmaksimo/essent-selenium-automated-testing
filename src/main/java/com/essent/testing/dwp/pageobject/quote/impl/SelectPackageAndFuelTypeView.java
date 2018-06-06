@@ -16,7 +16,7 @@ import stepdefinitions.dwp.tables.TariffTable;
 
 import static com.essent.testing.dwp.DwpDateFormats.MONTHLY_PACKAGE;
 import static com.essent.testing.dwp.DwpTimingParameters.*;
-import static com.essent.testing.dwp.elements.DwpBasicElements.NEXT_BUTTON;
+import static com.essent.testing.dwp.elements.BasicElements.NEXT_BUTTON;
 import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.TITLE_SELECTOR_TEMPLATE;
 import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.VIEW_SELECTOR;
 import static com.essent.testing.dwp.quote.elements.B2CQuoteElements.CONNECTION_DETAILS_ACTIVE;

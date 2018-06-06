@@ -1,5 +1,8 @@
 package com.essent.testing.dwp.menu.model;
 
+import com.essent.testing.dwp.menu.model.impl.TopMenuImpl;
+import com.essent.testing.dwp.pageobject.menu.Menu;
+
 public enum UpperMenuItems {
     FAILED_JOBS("Failed jobs", "failed-jobs-link"),
     JOB_LOG("Job Log", "job-log-link"),
@@ -100,6 +103,14 @@ public enum UpperMenuItems {
     private UpperMenuItems(String label, String dashboardLink) {
         this.label = label;
         this.link = dashboardLink;
+    }
+
+    public static TopMenu getTopMenu() {
+        TopMenu menu = new TopMenuImpl();
+        for (UpperMenuItems upperItem : UpperMenuItems.values()) {
+            menu.item(upperItem.name(), new TopMenu.Item(upperItem.getLabel(), upperItem.getLink()));
+        }
+        return menu;
     }
 
     public String getLabel() {

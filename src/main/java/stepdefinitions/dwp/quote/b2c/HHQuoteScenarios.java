@@ -2,6 +2,7 @@ package stepdefinitions.dwp.quote.b2c;
 
 import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
+import com.billinghouse.javascript.testrunner.dwp.menu.MenuTests;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
@@ -9,36 +10,40 @@ import com.essent.automation.flow.FlowAwarePredicate;
 import com.essent.testing.dwp.DwpDateFormats;
 import com.essent.testing.dwp.DwpScenario;
 import com.essent.testing.dwp.pageobject.Window;
+import com.essent.testing.dwp.pageobject.account.AccountCard;
+import com.essent.testing.dwp.pageobject.account.impl.AccountCardImpl;
 import com.essent.testing.dwp.pageobject.impl.MainWindow;
 import com.essent.testing.dwp.pageobject.menu.AccordionWrapperMenu;
 import com.essent.testing.dwp.pageobject.quote.CreateQuoteStepView;
 import com.essent.testing.dwp.pageobject.quote.CreateQuoteView;
-import com.essent.testing.dwp.pageobject.quote.impl.ConnectionDetailsView;
-import com.essent.testing.dwp.pageobject.quote.impl.CustomerDetailsView;
-import com.essent.testing.dwp.pageobject.quote.impl.SelectPackageAndFuelTypeView;
-import com.essent.testing.dwp.pageobject.quote.impl.SelectQuoteTypeView;
+import com.essent.testing.dwp.pageobject.quote.impl.*;
 import com.essent.testing.util.ResourceUtils;
+import com.google.common.reflect.Reflection;
 import cucumber.api.DataTable;
+import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.openqa.selenium.By;
+import cucumber.runtime.CucumberException;
+import gherkin.formatter.model.DataTableRow;
+import org.apache.commons.lang3.BooleanUtils;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.tables.*;
 import stepdefinitions.dwp.tables.plus.CheckBoxState;
 
 import java.io.File;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import static com.essent.testing.dwp.DwpDateFormats.TIMESTAMP;
 import static com.essent.testing.dwp.DwpTimingParameters.*;
-import static com.essent.testing.dwp.elements.DwpBasicElements.NEXT_BUTTON;
-import static com.essent.testing.dwp.elements.DwpBasicElements.SIBLING_OVERLAYING_ICONS_XPATH;
-import static com.essent.testing.dwp.quote.elements.B2CQuoteElements.SIGNATURE_OPTIONS_ACTIVE;
-import static com.essent.testing.dwp.quote.elements.BillingElements.*;
-import static com.essent.testing.dwp.quote.elements.SignatureElements.*;
 import static com.essent.testing.dwp.quote.elements.TariffElements.NO_PRICESHEET_ALERT;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -49,16 +54,6 @@ public class HHQuoteScenarios extends DwpScenario {
     @Before("@QUOTE, @DWP_SETUP")
     public void SetupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
-    }
-
-    private class HideAddressSuggestion implements Model.Callback {
-        @Override
-        public void onAccess(Autocrat.ExecutionContext context, Model.Step step, WebElement value) {
-            JavascriptExecutor jsExec = (JavascriptExecutor) context.driver;
-            String setProperty = "style = 'display:none'";
-            logger().info("Executing javascript " + setProperty + " on target element");
-            jsExec.executeScript("arguments[0]." + setProperty, value);
-        }
     }
 
     private class VerifyTariffSheetPriceAlert implements FlowAwarePredicate<HHQuoteScenarios> {
@@ -78,75 +73,6 @@ public class HHQuoteScenarios extends DwpScenario {
         }
     }
 
-    private class InitializeBillingDetails implements FlowAwarePredicate<BillingInformation> {
-        @Override
-        public boolean test(BillingInformation billingInformation) {
-            return execute(webDriver.getDriver(), build(billingInformation));
-        }
-
-        @Override
-        public Model.Execution build(BillingInformation billingInformation) {
-            PaymentMethod paymentMethod = billingInformation.getPaymentMethod();
-            String eban = billingInformation.getEban();
-            String bic = billingInformation.getBic();
-            Model.Execution execution = newExecution().
-                element(PAYMENT_METHOD.element()).
-                element(PAYMENT_IBAN.element()).
-                element(PAYMENT_BIC.element()).
-                element(NEXT_BUTTON.element()).
-                element(SIGNATURE_OPTIONS_ACTIVE.element()).
-                step(createStep(Action.SELECT).element(PAYMENT_METHOD.name()).value(paymentMethod.getLabel())).
-                step(createStep(Action.TYPING).element(PAYMENT_IBAN.name()).value(eban), INPUT.getSleepInMillis()).
-                step(createStep(Action.TYPING).element(PAYMENT_BIC.name()).value(bic), INPUT.getSleepInMillis()).
-                step(createStep(Action.CLICK).timeoutInSeconds(NEXT_STEP.getWaitInSeconds()).element(NEXT_BUTTON.name())).
-                step(createStep(Action.REQUIRE).timeoutInSeconds(WAIT_NEXT_PAGE.getWaitInSeconds()).element(SIGNATURE_OPTIONS_ACTIVE.name()));
-            return execution;
-        }
-    }
-    private class SignUp implements FlowAwarePredicate<SignatureData> {
-
-        @Override
-        public boolean test(SignatureData signatureData) {
-            return execute(webDriver.getDriver(), build(signatureData));
-        }
-
-        public Model.Execution build(SignatureData signatureData) {
-            String formattedDate = signatureData.getDate().print();
-            String place = signatureData.getPlace();
-            String filePath = signatureData.getFilePath();
-            Model.Execution execution = newExecution()
-                .element(SIGN_WANTTOSIGN_CHECKBOX.element())
-                .element(SIGN_ALREADYSIGNED_CHECKBOX.element())
-                .element(SIGN_DATE.element())
-                .element(SIGN_LOCATION.element())
-                .element(SIGN_UPLOAD_DOC.element())
-                .element(NEXT_BUTTON.element())
-                .step(createStep(Action.ACCESS).element(SIGN_WANTTOSIGN_CHECKBOX.name()).requireDisplayed(false).callback(new HideIconOverlays()))
-                .step(createStep(Action.CLICK).requireDisplayed(false).element(SIGN_WANTTOSIGN_CHECKBOX.name()).timeoutInSeconds(TOGGLE_CHECKBOX.getWaitInSeconds()), TOGGLE_CHECKBOX.getSleepInMillis())
-                .step(createStep(Action.CLICK).requireDisplayed(false).element(SIGN_ALREADYSIGNED_CHECKBOX.name()), TOGGLE_CHECKBOX.getSleepInMillis())
-                .step(createStep(Action.TYPING).element(SIGN_DATE.name()).value(formattedDate), INPUT.getSleepInMillis())
-                .step(createStep(Action.TYPING).element(SIGN_LOCATION.name()).value(place), INPUT.getSleepInMillis())
-                .step(createStep(Action.REQUIRE).element(SIGN_UPLOAD_DOC.name()).requireDisplayed(false))
-                .step(createStep(Action.UPLOAD)
-                    .element(SIGN_UPLOAD_DOC.name()).value(filePath).requireDisplayed(false), UPLOAD_FILE.getSleepInMillis())
-                .step(createStep(Action.CLICK).timeoutInSeconds(UPLOAD_FILE.getWaitInSeconds()).element(NEXT_BUTTON.name()).timeoutInSeconds(SUBMIT_QUOTE.getWaitInSeconds()));
-            return execution;
-        }
-    }
-
-    private class HideIconOverlays implements Model.Callback {
-        @Override
-        public void onAccess(Autocrat.ExecutionContext context, Model.Step step, WebElement value) {
-            JavascriptExecutor jsExec = (JavascriptExecutor) context.driver;
-            List<WebElement> elements = value.findElements(By.xpath(SIBLING_OVERLAYING_ICONS_XPATH.getQuery()));
-            elements.forEach(siblingIcon -> {
-                String setProperty = "style = 'display:none'";
-                logger().info("Executing javascript " + setProperty + " on target element");
-                jsExec.executeScript("arguments[0]." + setProperty, siblingIcon);
-            });
-        }
-    }
-
     @When("^I start a B2C quote flow:$")
     public void startB2CQuoteFlow() throws Throwable {
         Window window = new MainWindow(webDriver);
@@ -157,7 +83,7 @@ public class HHQuoteScenarios extends DwpScenario {
 
     }
 
-    @And("^I select ([^\"]*) sales channel and accept standard quote type for B2C:$")
+    @And("^B2C sales channel is ([^\"]*) for standard quote type:$")
     public void toggleReguCheckbox(SalesChannel salesChannel) throws Throwable {
         SelectQuoteTypeView selectQuoteTypeView = new SelectQuoteTypeView(webDriver);
         selectQuoteTypeView.setSalesChannel(salesChannel);
@@ -168,12 +94,16 @@ public class HHQuoteScenarios extends DwpScenario {
             notNullValue());
     }
 
-    @OutputParameter(name="customer")
-    private String customerName;
-    @And("^I enter customer details for B2C:$")
+    @OutputParameter(name = "customer")
+    private CustomerTable newCustomer;
+
+    @And("^Customer details for B2C are:$")
     public void initializeB2CCustomerDetails(DataTable customerTable) throws Throwable {
         List<CustomerTable> customers = customerTable.asList(CustomerTable.class);
         CustomerTable customer = customers.get(0);
+        String lastName = customer.getLastName().replace("${TIMESTAMP}", TIMESTAMP.print());
+        customer.setLastName(lastName);
+        newCustomer = customer;
         CustomerDetailsView customerDetailsView = new CustomerDetailsView(webDriver);
         customerDetailsView.setCustomer(customer);
         customerDetailsView.fillInInputValues();
@@ -182,7 +112,7 @@ public class HHQuoteScenarios extends DwpScenario {
             notNullValue());
     }
 
-    @And("^I select tariffsheet and package:$")
+    @And("^Tariffsheet and package are:$")
     public void selectTariffSheetAndPackage(final DataTable tariffTable) throws Throwable {
         List<TariffTable> tariffs = tariffTable.asList(TariffTable.class);
         TariffTable tariff = tariffs.get(0);
@@ -194,17 +124,14 @@ public class HHQuoteScenarios extends DwpScenario {
             notNullValue());
     }
 
-    @And("^I don't detect any price sheet alerts$")
+    @And("^No price sheet alerts popped up$")
     public void verifySelectTariffSheetAndPackage() throws Throwable {
         assertThat("Failure. Tariff sheet alerts were generated although they were not expected.", true,
             is(new VerifyTariffSheetPriceAlert().test(this)));
 
     }
 
-    @And("^I select product \"([^\"]*)\":$")
-    public void i_select_product(String product) throws Throwable {
-    }
-    @And("^I fill in the electricity and gas meter numbers and their EANs respectively:$")
+    @And("^Electricity and gas meter numbers and their EANs are:$")
     public void selectMeterIdAndEan(final DataTable connectionTable) throws Throwable {
         List<ConnectionDetails> list = connectionTable.asList(ConnectionDetails.class);
         ConnectionDetails electricityConnectionDetails = list.get(0);
@@ -214,39 +141,91 @@ public class HHQuoteScenarios extends DwpScenario {
         connectionDetailsView.setGasConnectionDetails(gasConnectionDetails);
         connectionDetailsView.fillInInputValues();
     }
-    @And("^I optionally ([^\"]*) the ([^\"]*) meter$")
-    public void setMeterState(final CheckBoxState meterState, final ProductType productType) throws Throwable {
+
+    @And("^The ([^\"]*) meter is ([^\"]*)$")
+    public void setMeterState(final ProductType productType, final CheckBoxState meterState) throws Throwable {
         ConnectionDetailsView connectionDetailsView = new ConnectionDetailsView(webDriver);
         connectionDetailsView.openMeter(productType, meterState);
     }
 
-    @And("^I confirm Connection details$")
-    public void confirmConnectionDetails() throws Throwable {
-
+    @And("^I confirm \"([^\"]*)\" details$")
+    public void confirmConnectionDetails(String viewName) throws Throwable {
         ConnectionDetailsView connectionDetailsView = new ConnectionDetailsView(webDriver);
         CreateQuoteStepView next = connectionDetailsView.next();
         assertThat("Failure filling in connection details, check up the log.", next,
             notNullValue());
     }
 
-    @And("^I select payment method ([^\"]*) for IBAN \"([^\"]*)\" and bic \"([^\"]*)\":$")
+    @And("^Payment details are: method: ([^\"]*), IBAN: \"([^\"]*)\" and bic: \"([^\"]*)\":$")
     public void selectPaymentMethod(PaymentMethod paymetnMethod, String iban, String bic) throws Throwable {
         BillingInformation billingInfo = new BillingInformation(paymetnMethod, iban, bic);
-        assertThat("Failure when initializing the payment, BIC and EBAN. +", true,
-            is(new InitializeBillingDetails().test(billingInfo)));
+        BillingDetailsView billingDetailsView = new BillingDetailsView(webDriver);
+        billingDetailsView.setBillingInformation(billingInfo);
+        billingDetailsView.fillInInputValues();
+        CreateQuoteStepView createQuoteStepView = billingDetailsView.next();
+
+        assertThat("Failure when initializing the payment, BIC and EBAN. +", createQuoteStepView,
+            notNullValue());
+
     }
 
-    @And("^I sign on date ([^\"]*) in location \"([^\"]*)\" with file \"([^\"]*)\":$")
+    @InputParameter(name = "customer")
+    private CustomerTable quoteCustomer;
+
+    @And("^Signing contract on date: ([^\"]*) in \"([^\"]*)\" with hand signature file \"([^\"]*)\":$")
     public void submitSignature(DwpDateFormats date, String location, String filePath) throws Throwable {
         String path = ResourceUtils.toPath(filePath);
         File document = new File(path);
         assertThat("File at path " + document.getAbsolutePath() + " doesn't exist.", true,
             is(document.exists()));
-        SignatureData signature = new SignatureData(date, location, path);
+        SignatureData signature = new SignatureData(quoteCustomer.getFirstName(),
+            quoteCustomer.getLastName(),
+            date,
+            location,
+            path);
+        QuoteOverviewView quoteOverviewView = new QuoteOverviewView(webDriver);
+        quoteOverviewView.setSignatureData(signature);
+        quoteOverviewView.fillInInputValues();
+        quoteOverviewView.next();
+    }
 
-        assertThat("Failure when initializing the signature or uploading the signature file.", true,
-            is(new SignUp().test(signature)));
+    @Then("^Redirect view is \"([^\"]*)\" with first name: \"([^\"]*)\" and last name: \"([^\"]*)\" customer details entry$")
+    public void iAmRedirectedToAnAccountPageThatHasCardWithAndCustomerDetails(String redirectView, String firstName, String lastName) throws Throwable {
+        String input[] = {firstName, lastName},
+               customerFirstName = null,
+               customerLastName = null,
+               customerDetails[] = new String[2];
+        for(int i = 0; i < customerDetails.length; i++) {
+            try {
+                customerDetails[i] = (String)checkFieldAccess(input[i], quoteCustomer);
+            } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException | IllegalArgumentException e) {
+                throw new CucumberException("Customer details did not contain " + firstName + " data field.");
+            }
+        }
+        customerFirstName = customerDetails[0];
+        customerLastName = customerDetails[1];
+        assertThat(customerFirstName, notNullValue());
+        assertThat(customerLastName, notNullValue());
 
+        AccountCard customerAccountCard = new AccountCardImpl(webDriver);
+        assertThat(String.format("Customer first name '%s' and last name '%s' were not found on the current web page", customerFirstName, customerLastName),
+            customerAccountCard.containsFirstAndLastName(customerFirstName, customerLastName), is(true));
+    }
+
+    @When("^I select the ([^\"]*) element and click the link in the \"([^\"]*)\" column$")
+    public void iSelectTheStElementAndClickOnTheLinkInTheAccountNumberNameColumn(String ordinal, String column) throws Throwable {
+        //int position = Integer.parseInt(ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", ""));
+        Map<String, String> options = new HashMap<>();
+        options.put("column", column);
+        Map result = executeJavascriptMethod("TrGetColumnIndexList", options);
+        boolean testResult = BooleanUtils.toBoolean((String) result.get("status"), "PASSED", "FAILED");
+        assertThat(testResult, is(true));
+    }
+
+    @And("^A quote with type \"([^\"]*)\" and status \"([^\"]*)\" is created$")
+    public void aQuoteWithTypeAndStatusIsCreated(String arg0, String arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
     }
 
     @Then("^I click on Home button, optionally dismissing the alert$")
@@ -254,12 +233,11 @@ public class HHQuoteScenarios extends DwpScenario {
 
     }
 
-    @InputParameter(name = "customer")
-    private String quotedName;
+
     @Then("^A signed quote is created of type \"([^\"]*)\" and status \"([^\"]*)\" and shown in an account for \"([^\"]*)\" with ([0-9]+) products:$")
     public void a_signed_quote_is_created_for_an_account_with_products(String type, String status, String accountName, String nrOfProducts) throws Throwable {
         Model.Execution execution = new Model.Execution();
-       // this.initializeFlowElements(execution);
+        // this.initializeFlowElements(execution);
         Model.Flow aSignedQuoteIsCreated = execution.flow();
 
         execution.element("DWP_QUOTEOVERVIEW_ACCOUNT_HEADER", new Model.Element().search("XPATH").query("//h1[1][text()='" + accountName + "']"));
