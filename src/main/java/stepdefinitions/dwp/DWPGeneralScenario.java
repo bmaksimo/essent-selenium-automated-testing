@@ -124,6 +124,7 @@ public class DWPGeneralScenario extends DwpScenario {
         retrieveAndInitUserLanguage();
         Window application = login.login(role.getUsername(), role.getPassword());
         retrieveAndInitUserLanguage();
+        System.out.println("=================================test");
         assertNotNull("DWP application did not appear after a login", application);
     }
 
