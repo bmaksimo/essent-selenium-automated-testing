@@ -11,7 +11,6 @@ TestRunner.prototype.get_overview_menu_index
     };
     setTimeout(function () {
         let element = $('.blue-sidebar .icon-nav a small:contains(' + options.menu + ')').parent();
-        console.log(element.length);
         if(element.length == 0) {
             response.result.status = 'FAILED';
             response.result.reason = 'Object ' + option.menu + ' was not found';
@@ -21,6 +20,5 @@ TestRunner.prototype.get_overview_menu_index
         if (callback) {
             callback(response);
         }
-        console.log(options);
     }, 5000);
 }

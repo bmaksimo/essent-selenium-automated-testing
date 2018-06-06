@@ -163,7 +163,6 @@ public class AngularSeleniumPage extends SeleniumPage {
                 id = id.replaceFirst("formly_[0-9]+_","");
                 // remove the trailing number
                 id = id.replaceAll("_[0-9]$","");
-                System.out.println("temp.put(\"" + id  +"\",\"\");");     // for getting id of each element);
             }
 
         }

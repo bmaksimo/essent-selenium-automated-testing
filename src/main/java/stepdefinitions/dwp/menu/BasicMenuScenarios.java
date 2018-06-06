@@ -111,6 +111,12 @@ public class BasicMenuScenarios extends NavigationElements {
         super.i_Click_on_Top_Menu_Items(leftMenuSelection, menuItems);
     }
 
+    @When("^I click on '(.*)' Top Menu item$")
+    public void i_Click_on_Top_Menu_Item(UpperMenuItems upperMenuItem) throws Throwable {
+        logger().info("Upper menu for " + upperMenuItem);
+        super.i_Click_on_Top_Menu_Item(upperMenuItem);
+    }
+
     @When("^Left Menu Item '(.*)' is made active$")
     public void left_Menu_Item_is_made_active(DwpLeftMenu leftMenuSelection) throws Throwable {
         super.visitLeftMenuItem(leftMenuSelection);
