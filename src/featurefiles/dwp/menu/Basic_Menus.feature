@@ -5,7 +5,7 @@
 Feature: DWP UI: Menu structure, specific menu items
 
     Background:
-        Given I logged in as admin on the DWP Main Page
+        Given I logged in as ESSENT_ADMIN on the DWP Main Page
         Given I optionally discard a previous flow:
 
     Scenario: We can click the left menu items and access the corresponding top menus

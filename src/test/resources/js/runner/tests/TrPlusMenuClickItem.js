@@ -1,23 +1,17 @@
-class TrPlusMenuClickItem extends TestRunnerBase {
+class TrPlusMenuClickItem extends TestRunnerDwp {
 
     /**
      * Checks if a menu-item is present in the DOM
      *
      * * @param {object} options - Arguments passed from Java.
      * * @param {function} callback - The Java callback that handles the result.
-     *
-     * Java example:
-     * assertThat(executeJsTest("new TrMenuHasLinkId({menu: 'mainMenu', linkId: 'sales-marketing-link', arguments[arguments.length - 1]);", link), is(true));
      */
 
     constructor(options, callback) {
         super(options, callback, 100);
-
     }
 
-    run() {
-        let result = this.result;
-        let options = this.options;
+    run(options, result) {
         if(!$("div[class='top-actions'] > .icon-plus.is-active").size()) {
             $("div[class='top-actions'] > .icon-plus").trigger('click');
         }
@@ -31,4 +25,5 @@ class TrPlusMenuClickItem extends TestRunnerBase {
             this.resolveCallback(result);
         }, 200);
     }
+
 }

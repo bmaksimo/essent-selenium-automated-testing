@@ -5,7 +5,7 @@
 Feature: DWP UI: Filter Elements
 
     Background:
-        Given I logged in as admin on the DWP Main Page
+        Given I logged in as ESSENT_ADMIN on the DWP Main Page
         Given I optionally discard a previous flow:
 
     Scenario: We see all Billing Main Menu Filter elements

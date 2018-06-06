@@ -123,6 +123,13 @@ public abstract class NavigationElements extends DwpScenario  {
             success, is(true));
     }
 
+    protected void i_Click_on_Top_Menu_Item(UpperMenuItems upperMenuItem) throws Throwable {
+        TopMenu.Item item = UpperMenuItems.getTopMenu().getItem(upperMenuItem.name());
+        boolean success = new VisitTopItem().test(item);
+        assertThat(String.format("Upper Menu item %s was not visited", upperMenuItem.name()),
+            success, is(true));
+    }
+
     protected void i_Click_on_Top_Menu_Item(DwpLeftMenu leftMenuSelection, String menuItem) throws Throwable {
 
         TopMenu topMenu = menu.get(leftMenuSelection);
