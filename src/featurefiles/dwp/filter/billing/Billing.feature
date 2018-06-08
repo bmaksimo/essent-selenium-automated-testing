@@ -5,23 +5,27 @@
 Feature: DWP UI: Filter Elements
 
     Background:
-        Given I logged in as ESSENT_ADMIN on the DWP Main Page
+        Given I logged in in DWP as essentadmin
         Given I optionally discard a previous flow:
 
-    Scenario: We see all Billing Main Menu Filter elements
-        When I check filter elements defined for Left Menu item: 'BILLING'
+    Scenario: Checking if filter elements, defined for "Billing" Left Tab, are available
+        When Left Menu Item is Billing
+        Then Available filter elements are:
             |Task number|
             |Task ID|
 
-    Scenario: We see all Billing -> 'BILLING' Filter elements
-        When I click on the following Left Menu item: 'BILLING'
-        Then I check filter elements defined for 'BILLING' Left Menu Item and 'ACCOUNTS_LIST' Top Menu Item
+    Scenario: Checking whether filter elements, defined for each Left Tab -> Top Tab combination, are available
+        When Left Menu Item is Billing
+        And  Top Menu Item is My Accounts
+        Then Available filter elements are:
             |EAN|
             |Account number|
-        And  I check filter elements defined for 'BILLING' Left Menu Item and 'CONTRACT_LIST' Top Menu Item
+        When Top Menu Item is Contracts
+        Then Available filter elements are:
             |Contract number|
             |Delivery address street|
-        And  I check filter elements defined for 'BILLING' Left Menu Item and 'CASES' Top Menu Item
+        When Top Menu Item is Cases
+        Then Available filter elements are:
             |Case number|
             |Status|
             |Priority|

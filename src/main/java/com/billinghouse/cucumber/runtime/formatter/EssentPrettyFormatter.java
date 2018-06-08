@@ -2,8 +2,8 @@ package com.billinghouse.cucumber.runtime.formatter;
 
 import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
 import com.billinghouse.cucumber.runtime.parameter.ParameterProvider;
-import com.billinghouse.cucumber.runtime.scenario.ActiveScenarioProvider;
 import com.billinghouse.cucumber.runtime.parameter.ParametersUtil;
+import com.billinghouse.cucumber.runtime.scenario.ActiveScenarioProvider;
 import com.essent.testing.dwp.DwpScenario;
 import cucumber.runtime.CucumberException;
 import cucumber.runtime.formatter.ColorAware;

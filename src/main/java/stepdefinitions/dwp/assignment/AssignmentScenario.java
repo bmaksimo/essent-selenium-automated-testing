@@ -1,9 +1,9 @@
 package stepdefinitions.dwp.assignment;
 
+import com.billinghouse.javascript.testrunner.dwp.menu.MenuTests;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
-import com.billinghouse.javascript.testrunner.dwp.menu.MenuTests;
 import com.essent.testing.dwp.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -22,16 +22,6 @@ public class AssignmentScenario extends DwpScenario {
     @After({"@ASSIGNMENT"})
     public void tearDown() throws Exception {
         tidyUp();
-    }
-
-    @When("^Left Tab is ([^\"]*)$")
-    public void check_left_menu_item(String itemName) throws Throwable {
-        executeJsTest(MenuTests.GET_LEFT_MENU.getTest(), itemName);
-    }
-
-    @When("^Top Tab is ([^\"]*)$")
-    public void check_top_menu_item(String itemName) throws Throwable {
-        executeJsTest(MenuTests.GET_TOP_TAB.getTest(), itemName);
     }
 
 

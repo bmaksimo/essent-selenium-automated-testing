@@ -3,6 +3,10 @@ package com.essent.roles;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Map;
+
 public enum UserRoles {
     ESSENT_ADMIN(ConfigProvider.getProperty(ConfigKey.DWP_USER_ESSENTADMIN), ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD)),
     SERVICE_DESK_B2B(ConfigProvider.getProperty(ConfigKey.DWP_USER_SERVICEDESK_B2B), ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_SERVICEDESK_B2B)),
@@ -16,11 +20,25 @@ public enum UserRoles {
         this.password = password;
     }
 
+    private static final Map<String, UserRoles> lookup = new HashMap<>();
+    static {
+        for(UserRoles role: EnumSet.allOf(UserRoles.class)) {
+            lookup.put(role.username, role);
+        }
+    }
+
     public String getUsername() {
         return username;
     }
 
     public String getPassword() {
         return password;
+    }
+
+    public static UserRoles get(final String userName) {
+        if(!lookup.containsKey(userName)) {
+            throw new IllegalArgumentException(String.format("DWP User name  '%s' undefined", userName));
+        }
+        return lookup.get(userName);
     }
 }

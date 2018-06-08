@@ -1,9 +1,9 @@
 package com.essent.testing.dwp;
 
+import com.billinghouse.cucumber.runtime.scenario.ActiveScenarioProvider;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model.Execution;
 import com.essent.automation.autocrat.Model.Step;
-import com.billinghouse.cucumber.runtime.scenario.ActiveScenarioProvider;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.selenium.SeleniumScenario;
 import com.essent.testing.util.AutocratExecutionAdapter;

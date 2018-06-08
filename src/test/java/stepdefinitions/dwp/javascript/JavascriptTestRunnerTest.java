@@ -6,7 +6,7 @@ import com.billinghouse.javascript.testrunner.dwp.menu.MenuTests;
 import com.billinghouse.javascript.testrunner.dwp.views.TitleTests;
 import com.essent.testing.dwp.DwpScenario;
 import com.essent.testing.dwp.menu.model.DwpLeftMenu;
-import com.essent.testing.dwp.menu.model.UpperMenuItems;
+import com.essent.testing.dwp.menu.model.TopMenuItems;
 import com.essent.testing.util.ResourceUtils;
 import com.google.gson.Gson;
 import cucumber.api.Scenario;
@@ -62,14 +62,14 @@ public class JavascriptTestRunnerTest extends DwpScenario {
 
         //Test Upper Item - Markettransactions - Dashboard
         TrMenuHasLinkIdOptions options = new TrMenuHasLinkIdOptions();
-        options.setLinkId(UpperMenuItems.MARKETTRANSACTIONS_DASHBOARD.getLink());
+        options.setLinkId(TopMenuItems.MARKETTRANSACTIONS_DASHBOARD.getLink());
         options.setMenu("subMenu");
         Map result = executeJavascriptMethod("TrMenuHasLinkId", options);
 
         //Evaluate XPATH
         final String TOP_MENU_ITEM_QUERY = "//div[@class='top-menu']/sub-menu/sub-menu-link/a[@id='{link}']";
         Map<String, String> xpathOptions = new HashMap<>();
-        xpathOptions.put("xpath", TOP_MENU_ITEM_QUERY.replace("{link}", UpperMenuItems.MARKETTRANSACTIONS_DASHBOARD.getLink()));
+        xpathOptions.put("xpath", TOP_MENU_ITEM_QUERY.replace("{link}", TopMenuItems.MARKETTRANSACTIONS_DASHBOARD.getLink()));
         result = executeJavascriptMethod("TrEvaluateXpath", xpathOptions);
 
         assertThat(executeJavascriptTest("TrMenuHasLinkId",
