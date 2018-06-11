@@ -13,7 +13,6 @@ TestRunner.prototype.get_top_action = function (id, options, callback) {
         function () {
             let a = false;
             $('.top-actions').children('a').each(function(index, element) {
-                console.log($(this));
                 if(options.menu != $(this).attr('name')) {
                     return;
                 } else {
