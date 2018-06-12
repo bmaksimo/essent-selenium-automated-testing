@@ -1,4 +1,4 @@
-TestRunner.prototype.get_top_tab = function (id, options, callback) {
+TestRunner.prototype.get_top_action = function (id, options, callback) {
     var self = this;
     var response = {
         id: id,
@@ -8,22 +8,21 @@ TestRunner.prototype.get_top_tab = function (id, options, callback) {
             reason: 'Not executed'
         }
     };
+
     setTimeout(
         function () {
             let a = false;
-            $('.top-menu sub-menu').children('sub-menu-link').each(function(index, element) {
-                if(options.menu != $(this).attr('label')) {
+            $('.top-actions').children('a').each(function(index, element) {
+                if(options.menu != $(this).attr('name')) {
                     return;
                 } else {
-                     e = $(this);
-                     a = true;
+                    e = $(this);
+                    a = true;
                 }
             });
 
-            console.log(e);
-
             if(a == true) {
-                e.find('a').trigger('click');
+                e.trigger('click');
                 response.result.status = 'PASSED';
             } else {
                 response.result.status = 'FAILED';

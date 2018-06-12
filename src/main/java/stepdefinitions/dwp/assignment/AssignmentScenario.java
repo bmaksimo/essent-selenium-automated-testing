@@ -47,9 +47,9 @@ public class AssignmentScenario extends DwpScenario {
         executeJsTest(MenuTests.GET_OVERVIEW_MENU_INDEX.getTest(), menuItem);
     }
 
-    @When("^Top Action is ([^\"]*)")
+    @When("^Top Action is ([^\"]*)$")
     public void check_top_action(String itemName) throws Throwable {
-        executeJsTest(MenuTests.GET_TOP_MENU.getTest(), itemName);
+        executeJsTest(MenuTests.GET_TOP_ACTION.getTest(), itemName);
     }
 
     @When("^Plus Menu is ([^\"]*)")

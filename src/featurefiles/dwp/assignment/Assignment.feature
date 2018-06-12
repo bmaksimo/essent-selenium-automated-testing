@@ -3,9 +3,8 @@
 Feature: Working with assignments
 
     Scenario: I create a new assignment
-
         Given I logged in as ESSENT_ADMIN on the DWP Main Page
-        When Left Tab is Sales marketing
+        When Left Tab is Billing
         And Top Tab is Accounts
         And Select the 1st element and click on the link in the Account Number & Name column
         And Overview is Details
