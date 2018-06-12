@@ -5,25 +5,31 @@
 Feature: DWP UI: Menu structure, specific menu items
 
     Background:
-        Given I logged in as ESSENT_ADMIN on the DWP Main Page
+        Given I logged in in DWP as essentadmin
         Given I optionally discard a previous flow:
 
     Scenario: Upper menu items are available for Left Menu Item
-        When Left Menu Item 'SALES_MARKETING' is made active
+        Given Available Left Menu items are:
+            | Sales Marketing       |
+            | Contracting Switching |
+            | Billing               |
+            | Credit Management     |
+            | Finance               |
+            | Service               |
+            | Ess                   |
+            | Admin                 |
+        And Left Menu Item is Sales Marketing
         Then Content page contains title 'Quotation - Group tasks'
-        And The following Top Menu Items are available:
-          #  | SALES_MARKETING_QUOTATION_TASKS|
-            | MARKETTRANSACTIONS_DASHBOARD|
-            |LEAD_LIST|
-            |MY_ACCOUNTS_LIST|
-            |ACCOUNTS_LIST|
-            |QUOTES_LIST|
-            |CONTRACT_LIST|
-            |PRICING_TOOL_DASHBOARD|
-            |CAMPAIGN_LIST|
-            |EUROCCOR_QUOTES|
-            |CASES|
-        And These Plus menu items are available at the following positions:
+        And Available Top Menu Items are:
+            | Market Transactions |
+            | Leads               |
+            | My Accounts         |
+            | Accounts            |
+            | Quotes              |
+            | Contracts           |
+            | Pricing tool        |
+            | Campaigns           |
+            | Euroccor Quotes     |
+        And The following Plus menu items are available at positions:
             |position|item|
             |4       |BILLING    |
-        And I click on 'CONTRACT_LIST' Top Menu item

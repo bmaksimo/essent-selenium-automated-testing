@@ -1,10 +1,10 @@
 package stepdefinitions.dwp;
 
+import com.billinghouse.javascript.model.options.TrGetUserLanguageOptions;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
 import com.essent.automation.autocrat.Model.Flow;
-import com.billinghouse.javascript.model.options.TrGetUserLanguageOptions;
 import com.essent.roles.UserRoles;
 import com.essent.testing.dwp.DwpScenario;
 import com.essent.testing.dwp.pageobject.Window;
@@ -117,12 +117,13 @@ public class DWPGeneralScenario extends DwpScenario {
         injectJavaScriptTestRunner();
     }
 
-    @Given("^I logged in as ([^\"]*) on the DWP Main Page$")
-    public void loginAs(UserRoles role) throws Throwable {
+    @Given("^I logged in in DWP as ([^\"]*)$")
+    public void loginAs(String userName) throws Throwable {
         LoginDialog login = new LoginDialog(webDriver);
         injectJavaScriptTestRunner();
         retrieveAndInitUserLanguage();
-        Window application = login.login(role.getUsername(), role.getPassword());
+        UserRoles dwpUser = UserRoles.get(userName);
+        Window application = login.login(dwpUser.getUsername(), dwpUser.getPassword());
         retrieveAndInitUserLanguage();
         assertNotNull("DWP application did not appear after a login", application);
     }
@@ -140,35 +141,8 @@ public class DWPGeneralScenario extends DwpScenario {
         }
     }
 
-    @Given("I logged in as admin on the DWP Sales")
-    public void I_logged_in_as_admin_on_the_DWP() throws Throwable {
-
-        Model.Execution execution = new Model.Execution();
-        execution.variable("DWP_USER", DWP_USER_ESSENTADMIN);
-        execution.variable("DWP_PASS", DWP_PASSWORD);
-        execution.element("DWP_USER", new Model.Element().search("ID").query("username"));
-        execution.element("DWP_PASS", new Model.Element().search("ID").query("password"));
-        execution.element("DWP_LOGIN",
-            new Model.Element().search("SELECTOR").query(".form__footer > .button"));
-        execution.element("ACCOUNTS_LIST",
-            new Model.Element().search("SELECTOR").query(".main-content list[list-key='Accounts']"));
-        Autocrat.ExecutionContext context =
-            new Autocrat.ExecutionContext(webDriver.getDriver(), execution);
-        Flow flow = new Flow();
-        flow.steps(
-            new Model.Step().action(Action.GOTO)
-                .value(BASE_URL + "sales-marketing/dashboard/accounts_list/"),
-            new Model.Step().action(Action.TYPING).element("DWP_USER_ESSENTADMIN").value("{{VAR:DWP_USER_ESSENTADMIN}}"),
-            new Model.Step().action(Action.TYPING).element("DWP_PASS").value("{{VAR:DWP_PASS}}"),
-            new Model.Step().action(Action.CLICK).element("DWP_LOGIN"),
-            new Model.Step().action(Action.REQUIRE_ABSENT).element("DWP_LOGIN"));
-        // ,new Model.Step().action(Action.REQUIRE).element("ACCOUNTS_LIST").timeoutInSeconds(3.5));
-        Autocrat.executeFlow(context, flow);
-
-    }
-
     @Given("^I optionally discard a previous flow:$")
-    public void i_optionally_discard_a_previous_flow() throws Throwable {
+    public void discardPreviousFlow() throws Throwable {
         Model.Execution execution = new Model.Execution();
         execution.element("DWP_MODAL_CANCEL",
             new Model.Element().search("SELECTOR").query("#cancel-button"));

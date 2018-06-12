@@ -5,7 +5,7 @@
 Feature: Creating a B2C Quote - moveIn
 
   Background:
-      Given I logged in as ESSENT_ADMIN on the DWP Main Page
+      Given I logged in in DWP as essentadmin
       Given I optionally discard a previous flow:
 
   Scenario: We can create a B2C Quote

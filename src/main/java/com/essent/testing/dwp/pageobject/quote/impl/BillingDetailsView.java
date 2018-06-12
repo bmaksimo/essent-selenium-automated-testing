@@ -14,16 +14,12 @@ import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.tables.BillingInformation;
 import stepdefinitions.dwp.tables.PaymentMethod;
 
-import static com.essent.testing.dwp.DwpTimingParameters.INPUT;
-import static com.essent.testing.dwp.DwpTimingParameters.NEXT_STEP;
-import static com.essent.testing.dwp.DwpTimingParameters.WAIT_NEXT_PAGE;
+import static com.essent.testing.dwp.DwpTimingParameters.*;
 import static com.essent.testing.dwp.elements.BasicElements.NEXT_BUTTON;
 import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.TITLE_SELECTOR_TEMPLATE;
 import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.VIEW_SELECTOR;
 import static com.essent.testing.dwp.quote.elements.B2CQuoteElements.SIGNATURE_OPTIONS_ACTIVE;
-import static com.essent.testing.dwp.quote.elements.BillingElements.PAYMENT_BIC;
-import static com.essent.testing.dwp.quote.elements.BillingElements.PAYMENT_IBAN;
-import static com.essent.testing.dwp.quote.elements.BillingElements.PAYMENT_METHOD;
+import static com.essent.testing.dwp.quote.elements.BillingElements.*;
 
 public class BillingDetailsView extends Component implements CreateQuoteView, CreateQuoteStepView {
 

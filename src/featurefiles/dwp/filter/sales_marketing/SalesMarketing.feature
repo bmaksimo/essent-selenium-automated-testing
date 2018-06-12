@@ -5,16 +5,19 @@
 Feature: DWP Filter Options
 
     Background:
-        Given I logged in as ESSENT_ADMIN on the DWP Main Page
+        Given I logged in in DWP as essentadmin
         Given I optionally discard a previous flow:
 
-    Scenario: We see all Sales And Marketing Main Menu Filter elements
-       When I check filter elements defined for Left Menu item: 'SALES_MARKETING'
+    Scenario: Checking if filter elements, defined for Sales Marketing Left Tab, are available
+        When Left Menu Item is Sales Marketing
+        Then Available filter elements are:
            |Number|
            |Name|
-    Scenario: We see all Sales And Marketing -> 'MARKETTRANSACTIONS_DASHBOARD' Filter elements
-        When I click on the following Left Menu item: 'SALES_MARKETING'
-        Then I check filter elements defined for 'SALES_MARKETING' Left Menu Item and 'MARKETTRANSACTIONS_DASHBOARD' Top Menu Item
+
+    Scenario: Checking whether Filter elements, defined for each Left Tab -> Top Tab combination, are available
+        Given Left Menu Item is Sales Marketing
+        When Top Menu Item is Market Transactions
+        Then Available filter elements are:
             |EAN|
             |Process ID|
             |Parent process ID|
@@ -35,20 +38,27 @@ Feature: DWP Filter Options
             |Effective date before|
             |Created after|
             |Created before|
-        And I check filter elements defined for 'SALES_MARKETING' Left Menu Item and 'LEAD_LIST' Top Menu Item
+        When Top Menu Item is Leads
+        Then Available filter elements are:
             |Company name|
             |Only "do not call"|
-        And  I check filter elements defined for 'SALES_MARKETING' Left Menu Item and 'MY_ACCOUNTS_LIST' Top Menu Item
+        When Top Menu Item is My Accounts
+        Then  Available filter elements are:
             |EAN|
-        And  I check filter elements defined for 'SALES_MARKETING' Left Menu Item and 'ACCOUNTS_LIST' Top Menu Item
+        When Top Menu Item is Accounts
+        Then Available filter elements are:
             |EAN|
-        And  I check filter elements defined for 'SALES_MARKETING' Left Menu Item and 'QUOTES_LIST' Top Menu Item
+        When Top Menu Item is Quotes
+        Then Available filter elements are:
             |Quote number|
-        And  I check filter elements defined for 'SALES_MARKETING' Left Menu Item and 'CONTRACT_LIST' Top Menu Item
+        When Top Menu Item is Contracts
+        Then Available filter elements are:
             |Contract number|
-        And  I check filter elements defined for 'SALES_MARKETING' Left Menu Item and 'EUROCCOR_QUOTES' Top Menu Item
+        When Top Menu Item is Euroccor Quotes
+        Then Available filter elements are:
             |Quote number|
-        And  I check filter elements defined for 'SALES_MARKETING' Left Menu Item and 'CASES' Top Menu Item
+        When Top Menu Item is Cases
+        Then Available filter elements are:
             |Case number|
 
 

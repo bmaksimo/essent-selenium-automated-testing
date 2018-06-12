@@ -18,7 +18,6 @@ import static com.essent.testing.dwp.elements.BasicElements.NEXT_BUTTON;
 import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.TITLE_SELECTOR_TEMPLATE;
 import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.VIEW_SELECTOR;
 import static com.essent.testing.dwp.quote.elements.SignatureElements.*;
-import static com.essent.testing.dwp.account.elements.Elements.*;
 
 public class QuoteOverviewView extends Component implements CreateQuoteView, CreateQuoteStepView {
 

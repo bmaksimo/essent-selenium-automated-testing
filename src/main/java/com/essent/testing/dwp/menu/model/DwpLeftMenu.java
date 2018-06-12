@@ -33,13 +33,15 @@ public enum DwpLeftMenu {
     private static final Map<String, DwpLeftMenu> lookup = new HashMap<>();
 
     static {
-        for (DwpLeftMenu d : EnumSet.allOf(DwpLeftMenu.class)) {
+        for (DwpLeftMenu d: EnumSet.allOf(DwpLeftMenu.class)) {
             lookup.put(d.getLabel(), d);
         }
-
     }
 
     public static DwpLeftMenu get(String label) {
+        if(!lookup.containsKey(label)) {
+            throw new IllegalArgumentException(String.format("DWP Left Menu Tab '%s' undefined", label));
+        }
         return lookup.get(label);
     }
 }

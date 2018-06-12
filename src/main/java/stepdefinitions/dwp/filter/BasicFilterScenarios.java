@@ -3,7 +3,6 @@ package stepdefinitions.dwp.filter;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.testing.dwp.model.FilterElementConverter;
-import com.essent.testing.dwp.menu.model.DwpLeftMenu;
 import cucumber.api.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -46,7 +45,7 @@ public class BasicFilterScenarios extends NavigationElements {
         }
     }
 
-    private class VerifyLeftItemFilterElements implements Function<DataTable, List<String>> {
+    private class VerifyFilterElements implements Function<DataTable, List<String>> {
         @Override
         public List<String> apply(DataTable filterElements) {
             List<Model.Element> elements = FilterElementConverter.get().getElements(filterElements);
@@ -61,22 +60,6 @@ public class BasicFilterScenarios extends NavigationElements {
         }
     }
 
-    private class VerifyTopItemFilterElements implements Function<DataTable, List<String>> {
-
-        @Override
-        public List<String> apply(DataTable filterElements) {
-            List<Model.Element> elements = FilterElementConverter.get().getElements(filterElements);
-
-            List<String> failures = elements.stream().filter(element ->
-            {   Model.Execution execution = newExecution().element("LABEL", element);
-                execution.flow().step((new Model.Step().action(REQUIRE).element("LABEL")));
-                return !execute(webDriver.getDriver(), execution);
-            }).map(element -> { return element.getName() + ", " + element.query;}).collect(Collectors.toList());
-            return failures;
-        }
-
-    }
-
 
     @When("^I click on the filter button$")
     public void i_click_on_filter_button() throws Throwable {
@@ -87,30 +70,14 @@ public class BasicFilterScenarios extends NavigationElements {
 
     }
 
-    @When("^I check filter elements defined for '(.*)' Left Menu Item and '(.*)' Top Menu Item$")
-    public void i_Check_Top_Item_Filter_Elements(DwpLeftMenu leftMenuSelection, String menuItem, DataTable elements) throws Throwable {
-        super.i_Click_on_Top_Menu_Item(leftMenuSelection, menuItem);
+    @When("^Available filter elements are:$")
+    public void visitLeftMenuItemFilter(DataTable filterElements) throws Throwable {
         TogggleFilterMode togggleFilterMode = new TogggleFilterMode();
         togggleFilterMode.test(this);
-        List<String> failedElements = new  VerifyTopItemFilterElements().apply(elements);
-        boolean success = failedElements.isEmpty();
-        togggleFilterMode.test(this);
-        assertThat(String.format("Check Filter options for '%s'->'%s' menu item failed. Elements: {%s} were not found.",
-            leftMenuSelection,
-            menuItem,
-            StringUtils.join(failedElements, ";")), success, is(true));
-    }
-
-    @When("^I check filter elements defined for Left Menu item: '(.*)'$")
-    public void visitLeftMenuItem(DwpLeftMenu leftMenuSelection, DataTable filterElements) throws Throwable {
-        super.visitLeftMenuItem(leftMenuSelection);
-        TogggleFilterMode togggleFilterMode = new TogggleFilterMode();
-        togggleFilterMode.test(this);
-        List<String> failingElements = new VerifyLeftItemFilterElements().apply(filterElements);
+        List<String> failingElements = new VerifyFilterElements().apply(filterElements);
         boolean success = failingElements.isEmpty();
         togggleFilterMode.test(this);
-        assertThat(String.format("Check Filter options for '%s' main menu failed. Elements: {%s} were not found.",
-            leftMenuSelection,
+        assertThat(String.format("Filter elements: {%s} were not available.",
             StringUtils.join(failingElements, ";")), success, is(true));
     }
 
