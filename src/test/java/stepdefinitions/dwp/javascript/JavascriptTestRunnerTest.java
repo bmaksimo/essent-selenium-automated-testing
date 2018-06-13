@@ -56,15 +56,22 @@ public class JavascriptTestRunnerTest extends DwpScenario {
     @When("^I smoke test all Javascript functions$")
     public void iRunAllJavascriptFunctions() throws Throwable {
 
-        //Test Left Item - Billing
-        DwpLeftMenu item = DwpLeftMenu.get("Billing");
-        assertThat(executeJsTest(MenuTests.LEFT_MENU_ITEM_TEST.getTest(),  item.getMenuItemLink()), is(true));
+        // new preferred simpler syntax: Test Upper Item - Markettransactions - Dashboard
+        Map jsOptions = new HashMap();
+        jsOptions.put("menu", "mainMenu");
+        jsOptions.put("linkId", "sales-marketing-link");
+        Map testResult = executeJavascriptMethod("TrMenuHasLinkId", jsOptions);
 
-        //Test Upper Item - Markettransactions - Dashboard
+        // old complicated syntax: Test Upper Item - Markettransactions - Dashboard
         TrMenuHasLinkIdOptions options = new TrMenuHasLinkIdOptions();
         options.setLinkId(TopMenuItems.MARKETTRANSACTIONS_DASHBOARD.getLink());
         options.setMenu("subMenu");
         Map result = executeJavascriptMethod("TrMenuHasLinkId", options);
+        assertThat(executeJavascriptTest("TrMenuHasLinkId",
+            options), is(true));
+
+        // get application state
+        result = executeJavascriptMethod("TrGetApplicationState", null);
 
         //Evaluate XPATH
         final String TOP_MENU_ITEM_QUERY = "//div[@class='top-menu']/sub-menu/sub-menu-link/a[@id='{link}']";
@@ -72,8 +79,13 @@ public class JavascriptTestRunnerTest extends DwpScenario {
         xpathOptions.put("xpath", TOP_MENU_ITEM_QUERY.replace("{link}", TopMenuItems.MARKETTRANSACTIONS_DASHBOARD.getLink()));
         result = executeJavascriptMethod("TrEvaluateXpath", xpathOptions);
 
-        assertThat(executeJavascriptTest("TrMenuHasLinkId",
-            options), is(true));
+
+
+        // deprecated: function based
+
+        //Test Left Item - Billing
+        DwpLeftMenu item = DwpLeftMenu.get("Billing");
+        assertThat(executeJsTest(MenuTests.LEFT_MENU_ITEM_TEST.getTest(),  item.getMenuItemLink()), is(true));
 
         //Test Contents Title
         int sec = 5;
