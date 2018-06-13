@@ -1,9 +1,9 @@
 package com.essent.testing.dwp.menu.model;
 
-import com.essent.testing.dwp.menu.model.impl.TopMenuImpl;
-import com.essent.testing.dwp.pageobject.menu.Menu;
+import java.util.HashMap;
+import java.util.Map;
 
-public enum UpperMenuItems {
+public enum TopMenuItems {
     FAILED_JOBS("Failed jobs", "failed-jobs-link"),
     JOB_LOG("Job Log", "job-log-link"),
     DGO_DASHBOARD("DGO/Supplier/BRP", "dgo-dashboard-link"),
@@ -96,21 +96,26 @@ public enum UpperMenuItems {
     CONDITIONAL_MESSAGES_TEST("Conditional messages test", "conditional-messages-test-link"),
     CONFIGLES_KATYCONFIG("Configles Katy Config", "configles-katyconfig-link");
 
-
     private String label;
     private String link;
 
-    private UpperMenuItems(String label, String dashboardLink) {
+    private TopMenuItems(String label, String dashboardLink) {
         this.label = label;
         this.link = dashboardLink;
     }
 
-    public static TopMenu getTopMenu() {
-        TopMenu menu = new TopMenuImpl();
-        for (UpperMenuItems upperItem : UpperMenuItems.values()) {
-            menu.item(upperItem.name(), new TopMenu.Item(upperItem.getLabel(), upperItem.getLink()));
+    private static final Map<String, TopMenuItems> lookup = new HashMap<>();
+    static {
+        for(TopMenuItems upperMenu: TopMenuItems.values()) {
+            lookup.put(upperMenu.label, upperMenu);
         }
-        return menu;
+    }
+
+    public static TopMenuItems get(String label) {
+        if(!lookup.containsKey(label)) {
+            throw new IllegalArgumentException(String.format("DWP Top Menu Tab '%s' undefined", label));
+        }
+        return lookup.get(label);
     }
 
     public String getLabel() {
@@ -119,5 +124,9 @@ public enum UpperMenuItems {
 
     public String getLink() {
         return link;
+    }
+
+    public TopMenu.Item getItem() {
+        return new TopMenu.Item(label, link);
     }
 }

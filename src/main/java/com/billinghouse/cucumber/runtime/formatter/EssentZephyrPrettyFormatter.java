@@ -1,11 +1,11 @@
 package com.billinghouse.cucumber.runtime.formatter;
 
 import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
-import com.essent.automation.bean.zephyr.*;
 import com.billinghouse.cucumber.runtime.parameter.ParameterProvider;
-import com.billinghouse.cucumber.runtime.scenario.ActiveScenarioProvider;
-import com.essent.automation.service.ZephyrService;
 import com.billinghouse.cucumber.runtime.parameter.ParametersUtil;
+import com.billinghouse.cucumber.runtime.scenario.ActiveScenarioProvider;
+import com.essent.automation.bean.zephyr.*;
+import com.essent.automation.service.ZephyrService;
 import com.essent.testing.dwp.DwpScenario;
 import cucumber.runtime.CucumberException;
 import cucumber.runtime.formatter.ColorAware;

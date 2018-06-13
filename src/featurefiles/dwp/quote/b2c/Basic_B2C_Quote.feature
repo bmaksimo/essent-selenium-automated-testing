@@ -5,7 +5,7 @@
 Feature: Creating a B2C Quote - moveIn
 
   Background:
-      Given I logged in as ESSENT_ADMIN on the DWP Main Page
+      Given I logged in in DWP as essentadmin
       Given I optionally discard a previous flow:
 
   Scenario: We can create a B2C Quote
@@ -30,4 +30,4 @@ Feature: Creating a B2C Quote - moveIn
     And Signing contract on date: DWP_TODAY in "Antwerpen" with hand signature file "/data/dwp/signed-document.pdf":
     Then Redirect view is "Account" with first name: "firstName" and last name: "lastName" customer details entry
     When I select the 1st element and click the link in the "Number & Signed contract nr" column
-    #And A quote with type "Sales" and status "Signed - Accepted" is created
+    Then A quote with type "Sales" and status "Signed - Accepted" is created

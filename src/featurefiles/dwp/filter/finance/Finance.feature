@@ -5,12 +5,13 @@
 Feature: DWP Filter Options
 
     Background:
-        Given I logged in as ESSENT_ADMIN on the DWP Main Page
+        Given I logged in in DWP as essentadmin
         Given I optionally discard a previous flow:
 
-    Scenario: We see all Finance Filter elements
-        When I click on the following Left Menu item: 'FINANCE'
-        Then I check filter elements defined for 'FINANCE' Left Menu Item and 'ACCOUNTS_LIST' Top Menu Item
+    Scenario: Checking whether filter elements, defined for "Finance" Left Menu, are available
+        When Left Menu Item is Finance
+        And  Top Menu Item is Accounts
+        Then Available filter elements are:
         |B2C/B2B|
         |Category|
         |Customer Type|

@@ -15,6 +15,9 @@ import stepdefinitions.dwp.tables.ConnectionDetails;
 import stepdefinitions.dwp.tables.ProductType;
 import stepdefinitions.dwp.tables.plus.CheckBoxState;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static com.essent.testing.dwp.DwpTimingParameters.*;
 import static com.essent.testing.dwp.elements.BasicElements.NEXT_BUTTON;
 import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.TITLE_SELECTOR_TEMPLATE;
@@ -105,10 +108,9 @@ public class ConnectionDetailsView extends Component implements CreateQuoteView,
             default:
                 break;
         }
-        Model.Execution execution = newExecution();
-        execution.element(meterOpenCheckboxElement)
-            .step(createStep(Action.ACCESS).requireDisplayed(false).element(meterOpenCheckboxName).callback(new HideIconOverlays()))
-            .step(createStep(Action.CLICK).requireDisplayed(false).element(meterOpenCheckboxName), TOGGLE_CHECKBOX.getSleepInMillis());
-        return execute(execution);
+        Map<String, String> options = new HashMap<>();
+        options.put("id", meterOpenCheckboxElement.query);
+        boolean result = seleniumDriver.executeJavascriptTest("TrToggleInputState", options);
+        return result;
     }
 }
