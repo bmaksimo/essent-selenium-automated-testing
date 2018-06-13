@@ -41,7 +41,6 @@ rectangle "Atlassian: Zephyr for Jira Cloud" as zephyr {
 }
 }
 
-
 'Testing Landscape
 rectangle "Landscape: Testing" as landscape_t {
 
