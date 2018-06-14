@@ -27,17 +27,6 @@ import static org.testng.Assert.assertTrue;
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 public class DWPGeneralScenario extends DwpScenario {
 
-    private class GetPreferredLanguage implements Model.Callback {
-
-        @Override
-        public void onAccess(Autocrat.ExecutionContext context, Model.Step step, WebElement value) {
-            JavascriptExecutor jsExec = (JavascriptExecutor) context.driver;
-            preferredLanguage = (String)jsExec.executeScript(String.format(
-                "return window.localStorage.%s;", "NG_TRANSLATE_LANG_KEY"));
-            logger().info("NG_TRANSLATE_LANG_KEY=" + preferredLanguage);
-        }
-    }
-
     @Before("@QUOTE, @MENU, @DWP_SETUP, @CORE_SUPERNOVA, @ASSIGNMENT, @FILTER, @SMOKE")
     public void SetupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
@@ -59,62 +48,6 @@ public class DWPGeneralScenario extends DwpScenario {
 
     public void dwp_is_running() throws Exception {
         verifyDwpIsRunning(BASE_URL);
-    }
-
-
-    public void go_to_dwp() throws Throwable {
-        webDriver.getDriver().get(BASE_URL);
-    }
-
-    @Given("^I logged in on the DWP Main Page$")
-    public void dwpPageLogin() throws Throwable {
-        mainDwpPageLogin();
-    }
-
-    @Given("^I logged in as admin on the DWP Main Page - Obsolete$")
-    public void mainDwpPageLogin() throws Throwable {
-
-        Autocrat.ExecutionContext getLanguageExecutionContext = new Autocrat.ExecutionContext(webDriver.getDriver());
-        Flow getDefaultlanguageFlow = getLanguageExecutionContext.getExecution()
-            .variable("DWP_USER", DWP_USER_ESSENTADMIN)
-            .element("DWP_USER", new Model.Element().search("ID").query("username"))
-            .flow()
-            .steps(
-                new Model.Step().action(Action.GOTO).value(BASE_URL),
-                new Model.Step().action(Action.ACCESS).element("DWP_USER_ESSENTADMIN")
-                    .timeoutInSeconds(5)
-                    .callback(new GetPreferredLanguage()));
-        Autocrat.executeFlow(getLanguageExecutionContext, getDefaultlanguageFlow);
-
-        Map<String, String> loginButtonLabel = new HashMap<>();
-        loginButtonLabel.put("nl_BE", "Log in");
-        loginButtonLabel.put("en_BE", "Login");
-
-        String loginButtonQuery = String.format(".form__footer > .button[value='%s']", loginButtonLabel.get(preferredLanguage));
-
-        Autocrat.ExecutionContext executionContext = new Autocrat.ExecutionContext(webDriver.getDriver());
-
-        Flow dwpLoginFlow = executionContext.getExecution()
-            .variable("DWP_USER", DWP_USER_ESSENTADMIN)
-            .variable("DWP_PASS", DWP_PASSWORD)
-            .element("DWP_USER", new Model.Element().search("ID").query("username"))
-            .element("DWP_PASS", new Model.Element().search("ID").query("password"))
-            .element("DWP_LOGIN", new Model.Element().search("SELECTOR").query(loginButtonQuery))
-            .element("ICON_NOVA", new Model.Element().search("SELECTOR").query(".icon-nova"))
-            .flow()
-            .steps(
-                //new Model.Step().action(Action.GOTO).value(BASE_URL),
-                new Model.Step().action(Action.TYPING).element("DWP_USER_ESSENTADMIN").value("{{VAR:DWP_USER_ESSENTADMIN}}"),
-                new Model.Step().action(Action.TYPING).element("DWP_PASS").value("{{VAR:DWP_PASS}}"),
-                new Model.Step().action(Action.SLEEP).sleepInMillis(2000),
-                new Model.Step().action(Action.CLICK).element("DWP_LOGIN"),
-                new Model.Step().action(Action.SLEEP).sleepInMillis(3000),
-                new Model.Step().action(Action.REQUIRE_ABSENT).element("DWP_LOGIN").breakFlowOnFailure(false).timeoutInSeconds(5).sleepInMillis(1000),
-                new Model.Step().action(Action.ACCESS).element("ICON_NOVA")
-                    .timeoutInSeconds(5)
-            .callback(new GetPreferredLanguage()));
-        assertTrue(Autocrat.executeFlow(executionContext, dwpLoginFlow), "Main DWP Page is expected to be active, but this did not happen");
-        injectJavaScriptTestRunner();
     }
 
     @Given("^I logged in in DWP as ([^\"]*)$")
@@ -150,7 +83,6 @@ public class DWPGeneralScenario extends DwpScenario {
             new Autocrat.ExecutionContext(webDriver.getDriver(), execution);
         Model.Step s =
             new Model.Step().action(Action.REQUIRE).element("DWP_MODAL_CANCEL").timeoutInSeconds(2).breakFlowOnFailure(false);
-        // found element, get rid of it
         Flow flow = s.flow();
         flow.steps(new Model.Step().action(Action.CLICK).element("DWP_MODAL_CANCEL").breakFlowOnFailure(false),
             new Model.Step().action(Action.REQUIRE_ABSENT).element("DWP_MODAL_CANCEL"));
