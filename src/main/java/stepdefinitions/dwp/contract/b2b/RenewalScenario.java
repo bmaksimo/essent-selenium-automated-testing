@@ -10,6 +10,7 @@ public class RenewalScenario extends DwpScenario {
     public void SetupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
+
     @Override
     @After("@RENEWAL")
     public void tearDown() throws Exception {
