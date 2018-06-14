@@ -221,12 +221,6 @@ public class HHQuoteScenarios extends DwpScenario {
         throw new PendingException();
     }
 
-    @Then("^I click on Home button, optionally dismissing the alert$")
-    public void home() throws Throwable {
-
-    }
-
-
     @Then("^A signed quote is created of type \"([^\"]*)\" and status \"([^\"]*)\" and shown in an account for \"([^\"]*)\" with ([0-9]+) products:$")
     public void a_signed_quote_is_created_for_an_account_with_products(String type, String status, String accountName, String nrOfProducts) throws Throwable {
         Model.Execution execution = new Model.Execution();

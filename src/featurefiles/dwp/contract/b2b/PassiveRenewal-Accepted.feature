@@ -43,7 +43,7 @@ Feature: Test the passive renewal of business contract.
         And  Filter element 'End date from' is '${today} + 3months'
         And  Filter element 'End date to' is '${today} +  4months'
         #Valid values are Sales Signed (Not marked), Sales Signed ()
-        And  Select 2 rows with:
+        And  Select 2 rows with
         |column                     | value                     |
         |TYPE & (RENEW) STATUS      | Sales Signed (Not marked) |
         And  Store selection values of 'COMPANY NAME & CONTACT' columns as comma-separated $SelectedContracts
@@ -56,26 +56,27 @@ Feature: Test the passive renewal of business contract.
         When   Top Action is Plus Menu
         And   Plus Menu is UP/TC2 - Passive renewal quotes
         Then  View is UP/TC2 - Passive Renewal quotes
-        And   Select 'ACCOUNT & CONTACT PERSON' columns with $SelectedContracts with
+        And   Select rows with 'ACCOUNT & CONTACT PERSON' column having $SelectedContracts with
         |column                     | value                             |
         |TYPE & STATUS              | Renewal-passive Priced - Accepted |
         And   Table action is 'CONFIRM UP/TC2 PASSIVE RENEWALS'
         And   I confirm 'CONFIRM PASSIVE RENEWAL'
-        Then  View is is UP/TC2 - Passive Renewal quotes
-        But   No 'COMPANY NAME & CONTACT' columns with $SelectedContracts values
+        Then  View is UP/TC2 - Passive Renewal quotes
+        #Valid values: "Available", "Not available", "Gone"
+        But   Rows with 'COMPANY NAME & CONTACT' column having $SelectedContracts are 'Gone'
         #Checking post-condition "New quote - passive renewal is created"
         When  Left Menu Item is Contracting Switching
         And   Top Menu Item is Quotes
         Then  View is Quotes
-        And   Select 'ACCOUNT & CONTACT PERSON' columns with $SelectedContracts with
+        And   Select rows with 'ACCOUNT & CONTACT PERSON' column having $SelectedContracts with
         |column                     | value                             |
         |TYPE & STATUS              | Renewal-passive Priced - Accepted |
         #Checking post-condition "Recurring Passive Renewal communication is dispatched to the Customer"
         When I select the 1st element of $SelectedContracts and click the link in the "Number & Signed contract nr" column
         And Overview is Documents
         And View is Documents
-        #Valid values are 'Available', 'Not Available', and
-        Then Data set is 'Available' with
+        #Valid values are 'Available', 'Not Available' and 'Gone'
+        Then Rows are 'Available' with
          |column                       | value                             |
          |DOCUMENT TYPE                | Passive renewal communication     |
          |CREATION DATE                | $recentTime                       |

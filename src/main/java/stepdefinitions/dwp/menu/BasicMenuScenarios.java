@@ -24,7 +24,7 @@ import static org.hamcrest.Matchers.is;
 
 public class BasicMenuScenarios extends NavigationElements {
 
-    @Before("@SMOKE, @QUOTE, @MENU, @DWP_SETUP, @FILTER")
+    @Before("@SMOKE, @QUOTE, @MENU, @DWP_SETUP, @FILTER, @RENEWAL")
     public void SetupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -103,7 +103,7 @@ public class BasicMenuScenarios extends NavigationElements {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @MENU, @DWP_SETUP, @FILTER")
+    @After("@SMOKE, @QUOTE, @MENU, @DWP_SETUP, @FILTER, @RENEWAL")
     public void tearDown() throws Exception {
         super.tearDown();
     }
