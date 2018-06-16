@@ -62,7 +62,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             options.addArguments("chrome.switches", "--disable-extensions");
             String headless = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_HEADLESS);
             if (StringUtils.isNotEmpty(headless)) {
-                options.addArguments(headless);
+                options.setHeadless(true);
                 String windowSize = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_HEADLESS_WINDOW_SIZE);
                 if (StringUtils.isNotEmpty(windowSize)) {
                     options.addArguments("window-size=" + windowSize);
@@ -72,7 +72,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             if (StringUtils.isNotEmpty(userDataPath)) {
                 options.addArguments("user-data-dir=" + userDataPath);
             }
-            logger.info(" - OPTIONS: " + options.asMap().toString());
+            logger.info(" - OPTIONS: " + options.toString());
             return new ChromeDriver(options);
         }
 
