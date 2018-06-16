@@ -34,11 +34,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-
 /**
  * This class is a wrapper around the selenium webdriver.
- * @author Peter
- * @author Dmitry
+ * @author Peter Wessels
+ * @author Dmitry Che
  */
 public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner {
 
@@ -61,11 +60,19 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         default WebDriver createWebDriver() {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("chrome.switches", "--disable-extensions");
-            options.addArguments("no-sandbox");
+            String headless = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_HEADLESS);
+            if (StringUtils.isNotEmpty(headless)) {
+                options.addArguments(headless);
+                String windowSize = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_HEADLESS_WINDOW_SIZE);
+                if (StringUtils.isNotEmpty(windowSize)) {
+                    options.addArguments("window-size=" + windowSize);
+                }
+            }
             String userDataPath = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_USER_DATA_PATH);
             if (StringUtils.isNotEmpty(userDataPath)) {
                 options.addArguments("user-data-dir=" + userDataPath);
             }
+            logger.info(" - OPTIONS: " + options.asMap().toString());
             return new ChromeDriver(options);
         }
 
@@ -92,7 +99,6 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
         browserName = caps.getBrowserName();
         browserVersion = caps.getVersion();
-
         logger.info(" - RESULT: Running tests on  " + browserName + " " + browserVersion);
     }
 
@@ -154,7 +160,6 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         for (File file1 : Objects.requireNonNull(dir.listFiles(fileFilter))) {
             injectJavaScriptInline(file1);
         }
-
         // new: class based
         String testRunnerClassPath = ResourceUtils.toPath(PATH + TEST_RUNNER_CLASS);
         File testRunnerClassFile = new File(testRunnerClassPath);
@@ -219,9 +224,18 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     public Map executeJavascriptMethod(String registeredJsClass, Object options) {
         String jsTestCall = SeleniumJsTestExpanderService.get().expandToJavascript(registeredJsClass, options);
         logger.info("STEP:");
-        logger.info(" - ACTION: EVALUATE_JAVASCRIPT");
+        logger.info(" - ACTION: EVALUATE_JAVASCRIPT_METHOD");
         logger.info(" - TEST: " + jsTestCall);
         Map result = (Map) ((JavascriptExecutor) driver).executeAsyncScript(jsTestCall);
+        String status = ((String) result.get("status"));
+        if(StringUtils.isEmpty(status)) {
+            status = "UNDEFINED";
+        }
+        logger.info(" - RESULT: " + status);
+        if (StringUtils.equals("FAILED", status)) {
+            String reason = ((String) result.get("reason"));
+            logger.info(" - REASON: " + reason);
+        }
         return result;
     }
 
@@ -239,7 +253,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             executeTest = executeTest.replace(String.format("${value%s}", i), param[i]);
         }
         logger.info("STEP:");
-        logger.info(" - ACTION: EVALUATE_JAVASCRIPT");
+        logger.info(" - ACTION: EXEC_JAVASCRIPT_TEST");
         logger.info(" - TEST: " + executeTest);
         for (int i = 0; i < param.length; i++) {
             logger.info(String.format(" - VALUE[%s]: " + param[i], i));
@@ -264,7 +278,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     public boolean executeJavascriptTest(String registeredJsClass, Object options) {
         String executeTest = SeleniumJsTestExpanderService.get().expandToJavascript(registeredJsClass, options);
         logger.info("STEP:");
-        logger.info(" - ACTION: EVALUATE_JAVASCRIPT");
+        logger.info(" - ACTION: EXEC_JAVASCRIPT_TEST");
         logger.info(" - TEST: " + executeTest);
         Map result = (Map) ((JavascriptExecutor) driver).executeAsyncScript(executeTest);
         String status = ((String) result.get("status"));
