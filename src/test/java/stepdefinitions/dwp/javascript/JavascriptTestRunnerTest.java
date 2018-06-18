@@ -85,23 +85,19 @@ public class JavascriptTestRunnerTest extends DwpScenario {
         contentPageOptions.put("seconds", sec);
         contentPageOptions.put("title", title);
         result = executeJavascriptMethod("TrContentPageContainsTitle", contentPageOptions);
-//        assertThat(executeJsTest(TitleTests.CONTENT_PAGE_CONTAINS_TITLE.getTest(), ""+sec, title), is(true));
-
-
-
-        // deprecated: function based
 
         //Test Left Item - Billing
         DwpLeftMenu item = DwpLeftMenu.get("Billing");
-        assertThat(executeJsTest(MenuTests.LEFT_MENU_ITEM_TEST.getTest(),  item.getMenuItemLink()), is(true));
+        Map<String, Object> leftMenuOptions = new HashMap<>();
+        leftMenuOptions.put("menu", item.getMenuItemLink());
+        result = executeJavascriptMethod("TrGetLeftMenu", leftMenuOptions);
 
-        //Test Contents Title
-//        int sec = 5;
-//        String title = "Quotation - Group tasks";
-//        assertThat(executeJsTest(TitleTests.CONTENT_PAGE_CONTAINS_TITLE.getTest(), ""+sec, title), is(true));
+        String columnIndex = "Name & Type & Subtype";
+        Map<String, String> columnIndexList = new HashMap<>();
+        columnIndexList.put("column", columnIndex);
+        result = executeJavascriptMethod("TrGetColumnIndexList", columnIndexList);
 
-        //Test index of column
-        Map map = executeJsMethod(MenuTests.GET_COLUMN_INDEX.getTest(), "Name & Type & Subtype", "" + 2);
+        // deprecated: function based
 
         //Test Plus
         String plusItem = "BILLING";
