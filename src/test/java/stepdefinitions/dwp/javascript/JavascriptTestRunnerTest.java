@@ -1,7 +1,6 @@
 package stepdefinitions.dwp.javascript;
 
 import com.billinghouse.javascript.model.Data;
-import com.billinghouse.javascript.model.options.TrMenuHasLinkIdOptions;
 import com.billinghouse.javascript.testrunner.dwp.menu.MenuTests;
 import com.essent.testing.dwp.DwpScenario;
 import com.essent.testing.dwp.menu.model.DwpLeftMenu;
@@ -54,54 +53,63 @@ public class JavascriptTestRunnerTest extends DwpScenario {
 
     @When("^I smoke test all Javascript functions$")
     public void iRunAllJavascriptFunctions() throws Throwable {
+        testTrMenuHasLinkId();
+        testTrGetApplicationState();
+        testTrEvaluateXpath();
+        testTrContentPageContainsTitle();
+        testTrGetLeftMenu();
+        testTrGetColumnIndexList();
+        testTrPlusMenuHasItem();
+    }
 
-        // new preferred simpler syntax: Test Upper Item - Markettransactions - Dashboard
-        Map jsOptions = new HashMap();
+    private void testTrMenuHasLinkId() {
+        // Test Upper Item - Markettransactions - Dashboard
+        Map<String, String> jsOptions = new HashMap<>();
         jsOptions.put("menu", "mainMenu");
         jsOptions.put("linkId", "sales-marketing-link");
-        Map testResult = executeJavascriptMethod("TrMenuHasLinkId", jsOptions);
+        executeJavascriptMethod("TrMenuHasLinkId", jsOptions);
 
-        // old complicated syntax: Test Upper Item - Markettransactions - Dashboard
-        TrMenuHasLinkIdOptions options = new TrMenuHasLinkIdOptions();
-        options.setLinkId(TopMenuItems.MARKETTRANSACTIONS_DASHBOARD.getLink());
-        options.setMenu("subMenu");
-        Map result = executeJavascriptMethod("TrMenuHasLinkId", options);
-        assertThat(executeJavascriptTest("TrMenuHasLinkId",
-            options), is(true));
+        // Test Upper Item - Markettransactions - Dashboard
+        Map<String, String> menuHasLinkIdOptions = new HashMap<>();
+        menuHasLinkIdOptions.put("linkId", TopMenuItems.MARKETTRANSACTIONS_DASHBOARD.getLink());
+        menuHasLinkIdOptions.put("menu", "subMenu");
+        executeJavascriptMethod("TrMenuHasLinkId", menuHasLinkIdOptions);
+    }
 
-        // get application state
-        result = executeJavascriptMethod("TrGetApplicationState", null);
-
-        //Evaluate XPATH
+    private void testTrGetApplicationState() {
+        executeJavascriptMethod("TrGetApplicationState", null);
+    }
+    private void testTrEvaluateXpath() {
         final String TOP_MENU_ITEM_QUERY = "//div[@class='top-menu']/sub-menu/sub-menu-link/a[@id='{link}']";
         Map<String, String> xpathOptions = new HashMap<>();
         xpathOptions.put("xpath", TOP_MENU_ITEM_QUERY.replace("{link}", TopMenuItems.MARKETTRANSACTIONS_DASHBOARD.getLink()));
-        result = executeJavascriptMethod("TrEvaluateXpath", xpathOptions);
-
-        //Test Contents Title
+        executeJavascriptMethod("TrEvaluateXpath", xpathOptions);
+    }
+    private void testTrContentPageContainsTitle() {
         int sec = 5;
         String title = "Quotation - Group tasks";
         Map<String, Object> contentPageOptions = new HashMap<>();
         contentPageOptions.put("seconds", sec);
         contentPageOptions.put("title", title);
-        result = executeJavascriptMethod("TrContentPageContainsTitle", contentPageOptions);
-
-        //Test Left Item - Billing
+        executeJavascriptMethod("TrContentPageContainsTitle", contentPageOptions);
+    }
+    private void testTrGetLeftMenu() {
         DwpLeftMenu item = DwpLeftMenu.get("Billing");
         Map<String, Object> leftMenuOptions = new HashMap<>();
-        leftMenuOptions.put("menu", item.getMenuItemLink());
-        result = executeJavascriptMethod("TrGetLeftMenu", leftMenuOptions);
-
+        leftMenuOptions.put("menu", item.getMenuItemLink());executeJavascriptMethod("TrGetLeftMenu", leftMenuOptions);
+    }
+    private void testTrGetColumnIndexList() {
         String columnIndex = "Name & Type & Subtype";
-        Map<String, String> columnIndexList = new HashMap<>();
-        columnIndexList.put("column", columnIndex);
-        result = executeJavascriptMethod("TrGetColumnIndexList", columnIndexList);
-
-        // deprecated: function based
-
-        //Test Plus
+        Map<String, String> columnIndexListOptions = new HashMap<>();
+        columnIndexListOptions.put("column", columnIndex);
+        executeJavascriptMethod("TrGetColumnIndexList", columnIndexListOptions);
+    }
+    private void testTrPlusMenuHasItem() {
         String plusItem = "BILLING";
-        String pluPosition = "4";
-        assertThat(executeJsTest(MenuTests.PLUS_MENU_ITEM_TEST.getTest(), plusItem, pluPosition), is(true));
+        String plusPosition = "4";
+        Map<String, String> plusMenuItemOptions = new HashMap<>();
+        plusMenuItemOptions.put("item", plusItem);
+        plusMenuItemOptions.put("position", plusPosition);
+        executeJavascriptMethod("TrPlusMenuHasItem", plusMenuItemOptions);
     }
 }

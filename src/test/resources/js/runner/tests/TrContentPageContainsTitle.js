@@ -14,13 +14,10 @@ class TrContentPageContainsTitle extends TestRunnerBase {
 
     run() {
         let result = this.result;
-        console.log("current result: " + result);
         const options = this.options;
-        console.log("current options: " + options);
         result.status = 'FAILED';
         result.reason = 'After ' + options.seconds + ' seconds content page did not contain title: ' + options.title;
         const length = $(".list__header").children().filter(function (i, node) {
-            console.log(i + ': ' + node.innerText);
             return node.innerText.trim() === options.title;
         }).length;
         if (length > 0) {

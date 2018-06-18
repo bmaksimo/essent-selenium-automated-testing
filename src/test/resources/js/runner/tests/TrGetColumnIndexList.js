@@ -25,18 +25,15 @@ class TrGetColumnIndexList extends TestRunnerBase {
             if (index < 0) {
                 result.status = 'FAILED';
                 result.reason = 'Column ' + options.column + ' was not found.';
-                console.log("index: " + index);
             } else if ($("#rows tr:nth-child(1)") < 0) {
                 result.status = 'FAILED';
                 result.reason = 'Row was not found.';
-                console.log(result);
             } else {
                 result.status = 'PASSED';
                 result.column.index = ++index;
                 let elem = $("#rows tr:nth-child(1) td:nth-child(" + index + ") div a");
                 result.reason = 'Navigation, click on ' + elem.text();
                 result.column.caption = options.column;
-                console.log(result);
                 elem.click();
             }
             this.resolveCallback(result);
