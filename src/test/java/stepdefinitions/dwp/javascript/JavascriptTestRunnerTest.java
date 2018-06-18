@@ -63,13 +63,11 @@ public class JavascriptTestRunnerTest extends DwpScenario {
     }
 
     private void testTrMenuHasLinkId() {
-        // Test Upper Item - Markettransactions - Dashboard
         Map<String, String> jsOptions = new HashMap<>();
         jsOptions.put("menu", "mainMenu");
         jsOptions.put("linkId", "sales-marketing-link");
         executeJavascriptMethod("TrMenuHasLinkId", jsOptions);
 
-        // Test Upper Item - Markettransactions - Dashboard
         Map<String, String> menuHasLinkIdOptions = new HashMap<>();
         menuHasLinkIdOptions.put("linkId", TopMenuItems.MARKETTRANSACTIONS_DASHBOARD.getLink());
         menuHasLinkIdOptions.put("menu", "subMenu");

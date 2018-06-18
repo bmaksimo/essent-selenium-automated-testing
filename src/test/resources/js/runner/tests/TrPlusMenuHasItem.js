@@ -12,7 +12,6 @@ class TrPlusMenuHasItem extends TestRunnerBase {
     constructor(options, callback) {
         super(options, callback, 100);
     }
-
     run() {
         let result = this.result;
         result.status = 'UNDEFINED';
@@ -26,7 +25,6 @@ class TrPlusMenuHasItem extends TestRunnerBase {
                         itemsCount === options.position) {
                         result.status = 'PASSED';
                         result.reason = '';
-                        console.log(itemsCount + ": " + b.innerText);
                         return false;
                     }
                     itemsCount++;
@@ -36,7 +34,6 @@ class TrPlusMenuHasItem extends TestRunnerBase {
                 }
             });
             $("div[class='top-actions'] > .icon-plus").trigger('click');
-
             this.resolveCallback(result);
         }, 500);
     }
