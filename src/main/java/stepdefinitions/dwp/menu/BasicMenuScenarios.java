@@ -2,7 +2,6 @@ package stepdefinitions.dwp.menu;
 
 import com.billinghouse.javascript.model.options.TrMenuHasLinkIdOptions;
 import com.billinghouse.javascript.testrunner.dwp.menu.MenuTests;
-import com.billinghouse.javascript.testrunner.dwp.views.TitleTests;
 import com.essent.testing.dwp.menu.model.DwpLeftMenu;
 import com.essent.testing.dwp.menu.model.TopMenuItems;
 import cucumber.api.DataTable;
@@ -16,7 +15,9 @@ import org.apache.commons.lang3.StringUtils;
 import stepdefinitions.dwp.NavigationElements;
 import stepdefinitions.dwp.tables.plus.Item;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -79,11 +80,15 @@ public class BasicMenuScenarios extends NavigationElements {
         executeJsTest(MenuTests.GET_TOP_TAB.getTest(), itemName);
     }
 
-    @Then("^Content page contains title '(.*)'$")
-    public void contentPageContainsTitleQuotationGroupTasks(String title) throws Throwable {
-        int sec = 5;
-        boolean result = executeJsTest(TitleTests.CONTENT_PAGE_CONTAINS_TITLE.getTest(), ""+sec, title);
-        assertThat("Title: " + title + " did not appear on content page after " + sec + " seconds",
+    @Then("^View title is '(.*)'$")
+    public void isViewTitle(String title) throws Throwable {
+        int sec = 1;
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("seconds", "" + sec);
+        parameters.put("title", title);
+        boolean result =
+        executeJavascriptTest("TrContentPageContainsTitle", parameters);
+        assertThat("View title: " + title + " did not appear after " + sec + " seconds",
             result, is(true));
     }
 

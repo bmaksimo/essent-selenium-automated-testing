@@ -19,7 +19,7 @@ Feature: DWP UI: Menu structure, specific menu items
             | Ess                   |
             | Admin                 |
         And Left Menu Item is Sales Marketing
-        Then Content page contains title 'Quotation - Group tasks'
+        Then View title is 'Quotation - Group tasks'
         And Available Top Menu Items are:
             | Market Transactions |
             | Leads               |
