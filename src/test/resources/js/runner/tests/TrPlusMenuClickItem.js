@@ -19,8 +19,6 @@ class TrPlusMenuClickItem extends TestRunnerDwp {
             if($(".plus-menu.ng-hide").length === 0) {
                 result.plusMenuOpen = true;
                 result.reason = 'DEBUG';
-                console.log(result);
-                console.log("Plus - Menu clicked on.")
             }
             this.resolveCallback(result);
         }, 200);
