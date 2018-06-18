@@ -8,7 +8,8 @@ class TrContentPageContainsTitle extends TestRunnerBase {
      */
 
     constructor(options, callback) {
-        super(options, callback, 100);
+        let timeoutMillis = parseInt(options.seconds) * 1000;
+        super(options, callback, timeoutMillis);
     }
 
     run() {
@@ -28,5 +29,4 @@ class TrContentPageContainsTitle extends TestRunnerBase {
         }
         this.resolveCallback(result);
     }
-
 }
