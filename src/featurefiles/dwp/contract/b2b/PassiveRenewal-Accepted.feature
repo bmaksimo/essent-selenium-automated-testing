@@ -60,7 +60,8 @@ Feature: Test the passive renewal of business contract.
         |column                     | value                             |
         |TYPE & STATUS              | Renewal-passive Priced - Accepted |
         And   Table action is 'CONFIRM UP/TC2 PASSIVE RENEWALS'
-        And   I confirm 'CONFIRM PASSIVE RENEWAL'
+        And   Popup dialogue is CONFIRM PASSIVE RENEWAL
+        And   Confirm 'CONFIRM PASSIVE RENEWAL' popup dialogue
         Then  View is UP/TC2 - Passive Renewal quotes
         #Valid values: "Available", "Not available", "Gone"
         But   Rows with 'COMPANY NAME & CONTACT' column having $SelectedContracts are 'Gone'
