@@ -79,6 +79,15 @@ public class JavascriptTestRunnerTest extends DwpScenario {
         xpathOptions.put("xpath", TOP_MENU_ITEM_QUERY.replace("{link}", TopMenuItems.MARKETTRANSACTIONS_DASHBOARD.getLink()));
         result = executeJavascriptMethod("TrEvaluateXpath", xpathOptions);
 
+        //Test Contents Title
+        int sec = 5;
+        String title = "Quotation - Group tasks";
+        Map<String, Object> contentPageOptions = new HashMap<>();
+        contentPageOptions.put("seconds", sec);
+        contentPageOptions.put("title", title);
+        result = executeJavascriptMethod("TrContentPageContainsTitle", contentPageOptions);
+//        assertThat(executeJsTest(TitleTests.CONTENT_PAGE_CONTAINS_TITLE.getTest(), ""+sec, title), is(true));
+
 
 
         // deprecated: function based
@@ -88,9 +97,9 @@ public class JavascriptTestRunnerTest extends DwpScenario {
         assertThat(executeJsTest(MenuTests.LEFT_MENU_ITEM_TEST.getTest(),  item.getMenuItemLink()), is(true));
 
         //Test Contents Title
-        int sec = 5;
-        String title = "Quotation - Group tasks";
-        assertThat(executeJsTest(TitleTests.CONTENT_PAGE_CONTAINS_TITLE.getTest(), ""+sec, title), is(true));
+//        int sec = 5;
+//        String title = "Quotation - Group tasks";
+//        assertThat(executeJsTest(TitleTests.CONTENT_PAGE_CONTAINS_TITLE.getTest(), ""+sec, title), is(true));
 
         //Test index of column
         Map map = executeJsMethod(MenuTests.GET_COLUMN_INDEX.getTest(), "Name & Type & Subtype", "" + 2);
