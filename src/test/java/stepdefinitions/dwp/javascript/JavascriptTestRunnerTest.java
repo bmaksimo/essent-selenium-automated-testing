@@ -93,15 +93,12 @@ public class JavascriptTestRunnerTest extends DwpScenario {
         leftMenuOptions.put("menu", item.getMenuItemLink());
         result = executeJavascriptMethod("TrGetLeftMenu", leftMenuOptions);
 
+        String columnIndex = "Name & Type & Subtype";
+        Map<String, String> columnIndexList = new HashMap<>();
+        columnIndexList.put("column", columnIndex);
+        result = executeJavascriptMethod("TrGetColumnIndexList", columnIndexList);
 
         // deprecated: function based
-
-        //Test Left Item - Billing
-//        DwpLeftMenu item = DwpLeftMenu.get("Billing");
-//        assertThat(executeJsTest(MenuTests.LEFT_MENU_ITEM_TEST.getTest(),  item.getMenuItemLink()), is(true));
-
-        //Test index of column
-        Map map = executeJsMethod(MenuTests.GET_COLUMN_INDEX.getTest(), "Name & Type & Subtype", "" + 2);
 
         //Test Plus
         String plusItem = "BILLING";
