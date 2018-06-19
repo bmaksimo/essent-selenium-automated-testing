@@ -87,6 +87,8 @@ public enum ConfigKey {
     WEBDRIVER_CHROME_DRIVER("webdriver.chrome.driver"),
     WEBDRIVER_FIREFOX_PROFILE("firefox.profile.path"),
 	WEBDRIVER_CHROME_USER_DATA_PATH("chrome.user.data.path"),
+    WEBDRIVER_CHROME_HEADLESS("webdriver.chrome.headless"),
+    WEBDRIVER_CHROME_HEADLESS_WINDOW_SIZE("webdriver.chrome.headless.window.size"),
     PLSQL_LOCATION("psql.location"),
 	SSH_BPM_HOSTNAME("ssh.bpm.hostname"),
     TESTING_BASE_URL("testing.base.url"),
