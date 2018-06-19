@@ -8,9 +8,11 @@ import com.essent.roles.UserRoles;
 import com.essent.testing.dwp.DwpScenario;
 import com.essent.testing.dwp.pageobject.Window;
 import com.essent.testing.dwp.pageobject.impl.LoginDialog;
+import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.html5.LocalStorage;
@@ -40,7 +42,6 @@ public class GenericSteps extends DwpScenario {
             logger().error("The scenario '" + scenario.getName() + "' failed");
         }
     }
-
 
     @Given("^I logged in in DWP as ([^\"]*)$")
     public void loginAs(String userName) throws Throwable {
@@ -78,5 +79,12 @@ public class GenericSteps extends DwpScenario {
         flow.steps(new Model.Step().action(Action.CLICK).element("DWP_MODAL_CANCEL").breakFlowOnFailure(false),
             new Model.Step().action(Action.REQUIRE_ABSENT).element("DWP_MODAL_CANCEL"));
         Autocrat.executeFlow(context, flow);
+    }
+
+    @And("^Recent Time interval is ([^\"]*) backwards$")
+    public void sentRecentTimeInterval(String ordinal) throws Throwable {
+        int time = Integer.parseInt(ordinal.replaceAll("(?<=\\d)(min|sec|millis|nanos)\\b", ""));
+            // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
     }
 }

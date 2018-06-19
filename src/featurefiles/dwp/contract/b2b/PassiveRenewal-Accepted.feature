@@ -26,7 +26,7 @@ Feature: Test the passive renewal of business contract.
     Background:
         Given   I logged in in DWP as BusinessDeskB2B
          #Valid parameters are 'N(min|sec)'
-        And Recent Time interval is '5min' backward
+        And Recent Time interval is 5min backwards
     Scenario:
         When Left Tab is Contracting
         And  Top Tab is Contracts
