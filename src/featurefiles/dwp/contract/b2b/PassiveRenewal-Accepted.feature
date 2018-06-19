@@ -16,7 +16,7 @@ Feature: Test the passive renewal of business contract.
     "Guarantee" involves very elaborate checks before determining whether the contract can be passively renewed,
     therefore even the passive renewal "Guarantee" acceptance status is checked manually.
     "Accepted" and "Refused" cases, are, on the contrary, very straight-forward, and the renewal check can be automated.
-    This scebario checks successful renewal for the customers with "Accepted" acceptance status.
+    This scenario checks successful renewal for the customers with "Accepted" acceptance status.
     Potentially useful notes.
     The workflow not only passively renews the contracts.
     It checks the actual solvency of the Customer (recently, the service provider is graydon.be).
@@ -26,7 +26,7 @@ Feature: Test the passive renewal of business contract.
     Background:
         Given   I logged in in DWP as BusinessDeskB2B
          #Valid parameters are 'N(min|sec)'
-        And Recent Time is '5min'
+        And Recent Time interval is '5min' backward
     Scenario:
         When Left Tab is Contracting
         And  Top Tab is Contracts

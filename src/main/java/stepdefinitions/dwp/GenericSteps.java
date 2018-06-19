@@ -1,6 +1,5 @@
 package stepdefinitions.dwp;
 
-import com.billinghouse.javascript.model.options.TrGetUserLanguageOptions;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
@@ -14,24 +13,20 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import org.apache.commons.lang3.StringUtils;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.html5.LocalStorage;
+import org.openqa.selenium.html5.WebStorage;
 import org.springframework.test.context.ContextConfiguration;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static com.essent.testing.dwp.DwpConstant.*;
+import static com.essent.testing.dwp.DwpConstant.BASE_URL;
 import static org.junit.Assert.assertNotNull;
-import static org.testng.Assert.assertTrue;
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
-public class DWPGeneralScenario extends DwpScenario {
+public class GenericSteps extends DwpScenario {
 
     @Before("@QUOTE, @MENU, @DWP_SETUP, @CORE_SUPERNOVA, @ASSIGNMENT, @FILTER, @SMOKE")
     public void SetupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
         setUpWebDriver();
-        dwp_is_running();
+        isDwpRunning(BASE_URL);
     }
 
     @After({"@QUOTE, @MENU, @DWP_TEARDOWN, @CORE_SUPERNOVA, @ASSIGNMENT, @FILTER, @SMOKE"})
@@ -46,28 +41,24 @@ public class DWPGeneralScenario extends DwpScenario {
         }
     }
 
-    public void dwp_is_running() throws Exception {
-        verifyDwpIsRunning(BASE_URL);
-    }
 
     @Given("^I logged in in DWP as ([^\"]*)$")
     public void loginAs(String userName) throws Throwable {
         LoginDialog login = new LoginDialog(webDriver);
         injectJavaScriptTestRunner();
-        retrieveAndInitUserLanguage();
+        retrieveUserLanguage();
         UserRoles dwpUser = UserRoles.get(userName);
         Window application = login.login(dwpUser.getUsername(), dwpUser.getPassword());
-        retrieveAndInitUserLanguage();
+        retrieveUserLanguage();
         assertNotNull("DWP application did not appear after a login", application);
     }
 
-    private void retrieveAndInitUserLanguage() {
-        TrGetUserLanguageOptions options = new TrGetUserLanguageOptions();
-        options.setLanguageKey("NG_TRANSLATE_LANG_KEY");
-        Map result = executeJavascriptMethod("TrGetUserLanguage", options);
-        String userLanguage = (String) result.get("userLanguage");
+    private void retrieveUserLanguage() {
+        WebStorage webStorage = (WebStorage)webDriver.getDriver();
+        LocalStorage localStorage = webStorage.getLocalStorage();
+        String userLanguage = localStorage.getItem("NG_TRANSLATE_LANG_KEY");
         if(StringUtils.isEmpty(userLanguage)) {
-            logger().warn(" - WARNING: Application did not contain " + options.getLanguageKey() + " key value, default: " + preferredLanguage + " will be used.");
+            logger().warn(" - WARNING: Application did not contain user language value. Default: " + preferredLanguage + " will be used.");
         } else {
             logger().info(" - RESULT: setting preferred language: " + userLanguage);
             preferredLanguage = userLanguage;

@@ -1,6 +1,5 @@
 package com.billinghouse.javascript;
 
-import com.billinghouse.javascript.model.options.TrGetUserLanguageOptions;
 import com.essent.testing.util.ResourceUtils;
 import org.junit.Before;
 import org.junit.Test;
