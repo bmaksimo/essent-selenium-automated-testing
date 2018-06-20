@@ -67,8 +67,8 @@ public class JavascriptTestRunnerTest extends DwpScenario {
         Map<String, String> jsOptions = new HashMap<>();
         jsOptions.put("menu", menu);
         jsOptions.put("linkId", linkId);
-        boolean result = executeJavascriptTest("TrMenuHasLinkId", jsOptions);
-        assertThat(String.format("%s hasn't link id %s", menu, linkId), result, is(true));
+        boolean success = executeJavascriptTest("TrMenuHasLinkId", jsOptions);
+        assertThat(String.format("%s hasn't link id %s", menu, linkId), success, is(true));
     }
 
     private void testTrGetApplicationState() {
