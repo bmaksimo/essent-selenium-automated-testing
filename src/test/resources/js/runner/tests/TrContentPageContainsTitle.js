@@ -12,9 +12,7 @@ class TrContentPageContainsTitle extends TestRunnerBase {
         super(options, callback, timeoutMillis);
     }
 
-    run() {
-        let result = this.result;
-        const options = this.options;
+    run(options, result) {
         result.status = 'FAILED';
         result.reason = 'After ' + options.seconds + ' seconds content page did not contain title: ' + options.title;
         const length = $(".list__header").children().filter(function (i, node) {

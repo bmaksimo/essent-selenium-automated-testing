@@ -17,9 +17,7 @@ class TrGetLeftMenu extends TestRunnerBase {
         super(options, callback, 100);
     }
 
-    run() {
-        let result = this.result;
-        const options = this.options;
+    run(options, result) {
         result.status = 'UNDEFINED';
         result.reason = 'Not executed';
 

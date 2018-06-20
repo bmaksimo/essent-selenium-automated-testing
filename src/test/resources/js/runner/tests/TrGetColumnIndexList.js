@@ -14,10 +14,8 @@ class TrGetColumnIndexList extends TestRunnerBase {
         super(options, callback, 200);
     }
 
-    run() {
+    run(options, result) {
         setTimeout(()=> {
-            let result = this.result;
-            let options = this.options;
             result.status = 'FAILED';
             result.reason = 'Not executed';
             result.column = {"index": -1, "caption": options.column};
