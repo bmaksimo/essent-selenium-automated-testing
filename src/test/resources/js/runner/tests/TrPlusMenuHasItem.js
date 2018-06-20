@@ -1,4 +1,4 @@
-class TrPlusMenuHasItem extends TestRunnerBase {
+class TrPlusMenuHasItem extends TestRunnerDwp {
     /**
      * Checks if plus menu contains item
      *
@@ -12,14 +12,15 @@ class TrPlusMenuHasItem extends TestRunnerBase {
     constructor(options, callback) {
         super(options, callback, 100);
     }
-    run() {
-        let result = this.result;
-        result.status = 'UNDEFINED';
-        result.reason = 'Not executed';
-        const options = this.options;
+    run(options, result) {
+        result.status = 'FAILED';
+        result.reason = options.item + ' plus menu item was not found at position ' + options.position;
+        if (!$("div[class='top-actions'] > .icon-plus.is-active").size()) {
+            $("div[class='top-actions'] > .icon-plus").trigger('click');
+        }
         setTimeout(()=> {
             let itemsCount = 1;
-            $('a.icon-arrow-down').each(function (a, b) {
+            $('a.icon-arrow-down').some(function (a, b) {
                 if (b.innerText.trim().length > 0) {
                     if (b.innerText.trim() === options.item &&
                         itemsCount === options.position) {
@@ -28,9 +29,6 @@ class TrPlusMenuHasItem extends TestRunnerBase {
                         return false;
                     }
                     itemsCount++;
-                } else {
-                    result.status = 'FAILED';
-                    result.reason = options.item + ' plus menu item was not found at position ' + options.position;
                 }
             });
             $("div[class='top-actions'] > .icon-plus").trigger('click');

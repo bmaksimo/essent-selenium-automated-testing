@@ -59,7 +59,7 @@ public class SeleniumScenario {
      * @return
      */
     protected boolean executeJsTest(String callTestRunnerTemplate, String ...param)  {
-        return  webDriver.executeJsTest(callTestRunnerTemplate, param);
+        return webDriver.executeJsTest(callTestRunnerTemplate, param);
     }
 
     /**
@@ -69,7 +69,7 @@ public class SeleniumScenario {
      * @return
      */
     protected boolean executeJavascriptTest(String registeredJsClass, Object options)  {
-        return  webDriver.executeJavascriptTest(registeredJsClass, options);
+        return webDriver.executeJavascriptTest(registeredJsClass, options);
     }
 
     /**
@@ -85,7 +85,7 @@ public class SeleniumScenario {
 
 
     public static Map executeJavascriptMethod(String registeredJsClass, Object options)  {
-        return  webDriver.executeJavascriptMethod(registeredJsClass, options);
+        return webDriver.executeJavascriptMethod(registeredJsClass, options);
     }
 
     @AfterClass
