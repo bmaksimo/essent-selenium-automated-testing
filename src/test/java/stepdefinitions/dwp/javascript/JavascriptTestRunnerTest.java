@@ -32,7 +32,6 @@ public class JavascriptTestRunnerTest extends DwpScenario {
 
     }
 
-
     @Given("^I deserialize DWP Test Data Json from file \"([^\"]*)\"$")
     public void testDwpTestData(String filePath) throws Throwable {
         logger().info("I read DwpTest Json");
@@ -58,7 +57,6 @@ public class JavascriptTestRunnerTest extends DwpScenario {
         testTrContentPageContainsTitle();
         testTrGetLeftMenu();
         testTrGetColumnIndexList();
-        testTrPlusMenuHasItem();
     }
 
     @Then("^Menu ([^\"]*) has link id ([^\"]*)$")
@@ -98,12 +96,5 @@ public class JavascriptTestRunnerTest extends DwpScenario {
         columnIndexListOptions.put("column", columnIndex);
         executeJavascriptMethod("TrGetColumnIndexList", columnIndexListOptions);
     }
-    private void testTrPlusMenuHasItem() {
-        String plusItem = "BILLING";
-        String plusPosition = "4";
-        Map<String, String> plusMenuItemOptions = new HashMap<>();
-        plusMenuItemOptions.put("item", plusItem);
-        plusMenuItemOptions.put("position", plusPosition);
-        executeJavascriptMethod("TrPlusMenuHasItem", plusMenuItemOptions);
-    }
+
 }

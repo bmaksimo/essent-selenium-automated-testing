@@ -46,10 +46,10 @@ public abstract class NavigationElements extends DwpScenario  {
             Map<String, String> options = new HashMap<>();
             options.put("path", path);
             boolean success = executeJavascriptTest("TrPlusMenuSelectAction", options);
+            webDriver.waitUntilAngularPageIsLoaded();
             return success;
         }
     }
-
 
     private class VisitTopItem implements Predicate<String> {
         @Override
@@ -57,6 +57,7 @@ public abstract class NavigationElements extends DwpScenario  {
             Map<String, String> options = new HashMap<>();
             options.put("label", label);
             boolean success = executeJavascriptTest("TrGetTopTab", options);
+            webDriver.waitUntilAngularPageIsLoaded();
             return success;
         }
     }
@@ -94,5 +95,4 @@ public abstract class NavigationElements extends DwpScenario  {
         assertThat(String.format("Plus Menu Path %s undefined.", path),
             success, is(true));
     }
-
 }
