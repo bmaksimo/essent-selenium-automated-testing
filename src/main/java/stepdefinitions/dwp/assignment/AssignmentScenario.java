@@ -37,16 +37,6 @@ public class AssignmentScenario extends DwpScenario {
         executeJsTest(MenuTests.GET_OVERVIEW_MENU_INDEX.getTest(), menuItem);
     }
 
-    @When("^Top Action is ([^\"]*)$")
-    public void check_top_action(String itemName) throws Throwable {
-        executeJsTest(MenuTests.GET_TOP_ACTION.getTest(), itemName);
-    }
-
-    @When("^Plus Menu is ([^\"]*)")
-    public void check_plus_menu(String itemName) throws  Throwable {
-        executeJsTest(MenuTests.SELECT_PLUS_MENU_ITEM.getTest(), itemName);
-    }
-
     @When("^Category is ([^\"]*)")
     public void select_assignment_category(String itemName) throws  Throwable {
         executeJsTest(MenuTests.SELECT_ASSIGNMENT_CATEGORY.getTest(), itemName);

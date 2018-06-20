@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class BasicMenuScenarios extends NavigationElements {
+public class MenuElements extends NavigationElements {
 
     @Before("@SMOKE, @QUOTE, @MENU, @DWP_SETUP, @FILTER, @RENEWAL")
     public void SetupTest(Scenario scenario) throws Throwable {
@@ -72,12 +72,12 @@ public class BasicMenuScenarios extends NavigationElements {
 
     @When("^Left Tab is ([^\"]*)$")
     public void check_left_menu_item(String itemName) throws Throwable {
-        executeJsTest(MenuTests.GET_LEFT_MENU.getTest(), itemName);
+        clickLeftMenuItem(itemName);
     }
 
     @When("^Top Tab is ([^\"]*)$")
     public void check_top_menu_item(String itemName) throws Throwable {
-        executeJsTest(MenuTests.GET_TOP_TAB.getTest(), itemName);
+        clickTopMenuItem(itemName);
     }
 
     @Then("^View title is '(.*)'$")

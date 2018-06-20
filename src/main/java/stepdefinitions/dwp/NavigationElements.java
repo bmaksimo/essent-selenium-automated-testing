@@ -18,37 +18,46 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public abstract class NavigationElements extends DwpScenario  {
-    private static final String ITEM_PARAM = "{item}";
-    private static final String LINK_PARAM = "{link}";
-    private static final String LEFT_ITEM_XPATH = "//a[@id='{item}']";
-
-
-    private static final String TOP_MENU_ITEM_ELEMENT = "TOP_MENU_{item}_ITEM_ELEMENT";
-    private static final String TOP_MENU_ITEM_QUERY = "//div[@class='top-menu']/sub-menu/sub-menu-link/a[@id='{link}']";
 
     private class ClickLeftTab implements Predicate<String> {
         @Override
         public boolean test(String label) {
             String kebabCaseLabel = label.replaceAll("\\s", "-").toLowerCase();
             Map<String, String> options = new HashMap<>();
-            options.put("menu",kebabCaseLabel);
-            boolean result = executeJavascriptTest("TrGetLeftMenu", options);
-            return result;
+            options.put("menu", kebabCaseLabel);
+            boolean success = executeJavascriptTest("TrGetLeftMenu", options);
+            return success;
         }
     }
+
+    private class ClickTopAction implements Predicate<String> {
+        @Override
+        public boolean test(String name) {
+            Map<String, String> options = new HashMap<>();
+            options.put("name", name);
+            boolean success = executeJavascriptTest("TrGetTopAction", options);
+            return success;
+        }
+    }
+
+    private class ClickPlusAction implements Predicate<String> {
+        @Override
+        public boolean test(String path) {
+            Map<String, String> options = new HashMap<>();
+            options.put("path", path);
+            boolean success = executeJavascriptTest("TrPlusMenuSelectAction", options);
+            return success;
+        }
+    }
+
 
     private class VisitTopItem implements Predicate<String> {
         @Override
         public boolean test(String label) {
-            TopMenuItems topTab = TopMenuItems.get(label);
-            String elementKey = TOP_MENU_ITEM_ELEMENT.replace(ITEM_PARAM, topTab.getLabel());
-            String elementQuery = TOP_MENU_ITEM_QUERY.replace(LINK_PARAM, topTab.getLink());
-            Model.Execution execution = newExecution().element(elementKey,
-                new Model.Element().search("XPATH").query(elementQuery));
-            execution.flow()
-                .step(new Model.Step().action(Action.CLICK).element(elementKey))
-                .step(new Model.Step().action(Action.SLEEP).sleepInMillis(2500));
-            return execute(webDriver.getDriver(), execution);
+            Map<String, String> options = new HashMap<>();
+            options.put("label", label);
+            boolean success = executeJavascriptTest("TrGetTopTab", options);
+            return success;
         }
     }
 
@@ -74,5 +83,16 @@ public abstract class NavigationElements extends DwpScenario  {
             success, is(true));
     }
 
+    protected void clickTopAction(String name) {
+        boolean success = new ClickTopAction().test(name);
+        assertThat(String.format("Top Menu item %s was not available.", name),
+            success, is(true));
+    }
+
+    protected void clickPlusAction(String path) {
+        boolean success = new ClickPlusAction().test(path);
+        assertThat(String.format("Plus Menu Path %s undefined.", path),
+            success, is(true));
+    }
 
 }
