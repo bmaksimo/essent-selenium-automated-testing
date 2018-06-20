@@ -6,10 +6,12 @@ import com.essent.testing.dwp.menu.model.DwpLeftMenu;
 import com.essent.testing.dwp.menu.model.TopMenuItems;
 import com.essent.testing.util.ResourceUtils;
 import com.google.gson.Gson;
+import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.io.FileUtils;
 
@@ -52,7 +54,6 @@ public class JavascriptTestRunnerTest extends DwpScenario {
 
     @When("^I smoke test all Javascript functions$")
     public void iRunAllJavascriptFunctions() throws Throwable {
-        testTrMenuHasLinkId();
         testTrGetApplicationState();
         testTrEvaluateXpath();
         testTrContentPageContainsTitle();
@@ -61,16 +62,13 @@ public class JavascriptTestRunnerTest extends DwpScenario {
         testTrPlusMenuHasItem();
     }
 
-    private void testTrMenuHasLinkId() {
+    @Then("^Menu ([^\"]*) has link id ([^\"]*)$")
+    public void menuHasLinkId(String menu, String linkId) throws Throwable {
         Map<String, String> jsOptions = new HashMap<>();
-        jsOptions.put("menu", "mainMenu");
-        jsOptions.put("linkId", "sales-marketing-link");
-        executeJavascriptMethod("TrMenuHasLinkId", jsOptions);
-
-        Map<String, String> menuHasLinkIdOptions = new HashMap<>();
-        menuHasLinkIdOptions.put("linkId", TopMenuItems.MARKETTRANSACTIONS_DASHBOARD.getLink());
-        menuHasLinkIdOptions.put("menu", "subMenu");
-        executeJavascriptMethod("TrMenuHasLinkId", menuHasLinkIdOptions);
+        jsOptions.put("menu", menu);
+        jsOptions.put("linkId", linkId);
+        boolean result = executeJavascriptTest("TrMenuHasLinkId", jsOptions);
+        assertThat(String.format("%s hasn't link id %s", menu, linkId), result, is(true));
     }
 
     private void testTrGetApplicationState() {
@@ -109,4 +107,6 @@ public class JavascriptTestRunnerTest extends DwpScenario {
         plusMenuItemOptions.put("position", plusPosition);
         executeJavascriptMethod("TrPlusMenuHasItem", plusMenuItemOptions);
     }
+
+
 }

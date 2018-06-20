@@ -6,7 +6,8 @@ Feature: Javascript using in DWP testing
         Given I optionally discard a previous flow:
 
     Scenario: We can access the main filter elements
-        Given Left Menu Item is Sales Marketing
-        Then I smoke test all Javascript functions
+        When Left Menu Item is Sales Marketing
 
-        ##Then I see the filter input on the right part of main page
+        Then  Menu mainMenu has link id sales-marketing-link
+        And   Menu subMenu has link id market-transactions-dashboard-link
+        And   I smoke test all Javascript functions

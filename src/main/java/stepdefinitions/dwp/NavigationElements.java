@@ -8,7 +8,9 @@ import com.essent.testing.dwp.menu.model.TopMenuItems;
 import cucumber.api.DataTable;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -25,20 +27,15 @@ public abstract class NavigationElements extends DwpScenario  {
     private static final String TOP_MENU_ITEM_QUERY = "//div[@class='top-menu']/sub-menu/sub-menu-link/a[@id='{link}']";
 
     private class ClickLeftTab implements Predicate<String> {
-
         @Override
         public boolean test(String label) {
-            DwpLeftMenu leftTab = DwpLeftMenu.get(label);
-            String query = LEFT_ITEM_XPATH.replace(ITEM_PARAM, leftTab.getMenuItemLink());
-            Model.Execution execution = newExecution().element("DWP_LEFT_MENU_ITEM",
-                new Model.Element().search("XPATH").query(query));
-            execution.flow()
-                .step(new Model.Step().action(Action.CLICK).element("DWP_LEFT_MENU_ITEM"))
-                .step(new Model.Step().action(Action.SLEEP).sleepInMillis(2500));
-            return execute(webDriver.getDriver(), execution);
+            String kebabCaseLabel = label.replaceAll("\\s", "-").toLowerCase();
+            Map<String, String> options = new HashMap<>();
+            options.put("menu",kebabCaseLabel);
+            boolean result = executeJavascriptTest("TrGetLeftMenu", options);
+            return result;
         }
     }
-
 
     private class VisitTopItem implements Predicate<String> {
         @Override
@@ -56,7 +53,6 @@ public abstract class NavigationElements extends DwpScenario  {
     }
 
     protected void visitLeftMenuItems(DataTable menuItems) throws Throwable {
-
         List<String> leftMenuItems = menuItems.asList(String.class);
         List<String> failedToVisitTabs = leftMenuItems.stream().filter(
                 new ClickLeftTab().negate()).collect(Collectors.toList());
