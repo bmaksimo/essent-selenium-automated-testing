@@ -21,7 +21,7 @@ import static com.essent.automation.autocrat.Action.REQUIRE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class BasicFilterScenarios extends NavigationElements {
+public class FilterElements extends NavigationElements {
 
     private static final String FILTER_BUTTON_ELEMENT = "FILTER_BUTTON_ELEMENT";
     private static final String FILTER_BUTTON_ELEMENT_QUERY = ".icon-filters";
@@ -32,10 +32,10 @@ public class BasicFilterScenarios extends NavigationElements {
         registerActiveScenario(scenario);
     }
 
-    private class TogggleFilterMode implements Predicate<BasicFilterScenarios> {
+    private class TogggleFilterMode implements Predicate<FilterElements> {
 
         @Override
-        public boolean test(BasicFilterScenarios param) {
+        public boolean test(FilterElements param) {
             Model.Execution execution = newExecution().element(FILTER_BUTTON_ELEMENT, new Model.Element().search("SELECTOR").query(FILTER_BUTTON_ELEMENT_QUERY));
             execution
                 .flow()

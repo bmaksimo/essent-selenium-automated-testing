@@ -27,7 +27,7 @@ public class AssignmentScenario extends DwpScenario {
 
     @When("^Select the ([^\"]*) element and click on the link in the ([^\"]*) column")
     public void select_element_from_list(String ordinal, String column) throws Throwable {
-        int position = Integer.parseInt(ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", ""));
+        String position = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
 
         executeJsTest(MenuTests.GET_COLUMN_INDEX.getTest(), column, "" + position);
     }

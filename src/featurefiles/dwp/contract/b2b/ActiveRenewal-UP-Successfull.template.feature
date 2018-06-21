@@ -33,7 +33,6 @@ Feature: Test of active renewal of business contract.
         #Chris
         And  Cockpit item is Market Transactions
         And  View is Market Ttansactions
-
         #Verify 3 contract acceptance criteria for a renewal.
         #Shluld be no one of following Market Transactions:
         #1) Loss
@@ -64,9 +63,10 @@ Feature: Test of active renewal of business contract.
         And  Filter element Account number is 6574
         And  Filter element 'End date from' is '${today} + 3months'
         And  Filter element 'End date to' is '${today} +  4months'
-        And  1st List element with
+        And  1st List element with 5
             |column                     | value           |
             |COMPANY NAME & CONTACT     | Cavamil  (6574) |
+        #Chris
         And List Plus Action is RENEW
         Then Submit Card is RENEWAL DETAILS
 

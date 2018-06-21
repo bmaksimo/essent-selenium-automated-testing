@@ -25,14 +25,9 @@ Feature: Test the passive renewal of business contract.
 
     Background:
         Given   I logged in in DWP as BusinessDeskB2B
-         #Valid parameters are 'N(min|sec)'
-        And Recent Time interval is '5min' backward
     Scenario:
-        When Left Tab is Contracting
-        And  Top Tab is Contracts
-        And  Top Action is Plus Menu
-        And  Plus Menu is Contracting - UP/TC2 - TO RENEW CONTRACTS
-        Then View is UP-TC2 - to renew contracts
+        When Plus Menu is "Contracting -> UP/TC2 - to renew contracts"
+        Then View List Header is "UP-TC2 - to renew contracts"
 
         #Selecting and submitting to renew contracts
         When Top Action is Filter
@@ -54,7 +49,7 @@ Feature: Test the passive renewal of business contract.
         |TYPE & (RENEW) STATUS      | Sales Signed (Passive renewal (with communication)) |
         #Confirming to renew contracts
         When   Top Action is Plus Menu
-        And   Plus Menu is UP/TC2 - Passive renewal quotes
+        And   Plus Menu is "Contracting -> UP/TC2 - Passive renewal quotes"
         Then  View is UP/TC2 - Passive Renewal quotes
         And   Select rows with 'ACCOUNT & CONTACT PERSON' column having $SelectedContracts with
         |column                     | value                             |
@@ -81,8 +76,3 @@ Feature: Test the passive renewal of business contract.
          |column                       | value                             |
          |DOCUMENT TYPE                | Passive renewal communication     |
          |CREATION DATE                | $recentTime                       |
-
-
-
-
-

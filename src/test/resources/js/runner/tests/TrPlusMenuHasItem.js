@@ -6,7 +6,7 @@ class TrPlusMenuHasItem extends TestRunnerDwp {
      * * @param {function} callback - The Java callback that handles the result.
      *
      * Java example:
-     * assertThat(executeJsTest("new TrGetColumnIndexList({menu: 'mainMenu', linkId: 'sales-marketing-link', arguments[arguments.length - 1]);", link), is(true));
+     * assertThat(executeJsTest("new TrClickTableCellUrl({menu: 'mainMenu', linkId: 'sales-marketing-link', arguments[arguments.length - 1]);", link), is(true));
      */
 
     constructor(options, callback) {

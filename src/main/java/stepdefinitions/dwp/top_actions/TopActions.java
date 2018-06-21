@@ -36,6 +36,11 @@ public class TopActions extends NavigationElements {
         clickTopAction(action);
     }
 
+    @And("^Top Arrow button is ([^\"]*)$")
+    public void clickTopArrow(String arrow) throws Throwable {
+        super.clickTopArrow(arrow.toLowerCase());
+    }
+
     @Override
     @After("@SMOKE, @QUOTE, @MENU, @DWP_SETUP, @FILTER, @RENEWAL")
     public void tearDown() throws Exception {

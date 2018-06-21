@@ -276,6 +276,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
      * @return
      */
     public boolean executeJavascriptTest(String registeredJsClass, Object options) {
+        waitUntilAngularPageIsLoaded();
         String executeTest = SeleniumJsTestExpanderService.get().expandToJavascript(registeredJsClass, options);
         logger.info("STEP:");
         logger.info(" - ACTION: EXEC_JAVASCRIPT_TEST");

@@ -46,7 +46,16 @@ public abstract class NavigationElements extends DwpScenario  {
             Map<String, String> options = new HashMap<>();
             options.put("path", path);
             boolean success = executeJavascriptTest("TrPlusMenuSelectAction", options);
-            webDriver.waitUntilAngularPageIsLoaded();
+            return success;
+        }
+    }
+
+    private class ClickTopArrowButton implements Predicate<String> {
+        @Override
+        public boolean test(String arrow) {
+            Map<String, String> options = new HashMap<>();
+            options.put("arrow", arrow);
+            boolean success = executeJavascriptTest("TrArrowAction", options);
             return success;
         }
     }
@@ -57,7 +66,6 @@ public abstract class NavigationElements extends DwpScenario  {
             Map<String, String> options = new HashMap<>();
             options.put("label", label);
             boolean success = executeJavascriptTest("TrGetTopTab", options);
-            webDriver.waitUntilAngularPageIsLoaded();
             return success;
         }
     }
@@ -87,6 +95,12 @@ public abstract class NavigationElements extends DwpScenario  {
     protected void clickTopAction(String name) {
         boolean success = new ClickTopAction().test(name);
         assertThat(String.format("Top Menu item %s was not available.", name),
+            success, is(true));
+    }
+
+    protected void clickTopArrow(String arrow) throws Throwable {
+        boolean success = new ClickTopArrowButton().test(arrow);
+        assertThat(String.format("Top Arrow %s is undefined.", arrow),
             success, is(true));
     }
 

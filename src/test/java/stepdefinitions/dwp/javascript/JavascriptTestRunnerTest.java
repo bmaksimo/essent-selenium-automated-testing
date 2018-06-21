@@ -55,8 +55,6 @@ public class JavascriptTestRunnerTest extends DwpScenario {
     public void iRunAllJavascriptFunctions() throws Throwable {
         testTrGetApplicationState();
         testTrEvaluateXpath();
-        testTrContentPageContainsTitle();
-        testTrGetColumnIndexList();
     }
 
     @Then("^Menu ([^\"]*) has link id ([^\"]*)$")
@@ -71,30 +69,11 @@ public class JavascriptTestRunnerTest extends DwpScenario {
     private void testTrGetApplicationState() {
         Assert.assertTrue(executeJavascriptTest("TrGetApplicationState", null));
     }
+
     private void testTrEvaluateXpath() {
-        final String TOP_MENU_ITEM_QUERY = "//div[@class='top-menu']/sub-menu/sub-menu-link/a[@id='{link}']";
+        final String TOP_MENU_ITEM_QUERY = "//div[@class='top-menu']/sub-menu/sub-menu-link/a[@id='Market Transactions']";
         Map<String, String> xpathOptions = new HashMap<>();
         xpathOptions.put("xpath", TOP_MENU_ITEM_QUERY.replace("{link}", TopMenuItems.MARKETTRANSACTIONS_DASHBOARD.getLink()));
         Assert.assertTrue(executeJavascriptTest("TrEvaluateXpath", xpathOptions));
-    }
-    private void testTrContentPageContainsTitle() {
-        int sec = 5;
-        String title = "Quotation - Group tasks";
-        Map<String, Object> contentPageOptions = new HashMap<>();
-        contentPageOptions.put("seconds", sec);
-        contentPageOptions.put("title", title);
-        Assert.assertTrue(executeJavascriptTest("TrContentPageContainsTitle", contentPageOptions));
-    }
-    private void testTrGetLeftMenu() {
-        DwpLeftMenu item = DwpLeftMenu.get("Billing");
-        Map<String, Object> leftMenuOptions = new HashMap<>();
-        leftMenuOptions.put("menu", item.getLabel());
-        Assert.assertTrue(executeJavascriptTest("TrGetLeftMenu", leftMenuOptions));
-    }
-    private void testTrGetColumnIndexList() {
-        String columnIndex = "Name & Type & Subtype";
-        Map<String, String> columnIndexListOptions = new HashMap<>();
-        columnIndexListOptions.put("column", columnIndex);
-        Assert.assertTrue(executeJavascriptTest("TrGetColumnIndexList", columnIndexListOptions));
     }
 }
