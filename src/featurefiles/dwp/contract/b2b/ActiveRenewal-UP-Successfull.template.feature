@@ -22,12 +22,15 @@ Feature: Test of active renewal of business contract.
         When Left Tab is Contracting Switching
         And  Top Tab is Accounts
         And  Top Action is Filter
+        #Dmitry
         And  Filter element Account number is 6574
+        #Dmitry
         Then View is Accounts
 
         #Navigate to Cockpit
         When Select the 1st element and click on the link in the Account Number & Name column
         #items.filter(function(){return $(this).text().indexOf('Market Transactions') > -1;}).parent().click();
+        #Chris
         And  Cockpit item is Market Transactions
         And  View is Market Ttansactions
 
@@ -39,6 +42,7 @@ Feature: Test of active renewal of business contract.
         And  Top Action is Filter
         And  Filter element Module is LOSS
         #$(".list__empty").length === 0
+        #Chris
         And  View is empty
         And  Top Action is Filter
         And  Filter element Module is INITIATE STOP ACCESS
