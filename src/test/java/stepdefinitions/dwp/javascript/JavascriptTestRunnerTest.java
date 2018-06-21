@@ -2,13 +2,12 @@ package stepdefinitions.dwp.javascript;
 
 import com.billinghouse.javascript.model.Data;
 import com.essent.testing.dwp.DwpScenario;
-import com.essent.testing.dwp.menu.model.DwpLeftMenu;
-import com.essent.testing.dwp.menu.model.TopMenuItems;
 import com.essent.testing.util.ResourceUtils;
 import com.google.gson.Gson;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -30,7 +29,6 @@ public class JavascriptTestRunnerTest extends DwpScenario {
     @Before("@SMOKE")
     public void SetupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
-
     }
 
     @Given("^I deserialize DWP Test Data Json from file \"([^\"]*)\"$")
@@ -45,16 +43,9 @@ public class JavascriptTestRunnerTest extends DwpScenario {
         assertThat("data was not initialised", data, is(notNullValue()));
     }
 
-    @Override
-    @After("@SMOKE")
-    public void tearDown() throws Exception {
-        super.tearDown();
-    }
-
     @When("^I smoke test all Javascript functions$")
     public void iRunAllJavascriptFunctions() throws Throwable {
         testTrGetApplicationState();
-        testTrEvaluateXpath();
     }
 
     @Then("^Menu ([^\"]*) has link id ([^\"]*)$")
@@ -66,14 +57,20 @@ public class JavascriptTestRunnerTest extends DwpScenario {
         assertThat(String.format("%s hasn't link id %s", menu, linkId), success, is(true));
     }
 
+    @And("^Find web element bv Xpath \"([^\"]*)\"$")
+    public void findWebElementBvXpath(String query) throws Throwable {
+        Map<String, String> xpathOptions = new HashMap<>();
+        xpathOptions.put("xpath", query);
+        Assert.assertTrue(executeJavascriptTest("TrEvaluateXpath", xpathOptions));
+    }
+
     private void testTrGetApplicationState() {
         Assert.assertTrue(executeJavascriptTest("TrGetApplicationState", null));
     }
 
-    private void testTrEvaluateXpath() {
-        final String TOP_MENU_ITEM_QUERY = "//div[@class='top-menu']/sub-menu/sub-menu-link/a[@id='Market Transactions']";
-        Map<String, String> xpathOptions = new HashMap<>();
-        xpathOptions.put("xpath", TOP_MENU_ITEM_QUERY.replace("{link}", TopMenuItems.MARKETTRANSACTIONS_DASHBOARD.getLink()));
-        Assert.assertTrue(executeJavascriptTest("TrEvaluateXpath", xpathOptions));
+    @Override
+    @After("@SMOKE")
+    public void tearDown() throws Exception {
+        super.tearDown();
     }
 }
