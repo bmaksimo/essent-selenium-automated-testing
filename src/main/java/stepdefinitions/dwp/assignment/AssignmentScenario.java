@@ -32,10 +32,6 @@ public class AssignmentScenario extends DwpScenario {
         executeJsTest(MenuTests.GET_COLUMN_INDEX.getTest(), column, "" + position);
     }
 
-    @When("^Overview is ([^\"]*)")
-    public void check_overview_menu_item(String menuItem) throws Throwable {
-        executeJsTest(MenuTests.GET_OVERVIEW_MENU_INDEX.getTest(), menuItem);
-    }
 
     @When("^Category is ([^\"]*)")
     public void select_assignment_category(String itemName) throws  Throwable {

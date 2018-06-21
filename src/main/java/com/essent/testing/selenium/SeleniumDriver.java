@@ -222,6 +222,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
      * @return
      */
     public Map executeJavascriptMethod(String registeredJsClass, Object options) {
+        waitUntilAngularPageIsLoaded();
         String jsTestCall = SeleniumJsTestExpanderService.get().expandToJavascript(registeredJsClass, options);
         logger.info("STEP:");
         logger.info(" - ACTION: EVALUATE_JAVASCRIPT_METHOD");

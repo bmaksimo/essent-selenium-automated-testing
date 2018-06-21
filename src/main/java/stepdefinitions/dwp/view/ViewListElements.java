@@ -20,7 +20,7 @@ public class ViewListElements extends NavigationElements {
     private class CheckViewListHeader implements Predicate<String> {
         @Override
         public boolean test(String header) {
-            int sec = 5;
+            int sec = 7;
             Map<String, Object> options = new HashMap<>();
             options.put("schedule_seconds", sec);
             options.put("header", header);
