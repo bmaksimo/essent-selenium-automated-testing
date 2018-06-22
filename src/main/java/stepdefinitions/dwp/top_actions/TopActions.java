@@ -12,6 +12,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import gherkin.lexer.Th;
 import org.apache.commons.lang3.StringUtils;
 import stepdefinitions.dwp.NavigationElements;
 import stepdefinitions.dwp.tables.plus.Item;
@@ -40,6 +41,12 @@ public class TopActions extends NavigationElements {
     public void clickTopArrow(String arrow) throws Throwable {
         super.clickTopArrow(arrow.toLowerCase());
     }
+
+    @When("^Cockpit item is ([^\"]*)$")
+    public void checkCockpitItem(String item) throws Throwable {
+        clickCockpitItem(item);
+    }
+
 
     @Override
     @After("@SMOKE, @QUOTE, @MENU, @DWP_SETUP, @FILTER, @RENEWAL")

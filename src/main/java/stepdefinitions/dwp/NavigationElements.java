@@ -50,6 +50,16 @@ public abstract class NavigationElements extends DwpScenario  {
         }
     }
 
+    private class ClickCockpitItem implements Predicate<String> {
+        @Override
+        public boolean test(String item) {
+            Map<String, String> options = new HashMap<>();
+            options.put("item", item);
+            boolean success = executeJavascriptTest("TrGetCockpitItem", options);
+            return success;
+        }
+    }
+
     private class ClickTopArrowButton implements Predicate<String> {
         @Override
         public boolean test(String arrow) {
@@ -107,6 +117,12 @@ public abstract class NavigationElements extends DwpScenario  {
     protected void clickPlusAction(String path) {
         boolean success = new ClickPlusAction().test(path);
         assertThat(String.format("Plus Menu Path %s undefined.", path),
+            success, is(true));
+    }
+
+    protected void clickCocktipItem(String item) {
+        boolean success = new ClickCockpitItem().test(item);
+        assertThat(String.format("Cockpit item %s was not available.", item),
             success, is(true));
     }
 }
