@@ -27,7 +27,7 @@ Feature: Test of active renewal of business contract.
         #Dmitry
         Then View List Header is "Accounts"
 
-        Navigate to Cockpit
+        #Navigate to Cockpit
         When Click on link in View List at 1st row and "Account Number & Name" column
         #Chris
         And  Cockpit item is Market Transactions

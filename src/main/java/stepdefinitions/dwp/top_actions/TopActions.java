@@ -47,7 +47,6 @@ public class TopActions extends NavigationElements {
         clickCockpitItem(item);
     }
 
-
     @Override
     @After("@SMOKE, @QUOTE, @MENU, @DWP_SETUP, @FILTER, @RENEWAL")
     public void tearDown() throws Exception {

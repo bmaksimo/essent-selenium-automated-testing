@@ -1,10 +1,6 @@
 package stepdefinitions.dwp;
 
-import com.essent.automation.autocrat.Action;
-import com.essent.automation.autocrat.Model;
 import com.essent.testing.dwp.DwpScenario;
-import com.essent.testing.dwp.menu.model.DwpLeftMenu;
-import com.essent.testing.dwp.menu.model.TopMenuItems;
 import cucumber.api.DataTable;
 import org.apache.commons.lang3.StringUtils;
 
@@ -120,7 +116,7 @@ public abstract class NavigationElements extends DwpScenario  {
             success, is(true));
     }
 
-    protected void clickCocktipItem(String item) {
+    protected void clickCockpitItem(String item) {
         boolean success = new ClickCockpitItem().test(item);
         assertThat(String.format("Cockpit item %s was not available.", item),
             success, is(true));
