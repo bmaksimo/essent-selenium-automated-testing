@@ -4,9 +4,11 @@ import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.testing.dwp.model.FilterElementConverter;
 import cucumber.api.DataTable;
+import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
 import stepdefinitions.dwp.NavigationElements;
@@ -27,7 +29,7 @@ public class FilterElements extends NavigationElements {
     private static final String FILTER_BUTTON_ELEMENT_QUERY = ".icon-filters";
 
 
-    @Before("@FILTER, @SMOKE")
+    @Before("@SMOKE, @QUOTE, @MENU, @DWP_SETUP, @FILTER, @RENEWAL")
     public void SetupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -81,8 +83,15 @@ public class FilterElements extends NavigationElements {
             StringUtils.join(failingElements, ";")), success, is(true));
     }
 
+    @And("^Filter element \"([^\"]*)\" is \"([^\"]*)\"$")
+    public void filterElementIs(String arg0, String arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+
     @Override
-    @After("@FILTER, @SMOKE")
+    @After("@SMOKE, @QUOTE, @MENU, @DWP_SETUP, @FILTER, @RENEWAL")
     public void tearDown() throws Exception {
         super.tearDown();
     }

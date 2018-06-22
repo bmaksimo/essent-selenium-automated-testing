@@ -1,5 +1,6 @@
 package stepdefinitions.dwp.view;
 
+import com.billinghouse.javascript.testrunner.dwp.menu.MenuTests;
 import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -47,7 +48,7 @@ public class ViewListElements extends NavigationElements {
             success, is(true));
     }
 
-    @When("^Click on View List at ([^\"]*) row and \"([^\"]*)\" column$")
+    @When("^Click on link in View List at ([^\"]*) row and \"([^\"]*)\" column$")
     public void clickOnViewListAtRowAndColumn(String ordinal, String column) throws Throwable {
         String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
         Map<String, String> columnIndexListOptions = new HashMap<>();

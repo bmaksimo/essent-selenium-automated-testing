@@ -24,15 +24,6 @@ public class AssignmentScenario extends DwpScenario {
         tidyUp();
     }
 
-
-    @When("^Select the ([^\"]*) element and click on the link in the ([^\"]*) column")
-    public void select_element_from_list(String ordinal, String column) throws Throwable {
-        String position = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
-
-        executeJsTest(MenuTests.GET_COLUMN_INDEX.getTest(), column, "" + position);
-    }
-
-
     @When("^Category is ([^\"]*)")
     public void select_assignment_category(String itemName) throws  Throwable {
         executeJsTest(MenuTests.SELECT_ASSIGNMENT_CATEGORY.getTest(), itemName);
