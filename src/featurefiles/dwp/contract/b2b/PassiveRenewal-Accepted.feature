@@ -26,7 +26,8 @@ Feature: Test the passive renewal of business contract.
     Background:
         Given   I logged in in DWP as BusinessDeskB2B
     Scenario:
-        When Plus Menu is "Contracting -> UP/TC2 - to renew contracts"
+        When Top Action is Plus Menu
+        And Plus Menu is "Contracting -> UP/TC2 - to renew contracts"
         Then View List Header is "UP-TC2 - to renew contracts"
 
         #Selecting and submitting to renew contracts

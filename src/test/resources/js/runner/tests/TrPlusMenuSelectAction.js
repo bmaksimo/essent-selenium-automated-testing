@@ -23,18 +23,10 @@ class TrPlusMenuSelectAction extends TestRunnerBase {
         const options = this.options;
         result.status = 'UNDEFINED';
         result.reason = 'Not executed';
-
         let items = options.path.split(PATH_PATTERN);
         let path = items.slice(0, items.length - 1);
-        console.log('--PATH: ' + path);
         let actionPath = items[items.length - 1];
-        console.log('--ACTION: ' + actionPath);
-        let i = 0;
-        let match;
-        do {
-            match = this.findMenu(undefined, path[i++]);
-        }
-        while (i < path.length && match != undefined);
+        let match = this.findMenu(undefined, path);
         let action = this.findAction(match, actionPath);
         if(action == undefined) {
             result.status = 'FAILED';
@@ -44,47 +36,41 @@ class TrPlusMenuSelectAction extends TestRunnerBase {
             result.reason = '';
             $(action).trigger('click');
         }
-        setTimeout(()=> {
-            this.resolveCallback(result);
-        }, 500);
+        this.resolveCallback(result);
+
     }
 
-    findAction(match, actionPath) {
-        console.log('--MATCH: ' + match);
-        console.log('--PATH: ' + actionPath);
-        let resultAction = undefined;
-        if (match != undefined) {
-            match.find('menu-link').each((index, element) => {
-                if ($(element).attr('label') === actionPath) {
-                    resultAction = $(element).find('.accordion-button')[0];
-                    console.log("-ELEMENT: " + element);
-                    return false;
-                }
-            });
+    findAction(accordion, actionLabel) {
+        if (accordion != undefined) {
+            let resultAction = $(accordion).find("[label='" + actionLabel + "']").find('.accordion-button');
+            if(resultAction.index() == 0) {
+                return resultAction;
+            }
+        } 
+        return undefined;
+    }
+
+    findMenu(item, menu) {
+        if(menu == undefined) {
+            return undefined;
         }
-        console.log('--ACTION:' + resultAction);
-        return resultAction;
-    }
-
-    findMenu(match, menu) {
-        console.log('--MATCH: ' + match);
-        console.log('--MENU: ' + menu);
-        let result = undefined;
+        let menuItem = menu.shift();
+        if(menuItem == undefined) {
+            return item;
+        }
         let context;
-        if(match != undefined) {
-            context = match.find('labeled-accordion-wrapper');
+        if(item != undefined) {
+            context = $(item).find('labeled-accordion-wrapper');
         } else {
             context = $('labeled-accordion-wrapper');
         }
-        console.log('--CONTEXT: ' + context);
-        context.each((index, element) => {
-            if ($(element).attr('label') === menu) {
-                $(element).find('a').trigger('click');
-                result = $(element);
-                return false;
-            }
+        context = context.filter((i, e)=>{
+            return $(e).attr('label') === menuItem;
         });
-        console.log('--RESULT: ' + result);
-        return result;
+        if (context.index() >= 0) {
+            $(context[0]).find('a')[0].click();
+            return this.findMenu(context[0], menu);
+        }
+        return undefined;
     }
 }

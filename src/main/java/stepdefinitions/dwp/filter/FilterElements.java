@@ -13,7 +13,9 @@ import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
 import stepdefinitions.dwp.NavigationElements;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -32,6 +34,13 @@ public class FilterElements extends NavigationElements {
     @Before("@SMOKE, @QUOTE, @MENU, @DWP_SETUP, @FILTER, @RENEWAL")
     public void SetupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
+    }
+
+    private class ApplySingleFilter implements Predicate<Map> {
+        @Override
+        public boolean test(Map options) {
+            return executeJavascriptTest("TrApplyFilterInput", options);
+        }
     }
 
     private class TogggleFilterMode implements Predicate<FilterElements> {
@@ -84,9 +93,13 @@ public class FilterElements extends NavigationElements {
     }
 
     @And("^Filter element \"([^\"]*)\" is \"([^\"]*)\"$")
-    public void filterElementIs(String arg0, String arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void filterElementIs(String label, String value) throws Throwable {
+        Map<String, String> options = new HashMap<>();
+        options.put("label", label);
+        options.put("value", value);
+        boolean success = new ApplySingleFilter().test(options);
+        assertThat(String.format("Filter element %s is undefined.", label),
+            success, is(true));
     }
 
 

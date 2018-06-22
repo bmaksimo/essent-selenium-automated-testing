@@ -149,7 +149,6 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     }
 
     public void injectJavaScriptTestRunner() {
-
         // old: functions based
         String testRunnerPath = ResourceUtils.toPath(PATH + TEST_RUNNER);
         File testRunnerFile = new File(testRunnerPath);

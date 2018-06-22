@@ -21,7 +21,7 @@ Feature: Test of active renewal of business contract.
         #Navigate to Customer Account
         When Left Tab is Contracting Switching
         And  Top Tab is Accounts
-        And  Top Action is Filter
+        And  Top Action is Filters
         #Dmitry
         And  Filter element "Account number" is "6574"
         #Dmitry
@@ -37,17 +37,17 @@ Feature: Test of active renewal of business contract.
         #1) Loss
         #2) Initiate stop access - Residential drop
         #3) Non-Residential End-of-Contract
-        And  Top Action is Filter
+        And  Top Action is Filters
         And  Filter element "Module" is "LOSS"
         #$(".list__empty").length === 0
         #Chris
         And  View List is empty
-        And  Top Action is Filter
+        And  Top Action is Filters
         And  Filter element "Module" is "INITIATE STOP ACCESS"
         And  Filter element "Label" is "Residential Drop"
         #$(".list__empty").length === 0
         And  View List is empty
-        And  Top Action is Filter
+        And  Top Action is Filters
         And  Filter element "Module" is "INITIATE STOP ACCESS"
         And  Filter element "Label" is "Non-Residential End-of-Contract"
         #$(".list__empty").length === 0
@@ -57,7 +57,7 @@ Feature: Test of active renewal of business contract.
         When Top Action is Home
         And Left Tab is Contracting Switching
         And Top Tab is Contracts
-        And Top Action is Filter
+        And Top Action is Filters
         And  Filter element "Contract type" is "All values"
         And  Filter element "Account number" is "6574"
         And  Filter element "End date from" is "${today} + 3months"
