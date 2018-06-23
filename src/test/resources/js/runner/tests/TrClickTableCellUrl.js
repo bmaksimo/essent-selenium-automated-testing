@@ -1,13 +1,14 @@
 class TrClickTableCellUrl extends TestRunnerBase {
 
     /**
-     * Checks if a menu-item is present in the DOM
+     * Checks if Table Cell is present in the DOM
+     *  and clicks the Url in the table cell if available.
      *
      * * @param {object} options - Arguments passed from Java.
      * * @param {function} callback - The Java callback that handles the result.
      *
      * Java example:
-     * assertThat(executeJsTest("new TrClickTableCellUrl({column: 'Account & EAN', index: '1', arguments[arguments.length - 1]);", link), is(true));
+     * boolean result = executeJavascriptTest("TrClickTableCellUrl", options);
      */
 
     constructor(options, callback) {

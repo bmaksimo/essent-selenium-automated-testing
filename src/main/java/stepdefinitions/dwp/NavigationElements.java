@@ -121,4 +121,5 @@ public abstract class NavigationElements extends DwpScenario  {
         assertThat(String.format("Cockpit item %s was not available.", item),
             success, is(true));
     }
+
 }

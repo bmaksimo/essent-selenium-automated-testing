@@ -1,13 +1,13 @@
-class TrClickTableCellUrl extends TestRunnerBase {
+class TrGetTableModel extends TestRunnerBase {
 
     /**
-     * Checks if a menu-item is present in the DOM
+     *   Fetches DWP table model and returns to Java as JSon object
      *
      * * @param {object} options - Arguments passed from Java.
      * * @param {function} callback - The Java callback that handles the result.
      *
      * Java example:
-     * assertThat(executeJsTest("new TrClickTableCellUrl({column: 'Account & EAN', index: '1', arguments[arguments.length - 1]);", link), is(true));
+     * boolean result = executeJavascriptTest("TrGetTableModel", options);
      */
 
     constructor(options, callback) {
@@ -15,36 +15,17 @@ class TrClickTableCellUrl extends TestRunnerBase {
     }
 
     run(options, result) {
-        result.status = 'FAILED';
-        result.reason = 'Not executed';
-        result.column = {"index": -1, "caption": options.column};
-        let caption = options.column;
-        let row = parseInt(options.index) * 2 - 1;
-        let index = $(".list__content th:contains('" + caption + "')").index();
-        if (index < 0) {
-            result.status = 'FAILED';
-            result.reason = 'Column ' + caption + ' was not found.';
-        } else if ($("#rows tr:nth-child(" + row + ")") < 0) {
-            result.status = 'FAILED';
-            result.reason = 'Row ' +  caption + ' was not found.';
-        } else {
-            let query = "#rows tr:nth-child(" + row + ") td:nth-child(" + ++index + ") div a";
-            let elem = $(query);
-            console.log("--QUERY: " + query);
-            console.log("--CELL TEXT: " + elem.text());
-            console.log("--ELEM index(): " + elem.index());
-            if(elem.index()  > -1) {
-                console.log(elem.text);
-                elem.click();
-                result.status = 'PASSED';
-                result.column.index = index;
-                result.reason = '';
-            } else {
-                result.reason  = 'Navigation, click on ' + elem.text();
-                result.column  = options.column;
-            }
-
-        }
+        result.status = 'PASSED';
+        result.reason = '';
+        result.column_names = [];
+        result.rows = [];
+        $('.list__content th').filter((i, e)=>{result.column_names.push($(e).text()); return true;});
+        let rows = $('.list__content tr:not(".row__actions, .list__column-headers")');
+        result.rows = $(rows).map((i, e) => {
+            return  $(e).find('td').map((ii, ee) => {
+                return $(ee).text();
+            });
+        });
         this.resolveCallback(result);
     }
 }

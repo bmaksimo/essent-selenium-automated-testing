@@ -210,9 +210,8 @@ public class HHQuoteScenarios extends DwpScenario {
         //int position = Integer.parseInt(ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", ""));
         Map<String, String> options = new HashMap<>();
         options.put("column", column);
-        Map result = executeJavascriptMethod("TrGetColumnIndexList", options);
-        boolean testResult = BooleanUtils.toBoolean((String) result.get("status"), "PASSED", "FAILED");
-        assertThat(testResult, is(true));
+        boolean success = executeJavascriptTest("TrGetColumnIndexList", options);
+        assertThat(success, is(true));
     }
 
     @And("^A quote with type \"([^\"]*)\" and status \"([^\"]*)\" is created$")

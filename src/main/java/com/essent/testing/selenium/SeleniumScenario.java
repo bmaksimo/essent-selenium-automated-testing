@@ -1,5 +1,6 @@
 package com.essent.testing.selenium;
 
+import com.google.gson.Gson;
 import org.junit.AfterClass;
 
 import java.math.BigDecimal;
@@ -84,8 +85,10 @@ public class SeleniumScenario {
     }
 
 
-    public static Map executeJavascriptMethod(String registeredJsClass, Object options)  {
-        return webDriver.executeJavascriptMethod(registeredJsClass, options);
+    public static String executeJavascriptMethod(String registeredJsClass, Object options)  {
+        Map map = webDriver.executeJavascriptMethod(registeredJsClass, options);
+        String json = new Gson().toJson(map);
+        return json;
     }
 
     @AfterClass

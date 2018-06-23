@@ -9,7 +9,8 @@ Feature: Javascript DWP testing
         And Plus Menu is "Sales -> UP/TC2 -> Create new quote (B2B)"
         And Top Arrow button is Back
         And Left Menu Item is Sales Marketing
-        And   Top Menu Item is Market Transactions
+        And Top Menu Item is Market Transactions
         And Top Action is Filters
-        And  Filter element "EAN" is "541444625522734400"
-        And  Filter element "Module" is "string:ESSENT IS HIJACKED"
+        And Filter element "EAN" input is "541444625522734400"
+        And Filter element "Module" selection is "ESSENT IS HIJACKED"
+        Then View List is empty

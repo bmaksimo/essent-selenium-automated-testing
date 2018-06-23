@@ -92,14 +92,19 @@ public class FilterElements extends NavigationElements {
             StringUtils.join(failingElements, ";")), success, is(true));
     }
 
-    @And("^Filter element \"([^\"]*)\" is \"([^\"]*)\"$")
-    public void filterElementIs(String label, String value) throws Throwable {
+    @And("^Filter element \"([^\"]*)\" input is \"([^\"]*)\"$")
+    public void setFilterInput(String label, String value) throws Throwable {
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
         options.put("value", value);
         boolean success = new ApplySingleFilter().test(options);
         assertThat(String.format("Filter element %s is undefined.", label),
             success, is(true));
+    }
+
+    @And("^Filter element \"([^\"]*)\" selection is \"([^\"]*)\"$")
+    public void setFilterSelection(String label, String value) throws Throwable {
+        setFilterInput(label, String.format("string:%s", value));
     }
 
 
