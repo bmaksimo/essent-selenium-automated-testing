@@ -1,6 +1,5 @@
 package com.essent.testing.selenium;
 
-import com.google.gson.Gson;
 import org.junit.AfterClass;
 
 import java.math.BigDecimal;
@@ -53,17 +52,6 @@ public class SeleniumScenario {
     }
 
     /**
-     * @deprecated
-     * Use {@link #executeJavascriptMethod(String, Object)}
-     * @param callTestRunnerTemplate
-     * @param param
-     * @return
-     */
-    protected boolean executeJsTest(String callTestRunnerTemplate, String ...param)  {
-        return webDriver.executeJsTest(callTestRunnerTemplate, param);
-    }
-
-    /**
      *
      * @param registeredJsClass
      * @param options
@@ -73,22 +61,9 @@ public class SeleniumScenario {
         return webDriver.executeJavascriptTest(registeredJsClass, options);
     }
 
-    /**
-     * @deprecated
-     * Use {@link #executeJavascriptMethod(String, Object)}
-     * @param callJsMethod
-     * @param param
-     * @return
-     */
-    public static Map executeJsMethod(String callJsMethod, String... param) {
-        return webDriver.executeJsMethod(callJsMethod, param);
-    }
-
-
-    public static String executeJavascriptMethod(String registeredJsClass, Object options)  {
+    public static Map executeJavascriptMethod(String registeredJsClass, Object options)  {
         Map map = webDriver.executeJavascriptMethod(registeredJsClass, options);
-        String json = new Gson().toJson(map);
-        return json;
+        return map;
     }
 
     @AfterClass

@@ -23,7 +23,7 @@ class TrGetTableModel extends TestRunnerBase {
         let rows = $('.list__content tr:not(".row__actions, .list__column-headers")');
         result.rows = $(rows).map((i, e) => {
             return  $(e).find('td').map((ii, ee) => {
-                return $(ee).text();
+                return $(ee).text().trim();
             });
         });
         this.resolveCallback(result);

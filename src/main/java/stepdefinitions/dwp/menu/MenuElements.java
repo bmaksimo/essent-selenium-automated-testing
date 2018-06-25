@@ -1,7 +1,6 @@
 package stepdefinitions.dwp.menu;
 
 import com.billinghouse.javascript.model.options.TrMenuHasLinkIdOptions;
-import com.billinghouse.javascript.testrunner.dwp.menu.MenuTests;
 import com.essent.testing.dwp.menu.model.DwpLeftMenu;
 import com.essent.testing.dwp.menu.model.TopMenuItems;
 import cucumber.api.DataTable;
@@ -35,8 +34,10 @@ public class MenuElements extends NavigationElements {
         List<String> failedMenuItems = menuItems.asList(String.class).stream()
             .filter(
             menuItem -> {
-                return !executeJsTest(MenuTests.LEFT_MENU_ITEM_TEST.getTest(),
-                        DwpLeftMenu.get(menuItem).getMenuItemLink());
+                Map<String, String> jsOptions = new HashMap<>();
+                jsOptions.put("menu", "mainMenu");
+                jsOptions.put("linkId", DwpLeftMenu.get(menuItem).getMenuItemLink());
+                return !executeJavascriptTest("TrMenuHasLinkId", jsOptions);
             })
             .collect(Collectors.toList());
         assertThat("The following left menu items were not available: "
@@ -93,12 +94,15 @@ public class MenuElements extends NavigationElements {
     }
 
     @And("^The following Plus menu items are available at positions:$")
-    public void thesePlusMenuItemsAreAvailableAtTheFollowingPositions(DataTable plusItems) throws Throwable {
+    public void checkPositionsOfPlusMenuItems(DataTable plusItems) throws Throwable {
         final List<String> failedItems = plusItems.asList(Item.class)
             .stream()
             .filter(
              item -> {
-                 return !executeJsTest(MenuTests.PLUS_MENU_ITEM_TEST.getTest(), item.getItem(), ""+item.getPosition());
+                 Map<String, Object> options = new HashMap<>();
+                 options.put("item", item.getItem());
+                 options.put("position", item.getPosition());
+                 return !executeJavascriptTest("TrPlusMenuHasItem", options);
              })
             .map(item -> {
                 return item.getItem();

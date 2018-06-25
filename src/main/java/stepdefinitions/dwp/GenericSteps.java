@@ -22,25 +22,12 @@ import static org.junit.Assert.assertNotNull;
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 public class GenericSteps extends DwpScenario {
 
-    @Before("@QUOTE, @MENU, @DWP_SETUP, @CORE_SUPERNOVA, @ASSIGNMENT, @FILTER, @SMOKE")
+    @Before("@QUOTE, @MENU, @DWP_SETUP, @CORE_SUPERNOVA, @FILTER, @SMOKE")
     public void SetupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
         setUpWebDriver();
         isDwpRunning(BASE_URL);
     }
-
-    @After({"@QUOTE, @MENU, @DWP_TEARDOWN, @CORE_SUPERNOVA, @ASSIGNMENT, @FILTER, @SMOKE"})
-    public void tearDown() throws Exception {
-        tidyUp();
-    }
-
-    @After({"@QUOTE, @SMOKE"})
-    public void failedScenario(Scenario scenario) throws Exception {
-        if (scenario.isFailed()) {
-            logger().error("The scenario '" + scenario.getName() + "' failed");
-        }
-    }
-
 
     @Given("^I logged in in DWP as ([^\"]*)$")
     public void loginAs(String userName) throws Throwable {
@@ -78,5 +65,17 @@ public class GenericSteps extends DwpScenario {
         flow.steps(new Model.Step().action(Action.CLICK).element("DWP_MODAL_CANCEL").breakFlowOnFailure(false),
             new Model.Step().action(Action.REQUIRE_ABSENT).element("DWP_MODAL_CANCEL"));
         Autocrat.executeFlow(context, flow);
+    }
+
+    @After({"@QUOTE, @MENU, @DWP_TEARDOWN, @CORE_SUPERNOVA, @FILTER, @SMOKE"})
+    public void tearDown() throws Exception {
+        tidyUp();
+    }
+
+    @After({"@QUOTE, @SMOKE"})
+    public void failedScenario(Scenario scenario) throws Exception {
+        if (scenario.isFailed()) {
+            logger().error("The scenario '" + scenario.getName() + "' failed");
+        }
     }
 }

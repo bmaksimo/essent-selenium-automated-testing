@@ -76,6 +76,10 @@ public abstract class NavigationElements extends DwpScenario  {
         }
     }
 
+    protected int parseOrdinal(String ordinal) {
+        return Integer.parseInt(ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", ""));
+    }
+
     protected void visitLeftMenuItems(DataTable menuItems) throws Throwable {
         List<String> leftMenuItems = menuItems.asList(String.class);
         List<String> failedToVisitTabs = leftMenuItems.stream().filter(

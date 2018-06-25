@@ -206,7 +206,7 @@ public class HHQuoteScenarios extends DwpScenario {
     }
 
     @When("^I select the ([^\"]*) element and click the link in the \"([^\"]*)\" column$")
-    public void iSelectTheStElementAndClickOnTheLinkInTheAccountNumberNameColumn(String ordinal, String column) throws Throwable {
+    public void navigateToListCellLink(String ordinal, String column) throws Throwable {
         //int position = Integer.parseInt(ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", ""));
         Map<String, String> options = new HashMap<>();
         options.put("column", column);
@@ -215,7 +215,7 @@ public class HHQuoteScenarios extends DwpScenario {
     }
 
     @And("^A quote with type \"([^\"]*)\" and status \"([^\"]*)\" is created$")
-    public void aQuoteWithTypeAndStatusIsCreated(String arg0, String arg1) throws Throwable {
+    public void checkCreatedQuote(String arg0, String arg1) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }

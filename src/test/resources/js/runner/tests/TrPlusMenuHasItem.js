@@ -1,12 +1,12 @@
 class TrPlusMenuHasItem extends TestRunnerDwp {
     /**
-     * Checks if plus menu contains item
+     * Checks if plus menu contains item at given position
      *
      * * @param {object} options - Arguments passed from Java.
      * * @param {function} callback - The Java callback that handles the result.
      *
      * Java example:
-     * assertThat(executeJsTest("new TrClickTableCellUrl({menu: 'mainMenu', linkId: 'sales-marketing-link', arguments[arguments.length - 1]);", link), is(true));
+     * assertThat(executeJsTest("new TrPlusMenuHasItem({item: 'Menu Item Label', position: 1,  arguments[arguments.length - 1]);", link), is(true));
      */
 
     constructor(options, callback) {

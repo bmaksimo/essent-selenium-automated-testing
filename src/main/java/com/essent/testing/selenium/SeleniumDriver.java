@@ -48,9 +48,6 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     private String browserName;
     private String browserVersion;
     private static final String PATH = "/js/runner/";
-    // old: function based
-    private static final String PATH_TO_INLINE_FUNCS = "/js/runner/functions/";
-    private static final String TEST_RUNNER = "TestRunner.js";
     // new: class based
     private static final String PATH_TO_INLINE_CLASSES = "/js/runner/tests/";
     private static final String TEST_RUNNER_CLASS = "TestRunnerBase.js";
@@ -149,18 +146,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     }
 
     public void injectJavaScriptTestRunner() {
-        // old: functions based
-        String testRunnerPath = ResourceUtils.toPath(PATH + TEST_RUNNER);
-        File testRunnerFile = new File(testRunnerPath);
-        injectJavaScriptInline(testRunnerFile);
-        String pathToFunction = ResourceUtils.toPath(PATH_TO_INLINE_FUNCS);
-        File dir = new File(pathToFunction);
-        FileFilter fileFilter = new WildcardFileFilter("*.js");
-        for (File file1 : Objects.requireNonNull(dir.listFiles(fileFilter))) {
-            injectJavaScriptInline(file1);
-        }
-        // new: class based
-        String testRunnerClassPath = ResourceUtils.toPath(PATH + TEST_RUNNER_CLASS);
+       String testRunnerClassPath = ResourceUtils.toPath(PATH + TEST_RUNNER_CLASS);
         File testRunnerClassFile = new File(testRunnerClassPath);
         injectJavaScriptInline(testRunnerClassFile);
         String pathToClasses = ResourceUtils.toPath(PATH_TO_INLINE_CLASSES);
@@ -180,38 +166,6 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     @Override
     public Object executeAsyncScript(String function, Object... objects) {
         return ((JavascriptExecutor) driver).executeAsyncScript(function, objects);
-    }
-
-    /**
-     * @deprecated
-     * Use {@link #executeJavascriptMethod(String, Object)}
-     * @param callJsMethod
-     * @param param
-     * @return
-     */
-    public Map executeJsMethod(String callJsMethod, String... param) {
-        String executeMethod = callJsMethod;
-        executeMethod = executeMethod.replace("${value}", param[0]);
-        for (int i = 1; i < param.length; i++) {
-            executeMethod = executeMethod.replace(String.format("${value%s}", i), param[i]);
-        }
-        logger.info("STEP:");
-        logger.info(" - ACTION: EXEC_JAVASCRIPT_METHOD");
-        logger.info(" - TEST: " + executeMethod);
-        for (int i = 0; i < param.length; i++) {
-            logger.info(String.format(" - VALUE[%s]: " + param[i], i));
-        }
-        Map  result = (Map) ((JavascriptExecutor) driver).executeAsyncScript(executeMethod);
-        String status = ((String) result.get("status"));
-        if(StringUtils.isEmpty(status)) {
-            status = "UNDEFINED";
-        }
-        logger.info(" - RESULT: " + status);
-        if (StringUtils.equals("FAILED", status)) {
-            String reason = ((String) result.get("reason"));
-            logger.info(" - REASON: " + reason);
-        }
-        return result;
     }
 
     /**
@@ -237,36 +191,6 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             logger.info(" - REASON: " + reason);
         }
         return result;
-    }
-
-    /**
-     * @deprecated
-     * Use {@link #executeJavascriptTest(String, Object)}
-     * @param callTestRunner
-     * @param param
-     * @return
-     */
-    public boolean executeJsTest(String callTestRunner, String... param) {
-        String executeTest = callTestRunner;
-        executeTest = executeTest.replace("${value}", param[0]);
-        for (int i = 1; i < param.length; i++) {
-            executeTest = executeTest.replace(String.format("${value%s}", i), param[i]);
-        }
-        logger.info("STEP:");
-        logger.info(" - ACTION: EXEC_JAVASCRIPT_TEST");
-        logger.info(" - TEST: " + executeTest);
-        for (int i = 0; i < param.length; i++) {
-            logger.info(String.format(" - VALUE[%s]: " + param[i], i));
-        }
-        Map result = (Map) ((JavascriptExecutor) driver).executeAsyncScript(executeTest);
-        String status = ((String) result.get("status"));
-        boolean success = StringUtils.equals("PASSED", status);
-        logger.info(" - RESULT: " + status);
-        if (StringUtils.equals("FAILED", status)) {
-            String reason = ((String) result.get("reason"));
-            logger.info(" - REASON: " + reason);
-        }
-        return success;
     }
 
     /**

@@ -1,10 +1,8 @@
 package stepdefinitions.dwp.overview;
 
-import com.billinghouse.javascript.testrunner.dwp.menu.MenuTests;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 import stepdefinitions.dwp.NavigationElements;
 

@@ -39,7 +39,7 @@ Feature: Test the passive renewal of business contract.
         And  Filter element "End date from" input is "${today} + 3months"
         And  Filter element "End date to" input is "${today} +  4months"
         #Valid values are Sales Signed (Not marked), Sales Signed ()
-        And  Select "2" List rows at:
+        And  Select 2 List rows having:
         |column                     | value                     |
         |TYPE & (RENEW) STATUS      | Sales Signed (Not marked) |
         And  Store selection values of 'COMPANY NAME & CONTACT' columns as comma-separated $SelectedContracts
