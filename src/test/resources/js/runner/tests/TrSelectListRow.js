@@ -22,12 +22,12 @@ class TrSelectListRow extends TestRunnerBase {
         result.reason = '';
         let row = this.options.index;
         let checkboxes = $('.list__content tr:not(".row__actions, .list__column-headers")  td [type=checkbox]');
-        let width = checkboxes.size;
-        if(row > width ) {
+        let height = checkboxes.size;
+        if(row > height ) {
             result.status = 'FAILED';
-            result.reason = `Row ${row} cannot be greater than table width ${width}`;
+            result.reason = `Row ${row} cannot be greater than table height ${height}`;
         } else {
-            checkboxes[row -1].click();
+            checkboxes[row - 1].click();
         }
         this.resolveCallback(result);
     }

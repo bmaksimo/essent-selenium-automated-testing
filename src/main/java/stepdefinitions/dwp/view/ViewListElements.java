@@ -31,7 +31,7 @@ public class ViewListElements extends NavigationElements {
         }
     }
 
-    private class TableModel {
+    private class ViewListModel {
         public DefaultTableModel getViewTableModel() {
             DefaultTableModel tableModel = new DefaultTableModel();
             Map viewTable = executeJavascriptMethod("TrGetTableModel", new HashMap<>());
@@ -57,7 +57,7 @@ public class ViewListElements extends NavigationElements {
             return success;
         }
 
-        public boolean selectListRow(int row, String value, String columnName) {
+        public List<Integer> fetchListRowsIndices(String value, String columnName) {
             Map viewTable = executeJavascriptMethod("TrGetTableModel", new HashMap<>());
             int index = getColimnNameIndex(columnName, viewTable);
             if(index < 0) {
@@ -67,10 +67,27 @@ public class ViewListElements extends NavigationElements {
             AtomicInteger idx = new AtomicInteger(1);
             List<Integer> indices = IntStream.range(1, rows.size() + 1)
                 .filter(i ->
-                idx.compareAndSet(i, i +1) & ((ArrayList<String>) rows.get(i - 1)).get(index).contains(value))
+                idx.compareAndSet(i, i + 1) & ((ArrayList<String>) rows.get(i - 1)).get(index).contains(value))
                 .boxed()
                 .collect(Collectors.toList());
+            return indices;
+        }
+
+        public boolean selectListRow(int row, String value, String columnName) {
+            List<Integer> indices = fetchListRowsIndices(value, columnName);
             return indices.size() > 0 && row <= indices.size();
+        }
+
+        public boolean  selectListRows(int numRows, String value, String columnName) {
+            List<Integer> rows = fetchListRowsIndices(value, columnName);
+            if(numRows > rows.size()) {
+                return false;
+            }
+            List<Integer> indices = IntStream.range(1, numRows + 1).boxed().filter(i -> i <= numRows).collect(Collectors.toList());
+            Map<String, Object> options = new HashMap<>();
+            options.put("indices", indices);
+            boolean success = executeJavascriptTest("TrSelectListRows", options);
+            return success;
         }
 
         private String getCellValueAt(int row, String columnName) {
@@ -86,7 +103,6 @@ public class ViewListElements extends NavigationElements {
             ArrayList<String> cells= rows.get(row -1);
             return cells.get(index);
         }
-
 
         private List<ArrayList> getData(Map viewTable) {
             return (List)viewTable.get("rows");
@@ -106,8 +122,6 @@ public class ViewListElements extends NavigationElements {
         }
     }
 
-
-
     @Before("@SMOKE, @QUOTE, @MENU, @DWP_SETUP, @FILTER, @RENEWAL")
     public void SetupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
@@ -122,7 +136,7 @@ public class ViewListElements extends NavigationElements {
 
     @When("^View List is empty$")
     public void checkTableModel() throws Throwable {
-        javax.swing.table.TableModel viewTableModel = new TableModel().getViewTableModel();
+        javax.swing.table.TableModel viewTableModel = new ViewListModel().getViewTableModel();
         boolean success = viewTableModel.getRowCount() == 0;
         assertThat("View Table list is not empty",
             success, is(true));
@@ -142,7 +156,7 @@ public class ViewListElements extends NavigationElements {
     @And("^([^\"]*) List element has cell value ([^\"]*) at column ([^\"]*)$")
     public void listElementWith(String ordinal, String value, String columnName) throws Throwable {
         int row = parseOrdinal(ordinal);
-        boolean success = new TableModel().containsDataAt(row, value, columnName);
+        boolean success = new ViewListModel().containsDataAt(row, value, columnName);
         assertThat(String.format("View list did not contain cell value %s at %s row, column '%s'", value, ordinal, columnName),
             success, is(true));
     }
@@ -150,15 +164,23 @@ public class ViewListElements extends NavigationElements {
     @And("^Select ([^\"]*) List row having cell value ([^\"]*) at column ([^\"]*)$")
     public void selectListRows(String ordinal, String value, String columnName) throws Throwable {
         int row = parseOrdinal(ordinal);
-        TableModel tableModel = new TableModel();
-        boolean success = tableModel.selectListRow(row, value, columnName);
+        ViewListModel viewListModel = new ViewListModel();
+        boolean success = viewListModel.selectListRow(row, value, columnName);
         String message = String.format("View list did not contain cell value %s at %s row, column '%s'", value, ordinal, columnName);
         assertThat(message,
             success, is(true));
-        success = tableModel.selectListRow(row);
+        success = viewListModel.selectListRow(row);
         assertThat(message,
             success, is(true));
+    }
 
+    @And("^Select ([^\"]*) List rows having cell value ([^\"]*) at column ([^\"]*)$")
+    public void selectListRowHavingCellValueAtColumn(int row, String value, String columnName) throws Throwable {
+        ViewListModel viewListModel = new ViewListModel();
+        boolean success = viewListModel.selectListRows(row, value, columnName);
+        String message = String.format("View list did not %s rows having cell value %s at column '%s'", row, value, columnName);
+        assertThat(message,
+            success, is(true));
     }
 
     @Override
@@ -167,4 +189,3 @@ public class ViewListElements extends NavigationElements {
         super.tearDown();
     }
 }
-
