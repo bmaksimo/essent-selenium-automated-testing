@@ -28,7 +28,6 @@ Feature: Test of active renewal of business contract.
         Then View List Header is "Accounts"
         #Navigate to Cockpit
         When Click on link in View List at 1st row and "Account Number & Name" column
-        #Chris
         And  Cockpit item is Market Transactions
         And  View List Header is "Market Ttansactions"
         #Verify 3 contract acceptance criteria for a renewal.
@@ -52,7 +51,6 @@ Feature: Test of active renewal of business contract.
         And Left Tab is Contracting Switching
         And Top Tab is Contracts
         And Top Action is Filters
-        #Chris Select all values
         And  Filter element "Contract type" selection is "All values"
         And  Filter element "Account number" input is "6574"
         And  Filter element "End date from" input is "${today} + 3months"
@@ -61,7 +59,6 @@ Feature: Test of active renewal of business contract.
         And  Select "1" List rows at:
             |column                     | value           |
             |COMPANY NAME & CONTACT     | Cavamil  (6574) |
-        #Chris
         And  List Plus Action is RENEW
         #Chris
         Then Submit Card is RENEWAL DETAILS
