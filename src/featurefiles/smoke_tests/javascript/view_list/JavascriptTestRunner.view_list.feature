@@ -13,5 +13,6 @@ Feature: Javascript DWP testing
         #Then 1st List element has cell value Closed at column EC Status & Effective Date
         Then Select 3 List rows having cell value Closed at column EC Status & Effective Date
         And  Store cell values of selected list rows at column "EC Status & Effective Date" as "ec_status"
+        And Selected List rows have cell value "Closed" at column "EC Status & Effective Date"
 
 

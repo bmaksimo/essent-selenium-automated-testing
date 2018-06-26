@@ -44,7 +44,7 @@ import static org.hamcrest.Matchers.notNullValue;
 
 
 public class HHQuoteScenarios extends DwpScenario {
-    @Before("@QUOTE, @DWP_SETUP")
+    @Before("@QUOTE")
     public void SetupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
