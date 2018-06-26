@@ -60,6 +60,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             String headless = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_HEADLESS);
             if (StringUtils.isNotEmpty(headless)) {
                 options.setHeadless(true);
+                options.addArguments("--headless");
                 String windowSize = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_HEADLESS_WINDOW_SIZE);
                 if (StringUtils.isNotEmpty(windowSize)) {
                     options.addArguments("window-size=" + windowSize);
