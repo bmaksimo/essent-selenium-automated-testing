@@ -21,6 +21,7 @@ class TestRunnerBase {
     }
 
     resolveCallback(result) {
+
         console.log(this.constructor.name + ' :: run');
         console.log('options: ');
         console.log(this.options);

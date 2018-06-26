@@ -24,23 +24,11 @@ import static org.junit.Assert.assertNotNull;
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 public class GenericSteps extends DwpScenario {
 
-    @Before("@QUOTE, @MENU, @DWP_SETUP, @CORE_SUPERNOVA, @ASSIGNMENT, @FILTER, @SMOKE")
+    @Before("@QUOTE, @MENU, @DWP_SETUP, @CORE_SUPERNOVA, @FILTER, @SMOKE")
     public void SetupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
         setUpWebDriver();
         isDwpRunning(BASE_URL);
-    }
-
-    @After({"@QUOTE, @MENU, @DWP_TEARDOWN, @CORE_SUPERNOVA, @ASSIGNMENT, @FILTER, @SMOKE"})
-    public void tearDown() throws Exception {
-        tidyUp();
-    }
-
-    @After({"@QUOTE, @SMOKE"})
-    public void failedScenario(Scenario scenario) throws Exception {
-        if (scenario.isFailed()) {
-            logger().error("The scenario '" + scenario.getName() + "' failed");
-        }
     }
 
     @Given("^I logged in in DWP as ([^\"]*)$")
@@ -81,10 +69,15 @@ public class GenericSteps extends DwpScenario {
         Autocrat.executeFlow(context, flow);
     }
 
-    @And("^Recent Time interval is ([^\"]*) backwards$")
-    public void sentRecentTimeInterval(String ordinal) throws Throwable {
-        int time = Integer.parseInt(ordinal.replaceAll("(?<=\\d)(min|sec|millis|nanos)\\b", ""));
-            // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    @After({"@QUOTE, @MENU, @DWP_TEARDOWN, @CORE_SUPERNOVA, @FILTER, @SMOKE"})
+    public void tearDown() throws Exception {
+        tidyUp();
+    }
+
+    @After({"@QUOTE, @SMOKE"})
+    public void failedScenario(Scenario scenario) throws Exception {
+        if (scenario.isFailed()) {
+            logger().error("The scenario '" + scenario.getName() + "' failed");
+        }
     }
 }

@@ -18,14 +18,16 @@ class TrMenuHasLinkId extends TestRunnerDwp {
         let state = this.getState();
         result.status = 'FAILED';
         result.reason = this.options.linkId + ' not found';
-        state[this.options.menu].forEach(function(menuItem){
+        let targetNumber = 1;
+        let matches = [];
+        state[this.options.menu].some(function(menuItem){
             if (menuItem['link-id'] === options.linkId) {
                 result.data = {menuItem: menuItem};
                 result.status = 'PASSED';
                 result.reason = '';
+                return true;
             }
         });
-
         this.resolveCallback(result);
     }
 

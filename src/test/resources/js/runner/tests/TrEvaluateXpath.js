@@ -22,8 +22,8 @@ class TrEvaluateXpath extends TestRunnerBase {
             let elements = this.evaluateXpath(xPath);
             if(elements.length >= 0) {
                 result.status = "PASSED";
-                result.reason = 'DEBUG elements are found by Xpath ' + xPath;
-                console.log(result);
+                result.reason = '';
+                result.found = elements;
             }
             this.resolveCallback(result);
         }, 200);

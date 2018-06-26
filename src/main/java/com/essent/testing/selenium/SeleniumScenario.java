@@ -52,40 +52,18 @@ public class SeleniumScenario {
     }
 
     /**
-     * @deprecated
-     * Use {@link #executeJavascriptMethod(String, Object)}
-     * @param callTestRunnerTemplate
-     * @param param
-     * @return
-     */
-    protected boolean executeJsTest(String callTestRunnerTemplate, String ...param)  {
-        return  webDriver.executeJsTest(callTestRunnerTemplate, param);
-    }
-
-    /**
      *
      * @param registeredJsClass
      * @param options
      * @return
      */
     protected boolean executeJavascriptTest(String registeredJsClass, Object options)  {
-        return  webDriver.executeJavascriptTest(registeredJsClass, options);
+        return webDriver.executeJavascriptTest(registeredJsClass, options);
     }
-
-    /**
-     * @deprecated
-     * Use {@link #executeJavascriptMethod(String, Object)}
-     * @param callJsMethod
-     * @param param
-     * @return
-     */
-    public static Map executeJsMethod(String callJsMethod, String... param) {
-        return webDriver.executeJsMethod(callJsMethod, param);
-    }
-
 
     public static Map executeJavascriptMethod(String registeredJsClass, Object options)  {
-        return  webDriver.executeJavascriptMethod(registeredJsClass, options);
+        Map map = webDriver.executeJavascriptMethod(registeredJsClass, options);
+        return map;
     }
 
     @AfterClass

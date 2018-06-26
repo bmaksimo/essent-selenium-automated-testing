@@ -1,12 +1,14 @@
 package com.essent.testing.dwp.pageobject.menu.impl;
 
-import com.billinghouse.javascript.testrunner.dwp.menu.MenuTests;
 import com.essent.testing.dwp.menu.model.DwpLeftMenu;
 import com.essent.testing.dwp.pageobject.Component;
 import com.essent.testing.dwp.pageobject.menu.Menu;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Navigation extends Component implements Menu {
 
@@ -23,6 +25,9 @@ public class Navigation extends Component implements Menu {
     @Override
     public boolean hasItem(String label) {
         DwpLeftMenu item = DwpLeftMenu.get(label);
-        return seleniumDriver.executeJsTest(MenuTests.LEFT_MENU_ITEM_TEST.getTest(),  item.getMenuItemLink());
+        Map<String, String> jsOptions = new HashMap<>();
+        jsOptions.put("menu", "mainMenu");
+        jsOptions.put("linkId", item.getMenuItemLink());
+        return seleniumDriver.executeJavascriptTest("TrMenuHasLinkId", jsOptions);
     }
 }
