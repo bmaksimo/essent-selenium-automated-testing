@@ -1,7 +1,7 @@
 @DWP
 @BASIC
 @CONTRACT
-@RENEWAL
+@_RENEWAL
 @REGRESSION
 
 Feature: Test the passive renewal of business contract.
@@ -41,14 +41,14 @@ Feature: Test the passive renewal of business contract.
         And  Filter element "End date to" input is "${today} +  4months"
         #Valid values are Sales Signed (Not marked), Sales Signed ()
         And  Select 2 List rows having cell value Closed at column EC Status & Effective Date
-        And  Store cell values of selected list rows at column "COMPANY NAME & CONTACT" as "company_name_and_contract"
+        And  Store cell values of selected list rows at column "COMPANY NAME & CONTACT" as "selected_contracts"
         #Dmitry
         And  Table action is 'PASSIVE RENEW'
         #Phrase means "Rows, selected 3 steps back but column values have changed"
-        #Split into 2 steps
-        Then Rows with 'COMPANY NAME & CONTACT' column having $SelectedContracts are 'Available' with
-        |column                     | value                     |
-        |TYPE & (RENEW) STATUS      | Sales Signed (Passive renewal (with communication)) |
+        #Check. Do we need additional check:
+        # List contains rows with "selected_contracts" values at "COMPANY NAME & CONTACT"
+        Then Selected List rows have cell value "Sales Signed (Passive renewal (with communication))" at column "TYPE & (RENEW) STATUS"
+
         #Confirming to renew contracts
         When  Top Action is Plus Menu
         And   Plus Menu is "Contracting -> UP/TC2 - Passive renewal quotes"

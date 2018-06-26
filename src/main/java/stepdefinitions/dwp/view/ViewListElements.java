@@ -1,35 +1,33 @@
 package stepdefinitions.dwp.view;
 
+import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
+import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.runtime.CucumberException;
 import stepdefinitions.dwp.NavigationElements;
 
 import javax.swing.table.DefaultTableModel;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasEntry;
 import static org.hamcrest.Matchers.is;
-
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.not;
 public class ViewListElements extends NavigationElements {
 
-    @OutputParameter(name = "toRenewContractsContact")
-    private Map<String, String> toRenewContractsContacts = new HashMap<>();
-    @And("^Store cell values of selected list rows at column \"([^\"]*)\" as \"([^\"]*)\"$")
-    public void storeCellValuesOfSelectedListRowsAtColumnAs(String columnName, String outParamName) throws Throwable {
-        toRenewContractsContacts.put(outParamName, "test");
-        throw new PendingException();
-    }
+
 
     private class CheckViewListHeader implements Predicate<String> {
         @Override
@@ -99,6 +97,21 @@ public class ViewListElements extends NavigationElements {
             options.put("indices", indices);
             boolean success = executeJavascriptTest("TrSelectListRows", options);
             return success;
+        }
+
+        public List<String> fetchDataSelection(String columnName) {
+            Map<String, Object> options = new HashMap<>();
+            options.put("include_selection", true);
+            Map viewTable = executeJavascriptMethod("TrFetchDataSelection", options);
+            int index = getColimnNameIndex(columnName, viewTable);
+            if(index < 0) {
+                throw new CucumberException(String.format("View List did not contain column %s", columnName));
+            }
+            List<ArrayList> rows = getData(viewTable);
+            List<String> selection = (List)rows.stream().map((e) -> {
+                return e.get(index);
+            }).collect(Collectors.toList());
+            return selection;
         }
 
         private String getCellValueAt(int row, String columnName) {
@@ -192,6 +205,25 @@ public class ViewListElements extends NavigationElements {
         String message = String.format("View list did not %s rows having cell value %s at column '%s'", row, value, columnName);
         assertThat(message,
             success, is(true));
+    }
+
+    @OutputParameter(name = "toRenewContractsContact")
+    private Map<String, Object> toRenewContractsContacts = new HashMap<>();
+    @And("^Store cell values of selected list rows at column \"([^\"]*)\" as \"([^\"]*)\"$")
+    public void storeDataSelectionOutputParameter(String columnName, String outParamName) throws Throwable {
+        ViewListModel viewListModel = new ViewListModel();
+        List<String> cellSelection = viewListModel.fetchDataSelection(columnName);
+        toRenewContractsContacts.put(outParamName, cellSelection);
+        assertThat(String.format("Data selection at column %s is empty", columnName),
+            cellSelection, not(hasSize(0)));
+    }
+
+    @InputParameter(name = "toRenewContractsContact")
+    private  Map<String, Object> selection;
+    @Then("^Selected List rows have cell value \"([^\"]*)\" at column \"([^\"]*)\"$")
+    public void checkSelectionData(String value, String columnName) throws Throwable {
+        ViewListModel viewListModel = new ViewListModel();
+        List<String> cellSelection = viewListModel.fetchDataSelection(columnName);
     }
 
     @Override
