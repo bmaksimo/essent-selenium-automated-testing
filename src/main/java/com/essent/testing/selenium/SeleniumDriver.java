@@ -69,6 +69,8 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             if (StringUtils.isNotEmpty(userDataPath)) {
                 options.addArguments("user-data-dir=" + userDataPath);
             }
+            options.addArguments("--disable-dev-shm-usage"); // overcome limited resource problems
+            options.addArguments("--no-sandbox"); // Bypass OS security model
             logger.info(" - OPTIONS: " + options.toString());
             return new ChromeDriver(options);
         }
