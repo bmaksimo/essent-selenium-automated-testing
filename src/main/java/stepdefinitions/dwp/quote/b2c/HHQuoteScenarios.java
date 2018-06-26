@@ -206,26 +206,19 @@ public class HHQuoteScenarios extends DwpScenario {
     }
 
     @When("^I select the ([^\"]*) element and click the link in the \"([^\"]*)\" column$")
-    public void iSelectTheStElementAndClickOnTheLinkInTheAccountNumberNameColumn(String ordinal, String column) throws Throwable {
+    public void navigateToListCellLink(String ordinal, String column) throws Throwable {
         //int position = Integer.parseInt(ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", ""));
         Map<String, String> options = new HashMap<>();
         options.put("column", column);
-        Map result = executeJavascriptMethod("TrGetColumnIndexList", options);
-        boolean testResult = BooleanUtils.toBoolean((String) result.get("status"), "PASSED", "FAILED");
-        assertThat(testResult, is(true));
+        boolean success = executeJavascriptTest("TrGetColumnIndexList", options);
+        assertThat(success, is(true));
     }
 
     @And("^A quote with type \"([^\"]*)\" and status \"([^\"]*)\" is created$")
-    public void aQuoteWithTypeAndStatusIsCreated(String arg0, String arg1) throws Throwable {
+    public void checkCreatedQuote(String arg0, String arg1) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }
-
-    @Then("^I click on Home button, optionally dismissing the alert$")
-    public void home() throws Throwable {
-
-    }
-
 
     @Then("^A signed quote is created of type \"([^\"]*)\" and status \"([^\"]*)\" and shown in an account for \"([^\"]*)\" with ([0-9]+) products:$")
     public void a_signed_quote_is_created_for_an_account_with_products(String type, String status, String accountName, String nrOfProducts) throws Throwable {

@@ -1,0 +1,26 @@
+package stepdefinitions.dwp.plus;
+
+import cucumber.api.Scenario;
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
+import cucumber.api.java.en.And;
+import stepdefinitions.dwp.NavigationElements;
+
+public class PlusActions extends NavigationElements {
+
+    @Before("@SMOKE, @QUOTE, @MENU, @DWP_SETUP, @FILTER, @RENEWAL")
+    public void SetupTest(Scenario scenario) throws Throwable {
+        registerActiveScenario(scenario);
+    }
+
+    @And("^Plus Menu is \"([^\"]*)\"$")
+    public void checkPlusMenu(String path) throws Throwable {
+        clickPlusAction(path);
+    }
+
+    @Override
+    @After("@SMOKE, @QUOTE, @MENU, @DWP_SETUP, @FILTER, @RENEWAL")
+    public void tearDown() throws Exception {
+        super.tearDown();
+    }
+}

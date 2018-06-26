@@ -18,8 +18,7 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Jim on 27-12-2017.
- * Here we will implement the conveniency methods that are
- * available for usung within all DWP Scenarios
+ * Here we implement methods for available for all scenarios
  */
 public abstract class DwpScenario extends SeleniumScenario {
 
@@ -38,7 +37,7 @@ public abstract class DwpScenario extends SeleniumScenario {
     }
 
 
-    protected void verifyDwpIsRunning(String baseUrl) throws Exception {
+    protected void isDwpRunning(String baseUrl) throws Exception {
         webDriver.setBaseUrl(baseUrl);
         webDriver.goToHomePage();
         String currentUrl = webDriver.getDriver().getCurrentUrl();
