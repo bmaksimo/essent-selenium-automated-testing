@@ -40,7 +40,7 @@ Feature: Test the passive renewal of business contract.
         And  Filter element "End date to" input is "${today} +  4months"
         #Valid values are Sales Signed (Not marked), Sales Signed ()
         And  Select 2 List rows having cell value Closed at column EC Status & Effective Date
-        And  Store selection values of 'COMPANY NAME & CONTACT' columns as comma-separated $SelectedContracts
+        And  Store cell values of selected list rows at column "COMPANY NAME & CONTACT" as "company_name_and_contract"
         #Dmitry
         And  Table action is 'PASSIVE RENEW'
         #Phrase means "Rows, selected 3 steps back but column values have changed"

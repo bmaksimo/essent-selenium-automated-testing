@@ -20,6 +20,14 @@ public class ViewListElementsTest {
             assertTrue(team.indexOf(member) + 1 == indices.get(0));
         }
     }
+    @Test
+    public void testJavaStreamHell() throws Exception {
+        int maxExclusive = 10;
+        List<Integer> indices = IntStream.range(1, maxExclusive + 1).boxed().collect(Collectors.toList());
+        for(int i = 1; i <= maxExclusive; i++) {
+            assertTrue(i == indices.get(i -1));
+        }
+    }
 
     private List<Integer> collectIndicesOf(List<String> team, String mate) {
         AtomicInteger index = new AtomicInteger(1);

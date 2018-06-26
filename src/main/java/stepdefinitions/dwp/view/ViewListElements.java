@@ -1,5 +1,7 @@
 package stepdefinitions.dwp.view;
 
+import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
+import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -16,9 +18,18 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasEntry;
 import static org.hamcrest.Matchers.is;
 
 public class ViewListElements extends NavigationElements {
+
+    @OutputParameter(name = "toRenewContractsContact")
+    private Map<String, String> toRenewContractsContacts = new HashMap<>();
+    @And("^Store cell values of selected list rows at column \"([^\"]*)\" as \"([^\"]*)\"$")
+    public void storeCellValuesOfSelectedListRowsAtColumnAs(String columnName, String outParamName) throws Throwable {
+        toRenewContractsContacts.put(outParamName, "test");
+        throw new PendingException();
+    }
 
     private class CheckViewListHeader implements Predicate<String> {
         @Override
@@ -83,7 +94,7 @@ public class ViewListElements extends NavigationElements {
             if(numRows > rows.size()) {
                 return false;
             }
-            List<Integer> indices = IntStream.range(1, numRows + 1).boxed().filter(i -> i <= numRows).collect(Collectors.toList());
+            List<Integer> indices = IntStream.range(1, numRows + 1).boxed().collect(Collectors.toList());
             Map<String, Object> options = new HashMap<>();
             options.put("indices", indices);
             boolean success = executeJavascriptTest("TrSelectListRows", options);
