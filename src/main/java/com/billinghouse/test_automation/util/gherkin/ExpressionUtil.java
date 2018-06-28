@@ -20,7 +20,7 @@ public class ExpressionUtil {
 
     public static DateTime expandFrom(String expression) throws CucumberException {
         if (!expression.matches(DATE_EXPR_REGEX))
-            throw new CucumberException(format("--Input %s did not match pattern %s or %s", expression, DATE_EXPR_REGEX, DWP_DATE_FORMAT_REGEX));
+            throw new CucumberException(format("--Date-time input %s match none of patterns: ['%s', '%s']", expression, DATE_EXPR_REGEX, DWP_DATE_FORMAT_REGEX));
 
         Matcher matcher = compile(DATE_EXPR_REGEX).matcher(expression);
         matcher.find();

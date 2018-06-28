@@ -53,8 +53,8 @@ Feature: Test of active renewal of business contract.
         And Top Action is Filters
         And  Filter element "Contract type" selection is "All values"
         And  Filter element "Account number" input is "6574"
-        And  Filter element "End date from" input is "${today} + 3months"
-        And  Filter element "End date to" input is "${today} +  4months"
+        And  Filter element "End date from" date input is "$today + 3 months"
+        And  Filter element "End date to" date input is "$today +  4 months"
         #Dmitry
         And  Select "1" List rows at:
             |column                     | value           |

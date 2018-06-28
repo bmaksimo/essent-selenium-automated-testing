@@ -20,8 +20,8 @@ Feature: Test the passive renewal of B2B contract.
         And  Filter element "Acceptance status" selection is "Accepted"
         #Valid value is '' - empty string or Default
         And  Filter element "Contract line status" selection is ""
-        And  Filter element "End date from" input is "${today} + 3months"
-        And  Filter element "End date to" input is "${today} +  4months"
+        And  Filter element "End date from" date input is "$today + 3 months"
+        And  Filter element "End date to" date input is "$today +  4 months"
         #Valid values are Sales Signed (Not marked), Sales Signed ()
         And  Select 2 List rows having cell value Closed at column EC Status & Effective Date
         And  Store cell values of selected list rows at column "COMPANY NAME & CONTACT" as "selected_contracts"
