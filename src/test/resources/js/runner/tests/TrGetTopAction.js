@@ -32,14 +32,18 @@ class TrGetTopAction extends TestRunnerBase {
                 return false;
             }
         });
-        if(matches.length > 0) {
-            matches[0].trigger('click');
-            result.status = 'PASSED';
-            result.reason = '';
-        } else {
-            result.status = 'FAILED';
-            result.reason = 'Top action  ' + options.name + ' not found';
-        }
+
+        $('.icon-filters').trigger('click');
+        result.status = 'PASSED';
+        result.reason = '';
+//        if(matches.length > 0) {
+//            matches[0].trigger('click');
+//            result.status = 'PASSED';
+//            result.reason = '';
+//        } else {
+//            result.status = 'FAILED';
+//            result.reason = 'Top action  ' + options.name + ' not found';
+//        }
 
         setTimeout(()=> {
             this.resolveCallback(result);
