@@ -1,7 +1,7 @@
-package com.billinghouse.javascript.impl;
+package com.billinghouse.test_automation.javascript.testrunner.impl;
 
-import com.billinghouse.javascript.JsTestExpanderService;
-import com.billinghouse.javascript.JsTestRegistry;
+import com.billinghouse.test_automation.javascript.testrunner.JsTestExpanderService;
+import com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry;
 import com.google.gson.Gson;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.text.StrSubstitutor;

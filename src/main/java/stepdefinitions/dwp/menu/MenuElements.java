@@ -1,6 +1,6 @@
 package stepdefinitions.dwp.menu;
 
-import com.billinghouse.javascript.model.options.TrMenuHasLinkIdOptions;
+import com.billinghouse.test_automation.javascript.model.options.TrMenuHasLinkIdOptions;
 import com.essent.testing.dwp.menu.model.DwpLeftMenu;
 import com.essent.testing.dwp.menu.model.TopMenuItems;
 import cucumber.api.DataTable;

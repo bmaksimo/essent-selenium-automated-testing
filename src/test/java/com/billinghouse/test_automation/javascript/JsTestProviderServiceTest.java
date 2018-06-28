@@ -1,7 +1,8 @@
-package com.billinghouse.javascript;
+package com.billinghouse.test_automation.javascript;
 
-import com.billinghouse.javascript.impl.SeleniumJsTestExpanderService;
-import com.billinghouse.javascript.model.options.TrMenuHasLinkIdOptions;
+import com.billinghouse.test_automation.javascript.testrunner.impl.SeleniumJsTestExpanderService;
+import com.billinghouse.test_automation.javascript.model.options.TrMenuHasLinkIdOptions;
+import com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry;
 import org.junit.Test;
 
 public class JsTestProviderServiceTest {

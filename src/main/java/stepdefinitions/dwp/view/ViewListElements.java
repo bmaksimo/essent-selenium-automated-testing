@@ -179,7 +179,7 @@ public class ViewListElements extends NavigationElements {
 
     @And("^([^\"]*) List element has cell value ([^\"]*) at column ([^\"]*)$")
     public void listElementWith(String ordinal, String value, String columnName) throws Throwable {
-        int row = parseOrdinal(ordinal);
+        int row = extractNumericValue(ordinal);
         boolean success = new ViewListModel().containsDataAt(row, value, columnName);
         assertThat(String.format("View list did not contain cell value %s at %s row, column '%s'", value, ordinal, columnName),
             success, is(true));
@@ -187,7 +187,7 @@ public class ViewListElements extends NavigationElements {
 
     @And("^Select ([^\"]*) List row having cell value ([^\"]*) at column ([^\"]*)$")
     public void selectListRows(String ordinal, String value, String columnName) throws Throwable {
-        int row = parseOrdinal(ordinal);
+        int row = extractNumericValue(ordinal);
         ViewListModel viewListModel = new ViewListModel();
         boolean success = viewListModel.selectListRow(row, value, columnName);
         String message = String.format("View list did not contain cell value %s at %s row, column '%s'", value, ordinal, columnName);

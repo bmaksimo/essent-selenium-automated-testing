@@ -1,4 +1,4 @@
-package com.billinghouse.javascript.testrunner.dwp.system;
+package com.billinghouse.test_automation.javascript.testrunner.dwp.system;
 
 public enum Queries {
     JQUERY_IS_NOT_ACTIVE("return window.jQuery != undefined && jQuery.active === 0");

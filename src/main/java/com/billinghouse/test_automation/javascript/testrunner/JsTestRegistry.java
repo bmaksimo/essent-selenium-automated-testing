@@ -1,4 +1,4 @@
-package com.billinghouse.javascript;
+package com.billinghouse.test_automation.javascript.testrunner;
 
 import java.util.HashSet;
 import java.util.Set;

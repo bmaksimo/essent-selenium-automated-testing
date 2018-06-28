@@ -1,4 +1,4 @@
-@_SMOKE
+@SMOKE
 Feature: Javascript DWP testing
 
     Background:
@@ -19,5 +19,5 @@ Feature: Javascript DWP testing
         And   Top Arrow button is Up
         And   Plus Menu is "Switching -> Market Transaction Tasks"
         Then  View List Header is "Tasks market transactions"
-        And   Find web element bv Xpath "//div[@class='top-menu']/sub-menu/sub-menu-link/a[@id='Market Transactions']"
+        And   Find web element by Xpath "//div[@class='top-menu']/sub-menu/sub-menu-link/a[@id='Market Transactions']"
         And   I smoke test all Javascript functions

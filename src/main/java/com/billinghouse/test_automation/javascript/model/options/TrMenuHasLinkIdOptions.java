@@ -1,5 +1,5 @@
 
-package com.billinghouse.javascript.model.options;
+package com.billinghouse.test_automation.javascript.model.options;
 
 import javax.annotation.Generated;
 
