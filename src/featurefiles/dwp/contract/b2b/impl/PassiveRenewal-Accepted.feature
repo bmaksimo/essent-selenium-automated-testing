@@ -1,7 +1,7 @@
 @DWP
 @BASIC
 @CONTRACT
-@RENEWAL
+@_RENEWAL
 @REGRESSION
 
 Feature: Test the passive renewal of B2B contract.

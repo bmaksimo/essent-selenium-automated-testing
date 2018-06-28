@@ -2,6 +2,7 @@ package stepdefinitions.dwp.view;
 
 import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
+import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -28,7 +29,6 @@ import static org.hamcrest.Matchers.not;
 public class ViewListElements extends NavigationElements {
 
 
-
     private class CheckViewListHeader implements Predicate<String> {
         @Override
         public boolean test(String header) {
@@ -37,6 +37,17 @@ public class ViewListElements extends NavigationElements {
             options.put("schedule_seconds", sec);
             options.put("header", header);
             return executeJavascriptTest("TrCheckViewListHeader", options);
+        }
+    }
+
+    private class CheckSubmitCard implements Predicate<String> {
+        @Override
+        public boolean test(String item) {
+            int sec = 7;
+            Map<String, Object> options = new HashMap<>();
+            options.put("schedule_seconds", sec);
+            options.put("item", item);
+            return executeJavascriptTest("TrCheckSubmitCard", options);
         }
     }
 
@@ -230,5 +241,12 @@ public class ViewListElements extends NavigationElements {
     @After("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
     public void tearDown() throws Exception {
         super.tearDown();
+    }
+
+    @When("^Submit Card is ([^\"]*)$")
+    public void checkSubmitCard(String item) throws Exception {
+        boolean success = new CheckSubmitCard().test(item);
+        assertThat(String.format("Submit Card does not contain '%s'", item),
+            success, is(true));
     }
 }

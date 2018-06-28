@@ -24,7 +24,7 @@ public class PlusActions extends NavigationElements {
         super.tearDown();
     }
 
-    @And("^List Plus Action is \"([^\"]*)\"$")
+    @And("^List Plus Action is ([^\"]*)$")
     public void checkPlusAction(String item) throws Exception {
         clickListPlusAction(item);
     }

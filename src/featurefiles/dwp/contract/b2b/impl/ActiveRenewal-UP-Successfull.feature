@@ -1,7 +1,7 @@
 @DWP
 @BASIC
 @CONTRACT
-@_RENEWAL
+@RENEWAL
 @REGRESSION
 
 Feature: Test of active renewal of business contract.
