@@ -15,7 +15,7 @@ Feature: Test the passive renewal of B2B contract.
         Then View List Header is "UP-TC2 - to renew contracts"
 
         #Selecting and submitting to renew contracts
-        When Top Action is Filter
+        When Top Action is Filters
         #Valid values: Accepted,  Refused
         And  Filter element "Acceptance status" selection is "Accepted"
         #Valid value is '' - empty string or Default
