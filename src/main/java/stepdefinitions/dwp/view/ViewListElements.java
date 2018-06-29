@@ -2,7 +2,6 @@ package stepdefinitions.dwp.view;
 
 import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -23,9 +22,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.*;
 public class ViewListElements extends NavigationElements {
 
 
@@ -48,6 +45,15 @@ public class ViewListElements extends NavigationElements {
             options.put("schedule_seconds", sec);
             options.put("item", item);
             return executeJavascriptTest("TrCheckSubmitCard", options);
+        }
+    }
+
+    private class GetListAction implements Predicate<String> {
+        @Override
+        public boolean test(String name) {
+            Map<String, Object> options = new HashMap<>();
+            options.put("name", name);
+            return executeJavascriptTest("TrGetListAction", options);
         }
     }
 
@@ -237,16 +243,23 @@ public class ViewListElements extends NavigationElements {
         List<String> cellSelection = viewListModel.fetchDataSelection(columnName);
     }
 
-    @Override
-    @After("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
-    public void tearDown() throws Exception {
-        super.tearDown();
-    }
-
     @When("^Submit Card is ([^\"]*)$")
     public void checkSubmitCard(String item) throws Exception {
         boolean success = new CheckSubmitCard().test(item);
         assertThat(String.format("Submit Card does not contain '%s'", item),
             success, is(true));
+    }
+
+    @And("^List View action is \"([^\"]*)\"$")
+    public void getListAction(String name) throws Throwable {
+        boolean success = new GetListAction().test(name);
+        assertThat(String.format("List Action '%s' undefined.", name),
+            success, is(true));
+    }
+
+    @Override
+    @After("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
+    public void tearDown() throws Exception {
+        super.tearDown();
     }
 }

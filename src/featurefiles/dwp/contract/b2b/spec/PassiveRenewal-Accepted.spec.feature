@@ -43,7 +43,7 @@ Feature: Test the passive renewal of business contract.
         And  Select 2 List rows having cell value Closed at column EC Status & Effective Date
         And  Store cell values of selected list rows at column "COMPANY NAME & CONTACT" as "selected_contracts"
         #Dmitry
-        And  Table action is 'PASSIVE RENEW'
+        And List View action is "PASSIVE RENEW"
         #Phrase means "Rows, selected 3 steps back but column values have changed"
         #Check. Do we need additional check:
         # List contains rows with "selected_contracts" values at "COMPANY NAME & CONTACT"

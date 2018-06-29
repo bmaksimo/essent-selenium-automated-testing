@@ -21,7 +21,7 @@ Feature: Javascript DWP testing
         Then View List Header is "Tasks market transactions"
         And  Find web element by Xpath "//div[@class='top-menu']/sub-menu/sub-menu-link/a[@id='Market Transactions']"
         And  I smoke test all Javascript functions
-        
+
         When Top Action is Filters
         And  Top Action is Plus Menu
         And  Top Action is Filters
