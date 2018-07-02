@@ -60,6 +60,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             String headless = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_HEADLESS);
             if (StringUtils.isNotEmpty(headless)) {
                 options.setHeadless(true);
+                options.addArguments("--headless");
                 String windowSize = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_HEADLESS_WINDOW_SIZE);
                 if (StringUtils.isNotEmpty(windowSize)) {
                     options.addArguments("window-size=" + windowSize);
@@ -69,6 +70,8 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             if (StringUtils.isNotEmpty(userDataPath)) {
                 options.addArguments("user-data-dir=" + userDataPath);
             }
+            options.addArguments("--disable-dev-shm-usage"); // overcome limited resource problems
+            options.addArguments("--no-sandbox"); // Bypass OS security model
             logger.info(" - OPTIONS: " + options.toString());
             return new ChromeDriver(options);
         }
