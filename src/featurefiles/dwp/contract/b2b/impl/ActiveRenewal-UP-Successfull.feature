@@ -60,7 +60,6 @@ Feature: Test of active renewal of business contract.
             |column                     | value           |
             |COMPANY NAME & CONTACT     | Cavamil  (6574) |
         And  List Plus Action is RENEW
-        #Chris
         Then Submit Card is RENEWAL DETAILS
 
         #Fill in & submit the Renewal and Calculation Card
