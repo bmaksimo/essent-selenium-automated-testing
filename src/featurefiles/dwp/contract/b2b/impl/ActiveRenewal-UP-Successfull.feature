@@ -29,7 +29,7 @@ Feature: Test of active renewal of business contract.
         #Navigate to Cockpit
         When Click on link in View List at 1st row and "Account Number & Name" column
         And  Cockpit item is Market Transactions
-        And  View List Header is "Market Ttansactions"
+        And  View List Header is "Market Transactions"
         #Verify 3 contract acceptance criteria for a renewal.
         #Shluld be no one of following Market Transactions:
         #1) Loss
