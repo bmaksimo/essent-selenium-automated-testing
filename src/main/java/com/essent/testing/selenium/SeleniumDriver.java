@@ -1,9 +1,9 @@
 package com.essent.testing.selenium;
 
-import com.billinghouse.javascript.JavascriptTestRunner;
-import com.billinghouse.javascript.JsTestRegistry;
-import com.billinghouse.javascript.impl.SeleniumJsTestExpanderService;
-import com.billinghouse.javascript.testrunner.dwp.system.Queries;
+import com.billinghouse.test_automation.javascript.testrunner.JavascriptTestRunner;
+import com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry;
+import com.billinghouse.test_automation.javascript.testrunner.impl.SeleniumJsTestExpanderService;
+import com.billinghouse.test_automation.javascript.testrunner.dwp.system.Queries;
 import com.essent.automation.core.WebDriverWait;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;

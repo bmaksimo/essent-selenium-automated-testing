@@ -1,4 +1,4 @@
-class TrCheckViewListHeader extends TestRunnerBase {
+class TrCheckSubmitCard extends TestRunnerBase {
 
     constructor(options, callback) {
         let timeoutMillis = parseInt(options.schedule_seconds) * 1000;

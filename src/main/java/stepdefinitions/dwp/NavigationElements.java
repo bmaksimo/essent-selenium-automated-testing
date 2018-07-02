@@ -2,6 +2,7 @@ package stepdefinitions.dwp;
 
 import com.essent.testing.dwp.DwpScenario;
 import cucumber.api.DataTable;
+import cucumber.runtime.CucumberException;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
@@ -12,6 +13,8 @@ import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static com.billinghouse.test_automation.util.gherkin.ExpressionUtil.*;
+
 
 public abstract class NavigationElements extends DwpScenario  {
 
@@ -86,8 +89,12 @@ public abstract class NavigationElements extends DwpScenario  {
         }
     }
 
-    protected int parseOrdinal(String ordinal) {
-        return Integer.parseInt(ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", ""));
+    protected int extractNumericValue(String ordinal) {
+        return numericValue(ordinal);
+    }
+
+    protected String convertToDwpDate(String formattedDate) throws CucumberException {
+        return checkAndConvertToDwpDate(formattedDate);
     }
 
     protected void visitLeftMenuItems(DataTable menuItems) throws Throwable {

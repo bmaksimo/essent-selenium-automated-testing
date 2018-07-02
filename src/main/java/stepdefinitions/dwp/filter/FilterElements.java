@@ -102,6 +102,16 @@ public class FilterElements extends NavigationElements {
             success, is(true));
     }
 
+    @And("^Filter element \"([^\"]*)\" date input is \"([^\"]*)\"$")
+    public void setFilterDateInput(String label, String value) throws Throwable {
+        Map<String, String> options = new HashMap<>();
+        options.put("label", label);
+        options.put("value", convertToDwpDate(value));
+        boolean success = new ApplySingleFilter().test(options);
+        assertThat(String.format("Filter element %s is undefined.", label),
+            success, is(true));
+    }
+
     @And("^Filter element \"([^\"]*)\" selection is \"([^\"]*)\"$")
     public void setFilterSelection(String label, String value) throws Throwable {
         setFilterInput(label, String.format("string:%s", value));
