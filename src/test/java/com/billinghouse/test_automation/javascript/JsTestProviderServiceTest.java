@@ -11,7 +11,7 @@ public class JsTestProviderServiceTest {
         TrMenuHasLinkIdOptions options = new TrMenuHasLinkIdOptions();
         options.setLinkId("sales-marketing");
         options.setMenu("mainMenu");
-        JsTestRegistry.get().add("TrMenuHasLinkId");
+        JsTestRegistry.get().register("TrMenuHasLinkId");
         String invokeTest  = SeleniumJsTestExpanderService.get().expandToJavascript("TrMenuHasLinkId", options);
     }
 }

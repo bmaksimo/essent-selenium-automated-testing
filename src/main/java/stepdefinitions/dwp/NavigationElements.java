@@ -2,7 +2,7 @@ package stepdefinitions.dwp;
 
 import com.essent.testing.dwp.DwpScenario;
 import cucumber.api.DataTable;
-import cucumber.runtime.CucumberException;
+import static org.junit.Assert.fail;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
@@ -93,17 +93,8 @@ public abstract class NavigationElements extends DwpScenario  {
         return numericValue(ordinal);
     }
 
-    protected String convertToDwpDate(String formattedDate) throws CucumberException {
+    protected String convertToDwpDate(String formattedDate)  {
         return checkAndConvertToDwpDate(formattedDate);
-    }
-
-    protected void visitLeftMenuItems(DataTable menuItems) throws Throwable {
-        List<String> leftMenuItems = menuItems.asList(String.class);
-        List<String> failedToVisitTabs = leftMenuItems.stream().filter(
-                new ClickLeftTab().negate()).collect(Collectors.toList());
-        boolean success = failedToVisitTabs.isEmpty();
-        assertThat(String.format("The following left menu items were not visited: %s", StringUtils.join(failedToVisitTabs)),
-            success, is(true));
     }
 
     protected void visitLeftMenuItem(String leftTab) throws Throwable {

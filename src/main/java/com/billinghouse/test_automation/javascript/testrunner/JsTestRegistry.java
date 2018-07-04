@@ -12,7 +12,7 @@ public class JsTestRegistry {
 
     }
 
-    public boolean add(String jsClass) {
+    public boolean register(String jsClass) {
         return javaScriptClasses.add(jsClass);
     }
 

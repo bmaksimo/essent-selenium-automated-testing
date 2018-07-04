@@ -8,7 +8,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import cucumber.runtime.CucumberException;
+import static org.junit.Assert.fail;
 import stepdefinitions.dwp.NavigationElements;
 
 import javax.swing.table.DefaultTableModel;
@@ -87,7 +87,7 @@ public class ViewListElements extends NavigationElements {
             Map viewTable = executeJavascriptMethod("TrGetTableModel", new HashMap<>());
             int index = getColimnNameIndex(columnName, viewTable);
             if(index < 0) {
-                throw new CucumberException(String.format("View List did not contain column %s", columnName));
+                fail(String.format("View List did not contain column %s", columnName));
             }
             List<ArrayList> rows = getData(viewTable);
             AtomicInteger idx = new AtomicInteger(1);
@@ -122,7 +122,7 @@ public class ViewListElements extends NavigationElements {
             Map viewTable = executeJavascriptMethod("TrFetchDataSelection", options);
             int index = getColimnNameIndex(columnName, viewTable);
             if(index < 0) {
-                throw new CucumberException(String.format("View List did not contain column %s", columnName));
+                fail(String.format("View List did not contain column %s", columnName));
             }
             List<ArrayList> rows = getData(viewTable);
             List<String> selection = (List)rows.stream().map((e) -> {
@@ -135,11 +135,11 @@ public class ViewListElements extends NavigationElements {
             Map viewTable = executeJavascriptMethod("TrGetTableModel", new HashMap<>());
             int index = getColimnNameIndex(columnName, viewTable);
             if(index < 0) {
-                throw new CucumberException(String.format("View List did not contain column %s", columnName));
+                fail(String.format("View List did not contain column %s", columnName));
             }
             List<ArrayList> rows = getData(viewTable);
             if (row > rows.size()) {
-                throw new CucumberException(String.format("--Error in Test Input: Given %s row index cannot be greater that actual View List size %s", row, rows.size()));
+                fail(String.format("--Error in Test Input: Given %s row index cannot be greater that actual View List size %s", row, rows.size()));
             }
             ArrayList<String> cells= rows.get(row -1);
             return cells.get(index);

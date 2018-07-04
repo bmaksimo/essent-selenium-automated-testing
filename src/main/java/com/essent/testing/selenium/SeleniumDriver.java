@@ -9,6 +9,7 @@ import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.util.ResourceUtils;
 import com.paulhammant.ngwebdriver.NgWebDriver;
+
 import cucumber.runtime.CucumberException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -157,7 +158,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         FileFilter fileFilterClasses = new WildcardFileFilter("*.js");
         for (File file : Objects.requireNonNull(dirClasses.listFiles(fileFilterClasses))) {
             injectJavaScriptInline(file);
-            JsTestRegistry.get().add(FilenameUtils.getBaseName(file.getName()));
+            JsTestRegistry.get().register(FilenameUtils.getBaseName(file.getName()));
         }
     }
 

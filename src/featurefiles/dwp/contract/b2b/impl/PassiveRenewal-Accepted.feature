@@ -8,6 +8,7 @@ Feature: Test the passive renewal of B2B contract.
 
     Background:
         Given   I logged in in DWP as BusinessDeskB2B
+        And     I optionally discard a previous flow:
 
     Scenario:
         When Top Action is Plus Menu

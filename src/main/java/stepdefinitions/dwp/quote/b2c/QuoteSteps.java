@@ -2,21 +2,20 @@ package stepdefinitions.dwp.quote.b2c;
 
 import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
+import com.billinghouse.random.Location;
+import com.billinghouse.random.RandomUser;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
 import com.essent.automation.flow.FlowAwarePredicate;
 import com.essent.testing.dwp.DwpDateFormats;
 import com.essent.testing.dwp.DwpScenario;
-import com.essent.testing.dwp.pageobject.Window;
 import com.essent.testing.dwp.pageobject.account.AccountCard;
 import com.essent.testing.dwp.pageobject.account.impl.AccountCardImpl;
-import com.essent.testing.dwp.pageobject.impl.MainWindow;
-import com.essent.testing.dwp.pageobject.menu.AccordionWrapperMenu;
 import com.essent.testing.dwp.pageobject.quote.CreateQuoteStepView;
-import com.essent.testing.dwp.pageobject.quote.CreateQuoteView;
 import com.essent.testing.dwp.pageobject.quote.impl.*;
 import com.essent.testing.util.ResourceUtils;
+import com.google.gson.Gson;
 import cucumber.api.DataTable;
 import cucumber.api.PendingException;
 import cucumber.api.Scenario;
@@ -24,8 +23,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import cucumber.runtime.CucumberException;
-import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.StringUtils;
 import stepdefinitions.dwp.tables.*;
 import stepdefinitions.dwp.tables.plus.CheckBoxState;
 
@@ -34,6 +32,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
 import static com.essent.testing.dwp.DwpDateFormats.TIMESTAMP;
 import static com.essent.testing.dwp.DwpTimingParameters.NEXT_STEP;
@@ -41,23 +40,38 @@ import static com.essent.testing.dwp.quote.elements.TariffElements.NO_PRICESHEET
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.fail;
+import static com.essent.testing.dwp.quote.elements.ConnectionElements.GAS_EAN;
+import static com.essent.testing.dwp.quote.elements.ConnectionElements.ELEC_EAN;
 
-
-public class HHQuoteScenarios extends DwpScenario {
+public class QuoteSteps extends DwpScenario {
     @Before("@QUOTE")
     public void SetupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
 
-    private class VerifyTariffSheetPriceAlert implements FlowAwarePredicate<HHQuoteScenarios> {
+
+
+    private class CheckFormHeader implements Predicate<String> {
+        @Override
+        public boolean test(String header) {
+            int sec = 7;
+            Map<String, Object> options = new HashMap<>();
+            options.put("schedule_seconds", sec);
+            options.put("header", header);
+            return executeJavascriptTest("TrCheckFormHeader", options);
+        }
+    }
+
+    private class VerifyTariffSheetPriceAlert implements FlowAwarePredicate<QuoteSteps> {
 
         @Override
-        public boolean test(HHQuoteScenarios scenarios) {
+        public boolean test(QuoteSteps scenarios) {
             return execute(webDriver.getDriver(), build(scenarios));
         }
 
         @Override
-        public Model.Execution build(HHQuoteScenarios input) {
+        public Model.Execution build(QuoteSteps input) {
             Model.Execution selectAlert = newExecution();
             selectAlert.element(NO_PRICESHEET_ALERT.element()).
                 step(createStep(Action.REQUIRE_ABSENT).timeoutInSeconds(NEXT_STEP.getWaitInSeconds()).
@@ -66,21 +80,66 @@ public class HHQuoteScenarios extends DwpScenario {
         }
     }
 
-    @When("^I start a B2C quote flow:$")
-    public void startB2CQuoteFlow() throws Throwable {
-        Window window = new MainWindow(webDriver);
-        AccordionWrapperMenu plusMenu = window.getPlusMenu();
-        assertThat(plusMenu, notNullValue());
-        CreateQuoteView b2CQuote = plusMenu.createB2CQuote("Sales -> TC1 -> Create new quote B2C");
-        assertThat(b2CQuote, notNullValue());
+    private class GetRandomUser implements Predicate<CustomerTable> {
+        @Override
+        public boolean test(CustomerTable customer) {
+            Map<String, String> options = new HashMap<>();
+            Map reply = executeJavascriptMethod("TrGetRandomUser", options);
+            String status = ((String) reply.get("status"));
+            boolean success = StringUtils.equals("PASSED", status);
+            if(success) {
+                Map userData  = (Map)reply.get("user");
+                RandomUser randomUser = randomUser(userData);
+                customer.setLastName(randomUser.getName().getLast());
+                customer.setFirstName(randomUser.getName().getFirst());
+                reply = executeJavascriptMethod("TrGetRandomValidAddress", options);
+                status = ((String) reply.get("status"));
+                if (!StringUtils.equals("PASSED", status))
+                    return false;
+                Map locationData  = (Map)reply.get("location");
+                Location randomAddress = randomAddress(locationData);
+                success = fillInCustomerDetails(randomUser, randomAddress);
+            }
+            return success;
+        }
 
+        private RandomUser randomUser(Map reply) {
+            Gson gson = new Gson();
+            String randomUserJs = gson.toJson(reply);
+            RandomUser randomUser = gson.fromJson(randomUserJs, RandomUser.class);
+            return randomUser;
+        }
+
+        private Location randomAddress(Map reply) {
+            Gson gson = new Gson();
+            String randomAddressJs = gson.toJson(reply);
+            Location randomAddress = gson.fromJson(randomAddressJs, Location.class);
+            return randomAddress;
+        }
+
+        private boolean fillInCustomerDetails(RandomUser randomUser, Location randomAddress) {
+            CustomerDetailsView customerDetailsView = new CustomerDetailsView(webDriver);
+            customerDetailsView.setRandomUser(randomUser);
+            customerDetailsView.setRandomAddress(randomAddress);
+            customerDetailsView.fillInFormData();
+            CreateQuoteStepView view = customerDetailsView.next();
+            return notNullValue().matches(view);
+        }
     }
 
-    @And("^B2C sales channel is ([^\"]*) for standard quote type:$")
+    @And("^Confirm Default B2C Channel Info$")
+    public void confirmDefaultBCChannelInfo() throws Throwable {
+        SelectQuoteTypeView selectQuoteTypeView = new SelectQuoteTypeView(webDriver);
+        CreateQuoteStepView next = selectQuoteTypeView.next();
+        assertThat("Failure accepting the standard quote type.", next,
+            notNullValue());
+    }
+
+    @And("^B2C sales channel is ([^\"]*)$")
     public void toggleReguCheckbox(SalesChannel salesChannel) throws Throwable {
         SelectQuoteTypeView selectQuoteTypeView = new SelectQuoteTypeView(webDriver);
         selectQuoteTypeView.setSalesChannel(salesChannel);
-        boolean formInitialized = selectQuoteTypeView.fillInInputValues();
+        boolean formInitialized = selectQuoteTypeView.fillInFormData();
         assertThat("Failure occurred when filling in input values", formInitialized, is(true));
         CreateQuoteStepView next = selectQuoteTypeView.next();
         assertThat("Failure accepting the standard quote type.", next,
@@ -99,10 +158,34 @@ public class HHQuoteScenarios extends DwpScenario {
         newCustomer = customer;
         CustomerDetailsView customerDetailsView = new CustomerDetailsView(webDriver);
         customerDetailsView.setCustomer(customer);
-        customerDetailsView.fillInInputValues();
+        customerDetailsView.fillInFormData();
         CreateQuoteStepView view = customerDetailsView.next();
         assertThat("Failure initializing B2C Customer details, check up the log.", view,
             notNullValue());
+    }
+
+    @Then("^Form Header is \"([^\"]*)\"$")
+    public void checkFormHeader(String formHeader) throws Throwable {
+        boolean success = new CheckFormHeader().test(formHeader);
+        assertThat(String.format("Form %s did not appear.", formHeader), success,
+            is(true));
+    }
+
+    @OutputParameter(name = "customers")
+    private Map<String, CustomerTable> customers = new HashMap<>();
+    @And("^Customer details are random$")
+    public void findRandomUser() throws Throwable {
+        CustomerTable customer = new CustomerTable();
+        boolean success = new GetRandomUser().test(customer);
+        customers.put("onboarding", customer);
+        assertThat("Random customer data was not fetched.", success,
+            is(true));
+    }
+
+    @And("^Valid customer address is random$")
+    public void validCustomerAddressIsRandom() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
     }
 
     @And("^Tariffsheet and package are:$")
@@ -111,11 +194,24 @@ public class HHQuoteScenarios extends DwpScenario {
         TariffTable tariff = tariffs.get(0);
         SelectPackageAndFuelTypeView selectPackageAndFuelTypeView = new SelectPackageAndFuelTypeView(webDriver);
         selectPackageAndFuelTypeView.setTariffData(tariff);
-        selectPackageAndFuelTypeView.fillInInputValues();
+        selectPackageAndFuelTypeView.fillInFormData();
         CreateQuoteStepView next = selectPackageAndFuelTypeView.next();
         assertThat("Failure selecting the Essent package and product(s), check up the log.", next,
             notNullValue());
     }
+
+    @And("^Package is \"([^\"]*)\"$")
+    public void packageIs(String packaqe) throws Throwable {
+        TariffTable tariff = new TariffTable();
+        tariff.setPackageName(packaqe);
+        SelectPackageAndFuelTypeView selectPackageAndFuelTypeView = new SelectPackageAndFuelTypeView(webDriver);
+        selectPackageAndFuelTypeView.setTariffData(tariff);
+        selectPackageAndFuelTypeView.fillInFormData();
+        CreateQuoteStepView next = selectPackageAndFuelTypeView.next();
+        assertThat("Failure selecting the Essent package and product(s), check up the log.", next,
+            notNullValue());
+    }
+
 
     @And("^No price sheet alerts popped up$")
     public void verifySelectTariffSheetAndPackage() throws Throwable {
@@ -129,10 +225,11 @@ public class HHQuoteScenarios extends DwpScenario {
         List<ConnectionDetails> list = connectionTable.asList(ConnectionDetails.class);
         ConnectionDetails electricityConnectionDetails = list.get(0);
         ConnectionDetails gasConnectionDetails = list.get(1);
+
         ConnectionDetailsView connectionDetailsView = new ConnectionDetailsView(webDriver);
         connectionDetailsView.setElectroConnectionDetails(electricityConnectionDetails);
         connectionDetailsView.setGasConnectionDetails(gasConnectionDetails);
-        connectionDetailsView.fillInInputValues();
+        connectionDetailsView.fillInFormData();
     }
 
     @And("^The ([^\"]*) meter is ([^\"]*)$")
@@ -141,7 +238,7 @@ public class HHQuoteScenarios extends DwpScenario {
         connectionDetailsView.openMeter(productType, meterState);
     }
 
-    @And("^I confirm \"([^\"]*)\" details$")
+    @And("^Confirm \"([^\"]*)\" details$")
     public void confirmConnectionDetails(String viewName) throws Throwable {
         ConnectionDetailsView connectionDetailsView = new ConnectionDetailsView(webDriver);
         CreateQuoteStepView next = connectionDetailsView.next();
@@ -154,7 +251,7 @@ public class HHQuoteScenarios extends DwpScenario {
         BillingInformation billingInfo = new BillingInformation(paymetnMethod, iban, bic);
         BillingDetailsView billingDetailsView = new BillingDetailsView(webDriver);
         billingDetailsView.setBillingInformation(billingInfo);
-        billingDetailsView.fillInInputValues();
+        billingDetailsView.fillInFormData();
         CreateQuoteStepView createQuoteStepView = billingDetailsView.next();
 
         assertThat("Failure when initializing the payment, BIC and EBAN. +", createQuoteStepView,
@@ -178,31 +275,8 @@ public class HHQuoteScenarios extends DwpScenario {
             path);
         QuoteOverviewView quoteOverviewView = new QuoteOverviewView(webDriver);
         quoteOverviewView.setSignatureData(signature);
-        quoteOverviewView.fillInInputValues();
+        quoteOverviewView.fillInFormData();
         quoteOverviewView.next();
-    }
-
-    @Then("^Redirect view is \"([^\"]*)\" with first name: \"([^\"]*)\" and last name: \"([^\"]*)\" customer details entry$")
-    public void iAmRedirectedToAnAccountPageThatHasCardWithAndCustomerDetails(String redirectView, String firstName, String lastName) throws Throwable {
-        String input[] = {firstName, lastName},
-               customerFirstName = null,
-               customerLastName = null,
-               customerDetails[] = new String[2];
-        for(int i = 0; i < customerDetails.length; i++) {
-            try {
-                customerDetails[i] = (String)checkFieldAccess(input[i], quoteCustomer);
-            } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException | IllegalArgumentException e) {
-                throw new CucumberException("Customer details did not contain " + firstName + " data field.");
-            }
-        }
-        customerFirstName = customerDetails[0];
-        customerLastName = customerDetails[1];
-        assertThat(customerFirstName, notNullValue());
-        assertThat(customerLastName, notNullValue());
-
-        AccountCard customerAccountCard = new AccountCardImpl(webDriver);
-        assertThat(String.format("Customer first name '%s' and last name '%s' were not found on the current web page", customerFirstName, customerLastName),
-            customerAccountCard.containsFirstAndLastName(customerFirstName, customerLastName), is(true));
     }
 
     @When("^I select the ([^\"]*) element and click the link in the \"([^\"]*)\" column$")

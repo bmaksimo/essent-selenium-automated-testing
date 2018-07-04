@@ -1,6 +1,6 @@
 package stepdefinitions.dwp.regex;
 
-import cucumber.runtime.CucumberException;
+
 import org.junit.Test;
 
 import static com.billinghouse.test_automation.util.gherkin.ExpressionUtil.expandFrom;
