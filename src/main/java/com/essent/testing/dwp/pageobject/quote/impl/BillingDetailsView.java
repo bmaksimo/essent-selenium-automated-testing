@@ -8,7 +8,6 @@ import com.essent.testing.dwp.pageobject.constant.Quote;
 import com.essent.testing.dwp.pageobject.quote.CreateQuoteStepView;
 import com.essent.testing.dwp.pageobject.quote.CreateQuoteView;
 import com.essent.testing.selenium.SeleniumDriver;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.tables.BillingInformation;

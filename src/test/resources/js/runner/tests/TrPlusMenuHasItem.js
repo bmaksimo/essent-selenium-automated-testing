@@ -1,4 +1,4 @@
-class TrPlusMenuHasItem extends TestRunnerDwp {
+class TrPlusMenuHasItem extends TestRunnerBase {
     /**
      * Checks if plus menu contains item at given position
      *
@@ -14,13 +14,13 @@ class TrPlusMenuHasItem extends TestRunnerDwp {
     }
     run(options, result) {
         result.status = 'FAILED';
-        result.reason = options.item + ' plus menu item was not found at position ' + options.position;
+        result.reason = `Plus Item  ${options.item} was not found at position ${options.position}`;
         if (!$("div[class='top-actions'] > .icon-plus.is-active").size()) {
             $("div[class='top-actions'] > .icon-plus").trigger('click');
         }
         setTimeout(()=> {
             let itemsCount = 1;
-            $('a.icon-arrow-down').some(function (a, b) {
+            $('a.icon-arrow-down').filter(function (a, b) {
                 if (b.innerText.trim().length > 0) {
                     if (b.innerText.trim() === options.item &&
                         itemsCount === options.position) {

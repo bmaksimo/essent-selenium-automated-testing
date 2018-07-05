@@ -1,12 +1,10 @@
-package stepdefinitions.dwp.quote;
+package stepdefinitions.dwp.smoke;
 
 import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
 import com.essent.testing.dwp.DwpScenario;
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;

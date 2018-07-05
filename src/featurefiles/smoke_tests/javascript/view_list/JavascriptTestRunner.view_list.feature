@@ -5,7 +5,7 @@ Feature: Javascript DWP testing
         Given   I logged in in DWP as BusinessDeskB2B
         And     I optionally discard a previous flow:
     Scenario:
-        When Left Menu Item is Sales Marketing
+        When Left Menu Item is sales-marketing
         And Top Menu Item is Market Transactions
         And Top Action is Filters
         #And Filter element "EAN" input is "541444625522734400"

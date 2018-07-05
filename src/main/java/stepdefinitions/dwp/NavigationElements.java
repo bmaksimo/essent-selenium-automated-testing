@@ -1,19 +1,15 @@
 package stepdefinitions.dwp;
 
 import com.essent.testing.dwp.DwpScenario;
-import cucumber.api.DataTable;
-import static org.junit.Assert.fail;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
+import static com.billinghouse.test_automation.util.gherkin.ExpressionUtil.checkAndConvertToDwpDate;
+import static com.billinghouse.test_automation.util.gherkin.ExpressionUtil.numericValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static com.billinghouse.test_automation.util.gherkin.ExpressionUtil.*;
 
 
 public abstract class NavigationElements extends DwpScenario  {
@@ -21,9 +17,8 @@ public abstract class NavigationElements extends DwpScenario  {
     private class ClickLeftTab implements Predicate<String> {
         @Override
         public boolean test(String label) {
-            String kebabCaseLabel = label.replaceAll("\\s", "-").toLowerCase();
             Map<String, String> options = new HashMap<>();
-            options.put("menu", kebabCaseLabel);
+            options.put("menu", label);
             boolean success = executeJavascriptTest("TrGetLeftMenu", options);
             return success;
         }

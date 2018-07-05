@@ -11,9 +11,6 @@ import cucumber.api.Scenario;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import static org.junit.Assert.assertTrue;
 
 /**

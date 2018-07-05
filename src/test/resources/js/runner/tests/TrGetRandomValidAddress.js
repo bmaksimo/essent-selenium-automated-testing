@@ -1,4 +1,4 @@
-class TrGetRandomValidAddress extends TestRunnerDwp {
+class TrGetRandomValidAddress extends TestRunnerBase {
 
     constructor(options, callback) {
         super(options, callback, 100);

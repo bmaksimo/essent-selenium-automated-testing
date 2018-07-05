@@ -10,8 +10,6 @@ import com.essent.automation.autocrat.Model;
 import com.essent.automation.flow.FlowAwarePredicate;
 import com.essent.testing.dwp.DwpDateFormats;
 import com.essent.testing.dwp.DwpScenario;
-import com.essent.testing.dwp.pageobject.account.AccountCard;
-import com.essent.testing.dwp.pageobject.account.impl.AccountCardImpl;
 import com.essent.testing.dwp.pageobject.quote.CreateQuoteStepView;
 import com.essent.testing.dwp.pageobject.quote.impl.*;
 import com.essent.testing.util.ResourceUtils;
@@ -28,7 +26,6 @@ import stepdefinitions.dwp.tables.*;
 import stepdefinitions.dwp.tables.plus.CheckBoxState;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,9 +37,6 @@ import static com.essent.testing.dwp.quote.elements.TariffElements.NO_PRICESHEET
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.fail;
-import static com.essent.testing.dwp.quote.elements.ConnectionElements.GAS_EAN;
-import static com.essent.testing.dwp.quote.elements.ConnectionElements.ELEC_EAN;
 
 public class QuoteSteps extends DwpScenario {
     @Before("@QUOTE")

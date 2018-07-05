@@ -65,7 +65,7 @@ Feature: Test the passive renewal of business contract.
         #Split into 2 steps
         But   Rows with 'COMPANY NAME & CONTACT' column having $SelectedContracts are 'Gone'
         #Checking post-condition "New quote - passive renewal is created"
-        When  Left Menu Item is Contracting Switching
+        When  Left Menu Item is contracting-switching
         And   Top Menu Item is Quotes
         Then  View List Header is "Quotes"
         #Need to split into 2 steps

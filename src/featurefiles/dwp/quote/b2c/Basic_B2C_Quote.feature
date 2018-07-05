@@ -29,7 +29,7 @@ Feature: Creating a B2C Quote - moveIn
       And The Gas meter is Closed
       And Confirm "Connection" details
       And Payment details are: method: BankTransfer, IBAN: "NL57ABNA0874253356" and bic: "123":
-      And Signing contract on date: DWP_TODAY in "Antwerpen" with hand signature file "/data/dwp/signed-document.pdf":
-      Then Redirect view is "Account" with first name: "firstName" and last name: "lastName" customer details entry
+      #And Signing contract on date: DWP_TODAY in "Antwerpen" with hand signature file "/data/dwp/signed-document.pdf":
+      #Then Redirect view is "Account" with first name: "firstName" and last name: "lastName" customer details entry
       When I select the 1st element and click the link in the "Number & Signed contract nr" column
       Then A quote with type "Sales" and status "Signed - Accepted" is created

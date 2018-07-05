@@ -12,9 +12,4 @@ Feature: DWP UI: Menu structure, specific menu items
         Then Available Left Menu items are:
             | Sales Marketing       |
             | Contracting Switching |
-            | Billing               |
-            | Credit Management     |
-            | Finance               |
-            | Service               |
-            | Ess                   |
-            | Admin                 |
+

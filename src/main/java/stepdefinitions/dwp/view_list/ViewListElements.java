@@ -1,4 +1,4 @@
-package stepdefinitions.dwp.view;
+package stepdefinitions.dwp.view_list;
 
 import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
@@ -8,7 +8,6 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import static org.junit.Assert.fail;
 import stepdefinitions.dwp.NavigationElements;
 
 import javax.swing.table.DefaultTableModel;
@@ -23,6 +22,7 @@ import java.util.stream.IntStream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.fail;
 public class ViewListElements extends NavigationElements {
 
 

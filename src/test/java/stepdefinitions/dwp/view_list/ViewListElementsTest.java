@@ -1,4 +1,4 @@
-package stepdefinitions.dwp.view;
+package stepdefinitions.dwp.view_list;
 
 import org.junit.Test;
 

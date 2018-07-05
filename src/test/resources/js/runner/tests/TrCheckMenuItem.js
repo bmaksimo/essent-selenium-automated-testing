@@ -1,4 +1,4 @@
-class TrCheckMenuItem extends TestRunnerDwp {
+class TrCheckMenuItem extends TestRunnerBase {
 
     /**
      * Checks if a menu-item is present in the DOM
@@ -7,7 +7,7 @@ class TrCheckMenuItem extends TestRunnerDwp {
      * * @param {function} callback - The Java callback that handles the result.
      *
      * Java example:
-     * assertThat(executeJsTest("new TrMenuHasLinkId({menu: 'mainMenu', linkId: 'sales-marketing-link', arguments[arguments.length - 1]);", link), is(true));
+     * assertThat(executeJsTest("new TrCheckMenuItem({menu: 'mainMenu', linkId: 'sales-marketing-link', arguments[arguments.length - 1]);", link), is(true));
      */
 
     constructor(options, callback) {
@@ -25,7 +25,7 @@ class TrCheckMenuItem extends TestRunnerDwp {
             result.reason = this.options.menu + ' not found';
         } else {
             let regex = new RegExp(`\\s*${this.options.item}\\s*`);
-            if($('sub-menu-link').filter((i, e) => $(e).text().match(regex)).size()) {
+            if($(type).filter((i, e) => $(e).text().match(regex)).size()) {
                result.status = 'PASSED';
                result.reason = '';
             }

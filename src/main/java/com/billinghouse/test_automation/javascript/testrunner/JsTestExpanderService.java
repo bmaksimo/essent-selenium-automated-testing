@@ -2,17 +2,17 @@ package com.billinghouse.test_automation.javascript.testrunner;
 
 
 /**
- * Expands registered Javascript class name and TrMenuHasLinkIdOptions POJO to a string,
- * which invokes the Javascript method by any underlying executor of Javascript code.
- */
+ * Expands registered Javascript class and options
+ * to Javascript invocation string, executed by Selenium
+ * */
 public interface JsTestExpanderService {
 
     /**
-     * Defines the contract of expanding the registered Javascript class name and POJO to a string,
-     * invoking the Javascript method call by any underlying executor of Javascript code.
-     * @param jsClass Javascriopt class containing the test. For example, TrMenuHasLinkId
-     * @param options options passed as parameter to Javascript test.
-     * @return string, invoking the Javascript method.
+     * Defines the contract of expanding registered Javascript class,
+     * and arguments, in single string for Selenium JS executor
+     * @param jsClass Javascriopt class name
+     * @param options options passed as argument
+     * @return string, invoking the Javascript, expanded to Selenium JS Executor format.
      */
     String expandToJavascript(String jsClass, Object options);
 }

@@ -2,7 +2,7 @@
  * Generates random user data.
  * Info: https://randomuser.me
  */
-class TrGetRandomUser extends TestRunnerDwp {
+class TrGetRandomUser extends TestRunnerBase {
 
     constructor(options, callback) {
         super(options, callback, 100);
