@@ -16,7 +16,7 @@ class TrCheckMenuItem extends TestRunnerBase {
 
     run(options, result) {
         result.status = 'FAILED';
-        result.reason = this.options.item + ' not found';
+        result.reason = this.options.item + ' not found among: ';
         let type = new Map([
             ['left', 'main-menu-link'],
             ['top', 'sub-menu-link']]).
@@ -24,8 +24,8 @@ class TrCheckMenuItem extends TestRunnerBase {
         if(!type) {
             result.reason = this.options.menu + ' not found';
         } else {
-            let regex = new RegExp(`\\s*${this.options.item}\\s*`);
-            if($(type).filter((i, e) => $(e).text().match(regex)).size()) {
+            $(type).filter((i, e)=> result.reason = result.reason.concat($(e).text().trim().concat(', ')))
+            if($(type).filter((i, e) => $(e).text().trim() === options.item).size()) {
                result.status = 'PASSED';
                result.reason = '';
             }
