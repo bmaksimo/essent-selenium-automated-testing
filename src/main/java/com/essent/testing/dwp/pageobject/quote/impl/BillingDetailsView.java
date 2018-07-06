@@ -8,7 +8,6 @@ import com.essent.testing.dwp.pageobject.constant.Quote;
 import com.essent.testing.dwp.pageobject.quote.CreateQuoteStepView;
 import com.essent.testing.dwp.pageobject.quote.CreateQuoteView;
 import com.essent.testing.selenium.SeleniumDriver;
-import cucumber.runtime.CucumberException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.tables.BillingInformation;
@@ -20,7 +19,7 @@ import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.TITLE_SE
 import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.VIEW_SELECTOR;
 import static com.essent.testing.dwp.quote.elements.B2CQuoteElements.SIGNATURE_OPTIONS_ACTIVE;
 import static com.essent.testing.dwp.quote.elements.BillingElements.*;
-
+import static org.junit.Assert.fail;
 public class BillingDetailsView extends Component implements CreateQuoteView, CreateQuoteStepView {
 
 
@@ -42,7 +41,7 @@ public class BillingDetailsView extends Component implements CreateQuoteView, Cr
             }
         );
         if(title == null) {
-            throw new CucumberException("Billing Details was not found.");
+            fail("Billing Details was not found.");
         }
         logger().info(" - RESULT: " + "element: <" + title.getTagName() + " class='" + title.getAttribute("class") + "'>" + title.getText() + "/<" + title.getTagName()+ ">");
     }
@@ -53,7 +52,7 @@ public class BillingDetailsView extends Component implements CreateQuoteView, Cr
     }
 
     @Override
-    public boolean fillInInputValues() {
+    public boolean fillInFormData() {
         Model.Execution execution = newExecution();
         PaymentMethod paymentMethod = billingInformation.getPaymentMethod();
         String eban = billingInformation.getEban();

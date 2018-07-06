@@ -22,7 +22,7 @@ import static org.junit.Assert.assertNotNull;
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 public class GenericSteps extends DwpScenario {
 
-    @Before("@QUOTE, @MENU, @DWP_SETUP, @CORE_SUPERNOVA, @FILTER, @SMOKE")
+    @Before("@QUOTE, @MENU, @RENEWAL, @FILTER, @SMOKE")
     public void SetupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
         setUpWebDriver();
@@ -52,7 +52,7 @@ public class GenericSteps extends DwpScenario {
         }
     }
 
-    @Given("^I optionally discard a previous flow:$")
+    @Given("^I optionally discard a previous flow$")
     public void discardPreviousFlow() throws Throwable {
         Model.Execution execution = new Model.Execution();
         execution.element("DWP_MODAL_CANCEL",
@@ -67,7 +67,7 @@ public class GenericSteps extends DwpScenario {
         Autocrat.executeFlow(context, flow);
     }
 
-    @After({"@QUOTE, @MENU, @DWP_TEARDOWN, @CORE_SUPERNOVA, @FILTER, @SMOKE"})
+    @After({"@QUOTE, @MENU, @RENEWAL, @FILTER, @SMOKE"})
     public void tearDown() throws Exception {
         tidyUp();
     }

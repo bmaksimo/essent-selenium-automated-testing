@@ -51,17 +51,15 @@ public class SeleniumScenario {
 
     }
 
-    /**
-     *
-     * @param registeredJsClass
-     * @param options
-     * @return
-     */
     protected boolean executeJavascriptTest(String registeredJsClass, Object options)  {
         return webDriver.executeJavascriptTest(registeredJsClass, options);
     }
 
-    public static Map executeJavascriptMethod(String registeredJsClass, Object options)  {
+    public static boolean executeJavascriptTest(String registeredJsClass, Object options, boolean withException) {
+        return webDriver.executeJavascriptTest(registeredJsClass, options, withException);
+    }
+
+    protected Map executeJavascriptMethod(String registeredJsClass, Object options)  {
         Map map = webDriver.executeJavascriptMethod(registeredJsClass, options);
         return map;
     }

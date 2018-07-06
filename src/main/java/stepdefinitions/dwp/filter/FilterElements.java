@@ -4,7 +4,6 @@ import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.testing.dwp.model.FilterElementConverter;
 import cucumber.api.DataTable;
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -31,7 +30,7 @@ public class FilterElements extends NavigationElements {
     private static final String FILTER_BUTTON_ELEMENT_QUERY = ".icon-filters";
 
 
-    @Before("@SMOKE, @QUOTE, @MENU, @DWP_SETUP, @FILTER, @RENEWAL")
+    @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
     public void SetupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -102,14 +101,23 @@ public class FilterElements extends NavigationElements {
             success, is(true));
     }
 
+    @And("^Filter element \"([^\"]*)\" date input is \"([^\"]*)\"$")
+    public void setFilterDateInput(String label, String value) throws Throwable {
+        Map<String, String> options = new HashMap<>();
+        options.put("label", label);
+        options.put("value", convertToDwpDate(value));
+        boolean success = new ApplySingleFilter().test(options);
+        assertThat(String.format("Filter element %s is undefined.", label),
+            success, is(true));
+    }
+
     @And("^Filter element \"([^\"]*)\" selection is \"([^\"]*)\"$")
     public void setFilterSelection(String label, String value) throws Throwable {
         setFilterInput(label, String.format("string:%s", value));
     }
 
-
     @Override
-    @After("@SMOKE, @QUOTE, @MENU, @DWP_SETUP, @FILTER, @RENEWAL")
+    @After("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
     public void tearDown() throws Exception {
         super.tearDown();
     }

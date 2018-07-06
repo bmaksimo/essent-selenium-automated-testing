@@ -6,7 +6,6 @@ import org.joda.time.format.DateTimeFormatter;
 
 public enum DwpDateFormats {
     TIMESTAMP("yyMMddHHmmssSSS"),
-    MONTHLY_PACKAGE("MM_yyyy"),
     DWP_TODAY("dd/MM/yyyy");
 
     private DateTimeFormatter formatter;

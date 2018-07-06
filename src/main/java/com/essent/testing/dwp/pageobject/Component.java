@@ -5,7 +5,6 @@ import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
 import com.essent.testing.selenium.SeleniumDriver;
 import com.essent.testing.util.AutocratExecutionAdapter;
-import cucumber.runtime.CucumberException;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -14,6 +13,7 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 
 import static com.essent.testing.dwp.elements.BasicElements.SIBLING_OVERLAYING_ICONS_XPATH;
+import static org.junit.Assert.fail;
 
 public abstract  class Component {
     protected static final String APPLICATION_SELECTOR =  "//dwp-app";
@@ -37,7 +37,7 @@ public abstract  class Component {
         if(element == null) {
             logger.info(" - RESULT: FAILED");
             logger.info(" - REASON: " + getClass() + "{null}: Web element was not found. ");
-            throw new CucumberException(getClass() + ": Web element was not found.");
+            fail(getClass() + ": Web element was not found.");
         }
 
         logger.info(" - RESULT: " + "element: <" + element.getTagName() + " class='" + element.getAttribute("class") + "'>");

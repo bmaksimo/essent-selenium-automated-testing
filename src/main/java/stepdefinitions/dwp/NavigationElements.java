@@ -1,26 +1,24 @@
 package stepdefinitions.dwp;
 
 import com.essent.testing.dwp.DwpScenario;
-import cucumber.api.DataTable;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
+import static com.billinghouse.test_automation.util.gherkin.ExpressionUtil.checkAndConvertToDwpDate;
+import static com.billinghouse.test_automation.util.gherkin.ExpressionUtil.numericValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+
 
 public abstract class NavigationElements extends DwpScenario  {
 
     private class ClickLeftTab implements Predicate<String> {
         @Override
         public boolean test(String label) {
-            String kebabCaseLabel = label.replaceAll("\\s", "-").toLowerCase();
             Map<String, String> options = new HashMap<>();
-            options.put("menu", kebabCaseLabel);
+            options.put("menu", label);
             boolean success = executeJavascriptTest("TrGetLeftMenu", options);
             return success;
         }
@@ -56,6 +54,16 @@ public abstract class NavigationElements extends DwpScenario  {
         }
     }
 
+    private class ClickListPlusAction implements Predicate<String> {
+        @Override
+        public boolean test(String item) {
+            Map<String, String> options = new HashMap<>();
+            options.put("item", item);
+            boolean success = executeJavascriptTest("TrListPlusMenuAction", options);
+            return success;
+        }
+    }
+
     private class ClickTopArrowButton implements Predicate<String> {
         @Override
         public boolean test(String arrow) {
@@ -76,17 +84,12 @@ public abstract class NavigationElements extends DwpScenario  {
         }
     }
 
-    protected int parseOrdinal(String ordinal) {
-        return Integer.parseInt(ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", ""));
+    protected int extractNumericValue(String ordinal) {
+        return numericValue(ordinal);
     }
 
-    protected void visitLeftMenuItems(DataTable menuItems) throws Throwable {
-        List<String> leftMenuItems = menuItems.asList(String.class);
-        List<String> failedToVisitTabs = leftMenuItems.stream().filter(
-                new ClickLeftTab().negate()).collect(Collectors.toList());
-        boolean success = failedToVisitTabs.isEmpty();
-        assertThat(String.format("The following left menu items were not visited: %s", StringUtils.join(failedToVisitTabs)),
-            success, is(true));
+    protected String convertToDwpDate(String formattedDate)  {
+        return checkAndConvertToDwpDate(formattedDate);
     }
 
     protected void visitLeftMenuItem(String leftTab) throws Throwable {
@@ -123,6 +126,12 @@ public abstract class NavigationElements extends DwpScenario  {
     protected void clickCockpitItem(String item) {
         boolean success = new ClickCockpitItem().test(item);
         assertThat(String.format("Cockpit item %s was not available.", item),
+            success, is(true));
+    }
+
+    protected void clickListPlusAction(String item) {
+        boolean success = new ClickListPlusAction().test(item);
+        assertThat(String.format("List Plus Action %s undefined.", item),
             success, is(true));
     }
 

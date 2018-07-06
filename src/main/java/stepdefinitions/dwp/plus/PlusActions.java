@@ -8,7 +8,7 @@ import stepdefinitions.dwp.NavigationElements;
 
 public class PlusActions extends NavigationElements {
 
-    @Before("@SMOKE, @QUOTE, @MENU, @DWP_SETUP, @FILTER, @RENEWAL")
+    @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
     public void SetupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -19,8 +19,13 @@ public class PlusActions extends NavigationElements {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @MENU, @DWP_SETUP, @FILTER, @RENEWAL")
+    @After("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
     public void tearDown() throws Exception {
         super.tearDown();
+    }
+
+    @And("^List Plus Action is ([^\"]*)$")
+    public void checkPlusAction(String item) throws Exception {
+        clickListPlusAction(item);
     }
 }
