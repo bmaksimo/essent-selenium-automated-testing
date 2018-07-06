@@ -3,7 +3,7 @@ Feature: Javascript DWP testing
 
     Background:
         Given I logged in in DWP as BusinessDeskB2B
-        Given I optionally discard a previous flow:
+        Given I optionally discard a previous flow
 
     Scenario: We can access the main gui elements
         When Left Menu Item is sales-marketing

@@ -63,18 +63,23 @@ public class ConnectionDetailsView extends Component implements CreateQuoteView,
 
     @Override
     public boolean fillInFormData() {
+        Map<String, String> options = new HashMap<>();
+        options.put("selector", ELEC_EAN.element().query);
+        options.put("value", electroConnectionDetails.getEan());
+        seleniumDriver.executeJavascriptTest("TrApplyFormInput", options, true);
+
+        options.put("selector", GAS_EAN.element().query);
+        options.put("value", gasConnectionDetails.getEan());
+        seleniumDriver.executeJavascriptTest("TrApplyFormInput", options, true);
+
         Model.Execution execution = newExecution();
         execution.
-            element(ELEC_EAN.element()).
             element(ELEC_METER_NR.element()).
-            element(GAS_EAN.element()).
             element(GAS_METER_NR.element()).
             step(createStep(Action.TYPING).element(ELEC_METER_NR.name()).value(electroConnectionDetails.getMeterNumber()), INPUT.getSleepInMillis()).
             step(createStep(Action.TYPING).element(GAS_METER_NR.name()).value(gasConnectionDetails.getMeterNumber()), INPUT.getSleepInMillis());
-           /* step(createStep(Action.CLICK).timeoutInSeconds(NEXT_STEP.getWaitInSeconds()).element(NEXT_BUTTON.name())).
-            step(createStep(Action.REQUIRE).timeoutInSeconds(WAIT_NEXT_PAGE.getWaitInSeconds()).element(BILLING_DETAILS_ACTIVE.name()));*/
-
         return execute(execution);
+
     }
 
     public void setElectroConnectionDetails(ConnectionDetails electroConnectionDetails) {
@@ -87,11 +92,9 @@ public class ConnectionDetailsView extends Component implements CreateQuoteView,
 
     public boolean openMeter(ProductType productType, CheckBoxState state) {
         Model.Element meterOpenCheckboxElement = ELEC_METER_OPEN_CHECKBOX.element();
-        String meterOpenCheckboxName = ELEC_METER_OPEN_CHECKBOX.name();
         switch (productType) {
             case Gas:
                 meterOpenCheckboxElement = GAS_METER_OPEN_CHECKBOX.element();
-                meterOpenCheckboxName = GAS_METER_OPEN_CHECKBOX.name();
                 break;
             default:
                 break;

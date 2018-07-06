@@ -111,7 +111,6 @@ public class CustomerDetailsView extends Component implements CreateQuoteView, C
             element(MOBILE_NR.element()).
             element(WORK_PHONE_NR.element()).
             step(createStep(Action.ACCESS).element(COPY_ADDRESS_CONNECTION_TO_BILLING.name()).requireDisplayed(false).callback(new HideIconOverlays())).
-            step(createStep(Action.CLICK).element(COPY_ADDRESS_CONNECTION_TO_BILLING.name()).requireDisplayed(false), INPUT.getSleepInMillis()).
             step(createStep(Action.SELECT).element(SALUTATION.name()).value(salutation), INPUT.getSleepInMillis()).
             step(createStep(Action.TYPING).element(FIRST_NAME.name()).value(firstName), INPUT.getSleepInMillis()).
             step(createStep(Action.CLICK).element(BIRTHDAY.name()), INPUT.getSleepInMillis()).

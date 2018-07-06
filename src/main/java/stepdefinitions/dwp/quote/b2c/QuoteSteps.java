@@ -5,7 +5,6 @@ import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
 import com.billinghouse.random.Location;
 import com.billinghouse.random.RandomUser;
 import com.essent.automation.autocrat.Action;
-import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
 import com.essent.automation.flow.FlowAwarePredicate;
 import com.essent.testing.dwp.DwpDateFormats;
@@ -39,12 +38,11 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
 public class QuoteSteps extends DwpScenario {
+
     @Before("@QUOTE")
     public void SetupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
-
-
 
     private class CheckFormHeader implements Predicate<String> {
         @Override
@@ -195,7 +193,7 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^Package is \"([^\"]*)\"$")
-    public void packageIs(String packaqe) throws Throwable {
+    public void selectPackage(String packaqe) throws Throwable {
         TariffTable tariff = new TariffTable();
         tariff.setPackageName(packaqe);
         SelectPackageAndFuelTypeView selectPackageAndFuelTypeView = new SelectPackageAndFuelTypeView(webDriver);
@@ -232,15 +230,15 @@ public class QuoteSteps extends DwpScenario {
         connectionDetailsView.openMeter(productType, meterState);
     }
 
-    @And("^Confirm \"([^\"]*)\" details$")
-    public void confirmConnectionDetails(String viewName) throws Throwable {
+    @And("^Confirm Connection$")
+    public void confirmConnection() throws Throwable {
         ConnectionDetailsView connectionDetailsView = new ConnectionDetailsView(webDriver);
         CreateQuoteStepView next = connectionDetailsView.next();
         assertThat("Failure filling in connection details, check up the log.", next,
             notNullValue());
     }
 
-    @And("^Payment details are: method: ([^\"]*), IBAN: \"([^\"]*)\" and bic: \"([^\"]*)\":$")
+    @And("^Payment details are: method ([^\"]*), IBAN \"([^\"]*)\", bic \"([^\"]*)\"$")
     public void selectPaymentMethod(PaymentMethod paymetnMethod, String iban, String bic) throws Throwable {
         BillingInformation billingInfo = new BillingInformation(paymetnMethod, iban, bic);
         BillingDetailsView billingDetailsView = new BillingDetailsView(webDriver);
@@ -253,11 +251,17 @@ public class QuoteSteps extends DwpScenario {
 
     }
 
+    @And("^Confirm Quote$")
+    public void confirmQuote() throws Throwable {
+        QuoteOverviewView quoteOverviewView = new QuoteOverviewView(webDriver);
+        quoteOverviewView.next();
+    }
+
     @InputParameter(name = "customer")
     private CustomerTable quoteCustomer;
 
-    @And("^Signing contract on date: ([^\"]*) in \"([^\"]*)\" with hand signature file \"([^\"]*)\":$")
-    public void submitSignature(DwpDateFormats date, String location, String filePath) throws Throwable {
+    @And("^Signature date is ([^\"]*), place is \"([^\"]*)\", hand signature file is \"([^\"]*)\":$")
+    public void submitSignedQuote(DwpDateFormats date, String location, String filePath) throws Throwable {
         String path = ResourceUtils.toPath(filePath);
         File document = new File(path);
         assertThat("File at path " + document.getAbsolutePath() + " doesn't exist.", true,
@@ -275,35 +279,10 @@ public class QuoteSteps extends DwpScenario {
 
     @When("^I select the ([^\"]*) element and click the link in the \"([^\"]*)\" column$")
     public void navigateToListCellLink(String ordinal, String column) throws Throwable {
-        //int position = Integer.parseInt(ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", ""));
         Map<String, String> options = new HashMap<>();
         options.put("column", column);
         boolean success = executeJavascriptTest("TrGetColumnIndexList", options);
         assertThat(success, is(true));
     }
 
-    @And("^A quote with type \"([^\"]*)\" and status \"([^\"]*)\" is created$")
-    public void checkCreatedQuote(String arg0, String arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
-
-    @Then("^A signed quote is created of type \"([^\"]*)\" and status \"([^\"]*)\" and shown in an account for \"([^\"]*)\" with ([0-9]+) products:$")
-    public void a_signed_quote_is_created_for_an_account_with_products(String type, String status, String accountName, String nrOfProducts) throws Throwable {
-        Model.Execution execution = new Model.Execution();
-        // this.initializeFlowElements(execution);
-        Model.Flow aSignedQuoteIsCreated = execution.flow();
-
-        execution.element("DWP_QUOTEOVERVIEW_ACCOUNT_HEADER", new Model.Element().search("XPATH").query("//h1[1][text()='" + accountName + "']"));
-        aSignedQuoteIsCreated.step(new Model.Step().action(Action.REQUIRE).element("DWP_QUOTEOVERVIEW_ACCOUNT_HEADER").timeoutInSeconds(30));
-
-        execution.element("DWP_QUOTEOVERVIEW_STATUS", new Model.Element().search("XPATH").query("//list[@list-key='QuotesOnAccount']//tr[1]//td/list-simple-two-liner-cell[@line-1='" + type + "'][@line-2='" + status + "']"));
-        aSignedQuoteIsCreated.step(new Model.Step().action(Action.REQUIRE).element("DWP_QUOTEOVERVIEW_STATUS").timeoutInSeconds(3));
-
-        execution.element("DWP_QUOTEOVERVIEW_PRODUCTS", new Model.Element().search("XPATH").query("//list[@list-key='QuotesOnAccount']//tr[1]//select/option[text()='4 Products']"));
-        aSignedQuoteIsCreated.step(new Model.Step().action(Action.REQUIRE).element("DWP_QUOTEOVERVIEW_PRODUCTS").timeoutInSeconds(3));
-
-        Autocrat.ExecutionContext context = new Autocrat.ExecutionContext(webDriver.getDriver(), execution);
-        Autocrat.executeFlow(context, aSignedQuoteIsCreated);
-    }
 }

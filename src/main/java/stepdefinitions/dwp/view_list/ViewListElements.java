@@ -112,7 +112,7 @@ public class ViewListElements extends NavigationElements {
             List<Integer> indices = IntStream.range(1, numRows + 1).boxed().collect(Collectors.toList());
             Map<String, Object> options = new HashMap<>();
             options.put("indices", indices);
-            boolean success = executeJavascriptTest("TrSelectListRows", options);
+            boolean success = executeJavascriptTest("TrSelectListRows", options, true);
             return success;
         }
 

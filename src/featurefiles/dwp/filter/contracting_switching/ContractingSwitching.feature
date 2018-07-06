@@ -5,8 +5,8 @@
 Feature: DWP UI: Filter elements
 
     Background:
-        Given I logged in in DWP as essentadmin
-        Given I optionally discard a previous flow:
+        Given I logged in in DWP as BusinessDeskB2B
+        Given I optionally discard a previous flow
 
     Scenario: Checking if filter elements, defined for Contracting Switching Left Tab, are available
         When Left Menu Item is contracting-switching

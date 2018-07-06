@@ -52,7 +52,7 @@ public class GenericSteps extends DwpScenario {
         }
     }
 
-    @Given("^I optionally discard a previous flow:$")
+    @Given("^I optionally discard a previous flow$")
     public void discardPreviousFlow() throws Throwable {
         Model.Execution execution = new Model.Execution();
         execution.element("DWP_MODAL_CANCEL",
