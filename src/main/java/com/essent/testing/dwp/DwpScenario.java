@@ -11,9 +11,6 @@ import cucumber.api.Scenario;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -80,14 +77,5 @@ public abstract class DwpScenario extends SeleniumScenario {
         name = scenario.getName();
         logger.info(" - NAME: " + name);
         ActiveScenarioProvider.get().setActiveScenario(this.getClass().getSimpleName(), this);
-    }
-
-    protected Object checkFieldAccess(String fieldName, Object testData) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        Method method = testData.getClass().getMethod(fieldToGetter(fieldName));
-        return method.invoke(testData);
-    }
-
-    private String fieldToGetter(String name) {
-        return "get" + name.substring(0, 1).toUpperCase() + name.substring(1);
     }
 }

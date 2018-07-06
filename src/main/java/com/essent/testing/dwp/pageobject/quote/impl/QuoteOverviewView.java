@@ -8,7 +8,6 @@ import com.essent.testing.dwp.pageobject.constant.Quote;
 import com.essent.testing.dwp.pageobject.quote.CreateQuoteStepView;
 import com.essent.testing.dwp.pageobject.quote.CreateQuoteView;
 import com.essent.testing.selenium.SeleniumDriver;
-import cucumber.runtime.CucumberException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.tables.SignatureData;
@@ -18,6 +17,7 @@ import static com.essent.testing.dwp.elements.BasicElements.NEXT_BUTTON;
 import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.TITLE_SELECTOR_TEMPLATE;
 import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.VIEW_SELECTOR;
 import static com.essent.testing.dwp.quote.elements.SignatureElements.*;
+import static org.junit.Assert.fail;
 
 public class QuoteOverviewView extends Component implements CreateQuoteView, CreateQuoteStepView {
 
@@ -39,7 +39,7 @@ public class QuoteOverviewView extends Component implements CreateQuoteView, Cre
             }
         );
         if(title == null) {
-            throw new CucumberException("Quote Overview was not found.");
+            fail("Quote Overview was not found.");
         }
         logger().info(" - RESULT: " + "element: <" + title.getTagName() + " class='" + title.getAttribute("class") + "'>" + title.getText() + "/<" + title.getTagName()+ ">");
     }
@@ -56,7 +56,7 @@ public class QuoteOverviewView extends Component implements CreateQuoteView, Cre
     }
 
     @Override
-    public boolean fillInInputValues() {
+    public boolean fillInFormData() {
         String formattedDate = signatureData.getDate().print();
         String place = signatureData.getPlace();
         String filePath = signatureData.getFilePath();

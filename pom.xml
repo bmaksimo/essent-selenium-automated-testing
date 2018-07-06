@@ -38,6 +38,7 @@
     <!-- Essent build version -->
     <essent.project.version>${project.version}</essent.project.version>
 
+    <!-- Essent dependencies -->
 
     <!-- Dependency versions. -->
     <spring.version>4.2.2.RELEASE</spring.version>

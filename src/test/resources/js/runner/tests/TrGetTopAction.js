@@ -22,25 +22,18 @@ class TrGetTopAction extends TestRunnerBase {
         const options = this.options;
         result.status = 'UNDEFINED';
         result.reason = 'Not executed';
-
-        let matches = [];
-        $('.top-actions').children('a').each(function(index, element) {
-            if(options.name != $(this).attr('name')) {
-                return;
-            } else {
-                matches.push($(this));
-                return false;
-            }
-        });
+        let map = new Map([['Plus Menu', '.top-actions .icon-plus'],
+            ['Filters', '.top-actions .icon-filters']]);
+        let query = map.get(options.name);
+        let matches = $(query);
         if(matches.length > 0) {
-            matches[0].trigger('click');
+            $(matches[0]).trigger('click');
             result.status = 'PASSED';
             result.reason = '';
         } else {
             result.status = 'FAILED';
             result.reason = 'Top action  ' + options.name + ' not found';
         }
-
         setTimeout(()=> {
             this.resolveCallback(result);
         }, 1000);

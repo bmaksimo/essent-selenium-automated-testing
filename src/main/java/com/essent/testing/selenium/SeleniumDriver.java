@@ -1,9 +1,9 @@
 package com.essent.testing.selenium;
 
-import com.billinghouse.javascript.JavascriptTestRunner;
-import com.billinghouse.javascript.JsTestRegistry;
-import com.billinghouse.javascript.impl.SeleniumJsTestExpanderService;
-import com.billinghouse.javascript.testrunner.dwp.system.Queries;
+import com.billinghouse.test_automation.javascript.testrunner.JavascriptTestRunner;
+import com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry;
+import com.billinghouse.test_automation.javascript.testrunner.dwp.system.Queries;
+import com.billinghouse.test_automation.javascript.testrunner.impl.SeleniumJsTestExpanderService;
 import com.essent.automation.core.WebDriverWait;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import static org.junit.Assert.fail;
 
 /**
  * This class is a wrapper around the selenium webdriver.
@@ -48,9 +49,49 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     private String browserName;
     private String browserVersion;
     private static final String PATH = "/js/runner/";
-    // new: class based
+
     private static final String PATH_TO_INLINE_CLASSES = "/js/runner/tests/";
     private static final String TEST_RUNNER_CLASS = "TestRunnerBase.js";
+
+    public class ExecuteJavascriptTest {
+
+        private final SeleniumDriver seleniumDriver;
+        private boolean withException;
+
+        public ExecuteJavascriptTest(SeleniumDriver seleniumDriver) {
+            this.seleniumDriver = seleniumDriver;
+        }
+
+        public ExecuteJavascriptTest withException(boolean withException) {
+            this.withException = withException;
+            return this;
+        }
+
+        /**
+         * @param registeredJsClass
+         * @param options
+         * @return
+         */
+        public boolean executeJavascriptTest(String registeredJsClass, Object options) {
+            seleniumDriver.waitUntilAngularPageIsLoaded();
+            String executeTest = SeleniumJsTestExpanderService.get().expandToJavascript(registeredJsClass, options);
+            SeleniumDriver.logger.info("STEP:");
+            SeleniumDriver.logger.info(" - ACTION: EXEC_JAVASCRIPT_TEST");
+            SeleniumDriver.logger.info(" - TEST: " + executeTest);
+            Map result = (Map) ((JavascriptExecutor) seleniumDriver.getDriver()).executeAsyncScript(executeTest);
+            String status = ((String) result.get("status"));
+            boolean success = StringUtils.equals("PASSED", status);
+            SeleniumDriver.logger.info(" - RESULT: " + status);
+            if (StringUtils.equals("FAILED", status)) {
+                String reason = ((String) result.get("reason"));
+                SeleniumDriver.logger.info(" - REASON: " + reason);
+                if(withException) {
+                    fail(reason);
+                }
+            }
+            return success;
+        }
+    }
 
     private interface WebDriverInitializingStrategy {
 
@@ -69,6 +110,12 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             String userDataPath = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_USER_DATA_PATH);
             if (StringUtils.isNotEmpty(userDataPath)) {
                 options.addArguments("user-data-dir=" + userDataPath);
+                try {
+                    FileUtils.cleanDirectory(new File((userDataPath)));
+                    logger.info(" - CLEAN_DIR: " + userDataPath);
+                } catch (IOException e) {
+                    logger.error(" - CLEAN_DIR: " + userDataPath);
+                }
             }
             options.addArguments("--disable-dev-shm-usage"); // overcome limited resource problems
             options.addArguments("--no-sandbox"); // Bypass OS security model
@@ -90,6 +137,8 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             }
         }
     }
+
+
 
     public void setUp() throws Exception {
         driver = createWebDriver();
@@ -157,7 +206,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         FileFilter fileFilterClasses = new WildcardFileFilter("*.js");
         for (File file : Objects.requireNonNull(dirClasses.listFiles(fileFilterClasses))) {
             injectJavaScriptInline(file);
-            JsTestRegistry.get().add(FilenameUtils.getBaseName(file.getName()));
+            JsTestRegistry.get().register(FilenameUtils.getBaseName(file.getName()));
         }
     }
 
@@ -203,20 +252,17 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
      * @return
      */
     public boolean executeJavascriptTest(String registeredJsClass, Object options) {
-        waitUntilAngularPageIsLoaded();
-        String executeTest = SeleniumJsTestExpanderService.get().expandToJavascript(registeredJsClass, options);
-        logger.info("STEP:");
-        logger.info(" - ACTION: EXEC_JAVASCRIPT_TEST");
-        logger.info(" - TEST: " + executeTest);
-        Map result = (Map) ((JavascriptExecutor) driver).executeAsyncScript(executeTest);
-        String status = ((String) result.get("status"));
-        boolean success = StringUtils.equals("PASSED", status);
-        logger.info(" - RESULT: " + status);
-        if (StringUtils.equals("FAILED", status)) {
-            String reason = ((String) result.get("reason"));
-            logger.info(" - REASON: " + reason);
-        }
-        return success;
+        return new ExecuteJavascriptTest(this).executeJavascriptTest(registeredJsClass, options);
+    }
+
+    /**
+     *
+     * @param registeredJsClass
+     * @param options
+     * @return
+     */
+    public boolean executeJavascriptTest(String registeredJsClass, Object options, boolean withException) {
+        return new ExecuteJavascriptTest(this).withException(withException).executeJavascriptTest(registeredJsClass, options);
     }
 
     private void awaitJqueryNotActive(long milliseconds) {
@@ -272,4 +318,5 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         WebElement result = waiter.until(driver -> driver.findElement(by));
         return result;
     }
+
 }

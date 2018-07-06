@@ -1,14 +1,10 @@
 package stepdefinitions.dwp.menu;
 
-import com.billinghouse.javascript.model.options.TrMenuHasLinkIdOptions;
-import com.essent.testing.dwp.menu.model.DwpLeftMenu;
-import com.essent.testing.dwp.menu.model.TopMenuItems;
 import cucumber.api.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
-import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
 import stepdefinitions.dwp.NavigationElements;
@@ -24,7 +20,7 @@ import static org.hamcrest.Matchers.is;
 
 public class MenuElements extends NavigationElements {
 
-    @Before("@SMOKE, @QUOTE, @MENU, @DWP_SETUP, @FILTER, @RENEWAL")
+    @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
     public void SetupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -35,9 +31,9 @@ public class MenuElements extends NavigationElements {
             .filter(
             menuItem -> {
                 Map<String, String> jsOptions = new HashMap<>();
-                jsOptions.put("menu", "mainMenu");
-                jsOptions.put("linkId", DwpLeftMenu.get(menuItem).getMenuItemLink());
-                return !executeJavascriptTest("TrMenuHasLinkId", jsOptions);
+                jsOptions.put("menu", "left");
+                jsOptions.put("item", menuItem);
+                return !executeJavascriptTest("TrCheckMenuItem", jsOptions);
             })
             .collect(Collectors.toList());
         assertThat("The following left menu items were not available: "
@@ -51,10 +47,10 @@ public class MenuElements extends NavigationElements {
             .stream()
             .filter(
                 menuItem -> {
-                    TrMenuHasLinkIdOptions options = new TrMenuHasLinkIdOptions();
-                    options.setLinkId(TopMenuItems.get(menuItem).getLink());
-                    options.setMenu("subMenu");
-                    return !executeJavascriptTest("TrMenuHasLinkId", options);
+                    Map<String, String> options = new HashMap<>();
+                    options.put("item", menuItem);
+                    options.put("menu", "top");
+                    return !executeJavascriptTest("TrCheckMenuItem", options);
                 })
             .collect(Collectors.toList());
         assertThat("The following left menu items were not available: "
@@ -81,18 +77,6 @@ public class MenuElements extends NavigationElements {
         clickTopMenuItem(itemName);
     }
 
-    @Then("^View title is '(.*)'$")
-    public void isViewTitle(String title) throws Throwable {
-        int sec = 1;
-        Map<String, String> parameters = new HashMap<>();
-        parameters.put("seconds", "" + sec);
-        parameters.put("title", title);
-        boolean result =
-        executeJavascriptTest("TrContentPageContainsTitle", parameters);
-        assertThat("View title: " + title + " did not appear after " + sec + " seconds",
-            result, is(true));
-    }
-
     @And("^The following Plus menu items are available at positions:$")
     public void checkPositionsOfPlusMenuItems(DataTable plusItems) throws Throwable {
         final List<String> failedItems = plusItems.asList(Item.class)
@@ -112,7 +96,7 @@ public class MenuElements extends NavigationElements {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @MENU, @DWP_SETUP, @FILTER, @RENEWAL")
+    @After("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
     public void tearDown() throws Exception {
         super.tearDown();
     }

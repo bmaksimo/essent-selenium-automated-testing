@@ -8,11 +8,9 @@ import com.essent.roles.UserRoles;
 import com.essent.testing.dwp.DwpScenario;
 import com.essent.testing.dwp.pageobject.Window;
 import com.essent.testing.dwp.pageobject.impl.LoginDialog;
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.html5.LocalStorage;
@@ -24,7 +22,7 @@ import static org.junit.Assert.assertNotNull;
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 public class GenericSteps extends DwpScenario {
 
-    @Before("@QUOTE, @MENU, @DWP_SETUP, @CORE_SUPERNOVA, @FILTER, @SMOKE")
+    @Before("@QUOTE, @MENU, @RENEWAL, @FILTER, @SMOKE")
     public void SetupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
         setUpWebDriver();
@@ -54,7 +52,7 @@ public class GenericSteps extends DwpScenario {
         }
     }
 
-    @Given("^I optionally discard a previous flow:$")
+    @Given("^I optionally discard a previous flow$")
     public void discardPreviousFlow() throws Throwable {
         Model.Execution execution = new Model.Execution();
         execution.element("DWP_MODAL_CANCEL",
@@ -69,7 +67,7 @@ public class GenericSteps extends DwpScenario {
         Autocrat.executeFlow(context, flow);
     }
 
-    @After({"@QUOTE, @MENU, @DWP_TEARDOWN, @CORE_SUPERNOVA, @FILTER, @SMOKE"})
+    @After({"@QUOTE, @MENU, @RENEWAL, @FILTER, @SMOKE"})
     public void tearDown() throws Exception {
         tidyUp();
     }

@@ -8,7 +8,6 @@ import com.essent.testing.dwp.pageobject.constant.Quote;
 import com.essent.testing.dwp.pageobject.quote.CreateQuoteStepView;
 import com.essent.testing.dwp.pageobject.quote.CreateQuoteView;
 import com.essent.testing.selenium.SeleniumDriver;
-import cucumber.runtime.CucumberException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.tables.SalesChannel;
@@ -18,6 +17,7 @@ import static com.essent.testing.dwp.elements.BasicElements.NEXT_BUTTON;
 import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.TITLE_SELECTOR_TEMPLATE;
 import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.VIEW_SELECTOR;
 import static com.essent.testing.dwp.quote.elements.B2CQuoteElements.*;
+import static org.junit.Assert.fail;
 
 public class SelectQuoteTypeView extends Component implements CreateQuoteView, CreateQuoteStepView {
 
@@ -34,12 +34,13 @@ public class SelectQuoteTypeView extends Component implements CreateQuoteView, C
             }
         );
         if(title == null) {
-            throw new CucumberException("Select Quote Type was not found.");
+            fail("Select Quote Type was not found.");
         }
         logger().info(" - RESULT: " + "element: <" + title.getTagName() + " class='" + title.getAttribute("class") + "'>" + title.getText() + "/<" + title.getTagName()+ ">");
     }
 
     private boolean      regularisation;
+
     private SalesChannel salesChannel;
 
     public boolean isRegularisation() {
@@ -60,22 +61,26 @@ public class SelectQuoteTypeView extends Component implements CreateQuoteView, C
 
     @Override
     public CreateQuoteStepView next() {
+        Model.Execution toggleReguCheckbox = newExecution();
+        toggleReguCheckbox.
+            element(NEXT_BUTTON.element()).
+            element(CUSTOMER_DETAILS_ACTIVE.element()).
+            step(createStep(Action.CLICK).timeoutInSeconds(NEXT_STEP.getWaitInSeconds()).
+                element(NEXT_BUTTON.name())).
+            step(createStep(Action.REQUIRE).timeoutInSeconds(WAIT_NEXT_PAGE.getWaitInSeconds()).element(CUSTOMER_DETAILS_ACTIVE.name()));
+        if(!execute(toggleReguCheckbox))
+            fail("Guided step Channel details faied.");
         return new CustomerDetailsView(seleniumDriver);
     }
 
     @Override
-    public boolean fillInInputValues() {
+    public boolean fillInFormData() {
         Model.Execution toggleReguCheckbox = newExecution();
         toggleReguCheckbox.
             element(REGU_CHECKBOX.element()).
             element(SALES_CHANNEL_FIELD.element()).
-            element(NEXT_BUTTON.element()).
-            element(CUSTOMER_DETAILS_ACTIVE.element()).
             step(createStep(Action.CLICK).requireDisplayed(false).element(REGU_CHECKBOX.name()), TOGGLE_CHECKBOX.getSleepInMillis()).
-            step(createStep(Action.SELECT).element(SALES_CHANNEL_FIELD.name()).value(salesChannel.getLabel()), INPUT.getSleepInMillis()).
-            step(createStep(Action.CLICK).timeoutInSeconds(NEXT_STEP.getWaitInSeconds()).
-                element(NEXT_BUTTON.name())).
-            step(createStep(Action.REQUIRE).timeoutInSeconds(WAIT_NEXT_PAGE.getWaitInSeconds()).element(CUSTOMER_DETAILS_ACTIVE.name()));
-        return execute(toggleReguCheckbox);
+            step(createStep(Action.SELECT).element(SALES_CHANNEL_FIELD.name()).value(salesChannel.getLabel()), INPUT.getSleepInMillis());
+            return execute(toggleReguCheckbox);
     }
 }
