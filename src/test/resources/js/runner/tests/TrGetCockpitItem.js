@@ -11,7 +11,6 @@ class TrGetCockpitItem extends TestRunnerBase {
         result.reason = 'Not executed';
         let matches = [];
         $("dashboard-item[label='"+options.item+"']");
-)
         if(matches.length > 0) {
             matches[0].find('a').trigger('click');
             result.status = 'PASSED';

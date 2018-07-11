@@ -2,10 +2,12 @@
 @BASIC
 @MENU
 @REGRESSION
+@SALESMKT
 Feature: DWP UI: Menu structure, specific menu items
 
     Background:
-        Given I logged in in DWP as BusinessDeskB2B
+#        Given I logged in in DWP as BusinessDeskB2B
+        Given I logged in in DWP as d.chebayewski.billinghouse@essent.be
         Given I optionally discard a previous flow
 
     Scenario: Upper menu items are available for Left Menu Item

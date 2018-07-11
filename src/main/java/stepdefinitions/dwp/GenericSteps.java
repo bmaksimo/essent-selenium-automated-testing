@@ -7,6 +7,7 @@ import com.essent.automation.autocrat.Model.Flow;
 import com.essent.roles.UserRoles;
 import com.essent.testing.dwp.DwpScenario;
 import com.essent.testing.dwp.pageobject.Window;
+import com.essent.testing.dwp.pageobject.impl.IWelcomeLoginDialog;
 import com.essent.testing.dwp.pageobject.impl.LoginDialog;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -31,7 +32,8 @@ public class GenericSteps extends DwpScenario {
 
     @Given("^I logged in in DWP as ([^\"]*)$")
     public void loginAs(String userName) throws Throwable {
-        LoginDialog login = new LoginDialog(webDriver);
+        IWelcomeLoginDialog login = new IWelcomeLoginDialog(webDriver);
+//        LoginDialog login = new LoginDialog(webDriver);
         injectJavaScriptTestRunner();
         retrieveUserLanguage();
         UserRoles dwpUser = UserRoles.get(userName);
