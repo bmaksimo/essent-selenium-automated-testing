@@ -314,7 +314,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     }
 
     public WebElement findElementOrNull(By by) {
-        WebDriverWait waiter = new WebDriverWait(driver, 5).withoutException();
+        WebDriverWait waiter = new WebDriverWait(driver, 15).withoutException();
         logger.info(driver.getCurrentUrl());
         WebElement result = waiter.until(driver -> {
             logger.info(driver.getCurrentUrl());
