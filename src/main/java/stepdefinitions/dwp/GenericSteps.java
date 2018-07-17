@@ -5,7 +5,11 @@ import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
 import com.essent.automation.autocrat.Model.Flow;
 import com.essent.roles.UserRoles;
+import com.essent.testing.config.ConfigKey;
+import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.dwp.DwpScenario;
+import com.essent.testing.dwp.pageobject.Component;
+import com.essent.testing.dwp.pageobject.LoginComponent;
 import com.essent.testing.dwp.pageobject.Window;
 import com.essent.testing.dwp.pageobject.impl.IWelcomeLoginDialog;
 import com.essent.testing.dwp.pageobject.impl.LoginDialog;
@@ -31,15 +35,33 @@ public class GenericSteps extends DwpScenario {
     }
 
     @Given("^I logged in in DWP as ([^\"]*)$")
-    public void loginAs(String userName) throws Throwable {
-        IWelcomeLoginDialog login = new IWelcomeLoginDialog(webDriver);
-//        LoginDialog login = new LoginDialog(webDriver);
+    public void loginAs(String username) throws Throwable {
         injectJavaScriptTestRunner();
         retrieveUserLanguage();
-        UserRoles dwpUser = UserRoles.get(userName);
-        Window application = login.login(dwpUser.getUsername(), dwpUser.getPassword());
+        UserRoles dwpUser = UserRoles.get(getUsernameFromEnvironment(username));
+        Window application = getCurrentLoginDialog().login(dwpUser.getUsername(), dwpUser.getPassword());
         retrieveUserLanguage();
         assertNotNull("DWP application did not appear after a login", application);
+    }
+
+    private LoginComponent getCurrentLoginDialog() {
+        return "DEVINT01".equalsIgnoreCase(ConfigProvider.getProperty(ConfigKey.ENVIRONMENT)) ?
+            new LoginDialog(webDriver)
+            : new IWelcomeLoginDialog(webDriver);
+    }
+
+    private String getUsernameFromEnvironment(String username) {
+        if (ConfigKey.DWP_USER_SERVICEDESK_B2B == ConfigKey.valueOf(username)) {
+            return ConfigProvider.getProperty(ConfigKey.DWP_USER_SERVICEDESK_B2B);
+        } else if (ConfigKey.DWP_USER_SERVICEDESK_B2C == ConfigKey.valueOf(username)) {
+            return ConfigProvider.getProperty(ConfigKey.DWP_USER_SERVICEDESK_B2C);
+        } else if (ConfigKey.DWP_USER_ESSENTADMIN == ConfigKey.valueOf(username)) {
+            return ConfigProvider.getProperty(ConfigKey.DWP_USER_ESSENTADMIN);
+        } else if (ConfigKey.DWP_USER_PARTNER_B2C_EXT == ConfigKey.valueOf(username)) {
+            return ConfigProvider.getProperty(ConfigKey.DWP_USER_PARTNER_B2C_EXT);
+        }
+
+        return username;
     }
 
     private void retrieveUserLanguage() {

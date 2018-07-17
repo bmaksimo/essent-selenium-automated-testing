@@ -7,8 +7,8 @@ Feature: DWP UI: Menu structure, specific menu items
 
     Background:
 #        Given I logged in in DWP as BusinessDeskB2B
-        Given I logged in in DWP as d.chebayewski.billinghouse@essent.be
-        Given I optionally discard a previous flow
+        Given I logged in in DWP as DWP_USER_SERVICEDESK_B2B
+#        Given I optionally discard a previous flow
 
     Scenario: Upper menu items are available for Left Menu Item
         Given Available Left Menu items are:

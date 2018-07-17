@@ -4,6 +4,7 @@ import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.dwp.pageobject.Component;
 import com.essent.testing.dwp.pageobject.Dialog;
+import com.essent.testing.dwp.pageobject.LoginComponent;
 import com.essent.testing.dwp.pageobject.Window;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
@@ -13,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertNotNull;
 
-public class IWelcomeLoginDialog extends Component implements Dialog {
+public class IWelcomeLoginDialog extends LoginComponent implements Dialog {
     private final static By SELECTOR = By.id("login-base");
 
 
