@@ -1,5 +1,7 @@
 package com.essent.testing.dwp.pageobject.impl;
 
+import com.essent.testing.config.ConfigKey;
+import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.dwp.pageobject.Component;
 import com.essent.testing.dwp.pageobject.Dialog;
 import com.essent.testing.dwp.pageobject.Window;
@@ -22,6 +24,9 @@ public class IWelcomeLoginDialog extends Component implements Dialog {
     public Window login(String username, String password) throws Throwable {
         final String usernameField = "idToken1";
         final String passwordField = "idToken2";
+        final String submitButtonField = "loginButton_0";
+        final String baseUrl = ConfigProvider.getProperty(ConfigKey.DWP_BASE_URL);
+
         WebElement element = seleniumDriver.findElementOrNull(By.id(usernameField));
         assertNotNull(element);
         element.clear();
@@ -30,10 +35,13 @@ public class IWelcomeLoginDialog extends Component implements Dialog {
         assertNotNull(element);
         element.clear();
         element.sendKeys(password);
-        element.submit();
+        element = seleniumDriver.findElementOrNull(By.id(submitButtonField));
+        assertNotNull(element);
+        element.click();
         seleniumDriver.waitUntilAngularPageIsLoaded();
         seleniumDriver.getDriver().manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-        seleniumDriver.getDriver().get("https://uat04.nova.essent.be/dwp/#");
+        seleniumDriver.getDriver().get(baseUrl);
+
         return new MainWindow(seleniumDriver);
     }
 }

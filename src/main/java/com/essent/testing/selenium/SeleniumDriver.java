@@ -23,11 +23,13 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.FluentWait;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -314,13 +316,10 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     }
 
     public WebElement findElementOrNull(By by) {
-        WebDriverWait waiter = new WebDriverWait(driver, 15).withoutException();
-        logger.info(driver.getCurrentUrl());
-        WebElement result = waiter.until(driver -> {
-            logger.info(driver.getCurrentUrl());
-            return driver.findElement(by);
-        });
-        return result;
+        FluentWait<WebDriver> wait = new FluentWait(driver);
+        return wait.withTimeout(Duration.ofMillis(5000))
+            .pollingEvery(Duration.ofSeconds(1))
+            .until(d -> driver.findElement(by));
     }
 
 }
