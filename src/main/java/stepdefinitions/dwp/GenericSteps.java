@@ -8,11 +8,10 @@ import com.essent.roles.UserRoles;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.dwp.DwpScenario;
-import com.essent.testing.dwp.pageobject.Component;
 import com.essent.testing.dwp.pageobject.LoginComponent;
 import com.essent.testing.dwp.pageobject.Window;
 import com.essent.testing.dwp.pageobject.impl.IWelcomeLoginDialog;
-import com.essent.testing.dwp.pageobject.impl.LoginDialog;
+import com.essent.testing.dwp.pageobject.impl.DWPLoginDialog;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -46,7 +45,7 @@ public class GenericSteps extends DwpScenario {
 
     private LoginComponent getCurrentLoginDialog() {
         return "DEVINT01".equalsIgnoreCase(ConfigProvider.getProperty(ConfigKey.ENVIRONMENT)) ?
-            new LoginDialog(webDriver)
+            new DWPLoginDialog(webDriver)
             : new IWelcomeLoginDialog(webDriver);
     }
 

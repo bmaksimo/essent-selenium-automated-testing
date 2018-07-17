@@ -2,7 +2,6 @@ package com.essent.testing.dwp.pageobject.impl;
 
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
-import com.essent.testing.dwp.pageobject.Component;
 import com.essent.testing.dwp.pageobject.Dialog;
 import com.essent.testing.dwp.pageobject.LoginComponent;
 import com.essent.testing.dwp.pageobject.Window;
