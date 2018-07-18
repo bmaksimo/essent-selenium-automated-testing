@@ -37,7 +37,7 @@ public class GenericSteps extends DwpScenario {
     public void loginAs(String username) throws Throwable {
         injectJavaScriptTestRunner();
         retrieveUserLanguage();
-        UserRoles dwpUser = UserRoles.get(getUsernameFromEnvironment(username));
+        UserRoles dwpUser = UserRoles.get(username);
         Window application = getCurrentLoginDialog().login(dwpUser.getUsername(), dwpUser.getPassword());
         retrieveUserLanguage();
         assertNotNull("DWP application did not appear after a login", application);
@@ -47,20 +47,6 @@ public class GenericSteps extends DwpScenario {
         return "DEVINT01".equalsIgnoreCase(ConfigProvider.getProperty(ConfigKey.ENVIRONMENT)) ?
             new DWPLoginDialog(webDriver)
             : new IWelcomeLoginDialog(webDriver);
-    }
-
-    private String getUsernameFromEnvironment(String username) {
-        if (ConfigKey.DWP_USER_SERVICEDESK_B2B == ConfigKey.valueOf(username)) {
-            return ConfigProvider.getProperty(ConfigKey.DWP_USER_SERVICEDESK_B2B);
-        } else if (ConfigKey.DWP_USER_SERVICEDESK_B2C == ConfigKey.valueOf(username)) {
-            return ConfigProvider.getProperty(ConfigKey.DWP_USER_SERVICEDESK_B2C);
-        } else if (ConfigKey.DWP_USER_ESSENTADMIN == ConfigKey.valueOf(username)) {
-            return ConfigProvider.getProperty(ConfigKey.DWP_USER_ESSENTADMIN);
-        } else if (ConfigKey.DWP_USER_PARTNER_B2C_EXT == ConfigKey.valueOf(username)) {
-            return ConfigProvider.getProperty(ConfigKey.DWP_USER_PARTNER_B2C_EXT);
-        }
-
-        return username;
     }
 
     private void retrieveUserLanguage() {

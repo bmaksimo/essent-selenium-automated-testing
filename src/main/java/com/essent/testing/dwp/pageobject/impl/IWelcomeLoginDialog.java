@@ -40,7 +40,6 @@ public class IWelcomeLoginDialog extends LoginComponent implements Dialog {
         element.click();
         seleniumDriver.waitUntilAngularPageIsLoaded();
         seleniumDriver.getDriver().manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-        seleniumDriver.getDriver().get(baseUrl);
 
         return new MainWindow(seleniumDriver);
     }
