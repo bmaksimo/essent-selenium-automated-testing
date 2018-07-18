@@ -1,4 +1,4 @@
-@SMOKE
+@_SMOKE
 Feature: Javascript DWP testing
 
     Background:
