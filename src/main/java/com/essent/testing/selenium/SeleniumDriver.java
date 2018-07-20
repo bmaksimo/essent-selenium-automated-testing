@@ -25,6 +25,8 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.FluentWait;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
@@ -34,7 +36,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 import static org.junit.Assert.fail;
 
 /**
@@ -146,7 +147,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         driver = createWebDriver();
         ngWebDriver = new NgWebDriver((JavascriptExecutor) driver);
         baseUrl = ConfigProvider.getProperty(ConfigKey.TESTING_BASE_URL);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(5, SECONDS);
         Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
         browserName = caps.getBrowserName();
         browserVersion = caps.getVersion();
@@ -317,9 +318,9 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
 
     public WebElement findElementOrNull(By by) {
         FluentWait<WebDriver> wait = new FluentWait(driver);
-        return wait.withTimeout(Duration.ofMillis(5000))
+        return wait.withTimeout(Duration.ofMillis(10000))
             .pollingEvery(Duration.ofSeconds(1))
+            .ignoring(NoSuchElementException.class)
             .until(d -> driver.findElement(by));
     }
-
 }

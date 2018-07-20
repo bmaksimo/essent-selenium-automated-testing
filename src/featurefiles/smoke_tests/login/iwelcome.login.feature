@@ -1,8 +1,9 @@
 @SMOKE
+    @LALALA
 Feature: Javascript DWP testing
 
     Background:
-#        This test will fail outside iWelcome
+#        Logging in will fail outside of iWelcome environments, like DEVINT01
         Given   I logged in in DWP as d.chebayewski.billinghouse@essent.be
         And     I optionally discard a previous flow
 

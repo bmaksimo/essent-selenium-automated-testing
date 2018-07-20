@@ -35,10 +35,10 @@ public class GenericSteps extends DwpScenario {
 
     @Given("^I logged in in DWP as ([^\"]*)$")
     public void loginAs(String username) throws Throwable {
-        injectJavaScriptTestRunner();
         retrieveUserLanguage();
         UserRoles dwpUser = UserRoles.get(username);
         Window application = getCurrentLoginDialog().login(dwpUser.getUsername(), dwpUser.getPassword());
+        injectJavaScriptTestRunner();
         retrieveUserLanguage();
         assertNotNull("DWP application did not appear after a login", application);
     }
