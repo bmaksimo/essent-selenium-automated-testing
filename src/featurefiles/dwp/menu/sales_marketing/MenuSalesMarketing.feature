@@ -2,7 +2,6 @@
 @BASIC
 @MENU
 @REGRESSION
-@SALESMKT
 Feature: DWP UI: Menu structure, specific menu items
 
     Background:

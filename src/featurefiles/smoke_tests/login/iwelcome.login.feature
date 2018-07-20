@@ -1,5 +1,4 @@
 @SMOKE
-    @LALALA
 Feature: Javascript DWP testing
 
     Background:
