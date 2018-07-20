@@ -22,7 +22,7 @@ import static org.junit.Assert.assertNotNull;
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 public class GenericSteps extends DwpScenario {
 
-    @Before("@QUOTE, @MENU, @RENEWAL, @FILTER, @SMOKE")
+    @Before("@QUOTE, @MENU, @RENEWAL, @FILTER, @SMOKE, @B2B_REGRESSION")
     public void SetupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
         setUpWebDriver();
