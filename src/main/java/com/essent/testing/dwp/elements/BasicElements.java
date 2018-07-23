@@ -6,6 +6,7 @@ public enum BasicElements {
     SIBLING_OVERLAYING_ICONS_XPATH("XPATH", "../span[contains(@class, 'icon')]"),
     PLUS_BUTTON("SELECTOR", "a.icon-plus", "first"),
     NEXT_BUTTON("SELECTOR", "#primaryButton:not([disabled])"),
+    CONFIRM_BUTTON("SELECTOR", "#confim-button:not([disabled])"),
     SALES_MENUITEM("XPATH", "//labeled-accordion-wrapper[@label='Sales']/a"),
     SALES_TC1_MENUITEM("XPATH", "//labeled-accordion-wrapper[@label='Sales']/div/div/ul/menu-button/labeled-accordion-wrapper[@label='TC1']/a"),
     DWP_SALES_TC1_NEWQUOTE_MENUITEM("XPATH", "//labeled-accordion-wrapper[@label='TC1']/div/div/ul/menu-button//menu-link[@label='Create new quote B2C']/li/a"),

@@ -14,5 +14,9 @@ Feature: DWP Test Nuat 372
         And Filter element "Customer Type" selection is "Customer"
         And Filter element "Name" input is "%Steven%"
         And Filter element "Account number" input is "150638828"
-        And Tap on element 150638828
-        Then View List is empty
+        And Click on link in View List at 1st row and "Account Number & Name" column
+        And Plus Menu is "Service -> Duplicate account"
+        When Filter element "Company name" input is "Van Hauwaert Steven - Test Nuat 372"
+        And Confirm Change
+        Then Top Arrow button is Up
+

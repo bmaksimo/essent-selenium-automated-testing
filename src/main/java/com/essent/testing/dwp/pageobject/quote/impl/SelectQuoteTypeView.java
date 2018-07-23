@@ -13,6 +13,7 @@ import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.tables.SalesChannel;
 
 import static com.essent.testing.dwp.DwpTimingParameters.*;
+import static com.essent.testing.dwp.elements.BasicElements.CONFIRM_BUTTON;
 import static com.essent.testing.dwp.elements.BasicElements.NEXT_BUTTON;
 import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.TITLE_SELECTOR_TEMPLATE;
 import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.VIEW_SELECTOR;

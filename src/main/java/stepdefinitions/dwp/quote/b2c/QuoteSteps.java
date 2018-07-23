@@ -21,6 +21,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.By;
 import stepdefinitions.dwp.tables.*;
 import stepdefinitions.dwp.tables.plus.CheckBoxState;
 
@@ -39,7 +40,7 @@ import static org.hamcrest.Matchers.notNullValue;
 
 public class QuoteSteps extends DwpScenario {
 
-    @Before("@QUOTE")
+    @Before("@QUOTE, @B2B_REGRESSION")
     public void SetupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -255,6 +256,13 @@ public class QuoteSteps extends DwpScenario {
     public void confirmQuote() throws Throwable {
         QuoteOverviewView quoteOverviewView = new QuoteOverviewView(webDriver);
         quoteOverviewView.next();
+    }
+
+    @And("^Confirm Change$")
+    public void confirmChange() {
+//        QuoteOverviewView quoteOverviewView = new QuoteOverviewView(webDriver);
+//        quoteOverviewView.confirm();
+        webDriver.findElementOrNull(By.id("confirm-button")).click();
     }
 
     @InputParameter(name = "customer")
