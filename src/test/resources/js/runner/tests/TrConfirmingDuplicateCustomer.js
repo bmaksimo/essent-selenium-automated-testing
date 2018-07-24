@@ -10,9 +10,9 @@ class TrConfirmingDuplicateCustomer extends TestRunnerBase {
         result.status = 'UNDEFINED';
         result.reason = 'Not executed';
         let matches = [];
-        $(".button-group modal__actions .button");
-        if (matches.length > 1) {
-            matches[1].find('a').trigger('click');
+        $(".button-group modal__actions button:contains('" +options.name + "')");
+        if (matches.length > 0) {
+            matches[0].click;
             result.status = 'PASSED';
             result.reason = '';
         } else {
