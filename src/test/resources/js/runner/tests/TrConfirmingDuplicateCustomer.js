@@ -9,8 +9,8 @@ class TrConfirmingDuplicateCustomer extends TestRunnerBase {
         const options = this.options;
         result.status = 'UNDEFINED';
         result.reason = 'Not executed';
-        let matches = $('.button-group modal__actions .confirm_button');
-        let query =
+        let matches = $(".form__footer button:contains('" + options.value + "')");
+        let matches = this.evaluateXpath(xPath);
         if (matches.length === 0) {
             matches[0].click();
             result.status = 'PASSED';

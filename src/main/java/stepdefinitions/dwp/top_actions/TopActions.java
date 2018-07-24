@@ -34,9 +34,4 @@ public class TopActions extends NavigationElements {
     public void tearDown() throws Exception {
         super.tearDown();
     }
-
-    @And("^([^\"]*) Change$")
-    public void confirmChange(String action) {
-        clickConfirm(action);
-    }
 }
