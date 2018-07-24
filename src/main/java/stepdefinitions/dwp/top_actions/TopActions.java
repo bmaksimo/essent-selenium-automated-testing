@@ -37,6 +37,6 @@ public class TopActions extends NavigationElements {
 
     @And("^([^\"]*) Change$")
     public void confirmChange(String action) {
-        clickConfirm(action);
+        clickConfirm(action.toUpperCase());
     }
 }

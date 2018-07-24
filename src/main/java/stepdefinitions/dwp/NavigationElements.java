@@ -150,7 +150,7 @@ public abstract class NavigationElements extends DwpScenario  {
 
     protected void clickConfirm(String confirm) {
         boolean success = new ClickConfirm().test(confirm);
-        assertThat(String.format("Confirm %s was not available.", confirm),
+        assertThat(String.format("Button %s was not available.", confirm),
             success, is(true));
     }
 
