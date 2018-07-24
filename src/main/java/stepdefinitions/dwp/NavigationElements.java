@@ -74,6 +74,26 @@ public abstract class NavigationElements extends DwpScenario  {
         }
     }
 
+    private class SearchForCustomer implements Predicate<String> {
+        @Override
+        public boolean test(String name) {
+            String customer = "";
+            customer = name;
+            boolean success = executeJavascriptTest("TrSearchCustomer", customer);
+            return success;
+        }
+    }
+
+    private class ClickConfirm implements Predicate<String> {
+        @Override
+        public boolean test(String name) {
+            Map<String, String> options = new HashMap<>();
+            options.put("name", name);
+            boolean success = executeJavascriptTest("TrConfirmingDuplicateCustomer", options);
+            return success;
+        }
+    }
+
     private class VisitTopItem implements Predicate<String> {
         @Override
         public boolean test(String label) {
@@ -128,9 +148,21 @@ public abstract class NavigationElements extends DwpScenario  {
             success, is(true));
     }
 
+    protected void clickConfirm(String confirm) {
+        boolean success = new ClickConfirm().test(confirm);
+        assertThat(String.format("Confirm %s was not available.", confirm),
+            success, is(true));
+    }
+
     protected void clickTopArrow(String arrow) throws Throwable {
         boolean success = new ClickTopArrowButton().test(arrow);
         assertThat(String.format("Top Arrow %s is undefined.", arrow),
+            success, is(true));
+    }
+
+    protected void searchForCustomer(String name) throws Throwable {
+        boolean success = new SearchForCustomer().test(name);
+        assertThat(String.format("Search for %s customer.", name),
             success, is(true));
     }
 

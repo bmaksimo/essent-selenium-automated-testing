@@ -1,5 +1,5 @@
 @SMOKE
-@B2B_REGRESSION
+    @B2B_REGRESSION
 Feature: DWP Test Nuat 372
 
     Background:
@@ -17,6 +17,9 @@ Feature: DWP Test Nuat 372
         And Click on link in View List at 1st row and "Account Number & Name" column
         And Plus Menu is "Service -> Duplicate account"
         When Filter element "Company name" input is "Van Hauwaert Steven - Test Nuat 372"
-        And Confirm Change
-        Then Top Arrow button is Up
+        When Confirm Change
+#        And Top Arrow button is Back
+        And Top Arrow button is Up
+        And Search input is "Van Hauwaert Steven - Test Nuat 372"
+        Then View List is empty
 

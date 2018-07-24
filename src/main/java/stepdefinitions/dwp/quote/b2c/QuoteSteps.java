@@ -258,13 +258,6 @@ public class QuoteSteps extends DwpScenario {
         quoteOverviewView.next();
     }
 
-    @And("^Confirm Change$")
-    public void confirmChange() {
-//        QuoteOverviewView quoteOverviewView = new QuoteOverviewView(webDriver);
-//        quoteOverviewView.confirm();
-        webDriver.findElementOrNull(By.id("confirm-button")).click();
-    }
-
     @InputParameter(name = "customer")
     private CustomerTable quoteCustomer;
 
