@@ -87,7 +87,7 @@ public abstract class NavigationElements extends DwpScenario  {
     private class ClickConfirm implements Predicate<String> {
         @Override
         public boolean test(String name) {
-            Map<String, Object> options = new HashMap<>();
+            Map<String, String> options = new HashMap<>();
             options.put("name", name);
             boolean success = executeJavascriptTest("TrConfirmingDuplicateCustomer", options);
             return success;
