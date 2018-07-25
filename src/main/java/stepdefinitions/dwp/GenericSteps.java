@@ -17,6 +17,13 @@ import org.openqa.selenium.html5.LocalStorage;
 import org.openqa.selenium.html5.WebStorage;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import static com.essent.testing.dwp.DwpConstant.BASE_URL;
 import static org.junit.Assert.assertNotNull;
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
@@ -65,6 +72,34 @@ public class GenericSteps extends DwpScenario {
         flow.steps(new Model.Step().action(Action.CLICK).element("DWP_MODAL_CANCEL").breakFlowOnFailure(false),
             new Model.Step().action(Action.REQUIRE_ABSENT).element("DWP_MODAL_CANCEL"));
         Autocrat.executeFlow(context, flow);
+    }
+
+    // This function creates an ArrayList of arrays of Strings with the addresses taken from the .csv file.
+    // After creating, it removes the header (address.remove(0);
+    // It then returns that ArrayList
+
+    public static ArrayList<String[]> getAddresses() {
+        String csvFile = "src/test/resources/csv/addresses.csv";
+        String line = "";
+
+        ArrayList<String[]> address = new ArrayList<String[]>();
+
+
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+
+            while ((line = br.readLine()) != null) {
+                String[] lineArray = new String[]{line};
+                address.add(lineArray);
+            }
+
+            address.remove(0);
+
+            return address;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @After({"@QUOTE, @MENU, @RENEWAL, @FILTER, @SMOKE"})

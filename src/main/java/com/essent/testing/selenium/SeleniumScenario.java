@@ -64,6 +64,11 @@ public class SeleniumScenario {
         return map;
     }
 
+    protected Map executeJavascriptMethod(String registeredJsClass, Object options, Object address)  {
+        Map map = webDriver.executeJavascriptMethod(registeredJsClass, options, address);
+        return map;
+    }
+
     @AfterClass
     public void tearDown() throws Exception {
         if (webDriver != null) {

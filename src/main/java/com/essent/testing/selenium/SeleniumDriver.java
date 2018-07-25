@@ -173,8 +173,8 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     }
 
     public void tearDown() {
-        driver.close();
-        driver.quit();
+//        driver.close();
+//        driver.quit();
     }
 
     private void injectJavaScriptInline(File functionFile) {
@@ -227,6 +227,25 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
      * @return
      */
     public Map executeJavascriptMethod(String registeredJsClass, Object options) {
+        waitUntilAngularPageIsLoaded();
+        String jsTestCall = SeleniumJsTestExpanderService.get().expandToJavascript(registeredJsClass, options);
+        logger.info("STEP:");
+        logger.info(" - ACTION: EVALUATE_JAVASCRIPT_METHOD");
+        logger.info(" - TEST: " + jsTestCall);
+        Map result = (Map) ((JavascriptExecutor) driver).executeAsyncScript(jsTestCall);
+        String status = ((String) result.get("status"));
+        if(StringUtils.isEmpty(status)) {
+            status = "UNDEFINED";
+        }
+        logger.info(" - RESULT: " + status);
+        if (StringUtils.equals("FAILED", status)) {
+            String reason = ((String) result.get("reason"));
+            logger.info(" - REASON: " + reason);
+        }
+        return result;
+    }
+
+    public Map executeJavascriptMethod(String registeredJsClass, Object options, Object address) {
         waitUntilAngularPageIsLoaded();
         String jsTestCall = SeleniumJsTestExpanderService.get().expandToJavascript(registeredJsClass, options);
         logger.info("STEP:");
