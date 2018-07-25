@@ -1,7 +1,7 @@
 class TrConfirmingDuplicateCustomer extends TestRunnerBase {
 
     constructor(options, callback) {
-    super(options,callback, 5000);
+    super(options,callback, 1000);
     }
 
     run() {
@@ -10,9 +10,8 @@ class TrConfirmingDuplicateCustomer extends TestRunnerBase {
         result.status = 'UNDEFINED';
         result.reason = 'Not executed';
         let matches = [];
-        $(".button-group modal__actions button:contains('" +options.name + "')");
-        if (matches.length > 0) {
-            matches[0].click;
+        if (matches >= 0) {
+            $('#confirm-button').click();
             result.status = 'PASSED';
             result.reason = '';
         } else {

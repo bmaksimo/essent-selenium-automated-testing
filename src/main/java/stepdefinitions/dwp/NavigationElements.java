@@ -77,9 +77,9 @@ public abstract class NavigationElements extends DwpScenario  {
     private class SearchForCustomer implements Predicate<String> {
         @Override
         public boolean test(String name) {
-            String customer = "";
-            customer = name;
-            boolean success = executeJavascriptTest("TrSearchCustomer", customer);
+            Map<String, Object> options = new HashMap<>();
+            options.put("name", name);
+            boolean success = executeJavascriptTest("TrSearchCustomer", options);
             return success;
         }
     }
