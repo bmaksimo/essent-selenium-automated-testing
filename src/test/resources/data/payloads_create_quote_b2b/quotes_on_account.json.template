@@ -1,0 +1,8 @@
+{
+  "recordId": "{recordId}",
+  "billingCustomerId": "%billingCustomerId%",
+  "recordType": "Accounts",
+  "deliveryPoint": "%deliveryPoint%",
+  "page": 1,
+  "sortBy": "ca5f6491-17f5-84aa-bcd6-5746bc18b073"
+}
