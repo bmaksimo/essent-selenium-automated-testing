@@ -5,13 +5,9 @@ import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
 import com.essent.automation.autocrat.Model.Flow;
 import com.essent.roles.UserRoles;
-import com.essent.testing.config.ConfigKey;
-import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.dwp.DwpScenario;
-import com.essent.testing.dwp.pageobject.LoginComponent;
 import com.essent.testing.dwp.pageobject.Window;
-import com.essent.testing.dwp.pageobject.impl.IWelcomeLoginDialog;
-import com.essent.testing.dwp.pageobject.impl.DWPLoginDialog;
+import com.essent.testing.dwp.pageobject.impl.LoginDialog;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -34,19 +30,14 @@ public class GenericSteps extends DwpScenario {
     }
 
     @Given("^I logged in in DWP as ([^\"]*)$")
-    public void loginAs(String username) throws Throwable {
-        retrieveUserLanguage();
-        UserRoles dwpUser = UserRoles.get(username);
-        Window application = getCurrentLoginDialog().login(dwpUser.getUsername(), dwpUser.getPassword());
+    public void loginAs(String userName) throws Throwable {
+        LoginDialog login = new LoginDialog(webDriver);
         injectJavaScriptTestRunner();
         retrieveUserLanguage();
+        UserRoles dwpUser = UserRoles.get(userName);
+        Window application = login.login(dwpUser.getUsername(), dwpUser.getPassword());
+        retrieveUserLanguage();
         assertNotNull("DWP application did not appear after a login", application);
-    }
-
-    private LoginComponent getCurrentLoginDialog() {
-        return "DEVINT01".equalsIgnoreCase(ConfigProvider.getProperty(ConfigKey.ENVIRONMENT)) ?
-            new DWPLoginDialog(webDriver)
-            : new IWelcomeLoginDialog(webDriver);
     }
 
     private void retrieveUserLanguage() {

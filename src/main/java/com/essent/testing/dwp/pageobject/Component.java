@@ -39,7 +39,8 @@ public abstract  class Component {
             logger.info(" - REASON: " + getClass() + "{null}: Web element was not found. ");
             fail(getClass() + ": Web element was not found.");
         }
-        logger.info(" - RESULT: " + element);
+
+        logger.info(" - RESULT: " + "element: <" + element.getTagName() + " class='" + element.getAttribute("class") + "'>");
         this.element = element;
         this.seleniumDriver = seleniumDriver;
     }
