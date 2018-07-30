@@ -72,6 +72,7 @@ public class CreateQuoteTC1B2B {
 				.when().body(jsonBody).post(API_CREATE_QUOTE_B2B_TC1).then().statusCode(201).extract().response();
 
 		recordId = new JsonPath(response.getBody().asString()).get("data.arguments.params.recordId");
+		//recordId = "b886787a-0ece-639b-cdc2-5b5f2680aff5";
 		
 		listOfQuotesOnAccount();
 
@@ -85,9 +86,11 @@ public class CreateQuoteTC1B2B {
 				+ "modal_to_gf_quote_send_to_customer_and_reload_list.json.template";
 
 		updatePayloadJson(payloadModalQuoteSendCustomerReloadList, "${rowId}", rowId);
+		
+		String jsonBody = generateStringFromResource(payloadModalQuoteSendCustomerReloadList);
 
 		Response response = RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
-				.body(payloadModalQuoteSendCustomerReloadList).when().post(API_MODAL_TO_GF_QUOTE_SEND_TO_CUSTOMER_AND_RELOAD_LIST).then()
+				.body(jsonBody).when().post(API_MODAL_TO_GF_QUOTE_SEND_TO_CUSTOMER_AND_RELOAD_LIST).then()
 				.statusCode(200).extract().response();
 
 		model = new JsonPath(response.getBody().asString()).get("data.arguments.model");
@@ -101,6 +104,8 @@ public class CreateQuoteTC1B2B {
 		String payloadQuoteSendCustomer = PATH_TO_JSON_FILES_QUOTE_TC1_B2B + "gf_quote_send_to_customer.json.template";
 
 		updatePayloadJson(payloadQuoteSendCustomer, "${model}", model);
+		
+		jsonBody = generateStringFromResource(payloadQuoteSendCustomer);
 
 		RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
 				.body(payloadQuoteSendCustomer).when().post(API_GF_QUOTE_SEND_TO_CUSTOMER).then().statusCode(201);
@@ -120,9 +125,11 @@ public class CreateQuoteTC1B2B {
 		testMap.put("${rowId}", rowId);
 		
 		updatePayloadJson(payloadQuoteSignatureReceived, testMap);
+		
+		String jsonBody = generateStringFromResource(payloadQuoteSignatureReceived);
 
 		Response response = RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
-				.body(payloadQuoteSignatureReceived).when().post(API_GF_QUOTE_SIGNATURE_RECEIVED).then().statusCode(201)
+				.body(jsonBody).when().post(API_GF_QUOTE_SIGNATURE_RECEIVED).then().statusCode(201)
 				.extract().response();
 		
 		
@@ -146,17 +153,21 @@ public class CreateQuoteTC1B2B {
 		testMap.put("${date}", getYesterdayDay());
 		
 		updatePayloadJson(payloadConfirmSigning, testMap);
+		
+		String jsonBody = generateStringFromResource(payloadConfirmSigning);
 
 		Response response = RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
-				.body(payloadConfirmSigning).when().post(API_SIGN_QUOTE_MODAL_TC1).then().statusCode(201)
+				.body(jsonBody).when().post(API_SIGN_QUOTE_MODAL_TC1).then().statusCode(201)
 				.extract().response();
 
 		String payloadContractsOnAccount = PATH_TO_JSON_FILES_QUOTE_TC1_B2B + "contracts_on_account.json.template";
 		
 		updatePayloadJson(payloadContractsOnAccount, "${recordId}", recordId);
 		
+		jsonBody = generateStringFromResource(payloadContractsOnAccount);
+		
 		RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
-				.body(payloadContractsOnAccount).when().post(API_VERIFY_CONTRACT_CREATED).then().statusCode(200);
+				.body(jsonBody).when().post(API_VERIFY_CONTRACT_CREATED).then().statusCode(200);
 		
 		
 	}
@@ -168,25 +179,26 @@ public class CreateQuoteTC1B2B {
 
 		updatePayloadJson(payloadBillingCustomerOnAccount, "${recordId}", recordId);
 		
+		String jsonBody = generateStringFromResource(payloadBillingCustomerOnAccount);
+		
 		Response response = RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
-				.body(payloadBillingCustomerOnAccount).when().post(API_LIST_BILLING_CUSTOMER_ACCOUNT).then().statusCode(200)
+				.body(jsonBody).when().post(API_LIST_BILLING_CUSTOMER_ACCOUNT).then().statusCode(200)
 				.extract().response();
 		
 		bilingCustomerId = new JsonPath(response.getBody().asString()).get("data.rows[0].id");
 		
-		
+		String payloadSignMandatePaper = PATH_TO_JSON_FILES_QUOTE_TC1_B2B + "modal_to_gf_sign_mandate_paper.json.template";
 		//TODO
 		//billingCustomerId, recordId
 		HashMap<String, String> testMap = new HashMap<String, String>();
 		testMap.put("${billingCustomerId}", bilingCustomerId);
 		testMap.put("${recordId}", recordId);
 		
-		updatePayloadJson(payloadBillingCustomerOnAccount, testMap);
-		
-		String payloadSignMandatePaper = PATH_TO_JSON_FILES_QUOTE_TC1_B2B + "modal_to_gf_sign_mandate_paper.json.template";
+		updatePayloadJson(payloadSignMandatePaper, testMap);
+		jsonBody = generateStringFromResource(payloadSignMandatePaper);
 		
 		response = RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
-				.body(payloadSignMandatePaper).when().post(API_MODAL_TO_GF_SIGN_MANDATE_PAPER).then().statusCode(200)
+				.body(jsonBody).when().post(API_MODAL_TO_GF_SIGN_MANDATE_PAPER).then().statusCode(200)
 				.extract().response();
 		
 		modelMandatePaper = new JsonPath(response.getBody().asString()).get("data.arguments.model");
@@ -317,11 +329,13 @@ public class CreateQuoteTC1B2B {
 		String payloadQuotesOnAccount = PATH_TO_JSON_FILES_QUOTE_TC1_B2B + "quotes_on_account.json.template";
 
 		updatePayloadJson(payloadQuotesOnAccount, "${recordId}", recordId);
+		
+		String jsonBody = generateStringFromResource(payloadQuotesOnAccount);
 
 		Response response = RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
-				.body(payloadQuotesOnAccount).when().post(API_QUOTES_ON_ACCOUNT).then().statusCode(200).extract()
+				.body(jsonBody).when().post(API_QUOTES_ON_ACCOUNT).then().statusCode(200).extract()
 				.response();
-
+		
 		rowId = new JsonPath(response.getBody().asString()).get("data.rows[0].id");
 
 	}
@@ -332,12 +346,14 @@ public class CreateQuoteTC1B2B {
 				+ "modal_to_gf_quote_send_to_customer.json.template";
 
 		updatePayloadJson(payloadModalQuoteSentToCustomer, "${rowId}", rowId);
+		
+		String jsonBody = generateStringFromResource(payloadModalQuoteSentToCustomer);
 
 		Response response = RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
-				.body(payloadModalQuoteSentToCustomer).when().post(API_MODAL_TO_GF_QUOTE_SEND_TO_CUSTOMER).then().statusCode(200)
+				.body(jsonBody).when().post(API_MODAL_TO_GF_QUOTE_SEND_TO_CUSTOMER).then().statusCode(200)
 				.extract().response();
-
-		contractId = new JsonPath(response.getBody().asString()).get("data.arguments.model.contacts|id");
+		
+		//contractId = new JsonPath(response.getBody().asString()).get("data.arguments.model.contacts|id");
 	}
 	
 	private String getYesterdayDay() {
