@@ -20,6 +20,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.html5.LocalStorage;
 import org.openqa.selenium.html5.WebStorage;
 import org.springframework.test.context.ContextConfiguration;
+import stepdefinitions.dwp.login.LoginAction;
 
 import static com.essent.testing.dwp.DwpConstant.BASE_URL;
 import static org.junit.Assert.assertNotNull;
@@ -37,7 +38,7 @@ public class GenericSteps extends DwpScenario {
     public void loginAs(String username) throws Throwable {
         retrieveUserLanguage();
         UserRoles dwpUser = UserRoles.get(username);
-        Window application = getCurrentLoginDialog().login(dwpUser.getUsername(), dwpUser.getPassword());
+        Window application = new LoginAction(webDriver).doLogin(dwpUser.getUsername(), dwpUser.getPassword());
         injectJavaScriptTestRunner();
         retrieveUserLanguage();
         assertNotNull("DWP application did not appear after a login", application);
