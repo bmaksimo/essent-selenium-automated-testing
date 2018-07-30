@@ -2,7 +2,7 @@
 Feature: Javascript DWP testing
 
     Background:
-        Given I logged in in DWP as d.chebayewski.billinghouse@essent.be
+        Given I logged in in DWP as BusinessDeskB2C
         Given I optionally discard a previous flow
 
     Scenario: We can access the main gui elements

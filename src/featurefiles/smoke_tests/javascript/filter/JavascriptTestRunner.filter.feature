@@ -2,7 +2,7 @@
 Feature: Javascript DWP testing
 
     Background:
-        Given   I logged in in DWP as d.chebayewski.billinghouse@essent.be
+        Given   I logged in in DWP as BusinessDeskB2B
         And     I optionally discard a previous flow
 
     Scenario:
