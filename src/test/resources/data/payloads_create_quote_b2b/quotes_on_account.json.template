@@ -1,5 +1,5 @@
 {
-  "recordId": "{recordId}",
+  "recordId": "${recordId}",
   "billingCustomerId": "%billingCustomerId%",
   "recordType": "Accounts",
   "deliveryPoint": "%deliveryPoint%",
