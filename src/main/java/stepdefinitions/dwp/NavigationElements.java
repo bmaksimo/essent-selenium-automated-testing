@@ -135,4 +135,6 @@ public abstract class NavigationElements extends DwpScenario  {
             success, is(true));
     }
 
+    public class ClickOnElement {
+    }
 }
