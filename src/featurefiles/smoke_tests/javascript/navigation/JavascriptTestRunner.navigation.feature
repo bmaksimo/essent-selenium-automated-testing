@@ -1,8 +1,8 @@
-@_SMOKE
+@SMOKE
 Feature: Javascript DWP testing
 
     Background:
-        Given I logged in in DWP as BusinessDeskB2B
+        Given I logged in in DWP as d.chebayewski.billinghouse@essent.be
         Given I optionally discard a previous flow
 
     Scenario: We can access the main gui elements
