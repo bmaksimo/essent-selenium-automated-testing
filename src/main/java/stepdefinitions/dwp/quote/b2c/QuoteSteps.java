@@ -336,4 +336,11 @@ public class QuoteSteps extends DwpScenario {
         assertThat(success, is(true));
     }
 
+    @And("^EAN code is selected$")
+    public void selectEanCode() throws Throwable {
+        Map<String, String> options = new HashMap<>();
+        boolean success = executeJavascriptTest("TrSelectEanCode", options);
+        assertThat(success, is(true));
+    }
+
 }
