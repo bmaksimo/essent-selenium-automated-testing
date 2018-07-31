@@ -1,14 +1,15 @@
 package stepdefinitions.dwp.login;
 
-import com.essent.testing.config.ConfigKey;
-import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.dwp.pageobject.LoginComponent;
 import com.essent.testing.dwp.pageobject.Window;
 import com.essent.testing.dwp.pageobject.impl.DWPLoginDialog;
 import com.essent.testing.dwp.pageobject.impl.IWelcomeLoginDialog;
 import com.essent.testing.selenium.SeleniumDriver;
+import org.openqa.selenium.By;
 
 public class LoginAction {
+    private final static By IWELCOME_SELECTOR = By.id("login-base");
+    private final static By DWP_SELECTOR = By.cssSelector(".modal__container.login");
 
     private SeleniumDriver seleniumDriver;
 
@@ -17,12 +18,14 @@ public class LoginAction {
     }
 
     public Window doLogin(String username, String password) throws Throwable {
-        return getCurrentLoginDialog().login(username, password);
+        LoginComponent loginComponent = getCurrentLoginDialog();
+        if (null == loginComponent) return null;
+        return loginComponent.login(username, password);
     }
 
     private LoginComponent getCurrentLoginDialog() {
-        return "DEVINT01".equalsIgnoreCase(ConfigProvider.getProperty(ConfigKey.ENVIRONMENT)) ?
-            new DWPLoginDialog(seleniumDriver)
-            : new IWelcomeLoginDialog(seleniumDriver);
+        if (null != seleniumDriver.findElementOrNull(IWELCOME_SELECTOR)) return new IWelcomeLoginDialog(seleniumDriver);
+        else if (null != seleniumDriver.findElementOrNull(DWP_SELECTOR)) return new DWPLoginDialog(seleniumDriver);
+        return null;
     }
 }
