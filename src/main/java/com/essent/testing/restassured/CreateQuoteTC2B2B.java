@@ -25,20 +25,20 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 
-public class CreateQuoteTC1B2B {
+public class CreateQuoteTC2B2B {
 
-	private static final String PATH_TO_JSON_FILES_QUOTE_TC1_B2B = "./src/test/resources/data/contract_b2b/payloads_create_quote_contract_b2b_tc1/";
+	private static final String PATH_TO_JSON_FILES_QUOTE_TC2_B2B = "./src/test/resources/data/contract_b2b/payloads_create_quote_contract_b2b_tc2/";
 
 	
 	private static final String API_LOGIN_CRM = "https://devint01.nova.essent.be/nova-crm/Api/V8/login";
-	private static final String API_CREATE_QUOTE_B2B_TC1 = "https://devint01.nova.essent.be/nova-crm/Api/V8_Custom/Flow/B2B_CQ_TC1";
+	private static final String API_CREATE_QUOTE_B2B_TC1 = "https://devint01.nova.essent.be/nova-crm/Api/V8_Custom/Flow/CUPQ";
 	private static final String API_QUOTES_ON_ACCOUNT = "https://devint01.nova.essent.be/nova-crm/Api/V8_Custom/List/QuotesOnAccount";
 	private static final String API_MODAL_TO_GF_QUOTE_SEND_TO_CUSTOMER = "https://devint01.nova.essent.be/nova-crm/Api/V8_Custom/Action/modal_to_gf_quote_send_to_customer";
 	private static final String API_MODAL_TO_GF_QUOTE_SEND_TO_CUSTOMER_AND_RELOAD_LIST = "https://devint01.nova.essent.be/nova-crm/Api/V8_Custom/Action/modal_to_gf_quote_send_to_customer_and_reload_list";
 	private static final String API_GF_QUOTE_SEND_TO_CUSTOMER = "https://devint01.nova.essent.be/nova-crm/Api/V8_Custom/Flow/gf_quote_send_to_customer";
 	private static final String API_GF_QUOTE_SIGNATURE_RECEIVED = "https://devint01.nova.essent.be/nova-crm/Api/V8_Custom/Flow/gf_quote_signatureReceived";
 	private static final String API_FILE_UPLOAD = "https://devint01.nova.essent.be/nova-crm/Api/V8_Custom/fileupload";
-	private static final String API_SIGN_QUOTE_MODAL_TC1 = "https://devint01.nova.essent.be/nova-crm/Api/V8_Custom/Flow/sign_quote_modal_tc1";
+	private static final String API_SIGN_QUOTE_MODAL_TC2_UP = "https://devint01.nova.essent.be/nova-crm/Api/V8_Custom/Flow/sign_quote_modal_tc2_up";
 	private static final String API_VERIFY_CONTRACT_CREATED = "https://devint01.nova.essent.be/nova-crm/Api/V8_Custom/List/ContractsOnAccount";
 	private static final String API_LIST_BILLING_CUSTOMER_ACCOUNT = "https://devint01.nova.essent.be/nova-crm/Api/V8_Custom/List/BillingCustomerOnaccount";
 	private static final String API_MODAL_TO_GF_SIGN_MANDATE_PAPER = "https://devint01.nova.essent.be/nova-crm/Api/V8_Custom/Action/Modal_to_gf_sign_mandate_paper";
@@ -59,10 +59,9 @@ public class CreateQuoteTC1B2B {
 	private String todayDate = "";
 	private String generatedIban = "";
 	
-	private String pricingDate = "2017-11-01 12:22:00";
-	private String priceValidUntilDate = "2017-11-02 12:22:00";
-	private String signatureReceivedDate = "2017-11-01 12:22:00";	
-	
+	private String pricingDate = "2016-11-01 12:22:00";
+	private String priceValidUntilDate = "2016-12-12 11:00:00";
+	private String signatureReceivedDate = "2016-11-01 12:22:00";	
 	
 	// This address params are located in src/test/resources/data/contract_b2b/address_b2b/adress_b2B.XLSX
 	private String addressNumber = "54";
@@ -74,10 +73,12 @@ public class CreateQuoteTC1B2B {
 	private String ean_c = "541448810000078275";
 	private String paymentMethod = "DOM"; // DOM or OV
 	private String legalCommunicationBy = "POST"; //POST or EMAIL
+	
+	private String paymentDetailsId = "";
 
 	
 	private Cookies cookie;
-	
+
 	private void setPreconditions() {
 		setAccountName();
 		generateValidBECompanyNumber();
@@ -90,7 +91,7 @@ public class CreateQuoteTC1B2B {
 	public void createContractB2BTC1() throws IOException {
 		setPreconditions();
 		login();
-		createQuoteTC1B2B();
+		createQuoteTC2B2B();
 		sendToCustomer();
 		signatureReceived();
 		confirmSigning();
@@ -106,7 +107,7 @@ public class CreateQuoteTC1B2B {
 				.response().getDetailedCookies();
 	}
 
-	public void createQuoteTC1B2B() throws IOException {
+	public void createQuoteTC2B2B() throws IOException {
 		
 		// Combined Customer Switch
 		//"move_in_c" : true, "switchtype_c":"ACTIVATION_REQUEST", "dwp|mig_module_c":"START ACCESS", "dwp|mig_label_c":"Combined Customer Switch"
@@ -114,11 +115,11 @@ public class CreateQuoteTC1B2B {
 		// Supplier Switch
 		// "move_in_c":false, "switchtype_c":"SUPPLY_START_REQUEST", "dwp|mig_module_c":"START ACCESS", "dwp|mig_label_c":"Supplier Switch"
 		
-		/*String payloadCreateQuoteB2BTC1 = PATH_TO_JSON_FILES_QUOTE_TC1_B2B
-				+ "create_quote_b2b_tc1.json.template";
+		String payloadCreateQuoteB2BTC1 = PATH_TO_JSON_FILES_QUOTE_TC2_B2B
+				+ "create_quote_b2b_tc2.json.template";
 		
-		String originalPayloadCreateQuoteB2BTC1 = PATH_TO_JSON_FILES_QUOTE_TC1_B2B
-				+ "create_quote_b2b_tc1.json";
+		String originalPayloadCreateQuoteB2BTC1 = PATH_TO_JSON_FILES_QUOTE_TC2_B2B
+				+ "create_quote_b2b_tc2.json";
 		
 		HashMap testMap = new HashMap();
 		testMap.put("${accountName}", accountName);
@@ -135,14 +136,15 @@ public class CreateQuoteTC1B2B {
 
 		updatePayloadJson(payloadCreateQuoteB2BTC1, originalPayloadCreateQuoteB2BTC1, testMap);
 		
-		String jsonBody = generateStringFromResource(originalPayloadCreateQuoteB2BTC1);*/
+		String jsonBody = generateStringFromResource(originalPayloadCreateQuoteB2BTC1);
 		
 		//accountName, companyNumber, pricingDate, addressStreet, addressNumber, addressPostalCode, addressCity, legalCommunicationBy,paymentMethod,generatedIban, ean_c
-		String jsonBody = generateStringFromResource(PATH_TO_JSON_FILES_QUOTE_TC1_B2B + "create_quote_b2b_tc1.json");
+		//String jsonBody = generateStringFromResource(PATH_TO_JSON_FILES_QUOTE_TC1_B2B + "create_quote_b2b_tc1.json");
 		Response response = RestAssured.given().log().all().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
 				.when().body(jsonBody).post(API_CREATE_QUOTE_B2B_TC1).then().log().all().statusCode(201).extract().response();
 
 		recordId = new JsonPath(response.getBody().asString()).get("data.arguments.params.recordId");
+		paymentDetailsId  = new JsonPath(response.getBody().asString()).get("data.relatedBeans.Paym_Details[0]");
 		
 		listOfQuotesOnAccount();
 
@@ -152,10 +154,10 @@ public class CreateQuoteTC1B2B {
 
 		modalSendToCustomer();
 
-		String payloadModalQuoteSendCustomerReloadList = PATH_TO_JSON_FILES_QUOTE_TC1_B2B
+		String payloadModalQuoteSendCustomerReloadList = PATH_TO_JSON_FILES_QUOTE_TC2_B2B
 				+ "modal_to_gf_quote_send_to_customer_and_reload_list.json.template";
 		
-		String originalPayloadModalQuoteSendCustomerReloadList = PATH_TO_JSON_FILES_QUOTE_TC1_B2B
+		String originalPayloadModalQuoteSendCustomerReloadList = PATH_TO_JSON_FILES_QUOTE_TC2_B2B
 				+ "modal_to_gf_quote_send_to_customer_and_reload_list.json";
 
 		updatePayloadJson(payloadModalQuoteSendCustomerReloadList, originalPayloadModalQuoteSendCustomerReloadList, "${rowId}", rowId);
@@ -176,8 +178,8 @@ public class CreateQuoteTC1B2B {
 		Gson gson = new Gson(); 
 		String payload = gson.toJson(model); 
 		
-		String payloadQuoteSendCustomer = PATH_TO_JSON_FILES_QUOTE_TC1_B2B + "gf_quote_send_to_customer.json.template";
-		String originalPayloadQuoteSendCustomer = PATH_TO_JSON_FILES_QUOTE_TC1_B2B + "gf_quote_send_to_customer.json";
+		String payloadQuoteSendCustomer = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "gf_quote_send_to_customer.json.template";
+		String originalPayloadQuoteSendCustomer = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "gf_quote_send_to_customer.json";
 
 		updatePayloadJson(payloadQuoteSendCustomer, originalPayloadQuoteSendCustomer, "${model}", payload);
 		
@@ -190,8 +192,8 @@ public class CreateQuoteTC1B2B {
 
 	public void signatureReceived() throws IOException {
 
-		String payloadQuoteSignatureReceived = PATH_TO_JSON_FILES_QUOTE_TC1_B2B + "gf_quote_signatureReceived.json.template";
-		String originalPayloadQuoteSignatureReceived = PATH_TO_JSON_FILES_QUOTE_TC1_B2B + "gf_quote_signatureReceived.json";
+		String payloadQuoteSignatureReceived = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "gf_quote_signatureReceived.json.template";
+		String originalPayloadQuoteSignatureReceived = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "gf_quote_signatureReceived.json";
 
 		//pricingDate, rowId, recordId, priceValidUntilDate, signatureReceivedDate
 		HashMap testMap = new HashMap();
@@ -219,25 +221,26 @@ public class CreateQuoteTC1B2B {
 	}
 	
 	public void confirmSigning() throws IOException {
-		String payloadConfirmSigning = PATH_TO_JSON_FILES_QUOTE_TC1_B2B + "sign_quote_modal_tc1.json.template";
-		String originalPayloadConfirmSigning = PATH_TO_JSON_FILES_QUOTE_TC1_B2B + "sign_quote_modal_tc1.json";
+		String payloadConfirmSigning = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "sign_quote_modal_tc2_up.json.template";
+		String originalPayloadConfirmSigning = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "sign_quote_modal_tc2_up.json";
 
 		//rowId, docId, date
 		HashMap testMap = new HashMap();
 		testMap.put("${rowId}", rowId);
 		testMap.put("${docId}", docId);
 		testMap.put("${date}", yesterdayDate);
+		testMap.put("${paymentDetailsId}", paymentDetailsId);
 		
 		updatePayloadJson(payloadConfirmSigning, originalPayloadConfirmSigning, testMap);
 		
 		String jsonBody = generateStringFromResource(originalPayloadConfirmSigning);
 
 		RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
-				.body(jsonBody).when().post(API_SIGN_QUOTE_MODAL_TC1).then().log().all().statusCode(201)
+				.body(jsonBody).when().post(API_SIGN_QUOTE_MODAL_TC2_UP).then().log().all().statusCode(201)
 				.extract().response();
 
-		String payloadContractsOnAccount = PATH_TO_JSON_FILES_QUOTE_TC1_B2B + "contracts_on_account.json.template";
-		String originalPayloadContractsOnAccount = PATH_TO_JSON_FILES_QUOTE_TC1_B2B + "contracts_on_account.json";
+		String payloadContractsOnAccount = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "contracts_on_account.json.template";
+		String originalPayloadContractsOnAccount = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "contracts_on_account.json";
 		
 		updatePayloadJson(payloadContractsOnAccount, originalPayloadContractsOnAccount, "${recordId}", recordId);
 		
@@ -251,8 +254,8 @@ public class CreateQuoteTC1B2B {
 	//Only required if we want to have payment method: DOM
 	public void signMandatePaper() throws IOException {
 		
-		String payloadBillingCustomerOnAccount = PATH_TO_JSON_FILES_QUOTE_TC1_B2B + "billing_customer_on_account.json.template";
-		String originalPayloadBillingCustomerOnAccount = PATH_TO_JSON_FILES_QUOTE_TC1_B2B + "billing_customer_on_account.json";
+		String payloadBillingCustomerOnAccount = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "billing_customer_on_account.json.template";
+		String originalPayloadBillingCustomerOnAccount = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "billing_customer_on_account.json";
 
 		updatePayloadJson(payloadBillingCustomerOnAccount, originalPayloadBillingCustomerOnAccount, "${recordId}", recordId);
 		
@@ -264,8 +267,8 @@ public class CreateQuoteTC1B2B {
 		
 		bilingCustomerId = new JsonPath(response.getBody().asString()).get("data.rows[0].id");
 		
-		String payloadModalSignMandatePaper = PATH_TO_JSON_FILES_QUOTE_TC1_B2B + "modal_to_gf_sign_mandate_paper.json.template";
-		String originalModalPayloadSignMandatePaper = PATH_TO_JSON_FILES_QUOTE_TC1_B2B + "modal_to_gf_sign_mandate_paper.json";
+		String payloadModalSignMandatePaper = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "modal_to_gf_sign_mandate_paper.json.template";
+		String originalModalPayloadSignMandatePaper = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "modal_to_gf_sign_mandate_paper.json";
 		
 		//billingCustomerId, recordId
 		HashMap<String, String> testMap = new HashMap<String, String>();
@@ -298,8 +301,8 @@ public class CreateQuoteTC1B2B {
 		gson = new Gson(); 
 		String payloadModelMandatePaper = gson.toJson(modelMandatePaper);
 		
-		String payloadSignMandatePaper = PATH_TO_JSON_FILES_QUOTE_TC1_B2B + "gf_sign_mandate_paper.json.template";
-		String originalPayloadSignMandatePaper = PATH_TO_JSON_FILES_QUOTE_TC1_B2B + "gf_sign_mandate_paper.json";
+		String payloadSignMandatePaper = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "gf_sign_mandate_paper.json.template";
+		String originalPayloadSignMandatePaper = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "gf_sign_mandate_paper.json";
 		
 		
 		updatePayloadJson(payloadSignMandatePaper, originalPayloadSignMandatePaper, "${modelMandatePaper}", payloadModelMandatePaper);
@@ -421,8 +424,8 @@ public class CreateQuoteTC1B2B {
 	
 	private void listOfQuotesOnAccount() throws IOException {
 
-		String payloadQuotesOnAccount = PATH_TO_JSON_FILES_QUOTE_TC1_B2B + "quotes_on_account.json.template";
-		String originalPayloadQuotesOnAccount = PATH_TO_JSON_FILES_QUOTE_TC1_B2B + "quotes_on_account.json";
+		String payloadQuotesOnAccount = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "quotes_on_account.json.template";
+		String originalPayloadQuotesOnAccount = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "quotes_on_account.json";
 
 		updatePayloadJson(payloadQuotesOnAccount, originalPayloadQuotesOnAccount, "${recordId}", recordId);
 		
@@ -438,10 +441,10 @@ public class CreateQuoteTC1B2B {
 
 	private void modalSendToCustomer() throws IOException {
 
-		String payloadModalQuoteSentToCustomer = PATH_TO_JSON_FILES_QUOTE_TC1_B2B
+		String payloadModalQuoteSentToCustomer = PATH_TO_JSON_FILES_QUOTE_TC2_B2B
 				+ "modal_to_gf_quote_send_to_customer.json.template";
 		
-		String originalPayloadModalQuoteSentToCustomer = PATH_TO_JSON_FILES_QUOTE_TC1_B2B
+		String originalPayloadModalQuoteSentToCustomer = PATH_TO_JSON_FILES_QUOTE_TC2_B2B
 				+ "modal_to_gf_quote_send_to_customer.json";
 
 		updatePayloadJson(payloadModalQuoteSentToCustomer, originalPayloadModalQuoteSentToCustomer, "${rowId}", rowId);

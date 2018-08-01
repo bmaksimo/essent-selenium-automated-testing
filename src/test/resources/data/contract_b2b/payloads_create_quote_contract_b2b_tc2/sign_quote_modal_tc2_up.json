@@ -1,0 +1,50 @@
+{
+   "model":{
+      "recordTypeOfRecordId":"AOS_Quotes",
+      "recordId":"b18a1a08-1374-97b7-a8be-5b61a79f9817",
+      "baseModule":"AOS_Quotes",
+      "dwp|id":"b18a1a08-1374-97b7-a8be-5b61a79f9817",
+      "dwp|tasks(task_subtype_c = 'quote_price_validity')|id":"",
+      "changed_guarantee_amount_c":false,
+      "dwp|aos_products_quotes|prev_contract_lines|id":"",
+      "stage":"SIGNED",
+	  "payment_details|payment_methods(valid_to is null)|payment_method":"DOM",
+      "pricing_group_c":"TC2",
+      "dwp|aos_products_quotes|prev_contract_lines|supply_stop_reason_c":"",
+      "accounts|company_number_c":"BE0652168513",
+      "id":"b18a1a08-1374-97b7-a8be-5b61a79f9817",
+      "aos_products_quotes|id":"c4a82974-483b-aacf-ad6b-5b61a7b1ad44",
+      "dwp|signed_contract_docguid_c":"",
+      "accounts|name":"dj. EFixUpAMR_OOnly 0801 142919",
+      "dwp|tasks(task_subtype_c = 'quote_price_validity')|status":"",
+      "accounts|record_type":"B2B",
+      "signature_option_c":"HAS_SIGNED",
+	  "payment_details|payment_methods(valid_to is null)|id":"",
+      "dwp|recordType":"AOS_Quotes",
+      "accounts|id":"a8e3c42a-82f7-ff2b-e0a5-5b61a7c0bb0f",
+      "payment_details|id":"6bd54453-215a-1afd-45fa-5b61a77855ac",
+      "complete":true,
+      "signed_contract_docguid_c":[
+         {
+            "name":"signed-document.pdf",
+            "id":"3c93fb8c-93cd-53a4-b38c-5b61a7df9828",
+            "url":"http://",
+            "type":"docbase"
+         }
+      ],
+      "sign_date_c":"2018-07-31",
+      "aos_products_quotes|dgo_id_c":[
+         {
+            "key":"d72a137d-d57a-199a-b7c0-573343edd248",
+            "label":"EANDIS (Imewo)"
+         }
+      ],
+      "do_auto_communication_c":true,
+      "dwp|alreadyContracted":false,
+      "dwp|alreadyContractedForDifferentClient":false,
+      "flag|confirmCommandKey":"reloadQuotesList"
+   },
+   "action":{
+      "event":"CONFIRM"
+   }
+}

@@ -1,0 +1,25 @@
+{
+   "model":{
+      "recordTypeOfRecordId":"AOS_Quotes",
+      "recordId":"df28ce46-af72-3f31-4c29-5b619f87b6aa",
+      "baseModule":"AOS_Quotes",
+      "dwp|id":"df28ce46-af72-3f31-4c29-5b619f87b6aa",
+      "id":"df28ce46-af72-3f31-4c29-5b619f87b6aa",
+      "stage":"SIGNED",
+      "dwp|signed_contract_docguid_c":"62a930ae-f041-cbd5-dc2a-5b61a095b5e4",
+      "dwp|recordType":"AOS_Quotes",
+      "complete":true,
+      "signature_option_c":"HAS_SIGNED",
+      "signed_contract_docguid_c":[
+
+      ],
+      "sign_date_c":"2018-07-31",
+      "do_auto_communication_c":true,
+      "dwp|alreadyContracted":false,
+      "dwp|alreadyContractedForDifferentClient":false
+   },
+   "action":{
+      "event":"CONFIRM",
+      "currentStep":"sign_quote_modal_tc1"
+   }
+}

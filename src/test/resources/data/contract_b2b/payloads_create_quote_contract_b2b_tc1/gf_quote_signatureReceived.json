@@ -1,0 +1,22 @@
+{
+    "model":{
+        "pricing_date_c":"2017-11-01 12:22:00",
+        "dwp|create_task":false,
+        "stage":"SIGNATURE RECEIVED",
+        "id":"df28ce46-af72-3f31-4c29-5b619f87b6aa",
+        "accounts|id":"d6572617-f662-731f-11af-5b619f9328c8",
+		"valid_until_c":"2017-11-02 12:22:00",
+		"signature_received_date_c":"2017-11-01 12:22:00",
+        "recordTypeOfRecordId":"AOS_Quotes",
+        "baseModule":"AOS_Quotes",
+        "assigned_user_id":[
+            {
+                "key":"1",
+                "label":"Administrator"
+            }
+        ]
+    },
+    "action":{
+        "event":"CONFIRM"
+    }
+}
