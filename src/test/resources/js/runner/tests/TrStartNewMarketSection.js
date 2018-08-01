@@ -1,4 +1,12 @@
-class TrClickOnElement extends TestRunnerBase {
+class TrStartNewMarketSection extends TestRunnerBase {
+
+    /*public boolean test(String element) {
+    Map<String, String> options = new HashMap<>();
+    options.put("element", element);
+    boolean success = executeJavascriptTest("TrClickOnElement", options);
+    return success;
+    }
+    */
 
     constructor(options, callback) {
         super(options, callback, 1000);
@@ -7,11 +15,9 @@ class TrClickOnElement extends TestRunnerBase {
     run(options, result) {
         result.status = 'UNDEFINED';
         result.reason = 'Not found';
-        let map = new Map(['.list__actions .icon-plus']);
-        let query = map.get(options.element);
-        let matches = $(query);
-        if (matches.length >= 0) {
-            $('.list__actions .icon-plus').click();
+        let matches = [];
+        if (matches >= 0) {
+            $('.button-group .icon-plus').click();
             result.status = 'PASSED';
             result.reason = '';
         } else {
@@ -23,6 +29,3 @@ class TrClickOnElement extends TestRunnerBase {
         }, 1000);
     }
 }
-
-//dwp-app/div[3]/focus-mode/focus-mode-content[@title='Van Hauwaert Steven']
-//div[@class='col-1-1']//gridlr[@class='']//list/div/div[@class='list__actions']/div[2]/a[2]

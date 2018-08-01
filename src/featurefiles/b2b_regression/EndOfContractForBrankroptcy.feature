@@ -15,5 +15,7 @@ Feature: DWP testing: NUAT-373
         When Click on link in View List at 1st row and "Account Number & Name" column
         And Overview is Workflows
         When Click on Start new market scenario
+        And Click Select Contractline
+        And Search field input is "541448860014827666"
 #        And Open Select Contractline
 #        And Input EAN in search field
