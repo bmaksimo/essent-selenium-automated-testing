@@ -13,7 +13,7 @@ Feature: Creating a B2C Quote - supplier switch
         And Plus Menu is "Sales -> TC1 -> Create new quote B2C"
         Then Form Header is "Quote details"
         And  Confirm Default B2C Channel Info
-        When Customer details are random
+        When Customer is random
         And Package is "TC_FIX_B2C"
         And EAN code is selected
 #        And No price sheet alerts popped up

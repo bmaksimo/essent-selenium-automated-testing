@@ -74,34 +74,6 @@ public class GenericSteps extends DwpScenario {
         Autocrat.executeFlow(context, flow);
     }
 
-    // This function creates an ArrayList of arrays of Strings with the addresses taken from the .csv file.
-    // After creating, it removes the header (address.remove(0);
-    // It then returns that ArrayList
-
-    public static ArrayList<String[]> getAddresses() {
-        String csvFile = "src/test/resources/csv/addresses.csv";
-        String line = "";
-
-        ArrayList<String[]> address = new ArrayList<String[]>();
-
-
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
-
-            while ((line = br.readLine()) != null) {
-                String[] lineArray = new String[]{line};
-                address.add(lineArray);
-            }
-
-            address.remove(0);
-
-            return address;
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     @After({"@QUOTE, @MENU, @RENEWAL, @FILTER, @SMOKE"})
     public void tearDown() throws Exception {
         tidyUp();
