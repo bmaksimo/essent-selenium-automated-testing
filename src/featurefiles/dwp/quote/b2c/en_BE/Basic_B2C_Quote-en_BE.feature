@@ -5,8 +5,7 @@
 Feature: Creating a B2C Quote - supplier switch
 
     Background:
-        Given I logged in in DWP as BusinessDeskB2C
-        Given I optionally discard a previous flow
+        Given I logged in to DWP as BusinessDeskB2C
 
     Scenario: Create a B2C Quote with Supplier Switch
         When Top Action is Plus Menu

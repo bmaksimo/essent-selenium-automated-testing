@@ -29,14 +29,29 @@ public class GenericSteps extends DwpScenario {
         isDwpRunning(BASE_URL);
     }
 
-    @Given("^I logged in in DWP as ([^\"]*)$")
+    @Given("^I logged in to DWP as ([^\"]*)$")
     public void loginAs(String username) throws Throwable {
+        discardPreviousFlow();
         retrieveUserLanguage();
         UserRoles dwpUser = UserRoles.get(username);
         Window application = new LoginAction(webDriver).doLogin(dwpUser.getUsername(), dwpUser.getPassword());
+        assertNotNull("DWP application did not appear after a login", application);
         injectJavaScriptTestRunner();
         retrieveUserLanguage();
-        assertNotNull("DWP application did not appear after a login", application);
+    }
+
+    private void discardPreviousFlow() throws Throwable {
+        Model.Execution execution = new Model.Execution();
+        execution.element("DWP_MODAL_CANCEL",
+            new Model.Element().search("SELECTOR").query("#cancel-button"));
+        Autocrat.ExecutionContext context =
+            new Autocrat.ExecutionContext(webDriver.getDriver(), execution);
+        Model.Step s =
+            new Model.Step().action(Action.REQUIRE).element("DWP_MODAL_CANCEL").timeoutInSeconds(2).breakFlowOnFailure(false);
+        Flow flow = s.flow();
+        flow.steps(new Model.Step().action(Action.CLICK).element("DWP_MODAL_CANCEL").breakFlowOnFailure(false),
+            new Model.Step().action(Action.REQUIRE_ABSENT).element("DWP_MODAL_CANCEL"));
+        Autocrat.executeFlow(context, flow);
     }
 
     private void retrieveUserLanguage() {
@@ -49,21 +64,6 @@ public class GenericSteps extends DwpScenario {
             logger().info(" - RESULT: setting preferred language: " + userLanguage);
             preferredLanguage = userLanguage;
         }
-    }
-
-    @Given("^I optionally discard a previous flow$")
-    public void discardPreviousFlow() throws Throwable {
-        Model.Execution execution = new Model.Execution();
-        execution.element("DWP_MODAL_CANCEL",
-            new Model.Element().search("SELECTOR").query("#cancel-button"));
-        Autocrat.ExecutionContext context =
-            new Autocrat.ExecutionContext(webDriver.getDriver(), execution);
-        Model.Step s =
-            new Model.Step().action(Action.REQUIRE).element("DWP_MODAL_CANCEL").timeoutInSeconds(2).breakFlowOnFailure(false);
-        Flow flow = s.flow();
-        flow.steps(new Model.Step().action(Action.CLICK).element("DWP_MODAL_CANCEL").breakFlowOnFailure(false),
-            new Model.Step().action(Action.REQUIRE_ABSENT).element("DWP_MODAL_CANCEL"));
-        Autocrat.executeFlow(context, flow);
     }
 
     @After({"@QUOTE, @MENU, @RENEWAL, @FILTER, @SMOKE"})
