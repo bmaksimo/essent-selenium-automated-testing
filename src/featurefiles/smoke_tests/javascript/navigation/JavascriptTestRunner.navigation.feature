@@ -2,8 +2,7 @@
 Feature: Javascript DWP testing
 
     Background:
-        Given I logged in in DWP as BusinessDeskB2C
-        Given I optionally discard a previous flow
+        Given I logged in to DWP as d.chebayewski.billinghouse@essent.be
 
     Scenario: We can access the main gui elements
         When Left Menu Item is sales-marketing
