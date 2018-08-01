@@ -76,4 +76,5 @@ public class GenericSteps extends DwpScenario {
             logger().error("The scenario '" + scenario.getName() + "' failed");
         }
     }
+
 }

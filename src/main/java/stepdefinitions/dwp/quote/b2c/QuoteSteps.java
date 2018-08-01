@@ -100,7 +100,7 @@ public class QuoteSteps extends DwpScenario {
                 // - Using a CSV parser;
                 // - Creating a global variable in Java
 
-                ArrayList<String[]> addresses = GenericSteps.getAddresses();
+                ArrayList<String[]> addresses = getAddresses();
                 int rnd = new Random().nextInt(addresses.size());
                 String[] address = addresses.get(rnd);
                 Gson gson = new Gson();
@@ -144,6 +144,38 @@ public class QuoteSteps extends DwpScenario {
                 success = fillInCustomerDetails(randomUser, randomAddress);
             }
             return success;
+        }
+
+        // This function creates an ArrayList of arrays of Strings with the addresses taken from the .csv file.
+        // After creating, it removes the header (address.remove(0);
+        // It then returns that ArrayList
+
+        /**
+         *
+         * @return
+         */
+        private ArrayList<String[]> getAddresses() {
+            String csvFile = "src/test/resources/csv/addresses.csv";
+            String line = "";
+
+            ArrayList<String[]> address = new ArrayList<String[]>();
+
+
+            try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+
+                while ((line = br.readLine()) != null) {
+                    String[] lineArray = new String[]{line};
+                    address.add(lineArray);
+                }
+
+                address.remove(0);
+
+                return address;
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
         }
 
         private RandomUser randomUser(Map reply) {
@@ -216,7 +248,7 @@ public class QuoteSteps extends DwpScenario {
 
     @OutputParameter(name = "customers")
     private Map<String, CustomerTable> customers = new HashMap<>();
-    @And("^Customer details are random$")
+    @And("^Customer is random$")
     public void findRandomUser() throws Throwable {
         CustomerTable customer = new CustomerTable();
         boolean success = new GetRandomUser().test(customer);
