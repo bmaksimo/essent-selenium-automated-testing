@@ -2,7 +2,7 @@
 Feature: Javascript DWP testing
 
     Background:
-        Given I logged in to DWP as BusinessDeskB2C
+        Given I logged in to DWP as d.chebayewski.billinghouse@essent.be
 
     Scenario: We can access the main gui elements
         When Left Menu Item is sales-marketing

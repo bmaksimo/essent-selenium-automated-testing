@@ -2,7 +2,7 @@
 Feature: Javascript DWP testing
 
     Background:
-        Given   I logged in to DWP as BusinessDeskB2B
+        Given   I logged in to DWP as d.chebayewski.billinghouse@essent.be
 
     Scenario:
         When Left Menu Item is sales-marketing
