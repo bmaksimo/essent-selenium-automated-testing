@@ -31,13 +31,13 @@ public class GenericSteps extends DwpScenario {
 
     @Given("^I logged in to DWP as ([^\"]*)$")
     public void loginAs(String username) throws Throwable {
-        discardPreviousFlow();
         retrieveUserLanguage();
         UserRoles dwpUser = UserRoles.get(username);
         Window application = new LoginAction(webDriver).doLogin(dwpUser.getUsername(), dwpUser.getPassword());
         assertNotNull("DWP application did not appear after a login", application);
         injectJavaScriptTestRunner();
         retrieveUserLanguage();
+        discardPreviousFlow();
     }
 
     private void discardPreviousFlow() throws Throwable {
