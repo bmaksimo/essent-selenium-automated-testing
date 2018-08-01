@@ -2,6 +2,7 @@ package com.essent.testing.restassured;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
@@ -78,7 +79,11 @@ public class CreateQuoteTC1B2B {
 	
 	private Cookies cookie;
 	
+	private Gson gson = null;
+	
 	private void setPreconditions() {
+		gson = new Gson();
+		
 		setAccountName();
 		generateValidBECompanyNumber();
 		getYesterdayDate();
@@ -114,7 +119,7 @@ public class CreateQuoteTC1B2B {
 		// Supplier Switch
 		// "move_in_c":false, "switchtype_c":"SUPPLY_START_REQUEST", "dwp|mig_module_c":"START ACCESS", "dwp|mig_label_c":"Supplier Switch"
 		
-		/*String payloadCreateQuoteB2BTC1 = PATH_TO_JSON_FILES_QUOTE_TC1_B2B
+		String payloadCreateQuoteB2BTC1 = PATH_TO_JSON_FILES_QUOTE_TC1_B2B
 				+ "create_quote_b2b_tc1.json.template";
 		
 		String originalPayloadCreateQuoteB2BTC1 = PATH_TO_JSON_FILES_QUOTE_TC1_B2B
@@ -135,10 +140,10 @@ public class CreateQuoteTC1B2B {
 
 		updatePayloadJson(payloadCreateQuoteB2BTC1, originalPayloadCreateQuoteB2BTC1, testMap);
 		
-		String jsonBody = generateStringFromResource(originalPayloadCreateQuoteB2BTC1);*/
+		String jsonBody = generateStringFromResource(originalPayloadCreateQuoteB2BTC1);
 		
 		//accountName, companyNumber, pricingDate, addressStreet, addressNumber, addressPostalCode, addressCity, legalCommunicationBy,paymentMethod,generatedIban, ean_c
-		String jsonBody = generateStringFromResource(PATH_TO_JSON_FILES_QUOTE_TC1_B2B + "create_quote_b2b_tc1.json");
+		//String jsonBody = generateStringFromResource(PATH_TO_JSON_FILES_QUOTE_TC1_B2B + "create_quote_b2b_tc1.json");
 		Response response = RestAssured.given().log().all().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
 				.when().body(jsonBody).post(API_CREATE_QUOTE_B2B_TC1).then().log().all().statusCode(201).extract().response();
 
@@ -173,7 +178,6 @@ public class CreateQuoteTC1B2B {
 		model.put("send_quote_to_c", "BOTH");
 		model.put("dwp|send_quote_to_c|matchedCondition", "model['dwp|sendemailtome'] && model['dwp|sendemailtome']");
 		
-		Gson gson = new Gson(); 
 		String payload = gson.toJson(model); 
 		
 		String payloadQuoteSendCustomer = PATH_TO_JSON_FILES_QUOTE_TC1_B2B + "gf_quote_send_to_customer.json.template";
@@ -280,8 +284,6 @@ public class CreateQuoteTC1B2B {
 				.extract().response();
 		
 		modelMandatePaper = new JsonPath(response.getBody().asString()).get("data.arguments.model");
-		Gson gson = new Gson(); 
-		String payload = gson.toJson(modelMandatePaper); 
 		
 		response = RestAssured.given().cookies(cookie).contentType("multipart/form-data")
 				.multiPart("file", new File("./src/test/resources/data/dwp/signed-document.pdf"), "application/pdf")
@@ -290,12 +292,10 @@ public class CreateQuoteTC1B2B {
 		
 		upload = new JsonPath(response.getBody().asString()).get("data");
 		
-		gson = new Gson(); 
 		String payloadUpload = gson.toJson(upload);
 
 		modelMandatePaper.put("dwp|attachment", payloadUpload);
 		
-		gson = new Gson(); 
 		String payloadModelMandatePaper = gson.toJson(modelMandatePaper);
 		
 		String payloadSignMandatePaper = PATH_TO_JSON_FILES_QUOTE_TC1_B2B + "gf_sign_mandate_paper.json.template";
@@ -400,15 +400,15 @@ public class CreateQuoteTC1B2B {
 	private void updatePayloadJson(String pathTemplate, String pathJson, String replaceString, String originalValue) throws IOException {
 		File pathTemplateFile = new File(pathTemplate);
 		File pathJsonFile = new File(pathJson);
-		String fileContext = FileUtils.readFileToString(pathTemplateFile);
+		String fileContext = FileUtils.readFileToString(pathTemplateFile, Charset.forName("utf-8"));
 		fileContext = fileContext.replace(replaceString, originalValue);
-		FileUtils.write(pathJsonFile, fileContext);
+		FileUtils.write(pathJsonFile, fileContext, Charset.forName("utf-8"));
 	}
 	
 	private void updatePayloadJson(String pathTemplate, String pathJson, HashMap<String, String> mapValues) throws IOException {
 		File pathTemplateFile = new File(pathTemplate);
 		File pathJsonFile = new File(pathJson);
-		String fileContext = FileUtils.readFileToString(pathTemplateFile);
+		String fileContext = FileUtils.readFileToString(pathTemplateFile, Charset.forName("utf-8"));
 		
 		for (Entry<String, String> entry : mapValues.entrySet()) {
 			if(fileContext.contains(entry.getKey())) {
@@ -416,7 +416,7 @@ public class CreateQuoteTC1B2B {
 			}
 		}
 		
-		FileUtils.write(pathJsonFile, fileContext);
+		FileUtils.write(pathJsonFile, fileContext, Charset.forName("utf-8"));
 	}
 	
 	private void listOfQuotesOnAccount() throws IOException {
