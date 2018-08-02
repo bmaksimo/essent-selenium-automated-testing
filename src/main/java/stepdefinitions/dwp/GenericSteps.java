@@ -36,7 +36,6 @@ public class GenericSteps extends DwpScenario {
         Window application = new LoginAction(webDriver).doLogin(dwpUser.getUsername(), dwpUser.getPassword());
         assertNotNull("DWP application did not appear after a login", application);
         injectJavaScriptTestRunner();
-        retrieveUserLanguage();
         discardPreviousFlow();
     }
 

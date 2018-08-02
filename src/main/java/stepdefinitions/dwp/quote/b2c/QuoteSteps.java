@@ -21,18 +21,21 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
+import stepdefinitions.dwp.GenericSteps;
 import stepdefinitions.dwp.tables.*;
 import stepdefinitions.dwp.tables.plus.CheckBoxState;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.*;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
 import java.util.function.Predicate;
 
 import static com.essent.testing.dwp.DwpDateFormats.TIMESTAMP;
 import static com.essent.testing.dwp.DwpTimingParameters.NEXT_STEP;
 import static com.essent.testing.dwp.quote.elements.TariffElements.NO_PRICESHEET_ALERT;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -84,7 +87,55 @@ public class QuoteSteps extends DwpScenario {
                 RandomUser randomUser = randomUser(userData);
                 customer.setLastName(randomUser.getName().getLast());
                 customer.setFirstName(randomUser.getName().getFirst());
+
+                // The idea here is to let the customer export the Excel file as .csv (Comma Separated Values).
+                // After retrieving the ArrayList from getAddresses(),
+                // it gets a random element to be passed to the JS file.
+                // It converts this element to a string with Gson.
+
+                // After that, it remove that line from the .csv file (line 105~123)
+                // It calls the JS file as usual.
+
+                // This code can be improved in the following way:
+                // - Using a CSV parser;
+                // - Creating a global variable in Java
+
+                ArrayList<String[]> addresses = GenericSteps.getAddresses();
+                int rnd = new Random().nextInt(addresses.size());
+                String[] address = addresses.get(rnd);
+                Gson gson = new Gson();
+                String addressJson = gson.toJson(address);
+                options.put("address", addressJson);
+
+                try {
+                    File inputFile = new File("src/test/resources/csv/addresses.csv");
+
+                    File tempFile = new File(inputFile.getAbsolutePath() + ".tmp");
+                    BufferedReader br = new BufferedReader(new FileReader("src/test/resources/csv/addresses.csv"));
+                    PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
+                    String line = null;
+
+                    while ((line = br.readLine()) != null) {
+                        if (!line.trim().equals(Arrays.toString(address).replace("[","").replace("]",""))) {
+                            pw.println(line);
+                            pw.flush();
+                        }
+                    }
+
+                    pw.close();
+                    br.close();
+
+                    Files.move(Paths.get("src/test/resources/csv/addresses.csv.tmp"), Paths.get("src/test/resources/csv/addresses.csv"), REPLACE_EXISTING);
+
+                } catch (FileNotFoundException ex) {
+                    ex.printStackTrace();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+
+
                 reply = executeJavascriptMethod("TrGetRandomValidAddress", options);
+
                 status = ((String) reply.get("status"));
                 if (!StringUtils.equals("PASSED", status))
                     return false;
