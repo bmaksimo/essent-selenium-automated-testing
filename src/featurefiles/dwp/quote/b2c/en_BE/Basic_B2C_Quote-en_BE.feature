@@ -14,13 +14,16 @@ Feature: Creating a B2C Quote - supplier switch
         Then Form Header is "Quote details"
         And  Confirm Default B2C Channel Info
         When Customer is random
+        And Customer address is:
+        | Street                | Number  | Postcode | City            |
+        | Mechelsesteenweg      | 46      | 2550     | Kontich         |
         And Package is "TC_FIX_B2C"
         And EAN code is selected
         And No price sheet alerts popped up
-        #And Electricity and gas meter numbers and their EANs are:
-        #    | productType | meterNumber | ean                |
-        #    | Electricity | 1331710     | 541448820045964198 |
-        #    | Gas         | 016258425   | 541448820045964198 |
+#        And Electricity and gas meter numbers and their EANs are:
+#            | productType | meterNumber | ean                |
+#            | Electricity | 1331710     | 541448820045964198 |
+#            | Gas         | 016258425   | 541448820045964198 |
         And The electricity meter is Closed
         And The gas meter is Closed
         And Confirm Connection
