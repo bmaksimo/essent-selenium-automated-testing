@@ -28,5 +28,3 @@ Feature: Creating a B2C Quote - supplier switch
         And View List Header is "Quotes"
         #Bugfix in UAT02 pending: removal extra space between Sales  Sent
         Then Select 1 List rows having cell value Sales Sent to customer - Accepted at column Type & Status
-        #Check Bobby Van heerde Mechelsesteenweg 12  2550 Kontich!
-        #check //https://uat04.nova.essent.be/dwp/#/sales-marketing/focus-mode/account_cockpit_sales/2e0122b9-5b92-b63c-0fb0-5b644394a0c4
