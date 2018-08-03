@@ -238,7 +238,7 @@
              "dwp|mig_label_c":"Supplier Switch",
              "mig_start_context_c":null,
              "previous_supplier_c":null,
-             "up_start_date_c":"2018-01-01",
+             "up_start_date_c":"${upStartDate}",
              "dgo_id_c":null,
              "contract_line_status_c":null,
              "current_dealer_id":"de18128e-a6e3-aff9-e9df-57a8e1c88552",

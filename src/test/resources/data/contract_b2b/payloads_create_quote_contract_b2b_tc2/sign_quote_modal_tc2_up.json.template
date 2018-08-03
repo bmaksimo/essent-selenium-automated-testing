@@ -9,7 +9,7 @@
       "dwp|aos_products_quotes|prev_contract_lines|id":"",
       "stage":"SIGNED",
 	  "payment_details|payment_methods(valid_to is null)|payment_method":"${paymentMethod}",
-      "pricing_group_c":"TC2",
+      "pricing_group_c":"UP",
       "dwp|aos_products_quotes|prev_contract_lines|supply_stop_reason_c":"",
       "accounts|company_number_c":"${companyNumber}",
       "id":"${rowId}",

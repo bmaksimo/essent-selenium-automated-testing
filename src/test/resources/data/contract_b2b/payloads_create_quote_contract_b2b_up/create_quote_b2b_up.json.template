@@ -130,10 +130,10 @@
        "accounts|aos_quotes|aos_products_quotes|hedged_prices_c":null,
        "accounts|aos_quotes|aos_products_quotes|up_gsc_and_wkc_c":false,
        "accounts|aos_quotes|aos_products_quotes|inclusive_transport_c":true,
-       "accounts|aos_quotes|aos_products_quotes|up_start_date_c":"2015-11-01",
+       "accounts|aos_quotes|aos_products_quotes|up_start_date_c":"${upStartDate}",
        "accounts|aos_quotes|aos_products_quotes|up_end_date_c":"2018-10-31",
        "accounts|aos_quotes|possible_duration_c":[
-          
+          24
        ],
        "accounts|aos_quotes|pricing_date_c":"${pricingDate}",
        "accounts|aos_quotes|quote_type_c":"SALES",

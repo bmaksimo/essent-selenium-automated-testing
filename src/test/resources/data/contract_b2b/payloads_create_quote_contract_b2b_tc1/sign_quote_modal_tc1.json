@@ -1,19 +1,19 @@
 {
    "model":{
       "recordTypeOfRecordId":"AOS_Quotes",
-      "recordId":"df28ce46-af72-3f31-4c29-5b619f87b6aa",
+      "recordId":"47e099da-06f0-67af-735f-5b62dc5a8a51",
       "baseModule":"AOS_Quotes",
-      "dwp|id":"df28ce46-af72-3f31-4c29-5b619f87b6aa",
-      "id":"df28ce46-af72-3f31-4c29-5b619f87b6aa",
+      "dwp|id":"47e099da-06f0-67af-735f-5b62dc5a8a51",
+      "id":"47e099da-06f0-67af-735f-5b62dc5a8a51",
       "stage":"SIGNED",
-      "dwp|signed_contract_docguid_c":"62a930ae-f041-cbd5-dc2a-5b61a095b5e4",
+      "dwp|signed_contract_docguid_c":"d9500336-704f-b38b-4a4e-5b62ddf3496d",
       "dwp|recordType":"AOS_Quotes",
       "complete":true,
       "signature_option_c":"HAS_SIGNED",
       "signed_contract_docguid_c":[
 
       ],
-      "sign_date_c":"2018-07-31",
+      "sign_date_c":"2018-08-01",
       "do_auto_communication_c":true,
       "dwp|alreadyContracted":false,
       "dwp|alreadyContractedForDifferentClient":false
