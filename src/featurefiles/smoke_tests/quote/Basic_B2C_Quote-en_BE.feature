@@ -16,7 +16,7 @@ Feature: Creating a B2C Quote - supplier switch
         When Customer is random
         And Customer Address is
         | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-        | Mechelsesteenweg| 10      |            |      | 2550       | Kontich  |         |
+        | Mechelsesteenweg| 13      |            |      | 2550       | Kontich  |         |
         And Package is "TC_FIX_B2C"
         And Checkbox "Gas Fix B2C (TC1)" is Unchecked
         And Package and Fuel Type is confirmed
@@ -27,5 +27,5 @@ Feature: Creating a B2C Quote - supplier switch
         And Quote is confirmed
         And View List Header is "Quotes"
         #Bugfix in UAT02 pending: removal extra space between Sales  Sent
-        Then Select 1 List rows having cell value Sales  Sent to customer - Accepted at column Type & Status
+        Then Select 1 List rows having cell value Sales Sent to customer - Accepted at column Type & Status
 
