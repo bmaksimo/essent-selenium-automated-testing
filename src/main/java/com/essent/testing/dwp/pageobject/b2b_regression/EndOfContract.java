@@ -44,16 +44,17 @@ public class EndOfContract extends DwpScenario {
     }
 
     protected void simpleExecuteJavaScript(String nameOfJavaScript) {
-        boolean success = new ExecuteJavaStript().test(nameOfJavaScript);
+        boolean success = new ExecuteJavaScript().test(nameOfJavaScript);
         assertThat(String.format("JavaScript file %s is undefined.", nameOfJavaScript),
             success, is(true));
     }
 
-    private class ExecuteJavaStript implements Predicate<String> {
+    private class ExecuteJavaScript implements Predicate<String> {
         @Override
         public boolean test(String s) {
-            Map<String, String> options = new HashMap<>();
+            Map<String, Object> options = new HashMap<>();
             options.put("value", s);
+            System.out.println(s);
             boolean success = executeJavascriptTest( s, options);
             return success;
         }

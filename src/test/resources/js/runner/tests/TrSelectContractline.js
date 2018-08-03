@@ -1,17 +1,15 @@
-class TrSelectContractline execute TestRunnerBase {
+class TrSelectContractline extends TestRunnerBase {
 
     constructor(options, callback) {
-            super(options, callback, 5000);
-        }
+        super(options, callback, 1000);
+    }
 
-    run (options, result) {
+    run(options, result) {
         result.status = 'UNDEFINED';
         result.reason = 'Not found';
-        let value = options.value;
-        console.log(value);
         let matches = [];
         if (matches >= 0) {
-            $('.input .button-placeholder').click();
+            $('.button-placeholder .icon-plus').click();
             result.status = 'PASSED';
             result.reason = '';
         } else {
