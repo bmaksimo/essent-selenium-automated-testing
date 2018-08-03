@@ -15,8 +15,8 @@ Feature: Creating a B2C Quote - supplier switch
         And  Default B2C Channel Info is confirmed
         When Customer is random
         And Customer Address is
-            | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-            | Mechelsesteenweg| 13      |            |      | 2550       | Kontich  |         |
+        | Street                | Number  | Postcode | City            |
+        | Mechelsesteenweg      | 13      | 2550     | Kontich         |
         And Package is "TC_FIX_B2C"
         And Checkbox "Gas Fix B2C (TC1)" is Unchecked
         And Package and Fuel Type is confirmed
