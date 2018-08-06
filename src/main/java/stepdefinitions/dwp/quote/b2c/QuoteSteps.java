@@ -2,7 +2,6 @@ package stepdefinitions.dwp.quote.b2c;
 
 import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
-import com.billinghouse.random.Location;
 import com.billinghouse.random.RandomUser;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
@@ -14,20 +13,20 @@ import com.essent.testing.dwp.pageobject.quote.impl.*;
 import com.essent.testing.util.ResourceUtils;
 import com.google.gson.Gson;
 import cucumber.api.DataTable;
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import cucumber.api.java.it.Ma;
 import org.apache.commons.lang3.StringUtils;
 import stepdefinitions.dwp.tables.*;
 import stepdefinitions.dwp.tables.plus.CheckBoxState;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 
 import static com.essent.testing.dwp.DwpTimingParameters.NEXT_STEP;
@@ -267,24 +266,19 @@ public class QuoteSteps extends DwpScenario {
         quoteOverviewView.next();
     }
 
-    @InputParameter(name = "customer")
-    private CustomerDetails quoteCustomer;
-
-    @And("^Signature date is ([^\"]*), place is \"([^\"]*)\", hand signature file is \"([^\"]*)\":$")
-    public void submitSignedQuote(DwpDateFormats date, String location, String filePath) throws Throwable {
-        String path = ResourceUtils.toPath(filePath);
+    @And("^Quote is signed in ([^\"]*)$")
+    public void submitSignedQuote(String location) throws Throwable {
+        String path = ResourceUtils.toPath("/data/dwp/customer-signature.pdf");
         File document = new File(path);
         assertThat("File at path " + document.getAbsolutePath() + " doesn't exist.", true,
             is(document.exists()));
-        SignatureData signature = new SignatureData(quoteCustomer.getFirstName(),
-            quoteCustomer.getLastName(),
-            date,
+        SignatureData signature = new SignatureData(
+            DwpDateFormats.DWP_TODAY,
             location,
             path);
         QuoteOverviewView quoteOverviewView = new QuoteOverviewView(webDriver);
         quoteOverviewView.setSignatureData(signature);
         quoteOverviewView.fillInFormData();
-        quoteOverviewView.next();
     }
 
     @When("^I select the ([^\"]*) element and click the link in the \"([^\"]*)\" column$")
