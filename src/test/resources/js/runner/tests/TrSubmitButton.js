@@ -1,4 +1,4 @@
-class TrSearch extends TestRunnerBase {
+class TrSubmitButton extends TestRunnerBase {
 
     constructor(options, callback) {
         super(options, callback, 5000);
@@ -7,15 +7,9 @@ class TrSearch extends TestRunnerBase {
     run (options, result) {
         result.status = 'UNDEFINED';
         result.reason = 'Not executed';
-        let value = options.value;
-        console.log(value);
-        let search = $('.ng-pristine');
-        let button = $('.button-dark');
-        console.log(search)
-        if(value != 'undefined') {
-//            $('.ng-pristine').val(valid).trigger("change")
-            search.val(value).trigger("change");
-            button.click();
+        let submit = $('.modal__header .button')[1];
+        if(submit != 0) {
+            submit.click();
             result.status = "PASSED";
             result.reason = '';
         } else {
@@ -26,4 +20,3 @@ class TrSearch extends TestRunnerBase {
             this.resolveCallback(result);
         }, 1000);
     }
-}

@@ -9,6 +9,9 @@ import cucumber.api.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
 public class EndOfContract extends com.essent.testing.dwp.pageobject.b2b_regression.EndOfContract {
 
     @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL, @B2B_REGRESSION")
@@ -45,5 +48,24 @@ public class EndOfContract extends com.essent.testing.dwp.pageobject.b2b_regress
     @And("^Click Select Contractline$")
     public void clickSelectContractline() {
         simpleExecuteJavaScript("TrSelectContractline");
+    }
+
+    @And("^EAN check box$")
+    public void eanCheckBox() {
+        boolean success = new EanCheckBox().test("");
+        assertThat(String.format("JavaScript file TrEanCheckBox is undefined."),
+            success, is(true));
+    }
+
+    @When("^Break Point$")
+    public void breakPoint() {
+        System.out.println("Break Point!");
+    }
+
+    @And("^Submit button$")
+    public void submitButton() {
+        boolean success = new SubmitContractLine().test( "");
+        assertThat(String.format("Java Script file TrSubmitButton is undefined."),
+            success, is(true));
     }
 }

@@ -9,7 +9,7 @@ class TrSelectContractline extends TestRunnerBase {
         result.reason = 'Not found';
         let matches = [];
         if (matches >= 0) {
-            $('.button-placeholder .icon-plus').click();
+            $('.button-placeholder')[0].click();
             result.status = 'PASSED';
             result.reason = '';
         } else {

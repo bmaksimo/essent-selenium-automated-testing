@@ -59,4 +59,21 @@ public class EndOfContract extends DwpScenario {
             return success;
         }
     }
+
+    public class EanCheckBox implements Predicate<String> {
+
+        @Override
+        public boolean test(String s) {
+            boolean success = executeJavascriptTest("TrEanCheckBox", "");
+            return success;
+        }
+    }
+
+    public class SubmitContractLine implements Predicate<String> {
+        @Override
+        public boolean test(String s) {
+            boolean success = executeJavascriptTest( "TrSubmitButton", "");
+            return success;
+        }
+    }
 }
