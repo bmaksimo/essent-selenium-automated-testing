@@ -5,8 +5,7 @@
 Feature: DWP Filter Options
 
     Background:
-        Given I logged in in DWP as BusinessDeskB2C
-        Given I optionally discard a previous flow
+        Given I logged in to DWP as BusinessDeskB2C
 
     Scenario: Checking if filter elements, defined for Sales Marketing Left Tab, are available
         When Left Menu Item is sales-marketing
