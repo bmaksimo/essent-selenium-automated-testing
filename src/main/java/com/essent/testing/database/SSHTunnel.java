@@ -6,10 +6,14 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 
 public class SSHTunnel {
+
+    private  final static Logger logger = Logger.getLogger(SSHTunnel.class);
 
     protected int port = 5432;
     protected Session session;
@@ -67,7 +71,7 @@ public class SSHTunnel {
 
                     this.port = session.setPortForwardingL(localPort, sshDbHostname, sshRemoteport);
                     // got here, it worked :)
-                    System.out.println("Tunnel created: dbhost = " + sshDbHostname + ", localport = " + localPort
+                    logger.info("Tunnel created: dbhost = " + sshDbHostname + ", localport = " + localPort
                             + ", remoteport = " + sshRemoteport);
                     tunnelCreated = true;
                     // We should now connect to localhost instead of the given sshDbHostname in PSQLUtility
