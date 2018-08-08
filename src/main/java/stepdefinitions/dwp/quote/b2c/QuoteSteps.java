@@ -1,6 +1,5 @@
 package stepdefinitions.dwp.quote.b2c;
 
-import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
 import com.billinghouse.random.RandomUser;
 import com.essent.automation.autocrat.Action;
