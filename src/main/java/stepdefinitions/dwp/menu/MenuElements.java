@@ -7,7 +7,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
-import stepdefinitions.dwp.NavigationElements;
+import stepdefinitions.dwp.navigation.NavigationElements;
 import stepdefinitions.dwp.tables.plus.Item;
 
 import java.util.HashMap;
@@ -21,7 +21,7 @@ import static org.hamcrest.Matchers.is;
 public class MenuElements extends NavigationElements {
 
     @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
-    public void SetupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
 
