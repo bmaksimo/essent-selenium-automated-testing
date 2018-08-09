@@ -21,7 +21,7 @@ import static org.hamcrest.Matchers.is;
 public class MenuElements extends NavigationElements {
 
     @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
-    public void SetupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
 
