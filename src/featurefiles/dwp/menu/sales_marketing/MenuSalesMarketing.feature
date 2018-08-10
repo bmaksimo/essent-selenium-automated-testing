@@ -5,7 +5,7 @@
 Feature: DWP UI: Menu structure, specific menu items
 
     Background:
-        Given I logged in to DWP as BusinessDeskB2B
+        Given I logged in to DWP as d.chebayewski.billinghouse@essent.be
 
     Scenario: Upper menu items are available for Left Menu Item
         Given Available Left Menu items are:

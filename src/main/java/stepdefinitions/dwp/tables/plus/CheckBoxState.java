@@ -4,5 +4,7 @@ public enum CheckBoxState {
     Open,
     Closed,
     On,
-    Off
+    Off,
+    Checked,
+    Unchecked
 }

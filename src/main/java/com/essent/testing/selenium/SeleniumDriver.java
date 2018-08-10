@@ -245,6 +245,25 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         return result;
     }
 
+    public Map executeJavascriptMethod(String registeredJsClass, Object options, Object address) {
+        waitUntilAngularPageIsLoaded();
+        String jsTestCall = SeleniumJsTestExpanderService.get().expandToJavascript(registeredJsClass, options);
+        logger.info("STEP:");
+        logger.info(" - ACTION: EVALUATE_JAVASCRIPT_METHOD");
+        logger.info(" - TEST: " + jsTestCall);
+        Map result = (Map) ((JavascriptExecutor) driver).executeAsyncScript(jsTestCall);
+        String status = ((String) result.get("status"));
+        if(StringUtils.isEmpty(status)) {
+            status = "UNDEFINED";
+        }
+        logger.info(" - RESULT: " + status);
+        if (StringUtils.equals("FAILED", status)) {
+            String reason = ((String) result.get("reason"));
+            logger.info(" - REASON: " + reason);
+        }
+        return result;
+    }
+
     /**
      *
      * @param registeredJsClass
