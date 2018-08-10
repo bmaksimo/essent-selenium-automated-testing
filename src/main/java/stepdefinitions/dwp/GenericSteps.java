@@ -22,8 +22,8 @@ import static org.junit.Assert.assertNotNull;
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 public class GenericSteps extends DwpScenario {
 
-    @Before("@QUOTE, @MENU, @RENEWAL, @FILTER, @SMOKE, @B2B_REGRESSION")
-    public void SetupTest(Scenario scenario) throws Throwable {
+    @Before("@QUOTE, @MENU, @RENEWAL, @FILTER, @SMOKE")
+    public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
         setUpWebDriver();
         isDwpRunning(BASE_URL);
@@ -54,9 +54,6 @@ public class GenericSteps extends DwpScenario {
         Autocrat.executeFlow(context, flow);
     }
 
-<<<<<<< HEAD
-    @After({"@QUOTE, @MENU, @RENEWAL, @FILTER, @SMOKE, @B2B_REGRESSION"})
-=======
     private void retrieveUserLanguage() {
         WebStorage webStorage = (WebStorage)webDriver.getDriver();
         LocalStorage localStorage = webStorage.getLocalStorage();
@@ -70,7 +67,6 @@ public class GenericSteps extends DwpScenario {
     }
 
     @After({"@QUOTE, @MENU, @RENEWAL, @FILTER, @SMOKE"})
->>>>>>> develop
     public void tearDown() throws Exception {
         tidyUp();
     }
