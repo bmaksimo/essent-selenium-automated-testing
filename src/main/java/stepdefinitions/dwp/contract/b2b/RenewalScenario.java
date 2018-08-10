@@ -7,7 +7,7 @@ import cucumber.api.java.Before;
 
 public class RenewalScenario extends DwpScenario {
     @Before("@RENEWAL")
-    public void SetupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
 
