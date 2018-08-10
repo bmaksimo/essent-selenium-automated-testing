@@ -25,7 +25,7 @@ public class OverviewMenu extends NavigationElements {
         }
     }
 
-    @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL, @B2B_REGRESSION")
+    @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
     public void SetupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -38,7 +38,7 @@ public class OverviewMenu extends NavigationElements {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL, @B2B_REGRESSION")
+    @After("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
     public void tearDown() throws Exception {
         super.tearDown();
     }
