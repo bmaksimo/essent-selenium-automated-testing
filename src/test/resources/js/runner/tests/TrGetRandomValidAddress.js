@@ -5,14 +5,19 @@ class TrGetRandomValidAddress extends TestRunnerBase {
     }
 
     run(options, result) {
+        let addressStrip = options.address.replace('["','');
+        addressStrip = addressStrip.replace('"]','');
+        let address = addressStrip.split(",");
+        console.log(address);
         let location = {
-                "street": "Vijgenstraat",
-                "houseNr": "3",
-                "houseNrAdd": "",
-                "city": "Lokeren",
-                "state": "",
-                "postcode": "9160",
-                "bus": ""};
+            "street": address[4],
+            "houseNr": address[5],
+            "houseNrAdd": "",
+            "city": address[7],
+            "state": "",
+            "postcode": address[6],
+            "bus": ""
+        };
         result.status = 'PASSED';
         result.reason = '';
         result.location = location;
