@@ -7,11 +7,12 @@ class TrEanCheckBox extends TestRunnerBase {
     run (options, result) {
         result.status = 'UNDEFINED';
         result.reason = 'Not executed';
-        let checkBox = $('.input__checkbox');
+        let checkBox = $('.input .input__checkbox')[1];
         let submit = $('.modal__header .button')[1];
+        let select = $('#confirm-button')
         if(checkBox != 0) {
             checkBox.click();
-//            submit.click();
+            submit.click();
             result.status = "PASSED";
             result.reason = '';
         } else {

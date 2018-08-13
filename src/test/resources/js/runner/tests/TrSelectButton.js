@@ -1,4 +1,4 @@
-class TrSubmitButton extends TestRunnerBase {
+class TrSelectButton extends TestRunnerBase {
 
     constructor(options, callback) {
         super(options, callback, 5000);
@@ -7,9 +7,9 @@ class TrSubmitButton extends TestRunnerBase {
     run (options, result) {
         result.status = 'UNDEFINED';
         result.reason = 'Not executed';
-        let submit = $('.modal__header .button')[1];
-        if(submit != 0) {
-            submit.click();
+        let select = $('#confirm-button');
+        if(select != 0) {
+            select.click();
             result.status = "PASSED";
             result.reason = '';
         } else {
@@ -20,3 +20,4 @@ class TrSubmitButton extends TestRunnerBase {
             this.resolveCallback(result);
         }, 1000);
     }
+}

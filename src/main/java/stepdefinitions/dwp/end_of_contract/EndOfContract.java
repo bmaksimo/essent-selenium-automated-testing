@@ -68,4 +68,11 @@ public class EndOfContract extends com.essent.testing.dwp.pageobject.b2b_regress
         assertThat(String.format("Java Script file TrSubmitButton is undefined."),
             success, is(true));
     }
+
+    @And("^Select button$")
+    public void selectButton() {
+        boolean success = new SelectButton().test("");
+        assertThat(String.format("Java Script file TrSelectButton is undefined."),
+            success, is(true));
+    }
 }
