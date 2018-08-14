@@ -14,13 +14,15 @@ Feature: Creating a B2C Quote - supplier switch
         And B2C sales channel is Inbound
         And  Default B2C Channel Info is confirmed
         When Customer is random
+        #Increase HouseNr by 1 before next execution!
         And Customer Address is
             | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-            | Mechelsesteenweg| 138    |            |      | 2550       | Kontich  |         |
+            | Mechelsesteenweg| 140    |            |      | 2550       | Kontich  |         |
         And Package is "TC_FIX_B2C"
         And Checkbox "Gas Fix B2C (TC1)" is Unchecked
         And Package and Fuel Type is confirmed
         And No price sheet alerts popped up
+        And "Start date" date input is "$today"
         And Electricity EAN code is selected
         And Connection is confirmed
         And Payment details are: method BankTransfer, IBAN "NL57ABNA0874253356", bic "ABNANL2A"

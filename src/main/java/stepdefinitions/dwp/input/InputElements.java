@@ -26,7 +26,14 @@ public class InputElements extends DwpScenario  {
     private class ApplyInput implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
-            return executeJavascriptTest("TrApplyFilterInput", options);
+            return executeJavascriptTest("TbrFormInput", options);
+        }
+    }
+
+    private class ApplyDateInput implements Predicate<Map> {
+        @Override
+        public boolean test(Map options) {
+            return executeJavascriptTest("TrDatePickerInput", options);
         }
     }
 
@@ -49,7 +56,7 @@ public class InputElements extends DwpScenario  {
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
         options.put("value", convertToDwpDate(value));
-        boolean success = new ApplyInput().test(options);
+        boolean success = new ApplyDateInput().test(options);
         assertThat(String.format("Filter element %s is undefined.", label),
             success, is(true));
     }

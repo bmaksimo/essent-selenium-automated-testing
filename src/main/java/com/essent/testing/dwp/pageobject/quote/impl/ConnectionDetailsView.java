@@ -90,17 +90,17 @@ public class ConnectionDetailsView extends Component implements CreateQuoteView,
         this.gasConnectionDetails = gasConnectionDetails;
     }
 
-    public boolean openMeter(ProductType productType, CheckBoxState state) {
-        Model.Element meterOpenCheckboxElement = ELEC_METER_OPEN_CHECKBOX.element();
+    public boolean toggleMeter(ProductType productType, CheckBoxState state) {
+        String query = ELEC_METER_OPEN_CHECKBOX.getQuery();
         switch (productType) {
             case Gas:
-                meterOpenCheckboxElement = GAS_METER_OPEN_CHECKBOX.element();
+                query = GAS_METER_OPEN_CHECKBOX.getQuery();
                 break;
             default:
                 break;
         }
         Map<String, String> options = new HashMap<>();
-        options.put("id", meterOpenCheckboxElement.query);
+        options.put("id", query);
         boolean result = seleniumDriver.executeJavascriptTest("TrToggleInputState", options);
         return result;
     }

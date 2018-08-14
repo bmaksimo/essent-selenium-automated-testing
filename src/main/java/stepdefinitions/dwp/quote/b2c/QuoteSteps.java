@@ -232,10 +232,10 @@ public class QuoteSteps extends DwpScenario {
         connectionDetailsView.fillInFormData();
     }
 
-    @And("^The ([^\"]*) meter is ([^\"]*)$")
+    @And("^([^\"]*) meter is ([^\"]*)$")
     public void setMeterState(final ProductType productType, final CheckBoxState meterState) throws Throwable {
         ConnectionDetailsView connectionDetailsView = new ConnectionDetailsView(webDriver);
-        connectionDetailsView.openMeter(productType, meterState);
+        connectionDetailsView.toggleMeter(productType, meterState);
     }
 
     @And("^Connection is confirmed$")
