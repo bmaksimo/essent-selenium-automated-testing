@@ -132,4 +132,11 @@ public abstract class NavigationElements extends DwpScenario  {
             success, is(true));
     }
 
+    public class ClickOnPlusAction implements Predicate<Map> {
+        @Override
+        public boolean test(Map map) {
+            Map<String, String> options = new HashMap<>();
+            return executeJavascriptTest("TrPlusActionFromList", options);
+        }
+    }
 }

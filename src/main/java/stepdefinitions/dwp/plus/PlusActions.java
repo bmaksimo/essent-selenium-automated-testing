@@ -6,9 +6,15 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import stepdefinitions.dwp.navigation.NavigationElements;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
 public class PlusActions extends NavigationElements {
 
-    @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
+    @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -24,8 +30,21 @@ public class PlusActions extends NavigationElements {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
+    @After("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL, @B2B_REGRESSION")
     public void tearDown() throws Exception {
         super.tearDown();
     }
+
+    @And("^\"([^\"]*)\" list item at ([^\"]*) plus action$")
+    public void listItemAtStringPlusAction(String headerName, String ordinal) {
+        String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
+        Map<String, String> ListOptions = new HashMap<>();
+        ListOptions.put("headerName", headerName);
+        ListOptions.put("index", rowIndex);
+        boolean success = new ClickOnPlusAction().test(ListOptions);
+        assertThat(String.format("View list did not contain header '%s'", ""),
+            success, is(true));
+    }
+
+
 }
