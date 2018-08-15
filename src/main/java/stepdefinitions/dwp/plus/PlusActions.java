@@ -18,14 +18,14 @@ public class PlusActions extends NavigationElements {
         clickPlusAction(path);
     }
 
+    @And("^List Plus Action is ([^\"]*)$")
+    public void checkPlusAction(String item) throws Exception {
+        clickListPlusAction(item);
+    }
+
     @Override
     @After("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
     public void tearDown() throws Exception {
         super.tearDown();
-    }
-
-    @And("^List Plus Action is ([^\"]*)$")
-    public void checkPlusAction(String item) throws Exception {
-        clickListPlusAction(item);
     }
 }

@@ -1,8 +1,6 @@
 package stepdefinitions.dwp.quote.b2c;
 
-import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
-import com.billinghouse.random.Location;
 import com.billinghouse.random.RandomUser;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
@@ -14,8 +12,8 @@ import com.essent.testing.dwp.pageobject.quote.impl.*;
 import com.essent.testing.util.ResourceUtils;
 import com.google.gson.Gson;
 import cucumber.api.DataTable;
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
+import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
@@ -30,7 +28,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
-import static com.essent.testing.dwp.DwpDateFormats.TIMESTAMP;
 import static com.essent.testing.dwp.DwpTimingParameters.NEXT_STEP;
 import static com.essent.testing.dwp.quote.elements.TariffElements.NO_PRICESHEET_ALERT;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -39,7 +36,7 @@ import static org.hamcrest.Matchers.notNullValue;
 
 public class QuoteSteps extends DwpScenario {
 
-    @Before("@QUOTE")
+    @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -72,9 +69,9 @@ public class QuoteSteps extends DwpScenario {
         }
     }
 
-    private class GetRandomUser implements Predicate<CustomerTable> {
+    private class GetRandomUser implements Predicate<CustomerDetails> {
         @Override
-        public boolean test(CustomerTable customer) {
+        public boolean test(CustomerDetails customer) {
             Map<String, String> options = new HashMap<>();
             Map reply = executeJavascriptMethod("TrGetRandomUser", options);
             String status = ((String) reply.get("status"));
@@ -84,13 +81,7 @@ public class QuoteSteps extends DwpScenario {
                 RandomUser randomUser = randomUser(userData);
                 customer.setLastName(randomUser.getName().getLast());
                 customer.setFirstName(randomUser.getName().getFirst());
-                reply = executeJavascriptMethod("TrGetRandomValidAddress", options);
-                status = ((String) reply.get("status"));
-                if (!StringUtils.equals("PASSED", status))
-                    return false;
-                Map locationData  = (Map)reply.get("location");
-                Location randomAddress = randomAddress(locationData);
-                success = fillInCustomerDetails(randomUser, randomAddress);
+                success = fillInCustomerDetails(randomUser);
             }
             return success;
         }
@@ -102,24 +93,39 @@ public class QuoteSteps extends DwpScenario {
             return randomUser;
         }
 
-        private Location randomAddress(Map reply) {
-            Gson gson = new Gson();
-            String randomAddressJs = gson.toJson(reply);
-            Location randomAddress = gson.fromJson(randomAddressJs, Location.class);
-            return randomAddress;
-        }
-
-        private boolean fillInCustomerDetails(RandomUser randomUser, Location randomAddress) {
+        private boolean fillInCustomerDetails(RandomUser randomUser) {
             CustomerDetailsView customerDetailsView = new CustomerDetailsView(webDriver);
             customerDetailsView.setRandomUser(randomUser);
-            customerDetailsView.setRandomAddress(randomAddress);
             customerDetailsView.fillInFormData();
             CreateQuoteStepView view = customerDetailsView.next();
             return notNullValue().matches(view);
         }
     }
 
-    @And("^Confirm Default B2C Channel Info$")
+    private class InitialiseCustomerAddress implements Predicate<CustomerAddress> {
+        @Override
+        public boolean test(CustomerAddress customerAddress) {
+           return fillInCustomerAddress(customerAddress);
+        }
+
+        private boolean fillInCustomerAddress(CustomerAddress customerAddress) {
+            CustomerAddressView customerAddressView = new CustomerAddressView(webDriver);
+            customerAddressView.setCustometAddress(customerAddress);
+            customerAddressView.fillInCustomerAddress();
+            CreateQuoteStepView view = customerAddressView.next();
+            return notNullValue().matches(view);
+        }
+    }
+
+    private class ToggleCheckBox implements Predicate<Map<String, String>> {
+
+        @Override
+        public boolean test(Map<String, String> options) {
+            return executeJavascriptTest("TrToggleCheckBox", options);
+        }
+    }
+
+    @And("^Default B2C Channel Info is confirmed$")
     public void confirmDefaultBCChannelInfo() throws Throwable {
         SelectQuoteTypeView selectQuoteTypeView = new SelectQuoteTypeView(webDriver);
         CreateQuoteStepView next = selectQuoteTypeView.next();
@@ -133,28 +139,10 @@ public class QuoteSteps extends DwpScenario {
         selectQuoteTypeView.setSalesChannel(salesChannel);
         boolean formInitialized = selectQuoteTypeView.fillInFormData();
         assertThat("Failure occurred when filling in input values", formInitialized, is(true));
-        CreateQuoteStepView next = selectQuoteTypeView.next();
-        assertThat("Failure accepting the standard quote type.", next,
-            notNullValue());
     }
 
     @OutputParameter(name = "customer")
-    private CustomerTable newCustomer;
-
-    @And("^Customer details for B2C are:$")
-    public void initializeB2CCustomerDetails(DataTable customerTable) throws Throwable {
-        List<CustomerTable> customers = customerTable.asList(CustomerTable.class);
-        CustomerTable customer = customers.get(0);
-        String lastName = customer.getLastName().replace("${TIMESTAMP}", TIMESTAMP.print());
-        customer.setLastName(lastName);
-        newCustomer = customer;
-        CustomerDetailsView customerDetailsView = new CustomerDetailsView(webDriver);
-        customerDetailsView.setCustomer(customer);
-        customerDetailsView.fillInFormData();
-        CreateQuoteStepView view = customerDetailsView.next();
-        assertThat("Failure initializing B2C Customer details, check up the log.", view,
-            notNullValue());
-    }
+    private CustomerDetails newCustomer;
 
     @Then("^Form Header is \"([^\"]*)\"$")
     public void checkFormHeader(String formHeader) throws Throwable {
@@ -164,20 +152,23 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @OutputParameter(name = "customers")
-    private Map<String, CustomerTable> customers = new HashMap<>();
-    @And("^Customer details are random$")
+    private Map<String, CustomerDetails> customers = new HashMap<>();
+
+    @And("^Customer is random$")
     public void findRandomUser() throws Throwable {
-        CustomerTable customer = new CustomerTable();
+        CustomerDetails customer = new CustomerDetails();
         boolean success = new GetRandomUser().test(customer);
         customers.put("onboarding", customer);
         assertThat("Random customer data was not fetched.", success,
             is(true));
     }
 
-    @And("^Valid customer address is random$")
-    public void validCustomerAddressIsRandom() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    @And("^Customer Address is$")
+    public void customerAddressIs(final DataTable address) throws Throwable {
+        List<CustomerAddress> list = address.asList(CustomerAddress.class);
+        CustomerAddress cuatomerAddress = list.get(0);
+        boolean success = new InitialiseCustomerAddress().test(cuatomerAddress);
+        assertThat("Cusomer Address data wasn't initialised.", success, is(true));
     }
 
     @And("^Tariffsheet and package are:$")
@@ -199,8 +190,25 @@ public class QuoteSteps extends DwpScenario {
         SelectPackageAndFuelTypeView selectPackageAndFuelTypeView = new SelectPackageAndFuelTypeView(webDriver);
         selectPackageAndFuelTypeView.setTariffData(tariff);
         selectPackageAndFuelTypeView.fillInFormData();
+    }
+
+    @And("^Checkbox \"([^\"]*)\" is ([^\"]*)$")
+    public void toggleCheckbox(String label, CheckBoxState state) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        Map<String, String> options = new HashMap<>();
+        options.put("label", label);
+        options.put("state", state.name().toLowerCase());
+        boolean success = new ToggleCheckBox().test(options);
+        assertThat(String.format("Failure toggling checkbox %s to  target state %s.", label, state.name()),
+            success,
+            is(true));
+    }
+
+    @And("^Package and Fuel Type is confirmed$")
+    public void packageAndFuelTypeIsConfirmed() throws Throwable {
+        SelectPackageAndFuelTypeView selectPackageAndFuelTypeView = new SelectPackageAndFuelTypeView(webDriver);
         CreateQuoteStepView next = selectPackageAndFuelTypeView.next();
-        assertThat("Failure selecting the Essent package and product(s), check up the log.", next,
+        assertThat(next,
             notNullValue());
     }
 
@@ -230,7 +238,7 @@ public class QuoteSteps extends DwpScenario {
         connectionDetailsView.openMeter(productType, meterState);
     }
 
-    @And("^Confirm Connection$")
+    @And("^Connection is confirmed$")
     public void confirmConnection() throws Throwable {
         ConnectionDetailsView connectionDetailsView = new ConnectionDetailsView(webDriver);
         CreateQuoteStepView next = connectionDetailsView.next();
@@ -251,30 +259,25 @@ public class QuoteSteps extends DwpScenario {
 
     }
 
-    @And("^Confirm Quote$")
+    @And("^Quote is confirmed$")
     public void confirmQuote() throws Throwable {
         QuoteOverviewView quoteOverviewView = new QuoteOverviewView(webDriver);
         quoteOverviewView.next();
     }
 
-    @InputParameter(name = "customer")
-    private CustomerTable quoteCustomer;
-
-    @And("^Signature date is ([^\"]*), place is \"([^\"]*)\", hand signature file is \"([^\"]*)\":$")
-    public void submitSignedQuote(DwpDateFormats date, String location, String filePath) throws Throwable {
-        String path = ResourceUtils.toPath(filePath);
+    @And("^Quote is signed in ([^\"]*)$")
+    public void submitSignedQuote(String location) throws Throwable {
+        String path = ResourceUtils.toPath("/data/dwp/customer-signature.pdf");
         File document = new File(path);
         assertThat("File at path " + document.getAbsolutePath() + " doesn't exist.", true,
             is(document.exists()));
-        SignatureData signature = new SignatureData(quoteCustomer.getFirstName(),
-            quoteCustomer.getLastName(),
-            date,
+        SignatureData signature = new SignatureData(
+            DwpDateFormats.DWP_TODAY,
             location,
             path);
         QuoteOverviewView quoteOverviewView = new QuoteOverviewView(webDriver);
         quoteOverviewView.setSignatureData(signature);
         quoteOverviewView.fillInFormData();
-        quoteOverviewView.next();
     }
 
     @When("^I select the ([^\"]*) element and click the link in the \"([^\"]*)\" column$")
@@ -283,6 +286,19 @@ public class QuoteSteps extends DwpScenario {
         options.put("column", column);
         boolean success = executeJavascriptTest("TrGetColumnIndexList", options);
         assertThat(success, is(true));
+    }
+
+    @And("^Electricity EAN code is selected$")
+    public void selectEanCode() throws Throwable {
+        Map<String, String> options = new HashMap<>();
+        boolean success = executeJavascriptTest("TrSelectEanCode", options);
+        assertThat(success, is(true));
+    }
+
+    @Override
+    @After("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
+    public void tearDown() throws Exception {
+        super.tearDown();
     }
 
 }

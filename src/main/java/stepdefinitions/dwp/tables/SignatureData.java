@@ -4,8 +4,6 @@ import com.essent.testing.dwp.DwpDateFormats;
 
 public class SignatureData {
 
-    private String firstName;
-    private String lastName;
     private DwpDateFormats date;
     private String place;
     private String filePath;
@@ -14,28 +12,10 @@ public class SignatureData {
 
     }
 
-    public SignatureData(String firstName, String lastName, DwpDateFormats date, String place, String pathToSingatureFile) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public SignatureData(DwpDateFormats date, String place, String pathToSingatureFile) {
         this.date = date;
         this.place = place;
         this.filePath = pathToSingatureFile;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public DwpDateFormats getDate() {

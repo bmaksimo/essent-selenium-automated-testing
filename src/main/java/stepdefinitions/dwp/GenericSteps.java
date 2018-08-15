@@ -17,6 +17,13 @@ import org.openqa.selenium.html5.WebStorage;
 import org.springframework.test.context.ContextConfiguration;
 import stepdefinitions.dwp.login.LoginAction;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import static com.essent.testing.dwp.DwpConstant.BASE_URL;
 import static org.junit.Assert.assertNotNull;
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
@@ -36,7 +43,6 @@ public class GenericSteps extends DwpScenario {
         Window application = new LoginAction(webDriver).doLogin(dwpUser.getUsername(), dwpUser.getPassword());
         assertNotNull("DWP application did not appear after a login", application);
         injectJavaScriptTestRunner();
-        retrieveUserLanguage();
         discardPreviousFlow();
     }
 
@@ -77,4 +83,5 @@ public class GenericSteps extends DwpScenario {
             logger().error("The scenario '" + scenario.getName() + "' failed");
         }
     }
+
 }
