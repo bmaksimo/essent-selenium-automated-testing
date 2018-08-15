@@ -1,6 +1,6 @@
 @DWP
 @BASIC
-@QUOTE
+@_QUOTE
 @REGRESSION
 Feature: Creating a B2C Quote - supplier switch
 
