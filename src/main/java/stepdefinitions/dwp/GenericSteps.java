@@ -29,7 +29,7 @@ import static org.junit.Assert.assertNotNull;
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 public class GenericSteps extends DwpScenario {
 
-    @Before("@QUOTE, @MENU, @RENEWAL, @FILTER, @SMOKE")
+    @Before("@QUOTE, @MENU, @RENEWAL, @FILTER, @SMOKE, @INVOICE")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
         setUpWebDriver();
@@ -72,12 +72,12 @@ public class GenericSteps extends DwpScenario {
         }
     }
 
-    @After({"@QUOTE, @MENU, @RENEWAL, @FILTER, @SMOKE"})
+    @After({"@QUOTE, @MENU, @RENEWAL, @FILTER, @SMOKE, @INVOICE"})
     public void tearDown() throws Exception {
         tidyUp();
     }
 
-    @After({"@QUOTE, @SMOKE"})
+    @After({"@QUOTE, @SMOKE, @INVOICE"})
     public void failedScenario(Scenario scenario) throws Exception {
         if (scenario.isFailed()) {
             logger().error("The scenario '" + scenario.getName() + "' failed");

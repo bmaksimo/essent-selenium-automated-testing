@@ -163,7 +163,7 @@ public class ViewListElements extends NavigationElements {
         }
     }
 
-    @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
+    @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL, @INVOICE")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -258,7 +258,7 @@ public class ViewListElements extends NavigationElements {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
+    @After("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL, @INVOICE")
     public void tearDown() throws Exception {
         super.tearDown();
     }
