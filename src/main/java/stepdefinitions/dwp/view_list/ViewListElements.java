@@ -8,7 +8,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import stepdefinitions.dwp.NavigationElements;
+import stepdefinitions.dwp.navigation.NavigationElements;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
@@ -23,6 +23,7 @@ import java.util.stream.IntStream;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.fail;
+
 public class ViewListElements extends NavigationElements {
 
 
@@ -61,10 +62,10 @@ public class ViewListElements extends NavigationElements {
         public DefaultTableModel getViewTableModel() {
             DefaultTableModel tableModel = new DefaultTableModel();
             Map viewTable = executeJavascriptMethod("TrGetTableModel", new HashMap<>());
-            List columnNames = (List)viewTable.get("column_names");
+            List columnNames = (List) viewTable.get("column_names");
             List rows = getData(viewTable);
             tableModel.setColumnIdentifiers(columnNames.toArray());
-            for(int i = 0; i < rows.size(); i++) {
+            for (int i = 0; i < rows.size(); i++) {
                 Object[] row = ((List) rows.get(i)).toArray();
                 tableModel.addRow(row);
             }
@@ -76,6 +77,7 @@ public class ViewListElements extends NavigationElements {
             boolean success = cell.contains(value);
             return success;
         }
+
         public boolean selectListRow(int row) {
             Map<String, Object> options = new HashMap<>();
             options.put("index", row);
@@ -86,14 +88,14 @@ public class ViewListElements extends NavigationElements {
         public List<Integer> fetchListRowsIndices(String value, String columnName) {
             Map viewTable = executeJavascriptMethod("TrGetTableModel", new HashMap<>());
             int index = getColimnNameIndex(columnName, viewTable);
-            if(index < 0) {
+            if (index < 0) {
                 fail(String.format("View List did not contain column %s", columnName));
             }
             List<ArrayList> rows = getData(viewTable);
             AtomicInteger idx = new AtomicInteger(1);
             List<Integer> indices = IntStream.range(1, rows.size() + 1)
                 .filter(i ->
-                idx.compareAndSet(i, i + 1) & ((ArrayList<String>) rows.get(i - 1)).get(index).contains(value))
+                    idx.compareAndSet(i, i + 1) & ((ArrayList<String>) rows.get(i - 1)).get(index).contains(value))
                 .boxed()
                 .collect(Collectors.toList());
             return indices;
@@ -104,9 +106,9 @@ public class ViewListElements extends NavigationElements {
             return indices.size() > 0 && row <= indices.size();
         }
 
-        public boolean  selectListRows(int numRows, String value, String columnName) {
+        public boolean selectListRows(int numRows, String value, String columnName) {
             List<Integer> rows = fetchListRowsIndices(value, columnName);
-            if(numRows > rows.size()) {
+            if (numRows > rows.size()) {
                 return false;
             }
             List<Integer> indices = IntStream.range(1, numRows + 1).boxed().collect(Collectors.toList());
@@ -121,11 +123,11 @@ public class ViewListElements extends NavigationElements {
             options.put("include_selection", true);
             Map viewTable = executeJavascriptMethod("TrFetchDataSelection", options);
             int index = getColimnNameIndex(columnName, viewTable);
-            if(index < 0) {
+            if (index < 0) {
                 fail(String.format("View List did not contain column %s", columnName));
             }
             List<ArrayList> rows = getData(viewTable);
-            List<String> selection = (List)rows.stream().map((e) -> {
+            List<String> selection = (List) rows.stream().map((e) -> {
                 return e.get(index);
             }).collect(Collectors.toList());
             return selection;
@@ -134,23 +136,23 @@ public class ViewListElements extends NavigationElements {
         private String getCellValueAt(int row, String columnName) {
             Map viewTable = executeJavascriptMethod("TrGetTableModel", new HashMap<>());
             int index = getColimnNameIndex(columnName, viewTable);
-            if(index < 0) {
+            if (index < 0) {
                 fail(String.format("View List did not contain column %s", columnName));
             }
             List<ArrayList> rows = getData(viewTable);
             if (row > rows.size()) {
                 fail(String.format("--Error in Test Input: Given %s row index cannot be greater that actual View List size %s", row, rows.size()));
             }
-            ArrayList<String> cells= rows.get(row -1);
+            ArrayList<String> cells = rows.get(row - 1);
             return cells.get(index);
         }
 
         private List<ArrayList> getData(Map viewTable) {
-            return (List)viewTable.get("rows");
+            return (List) viewTable.get("rows");
         }
 
         private int getColimnNameIndex(String columnName, Map viewTable) {
-            List<String> columnNames = (List)viewTable.get("column_names");
+            List<String> columnNames = (List) viewTable.get("column_names");
             return columnNames.indexOf(columnName);
         }
 
@@ -163,7 +165,7 @@ public class ViewListElements extends NavigationElements {
         }
     }
 
-    @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
+    @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL, @B2B_REGRESSION")
     public void SetupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -226,6 +228,7 @@ public class ViewListElements extends NavigationElements {
 
     @OutputParameter(name = "toRenewContractsContact")
     private Map<String, Object> toRenewContractsContacts = new HashMap<>();
+
     @And("^Store cell values of selected list rows at column \"([^\"]*)\" as \"([^\"]*)\"$")
     public void storeDataSelectionOutputParameter(String columnName, String outParamName) throws Throwable {
         ViewListModel viewListModel = new ViewListModel();
@@ -236,7 +239,8 @@ public class ViewListElements extends NavigationElements {
     }
 
     @InputParameter(name = "toRenewContractsContact")
-    private  Map<String, Object> selection;
+    private Map<String, Object> selection;
+
     @Then("^Selected List rows have cell value \"([^\"]*)\" at column \"([^\"]*)\"$")
     public void checkSelectionData(String value, String columnName) throws Throwable {
         ViewListModel viewListModel = new ViewListModel();
@@ -258,7 +262,7 @@ public class ViewListElements extends NavigationElements {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
+    @After("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL, @B2B_REGRESSION")
     public void tearDown() throws Exception {
         super.tearDown();
     }

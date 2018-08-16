@@ -1,4 +1,3 @@
-@SMOKE
 @B2B_REGRESSION
 Feature: DWP Test Nuat 372
 
