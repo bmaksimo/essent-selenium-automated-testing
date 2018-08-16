@@ -66,6 +66,13 @@ public class SelectPackageAndFuelTypeView extends Component implements CreateQuo
 
     @Override
     public CreateQuoteStepView next() {
+        Model.Execution execution = newExecution();
+        execution.
+            element(NEXT_BUTTON.element()).
+            element(CONNECTION_DETAILS_ACTIVE.element())
+            .step(createStep(Action.CLICK).timeoutInSeconds(NEXT_STEP.getWaitInSeconds()).element(NEXT_BUTTON.name()))
+            .step(createStep(Action.REQUIRE).timeoutInSeconds(WAIT_NEXT_PAGE.getWaitInSeconds()).element(CONNECTION_DETAILS_ACTIVE.name()));
+        execute(execution);
         return new ConnectionDetailsView(seleniumDriver);
     }
 
@@ -74,17 +81,12 @@ public class SelectPackageAndFuelTypeView extends Component implements CreateQuo
         String essentTariff = tariffData.getTariffSheet();
         Model.Execution execution = newExecution();
         execution.
-            element(PACKAGE.element()).
-            element(NEXT_BUTTON.element()).
-            element(CONNECTION_DETAILS_ACTIVE.element());
+            element(PACKAGE.element());
         if(StringUtils.isNotEmpty(essentTariff))
             execution.element(TARIFFSHEET.element()).
             step(createStep(Action.SELECT).requireDisplayed(true).element(TARIFFSHEET.name()).value(essentTariff), TOGGLE_CHECKBOX.getSleepInMillis());
 
-        execution.step(createStep(Action.SELECT).requireDisplayed(true).element(PACKAGE.name()).value(tariffData.getPackageName()),TOGGLE_CHECKBOX.getSleepInMillis()).
-            step(createStep(Action.CLICK).timeoutInSeconds(NEXT_STEP.getWaitInSeconds()).
-                element(NEXT_BUTTON.name())).
-            step(createStep(Action.REQUIRE).timeoutInSeconds(WAIT_NEXT_PAGE.getWaitInSeconds()).element(CONNECTION_DETAILS_ACTIVE.name()));
+        execution.step(createStep(Action.SELECT).requireDisplayed(true).element(PACKAGE.name()).value(tariffData.getPackageName()),TOGGLE_CHECKBOX.getSleepInMillis());
         return execute(execution);
     }
 

@@ -78,9 +78,7 @@ public class SelectQuoteTypeView extends Component implements CreateQuoteView, C
     public boolean fillInFormData() {
         Model.Execution toggleReguCheckbox = newExecution();
         toggleReguCheckbox.
-            element(REGU_CHECKBOX.element()).
             element(SALES_CHANNEL_FIELD.element()).
-            step(createStep(Action.CLICK).requireDisplayed(false).element(REGU_CHECKBOX.name()), TOGGLE_CHECKBOX.getSleepInMillis()).
             step(createStep(Action.SELECT).element(SALES_CHANNEL_FIELD.name()).value(salesChannel.getLabel()), INPUT.getSleepInMillis());
             return execute(toggleReguCheckbox);
     }

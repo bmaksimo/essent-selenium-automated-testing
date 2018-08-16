@@ -1,16 +1,17 @@
 package stepdefinitions.dwp.duplicate_customer;
 
-import com.essent.testing.dwp.DwpScenario;
 import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
-import cucumber.api.java.en.When;
-import org.junit.Assert;
-import org.openqa.selenium.By;
+import cucumber.api.java.en.Then;
+import stepdefinitions.dwp.navigation.NavigationElements;
 
-public class DuplicateCustomer extends DwpScenario {
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
+public class DuplicateCustomer extends NavigationElements {
     @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL @B2B_REGRESSION")
     public void SetupTest(Scenario scenario) {
         registerActiveScenario(scenario);

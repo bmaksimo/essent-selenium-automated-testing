@@ -1,4 +1,4 @@
-package stepdefinitions.dwp;
+package stepdefinitions.dwp.navigation;
 
 import com.essent.testing.dwp.DwpScenario;
 
@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
-import static com.billinghouse.test_automation.util.gherkin.ExpressionUtil.checkAndConvertToDwpDate;
+
 import static com.billinghouse.test_automation.util.gherkin.ExpressionUtil.numericValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -108,9 +108,6 @@ public abstract class NavigationElements extends DwpScenario  {
         return numericValue(ordinal);
     }
 
-    protected String convertToDwpDate(String formattedDate)  {
-        return checkAndConvertToDwpDate(formattedDate);
-    }
 
     protected void visitLeftMenuItem(String leftTab) throws Throwable {
         ClickLeftTab goToLeftItem = new ClickLeftTab();

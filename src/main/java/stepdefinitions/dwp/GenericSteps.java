@@ -7,7 +7,6 @@ import com.essent.automation.autocrat.Model.Flow;
 import com.essent.roles.UserRoles;
 import com.essent.testing.dwp.DwpScenario;
 import com.essent.testing.dwp.pageobject.Window;
-import com.essent.testing.dwp.pageobject.impl.LoginDialog;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -16,6 +15,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.html5.LocalStorage;
 import org.openqa.selenium.html5.WebStorage;
 import org.springframework.test.context.ContextConfiguration;
+import stepdefinitions.dwp.login.LoginAction;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import static com.essent.testing.dwp.DwpConstant.BASE_URL;
 import static org.junit.Assert.assertNotNull;
@@ -29,15 +36,28 @@ public class GenericSteps extends DwpScenario {
         isDwpRunning(BASE_URL);
     }
 
-    @Given("^I logged in in DWP as ([^\"]*)$")
-    public void loginAs(String userName) throws Throwable {
-        LoginDialog login = new LoginDialog(webDriver);
-        injectJavaScriptTestRunner();
+    @Given("^I logged in to DWP as ([^\"]*)$")
+    public void loginAs(String username) throws Throwable {
         retrieveUserLanguage();
-        UserRoles dwpUser = UserRoles.get(userName);
-        Window application = login.login(dwpUser.getUsername(), dwpUser.getPassword());
-        retrieveUserLanguage();
+        UserRoles dwpUser = UserRoles.get(username);
+        Window application = new LoginAction(webDriver).doLogin(dwpUser.getUsername(), dwpUser.getPassword());
         assertNotNull("DWP application did not appear after a login", application);
+        injectJavaScriptTestRunner();
+        discardPreviousFlow();
+    }
+
+    private void discardPreviousFlow() throws Throwable {
+        Model.Execution execution = new Model.Execution();
+        execution.element("DWP_MODAL_CANCEL",
+            new Model.Element().search("SELECTOR").query("#cancel-button"));
+        Autocrat.ExecutionContext context =
+            new Autocrat.ExecutionContext(webDriver.getDriver(), execution);
+        Model.Step s =
+            new Model.Step().action(Action.REQUIRE).element("DWP_MODAL_CANCEL").timeoutInSeconds(2).breakFlowOnFailure(false);
+        Flow flow = s.flow();
+        flow.steps(new Model.Step().action(Action.CLICK).element("DWP_MODAL_CANCEL").breakFlowOnFailure(false),
+            new Model.Step().action(Action.REQUIRE_ABSENT).element("DWP_MODAL_CANCEL"));
+        Autocrat.executeFlow(context, flow);
     }
 
     private void retrieveUserLanguage() {
@@ -52,22 +72,7 @@ public class GenericSteps extends DwpScenario {
         }
     }
 
-    @Given("^I optionally discard a previous flow$")
-    public void discardPreviousFlow() throws Throwable {
-        Model.Execution execution = new Model.Execution();
-        execution.element("DWP_MODAL_CANCEL",
-            new Model.Element().search("SELECTOR").query("#cancel-button"));
-        Autocrat.ExecutionContext context =
-            new Autocrat.ExecutionContext(webDriver.getDriver(), execution);
-        Model.Step s =
-            new Model.Step().action(Action.REQUIRE).element("DWP_MODAL_CANCEL").timeoutInSeconds(2).breakFlowOnFailure(false);
-        Flow flow = s.flow();
-        flow.steps(new Model.Step().action(Action.CLICK).element("DWP_MODAL_CANCEL").breakFlowOnFailure(false),
-            new Model.Step().action(Action.REQUIRE_ABSENT).element("DWP_MODAL_CANCEL"));
-        Autocrat.executeFlow(context, flow);
-    }
-
-    @After({"@QUOTE, @MENU, @RENEWAL, @FILTER, @SMOKE"})
+    @After({"@QUOTE, @MENU, @RENEWAL, @FILTER, @SMOKE, @B2B_REGRESSION"})
     public void tearDown() throws Exception {
         tidyUp();
     }
@@ -78,4 +83,5 @@ public class GenericSteps extends DwpScenario {
             logger().error("The scenario '" + scenario.getName() + "' failed");
         }
     }
+
 }

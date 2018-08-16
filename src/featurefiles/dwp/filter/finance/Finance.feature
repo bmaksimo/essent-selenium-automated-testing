@@ -5,8 +5,7 @@
 Feature: DWP Filter Options
 
     Background:
-        Given I logged in in DWP as Finance
-        Given I optionally discard a previous flow
+        Given I logged in to DWP as Finance
     Scenario: Checking whether filter elements, defined for "Finance" Left Menu, are available
         When Left Menu Item is finance
         And  Top Menu Item is Accounts

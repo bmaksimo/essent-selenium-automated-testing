@@ -38,8 +38,13 @@ public abstract class DwpScenario extends SeleniumScenario {
         webDriver.setBaseUrl(baseUrl);
         webDriver.goToHomePage();
         String currentUrl = webDriver.getDriver().getCurrentUrl();
+        if (null != currentUrl && !currentUrl.equals(baseUrl)) {
+            webDriver.setBaseUrl(currentUrl);
+            webDriver.goToHomePage();
+        }
         Sleeper.sleepTightInSeconds(3);
-        assertTrue(currentUrl.startsWith(baseUrl));
+        logger.info("Current URL: " + currentUrl);
+        assertTrue(currentUrl.startsWith(webDriver.getBaseUrl()));
     }
 
     /**
