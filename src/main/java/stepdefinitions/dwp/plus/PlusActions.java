@@ -37,12 +37,11 @@ public class PlusActions extends NavigationElements {
 
     @And("^\"([^\"]*)\" list item at ([^\"]*) plus action$")
     public void listItemAtStringPlusAction(String headerName, String ordinal) {
-        String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
-        Map<String, String> ListOptions = new HashMap<>();
-        ListOptions.put("headerName", headerName);
-        ListOptions.put("index", rowIndex);
-        boolean success = new ClickOnPlusAction().test(ListOptions);
-        assertThat(String.format("View list did not contain header '%s'", ""),
+        Map<String, String> params = new HashMap<>();
+        params.put("headerName", headerName);
+        params.put("ordinal", ordinal);
+        boolean success = new ClickOnPlusAction().test(params);
+        assertThat(String.format("View list did not contain header '%s'", headerName),
             success, is(true));
     }
 
