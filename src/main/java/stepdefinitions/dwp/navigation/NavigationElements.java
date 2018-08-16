@@ -116,23 +116,6 @@ public abstract class NavigationElements extends DwpScenario  {
             success, is(true));
     }
 
-//    private class ClickOnCustomerAccountNumber implements Predicate<String> {
-//        @Override
-//        public boolean test(String label) {
-//            Map<String, String> options = new HashMap<>();
-//            options.put("menu", label);
-//            boolean success = executeJavascriptTest("TrClickOnCustomerAccountNumber", options);
-//            return success;
-//        }
-//    }
-//
-//    protected void clickOnElement(String element) {
-//        ClickOnCustomerAccountNumber clickOnCustomerAccountNumber = new ClickOnCustomerAccountNumber();
-//        boolean success = clickOnCustomerAccountNumber.test(element);
-//        assertThat(String.format("Account number %s was not visited.", element),
-//            success, is( true));
-//    }
-
     protected void visitTopMenuItem(String label) throws Throwable {
         boolean success = new VisitTopItem().test(label);
         assertThat(String.format("Top Menu item %s was not available.", label),
@@ -181,4 +164,10 @@ public abstract class NavigationElements extends DwpScenario  {
             success, is(true));
     }
 
+    public class ValidateCustomer implements Predicate<Map> {
+        @Override
+        public boolean test(Map name) {
+            return executeJavascriptTest("TrFindCustomer", name);
+        }
+    }
 }

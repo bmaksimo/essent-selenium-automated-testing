@@ -9,6 +9,12 @@ import stepdefinitions.dwp.navigation.NavigationElements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
 public class TopActions extends NavigationElements {
 
     @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL, @B2B_REGRESSION")
@@ -44,8 +50,16 @@ public class TopActions extends NavigationElements {
 
     @And("Search input is ([^\"]*)$")
     public void input(String name) throws Throwable {
-//        searchForCustomer(name);
-        webDriver.findElementOrNull(By.xpath("/html//dwp-app/div[2]//top-search/div[@class='top-search']/input[@type='search']")).sendKeys("Van Hauwaert Steven - Test Nuat 372");
+        webDriver.findElementOrNull(By.xpath("/html//dwp-app/div[2]//top-search/div[@class='top-search']/input[@type='search']")).sendKeys(name);
         webDriver.findElementOrNull(By.xpath("/html//dwp-app/div[2]//top-search/div[@class='top-search']/input[@type='search']")).sendKeys(Keys.ENTER);
+    }
+
+    @And("^Customer \"([^\"]*)\" is find$")
+    public void customerFind(String name) throws Throwable {
+        Map<String, String> customerName = new HashMap<>();
+        customerName.put("name", name);
+        boolean success = new ValidateCustomer().test(customerName);
+        assertThat(String.format("View list did not contain customer '%s'", name),
+            success, is(true));
     }
 }

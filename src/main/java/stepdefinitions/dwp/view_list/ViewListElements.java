@@ -8,6 +8,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import cucumber.api.java.it.Ma;
 import stepdefinitions.dwp.navigation.NavigationElements;
 
 import javax.swing.table.DefaultTableModel;
@@ -37,6 +38,8 @@ public class ViewListElements extends NavigationElements {
             return executeJavascriptTest("TrCheckViewListHeader", options);
         }
     }
+
+
 
     private class CheckSubmitCard implements Predicate<String> {
         @Override

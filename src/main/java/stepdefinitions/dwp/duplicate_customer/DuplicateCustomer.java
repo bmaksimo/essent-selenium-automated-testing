@@ -1,5 +1,6 @@
 package stepdefinitions.dwp.duplicate_customer;
 
+import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -7,6 +8,12 @@ import cucumber.api.java.en.And;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import stepdefinitions.dwp.navigation.NavigationElements;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 public class DuplicateCustomer extends NavigationElements {
     @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL @B2B_REGRESSION")

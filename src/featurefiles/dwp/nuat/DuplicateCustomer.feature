@@ -17,5 +17,5 @@ Feature: DWP Test Nuat 372
         When Confirm Change
         And Top Arrow button is Up
         And Search input is Van Hauwaert Steven - Test Nuat 372
-        Then Validate customer duplicate
+        Then Customer "Van Hauwaert Steven - Test Nuat 372" is find
 
