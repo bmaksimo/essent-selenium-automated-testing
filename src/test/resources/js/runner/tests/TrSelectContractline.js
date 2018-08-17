@@ -7,9 +7,9 @@ class TrSelectContractline extends TestRunnerBase {
     run(options, result) {
         result.status = 'UNDEFINED';
         result.reason = 'Not found';
-        let matches = [];
-        if (matches >= 0) {
-            $('.button-placeholder')[0].click();
+        let placeholder = $('.button-placeholder')[0];
+        if (placeholder != 0) {
+            placeholder.click();
             result.status = 'PASSED';
             result.reason = '';
         } else {

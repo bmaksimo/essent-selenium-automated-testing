@@ -1,6 +1,5 @@
 package stepdefinitions.dwp.end_of_contract;
 
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -15,7 +14,7 @@ import static org.hamcrest.Matchers.is;
 public class EndOfContract extends com.essent.testing.dwp.pageobject.b2b_regression.EndOfContract {
 
     @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL, @B2B_REGRESSION")
-    public void SetupTest(Scenario scenario) {
+    public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
     }
 
@@ -64,7 +63,7 @@ public class EndOfContract extends com.essent.testing.dwp.pageobject.b2b_regress
 
     @And("^Submit button$")
     public void submitButton() {
-        boolean success = new SubmitContractLine().test( "");
+        boolean success = new SubmitContractLine().test("");
         assertThat(String.format("Java Script file TrSubmitButton is undefined."),
             success, is(true));
     }

@@ -15,7 +15,7 @@ Feature: End of contract for bankruptcy
         When Click on Start new market scenario
         And Click Select Contractline
         And EAN check box
-        And Select button
+        Then Select button
         And "Module" selection is "INITIATE STOP ACCESS"
         And "Label" selection is "Non-Residential End-of-Contract"
         And "Label" selection is "Non-Residential End-of-Contract"
