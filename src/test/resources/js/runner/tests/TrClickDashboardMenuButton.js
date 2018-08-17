@@ -1,4 +1,4 @@
-class TrClickOverviewMenuButton extends TestRunnerBase {
+class TrClickDashboardMenuButton extends TestRunnerBase {
 
     /**
      * Checks if Overview Menu Item is present in the DOM
@@ -10,7 +10,7 @@ class TrClickOverviewMenuButton extends TestRunnerBase {
      * Java example:
      * Map<String, String> options = new HashMap<>();
      * options.put("menu", "Sales");
-     * boolean result = executeJavascriptTest("TrClickOverviewMenuButton.js", options);
+     * boolean result = executeJavascriptTest("TrClickDashboardMenuButton.js", options);
      */
 
     constructor(options, callback) {

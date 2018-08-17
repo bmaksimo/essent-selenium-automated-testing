@@ -12,10 +12,13 @@ Feature: Billing - Invoices
         When Left Menu Item is billing
         And Top Menu Item is Klanten
         And Top Action is Filters
+        And "B2C/B2B" selection is "B2C"
         And "Type klant" selection is "CUSTOMER"
+#        And "Klantnummer" input is "150633291"
         Then View List Header is "Klanten"
         When Click on link in View List at 1st row and "Klantnummer & Naam" column
-        And Overview is Billing
-        And Click on link in View List at 1st row and "ID & Type" column
-        Then Advanced Invoice is available
+        And Click on Documenten dashboard menu
+        Then View List Header is "Documenten"
+        And Document with document type B2BCollectionLetter is available
+#        And Document with document type Tussentijdse is available
 
