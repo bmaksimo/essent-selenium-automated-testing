@@ -1,6 +1,5 @@
 package com.essent.testing.dwp.pageobject.quote.impl;
 
-import com.billinghouse.test_automation.util.gherkin.DateTimeFormatUtil;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
@@ -15,10 +14,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.tables.CustomerAddress;
-
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static com.essent.testing.dwp.DwpTimingParameters.*;
 import static com.essent.testing.dwp.elements.BasicElements.NEXT_BUTTON;

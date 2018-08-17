@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.essent.testing.dwp.DwpTimingParameters.*;
+import static com.essent.testing.dwp.DwpTimingParameters.INPUT;
 import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.TITLE_SELECTOR_TEMPLATE;
 import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.VIEW_SELECTOR;
 import static com.essent.testing.dwp.quote.elements.B2CQuoteElements.*;

@@ -16,7 +16,8 @@ import static com.essent.testing.dwp.DwpTimingParameters.*;
 import static com.essent.testing.dwp.elements.BasicElements.NEXT_BUTTON;
 import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.TITLE_SELECTOR_TEMPLATE;
 import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.VIEW_SELECTOR;
-import static com.essent.testing.dwp.quote.elements.B2CQuoteElements.*;
+import static com.essent.testing.dwp.quote.elements.B2CQuoteElements.CUSTOMER_DETAILS_ACTIVE;
+import static com.essent.testing.dwp.quote.elements.B2CQuoteElements.SALES_CHANNEL_FIELD;
 import static org.junit.Assert.fail;
 
 public class SelectQuoteTypeView extends Component implements CreateQuoteView, CreateQuoteStepView {

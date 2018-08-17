@@ -17,13 +17,6 @@ import org.openqa.selenium.html5.WebStorage;
 import org.springframework.test.context.ContextConfiguration;
 import stepdefinitions.dwp.login.LoginAction;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import static com.essent.testing.dwp.DwpConstant.BASE_URL;
 import static org.junit.Assert.assertNotNull;
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
