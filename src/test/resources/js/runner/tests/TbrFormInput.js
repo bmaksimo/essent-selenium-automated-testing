@@ -29,7 +29,6 @@ class TbrFormInput extends TestRunnerBase {
         if(elements.length >= 0) {
             let input = $(elements[0]).find("input, select");
             if(input.index() == 0) {
-                //input.val(value).trigger("change");
                 this.applyInput(input, value);
                 result.status = "PASSED";
                 result.reason = '';

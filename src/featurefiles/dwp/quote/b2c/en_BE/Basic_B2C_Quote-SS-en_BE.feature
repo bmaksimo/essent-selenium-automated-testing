@@ -29,5 +29,4 @@ Feature: Creating a B2C Quote - supplier switch
         And Quote is signed in Kontich
         And Quote is confirmed
         And View List Header is "Quotes"
-        #Bugfix in UAT02 pending: removal extra space between Sales  Sent
         Then Select 1 List rows having cell value Sales Signed - Accepted at column Type & Status
