@@ -18,7 +18,7 @@ import static org.hamcrest.Matchers.is;
 public class TopActions extends NavigationElements {
 
     @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL, @B2B_REGRESSION")
-    public void SetupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
 
@@ -43,9 +43,11 @@ public class TopActions extends NavigationElements {
         super.tearDown();
     }
 
-    @And("^([^\"]*) Change$")
-    public void confirmChange(String action) {
-        clickConfirm(action.toUpperCase());
+    @And("Confirm Changes")
+    public void confirmChange() {
+        boolean success = new ClickConfirm().test("");
+        assertThat(String.format("Button %s was not available.", ""),
+            success, is(true));
     }
 
     @And("Search input is ([^\"]*)$")
@@ -54,7 +56,7 @@ public class TopActions extends NavigationElements {
         webDriver.findElementOrNull(By.xpath("/html//dwp-app/div[2]//top-search/div[@class='top-search']/input[@type='search']")).sendKeys(Keys.ENTER);
     }
 
-    @And("^Customer \"([^\"]*)\" is find$")
+    @And("^Customer \"([^\"]*)\" is found$")
     public void customerFind(String name) throws Throwable {
         Map<String, String> customerName = new HashMap<>();
         customerName.put("name", name);

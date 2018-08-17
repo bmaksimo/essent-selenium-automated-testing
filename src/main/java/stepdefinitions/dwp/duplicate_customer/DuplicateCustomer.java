@@ -17,7 +17,7 @@ import static org.hamcrest.Matchers.is;
 
 public class DuplicateCustomer extends NavigationElements {
     @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL @B2B_REGRESSION")
-    public void SetupTest(Scenario scenario) {
+    public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
     }
 

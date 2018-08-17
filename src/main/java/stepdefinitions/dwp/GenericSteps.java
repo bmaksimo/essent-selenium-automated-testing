@@ -30,7 +30,7 @@ import static org.junit.Assert.assertNotNull;
 public class GenericSteps extends DwpScenario {
 
     @Before("@QUOTE, @MENU, @RENEWAL, @FILTER, @SMOKE, @B2B_REGRESSION")
-    public void SetupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
         setUpWebDriver();
         isDwpRunning(BASE_URL);
