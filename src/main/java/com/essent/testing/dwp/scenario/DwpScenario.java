@@ -1,4 +1,4 @@
-package com.essent.testing.dwp;
+package com.essent.testing.dwp.scenario;
 
 import com.billinghouse.cucumber.runtime.scenario.ActiveScenarioProvider;
 import com.essent.automation.autocrat.Action;
@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 
 import static org.junit.Assert.assertTrue;
+import static  com.essent.testing.util.selenium.dwp.LocalStorageUtil.*;
 
 /**
  * Created by Jim on 27-12-2017.
@@ -20,8 +21,6 @@ import static org.junit.Assert.assertTrue;
 public abstract class DwpScenario extends SeleniumScenario {
 
     private  final static Logger logger = Logger.getLogger(DwpScenario.class);
-
-    protected String preferredLanguage = "en_BE";
 
     private String name;
 
@@ -47,12 +46,6 @@ public abstract class DwpScenario extends SeleniumScenario {
         assertTrue(currentUrl.startsWith(webDriver.getBaseUrl()));
     }
 
-    /**
-     * "Syntactic sugar" method which makes it easy to create
-     * new Nova Autocrat Execution class in DWP Scenarios
-     *
-     * @return
-     */
     protected Execution     newExecution() {
         return AutocratExecutionAdapter.newExecution();
     }

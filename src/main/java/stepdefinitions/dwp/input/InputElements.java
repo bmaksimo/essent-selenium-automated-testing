@@ -1,6 +1,6 @@
 package stepdefinitions.dwp.input;
 
-import com.essent.testing.dwp.DwpScenario;
+import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -16,7 +16,7 @@ import static org.hamcrest.Matchers.is;
 
 
 
-public class InputElements extends DwpScenario  {
+public class InputElements extends DwpScenario {
 
     @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
     public void setupTest(Scenario scenario) throws Throwable {

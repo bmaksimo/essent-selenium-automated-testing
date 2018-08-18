@@ -1,6 +1,6 @@
 package stepdefinitions.dwp.contract.b2b;
 
-import com.essent.testing.dwp.DwpScenario;
+import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;

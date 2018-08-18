@@ -2,14 +2,8 @@ package com.essent.testing.dwp.pageobject.quote.impl;
 
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
-import com.essent.automation.core.WebDriverWait;
-import com.essent.testing.dwp.pageobject.Component;
-import com.essent.testing.dwp.pageobject.constant.Quote;
-import com.essent.testing.dwp.pageobject.quote.CreateQuoteStepView;
-import com.essent.testing.dwp.pageobject.quote.CreateQuoteView;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.tables.ConnectionDetails;
 import stepdefinitions.dwp.tables.ProductType;
 import stepdefinitions.dwp.tables.plus.CheckBoxState;
@@ -17,48 +11,18 @@ import stepdefinitions.dwp.tables.plus.CheckBoxState;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.essent.testing.dwp.DwpTimingParameters.*;
-import static com.essent.testing.dwp.elements.BasicElements.NEXT_BUTTON;
-import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.TITLE_SELECTOR_TEMPLATE;
+import static com.essent.testing.dwp.DwpTimingParameters.INPUT;
 import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.VIEW_SELECTOR;
-import static com.essent.testing.dwp.quote.elements.B2CQuoteElements.BILLING_DETAILS_ACTIVE;
 import static com.essent.testing.dwp.quote.elements.ConnectionElements.*;
-import static org.junit.Assert.fail;
 
-public class ConnectionDetailsView extends Component implements CreateQuoteView, CreateQuoteStepView {
+public class ConnectionDetailsPage extends CreateQuoteGuidedStep {
 
 
     private ConnectionDetails electroConnectionDetails;
     private ConnectionDetails gasConnectionDetails;
 
-    public ConnectionDetailsView(SeleniumDriver seleniumDriver) {
+    public ConnectionDetailsPage(SeleniumDriver seleniumDriver) {
         super(seleniumDriver.findElementOrNull(By.xpath(VIEW_SELECTOR.getQuery())), seleniumDriver);
-        WebElement title = new WebDriverWait(seleniumDriver.getDriver(), 5).withoutException().until(
-            driver -> {
-                logger().info("STEP:");
-                logger().info(" - ACTION: SELENIUM_FIND_ELEMENT");
-                By by = By.xpath(TITLE_SELECTOR_TEMPLATE.getQuery().replace("${value}", Quote.CONNECTION_DETAILS.getText()));
-                logger().info(" - BY: " + by.toString());
-                return driver.findElement(by);
-            }
-        );
-        if (title == null) {
-            fail("Connection Details was not found.");
-        }
-        logger().info(" - RESULT: " + "element: <" + title.getTagName() + " class='" + title.getAttribute("class") + "'>" + title.getText() + "/<" + title.getTagName() + ">");
-    }
-
-
-    @Override
-    public CreateQuoteStepView next() {
-        Model.Execution execution = newExecution();
-        execution
-            .element(NEXT_BUTTON.element())
-            .element(BILLING_DETAILS_ACTIVE.element())
-            .step(createStep(Action.CLICK).timeoutInSeconds(NEXT_STEP.getWaitInSeconds()).element(NEXT_BUTTON.name())).
-            step(createStep(Action.REQUIRE).timeoutInSeconds(WAIT_NEXT_PAGE.getWaitInSeconds()).element(BILLING_DETAILS_ACTIVE.name()));
-        execute(execution);
-        return new BillingDetailsView(seleniumDriver);
     }
 
     @Override
