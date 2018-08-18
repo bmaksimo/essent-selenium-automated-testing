@@ -5,14 +5,12 @@ import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.apache.commons.lang3.StringUtils;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.tables.CustomerAddress;
 
 import static com.essent.testing.dwp.DwpTimingParameters.INPUT;
 import static com.essent.testing.dwp.DwpTimingParameters.TOGGLE_CHECKBOX;
-import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.VIEW_SELECTOR;
 import static com.essent.testing.dwp.quote.elements.B2CQuoteElements.*;
 import static org.junit.Assert.fail;
 
@@ -25,7 +23,7 @@ public class PersonalDetailsAddressPage extends CreateQuoteGuidedStep {
     }
 
     public PersonalDetailsAddressPage(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver.findElementOrNull(By.xpath(VIEW_SELECTOR.getQuery())), seleniumDriver);
+        super(seleniumDriver);
     }
 
     private class HideAddressSuggestion implements Model.Callback {
@@ -53,7 +51,7 @@ public class PersonalDetailsAddressPage extends CreateQuoteGuidedStep {
         String city = address.getCity();
         String country = address.getCountry();
 
-        Model.Execution initializeAddress = newExecution();
+        Model.Execution initializeAddress = createExecutuin();
         initializeAddress.
             element(DELIVERY_ADDR_STREET.element()).
             element(DELIVERY_ADDR_STREET_SUGGESTION.element()).
@@ -83,13 +81,10 @@ public class PersonalDetailsAddressPage extends CreateQuoteGuidedStep {
         if(!execute(initializeAddress)) {
             fail("Customer Address fields were not initialized");
         }
-        Model.Execution copyAddress = newExecution()
+        Model.Execution copyAddress = createExecutuin()
             .element(COPY_ADDRESS_CONNECTION_TO_BILLING.element())
             .step(createStep(Action.SLEEP).sleepInMillis(3000))
             .step(createStep(Action.CLICK).element(COPY_ADDRESS_CONNECTION_TO_BILLING.name()).requireDisplayed(false), TOGGLE_CHECKBOX.getSleepInMillis());
-        if(!execute(copyAddress)) {
-            fail("Copy Address switch was not initialized");
-        }
-        return true;
+        return execute(copyAddress);
     }
 }

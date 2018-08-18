@@ -1,6 +1,6 @@
 @DWP
 @BASIC
-@_QUOTE
+@QUOTE
 @REGRESSION
 Feature: Creating a B2C Quote - supplier switch
 
@@ -19,7 +19,7 @@ Feature: Creating a B2C Quote - supplier switch
         When Customer is random
         And Customer Address is
             | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-            | Mechelsesteenweg| 147    |            |      | 2550       | Kontich  |         |
+            | Mechelsesteenweg| 146    |            |      | 2550       | Kontich  |         |
         And Customer details are confirmed
         Then Form Header is "Select package & fuel type"
 
@@ -31,7 +31,6 @@ Feature: Creating a B2C Quote - supplier switch
 
         When "Start date" date input is "$today"
         And Electricity EAN code is selected
-        And Electricity meter is Closed
         And Connection details are confirmed
         Then Form Header is "Billing details"
 

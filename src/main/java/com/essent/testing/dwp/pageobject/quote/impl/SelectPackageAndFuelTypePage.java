@@ -4,12 +4,10 @@ import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.apache.commons.lang3.StringUtils;
-import org.openqa.selenium.By;
 import stepdefinitions.dwp.tables.SalesChannel;
 import stepdefinitions.dwp.tables.TariffTable;
 
 import static com.essent.testing.dwp.DwpTimingParameters.TOGGLE_CHECKBOX;
-import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.VIEW_SELECTOR;
 import static com.essent.testing.dwp.quote.elements.TariffElements.PACKAGE;
 import static com.essent.testing.dwp.quote.elements.TariffElements.TARIFFSHEET;
 
@@ -19,7 +17,7 @@ public class SelectPackageAndFuelTypePage extends CreateQuoteGuidedStep {
     private TariffTable tariffData;
 
     public SelectPackageAndFuelTypePage(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver.findElementOrNull(By.xpath(VIEW_SELECTOR.getQuery())), seleniumDriver);
+        super(seleniumDriver);
     }
 
     private boolean      regularisation;
@@ -45,7 +43,7 @@ public class SelectPackageAndFuelTypePage extends CreateQuoteGuidedStep {
     @Override
     public boolean fillInFormData() {
         String essentTariff = tariffData.getTariffSheet();
-        Model.Execution execution = newExecution();
+        Model.Execution execution = createExecutuin();
         execution.
             element(PACKAGE.element());
         if(StringUtils.isNotEmpty(essentTariff))

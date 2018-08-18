@@ -12,7 +12,6 @@ import com.essent.testing.dwp.pageobject.quote.impl.*;
 import com.essent.testing.util.ResourceUtils;
 import com.google.gson.Gson;
 import cucumber.api.DataTable;
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -40,7 +39,7 @@ import static org.hamcrest.Matchers.is;
 
 public class QuoteSteps extends DwpScenario {
 
-    @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
+    @Before("@SMOKE, @QUOTE, @MENU, @FILTER")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -68,12 +67,12 @@ public class QuoteSteps extends DwpScenario {
 
         @Override
         public boolean test(QuoteSteps scenarios) {
-            return execute(webDriver.getDriver(), build(scenarios));
+            return execute(build(scenarios));
         }
 
         @Override
         public Model.Execution build(QuoteSteps input) {
-            Model.Execution selectAlert = newExecution();
+            Model.Execution selectAlert = createExecution();
             selectAlert.element(NO_PRICESHEET_ALERT.element()).
                 step(createStep(Action.REQUIRE_ABSENT).timeoutInSeconds(NEXT_STEP.getWaitInSeconds()).
                     element(NO_PRICESHEET_ALERT.name()));
@@ -286,7 +285,7 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
+    @After("@SMOKE, @QUOTE, @MENU, @FILTER")
     public void tearDown() throws Exception {
         super.tearDown();
     }

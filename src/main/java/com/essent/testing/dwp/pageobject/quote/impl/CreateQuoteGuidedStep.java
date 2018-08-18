@@ -6,11 +6,12 @@ import com.essent.testing.dwp.pageobject.Component;
 import com.essent.testing.dwp.pageobject.quote.Form;
 import com.essent.testing.dwp.pageobject.quote.GuidedStep;
 import com.essent.testing.selenium.SeleniumDriver;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import static com.essent.testing.dwp.DwpTimingParameters.NEXT_STEP;
-import static com.essent.testing.dwp.elements.BasicElements.NEXT_BUTTON;
-import static org.junit.Assert.fail;
+import static com.essent.testing.dwp.pageobject.selector.BasicSelectors.NEXT_BUTTON;
+import static com.essent.testing.dwp.pageobject.selector.BasicSelectors.VIEW;
 
 public abstract class CreateQuoteGuidedStep extends Component implements GuidedStep, Form {
 
@@ -19,14 +20,18 @@ public abstract class CreateQuoteGuidedStep extends Component implements GuidedS
         super(element, seleniumDriver);
     }
 
+    public CreateQuoteGuidedStep(SeleniumDriver seleniumDriver) {
+        super(seleniumDriver.findElementOrNull(By.xpath(VIEW.getQuery())),
+            seleniumDriver);
+    }
+
     @Override
     public void next() {
-        Model.Execution next = newExecution();
+        Model.Execution next = createExecutuin();
         next.
-            element(NEXT_BUTTON.element()).
-            step(createStep(Action.CLICK).timeoutInSeconds(NEXT_STEP.getWaitInSeconds()).
-                element(NEXT_BUTTON.name()));
-        if(!execute(next))
-            fail("Confirm Page Data faied.");
+            element(NEXT_BUTTON.element())
+            .step(createStep(Action.CLICK).timeoutInSeconds(NEXT_STEP.getWaitInSeconds())
+            .element(NEXT_BUTTON.name()));
+        execute(next);
     }
 }

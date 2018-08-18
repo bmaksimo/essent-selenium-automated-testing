@@ -3,11 +3,9 @@ package com.essent.testing.dwp.pageobject.quote.impl;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.testing.selenium.SeleniumDriver;
-import org.openqa.selenium.By;
 import stepdefinitions.dwp.tables.BillingInformation;
 
 import static com.essent.testing.dwp.DwpTimingParameters.INPUT;
-import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.VIEW_SELECTOR;
 import static com.essent.testing.dwp.quote.elements.BillingElements.*;
 public class BillingDetailsPage extends CreateQuoteGuidedStep {
 
@@ -17,11 +15,11 @@ public class BillingDetailsPage extends CreateQuoteGuidedStep {
         this.billingInformation = billingInformation;
     }
     public BillingDetailsPage(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver.findElementOrNull(By.xpath(VIEW_SELECTOR.getQuery())), seleniumDriver);
+        super(seleniumDriver);
     }
     @Override
     public boolean fillInFormData() {
-        Model.Execution execution = newExecution();
+        Model.Execution execution = createExecutuin();
         String paymentMethod = billingInformation.getPaymentMethod();
         String eban = billingInformation.getEban();
         String bic = billingInformation.getBic();

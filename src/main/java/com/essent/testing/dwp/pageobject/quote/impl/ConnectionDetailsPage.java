@@ -3,7 +3,6 @@ package com.essent.testing.dwp.pageobject.quote.impl;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.testing.selenium.SeleniumDriver;
-import org.openqa.selenium.By;
 import stepdefinitions.dwp.tables.ConnectionDetails;
 import stepdefinitions.dwp.tables.ProductType;
 import stepdefinitions.dwp.tables.plus.CheckBoxState;
@@ -12,7 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.essent.testing.dwp.DwpTimingParameters.INPUT;
-import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.VIEW_SELECTOR;
 import static com.essent.testing.dwp.quote.elements.ConnectionElements.*;
 
 public class ConnectionDetailsPage extends CreateQuoteGuidedStep {
@@ -22,7 +20,7 @@ public class ConnectionDetailsPage extends CreateQuoteGuidedStep {
     private ConnectionDetails gasConnectionDetails;
 
     public ConnectionDetailsPage(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver.findElementOrNull(By.xpath(VIEW_SELECTOR.getQuery())), seleniumDriver);
+        super(seleniumDriver);
     }
 
     @Override
@@ -36,7 +34,7 @@ public class ConnectionDetailsPage extends CreateQuoteGuidedStep {
         options.put("value", gasConnectionDetails.getEan());
         seleniumDriver.executeJavascriptTest("TrApplyFormInput", options, true);
 
-        Model.Execution execution = newExecution();
+        Model.Execution execution = createExecutuin();
         execution.
             element(ELEC_METER_NR.element()).
             element(GAS_METER_NR.element()).

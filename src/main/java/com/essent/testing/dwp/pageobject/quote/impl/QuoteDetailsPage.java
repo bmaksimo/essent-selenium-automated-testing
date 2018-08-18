@@ -3,17 +3,15 @@ package com.essent.testing.dwp.pageobject.quote.impl;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.testing.selenium.SeleniumDriver;
-import org.openqa.selenium.By;
 import stepdefinitions.dwp.tables.SalesChannel;
 
 import static com.essent.testing.dwp.DwpTimingParameters.INPUT;
-import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.VIEW_SELECTOR;
 import static com.essent.testing.dwp.quote.elements.B2CQuoteElements.SALES_CHANNEL_FIELD;
 
 public class QuoteDetailsPage extends CreateQuoteGuidedStep {
 
     public QuoteDetailsPage(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver.findElementOrNull(By.xpath(VIEW_SELECTOR.getQuery())), seleniumDriver);
+        super(seleniumDriver);
     }
 
     private boolean      regularisation;
@@ -37,10 +35,10 @@ public class QuoteDetailsPage extends CreateQuoteGuidedStep {
     }
     @Override
     public boolean fillInFormData() {
-        Model.Execution toggleReguCheckbox = newExecution();
+        Model.Execution toggleReguCheckbox = createExecutuin();
         toggleReguCheckbox.
             element(SALES_CHANNEL_FIELD.element()).
             step(createStep(Action.SELECT).element(SALES_CHANNEL_FIELD.name()).value(salesChannel.getLabel()), INPUT.getSleepInMillis());
-            return execute(toggleReguCheckbox);
+        return execute(toggleReguCheckbox);
     }
 }

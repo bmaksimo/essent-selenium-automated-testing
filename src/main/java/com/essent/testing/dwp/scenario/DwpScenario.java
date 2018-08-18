@@ -46,7 +46,7 @@ public abstract class DwpScenario extends SeleniumScenario {
         assertTrue(currentUrl.startsWith(webDriver.getBaseUrl()));
     }
 
-    protected Execution     newExecution() {
+    protected Execution createExecution() {
         return AutocratExecutionAdapter.newExecution();
     }
 
@@ -54,18 +54,15 @@ public abstract class DwpScenario extends SeleniumScenario {
         return new Step().action(action);
     }
 
-    protected boolean execute(final WebDriver driver, final Execution execution) {
-        return AutocratExecutionAdapter.execute(driver, execution);
-    }
 
-    protected boolean executeStep(final WebDriver driver, final Step step) {
-        return AutocratExecutionAdapter.executeStep(driver, step);
+    protected boolean execute(final Execution execution) {
+        return AutocratExecutionAdapter.execute(webDriver.getDriver(), execution);
     }
 
     /**
-     * The method will link the instance of active scenario to the simple scenario name.
+     * The method will mapthe instance of active scenario to the simple scenario name.
      * Then, EssentPretyFormatter plugin methods, such as match(),
-     * get access to active scebario
+     * gain access to active scenario
      * @param scenario
      */
     protected void registerActiveScenario(Scenario scenario) {

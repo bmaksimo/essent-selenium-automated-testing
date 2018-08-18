@@ -6,7 +6,6 @@ import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.apache.commons.lang3.StringUtils;
-import org.openqa.selenium.By;
 import org.openqa.selenium.html5.WebStorage;
 
 import java.util.HashMap;
@@ -15,10 +14,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.essent.testing.dwp.DwpTimingParameters.INPUT;
-import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.VIEW_SELECTOR;
 import static com.essent.testing.dwp.quote.elements.B2CQuoteElements.*;
 import static com.essent.testing.util.selenium.dwp.LocalStorageUtil.fetchPreferredLanguage;
-import static org.junit.Assert.fail;
 
 public class PersonalDetailsPage extends CreateQuoteGuidedStep {
 
@@ -28,11 +25,9 @@ public class PersonalDetailsPage extends CreateQuoteGuidedStep {
         this.customer = randomUser;
     }
 
-
     public PersonalDetailsPage(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver.findElementOrNull(By.xpath(VIEW_SELECTOR.getQuery())), seleniumDriver);
+        super(seleniumDriver);
     }
-
 
     @Override
     public boolean fillInFormData() {
@@ -54,7 +49,7 @@ public class PersonalDetailsPage extends CreateQuoteGuidedStep {
         String birthDate = DateTimeFormatUtil.getBirthDate(customer.getDob().getDate());
         String mobilePhone = "+3168" + (int) (Math.floor(Math.random() * 9000000) + 1000000);
 
-        Model.Execution initializeFields = newExecution();
+        Model.Execution initializeFields = createExecutuin();
         initializeFields.
             element(COPY_ADDRESS_CONNECTION_TO_BILLING.element()).
             element(SALUTATION.element()).
@@ -72,9 +67,6 @@ public class PersonalDetailsPage extends CreateQuoteGuidedStep {
             step(createStep(Action.TYPING).element(LAST_NAME.name()).value(lastName), INPUT.getSleepInMillis()).
             step(createStep(Action.TYPING).element(EMAIL.name()).value(customer.getEmail()), INPUT.getSleepInMillis()).
             step(createStep(Action.TYPING).element(MOBILE_NR.name()).value(mobilePhone), INPUT.getSleepInMillis());
-        if (!execute(initializeFields)) {
-            fail("Customer Name fields were not initialized");
-        }
-        return true;
+        return execute(initializeFields);
     }
 }

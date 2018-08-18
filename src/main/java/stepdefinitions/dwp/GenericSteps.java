@@ -22,7 +22,7 @@ import static org.junit.Assert.assertNotNull;
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 public class GenericSteps extends DwpScenario {
 
-    @Before("@QUOTE, @MENU, @RENEWAL, @FILTER, @SMOKE")
+    @Before("@QUOTE, @MENU, @FILTER, @SMOKE")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
         setUpWebDriver();
@@ -39,20 +39,15 @@ public class GenericSteps extends DwpScenario {
     }
 
     private void discardPreviousFlow() throws Throwable {
-        Model.Execution execution = new Model.Execution();
-        execution.element("DWP_MODAL_CANCEL",
-            new Model.Element().search("SELECTOR").query("#cancel-button"));
-        Autocrat.ExecutionContext context =
-            new Autocrat.ExecutionContext(webDriver.getDriver(), execution);
-        Model.Step s =
-            new Model.Step().action(Action.REQUIRE).element("DWP_MODAL_CANCEL").timeoutInSeconds(2).breakFlowOnFailure(false);
-        Flow flow = s.flow();
-        flow.steps(new Model.Step().action(Action.CLICK).element("DWP_MODAL_CANCEL").breakFlowOnFailure(false));
-        Autocrat.executeFlow(context, flow);
+        Model.Execution execution = createExecution();
+        execution
+            .element("DWP_MODAL_CANCEL", new Model.Element().search("SELECTOR").query("#cancel-button"))
+            .step(createStep(Action.CLICK).element("DWP_MODAL_CANCEL").timeoutInSeconds(3).sleepInMillis(100));
+        execute(execution);
     }
 
 
-    @After({"@QUOTE, @MENU, @RENEWAL, @FILTER, @SMOKE"})
+    @After({"@QUOTE, @MENU, @FILTER, @SMOKE"})
     public void tearDown() throws Exception {
         tidyUp();
     }
