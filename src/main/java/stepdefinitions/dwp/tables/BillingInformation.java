@@ -1,11 +1,11 @@
 package stepdefinitions.dwp.tables;
 
 public class BillingInformation {
-    private PaymentMethod paymentMethod;
+    private String paymentMethod;
     private String eban;
     private String bic;
 
-    public BillingInformation(PaymentMethod paymentMethod, String eban, String bic) {
+    public BillingInformation(String paymentMethod, String eban, String bic) {
         this.paymentMethod = paymentMethod;
         this.eban = eban;
         this.bic = bic;
@@ -15,11 +15,11 @@ public class BillingInformation {
 
     }
 
-    public PaymentMethod getPaymentMethod() {
+    public String getPaymentMethod() {
         return paymentMethod;
     }
 
-    public void setPaymentMethod(PaymentMethod paymentMethod) {
+    public void setPaymentMethod(String paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
 

@@ -1,6 +1,6 @@
 package stepdefinitions.dwp.navigation;
 
-import com.essent.testing.dwp.DwpScenario;
+import com.essent.testing.dwp.scenario.DwpScenario;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +12,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 
-public abstract class NavigationElements extends DwpScenario  {
+public abstract class NavigationElements extends DwpScenario {
 
     private class ClickLeftTab implements Predicate<String> {
         @Override
