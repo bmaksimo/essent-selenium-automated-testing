@@ -10,7 +10,6 @@ class TrCheckDocumentType extends TestRunnerBase {
         const length = $(".list__row").filter(function (i, node) {
             console.log('current node ' + node);
             return node.children[1].textContent.trim() === options.documentType;
-            // return node.innerText.trim() === options.documentType;
         }).length;
         if (length > 0) {
             result.status = 'PASSED';
@@ -19,5 +18,3 @@ class TrCheckDocumentType extends TestRunnerBase {
         this.resolveCallback(result);
     }
 }
-
-// $('.list__row')[i].children[1].textContent.trim()
