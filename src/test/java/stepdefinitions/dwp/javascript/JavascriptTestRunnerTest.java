@@ -14,7 +14,7 @@ import java.util.Map;
 public class JavascriptTestRunnerTest extends DwpScenario {
 
     @Before("@SMOKE")
-    public void SetupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
 
