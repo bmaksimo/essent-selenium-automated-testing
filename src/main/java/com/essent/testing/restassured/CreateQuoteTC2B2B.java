@@ -1,16 +1,23 @@
 package com.essent.testing.restassured;
 
+import static org.hamcrest.Matchers.equalTo;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
+
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.concurrent.ThreadLocalRandom;
 
-import org.apache.commons.io.FileUtils;
-
+import com.essent.testing.restassured.constants.ApiPaths;
+import com.essent.testing.restassured.constants.Constants;
+import com.essent.testing.restassured.constants.ContractStatus;
+import com.essent.testing.restassured.helper.ContractUtil;
 import com.essent.testing.restassured.helper.GenerateDataForQuote;
 import com.google.gson.Gson;
 
@@ -20,28 +27,11 @@ import io.restassured.http.Cookies;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
-
 //TODO This class and class CreateQuoteUPB2B should be in one class because APIs are almost the same
 public class CreateQuoteTC2B2B {
 
-	private static final String PATH_TO_JSON_FILES_QUOTE_TC2_B2B = "./src/test/resources/data/contract_b2b/payloads_create_quote_contract_b2b_tc2/";
-
-	//TODO This should be done on generic way to handle any environment not only devint01
-	private static final String API_LOGIN_CRM = "https://devint01.nova.essent.be/nova-crm/Api/V8/login";
-	private static final String API_CREATE_QUOTE_B2B_TC1 = "https://devint01.nova.essent.be/nova-crm/Api/V8_Custom/Flow/CUPQ";
-	private static final String API_QUOTES_ON_ACCOUNT = "https://devint01.nova.essent.be/nova-crm/Api/V8_Custom/List/QuotesOnAccount";
-	private static final String API_MODAL_TO_GF_QUOTE_SEND_TO_CUSTOMER = "https://devint01.nova.essent.be/nova-crm/Api/V8_Custom/Action/modal_to_gf_quote_send_to_customer";
-	private static final String API_MODAL_TO_GF_QUOTE_SEND_TO_CUSTOMER_AND_RELOAD_LIST = "https://devint01.nova.essent.be/nova-crm/Api/V8_Custom/Action/modal_to_gf_quote_send_to_customer_and_reload_list";
-	private static final String API_GF_QUOTE_SEND_TO_CUSTOMER = "https://devint01.nova.essent.be/nova-crm/Api/V8_Custom/Flow/gf_quote_send_to_customer";
-	private static final String API_GF_QUOTE_SIGNATURE_RECEIVED = "https://devint01.nova.essent.be/nova-crm/Api/V8_Custom/Flow/gf_quote_signatureReceived";
-	private static final String API_FILE_UPLOAD = "https://devint01.nova.essent.be/nova-crm/Api/V8_Custom/fileupload";
-	private static final String API_SIGN_QUOTE_MODAL_TC2_UP = "https://devint01.nova.essent.be/nova-crm/Api/V8_Custom/Flow/sign_quote_modal_tc2_up";
-	private static final String API_VERIFY_CONTRACT_CREATED = "https://devint01.nova.essent.be/nova-crm/Api/V8_Custom/List/ContractsOnAccount";
-	private static final String API_LIST_BILLING_CUSTOMER_ACCOUNT = "https://devint01.nova.essent.be/nova-crm/Api/V8_Custom/List/BillingCustomerOnaccount";
-	private static final String API_MODAL_TO_GF_SIGN_MANDATE_PAPER = "https://devint01.nova.essent.be/nova-crm/Api/V8_Custom/Action/Modal_to_gf_sign_mandate_paper";
-	private static final String API_GF_SIGN_MANDATE_PAPER = "https://devint01.nova.essent.be/nova-crm/Api/V8_Custom/Flow/gf_sign_mandate_paper";
-
-	//TODO This fields should be maybe defined in separate class. See how to handle this
+	// TODO This fields should be maybe defined in separate class. See how to handle
+	// this
 	private String recordId = "";
 	private String rowId = "";
 	private String aosProductsQuotesId = "";
@@ -55,87 +45,131 @@ public class CreateQuoteTC2B2B {
 	private String yesterdayDate = "";
 	private String todayDate = "";
 	private String generatedIban = "";
-	
+
 	private String pricingDate = "2016-11-01 12:22:00";
 	private String priceValidUntilDate = "2016-12-12 11:00:00";
-	private String signatureReceivedDate = "2016-11-01 12:22:00";	
-	
+	private String signatureReceivedDate = "2016-11-01 12:22:00";
+
+	//This is address from SOAPUI
+	/*
+	 * private String addressNumber = "175240"; private String addressStreet =
+	 * "Stadsveld"; private String addressPostalCode = "3012"; private String
+	 * addressCity = "WILSELE";
+	 */
+
 	// This address params are located in src/test/resources/data/contract_b2b/address_b2b/adress_b2B.XLSX
-	private String addressNumber = "123333";
-	private String addressStreet = "Stadsveld";
-	private String addressPostalCode = "3012";
-	private String addressCity = "WILSELE";
-	
-	
-	// This date is from SOAPUI. 
+	private String addressNumber = "36";
+	private String addressStreet = "Heiken";
+	private String addressPostalCode = "2960";
+	private String addressCity = "Brecht";
+
+	// This date is from SOAPUI.
 	// Each time new contract is created this date should be incremented by 1, and
-	// normally a customer switch can only be sent 30 days in the future or in the past. On devint01 we do not have this validation, for UAT* I do not know
-	
-	//Contract 1: I should set some date in file: create_quote_b2b_tc2.json. Once I started with creation of new contract, I should read upStartDate from file, and increment by 1, and so on
-	private String upStartDate = "2016-11-01";  
-	
-	
-	private String ean_c = "541446484533129401";
+	// normally a customer switch can only be sent 30 days in the future or in the
+	// past. On devint01 we do not have this validation, for UAT* I do not know
+
+	// Contract 1: I should set some date in file: create_quote_b2b_tc2.json. Once I
+	// started with creation of new contract, I should read upStartDate from file,
+	// and increment by 1, and so on
+	private String upStartDate = "2017-03-22";
+	private String upEndDate = "2018-10-31";
+
+	private String ean_c = "541448810000057966";
 	private String paymentMethod = "DOM"; // DOM or OV
-	private String legalCommunicationBy = "POST"; //POST or EMAIL
-	
+	private String legalCommunicationBy = "POST"; // POST or EMAIL
+
 	private String paymentDetailsId = "";
 	private Gson gson = null;
 
-	
+	private int numberOfAttempts;
+
 	private Cookies cookie;
 
 	public CreateQuoteTC2B2B() {
 		gson = new Gson();
+		numberOfAttempts = 0;
 	}
-	
-	private void setPreconditions() {
-		
+
+	private void setPreconditions() throws ParseException {
+
 		accountName = GenerateDataForQuote.setAccountName("B2B_TC2 ");
 		companyNumber = GenerateDataForQuote.generateValidBECompanyNumber();
 		yesterdayDate = GenerateDataForQuote.getYesterdayDate();
 		todayDate = GenerateDataForQuote.getTodayDate();
 		generatedIban = GenerateDataForQuote.getValidIbanBE();
-		
+		upStartDate = ContractUtil.getRandomStartContractDate(upStartDate, todayDate);
+
 	}
-	
-	public void createContractB2BTC2() throws IOException {
+
+	public void createContractB2BTC2() throws Exception {
 		setPreconditions();
 		login();
 		createQuoteTC2B2B();
+		verifyQuoteAfterCreating();
 		sendToCustomer();
+		verifyQuoteAfterSending();
 		signatureReceived();
+		verifyQuoteAfterSignatureReceived();
 		confirmSigning();
 		signMandatePaper();
+		checkContractIsActive();
 	}
 
+	public void checkContractIsActive() throws Exception {
+
+		String payloadContractedEansOnAccount = Constants.PATH_TO_JSON_FILES_QUOTE_TC2_B2B
+				+ "contracted_eans_on_account.json.template";
+		String originalPayloadContractedEansOnAccount = Constants.PATH_TO_JSON_FILES_QUOTE_TC2_B2B
+				+ "contracted_eans_on_account.json";
+
+		String jsonBody = GenerateDataForQuote.createRequestJsonPayload(payloadContractedEansOnAccount,
+				originalPayloadContractedEansOnAccount, "${recordId}", recordId);
+
+		String jsonPathFromResponse = "data.rows[0].rowData.contract_line_status_c";
+
+		if (numberOfAttempts < Constants.MAX_NUMBER_OF_ATTEMPTS_TO_FIND_APPROPRIATE_START_CONTRACT_DATE) {
+			if (ContractUtil.waitUntilStringFoundInResponse(cookie, ApiPaths.API_CONTRACTED_EAN, jsonBody,
+					ContractStatus.ACTIVE, jsonPathFromResponse, 12).equals(ContractStatus.TO_BE_ACTIVATED.getContractStatus())) {
+				++numberOfAttempts;
+				createContractB2BTC2();
+			}
+		} else {
+			assertFalse(false, "Contract is not being ACTIVE");
+		}
+
+		assertTrue(true, "Contract is ACTIVE");
+	}
 
 	public void login() {
 
 		cookie = RestAssured.given().contentType(ContentType.JSON).when()
-				.body("{ \"username\": \"soapui_b2b\", \"password\": \"504pu17357\" }")
-				.post(API_LOGIN_CRM).then().statusCode(200).extract()
-				.response().getDetailedCookies();
+				.body("{ \"username\": \"soapui_b2b\", \"password\": \"504pu17357\" }").post(ApiPaths.API_LOGIN_CRM)
+				.then().statusCode(200).extract().response().getDetailedCookies();
 	}
 
-	public void createQuoteTC2B2B() throws IOException {
-		
+	public void createQuoteTC2B2B() throws IOException, ParseException {
+
 		// Combined Customer Switch
-		//"move_in_c" : true, "switchtype_c":"SUPPLY_START_REQUEST", "dwp|mig_module_c":"START ACCESS", "dwp|mig_label_c":"Combined Customer Switch"
-		
+		// "move_in_c" : true, "switchtype_c":"SUPPLY_START_REQUEST",
+		// "dwp|mig_module_c":"START ACCESS", "dwp|mig_label_c":"Combined Customer
+		// Switch"
+
 		// Supplier Switch
-		// "move_in_c":false, "switchtype_c":"SUPPLY_START_REQUEST", "dwp|mig_module_c":"START ACCESS", "dwp|mig_label_c":"Supplier Switch"
-		
-		// normally a customer switch can only be sent 30 days in the future or in the past
+		// "move_in_c":false, "switchtype_c":"SUPPLY_START_REQUEST",
+		// "dwp|mig_module_c":"START ACCESS", "dwp|mig_label_c":"Supplier Switch"
+
+		// normally a customer switch can only be sent 30 days in the future or in the
+		// past
 		// Customer Switch
-		// "move_in_c":true, "switchtype_c":"CUSTOMER_SWITCH_NOTIFICATION", "dwp|mig_module_c":"START ACCESS", "dwp|mig_label_c":"Customer Switch"
-		
-		String payloadCreateQuoteB2BTC2 = PATH_TO_JSON_FILES_QUOTE_TC2_B2B
+		// "move_in_c":true, "switchtype_c":"CUSTOMER_SWITCH_NOTIFICATION",
+		// "dwp|mig_module_c":"START ACCESS", "dwp|mig_label_c":"Customer Switch"
+
+		String payloadCreateQuoteB2BTC2 = Constants.PATH_TO_JSON_FILES_QUOTE_TC2_B2B
 				+ "create_quote_b2b_tc2.json.template";
-		
-		String originalPayloadCreateQuoteB2BTC2 = PATH_TO_JSON_FILES_QUOTE_TC2_B2B
+
+		String originalPayloadCreateQuoteB2BTC2 = Constants.PATH_TO_JSON_FILES_QUOTE_TC2_B2B
 				+ "create_quote_b2b_tc2.json";
-		
+
 		HashMap testMap = new HashMap();
 		testMap.put("${accountName}", accountName);
 		testMap.put("${companyNumber}", companyNumber);
@@ -149,19 +183,31 @@ public class CreateQuoteTC2B2B {
 		testMap.put("${generatedIban}", generatedIban);
 		testMap.put("${ean_c}", ean_c);
 		testMap.put("${upStartDate}", upStartDate);
+		testMap.put("${upEndDate}", upEndDate);
 
-		String jsonBody = GenerateDataForQuote.createRequestJsonPayload(payloadCreateQuoteB2BTC2, originalPayloadCreateQuoteB2BTC2, testMap);
-		
-		//accountName, companyNumber, pricingDate, addressStreet, addressNumber, addressPostalCode, addressCity, legalCommunicationBy,paymentMethod,generatedIban, ean_c
-		
-		//String jsonBody = GenerateDataForQuote.generateStringFromResource(PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "create_quote_b2b_tc2.json");
-		Response response = RestAssured.given().log().all().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
-				.when().body(jsonBody).post(API_CREATE_QUOTE_B2B_TC1).then().log().all().statusCode(201).extract().response();
+		String jsonBody = GenerateDataForQuote.createRequestJsonPayload(payloadCreateQuoteB2BTC2,
+				originalPayloadCreateQuoteB2BTC2, testMap);
+
+		// accountName, companyNumber, pricingDate, addressStreet, addressNumber,
+		// addressPostalCode, addressCity,
+		// legalCommunicationBy,paymentMethod,generatedIban, ean_c
+
+		// String jsonBody =
+		// GenerateDataForQuote.generateStringFromResource(PATH_TO_JSON_FILES_QUOTE_TC2_B2B
+		// + "create_quote_b2b_tc2.json");
+		Response response = RestAssured.given().log().all().cookies(cookie).contentType(ContentType.JSON)
+				.accept(ContentType.JSON).when().body(jsonBody).post(ApiPaths.API_CREATE_QUOTE_B2B_TC2_UP).then().log()
+				.all().statusCode(201).body("data.arguments.errors", equalTo(null)).extract().response();
+
+		// if(findAppropriateStartContractDate(response)) {
 
 		recordId = new JsonPath(response.getBody().asString()).get("data.arguments.params.recordId");
-		paymentDetailsId  = new JsonPath(response.getBody().asString()).get("data.relatedBeans.Paym_Details[0]");
-		
+		paymentDetailsId = new JsonPath(response.getBody().asString()).get("data.relatedBeans.Paym_Details[0]");
+
 		listOfQuotesOnAccount();
+		// }else {
+		// assertFalse(false, "Appropriate start contract date is not found");
+		// }
 
 	}
 
@@ -169,174 +215,200 @@ public class CreateQuoteTC2B2B {
 
 		modalSendToCustomer();
 
-		String payloadModalQuoteSendCustomerReloadList = PATH_TO_JSON_FILES_QUOTE_TC2_B2B
+		String payloadModalQuoteSendCustomerReloadList = Constants.PATH_TO_JSON_FILES_QUOTE_TC2_B2B
 				+ "modal_to_gf_quote_send_to_customer_and_reload_list.json.template";
-		String originalPayloadModalQuoteSendCustomerReloadList = PATH_TO_JSON_FILES_QUOTE_TC2_B2B
+		String originalPayloadModalQuoteSendCustomerReloadList = Constants.PATH_TO_JSON_FILES_QUOTE_TC2_B2B
 				+ "modal_to_gf_quote_send_to_customer_and_reload_list.json";
 
-		String jsonBody = GenerateDataForQuote.createRequestJsonPayload(payloadModalQuoteSendCustomerReloadList, originalPayloadModalQuoteSendCustomerReloadList, "${rowId}", rowId);
+		String jsonBody = GenerateDataForQuote.createRequestJsonPayload(payloadModalQuoteSendCustomerReloadList,
+				originalPayloadModalQuoteSendCustomerReloadList, "${rowId}", rowId);
 
 		Response response = RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
-				.body(jsonBody).when().post(API_MODAL_TO_GF_QUOTE_SEND_TO_CUSTOMER_AND_RELOAD_LIST).then().log().all()
-				.statusCode(200).extract().response();
+				.body(jsonBody).when().post(ApiPaths.API_MODAL_TO_GF_QUOTE_SEND_TO_CUSTOMER_AND_RELOAD_LIST).then()
+				.log().all().statusCode(200).extract().response();
 
 		model = new JsonPath(response.getBody().asString()).get("data.arguments.model");
 		model.put("dwp|sendemailtocust", true);
 		model.put("dwp|sendemailtome", false);
 		model.put("send_quote_to_c", "BOTH");
 		model.put("dwp|send_quote_to_c|matchedCondition", "model['dwp|sendemailtome'] && model['dwp|sendemailtome']");
-		String payload = gson.toJson(model); 
-		
-		String payloadQuoteSendCustomer = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "gf_quote_send_to_customer.json.template";
-		String originalPayloadQuoteSendCustomer = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "gf_quote_send_to_customer.json";
+		String payload = gson.toJson(model);
 
-		jsonBody = GenerateDataForQuote.createRequestJsonPayload(payloadQuoteSendCustomer, originalPayloadQuoteSendCustomer, "${model}", payload);
+		String payloadQuoteSendCustomer = Constants.PATH_TO_JSON_FILES_QUOTE_TC2_B2B
+				+ "gf_quote_send_to_customer.json.template";
+		String originalPayloadQuoteSendCustomer = Constants.PATH_TO_JSON_FILES_QUOTE_TC2_B2B
+				+ "gf_quote_send_to_customer.json";
 
-		RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
-				.body(jsonBody).when().post(API_GF_QUOTE_SEND_TO_CUSTOMER).then().log().all().statusCode(201);
-		
+		jsonBody = GenerateDataForQuote.createRequestJsonPayload(payloadQuoteSendCustomer,
+				originalPayloadQuoteSendCustomer, "${model}", payload);
+
+		RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON).body(jsonBody).when()
+				.post(ApiPaths.API_GF_QUOTE_SEND_TO_CUSTOMER).then().log().all().statusCode(201)
+				.body("data.arguments.errors", equalTo(null));
+
 	}
 
 	public void signatureReceived() throws IOException {
 
-		String payloadQuoteSignatureReceived = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "gf_quote_signatureReceived.json.template";
-		String originalPayloadQuoteSignatureReceived = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "gf_quote_signatureReceived.json";
+		String payloadQuoteSignatureReceived = Constants.PATH_TO_JSON_FILES_QUOTE_TC2_B2B
+				+ "gf_quote_signatureReceived.json.template";
+		String originalPayloadQuoteSignatureReceived = Constants.PATH_TO_JSON_FILES_QUOTE_TC2_B2B
+				+ "gf_quote_signatureReceived.json";
 
-		//pricingDate, rowId, recordId, priceValidUntilDate, signatureReceivedDate
+		// pricingDate, rowId, recordId, priceValidUntilDate, signatureReceivedDate
 		HashMap testMap = new HashMap();
 		testMap.put("${pricingDate}", pricingDate);
 		testMap.put("${priceValidUntilDate}", priceValidUntilDate);
 		testMap.put("${signatureReceivedDate}", signatureReceivedDate);
 		testMap.put("${rowId}", rowId);
 		testMap.put("${recordId}", recordId);
-		
-		String jsonBody = GenerateDataForQuote.createRequestJsonPayload(payloadQuoteSignatureReceived, originalPayloadQuoteSignatureReceived, testMap);
+
+		String jsonBody = GenerateDataForQuote.createRequestJsonPayload(payloadQuoteSignatureReceived,
+				originalPayloadQuoteSignatureReceived, testMap);
 
 		Response response = RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
-				.body(jsonBody).when().post(API_GF_QUOTE_SIGNATURE_RECEIVED).then().log().all().statusCode(201)
+				.body(jsonBody).when().post(ApiPaths.API_GF_QUOTE_SIGNATURE_RECEIVED).then().log().all().statusCode(201)
 				.extract().response();
-		
+
 		response = RestAssured.given().log().all().cookies(cookie).contentType("multipart/form-data")
-				.multiPart("file", new File("./src/test/resources/data/dwp/signed-document.pdf"), "application/pdf")
-				.formParams(createFormParamsMap()).when().post(API_FILE_UPLOAD).then().log().all().statusCode(200).extract()
-				.response();
-		
+				.multiPart("file", new File(Constants.PATH_TO_PDF), "application/pdf")
+				.formParams(createFormParamsMap()).when().post(ApiPaths.API_FILE_UPLOAD).then().log().all()
+				.statusCode(200).extract().response();
+
 		docId = new JsonPath(response.getBody().asString()).get("data.id");
 
 	}
-	
-	public void confirmSigning() throws IOException {
-		String payloadConfirmSigning = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "sign_quote_modal_tc2_up.json.template";
-		String originalPayloadConfirmSigning = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "sign_quote_modal_tc2_up.json";
 
-		//rowId, docId, date
+	public void confirmSigning() throws IOException {
+		String payloadConfirmSigning = Constants.PATH_TO_JSON_FILES_QUOTE_TC2_B2B
+				+ "sign_quote_modal_tc2_up.json.template";
+		String originalPayloadConfirmSigning = Constants.PATH_TO_JSON_FILES_QUOTE_TC2_B2B
+				+ "sign_quote_modal_tc2_up.json";
+
+		// rowId, docId, date
 		HashMap testMap = new HashMap();
 		testMap.put("${rowId}", rowId);
 		testMap.put("${docId}", docId);
 		testMap.put("${date}", yesterdayDate);
 		testMap.put("${paymentDetailsId}", paymentDetailsId);
-		
-		String jsonBody = GenerateDataForQuote.createRequestJsonPayload(payloadConfirmSigning, originalPayloadConfirmSigning, testMap);
 
-		RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
-				.body(jsonBody).when().post(API_SIGN_QUOTE_MODAL_TC2_UP).then().log().all().statusCode(201)
-				.extract().response();
+		String jsonBody = GenerateDataForQuote.createRequestJsonPayload(payloadConfirmSigning,
+				originalPayloadConfirmSigning, testMap);
 
-		String payloadContractsOnAccount = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "contracts_on_account.json.template";
-		String originalPayloadContractsOnAccount = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "contracts_on_account.json";
-		
-		jsonBody = GenerateDataForQuote.createRequestJsonPayload(payloadContractsOnAccount, originalPayloadContractsOnAccount, "${recordId}", recordId);
-		
-		RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
-				.body(jsonBody).when().post(API_VERIFY_CONTRACT_CREATED).then().log().all().statusCode(200);
-		
+		RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON).body(jsonBody).when()
+				.post(ApiPaths.API_SIGN_QUOTE_MODAL_TC2_UP).then().log().all().statusCode(201).extract().response();
+
+		String payloadContractsOnAccount = Constants.PATH_TO_JSON_FILES_QUOTE_TC2_B2B
+				+ "contracts_on_account.json.template";
+		String originalPayloadContractsOnAccount = Constants.PATH_TO_JSON_FILES_QUOTE_TC2_B2B
+				+ "contracts_on_account.json";
+
+		jsonBody = GenerateDataForQuote.createRequestJsonPayload(payloadContractsOnAccount,
+				originalPayloadContractsOnAccount, "${recordId}", recordId);
+
+		RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON).body(jsonBody).when()
+				.post(ApiPaths.API_VERIFY_CONTRACT_CREATED).then().log().all().statusCode(200);
+
 	}
-	
-	//Only required if we want to have payment method: DOM
-	public void signMandatePaper() throws IOException {
-		
-		String payloadBillingCustomerOnAccount = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "billing_customer_on_account.json.template";
-		String originalPayloadBillingCustomerOnAccount = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "billing_customer_on_account.json";
 
-		String jsonBody = GenerateDataForQuote.createRequestJsonPayload(payloadBillingCustomerOnAccount, originalPayloadBillingCustomerOnAccount, "${recordId}", recordId);
-		
+	// Only required if we want to have payment method: DOM
+	public void signMandatePaper() throws IOException {
+
+		String payloadBillingCustomerOnAccount = Constants.PATH_TO_JSON_FILES_QUOTE_TC2_B2B
+				+ "billing_customer_on_account.json.template";
+		String originalPayloadBillingCustomerOnAccount = Constants.PATH_TO_JSON_FILES_QUOTE_TC2_B2B
+				+ "billing_customer_on_account.json";
+
+		String jsonBody = GenerateDataForQuote.createRequestJsonPayload(payloadBillingCustomerOnAccount,
+				originalPayloadBillingCustomerOnAccount, "${recordId}", recordId);
+
 		Response response = RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
-				.body(jsonBody).when().post(API_LIST_BILLING_CUSTOMER_ACCOUNT).then().statusCode(200)
-				.extract().response();
-		
+				.body(jsonBody).when().post(ApiPaths.API_LIST_BILLING_CUSTOMER_ACCOUNT).then().statusCode(200).extract()
+				.response();
+
 		bilingCustomerId = new JsonPath(response.getBody().asString()).get("data.rows[0].id");
-		
-		String payloadModalSignMandatePaper = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "modal_to_gf_sign_mandate_paper.json.template";
-		String originalModalPayloadSignMandatePaper = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "modal_to_gf_sign_mandate_paper.json";
-		
-		//billingCustomerId, recordId
+
+		String payloadModalSignMandatePaper = Constants.PATH_TO_JSON_FILES_QUOTE_TC2_B2B
+				+ "modal_to_gf_sign_mandate_paper.json.template";
+		String originalModalPayloadSignMandatePaper = Constants.PATH_TO_JSON_FILES_QUOTE_TC2_B2B
+				+ "modal_to_gf_sign_mandate_paper.json";
+
+		// billingCustomerId, recordId
 		HashMap<String, String> testMap = new HashMap<String, String>();
 		testMap.put("${billingCustomerId}", bilingCustomerId);
 		testMap.put("${recordId}", recordId);
-		
-		jsonBody = GenerateDataForQuote.createRequestJsonPayload(payloadModalSignMandatePaper, originalModalPayloadSignMandatePaper, testMap);
-		
+
+		jsonBody = GenerateDataForQuote.createRequestJsonPayload(payloadModalSignMandatePaper,
+				originalModalPayloadSignMandatePaper, testMap);
+
 		response = RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
-				.body(jsonBody).when().post(API_MODAL_TO_GF_SIGN_MANDATE_PAPER).then().statusCode(200)
+				.body(jsonBody).when().post(ApiPaths.API_MODAL_TO_GF_SIGN_MANDATE_PAPER).then().statusCode(200)
 				.extract().response();
-		
+
 		modelMandatePaper = new JsonPath(response.getBody().asString()).get("data.arguments.model");
-		
+
 		response = RestAssured.given().cookies(cookie).contentType("multipart/form-data")
-				.multiPart("file", new File("./src/test/resources/data/dwp/signed-document.pdf"), "application/pdf")
-				.formParams(createFormParamsMapMandatePaper()).when().post(API_FILE_UPLOAD).then().statusCode(200).extract()
-				.response();
-		
+				.multiPart("file", new File(Constants.PATH_TO_PDF), "application/pdf")
+				.formParams(createFormParamsMapMandatePaper()).when().post(ApiPaths.API_FILE_UPLOAD).then()
+				.statusCode(200).extract().response();
+
 		upload = new JsonPath(response.getBody().asString()).get("data");
 		String payloadUpload = gson.toJson(upload);
 		modelMandatePaper.put("dwp|attachment", payloadUpload);
 		String payloadModelMandatePaper = gson.toJson(modelMandatePaper);
-		
-		String payloadSignMandatePaper = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "gf_sign_mandate_paper.json.template";
-		String originalPayloadSignMandatePaper = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "gf_sign_mandate_paper.json";
-		
-		String jsonBodyPayloadSignMandatePaper = GenerateDataForQuote.createRequestJsonPayload(payloadSignMandatePaper, originalPayloadSignMandatePaper, "${modelMandatePaper}", payloadModelMandatePaper);
-		
+
+		String payloadSignMandatePaper = Constants.PATH_TO_JSON_FILES_QUOTE_TC2_B2B
+				+ "gf_sign_mandate_paper.json.template";
+		String originalPayloadSignMandatePaper = Constants.PATH_TO_JSON_FILES_QUOTE_TC2_B2B
+				+ "gf_sign_mandate_paper.json";
+
+		String jsonBodyPayloadSignMandatePaper = GenerateDataForQuote.createRequestJsonPayload(payloadSignMandatePaper,
+				originalPayloadSignMandatePaper, "${modelMandatePaper}", payloadModelMandatePaper);
+
 		RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
-				.body(jsonBodyPayloadSignMandatePaper).when().post(API_GF_SIGN_MANDATE_PAPER).then().statusCode(201);
-		
+				.body(jsonBodyPayloadSignMandatePaper).when().post(ApiPaths.API_GF_SIGN_MANDATE_PAPER).then()
+				.statusCode(201);
+
 	}
-	
+
 	private void listOfQuotesOnAccount() throws IOException {
 
-		String payloadQuotesOnAccount = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "quotes_on_account.json.template";
-		String originalPayloadQuotesOnAccount = PATH_TO_JSON_FILES_QUOTE_TC2_B2B + "quotes_on_account.json";
+		String payloadQuotesOnAccount = Constants.PATH_TO_JSON_FILES_QUOTE_TC2_B2B
+				+ "quotes_on_account.json.template";
+		String originalPayloadQuotesOnAccount = Constants.PATH_TO_JSON_FILES_QUOTE_TC2_B2B
+				+ "quotes_on_account.json";
 
-		String jsonBody = GenerateDataForQuote.createRequestJsonPayload(payloadQuotesOnAccount, originalPayloadQuotesOnAccount, "${recordId}", recordId);
+		String jsonBody = GenerateDataForQuote.createRequestJsonPayload(payloadQuotesOnAccount,
+				originalPayloadQuotesOnAccount, "${recordId}", recordId);
 
 		Response response = RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
-				.body(jsonBody).when().post(API_QUOTES_ON_ACCOUNT).then().statusCode(200).extract()
-				.response();
-		
+				.body(jsonBody).when().post(ApiPaths.API_QUOTES_ON_ACCOUNT).then().statusCode(200).extract().response();
+
 		rowId = new JsonPath(response.getBody().asString()).get("data.rows[0].id");
 
 	}
 
 	private void modalSendToCustomer() throws IOException {
 
-		String payloadModalQuoteSentToCustomer = PATH_TO_JSON_FILES_QUOTE_TC2_B2B
+		String payloadModalQuoteSentToCustomer = Constants.PATH_TO_JSON_FILES_QUOTE_TC2_B2B
 				+ "modal_to_gf_quote_send_to_customer.json.template";
-		String originalPayloadModalQuoteSentToCustomer = PATH_TO_JSON_FILES_QUOTE_TC2_B2B
+		String originalPayloadModalQuoteSentToCustomer = Constants.PATH_TO_JSON_FILES_QUOTE_TC2_B2B
 				+ "modal_to_gf_quote_send_to_customer.json";
 
-		String jsonBody = GenerateDataForQuote.createRequestJsonPayload(payloadModalQuoteSentToCustomer, originalPayloadModalQuoteSentToCustomer, "${rowId}", rowId);
+		String jsonBody = GenerateDataForQuote.createRequestJsonPayload(payloadModalQuoteSentToCustomer,
+				originalPayloadModalQuoteSentToCustomer, "${rowId}", rowId);
 
 		Response response = RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
-				.body(jsonBody).when().post(API_MODAL_TO_GF_QUOTE_SEND_TO_CUSTOMER).then().log().all().statusCode(200)
-				.extract().response();
-		
+				.body(jsonBody).when().post(ApiPaths.API_MODAL_TO_GF_QUOTE_SEND_TO_CUSTOMER).then().log().all()
+				.statusCode(200).extract().response();
+
 		HashMap model = new JsonPath(response.getBody().asString()).get("data.arguments.model");
 		aosProductsQuotesId = (String) model.get("aos_products_quotes|id");
 	}
-	
-	private Map<String, String> createFormParamsMap(){
+
+	private Map<String, String> createFormParamsMap() {
 		Map<String, String> formParams = new HashMap<>();
-		
+
 		formParams.put("model[id]", rowId);
 		formParams.put("model[dwp|id]", rowId);
 		formParams.put("model[accounts|name]", accountName);
@@ -367,15 +439,14 @@ public class CreateQuoteTC2B2B {
 		formParams.put("model[recordId]", "");
 		formParams.put("model[tasks(parent_type = 'AOS_Quotes')|id]", "");
 		formParams.put("model[tasks(parent_type = 'AOS_Quotes')|status]", "");
-		
+
 		return formParams;
-		
+
 	}
-	
-	
-	private Map<String, String> createFormParamsMapMandatePaper(){
+
+	private Map<String, String> createFormParamsMapMandatePaper() {
 		Map<String, String> formParams = new HashMap<>();
-		
+
 		formParams.put("model[recordTypeOfRecordId]", "Paym_Details");
 		formParams.put("model[recordId]", bilingCustomerId);
 		formParams.put("model[baseModule]", "Paym_Details");
@@ -406,9 +477,60 @@ public class CreateQuoteTC2B2B {
 		formParams.put("model[payment_details|payment_methods(valid_to is null)|payment_method]", "");
 		formParams.put("model[tasks(parent_type = 'AOS_Quotes')|id]", "");
 		formParams.put("model[tasks(parent_type = 'AOS_Quotes')|status]", "");
-		
+
 		return formParams;
-		
+
 	}
-	
+
+	private void verifyQuoteAfterSignatureReceived() throws IOException {
+		String payloadVerifyQuotesOnAccount = Constants.PATH_TO_JSON_FILES_QUOTE_TC1_B2B
+				+ "verify_quotes_on_account.json.template";
+		String originalPayloadVerifyQuotesOnAccount = Constants.PATH_TO_JSON_FILES_QUOTE_TC1_B2B
+				+ "verify_quotes_on_account.json";
+
+		String jsonBody = GenerateDataForQuote.createRequestJsonPayload(payloadVerifyQuotesOnAccount,
+				originalPayloadVerifyQuotesOnAccount, "${recordId}", recordId);
+
+		Response response = RestAssured.given().log().all().cookies(cookie).contentType(ContentType.JSON)
+				.accept(ContentType.JSON).when().body(jsonBody).post(ApiPaths.API_QUOTES_ON_ACCOUNT).then().log().all()
+				.statusCode(200).body("data.rows[0].cells[2].options.line2",
+						equalTo(Constants.STATUS_QUOTE_AFTER_SIGNATURE_RECEIVED_EN))
+				.extract().response();
+
+	}
+
+	private void verifyQuoteAfterSending() throws IOException {
+		String payloadVerifyQuotesOnAccount = Constants.PATH_TO_JSON_FILES_QUOTE_TC1_B2B
+				+ "verify_quotes_on_account.json.template";
+		String originalPayloadVerifyQuotesOnAccount = Constants.PATH_TO_JSON_FILES_QUOTE_TC1_B2B
+				+ "verify_quotes_on_account.json";
+
+		String jsonBody = GenerateDataForQuote.createRequestJsonPayload(payloadVerifyQuotesOnAccount,
+				originalPayloadVerifyQuotesOnAccount, "${recordId}", recordId);
+
+		Response response = RestAssured.given().log().all().cookies(cookie).contentType(ContentType.JSON)
+				.accept(ContentType.JSON).when().body(jsonBody).post(ApiPaths.API_QUOTES_ON_ACCOUNT).then().log().all()
+				.statusCode(200).body("data.rows[0].cells[2].options.line2",
+						equalTo(Constants.STATUS_QUOTE_AFTER_SENDING_EN))
+				.extract().response();
+
+	}
+
+	private void verifyQuoteAfterCreating() throws IOException {
+		String payloadVerifyQuotesOnAccount = Constants.PATH_TO_JSON_FILES_QUOTE_TC1_B2B
+				+ "verify_quotes_on_account.json.template";
+		String originalPayloadVerifyQuotesOnAccount = Constants.PATH_TO_JSON_FILES_QUOTE_TC1_B2B
+				+ "verify_quotes_on_account.json";
+
+		String jsonBody = GenerateDataForQuote.createRequestJsonPayload(payloadVerifyQuotesOnAccount,
+				originalPayloadVerifyQuotesOnAccount, "${recordId}", recordId);
+
+		Response response = RestAssured.given().log().all().cookies(cookie).contentType(ContentType.JSON)
+				.accept(ContentType.JSON).when().body(jsonBody).post(ApiPaths.API_QUOTES_ON_ACCOUNT).then().log().all()
+				.statusCode(200).body("data.rows[0].cells[2].options.line2",
+						equalTo(Constants.STATUS_QUOTE_AFTER_CREATING_TC2_UP_EN))
+				.extract().response();
+
+	}
+
 }

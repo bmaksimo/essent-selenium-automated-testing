@@ -11,10 +11,18 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Map.Entry;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import org.apache.commons.io.FileUtils;
 import org.iban4j.CountryCode;
 import org.iban4j.Iban;
+
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.http.Cookies;
+import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
 
 public final class GenerateDataForQuote {
 	
