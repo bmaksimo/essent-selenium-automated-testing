@@ -34,7 +34,7 @@ public class DashboardMenu extends NavigationElements {
         registerActiveScenario(scenario);
     }
 
-    @When("^Click on ([^\"]*) dashboard menu")
+    @When("^Dashboard menu is ([^\"]*)")
     public void checkDashboardMenuItem(String menuItem) throws Throwable {
         boolean success = new ClickDashboardMenu().test(menuItem);
         assertThat(String.format("Overview Menu  %s is undefined.", menuItem),

@@ -18,7 +18,7 @@ Feature: Billing - Invoices
         When Click on link in View List at 1st row and "Nummer & Aanmaakdatum" column
         Then Form Header is "Contract Details"
 
-        When Click on Documenten dashboard menu
+        When Dashboard menu is Documenten
         Then View List Header is "Documenten"
         And Document with document type Tussentijdse is available
 

@@ -12,7 +12,7 @@ Feature: Javascript DWP testing
         When Click on link in View List at 1st row and "Account & EAN" column
         And  Top Arrow button is Up
         When Click on link in View List at 1st row and "Account & EAN" column
-        And  Click on Contracts dashboard menu
+        And  Dashboard menu is Contracts
         And  Top Arrow button is Up
         And  Plus Menu is "Switching -> Market Transaction Tasks"
         Then View List Header is "Tasks market transactions"
