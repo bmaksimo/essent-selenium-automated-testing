@@ -18,7 +18,7 @@ import static org.hamcrest.Matchers.is;
 
 public class InputElements extends DwpScenario  {
 
-    @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL, @INVOICE")
+    @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }

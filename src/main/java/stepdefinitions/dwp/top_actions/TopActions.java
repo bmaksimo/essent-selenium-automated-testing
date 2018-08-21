@@ -9,7 +9,7 @@ import stepdefinitions.dwp.navigation.NavigationElements;
 
 public class TopActions extends NavigationElements {
 
-    @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL, @INVOICE")
+    @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
