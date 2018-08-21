@@ -8,7 +8,6 @@ class TrCheckDocumentType extends TestRunnerBase {
         result.status = 'FAILED';
         result.reason = 'Document type ' + options.documentType + ' was not found';
         const length = $(".list__row").filter(function (i, node) {
-            console.log('current node ' + node);
             return node.children[1].textContent.trim() === options.documentType;
         }).length;
         if (length > 0) {
