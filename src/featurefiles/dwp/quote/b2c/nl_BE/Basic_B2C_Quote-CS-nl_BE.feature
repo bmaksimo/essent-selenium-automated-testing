@@ -2,7 +2,7 @@
 @BASIC
 @QUOTE
 @REGRESSION
-Feature: Creating a B2C Quote with customer switch.
+Feature: Creating a B2C Quote with customer switch - Dutch version
          The test creates a contract with start date and pricing date set to 3 months before now.
          The existing valid address already known to Nova is used,
          the new Dutch-speaking customer is generated randomly,
@@ -12,7 +12,7 @@ Feature: Creating a B2C Quote with customer switch.
     Background:
         Given I logged in to DWP as contracting.testautomation.b2c@essent.be
 
-    Scenario: Create a B2C Quote with Supplier Switch
+    Scenario: Create a B2C Quote with customer switch
         When Top Action is Plus Menu
         And Plus Menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form Header is "Details van de offerte"
