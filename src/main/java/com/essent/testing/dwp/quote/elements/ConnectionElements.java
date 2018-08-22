@@ -17,6 +17,11 @@ public enum ConnectionElements {
     GAS_METER_NR("SELECTOR", "#meter-no-c-accounts-aos-quotes-aos-products-quotes-a-6565-bd-4-e-0-ec-dee-9-64-fd-58-aca-11-b-3994-field");
 
     private String searchBy;
+
+    public String getQuery() {
+        return query;
+    }
+
     private String query;
     private String pick;
 

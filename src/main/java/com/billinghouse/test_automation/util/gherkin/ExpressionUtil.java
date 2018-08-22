@@ -1,7 +1,9 @@
 package com.billinghouse.test_automation.util.gherkin;
 
 import cucumber.runtime.CucumberException;
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
+import sun.swing.StringUIClientPropertyKey;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +18,7 @@ public class ExpressionUtil {
 
     private static final String DWP_DATE_FOMAT = "dd/MM/yyyy";
 
-    private static final String DATE_EXPR_REGEX = "(\\$today)\\s*(\\+|-)\\s*(\\d*)\\s*(month|day)(s*)\\b";
+    private static final String DATE_EXPR_REGEX = "(\\$today)(\\s*(\\+|-)\\s*(\\d*)\\s*(month|day)(s*)\\b)*";
 
     public static DateTime expandFrom(String expression) throws CucumberException {
         if (!expression.matches(DATE_EXPR_REGEX))
@@ -26,13 +28,16 @@ public class ExpressionUtil {
         matcher.find();
 
         DateTime dateTime = new DateTime();
+        if(matcher.group(2) == null) {
+            return dateTime;
+        }
         Map<String, Function<Integer, DateTime>> operations = new HashMap<>();
         operations.put("+month", (i) -> dateTime.plusMonths(i));
         operations.put("-month", (i) -> dateTime.minusMonths(i));
         operations.put("+day", (i) -> dateTime.plusDays(i));
         operations.put("-day", (i) -> dateTime.minusDays(i));
-        return operations.get(matcher.group(2) + matcher.group(4))
-            .apply(parseInt(matcher.group(3)));
+        return operations.get(matcher.group(3) + matcher.group(5))
+            .apply(parseInt(matcher.group(4)));
     }
 
     public static String checkAndConvertToDwpDate(String input) throws CucumberException {
