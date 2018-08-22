@@ -7,26 +7,24 @@ Feature: DWP Filter Options
     Background:
         Given I logged in to DWP as Finance
     Scenario: Checking whether filter elements, defined for "Finance" Left Menu, are available
-        When Left Menu Item is finance
-        And  Top Menu Item is Accounts
-        Then Available filter elements are:
-        |B2C/B2B|
-        |Category|
-        |Customer Type|
-        |Segment|
-        |EAN|
-        |Account number|
-        |Name|
-        |Contactperson|
-        |Headquarter street|
-        |Invoice street|
-        |Connection street|
-        |IBAN|
-        |Company number|
-        |Birthdate|
-        |E-mail|
-        |Billing customer nr|
-        |Assigned dealer|
-        |Assigned user|
-
-
+        When Left menu is finance
+        And  Top menu item is Accounts
+        Then Available filters are:
+            |B2C/B2B|
+            |Category|
+            |Customer Type|
+            |Segment|
+            |EAN|
+            |Account number|
+            |Name|
+            |Contactperson|
+            |Headquarter street|
+            |Invoice street|
+            |Connection street|
+            |IBAN|
+            |Company number|
+            |Birthdate|
+            |E-mail|
+            |Billing customer nr|
+            |Assigned dealer|
+            |Assigned user|

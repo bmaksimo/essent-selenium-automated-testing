@@ -8,16 +8,16 @@ Feature: DWP UI: Filter elements
         Given I logged in to DWP as BusinessDeskB2B
 
     Scenario: Checking if filter elements, defined for Contracting Switching Left Tab, are available
-        When Left Menu Item is contracting-switching
-        Then Available filter elements are:
+        When Left menu is contracting-switching
+        Then Available filters are:
             |Number|
             |Name|
             |Account name|
             |Account number|
     Scenario: Checking whether filter elements, defined for each Left Tab -> Top Tab combination, are available
-        When Left Menu Item is contracting-switching
-        And Top Menu Item is MS: Send ILC
-        Then Available filter elements are:
+        When Left menu is contracting-switching
+        And Top menu item is MS: Send ILC
+        Then Available filters are:
             |Account number|
             |Name|
             |EAN|

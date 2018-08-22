@@ -5,16 +5,16 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
-import stepdefinitions.dwp.navigation.NavigationElements;
+import stepdefinitions.dwp.NavigationElements;
 
 public class TopActions extends NavigationElements {
 
     @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void SetupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
 
-    @When("^Top Action is ([^\"]*)$")
+    @When("^Top action is ([^\"]*)$")
     public void checkTopAction(String action) throws Throwable {
         clickTopAction(action);
     }
