@@ -16,14 +16,22 @@ public enum ConfigKey {
     BPM_USER("bpm.user"),
     BPM_PASSWORD("bpm.password"),
     DWP_BASE_URL("dwp.baseurl"),
+
     DWP_USER_ESSENTADMIN("dwp.user"),
-    DWP_USER_SERVICEDESK_B2B("dwp.user.b2b"),
-    DWP_USER_SERVICEDESK_B2C("dwp.user.b2c"),
-    DWP_USER_PARTNER_B2C_EXT("dwp.user.partner.b2c.external"),
     DWP_PASSWORD("dwp.password"),
+
+    DWP_USER_SERVICEDESK_B2B("dwp.user.b2b"),
     DWP_PASSWORD_SERVICEDESK_B2B("dwp.password.b2b"),
-    DWP_PASSWORD_SERVICEDESK_B2C("dwp.password.b2c"),
-    DWP_PASSWORD_PARTNER_B2C_EXT("dwp.password.partner.b2c.external"),
+
+    DWP_USER_SALESMARKETING_B2C("dwp.user.b2c.salesmarketing"),
+    DWP_PASSWORD_SALESMARKETING_B2C("dwp.password.b2c.salesmarketing"),
+
+    DWP_USER_CONTRACTING_B2C("dwp.user.b2c.contracting"),
+    DWP_PASSWORD_CONTRACTING_B2C("dwp.password.b2c.contracting"),
+
+    DWP_USER_BILLING("dwp.user..billing"),
+    DWP_PASSWORD_BILLING("dwp.password..billing"),
+
     SERVICEMIX_BASE_URL("servicemix.baseurl"),
     BILLING_URL("billing.url"),
     BILLING_DB_HOST("billing.db.host"),

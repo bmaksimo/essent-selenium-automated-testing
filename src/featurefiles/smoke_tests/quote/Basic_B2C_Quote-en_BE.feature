@@ -16,11 +16,13 @@ Feature: Creating a B2C Quote - supplier switch
         When Customer is random
         And Customer Address is
         | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-        | Mechelsesteenweg| 13      |            |      | 2550       | Kontich  |         |
+        | Mechelsesteenweg| 139     |            |      | 2550       | Kontich  |         |
         And Package is "TC_FIX_B2C"
         And Checkbox "Gas Fix B2C (TC1)" is Unchecked
         And Package and Fuel Type is confirmed
         And No price sheet alerts popped up
+        And "Start date" date is "$today"
+        And Electricity meter is Closed
         And Electricity EAN code is selected
         And Connection is confirmed
         And Payment details are: method BankTransfer, IBAN "NL57ABNA0874253356", bic "ABNANL2A"
