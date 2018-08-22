@@ -8,8 +8,8 @@ Feature: Javascript DWP testing
         When Left Menu Item is sales-marketing
         And Top Menu Item is Market Transactions
         And Top Action is Filters
-        And "Created after" date input is "$today + 3months"
-        And "Created before" date input is "$today +  4months"
+        And "Created after" date is "$today + 3months"
+        And "Created before" date is "$today +  4months"
         And "EAN" input is "541444625522734400"
         And "Module" selection is "ESSENT IS HIJACKED"
         Then View List is empty

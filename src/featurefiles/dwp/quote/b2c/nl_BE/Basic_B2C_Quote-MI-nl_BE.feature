@@ -1,6 +1,6 @@
 @DWP
 @BASIC
-@QUOTE
+@_QUOTE
 @REGRESSION
 Feature: Creating a B2C Quote - supplier switch
 
@@ -12,14 +12,15 @@ Feature: Creating a B2C Quote - supplier switch
         And Plus Menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form Header is "Details van de offerte"
 
-        When B2C sales channel is Inbound
+        When "Tariefdatum" date is "$today - 3 months"
+        And B2C sales channel is Inbound
         And Quote details are confirmed
         Then Form Header is "Persoonsgegevens"
 
         When Customer is random
         And Customer Address is
             | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-            | Mechelsesteenweg| 3     |            |      | 2550       | Kontich  |         |
+            | Mechelsesteenweg| 21   |            |      | 2550       | Kontich  |         |
         And Customer details are confirmed
         Then Form Header is "Selecteer pakket en product"
 
@@ -31,6 +32,7 @@ Feature: Creating a B2C Quote - supplier switch
 
         When "Startdatum" date is "$today - 3 months"
         And Electricity EAN code is selected
+        And Option "Is de meter geopend?" is Closed
         And Connection details are confirmed
         Then Form Header is "Facturatiedetails"
 

@@ -21,7 +21,7 @@ Feature: Creating a B2C Quote - supplier switch
         And Checkbox "Gas Fix B2C (TC1)" is Unchecked
         And Package and Fuel Type is confirmed
         And No price sheet alerts popped up
-        And "Start date" date input is "$today"
+        And "Start date" date is "$today"
         And Electricity meter is Closed
         And Electricity EAN code is selected
         And Connection is confirmed

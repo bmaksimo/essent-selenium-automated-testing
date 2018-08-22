@@ -1,10 +1,13 @@
 package stepdefinitions.dwp.input;
 
 import com.essent.testing.dwp.scenario.DwpScenario;
+import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
+import cucumber.api.java.en.When;
+import stepdefinitions.dwp.tables.plus.CheckBoxState;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +25,7 @@ public class InputElements extends DwpScenario {
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
+
 
     private class ApplyInput implements Predicate<Map> {
         @Override
@@ -51,7 +55,7 @@ public class InputElements extends DwpScenario {
             success, is(true));
     }
 
-    @And("^\"([^\"]*)\" date input is \"([^\"]*)\"$")
+    @And("^\"([^\"]*)\" date is \"([^\"]*)\"$")
     public void setDateInput(String label, String value) throws Throwable {
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
@@ -64,6 +68,15 @@ public class InputElements extends DwpScenario {
     @And("^\"([^\"]*)\" selection is \"([^\"]*)\"$")
     public void setSelection(String label, String value) throws Throwable {
         setInput(label, String.format("string:%s", value));
+    }
+
+    @And("^Option \"([^\"]*)\" is ([^\"]*)$")
+    public void switchOption(String option, CheckBoxState state) throws Throwable {
+        Map<String, String> options = new HashMap<>();
+        options.put("label", option);
+        boolean success = executeJavascriptTest("TrClickToggleInput", options);
+        assertThat(String.format("Option %s is undefined.", option),
+            success, is(true));
     }
 
     @Override

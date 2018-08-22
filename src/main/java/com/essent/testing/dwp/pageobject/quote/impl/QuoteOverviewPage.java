@@ -23,20 +23,12 @@ public class QuoteOverviewPage extends CreateQuoteGuidedStep {
 
     @Override
     public boolean fillInFormData() {
-        String formattedDate = signatureData.getDate().print();
         String place = signatureData.getPlace();
         String filePath = signatureData.getFilePath();
         Model.Execution execution = createExecutuin();
         execution
-            .element(SIGN_WANTTOSIGN_CHECKBOX.element())
-            .element(SIGN_ALREADYSIGNED_CHECKBOX.element())
-            .element(SIGN_DATE.element())
             .element(SIGN_LOCATION.element())
             .element(SIGN_UPLOAD_DOC.element())
-            .step(createStep(Action.ACCESS).element(SIGN_WANTTOSIGN_CHECKBOX.name()).requireDisplayed(false).callback(new HideIconOverlays()))
-            .step(createStep(Action.CLICK).requireDisplayed(false).element(SIGN_WANTTOSIGN_CHECKBOX.name()).timeoutInSeconds(TOGGLE_CHECKBOX.getWaitInSeconds()), TOGGLE_CHECKBOX.getSleepInMillis())
-            .step(createStep(Action.CLICK).requireDisplayed(false).element(SIGN_ALREADYSIGNED_CHECKBOX.name()), TOGGLE_CHECKBOX.getSleepInMillis())
-            .step(createStep(Action.TYPING).element(SIGN_DATE.name()).value(formattedDate), INPUT.getSleepInMillis())
             .step(createStep(Action.TYPING).element(SIGN_LOCATION.name()).value(place), INPUT.getSleepInMillis())
             .step(createStep(Action.REQUIRE).element(SIGN_UPLOAD_DOC.name()).requireDisplayed(false))
             .step(createStep(Action.UPLOAD).element(SIGN_UPLOAD_DOC.name()).value(filePath).requireDisplayed(false), UPLOAD_FILE.getSleepInMillis());

@@ -263,6 +263,7 @@ public class QuoteSteps extends DwpScenario {
         quoteOverviewView.fillInFormData();
     }
 
+
     @And("^Quote is confirmed$")
     public void confirmQuote() throws Throwable {
         QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage(webDriver);

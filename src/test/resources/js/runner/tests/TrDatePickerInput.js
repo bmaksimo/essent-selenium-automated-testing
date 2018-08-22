@@ -18,6 +18,6 @@ class TrDatePickerInput extends TbrFormInput {
     }
 
     applyInput(input, value) {
-        input.val(value).trigger("change").trigger("keyup");
+        $(input[0]).val(value).trigger("change").trigger("keyup");
     }
 }

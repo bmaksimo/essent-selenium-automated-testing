@@ -37,7 +37,7 @@ public class PersonalDetailsPage extends CreateQuoteGuidedStep {
     public boolean fillInCustomerDetails() {
         Map<String, String[][]> titles = new HashMap<>();
         String[][] en_Titles = new String[][]{{"male", "Mr."}, {"female", "Ms."}};
-        String[][] nl_Titles = new String[][]{{"male", "Meneer"}, {"female", "Mevr."}};
+        String[][] nl_Titles = new String[][]{{"male", "Meneer"}, {"female", "Mevrouw"}};
         titles.put("en_BE", en_Titles);
         titles.put("nl_BE", nl_Titles);
         String[][] salutations = titles.get(fetchPreferredLanguage((WebStorage) seleniumDriver.getDriver()));

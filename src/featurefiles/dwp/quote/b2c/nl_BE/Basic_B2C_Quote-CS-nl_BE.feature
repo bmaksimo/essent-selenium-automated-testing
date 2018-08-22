@@ -1,6 +1,6 @@
 @DWP
 @BASIC
-@QUOTE
+@_QUOTE
 @REGRESSION
 Feature: Creating a B2C Quote - supplier switch
 
@@ -19,7 +19,7 @@ Feature: Creating a B2C Quote - supplier switch
         When Customer is random
         And Customer Address is
             | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-            | Mechelsesteenweg| 3     |            |      | 2550       | Kontich  |         |
+            | Mechelsesteenweg| 2     |            |      | 2550       | Kontich  |         |
         And Customer details are confirmed
         Then Form Header is "Selecteer pakket en product"
 
