@@ -3,27 +3,17 @@ package com.essent.testing.dwp.pageobject.quote.impl;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
-import com.essent.automation.core.WebDriverWait;
-import com.essent.testing.dwp.pageobject.Component;
-import com.essent.testing.dwp.pageobject.constant.Quote;
-import com.essent.testing.dwp.pageobject.quote.CreateQuoteStepView;
-import com.essent.testing.dwp.pageobject.quote.CreateQuoteView;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.apache.commons.lang3.StringUtils;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.tables.CustomerAddress;
-
-import static com.essent.testing.dwp.DwpTimingParameters.*;
-import static com.essent.testing.dwp.elements.BasicElements.NEXT_BUTTON;
-import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.TITLE_SELECTOR_TEMPLATE;
-import static com.essent.testing.dwp.pageobject.constant.XpathSelectors.VIEW_SELECTOR;
+import static com.essent.testing.dwp.DwpTimingParameters.INPUT;
+import static com.essent.testing.dwp.DwpTimingParameters.TOGGLE_CHECKBOX;
 import static com.essent.testing.dwp.quote.elements.B2CQuoteElements.*;
 import static org.junit.Assert.fail;
 
-public class CustomerAddressView extends Component implements CreateQuoteView, CreateQuoteStepView {
-
+public class PersonalDetailsAddressPage extends CreateQuoteGuidedStep {
 
     private CustomerAddress      address;
 
@@ -31,21 +21,8 @@ public class CustomerAddressView extends Component implements CreateQuoteView, C
         address = customerAddress;
     }
 
-    public CustomerAddressView(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver.findElementOrNull(By.xpath(VIEW_SELECTOR.getQuery())), seleniumDriver);
-        WebElement title = new WebDriverWait(seleniumDriver.getDriver(), 5).withoutException().until(
-            driver -> {
-                logger().info("STEP:");
-                logger().info(" - ACTION: SELENIUM_FIND_ELEMENT");
-                By by = By.xpath(TITLE_SELECTOR_TEMPLATE.getQuery().replace("${value}", Quote.PERSONAL_DETAILS.getText()));
-                logger().info(" - BY: " + by.toString());
-                return driver.findElement(by);
-            }
-        );
-        if(title == null) {
-            fail("Personal Details view was not found.");
-        }
-        logger().info(" - RESULT: " + "element: <" + title.getTagName() + " class='" + title.getAttribute("class") + "'>" + title.getText() + "/<" + title.getTagName()+ ">");
+    public PersonalDetailsAddressPage(SeleniumDriver seleniumDriver) {
+        super(seleniumDriver);
     }
 
     private class HideAddressSuggestion implements Model.Callback {
@@ -59,16 +36,9 @@ public class CustomerAddressView extends Component implements CreateQuoteView, C
     }
 
     @Override
-    public CreateQuoteStepView next() {
-        return new SelectPackageAndFuelTypeView(seleniumDriver);
-    }
-
-    @Override
     public boolean fillInFormData() {
-        fillInCustomerAddress();
-        return true;
+        return fillInCustomerAddress();
     }
-
 
     public boolean fillInCustomerAddress() {
 
@@ -80,7 +50,7 @@ public class CustomerAddressView extends Component implements CreateQuoteView, C
         String city = address.getCity();
         String country = address.getCountry();
 
-        Model.Execution initializeAddress = newExecution();
+        Model.Execution initializeAddress = createExecutuin();
         initializeAddress.
             element(DELIVERY_ADDR_STREET.element()).
             element(DELIVERY_ADDR_STREET_SUGGESTION.element()).
@@ -107,26 +77,13 @@ public class CustomerAddressView extends Component implements CreateQuoteView, C
         if (StringUtils.isNotEmpty(country)) {
             initializeAddress.step(createStep(Action.SELECT).element(DELIVERY_ADDR_COUNTRY.name()).value(country));
         }
-
         if(!execute(initializeAddress)) {
             fail("Customer Address fields were not initialized");
         }
-
-        Model.Execution copyAddress = newExecution()
-            .element(NEXT_BUTTON.element())
-            .element(SELECT_PACKAGE_ACTIVE.element())
+        Model.Execution copyAddress = createExecutuin()
             .element(COPY_ADDRESS_CONNECTION_TO_BILLING.element())
             .step(createStep(Action.SLEEP).sleepInMillis(3000))
-            .step(createStep(Action.CLICK).element(COPY_ADDRESS_CONNECTION_TO_BILLING.name()).requireDisplayed(false), TOGGLE_CHECKBOX.getSleepInMillis())
-            .step(createStep(Action.CLICK).timeoutInSeconds(NEXT_STEP.getWaitInSeconds()).element(NEXT_BUTTON.name()))
-            .step(createStep(Action.REQUIRE).timeoutInSeconds(WAIT_NEXT_PAGE.getWaitInSeconds()).element(SELECT_PACKAGE_ACTIVE.name()), NEXT_STEP.getSleepInMillis());
-        if(!execute(copyAddress)) {
-            fail("Copy Address switch was not initialized");
-        }
-        Model.Execution discardSimilarCustomer = newExecution()
-            .element(SIMILAR_CUSTOMER_ALERT.element())
-            .step(createStep(Action.CLICK).element(SIMILAR_CUSTOMER_ALERT.name()).timeoutInSeconds(1.5), INPUT.getSleepInMillis());
-        execute(discardSimilarCustomer);
-        return true;
+            .step(createStep(Action.CLICK).element(COPY_ADDRESS_CONNECTION_TO_BILLING.name()).requireDisplayed(false), TOGGLE_CHECKBOX.getSleepInMillis());
+        return execute(copyAddress);
     }
 }

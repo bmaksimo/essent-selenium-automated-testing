@@ -1,8 +1,5 @@
 package com.essent.testing.dwp.pageobject.quote;
 
-public interface CreateQuoteStepView {
-
-    CreateQuoteStepView next();
+public interface Form {
     boolean fillInFormData();
-
 }

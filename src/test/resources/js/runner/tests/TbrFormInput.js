@@ -1,4 +1,4 @@
-class TrApplyFilterInput extends TestRunnerBase {
+class TbrFormInput extends TestRunnerBase {
 
     /**
      * Checks if Filter element is available in the DOM
@@ -10,7 +10,7 @@ class TrApplyFilterInput extends TestRunnerBase {
      * Java example:
      * Map<String, String> options = new HashMap<>();
      * options.put("label", "Contract number");
-     * boolean result = executeJavascriptTest("TrApplyFilterInput", options);
+     * boolean result = executeJavascriptTest("TrFormInput", options);
      */
 
     constructor(options, callback) {
@@ -29,7 +29,7 @@ class TrApplyFilterInput extends TestRunnerBase {
         if(elements.length >= 0) {
             let input = $(elements[0]).find("input, select");
             if(input.index() == 0) {
-                input.val(value).trigger("change");
+                this.applyInput(input, value);
                 result.status = "PASSED";
                 result.reason = '';
             } else {
@@ -41,5 +41,9 @@ class TrApplyFilterInput extends TestRunnerBase {
                 result.reason = 'Filter element ' + label + ' undefined.';
         }
         this.resolveCallback(result);
+    }
+
+    applyInput(input, value) {
+        input.val(value).trigger("change");
     }
 }

@@ -118,10 +118,13 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
                     logger.error(" - CLEAN_DIR: " + userDataPath);
                 }
             }
+
             options.addArguments("--disable-dev-shm-usage"); // overcome limited resource problems
             options.addArguments("--no-sandbox"); // Bypass OS security model
             logger.info(" - OPTIONS: " + options.toString());
-            return new ChromeDriver(options);
+            ChromeDriver chromeDriver = new ChromeDriver(options);
+            chromeDriver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
+            return chromeDriver;
         }
 
         class FirefoxWebdriverInitialingStrategy implements WebDriverInitializingStrategy {

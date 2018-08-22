@@ -12,12 +12,14 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-import static com.essent.testing.dwp.elements.BasicElements.SIBLING_OVERLAYING_ICONS_XPATH;
-import static org.junit.Assert.fail;
+import static com.essent.testing.dwp.pageobject.selector.BasicSelectors.SIBLING_OVERLAYING_ICONS;
 
 public abstract  class Component {
+
     protected static final String APPLICATION_SELECTOR =  "//dwp-app";
+
     protected WebElement     element;
+
     protected SeleniumDriver seleniumDriver;
 
     private final Logger    logger = Logger.getLogger(Component.class);
@@ -35,9 +37,9 @@ public abstract  class Component {
         logger.info(" - ACTION: LOAD_PAGE_OBJECT");
 
         if(element == null) {
-            logger.info(" - RESULT: FAILED");
-            logger.info(" - REASON: " + getClass() + "{null}: Web element was not found. ");
-            fail(getClass() + ": Web element was not found.");
+            logger.error(" - RESULT: FAILED");
+            logger.error(" - REASON: " + getClass() + "{null}: Web element was not found. ");
+            throw new IllegalArgumentException(getClass() + ": Web element was not found.");
         }
 
         logger.info(" - RESULT: " + element);
@@ -45,13 +47,8 @@ public abstract  class Component {
         this.seleniumDriver = seleniumDriver;
     }
 
-    /**
-     * "Syntactic sugar" method which makes it easy to create
-     * new Nova Autocrat Execution class in DWP Scenarios
-     *
-     * @return
-     */
-    protected Model.Execution newExecution() {
+
+    protected Model.Execution createExecutuin() {
         return AutocratExecutionAdapter.newExecution();
     }
 
@@ -63,15 +60,11 @@ public abstract  class Component {
         return AutocratExecutionAdapter.execute(seleniumDriver.getDriver(), execution);
     }
 
-    protected boolean executeStep(final Model.Step step) {
-        return AutocratExecutionAdapter.executeStep(seleniumDriver.getDriver(), step);
-    }
-
     public class HideIconOverlays implements Model.Callback {
         @Override
         public void onAccess(Autocrat.ExecutionContext context, Model.Step step, WebElement value) {
             JavascriptExecutor jsExec = (JavascriptExecutor) context.driver;
-            List<WebElement> elements = value.findElements(By.xpath(SIBLING_OVERLAYING_ICONS_XPATH.getQuery()));
+            List<WebElement> elements = value.findElements(By.xpath(SIBLING_OVERLAYING_ICONS.getQuery()));
             elements.forEach(siblingIcon -> {
                 String setProperty = "style = 'display:none'";
                 logger().info("Executing javascript " + setProperty + " on target element");
