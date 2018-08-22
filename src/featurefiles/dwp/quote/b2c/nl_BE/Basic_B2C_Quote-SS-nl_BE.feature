@@ -43,9 +43,9 @@ Feature: Creating a B2C Quote with supplier switch
         And Billing details are confirmed
         Then  Form Header is "Overzicht offerte"
 
-        When "Datum ondertekening" date is "$today - 3 months"
-        And Option "Heeft de klant al getekend?" is On
+        When Option "Heeft de klant al getekend?" is On
         And Quote is signed in Kontich
+        And "Datum ondertekening" date is "$today - 3 months"
         And Quote is confirmed
         Then View List Header is "Offertes"
         And  1 List row having cell value Sales Getekend - Geaccepteerd at column Type & status are selected

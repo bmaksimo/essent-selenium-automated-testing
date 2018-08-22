@@ -38,7 +38,7 @@ Feature: Creating a B2C Quote with Move In.
 
         When "Startdatum" date is "$today - 3 months"
         And Electricity EAN code is selected
-        And Option "Is de meter geopend?" is Closed
+        And Electricity meter is Closed
         And Connection details are confirmed
         Then Form Header is "Facturatiedetails"
 
@@ -47,6 +47,7 @@ Feature: Creating a B2C Quote with Move In.
         Then  Form Header is "Overzicht offerte"
 
         When Option "Heeft de klant al getekend?" is On
+        And Quote is signed in Kontich
         And "Datum ondertekening" date is "$today - 3 months"
         And Quote is confirmed
         Then View List Header is "Offertes"
