@@ -39,7 +39,7 @@ import static org.hamcrest.Matchers.is;
 
 public class QuoteSteps extends DwpScenario {
 
-    @Before("@SMOKE, @QUOTE, @MENU, @FILTER")
+    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -225,6 +225,11 @@ public class QuoteSteps extends DwpScenario {
     @And("^([^\"]*) meter is ([^\"]*)$")
     public void setMeterState(final ProductType productType, final CheckBoxState meterState) throws Throwable {
         ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage(webDriver);
+        given().await()
+            .ignoreExceptions()
+            .pollInterval(FIVE_HUNDRED_MILLISECONDS)
+            .pollDelay(ONE_HUNDRED_MILLISECONDS)
+            .atMost(new Duration(10, SECONDS)).until(()->connectionDetailsView.isNextButtonEnabled());
         connectionDetailsView.toggleMeter(productType, meterState);
     }
 
@@ -286,7 +291,7 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @MENU, @FILTER")
+    @After("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER")
     public void tearDown() throws Exception {
         super.tearDown();
     }

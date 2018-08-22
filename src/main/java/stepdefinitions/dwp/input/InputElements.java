@@ -1,5 +1,6 @@
 package stepdefinitions.dwp.input;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.PendingException;
 import cucumber.api.Scenario;
@@ -7,6 +8,7 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
+import org.awaitility.Duration;
 import stepdefinitions.dwp.tables.plus.CheckBoxState;
 
 import java.util.HashMap;
@@ -21,7 +23,7 @@ import static org.hamcrest.Matchers.is;
 
 public class InputElements extends DwpScenario {
 
-    @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
+    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER, @RENEWAL")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -80,7 +82,7 @@ public class InputElements extends DwpScenario {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
+    @After("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER, @RENEWAL")
     public void tearDown() throws Exception {
         super.tearDown();
     }

@@ -9,7 +9,7 @@ import stepdefinitions.dwp.navigation.NavigationElements;
 
 public class TopActions extends NavigationElements {
 
-    @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
+    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER, @RENEWAL")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -30,7 +30,7 @@ public class TopActions extends NavigationElements {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
+    @After("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER, @RENEWAL")
     public void tearDown() throws Exception {
         super.tearDown();
     }

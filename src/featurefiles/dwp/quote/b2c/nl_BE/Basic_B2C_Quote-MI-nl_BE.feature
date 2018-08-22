@@ -1,8 +1,13 @@
 @DWP
 @BASIC
-@_QUOTE
+@QUOTE_MI
 @REGRESSION
-Feature: Creating a B2C Quote - supplier switch
+Feature: Creating a B2C Quote with Move In.
+    The test creates a contract with start date and pricing date set to 3 months before now.
+    The existing valid address not known to Nova is used.
+    The new Dutch-speaking customer is generated randomly,
+    with pronounceable first and last name and valid date of birth.
+    DWP application Closes the electricity meter, and  MIG from supplier switch to customer switch automatically.
 
     Background:
         Given I logged in to DWP as contracting.testautomation.b2c@essent.be
@@ -18,9 +23,10 @@ Feature: Creating a B2C Quote - supplier switch
         Then Form Header is "Persoonsgegevens"
 
         When Customer is random
+        #Increase houseNr by 2 (odds from 13)
         And Customer Address is
             | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-            | Mechelsesteenweg| 21   |            |      | 2550       | Kontich  |         |
+            | Mechelsesteenweg| 13   |            |      | 2550       | Kontich  |         |
         And Customer details are confirmed
         Then Form Header is "Selecteer pakket en product"
 
@@ -40,9 +46,8 @@ Feature: Creating a B2C Quote - supplier switch
         And Billing details are confirmed
         Then  Form Header is "Overzicht offerte"
 
-        When "Datum ondertekening" date is "$today - 3 months"
-        And Option "Heeft de klant al getekend?" is On
-        And Quote is signed in Kontich
+        When Option "Heeft de klant al getekend?" is On
+        And "Datum ondertekening" date is "$today - 3 months"
         And Quote is confirmed
         Then View List Header is "Offertes"
-        And Select 1 List rows having cell value Sales Getekend - Geaccepteerd at column Type & status
+        And 1 List row having cell value Sales Getekend - Geaccepteerd at column Type & status is selected

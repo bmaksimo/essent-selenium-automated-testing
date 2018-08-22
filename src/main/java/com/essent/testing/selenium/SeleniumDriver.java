@@ -123,7 +123,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             options.addArguments("--no-sandbox"); // Bypass OS security model
             logger.info(" - OPTIONS: " + options.toString());
             ChromeDriver chromeDriver = new ChromeDriver(options);
-            chromeDriver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
+            chromeDriver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS).setScriptTimeout(1, TimeUnit.MINUTES);
             return chromeDriver;
         }
 

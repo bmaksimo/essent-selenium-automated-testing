@@ -25,7 +25,7 @@ public class OverviewMenu extends NavigationElements {
         }
     }
 
-    @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
+    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER, @RENEWAL")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }

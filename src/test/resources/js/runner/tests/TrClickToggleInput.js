@@ -14,7 +14,7 @@
 class TrClickToggleInput extends TestRunnerBase {
 
     constructor(options, callback) {
-        super(options, callback, 1000);
+        super(options, callback, 3000);
     }
     run(options, result) {
         let label = options.label;

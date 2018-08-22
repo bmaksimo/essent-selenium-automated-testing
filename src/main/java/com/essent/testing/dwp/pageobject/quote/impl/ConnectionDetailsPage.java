@@ -3,6 +3,7 @@ package com.essent.testing.dwp.pageobject.quote.impl;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.testing.selenium.SeleniumDriver;
+import org.apache.commons.lang3.BooleanUtils;
 import stepdefinitions.dwp.tables.ConnectionDetails;
 import stepdefinitions.dwp.tables.ProductType;
 import stepdefinitions.dwp.tables.plus.CheckBoxState;
@@ -65,5 +66,11 @@ public class ConnectionDetailsPage extends CreateQuoteGuidedStep {
         options.put("id", query);
         boolean result = seleniumDriver.executeJavascriptTest("TrToggleInputState", options);
         return result;
+    }
+
+    public Boolean isNextButtonEnabled() {
+        Map options = new HashMap<>();
+        Map result = seleniumDriver.executeJavascriptMethod("TrIsNextButtonEnabled", options);
+        return BooleanUtils.toBoolean((String)result.get("enabled"));
     }
 }

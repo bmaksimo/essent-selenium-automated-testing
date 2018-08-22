@@ -1,12 +1,8 @@
 @DWP
 @BASIC
-@QUOTE_SS
+@_QUOTE
 @REGRESSION
-Feature: Creating a B2C Quote with supplier switch
-    The test creates a contract with start date and pricing date set to 3 months before now.
-    The existing valid address not known to Nova is used.
-    The new Dutch-speaking customer is generated randomly,
-    with pronounceable first and last name and valid date of birth.
+Feature: Creating a B2C Quote - supplier switch
 
     Background:
         Given I logged in to DWP as contracting.testautomation.b2c@essent.be
@@ -16,15 +12,15 @@ Feature: Creating a B2C Quote with supplier switch
         And Plus Menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form Header is "Details van de offerte"
 
-        When B2C sales channel is Inbound
+        When "Tariefdatum" date is "$today - 3 months"
+        And B2C sales channel is Inbound
         And Quote details are confirmed
         Then Form Header is "Persoonsgegevens"
 
         When Customer is random
-        #Increase houseNr by 2 (evens from 14)
         And Customer Address is
             | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-            | Mechelsesteenweg| 14     |            |      | 2550       | Kontich  |         |
+            | Mechelsesteenweg| 12   |            |      | 2550       | Kontich  |         |
         And Customer details are confirmed
         Then Form Header is "Selecteer pakket en product"
 
@@ -36,6 +32,8 @@ Feature: Creating a B2C Quote with supplier switch
 
         When "Startdatum" date is "$today - 3 months"
         And Electricity EAN code is selected
+        #And Electricity meter is Closed
+        #And Option "Is de meter geopend?" is Closed
         And Connection details are confirmed
         Then Form Header is "Facturatiedetails"
 
@@ -43,9 +41,11 @@ Feature: Creating a B2C Quote with supplier switch
         And Billing details are confirmed
         Then  Form Header is "Overzicht offerte"
 
-        When "Datum ondertekening" date is "$today - 3 months"
-        And Option "Heeft de klant al getekend?" is On
+        When Option "Heeft de klant al getekend?" is On
+        And "Datum ondertekening" date is "$today - 3 months"
         And Quote is signed in Kontich
         And Quote is confirmed
         Then View List Header is "Offertes"
-        And  1 List row having cell value Sales Getekend - Geaccepteerd at column Type & status are selected
+        And  1 List row having cell value Sales Getekend - Geaccepteerd at column Type & status is selected
+
+

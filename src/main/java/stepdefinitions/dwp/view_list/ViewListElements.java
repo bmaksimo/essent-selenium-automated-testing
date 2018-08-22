@@ -163,7 +163,7 @@ public class ViewListElements extends NavigationElements {
         }
     }
 
-    @Before("@SMOKE, @QUOTE, @MENU, @FILTER")
+    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -215,7 +215,7 @@ public class ViewListElements extends NavigationElements {
             success, is(true));
     }
 
-    @And("^Select ([^\"]*) List rows having cell value ([^\"]*) at column ([^\"]*)$")
+    @And("^([^\"]*) List rows? having cell value ([^\"]*) at column ([^\"]*) (?:is|are) selected$")
     public void selectListRowHavingCellValueAtColumn(int row, String value, String columnName) throws Throwable {
         ViewListModel viewListModel = new ViewListModel();
         boolean success = viewListModel.selectListRows(row, value, columnName);
@@ -258,7 +258,7 @@ public class ViewListElements extends NavigationElements {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @MENU, @FILTER")
+    @After("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER")
     public void tearDown() throws Exception {
         super.tearDown();
     }

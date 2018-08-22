@@ -14,7 +14,7 @@ class TrDatePickerInput extends TbrFormInput {
      */
 
     constructor(options, callback) {
-        super(options, callback, 500);
+        super(options, callback, 1000);
     }
 
     applyInput(input, value) {

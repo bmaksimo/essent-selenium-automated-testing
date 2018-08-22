@@ -20,7 +20,7 @@ import static org.hamcrest.Matchers.is;
 
 public class MenuElements extends NavigationElements {
 
-    @Before("@SMOKE, @QUOTE, @MENU, @FILTER")
+    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -96,7 +96,7 @@ public class MenuElements extends NavigationElements {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @MENU, @FILTER")
+    @After("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER")
     public void tearDown() throws Exception {
         super.tearDown();
     }
