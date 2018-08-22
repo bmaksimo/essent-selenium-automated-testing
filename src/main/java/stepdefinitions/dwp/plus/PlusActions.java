@@ -13,19 +13,19 @@ public class PlusActions extends NavigationElements {
         registerActiveScenario(scenario);
     }
 
-    @And("^Plus Menu is \"([^\"]*)\"$")
+    @And("^Plus menu is \"([^\"]*)\"$")
     public void checkPlusMenu(String path) throws Throwable {
         clickPlusAction(path);
-    }
-
-    @And("^List Plus Action is ([^\"]*)$")
-    public void checkPlusAction(String item) throws Exception {
-        clickListPlusAction(item);
     }
 
     @Override
     @After("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER")
     public void tearDown() throws Exception {
         super.tearDown();
+    }
+
+    @And("^List Plus Action is ([^\"]*)$")
+    public void checkPlusAction(String item) throws Exception {
+        clickListPlusAction(item);
     }
 }

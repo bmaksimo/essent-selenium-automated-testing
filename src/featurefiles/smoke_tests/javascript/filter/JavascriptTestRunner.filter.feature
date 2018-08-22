@@ -5,7 +5,7 @@ Feature: Javascript DWP testing
         Given   I logged in to DWP as d.chebayewski.billinghouse@essent.be
 
     Scenario:
-        When Left Menu Item is sales-marketing
+        When Left menu is sales-marketing
         And Top Menu Item is Market Transactions
         And Top Action is Filters
         And "Created after" date is "$today + 3months"
@@ -15,10 +15,10 @@ Feature: Javascript DWP testing
         Then View List is empty
 
     Scenario:
-        When Top Action is Plus Menu
-        And Plus Menu is "Contracting -> UP/TC2 - to renew contracts"
-        Then View List Header is "UP-TC2 - to renew contracts"
-        When Top Action is Filters
+        When Top action is Plus Menu
+        And Plus menu is "Contracting -> UP/TC2 - to renew contracts"
+        Then View list header is "UP-TC2 - to renew contracts"
+        When Top action is Filters
         And "Account number" input is "6574"
         Then View List is empty
 

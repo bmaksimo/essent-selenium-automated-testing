@@ -4,9 +4,9 @@ Feature: Javascript DWP testing
     Background:
         Given   I logged in to DWP as d.chebayewski.billinghouse@essent.be
     Scenario:
-        When Left Menu Item is sales-marketing
-        And Top Menu Item is Market Transactions
-        And Top Action is Filters
+        When Left menu is sales-marketing
+        And Top menu item is Market Transactions
+        And Top action is Filters
         #And Filter element "EAN" input is "541444625522734400"
         And "Module" selection is "CANCEL"
         #Then 1st List element has cell value Closed at column EC Status & Effective Date

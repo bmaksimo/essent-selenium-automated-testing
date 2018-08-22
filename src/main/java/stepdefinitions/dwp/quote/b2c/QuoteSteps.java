@@ -1,6 +1,8 @@
 package stepdefinitions.dwp.quote.b2c;
 
+import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
+import com.billinghouse.random.Location;
 import com.billinghouse.random.RandomUser;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
@@ -12,6 +14,7 @@ import com.essent.testing.dwp.pageobject.quote.impl.*;
 import com.essent.testing.util.ResourceUtils;
 import com.google.gson.Gson;
 import cucumber.api.DataTable;
+import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -32,6 +35,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
+import static com.essent.testing.dwp.DwpDateFormats.TIMESTAMP;
 import static com.essent.testing.dwp.DwpTimingParameters.NEXT_STEP;
 import static com.essent.testing.dwp.quote.elements.TariffElements.NO_PRICESHEET_ALERT;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -139,7 +143,6 @@ public class QuoteSteps extends DwpScenario {
     }
 
 
-
     @OutputParameter(name = "customer")
     private CustomerDetails newCustomer;
 
@@ -204,13 +207,14 @@ public class QuoteSteps extends DwpScenario {
         selectPackageAndFuelTypeView.next();
     }
 
-    @And("^No price sheet alerts popped up$")
+
+    @And("^Price sheet alert doesn't pop up$")
     public void verifySelectTariffSheetAndPackage() throws Throwable {
         assertThat("Failure. Tariff sheet alerts were generated although they were not expected.", true,
             is(new VerifyTariffSheetPriceAlert().test(this)));
     }
 
-    @And("^Electricity and gas meter numbers and their EANs are:$")
+    @And("^Electricity and gas meter number and EAN are:$")
     public void selectMeterIdAndEan(final DataTable connectionTable) throws Throwable {
         List<ConnectionDetails> list = connectionTable.asList(ConnectionDetails.class);
         ConnectionDetails electricityConnectionDetails = list.get(0);
@@ -234,6 +238,7 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^Connection details are confirmed$")
+
     public void confirmConnection() throws Throwable {
         ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage(webDriver);
         connectionDetailsView.next();

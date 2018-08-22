@@ -25,23 +25,23 @@ public class MenuElements extends NavigationElements {
         registerActiveScenario(scenario);
     }
 
-    @When("^Available Left Menu items are:$")
+    @When("^Available left menu items are:$")
     public void checkMenuItemLink(DataTable menuItems) throws Throwable {
         List<String> failedMenuItems = menuItems.asList(String.class).stream()
             .filter(
-            menuItem -> {
-                Map<String, String> jsOptions = new HashMap<>();
-                jsOptions.put("menu", "left");
-                jsOptions.put("item", menuItem);
-                return !executeJavascriptTest("TrCheckMenuItem", jsOptions);
-            })
+                menuItem -> {
+                    Map<String, String> jsOptions = new HashMap<>();
+                    jsOptions.put("menu", "left");
+                    jsOptions.put("item", menuItem);
+                    return !executeJavascriptTest("TrCheckMenuItem", jsOptions);
+                })
             .collect(Collectors.toList());
         assertThat("The following left menu items were not available: "
             + StringUtils.join(failedMenuItems, ", "), failedMenuItems.isEmpty(), is(true));
 
     }
 
-    @And("^Available Top Menu Items are:$")
+    @And("^Available top menu items are:$")
     public void checkAvailableTopItems(DataTable menuItems) throws Throwable {
         final List<String> failedUpperItems = menuItems.asList(String.class)
             .stream()
@@ -57,12 +57,12 @@ public class MenuElements extends NavigationElements {
             + StringUtils.join(failedUpperItems, ", "), failedUpperItems.isEmpty(), is(true));
     }
 
-    @When("^Left Menu Item is ([^\"]*)$")
+    @When("^Left menu is ([^\"]*)$")
     public void clickLeftMenuItem(String tabName) throws Throwable {
         super.visitLeftMenuItem(tabName);
     }
 
-    @When("^Top Menu Item is ([^\"]*)$")
+    @When("^Top menu item is ([^\"]*)$")
     public void clickTopMenuItem(String tabName) throws Throwable {
         super.visitTopMenuItem(tabName);
     }
@@ -82,12 +82,12 @@ public class MenuElements extends NavigationElements {
         final List<String> failedItems = plusItems.asList(Item.class)
             .stream()
             .filter(
-             item -> {
-                 Map<String, Object> options = new HashMap<>();
-                 options.put("item", item.getItem());
-                 options.put("position", item.getPosition());
-                 return !executeJavascriptTest("TrPlusMenuHasItem", options);
-             })
+                item -> {
+                    Map<String, Object> options = new HashMap<>();
+                    options.put("item", item.getItem());
+                    options.put("position", item.getPosition());
+                    return !executeJavascriptTest("TrPlusMenuHasItem", options);
+                })
             .map(item -> {
                 return item.getItem();
             }).collect(Collectors.toList());

@@ -70,7 +70,7 @@ public class FilterElements extends NavigationElements {
 
     }
 
-    @When("^Available filter elements are:$")
+    @When("^Available filters are:$")
     public void visitLeftMenuItemFilter(DataTable filterElements) throws Throwable {
         TogggleFilterMode togggleFilterMode = new TogggleFilterMode();
         togggleFilterMode.test(this);

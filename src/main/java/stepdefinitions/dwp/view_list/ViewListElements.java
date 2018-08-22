@@ -10,6 +10,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import stepdefinitions.dwp.navigation.NavigationElements;
 
+
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -93,7 +94,7 @@ public class ViewListElements extends NavigationElements {
             AtomicInteger idx = new AtomicInteger(1);
             List<Integer> indices = IntStream.range(1, rows.size() + 1)
                 .filter(i ->
-                idx.compareAndSet(i, i + 1) & ((ArrayList<String>) rows.get(i - 1)).get(index).contains(value))
+                    idx.compareAndSet(i, i + 1) & ((ArrayList<String>) rows.get(i - 1)).get(index).contains(value))
                 .boxed()
                 .collect(Collectors.toList());
             return indices;
@@ -168,7 +169,7 @@ public class ViewListElements extends NavigationElements {
         registerActiveScenario(scenario);
     }
 
-    @When("^View List Header is \"([^\"]*)\"$")
+    @When("^View list header is \"([^\"]*)\"$")
     public void checkViewListHeader(String header) throws Throwable {
         boolean success = new CheckViewListHeader().test(header);
         assertThat(String.format("View list did not contain header '%s'", header),

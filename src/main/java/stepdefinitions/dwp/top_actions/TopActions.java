@@ -14,7 +14,7 @@ public class TopActions extends NavigationElements {
         registerActiveScenario(scenario);
     }
 
-    @When("^Top Action is ([^\"]*)$")
+    @When("^Top action is ([^\"]*)$")
     public void checkTopAction(String action) throws Throwable {
         clickTopAction(action);
     }
