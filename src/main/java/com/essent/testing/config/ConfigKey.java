@@ -29,8 +29,8 @@ public enum ConfigKey {
     DWP_USER_CONTRACTING_B2C("dwp.user.b2c.contracting"),
     DWP_PASSWORD_CONTRACTING_B2C("dwp.password.b2c.contracting"),
 
-    DWP_USER_BILLING("dwp.user..billing"),
-    DWP_PASSWORD_BILLING("dwp.password..billing"),
+    DWP_USER_BILLING("dwp.user.billing"),
+    DWP_PASSWORD_BILLING("dwp.password.billing"),
 
     SERVICEMIX_BASE_URL("servicemix.baseurl"),
     BILLING_URL("billing.url"),

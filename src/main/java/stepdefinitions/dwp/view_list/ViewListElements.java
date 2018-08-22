@@ -226,7 +226,7 @@ public class ViewListElements extends NavigationElements {
 
     @OutputParameter(name = "toRenewContractsContact")
     private Map<String, Object> toRenewContractsContacts = new HashMap<>();
-    @And("^Store cell values of selected list rows at column \"([^\"]*)\" as \"([^\"]*)\"$")
+    @And("^Selected list rows at column \"([^\"]*)\" are put to global parameter \"([^\"]*)\"$")
     public void storeDataSelectionOutputParameter(String columnName, String outParamName) throws Throwable {
         ViewListModel viewListModel = new ViewListModel();
         List<String> cellSelection = viewListModel.fetchDataSelection(columnName);
@@ -241,6 +241,10 @@ public class ViewListElements extends NavigationElements {
     public void checkSelectionData(String value, String columnName) throws Throwable {
         ViewListModel viewListModel = new ViewListModel();
         List<String> cellSelection = viewListModel.fetchDataSelection(columnName);
+        assertThat(String.format("Selection of rows by column %s was empty", columnName),
+            cellSelection.isEmpty(), is(false));
+        assertThat(String.format("Selected rows did not contain cell value %s at column %s", value, columnName),
+            cellSelection.get(0).contains(value), is(true));
     }
 
     @When("^Submit Card is ([^\"]*)$")
