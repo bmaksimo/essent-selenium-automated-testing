@@ -16,7 +16,7 @@ import static org.hamcrest.Matchers.is;
 
 public class PlusActions extends NavigationElements {
 
-    @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL, @B2B_REGRESSION")
+    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -32,7 +32,7 @@ public class PlusActions extends NavigationElements {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL, @B2B_REGRESSION")
+    @After("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER, @B2B_REGRESSION")
     public void tearDown() throws Exception {
         super.tearDown();
     }
@@ -51,10 +51,7 @@ public class PlusActions extends NavigationElements {
 
     @And("^Selenium click on plus$")
     public void seleniumClickOnPlus() throws Throwable {
-        webDriver.findElementOrNull(By.id("d1baa825-bda0-93ac-1e01-5b4856e6ef71")).click();
-        webDriver.findElementOrNull(By.id("d1baa825-bda0-93ac-1e01-5b4856e6ef71")).click();
-        webDriver.findElementOrNull(By.id("d1baa825-bda0-93ac-1e01-5b4856e6ef71")).click();
-        webDriver.findElementOrNull(By.id("d1baa825-bda0-93ac-1e01-5b4856e6ef71")).click();
-        webDriver.findElementOrNull(By.xpath("//table[@safeclass~'\\blist__content\\b']/tbody[@id='rows']/tr[@safeclass~'\\brow__actions\\b']//list-row-actions[@smartid='bdaac-e']/?/?/list-row-action[@label='Update']/a[@innertext=' Update ']/span[@safeclass~'\\bicon-edit\\b']")).click();
+        webDriver.findElementOrNull(By.xpath("//table[@safeclass~'\\blist__content\\b']/tbody[@id='rows']//list-plus-cell[@smartid='bdaac-e']/?/?/a[@safeclass~'\\bicon-plus\\b.*\\bshow-actions\\b']")).click();
+        webDriver.findElementOrNull(By.className("icon-edit")).click();
     }
 }

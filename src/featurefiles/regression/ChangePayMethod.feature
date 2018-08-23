@@ -11,7 +11,7 @@ Feature: Change Pay Method
         And "B2C/B2B" selection is "B2B"
         And "Account number" input is "151004569"
         When Click on link in View List at 1st row and "Account Number & Name" column
-        And Overview is Details
+        And Dashboard menu is Details
         And View List Header is "Billing customer"
 #        When Click on link in View List at 1st row and "" column
 #        And "Billing customer" list item at 1st plus action

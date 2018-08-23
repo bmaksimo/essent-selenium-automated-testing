@@ -27,7 +27,7 @@ public class FilterElements extends NavigationElements {
     private static final String FILTER_BUTTON_ELEMENT_QUERY = ".icon-filters";
 
 
-    @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
+    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -36,12 +36,12 @@ public class FilterElements extends NavigationElements {
 
         @Override
         public boolean test(FilterElements param) {
-            Model.Execution execution = newExecution().element(FILTER_BUTTON_ELEMENT, new Model.Element().search("SELECTOR").query(FILTER_BUTTON_ELEMENT_QUERY));
+            Model.Execution execution = createExecution().element(FILTER_BUTTON_ELEMENT, new Model.Element().search("SELECTOR").query(FILTER_BUTTON_ELEMENT_QUERY));
             execution
                 .flow()
                 .step((new Model.Step().action(CLICK).element(FILTER_BUTTON_ELEMENT)))
                 .step(new Model.Step().action(Action.SLEEP).sleepInMillis(2500));
-            return execute(webDriver.getDriver(), execution);
+            return execute(execution);
         }
     }
 
@@ -51,9 +51,9 @@ public class FilterElements extends NavigationElements {
             List<Model.Element> elements = FilterElementConverter.get().getElements(filterElements);
             List<String> failures = elements.stream().filter(element ->
             {
-                Model.Execution execution = newExecution().element("LABEL", element);
+                Model.Execution execution = createExecution().element("LABEL", element);
                 execution.flow().step((new Model.Step().action(REQUIRE).element("LABEL")));
-                return !execute(webDriver.getDriver(), execution);
+                return !execute(execution);
             })
                 .map(element->{ return element.getName() + ", " + element.query;}).collect(Collectors.toList());
             return failures;
@@ -83,7 +83,7 @@ public class FilterElements extends NavigationElements {
 
 
     @Override
-    @After("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
+    @After("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER")
     public void tearDown() throws Exception {
         super.tearDown();
     }
