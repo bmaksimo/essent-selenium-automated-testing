@@ -22,6 +22,10 @@ class TrClickTableCellUrl extends TestRunnerBase {
         let caption = options.column;
         let row = parseInt(options.index) * 2 - 1;
         let index = $(".list__content th:contains('" + caption + "')").index();
+        console.log("ROW: " + row);
+        console.log("INDEX: " + index);
+//        console.log("Column is " + options.column);
+//        console.log("Caption is " caption);
         if (index < 0) {
             result.status = 'FAILED';
             result.reason = 'Column ' + caption + ' was not found.';

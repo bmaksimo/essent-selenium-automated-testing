@@ -39,6 +39,6 @@ class TrGetLeftMenu extends TestRunnerBase {
         }
         setTimeout(()=> {
             this.resolveCallback(result);
-        }, 5000);
+        }, 500);
     }
 }

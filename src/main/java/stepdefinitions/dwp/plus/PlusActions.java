@@ -1,9 +1,11 @@
 package stepdefinitions.dwp.plus;
 
+import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
+import org.openqa.selenium.By;
 import stepdefinitions.dwp.navigation.NavigationElements;
 
 import java.util.HashMap;
@@ -37,13 +39,22 @@ public class PlusActions extends NavigationElements {
 
     @And("^\"([^\"]*)\" list item at ([^\"]*) plus action$")
     public void listItemAtStringPlusAction(String headerName, String ordinal) {
+        String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
         Map<String, String> params = new HashMap<>();
         params.put("headerName", headerName);
-        params.put("ordinal", ordinal);
+        params.put("ordinal", rowIndex);
         boolean success = new ClickOnPlusAction().test(params);
         assertThat(String.format("View list did not contain header '%s'", headerName),
             success, is(true));
     }
 
 
+    @And("^Selenium click on plus$")
+    public void seleniumClickOnPlus() throws Throwable {
+        webDriver.findElementOrNull(By.id("d1baa825-bda0-93ac-1e01-5b4856e6ef71")).click();
+        webDriver.findElementOrNull(By.id("d1baa825-bda0-93ac-1e01-5b4856e6ef71")).click();
+        webDriver.findElementOrNull(By.id("d1baa825-bda0-93ac-1e01-5b4856e6ef71")).click();
+        webDriver.findElementOrNull(By.id("d1baa825-bda0-93ac-1e01-5b4856e6ef71")).click();
+        webDriver.findElementOrNull(By.xpath("//table[@safeclass~'\\blist__content\\b']/tbody[@id='rows']/tr[@safeclass~'\\brow__actions\\b']//list-row-actions[@smartid='bdaac-e']/?/?/list-row-action[@label='Update']/a[@innertext=' Update ']/span[@safeclass~'\\bicon-edit\\b']")).click();
+    }
 }

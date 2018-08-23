@@ -9,8 +9,10 @@ Feature: Change Pay Method
         And Top Menu Item is Accounts
         And Top Action is Filters
         And "B2C/B2B" selection is "B2B"
-        And "Account number" input is "151004631"
+        And "Account number" input is "151004569"
         When Click on link in View List at 1st row and "Account Number & Name" column
         And Overview is Details
         And View List Header is "Billing customer"
-        And "Billing customer" list item at 1st plus action
+#        When Click on link in View List at 1st row and "" column
+#        And "Billing customer" list item at 1st plus action
+        And Selenium click on plus
