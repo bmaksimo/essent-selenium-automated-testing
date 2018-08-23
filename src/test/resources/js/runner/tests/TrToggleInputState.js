@@ -4,13 +4,13 @@ class TrToggleInputState extends TestRunnerBase {
         super(options, callback, 100);
     }
     run(options, result) {
-        let $inputElements = $(options.id);
-        let inputElementsSize = $inputElements.size();
-        if (inputElementsSize === 0) {
+        let input = $(options.id);
+        let inputSize = input.size();
+        if (inputSize === 0) {
             result.status = 'FAILED';
             result.reason = 'Input element with id ' + options.id + ' not found';
         } else {
-            $inputElements[0].element.click();
+            input[0].click();
             result.status = 'PASSED';
             result.reason = '';
         }
