@@ -168,7 +168,7 @@ public class ViewListElements extends NavigationElements {
         }
     }
 
-    @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL, @B2B_REGRESSION")
+    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -220,7 +220,7 @@ public class ViewListElements extends NavigationElements {
             success, is(true));
     }
 
-    @And("^Select ([^\"]*) List rows having cell value ([^\"]*) at column ([^\"]*)$")
+    @And("^([^\"]*) List rows? having cell value ([^\"]*) at column ([^\"]*) (?:is|are) selected$")
     public void selectListRowHavingCellValueAtColumn(int row, String value, String columnName) throws Throwable {
         ViewListModel viewListModel = new ViewListModel();
         boolean success = viewListModel.selectListRows(row, value, columnName);
@@ -231,8 +231,7 @@ public class ViewListElements extends NavigationElements {
 
     @OutputParameter(name = "toRenewContractsContact")
     private Map<String, Object> toRenewContractsContacts = new HashMap<>();
-
-    @And("^Store cell values of selected list rows at column \"([^\"]*)\" as \"([^\"]*)\"$")
+    @And("^Selected list rows at column \"([^\"]*)\" are put to global parameter \"([^\"]*)\"$")
     public void storeDataSelectionOutputParameter(String columnName, String outParamName) throws Throwable {
         ViewListModel viewListModel = new ViewListModel();
         List<String> cellSelection = viewListModel.fetchDataSelection(columnName);
@@ -242,12 +241,15 @@ public class ViewListElements extends NavigationElements {
     }
 
     @InputParameter(name = "toRenewContractsContact")
-    private Map<String, Object> selection;
-
+    private  Map<String, Object> selection;
     @Then("^Selected List rows have cell value \"([^\"]*)\" at column \"([^\"]*)\"$")
     public void checkSelectionData(String value, String columnName) throws Throwable {
         ViewListModel viewListModel = new ViewListModel();
         List<String> cellSelection = viewListModel.fetchDataSelection(columnName);
+        assertThat(String.format("Selection of rows by column %s was empty", columnName),
+            cellSelection.isEmpty(), is(false));
+        assertThat(String.format("Selected rows did not contain cell value %s at column %s", value, columnName),
+            cellSelection.get(0).contains(value), is(true));
     }
 
     @When("^Submit Card is ([^\"]*)$")
@@ -265,7 +267,7 @@ public class ViewListElements extends NavigationElements {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL, @B2B_REGRESSION")
+    @After("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER, @B2B_REGRESSION")
     public void tearDown() throws Exception {
         super.tearDown();
     }
