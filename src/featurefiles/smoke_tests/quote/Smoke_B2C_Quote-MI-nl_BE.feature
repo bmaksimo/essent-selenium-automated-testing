@@ -1,13 +1,18 @@
 @DWP
 @BASIC
-@_QUOTE
+@SMOKE
 @REGRESSION
-Feature: Creating a B2C Quote - supplier switch
+Feature: Creating a B2C Quote with customer switch - Dutch version
+    The test creates a contract with start date and pricing date set to 3 months before now.
+    The existing valid address already known to Nova is used,
+    the new Dutch-speaking customer is generated randomly,
+    with pronounceable first and last name and valid date of birth.
+    DWP application switches MIG from supplier switch to customer switch automatically.
 
     Background:
         Given I logged in to DWP as contracting.testautomation.b2c@essent.be
 
-    Scenario: Create a B2C Quote with Supplier Switch
+    Scenario: Create a B2C Quote with customer switch
         When Top Action is Plus Menu
         And Plus Menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form Header is "Details van de offerte"
@@ -32,8 +37,6 @@ Feature: Creating a B2C Quote - supplier switch
 
         When "Startdatum" date is "$today - 3 months"
         And Electricity EAN code is selected
-        #And Electricity meter is Closed
-        #And Option "Is de meter geopend?" is Closed
         And Connection details are confirmed
         Then Form Header is "Facturatiedetails"
 
@@ -42,10 +45,8 @@ Feature: Creating a B2C Quote - supplier switch
         Then  Form Header is "Overzicht offerte"
 
         When Option "Heeft de klant al getekend?" is On
-        And "Datum ondertekening" date is "$today - 3 months"
         And Quote is signed in Kontich
+        And "Datum ondertekening" date is "$today - 3 months"
         And Quote is confirmed
         Then View List Header is "Offertes"
-        And  1 List row having cell value Sales Getekend - Geaccepteerd at column Type & status is selected
-
-
+        And 1 List row having cell value Sales Getekend - Geaccepteerd at column Type & status is selected
