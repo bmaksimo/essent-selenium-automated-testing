@@ -1,4 +1,4 @@
-package com.essent.testing.restassured.constants;
+package com.essent.testing.restassured.create_b2b_contract.constants;
 
 public enum ContractStatus {
 	

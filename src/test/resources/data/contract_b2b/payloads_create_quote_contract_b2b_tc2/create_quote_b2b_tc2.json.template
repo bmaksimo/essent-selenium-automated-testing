@@ -130,7 +130,7 @@
        "accounts|aos_quotes|aos_products_quotes|hedged_prices_c":null,
        "accounts|aos_quotes|aos_products_quotes|up_gsc_and_wkc_c":false,
        "accounts|aos_quotes|aos_products_quotes|inclusive_transport_c":true,
-       "accounts|aos_quotes|aos_products_quotes|up_start_date_c":"2017-03-22",
+       "accounts|aos_quotes|aos_products_quotes|up_start_date_c":"${upStartDate}",
        "accounts|aos_quotes|aos_products_quotes|up_end_date_c":"${upEndDate}",
        "accounts|aos_quotes|possible_duration_c":[
           24
@@ -165,7 +165,7 @@
                    "key":null,
                    "disabled":true,
                    "label":"High",
-                   "uom":"â‚¬/MWh",
+                   "uom":"€/MWh",
                    "title":"24 months",
                    "timeFrame":"High",
                    "indexationParameter":null
@@ -176,7 +176,7 @@
                    "key":null,
                    "disabled":true,
                    "label":"Low",
-                   "uom":"â‚¬/MWh",
+                   "uom":"€/MWh",
                    "title":"24 months",
                    "timeFrame":"Low",
                    "indexationParameter":null
@@ -187,7 +187,7 @@
                    "key":null,
                    "disabled":true,
                    "label":"Fixed fee",
-                   "uom":"â‚¬/Year",
+                   "uom":"€/Year",
                    "title":"24 months",
                    "timeFrame":"Fixed fee",
                    "indexationParameter":null

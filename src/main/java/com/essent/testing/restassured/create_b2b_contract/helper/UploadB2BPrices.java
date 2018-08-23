@@ -1,10 +1,10 @@
-package com.essent.testing.restassured.helper;
+package com.essent.testing.restassured.create_b2b_contract.helper;
 
 import java.io.File;
 
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
-import com.essent.testing.restassured.constants.Constants;
+import com.essent.testing.restassured.create_b2b_contract.constants.Constants;
 import com.jcraft.jsch.*;
 
 public class UploadB2BPrices {

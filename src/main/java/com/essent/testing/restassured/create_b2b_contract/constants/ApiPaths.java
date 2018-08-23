@@ -1,4 +1,4 @@
-package com.essent.testing.restassured.constants;
+package com.essent.testing.restassured.create_b2b_contract.constants;
 
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
@@ -24,4 +24,5 @@ public class ApiPaths {
 	public static final String API_GF_SIGN_MANDATE_PAPER = CRM_ROOT_API + "/V8_Custom/Flow/gf_sign_mandate_paper";
 
 	public static final String API_CONTRACTED_EAN = CRM_ROOT_API + "/V8_Custom/List/ContractedEansOnAccount";
+	public static final String API_GET_ACCOUNT_NUMBER = CRM_ROOT_API + "/V8_Custom/BlueSidebar/Accounts/{recordId}";
 }

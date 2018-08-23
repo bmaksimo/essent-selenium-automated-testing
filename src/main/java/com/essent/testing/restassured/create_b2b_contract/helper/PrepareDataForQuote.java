@@ -1,32 +1,27 @@
-package com.essent.testing.restassured.helper;
+package com.essent.testing.restassured.create_b2b_contract.helper;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Random;
 import java.util.Map.Entry;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.commons.io.FileUtils;
 import org.iban4j.CountryCode;
 import org.iban4j.Iban;
 
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
-import io.restassured.http.Cookies;
-import io.restassured.path.json.JsonPath;
-import io.restassured.response.Response;
-
-public final class GenerateDataForQuote {
+public final class PrepareDataForQuote {
 	
-	private GenerateDataForQuote() {
+	private PrepareDataForQuote() {
 		
 	}
 	
@@ -115,6 +110,19 @@ public final class GenerateDataForQuote {
 			(Character.getNumericValue(charArray[15]))));
 
 			return randomNumberForEAN + String.valueOf(Math.round(Math.ceil(sum/10))*10 - sum);
+	}
+	
+	public static String getRandomStartContractDate(String startContractDate, String todayDate) throws ParseException {
+
+		Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(startContractDate);
+		Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse(todayDate);
+
+		long random = ThreadLocalRandom.current().nextLong(date1.getTime(), date2.getTime());
+		Date date = new Date(random);
+
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		return dateFormat.format(date);
+
 	}
 	
 	public static String generateStringFromResource(String path) throws IOException {

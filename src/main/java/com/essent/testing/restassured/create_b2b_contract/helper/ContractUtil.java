@@ -1,13 +1,8 @@
-package com.essent.testing.restassured.helper;
+package com.essent.testing.restassured.create_b2b_contract.helper;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
-import com.essent.testing.restassured.constants.ContractStatus;
+import com.essent.testing.restassured.create_b2b_contract.constants.ContractStatus;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -45,17 +40,4 @@ public class ContractUtil {
 	    return contractStatus;
 	}
 	
-	public static String getRandomStartContractDate(String startContractDate, String todayDate) throws ParseException {
-
-		Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(startContractDate);
-		Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse(todayDate);
-
-		long random = ThreadLocalRandom.current().nextLong(date1.getTime(), date2.getTime());
-		Date date = new Date(random);
-
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		return dateFormat.format(date);
-
-	}
-
 }

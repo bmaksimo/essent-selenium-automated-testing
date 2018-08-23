@@ -1,6 +1,8 @@
-package com.essent.testing.restassured.constants;
+package com.essent.testing.restassured.create_b2b_contract.constants;
 
 public class Constants {
+	
+	public static final int TIMEOUT_SET_CONTRACT_ACTIVE = 12;
 	
 	public static final int MAX_NUMBER_OF_ATTEMPTS_TO_FIND_APPROPRIATE_START_CONTRACT_DATE = 5;
 	
@@ -10,6 +12,10 @@ public class Constants {
 	public static final String PATH_TO_JSON_FILES_QUOTE_TC1_B2B = "./src/test/resources/data/contract_b2b/payloads_create_quote_contract_b2b_tc1/";
 	public static final String PATH_TO_JSON_FILES_QUOTE_TC2_B2B = "./src/test/resources/data/contract_b2b/payloads_create_quote_contract_b2b_tc2/";
 	public static final String PATH_TO_JSON_FILES_QUOTE_UP_B2B = "./src/test/resources/data/contract_b2b/payloads_create_quote_contract_b2b_up/";
+	
+	public static final String ACCOUNT_NAME_PREFIX_TC1_B2B = "B2B_TC1_";
+	public static final String ACCOUNT_NAME_PREFIX_TC2_B2B = "B2B_TC2_";
+	public static final String ACCOUNT_NAME_PREFIX_UP_B2B = "B2B_UP_";
 	
 	public static final String SENT_TO_CUSTOMER_EN = "Sent to customer";
 	public static final String SENT_TO_CUSTOMER_NL = "Verstuurd naar de klant";
