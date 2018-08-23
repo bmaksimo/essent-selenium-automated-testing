@@ -11,7 +11,7 @@ Feature: End of contract for bankruptcy
         And "B2C/B2B" selection is "B2B"
         And "Account number" input is "151004631"
         When Click on link in View List at 1st row and "Account Number & Name" column
-        Then Overview is Workflows
+        Then Dashboard menu is Workflows
         When Click on Start new market scenario
         And Click Select Contractline
         And EAN check box
