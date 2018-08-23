@@ -41,6 +41,7 @@
     <!-- Essent dependencies -->
 
     <!-- Dependency versions. -->
+    <awaitility.version>3.1.1</awaitility.version>
     <spring.version>4.2.2.RELEASE</spring.version>
     <freemarker.version>2.3.23</freemarker.version>
     <activemq.version>5.13.2</activemq.version>
@@ -79,6 +80,11 @@
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.awaitility</groupId>
+        <artifactId>awaitility</artifactId>
+        <version>${awaitility.version}</version>
+      </dependency>
       <dependency>
         <groupId>info.cukes</groupId>
         <artifactId>cucumber-spring</artifactId>
@@ -314,6 +320,10 @@
         number PROPERTY needs to be added. **** -->
   <!-- ************************************************************************************************************ -->
   <dependencies>
+    <dependency>
+      <groupId>org.awaitility</groupId>
+      <artifactId>awaitility</artifactId>
+    </dependency>
     <dependency>
       <groupId>info.cukes</groupId>
       <artifactId>cucumber-spring</artifactId>

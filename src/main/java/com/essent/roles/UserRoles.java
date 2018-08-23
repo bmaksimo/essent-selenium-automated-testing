@@ -10,9 +10,9 @@ import java.util.Map;
 public enum UserRoles {
     ESSENT_ADMIN(ConfigProvider.getProperty(ConfigKey.DWP_USER_ESSENTADMIN), ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD)),
     SERVICE_DESK_B2B(ConfigProvider.getProperty(ConfigKey.DWP_USER_SERVICEDESK_B2B), ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_SERVICEDESK_B2B)),
-    SERVICE_DESK_B2C(ConfigProvider.getProperty(ConfigKey.DWP_USER_SERVICEDESK_B2C), ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_SERVICEDESK_B2C)),
-    PARTNER_B2C_EXT(ConfigProvider.getProperty(ConfigKey.DWP_USER_PARTNER_B2C_EXT), ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_PARTNER_B2C_EXT)),
-    SOAPUI_B2B(ConfigProvider.getProperty(ConfigKey.DWP_USER_SOAPUI_B2B), ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_SOAPUI_B2B));
+    SALESMARKETING_B2C(ConfigProvider.getProperty(ConfigKey.DWP_USER_SALESMARKETING_B2C), ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_SALESMARKETING_B2C)),
+    CONTRACTING_B2C(ConfigProvider.getProperty(ConfigKey.DWP_USER_CONTRACTING_B2C), ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_CONTRACTING_B2C)),
+    BILLING(ConfigProvider.getProperty(ConfigKey.DWP_USER_BILLING), ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_BILLING));
     private String username;
     private String password;
 

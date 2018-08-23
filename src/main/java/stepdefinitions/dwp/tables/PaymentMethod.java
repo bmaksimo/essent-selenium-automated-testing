@@ -2,9 +2,10 @@ package stepdefinitions.dwp.tables;
 
 public enum PaymentMethod {
     DirectDebit("Direct Debit"),
-    BankTransfer("Bank Transfer");
+    BankTransfer("Bank Transfer"),
+    DOM("Domiciliëring"),
+    Overschrijving("Overschrijving");
     private String label;
-
     private PaymentMethod(String label) {
         this.label = label;
     }

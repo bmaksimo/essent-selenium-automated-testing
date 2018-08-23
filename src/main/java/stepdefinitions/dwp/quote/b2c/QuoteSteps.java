@@ -6,8 +6,8 @@ import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.automation.flow.FlowAwarePredicate;
 import com.essent.testing.dwp.DwpDateFormats;
-import com.essent.testing.dwp.DwpScenario;
-import com.essent.testing.dwp.pageobject.quote.CreateQuoteStepView;
+import com.essent.testing.dwp.scenario.DwpScenario;
+import com.essent.testing.dwp.pageobject.quote.GuidedStep;
 import com.essent.testing.dwp.pageobject.quote.impl.*;
 import com.essent.testing.util.ResourceUtils;
 import com.google.gson.Gson;
@@ -19,8 +19,12 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
+import org.awaitility.Duration;
 import stepdefinitions.dwp.tables.*;
 import stepdefinitions.dwp.tables.plus.CheckBoxState;
+import static org.awaitility.Awaitility.*;
+import static org.awaitility.Duration.*;
+import static java.util.concurrent.TimeUnit.*;
 
 import java.io.File;
 import java.util.HashMap;
@@ -32,13 +36,20 @@ import static com.essent.testing.dwp.DwpTimingParameters.NEXT_STEP;
 import static com.essent.testing.dwp.quote.elements.TariffElements.NO_PRICESHEET_ALERT;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
 
 public class QuoteSteps extends DwpScenario {
 
-    @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
+    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
+    }
+
+    @When("^B2C sales channel is ([^\"]*)$")
+    public void initSalesChannel(SalesChannel salesChannel) throws Throwable {
+        QuoteDetailsPage quoteDetailsPage = new QuoteDetailsPage(webDriver);
+        quoteDetailsPage.setSalesChannel(salesChannel);
+        boolean formInitialized = quoteDetailsPage.fillInFormData();
+        assertThat("Failure occurred when filling in input values", formInitialized, is(true));
     }
 
     private class CheckFormHeader implements Predicate<String> {
@@ -56,12 +67,12 @@ public class QuoteSteps extends DwpScenario {
 
         @Override
         public boolean test(QuoteSteps scenarios) {
-            return execute(webDriver.getDriver(), build(scenarios));
+            return execute(build(scenarios));
         }
 
         @Override
         public Model.Execution build(QuoteSteps input) {
-            Model.Execution selectAlert = newExecution();
+            Model.Execution selectAlert = createExecution();
             selectAlert.element(NO_PRICESHEET_ALERT.element()).
                 step(createStep(Action.REQUIRE_ABSENT).timeoutInSeconds(NEXT_STEP.getWaitInSeconds()).
                     element(NO_PRICESHEET_ALERT.name()));
@@ -94,11 +105,9 @@ public class QuoteSteps extends DwpScenario {
         }
 
         private boolean fillInCustomerDetails(RandomUser randomUser) {
-            CustomerDetailsView customerDetailsView = new CustomerDetailsView(webDriver);
+            PersonalDetailsPage customerDetailsView = new PersonalDetailsPage(webDriver);
             customerDetailsView.setRandomUser(randomUser);
-            customerDetailsView.fillInFormData();
-            CreateQuoteStepView view = customerDetailsView.next();
-            return notNullValue().matches(view);
+            return customerDetailsView.fillInFormData();
         }
     }
 
@@ -109,11 +118,9 @@ public class QuoteSteps extends DwpScenario {
         }
 
         private boolean fillInCustomerAddress(CustomerAddress customerAddress) {
-            CustomerAddressView customerAddressView = new CustomerAddressView(webDriver);
+            PersonalDetailsAddressPage customerAddressView = new PersonalDetailsAddressPage(webDriver);
             customerAddressView.setCustometAddress(customerAddress);
-            customerAddressView.fillInCustomerAddress();
-            CreateQuoteStepView view = customerAddressView.next();
-            return notNullValue().matches(view);
+            return customerAddressView.fillInCustomerAddress();
         }
     }
 
@@ -125,30 +132,23 @@ public class QuoteSteps extends DwpScenario {
         }
     }
 
-    @And("^Default B2C Channel Info is confirmed$")
-    public void confirmDefaultBCChannelInfo() throws Throwable {
-        SelectQuoteTypeView selectQuoteTypeView = new SelectQuoteTypeView(webDriver);
-        CreateQuoteStepView next = selectQuoteTypeView.next();
-        assertThat("Failure accepting the standard quote type.", next,
-            notNullValue());
+    @And("^Quote details are confirmed$")
+    public void confirmQuoteDetails() throws Throwable {
+        QuoteDetailsPage quoteDetailsPage = new QuoteDetailsPage(webDriver);
+        quoteDetailsPage.next();
     }
 
-    @And("^B2C sales channel is ([^\"]*)$")
-    public void toggleReguCheckbox(SalesChannel salesChannel) throws Throwable {
-        SelectQuoteTypeView selectQuoteTypeView = new SelectQuoteTypeView(webDriver);
-        selectQuoteTypeView.setSalesChannel(salesChannel);
-        boolean formInitialized = selectQuoteTypeView.fillInFormData();
-        assertThat("Failure occurred when filling in input values", formInitialized, is(true));
-    }
+
 
     @OutputParameter(name = "customer")
     private CustomerDetails newCustomer;
 
     @Then("^Form Header is \"([^\"]*)\"$")
     public void checkFormHeader(String formHeader) throws Throwable {
-        boolean success = new CheckFormHeader().test(formHeader);
-        assertThat(String.format("Form %s did not appear.", formHeader), success,
-            is(true));
+        given().await()
+            .pollInterval(FIVE_HUNDRED_MILLISECONDS)
+            .pollDelay(ONE_SECOND)
+            .atMost(new Duration(30, SECONDS)).until(()->new CheckFormHeader().test(formHeader));
     }
 
     @OutputParameter(name = "customers")
@@ -164,30 +164,24 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^Customer Address is$")
-    public void customerAddressIs(final DataTable address) throws Throwable {
+    public void initCustomerAddress(final DataTable address) throws Throwable {
         List<CustomerAddress> list = address.asList(CustomerAddress.class);
         CustomerAddress cuatomerAddress = list.get(0);
         boolean success = new InitialiseCustomerAddress().test(cuatomerAddress);
         assertThat("Cusomer Address data wasn't initialised.", success, is(true));
     }
 
-    @And("^Tariffsheet and package are:$")
-    public void selectTariffSheetAndPackage(final DataTable tariffTable) throws Throwable {
-        List<TariffTable> tariffs = tariffTable.asList(TariffTable.class);
-        TariffTable tariff = tariffs.get(0);
-        SelectPackageAndFuelTypeView selectPackageAndFuelTypeView = new SelectPackageAndFuelTypeView(webDriver);
-        selectPackageAndFuelTypeView.setTariffData(tariff);
-        selectPackageAndFuelTypeView.fillInFormData();
-        CreateQuoteStepView next = selectPackageAndFuelTypeView.next();
-        assertThat("Failure selecting the Essent package and product(s), check up the log.", next,
-            notNullValue());
+    @And("^Customer details are confirmed$")
+    public void confirmCustomerDetails() throws Throwable {
+        GuidedStep quoteDetailsPage = new PersonalDetailsAddressPage(webDriver);
+        quoteDetailsPage.next();
     }
 
     @And("^Package is \"([^\"]*)\"$")
     public void selectPackage(String packaqe) throws Throwable {
         TariffTable tariff = new TariffTable();
         tariff.setPackageName(packaqe);
-        SelectPackageAndFuelTypeView selectPackageAndFuelTypeView = new SelectPackageAndFuelTypeView(webDriver);
+        SelectPackageAndFuelTypePage selectPackageAndFuelTypeView = new SelectPackageAndFuelTypePage(webDriver);
         selectPackageAndFuelTypeView.setTariffData(tariff);
         selectPackageAndFuelTypeView.fillInFormData();
     }
@@ -205,19 +199,15 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^Package and Fuel Type is confirmed$")
-    public void packageAndFuelTypeIsConfirmed() throws Throwable {
-        SelectPackageAndFuelTypeView selectPackageAndFuelTypeView = new SelectPackageAndFuelTypeView(webDriver);
-        CreateQuoteStepView next = selectPackageAndFuelTypeView.next();
-        assertThat(next,
-            notNullValue());
+    public void confirmPackageAndFuelType() throws Throwable {
+        SelectPackageAndFuelTypePage selectPackageAndFuelTypeView = new SelectPackageAndFuelTypePage(webDriver);
+        selectPackageAndFuelTypeView.next();
     }
-
 
     @And("^No price sheet alerts popped up$")
     public void verifySelectTariffSheetAndPackage() throws Throwable {
         assertThat("Failure. Tariff sheet alerts were generated although they were not expected.", true,
             is(new VerifyTariffSheetPriceAlert().test(this)));
-
     }
 
     @And("^Electricity and gas meter numbers and their EANs are:$")
@@ -226,43 +216,41 @@ public class QuoteSteps extends DwpScenario {
         ConnectionDetails electricityConnectionDetails = list.get(0);
         ConnectionDetails gasConnectionDetails = list.get(1);
 
-        ConnectionDetailsView connectionDetailsView = new ConnectionDetailsView(webDriver);
+        ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage(webDriver);
         connectionDetailsView.setElectroConnectionDetails(electricityConnectionDetails);
         connectionDetailsView.setGasConnectionDetails(gasConnectionDetails);
         connectionDetailsView.fillInFormData();
     }
 
-    @And("^The ([^\"]*) meter is ([^\"]*)$")
+    @And("^([^\"]*) meter is ([^\"]*)$")
     public void setMeterState(final ProductType productType, final CheckBoxState meterState) throws Throwable {
-        ConnectionDetailsView connectionDetailsView = new ConnectionDetailsView(webDriver);
-        connectionDetailsView.openMeter(productType, meterState);
+        ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage(webDriver);
+        given().await()
+            .ignoreExceptions()
+            .pollInterval(FIVE_HUNDRED_MILLISECONDS)
+            .pollDelay(ONE_HUNDRED_MILLISECONDS)
+            .atMost(new Duration(10, SECONDS)).until(()->connectionDetailsView.isNextButtonEnabled());
+        connectionDetailsView.toggleMeter(productType, meterState);
     }
 
-    @And("^Connection is confirmed$")
+    @And("^Connection details are confirmed$")
     public void confirmConnection() throws Throwable {
-        ConnectionDetailsView connectionDetailsView = new ConnectionDetailsView(webDriver);
-        CreateQuoteStepView next = connectionDetailsView.next();
-        assertThat("Failure filling in connection details, check up the log.", next,
-            notNullValue());
+        ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage(webDriver);
+        connectionDetailsView.next();
     }
 
     @And("^Payment details are: method ([^\"]*), IBAN \"([^\"]*)\", bic \"([^\"]*)\"$")
-    public void selectPaymentMethod(PaymentMethod paymetnMethod, String iban, String bic) throws Throwable {
+    public void selectPaymentMethod(String paymetnMethod, String iban, String bic) throws Throwable {
         BillingInformation billingInfo = new BillingInformation(paymetnMethod, iban, bic);
-        BillingDetailsView billingDetailsView = new BillingDetailsView(webDriver);
+        BillingDetailsPage billingDetailsView = new BillingDetailsPage(webDriver);
         billingDetailsView.setBillingInformation(billingInfo);
         billingDetailsView.fillInFormData();
-        CreateQuoteStepView createQuoteStepView = billingDetailsView.next();
-
-        assertThat("Failure when initializing the payment, BIC and EBAN. +", createQuoteStepView,
-            notNullValue());
-
     }
 
-    @And("^Quote is confirmed$")
-    public void confirmQuote() throws Throwable {
-        QuoteOverviewView quoteOverviewView = new QuoteOverviewView(webDriver);
-        quoteOverviewView.next();
+    @And("^Billing details are confirmed$")
+    public void confirmBillingDetaile() throws Throwable {
+        BillingDetailsPage billingDetailsPage = new BillingDetailsPage(webDriver);
+        billingDetailsPage.next();
     }
 
     @And("^Quote is signed in ([^\"]*)$")
@@ -275,9 +263,16 @@ public class QuoteSteps extends DwpScenario {
             DwpDateFormats.DWP_TODAY,
             location,
             path);
-        QuoteOverviewView quoteOverviewView = new QuoteOverviewView(webDriver);
+        QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage(webDriver);
         quoteOverviewView.setSignatureData(signature);
         quoteOverviewView.fillInFormData();
+    }
+
+
+    @And("^Quote is confirmed$")
+    public void confirmQuote() throws Throwable {
+        QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage(webDriver);
+        quoteOverviewView.next();
     }
 
     @When("^I select the ([^\"]*) element and click the link in the \"([^\"]*)\" column$")
@@ -296,7 +291,7 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
+    @After("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER")
     public void tearDown() throws Exception {
         super.tearDown();
     }
