@@ -22,6 +22,8 @@ public enum ConfigKey {
 
     DWP_USER_SERVICEDESK_B2B("dwp.user.b2b"),
     DWP_PASSWORD_SERVICEDESK_B2B("dwp.password.b2b"),
+    DWP_USER_B("dwp.user.b.b2b"),
+    DWP_PASSWORD_B("dwp.password.b.b2b"),
 
     DWP_USER_SALESMARKETING_B2C("dwp.user.b2c.salesmarketing"),
     DWP_PASSWORD_SALESMARKETING_B2C("dwp.password.b2c.salesmarketing"),

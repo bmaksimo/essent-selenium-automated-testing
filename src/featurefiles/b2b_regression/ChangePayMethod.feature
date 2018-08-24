@@ -2,7 +2,7 @@
 Feature: Change Pay Method
 
     Background:
-        Given I logged in to DWP as d.chebayewski.billinghouse@essent.be
+        Given I logged in to DWP as b.maksimovic@levi9.com
 
     Scenario:
         When Left Menu Item is sales-marketing
