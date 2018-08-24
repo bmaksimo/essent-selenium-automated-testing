@@ -10,6 +10,7 @@ import java.util.Map;
 public enum UserRoles {
     ESSENT_ADMIN(ConfigProvider.getProperty(ConfigKey.DWP_USER_ESSENTADMIN), ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD)),
     SERVICE_DESK_B2B(ConfigProvider.getProperty(ConfigKey.DWP_USER_SERVICEDESK_B2B), ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_SERVICEDESK_B2B)),
+    B2B(ConfigProvider.getProperty(ConfigKey.DWP_USER_B), ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_B)),
     SALESMARKETING_B2C(ConfigProvider.getProperty(ConfigKey.DWP_USER_SALESMARKETING_B2C), ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_SALESMARKETING_B2C)),
     CONTRACTING_B2C(ConfigProvider.getProperty(ConfigKey.DWP_USER_CONTRACTING_B2C), ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_CONTRACTING_B2C)),
     BILLING(ConfigProvider.getProperty(ConfigKey.DWP_USER_BILLING), ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_BILLING));

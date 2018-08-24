@@ -23,11 +23,10 @@ import static org.hamcrest.Matchers.is;
 
 public class InputElements extends DwpScenario {
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER, @RENEWAL")
+    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER, @RENEWAL, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
-
 
     private class ApplyInput implements Predicate<Map> {
         @Override
@@ -82,7 +81,7 @@ public class InputElements extends DwpScenario {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER, @RENEWAL")
+    @After("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER, @RENEWAL, @B2B_REGRESSION")
     public void tearDown() throws Exception {
         super.tearDown();
     }
