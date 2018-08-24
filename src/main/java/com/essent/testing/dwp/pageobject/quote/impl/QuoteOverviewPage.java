@@ -5,8 +5,10 @@ import com.essent.automation.autocrat.Model;
 import com.essent.testing.selenium.SeleniumDriver;
 import stepdefinitions.dwp.tables.SignatureData;
 
-import static com.essent.testing.dwp.DwpTimingParameters.*;
-import static com.essent.testing.dwp.quote.elements.SignatureElements.*;
+import static com.essent.testing.dwp.DwpTimingParameters.INPUT;
+import static com.essent.testing.dwp.DwpTimingParameters.UPLOAD_FILE;
+import static com.essent.testing.dwp.quote.elements.SignatureElements.SIGN_LOCATION;
+import static com.essent.testing.dwp.quote.elements.SignatureElements.SIGN_UPLOAD_DOC;
 
 public class QuoteOverviewPage extends CreateQuoteGuidedStep {
 

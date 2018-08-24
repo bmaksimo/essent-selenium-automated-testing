@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.tables.CustomerAddress;
+
 import static com.essent.testing.dwp.DwpTimingParameters.INPUT;
 import static com.essent.testing.dwp.DwpTimingParameters.TOGGLE_CHECKBOX;
 import static com.essent.testing.dwp.quote.elements.B2CQuoteElements.*;

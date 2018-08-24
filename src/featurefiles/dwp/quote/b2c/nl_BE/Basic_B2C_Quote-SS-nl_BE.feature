@@ -1,5 +1,3 @@
-@DWP
-@BASIC
 @QUOTE_SS
 @REGRESSION
 Feature: Creating a B2C Quote TC1 with supplier switch - Dutch version

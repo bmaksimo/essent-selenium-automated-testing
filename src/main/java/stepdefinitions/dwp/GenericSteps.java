@@ -1,9 +1,7 @@
 package stepdefinitions.dwp;
 
 import com.essent.automation.autocrat.Action;
-import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
-import com.essent.automation.autocrat.Model.Flow;
 import com.essent.roles.UserRoles;
 import com.essent.testing.dwp.pageobject.Window;
 import com.essent.testing.dwp.scenario.DwpScenario;
@@ -11,9 +9,6 @@ import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
-import org.apache.commons.lang3.StringUtils;
-import org.openqa.selenium.html5.LocalStorage;
-import org.openqa.selenium.html5.WebStorage;
 import org.springframework.test.context.ContextConfiguration;
 import stepdefinitions.dwp.login.LoginAction;
 

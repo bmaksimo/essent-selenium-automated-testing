@@ -6,8 +6,6 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 import stepdefinitions.dwp.navigation.NavigationElements;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 
 import java.util.HashMap;
 import java.util.Map;

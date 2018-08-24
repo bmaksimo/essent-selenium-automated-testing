@@ -1,14 +1,10 @@
 package stepdefinitions.dwp.input;
 
-import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.scenario.DwpScenario;
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
-import cucumber.api.java.en.When;
-import org.awaitility.Duration;
 import stepdefinitions.dwp.tables.plus.CheckBoxState;
 
 import java.util.HashMap;

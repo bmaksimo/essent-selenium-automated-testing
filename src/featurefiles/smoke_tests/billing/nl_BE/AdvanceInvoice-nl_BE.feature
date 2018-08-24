@@ -1,6 +1,6 @@
 @DWP
 @BASIC
-@SMOKE
+@_SMOKE
 @REGRESSION
 Feature: Billing - Invoices
 

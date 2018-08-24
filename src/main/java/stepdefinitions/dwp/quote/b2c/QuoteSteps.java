@@ -6,9 +6,9 @@ import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.automation.flow.FlowAwarePredicate;
 import com.essent.testing.dwp.DwpDateFormats;
-import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.dwp.pageobject.quote.GuidedStep;
 import com.essent.testing.dwp.pageobject.quote.impl.*;
+import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.util.ResourceUtils;
 import com.google.gson.Gson;
 import cucumber.api.DataTable;
@@ -20,12 +20,10 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
-import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import stepdefinitions.dwp.tables.*;
 import stepdefinitions.dwp.tables.plus.CheckBoxState;
-import static org.awaitility.Awaitility.*;
-import static org.awaitility.Duration.*;
-import static java.util.concurrent.TimeUnit.*;
 
 import java.io.File;
 import java.util.HashMap;
@@ -35,6 +33,9 @@ import java.util.function.Predicate;
 
 import static com.essent.testing.dwp.DwpTimingParameters.NEXT_STEP;
 import static com.essent.testing.dwp.quote.elements.TariffElements.NO_PRICESHEET_ALERT;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.awaitility.Awaitility.given;
+import static org.awaitility.Duration.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 

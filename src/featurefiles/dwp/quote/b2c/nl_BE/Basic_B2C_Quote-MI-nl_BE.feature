@@ -1,5 +1,3 @@
-@DWP
-@BASIC
 @QUOTE_MI
 @REGRESSION
 Feature: Creating a B2C Quote TC1 with move in - Dutch version

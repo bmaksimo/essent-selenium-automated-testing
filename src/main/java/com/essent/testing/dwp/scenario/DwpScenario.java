@@ -9,10 +9,8 @@ import com.essent.testing.selenium.SeleniumScenario;
 import com.essent.testing.util.AutocratExecutionAdapter;
 import cucumber.api.Scenario;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.WebDriver;
 
 import static org.junit.Assert.assertTrue;
-import static  com.essent.testing.util.selenium.dwp.LocalStorageUtil.*;
 
 /**
  * Created by Jim on 27-12-2017.

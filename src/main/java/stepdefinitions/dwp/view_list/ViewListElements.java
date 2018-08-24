@@ -8,7 +8,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import cucumber.api.java.it.Ma;
+import org.awaitility.Duration;
 import stepdefinitions.dwp.navigation.NavigationElements;
 
 import javax.swing.table.DefaultTableModel;
@@ -21,6 +21,10 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.awaitility.Awaitility.given;
+import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
+import static org.awaitility.Duration.TWO_SECONDS;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.fail;
@@ -178,6 +182,15 @@ public class ViewListElements extends NavigationElements {
         boolean success = new CheckViewListHeader().test(header);
         assertThat(String.format("View list did not contain header '%s'", header),
             success, is(true));
+    }
+
+    @When("^View List Header is \"([^\"]*)\" appears within (\\d+) seconds?$")
+    public void checkViewListHeaderUntil(String header, int seconds) throws Throwable {
+        CheckViewListHeader checkViewListHeader = new CheckViewListHeader();
+        given().await()
+            .pollInterval(FIVE_HUNDRED_MILLISECONDS)
+            .pollDelay(TWO_SECONDS)
+            .atMost(new Duration(seconds, SECONDS)).until(()-> checkViewListHeader.test(header));
     }
 
     @When("^View List is empty$")

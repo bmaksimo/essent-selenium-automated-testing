@@ -1,5 +1,4 @@
 @DWP
-@BASIC
 @QUOTE
 @REGRESSION
 Feature: Creating a B2C Quote with customer switch - Dutch version
