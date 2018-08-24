@@ -5,6 +5,7 @@
 Feature: Billing - Invoices
 
     Background:
+
         Given I logged in to DWP as billing.testautomation@essent.be
 
     Scenario: Navigate to "account_cockpit_billing", verify B2C Advance Invoice
