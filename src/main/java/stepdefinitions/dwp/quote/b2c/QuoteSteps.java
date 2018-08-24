@@ -20,6 +20,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
+import org.openqa.selenium.By;
 import stepdefinitions.dwp.tables.*;
 import stepdefinitions.dwp.tables.plus.CheckBoxState;
 import static org.awaitility.Awaitility.*;
@@ -39,7 +40,7 @@ import static org.hamcrest.Matchers.is;
 
 public class QuoteSteps extends DwpScenario {
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER")
+    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -291,7 +292,7 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER")
+    @After("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER, @B2B_REGRESSION")
     public void tearDown() throws Exception {
         super.tearDown();
     }

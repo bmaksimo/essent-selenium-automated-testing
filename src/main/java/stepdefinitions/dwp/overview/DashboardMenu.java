@@ -29,7 +29,7 @@ public class DashboardMenu extends NavigationElements {
         }
     }
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER, @RENEWAL")
+    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER, @RENEWAL, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -42,7 +42,7 @@ public class DashboardMenu extends NavigationElements {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
+    @After("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL, @B2B_REGRESSION")
     public void tearDown() throws Exception {
         super.tearDown();
     }
