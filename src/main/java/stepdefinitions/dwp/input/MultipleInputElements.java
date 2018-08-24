@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.is;
 
 public class MultipleInputElements extends DwpScenario {
 
-    @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
+    @Before("@SMOKE, @QUOTE, @RENEWAL")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -50,7 +50,7 @@ public class MultipleInputElements extends DwpScenario {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
+    @After("@SMOKE, @QUOTE, @RENEWAL")
     public void tearDown() throws Exception {
         super.tearDown();
     }
