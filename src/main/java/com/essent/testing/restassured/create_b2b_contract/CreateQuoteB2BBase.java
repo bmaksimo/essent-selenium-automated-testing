@@ -1,8 +1,6 @@
 package com.essent.testing.restassured.create_b2b_contract;
 
 import static org.hamcrest.Matchers.equalTo;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -151,7 +149,7 @@ public class CreateQuoteB2BBase {
 		String originalPayloadQuoteSignatureReceived = Constants.PATH_TO_JSON_FILES_QUOTE_TC1_B2B + "gf_quote_signatureReceived.json";
 
 		//pricingDate, rowId, recordId, priceValidUntilDate, signatureReceivedDate
-		HashMap testMap = new HashMap();
+		HashMap<String, String> testMap = new HashMap<>();
 		testMap.put("${pricingDate}", pricingDate);
 		testMap.put("${priceValidUntilDate}", priceValidUntilDate);
 		testMap.put("${signatureReceivedDate}", signatureReceivedDate);
@@ -178,7 +176,7 @@ public class CreateQuoteB2BBase {
 		String originalPayloadConfirmSigning = path + pathJsonFileSignQuote;
 
 		//rowId, docId, date
-		HashMap testMap = new HashMap();
+		HashMap<String, String> testMap = new HashMap<>();
 		testMap.put("${rowId}", rowId);
 		testMap.put("${docId}", docId);
 		testMap.put("${date}", yesterdayDate);
@@ -217,7 +215,7 @@ public class CreateQuoteB2BBase {
 		String originalModalPayloadSignMandatePaper = path + "modal_to_gf_sign_mandate_paper.json";
 		
 		//billingCustomerId, recordId
-		HashMap<String, String> testMap = new HashMap<String, String>();
+		HashMap<String, String> testMap = new HashMap<>();
 		testMap.put("${billingCustomerId}", bilingCustomerId);
 		testMap.put("${recordId}", recordId);
 		
@@ -248,7 +246,7 @@ public class CreateQuoteB2BBase {
 				.body(jsonBodyPayloadSignMandatePaper).when().post(ApiPaths.API_GF_SIGN_MANDATE_PAPER).then().statusCode(201);
 	}
 	
-	protected void listOfQuotesOnAccount(String path) throws IOException {
+	private void listOfQuotesOnAccount(String path) throws IOException {
 
 		String payloadQuotesOnAccount = path + "quotes_on_account.json.template";
 		String originalPayloadQuotesOnAccount = path + "quotes_on_account.json";
@@ -272,8 +270,70 @@ public class CreateQuoteB2BBase {
 		return new JsonPath(response.getBody().asString()).get("data.number");
 	}
 	
+	protected void createQuoteB2B(String path, String pathJsonFile, String pathApiPath) throws IOException {
+		
+		// Combined Customer Switch
+		//"move_in_c" : true, "switchtype_c":"ACTIVATION_REQUEST", "dwp|mig_module_c":"START ACCESS", "dwp|mig_label_c":"Combined Customer Switch"
+		
+		// Supplier Switch
+		// "move_in_c":false, "switchtype_c":"SUPPLY_START_REQUEST", "dwp|mig_module_c":"START ACCESS", "dwp|mig_label_c":"Supplier Switch"
+		
+		// normally a customer switch can only be sent 30 days in the future or in the past
+		// Customer Switch
+		// "move_in_c":true, "switchtype_c":"CUSTOMER_SWITCH_NOTIFICATION", "dwp|mig_module_c":"START ACCESS", "dwp|mig_label_c":"Customer Switch"
+		
+		String payloadCreateQuoteB2B = path
+				+ pathJsonFile + ".template";
+		String originalPayloadCreateQuoteB2B = path
+				+ pathJsonFile;
+		
+		HashMap<String, String> testMap = new HashMap<>();
+		testMap.put("${accountName}", accountName);
+		testMap.put("${companyNumber}", companyNumber);
+		testMap.put("${pricingDate}", pricingDate);
+		testMap.put("${addressStreet}", addressStreet);
+		testMap.put("${addressNumber}", addressNumber);
+		testMap.put("${addressPostalCode}", addressPostalCode);
+		testMap.put("${addressCity}", addressCity);
+		testMap.put("${legalCommunicationBy}", legalCommunicationBy);
+		testMap.put("${paymentMethod}", paymentMethod);
+		testMap.put("${generatedIban}", generatedIban);
+		testMap.put("${ean_c}", ean_c);
+		testMap.put("${upStartDate}", upStartDate);
+		testMap.put("${upEndDate}", upEndDate);
+
+		String jsonBody = PrepareDataForQuote.createRequestJsonPayload(payloadCreateQuoteB2B, originalPayloadCreateQuoteB2B, testMap);
+		
+		//accountName, companyNumber, pricingDate, addressStreet, addressNumber, addressPostalCode, addressCity, legalCommunicationBy,paymentMethod,generatedIban, ean_c
+		Response response = RestAssured.given().log().all().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
+				.when().body(jsonBody).post(pathApiPath).then().log().all().statusCode(201).body("data.arguments.errors", equalTo(null)).extract().response();
+
+		recordId = new JsonPath(response.getBody().asString()).get("data.arguments.params.recordId");
+		
+		if(path != Constants.PATH_TO_JSON_FILES_QUOTE_TC1_B2B) {
+			paymentDetailsId  = new JsonPath(response.getBody().asString()).get("data.relatedBeans.Paym_Details[0]");
+		}
+		
+		listOfQuotesOnAccount(path);
+	}
 	
-	
+	protected ContractStatus checkContractIsActive(String path) throws Exception {
+		
+		String payloadContractedEansOnAccount = path + "contracted_eans_on_account.json.template";
+		String originalPayloadContractedEansOnAccount = path + "contracted_eans_on_account.json";
+				
+		String jsonBody = PrepareDataForQuote.createRequestJsonPayload(payloadContractedEansOnAccount, originalPayloadContractedEansOnAccount, "${recordId}", recordId);
+		
+		String jsonPathFromResponse = "data.rows[0].rowData.contract_line_status_c";
+		
+		String contractStatus = ContractUtil.waitUntilStringFoundInResponse(cookie, ApiPaths.API_CONTRACTED_EAN, jsonBody,
+				ContractStatus.ACTIVE, jsonPathFromResponse, Constants.TIMEOUT_SET_CONTRACT_ACTIVE);
+		
+		return ContractStatus.valueOf(contractStatus);
+		
+	}
+
+
 	private void modalSendToCustomer(String path) throws IOException {
 
 		String payloadModalQuoteSentToCustomer = Constants.PATH_TO_JSON_FILES_QUOTE_TC1_B2B

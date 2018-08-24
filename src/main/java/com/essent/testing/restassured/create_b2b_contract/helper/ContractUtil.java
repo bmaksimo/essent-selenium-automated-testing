@@ -33,7 +33,6 @@ public class ContractUtil {
 	            ++i;
 	            if (i == TIMEOUT) {
 	            	return contractStatus;
-	                //throw new TimeoutException("Timed out after waiting for " + i + " seconds");
 	            }
 	        }
 	    }

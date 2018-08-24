@@ -6,17 +6,29 @@ public class Constants {
 	
 	public static final int MAX_NUMBER_OF_ATTEMPTS_TO_FIND_APPROPRIATE_START_CONTRACT_DATE = 5;
 	
+	// Paths to the pdf files
 	public static final String PATH_TO_PDF = "./src/test/resources/data/contract_b2b/pdf/customer-signature.pdf";
 	public static final String PATH_TO_PRICES = "./src/test/resources/data/contract_b2b/soapui_tests_prices";
 	
+	// Paths to the json request payloads
 	public static final String PATH_TO_JSON_FILES_QUOTE_TC1_B2B = "./src/test/resources/data/contract_b2b/payloads_create_quote_contract_b2b_tc1/";
 	public static final String PATH_TO_JSON_FILES_QUOTE_TC2_B2B = "./src/test/resources/data/contract_b2b/payloads_create_quote_contract_b2b_tc2/";
 	public static final String PATH_TO_JSON_FILES_QUOTE_UP_B2B = "./src/test/resources/data/contract_b2b/payloads_create_quote_contract_b2b_up/";
 	
+	public static final String PATH_TO_JSON_FILES_CREATE_QUOTE_B2B_TC1 = "create_quote_b2b_tc1.json";
+	public static final String PATH_TO_JSON_FILES_CREATE_QUOTE_B2B_TC2 = "create_quote_b2b_tc2.json";
+	public static final String PATH_TO_JSON_FILES_CREATE_QUOTE_B2B_UP = "create_quote_b2b_up.json";
+	
+	public static final String PATH_TO_JSON_FILES_SIGN_QUOTE_MODAL_TC1 = "sign_quote_modal_tc1.json";
+	public static final String PATH_TO_JSON_FILES_SIGN_QUOTE_MODAL_TC2_UP = "sign_quote_modal_tc2_up.json";
+	
+	
+	// Account names for TC1, TC2, UP contracts
 	public static final String ACCOUNT_NAME_PREFIX_TC1_B2B = "B2B_TC1_";
 	public static final String ACCOUNT_NAME_PREFIX_TC2_B2B = "B2B_TC2_";
 	public static final String ACCOUNT_NAME_PREFIX_UP_B2B = "B2B_UP_";
 	
+	// Different quote statuses after creating, sending, signature receiving quote (in different languages: Dutch, English, French)
 	public static final String SENT_TO_CUSTOMER_EN = "Sent to customer";
 	public static final String SENT_TO_CUSTOMER_NL = "Verstuurd naar de klant";
 	public static final String SENT_TO_CUSTOMER_FR = "Envoyé au client";

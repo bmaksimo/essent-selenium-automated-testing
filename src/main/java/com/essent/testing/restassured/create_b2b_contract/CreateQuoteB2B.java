@@ -1,6 +1,6 @@
 package com.essent.testing.restassured.create_b2b_contract;
 
-import io.restassured.http.Cookies;
+import com.essent.testing.restassured.create_b2b_contract.constants.ContractStatus;
 
 public interface CreateQuoteB2B {
 	
@@ -8,8 +8,7 @@ public interface CreateQuoteB2B {
 	
 	public void login();
 	
-	//TODO Is this should be public, or only this class should see this login. Probably it should be private
-	public void createQuoteB2B() throws Exception;
+	public void createQuoteB2B(String path, String pathJsonFile, String pathApiPath) throws Exception;
 
 	public void sendToCustomer(String path) throws Exception;
 
@@ -22,6 +21,6 @@ public interface CreateQuoteB2B {
 	
 	public String createContractB2B() throws Exception;
 	
-	public void checkContractIsActive() throws Exception;
+	public ContractStatus checkContractIsActive(String path) throws Exception;
 	
 }
