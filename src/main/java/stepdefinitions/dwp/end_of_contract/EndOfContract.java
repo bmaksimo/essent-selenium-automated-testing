@@ -56,22 +56,16 @@ public class EndOfContract extends com.essent.testing.dwp.pageobject.b2b_regress
             success, is(true));
     }
 
-    @When("^Break Point$")
-    public void breakPoint() {
-        System.out.println("Break Point!");
-    }
-
-    @And("^Submit button$")
-    public void submitButton() {
-        boolean success = new SubmitContractLine().test("");
-        assertThat(String.format("Java Script file TrSubmitButton is undefined."),
-            success, is(true));
-    }
-
     @And("^Select button$")
     public void selectButton() {
         boolean success = new SelectButton().test("");
         assertThat(String.format("Java Script file TrSelectButton is undefined."),
+            success, is(true));
+    }
+
+    public void clickOnElement(String element) {
+        boolean success = new ClickOnElement().test(element);
+        assertThat(String.format("Top Menu item %s was not available.", element),
             success, is(true));
     }
 }

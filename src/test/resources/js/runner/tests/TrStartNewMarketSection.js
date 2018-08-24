@@ -1,13 +1,5 @@
 class TrStartNewMarketSection extends TestRunnerBase {
 
-    /*public boolean test(String element) {
-    Map<String, String> options = new HashMap<>();
-    options.put("element", element);
-    boolean success = executeJavascriptTest("TrClickOnElement", options);
-    return success;
-    }
-    */
-
     constructor(options, callback) {
         super(options, callback, 1000);
     }
