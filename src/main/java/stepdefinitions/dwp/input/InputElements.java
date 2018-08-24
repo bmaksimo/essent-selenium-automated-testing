@@ -28,7 +28,6 @@ public class InputElements extends DwpScenario {
         registerActiveScenario(scenario);
     }
 
-
     private class ApplyInput implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
