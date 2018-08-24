@@ -10,7 +10,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
-import stepdefinitions.dwp.NavigationElements;
+import stepdefinitions.dwp.navigation.NavigationElements;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +23,8 @@ import static com.essent.automation.autocrat.Action.CLICK;
 import static com.essent.automation.autocrat.Action.REQUIRE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+
+import static com.billinghouse.test_automation.util.gherkin.ExpressionUtil.checkAndConvertToDwpDate;
 
 public class FilterElements extends NavigationElements {
 
@@ -105,7 +107,7 @@ public class FilterElements extends NavigationElements {
     public void setFilterDateInput(String label, String value) throws Throwable {
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
-        options.put("value", convertToDwpDate(value));
+        options.put("value", checkAndConvertToDwpDate(value));
         boolean success = new ApplySingleFilter().test(options);
         assertThat(String.format("Filter element %s is undefined.", label),
             success, is(true));

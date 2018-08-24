@@ -8,7 +8,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import stepdefinitions.dwp.NavigationElements;
+import stepdefinitions.dwp.navigation.NavigationElements;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
@@ -93,7 +93,7 @@ public class ViewListElements extends NavigationElements {
             AtomicInteger idx = new AtomicInteger(1);
             List<Integer> indices = IntStream.range(1, rows.size() + 1)
                 .filter(i ->
-                    idx.compareAndSet(i, i + 1) & ((ArrayList<String>) rows.get(i - 1)).get(index).contains(value))
+                idx.compareAndSet(i, i + 1) & ((ArrayList<String>) rows.get(i - 1)).get(index).contains(value))
                 .boxed()
                 .collect(Collectors.toList());
             return indices;
@@ -164,7 +164,7 @@ public class ViewListElements extends NavigationElements {
     }
 
     @Before("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL")
-    public void SetupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
 
