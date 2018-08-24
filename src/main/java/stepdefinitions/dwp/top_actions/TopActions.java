@@ -43,7 +43,7 @@ public class TopActions extends NavigationElements {
         super.tearDown();
     }
 
-    @And("Confirm Changes")
+    @And("Changes are confirmed")
     public void confirmChange() {
         boolean success = new ClickConfirm().test("");
         assertThat(String.format("Button %s was not available.", ""),
@@ -52,8 +52,11 @@ public class TopActions extends NavigationElements {
 
     @And("Search input is ([^\"]*)$")
     public void input(String name) throws Throwable {
-        webDriver.findElementOrNull(By.xpath("/html//dwp-app/div[2]//top-search/div[@class='top-search']/input[@type='search']")).sendKeys(name);
-        webDriver.findElementOrNull(By.xpath("/html//dwp-app/div[2]//top-search/div[@class='top-search']/input[@type='search']")).sendKeys(Keys.ENTER);
+        Map<String, String> customerName = new HashMap<>();
+        customerName.put("name", name);
+        boolean success = new SearchCustomer().test(name);
+        assertThat(String.format("Customer %s was not found.", name),
+            success, is(true));
     }
 
     @And("^Customer \"([^\"]*)\" is found$")

@@ -167,4 +167,11 @@ public abstract class NavigationElements extends DwpScenario {
             return executeJavascriptTest("TrFindCustomer", name);
         }
     }
+    public class SearchCustomer implements Predicate<String> {
+        @Override
+        public boolean test(String s) {
+            return executeJavascriptTest("TrSearchCustomer", s);
+        }
+    }
+
 }

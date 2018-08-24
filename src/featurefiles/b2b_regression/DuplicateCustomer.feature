@@ -2,7 +2,7 @@
 Feature: Dwp test for duplicating customer
 
     Background:
-        Given   I logged in to DWP as d.chebayewski.billinghouse@essent.be
+        Given   I logged in to DWP as b.maksimovic@levi9.com
 
 
     Scenario:
@@ -14,7 +14,7 @@ Feature: Dwp test for duplicating customer
         And Click on link in View List at 1st row and "Account Number & Name" column
         And Plus Menu is "Service -> Duplicate account"
         When "Company name" input is "Van Hauwaert Steven - Test Nuat 372"
-        Then Confirm Changes
+        Then Changes are confirmed
         And Top Arrow button is Up
         And Search input is Van Hauwaert Steven - Test Nuat 372
         Then Customer "Van Hauwaert Steven - Test Nuat 372" is found
