@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.is;
 
 public class PlusActions extends NavigationElements {
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER, @B2B_REGRESSION")
+    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -25,13 +25,8 @@ public class PlusActions extends NavigationElements {
         clickPlusAction(path);
     }
 
-    @And("^List Plus Action is ([^\"]*)$")
-    public void checkPlusAction(String item) throws Exception {
-        clickListPlusAction(item);
-    }
-
     @Override
-    @After("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER, @B2B_REGRESSION")
+    @After("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void tearDown() throws Exception {
         super.tearDown();
     }
@@ -47,10 +42,14 @@ public class PlusActions extends NavigationElements {
             success, is(true));
     }
 
-
     @And("^Selenium click on plus$")
     public void seleniumClickOnPlus() throws Throwable {
         webDriver.findElementOrNull(By.xpath("//table[@safeclass~'\\blist__content\\b']/tbody[@id='rows']//list-plus-cell[@smartid='bdaac-e']/?/?/a[@safeclass~'\\bicon-plus\\b.*\\bshow-actions\\b']")).click();
         webDriver.findElementOrNull(By.className("icon-edit")).click();
+    }
+
+    @And("^List Plus Action is ([^\"]*)$")
+    public void checkPlusAction(String item) throws Exception {
+        clickListPlusAction(item);
     }
 }

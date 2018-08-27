@@ -1,6 +1,4 @@
-@DWP
-@BASIC
-@SMOKE
+@_SMOKE
 @REGRESSION
 Feature: DWP Tool Framework: Annotations, Zephyre
 

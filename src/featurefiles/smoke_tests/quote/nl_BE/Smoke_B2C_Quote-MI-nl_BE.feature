@@ -1,5 +1,3 @@
-@DWP
-@BASIC
 @SMOKE
 @REGRESSION
 Feature: Creating a B2C Quote with customer switch - Dutch version
@@ -10,7 +8,7 @@ Feature: Creating a B2C Quote with customer switch - Dutch version
     DWP application switches MIG from supplier switch to customer switch automatically.
 
     Background:
-        Given I logged in to DWP as contracting.testautomation.b2c@essent.be
+        Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
 
     Scenario: Create a B2C Quote with customer switch
         When Top Action is Plus Menu

@@ -91,6 +91,8 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
                 if(withException) {
                     fail(reason);
                 }
+                File scrFile = ((TakesScreenshot)seleniumDriver.getDriver()).getScreenshotAs(OutputType.FILE);
+                SeleniumDriver.logger.info(" - ACTION: CAPTURE_SCREENSHOT: " + scrFile.getPath());
             }
             return success;
         }

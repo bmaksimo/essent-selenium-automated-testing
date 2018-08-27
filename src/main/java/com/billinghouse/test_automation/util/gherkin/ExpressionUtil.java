@@ -1,9 +1,7 @@
 package com.billinghouse.test_automation.util.gherkin;
 
 import cucumber.runtime.CucumberException;
-import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
-import sun.swing.StringUIClientPropertyKey;
 
 import java.util.HashMap;
 import java.util.Map;

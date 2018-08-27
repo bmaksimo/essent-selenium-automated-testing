@@ -1,11 +1,11 @@
-@SMOKE
+@_SMOKE
 Feature: Javascript DWP testing
 
     Background:
-        Given   I logged in to DWP as d.chebayewski.billinghouse@essent.be
+        Given   I logged in to DWP as contracting.testautomation.b2c@essent.be
 
     Scenario:
-        When Left Menu Item is sales-marketing
+        When Left Menu Item is contracting-switching
         And Top Menu Item is Market Transactions
         And Top Action is Filters
         And "Created after" date is "$today + 3months"
