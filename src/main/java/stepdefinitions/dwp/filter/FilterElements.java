@@ -7,14 +7,11 @@ import cucumber.api.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
 import stepdefinitions.dwp.navigation.NavigationElements;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -34,13 +31,6 @@ public class FilterElements extends NavigationElements {
     @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
-    }
-
-    private class ApplySingleFilter implements Predicate<Map> {
-        @Override
-        public boolean test(Map options) {
-            return executeJavascriptTest("TrApplyFilterInput", options);
-        }
     }
 
     private class TogggleFilterMode implements Predicate<FilterElements> {
@@ -90,31 +80,6 @@ public class FilterElements extends NavigationElements {
         togggleFilterMode.test(this);
         assertThat(String.format("Filter elements: {%s} were not available.",
             StringUtils.join(failingElements, ";")), success, is(true));
-    }
-
-    @And("^Filter element \"([^\"]*)\" input is \"([^\"]*)\"$")
-    public void setFilterInput(String label, String value) throws Throwable {
-        Map<String, String> options = new HashMap<>();
-        options.put("label", label);
-        options.put("value", value);
-        boolean success = new ApplySingleFilter().test(options);
-        assertThat(String.format("Filter element %s is undefined.", label),
-            success, is(true));
-    }
-
-    @And("^Filter element \"([^\"]*)\" date input is \"([^\"]*)\"$")
-    public void setFilterDateInput(String label, String value) throws Throwable {
-        Map<String, String> options = new HashMap<>();
-        options.put("label", label);
-        options.put("value", checkAndConvertToDwpDate(value));
-        boolean success = new ApplySingleFilter().test(options);
-        assertThat(String.format("Filter element %s is undefined.", label),
-            success, is(true));
-    }
-
-    @And("^Filter element \"([^\"]*)\" selection is \"([^\"]*)\"$")
-    public void setFilterSelection(String label, String value) throws Throwable {
-        setFilterInput(label, String.format("string:%s", value));
     }
 
     @Override

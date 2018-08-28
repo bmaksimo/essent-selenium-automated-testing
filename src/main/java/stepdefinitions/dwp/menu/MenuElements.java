@@ -20,7 +20,7 @@ import static org.hamcrest.Matchers.is;
 
 public class MenuElements extends NavigationElements {
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
+    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
