@@ -1,3 +1,4 @@
+@DWP
 @SMOKE
 Feature: Javascript DWP testing
 

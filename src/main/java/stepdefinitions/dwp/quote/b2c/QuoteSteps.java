@@ -20,8 +20,6 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import stepdefinitions.dwp.tables.*;
 import stepdefinitions.dwp.tables.plus.CheckBoxState;
 
@@ -41,7 +39,7 @@ import static org.hamcrest.Matchers.is;
 
 public class QuoteSteps extends DwpScenario {
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
+    @Before("@SMOKE, @QUOTE, @QUOTE_CS,@QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -61,7 +59,9 @@ public class QuoteSteps extends DwpScenario {
             Map<String, Object> options = new HashMap<>();
             options.put("schedule_seconds", sec);
             options.put("header", header);
-            return executeJavascriptTest("TrCheckFormHeader", options);
+            boolean success = executeJavascriptTest("TrCheckFormHeader", options);
+            takeScreenshot(success);
+            return success;
         }
     }
 
@@ -185,7 +185,10 @@ public class QuoteSteps extends DwpScenario {
         tariff.setPackageName(packaqe);
         SelectPackageAndFuelTypePage selectPackageAndFuelTypeView = new SelectPackageAndFuelTypePage(webDriver);
         selectPackageAndFuelTypeView.setTariffData(tariff);
-        selectPackageAndFuelTypeView.fillInFormData();
+        boolean success = selectPackageAndFuelTypeView.fillInFormData();
+        assertThat(String.format("Failure when selecting the package %s.", packaqe),
+            success,
+            is(true));
     }
 
     @And("^Checkbox \"([^\"]*)\" is ([^\"]*)$")
@@ -293,7 +296,7 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
+    @After("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void tearDown() throws Exception {
         super.tearDown();
     }

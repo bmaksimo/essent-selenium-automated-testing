@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.is;
 
 public class TopActions extends NavigationElements {
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @RENEWAL, @B2B_REGRESSION")
+    @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @RENEWAL, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -33,12 +33,6 @@ public class TopActions extends NavigationElements {
     @When("^Cockpit item is ([^\"]*)$")
     public void checkCockpitItem(String item) throws Throwable {
         clickCockpitItem(item);
-    }
-
-    @Override
-    @After("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @RENEWAL, @B2B_REGRESSION")
-    public void tearDown() throws Exception {
-        super.tearDown();
     }
 
     @And("Changes are confirmed")
@@ -64,5 +58,11 @@ public class TopActions extends NavigationElements {
         boolean success = new ValidateCustomer().test(customerName);
         assertThat(String.format("View list did not contain customer '%s'", name),
             success, is(true));
+    }
+
+    @Override
+    @After("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @RENEWAL, @B2B_REGRESSION")
+    public void tearDown() throws Exception {
+        super.tearDown();
     }
 }

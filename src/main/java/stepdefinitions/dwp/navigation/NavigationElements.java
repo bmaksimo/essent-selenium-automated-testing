@@ -83,14 +83,6 @@ public abstract class NavigationElements extends DwpScenario {
         }
     }
 
-    public class ClickConfirm implements Predicate<String> {
-        @Override
-        public boolean test(String name) {
-            boolean success = executeJavascriptTest("TrSelectButton", "");
-            return success;
-        }
-    }
-
     private class VisitTopItem implements Predicate<String> {
         @Override
         public boolean test(String label) {
@@ -100,6 +92,28 @@ public abstract class NavigationElements extends DwpScenario {
             return success;
         }
     }
+
+    public class ClickConfirm implements Predicate<String> {
+        @Override
+        public boolean test(String name) {
+            boolean success = executeJavascriptTest("TrSelectButton", "");
+            return success;
+        }
+    }
+
+    public class ValidateCustomer implements Predicate<Map> {
+        @Override
+        public boolean test(Map name) {
+            return executeJavascriptTest("TrFindCustomer", name);
+        }
+    }
+    public class SearchCustomer implements Predicate<String> {
+        @Override
+        public boolean test(String s) {
+            return executeJavascriptTest("TrSearchCustomer", s);
+        }
+    }
+
 
     protected int extractNumericValue(String ordinal) {
         return numericValue(ordinal);
@@ -159,19 +173,6 @@ public abstract class NavigationElements extends DwpScenario {
         boolean success = new ClickListPlusAction().test(item);
         assertThat(String.format("List Plus Action %s undefined.", item),
             success, is(true));
-    }
-
-    public class ValidateCustomer implements Predicate<Map> {
-        @Override
-        public boolean test(Map name) {
-            return executeJavascriptTest("TrFindCustomer", name);
-        }
-    }
-    public class SearchCustomer implements Predicate<String> {
-        @Override
-        public boolean test(String s) {
-            return executeJavascriptTest("TrSearchCustomer", s);
-        }
     }
 
 }

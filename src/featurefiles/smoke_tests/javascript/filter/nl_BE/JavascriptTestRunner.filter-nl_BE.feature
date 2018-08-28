@@ -1,3 +1,4 @@
+@DWP
 @SMOKE
 Feature: Javascript DWP testing
 
@@ -18,7 +19,7 @@ Feature: Javascript DWP testing
     Scenario:
         When Top Action is Plus Menu
         And Plus Menu is "Contracting -> UP-TK2 - Om contracten te hernieuwen"
-        Then View List Header is "UP-TK2 - Om contracten te hernieuwen" appears within 3 seconds
+        Then View List Header is "UP-TK2 - Om contracten te hernieuwen" appears within 10 seconds
 
         When Top Action is Filters
         And "Klantnummer" input is "6574"

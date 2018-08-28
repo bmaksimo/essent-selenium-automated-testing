@@ -1,4 +1,5 @@
 @DWP
+@QUOTE_CS
 @QUOTE
 @REGRESSION
 Feature: Creating a B2C Quote with customer switch - Dutch version
@@ -9,15 +10,14 @@ Feature: Creating a B2C Quote with customer switch - Dutch version
          DWP application switches MIG from supplier switch to customer switch automatically.
 
     Background:
-        Given I logged in to DWP as contracting.testautomation.b2c@essent.be
+        Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
 
     Scenario: Create a B2C Quote with customer switch
         When Top Action is Plus Menu
         And Plus Menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form Header is "Details van de offerte"
 
-        When "Tariefdatum" date is "$today - 3 months"
-        And B2C sales channel is Inbound
+        When B2C sales channel is Inbound
         And Quote details are confirmed
         Then Form Header is "Persoonsgegevens"
 
@@ -34,7 +34,7 @@ Feature: Creating a B2C Quote with customer switch - Dutch version
         Then Form Header is "Connectiedetails"
         And No price sheet alerts popped up
 
-        When "Startdatum" date is "$today - 3 months"
+        When "Startdatum" date is "$today"
         And Electricity EAN code is selected
         And Connection details are confirmed
         Then Form Header is "Facturatiedetails"
@@ -45,7 +45,7 @@ Feature: Creating a B2C Quote with customer switch - Dutch version
 
         When Option "Heeft de klant al getekend?" is On
         And Quote is signed in Kontich
-        And "Datum ondertekening" date is "$today - 3 months"
+        And "Datum ondertekening" date is "$today"
         And Quote is confirmed
         Then View List Header is "Offertes"
-        And 1 List row having cell value Sales Getekend - Geaccepteerd at column Type & status is selected
+        And 1 List row having cell value Sales Handtekening ontvangen - Geaccepteerd at column Type & status is selected

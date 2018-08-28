@@ -29,6 +29,8 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
@@ -285,6 +287,20 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         logger.info(" - WAIT: waiting for all angular requests to finish on page at url: " + getDriver().getCurrentUrl());
         ngWebDriver.waitForAngularRequestsToFinish();
         logger.info(" - RESULT: all angular requests finished! " + getDriver().getCurrentUrl());
+    }
+
+    protected void takeScreenshot(boolean success)  {
+        if(success) {
+            return;
+        }
+        File screenshot = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
+        Path currentRelativePath = Paths.get("").resolveSibling("target");
+        String currentAbsolutePath = currentRelativePath.toAbsolutePath().toString();
+        try {
+            FileUtils.copyFile(screenshot, new File(FilenameUtils.concat(currentAbsolutePath, screenshot.getName())));
+        } catch (IOException e) {
+            logger.warn(String.format("- ACTION: failed copying screenshot to %s", currentAbsolutePath));
+        }
     }
 
     public void goToHomePage() {
