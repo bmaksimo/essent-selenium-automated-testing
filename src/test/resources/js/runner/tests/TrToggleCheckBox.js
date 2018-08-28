@@ -13,7 +13,6 @@ class TrToggleCheckBox extends TestRunnerBase {
      * options.put("state", "unchecked")
      * boolean result = executeJavascriptTest("TrToggleCheckBox", options);
      */
-
     constructor(options, callback) {
         super(options, callback, 1000);
     }

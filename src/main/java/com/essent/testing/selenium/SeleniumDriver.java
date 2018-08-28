@@ -23,16 +23,19 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.FluentWait;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+
 import static org.junit.Assert.fail;
 
 /**
@@ -88,6 +91,8 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
                 if(withException) {
                     fail(reason);
                 }
+                File scrFile = ((TakesScreenshot)seleniumDriver.getDriver()).getScreenshotAs(OutputType.FILE);
+                SeleniumDriver.logger.info(" - ACTION: CAPTURE_SCREENSHOT: " + scrFile.getPath());
             }
             return success;
         }
@@ -117,10 +122,13 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
                     logger.error(" - CLEAN_DIR: " + userDataPath);
                 }
             }
+
             options.addArguments("--disable-dev-shm-usage"); // overcome limited resource problems
             options.addArguments("--no-sandbox"); // Bypass OS security model
             logger.info(" - OPTIONS: " + options.toString());
-            return new ChromeDriver(options);
+            ChromeDriver chromeDriver = new ChromeDriver(options);
+            chromeDriver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS).setScriptTimeout(1, TimeUnit.MINUTES);
+            return chromeDriver;
         }
 
         class FirefoxWebdriverInitialingStrategy implements WebDriverInitializingStrategy {
@@ -140,7 +148,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
 
 
 
-    public void setUp() throws Exception {
+    public void setUp() {
         driver = createWebDriver();
         ngWebDriver = new NgWebDriver((JavascriptExecutor) driver);
         baseUrl = ConfigProvider.getProperty(ConfigKey.TESTING_BASE_URL);
@@ -184,7 +192,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         try {
             String injection = FileUtils.readFileToString(injectionFile, Charset.defaultCharset());
             String function = FileUtils.readFileToString(functionFile, Charset.defaultCharset());
-            Map values = new HashMap();
+            Map<String, String> values = new HashMap<>();
             values.put("function", StringEscapeUtils.escapeEcmaScript(function));
             StrSubstitutor sub = new StrSubstitutor(values);
             injection = sub.replace(injection);
@@ -220,29 +228,8 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         return ((JavascriptExecutor) driver).executeAsyncScript(function, objects);
     }
 
-    /**
-     *
-     * @param registeredJsClass
-     * @param options
-     * @return
-     */
     public Map executeJavascriptMethod(String registeredJsClass, Object options) {
-        waitUntilAngularPageIsLoaded();
-        String jsTestCall = SeleniumJsTestExpanderService.get().expandToJavascript(registeredJsClass, options);
-        logger.info("STEP:");
-        logger.info(" - ACTION: EVALUATE_JAVASCRIPT_METHOD");
-        logger.info(" - TEST: " + jsTestCall);
-        Map result = (Map) ((JavascriptExecutor) driver).executeAsyncScript(jsTestCall);
-        String status = ((String) result.get("status"));
-        if(StringUtils.isEmpty(status)) {
-            status = "UNDEFINED";
-        }
-        logger.info(" - RESULT: " + status);
-        if (StringUtils.equals("FAILED", status)) {
-            String reason = ((String) result.get("reason"));
-            logger.info(" - REASON: " + reason);
-        }
-        return result;
+        return executeJavascriptMethod(registeredJsClass, options, null);
     }
 
     public Map executeJavascriptMethod(String registeredJsClass, Object options, Object address) {
@@ -328,14 +315,17 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         return ngWebDriver;
     }
 
-    public List<WebElement> findElements(By by) {
-        return driver.findElements(by);
+    public List<WebElement> findElements(By selector) {
+        return driver.findElements(selector);
     }
 
-    public WebElement findElementOrNull(By by) {
-        WebDriverWait waiter = new WebDriverWait(driver, 5).withoutException();
-        WebElement result = waiter.until(driver -> driver.findElement(by));
-        return result;
+    public WebElement findElementOrNull(By selector) {
+        FluentWait<WebDriver> waiter = new FluentWait<>(driver)
+            .withTimeout(Duration.ofSeconds(30))
+            .pollingEvery(Duration.ofSeconds(5))
+            .ignoring(NoSuchElementException.class);
+
+        return waiter.until(driver -> driver.findElement(selector));
     }
 
 }

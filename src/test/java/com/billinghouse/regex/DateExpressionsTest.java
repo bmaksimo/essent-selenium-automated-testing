@@ -34,6 +34,7 @@ public class DateExpressionsTest {
             "$today -1month",
             "$today +  21day",
             "$today-30days",
+            "$today"
         };
         for (String dateFrom : dateF) {
             out.println(format("--Input '%s' expanded to date-time %s", dateFrom, expandFrom(dateFrom).toString("dd/MM/yyyy")));

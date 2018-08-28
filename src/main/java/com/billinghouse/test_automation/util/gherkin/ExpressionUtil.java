@@ -17,7 +17,7 @@ public class ExpressionUtil {
 
     private static final String DWP_DATE_FOMAT = "dd/MM/yyyy";
 
-    private static final String DATE_EXPR_REGEX = "(\\$today)\\s*(\\+|-)\\s*(\\d*)\\s*(month|day)(s*)\\b";
+    private static final String DATE_EXPR_REGEX = "(\\$today)(\\s*(\\+|-)\\s*(\\d*)\\s*(month|day)(s*)\\b)*";
 
     private static final String DATE_EXPR_REGEX_NEW = "(\\d+)\\s*(month|day)(s*)\\s+(from|before)\\s+now";
 
