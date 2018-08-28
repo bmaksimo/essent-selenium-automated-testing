@@ -17,11 +17,12 @@ public class CreateContractTC1B2B extends CreateQuoteB2BBase implements CreateQu
 	public CreateContractTC1B2B() {
 		super();
 		
-		pricingDate = "2017-11-01 12:22:00";
-		priceValidUntilDate = "2017-11-02 12:22:00";
-		signatureReceivedDate = "2017-11-01 12:22:00";	
+		pricingDate = "2018-04-01 12:22:00";
+		priceValidUntilDate = "2018-04-02 12:22:00";
+		signatureReceivedDate = "2018-04-01 12:22:00";	
 		
 		upStartDate = "2018-01-01";  
+		upEndDate = "2019-12-31";
 		
 		addressNumber = "54";
 		addressStreet = "Nijverheidsstraat";

@@ -15,5 +15,14 @@ public enum ContractStatus {
 	    public String getContractStatus() {
 	        return contractStatus;
 	    }
+	    
+	    public static ContractStatus fromString(String text) {
+	        for (ContractStatus contractStatus : ContractStatus.values()) {
+	          if (contractStatus.getContractStatus().equalsIgnoreCase(text)) {
+	            return contractStatus;
+	          }
+	        }
+	        return null;
+	      }
 
 }

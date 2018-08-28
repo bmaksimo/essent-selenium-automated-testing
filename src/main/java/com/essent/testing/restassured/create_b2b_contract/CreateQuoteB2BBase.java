@@ -329,7 +329,7 @@ public class CreateQuoteB2BBase {
 		String contractStatus = ContractUtil.waitUntilStringFoundInResponse(cookie, ApiPaths.API_CONTRACTED_EAN, jsonBody,
 				ContractStatus.ACTIVE, jsonPathFromResponse, Constants.TIMEOUT_SET_CONTRACT_ACTIVE);
 		
-		return ContractStatus.valueOf(contractStatus);
+		return ContractStatus.fromString(contractStatus);
 		
 	}
 

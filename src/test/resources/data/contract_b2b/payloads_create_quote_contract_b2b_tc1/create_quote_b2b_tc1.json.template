@@ -243,7 +243,7 @@
              "contract_line_status_c":null,
              "current_dealer_id":"de18128e-a6e3-aff9-e9df-57a8e1c88552",
              "prev_contract_line_id":null,
-             "up_end_date_c":null,
+             "up_end_date_c":"${upEndDate}",
              "dwp|external_message_GUID_4":null,
              "dwp|external_message_GUID_2":null,
              "dwp|external_message_GUID_1":null,

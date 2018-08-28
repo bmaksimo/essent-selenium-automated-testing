@@ -38,7 +38,7 @@ public class CreateContractUPB2B extends CreateQuoteB2BBase implements CreateQuo
 		// normally a customer switch can only be sent 30 days in the future or in the past. On devint01 we do not have this validation, for UAT* I do not know
 		
 		//Contract 1: I should set some date in file: create_quote_b2b_up.json. Once I started with creation of new contract, I should read upStartDate from file, and increment by 1, and so on
-		upStartDate = "2015-11-01"; 
+		upStartDate = "2015-11-01";  // For this UP product: upStartDate can be only in this range: 02/10/2015 - 01/11/2015!!!!!!!!!!!!
 		upEndDate = "2018-10-31";
 		
 		// This ean should be any from src/test/resources/data/contract_b2b/address_b2b/adress_b2B.XLSX which correspond appropriate address
