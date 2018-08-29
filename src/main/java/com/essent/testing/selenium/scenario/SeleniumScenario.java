@@ -1,12 +1,13 @@
-package com.essent.testing.selenium;
+package com.essent.testing.selenium.scenario;
 
+import com.essent.testing.scenario.RegisteredScenario;
+import com.essent.testing.selenium.SeleniumDriver;
 import org.junit.AfterClass;
 
-import java.math.BigDecimal;
 import java.util.Map;
 
 
-public class SeleniumScenario {
+public class SeleniumScenario extends RegisteredScenario {
 
 
     static protected SeleniumDriver webDriver;
@@ -30,21 +31,6 @@ public class SeleniumScenario {
         webDriver.getDriver().manage().window().maximize();
     }
 
-    protected boolean equals(Object expected, Object actual) {
-        if (expected == null || (expected instanceof String && ((String) expected).isEmpty())) {
-            return actual == null || (actual instanceof String && ((String) actual).isEmpty());
-        }
-
-        if (expected instanceof BigDecimal) {
-            expected = ((BigDecimal) expected).doubleValue();
-        }
-
-        if (actual instanceof BigDecimal) {
-            actual = ((BigDecimal) actual).doubleValue();
-        }
-
-        return expected.equals(actual);
-    }
 
     protected void injectJavaScriptTestRunner() {
         webDriver.injectJavaScriptTestRunner();
