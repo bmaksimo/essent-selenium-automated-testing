@@ -7,17 +7,16 @@ Feature: Change Payment Method
 
     Scenario:
         When Left menu is sales-marketing
-        And Top Menu Item is Accounts
-        And Top Action is Filters
+        And Top menu item is Accounts
+        And Top action is Filters
         And "B2C/B2B" selection is "B2B"
         And "Account number" input is "151004569"
         When Click on link in View List at 1st row and "Account Number & Name" column
         And Dashboard menu is Details
-        And View List Header is "Billing customer"
+        And View list header is "Billing customer"
         When Click on link in "Billing customer" View List at 1st row and "Plus Action" column
-        Then Row actions is "Billing customer"
-        When Row actions "Update" is clicked
-        Then Modal "Update Billing Customer" is displayed
-        When Payment method is "Direct debit" and IBAN is NL43ABNA0978459932
-        And Modal Save is clicked
-        Then 1st List element has cell value Direct Debit at column Payment Method
+        And Row actions "Update" is clicked
+        Then Modal "Update billing customer" is displayed
+#        When Payment method is "Direct debit" and IBAN is NL43ABNA0978459932
+#        And Modal Save is clicked
+#        Then 1st List element has cell value Direct Debit at column Payment Method

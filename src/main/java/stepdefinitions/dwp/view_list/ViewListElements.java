@@ -170,6 +170,20 @@ public class ViewListElements extends NavigationElements {
         }
     }
 
+    private class ClickTableRowAction implements Predicate<Map> {
+        @Override
+        public boolean test(Map options) {
+            return executeJavascriptTest("TrClickTableRowAction", options);
+        }
+    }
+
+    private class CheckModalDialog implements Predicate<Map> {
+        @Override
+        public boolean test(Map options) {
+            return executeJavascriptTest("TrCheckModalDialog", options);
+        }
+    }
+
     @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION, @PAY")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
@@ -221,6 +235,23 @@ public class ViewListElements extends NavigationElements {
         boolean success = new ClickTableCellUrl().test(columnIndexListOptions);
         assertThat(String.format("View list did not contain URL at row %s header '%s' and '%s' view list", ordinal, column, viewListName),
             success, is(true));
+    }
+
+    @When("^Modal \"([^\"]*)\" is displayed$")
+    public void checkModalDialogOpen(String headerText) {
+        Map<String, String> options = new HashMap<>();
+        options.put("headerText", headerText);
+        boolean success = new CheckModalDialog().test(options);
+        assertThat(String.format("Action row %s was not found", headerText), success, is(true));
+    }
+
+
+    @Then("^Row actions \"([^\"]*)\" is clicked$")
+    public void clickOnRowAction(String rowAction) {
+        Map<String, String> options = new HashMap<>();
+        options.put("rowAction", rowAction);
+        boolean success = new ClickTableRowAction().test(options);
+        assertThat(String.format("Action row %s was not found", rowAction), success, is(true));
     }
 
     @And("^([^\"]*) List element has cell value ([^\"]*) at column ([^\"]*)$")
