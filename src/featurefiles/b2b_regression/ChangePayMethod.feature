@@ -1,12 +1,12 @@
 @B2B_REGRESSION
-    @PAY
+@PAY
 Feature: Change Payment Method
 
     Background:
         Given I logged in to DWP as b.maksimovic@levi9.com
 
     Scenario:
-        When Left Menu Item is sales-marketing
+        When Left menu is sales-marketing
         And Top Menu Item is Accounts
         And Top Action is Filters
         And "B2C/B2B" selection is "B2B"
