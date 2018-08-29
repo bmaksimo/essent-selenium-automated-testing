@@ -26,7 +26,7 @@ public class DateExpressionsTest {
 
 
     @Test
-    public void testJavaRegexHell_inputExpression() throws Exception {
+    public void testJavaRegexHell_inputExpressionLegacy() throws Exception {
         String[] dateF = {"$today +  3months",
             "$today +  4 months",
             "$today +  3 months",
@@ -36,8 +36,25 @@ public class DateExpressionsTest {
             "$today-30days",
             "$today"
         };
-        for (String dateFrom : dateF)
+        for (String dateFrom : dateF) {
             out.println(format("--Input '%s' expanded to date-time %s", dateFrom, expandFrom(dateFrom).toString("dd/MM/yyyy")));
+        }
+    }
+
+    @Test
+    public void testInputExpressionNew() throws Exception {
+        String[] dateF = {"3months from now",
+            "4 months from now",
+            "3 months from now",
+            "3 months before now",
+            "1month before now",
+            "21day from now",
+            "30 days before now",
+            "now"
+        };
+        for (String dateFrom : dateF) {
+            out.println(format("--Input '%s' expanded to date-time %s", dateFrom, expandFrom(dateFrom).toString("dd/MM/yyyy")));
+        }
     }
 
     @Test

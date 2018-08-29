@@ -41,7 +41,7 @@ import static org.hamcrest.Matchers.is;
 
 public class QuoteSteps extends DwpScenario {
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
+    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -140,8 +140,6 @@ public class QuoteSteps extends DwpScenario {
         quoteDetailsPage.next();
     }
 
-
-
     @OutputParameter(name = "customer")
     private CustomerDetails newCustomer;
 
@@ -206,7 +204,7 @@ public class QuoteSteps extends DwpScenario {
         selectPackageAndFuelTypeView.next();
     }
 
-    @And("^No price sheet alerts popped up$")
+    @And("^Price sheet alert doesn't pop up$")
     public void verifySelectTariffSheetAndPackage() throws Throwable {
         assertThat("Failure. Tariff sheet alerts were generated although they were not expected.", true,
             is(new VerifyTariffSheetPriceAlert().test(this)));

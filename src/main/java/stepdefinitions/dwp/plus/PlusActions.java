@@ -8,12 +8,12 @@ import stepdefinitions.dwp.navigation.NavigationElements;
 
 public class PlusActions extends NavigationElements {
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
+    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
 
-    @And("^Plus Menu is \"([^\"]*)\"$")
+    @And("^Plus menu is \"([^\"]*)\"$")
     public void checkPlusMenu(String path) throws Throwable {
         clickPlusAction(path);
     }
