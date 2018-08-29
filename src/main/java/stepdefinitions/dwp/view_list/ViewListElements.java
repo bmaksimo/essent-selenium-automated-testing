@@ -170,7 +170,7 @@ public class ViewListElements extends NavigationElements {
         }
     }
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER")
+    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION, @PAY")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -203,10 +203,23 @@ public class ViewListElements extends NavigationElements {
     public void clickOnViewListAtRowAndColumn(String ordinal, String column) throws Throwable {
         String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
         Map<String, String> columnIndexListOptions = new HashMap<>();
+        columnIndexListOptions = new HashMap<>();
         columnIndexListOptions.put("column", column);
         columnIndexListOptions.put("index", rowIndex);
         boolean success = new ClickTableCellUrl().test(columnIndexListOptions);
         assertThat(String.format("View list did not contain URL at row %s header '%s'", ordinal, column),
+            success, is(true));
+    }
+
+    @When("^Click on link in \"([^\"]*)\" View List at ([^\"]*) row and \"([^\"]*)\" column$")
+    public void clickOnSuppliedViewListAtRowAndColumn(String viewListName, String ordinal, String column) throws Throwable {
+        String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
+        Map<String, String> columnIndexListOptions = new HashMap<>();
+        columnIndexListOptions.put("column", column);
+        columnIndexListOptions.put("view_list_name", viewListName);
+        columnIndexListOptions.put("index", rowIndex);
+        boolean success = new ClickTableCellUrl().test(columnIndexListOptions);
+        assertThat(String.format("View list did not contain URL at row %s header '%s' and '%s' view list", ordinal, column, viewListName),
             success, is(true));
     }
 

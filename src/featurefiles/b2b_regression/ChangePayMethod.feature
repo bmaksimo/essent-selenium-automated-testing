@@ -1,5 +1,6 @@
 @B2B_REGRESSION
-Feature: Change Pay Method
+    @PAY
+Feature: Change Payment Method
 
     Background:
         Given I logged in to DWP as b.maksimovic@levi9.com
@@ -13,6 +14,10 @@ Feature: Change Pay Method
         When Click on link in View List at 1st row and "Account Number & Name" column
         And Dashboard menu is Details
         And View List Header is "Billing customer"
-#        When Click on link in View List at 1st row and "" column
-#        And "Billing customer" list item at 1st plus action
-        And Selenium click on plus
+        When Click on link in "Billing customer" View List at 1st row and "Plus Action" column
+        Then Row actions is "Billing customer"
+        When Row actions "Update" is clicked
+        Then Modal "Update Billing Customer" is displayed
+        When Payment method is "Direct debit" and IBAN is NL43ABNA0978459932
+        And Modal Save is clicked
+        Then 1st List element has cell value Direct Debit at column Payment Method
