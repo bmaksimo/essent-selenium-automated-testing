@@ -28,7 +28,7 @@ public class FilterElements extends NavigationElements {
     private static final String FILTER_BUTTON_ELEMENT = "FILTER_BUTTON_ELEMENT";
     private static final String FILTER_BUTTON_ELEMENT_QUERY = ".icon-filters";
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER")
+    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -83,7 +83,7 @@ public class FilterElements extends NavigationElements {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER")
+    @After("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS")
     public void tearDown() throws Exception {
         super.tearDown();
     }

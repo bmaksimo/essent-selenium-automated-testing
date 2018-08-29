@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.is;
 
 public class PlusActions extends NavigationElements {
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER")
+    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
