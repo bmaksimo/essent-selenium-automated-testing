@@ -21,11 +21,12 @@ import static com.essent.automation.autocrat.Action.REQUIRE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
+import static com.billinghouse.test_automation.util.gherkin.ExpressionUtil.checkAndConvertToDwpDate;
+
 public class FilterElements extends NavigationElements {
 
     private static final String FILTER_BUTTON_ELEMENT = "FILTER_BUTTON_ELEMENT";
     private static final String FILTER_BUTTON_ELEMENT_QUERY = ".icon-filters";
-
 
     @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER")
     public void setupTest(Scenario scenario) throws Throwable {
@@ -70,7 +71,7 @@ public class FilterElements extends NavigationElements {
 
     }
 
-    @When("^Available filter elements are:$")
+    @When("^Available filters are:$")
     public void visitLeftMenuItemFilter(DataTable filterElements) throws Throwable {
         TogggleFilterMode togggleFilterMode = new TogggleFilterMode();
         togggleFilterMode.test(this);
@@ -80,7 +81,6 @@ public class FilterElements extends NavigationElements {
         assertThat(String.format("Filter elements: {%s} were not available.",
             StringUtils.join(failingElements, ";")), success, is(true));
     }
-
 
     @Override
     @After("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER")

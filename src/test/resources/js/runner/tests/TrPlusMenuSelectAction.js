@@ -46,7 +46,7 @@ class TrPlusMenuSelectAction extends TestRunnerBase {
             if(resultAction.index() == 0) {
                 return resultAction;
             }
-        } 
+        }
         return undefined;
     }
 
