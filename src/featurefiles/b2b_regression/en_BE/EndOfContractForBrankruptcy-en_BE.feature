@@ -5,9 +5,9 @@ Feature: End of contract for bankruptcy
         Given   I logged in to DWP as b.maksimovic@levi9.com
 
     Scenario:
-        When Left Menu is sales-marketing
-        And Top Menu Item is Accounts
-        And Top Action is Filters
+        When Left menu is sales-marketing
+        And Top menu item is Accounts
+        And Top action is Filters
         And "B2C/B2B" selection is "B2B"
         And "Account number" input is "151004631"
         When Click on link in View List at 1st row and "Account Number & Name" column

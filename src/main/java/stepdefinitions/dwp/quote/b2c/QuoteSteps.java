@@ -143,7 +143,7 @@ public class QuoteSteps extends DwpScenario {
     @OutputParameter(name = "customer")
     private CustomerDetails newCustomer;
 
-    @Then("^Form Header is \"([^\"]*)\"$")
+    @Then("^Form header is \"([^\"]*)\"$")
     public void checkFormHeader(String formHeader) throws Throwable {
         given().await()
             .pollInterval(FIVE_HUNDRED_MILLISECONDS)
@@ -163,7 +163,7 @@ public class QuoteSteps extends DwpScenario {
             is(true));
     }
 
-    @And("^Customer Address is$")
+    @And("^Customer address is$")
     public void initCustomerAddress(final DataTable address) throws Throwable {
         List<CustomerAddress> list = address.asList(CustomerAddress.class);
         CustomerAddress cuatomerAddress = list.get(0);

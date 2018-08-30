@@ -184,7 +184,7 @@ public class ViewListElements extends NavigationElements {
             success, is(true));
     }
 
-    @When("^View List Header is \"([^\"]*)\" appears within (\\d+) seconds?$")
+    @When("^View list header is \"([^\"]*)\" appears within (\\d+) seconds?$")
     public void checkViewListHeaderUntil(String header, int seconds) throws Throwable {
         CheckViewListHeader checkViewListHeader = new CheckViewListHeader();
         given().await()

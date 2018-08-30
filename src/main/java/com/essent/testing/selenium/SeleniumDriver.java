@@ -249,6 +249,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         if (StringUtils.equals("FAILED", status)) {
             String reason = ((String) result.get("reason"));
             logger.info(" - REASON: " + reason);
+            takeScreenshot(false);
         }
         return result;
     }

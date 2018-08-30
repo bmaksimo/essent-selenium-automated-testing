@@ -18,7 +18,7 @@ public class PlusActions extends NavigationElements {
         clickPlusAction(path);
     }
 
-    @And("^List Plus Action is ([^\"]*)$")
+    @And("^List plus action is ([^\"]*)$")
     public void checkPlusAction(String item) throws Exception {
         clickListPlusAction(item);
     }
