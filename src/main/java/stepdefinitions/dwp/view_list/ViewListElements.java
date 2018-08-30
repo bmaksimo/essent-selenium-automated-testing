@@ -172,7 +172,7 @@ public class ViewListElements extends NavigationElements {
         }
     }
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER")
+    @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -184,7 +184,7 @@ public class ViewListElements extends NavigationElements {
             success, is(true));
     }
 
-    @When("^View List Header is \"([^\"]*)\" appears within (\\d+) seconds?$")
+    @When("^View list header is \"([^\"]*)\" appears within (\\d+) seconds?$")
     public void checkViewListHeaderUntil(String header, int seconds) throws Throwable {
         CheckViewListHeader checkViewListHeader = new CheckViewListHeader();
         given().await()
@@ -280,7 +280,7 @@ public class ViewListElements extends NavigationElements {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
+    @After("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void tearDown() throws Exception {
         super.tearDown();
     }
