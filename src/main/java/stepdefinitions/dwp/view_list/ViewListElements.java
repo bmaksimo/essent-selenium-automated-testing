@@ -2,12 +2,14 @@ package stepdefinitions.dwp.view_list;
 
 import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
+import com.essent.testing.util.SharedPropertiesSingleton;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
 import stepdefinitions.dwp.navigation.NavigationElements;
 
@@ -184,7 +186,30 @@ public class ViewListElements extends NavigationElements {
         }
     }
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION, @PAY")
+    private class ModalSaveAction implements Predicate<Map> {
+        @Override
+        public boolean test(Map options) {
+            return executeJavascriptTest("TrModalSaveAction", options);
+        }
+    }
+
+    private class PaymentMethodSwitch implements Predicate<Map> {
+        @Override
+        public boolean test(Map options) {
+            Map result = executeJavascriptMethod("TrSwitchPaymentMethod", options);
+            String status = ((String) result.get("status"));
+            boolean success = StringUtils.equals("PASSED", status);
+            if (success) {
+                String switchedPaymentMethod = (String) result.get("paymentMethod");
+                Map<String, Object> sharedProperties = SharedPropertiesSingleton.getInstance().getSharedProperties();
+                sharedProperties.put("paymentMethod", switchedPaymentMethod);
+            }
+
+            return success;
+        }
+    }
+
+   @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION, @PAY")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -244,6 +269,21 @@ public class ViewListElements extends NavigationElements {
         boolean success = new CheckModalDialog().test(options);
         assertThat(String.format("Action row %s was not found", headerText), success, is(true));
     }
+
+    @When("Payment method is switched and IBAN is ([^\"]*)$")
+    public void switchPaymentMethod(String iban) {
+        Map<String, String> options = new HashMap<>();
+        options.put("iban", iban);
+        boolean success = new PaymentMethodSwitch().test(options);
+        assertThat("Payment method has not been switched", success, is(true));
+    }
+
+    @And("Modal Save is clicked$")
+    public void switchPaymentMethod() {
+        boolean success = new ModalSaveAction().test(null);
+        assertThat("Billing customer update has failed.", success, is(true));
+    }
+
 
 
     @Then("^Row actions \"([^\"]*)\" is clicked$")

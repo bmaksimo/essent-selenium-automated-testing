@@ -11,12 +11,13 @@ Feature: Change Payment Method
         And Top action is Filters
         And "B2C/B2B" selection is "B2B"
         And "Account number" input is "151004569"
-        When Click on link in View List at 1st row and "Account Number & Name" column
+        And Click on link in View List at 1st row and "Account Number & Name" column
         And Dashboard menu is Details
-        And View list header is "Billing customer"
+        Then View list header is "Billing customer"
         When Click on link in "Billing customer" View List at 1st row and "Plus Action" column
         And Row actions "Update" is clicked
         Then Modal "Update billing customer" is displayed
-#        When Payment method is "Direct debit" and IBAN is NL43ABNA0978459932
-#        And Modal Save is clicked
+        When Payment method is switched and IBAN is NL43ABNA0978459932
+        And Modal Save is clicked
+
 #        Then 1st List element has cell value Direct Debit at column Payment Method
