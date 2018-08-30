@@ -23,7 +23,7 @@ Feature: Creating a B2C Quote TC1 with move in - Dutch version
         #Increase houseNr by 2 (odds from 13)
         And Customer Address is
             | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-            | Mechelsesteenweg| 13   |            |      | 2550       | Kontich  |         |
+            | Mechelsesteenweg| 21   |            |      | 2550       | Kontich  |         |
         And Customer details are confirmed
         Then Form Header is "Selecteer pakket en product"
 
@@ -36,10 +36,11 @@ Feature: Creating a B2C Quote TC1 with move in - Dutch version
         When "Startdatum" date is "$today"
         And Electricity EAN code is selected
         And Electricity meter is Closed
+        And Electricity market mock test is Open
         And Connection details are confirmed
         Then Form Header is "Facturatiedetails"
 
-        When Payment details are: method Domiciliëring, IBAN "NL57ABNA0874253356", bic "ABNANL2A"
+        When Payment details are: method Overschrijving, IBAN "NL57ABNA0874253356", bic "ABNANL2A"
         And Billing details are confirmed
         Then  Form Header is "Overzicht offerte"
 

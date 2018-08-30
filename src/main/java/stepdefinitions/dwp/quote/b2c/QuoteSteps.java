@@ -238,6 +238,17 @@ public class QuoteSteps extends DwpScenario {
         connectionDetailsView.toggleMeter(productType, meterState);
     }
 
+    @And("^([^\"]*) market mock test is ([^\"]*)$")
+    public void setMarketMockTest(final ProductType productType, final CheckBoxState state) throws Throwable {
+        ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage(webDriver);
+        given().await()
+            .ignoreExceptions()
+            .pollInterval(FIVE_HUNDRED_MILLISECONDS)
+            .pollDelay(ONE_HUNDRED_MILLISECONDS)
+            .atMost(new Duration(10, SECONDS)).until(()->connectionDetailsView.isNextButtonEnabled());
+        connectionDetailsView.toggleMarketMockTest(productType, state);
+    }
+
     @And("^Connection details are confirmed$")
     public void confirmConnection() throws Throwable {
         ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage(webDriver);

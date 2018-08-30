@@ -40,7 +40,7 @@ Feature: Creating a B2C Quote TC1 with move in - Dutch version
         And Connection details are confirmed
         Then Form Header is "Facturatiedetails"
 
-        When Payment details are: method Domiciliëring, IBAN "NL57ABNA0874253356", bic "ABNANL2A"
+        When Payment details are: method Overschrijving, IBAN "NL57ABNA0874253356", bic "ABNANL2A"
         And Billing details are confirmed
         Then  Form Header is "Overzicht offerte"
 
@@ -50,3 +50,7 @@ Feature: Creating a B2C Quote TC1 with move in - Dutch version
         And Quote is confirmed
         Then View List Header is "Offertes"
         And 1 List row having cell value Sales Handtekening ontvangen - Geaccepteerd at column Type & status is selected
+        And List Plus Action is Bevestig
+        
+        
+    
