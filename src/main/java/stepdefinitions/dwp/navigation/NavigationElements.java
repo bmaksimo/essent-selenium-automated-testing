@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
-import static com.billinghouse.test_automation.util.gherkin.ExpressionUtil.numericValue;
+import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.numericValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 

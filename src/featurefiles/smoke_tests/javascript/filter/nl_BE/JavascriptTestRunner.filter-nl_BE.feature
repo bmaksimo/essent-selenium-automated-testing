@@ -11,8 +11,8 @@ Feature: Javascript DWP testing
         Then View List Header is "Marktberichten" appears within 25 seconds
 
         When Top Action is Filters
-        And "Aangemaakt na" date is "$today - 3months"
-        And "Aangemaakt voor" date is "$today +  1 day"
+        And "Aangemaakt na" date is "3 months before now"
+        And "Aangemaakt voor" date is "1 day from now"
         And "EAN-code" input is "541448820045086029"
         Then 1 List row having cell value MOVE IN Move In at column Module & Label is selected
 

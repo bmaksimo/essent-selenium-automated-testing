@@ -33,7 +33,7 @@ Feature: Creating a B2C Quote TC1 with supplier switch - Dutch version
         Then Form Header is "Connectiedetails"
         And Price sheet alert doesn't pop up
 
-        When "Startdatum" date is "$today"
+        When "Startdatum" date is "now"
         And Electricity EAN code is selected
         And Connection details are confirmed
         Then Form Header is "Facturatiedetails"
@@ -44,7 +44,7 @@ Feature: Creating a B2C Quote TC1 with supplier switch - Dutch version
 
         When Option "Heeft de klant al getekend?" is On
         And Quote is signed in Kontich
-        And "Datum ondertekening" date is "$today"
+        And "Datum ondertekening" date is "now"
         And Quote is confirmed
         Then View List Header is "Offertes"
         And  1 List row having cell value Sales Handtekening ontvangen - Geaccepteerd at column Type & status are selected

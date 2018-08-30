@@ -21,8 +21,6 @@ import static com.essent.automation.autocrat.Action.REQUIRE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-import static com.billinghouse.test_automation.util.gherkin.ExpressionUtil.checkAndConvertToDwpDate;
-
 public class FilterElements extends NavigationElements {
 
     private static final String FILTER_BUTTON_ELEMENT = "FILTER_BUTTON_ELEMENT";

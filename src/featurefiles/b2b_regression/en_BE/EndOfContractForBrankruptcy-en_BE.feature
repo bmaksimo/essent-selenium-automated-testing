@@ -19,5 +19,5 @@ Feature: End of contract for bankruptcy
         And "Module" selection is "INITIATE STOP ACCESS"
         And "Label" selection is "Non-Residential End-of-Contract"
         And "Label" selection is "Non-Residential End-of-Contract"
-        And "Effective Date" selection is "$today"
+        And "Effective Date" selection is "now"
         Then Select button
