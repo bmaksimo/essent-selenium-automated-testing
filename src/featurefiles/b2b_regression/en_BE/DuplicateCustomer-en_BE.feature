@@ -6,7 +6,7 @@ Feature: Dwp test for duplicating customer
 
 
     Scenario:
-        When Left Menu Item is sales-marketing
+        When Left Menu is sales-marketing
         And Top Menu Item is Accounts
         And Top Action is Filters
         And "Name" input is "%Steven%"

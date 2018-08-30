@@ -1,3 +1,4 @@
+@DWP
 @QUOTE_MI
 @REGRESSION
 Feature: Creating a B2C Quote TC1 with move in - Dutch version
@@ -31,7 +32,7 @@ Feature: Creating a B2C Quote TC1 with move in - Dutch version
         And Checkbox "Gas Fix B2C (TC1)" is Unchecked
         And Package and Fuel Type is confirmed
         Then Form Header is "Connectiedetails"
-        And No price sheet alerts popped up
+        And Price sheet alert doesn't pop up
 
         When "Startdatum" date is "$today"
         And Electricity EAN code is selected

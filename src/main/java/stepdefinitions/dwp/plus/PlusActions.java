@@ -13,7 +13,7 @@ public class PlusActions extends NavigationElements {
         registerActiveScenario(scenario);
     }
 
-    @And("^Plus Menu is \"([^\"]*)\"$")
+    @And("^Plus menu is \"([^\"]*)\"$")
     public void checkPlusMenu(String path) throws Throwable {
         clickPlusAction(path);
     }

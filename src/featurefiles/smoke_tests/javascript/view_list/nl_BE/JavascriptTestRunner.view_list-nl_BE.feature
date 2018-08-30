@@ -5,7 +5,7 @@ Feature: Javascript DWP testing
     Background:
         Given   I logged in to DWP as contracting.testautomation.b2c@essent.be
     Scenario:
-        When Left Menu Item is contracting-switching
+        When Left menu is contracting-switching
         And Top Menu Item is Marktberichten
         Then View List Header is "Marktberichten" appears within 25 seconds
 

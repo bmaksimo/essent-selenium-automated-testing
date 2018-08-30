@@ -13,6 +13,7 @@ import java.util.Map;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
+
 public class TopActions extends NavigationElements {
 
     @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @RENEWAL, @B2B_REGRESSION")
@@ -20,7 +21,7 @@ public class TopActions extends NavigationElements {
         registerActiveScenario(scenario);
     }
 
-    @When("^Top Action is ([^\"]*)$")
+    @When("^Top action is ([^\"]*)$")
     public void checkTopAction(String action) throws Throwable {
         clickTopAction(action);
     }

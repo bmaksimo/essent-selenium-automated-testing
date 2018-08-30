@@ -177,7 +177,7 @@ public class ViewListElements extends NavigationElements {
         registerActiveScenario(scenario);
     }
 
-    @When("^View List Header is \"([^\"]*)\"$")
+    @When("^View list header is \"([^\"]*)\"$")
     public void checkViewListHeader(String header) throws Throwable {
         boolean success = new CheckViewListHeader().test(header);
         assertThat(String.format("View list did not contain header '%s'", header),

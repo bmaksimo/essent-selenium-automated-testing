@@ -9,7 +9,7 @@ Feature: Billing - Invoices
         Given I logged in to DWP as billing.testautomation@essent.be
 
     Scenario: Navigate to "account_cockpit_billing", verify B2C Advance Invoice
-        When Left Menu Item is billing
+        When Left Menu is billing
         And Top Menu Item is Contracten
         And Top Action is Filters
         And "Contracttype" selection is "RENEWAL_PASSIVE"
