@@ -244,7 +244,6 @@ public class ViewListElements extends NavigationElements {
     public void clickOnViewListAtRowAndColumn(String ordinal, String column) throws Throwable {
         String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
         Map<String, String> columnIndexListOptions = new HashMap<>();
-        columnIndexListOptions = new HashMap<>();
         columnIndexListOptions.put("column", column);
         columnIndexListOptions.put("index", rowIndex);
         boolean success = new ClickTableCellUrl().test(columnIndexListOptions);
