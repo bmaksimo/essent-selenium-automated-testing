@@ -150,11 +150,8 @@ public class ViewListElements extends NavigationElements {
             if (row > rows.size()) {
                 fail(String.format("--Error in Test Input: Given %s row index cannot be greater that actual View List size %s", row, rows.size()));
             }
-
             List<String> allRows = new ArrayList<>();
-
             for (List internalRow : rows) allRows.addAll(internalRow);
-
             return allRows.get(index);
         }
 
@@ -288,8 +285,6 @@ public class ViewListElements extends NavigationElements {
         boolean success = new ModalSaveAction().test(null);
         assertThat("Billing customer update has failed.", success, is(true));
     }
-
-
 
     @Then("^Row actions \"([^\"]*)\" is clicked$")
     public void clickOnRowAction(String rowAction) {
