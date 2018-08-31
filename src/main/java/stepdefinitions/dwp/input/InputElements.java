@@ -27,7 +27,13 @@ public class InputElements extends DwpScenario {
     private class ApplyInput implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
-            return executeJavascriptTest("TbrFormInput", options);
+            return executeJavascriptTest("BaseFormInput", options);
+        }
+    }
+    private class ApplySelection implements Predicate<Map> {
+        @Override
+        public boolean test(Map options) {
+            return executeJavascriptTest("TrFormSelection", options);
         }
     }
 
@@ -48,7 +54,7 @@ public class InputElements extends DwpScenario {
         options.put("label", label);
         options.put("value", value);
         boolean success = new ApplyInput().test(options);
-        assertThat(String.format("Filter element %s is undefined.", label),
+        assertThat(String.format("Input field %s is undefined.", label),
             success, is(true));
     }
 
@@ -64,7 +70,12 @@ public class InputElements extends DwpScenario {
 
     @And("^\"([^\"]*)\" selection is \"([^\"]*)\"$")
     public void setSelection(String label, String value) throws Throwable {
-        setInput(label, String.format("string:%s", value));
+        Map<String, String> options = new HashMap<>();
+        options.put("label", label);
+        options.put("value", value);
+        boolean success = new ApplySelection().test(options);
+        assertThat(String.format("Selection %s is undefined.", label),
+            success, is(true));
     }
 
     @And("^Option \"([^\"]*)\" is ([^\"]*)$")
