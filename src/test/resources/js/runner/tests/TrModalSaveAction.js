@@ -10,7 +10,7 @@ class TrModalSaveAction extends TestRunnerBase {
         const modalSaveButton = $('#confirm-button');
 
         if (modalSaveButton.index() > -1) {
-            modalSaveButton.trigger('click');
+            setTimeout(function() { modalSaveButton.trigger('click'); }, 1000);
             result.status = 'PASSED';
             result.reason = '';
         } else {

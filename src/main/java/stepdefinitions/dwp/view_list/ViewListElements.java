@@ -150,8 +150,12 @@ public class ViewListElements extends NavigationElements {
             if (row > rows.size()) {
                 fail(String.format("--Error in Test Input: Given %s row index cannot be greater that actual View List size %s", row, rows.size()));
             }
-            ArrayList<String> cells = rows.get(row - 1);
-            return cells.get(index);
+
+            List<String> allRows = new ArrayList<>();
+
+            for (List internalRow : rows) allRows.addAll(internalRow);
+
+            return allRows.get(index);
         }
 
         private List<ArrayList> getData(Map viewTable) {
@@ -200,7 +204,8 @@ public class ViewListElements extends NavigationElements {
             String status = ((String) result.get("status"));
             boolean success = StringUtils.equals("PASSED", status);
             if (success) {
-                String switchedPaymentMethod = (String) result.get("paymentMethod");
+                String switchedPaymentMethod = ((String) result.get("paymentMethod")).equalsIgnoreCase("string:OV") ?
+                    "Bank Transfer" : "Direct Debit";
                 Map<String, Object> sharedProperties = SharedPropertiesSingleton.getInstance().getSharedProperties();
                 sharedProperties.put("paymentMethod", switchedPaymentMethod);
             }
@@ -279,7 +284,7 @@ public class ViewListElements extends NavigationElements {
     }
 
     @And("Modal Save is clicked$")
-    public void switchPaymentMethod() {
+    public void clickSaveOnModal() {
         boolean success = new ModalSaveAction().test(null);
         assertThat("Billing customer update has failed.", success, is(true));
     }
@@ -299,6 +304,15 @@ public class ViewListElements extends NavigationElements {
         int row = extractNumericValue(ordinal);
         boolean success = new ViewListModel().containsDataAt(row, value, columnName);
         assertThat(String.format("View list did not contain cell value %s at %s row, column '%s'", value, ordinal, columnName),
+            success, is(true));
+    }
+
+    @And("^([^\"]*) List element has updated cell value at column \"([^\"]*)\"$")
+    public void listSwitchedPaymentMethod(String ordinal, String columnName) throws Throwable {
+        int row = extractNumericValue(ordinal);
+        String updatedPaymentMethodName = (String) SharedPropertiesSingleton.getInstance().getSharedProperties().get("paymentMethod");
+        boolean success = new ViewListModel().containsDataAt(row, updatedPaymentMethodName, columnName);
+        assertThat(String.format("View list did not contain payment method %s at %s row, column '%s'", updatedPaymentMethodName, ordinal, columnName),
             success, is(true));
     }
 
