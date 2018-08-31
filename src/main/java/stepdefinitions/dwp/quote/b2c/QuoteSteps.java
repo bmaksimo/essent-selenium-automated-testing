@@ -39,7 +39,7 @@ import static org.hamcrest.Matchers.is;
 
 public class QuoteSteps extends DwpScenario {
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS")
+    @Before("@SMOKE, @QUOTE, @QUOTE_CS,@QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -59,7 +59,9 @@ public class QuoteSteps extends DwpScenario {
             Map<String, Object> options = new HashMap<>();
             options.put("schedule_seconds", sec);
             options.put("header", header);
-            return executeJavascriptTest("TrCheckFormHeader", options);
+            boolean success = executeJavascriptTest("TrCheckFormHeader", options);
+            takeScreenshot(success);
+            return success;
         }
     }
 
@@ -141,7 +143,7 @@ public class QuoteSteps extends DwpScenario {
     @OutputParameter(name = "customer")
     private CustomerDetails newCustomer;
 
-    @Then("^Form Header is \"([^\"]*)\"$")
+    @Then("^Form header is \"([^\"]*)\"$")
     public void checkFormHeader(String formHeader) throws Throwable {
         given().await()
             .pollInterval(FIVE_HUNDRED_MILLISECONDS)
@@ -161,7 +163,7 @@ public class QuoteSteps extends DwpScenario {
             is(true));
     }
 
-    @And("^Customer Address is$")
+    @And("^Customer address is$")
     public void initCustomerAddress(final DataTable address) throws Throwable {
         List<CustomerAddress> list = address.asList(CustomerAddress.class);
         CustomerAddress cuatomerAddress = list.get(0);
@@ -181,7 +183,10 @@ public class QuoteSteps extends DwpScenario {
         tariff.setPackageName(packaqe);
         SelectPackageAndFuelTypePage selectPackageAndFuelTypeView = new SelectPackageAndFuelTypePage(webDriver);
         selectPackageAndFuelTypeView.setTariffData(tariff);
-        selectPackageAndFuelTypeView.fillInFormData();
+        boolean success = selectPackageAndFuelTypeView.fillInFormData();
+        assertThat(String.format("Failure when selecting the package %s.", packaqe),
+            success,
+            is(true));
     }
 
     @And("^Checkbox \"([^\"]*)\" is ([^\"]*)$")
@@ -229,6 +234,17 @@ public class QuoteSteps extends DwpScenario {
             .pollDelay(ONE_HUNDRED_MILLISECONDS)
             .atMost(new Duration(10, SECONDS)).until(()->connectionDetailsView.isNextButtonEnabled());
         connectionDetailsView.toggleMeter(productType, meterState);
+    }
+
+    @And("^([^\"]*) market mock test is ([^\"]*)$")
+    public void setMarketMockTest(final ProductType productType, final CheckBoxState state) throws Throwable {
+        ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage(webDriver);
+        given().await()
+            .ignoreExceptions()
+            .pollInterval(FIVE_HUNDRED_MILLISECONDS)
+            .pollDelay(ONE_HUNDRED_MILLISECONDS)
+            .atMost(new Duration(10, SECONDS)).until(()->connectionDetailsView.isNextButtonEnabled());
+        connectionDetailsView.toggleMarketMockTest(productType, state);
     }
 
     @And("^Connection details are confirmed$")
@@ -289,7 +305,7 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
+    @After("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void tearDown() throws Exception {
         super.tearDown();
     }

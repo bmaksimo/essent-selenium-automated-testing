@@ -1,6 +1,6 @@
 @DWP
-@BASIC
 @SMOKE
+@BILLING
 @REGRESSION
 Feature: Billing - Invoices
 
@@ -10,16 +10,16 @@ Feature: Billing - Invoices
 
     Scenario: Navigate to "account_cockpit_billing", verify B2C Advance Invoice
         When Left menu is billing
-        And Top Menu Item is Contracten
-        And Top Action is Filters
+        And Top menu item is Contracten
+        And Top action is Filters
         And "Contracttype" selection is "RENEWAL_PASSIVE"
         And Multiple product input selected is "Electricity Fix B2C (TC1)"
-        Then View List Header is "Contracten"
+        Then View list header is "Contracten"
 
         When Click on link in View List at 1st row and "Nummer & Aanmaakdatum" column
-        Then Form Header is "Contract Details"
+        Then Form header is "Contract Details"
 
         When Dashboard menu is Documenten
-        Then View List Header is "Documenten"
+        Then View list header is "Documenten"
         And Document with document type Tussentijdse is available
 
