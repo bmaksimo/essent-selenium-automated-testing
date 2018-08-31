@@ -48,7 +48,7 @@ public abstract  class Component {
     }
 
 
-    protected Model.Execution createExecutuin() {
+    protected Model.Execution createExecution() {
         return AutocratExecutionAdapter.newExecution();
     }
 
