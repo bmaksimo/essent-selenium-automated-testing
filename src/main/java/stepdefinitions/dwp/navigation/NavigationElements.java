@@ -174,5 +174,5 @@ public abstract class NavigationElements extends DwpScenario {
         assertThat(String.format("List Plus Action %s undefined.", item),
             success, is(true));
     }
-    
+
 }
