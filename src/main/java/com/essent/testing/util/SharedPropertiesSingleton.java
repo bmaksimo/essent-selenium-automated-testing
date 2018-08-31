@@ -11,11 +11,7 @@ public class SharedPropertiesSingleton {
     private SharedPropertiesSingleton() { this.sharedProperties = new HashMap<>(); }
 
     public static SharedPropertiesSingleton getInstance() {
-        if (null == instance) {
-            instance = new SharedPropertiesSingleton();
-        }
-
-        return instance;
+        return null == instance ? new SharedPropertiesSingleton() : instance;
     }
 
     public Map<String, Object> getSharedProperties() {
