@@ -20,7 +20,7 @@ import static org.hamcrest.Matchers.is;
 
 public class MenuElements extends NavigationElements {
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER")
+    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -56,7 +56,7 @@ public class MenuElements extends NavigationElements {
         assertThat("The following left menu items were not available: "
             + StringUtils.join(failedUpperItems, ", "), failedUpperItems.isEmpty(), is(true));
     }
-
+    
     @When("^Left menu is ([^\"]*)$")
     public void clickLeftMenuItem(String tabName) throws Throwable {
         super.visitLeftMenuItem(tabName);

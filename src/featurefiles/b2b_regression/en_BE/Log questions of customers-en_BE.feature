@@ -6,10 +6,11 @@ Feature: Log questions of customers
 
 
     Scenario:
-        When Left Menu Item is sales-marketing
-        And Top Menu  Item is Accounts
-        And Top Action is Filters
+        When Left menu is sales-marketing
+        When Top menu item is Accounts
+        When Top action is Filters
         And "Name" input is "%Steven%"
         And "Account number" input is "150638828"
         And Click on link in View List at 1st row and "Account Number & Name" column
-        And Plus Menu is "Service -> Log a case for account"
+        And Plus menu is "Service -> Log a case for account"
+        

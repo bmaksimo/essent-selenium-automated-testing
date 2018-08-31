@@ -181,8 +181,8 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     }
 
     public void tearDown() {
-        driver.close();
-        driver.quit();
+        //driver.close();
+        //driver.quit();
     }
 
     private void injectJavaScriptInline(File functionFile) {
