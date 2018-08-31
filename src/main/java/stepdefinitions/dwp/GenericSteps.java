@@ -17,7 +17,7 @@ import static org.junit.Assert.assertNotNull;
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 public class GenericSteps extends DwpScenario {
 
-    @Before("@QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @SMOKE, @B2B_REGRESSION, @PAY")
+    @Before("@QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @SMOKE, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
         setUpWebDriver();

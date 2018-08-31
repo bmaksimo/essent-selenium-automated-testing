@@ -25,6 +25,11 @@ public class PlusActions extends NavigationElements {
         clickPlusAction(path);
     }
 
+    @And("^List plus action is ([^\"]*)$")
+    public void checkPlusAction(String item) throws Exception {
+        clickListPlusAction(item);
+    }
+
     @Override
     @After("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void tearDown() throws Exception {
@@ -46,10 +51,5 @@ public class PlusActions extends NavigationElements {
     public void seleniumClickOnPlus() throws Throwable {
         webDriver.findElementOrNull(By.xpath("//table[@safeclass~'\\blist__content\\b']/tbody[@id='rows']//list-plus-cell[@smartid='bdaac-e']/?/?/a[@safeclass~'\\bicon-plus\\b.*\\bshow-actions\\b']")).click();
         webDriver.findElementOrNull(By.className("icon-edit")).click();
-    }
-
-    @And("^List Plus Action is ([^\"]*)$")
-    public void checkPlusAction(String item) throws Exception {
-        clickListPlusAction(item);
     }
 }

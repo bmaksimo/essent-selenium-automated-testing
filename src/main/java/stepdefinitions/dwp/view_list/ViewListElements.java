@@ -205,7 +205,7 @@ public class ViewListElements extends NavigationElements {
             boolean success = StringUtils.equals("PASSED", status);
             if (success) {
                 String switchedPaymentMethod = ((String) result.get("paymentMethod")).equalsIgnoreCase("string:OV") ?
-                    "Bank Transfer" : "Direct Debit";
+                    "Overschrijving" : "Domiciliëring";
                 Map<String, Object> sharedProperties = SharedPropertiesSingleton.getInstance().getSharedProperties();
                 sharedProperties.put("paymentMethod", switchedPaymentMethod);
             }
@@ -214,7 +214,7 @@ public class ViewListElements extends NavigationElements {
         }
     }
 
-   @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION, @PAY")
+   @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }

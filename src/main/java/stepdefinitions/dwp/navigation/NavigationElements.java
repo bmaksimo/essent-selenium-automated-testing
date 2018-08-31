@@ -174,4 +174,11 @@ public abstract class NavigationElements extends DwpScenario {
         assertThat(String.format("List Plus Action %s undefined.", item),
             success, is(true));
     }
+
+    public class ClickOnPlusAction implements Predicate<Map> {
+        @Override
+        public boolean test(Map options) {
+            return executeJavascriptTest("TrPlusActionFromList", options);
+        }
+    }
 }
