@@ -4,12 +4,10 @@ import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
 import com.billinghouse.random.RandomUser;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
-import com.essent.automation.flow.FlowAwarePredicate;
-import com.essent.testing.dwp.DwpDateFormats;
+import com.essent.testing.dwp.pageobject.impl.quote.*;
 import com.essent.testing.dwp.pageobject.quote.GuidedStep;
-import com.essent.testing.dwp.pageobject.quote.impl.*;
 import com.essent.testing.dwp.scenario.DwpScenario;
-import com.essent.testing.util.ResourceUtils;
+import com.essent.testing.util.resource.ResourceUtil;
 import com.google.gson.Gson;
 import cucumber.api.DataTable;
 import cucumber.api.Scenario;
@@ -20,6 +18,8 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
+import stepdefinitions.dwp.autocrat.flow.FlowAwarePredicate;
+import stepdefinitions.dwp.quote.DwpDateFormats;
 import stepdefinitions.dwp.tables.*;
 import stepdefinitions.dwp.tables.plus.CheckBoxState;
 
@@ -29,8 +29,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
-import static com.essent.testing.dwp.DwpTimingParameters.NEXT_STEP;
-import static com.essent.testing.dwp.quote.elements.TariffElements.NO_PRICESHEET_ALERT;
+import static com.essent.testing.dwp.autocrat.element.quote.TariffElements.NO_PRICESHEET_ALERT;
+import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.NEXT_STEP;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
 import static org.awaitility.Duration.*;
@@ -269,7 +269,7 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^Quote is signed in ([^\"]*)$")
     public void submitSignedQuote(String location) throws Throwable {
-        String path = ResourceUtils.toPath("/data/dwp/customer-signature.pdf");
+        String path = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
         File document = new File(path);
         assertThat("File at path " + document.getAbsolutePath() + " doesn't exist.", true,
             is(document.exists()));

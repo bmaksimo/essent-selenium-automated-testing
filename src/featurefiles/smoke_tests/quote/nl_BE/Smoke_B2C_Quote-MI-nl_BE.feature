@@ -1,5 +1,5 @@
 @DWP
-@_SMOKE
+@SMOKE
 @REGRESSION
 Feature: Creating a B2C Quote TC1 with move in - Dutch version
     The test creates a contract with start date and pricing date set to 3 months before now.
@@ -32,7 +32,7 @@ Feature: Creating a B2C Quote TC1 with move in - Dutch version
         And Checkbox "Gas Fix B2C (TC1)" is Unchecked
         And Package and Fuel Type is confirmed
         Then Form header is "Connectiedetails"
-        And Price sheet alert doesn't pop up
+        #And Price sheet alert doesn't pop up
 
         When "Startdatum" date is "now"
         And Electricity EAN code is selected
@@ -49,8 +49,10 @@ Feature: Creating a B2C Quote TC1 with move in - Dutch version
         And "Datum ondertekening" date is "now"
         And Quote is confirmed
         Then View list header is "Offertes"
-        And 1 List row having cell value Sales Handtekening ontvangen - Geaccepteerd at column Type & status is selected
+
+        When Plus actions at 1st list row having cell value "Sales Handtekening ontvangen - Geaccepteerd" at column "Type & status" are open
         And List plus action is Bevestig
-        
-        
+        And Modal dialog is Sign quote
+        And  Contract signature is confirmed
+        Then 1st list element has cell value Sales Getekend - Geaccepteerd at column Type & status
     

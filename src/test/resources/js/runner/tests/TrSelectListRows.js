@@ -22,9 +22,9 @@ class TrSelectListRows extends TestRunnerBase {
         result.reason = '';
         let indices = this.options.indices;
         console.log(indices);
-        let checkboxes = $('.list__content tr:not(".row__actions, .list__column-headers")  td [type=checkbox]');
+        let plusCells = $('.list__content tr:not(".row__actions, .list__column-headers")  td [type=checkbox]');
         let heightI = indices.length;
-        let height = checkboxes.size;
+        let height = plusCells.size;
         if(heightI > height ) {
             result.status = 'FAILED';
             result.reason = `Number of indices ${heightI} cannot be greater than table height ${height}`;
@@ -40,7 +40,7 @@ class TrSelectListRows extends TestRunnerBase {
                     result.reason = `Row ${row} cannot be greater than table height ${height}`;
                     break;
                 } else {
-                    checkboxes[row -1].click();
+                    plusCells[row -1].click();
                 }
             }
         }
