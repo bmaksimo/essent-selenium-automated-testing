@@ -181,7 +181,7 @@ public class QuoteSteps extends DwpScenario {
     public void selectPackage(String packaqe) throws Throwable {
         TariffTable tariff = new TariffTable();
         tariff.setPackageName(packaqe);
-        SelectPackageAndFuelTypePage selectPackageAndFuelTypeView = new SelectPackageAndFuelTypePage(webDriver);
+        PackageAndFuelTypeSelectionPage selectPackageAndFuelTypeView = new PackageAndFuelTypeSelectionPage(webDriver);
         selectPackageAndFuelTypeView.setTariffData(tariff);
         boolean success = selectPackageAndFuelTypeView.fillInFormData();
         assertThat(String.format("Failure when selecting the package %s.", packaqe),
@@ -203,7 +203,7 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^Package and Fuel Type is confirmed$")
     public void confirmPackageAndFuelType() throws Throwable {
-        SelectPackageAndFuelTypePage selectPackageAndFuelTypeView = new SelectPackageAndFuelTypePage(webDriver);
+        PackageAndFuelTypeSelectionPage selectPackageAndFuelTypeView = new PackageAndFuelTypeSelectionPage(webDriver);
         selectPackageAndFuelTypeView.next();
     }
 

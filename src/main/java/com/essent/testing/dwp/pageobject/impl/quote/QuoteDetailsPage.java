@@ -8,7 +8,7 @@ import stepdefinitions.dwp.tables.SalesChannel;
 import static com.essent.testing.dwp.autocrat.element.quote.B2CQuoteElements.SALES_CHANNEL_FIELD;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.INPUT;
 
-public class QuoteDetailsPage extends CreateQuoteGuidedStep {
+public class QuoteDetailsPage extends QuoteCreationGuidedStep {
 
     public QuoteDetailsPage(SeleniumDriver seleniumDriver) {
         super(seleniumDriver);

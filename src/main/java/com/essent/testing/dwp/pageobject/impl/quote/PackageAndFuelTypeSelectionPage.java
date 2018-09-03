@@ -11,12 +11,12 @@ import static com.essent.testing.dwp.autocrat.element.quote.TariffElements.PACKA
 import static com.essent.testing.dwp.autocrat.element.quote.TariffElements.TARIFFSHEET;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.TOGGLE_CHECKBOX;
 
-public class SelectPackageAndFuelTypePage extends CreateQuoteGuidedStep {
+public class PackageAndFuelTypeSelectionPage extends QuoteCreationGuidedStep {
 
 
     private TariffTable tariffData;
 
-    public SelectPackageAndFuelTypePage(SeleniumDriver seleniumDriver) {
+    public PackageAndFuelTypeSelectionPage(SeleniumDriver seleniumDriver) {
         super(seleniumDriver);
     }
 

@@ -245,7 +245,7 @@ public class ViewListElements extends NavigationElements {
     public void openPlusActions(String ordinal, String value, String columnName) throws Throwable {
         int row = extractNumericValue(ordinal);
         ViewListModel viewListModel = new ViewListModel();
-        boolean success = success = viewListModel.openListPlusActions(row);
+        boolean success = viewListModel.openListPlusActions(row);
         String message = String.format("View list did not contain cell value %s at %s row, column '%s'", value, ordinal, columnName);
         assertThat(message,
             success, is(true));

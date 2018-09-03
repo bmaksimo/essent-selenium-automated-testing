@@ -14,7 +14,7 @@ import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.INPUT;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.TOGGLE_CHECKBOX;
 import static org.junit.Assert.fail;
 
-public class PersonalDetailsAddressPage extends CreateQuoteGuidedStep {
+public class PersonalDetailsAddressPage extends QuoteCreationGuidedStep {
 
     private CustomerAddress      address;
 

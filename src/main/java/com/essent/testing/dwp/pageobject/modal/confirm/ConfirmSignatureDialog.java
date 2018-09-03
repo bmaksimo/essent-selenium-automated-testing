@@ -8,4 +8,5 @@ public interface ConfirmSignatureDialog extends ConfirmDialog {
     String getSignatureDate();
 
     void setSignatureDate(String signatureDate);
+
 }

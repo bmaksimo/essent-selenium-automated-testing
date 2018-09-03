@@ -62,4 +62,9 @@ public class ConfirmSignatureDialogImpl extends Component implements ConfirmSign
     public boolean reject() {
         return true;
     }
+
+    @Override
+    public boolean isShown() {
+        return seleniumDriver.findElementOrNull(SELECOR) != null;
+    }
 }

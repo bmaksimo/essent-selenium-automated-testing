@@ -13,14 +13,14 @@ import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.NEXT_ST
 import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.NEXT_BUTTON;
 import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.VIEW;
 
-public abstract class CreateQuoteGuidedStep extends Component implements GuidedStep, Form {
+public abstract class QuoteCreationGuidedStep extends Component implements GuidedStep, Form {
 
 
-    public CreateQuoteGuidedStep(WebElement element, SeleniumDriver seleniumDriver) {
+    public QuoteCreationGuidedStep(WebElement element, SeleniumDriver seleniumDriver) {
         super(element, seleniumDriver);
     }
 
-    public CreateQuoteGuidedStep(SeleniumDriver seleniumDriver) {
+    public QuoteCreationGuidedStep(SeleniumDriver seleniumDriver) {
         super(seleniumDriver.findElementOrNull(By.xpath(VIEW.getQuery())),
             seleniumDriver);
     }

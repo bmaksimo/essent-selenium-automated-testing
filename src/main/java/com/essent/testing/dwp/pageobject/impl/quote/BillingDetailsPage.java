@@ -7,7 +7,7 @@ import stepdefinitions.dwp.tables.BillingInformation;
 
 import static com.essent.testing.dwp.autocrat.element.quote.BillingElements.*;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.INPUT;
-public class BillingDetailsPage extends CreateQuoteGuidedStep {
+public class BillingDetailsPage extends QuoteCreationGuidedStep {
 
     private BillingInformation billingInformation;
 

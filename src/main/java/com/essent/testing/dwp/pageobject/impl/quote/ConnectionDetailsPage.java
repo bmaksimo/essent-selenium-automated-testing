@@ -14,7 +14,7 @@ import java.util.Map;
 import static com.essent.testing.dwp.autocrat.element.quote.ConnectionElements.*;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.INPUT;
 
-public class ConnectionDetailsPage extends CreateQuoteGuidedStep {
+public class ConnectionDetailsPage extends QuoteCreationGuidedStep {
 
 
     private ConnectionDetails electroConnectionDetails;

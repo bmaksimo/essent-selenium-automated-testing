@@ -17,7 +17,7 @@ import static com.essent.testing.dwp.autocrat.element.quote.B2CQuoteElements.*;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.INPUT;
 import static com.essent.testing.selenium.helper.dwp.LocalStorage.fetchPreferredLanguage;
 
-public class PersonalDetailsPage extends CreateQuoteGuidedStep {
+public class PersonalDetailsPage extends QuoteCreationGuidedStep {
 
     private RandomUser    customer;
 

@@ -10,7 +10,7 @@ import static com.essent.testing.dwp.autocrat.element.quote.SignatureElements.SI
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.INPUT;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.UPLOAD_FILE;
 
-public class QuoteOverviewPage extends CreateQuoteGuidedStep {
+public class QuoteOverviewPage extends QuoteCreationGuidedStep {
 
     private SignatureData signatureData;
 
