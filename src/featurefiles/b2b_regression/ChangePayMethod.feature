@@ -1,5 +1,4 @@
 @B2B_REGRESSION
-    @PAY
 Feature: Change Payment Method
 
     Background:
