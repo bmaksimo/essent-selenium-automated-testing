@@ -1,4 +1,4 @@
-class TrModalSaveAction extends TestRunnerBase {
+class TrAddIBANToPaymentDetails extends TestRunnerBase {
     constructor(options, callback) {
         super(options, callback, 1000);
     }
@@ -7,14 +7,15 @@ class TrModalSaveAction extends TestRunnerBase {
         result.status = 'FAILED';
         result.reason = 'Not executed';
 
-        const modalSaveButton = $('#confirm-button');
+        const iban = options.iban;
+        const ibanField = $('#bankaccounts-iban-field');
+        ibanField.prop('value', iban);
 
-        if (modalSaveButton.index() > -1) {
-            setTimeout(function() { modalSaveButton.trigger('click'); }, 1000);
+        if (iban === ibanField.val()) {
             result.status = 'PASSED';
             result.reason = '';
         } else {
-            result.reason = 'Save button is not present.' ;
+            result.reason = 'IBAN field failed to update.';
         }
 
         this.resolveCallback(result);

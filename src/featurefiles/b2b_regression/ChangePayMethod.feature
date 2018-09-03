@@ -1,4 +1,5 @@
 @B2B_REGRESSION
+    @PAY
 Feature: Change Payment Method
 
     Background:
@@ -13,9 +14,12 @@ Feature: Change Payment Method
         And Click on link in View List at 1st row and "Klantnummer & Naam" column
         And Dashboard menu is Details
         Then View list header is "Billing customer"
+
         When Click on link in "Billing customer" View List at 1st row and "Plus Action" column
         And Row actions "Update" is clicked
         Then Modal "Update billing customer" is displayed
-        When Payment method is switched and IBAN is NL43ABNA0978459932
-        And Modal Save is clicked
+
+        When Payment method is switched
+        And IBAN is NL43ABNA0978459932
+        And Payment details are confirmed
         Then 1st List element has updated cell value at column "Betalingstermijnen & betalingswijze"

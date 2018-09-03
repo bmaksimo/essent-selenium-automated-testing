@@ -187,10 +187,10 @@ public class ViewListElements extends NavigationElements {
         }
     }
 
-    private class ModalSaveAction implements Predicate<Map> {
+    private class PaymentDetailsModalSaveAction implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
-            return executeJavascriptTest("TrModalSaveAction", options);
+            return executeJavascriptTest("TrPaymentDetailsModalSaveAction", options);
         }
     }
 
@@ -203,11 +203,17 @@ public class ViewListElements extends NavigationElements {
             if (success) {
                 String switchedPaymentMethod = ((String) result.get("paymentMethod")).equalsIgnoreCase("string:OV") ?
                     "Overschrijving" : "Domiciliëring";
-                Map<String, Object> sharedProperties = SharedPropertiesSingleton.getInstance().getSharedProperties();
-                sharedProperties.put("paymentMethod", switchedPaymentMethod);
+                SharedPropertiesSingleton.getInstance().getSharedProperties().put("paymentMethod", switchedPaymentMethod);
             }
 
             return success;
+        }
+    }
+
+    private class PaymentDetailsIBANChange implements Predicate<Map> {
+        @Override
+        public boolean test(Map options) {
+            return executeJavascriptTest("TrAddIBANToPaymentDetails", options);
         }
     }
 
@@ -271,17 +277,23 @@ public class ViewListElements extends NavigationElements {
         assertThat(String.format("Action row %s was not found", headerText), success, is(true));
     }
 
-    @When("Payment method is switched and IBAN is ([^\"]*)$")
-    public void switchPaymentMethod(String iban) {
-        Map<String, String> options = new HashMap<>();
-        options.put("iban", iban);
-        boolean success = new PaymentMethodSwitch().test(options);
+    @When("Payment method is switched$")
+    public void switchPaymentMethod() {
+        boolean success = new PaymentMethodSwitch().test(new HashMap<>());
         assertThat("Payment method has not been switched", success, is(true));
     }
 
-    @And("Modal Save is clicked$")
-    public void clickSaveOnModal() {
-        boolean success = new ModalSaveAction().test(null);
+    @And("IBAN is ([^\"]*)$")
+    public void changeIBAN(String iban) {
+        Map<String, String> options = new HashMap<>();
+        options.put("iban", iban);
+        boolean success = new PaymentDetailsIBANChange().test(options);
+        assertThat("IBAN has failed to be updated", success, is(true));
+    }
+
+    @And("Payment details are confirmed$")
+    public void clickSaveOnPaymentDetailsModal() {
+        boolean success = new PaymentDetailsModalSaveAction().test(null);
         assertThat("Billing customer update has failed.", success, is(true));
     }
 

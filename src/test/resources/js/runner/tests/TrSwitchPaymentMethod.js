@@ -10,20 +10,17 @@ class TrSwitchPaymentMethod extends TestRunnerBase {
 
         const bankTransferPaymentMethod = "string:OV";
         const directDebitPaymentMethod = "string:DOM";
-        const iban = options.iban;
         const currentPaymentMethod = $("#payment-methods-valid-to-is-null-payment-method-field").prop('value');
 
         if (bankTransferPaymentMethod === currentPaymentMethod) {
             $("#payment-methods-valid-to-is-null-payment-method-field").prop('value', directDebitPaymentMethod);
             $("#payment-methods-valid-to-is-null-payment-method-field").change();
-            $('#bankaccounts-iban-field').attr('value', iban);
             result.status = 'PASSED';
             result.reason = '';
             result.paymentMethod = directDebitPaymentMethod;
         } else if (directDebitPaymentMethod === currentPaymentMethod) {
             $("#payment-methods-valid-to-is-null-payment-method-field").prop('value', bankTransferPaymentMethod);
             $("#payment-methods-valid-to-is-null-payment-method-field").change();
-            $('#bankaccounts-iban-field').attr('value', iban);
             result.status = 'PASSED';
             result.reason = '';
             result.paymentMethod = bankTransferPaymentMethod;
