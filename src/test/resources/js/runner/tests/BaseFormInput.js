@@ -1,4 +1,4 @@
-class TbrFormInput extends TestRunnerBase {
+class BaseFormInput extends TestRunnerBase {
 
     /**
      * Checks if Filter element is available in the DOM
@@ -29,9 +29,14 @@ class TbrFormInput extends TestRunnerBase {
         if(elements.length >= 0) {
             let input = $(elements[0]).find("input, select");
             if(input.index() == 0) {
-                this.applyInput(input, value);
-                result.status = "PASSED";
-                result.reason = '';
+                let success = this.applyInput(input, value);
+                if(success) {
+                    result.status = "PASSED";
+                    result.reason = '';
+                } else {
+                    result.status = "FAILED";
+                    result.reason = 'Input value was rejected';
+                }
             } else {
                 result.status = "FAILED";
                 result.reason = 'Filter ' + label + ' input undefined.';
@@ -45,5 +50,6 @@ class TbrFormInput extends TestRunnerBase {
 
     applyInput(input, value) {
         input.val(value).trigger("change");
+        return true;
     }
 }
