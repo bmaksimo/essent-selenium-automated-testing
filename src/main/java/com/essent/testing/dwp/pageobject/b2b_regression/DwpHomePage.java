@@ -17,7 +17,7 @@ public DwpHomePage(SeleniumDriver seleniumDriver) {
 
     public WebElement salesMarketingLink() throws InterruptedException {
         //Thread.sleep(2000);
-        return seleniumDriver.findElementOrNull(By.id("sales-marketing-link"));
+        return seleniumDriver.findElementWhenVisible(By.id("sales-marketing-link"));
 
     }
 
@@ -27,7 +27,7 @@ public DwpHomePage(SeleniumDriver seleniumDriver) {
     }
 
     public WebElement accountsListLink() {
-        return seleniumDriver.findElementOrNull(By.id("accounts-list-link"));
+        return seleniumDriver.findElementWhenVisible(By.id("accounts-list-link"));
 
     }
 
@@ -37,18 +37,18 @@ public DwpHomePage(SeleniumDriver seleniumDriver) {
     }
 
     public WebElement searchByAccountNumberField() {
-        return seleniumDriver.findElementOrNull(By.id("account-number-c-default-value-field"));
+        return seleniumDriver.findElementWhenVisible(By.id("account-number-c-default-value-field"));
     }
 
     public void searchByAccountNumberFieldClearAndClick() throws Throwable {
-        Thread.sleep(2000);
-        seleniumDriver.findElementOrNull(By.id("account-number-c-default-value-field")).clear();
-        seleniumDriver.findElementOrNull(By.id("account-number-c-default-value-field")).click();
+      //Thread.sleep(2000);
+        seleniumDriver.findElementWhenVisible(By.id("account-number-c-default-value-field")).clear();
+        seleniumDriver.findElementWhenVisible(By.id("account-number-c-default-value-field")).click();
 
     }
 
     public WebElement searchByAccountIdResultArea() {
-        return seleniumDriver.findElementOrNull(By.className("list__row"));
+        return seleniumDriver.findElementWhenVisible(By.className("list__row"));
     }
 
     public void enterAccountId(String accountNumber) throws InterruptedException {
@@ -59,7 +59,7 @@ public DwpHomePage(SeleniumDriver seleniumDriver) {
     public WebElement accountWithAppropriateId(String accountId) throws InterruptedException {
         ////Thread.sleep(5000);
         System.out.println("------------------ffffff accountId:"+accountId);
-        return seleniumDriver.findElementOrNull(By.xpath("//*[contains(text(),'" + accountId + "')]"));
+        return seleniumDriver.findElementWhenVisible(By.xpath("//*[contains(text(),'" + accountId + "')]"));
 
     }
 
@@ -69,16 +69,16 @@ public DwpHomePage(SeleniumDriver seleniumDriver) {
     }
 
     public WebElement filterButton() {
-        return seleniumDriver.findElementOrNull(By.className("icon-filters"));
+        return seleniumDriver.findElementWhenVisible(By.className("icon-filters"));
     }
 
     public void clickOnFilterButton() throws InterruptedException {
-        Thread.sleep(2000);
+      //Thread.sleep(2000);
         filterButton().click();
     }
 
     public WebElement searchField() {
-        return seleniumDriver.findElementOrNull(By.xpath("//input[@type='search']"));
+        return seleniumDriver.findElementWhenVisible(By.xpath("//input[@type='search']"));
     }
 
     public void searchForAppropriateUser(String newNameOfDuplicatedUser) throws InterruptedException {
@@ -94,7 +94,7 @@ public DwpHomePage(SeleniumDriver seleniumDriver) {
     }
 
     public WebElement firstResultOfTheSearch() {
-        return seleniumDriver.findElementOrNull(By.xpath("//h5"));
+        return seleniumDriver.findElementWhenVisible(By.xpath("//h5"));
     }
 
     public void clickOnFirstResultOfTheSearch() throws InterruptedException {
@@ -107,11 +107,11 @@ public DwpHomePage(SeleniumDriver seleniumDriver) {
     }
 
     public WebElement checkIfAccountTypeIsB2bProspect() {
-        return seleniumDriver.findElementOrNull(By.xpath("(//*[@text='B2B Prospect'])[1]"));
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//*[@text='B2B Prospect'])[1]"));
     }
 
     public void ClickOnContractsLink() throws InterruptedException {
         //Thread.sleep(3000);
-        seleniumDriver.findElementOrNull(By.id("contract-list-link")).click();
+        seleniumDriver.findElementWhenVisible(By.id("contract-list-link")).click();
     }
 }

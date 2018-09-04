@@ -23,6 +23,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 
 import java.io.File;
@@ -326,6 +327,17 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             .ignoring(NoSuchElementException.class);
 
         return waiter.until(driver -> driver.findElement(selector));
+    }
+
+    public WebElement findElementWhenVisible(By selector) {
+        FluentWait<WebDriver> waiter = new FluentWait<>(driver)
+            .withTimeout(Duration.ofSeconds(30))
+            .pollingEvery(Duration.ofSeconds(5))
+            .ignoring(ElementNotVisibleException.class);
+
+
+        WebElement element = waiter.until(ExpectedConditions.visibilityOfElementLocated(selector));
+        return element;
     }
 
 }
