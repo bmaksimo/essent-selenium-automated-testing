@@ -63,14 +63,6 @@ public class EndOfContract extends DwpScenario {
         }
     }
 
-    public class SubmitContractLine implements Predicate<String> {
-        @Override
-        public boolean test(String s) {
-            boolean success = executeJavascriptTest("TrSubmitButton", "");
-            return success;
-        }
-    }
-
     public class SelectButton implements Predicate<String> {
         @Override
         public boolean test(String s) {
