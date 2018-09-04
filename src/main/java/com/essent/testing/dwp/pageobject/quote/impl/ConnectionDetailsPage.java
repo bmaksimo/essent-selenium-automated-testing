@@ -68,6 +68,22 @@ public class ConnectionDetailsPage extends CreateQuoteGuidedStep {
         return result;
     }
 
+    public boolean toggleMarketMockTest(ProductType productType, CheckBoxState state) {
+        String query = ELEC_MARKET_MOCK.getQuery();
+        switch (productType) {
+            case Gas:
+                query = GAS_MARKET_MOCK.getQuery();
+                break;
+            default:
+                break;
+        }
+        Map<String, String> options = new HashMap<>();
+        options.put("id", query);
+        boolean result = seleniumDriver.executeJavascriptTest("TrToggleInputState", options);
+        return result;
+    }
+
+
     public Boolean isNextButtonEnabled() {
         Map options = new HashMap<>();
         Map result = seleniumDriver.executeJavascriptMethod("TrIsNextButtonEnabled", options);

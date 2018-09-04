@@ -14,7 +14,9 @@ public enum UserRoles {
     B2B_BUSINESS(ConfigProvider.getProperty(ConfigKey.DWP_BUSINESS_USER), ConfigProvider.getProperty(ConfigKey.DWP_BUSINESS_PASSWORD)),
     SALESMARKETING_B2C(ConfigProvider.getProperty(ConfigKey.DWP_USER_SALESMARKETING_B2C), ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_SALESMARKETING_B2C)),
     CONTRACTING_B2C(ConfigProvider.getProperty(ConfigKey.DWP_USER_CONTRACTING_B2C), ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_CONTRACTING_B2C)),
-    BILLING(ConfigProvider.getProperty(ConfigKey.DWP_USER_BILLING), ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_BILLING));
+    BILLING(ConfigProvider.getProperty(ConfigKey.DWP_USER_BILLING), ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_BILLING)),
+    ODOO(ConfigProvider.getProperty(ConfigKey.ODOO_USER), ConfigProvider.getProperty(ConfigKey.ODOO_PASSWORD));
+
     private String username;
     private String password;
 

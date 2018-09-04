@@ -1,14 +1,14 @@
 package com.essent.testing.selenium;
 
+import org.apache.log4j.Logger;
 import org.junit.AfterClass;
 
-import java.math.BigDecimal;
 import java.util.Map;
 
 
 public class SeleniumScenario {
 
-
+    private static Logger logger = Logger.getLogger(SeleniumScenario.class);
     static protected SeleniumDriver webDriver;
 
     public void tidyUp() {
@@ -30,25 +30,9 @@ public class SeleniumScenario {
         webDriver.getDriver().manage().window().maximize();
     }
 
-    protected boolean equals(Object expected, Object actual) {
-        if (expected == null || (expected instanceof String && ((String) expected).isEmpty())) {
-            return actual == null || (actual instanceof String && ((String) actual).isEmpty());
-        }
-
-        if (expected instanceof BigDecimal) {
-            expected = ((BigDecimal) expected).doubleValue();
-        }
-
-        if (actual instanceof BigDecimal) {
-            actual = ((BigDecimal) actual).doubleValue();
-        }
-
-        return expected.equals(actual);
-    }
 
     protected void injectJavaScriptTestRunner() {
         webDriver.injectJavaScriptTestRunner();
-
     }
 
     protected boolean executeJavascriptTest(String registeredJsClass, Object options)  {
@@ -67,6 +51,10 @@ public class SeleniumScenario {
     protected Map executeJavascriptMethod(String registeredJsClass, Object options, Object address)  {
         Map map = webDriver.executeJavascriptMethod(registeredJsClass, options, address);
         return map;
+    }
+
+    protected void takeScreenshot(boolean success)  {
+        webDriver.takeScreenshot(success);
     }
 
     @AfterClass

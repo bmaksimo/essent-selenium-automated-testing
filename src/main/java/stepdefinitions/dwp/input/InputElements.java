@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
-import static com.billinghouse.test_automation.util.gherkin.ExpressionUtil.checkAndConvertToDwpDate;
+import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpDate;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.is;
 
 public class InputElements extends DwpScenario {
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @RENEWAL, @B2B_REGRESSION")
+    @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @RENEWAL, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -77,7 +77,7 @@ public class InputElements extends DwpScenario {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @RENEWAL, @B2B_REGRESSION")
+    @After("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @RENEWAL, @B2B_REGRESSION")
     public void tearDown() throws Exception {
         super.tearDown();
     }
