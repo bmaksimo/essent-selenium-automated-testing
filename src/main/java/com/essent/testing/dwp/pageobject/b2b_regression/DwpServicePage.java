@@ -18,7 +18,6 @@ public class DwpServicePage  {
     }
 
     public void clickOnplusIcon() throws InterruptedException {
-        Thread.sleep(3000);
         plusIcon().click();
     }
 
@@ -27,8 +26,7 @@ public class DwpServicePage  {
     }
 
     public void clickOnServiceDropdownMenu() throws InterruptedException {
-        Thread.sleep(2000);
-        serviceDropdownMenu().click();
+         serviceDropdownMenu().click();
     }
 
     public WebElement logAcaseForAccountOption() {
@@ -36,7 +34,6 @@ public class DwpServicePage  {
     }
 
     public void clickOnLogAcaseForAccountOption() throws InterruptedException {
-        Thread.sleep(500);
         logAcaseForAccountOption().click();
     }
 
@@ -45,7 +42,6 @@ public class DwpServicePage  {
     }
 
     public void clickOnSubjectDropdownMenu() throws InterruptedException {
-        Thread.sleep(1000);
         subjectDropdownMenu().click();
     }
 
@@ -54,7 +50,6 @@ public class DwpServicePage  {
     }
 
     public void clickOnSettlementInvoiceDropdownOption() throws InterruptedException {
-        Thread.sleep(500);
         settlementInvoiceDropdownOption().click();
     }
 
@@ -63,7 +58,6 @@ public class DwpServicePage  {
     }
 
     public void enterComplaintText(String string) throws InterruptedException {
-        Thread.sleep(1000);
         decriptionField().click();
         decriptionField().clear();
         decriptionField().sendKeys(string);
@@ -74,13 +68,11 @@ public class DwpServicePage  {
     }
 
     public void clickOnSaveButton() throws InterruptedException {
-        Thread.sleep(500);
-        saveButton().click();
+         saveButton().click();
     }
 
     public WebElement firstCaseInTheList() throws InterruptedException {
-        Thread.sleep(4000);
-        return seleniumDriver.findElementWhenVisible(By.xpath("(//h5)[1]"));
+          return seleniumDriver.findElementWhenVisible(By.xpath("(//h5)[1]"));
     }
 
     public void clickOnFirstCaseInTheList() throws InterruptedException {
@@ -88,7 +80,6 @@ public class DwpServicePage  {
     }
 
     public WebElement caseDetailsheader() throws InterruptedException {
-        //Thread.sleep(3000);
         return seleniumDriver.findElementWhenVisible(By.xpath("//*[contains(text(),' Case Details ')]"));
     }
 
@@ -105,8 +96,7 @@ public class DwpServicePage  {
     }
 
     public void clickOnDescribeTheSolutionDropdown() throws InterruptedException {
-        Thread.sleep(300);
-        describeTheSolutionDropdown().click();
+         describeTheSolutionDropdown().click();
     }
 
     public WebElement duplicateAccountOption() {
@@ -114,8 +104,7 @@ public class DwpServicePage  {
     }
 
     public void clickOnDuplicateAccountOption() throws InterruptedException {
-        Thread.sleep(300);
-        duplicateAccountOption().click();
+         duplicateAccountOption().click();
     }
 
     public WebElement duplicateAccountEnterNewNameField() {
@@ -123,18 +112,14 @@ public class DwpServicePage  {
     }
 
     public void enterNewNameForDuplicatedCustomer(String newName) throws InterruptedException {
-        Thread.sleep(2000);
         duplicateAccountEnterNewNameField().click();
         duplicateAccountEnterNewNameField().clear();
-        Thread.sleep(100);
         duplicateAccountEnterNewNameField().sendKeys(newName);
 
     }
 
     public void clickOnConfirmButtonOnDuplicateAccountForm() throws InterruptedException {
-        Thread.sleep(300);
         seleniumDriver.findElementWhenVisible(By.id("confirm-button")).click();
-        Thread.sleep(4000);
     }
 
 }

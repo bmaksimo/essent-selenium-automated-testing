@@ -334,11 +334,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             .withTimeout(Duration.ofSeconds(30))
             .pollingEvery(Duration.ofSeconds(5))
             .ignoring(ElementNotVisibleException.class);
-
-
-
         WebElement element = waiter.until(ExpectedConditions.visibilityOfElementLocated(selector));
-       // WebElement element = waiter.until(ExpectedConditions.elementToBeClickable(selector));
         return element;
     }
 
@@ -347,9 +343,6 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             .withTimeout(Duration.ofSeconds(30))
             .pollingEvery(Duration.ofSeconds(5))
             .ignoring(ElementNotVisibleException.class);
-
-
-
         WebElement element = waiter.until(ExpectedConditions.elementToBeClickable(selector));
         return element;
     }
