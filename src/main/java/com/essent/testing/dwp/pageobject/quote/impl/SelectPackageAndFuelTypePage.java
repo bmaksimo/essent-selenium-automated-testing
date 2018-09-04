@@ -43,7 +43,7 @@ public class SelectPackageAndFuelTypePage extends CreateQuoteGuidedStep {
     @Override
     public boolean fillInFormData() {
         String essentTariff = tariffData.getTariffSheet();
-        Model.Execution execution = createExecutuin();
+        Model.Execution execution = createExecution();
         execution.
             element(PACKAGE.element());
         if(StringUtils.isNotEmpty(essentTariff))

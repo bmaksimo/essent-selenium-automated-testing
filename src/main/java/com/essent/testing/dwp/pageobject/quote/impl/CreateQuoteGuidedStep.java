@@ -27,7 +27,7 @@ public abstract class CreateQuoteGuidedStep extends Component implements GuidedS
 
     @Override
     public void next() {
-        Model.Execution next = createExecutuin();
+        Model.Execution next = createExecution();
         next.
             element(NEXT_BUTTON.element())
             .step(createStep(Action.CLICK).timeoutInSeconds(NEXT_STEP.getWaitInSeconds())

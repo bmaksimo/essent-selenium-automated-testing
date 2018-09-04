@@ -49,7 +49,7 @@ public class PersonalDetailsPage extends CreateQuoteGuidedStep {
         String birthDate = DateTimeFormatUtil.getBirthDate(customer.getDob().getDate());
         String mobilePhone = "+3168" + (int) (Math.floor(Math.random() * 9000000) + 1000000);
 
-        Model.Execution initializeFields = createExecutuin();
+        Model.Execution initializeFields = createExecution();
         initializeFields.
             element(COPY_ADDRESS_CONNECTION_TO_BILLING.element()).
             element(SALUTATION.element()).
