@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.StringEscapeUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -25,15 +26,10 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.FluentWait;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.fail;
@@ -51,6 +47,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     private String baseUrl;
     private String browserName;
     private String browserVersion;
+    private static Properties propertiesFiles;
     private static final String PATH = "/js/runner/";
 
     private static final String PATH_TO_INLINE_CLASSES = "/js/runner/tests/";
@@ -327,5 +324,48 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
 
         return waiter.until(driver -> driver.findElement(selector));
     }
+    public WebElement locateElement(String locator) {
+        FluentWait<WebDriver> waiter = new FluentWait<>(driver)
+            .withTimeout(Duration.ofSeconds(30))
+            .pollingEvery(Duration.ofSeconds(5))
+            .ignoring(NoSuchElementException.class);
 
+        return waiter.until(driver -> chooseWayToFindElement(locator));
+    }
+
+    private static Properties loadProperties(String propertiesLocation) {
+        InputStream propertiesFile;
+        Properties properties = new Properties();
+        try {
+            propertiesFile = new FileInputStream(propertiesLocation);
+            properties.load(propertiesFile);
+            propertiesFile.close();
+        } catch (IOException e) {
+            final String message = "Something went wrong while trying to load properties from: " + propertiesLocation;
+            throw new RuntimeException(message, e);
+        }
+
+        return properties;
+    }
+
+    protected Properties findLocators(String locator) {
+
+        propertiesFiles = loadProperties("src\\test\\resources\\environmentspecific\\PageObjectLocators.properties");
+        return propertiesFiles;
+    }
+
+    public WebElement chooseWayToFindElement(String locator) {
+        WebElement sDriver;
+
+        Properties loc = findLocators(locator);
+        final String value = loc.getProperty(locator);
+
+        if (value.startsWith("//")) {
+            sDriver = getDriver().findElement(By.xpath(value));
+        } else {
+            sDriver = getDriver().findElement(By.id(value));
+        }
+
+        return sDriver;
+    }
 }
