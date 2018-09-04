@@ -1,4 +1,4 @@
-class TrDatePickerInput extends TbrFormInput {
+class TrDatePickerInput extends BaseFormInput {
 
     /**
      * Checks if date picker element is available in the DOM
@@ -9,7 +9,8 @@ class TrDatePickerInput extends TbrFormInput {
      *
      * Java example:
      * Map<String, String> options = new HashMap<>();
-     * options.put("label", "Contract number");
+     * options.put("label", "Contract start date");
+     * options.put("value", "Contract start date");
      * boolean result = executeJavascriptTest("TrDatePickerInput", options);
      */
 
@@ -19,5 +20,6 @@ class TrDatePickerInput extends TbrFormInput {
 
     applyInput(input, value) {
         $(input[0]).val(value).trigger("change").trigger("keyup");
+        return true;
     }
 }
