@@ -1,8 +1,6 @@
 package stepdefinitions.dwp.pgo;
 
-import static com.essent.testing.dwp.DwpConstant.BASE_URL;
-
-
+import cucumber.api.PendingException;
 import org.junit.Assert;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -29,23 +27,11 @@ public class LogQuestionsOfCustomers extends DwpScenario {
 
     @When("^pgo New case for customer is logged$")
     public void logAcaseForCustomer() throws Throwable {
-        System.out.println("---HHH1 logAcaseForCustomer");
-        //DwpHomePage dhp = new DwpHomePage(seleniumDriver);
         DwpAccountOverviewPage daop = new DwpAccountOverviewPage(webDriver);
 		DwpServicePage dsp = new DwpServicePage(webDriver);
-//		dhp.clickOnsalesMarketingLink();
-//		dhp.clickOnAccountsListLink();
-//		dhp.clickOnFilterButton();
-//		dhp.searchByAccountNumberFieldClearAndClick();
-//		String accountId = DwpPropertiesHelper.getEssentDwpProperty("AccountNumberB2BClient");
-//		dhp.enterAccountId(accountId);
-//		Assert.assertTrue(dhp.accountWithAppropriateId(accountId).isDisplayed());
-//		dhp.clickOnAccountWithAppropriateId(accountId);
-//		daop.clickOnplusIcon();
-//		daop.clickOnServiceDropdownMenu();
-//		daop.clickOnLogAcaseForAccountOption();
-//		String complaintText = DwpPropertiesHelper.getEssentDwpProperty("TextForComplaint");
-//		String solutionText = DwpPropertiesHelper.getEssentDwpProperty("TextForSolution");
+		daop.clickOnplusIcon();
+		daop.clickOnServiceDropdownMenu();
+		daop.clickOnLogAcaseForAccountOption();
 
         String complaintText = "TextForComplaint";
         String solutionText = "TextForSolution";
@@ -66,6 +52,7 @@ public class LogQuestionsOfCustomers extends DwpScenario {
         Assert.assertTrue(daop.checkIfPriorityIsHigh());
 
     }
+
 
 
 }
