@@ -26,11 +26,13 @@ public class Filter extends DwpScenario {
     public void pgoAccountIsSelected() throws Throwable {
         DwpHomePage dhp = new DwpHomePage(webDriver);
 		dhp.clickOnsalesMarketingLink();
+		webDriver.waitUntilAngularPageIsLoaded();
 		dhp.clickOnAccountsListLink();
 		dhp.clickOnFilterButton();
 		dhp.searchByAccountNumberFieldClearAndClick();
 		String accountId = "150638828";
 		dhp.enterAccountId(accountId);
+        webDriver.waitUntilAngularPageIsLoaded();
 		Assert.assertTrue(dhp.accountWithAppropriateId(accountId).isDisplayed());
 		dhp.clickOnAccountWithAppropriateId(accountId);
     }
