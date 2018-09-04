@@ -120,7 +120,7 @@ public class DwpAccountOverviewPage  {
     }
 
     public WebElement saveButton() {
-        return seleniumDriver.findElementWhenVisible(By.xpath("//button[contains(text(),'Save')]"));
+        return seleniumDriver.findElementWhenClickable(By.xpath("//button[contains(text(),'Save')]"));
     }
 
     public void clickOnSaveButton() throws InterruptedException {

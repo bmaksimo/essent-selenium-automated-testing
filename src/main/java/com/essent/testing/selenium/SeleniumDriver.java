@@ -336,7 +336,21 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             .ignoring(ElementNotVisibleException.class);
 
 
+
         WebElement element = waiter.until(ExpectedConditions.visibilityOfElementLocated(selector));
+       // WebElement element = waiter.until(ExpectedConditions.elementToBeClickable(selector));
+        return element;
+    }
+
+    public WebElement findElementWhenClickable(By selector) {
+        FluentWait<WebDriver> waiter = new FluentWait<>(driver)
+            .withTimeout(Duration.ofSeconds(30))
+            .pollingEvery(Duration.ofSeconds(5))
+            .ignoring(ElementNotVisibleException.class);
+
+
+
+        WebElement element = waiter.until(ExpectedConditions.elementToBeClickable(selector));
         return element;
     }
 
