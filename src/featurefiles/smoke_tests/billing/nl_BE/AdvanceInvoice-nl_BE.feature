@@ -1,5 +1,5 @@
 @DWP
-@_SMOKE
+@SMOKE
 @BILLING
 @REGRESSION
 Feature: Billing - Invoices
@@ -12,7 +12,7 @@ Feature: Billing - Invoices
         When Left menu is billing
         And Top menu item is Contracten
         And Top action is Filters
-        And "Contracttype" selection is "RENEWAL_PASSIVE"
+        And "Contracttype" selection is "Passieve hernieuwing"
         And Multiple product input selected is "Electricity Fix B2C (TC1)"
         Then View list header is "Contracten"
 

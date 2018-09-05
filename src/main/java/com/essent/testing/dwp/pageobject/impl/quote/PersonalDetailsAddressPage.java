@@ -51,7 +51,7 @@ public class PersonalDetailsAddressPage extends QuoteCreationGuidedStep {
         String city = address.getCity();
         String country = address.getCountry();
 
-        Model.Execution initializeAddress = createExecutuin();
+        Model.Execution initializeAddress = createExecution();
         initializeAddress.
             element(DELIVERY_ADDR_STREET.element()).
             element(DELIVERY_ADDR_STREET_SUGGESTION.element()).
@@ -81,7 +81,7 @@ public class PersonalDetailsAddressPage extends QuoteCreationGuidedStep {
         if(!execute(initializeAddress)) {
             fail("Customer Address fields were not initialized");
         }
-        Model.Execution copyAddress = createExecutuin()
+        Model.Execution copyAddress = createExecution()
             .element(COPY_ADDRESS_CONNECTION_TO_BILLING.element())
             .step(createStep(Action.SLEEP).sleepInMillis(3000))
             .step(createStep(Action.CLICK).element(COPY_ADDRESS_CONNECTION_TO_BILLING.name()).requireDisplayed(false), TOGGLE_CHECKBOX.getSleepInMillis());

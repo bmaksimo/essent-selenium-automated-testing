@@ -27,7 +27,7 @@ public class QuoteOverviewPage extends QuoteCreationGuidedStep {
     public boolean fillInFormData() {
         String place = signatureData.getPlace();
         String filePath = signatureData.getFilePath();
-        Model.Execution execution = createExecutuin();
+        Model.Execution execution = createExecution();
         execution
             .element(SIGN_LOCATION.element())
             .element(SIGN_UPLOAD_DOC.element())

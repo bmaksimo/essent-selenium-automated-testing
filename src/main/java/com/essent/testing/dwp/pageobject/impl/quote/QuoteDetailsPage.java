@@ -35,7 +35,7 @@ public class QuoteDetailsPage extends QuoteCreationGuidedStep {
     }
     @Override
     public boolean fillInFormData() {
-        Model.Execution toggleReguCheckbox = createExecutuin();
+        Model.Execution toggleReguCheckbox = createExecution();
         toggleReguCheckbox.
             element(SALES_CHANNEL_FIELD.element()).
             step(createStep(Action.SELECT).element(SALES_CHANNEL_FIELD.name()).value(salesChannel.getLabel()), INPUT.getSleepInMillis());

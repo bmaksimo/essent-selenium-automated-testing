@@ -35,7 +35,7 @@ public class ConnectionDetailsPage extends QuoteCreationGuidedStep {
         options.put("value", gasConnectionDetails.getEan());
         seleniumDriver.executeJavascriptTest("TrApplyFormInput", options, true);
 
-        Model.Execution execution = createExecutuin();
+        Model.Execution execution = createExecution();
         execution.
             element(ELEC_METER_NR.element()).
             element(GAS_METER_NR.element()).

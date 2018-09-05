@@ -19,7 +19,7 @@ public class BillingDetailsPage extends QuoteCreationGuidedStep {
     }
     @Override
     public boolean fillInFormData() {
-        Model.Execution execution = createExecutuin();
+        Model.Execution execution = createExecution();
         String paymentMethod = billingInformation.getPaymentMethod();
         String eban = billingInformation.getEban();
         String bic = billingInformation.getBic();
