@@ -12,7 +12,6 @@ import cucumber.api.java.en.Given;
 import org.springframework.test.context.ContextConfiguration;
 import stepdefinitions.dwp.login.LoginAction;
 
-import static com.essent.testing.dwp.DwpConstant.BASE_URL;
 import static org.junit.Assert.assertNotNull;
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 public class GenericSteps extends DwpScenario {
@@ -21,7 +20,7 @@ public class GenericSteps extends DwpScenario {
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
         setUpWebDriver();
-        isDwpRunning(BASE_URL);
+        isDwpRunning();
     }
 
     @Given("^I logged in to DWP as ([^\"]*)$")
