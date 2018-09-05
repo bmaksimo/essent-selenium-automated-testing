@@ -6,5 +6,4 @@ Feature: DWP Tool Framework: Annotations, Zephyre
                even if scenario steps are defined in the different Java classes.
 
         When  Contractor is Sjaak van Vliet
-        And   Start of tenure is 10-02-2000
-        Then  Print contractor tenure date
+        And   Start of tenure is 10 years before now
