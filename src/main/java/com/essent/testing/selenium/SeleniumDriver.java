@@ -49,7 +49,6 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     private String baseUrl;
     private String browserName;
     private String browserVersion;
-    private static Properties propertiesFiles;
     private static final String PATH = "/js/runner/";
 
     private static final String PATH_TO_INLINE_CLASSES = "/js/runner/tests/";
@@ -365,16 +364,10 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         return properties;
     }
 
-    protected Properties findLocators(String locator) {
-
-        propertiesFiles = loadProperties("src\\test\\resources\\environmentspecific\\PageObjectLocators.properties");
-        return propertiesFiles;
-    }
-
     public WebElement chooseWayToFindElement(String locator) {
         WebElement sDriver;
 
-        Properties loc = findLocators(locator);
+        final Properties loc = loadProperties("src\\test\\resources\\environmentspecific\\PageObjectLocators.properties");
         final String value = loc.getProperty(locator);
 
         if (value.startsWith("//")) {
