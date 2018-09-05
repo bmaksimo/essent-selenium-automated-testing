@@ -1,4 +1,4 @@
-package stepdefinitions.dwp.login;
+package com.essent.testing.dwp.pageobject.impl.modal.login;
 
 import com.essent.testing.dwp.pageobject.Window;
 import com.essent.testing.dwp.pageobject.impl.modal.login.DWPLoginDialog;

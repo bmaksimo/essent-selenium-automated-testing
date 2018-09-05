@@ -10,7 +10,7 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import org.springframework.test.context.ContextConfiguration;
-import stepdefinitions.dwp.login.LoginAction;
+import com.essent.testing.dwp.pageobject.impl.modal.login.LoginAction;
 
 import static org.junit.Assert.assertNotNull;
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
