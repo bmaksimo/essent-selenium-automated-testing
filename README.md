@@ -74,12 +74,12 @@ This README would normally document whatever steps are necessary to get your app
   If not, we give <span style="color:green">*"non-blocking"*</span> advice, and PR should be approved.
 ##### 5.4  Precedence of location strategies #####
   Precedence of location strategies is as follows:
-    * By.id, 
-    * By.name
-    * By.cssSelector, 
-    * JavascriptTestRunner should be used in DWP as table column/row  lookup strategy where HTML is extremely complex or
+  * By.id, 
+  * By.name
+  * By.cssSelector, 
+  * JavascriptTestRunner should be used in DWP as table column/row  lookup strategy where HTML is extremely complex or
       changes dynamically or to work with timing issues of ajax
-    * By.xpath
+  * By.xpath
   If your PR has precedence of complex xpath locators over by.name for DWP,
   we give <span style="color:green">*"non-blocking"*</span> advice, and PR will be approved.
   Before merging your PR you may be asked to find out how to enable By.name location in DWP web application.
