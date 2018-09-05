@@ -1,6 +1,5 @@
-package stepdefinitions.dwp.pgo;
+package stepdefinitions.dwp.b2b;
 
-import cucumber.api.PendingException;
 import org.junit.Assert;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -25,7 +24,7 @@ public class LogQuestionsOfCustomers extends DwpScenario {
     }
 
 
-    @When("^pgo New case for customer is logged$")
+    @When("^b2b New case for customer is logged$")
     public void logAcaseForCustomer() throws Throwable {
         DwpAccountOverviewPage daop = new DwpAccountOverviewPage(webDriver);
 		DwpServicePage dsp = new DwpServicePage(webDriver);
@@ -42,7 +41,7 @@ public class LogQuestionsOfCustomers extends DwpScenario {
 
     }
 
-    @Then("^pgo Case details are visible when case is opened$")
+    @Then("^b2b Case details are visible when case is opened$")
     public void checkSuccess() throws Throwable {
         //Thread.sleep(3000);
         DwpAccountOverviewPage daop = new DwpAccountOverviewPage(webDriver);

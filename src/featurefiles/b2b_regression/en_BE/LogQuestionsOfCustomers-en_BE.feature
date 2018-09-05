@@ -6,7 +6,7 @@ Feature: Log questions of customers
 
 
     Scenario:
-        When pgo Account is selected
-        When pgo New case for customer is logged
-        Then pgo Case details are visible when case is opened
+        When b2b Account is selected
+        When b2b New case for customer is logged
+        Then b2b Case details are visible when case is opened
         

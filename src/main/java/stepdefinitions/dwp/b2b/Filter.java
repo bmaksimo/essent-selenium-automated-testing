@@ -1,4 +1,4 @@
-package stepdefinitions.dwp.pgo;
+package stepdefinitions.dwp.b2b;
 
 import com.essent.testing.dwp.pageobject.b2b_regression.DwpHomePage;
 import org.junit.Assert;
@@ -22,7 +22,7 @@ public class Filter extends DwpScenario {
     }
 
 
-    @When("^pgo Account is selected$")
+    @When("^b2b Account is selected$")
     public void pgoAccountIsSelected() throws Throwable {
         DwpHomePage dhp = new DwpHomePage(webDriver);
 		dhp.clickOnsalesMarketingLink();
@@ -30,7 +30,7 @@ public class Filter extends DwpScenario {
 		dhp.clickOnAccountsListLink();
 		dhp.clickOnFilterButton();
 		dhp.searchByAccountNumberFieldClearAndClick();
-		String accountId = "150638828";
+		String accountId = "150638828"; //TO DO remove hardcoded accountId when gerate contract is implemented
 		dhp.enterAccountId(accountId);
         webDriver.waitUntilAngularPageIsLoaded();
 		Assert.assertTrue(dhp.accountWithAppropriateId(accountId).isDisplayed());
