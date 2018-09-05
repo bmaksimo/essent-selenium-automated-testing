@@ -10,7 +10,6 @@ Feature: Dwp test for checking usage of a customer
             And Top action is Filters
             And "B2C/B2B" selection is "B2B"
             And "Type klant" selection is "Klant"
-            And "Naam" input is "steve"
             Then Click on link in View List at 1st row and "Klantnummer & Naam" column
 
             When Plus menu is "Billing -> Verbruiken voor klant"

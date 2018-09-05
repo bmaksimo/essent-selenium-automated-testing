@@ -1,15 +1,15 @@
 package stepdefinitions.dwp.page_object;
 
-import com.essent.testing.dwp.pageobject.b2b_regression.ConsumptionsPage;
-import com.essent.testing.dwp.scenario.DwpScenario;
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Then;
-import org.junit.Assert;
+import stepdefinitions.dwp.navigation.NavigationElements;
 
-public class ConsumptionsTest extends DwpScenario {
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
+public class ConsumptionsTest extends NavigationElements {
 
     @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
@@ -21,9 +21,11 @@ public class ConsumptionsTest extends DwpScenario {
     public void tearDown() throws Exception {
         super.tearDown();
     }
+
     @Then("^View list is not empty$")
     public void viewListIsNotEmpty() throws Throwable {
-        ConsumptionsPage consumptionsPage = new ConsumptionsPage();
-        Assert.assertTrue(consumptionsPage.listIsVisible());
+        boolean success = new CheckViewListIsNotEmpty().test("");
+        assertThat(String.format("View list did not contain header '%s'", ""),
+            success, is(true));
     }
 }
