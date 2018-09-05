@@ -14,13 +14,17 @@ import stepdefinitions.dwp.contracts.b2b.product_types.B2BProductTypes;
 
 public class ContractB2BScenario extends DwpScenario {
 	
+	private String accountNumber;
+	
 	@Before("@QUOTE, @MENU, @RENEWAL, @FILTER, @SMOKE, @B2B_REGRESSION")
 	public void setupTest(Scenario scenario) throws Throwable {
 		registerActiveScenario(scenario);
 	}
 	
     @Given("^B2B Contract is \"([^\"]*)\"$")
-    public void createB2BContract(String productType) throws Throwable {
+    public String createB2BContract(String productType) throws Throwable {
+    	
+    	accountNumber = "";
     	
     	B2BProductTypes b2bProductTypes = B2BProductTypes.valueOf(productType);
     	
@@ -28,23 +32,29 @@ public class ContractB2BScenario extends DwpScenario {
 		
 			case UP: {
 				CreateQuoteB2B createQuoteB2BUP = new CreateContractUPB2B();
-				createQuoteB2BUP.createContractB2B();
+				accountNumber = createQuoteB2BUP.createContractB2B();
 				break;
 			}
 			case TC1: {
 				CreateQuoteB2B createQuoteB2BTC1 = new CreateContractTC1B2B();
-				createQuoteB2BTC1.createContractB2B();
+				accountNumber= createQuoteB2BTC1.createContractB2B();
 				break;
 			}
 			case TC2: {
 				CreateQuoteB2B createQuoteB2BTC2 = new CreateContractTC2B2B();
-				createQuoteB2BTC2.createContractB2B();
+				accountNumber= createQuoteB2BTC2.createContractB2B();
 				break;
 			}
 		}
+		
+		return accountNumber;
     }
     
-    @Override
+    public String getAccountNumber() {
+		return accountNumber;
+	}
+
+	@Override
     @After("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL, @B2B_REGRESSION")
     public void tearDown() throws Exception {
         super.tearDown();
