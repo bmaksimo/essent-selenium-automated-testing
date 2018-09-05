@@ -1,17 +1,16 @@
+/**
+ * Checks if Overview Menu Item is present in the DOM
+ * Then clicks on it, if it is available
+ *
+ * * @param {object.name}  - menu item argument passed from Java.
+ * * @param {function} callback - The Java callback that handles the result.
+ *
+ * Java example:
+ * Map<String, String> options = new HashMap<>();
+ * options.put("menu", "Sales");
+ * boolean result = executeJavascriptTest("TrClickDashboardMenuButton.js", options);
+ */
 class TrClickDashboardMenuButton extends TestRunnerBase {
-
-    /**
-     * Checks if Overview Menu Item is present in the DOM
-     * Then clicks on it, if it is available
-     *
-     * * @param {object.name}  - menu item argument passed from Java.
-     * * @param {function} callback - The Java callback that handles the result.
-     *
-     * Java example:
-     * Map<String, String> options = new HashMap<>();
-     * options.put("menu", "Sales");
-     * boolean result = executeJavascriptTest("TrClickDashboardMenuButton.js", options);
-     */
 
     constructor(options, callback) {
         super(options, callback, 500);
