@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
-import static com.billinghouse.test_automation.util.gherkin.ExpressionUtil.checkAndConvertToDwpDate;
+import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpDate;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.is;
 
 public class InputElements extends DwpScenario {
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @RENEWAL, @B2B_REGRESSION")
+    @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @RENEWAL, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -27,7 +27,13 @@ public class InputElements extends DwpScenario {
     private class ApplyInput implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
-            return executeJavascriptTest("TbrFormInput", options);
+            return executeJavascriptTest("BaseFormInput", options);
+        }
+    }
+    private class ApplySelection implements Predicate<Map> {
+        @Override
+        public boolean test(Map options) {
+            return executeJavascriptTest("TrFormSelection", options);
         }
     }
 
@@ -48,7 +54,7 @@ public class InputElements extends DwpScenario {
         options.put("label", label);
         options.put("value", value);
         boolean success = new ApplyInput().test(options);
-        assertThat(String.format("Filter element %s is undefined.", label),
+        assertThat(String.format("Input field %s is undefined.", label),
             success, is(true));
     }
 
@@ -64,7 +70,12 @@ public class InputElements extends DwpScenario {
 
     @And("^\"([^\"]*)\" selection is \"([^\"]*)\"$")
     public void setSelection(String label, String value) throws Throwable {
-        setInput(label, String.format("string:%s", value));
+        Map<String, String> options = new HashMap<>();
+        options.put("label", label);
+        options.put("value", value);
+        boolean success = new ApplySelection().test(options);
+        assertThat(String.format("Selection %s is undefined.", label),
+            success, is(true));
     }
 
     @And("^Option \"([^\"]*)\" is ([^\"]*)$")
@@ -77,7 +88,7 @@ public class InputElements extends DwpScenario {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @RENEWAL, @B2B_REGRESSION")
+    @After("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @RENEWAL, @B2B_REGRESSION")
     public void tearDown() throws Exception {
         super.tearDown();
     }

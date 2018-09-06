@@ -21,13 +21,13 @@ class TrSelectListRow extends TestRunnerBase {
         result.status = 'PASSED';
         result.reason = '';
         let row = this.options.index;
-        let checkboxes = $('.list__content tr:not(".row__actions, .list__column-headers")  td [type=checkbox]');
-        let height = checkboxes.size;
+        let plusCells = $('.list__content tr:not(".row__actions, .list__column-headers")  td [type=checkbox]');
+        let height = plusCells.size;
         if(row > height ) {
             result.status = 'FAILED';
             result.reason = `Row ${row} cannot be greater than table height ${height}`;
         } else {
-            checkboxes[row - 1].click();
+            plusCells[row - 1].click();
         }
         this.resolveCallback(result);
     }

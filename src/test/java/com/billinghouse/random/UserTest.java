@@ -1,6 +1,6 @@
 package com.billinghouse.random;
 
-import com.essent.testing.util.ResourceUtils;
+import com.essent.testing.util.resource.ResourceUtil;
 import com.google.gson.Gson;
 import org.joda.time.DateTime;
 import org.junit.Test;
@@ -14,7 +14,7 @@ public class UserTest {
 
     @Test
     public void  testRandomUser() throws Exception {
-        String path = ResourceUtils.toPath("/com/billinghouse/random/User.json");
+        String path = ResourceUtil.toPath("/com/billinghouse/random/User.json");
         Reader reader = new FileReader(path);
         Gson gson = new Gson();
         RandomUser user = gson.fromJson(reader, RandomUser.class);

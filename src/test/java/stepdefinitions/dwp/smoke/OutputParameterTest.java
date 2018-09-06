@@ -7,8 +7,8 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
+
+import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.expandFrom;
 
 public class OutputParameterTest extends DwpScenario {
 
@@ -38,8 +38,7 @@ public class OutputParameterTest extends DwpScenario {
         logger().info("STEP:");
         logger().info(" - ACTION: SET_OUTPUT_PARAM");
         logger().info(" - NAME: startOfTenure");
-        logger().info(" - VALUE: " + startOfTenure);
-        DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MM-yyyy");
-        this.startOfTenure = formatter.parseDateTime(startOfTenure);
+        this.startOfTenure = expandFrom(startOfTenure);
+        logger().info(" - VALUE: " + this.startOfTenure.toString());
     }
 }

@@ -1,7 +1,9 @@
 package com.essent.testing.selenium.scenario;
 
+
 import com.essent.testing.scenario.RegisteredScenario;
 import com.essent.testing.selenium.SeleniumDriver;
+import org.apache.log4j.Logger;
 import org.junit.AfterClass;
 
 import java.util.Map;
@@ -9,7 +11,7 @@ import java.util.Map;
 
 public class SeleniumScenario extends RegisteredScenario {
 
-
+    private static Logger logger = Logger.getLogger(SeleniumScenario.class);
     static protected SeleniumDriver webDriver;
 
     public void tidyUp() {
@@ -34,7 +36,6 @@ public class SeleniumScenario extends RegisteredScenario {
 
     protected void injectJavaScriptTestRunner() {
         webDriver.injectJavaScriptTestRunner();
-
     }
 
     protected boolean executeJavascriptTest(String registeredJsClass, Object options)  {
@@ -53,6 +54,10 @@ public class SeleniumScenario extends RegisteredScenario {
     protected Map executeJavascriptMethod(String registeredJsClass, Object options, Object address)  {
         Map map = webDriver.executeJavascriptMethod(registeredJsClass, options, address);
         return map;
+    }
+
+    protected void takeScreenshot(boolean success)  {
+        webDriver.takeScreenshot(success);
     }
 
     @AfterClass
