@@ -7,7 +7,7 @@ import com.billinghouse.test_automation.javascript.testrunner.impl.SeleniumJsTes
 import com.essent.automation.core.WebDriverWait;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
-import com.essent.testing.util.ResourceUtils;
+import com.essent.testing.util.resource.ResourceUtil;
 import com.paulhammant.ngwebdriver.NgWebDriver;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.io.FileUtils;
@@ -29,6 +29,8 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
@@ -76,7 +78,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
          * @return
          */
         public boolean executeJavascriptTest(String registeredJsClass, Object options) {
-            seleniumDriver.waitUntilAngularPageIsLoaded();
+            seleniumDriver.waitForRequestsToFinish();
             String executeTest = SeleniumJsTestExpanderService.get().expandToJavascript(registeredJsClass, options);
             SeleniumDriver.logger.info("STEP:");
             SeleniumDriver.logger.info(" - ACTION: EXEC_JAVASCRIPT_TEST");
@@ -187,7 +189,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
 
     private void injectJavaScriptInline(File functionFile) {
         JavascriptExecutor jsExec = (JavascriptExecutor) driver;
-        String path = ResourceUtils.toPath(PATH + "DwpInjectScript.js.template");
+        String path = ResourceUtil.toPath(PATH + "DwpInjectScript.js.template");
         File injectionFile = new File(path);
         try {
             String injection = FileUtils.readFileToString(injectionFile, Charset.defaultCharset());
@@ -206,10 +208,10 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     }
 
     public void injectJavaScriptTestRunner() {
-       String testRunnerClassPath = ResourceUtils.toPath(PATH + TEST_RUNNER_CLASS);
+       String testRunnerClassPath = ResourceUtil.toPath(PATH + TEST_RUNNER_CLASS);
         File testRunnerClassFile = new File(testRunnerClassPath);
         injectJavaScriptInline(testRunnerClassFile);
-        String pathToClasses = ResourceUtils.toPath(PATH_TO_INLINE_CLASSES);
+        String pathToClasses = ResourceUtil.toPath(PATH_TO_INLINE_CLASSES);
         File dirClasses = new File(pathToClasses);
         FileFilter fileFilterClasses = new WildcardFileFilter("*.js");
         for (File file : Objects.requireNonNull(dirClasses.listFiles(fileFilterClasses))) {
@@ -233,7 +235,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     }
 
     public Map executeJavascriptMethod(String registeredJsClass, Object options, Object address) {
-        waitUntilAngularPageIsLoaded();
+        waitForRequestsToFinish();
         String jsTestCall = SeleniumJsTestExpanderService.get().expandToJavascript(registeredJsClass, options);
         logger.info("STEP:");
         logger.info(" - ACTION: EVALUATE_JAVASCRIPT_METHOD");
@@ -247,6 +249,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         if (StringUtils.equals("FAILED", status)) {
             String reason = ((String) result.get("reason"));
             logger.info(" - REASON: " + reason);
+            takeScreenshot(false);
         }
         return result;
     }
@@ -279,12 +282,26 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         });
     }
 
-    public void waitUntilAngularPageIsLoaded() {
+    public void waitForRequestsToFinish() {
         awaitJqueryNotActive(200);
         logger.info("STEP:");
         logger.info(" - WAIT: waiting for all angular requests to finish on page at url: " + getDriver().getCurrentUrl());
         ngWebDriver.waitForAngularRequestsToFinish();
         logger.info(" - RESULT: all angular requests finished! " + getDriver().getCurrentUrl());
+    }
+
+    public void takeScreenshot(boolean success)  {
+        if(success) {
+            return;
+        }
+        File screenshot = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
+        Path currentRelativePath = Paths.get("").resolveSibling("target");
+        String currentAbsolutePath = currentRelativePath.toAbsolutePath().toString();
+        try {
+            FileUtils.copyFile(screenshot, new File(FilenameUtils.concat(currentAbsolutePath, screenshot.getName())));
+        } catch (IOException e) {
+            logger.warn(String.format("- ACTION: failed copying screenshot to %s", currentAbsolutePath));
+        }
     }
 
     public void goToHomePage() {

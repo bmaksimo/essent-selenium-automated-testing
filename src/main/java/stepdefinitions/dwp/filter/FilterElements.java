@@ -2,22 +2,15 @@ package stepdefinitions.dwp.filter;
 
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
-import com.essent.testing.dwp.model.FilterElementConverter;
-import cucumber.api.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.When;
-import org.apache.commons.lang3.StringUtils;
 import stepdefinitions.dwp.navigation.NavigationElements;
 
-import java.util.List;
-import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import static com.essent.automation.autocrat.Action.CLICK;
-import static com.essent.automation.autocrat.Action.REQUIRE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -26,8 +19,7 @@ public class FilterElements extends NavigationElements {
     private static final String FILTER_BUTTON_ELEMENT = "FILTER_BUTTON_ELEMENT";
     private static final String FILTER_BUTTON_ELEMENT_QUERY = ".icon-filters";
 
-
-    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER")
+    @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -45,22 +37,6 @@ public class FilterElements extends NavigationElements {
         }
     }
 
-    private class VerifyFilterElements implements Function<DataTable, List<String>> {
-        @Override
-        public List<String> apply(DataTable filterElements) {
-            List<Model.Element> elements = FilterElementConverter.get().getElements(filterElements);
-            List<String> failures = elements.stream().filter(element ->
-            {
-                Model.Execution execution = createExecution().element("LABEL", element);
-                execution.flow().step((new Model.Step().action(REQUIRE).element("LABEL")));
-                return !execute(execution);
-            })
-                .map(element->{ return element.getName() + ", " + element.query;}).collect(Collectors.toList());
-            return failures;
-        }
-    }
-
-
     @When("^I click on the filter button$")
     public void i_click_on_filter_button() throws Throwable {
         TogggleFilterMode togggleFilterMode = new TogggleFilterMode();
@@ -70,20 +46,8 @@ public class FilterElements extends NavigationElements {
 
     }
 
-    @When("^Available filter elements are:$")
-    public void visitLeftMenuItemFilter(DataTable filterElements) throws Throwable {
-        TogggleFilterMode togggleFilterMode = new TogggleFilterMode();
-        togggleFilterMode.test(this);
-        List<String> failingElements = new VerifyFilterElements().apply(filterElements);
-        boolean success = failingElements.isEmpty();
-        togggleFilterMode.test(this);
-        assertThat(String.format("Filter elements: {%s} were not available.",
-            StringUtils.join(failingElements, ";")), success, is(true));
-    }
-
-
     @Override
-    @After("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER")
+    @After("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER")
     public void tearDown() throws Exception {
         super.tearDown();
     }

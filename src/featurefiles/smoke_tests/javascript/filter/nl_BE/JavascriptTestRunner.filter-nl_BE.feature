@@ -1,3 +1,4 @@
+@DWP
 @SMOKE
 Feature: Javascript DWP testing
 
@@ -5,22 +6,22 @@ Feature: Javascript DWP testing
         Given   I logged in to DWP as contracting.testautomation.b2c@essent.be
 
     Scenario:
-        When Left Menu Item is contracting-switching
-        And Top Menu Item is Marktberichten
-        Then View List Header is "Marktberichten" appears within 25 seconds
+        When Left menu is contracting-switching
+        And Top menu item is Marktberichten
+        Then View list header is "Marktberichten" appears within 25 seconds
 
-        When Top Action is Filters
-        And "Aangemaakt na" date is "$today - 3months"
-        And "Aangemaakt voor" date is "$today +  1 day"
+        When Top action is Filters
+        And "Aangemaakt na" date is "3 months before now"
+        And "Aangemaakt voor" date is "1 day from now"
         And "EAN-code" input is "541448820045086029"
         Then 1 List row having cell value MOVE IN Move In at column Module & Label is selected
 
     Scenario:
-        When Top Action is Plus Menu
-        And Plus Menu is "Contracting -> UP-TK2 - Om contracten te hernieuwen"
-        Then View List Header is "UP-TK2 - Om contracten te hernieuwen" appears within 3 seconds
+        When Top action is Plus Menu
+        And Plus menu is "Contracting -> UP-TK2 - Om contracten te hernieuwen"
+        Then View list header is "UP-TK2 - Om contracten te hernieuwen" appears within 10 seconds
 
-        When Top Action is Filters
+        When Top action is Filters
         And "Klantnummer" input is "6574"
         Then View List is empty
 

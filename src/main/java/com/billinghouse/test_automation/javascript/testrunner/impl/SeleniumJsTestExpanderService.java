@@ -27,7 +27,7 @@ public class SeleniumJsTestExpanderService implements JsTestExpanderService {
     @Override
     public String expandToJavascript(String jsClass, Object options) {
         if(!JsTestRegistry.get().contains(jsClass)){
-            throw new CucumberException("Javascript claas " + jsClass + " is not registered.");
+            throw new CucumberException("Javascript class " + jsClass + " is not registered.");
         }
         Map<String, String> substitutions = new HashMap<>();
         substitutions.put("class-name", jsClass);
