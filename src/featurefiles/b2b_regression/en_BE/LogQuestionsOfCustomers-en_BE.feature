@@ -6,7 +6,7 @@ Feature: Log questions of customers
 
 
     Scenario:
-        When b2b Account is selected
-        When b2b New case for customer is logged
+        When b2b Account is selected by using filter on account page
+        And b2b New case for customer is logged through plus icon on the top right side
         Then b2b Case details are visible when case is opened
         

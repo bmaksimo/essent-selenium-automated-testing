@@ -22,7 +22,7 @@ public class Filter extends DwpScenario {
     }
 
 
-    @When("^b2b Account is selected$")
+    @When("^b2b Account is selected by using filter on account page$")
     public void pgoAccountIsSelected() throws Throwable {
         DwpHomePage dhp = new DwpHomePage(webDriver);
 		dhp.clickOnsalesMarketingLink();

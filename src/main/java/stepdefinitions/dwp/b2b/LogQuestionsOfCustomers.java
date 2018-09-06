@@ -24,7 +24,7 @@ public class LogQuestionsOfCustomers extends DwpScenario {
     }
 
 
-    @When("^b2b New case for customer is logged$")
+    @When("^b2b New case for customer is logged through plus icon on the top right side$")
     public void logAcaseForCustomer() throws Throwable {
         DwpAccountOverviewPage daop = new DwpAccountOverviewPage(webDriver);
 		DwpServicePage dsp = new DwpServicePage(webDriver);
