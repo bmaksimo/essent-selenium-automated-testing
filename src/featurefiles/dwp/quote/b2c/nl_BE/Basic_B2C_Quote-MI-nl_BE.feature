@@ -50,4 +50,9 @@ Feature: Creating a B2C Quote TC1 with move in - Dutch version
         And "Datum ondertekening" date is "now"
         And Quote is confirmed
         Then View list header is "Offertes"
-        And 1 List row having cell value Sales Handtekening ontvangen - Geaccepteerd at column Type & status is selected
+
+        When Plus actions at 1st list row having cell value "Sales Handtekening ontvangen - Geaccepteerd" at column "Type & status" are open
+        And List plus action is Bevestig
+        And Modal dialog is Sign quote
+        And  Contract signature is confirmed
+        Then 1st list element has cell value Sales Getekend - Geaccepteerd at column Type & status

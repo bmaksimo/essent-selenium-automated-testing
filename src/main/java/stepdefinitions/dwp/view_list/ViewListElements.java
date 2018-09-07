@@ -92,6 +92,15 @@ public class ViewListElements extends NavigationElements {
             return success;
         }
 
+        public boolean openListPlusActions(int row) {
+            Map<String, Object> options = new HashMap<>();
+            options.put("index", row);
+            boolean success = executeJavascriptTest("TrOpenListPlusActions", options);
+            return success;
+        }
+
+
+
         public List<Integer> fetchListRowsIndices(String value, String columnName) {
             Map viewTable = executeJavascriptMethod("TrGetTableModel", new HashMap<>());
             int index = getColimnNameIndex(columnName, viewTable);
@@ -331,6 +340,15 @@ public class ViewListElements extends NavigationElements {
         assertThat(message,
             success, is(true));
         success = viewListModel.selectListRow(row);
+        assertThat(message,
+            success, is(true));
+    }
+    @And("^Plus actions at ([^\"]*) list row having cell value \"([^\"]*)\" at column \"([^\"]*)\" are open$")
+    public void openPlusActions(String ordinal, String value, String columnName) throws Throwable {
+        int row = extractNumericValue(ordinal);
+        ViewListModel viewListModel = new ViewListModel();
+        boolean success = viewListModel.openListPlusActions(row);
+        String message = String.format("View list did not contain cell value %s at %s row, column '%s'", value, ordinal, columnName);
         assertThat(message,
             success, is(true));
     }
