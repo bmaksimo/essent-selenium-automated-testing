@@ -1,37 +1,18 @@
-package com.essent.testing.dwp.pageobject.b2b_regression;
+package com.essent.testing.dwp.pageobject.impl;
 
+import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import com.essent.testing.selenium.SeleniumDriver;
 
+public class DwpFilter {
+    private SeleniumDriver seleniumDriver;
 
+    public DwpFilter(SeleniumDriver seleniumDriver) {
 
-public class DwpHomePage {
-
-private SeleniumDriver seleniumDriver;
-
-public DwpHomePage(SeleniumDriver seleniumDriver) {
-    this.seleniumDriver = seleniumDriver;
+        this.seleniumDriver = seleniumDriver;
     }
 
-    public WebElement salesMarketingLink() throws InterruptedException {
-        return seleniumDriver.findElementWhenVisible(By.id("sales-marketing-link"));
-
-    }
-
-    public void clickOnsalesMarketingLink() throws InterruptedException {
-        salesMarketingLink().click();
-    }
-
-    public WebElement accountsListLink() {
-        return seleniumDriver.findElementWhenVisible(By.id("accounts-list-link"));
-
-    }
-
-    public void clickOnAccountsListLink() throws InterruptedException {
-        accountsListLink().click();
-    }
 
     public WebElement searchByAccountNumberField() {
         return seleniumDriver.findElementWhenVisible(By.id("account-number-c-default-value-field"));
@@ -61,6 +42,7 @@ public DwpHomePage(SeleniumDriver seleniumDriver) {
     }
 
     public WebElement filterButton() {
+
         return seleniumDriver.findElementWhenVisible(By.className("icon-filters"));
     }
 
@@ -81,6 +63,7 @@ public DwpHomePage(SeleniumDriver seleniumDriver) {
     }
 
     public WebElement firstResultOfTheSearch() {
+
         return seleniumDriver.findElementWhenVisible(By.xpath("//h5"));
     }
 

@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.b2b_regression;
+package com.essent.testing.dwp.pageobject.impl;
 
 import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
@@ -13,31 +13,8 @@ public class DwpServicePage  {
         this.seleniumDriver = seleniumDriver;
     }
 
-    public WebElement plusIcon() {
-        return seleniumDriver.findElementWhenVisible(By.xpath("//a[@name='Plus Menu']"));
-    }
-
-    public void clickOnplusIcon() throws InterruptedException {
-        plusIcon().click();
-    }
-
-    public WebElement serviceDropdownMenu() {
-        return seleniumDriver.findElementWhenVisible(By.xpath("//span[contains(text(),'Service')]"));
-    }
-
-    public void clickOnServiceDropdownMenu() throws InterruptedException {
-         serviceDropdownMenu().click();
-    }
-
-    public WebElement logAcaseForAccountOption() {
-        return seleniumDriver.findElementWhenVisible(By.xpath("//span[contains(text(),'Log a case for account')]"));
-    }
-
-    public void clickOnLogAcaseForAccountOption() throws InterruptedException {
-        logAcaseForAccountOption().click();
-    }
-
     public WebElement subjectDropdownMenu() {
+
         return seleniumDriver.findElementWhenVisible(By.id("cases-name-field"));
     }
 

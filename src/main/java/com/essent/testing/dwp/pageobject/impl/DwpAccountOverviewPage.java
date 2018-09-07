@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.b2b_regression;
+package com.essent.testing.dwp.pageobject.impl;
 
 import com.essent.testing.selenium.SeleniumDriver;
 
@@ -12,10 +12,12 @@ public class DwpAccountOverviewPage  {
     private SeleniumDriver seleniumDriver;
 
     public DwpAccountOverviewPage(SeleniumDriver seleniumDriver) {
+
         this.seleniumDriver = seleniumDriver;
     }
 
     public WebElement overviewHeader() {
+
         return seleniumDriver.findElementWhenVisible(By.className("nav-header"));
     }
 
@@ -76,6 +78,7 @@ public class DwpAccountOverviewPage  {
     }
 
     public WebElement subjectDropdownMenu() {
+
         return seleniumDriver.findElementWhenVisible(By.id("cases-name-field"));
     }
 

@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.b2b_regression;
+package com.essent.testing.dwp.pageobject.impl;
 
 import com.essent.testing.dwp.scenario.DwpScenario;
 

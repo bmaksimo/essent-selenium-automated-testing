@@ -1,0 +1,69 @@
+package stepdefinitions.dwp.b2b;
+
+import com.essent.testing.dwp.pageobject.impl.Navigation.DwpLeftMenu;
+import com.essent.testing.dwp.pageobject.impl.Navigation.DwpPlusMenu;
+import com.essent.testing.dwp.pageobject.impl.Navigation.DwpTopMenu;
+import com.essent.testing.dwp.scenario.DwpScenario;
+import cucumber.api.Scenario;
+import cucumber.api.java.Before;
+import cucumber.api.java.en.And;
+import cucumber.api.java.en.When;
+
+
+public class Navigation extends DwpScenario {
+
+    @Before("@B2B_REGRESSION")
+    public void setupTest(Scenario scenario) throws Throwable {
+        registerActiveScenario(scenario);
+
+    }
+
+    @And("^b2b Plus menu is \"([^\"]*)\"$")
+    public void bBPlusMenuIs(String plus) throws Throwable {
+        DwpPlusMenu pl = new DwpPlusMenu(webDriver);
+        pl.clickOnplusIcon();
+        switch (plus.toLowerCase()){
+            case "service":
+                pl.clickOnServiceDropdownMenu();
+                break;
+
+        }
+    }
+
+    @And("^b2b \"([^\"]*)\" is selected in Service$")
+    public void bBIsSelectedInService(String menu) throws Throwable {
+        DwpPlusMenu pl = new DwpPlusMenu(webDriver);
+        switch (menu.toLowerCase()){
+            case "log a case for account":
+                //webDriver.waitUntilAngularPageIsLoaded();
+                pl.clickOnLogAcaseForAccountOption();
+                break;
+
+        }
+
+    }
+
+
+    @When("^b2b Top menu is \"([^\"]*)\"$")
+    public void topMenuIs(String top) throws Throwable {
+        DwpTopMenu tm = new DwpTopMenu(webDriver);
+        switch (top.toLowerCase()){
+            case "accounts":
+                webDriver.waitUntilAngularPageIsLoaded();
+		        tm.clickOnAccountsListLink();
+		        break;
+        }
+
+    }
+
+    @When("^b2b Left menu is \"([^\"]*)\"$")
+    public void bBLeftMenuIs(String left) throws Throwable {
+        DwpLeftMenu lm = new DwpLeftMenu(webDriver);
+        switch (left.toLowerCase()){
+            case "sales-marketing":
+                //webDriver.waitUntilAngularPageIsLoaded();
+                lm.clickOnsalesMarketingLink();
+                break;
+        }
+    }
+}
