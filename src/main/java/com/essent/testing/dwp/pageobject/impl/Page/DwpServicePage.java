@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.impl;
+package com.essent.testing.dwp.pageobject.impl.Page;
 
 import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;

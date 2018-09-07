@@ -4,8 +4,8 @@ import cucumber.api.java.en.And;
 import org.junit.Assert;
 import org.springframework.test.context.ContextConfiguration;
 
-import com.essent.testing.dwp.pageobject.impl.DwpAccountOverviewPage;
-import com.essent.testing.dwp.pageobject.impl.DwpServicePage;
+import com.essent.testing.dwp.pageobject.impl.Page.DwpAccountOverviewPage;
+import com.essent.testing.dwp.pageobject.impl.Page.DwpServicePage;
 
 import com.essent.testing.dwp.scenario.DwpScenario;
 

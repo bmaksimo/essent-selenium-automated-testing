@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.impl;
+package com.essent.testing.dwp.pageobject.impl.Page;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
