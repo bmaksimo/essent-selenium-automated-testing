@@ -12,7 +12,6 @@ public class DwpFilter {
         this.seleniumDriver = seleniumDriver;
     }
 
-
     public WebElement searchByAccountNumberField() {
         return seleniumDriver.findElementWhenVisible(By.id("account-number-c-default-value-field"));
     }
@@ -20,7 +19,6 @@ public class DwpFilter {
     public void searchByAccountNumberFieldClearAndClick() throws Throwable {
         seleniumDriver.findElementWhenVisible(By.id("account-number-c-default-value-field")).clear();
         seleniumDriver.findElementWhenVisible(By.id("account-number-c-default-value-field")).click();
-
     }
 
     public WebElement searchByAccountIdResultArea() {
@@ -33,7 +31,6 @@ public class DwpFilter {
 
     public WebElement accountWithAppropriateId(String accountId) throws InterruptedException {
         return seleniumDriver.findElementWhenVisible(By.xpath("//*[contains(text(),'" + accountId + "')]"));
-
     }
 
     public void clickOnAccountWithAppropriateId(String accountId) throws InterruptedException {
@@ -41,7 +38,6 @@ public class DwpFilter {
     }
 
     public WebElement filterButton() {
-
         return seleniumDriver.findElementWhenVisible(By.className("icon-filters"));
     }
 
@@ -61,7 +57,6 @@ public class DwpFilter {
     }
 
     public WebElement firstResultOfTheSearch() {
-
         return seleniumDriver.findElementWhenVisible(By.xpath("//h5"));
     }
 

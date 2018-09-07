@@ -56,7 +56,7 @@ public class MenuElements extends NavigationElements {
         assertThat("The following left menu items were not available: "
             + StringUtils.join(failedUpperItems, ", "), failedUpperItems.isEmpty(), is(true));
     }
-    
+
     @When("^Left menu is ([^\"]*)$")
     public void clickLeftMenuItem(String tabName) throws Throwable {
         super.visitLeftMenuItem(tabName);

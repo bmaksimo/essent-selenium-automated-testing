@@ -8,13 +8,11 @@ public class DwpLeftMenu {
     private SeleniumDriver seleniumDriver;
 
     public DwpLeftMenu(SeleniumDriver seleniumDriver) {
-
         this.seleniumDriver = seleniumDriver;
     }
 
     public WebElement salesMarketingLink() throws InterruptedException {
         return seleniumDriver.findElementWhenVisible(By.id("sales-marketing-link"));
-
     }
 
     public void clickOnsalesMarketingLink() throws InterruptedException {

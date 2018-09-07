@@ -15,7 +15,6 @@ public class DwpHomePage {
         this.seleniumDriver = seleniumDriver;
     }
 
-
     public WebElement searchByAccountNumberField() {
         return seleniumDriver.findElementWhenVisible(By.id("account-number-c-default-value-field"));
     }
@@ -23,7 +22,6 @@ public class DwpHomePage {
     public void searchByAccountNumberFieldClearAndClick() throws Throwable {
         seleniumDriver.findElementWhenVisible(By.id("account-number-c-default-value-field")).clear();
         seleniumDriver.findElementWhenVisible(By.id("account-number-c-default-value-field")).click();
-
     }
 
     public WebElement searchByAccountIdResultArea() {
