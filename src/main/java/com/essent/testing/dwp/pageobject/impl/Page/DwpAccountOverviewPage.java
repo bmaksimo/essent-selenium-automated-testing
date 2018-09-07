@@ -12,12 +12,9 @@ public class DwpAccountOverviewPage  {
     private SeleniumDriver seleniumDriver;
 
     public DwpAccountOverviewPage(SeleniumDriver seleniumDriver) {
-
-        this.seleniumDriver = seleniumDriver;
-    }
+        this.seleniumDriver = seleniumDriver;    }
 
     public WebElement overviewHeader() {
-
         return seleniumDriver.findElementWhenVisible(By.className("nav-header"));
     }
 

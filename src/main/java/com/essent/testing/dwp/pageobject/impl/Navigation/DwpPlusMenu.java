@@ -9,13 +9,10 @@ public class DwpPlusMenu {
     private SeleniumDriver seleniumDriver;
 
     public DwpPlusMenu(SeleniumDriver seleniumDriver) {
-
         this.seleniumDriver = seleniumDriver;
-
     }
 
     public WebElement plusIcon() {
-
         return seleniumDriver.findElementWhenVisible(By.xpath("//a[@name='Plus Menu']"));
     }
 

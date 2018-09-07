@@ -9,7 +9,6 @@ public class DwpFilter {
     private SeleniumDriver seleniumDriver;
 
     public DwpFilter(SeleniumDriver seleniumDriver) {
-
         this.seleniumDriver = seleniumDriver;
     }
 
@@ -59,7 +58,6 @@ public class DwpFilter {
         searchField().click();
         searchField().sendKeys(newNameOfDuplicatedUser);
         searchField().sendKeys(Keys.ENTER);
-
     }
 
     public WebElement firstResultOfTheSearch() {

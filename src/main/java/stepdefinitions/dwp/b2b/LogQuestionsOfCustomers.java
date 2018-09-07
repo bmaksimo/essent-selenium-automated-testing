@@ -48,7 +48,4 @@ public class LogQuestionsOfCustomers extends DwpScenario {
         Assert.assertTrue(dsp.caseDetailsheader().isDisplayed());
     }
 
-
-
-
 }

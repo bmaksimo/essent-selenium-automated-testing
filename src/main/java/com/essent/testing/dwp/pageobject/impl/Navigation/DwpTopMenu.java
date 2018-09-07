@@ -8,14 +8,11 @@ public class DwpTopMenu {
     private SeleniumDriver seleniumDriver;
 
     public DwpTopMenu(SeleniumDriver seleniumDriver) {
-
         this.seleniumDriver = seleniumDriver;
-
-
     }
+
     public WebElement accountsListLink() {
         return seleniumDriver.findElementWhenVisible(By.id("accounts-list-link"));
-
     }
 
     public void clickOnAccountsListLink() throws InterruptedException {

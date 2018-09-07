@@ -14,7 +14,6 @@ public class DwpServicePage  {
     }
 
     public WebElement subjectDropdownMenu() {
-
         return seleniumDriver.findElementWhenVisible(By.id("cases-name-field"));
     }
 

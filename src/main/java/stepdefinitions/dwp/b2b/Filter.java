@@ -36,12 +36,6 @@ public class Filter extends DwpScenario {
                 fp.clickOnAccountWithAppropriateId(accountId);
                 break;
         }
-
     }
-
-
-
-
-
 
 }

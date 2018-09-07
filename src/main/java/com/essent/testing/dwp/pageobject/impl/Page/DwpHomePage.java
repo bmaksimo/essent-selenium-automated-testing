@@ -9,11 +9,10 @@ import com.essent.testing.selenium.SeleniumDriver;
 
 public class DwpHomePage {
 
-private SeleniumDriver seleniumDriver;
+    private SeleniumDriver seleniumDriver;
 
-public DwpHomePage(SeleniumDriver seleniumDriver) {
-
-    this.seleniumDriver = seleniumDriver;
+    public DwpHomePage(SeleniumDriver seleniumDriver) {
+        this.seleniumDriver = seleniumDriver;
     }
 
 
