@@ -2,12 +2,14 @@ package stepdefinitions.dwp.view_list;
 
 import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
+import com.essent.testing.util.SharedPropertiesSingleton;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
 import stepdefinitions.dwp.navigation.NavigationElements;
 
@@ -42,8 +44,6 @@ public class ViewListElements extends NavigationElements {
             return executeJavascriptTest("TrCheckViewListHeader", options);
         }
     }
-
-
 
     private class CheckSubmitCard implements Predicate<String> {
         @Override
@@ -91,6 +91,15 @@ public class ViewListElements extends NavigationElements {
             boolean success = executeJavascriptTest("TrSelectListRow", options);
             return success;
         }
+
+        public boolean openListPlusActions(int row) {
+            Map<String, Object> options = new HashMap<>();
+            options.put("index", row);
+            boolean success = executeJavascriptTest("TrOpenListPlusActions", options);
+            return success;
+        }
+
+
 
         public List<Integer> fetchListRowsIndices(String value, String columnName) {
             Map viewTable = executeJavascriptMethod("TrGetTableModel", new HashMap<>());
@@ -150,8 +159,9 @@ public class ViewListElements extends NavigationElements {
             if (row > rows.size()) {
                 fail(String.format("--Error in Test Input: Given %s row index cannot be greater that actual View List size %s", row, rows.size()));
             }
-            ArrayList<String> cells = rows.get(row - 1);
-            return cells.get(index);
+            List<String> allRows = new ArrayList<>();
+            for (List internalRow : rows) allRows.addAll(internalRow);
+            return allRows.get(index);
         }
 
         private List<ArrayList> getData(Map viewTable) {
@@ -172,6 +182,50 @@ public class ViewListElements extends NavigationElements {
         }
     }
 
+    private class ClickTableRowAction implements Predicate<Map> {
+        @Override
+        public boolean test(Map options) {
+            return executeJavascriptTest("TrClickTableRowAction", options);
+        }
+    }
+
+    private class CheckModalDialog implements Predicate<Map> {
+        @Override
+        public boolean test(Map options) {
+            return executeJavascriptTest("TrCheckModalDialog", options);
+        }
+    }
+
+    private class PaymentDetailsModalSaveAction implements Predicate<Map> {
+        @Override
+        public boolean test(Map options) {
+            return executeJavascriptTest("TrPaymentDetailsModalSaveAction", options);
+        }
+    }
+
+    private class PaymentMethodSwitch implements Predicate<Map> {
+        @Override
+        public boolean test(Map options) {
+            Map result = executeJavascriptMethod("TrSwitchPaymentMethod", options);
+            String status = ((String) result.get("status"));
+            boolean success = StringUtils.equals("PASSED", status);
+            if (success) {
+                String switchedPaymentMethod = ((String) result.get("paymentMethod")).equalsIgnoreCase("string:OV") ?
+                    "Overschrijving" : "Domiciliëring";
+                SharedPropertiesSingleton.getInstance().getSharedProperties().put("paymentMethod", switchedPaymentMethod);
+            }
+
+            return success;
+        }
+    }
+
+    private class PaymentDetailsIBANChange implements Predicate<Map> {
+        @Override
+        public boolean test(Map options) {
+            return executeJavascriptTest("TrAddIBANToPaymentDetails", options);
+        }
+    }
+
     @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
@@ -184,7 +238,7 @@ public class ViewListElements extends NavigationElements {
             success, is(true));
     }
 
-    @When("^View List Header is \"([^\"]*)\" appears within (\\d+) seconds?$")
+    @When("^View list header is \"([^\"]*)\" appears within (\\d+) seconds?$")
     public void checkViewListHeaderUntil(String header, int seconds) throws Throwable {
         CheckViewListHeader checkViewListHeader = new CheckViewListHeader();
         given().await()
@@ -212,11 +266,68 @@ public class ViewListElements extends NavigationElements {
             success, is(true));
     }
 
+    @When("^Click on link in \"([^\"]*)\" View List at ([^\"]*) row and \"([^\"]*)\" column$")
+    public void clickOnSuppliedViewListAtRowAndColumn(String viewListName, String ordinal, String column) throws Throwable {
+        String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
+        Map<String, String> columnIndexListOptions = new HashMap<>();
+        columnIndexListOptions.put("column", column);
+        columnIndexListOptions.put("view_list_name", viewListName);
+        columnIndexListOptions.put("index", rowIndex);
+        boolean success = new ClickTableCellUrl().test(columnIndexListOptions);
+        assertThat(String.format("View list did not contain URL at row %s header '%s' and '%s' view list", ordinal, column, viewListName),
+            success, is(true));
+    }
+
+    @When("^Modal \"([^\"]*)\" is displayed$")
+    public void checkModalDialogOpen(String headerText) {
+        Map<String, String> options = new HashMap<>();
+        options.put("headerText", headerText);
+        boolean success = new CheckModalDialog().test(options);
+        assertThat(String.format("Action row %s was not found", headerText), success, is(true));
+    }
+
+    @When("Payment method is switched$")
+    public void switchPaymentMethod() {
+        boolean success = new PaymentMethodSwitch().test(new HashMap<>());
+        assertThat("Payment method has not been switched", success, is(true));
+    }
+
+    @And("IBAN is ([^\"]*)$")
+    public void changeIBAN(String iban) {
+        Map<String, String> options = new HashMap<>();
+        options.put("iban", iban);
+        boolean success = new PaymentDetailsIBANChange().test(options);
+        assertThat("IBAN has failed to be updated", success, is(true));
+    }
+
+    @And("Payment details are confirmed$")
+    public void clickSaveOnPaymentDetailsModal() {
+        boolean success = new PaymentDetailsModalSaveAction().test(null);
+        assertThat("Billing customer update has failed.", success, is(true));
+    }
+
+    @Then("^Row actions \"([^\"]*)\" is clicked$")
+    public void clickOnRowAction(String rowAction) {
+        Map<String, String> options = new HashMap<>();
+        options.put("rowAction", rowAction);
+        boolean success = new ClickTableRowAction().test(options);
+        assertThat(String.format("Action row %s was not found", rowAction), success, is(true));
+    }
+
     @And("^([^\"]*) List element has cell value ([^\"]*) at column ([^\"]*)$")
     public void listElementWith(String ordinal, String value, String columnName) throws Throwable {
         int row = extractNumericValue(ordinal);
         boolean success = new ViewListModel().containsDataAt(row, value, columnName);
         assertThat(String.format("View list did not contain cell value %s at %s row, column '%s'", value, ordinal, columnName),
+            success, is(true));
+    }
+
+    @And("^([^\"]*) List element has updated cell value at column \"([^\"]*)\"$")
+    public void listSwitchedPaymentMethod(String ordinal, String columnName) throws Throwable {
+        int row = extractNumericValue(ordinal);
+        String updatedPaymentMethodName = (String) SharedPropertiesSingleton.getInstance().getSharedProperties().get("paymentMethod");
+        boolean success = new ViewListModel().containsDataAt(row, updatedPaymentMethodName, columnName);
+        assertThat(String.format("View list did not contain payment method %s at %s row, column '%s'", updatedPaymentMethodName, ordinal, columnName),
             success, is(true));
     }
 
@@ -229,6 +340,15 @@ public class ViewListElements extends NavigationElements {
         assertThat(message,
             success, is(true));
         success = viewListModel.selectListRow(row);
+        assertThat(message,
+            success, is(true));
+    }
+    @And("^Plus actions at ([^\"]*) list row having cell value \"([^\"]*)\" at column \"([^\"]*)\" are open$")
+    public void openPlusActions(String ordinal, String value, String columnName) throws Throwable {
+        int row = extractNumericValue(ordinal);
+        ViewListModel viewListModel = new ViewListModel();
+        boolean success = viewListModel.openListPlusActions(row);
+        String message = String.format("View list did not contain cell value %s at %s row, column '%s'", value, ordinal, columnName);
         assertThat(message,
             success, is(true));
     }
@@ -280,7 +400,7 @@ public class ViewListElements extends NavigationElements {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
+    @After("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void tearDown() throws Exception {
         super.tearDown();
     }
