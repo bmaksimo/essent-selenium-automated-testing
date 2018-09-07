@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.b2b_regression;
+package com.essent.testing.dwp.pageobject.service_contracting;
 
 import com.essent.testing.dwp.scenario.DwpScenario;
 
@@ -9,7 +9,7 @@ import java.util.function.Predicate;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class EndOfContract extends DwpScenario {
+public class EndOfContractPage extends DwpScenario {
 
     public class ClickOnElement implements Predicate<String> {
         @Override
@@ -59,14 +59,6 @@ public class EndOfContract extends DwpScenario {
         @Override
         public boolean test(String s) {
             boolean success = executeJavascriptTest("TrEanCheckBox", "");
-            return success;
-        }
-    }
-
-    public class SubmitContractLine implements Predicate<String> {
-        @Override
-        public boolean test(String s) {
-            boolean success = executeJavascriptTest("TrSubmitButton", "");
             return success;
         }
     }

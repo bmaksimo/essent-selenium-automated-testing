@@ -1,5 +1,6 @@
-package stepdefinitions.dwp.end_of_contract;
+package stepdefinitions.dwp.page_object;
 
+import com.essent.testing.dwp.pageobject.service_contracting.EndOfContractPage;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -11,7 +12,7 @@ import org.openqa.selenium.By;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class EndOfContract extends com.essent.testing.dwp.pageobject.b2b_regression.EndOfContract {
+public class EndOfContractSteps extends EndOfContractPage {
 
     @Before("@SMOKE, @QUOTE, @RENEWAL, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) {
