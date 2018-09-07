@@ -8,7 +8,7 @@ import stepdefinitions.dwp.navigation.NavigationElements;
 
 public class PlusActions extends NavigationElements {
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER, @B2B_REGRESSION")
+    @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
