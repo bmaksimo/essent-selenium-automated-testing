@@ -258,6 +258,7 @@ public class DwpAccountOverviewPage  {
     }
 
     public WebElement complaintField() {
+
         return seleniumDriver.findElementWhenVisible(By.id("description-field"));
     }
 
@@ -266,6 +267,7 @@ public class DwpAccountOverviewPage  {
     }
 
     public WebElement firstCaseInTheList() {
+
         return seleniumDriver.findElementWhenVisible(By.xpath("(//h5)[1]"));
     }
 
@@ -274,6 +276,7 @@ public class DwpAccountOverviewPage  {
     }
 
     public WebElement priorityField() {
+
         return seleniumDriver.findElementWhenVisible(By.id("priority-field"));
     }
 

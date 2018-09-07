@@ -38,7 +38,6 @@ public class Navigation extends DwpScenario {
                 //webDriver.waitUntilAngularPageIsLoaded();
                 pl.clickOnLogAcaseForAccountOption();
                 break;
-
         }
 
     }
