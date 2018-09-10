@@ -1,5 +1,4 @@
 @B2B_REGRESSION
-    @EOC
 Feature: End of contract for bankruptcy - nl_BE version
 
     Background:
