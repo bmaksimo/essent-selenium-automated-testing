@@ -129,8 +129,6 @@ public final class PrepareDataForQuote {
 		return new String(Files.readAllBytes(Paths.get(path)));
 	}
 
-	//TODO
-	// Should merge these two methods updatePayloadJson which have different params
 	public static void updatePayloadJson(String pathTemplate, String pathJson, String replaceString, String originalValue) throws IOException {
 		File pathTemplateFile = new File(pathTemplate);
 		File pathJsonFile = new File(pathJson);
@@ -153,8 +151,6 @@ public final class PrepareDataForQuote {
 		FileUtils.write(pathJsonFile, fileContext, Charset.forName("utf-8"));
 	}
 	
-	//TODO
-	// Should merge these two methods updatePayloadJson which have different params
 	public static String createRequestJsonPayload(String payloadFromTemplate, String payloadWithRealValues, HashMap testMap) throws IOException {
 
 		updatePayloadJson(payloadFromTemplate, payloadWithRealValues, testMap);

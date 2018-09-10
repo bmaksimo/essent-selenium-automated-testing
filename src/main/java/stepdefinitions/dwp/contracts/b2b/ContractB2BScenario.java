@@ -3,7 +3,7 @@ package stepdefinitions.dwp.contracts.b2b;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 
-import com.essent.testing.dwp.DwpScenario;
+import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.restassured.create_b2b_contract.CreateQuoteB2B;
 import com.essent.testing.restassured.create_b2b_contract.impl.CreateContractTC1B2B;
 import com.essent.testing.restassured.create_b2b_contract.impl.CreateContractTC2B2B;

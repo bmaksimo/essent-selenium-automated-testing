@@ -2,12 +2,19 @@ package com.essent.testing.restassured.create_b2b_contract.helper;
 
 import java.io.File;
 
+import org.apache.log4j.Logger;
+import org.junit.Assert;
+
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.restassured.create_b2b_contract.constants.Constants;
 import com.jcraft.jsch.*;
 
+import stepdefinitions.dwp.contracts.b2b.ContractB2BScenario;
+
 public class UploadB2BPrices {
+	
+	private static final Logger logger = Logger.getLogger(UploadB2BPrices.class);
 
 	private static final String ftpDomain = ConfigProvider.getProperty(ConfigKey.ENVIRONMENT) + "-sftp.nova.essent.be";
 	
@@ -52,11 +59,14 @@ public class UploadB2BPrices {
 			Thread.sleep(sleepTime);
 			
 		} catch (JSchException e) {
-			e.printStackTrace();
+			logger.error("JSchException", e);
+			Assert.fail("JSchException : " + e.getMessage());
 		} catch (SftpException e) {
-			e.printStackTrace();
+			logger.error("SftpException", e);
+			Assert.fail("SftpException: " + e.getMessage());
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Exception", e);
+			Assert.fail("Exception: " + e.getMessage());
 		} finally {
 			if (channel != null) {
 				channel.disconnect();
