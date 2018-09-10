@@ -13,13 +13,13 @@ import static org.hamcrest.Matchers.is;
 
 public class EndOfContract extends EndOfContractBase {
 
-    @Before("@SMOKE, @QUOTE, @RENEWAL, @B2B_REGRESSION")
+    @Before("@SMOKE, @QUOTE, @BILLING, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @RENEWAL, @B2B_REGRESSION")
+    @After("@SMOKE, @QUOTE, @BILLING, @B2B_REGRESSION")
     public void tearDown() throws Exception {
         super.tearDown();
     }
