@@ -98,4 +98,12 @@ public class DwpServicePage  {
         seleniumDriver.findElementWhenVisible(By.id("confirm-button")).click();
     }
 
+    public WebElement addCaseButton(){
+        return seleniumDriver.findElementWhenVisible(By.name("ADD CASE"));
+    }
+
+    public void clickOnAddCaseButton()throws InterruptedException {
+        addCaseButton().click();
+    }
+
 }

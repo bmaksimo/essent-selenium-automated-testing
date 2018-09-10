@@ -1,9 +1,12 @@
 package stepdefinitions.dwp.b2b;
 
 import com.essent.testing.dwp.pageobject.impl.Navigation.DwpLeftMenu;
+import com.essent.testing.dwp.pageobject.impl.Navigation.DwpLowerLeftMenu;
 import com.essent.testing.dwp.pageobject.impl.Navigation.DwpPlusMenu;
 import com.essent.testing.dwp.pageobject.impl.Navigation.DwpTopMenu;
+import com.essent.testing.dwp.pageobject.impl.Page.DwpServicePage;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
@@ -64,5 +67,24 @@ public class Navigation extends DwpScenario {
                 lm.clickOnsalesMarketingLink();
                 break;
         }
+    }
+
+    @When("^b2b Left button menu is \"([^\"]*)\"$")
+    public void bBLeftButtonMenuIs(String menu) throws Throwable {
+        DwpLowerLeftMenu lbm = new DwpLowerLeftMenu(webDriver);
+        webDriver.waitUntilAngularPageIsLoaded();
+        switch (menu.toLowerCase()){
+            case "service":
+                lbm.clickOnServiceButton();
+        }
+
+    }
+
+    @And("^b2b Add case is clicked$")
+    public void bBAddCaseIsClicked() throws Throwable {
+        webDriver.waitUntilAngularPageIsLoaded();
+        DwpServicePage sp = new DwpServicePage(webDriver);
+        sp.clickOnAddCaseButton();
+
     }
 }
