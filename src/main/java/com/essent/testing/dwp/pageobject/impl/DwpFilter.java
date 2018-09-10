@@ -68,8 +68,8 @@ public class DwpFilter {
         return firstResultOfTheSearch().getText();
     }
 
-    public WebElement checkIfAccountTypeIsB2bProspect() {
-        return seleniumDriver.findElementWhenVisible(By.xpath("(//*[@text='B2B Prospect'])[1]"));
+    public WebElement checkIfAccountTypeIsB2bProspect(String key) {
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//*[@text='"+key+"'])[1]")); //key=B2B Prospect
     }
 
     public void ClickOnContractsLink() throws InterruptedException {

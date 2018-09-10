@@ -35,7 +35,6 @@ public class Navigation extends DwpScenario {
         DwpPlusMenu pl = new DwpPlusMenu(webDriver);
         switch (menu.toLowerCase()){
             case "log a case for account":
-                //webDriver.waitUntilAngularPageIsLoaded();
                 pl.clickOnLogAcaseForAccountOption();
                 break;
         }
@@ -60,7 +59,6 @@ public class Navigation extends DwpScenario {
         DwpLeftMenu lm = new DwpLeftMenu(webDriver);
         switch (left.toLowerCase()){
             case "sales-marketing":
-                //webDriver.waitUntilAngularPageIsLoaded();
                 lm.clickOnsalesMarketingLink();
                 break;
         }

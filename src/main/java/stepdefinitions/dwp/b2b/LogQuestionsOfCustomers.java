@@ -25,7 +25,6 @@ public class LogQuestionsOfCustomers extends DwpScenario {
 
     @Then("^b2b Case details are visible when case is opened$")
     public void checkSuccess() throws Throwable {
-        //Thread.sleep(3000);
         DwpAccountOverviewPage daop = new DwpAccountOverviewPage(webDriver);
         String complaintText = "TextForComplaint";
         String solutionText = "TextForSolution";

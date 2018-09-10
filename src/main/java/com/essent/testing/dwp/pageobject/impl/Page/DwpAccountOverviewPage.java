@@ -143,7 +143,6 @@ public class DwpAccountOverviewPage  {
 
     public void clickOnDuningStopCheckbox() throws InterruptedException {
         if (checkIfDunningStopCheckboxIsChecked()) {
-            System.out.println("DUNNING STOP WAS ALREADY ACTIVE");
             seleniumDriver.findElementWhenVisible(By.id("dunning_stop_c")).click();
             duningStopCheckbox().click();
         } else {
@@ -161,11 +160,7 @@ public class DwpAccountOverviewPage  {
 
     public boolean checkIfDunningStopCheckboxIsChecked() throws InterruptedException {
         String classValue = duningStopCheckbox().getAttribute("class");
-        if (classValue.contains("not-empty")) {
-            return true;
-        } else {
-            return false;
-        }
+       return classValue.contains("not-empty");
     }
 
     public void putDuningStopBackToOff() throws InterruptedException {
@@ -278,13 +273,7 @@ public class DwpAccountOverviewPage  {
     }
 
     public boolean checkIfPriorityIsHigh() {
-        if (priorityField().getText().equalsIgnoreCase("High")) {
-            return true;
-        }
-
-        else {
-            return false;
-        }
+        return priorityField().getText().equalsIgnoreCase("High");
     }
 
     public String getSolutionFieldText() {
