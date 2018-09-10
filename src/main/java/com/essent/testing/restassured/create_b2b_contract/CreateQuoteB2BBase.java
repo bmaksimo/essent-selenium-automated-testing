@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.essent.testing.config.ConfigKey;
+import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.restassured.create_b2b_contract.constants.ApiPaths;
 import com.essent.testing.restassured.create_b2b_contract.constants.Constants;
 import com.essent.testing.restassured.create_b2b_contract.constants.ContractStatus;
@@ -21,6 +23,9 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 public class CreateQuoteB2BBase {
+	
+	private String CRMusername = ConfigProvider.getProperty(ConfigKey.DWP_USER_SOAPUI_B2B);
+	private String CRMpassword = ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_SOAPUI_B2B);
 	
 	protected Gson gson;
 	
@@ -87,25 +92,35 @@ public class CreateQuoteB2BBase {
 		generatedIban = PrepareDataForQuote.getValidIbanBE();
 		this.upStartDate = PrepareDataForQuote.getRandomStartContractDate(upStartDate, todayDate);
 		
-		
 	}
 	
 	protected void login() {
-
-		cookie = RestAssured.given().contentType(ContentType.JSON).when()
-				.body("{ \"username\": \"soapui_b2b\", \"password\": \"504pu17357\" }")
-				.post(ApiPaths.API_LOGIN_CRM).then().statusCode(200).extract()
+				
+		cookie = RestAssured.given().log().all().contentType(ContentType.JSON).when()
+				.body("{ \"username\": \"" + CRMusername + "\", \"password\": \"" + CRMpassword + "\" }")
+				.post(ApiPaths.API_LOGIN_CRM).then().log().all().statusCode(200).extract()
 				.response().getDetailedCookies();
 	}
 	
-	protected void verifyQuoteStatus(String path, String quoteStatus) throws IOException {
+	protected void verifyQuoteStatus(String path, String quoteStage, String quoteStatus) throws IOException {
 		String payloadVerifyQuotesOnAccount = path + "verify_quotes_on_account.json.template";
 		String originalPayloadVerifyQuotesOnAccount = path + "verify_quotes_on_account.json";
 		
 		String jsonBody = PrepareDataForQuote.createRequestJsonPayload(payloadVerifyQuotesOnAccount, originalPayloadVerifyQuotesOnAccount, "${recordId}", recordId);
 		
 		RestAssured.given().log().all().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
-				.when().body(jsonBody).post(ApiPaths.API_QUOTES_ON_ACCOUNT).then().log().all().statusCode(200).body("data.rows[0].cells[2].options.line2", equalTo(quoteStatus)).extract().response();
+			.when().body(jsonBody).post(ApiPaths.API_QUOTES_ON_ACCOUNT).then().log().all().statusCode(200).body("data.rows[0].rowData.stage", equalTo(quoteStage)).body("data.rows[0].rowData.ca_status_c", equalTo(quoteStatus)).extract().response();
+		
+	}
+	
+	protected void verifyContractCreated(String path, String quoteStage, String quoteStatus) throws IOException {
+		String payloadVerifyContractOnAccount = path + "verify_contract_on_account.json.template";
+		String originalPayloadVerifyContractOnAccount = path + "verify_contract_on_account.json";
+		
+		String jsonBody = PrepareDataForQuote.createRequestJsonPayload(payloadVerifyContractOnAccount, originalPayloadVerifyContractOnAccount, "${recordId}", recordId);
+		
+		RestAssured.given().log().all().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
+			.when().body(jsonBody).post(ApiPaths.API_CONTRACT_ON_ACCOUNT).then().log().all().statusCode(200).body("data.rows[0].rowData.status", equalTo(quoteStage)).body("data.rows[0].rowData.ca_status_c", equalTo(quoteStatus)).extract().response();
 		
 	}
 	

@@ -1,8 +1,5 @@
 package com.essent.testing.restassured.create_b2b_contract.impl;
 
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
-
 import java.io.IOException;
 
 import com.essent.testing.restassured.create_b2b_contract.CreateQuoteB2B;
@@ -58,14 +55,17 @@ public class CreateContractUPB2B extends CreateQuoteB2BBase implements CreateQuo
 		setPreconditions(Constants.ACCOUNT_NAME_PREFIX_UP_B2B, upStartDate);
 		login();
 		createQuoteB2B(Constants.PATH_TO_JSON_FILES_QUOTE_UP_B2B, Constants.PATH_TO_JSON_FILES_CREATE_QUOTE_B2B_UP, ApiPaths.API_CREATE_QUOTE_B2B_TC2_UP);
-		verifyQuoteStatus(Constants.PATH_TO_JSON_FILES_QUOTE_UP_B2B, Constants.STATUS_QUOTE_AFTER_CREATING_TC2_UP_EN);
+		verifyQuoteStatus(Constants.PATH_TO_JSON_FILES_QUOTE_UP_B2B, Constants.PRICED_EN.toUpperCase(), Constants.ACCEPTED_EN.toUpperCase());
 		sendToCustomer(Constants.PATH_TO_JSON_FILES_QUOTE_UP_B2B);
-		verifyQuoteStatus(Constants.PATH_TO_JSON_FILES_QUOTE_UP_B2B, Constants.STATUS_QUOTE_AFTER_SENDING_EN);
+		verifyQuoteStatus(Constants.PATH_TO_JSON_FILES_QUOTE_UP_B2B, Constants.SENT_TO_CUSTOMER_EN.toUpperCase(), Constants.ACCEPTED_EN.toUpperCase());
 		signatureReceived(Constants.PATH_TO_JSON_FILES_QUOTE_UP_B2B, pricingDate, priceValidUntilDate, signatureReceivedDate);
-		verifyQuoteStatus(Constants.PATH_TO_JSON_FILES_QUOTE_UP_B2B, Constants.STATUS_QUOTE_AFTER_SIGNATURE_RECEIVED_EN);
+		verifyQuoteStatus(Constants.PATH_TO_JSON_FILES_QUOTE_UP_B2B, Constants.SIGNATURE_RECEIVED_EN.toUpperCase(), Constants.ACCEPTED_EN.toUpperCase());
 		confirmSigning(Constants.PATH_TO_JSON_FILES_QUOTE_UP_B2B, Constants.PATH_TO_JSON_FILES_SIGN_QUOTE_MODAL_TC2_UP, ApiPaths.API_SIGN_QUOTE_MODAL_TC2_UP);
 		signMandatePaper(Constants.PATH_TO_JSON_FILES_QUOTE_UP_B2B);
+		verifyContractCreated(Constants.PATH_TO_JSON_FILES_QUOTE_UP_B2B, Constants.SIGNED_EN.toUpperCase(), Constants.ACCEPTED_EN.toUpperCase());
 		
+		//Should be checked is this should be removed or not after we start to use CREATING OF CONTRACTS from jenkins job
+		/*
 		if (numberOfAttempts < Constants.MAX_NUMBER_OF_ATTEMPTS_TO_FIND_APPROPRIATE_START_CONTRACT_DATE) {
 			
 			ContractStatus contractStatus = checkContractIsActive(Constants.PATH_TO_JSON_FILES_QUOTE_UP_B2B);
@@ -88,7 +88,7 @@ public class CreateContractUPB2B extends CreateQuoteB2BBase implements CreateQuo
 					break;
 				}
 			}
-		}
+		}*/
 		
 		return getAccountNumber(recordId, cookie);
 		

@@ -11,6 +11,7 @@ public class ApiPaths {
 	public static final String API_CREATE_QUOTE_B2B_TC1 = CRM_ROOT_API + "/V8_Custom/Flow/B2B_CQ_TC1";
 	public static final String API_CREATE_QUOTE_B2B_TC2_UP = CRM_ROOT_API + "/V8_Custom/Flow/CUPQ";
 	public static final String API_QUOTES_ON_ACCOUNT = CRM_ROOT_API + "/V8_Custom/List/QuotesOnAccount";
+	public static final String API_CONTRACT_ON_ACCOUNT = CRM_ROOT_API + "/V8_Custom/List/ContractsOnAccount";
 	public static final String API_MODAL_TO_GF_QUOTE_SEND_TO_CUSTOMER = CRM_ROOT_API + "/V8_Custom/Action/modal_to_gf_quote_send_to_customer";
 	public static final String API_MODAL_TO_GF_QUOTE_SEND_TO_CUSTOMER_AND_RELOAD_LIST = CRM_ROOT_API + "/V8_Custom/Action/modal_to_gf_quote_send_to_customer_and_reload_list";
 	public static final String API_GF_QUOTE_SEND_TO_CUSTOMER = CRM_ROOT_API + "/V8_Custom/Flow/gf_quote_send_to_customer";

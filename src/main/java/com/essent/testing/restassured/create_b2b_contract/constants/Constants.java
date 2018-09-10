@@ -29,7 +29,7 @@ public class Constants {
 	public static final String ACCOUNT_NAME_PREFIX_UP_B2B = "B2B_UP_";
 	
 	// Different quote statuses after creating, sending, signature receiving quote (in different languages: Dutch, English, French)
-	public static final String SENT_TO_CUSTOMER_EN = "Sent to customer";
+	public static final String SENT_TO_CUSTOMER_EN = "Send to customer";
 	public static final String SENT_TO_CUSTOMER_NL = "Verstuurd naar de klant";
 	public static final String SENT_TO_CUSTOMER_FR = "Envoyé au client";
 	
