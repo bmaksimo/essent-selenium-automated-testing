@@ -1,11 +1,12 @@
 package stepdefinitions.dwp.smoke;
 
 import com.billinghouse.cucumber.runtime.annotations.InputParameter;
-import com.essent.testing.dwp.DwpScenario;
+import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Then;
 import org.joda.time.DateTime;
+import org.joda.time.Period;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -28,14 +29,15 @@ public class InputParametersTest extends DwpScenario {
     private DateTime startOfTenure;
 
 
-    @Then("^Print contractor tenure date$")
+    @Then("^Print period of tenure$")
     public void printContractorTenureDate() throws Throwable {
         assertThat("'employee' was null", employee, is(notNullValue()));
         assertThat("'startOfTenure' was null", startOfTenure, is(notNullValue()));
         DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("DD-MM-YYYY");
         logger().info("STEP:");
         logger().info(" - ACTION: GET_INPUT_PARAM");
-        logger().info(String.format(" - RESULT: %s's end of tenure is %s", employee, dateTimeFormatter.print(startOfTenure)));
+        Period diff = new Period(startOfTenure, DateTime.now());
+        logger().info(String.format(" - RESULT: %s's period of tenure is %s years", employee, diff.getYears()));
 
     }
 }

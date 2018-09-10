@@ -1,6 +1,6 @@
 package com.essent.testing.database;
 
-import com.essent.testing.util.ResourceUtils;
+import com.essent.testing.util.resource.ResourceUtil;
 import com.jcraft.jsch.JSchException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -16,14 +16,7 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.sql.Types;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -523,7 +516,7 @@ public class DBUtility {
 
     public static void uploadAndApplyDunningBRE(String name) throws SQLException, JSchException, IOException {
         String resourcePath = "./data/dunning/" + name + ".json";
-        String filePath = ResourceUtils.toPath("/data/dunning/" + name + ".json");
+        String filePath = ResourceUtil.toPath("/data/dunning/" + name + ".json");
         byte[] raw;
 
         File file = new File(filePath);
