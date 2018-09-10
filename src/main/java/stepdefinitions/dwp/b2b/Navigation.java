@@ -35,6 +35,7 @@ public class Navigation extends DwpScenario {
         DwpPlusMenu pl = new DwpPlusMenu(webDriver);
         switch (menu.toLowerCase()){
             case "log a case for account":
+            case "case aanmaken voor de klant":
                 pl.clickOnLogAcaseForAccountOption();
                 break;
         }
@@ -47,6 +48,7 @@ public class Navigation extends DwpScenario {
         DwpTopMenu tm = new DwpTopMenu(webDriver);
         switch (top.toLowerCase()){
             case "accounts":
+            case "klanten":
                 webDriver.waitUntilAngularPageIsLoaded();
 		        tm.clickOnAccountsListLink();
 		        break;

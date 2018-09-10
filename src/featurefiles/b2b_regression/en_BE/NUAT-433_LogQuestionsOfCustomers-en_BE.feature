@@ -6,9 +6,9 @@ Feature: Log questions of customers
 
     Scenario:
         When b2b Left menu is "Sales-marketing"
-        When b2b Top menu is "Accounts"
-        When b2b Account is selected by using "accountId" in filter
+        When b2b Top menu is "Klanten"
+        When b2b Account is selected by using "Klantnummer" in filter
         And b2b Plus menu is "Service"
-        And b2b "Log a case for account" is selected in Service
+        And b2b "Case aanmaken voor de klant" is selected in Service
         And b2b New case for account is created
         Then b2b Case details are visible when case is opened

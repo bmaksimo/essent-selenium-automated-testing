@@ -28,6 +28,7 @@ public class Filter extends DwpScenario {
         fp.clickOnFilterButton();
         switch(key.toLowerCase()){
             case "accountid":
+            case "klantnummer":
                 fp.searchByAccountNumberFieldClearAndClick();
                 String accountId = "150638828"; //TO DO remove hardcoded accountId when generate contract is implemented
                 fp.enterAccountId(accountId);
