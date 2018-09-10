@@ -1,9 +1,9 @@
 package com.essent.testing.idresolvers;
 
+import com.essent.testing.database.DBUtility;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import com.essent.testing.database.DBUtility;
 
 public class DunningAccountIdResolver {
 	

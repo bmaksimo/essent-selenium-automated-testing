@@ -1,12 +1,11 @@
 package com.essent.testing.idresolvers;
 
+import com.essent.testing.database.DBUtility;
+import stepdefinitions.transformers.DateMapper;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.essent.testing.database.DBUtility;
-
-import stepdefinitions.transformers.DateMapper;
 
 public class SettlementIdResolver {
 	

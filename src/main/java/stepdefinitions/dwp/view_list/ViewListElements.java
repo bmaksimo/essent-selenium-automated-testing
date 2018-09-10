@@ -23,13 +23,13 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static com.billinghouse.test_automation.util.dsl.NumericExpressionsUtil.extractFirstNumericPart;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
 import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
 import static org.awaitility.Duration.TWO_SECONDS;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static com.billinghouse.test_automation.util.dsl.NumericExpressionsUtil.extractFirstNumericPart;
 import static org.junit.Assert.fail;
 public class ViewListElements extends NavigationElements {
 

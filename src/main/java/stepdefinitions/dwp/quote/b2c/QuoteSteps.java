@@ -18,7 +18,6 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
-
 import stepdefinitions.dwp.autocrat.flow.FlowAwarePredicate;
 import stepdefinitions.dwp.quote.DwpDateFormats;
 import stepdefinitions.dwp.tables.*;

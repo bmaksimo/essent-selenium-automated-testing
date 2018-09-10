@@ -1,5 +1,6 @@
 @DWP
-@SMOKE
+@E2E_B2C
+@_SMOKE
 @REGRESSION
 Feature: Billing - Invoices 01 - Start invoiceRun
 

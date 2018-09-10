@@ -1,5 +1,5 @@
 @DWP
-@_SMOKE
+@SMOKE
 @REGRESSION
 Feature: Creating a B2C Quote TC1 with move in - Dutch version
     The test creates a contract with start date and pricing date set to 3 months before now.

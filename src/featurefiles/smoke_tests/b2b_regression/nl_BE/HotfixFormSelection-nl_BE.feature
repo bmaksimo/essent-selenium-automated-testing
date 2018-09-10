@@ -1,4 +1,4 @@
-@_SMOKE
+@SMOKE
 Feature: Basic elements - Hotfix NSTA-213, Form Selection by text
 
     Background:

@@ -1,8 +1,5 @@
 package com.essent.testing.client.billing;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.essent.be.jbilling.api.rest.RestResponse;
 import com.essent.be.jbilling.api.rest.batch.RSTriggerBillRunRequest;
 import com.essent.be.jbilling.api.rest.batch.RSTriggerDunningRequest;
@@ -10,6 +7,8 @@ import com.essent.be.jbilling.api.rest.batch.RSTriggerMediationRequest;
 import com.essent.be.jbilling.api.rest.batch.admin.RSGetThreadsExecutingJobResponse;
 import com.essent.be.jbilling.api.rest.batch.admin.RSShowRunningJobsResponse;
 import com.essent.be.jbilling.api.rest.batch.admin.RSStopRunningJobRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BillingBatch extends BillingRootClient {
     private static final Logger LOG = LoggerFactory.getLogger(BillingBatch.class);

@@ -1,18 +1,5 @@
 package stepdefinitions.billing.test;
 
-import static org.junit.Assert.fail;
-
-import java.text.SimpleDateFormat;
-import java.time.LocalTime;
-import java.util.Date;
-
-import com.essent.testing.client.billing.BillingBatch;
-import cucumber.api.PendingException;
-import cucumber.api.java.Before;
-import org.apache.commons.lang3.StringUtils;
-import org.joda.time.DateTime;
-import org.junit.Assert;
-
 import com.essent.be.jbilling.api.rest.RestResponse;
 import com.essent.be.jbilling.api.rest.batch.RSTriggerBillRunRequest;
 import com.essent.be.jbilling.api.rest.batch.RSTriggerMediationRequest;
@@ -20,17 +7,26 @@ import com.essent.be.jbilling.api.rest.batch.admin.RSGetThreadsExecutingJobRespo
 import com.essent.be.jbilling.api.rest.batch.admin.RSShowRunningJobsResponse;
 import com.essent.be.jbilling.api.rest.batch.admin.RSStopRunningJobRequest;
 import com.essent.be.jbilling.api.rest.batch.admin.RunningJobItem;
-
-
+import com.essent.testing.client.billing.BillingBatch;
 import cucumber.api.Scenario;
 import cucumber.api.Transform;
 import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
+import org.junit.Assert;
 import stepdefinitions.billing.generic.BillingScenario;
 import stepdefinitions.transformers.DateMapper;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.util.Date;
+
+import static org.junit.Assert.fail;
 
 public class BatchSteps extends BillingScenario {
 

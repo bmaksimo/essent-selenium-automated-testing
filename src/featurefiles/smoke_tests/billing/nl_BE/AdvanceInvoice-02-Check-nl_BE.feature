@@ -1,5 +1,5 @@
 @DWP
-@_SMOKE
+@SMOKE
 @BILLING
 @REGRESSION
 Feature: Billing - Invoices - Check - InBetween Document
