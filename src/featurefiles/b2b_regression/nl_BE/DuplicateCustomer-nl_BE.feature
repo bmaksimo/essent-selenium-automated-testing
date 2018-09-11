@@ -1,9 +1,8 @@
-#@B2B_REGRESSION
+@B2B_REGRESSION
 Feature: Dwp test for duplicating customer - nl_BE
 
     Background:
         Given I logged in to DWP as businessdesk.testautomation.b2b@essent.be
-
 
     Scenario:
         When Left menu is sales-marketing

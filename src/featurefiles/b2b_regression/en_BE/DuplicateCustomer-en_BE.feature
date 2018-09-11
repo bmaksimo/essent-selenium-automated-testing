@@ -1,9 +1,8 @@
-#@B2B_REGRESSION
+@B2B_REGRESSION
 Feature: Dwp test for duplicating customer
 
     Background:
         Given   I logged in to DWP as b.maksimovic@levi9.com
-
 
     Scenario:
         When Left menu is sales-marketing

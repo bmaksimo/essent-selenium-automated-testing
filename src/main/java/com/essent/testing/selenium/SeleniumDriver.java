@@ -23,6 +23,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 
 import java.io.File;
@@ -42,6 +43,7 @@ import static org.junit.Assert.fail;
 
 /**
  * This class is a wrapper around the selenium webdriver.
+ *
  * @author Peter Wessels
  * @author Dmitry Che
  */
@@ -90,10 +92,10 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             if (StringUtils.equals("FAILED", status)) {
                 String reason = ((String) result.get("reason"));
                 SeleniumDriver.logger.info(" - REASON: " + reason);
-                if(withException) {
+                if (withException) {
                     fail(reason);
                 }
-                File scrFile = ((TakesScreenshot)seleniumDriver.getDriver()).getScreenshotAs(OutputType.FILE);
+                File scrFile = ((TakesScreenshot) seleniumDriver.getDriver()).getScreenshotAs(OutputType.FILE);
                 SeleniumDriver.logger.info(" - ACTION: CAPTURE_SCREENSHOT: " + scrFile.getPath());
             }
             return success;
@@ -149,7 +151,6 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     }
 
 
-
     public void setUp() {
         driver = createWebDriver();
         ngWebDriver = new NgWebDriver((JavascriptExecutor) driver);
@@ -183,8 +184,8 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     }
 
     public void tearDown() {
-//        driver.close();
-//        driver.quit();
+        driver.close();
+        driver.quit();
     }
 
     private void injectJavaScriptInline(File functionFile) {
@@ -208,7 +209,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     }
 
     public void injectJavaScriptTestRunner() {
-       String testRunnerClassPath = ResourceUtil.toPath(PATH + TEST_RUNNER_CLASS);
+        String testRunnerClassPath = ResourceUtil.toPath(PATH + TEST_RUNNER_CLASS);
         File testRunnerClassFile = new File(testRunnerClassPath);
         injectJavaScriptInline(testRunnerClassFile);
         String pathToClasses = ResourceUtil.toPath(PATH_TO_INLINE_CLASSES);
@@ -242,7 +243,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         logger.info(" - TEST: " + jsTestCall);
         Map result = (Map) ((JavascriptExecutor) driver).executeAsyncScript(jsTestCall);
         String status = ((String) result.get("status"));
-        if(StringUtils.isEmpty(status)) {
+        if (StringUtils.isEmpty(status)) {
             status = "UNDEFINED";
         }
         logger.info(" - RESULT: " + status);
@@ -255,7 +256,6 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     }
 
     /**
-     *
      * @param registeredJsClass
      * @param options
      * @return
@@ -265,7 +265,6 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     }
 
     /**
-     *
      * @param registeredJsClass
      * @param options
      * @return
@@ -290,8 +289,8 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         logger.info(" - RESULT: all angular requests finished! " + getDriver().getCurrentUrl());
     }
 
-    public void takeScreenshot(boolean success)  {
-        if(success) {
+    public void takeScreenshot(boolean success) {
+        if (success) {
             return;
         }
         File screenshot = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
@@ -343,6 +342,24 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             .ignoring(NoSuchElementException.class);
 
         return waiter.until(driver -> driver.findElement(selector));
+    }
+
+    public WebElement findElementWhenVisible(By selector) {
+        FluentWait<WebDriver> waiter = new FluentWait<>(driver)
+            .withTimeout(Duration.ofSeconds(30))
+            .pollingEvery(Duration.ofSeconds(5))
+            .ignoring(ElementNotVisibleException.class);
+        WebElement element = waiter.until(ExpectedConditions.visibilityOfElementLocated(selector));
+        return element;
+    }
+
+    public WebElement findElementWhenClickable(By selector) {
+        FluentWait<WebDriver> waiter = new FluentWait<>(driver)
+            .withTimeout(Duration.ofSeconds(30))
+            .pollingEvery(Duration.ofSeconds(5))
+            .ignoring(ElementNotVisibleException.class);
+        WebElement element = waiter.until(ExpectedConditions.elementToBeClickable(selector));
+        return element;
     }
 
 }
