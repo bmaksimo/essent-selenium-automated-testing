@@ -66,12 +66,12 @@ public class DwpAccountOverviewPage  {
         plusIcon().click();
     }
 
-    public WebElement logAcaseForAccountOption() {
-        return seleniumDriver.findElementWhenVisible(By.xpath("//span[contains(text(),'Log a case for account')]"));
+    public WebElement logAcaseForAccountOption(String key) {
+        return seleniumDriver.findElementWhenVisible(By.xpath("//span[contains(text(),'"+key+"')]"));
     }
 
-    public void clickOnLogAcaseForAccountOption() throws InterruptedException {
-        logAcaseForAccountOption().click();
+    public void clickOnLogAcaseForAccountOption(String key) throws InterruptedException {
+        logAcaseForAccountOption(key).click();
     }
 
     public WebElement subjectDropdownMenu() {
