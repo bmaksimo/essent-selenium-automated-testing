@@ -8,7 +8,6 @@ public class ServicePage extends DwpScenario {
 
     protected void validateCreatedTask(String input) {
         webDriver.waitForRequestsToFinish();
-        final String labelText = webDriver.findElementOrNull(By.xpath("//span[.='" + input + "']")).getText();
-        Assert.assertEquals(labelText, input);
+        Assert.assertTrue(webDriver.findElementWhenVisible(By.xpath("(//span[.='" + input + "'])[1]")).isDisplayed());
     }
 }

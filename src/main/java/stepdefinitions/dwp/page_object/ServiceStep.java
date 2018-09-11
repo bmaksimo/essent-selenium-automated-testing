@@ -1,5 +1,6 @@
-package com.essent.testing.dwp.pageobject.service_contracting;
+package stepdefinitions.dwp.page_object;
 
+import com.essent.testing.dwp.pageobject.service_contracting.ServicePage;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -22,4 +23,5 @@ public class ServiceStep extends ServicePage {
     public void isCreated(String input) throws Throwable {
         validateCreatedTask(input);
     }
+
 }
