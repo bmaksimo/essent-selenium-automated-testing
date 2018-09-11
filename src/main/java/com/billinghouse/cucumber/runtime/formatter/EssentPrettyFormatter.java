@@ -4,7 +4,7 @@ import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
 import com.billinghouse.cucumber.runtime.parameter.ParameterProvider;
 import com.billinghouse.cucumber.runtime.parameter.ParametersUtil;
 import com.billinghouse.cucumber.runtime.scenario.ActiveScenarioProvider;
-import com.essent.testing.dwp.scenario.DwpScenario;
+import com.essent.testing.scenario.RegisteredScenario;
 import cucumber.runtime.CucumberException;
 import cucumber.runtime.formatter.ColorAware;
 import gherkin.formatter.PrettyFormatter;
@@ -39,7 +39,7 @@ public class EssentPrettyFormatter extends PrettyFormatter implements ColorAware
         logger.info("STEP:");
         logger.info(" - ACTION: CUCUMBER_HOOK");
         logger.info(" - HOOK: result: " + result.getStatus());
-        DwpScenario activeScenario = (DwpScenario) getActiveScenario(location);
+        RegisteredScenario activeScenario = (RegisteredScenario) getActiveScenario(location);
         switch(result.getStatus()) {
             case Result.PASSED:
                 collectOutputParameters(OutputParameter.class, activeScenario);

@@ -1,6 +1,0 @@
-{
-  "selector": {
-    "type": "XPATH",
-    "value": "//div[@class='input' | @class='input label-inline' and label/text()='${label}']"
-  }
-}
