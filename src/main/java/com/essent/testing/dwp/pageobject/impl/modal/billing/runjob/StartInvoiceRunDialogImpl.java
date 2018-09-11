@@ -7,9 +7,7 @@ import org.openqa.selenium.By;
 
 public class StartInvoiceRunDialogImpl extends Component implements RunJobDialog {
 
-    private final static By SELECOR = By.cssSelector(".view__modal .modal__header");
-
-    private final static By SELECOR_RUN_BUTTON = By.id("confirm-button");
+    private final static By SELECTOR = By.cssSelector(".view__modal .modal__header");
 
     private String title;
 
@@ -27,7 +25,7 @@ public class StartInvoiceRunDialogImpl extends Component implements RunJobDialog
     }
 
     public StartInvoiceRunDialogImpl(SeleniumDriver seleniumDriver, String title) {
-        super(seleniumDriver.findElementOrNull(SELECOR), seleniumDriver);
+        super(seleniumDriver.findElementOrNull(SELECTOR), seleniumDriver);
         this.title = title;
         waitForRequestsToFinish();
     }
