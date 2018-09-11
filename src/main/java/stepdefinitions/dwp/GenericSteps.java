@@ -4,13 +4,13 @@ import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.roles.UserRoles;
 import com.essent.testing.dwp.pageobject.Window;
+import com.essent.testing.dwp.pageobject.impl.modal.login.LoginAction;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import org.springframework.test.context.ContextConfiguration;
-import com.essent.testing.dwp.pageobject.impl.modal.login.LoginAction;
 
 import static org.junit.Assert.assertNotNull;
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")

@@ -1,5 +1,7 @@
 package com.essent.testing.selenium.scenario;
 
+
+import com.essent.testing.scenario.RegisteredScenario;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.apache.log4j.Logger;
 import org.junit.AfterClass;
@@ -7,7 +9,7 @@ import org.junit.AfterClass;
 import java.util.Map;
 
 
-public class SeleniumScenario {
+public class SeleniumScenario extends RegisteredScenario {
 
     private static Logger logger = Logger.getLogger(SeleniumScenario.class);
     static protected SeleniumDriver webDriver;
