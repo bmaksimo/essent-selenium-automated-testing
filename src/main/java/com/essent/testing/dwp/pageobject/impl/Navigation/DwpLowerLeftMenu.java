@@ -13,7 +13,7 @@ public class DwpLowerLeftMenu {
     }
 
     public WebElement serviceButton() throws InterruptedException {
-        return seleniumDriver.findElementWhenVisible(By.xpath("//span[contains(text(),'Service')]"));
+        return seleniumDriver.findElementWhenVisible(By.className("icon-agent"));
     }
 
     public void clickOnServiceButton() throws InterruptedException {
