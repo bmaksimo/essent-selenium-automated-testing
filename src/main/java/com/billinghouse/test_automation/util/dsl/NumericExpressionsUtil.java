@@ -16,7 +16,7 @@ public class NumericExpressionsUtil {
         if(matcher.find()) {
             return matcher.group(1);
         }
-        else {
+       else {
             throw new CucumberException(format("--Billing customer and tariff date input '%s' doesn't match the pattern '%s'", input, NUMERIC_AND_ANYTHING_REGEX));
         }
     }
