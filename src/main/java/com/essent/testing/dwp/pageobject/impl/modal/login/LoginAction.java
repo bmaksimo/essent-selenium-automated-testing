@@ -1,9 +1,6 @@
 package com.essent.testing.dwp.pageobject.impl.modal.login;
 
 import com.essent.testing.dwp.pageobject.Window;
-import com.essent.testing.dwp.pageobject.impl.modal.login.DWPLoginDialog;
-import com.essent.testing.dwp.pageobject.impl.modal.login.IWelcomeLoginDialog;
-import com.essent.testing.dwp.pageobject.impl.modal.login.LoginComponent;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
 
