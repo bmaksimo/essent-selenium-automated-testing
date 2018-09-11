@@ -23,6 +23,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static com.billinghouse.test_automation.util.dsl.NumericExpressionsUtil.extractFirstNumericPart;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
 import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
@@ -30,8 +31,9 @@ import static org.awaitility.Duration.TWO_SECONDS;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.fail;
-
 public class ViewListElements extends NavigationElements {
+
+
 
 
     private class CheckViewListHeader implements Predicate<String> {
@@ -226,7 +228,7 @@ public class ViewListElements extends NavigationElements {
         }
     }
 
-   @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
+    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -314,12 +316,22 @@ public class ViewListElements extends NavigationElements {
         assertThat(String.format("Action row %s was not found", rowAction), success, is(true));
     }
 
-    @And("^([^\"]*) List element has cell value ([^\"]*) at column ([^\"]*)$")
+    @And("^([^\"]*) list element has cell value ([^\"]*) at column ([^\"]*)$")
     public void listElementWith(String ordinal, String value, String columnName) throws Throwable {
         int row = extractNumericValue(ordinal);
         boolean success = new ViewListModel().containsDataAt(row, value, columnName);
         assertThat(String.format("View list did not contain cell value %s at %s row, column '%s'", value, ordinal, columnName),
             success, is(true));
+    }
+
+    @OutputParameter(name = "@text-parameters")
+    private Map<String, String> textInputParameters = new HashMap<>();
+    @And("^Number parameter \"([^\"]*)\" is put from \"([^\"]*)\" row and \"([^\"]*)\" column$")
+    public void putNumberParameter(String key, String ordinal, String column) throws Throwable {
+        int row = extractNumericValue(ordinal);
+        String rawValue = new ViewListModel().getCellValueAt(row, column);
+        String numericValue = extractFirstNumericPart(rawValue);
+        textInputParameters.put(key, numericValue);
     }
 
     @And("^([^\"]*) List element has updated cell value at column \"([^\"]*)\"$")
