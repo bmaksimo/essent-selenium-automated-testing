@@ -50,15 +50,15 @@ public class DwpHomePage {
         filterButton().click();
     }
 
-    public WebElement searchField() {
-        return seleniumDriver.findElementWhenVisible(By.xpath("//input[@type='search']"));
+    public WebElement searchField(String search ) {
+        return seleniumDriver.findElementWhenVisible(By.xpath("//input[@type='"+search+"']"));
     }
 
-    public void searchForAppropriateUser(String newNameOfDuplicatedUser) throws InterruptedException {
-        searchField().clear();
-        searchField().click();
-        searchField().sendKeys(newNameOfDuplicatedUser);
-        searchField().sendKeys(Keys.ENTER);
+    public void searchForAppropriateUser(String newNameOfDuplicatedUser, String search ) throws InterruptedException {
+        searchField(search).clear();
+        searchField(search).click();
+        searchField(search).sendKeys(newNameOfDuplicatedUser);
+        searchField(search).sendKeys(Keys.ENTER);
 
     }
 
@@ -74,8 +74,8 @@ public class DwpHomePage {
         return firstResultOfTheSearch().getText();
     }
 
-    public WebElement checkIfAccountTypeIsB2bProspect() {
-        return seleniumDriver.findElementWhenVisible(By.xpath("(//*[@text='B2B Prospect'])[1]"));
+    public WebElement checkIfAccountTypeIsB2bProspect(String key) {
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//*[@text='"+key+"'])[1]")); //key = B2B Prospect
     }
 
     public void ClickOnContractsLink() throws InterruptedException {

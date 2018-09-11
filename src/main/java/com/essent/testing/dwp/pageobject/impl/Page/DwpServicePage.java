@@ -22,7 +22,7 @@ public class DwpServicePage  {
     }
 
     public WebElement settlementInvoiceDropdownOption() {
-        return seleniumDriver.findElementWhenVisible(By.xpath("//option[@label='Settlement invoice']"));
+        return seleniumDriver.findElementWhenVisible(By.xpath("//option[@label='Afrekeningsfactuur']"));
     }
 
     public void clickOnSettlementInvoiceDropdownOption() throws InterruptedException {
@@ -40,7 +40,7 @@ public class DwpServicePage  {
     }
 
     public WebElement saveButton() {
-        return seleniumDriver.findElementWhenVisible(By.xpath("//button[contains(text(),'Save')]"));
+        return seleniumDriver.findElementWhenVisible(By.xpath("//button[contains(text(),'Opslaan')]"));
     }
 
     public void clickOnSaveButton() throws InterruptedException {
