@@ -38,8 +38,10 @@ public class Navigation extends DwpScenario {
         DwpPlusMenu pl = new DwpPlusMenu(webDriver);
         switch (menu.toLowerCase()){
             case "log a case for account":
+                pl.clickOnLogAcaseForAccountOption("Log a case for account");
+                break;//'Log a case for account'
             case "case aanmaken voor de klant":
-                pl.clickOnLogAcaseForAccountOption();
+                pl.clickOnLogAcaseForAccountOption("Case aanmaken voor de klant");
                 break;
         }
 
@@ -80,11 +82,11 @@ public class Navigation extends DwpScenario {
 
     }
 
-    @And("^b2b Add case is clicked$")
-    public void bBAddCaseIsClicked() throws Throwable {
+    @And("^b2b \"([^\"]*)\" is clicked$")
+    public void bBAddCaseIsClicked(String addCase) throws Throwable {
         webDriver.waitUntilAngularPageIsLoaded();
         DwpServicePage sp = new DwpServicePage(webDriver);
-        sp.clickOnAddCaseButton();
+        sp.clickOnAddCaseButton(addCase.toUpperCase());
 
     }
 }

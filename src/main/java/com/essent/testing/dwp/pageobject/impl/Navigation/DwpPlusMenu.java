@@ -28,11 +28,11 @@ public class DwpPlusMenu {
         serviceDropdownMenu().click();
     }
 
-    public WebElement logAcaseForAccountOption() {
-        return seleniumDriver.findElementWhenVisible(By.xpath("//span[contains(text(),'Log a case for account')]"));
+    public WebElement logACaseForAccountOption(String key) {
+        return seleniumDriver.findElementWhenVisible(By.xpath("//span[contains(text(),'"+key+"')]"));
     }
 
-    public void clickOnLogAcaseForAccountOption() throws InterruptedException {
-        logAcaseForAccountOption().click();
+    public void clickOnLogAcaseForAccountOption(String key) throws InterruptedException {
+        logACaseForAccountOption(key).click();
     }
 }
