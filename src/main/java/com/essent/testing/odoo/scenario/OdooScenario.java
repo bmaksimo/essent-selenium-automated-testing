@@ -18,10 +18,6 @@ public abstract class OdooScenario extends SeleniumScenario {
 
     private String name;
 
-    protected final Logger logger() {
-        return logger;
-    }
-
     public String getName() {
         return name;
     }
