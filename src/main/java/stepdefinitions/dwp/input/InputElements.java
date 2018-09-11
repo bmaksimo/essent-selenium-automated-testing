@@ -1,10 +1,13 @@
 package stepdefinitions.dwp.input;
 
+import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
+import cucumber.runtime.CucumberException;
+import org.apache.commons.lang3.StringUtils;
 import stepdefinitions.dwp.tables.plus.CheckBoxState;
 
 import java.util.HashMap;
@@ -19,7 +22,7 @@ import static org.hamcrest.Matchers.is;
 
 public class InputElements extends DwpScenario {
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @RENEWAL, @B2B_REGRESSION")
+    @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @BILLING, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -48,21 +51,59 @@ public class InputElements extends DwpScenario {
         return checkAndConvertToDwpDate(formattedDate);
     }
 
+    @InputParameter(name = "@text-parameters")
+    private Map<String, String> textInputParameters = new HashMap<>();
+
+    @InputParameter(name = "@date-parameters")
+    private Map<String, String> dateInputParameters = new HashMap<>();
+
+
+    private String getValue(String value) {
+        String parameterPrefix = "@";
+        if (value.startsWith("@")) {
+            String key = StringUtils.replace(value, parameterPrefix, "", 1);
+            if(!textInputParameters.containsKey(key)) {
+                throw new CucumberException(String.format("Input parameter %s is undefined", value));
+            }
+            return textInputParameters.get(key);
+        }
+        else
+            return value;
+    }
+
+    private String getDateValue(String value) {
+        String parameterPrefix = "@";
+        if (value.startsWith("@")) {
+            String key = StringUtils.replace(value, parameterPrefix, "", 1);
+            if(!dateInputParameters.containsKey(key)) {
+                throw new CucumberException(String.format("Input date parameter %s is undefined", value));
+            }
+            return textInputParameters.get(key);
+        }
+        else
+            return convertToDwpDate(value);
+    }
+
+
     @And("^\"([^\"]*)\" input is \"([^\"]*)\"$")
     public void setInput(String label, String value) throws Throwable {
+        String inputValue = getValue(value);
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
-        options.put("value", value);
+        options.put("value", inputValue);
         boolean success = new ApplyInput().test(options);
         assertThat(String.format("Input field %s is undefined.", label),
             success, is(true));
     }
 
+
+
     @And("^\"([^\"]*)\" date is \"([^\"]*)\"$")
     public void setDateInput(String label, String value) throws Throwable {
+        String inputValue = getDateValue(value);
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
-        options.put("value", convertToDwpDate(value));
+        options.put("value", inputValue);
         boolean success = new ApplyDateInput().test(options);
         assertThat(String.format("Filter element %s is undefined.", label),
             success, is(true));
@@ -88,7 +129,7 @@ public class InputElements extends DwpScenario {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @RENEWAL, @B2B_REGRESSION")
+    @After("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @BILLING, @B2B_REGRESSION")
     public void tearDown() throws Exception {
         super.tearDown();
     }

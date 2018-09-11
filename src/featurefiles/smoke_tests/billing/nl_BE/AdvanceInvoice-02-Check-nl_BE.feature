@@ -2,7 +2,7 @@
 @SMOKE
 @BILLING
 @REGRESSION
-Feature: Billing - Invoices
+Feature: Billing - Invoices - Check - InBetween Document
 
     Background:
 
