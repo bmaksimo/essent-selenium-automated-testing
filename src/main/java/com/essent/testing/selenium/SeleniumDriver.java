@@ -340,42 +340,4 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
 
         return waiter.until(driver -> driver.findElement(selector));
     }
-    public WebElement locateElement(String locator) {
-        FluentWait<WebDriver> waiter = new FluentWait<>(driver)
-            .withTimeout(Duration.ofSeconds(30))
-            .pollingEvery(Duration.ofSeconds(5))
-            .ignoring(NoSuchElementException.class);
-
-        return waiter.until(driver -> chooseWayToFindElement(locator));
-    }
-
-    private static Properties loadProperties(String propertiesLocation) {
-        InputStream propertiesFile;
-        Properties properties = new Properties();
-        try {
-            propertiesFile = new FileInputStream(propertiesLocation);
-            properties.load(propertiesFile);
-            propertiesFile.close();
-        } catch (IOException e) {
-            final String message = "Something went wrong while trying to load properties from: " + propertiesLocation;
-            throw new RuntimeException(message, e);
-        }
-
-        return properties;
-    }
-
-    public WebElement chooseWayToFindElement(String locator) {
-        WebElement sDriver;
-
-        final Properties loc = loadProperties("src\\test\\resources\\environmentspecific\\PageObjectLocators.properties");
-        final String value = loc.getProperty(locator);
-
-        if (value.startsWith("//")) {
-            sDriver = getDriver().findElement(By.xpath(value));
-        } else {
-            sDriver = getDriver().findElement(By.id(value));
-        }
-
-        return sDriver;
-    }
 }
