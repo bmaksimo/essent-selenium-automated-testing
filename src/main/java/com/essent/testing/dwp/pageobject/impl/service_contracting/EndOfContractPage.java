@@ -1,6 +1,9 @@
-package com.essent.testing.dwp.pageobject.service_contracting;
+package com.essent.testing.dwp.pageobject.impl.service_contracting;
 
+import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import com.essent.testing.selenium.SeleniumDriver;
+import stepdefinitions.dwp.view_list.ViewListElements;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +12,13 @@ import java.util.function.Predicate;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class EndOfContractPage extends DwpScenario {
+public class EndOfContractPage extends Component {
+
+    private DwpScenario dwpScenario = new ViewListElements();
+
+    public EndOfContractPage(SeleniumDriver seleniumDriver) {
+        super(seleniumDriver);
+    }
 
     public class ClickOnElement implements Predicate<String> {
         @Override
@@ -21,7 +30,7 @@ public class EndOfContractPage extends DwpScenario {
         }
     }
 
-    protected void searchInputField(String input) {
+    public void searchInputField(String input) {
         boolean success = new SearchInputField().test(input);
         assertThat(String.format("Filter element %s is undefined.", input),
             success, is(true));
@@ -37,7 +46,7 @@ public class EndOfContractPage extends DwpScenario {
         }
     }
 
-    protected void simpleExecuteJavaScript(String nameOfJavaScript) {
+    public void simpleExecuteJavaScript(String nameOfJavaScript) {
         boolean success = new ExecuteJavaScript().test(nameOfJavaScript);
         assertThat(String.format("JavaScript file %s is undefined.", nameOfJavaScript),
             success, is(true));
@@ -69,5 +78,17 @@ public class EndOfContractPage extends DwpScenario {
             boolean success = executeJavascriptTest("TrSelectButton", "");
             return success;
         }
+    }
+
+    public boolean checkEanCheckBox() {
+        return new EanCheckBox().test("");
+    }
+
+    public boolean checkSelectButton() {
+        return new SelectButton().test("");
+    }
+
+    public boolean  startNewMarketSection(String element) {
+        return new ClickOnElement().test(element);
     }
 }
