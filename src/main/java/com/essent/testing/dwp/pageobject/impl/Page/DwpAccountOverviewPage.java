@@ -84,7 +84,7 @@ public class DwpAccountOverviewPage  {
     }
 
     public WebElement settlementInvoiceDropdownOption() {
-        return seleniumDriver.findElementWhenVisible(By.xpath("//option[@label='Settlement invoice']"));
+        return seleniumDriver.findElementWhenVisible(By.xpath("//option[@label='Afrekeningsfactuur']"));
     }
 
     public void clickOnSettlementInvoiceDropdownOption() throws InterruptedException {
@@ -106,7 +106,7 @@ public class DwpAccountOverviewPage  {
     }
 
     public WebElement saveButton() {
-        return seleniumDriver.findElementWhenClickable(By.xpath("//button[contains(text(),'Save')]"));
+        return seleniumDriver.findElementWhenClickable(By.xpath("//button[contains(text(),'Opslaan')]"));
     }
 
     public void clickOnSaveButton() throws InterruptedException {
@@ -183,7 +183,7 @@ public class DwpAccountOverviewPage  {
     }
 
     public WebElement phoneDropdownOption() {
-        return seleniumDriver.findElementWhenVisible(By.xpath("//option[@label='Phone']"));
+        return seleniumDriver.findElementWhenVisible(By.xpath("//option[@label='Telefoon']"));
     }
 
     public void clickOnPhoneDropdownOption() throws InterruptedException {
@@ -199,7 +199,7 @@ public class DwpAccountOverviewPage  {
     }
 
     public WebElement highDropdownOption() {
-        return seleniumDriver.findElementWhenVisible(By.xpath("//option[@label='High']"));
+        return seleniumDriver.findElementWhenVisible(By.xpath("//option[@label='Hoog']"));
     }
 
     public void clickOnHighDropdownOption() {
@@ -207,7 +207,7 @@ public class DwpAccountOverviewPage  {
     }
 
     public WebElement solutionField() {
-        return seleniumDriver.findElementWhenVisible(By.id("cases-resolution-field")); //cases-resolution-field
+        return seleniumDriver.findElementWhenVisible(By.id("cases-resolution-field"));
     }
 
     public void clickOnSolutionField() throws InterruptedException {
@@ -273,7 +273,7 @@ public class DwpAccountOverviewPage  {
     }
 
     public boolean checkIfPriorityIsHigh() {
-        return priorityField().getText().equalsIgnoreCase("High");
+        return priorityField().getText().equalsIgnoreCase("Hoog");
     }
 
     public String getSolutionFieldText() {

@@ -2,7 +2,7 @@
 Feature: Log questions of customers
 
     Background:
-        Given   I logged in to DWP as b.maksimovic@levi9.com
+        Given   I logged in to DWP as businessdesk.testautomation.b2b@essent.be
 
     Scenario:
         When b2b Left menu is "Sales-marketing"

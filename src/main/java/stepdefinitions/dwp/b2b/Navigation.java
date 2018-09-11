@@ -35,8 +35,10 @@ public class Navigation extends DwpScenario {
         DwpPlusMenu pl = new DwpPlusMenu(webDriver);
         switch (menu.toLowerCase()){
             case "log a case for account":
+                pl.clickOnLogAcaseForAccountOption("Log a case for account");
+                break;
             case "case aanmaken voor de klant":
-                pl.clickOnLogAcaseForAccountOption();
+                pl.clickOnLogAcaseForAccountOption("Case aanmaken voor de klant");
                 break;
         }
 
