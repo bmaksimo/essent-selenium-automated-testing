@@ -1,14 +1,15 @@
 package com.essent.testing.dwp.pageobject.impl.Navigation;
 
+import com.essent.testing.dwp.pageobject.Component;
+//import com.essent.testing.selenium.SeleniumDriver;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public class DwpTopMenu {
-    private SeleniumDriver seleniumDriver;
+public class DwpTopMenu extends Component {
 
     public DwpTopMenu(SeleniumDriver seleniumDriver) {
-        this.seleniumDriver = seleniumDriver;
+        super(seleniumDriver);
     }
 
     public WebElement accountsListLink() {

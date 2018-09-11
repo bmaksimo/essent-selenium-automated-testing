@@ -1,16 +1,15 @@
 package com.essent.testing.dwp.pageobject.impl.Page;
 
+import com.essent.testing.dwp.pageobject.Component;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 
-public class DwpServicePage  {
-
-    private SeleniumDriver seleniumDriver;
+public class DwpServicePage extends Component {
 
     public DwpServicePage(SeleniumDriver seleniumDriver) {
-        this.seleniumDriver = seleniumDriver;
+        super(seleniumDriver);
     }
 
     public WebElement subjectDropdownMenu() {

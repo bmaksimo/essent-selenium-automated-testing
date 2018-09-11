@@ -1,15 +1,15 @@
 package com.essent.testing.dwp.pageobject.impl;
 
+import com.essent.testing.dwp.pageobject.Component;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
-public class DwpFilter {
-    private SeleniumDriver seleniumDriver;
+public class DwpFilter extends Component {
 
     public DwpFilter(SeleniumDriver seleniumDriver) {
-        this.seleniumDriver = seleniumDriver;
+        super(seleniumDriver);
     }
 
     public WebElement searchByAccountNumberField() {

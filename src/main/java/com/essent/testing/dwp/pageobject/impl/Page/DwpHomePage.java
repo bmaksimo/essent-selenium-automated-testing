@@ -1,5 +1,6 @@
 package com.essent.testing.dwp.pageobject.impl.Page;
 
+import com.essent.testing.dwp.pageobject.Component;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -7,12 +8,10 @@ import com.essent.testing.selenium.SeleniumDriver;
 
 
 
-public class DwpHomePage {
-
-    private SeleniumDriver seleniumDriver;
+public class DwpHomePage extends Component {
 
     public DwpHomePage(SeleniumDriver seleniumDriver) {
-        this.seleniumDriver = seleniumDriver;
+        super(seleniumDriver);
     }
 
     public WebElement searchByAccountNumberField() {
