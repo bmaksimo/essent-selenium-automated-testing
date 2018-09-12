@@ -4,7 +4,6 @@ Feature: Dwp test for duplicating customer - nl_BE
     Background:
         Given I logged in to DWP as businessdesk.testautomation.b2b@essent.be
 
-
     Scenario:
         When Left menu is sales-marketing
         And Top menu item is Klanten

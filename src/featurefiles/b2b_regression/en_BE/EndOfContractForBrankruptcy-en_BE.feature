@@ -1,7 +1,7 @@
 @B2B_REGRESSION
 Feature: End of contract for bankruptcy
 
-	  Background:
+    Background:
         Given   I logged in to DWP as b.maksimovic@levi9.com
 
     Scenario:
@@ -15,9 +15,9 @@ Feature: End of contract for bankruptcy
         When Click on Start new market scenario
         And Click Select Contractline
         And EAN check box
-        Then Select button
+        Then Changes are confirmed
         And "Module" selection is "INITIATE STOP ACCESS"
         And "Label" selection is "Non-Residential End-of-Contract"
         And "Label" selection is "Non-Residential End-of-Contract"
         And "Effective Date" date is "now"
-        Then Select button
+        Then Changes are confirmed
