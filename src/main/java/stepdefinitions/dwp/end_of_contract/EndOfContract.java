@@ -56,14 +56,7 @@ public class EndOfContract extends EndOfContractBase {
             success, is(true));
     }
 
-    @And("^Select button$")
-    public void selectButton() {
-        boolean success = new SelectButton().test("");
-        assertThat(String.format("Java Script file TrSelectButton is undefined."),
-            success, is(true));
-    }
-
-    public void clickOnElement(String element) {
+    private void clickOnElement(String element) {
         boolean success = new ClickOnElement().test(element);
         assertThat(String.format("Top Menu item %s was not available.", element),
             success, is(true));

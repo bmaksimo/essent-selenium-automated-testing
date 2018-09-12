@@ -4,7 +4,6 @@ Feature: Dwp test for duplicating customer
     Background:
         Given   I logged in to DWP as b.maksimovic@levi9.com
 
-
     Scenario:
         When Left menu is sales-marketing
         And Top menu item is Accounts
