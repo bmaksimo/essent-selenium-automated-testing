@@ -1,4 +1,4 @@
-package stepdefinitions.dwp.service_contracting;
+package stepdefinitions.dwp.page_object;
 
 import com.essent.testing.dwp.pageobject.BaseObject;
 import com.essent.testing.dwp.scenario.DwpScenario;
