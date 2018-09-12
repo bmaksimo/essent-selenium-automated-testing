@@ -72,21 +72,10 @@ public class EndOfContractPage extends Component {
         }
     }
 
-    public class SelectButton implements Predicate<String> {
-        @Override
-        public boolean test(String s) {
-            boolean success = executeJavascriptTest("TrSelectButton", "");
-            return success;
-        }
-    }
-
     public boolean checkEanCheckBox() {
         return new EanCheckBox().test("");
     }
 
-    public boolean checkSelectButton() {
-        return new SelectButton().test("");
-    }
 
     public boolean  startNewMarketSection(String element) {
         return new ClickOnElement().test(element);

@@ -61,14 +61,6 @@ public class EndOfContractSteps extends DwpScenario {
             success, is(true));
     }
 
-    @And("^Select button$")
-    public void selectButton() {
-        EndOfContractPage endOfContractPage = new EndOfContractPage(webDriver);
-        boolean success = endOfContractPage.checkSelectButton();
-        assertThat(String.format("Java Script file TrSelectButton is undefined."),
-            success, is(true));
-    }
-
     private void clickOnElement(String element) {
         EndOfContractPage endOfContractPage = new EndOfContractPage(webDriver);
         boolean success = endOfContractPage.startNewMarketSection(element);

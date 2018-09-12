@@ -15,9 +15,9 @@ Feature: End of contract for bankruptcy - nl_BE version
         When Click on Start nieuw marktbericht
         And Click Select Contractline
         And EAN check box
-        Then Select button
+        Then Changes are confirmed
         And "Module" selection is "INITIATE STOP ACCESS"
         And "Label" selection is "Non-Residential End-of-Contract"
         And "Label" selection is "Non-Residential End-of-Contract"
         And "Effective Date" date is "now"
-        Then Select button
+        Then Changes are confirmed
