@@ -7,7 +7,7 @@ import org.openqa.selenium.By;
 
 public class OdooMainWindow extends Component implements Window {
 
-    protected static final By MAIN_WINDOW_SELECTOR = By.className("openerp openerp_webclient_container");
+    protected static final By MAIN_WINDOW_SELECTOR = By.className("openerp_webclient_container");
 
     public OdooMainWindow(SeleniumDriver seleniumDriver) {
         super(seleniumDriver.findElementOrNull(MAIN_WINDOW_SELECTOR), seleniumDriver);

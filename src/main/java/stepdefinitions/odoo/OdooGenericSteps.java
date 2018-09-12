@@ -24,8 +24,6 @@ public class OdooGenericSteps extends OdooScenario {
     public void loginAs(String username) throws Throwable {
         UserRoles odooUser = UserRoles.get(username);
         Window application = new OdooLogin(webDriver).login(odooUser.getUsername(), odooUser.getPassword());
-        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++");
-        System.out.println(application);
         assertNotNull("DWP application did not appear after a login", application);
     }
 

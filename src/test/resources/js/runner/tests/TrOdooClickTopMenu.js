@@ -29,6 +29,6 @@ class TrOdooClickTopMenu extends TestRunnerBase {
 //        }
         setTimeout(()=> {
             this.resolveCallback(result);
-        }, 5000);
+        }, 100);
     }
 }
