@@ -22,15 +22,6 @@ public abstract class OdooScenario extends SeleniumScenario {
         return name;
     }
 
-    protected void registerActiveScenario(Scenario scenario) {
-        logger.info("STEP:");
-        logger.info(" - ACTION: REGISTER_GHERKIN_SCENARIO");
-        logger.info(" - CLASS: " + this.getClass().getSimpleName());
-        name = scenario.getName();
-        logger.info(" - NAME: " + name);
-        ActiveScenarioProvider.get().setActiveScenario(this.getClass().getSimpleName(), this);
-    }
-
     protected void isOdooRunning() throws Exception {
         String dwpUrl = ConfigProvider.getProperty(ConfigKey.ODOO_BASE_URL);
         webDriver.setBaseUrl(dwpUrl);
