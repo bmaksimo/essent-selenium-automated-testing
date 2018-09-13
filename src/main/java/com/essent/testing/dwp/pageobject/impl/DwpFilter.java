@@ -34,7 +34,8 @@ public class DwpFilter extends Component {
     }
 
     public void clickOnAccountWithAppropriateId(String accountId) throws InterruptedException {
-        accountWithAppropriateId(accountId).click();
+        //accountWithAppropriateId(accountId).click();
+        seleniumDriver.waitAndClick(accountWithAppropriateId(accountId));
     }
 
     public WebElement filterButton() {
@@ -42,7 +43,8 @@ public class DwpFilter extends Component {
     }
 
     public void clickOnFilterButton() throws InterruptedException {
-        filterButton().click();
+        //filterButton().click();
+        seleniumDriver.waitAndClick(filterButton());
     }
 
     public WebElement searchField() {
@@ -51,7 +53,7 @@ public class DwpFilter extends Component {
 
     public void searchForAppropriateUser(String newNameOfDuplicatedUser) throws InterruptedException {
         searchField().clear();
-        searchField().click();
+        //searchField().click();
         searchField().sendKeys(newNameOfDuplicatedUser);
         searchField().sendKeys(Keys.ENTER);
     }

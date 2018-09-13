@@ -22,7 +22,8 @@ public class DwpAccountOverviewPage extends Component {
     }
 
     public void clickOnServiceIcon() throws InterruptedException {
-        serviceIcon().click();
+        //serviceIcon().click();
+        seleniumDriver.waitAndClick(serviceIcon());
     }
 
     public void clickArrowUpButton() throws InterruptedException {
@@ -38,7 +39,8 @@ public class DwpAccountOverviewPage extends Component {
     }
 
     public void clickOnWorkflowsIcon() throws InterruptedException {
-        workflowsicon().click();
+        //workflowsicon().click();
+        seleniumDriver.waitAndClick(workflowsicon());
     }
 
     public WebElement detailsIcon() throws InterruptedException {
@@ -46,7 +48,8 @@ public class DwpAccountOverviewPage extends Component {
     }
 
     public void clickOnDetailsIcon() throws InterruptedException {
-        detailsIcon().click();
+        //detailsIcon().click();
+        seleniumDriver.waitAndClick(detailsIcon());
     }
 
     public WebElement contractIcon() throws InterruptedException {
@@ -54,7 +57,8 @@ public class DwpAccountOverviewPage extends Component {
     }
 
     public void clickOnContractIcon() throws InterruptedException {
-        contractIcon().click();
+        //contractIcon().click();
+        seleniumDriver.waitAndClick(contractIcon());
     }
 
     public WebElement plusIcon() {
@@ -62,7 +66,8 @@ public class DwpAccountOverviewPage extends Component {
     }
 
     public void clickOnplusIcon() throws InterruptedException {
-        plusIcon().click();
+       // plusIcon().click();
+        seleniumDriver.waitAndClick(plusIcon());
     }
 
     public WebElement logAcaseForAccountOption(String key) {
@@ -70,7 +75,8 @@ public class DwpAccountOverviewPage extends Component {
     }
 
     public void clickOnLogAcaseForAccountOption(String key) throws InterruptedException {
-        logAcaseForAccountOption(key).click();
+       //logAcaseForAccountOption(key).click();
+        seleniumDriver.waitAndClick(logAcaseForAccountOption(key));
     }
 
     public WebElement subjectDropdownMenu() {
@@ -79,7 +85,8 @@ public class DwpAccountOverviewPage extends Component {
     }
 
     public void clickOnSubjectDropdownMenu() throws InterruptedException {
-        subjectDropdownMenu().click();
+        //subjectDropdownMenu().click();
+        seleniumDriver.waitAndClick(subjectDropdownMenu());
     }
 
     public WebElement settlementInvoiceDropdownOption() {
@@ -87,7 +94,8 @@ public class DwpAccountOverviewPage extends Component {
     }
 
     public void clickOnSettlementInvoiceDropdownOption() throws InterruptedException {
-        settlementInvoiceDropdownOption().click();
+        //settlementInvoiceDropdownOption().click();
+        seleniumDriver.waitAndClick(settlementInvoiceDropdownOption());
     }
 
     public WebElement descriptionField() {
@@ -95,13 +103,15 @@ public class DwpAccountOverviewPage extends Component {
     }
 
     public void clickOnDescriptionField() throws InterruptedException {
-        descriptionField();
+        seleniumDriver.waitAndClick(descriptionField());
     }
 
     public void enterComplaintText(String string) throws InterruptedException {
-        descriptionField().click();
+        //descriptionField().click();
+        seleniumDriver.waitAndClick(descriptionField());
         descriptionField().clear();
-        descriptionField().sendKeys(string);
+        //descriptionField().sendKeys(string);
+        seleniumDriver.waitAndSendKeys(descriptionField(), string);
     }
 
     public WebElement saveButton() {
@@ -109,7 +119,8 @@ public class DwpAccountOverviewPage extends Component {
     }
 
     public void clickOnSaveButton() throws InterruptedException {
-        saveButton().click();
+        //saveButton().click();
+        seleniumDriver.waitAndClick(saveButton());
     }
 
     public WebElement serviceDropdownMenu() {
@@ -117,7 +128,8 @@ public class DwpAccountOverviewPage extends Component {
     }
 
     public void clickOnServiceDropdownMenu() throws InterruptedException {
-        serviceDropdownMenu().click();
+        //serviceDropdownMenu().click();
+        seleniumDriver.waitAndClick(serviceDropdownMenu());
     }
 
     public WebElement accountChangesDropdownSubMenu() {
@@ -125,7 +137,8 @@ public class DwpAccountOverviewPage extends Component {
     }
 
     public void clickOnAccountChangesDropdownSubMenu() throws InterruptedException {
-        accountChangesDropdownSubMenu().click();
+        //accountChangesDropdownSubMenu().click();
+        seleniumDriver.waitAndClick(accountChangesDropdownSubMenu());
     }
 
     public WebElement updateAccountDetailsOption() {
@@ -133,7 +146,8 @@ public class DwpAccountOverviewPage extends Component {
     }
 
     public void clickOnUpdateAccountDetailsOption() throws InterruptedException {
-        updateAccountDetailsOption().click();
+        //updateAccountDetailsOption().click();
+        seleniumDriver.waitAndClick(updateAccountDetailsOption());
     }
 
     public WebElement duningStopCheckbox() {
@@ -143,9 +157,11 @@ public class DwpAccountOverviewPage extends Component {
     public void clickOnDuningStopCheckbox() throws InterruptedException {
         if (checkIfDunningStopCheckboxIsChecked()) {
             seleniumDriver.findElementWhenVisible(By.id("dunning_stop_c")).click();
-            duningStopCheckbox().click();
+            //duningStopCheckbox().click();
+            seleniumDriver.waitAndClick(duningStopCheckbox());
         } else {
-            duningStopCheckbox().click();
+            //duningStopCheckbox().click();
+            seleniumDriver.waitAndClick(duningStopCheckbox());
         }
     }
 
@@ -154,7 +170,8 @@ public class DwpAccountOverviewPage extends Component {
     }
 
     public void clickOnSaveButtonForFinanceAndLegalSection() throws InterruptedException {
-        saveButtonForFinanceAndLegalSection().click();
+        //saveButtonForFinanceAndLegalSection().click();
+        seleniumDriver.waitAndClick(saveButtonForFinanceAndLegalSection());
     }
 
     public boolean checkIfDunningStopCheckboxIsChecked() throws InterruptedException {
@@ -167,7 +184,7 @@ public class DwpAccountOverviewPage extends Component {
         clickOnServiceDropdownMenu();
         clickOnAccountChangesDropdownSubMenu();
         clickOnUpdateAccountDetailsOption();
-        seleniumDriver.findElementWhenVisible(By.id("dunning_stop_c")).click();
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("dunning_stop_c")));//seleniumDriver.findElementWhenVisible(By.id("dunning_stop_c")).click();
         clickOnSaveButtonForFinanceAndLegalSection();
 
     }
@@ -186,7 +203,8 @@ public class DwpAccountOverviewPage extends Component {
     }
 
     public void clickOnPhoneDropdownOption() throws InterruptedException {
-        phoneDropdownOption().click();
+        //phoneDropdownOption().click();
+        seleniumDriver.waitAndClick(phoneDropdownOption());
     }
 
     public WebElement casePriorityField() {
@@ -194,7 +212,8 @@ public class DwpAccountOverviewPage extends Component {
     }
 
     public void clickOnCasePriorityField() throws InterruptedException {
-        casePriorityField().click();
+        //casePriorityField().click();
+        seleniumDriver.waitAndClick(casePriorityField());
     }
 
     public WebElement highDropdownOption() {
@@ -210,8 +229,8 @@ public class DwpAccountOverviewPage extends Component {
     }
 
     public void clickOnSolutionField() throws InterruptedException {
-        solutionField().click();
-
+        //solutionField().click();
+        seleniumDriver.waitAndClick(solutionField());
     }
 
     public WebElement describeTheSolutionDropdown() {
@@ -219,7 +238,8 @@ public class DwpAccountOverviewPage extends Component {
     }
 
     public void clickOnDescribeTheSolutionDropdown() throws InterruptedException {
-        describeTheSolutionDropdown().click();
+        //describeTheSolutionDropdown().click();
+        seleniumDriver.waitAndClick(describeTheSolutionDropdown());
     }
 
 
@@ -228,7 +248,8 @@ public class DwpAccountOverviewPage extends Component {
     }
 
     public void clickOnDescribeTheQuestionDropdown() throws InterruptedException {
-        describeTheQuestionDropdown().click();
+        //describeTheQuestionDropdown().click();
+        seleniumDriver.waitAndClick(describeTheQuestionDropdown());
     }
 
     public void setAllForNewCaseForCustomer(String descriptiontext, String solutionText) throws InterruptedException {
@@ -239,10 +260,12 @@ public class DwpAccountOverviewPage extends Component {
         clickOnCasePriorityField();
         clickOnHighDropdownOption();
         clickOnDescriptionField();
-        descriptionField().sendKeys(descriptiontext);
+        //descriptionField().sendKeys(descriptiontext);
+        seleniumDriver.waitAndSendKeys(descriptionField(),descriptiontext);
         clickOnDescribeTheQuestionDropdown();
         clickOnSolutionField();
-        solutionField().sendKeys(solutionText);
+        //solutionField().sendKeys(solutionText);
+        seleniumDriver.waitAndSendKeys(solutionField(),solutionText);
         clickOnDescribeTheSolutionDropdown();
         clickOnSaveButton();
 
@@ -263,7 +286,8 @@ public class DwpAccountOverviewPage extends Component {
     }
 
     public void clickOnFirstCaseInTheList() throws InterruptedException {
-        firstCaseInTheList().click();
+        //firstCaseInTheList().click();
+        seleniumDriver.waitAndClick(firstCaseInTheList());
     }
 
     public WebElement priorityField() {
@@ -281,15 +305,17 @@ public class DwpAccountOverviewPage extends Component {
     }
 
     public void clickOnMarketTransactionLink() throws InterruptedException {
-        seleniumDriver.findElementWhenVisible(By.id("market-transactions-dashboard-link")).click();
+        //seleniumDriver.findElementWhenVisible(By.id("market-transactions-dashboard-link")).click();
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("market-transactions-dashboard-link")));
     }
 
     public void clickOnFirstTransaction(String contractID) throws InterruptedException {
-        seleniumDriver.findElementWhenVisible(By.xpath("(//h6[contains(text(),'"+contractID+"')]/preceding-sibling::*[1])[1]"))
-            .click();
+        //seleniumDriver.findElementWhenVisible(By.xpath("(//h6[contains(text(),'"+contractID+"')]/preceding-sibling::*[1])[1]")).click();
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("(//h6[contains(text(),'"+contractID+"')]/preceding-sibling::*[1])[1]")));
     }
 
     public void refreshMarketTransactions() throws InterruptedException {
-        seleniumDriver.findElementWhenVisible(By.xpath("//span[contains(text(),'REFRESH MARKET TRANSACTIONS')]")).click();
+        //seleniumDriver.findElementWhenVisible(By.xpath("//span[contains(text(),'REFRESH MARKET TRANSACTIONS')]")).click();
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//span[contains(text(),'REFRESH MARKET TRANSACTIONS')]")));
     }
 }
