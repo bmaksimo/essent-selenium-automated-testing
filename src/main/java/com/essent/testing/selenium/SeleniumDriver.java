@@ -336,8 +336,10 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             .withTimeout(Duration.ofSeconds(30))
             .pollingEvery(Duration.ofSeconds(5))
             .ignoring(NoSuchElementException.class);
-
-        return waiter.until(driver -> driver.findElement(selector));
+        List<WebElement> elements = waiter.until(driver -> driver.findElements(selector));
+        if(elements.isEmpty()) {
+            return null;
+        } else  return elements.get(0);
     }
 
     public WebElement findElementWhenVisible(By selector) {
