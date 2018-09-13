@@ -23,6 +23,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 
@@ -38,6 +39,8 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.fail;
+
+import java.util.function.Function;
 
 /**
  * This class is a wrapper around the selenium webdriver.
@@ -344,7 +347,53 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             .pollingEvery(Duration.ofSeconds(5))
             .ignoring(ElementNotVisibleException.class);
         WebElement element = waiter.until(ExpectedConditions.elementToBeClickable(selector));
+        ngWebDriver.waitForAngularRequestsToFinish();
         return element;
     }
+
+    public <V> void waitForExpectedCondition(final ExpectedCondition<?> expectedCondition, final long timeoutInSeconds, final long sleepInMillis) {
+        final WebDriverWait driverWait = new WebDriverWait(driver, timeoutInSeconds, sleepInMillis);
+        driverWait.until((Function<? super WebDriver, V>) expectedCondition);
+    }
+
+    private void driverWaitFor(final ExpectedCondition<?> expectedCondition, final long timeoutInSeconds, final long sleepInMillis) {
+        ngWebDriver.waitForAngularRequestsToFinish();
+        waitForExpectedCondition(expectedCondition, timeoutInSeconds, sleepInMillis);
+    }
+    public void waitForElementToBeVisibleBy (final By by, final long timeoutInSeconds, final long sleepInMillis) {
+        driverWaitFor(ExpectedConditions.visibilityOfElementLocated(by), timeoutInSeconds,sleepInMillis);
+    }
+
+    public void waitForElementToBeVisible(final WebElement element, final long timeoutInSeconds, final long sleepInMillis) {
+        driverWaitFor(ExpectedConditions.visibilityOf(element), timeoutInSeconds,sleepInMillis);
+    }
+
+    public void waitForElementToBeClickable(final WebElement element, final long timeoutInSeconds, final long sleepInMillis) {
+        driverWaitFor(ExpectedConditions.elementToBeClickable(element), timeoutInSeconds, sleepInMillis);
+    }
+
+    public void waitForElementNotToBeDisplayed(final WebElement element, final long timeoutInSeconds, final long sleepInMillis) {
+        driverWaitFor(ExpectedConditions.stalenessOf(element), timeoutInSeconds,sleepInMillis );
+    }
+    public void waitForElement(final WebElement element) {
+        ngWebDriver.waitForAngularRequestsToFinish();
+        waitForElementToBeVisible(element, 30,5);
+        waitForElementToBeClickable(element, 30, 5);
+    }
+
+    public void waitAndClick(final WebElement element) {
+        waitForElement(element);
+        element.click();
+        ngWebDriver.waitForAngularRequestsToFinish();
+    }
+
+    public void waitAndSendKeys(final WebElement element, final String keysToSend) {
+        waitForElement(element);
+        element.clear();
+        element.click();
+        element.sendKeys(keysToSend);
+        ngWebDriver.waitForAngularRequestsToFinish();
+    }
+
 
 }

@@ -35,7 +35,8 @@ public class DwpServicePage extends Component {
     public void enterComplaintText(String string) throws InterruptedException {
         decriptionField().click();
         decriptionField().clear();
-        decriptionField().sendKeys(string);
+        seleniumDriver.waitAndSendKeys(decriptionField(),string);
+       // decriptionField().sendKeys(string);
     }
 
     public WebElement saveButton() {
