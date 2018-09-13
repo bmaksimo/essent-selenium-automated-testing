@@ -19,19 +19,22 @@ public class DwpPlusMenu extends Component {
         plusIcon().click();
     }
 
-    public WebElement serviceDropdownMenu() {
-        return seleniumDriver.findElementWhenVisible(By.xpath("//span[contains(text(),'Service')]"));
+    public WebElement plusElement(String element) {
+        return seleniumDriver.findElementWhenVisible(By.xpath("//span[contains(text(),'"+element+"')]"));
+
     }
 
-    public void clickOnServiceDropdownMenu() throws InterruptedException {
-        serviceDropdownMenu().click();
+    public void clickplusElement(String element) throws InterruptedException {
+        plusElement(element).click();
     }
 
-    public WebElement logAcaseForAccountOption(String key) {
+
+
+    public WebElement serviceElemet(String key) {
         return seleniumDriver.findElementWhenVisible(By.xpath("//span[contains(text(),'"+key+"')]"));
     }
 
-    public void clickOnLogAcaseForAccountOption(String key) throws InterruptedException {
-        logAcaseForAccountOption(key).click();
+    public void clickServiceElemet(String key) throws InterruptedException {
+        serviceElemet(key).click();
     }
 }

@@ -8,9 +8,11 @@ import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
+import org.apache.log4j.Logger;
 
 
 public class Navigation extends DwpScenario {
+
 
     @Before("@B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
@@ -22,49 +24,27 @@ public class Navigation extends DwpScenario {
     public void bBPlusMenuIs(String plus) throws Throwable {
         DwpPlusMenu pl = new DwpPlusMenu(webDriver);
         pl.clickOnplusIcon();
-        switch (plus.toLowerCase()){
-            case "service":
-                pl.clickOnServiceDropdownMenu();
-                break;
-
-        }
+        pl.clickplusElement(plus);
     }
 
     @And("^b2b \"([^\"]*)\" is selected in Service$")
     public void bBIsSelectedInService(String menu) throws Throwable {
         DwpPlusMenu pl = new DwpPlusMenu(webDriver);
-        switch (menu.toLowerCase()){
-            case "log a case for account":
-                pl.clickOnLogAcaseForAccountOption("Log a case for account");
-                break;
-            case "case aanmaken voor de klant":
-                pl.clickOnLogAcaseForAccountOption("Case aanmaken voor de klant");
-                break;
-        }
-
+            pl.clickServiceElemet(menu);
     }
 
 
     @When("^b2b Top menu is \"([^\"]*)\"$")
     public void topMenuIs(String top) throws Throwable {
+        webDriver.waitUntilAngularPageIsLoaded();
         DwpTopMenu tm = new DwpTopMenu(webDriver);
-        switch (top.toLowerCase()){
-            case "accounts":
-            case "klanten":
-                webDriver.waitUntilAngularPageIsLoaded();
-		        tm.clickOnAccountsListLink();
-		        break;
-        }
-
+        tm.clickTopMenu(top);
     }
 
     @When("^b2b Left menu is \"([^\"]*)\"$")
     public void bBLeftMenuIs(String left) throws Throwable {
+        webDriver.waitUntilAngularPageIsLoaded();
         DwpLeftMenu lm = new DwpLeftMenu(webDriver);
-        switch (left.toLowerCase()){
-            case "sales-marketing":
-                lm.clickOnsalesMarketingLink();
-                break;
-        }
+        lm.clickOnLeftElemet(left.toLowerCase());
     }
 }

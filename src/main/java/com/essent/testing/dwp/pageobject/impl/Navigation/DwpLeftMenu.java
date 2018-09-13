@@ -11,11 +11,11 @@ public class DwpLeftMenu extends Component {
         super(seleniumDriver);
     }
 
-    public WebElement salesMarketingLink() throws InterruptedException {
-        return seleniumDriver.findElementWhenVisible(By.id("sales-marketing-link"));
+    public  WebElement leftElement(String element) throws InterruptedException {
+        return seleniumDriver.findElementWhenVisible(By.xpath("//main-menu-link[@name='"+element+"']//a"));
     }
 
-    public void clickOnsalesMarketingLink() throws InterruptedException {
-        salesMarketingLink().click();
+    public void clickOnLeftElemet(String element) throws InterruptedException{
+        leftElement(element).click();
     }
 }
