@@ -294,7 +294,7 @@ public class ViewListElements extends NavigationElements {
         assertThat("Payment method has not been switched", success, is(true));
     }
 
-    @And("IBAN is ([^\"]*)$")
+    @And("IBAN is ([^\"]*) if not empty$")
     public void changeIBAN(String iban) {
         Map<String, String> options = new HashMap<>();
         options.put("iban", iban);

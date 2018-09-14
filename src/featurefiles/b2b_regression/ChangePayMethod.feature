@@ -1,4 +1,5 @@
 @B2B_REGRESSION
+    @PAY
 Feature: Change Payment Method
 
     Background:
@@ -19,6 +20,6 @@ Feature: Change Payment Method
         Then Modal "Update billing customer" is displayed
 
         When Payment method is switched
-        And IBAN is NL43ABNA0978459932
+        And IBAN is NL43ABNA0978459932 if not empty
         And Payment details are confirmed
         Then 1st List element has updated cell value at column "Betalingstermijnen & betalingswijze"

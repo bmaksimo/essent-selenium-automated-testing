@@ -90,7 +90,7 @@ public class InputElements extends DwpScenario {
         String inputValue = getValue(value);
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
-        options.put("value", inputValue);
+        options.put("value", "string:" + inputValue);
         boolean success = new ApplyInput().test(options);
         assertThat(String.format("Input field %s is undefined.", label),
             success, is(true));
