@@ -259,11 +259,11 @@ public class DwpAccountOverviewPage extends Component {
         clickOnPhoneDropdownOption();
         clickOnCasePriorityField();
         clickOnHighDropdownOption();
-        clickOnDescriptionField();
+        //clickOnDescriptionField();
         //descriptionField().sendKeys(descriptiontext);
         seleniumDriver.waitAndSendKeys(descriptionField(),descriptiontext);
         clickOnDescribeTheQuestionDropdown();
-        clickOnSolutionField();
+        //clickOnSolutionField();
         //solutionField().sendKeys(solutionText);
         seleniumDriver.waitAndSendKeys(solutionField(),solutionText);
         clickOnDescribeTheSolutionDropdown();

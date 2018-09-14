@@ -37,7 +37,8 @@ public class DwpHomePage extends Component {
     }
 
     public void clickOnAccountWithAppropriateId(String accountId) throws InterruptedException {
-        accountWithAppropriateId(accountId).click();
+        //accountWithAppropriateId(accountId).click();
+        seleniumDriver.waitAndClick(accountWithAppropriateId(accountId));
     }
 
     public WebElement filterButton() {
@@ -46,7 +47,8 @@ public class DwpHomePage extends Component {
     }
 
     public void clickOnFilterButton() throws InterruptedException {
-        filterButton().click();
+        //filterButton().click();
+        seleniumDriver.waitAndClick(filterButton());
     }
 
     public WebElement searchField(String search ) {
@@ -55,7 +57,8 @@ public class DwpHomePage extends Component {
 
     public void searchForAppropriateUser(String newNameOfDuplicatedUser, String search ) throws InterruptedException {
         searchField(search).clear();
-        searchField(search).click();
+        //searchField(search).click();
+        seleniumDriver.waitAndClick(searchField(search));
         searchField(search).sendKeys(newNameOfDuplicatedUser);
         searchField(search).sendKeys(Keys.ENTER);
 
@@ -66,7 +69,8 @@ public class DwpHomePage extends Component {
     }
 
     public void clickOnFirstResultOfTheSearch() throws InterruptedException {
-        firstResultOfTheSearch().click();
+        //firstResultOfTheSearch().click();
+        seleniumDriver.waitAndClick(firstResultOfTheSearch());
     }
 
     public String getTextOfTheFirstResult() {
@@ -78,6 +82,7 @@ public class DwpHomePage extends Component {
     }
 
     public void ClickOnContractsLink() throws InterruptedException {
-        seleniumDriver.findElementWhenVisible(By.id("contract-list-link")).click();
+        //seleniumDriver.findElementWhenVisible(By.id("contract-list-link")).click();
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("contract-list-link")));
     }
 }

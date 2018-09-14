@@ -53,7 +53,7 @@ public class DwpFilter extends Component {
 
     public void searchForAppropriateUser(String newNameOfDuplicatedUser) throws InterruptedException {
         searchField().clear();
-        //searchField().click();
+        searchField().click();
         searchField().sendKeys(newNameOfDuplicatedUser);
         searchField().sendKeys(Keys.ENTER);
     }
