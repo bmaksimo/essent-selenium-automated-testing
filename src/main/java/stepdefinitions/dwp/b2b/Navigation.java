@@ -8,7 +8,6 @@ import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
-import org.apache.log4j.Logger;
 
 
 public class Navigation extends DwpScenario {

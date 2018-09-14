@@ -18,7 +18,6 @@ public class DwpTopMenu extends Component {
     }
 
     public void clickTopMenu(String label) throws InterruptedException {
-        //topMenu(label).click();
         seleniumDriver.waitAndClick(topMenu(label));
     }
 

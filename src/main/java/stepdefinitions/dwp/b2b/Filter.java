@@ -32,7 +32,6 @@ public class Filter extends DwpScenario {
                 fp.searchByAccountNumberFieldClearAndClick();
                 String accountId = "150638828"; //TO DO remove hardcoded accountId when generate contract is implemented
                 fp.enterAccountId(accountId);
-                webDriver.waitUntilAngularPageIsLoaded();
                 Assert.assertTrue(fp.accountWithAppropriateId(accountId).isDisplayed());
                 fp.clickOnAccountWithAppropriateId(accountId);
                 break;

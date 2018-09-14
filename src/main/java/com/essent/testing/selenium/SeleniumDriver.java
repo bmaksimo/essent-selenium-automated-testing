@@ -384,8 +384,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     public void waitAndClick(final WebElement element) {
         waitForElement(element);
         element.click();
-        waitUntilAngularPageIsLoaded();
-        //ngWebDriver.waitForAngularRequestsToFinish();
+        ngWebDriver.waitForAngularRequestsToFinish();
     }
 
     public void waitAndSendKeys(final WebElement element, final String keysToSend) {

@@ -16,7 +16,6 @@ public class DwpLeftMenu extends Component {
     }
 
     public void clickOnLeftElemet(String element) throws InterruptedException{
-        //leftElement(element).click();
         seleniumDriver.waitAndClick(leftElement(element));
     }
 }

@@ -18,7 +18,7 @@ public class DwpFilter extends Component {
 
     public void searchByAccountNumberFieldClearAndClick() throws Throwable {
         seleniumDriver.findElementWhenVisible(By.id("account-number-c-default-value-field")).clear();
-        seleniumDriver.findElementWhenVisible(By.id("account-number-c-default-value-field")).click();
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("account-number-c-default-value-field")));
     }
 
     public WebElement searchByAccountIdResultArea() {
@@ -26,7 +26,7 @@ public class DwpFilter extends Component {
     }
 
     public void enterAccountId(String accountNumber) throws InterruptedException {
-        searchByAccountNumberField().sendKeys(accountNumber);
+        seleniumDriver.waitAndSendKeys(searchByAccountNumberField(), accountNumber);
     }
 
     public WebElement accountWithAppropriateId(String accountId) throws InterruptedException {
@@ -34,7 +34,6 @@ public class DwpFilter extends Component {
     }
 
     public void clickOnAccountWithAppropriateId(String accountId) throws InterruptedException {
-        //accountWithAppropriateId(accountId).click();
         seleniumDriver.waitAndClick(accountWithAppropriateId(accountId));
     }
 
@@ -43,7 +42,6 @@ public class DwpFilter extends Component {
     }
 
     public void clickOnFilterButton() throws InterruptedException {
-        //filterButton().click();
         seleniumDriver.waitAndClick(filterButton());
     }
 
@@ -52,9 +50,7 @@ public class DwpFilter extends Component {
     }
 
     public void searchForAppropriateUser(String newNameOfDuplicatedUser) throws InterruptedException {
-        searchField().clear();
-        searchField().click();
-        searchField().sendKeys(newNameOfDuplicatedUser);
+        seleniumDriver.waitAndSendKeys(searchField(), newNameOfDuplicatedUser);
         searchField().sendKeys(Keys.ENTER);
     }
 
@@ -63,7 +59,7 @@ public class DwpFilter extends Component {
     }
 
     public void clickOnFirstResultOfTheSearch() throws InterruptedException {
-        firstResultOfTheSearch().click();
+        seleniumDriver.waitAndClick(firstResultOfTheSearch());
     }
 
     public String getTextOfTheFirstResult() {
@@ -75,6 +71,6 @@ public class DwpFilter extends Component {
     }
 
     public void ClickOnContractsLink() throws InterruptedException {
-        seleniumDriver.findElementWhenVisible(By.id("contract-list-link")).click();
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("contract-list-link")));
     }
 }

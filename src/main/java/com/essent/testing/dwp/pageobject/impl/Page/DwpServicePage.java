@@ -17,7 +17,6 @@ public class DwpServicePage extends Component {
     }
 
     public void clickOnSubjectDropdownMenu() throws InterruptedException {
-        //subjectDropdownMenu().click();
         seleniumDriver.waitAndClick(subjectDropdownMenu());
     }
 
@@ -26,7 +25,6 @@ public class DwpServicePage extends Component {
     }
 
     public void clickOnSettlementInvoiceDropdownOption() throws InterruptedException {
-        //settlementInvoiceDropdownOption().click();
         seleniumDriver.waitAndClick(settlementInvoiceDropdownOption());
     }
 
@@ -35,10 +33,7 @@ public class DwpServicePage extends Component {
     }
 
     public void enterComplaintText(String string) throws InterruptedException {
-        //decriptionField().click();
-        //decriptionField().clear();
         seleniumDriver.waitAndSendKeys(decriptionField(),string);
-       // decriptionField().sendKeys(string);
     }
 
     public WebElement saveButton() {
@@ -46,7 +41,6 @@ public class DwpServicePage extends Component {
     }
 
     public void clickOnSaveButton() throws InterruptedException {
-         //saveButton().click();
          seleniumDriver.waitAndClick(saveButton());
     }
 
@@ -55,7 +49,6 @@ public class DwpServicePage extends Component {
     }
 
     public void clickOnFirstCaseInTheList() throws InterruptedException {
-        //firstCaseInTheList().click();
         seleniumDriver.waitAndClick(firstCaseInTheList());
     }
 
@@ -76,7 +69,6 @@ public class DwpServicePage extends Component {
     }
 
     public void clickOnDescribeTheSolutionDropdown() throws InterruptedException {
-         //describeTheSolutionDropdown().click();
          seleniumDriver.waitAndClick(describeTheSolutionDropdown());
     }
 
@@ -85,7 +77,6 @@ public class DwpServicePage extends Component {
     }
 
     public void clickOnDuplicateAccountOption() throws InterruptedException {
-         //duplicateAccountOption().click();
          seleniumDriver.waitAndClick(duplicateAccountOption());
     }
 
@@ -94,15 +85,11 @@ public class DwpServicePage extends Component {
     }
 
     public void enterNewNameForDuplicatedCustomer(String newName) throws InterruptedException {
-        //duplicateAccountEnterNewNameField().click();
-        //duplicateAccountEnterNewNameField().clear();
-        //duplicateAccountEnterNewNameField().sendKeys(newName);
         seleniumDriver.waitAndSendKeys(duplicateAccountEnterNewNameField(),newName);
 
     }
 
     public void clickOnConfirmButtonOnDuplicateAccountForm() throws InterruptedException {
-        //seleniumDriver.findElementWhenVisible(By.id("confirm-button")).click();
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("confirm-button")));
     }
 
