@@ -16,7 +16,6 @@ public class DwpPlusMenu extends Component {
     }
 
     public void clickOnplusIcon() throws InterruptedException {
-        //plusIcon().click();
         seleniumDriver.waitAndClick(plusIcon());
     }
 
@@ -26,7 +25,6 @@ public class DwpPlusMenu extends Component {
     }
 
     public void clickplusElement(String element) throws InterruptedException {
-        //plusElement(element).click();
         seleniumDriver.waitAndClick(plusElement(element));
     }
 
@@ -37,7 +35,6 @@ public class DwpPlusMenu extends Component {
     }
 
     public void clickServiceElemet(String key) throws InterruptedException {
-        //serviceElemet(key).click();
         seleniumDriver.waitAndClick(serviceElemet(key));
     }
 }

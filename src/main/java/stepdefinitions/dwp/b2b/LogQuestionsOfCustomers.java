@@ -41,9 +41,7 @@ public class LogQuestionsOfCustomers extends DwpScenario {
         String complaintText = "TextForComplaint";
         String solutionText = "TextForSolution";
         daop.setAllForNewCaseForCustomer(complaintText, solutionText);
-        webDriver.waitUntilAngularPageIsLoaded();
         dsp.clickOnFirstCaseInTheList();
-        webDriver.waitUntilAngularPageIsLoaded();
         Assert.assertTrue(dsp.caseDetailsheader().isDisplayed());
     }
 
