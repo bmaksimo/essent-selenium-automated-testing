@@ -1,4 +1,4 @@
-@B2B_REGRESSION
+@_B2B_REGRESSION
 Feature: Create a task for an other team
 
     Background:

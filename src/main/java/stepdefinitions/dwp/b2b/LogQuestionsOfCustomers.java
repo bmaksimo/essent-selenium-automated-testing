@@ -1,17 +1,14 @@
 package stepdefinitions.dwp.b2b;
 
-import cucumber.api.java.en.And;
-import org.junit.Assert;
-import org.springframework.test.context.ContextConfiguration;
-
 import com.essent.testing.dwp.pageobject.impl.page.DwpAccountOverviewPage;
 import com.essent.testing.dwp.pageobject.impl.page.DwpServicePage;
-
 import com.essent.testing.dwp.scenario.DwpScenario;
-
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
+import org.junit.Assert;
+import org.springframework.test.context.ContextConfiguration;
 
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 public class LogQuestionsOfCustomers extends DwpScenario {

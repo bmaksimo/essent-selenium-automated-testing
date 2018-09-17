@@ -32,18 +32,4 @@ public class Navigation extends DwpScenario {
             pl.clickServiceElemet(menu);
     }
 
-
-    @When("^b2b Top menu is \"([^\"]*)\"$")
-    public void topMenuIs(String top) throws Throwable {
-        webDriver.waitUntilAngularPageIsLoaded();
-        DwpTopMenu tm = new DwpTopMenu(webDriver);
-        tm.clickTopMenu(top);
-    }
-
-    @When("^b2b Left menu is \"([^\"]*)\"$")
-    public void bBLeftMenuIs(String left) throws Throwable {
-        webDriver.waitUntilAngularPageIsLoaded();
-        DwpLeftMenu lm = new DwpLeftMenu(webDriver);
-        lm.clickOnLeftElemet(left.toLowerCase());
-    }
 }

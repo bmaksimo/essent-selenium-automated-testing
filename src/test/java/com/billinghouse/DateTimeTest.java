@@ -1,9 +1,10 @@
 package com.billinghouse;
 
-import org.joda.time.*;
-import org.joda.time.format.PeriodFormatter;
-import org.joda.time.format.PeriodFormatterBuilder;
+import org.joda.time.DateTime;
+import org.joda.time.Period;
 import org.junit.Test;
+
+import static com.billinghouse.test_automation.util.gherkin.DateTimeFormatUtil.printPeriod;
 
 public class DateTimeTest {
 
@@ -11,12 +12,9 @@ public class DateTimeTest {
     public void testInterval() throws Exception {
         DateTime timerStart = DateTime.now();
         DateTime endOfMeasurement = DateTime.now().plusSeconds(155);
-        Interval measurementInterval = new Interval(timerStart, endOfMeasurement);
-        Period period = measurementInterval.toPeriod(PeriodType.dayTime());
-        PeriodFormatter pf = new PeriodFormatterBuilder().appendHours().appendSuffix(" hour(s)")
-            .appendSeparator(", ").appendMinutes().appendSuffix(" minute(s)")
-            .appendSeparator(", ").appendSeconds().appendSuffix(" second(s)").toFormatter();
-        System.out.println(String.format(" - Measured duration %s", pf.print(period)));
+        Period period = new Period(timerStart, endOfMeasurement);
+
+        System.out.println(String.format(" - Measured duration %s", printPeriod(period)));
     }
 
 }

@@ -1,4 +1,4 @@
-@B2B_REGRESSION
+@_B2B_REGRESSION
 Feature: Dwp test for checking usage of a customer
 
     Background:

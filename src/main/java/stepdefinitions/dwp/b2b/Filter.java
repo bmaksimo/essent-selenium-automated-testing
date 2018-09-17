@@ -1,16 +1,12 @@
 package stepdefinitions.dwp.b2b;
 
 import com.essent.testing.dwp.pageobject.impl.filter.DwpFilter;
-
-import org.junit.Assert;
-import org.springframework.test.context.ContextConfiguration;
-
-
 import com.essent.testing.dwp.scenario.DwpScenario;
-
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.When;
+import org.junit.Assert;
+import org.springframework.test.context.ContextConfiguration;
 
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 

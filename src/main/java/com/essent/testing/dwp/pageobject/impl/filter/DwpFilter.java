@@ -1,6 +1,6 @@
 package com.essent.testing.dwp.pageobject.impl.filter;
 
-import com.essent.testing.dwp.pageobject.Component;
+import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
