@@ -1,6 +1,6 @@
 package stepdefinitions.dwp.tables;
 
-import com.essent.testing.dwp.DwpDateFormats;
+import stepdefinitions.dwp.quote.DwpDateFormats;
 
 public class SignatureData {
 

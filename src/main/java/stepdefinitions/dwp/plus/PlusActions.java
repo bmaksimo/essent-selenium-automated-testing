@@ -18,14 +18,14 @@ public class PlusActions extends NavigationElements {
         clickPlusAction(path);
     }
 
-    @Override
-    @After("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
-    public void tearDown() throws Exception {
-        super.tearDown();
-    }
-
-    @And("^List Plus Action is ([^\"]*)$")
+    @And("^List plus action is ([^\"]*)$")
     public void checkPlusAction(String item) throws Exception {
         clickListPlusAction(item);
+    }
+
+    @Override
+    @After("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
+    public void tearDown() throws Exception {
+        super.tearDown();
     }
 }

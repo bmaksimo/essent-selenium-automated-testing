@@ -4,12 +4,10 @@ import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
 import com.billinghouse.random.RandomUser;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
-import com.essent.automation.flow.FlowAwarePredicate;
-import com.essent.testing.dwp.DwpDateFormats;
+import com.essent.testing.dwp.pageobject.impl.quote.*;
 import com.essent.testing.dwp.pageobject.quote.GuidedStep;
-import com.essent.testing.dwp.pageobject.quote.impl.*;
 import com.essent.testing.dwp.scenario.DwpScenario;
-import com.essent.testing.util.ResourceUtils;
+import com.essent.testing.util.resource.ResourceUtil;
 import com.google.gson.Gson;
 import cucumber.api.DataTable;
 import cucumber.api.Scenario;
@@ -20,8 +18,8 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
+import stepdefinitions.dwp.autocrat.flow.FlowAwarePredicate;
+import stepdefinitions.dwp.quote.DwpDateFormats;
 import stepdefinitions.dwp.tables.*;
 import stepdefinitions.dwp.tables.plus.CheckBoxState;
 
@@ -31,8 +29,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
-import static com.essent.testing.dwp.DwpTimingParameters.NEXT_STEP;
-import static com.essent.testing.dwp.quote.elements.TariffElements.NO_PRICESHEET_ALERT;
+import static com.essent.testing.dwp.autocrat.element.quote.TariffElements.NO_PRICESHEET_ALERT;
+import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.NEXT_STEP;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
 import static org.awaitility.Duration.*;
@@ -41,7 +39,7 @@ import static org.hamcrest.Matchers.is;
 
 public class QuoteSteps extends DwpScenario {
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @MENU, @FILTER")
+    @Before("@SMOKE, @QUOTE, @QUOTE_CS,@QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -61,7 +59,9 @@ public class QuoteSteps extends DwpScenario {
             Map<String, Object> options = new HashMap<>();
             options.put("schedule_seconds", sec);
             options.put("header", header);
-            return executeJavascriptTest("TrCheckFormHeader", options);
+            boolean success = executeJavascriptTest("TrCheckFormHeader", options);
+            takeScreenshot(success);
+            return success;
         }
     }
 
@@ -143,7 +143,7 @@ public class QuoteSteps extends DwpScenario {
     @OutputParameter(name = "customer")
     private CustomerDetails newCustomer;
 
-    @Then("^Form Header is \"([^\"]*)\"$")
+    @Then("^Form header is \"([^\"]*)\"$")
     public void checkFormHeader(String formHeader) throws Throwable {
         given().await()
             .pollInterval(FIVE_HUNDRED_MILLISECONDS)
@@ -163,7 +163,7 @@ public class QuoteSteps extends DwpScenario {
             is(true));
     }
 
-    @And("^Customer Address is$")
+    @And("^Customer address is$")
     public void initCustomerAddress(final DataTable address) throws Throwable {
         List<CustomerAddress> list = address.asList(CustomerAddress.class);
         CustomerAddress cuatomerAddress = list.get(0);
@@ -181,9 +181,12 @@ public class QuoteSteps extends DwpScenario {
     public void selectPackage(String packaqe) throws Throwable {
         TariffTable tariff = new TariffTable();
         tariff.setPackageName(packaqe);
-        SelectPackageAndFuelTypePage selectPackageAndFuelTypeView = new SelectPackageAndFuelTypePage(webDriver);
+        PackageAndFuelTypeSelectionPage selectPackageAndFuelTypeView = new PackageAndFuelTypeSelectionPage(webDriver);
         selectPackageAndFuelTypeView.setTariffData(tariff);
-        selectPackageAndFuelTypeView.fillInFormData();
+        boolean success = selectPackageAndFuelTypeView.fillInFormData();
+        assertThat(String.format("Failure when selecting the package %s.", packaqe),
+            success,
+            is(true));
     }
 
     @And("^Checkbox \"([^\"]*)\" is ([^\"]*)$")
@@ -200,7 +203,7 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^Package and Fuel Type is confirmed$")
     public void confirmPackageAndFuelType() throws Throwable {
-        SelectPackageAndFuelTypePage selectPackageAndFuelTypeView = new SelectPackageAndFuelTypePage(webDriver);
+        PackageAndFuelTypeSelectionPage selectPackageAndFuelTypeView = new PackageAndFuelTypeSelectionPage(webDriver);
         selectPackageAndFuelTypeView.next();
     }
 
@@ -233,6 +236,17 @@ public class QuoteSteps extends DwpScenario {
         connectionDetailsView.toggleMeter(productType, meterState);
     }
 
+    @And("^([^\"]*) market mock test is ([^\"]*)$")
+    public void setMarketMockTest(final ProductType productType, final CheckBoxState state) throws Throwable {
+        ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage(webDriver);
+        given().await()
+            .ignoreExceptions()
+            .pollInterval(FIVE_HUNDRED_MILLISECONDS)
+            .pollDelay(ONE_HUNDRED_MILLISECONDS)
+            .atMost(new Duration(10, SECONDS)).until(()->connectionDetailsView.isNextButtonEnabled());
+        connectionDetailsView.toggleMarketMockTest(productType, state);
+    }
+
     @And("^Connection details are confirmed$")
     public void confirmConnection() throws Throwable {
         ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage(webDriver);
@@ -255,7 +269,7 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^Quote is signed in ([^\"]*)$")
     public void submitSignedQuote(String location) throws Throwable {
-        String path = ResourceUtils.toPath("/data/dwp/customer-signature.pdf");
+        String path = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
         File document = new File(path);
         assertThat("File at path " + document.getAbsolutePath() + " doesn't exist.", true,
             is(document.exists()));
@@ -291,7 +305,7 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
+    @After("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void tearDown() throws Exception {
         super.tearDown();
     }

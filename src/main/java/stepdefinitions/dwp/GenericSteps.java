@@ -4,24 +4,23 @@ import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.roles.UserRoles;
 import com.essent.testing.dwp.pageobject.Window;
+import com.essent.testing.dwp.pageobject.impl.modal.login.LoginAction;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import org.springframework.test.context.ContextConfiguration;
-import stepdefinitions.dwp.login.LoginAction;
 
-import static com.essent.testing.dwp.DwpConstant.BASE_URL;
 import static org.junit.Assert.assertNotNull;
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 public class GenericSteps extends DwpScenario {
 
-    @Before("@QUOTE, @QUOTE_MI, @QUOTE_SS, @SMOKE, @B2B_REGRESSION")
+    @Before("@QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @SMOKE, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
         setUpWebDriver();
-        isDwpRunning(BASE_URL);
+        isDwpRunning();
     }
 
     @Given("^I logged in to DWP as ([^\"]*)$")
@@ -42,12 +41,12 @@ public class GenericSteps extends DwpScenario {
     }
 
 
-    @After({"@QUOTE, @QUOTE_MI, @QUOTE_SS, @SMOKE, @B2B_REGRESSION"})
+    @After({"@QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @SMOKE, @B2B_REGRESSION"})
     public void tearDown() throws Exception {
         tidyUp();
     }
 
-    @After({"@QUOTE, @QUOTE_MI, @QUOTE_SS, @SMOKE"})
+    @After({"@QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @SMOKE"})
     public void failedScenario(Scenario scenario) throws Exception {
         if (scenario.isFailed()) {
             logger().error("The scenario '" + scenario.getName() + "' failed");

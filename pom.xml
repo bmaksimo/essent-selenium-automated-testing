@@ -39,6 +39,7 @@
     <essent.project.version>${project.version}</essent.project.version>
 
     <!-- Essent dependencies -->
+    <jbilling.client.version>2.53.0-SNAPSHOT</jbilling.client.version>
 
     <!-- Dependency versions. -->
     <awaitility.version>3.1.1</awaitility.version>
@@ -80,6 +81,11 @@
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>com.essent.be</groupId>
+        <artifactId>jbilling.client</artifactId>
+        <version>${jbilling.client.version}</version>
+      </dependency>
       <dependency>
         <groupId>org.awaitility</groupId>
         <artifactId>awaitility</artifactId>
@@ -320,6 +326,10 @@
         number PROPERTY needs to be added. **** -->
   <!-- ************************************************************************************************************ -->
   <dependencies>
+    <dependency>
+      <groupId>com.essent.be</groupId>
+      <artifactId>jbilling.client</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.awaitility</groupId>
       <artifactId>awaitility</artifactId>
