@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.impl.Navigation;
+package com.essent.testing.dwp.pageobject.impl.navigation;
 
 import com.essent.testing.dwp.pageobject.Component;
 import com.essent.testing.selenium.SeleniumDriver;
@@ -11,30 +11,28 @@ public class DwpPlusMenu extends Component {
         super(seleniumDriver);
     }
 
-    public WebElement plusIcon() {
+    private WebElement plusIcon() {
         return seleniumDriver.findElementWhenVisible(By.xpath("//a[@name='Plus Menu']"));
     }
 
-    public void clickOnplusIcon() throws InterruptedException {
+
+    public void clickOnplusIcon()  {
         seleniumDriver.waitAndClick(plusIcon());
     }
 
-    public WebElement plusElement(String element) {
+    private WebElement plusElement(String element) {
         return seleniumDriver.findElementWhenVisible(By.xpath("//span[contains(text(),'"+element+"')]"));
-
     }
 
-    public void clickplusElement(String element) throws InterruptedException {
+    public void clickplusElement(String element)  {
         seleniumDriver.waitAndClick(plusElement(element));
     }
 
-
-
-    public WebElement serviceElemet(String key) {
+    private WebElement serviceElemet(String key) {
         return seleniumDriver.findElementWhenVisible(By.xpath("//span[contains(text(),'"+key+"')]"));
     }
 
-    public void clickServiceElemet(String key) throws InterruptedException {
+    public void clickServiceElemet(String key)  {
         seleniumDriver.waitAndClick(serviceElemet(key));
     }
 }

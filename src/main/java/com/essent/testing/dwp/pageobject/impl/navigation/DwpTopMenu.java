@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.impl.Navigation;
+package com.essent.testing.dwp.pageobject.impl.navigation;
 
 import com.essent.testing.dwp.pageobject.Component;
 import com.essent.testing.selenium.SeleniumDriver;
@@ -13,12 +13,11 @@ public class DwpTopMenu extends Component {
         super(seleniumDriver);
     }
 
-    public WebElement topMenu(String label) {
+    private WebElement topMenu(String label) {
         return seleniumDriver.findElementWhenVisible(By.xpath("//sub-menu-link[@label='" + label + "']//a"));
     }
 
-    public void clickTopMenu(String label) throws InterruptedException {
+    public void clickTopMenu(String label) {
         seleniumDriver.waitAndClick(topMenu(label));
     }
-
 }

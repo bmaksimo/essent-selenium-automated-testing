@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.impl.Navigation;
+package com.essent.testing.dwp.pageobject.impl.navigation;
 
 import com.essent.testing.dwp.pageobject.Component;
 import com.essent.testing.selenium.SeleniumDriver;
@@ -11,11 +11,11 @@ public class DwpLeftMenu extends Component {
         super(seleniumDriver);
     }
 
-    public  WebElement leftElement(String element) throws InterruptedException {
-        return seleniumDriver.findElementWhenVisible(By.xpath("//main-menu-link[@name='"+element+"']//a"));
+    private  WebElement leftElement(String element)  {
+        return seleniumDriver.findElementWhenVisible(By.xpath("//main-menu-link[@name='" + element + "']//a"));
     }
 
-    public void clickOnLeftElemet(String element) throws InterruptedException{
+    public void clickOnLeftElemet(String element) {
         seleniumDriver.waitAndClick(leftElement(element));
     }
 }

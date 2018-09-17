@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.impl;
+package com.essent.testing.dwp.pageobject.impl.filter;
 
 import com.essent.testing.dwp.pageobject.Component;
 import com.essent.testing.selenium.SeleniumDriver;
@@ -25,15 +25,15 @@ public class DwpFilter extends Component {
         return seleniumDriver.findElementWhenVisible(By.className("list__row"));
     }
 
-    public void enterAccountId(String accountNumber) throws InterruptedException {
+    public void enterAccountId(String accountNumber)  {
         seleniumDriver.waitAndSendKeys(searchByAccountNumberField(), accountNumber);
     }
 
-    public WebElement accountWithAppropriateId(String accountId) throws InterruptedException {
+    public WebElement accountWithAppropriateId(String accountId)  {
         return seleniumDriver.findElementWhenVisible(By.xpath("//*[contains(text(),'" + accountId + "')]"));
     }
 
-    public void clickOnAccountWithAppropriateId(String accountId) throws InterruptedException {
+    public void clickOnAccountWithAppropriateId(String accountId)  {
         seleniumDriver.waitAndClick(accountWithAppropriateId(accountId));
     }
 
@@ -41,7 +41,7 @@ public class DwpFilter extends Component {
         return seleniumDriver.findElementWhenVisible(By.className("icon-filters"));
     }
 
-    public void clickOnFilterButton() throws InterruptedException {
+    public void clickOnFilterButton()  {
         seleniumDriver.waitAndClick(filterButton());
     }
 
@@ -49,7 +49,7 @@ public class DwpFilter extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath("//input[@type='search']"));
     }
 
-    public void searchForAppropriateUser(String newNameOfDuplicatedUser) throws InterruptedException {
+    public void searchForAppropriateUser(String newNameOfDuplicatedUser)  {
         seleniumDriver.waitAndSendKeys(searchField(), newNameOfDuplicatedUser);
         searchField().sendKeys(Keys.ENTER);
     }
@@ -58,7 +58,7 @@ public class DwpFilter extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath("//h5"));
     }
 
-    public void clickOnFirstResultOfTheSearch() throws InterruptedException {
+    public void clickOnFirstResultOfTheSearch()  {
         seleniumDriver.waitAndClick(firstResultOfTheSearch());
     }
 
@@ -70,7 +70,7 @@ public class DwpFilter extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath("(//*[@text='"+key+"'])[1]")); //key=B2B Prospect
     }
 
-    public void ClickOnContractsLink() throws InterruptedException {
+    public void ClickOnContractsLink()  {
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("contract-list-link")));
     }
 }

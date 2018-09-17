@@ -1,6 +1,6 @@
 package stepdefinitions.dwp.b2b;
 
-import com.essent.testing.dwp.pageobject.impl.DwpFilter;
+import com.essent.testing.dwp.pageobject.impl.filter.DwpFilter;
 
 import org.junit.Assert;
 import org.springframework.test.context.ContextConfiguration;

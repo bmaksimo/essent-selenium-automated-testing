@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.impl.Page;
+package com.essent.testing.dwp.pageobject.impl.page;
 
 import com.essent.testing.dwp.pageobject.Component;
 import com.essent.testing.selenium.SeleniumDriver;
@@ -16,7 +16,7 @@ public class DwpServicePage extends Component {
         return seleniumDriver.findElementWhenVisible(By.id("cases-name-field"));
     }
 
-    public void clickOnSubjectDropdownMenu() throws InterruptedException {
+    public void clickOnSubjectDropdownMenu()  {
         seleniumDriver.waitAndClick(subjectDropdownMenu());
     }
 
@@ -24,7 +24,7 @@ public class DwpServicePage extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath("//option[@label='Afrekeningsfactuur']"));
     }
 
-    public void clickOnSettlementInvoiceDropdownOption() throws InterruptedException {
+    public void clickOnSettlementInvoiceDropdownOption()  {
         seleniumDriver.waitAndClick(settlementInvoiceDropdownOption());
     }
 
@@ -32,7 +32,7 @@ public class DwpServicePage extends Component {
         return seleniumDriver.findElementWhenVisible(By.id("cases-description-field"));
     }
 
-    public void enterComplaintText(String string) throws InterruptedException {
+    public void enterComplaintText(String string)  {
         seleniumDriver.waitAndSendKeys(decriptionField(),string);
     }
 
@@ -40,19 +40,19 @@ public class DwpServicePage extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath("//button[contains(text(),'Opslaan')]"));
     }
 
-    public void clickOnSaveButton() throws InterruptedException {
+    public void clickOnSaveButton()  {
          seleniumDriver.waitAndClick(saveButton());
     }
 
-    public WebElement firstCaseInTheList() throws InterruptedException {
+    public WebElement firstCaseInTheList()  {
           return seleniumDriver.findElementWhenVisible(By.xpath("(//h5)[1]"));
     }
 
-    public void clickOnFirstCaseInTheList() throws InterruptedException {
+    public void clickOnFirstCaseInTheList()  {
         seleniumDriver.waitAndClick(firstCaseInTheList());
     }
 
-    public WebElement caseDetailsheader() throws InterruptedException {
+    public WebElement caseDetailsheader()  {
         return seleniumDriver.findElementWhenVisible(By.xpath("//*[contains(text(),' Case Details ')]"));
     }
 
@@ -68,7 +68,7 @@ public class DwpServicePage extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath("//span[contains(text(),'DESCRIBE THE SOLUTION')]"));
     }
 
-    public void clickOnDescribeTheSolutionDropdown() throws InterruptedException {
+    public void clickOnDescribeTheSolutionDropdown()  {
          seleniumDriver.waitAndClick(describeTheSolutionDropdown());
     }
 
@@ -76,7 +76,7 @@ public class DwpServicePage extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath("//span[contains(text(),'Duplicate account')]"));
     }
 
-    public void clickOnDuplicateAccountOption() throws InterruptedException {
+    public void clickOnDuplicateAccountOption()  {
          seleniumDriver.waitAndClick(duplicateAccountOption());
     }
 
@@ -84,12 +84,12 @@ public class DwpServicePage extends Component {
         return seleniumDriver.findElementWhenVisible(By.id("name-field"));
     }
 
-    public void enterNewNameForDuplicatedCustomer(String newName) throws InterruptedException {
+    public void enterNewNameForDuplicatedCustomer(String newName)  {
         seleniumDriver.waitAndSendKeys(duplicateAccountEnterNewNameField(),newName);
 
     }
 
-    public void clickOnConfirmButtonOnDuplicateAccountForm() throws InterruptedException {
+    public void clickOnConfirmButtonOnDuplicateAccountForm()  {
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("confirm-button")));
     }
 

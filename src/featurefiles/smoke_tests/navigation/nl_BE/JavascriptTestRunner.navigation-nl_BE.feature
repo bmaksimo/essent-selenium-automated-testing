@@ -1,0 +1,11 @@
+@_B2B_REGRESSION
+Feature: Javascript DWP testing
+
+    Background:
+        Given I logged in to DWP as contracting.testautomation.b2c@essent.be
+
+    Scenario: We can access the main gui elements
+        When Left menu is contracting-switching
+        And Top menu item is Marktberichten
+        Then View list header is "Marktberichten" appears within 25 seconds
+        And  Plus Menu is "Switching -> Marktbericht Taken"

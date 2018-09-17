@@ -1,5 +1,7 @@
 package stepdefinitions.dwp.menu;
 
+import com.essent.testing.dwp.pageobject.impl.navigation.DwpLeftMenu;
+import com.essent.testing.dwp.pageobject.impl.navigation.DwpTopMenu;
 import cucumber.api.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -57,25 +59,18 @@ public class MenuElements extends NavigationElements {
             + StringUtils.join(failedUpperItems, ", "), failedUpperItems.isEmpty(), is(true));
     }
 
-    @When("^Left menu is ([^\"]*)$")
-    public void clickLeftMenuItem(String tabName) throws Throwable {
-        super.visitLeftMenuItem(tabName);
-    }
-
     @When("^Top menu item is ([^\"]*)$")
     public void clickTopMenuItem(String tabName) throws Throwable {
-        super.visitTopMenuItem(tabName);
+        DwpTopMenu tm = new DwpTopMenu(webDriver);
+        tm.clickTopMenu(tabName);
     }
 
-    @When("^Left Tab is ([^\"]*)$")
-    public void check_left_menu_item(String itemName) throws Throwable {
-        clickLeftMenuItem(itemName);
+    @When("^Left menu is ([^\"]*)$")
+    public void clickLeftMenuItem(String tabName) throws Throwable {
+        DwpLeftMenu lm = new DwpLeftMenu(webDriver);
+        lm.clickOnLeftElemet(tabName.toLowerCase());
     }
 
-    @When("^Top Tab is ([^\"]*)$")
-    public void check_top_menu_item(String itemName) throws Throwable {
-        clickTopMenuItem(itemName);
-    }
 
     @And("^The following Plus menu items are available at positions:$")
     public void checkPositionsOfPlusMenuItems(DataTable plusItems) throws Throwable {

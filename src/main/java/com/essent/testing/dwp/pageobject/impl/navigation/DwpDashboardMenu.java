@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.impl.Navigation;
+package com.essent.testing.dwp.pageobject.impl.navigation;
 
 import com.essent.testing.dwp.pageobject.Component;
 import com.essent.testing.selenium.SeleniumDriver;

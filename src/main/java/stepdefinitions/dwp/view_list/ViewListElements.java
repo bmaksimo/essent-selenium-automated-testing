@@ -268,6 +268,18 @@ public class ViewListElements extends NavigationElements {
             success, is(true));
     }
 
+    @When("^View list is not empty within (\\d+) seconds?$")
+    public void checkViewListIsNotEmpty(int seconds) throws Throwable {
+        given().await()
+            .pollInterval(FIVE_HUNDRED_MILLISECONDS)
+            .pollDelay(TWO_SECONDS)
+            .atMost(new Duration(seconds, SECONDS)).until(()-> {
+            ViewListModel viewListModel = new ViewListModel();
+            DefaultTableModel viewTableModel = viewListModel.getViewTableModel();
+            return viewTableModel.getRowCount() > 0;
+        });
+    }
+
     @When("^Click on link in \"([^\"]*)\" View List at ([^\"]*) row and \"([^\"]*)\" column$")
     public void clickOnSuppliedViewListAtRowAndColumn(String viewListName, String ordinal, String column) throws Throwable {
         String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
@@ -334,7 +346,7 @@ public class ViewListElements extends NavigationElements {
         textInputParameters.put(key, numericValue);
     }
 
-    @And("^([^\"]*) List element has updated cell value at column \"([^\"]*)\"$")
+    @And("^([^\"]*) List element has up1dated cell value at column \"([^\"]*)\"$")
     public void listSwitchedPaymentMethod(String ordinal, String columnName) throws Throwable {
         int row = extractNumericValue(ordinal);
         String updatedPaymentMethodName = (String) SharedPropertiesSingleton.getInstance().getSharedProperties().get("paymentMethod");
@@ -355,6 +367,7 @@ public class ViewListElements extends NavigationElements {
         assertThat(message,
             success, is(true));
     }
+
     @And("^Plus actions at ([^\"]*) list row having cell value \"([^\"]*)\" at column \"([^\"]*)\" are open$")
     public void openPlusActions(String ordinal, String value, String columnName) throws Throwable {
         int row = extractNumericValue(ordinal);
