@@ -18,6 +18,7 @@ public abstract class Component {
 
     protected WebElement element;
 
+
     protected SeleniumDriver seleniumDriver;
 
     private final Logger logger = Logger.getLogger(Component.class);
@@ -45,6 +46,13 @@ public abstract class Component {
         this.seleniumDriver = seleniumDriver;
     }
 
+    public boolean executeJavascriptTest(String registeredJsClass, Object options) {
+        return seleniumDriver.executeJavascriptTest(registeredJsClass, options);
+    }
+
+    public WebElement findElementWhenVisible(By selector) {
+        return seleniumDriver.findElementWhenVisible(selector);
+    }
 
     protected Model.Execution createExecution() {
         return AutocratExecutionAdapter.newExecution();
