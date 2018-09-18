@@ -60,6 +60,8 @@ public class ContractB2BScenario extends DwpScenario {
 			logger.error("Creation of B2B contract failed", e);
 			Assert.fail("Creation of B2B contract failed: " + e.getMessage());
 		}
+		
+		logger.info("ACCOUNT NUMBER: " + accountNumber);
 
 		return accountNumber;
 	}

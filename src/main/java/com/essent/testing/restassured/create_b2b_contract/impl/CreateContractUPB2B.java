@@ -1,74 +1,58 @@
 package com.essent.testing.restassured.create_b2b_contract.impl;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import org.apache.log4j.Logger;
 
 import com.essent.testing.restassured.create_b2b_contract.CreateQuoteB2B;
 import com.essent.testing.restassured.create_b2b_contract.CreateQuoteB2BBase;
-import com.essent.testing.restassured.create_b2b_contract.constants.ApiPaths;
-import com.essent.testing.restassured.create_b2b_contract.constants.Constants;
+import com.essent.testing.restassured.create_b2b_contract.constants.ApiPathsContractB2B;
+import com.essent.testing.restassured.create_b2b_contract.constants.ConstantsContractB2B;
 import com.essent.testing.restassured.create_b2b_contract.constants.ContractStatus;
+import com.essent.testing.restassured.create_b2b_contract.helper.PrepareDataForB2BContract;
 
 public class CreateContractUPB2B extends CreateQuoteB2BBase implements CreateQuoteB2B{
+	
+	private static final Logger logger = Logger.getLogger(CreateContractUPB2B.class);
 
-	public CreateContractUPB2B() {
+	public CreateContractUPB2B() throws FileNotFoundException, IOException{
 		super();
 		
-		pricingDate = "2016-11-01 12:22:00";
-		priceValidUntilDate = "2016-11-02 12:22:00";
-		signatureReceivedDate = "2016-11-01 12:22:00";
-		
-		// This address params are located in src/test/resources/data/contract_b2b/address_b2b/adress_b2B.XLSX
-		addressNumber = "325";
-		addressStreet = "Diksmuidsesteenweg";
-		addressPostalCode = "8800";
-		addressCity = "Roeselare";
-		
-		
-		// This is address from SOAPUI
-		//addressNumber = "118805";
-		//addressStreet = "Stadsvest";
-		//addressPostalCode = "3012";
-		//addressCity = "WILSELE";
-		
-		// This date is from SOAPUI. 
-		// Each time new contract is created this date should be incremented by 1, and
-		// normally a customer switch can only be sent 30 days in the future or in the past. On devint01 we do not have this validation, for UAT* I do not know
-		
-		//Contract 1: I should set some date in file: create_quote_b2b_up.json. Once I started with creation of new contract, I should read upStartDate from file, and increment by 1, and so on
-		upStartDate = "2015-11-01";  // For this UP product: upStartDate can be only in this range: 02/10/2015 - 01/11/2015!!!!!!!!!!!!
-		upEndDate = "2018-10-31";
-		
-		// This ean should be any from src/test/resources/data/contract_b2b/address_b2b/adress_b2B.XLSX which correspond appropriate address
-		ean_c = "541448810000084849";
-		
-		paymentMethod = "DOM"; // DOM or OV
-		legalCommunicationBy = "POST"; //POST or EMAIL
+		getQuoteProperties(ConstantsContractB2B.PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_B2B_UP);
 	}
 	
 	@Override
-	public void setPreconditions(String accountName, String upStartDate) throws Exception{
-		super.setPreconditions(accountName, upStartDate);
+	public void setPreconditions(String accountName, String contractStartDate, String contractEndDate) throws Exception{
+		logger.info("Set preconditions before starting: " + this.getClass().getSimpleName());
+		super.setPreconditions(accountName, contractStartDate, contractEndDate);
+		logger.info("Set preconditions after starting: " + this.getClass().getSimpleName() + " - PASSED");
 	}
 	
 	@Override
 	public String createContractB2B() throws Exception {
-		setPreconditions(Constants.ACCOUNT_NAME_PREFIX_UP_B2B, upStartDate);
+		
+		logger.info("createContractB2B: " + this.getClass().getSimpleName());
+		
+		setPreconditions(ConstantsContractB2B.ACCOUNT_NAME_PREFIX_UP_B2B, upStartDate, PrepareDataForB2BContract.getTodayDate());
 		login();
-		createQuoteB2B(Constants.PATH_TO_JSON_FILES_QUOTE_UP_B2B, Constants.PATH_TO_JSON_FILES_CREATE_QUOTE_B2B_UP, ApiPaths.API_CREATE_QUOTE_B2B_TC2_UP);
-		verifyQuoteStatus(Constants.PATH_TO_JSON_FILES_QUOTE_UP_B2B, Constants.PRICED_EN.toUpperCase(), Constants.ACCEPTED_EN.toUpperCase());
-		sendToCustomer(Constants.PATH_TO_JSON_FILES_QUOTE_UP_B2B);
-		verifyQuoteStatus(Constants.PATH_TO_JSON_FILES_QUOTE_UP_B2B, Constants.SENT_TO_CUSTOMER_EN.toUpperCase(), Constants.ACCEPTED_EN.toUpperCase());
-		signatureReceived(Constants.PATH_TO_JSON_FILES_QUOTE_UP_B2B, pricingDate, priceValidUntilDate, signatureReceivedDate);
-		verifyQuoteStatus(Constants.PATH_TO_JSON_FILES_QUOTE_UP_B2B, Constants.SIGNATURE_RECEIVED_EN.toUpperCase(), Constants.ACCEPTED_EN.toUpperCase());
-		confirmSigning(Constants.PATH_TO_JSON_FILES_QUOTE_UP_B2B, Constants.PATH_TO_JSON_FILES_SIGN_QUOTE_MODAL_TC2_UP, ApiPaths.API_SIGN_QUOTE_MODAL_TC2_UP);
-		signMandatePaper(Constants.PATH_TO_JSON_FILES_QUOTE_UP_B2B);
-		verifyContractCreated(Constants.PATH_TO_JSON_FILES_QUOTE_UP_B2B, Constants.SIGNED_EN.toUpperCase(), Constants.ACCEPTED_EN.toUpperCase());
+		createQuoteB2B(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_UP_B2B, ConstantsContractB2B.PATH_TO_JSON_FILES_CREATE_QUOTE_B2B_UP, ApiPathsContractB2B.API_CREATE_QUOTE_B2B_TC2_UP);
+		verifyQuoteStatus(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_UP_B2B, ConstantsContractB2B.PRICED_EN.toUpperCase(), ConstantsContractB2B.ACCEPTED_EN.toUpperCase());
+		sendToCustomer(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_UP_B2B);
+		verifyQuoteStatus(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_UP_B2B, ConstantsContractB2B.SENT_TO_CUSTOMER_EN.toUpperCase(), ConstantsContractB2B.ACCEPTED_EN.toUpperCase());
+		signatureReceived(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_UP_B2B, pricingDate, priceValidUntilDate, signatureReceivedDate);
+		verifyQuoteStatus(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_UP_B2B, ConstantsContractB2B.SIGNATURE_RECEIVED_EN.toUpperCase(), ConstantsContractB2B.ACCEPTED_EN.toUpperCase());
+		confirmSigning(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_UP_B2B, ConstantsContractB2B.PATH_TO_JSON_FILES_SIGN_QUOTE_MODAL_TC2_UP, ApiPathsContractB2B.API_SIGN_QUOTE_MODAL_TC2_UP);
+		signMandatePaper(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_UP_B2B);
+		verifyContractCreated(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_UP_B2B, ConstantsContractB2B.SIGNED_EN.toUpperCase(), ConstantsContractB2B.ACCEPTED_EN.toUpperCase());
+		
+		logger.info("createContractB2B: " + this.getClass().getSimpleName() + " - PASSED");
 		
 		//Should be checked is this should be removed or not after we start to use CREATING OF CONTRACTS from jenkins job
 		/*
-		if (numberOfAttempts < Constants.MAX_NUMBER_OF_ATTEMPTS_TO_FIND_APPROPRIATE_START_CONTRACT_DATE) {
+		if (numberOfAttempts < ConstantsContractB2B.MAX_NUMBER_OF_ATTEMPTS_TO_FIND_APPROPRIATE_START_CONTRACT_DATE) {
 			
-			ContractStatus contractStatus = checkContractIsActive(Constants.PATH_TO_JSON_FILES_QUOTE_UP_B2B);
+			ContractStatus contractStatus = checkContractIsActive(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_UP_B2B);
 			
 			switch (contractStatus) {
 				case TO_BE_ACTIVATED:
@@ -96,38 +80,51 @@ public class CreateContractUPB2B extends CreateQuoteB2BBase implements CreateQuo
 	
 	@Override
 	public ContractStatus checkContractIsActive(String path) throws Exception {
+		logger.info("checkContractIsActive: " + this.getClass().getSimpleName());
 		return super.checkContractIsActive(path);
 	}
 
 	@Override
 	public void login() {
+		logger.info("login: " + this.getClass().getSimpleName());
 		super.login();
+		logger.info("login: " + this.getClass().getSimpleName() + " - PASSED");
 	}
 	
 	@Override
 	public void createQuoteB2B(String path, String pathJsonFile, String pathApiPath) throws IOException {
+		logger.info("createQuoteB2B: " + this.getClass().getSimpleName());
 		super.createQuoteB2B(path, pathJsonFile, pathApiPath);
+		logger.info("createQuoteB2B: " + this.getClass().getSimpleName() + " - PASSED");
 	}
 
 	@Override
 	public void sendToCustomer(String path) throws IOException {
+		logger.info("sendToCustomer: " + this.getClass().getSimpleName());
 		super.sendToCustomer(path);
+		logger.info("sendToCustomer: " + this.getClass().getSimpleName() + " - PASSED");
 	}
 	
 	@Override
 	public void signatureReceived(String path, String pricingDate, String priceValidUntilDate, String signatureReceivedDate) throws IOException {
+		logger.info("signatureReceived: " + this.getClass().getSimpleName());
 		super.signatureReceived(path, pricingDate, priceValidUntilDate, signatureReceivedDate);
+		logger.info("signatureReceived: " + this.getClass().getSimpleName() + " - PASSED");
 	}
 	
 	@Override
 	public void confirmSigning(String path, String pathJsonFileSignQuote, String apiPathSignQuote) throws IOException {
+		logger.info("confirmSigning: " + this.getClass().getSimpleName());
 		super.confirmSigning(path, pathJsonFileSignQuote, apiPathSignQuote);
+		logger.info("confirmSigning: " + this.getClass().getSimpleName() + " - PASSED");
 	}
 
 	// Only required if we want to have payment method: DOM
 	@Override
 	public void signMandatePaper(String path) throws IOException {
+		logger.info("signMandatePaper: " + this.getClass().getSimpleName());
 		super.signMandatePaper(path);
+		logger.info("signMandatePaper: " + this.getClass().getSimpleName() + " - PASSED");
 	}
 	
 }

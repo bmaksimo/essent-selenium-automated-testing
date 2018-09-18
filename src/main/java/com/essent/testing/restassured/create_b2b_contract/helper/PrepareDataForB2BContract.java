@@ -19,9 +19,9 @@ import org.apache.commons.io.FileUtils;
 import org.iban4j.CountryCode;
 import org.iban4j.Iban;
 
-public final class PrepareDataForQuote {
+public final class PrepareDataForB2BContract {
 	
-	private PrepareDataForQuote() {
+	private PrepareDataForB2BContract() {
 		
 	}
 	
@@ -123,6 +123,10 @@ public final class PrepareDataForQuote {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		return dateFormat.format(date);
 
+	}
+	
+	public static String getRandomAddressNumber() {
+		return "1" + (long)(Math.random()*(99999-10000)+10000);
 	}
 	
 	public static String generateStringFromResource(String path) throws IOException {

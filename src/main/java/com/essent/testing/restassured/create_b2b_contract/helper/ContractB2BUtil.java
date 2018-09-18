@@ -1,5 +1,11 @@
 package com.essent.testing.restassured.create_b2b_contract.helper;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import com.essent.testing.restassured.create_b2b_contract.constants.ContractStatus;
@@ -10,7 +16,7 @@ import io.restassured.http.Cookies;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
-public class ContractUtil {
+public class ContractB2BUtil {
 	
 	public static String waitUntilStringFoundInResponse(Cookies cookie, String apiPath, String payload, ContractStatus findMe, String jsonPathFromResponse, int TIMEOUT) throws Exception {
 	    String contractStatus = "";
@@ -37,6 +43,19 @@ public class ContractUtil {
 	        }
 	    }
 	    return contractStatus;
+	}
+	
+	public static Properties loadProperties(String path) throws FileNotFoundException, IOException{
+		
+		Properties properties = new Properties();
+		
+		File file = new File(path);
+		FileInputStream fileInput = new FileInputStream(file);
+		
+		properties.load(fileInput);
+		fileInput.close();
+			
+		return properties;
 	}
 	
 }

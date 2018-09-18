@@ -4,7 +4,7 @@ import com.essent.testing.restassured.create_b2b_contract.constants.ContractStat
 
 public interface CreateQuoteB2B {
 	
-	public void setPreconditions(String accountName, String upStartDate) throws Exception;
+	public void setPreconditions(String accountName, String contractStartDate, String contractEndDate) throws Exception;
 	
 	public void login();
 	

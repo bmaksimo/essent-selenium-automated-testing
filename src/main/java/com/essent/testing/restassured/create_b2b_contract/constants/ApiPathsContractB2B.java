@@ -3,7 +3,7 @@ package com.essent.testing.restassured.create_b2b_contract.constants;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 
-public class ApiPaths {
+public class ApiPathsContractB2B {
 	
 	public static final String CRM_ROOT_API = ConfigProvider.getProperty(ConfigKey.CRM_ROOT_API);
 

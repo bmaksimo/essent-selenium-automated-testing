@@ -7,14 +7,17 @@ import org.junit.Assert;
 
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
-import com.essent.testing.restassured.create_b2b_contract.constants.Constants;
-import com.jcraft.jsch.*;
+import com.essent.testing.restassured.create_b2b_contract.constants.ConstantsContractB2B;
+import com.jcraft.jsch.Channel;
+import com.jcraft.jsch.ChannelSftp;
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.Session;
+import com.jcraft.jsch.SftpException;
 
-import stepdefinitions.dwp.contracts.b2b.ContractB2BScenario;
-
-public class UploadB2BPrices {
+public class UploadB2BContractPrices {
 	
-	private static final Logger logger = Logger.getLogger(UploadB2BPrices.class);
+	private static final Logger logger = Logger.getLogger(UploadB2BContractPrices.class);
 
 	private static final String ftpDomain = ConfigProvider.getProperty(ConfigKey.ENVIRONMENT) + "-sftp.nova.essent.be";
 	
@@ -43,13 +46,13 @@ public class UploadB2BPrices {
 			channel = session.openChannel("sftp");
 			channel.connect();
 			ChannelSftp sftp = (ChannelSftp) channel;
-			File directory = new File(Constants.PATH_TO_PRICES);
+			File directory = new File(ConstantsContractB2B.PATH_TO_PRICES);
 
 			File[] files = directory.listFiles();
 			
 			// for each file in the directory
 			for (int i = 0; i < files.length; i++) {
-				String localfilelocation = Constants.PATH_TO_PRICES + "//" + files[i].getName();
+				String localfilelocation = ConstantsContractB2B.PATH_TO_PRICES + "//" + files[i].getName();
 				sftp.put(localfilelocation, remoteFileLocation);
 			}
 
