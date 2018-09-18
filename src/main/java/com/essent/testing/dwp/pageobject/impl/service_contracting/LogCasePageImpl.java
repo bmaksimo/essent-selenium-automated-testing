@@ -22,7 +22,7 @@ import static org.awaitility.Duration.ONE_SECOND;
 public class LogCasePageImpl extends Component implements Form, LogCasePage {
 
 
-    String BUTTON_SELECTOR_TEMPLATE                  = "//div[@class='form__footer']/button[normalize-space(text()) = '${text}']";
+    private static final String BUTTON_SELECTOR_TEMPLATE                  = "//div[@class='form__footer']/button[normalize-space(text()) = '${text}']";
 
     private String subject;
 
@@ -45,42 +45,29 @@ public class LogCasePageImpl extends Component implements Form, LogCasePage {
         String questionQuestionElement =  "element.question.question";
         String solutionSolutionElement =  "element.solution.solution";
 
-        Model.Execution execution = newExecution().element(specificationsSubjectElement, new Model.Element()
-             .search("SELECTOR")
-             .query("#cases-name-field"));
+        Model.Execution execution = newExecution();
 
-        execution.element(specificationsPriorityElement, new Model.Element()
-            .search("SELECTOR")
-            .query("#cases-priority-field"));
+            execution
+            .element(specificationsSubjectElement, createElement("SELECTOR", "#cases-name-field"))
+            .element(specificationsPriorityElement, createElement("SELECTOR", "#cases-priority-field"))
+            .element(questionQuestionElement, createElement("SELECTOR", "#cases-description-field"))
+            .element(solutionSolutionElement, createElement("SELECTOR", "#cases-resolution-field"))
 
+            .flow()
+            .step(createStep(SELECT).element(specificationsSubjectElement).value(subject))
+            .step(createStep(SLEEP).sleepInMillis(500))
 
-        execution.element(questionQuestionElement, new Model.Element()
-            .search("SELECTOR")
-            .query("#cases-description-field"));
+            .step(createStep(SELECT).element(specificationsPriorityElement).value(priority))
+            .step(createStep(SLEEP).sleepInMillis(500))
 
-
-
-        execution.element(solutionSolutionElement, new Model.Element()
-            .search("SELECTOR")
-            .query("#cases-resolution-field"));
-
-        execution.flow()
-            .step(((new Model.Step().action(SELECT).element(specificationsSubjectElement))).value(subject))
-            .step(new Model.Step().action(Action.SLEEP).sleepInMillis(500))
-
-            .step(((new Model.Step().action(SELECT).element(specificationsPriorityElement))).value(priority))
-            .step(new Model.Step().action(Action.SLEEP).sleepInMillis(500))
-
-            .step((new Model.Step().action(CLICK).element(questionQuestionElement)))
-            .step(new Model.Step().action(Action.SLEEP).sleepInMillis(500))
-            .step(((new Model.Step().action(TYPING).element(questionQuestionElement))).value(description))
-            .step(new Model.Step().action(Action.SLEEP).sleepInMillis(500))
-            .step((new Model.Step().action(ACCESS).element(solutionSolutionElement).callback(
-                srollToView()
-            )))
-            .step(new Model.Step().action(Action.SLEEP).sleepInMillis(500))
-            .step(((new Model.Step().action(TYPING).element(solutionSolutionElement))).value(solution))
-            .step(new Model.Step().action(Action.SLEEP).sleepInMillis(500));
+            .step(createStep(CLICK).element(questionQuestionElement))
+            .step(createStep(SLEEP).sleepInMillis(500))
+            .step(createStep(TYPING).element(questionQuestionElement).value(description))
+            .step(createStep(SLEEP).sleepInMillis(500))
+            .step(createStep(ACCESS).element(solutionSolutionElement).callback(srollToView()))
+            .step(createStep(SLEEP).sleepInMillis(500))
+            .step(createStep(TYPING).element(solutionSolutionElement).value(solution))
+            .step(createStep(SLEEP).sleepInMillis(500));
 
         return execute(execution);
     }

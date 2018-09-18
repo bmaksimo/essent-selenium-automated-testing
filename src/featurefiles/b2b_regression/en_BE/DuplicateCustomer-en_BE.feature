@@ -1,4 +1,4 @@
-@_B2B_REGRESSION
+@B2B_REGRESSION
 Feature: Dwp test for duplicating customer
 
     Background:

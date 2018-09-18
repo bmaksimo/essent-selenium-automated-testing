@@ -64,6 +64,11 @@ public abstract class Component {
     protected Model.Step createStep(Action action) {
         return new Model.Step().action(action);
     }
+    protected Model.Element createElement(String searchType, String query) {
+        return new Model.Element()
+            .search(searchType)
+            .query(query);
+    }
 
     protected boolean execute(final Model.Execution execution) {
         return AutocratExecutionAdapter.execute(seleniumDriver.getDriver(), execution);

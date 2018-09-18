@@ -1,4 +1,4 @@
-@_B2B_REGRESSION
+@B2B_REGRESSION
 Feature: End of contract for bankruptcy
 
     Background:
