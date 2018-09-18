@@ -2,15 +2,25 @@
 Feature: Log questions of customers
 
     Background:
-        Given   I logged in to DWP as businessdesk.testautomation.b2b@essent.be
+        Given  I logged in to DWP as businessdesk.testautomation.b2b@essent.be
 
     Scenario:
         When Left menu is Sales-marketing
         And  Top menu item is Klanten
         Then View list header is "Klanten" appears within 25 seconds
 
-        When b2b Account is selected by using "Klantnummer" in filter
-        And b2b Plus menu is "Service"
-        And b2b "Case aanmaken voor de klant" is selected in Service
-        And b2b New case for account is created
-        Then b2b Case details are visible when case is opened
+
+        When Top action is Filters
+        And "Klantnummer" input is "150638828"
+        And Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
+        #Did now work in headless mode
+        #And b2b Account is selected by using "Klantnummer" in filter
+        And Plus menu is "Service -> Case aanmaken voor de klant"
+        # Ugly synthax
+        # And b2b "Case aanmaken voor de klant" is selected in Service
+        #Did now work in headless mode
+        #And b2b New case for account is created
+        And New case for account is created
+        And View list header is "Cases" appears within 10 seconds
+        And Click on link in View List at 1st row and "Nummer & Aanmaakdatum" column polling 20 seconds
+        And Case details are visible

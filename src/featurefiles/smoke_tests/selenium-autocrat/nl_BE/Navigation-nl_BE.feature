@@ -8,4 +8,6 @@ Feature: Javascript DWP testing
         When Left menu is contracting-switching
         And Top menu item is Marktberichten
         Then View list header is "Marktberichten" appears within 25 seconds
-        And  Plus Menu is "Switching -> Marktbericht Taken"
+        
+        When Top action is Filters
+        And  Plus menu is "Switching -> Marktbericht Taken"

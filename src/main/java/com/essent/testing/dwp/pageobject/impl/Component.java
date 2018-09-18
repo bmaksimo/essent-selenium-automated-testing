@@ -5,12 +5,15 @@ import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
 import com.essent.testing.selenium.SeleniumDriver;
 import com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter;
+import org.apache.commons.text.StrSubstitutor;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.SIBLING_OVERLAYING_ICONS;
 
@@ -64,6 +67,23 @@ public abstract class Component {
 
     protected boolean execute(final Model.Execution execution) {
         return AutocratExecutionAdapter.execute(seleniumDriver.getDriver(), execution);
+    }
+
+    protected String createQuery(String template, String key, String name) {
+        Map<String, String> valuesMap = new HashMap<>();
+        valuesMap.put(key, name);
+        StrSubstitutor sub = new StrSubstitutor(valuesMap);
+        return sub.replace(template);
+    }
+
+    protected Model.Callback srollToView() {
+        return new Model.Callback() {
+            @Override
+            public void onAccess(Autocrat.ExecutionContext context, Model.Step step, WebElement element) {
+                JavascriptExecutor jsExec = (JavascriptExecutor) context.driver;
+                jsExec.executeScript("arguments[0].scrollIntoView()", element);
+            }
+        };
     }
 
     public class HideIconOverlays implements Model.Callback {

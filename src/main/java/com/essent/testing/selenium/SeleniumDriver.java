@@ -4,7 +4,6 @@ import com.billinghouse.test_automation.javascript.testrunner.JavascriptTestRunn
 import com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry;
 import com.billinghouse.test_automation.javascript.testrunner.dwp.system.Queries;
 import com.billinghouse.test_automation.javascript.testrunner.impl.SeleniumJsTestExpanderService;
-import com.billinghouse.test_automation.util.gherkin.DateTimeFormatUtil;
 import com.essent.automation.core.WebDriverWait;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
@@ -44,8 +43,8 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
-import static org.junit.Assert.fail;
 import static com.billinghouse.test_automation.util.gherkin.DateTimeFormatUtil.printPeriod;
+import static org.junit.Assert.fail;
 /**
  * This class is a wrapper around the selenium webdriver.
  *

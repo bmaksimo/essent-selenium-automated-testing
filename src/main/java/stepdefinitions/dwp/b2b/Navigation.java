@@ -1,13 +1,10 @@
 package stepdefinitions.dwp.b2b;
 
-import com.essent.testing.dwp.pageobject.impl.navigation.DwpLeftMenu;
 import com.essent.testing.dwp.pageobject.impl.navigation.DwpPlusMenu;
-import com.essent.testing.dwp.pageobject.impl.navigation.DwpTopMenu;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
-import cucumber.api.java.en.When;
 
 
 public class Navigation extends DwpScenario {
