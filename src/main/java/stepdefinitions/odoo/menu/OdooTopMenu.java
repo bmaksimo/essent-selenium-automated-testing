@@ -28,6 +28,5 @@ public class OdooTopMenu extends OdooNavigationElements {
         By xpath = By.xpath("//*[@id=\"oe_main_menu_placeholder\"]/ul[1]/li[4]/a");
         WebElement element = webDriver.findElementOrNull(xpath);
         element.click();
-
     }
 }

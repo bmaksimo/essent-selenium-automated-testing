@@ -8,3 +8,4 @@ Feature: Import a coda file
     Scenario: Create a CODA file
         When Odoo top menu is Accounting
         And Odoo left menu is Import CODA Files
+        And Odoo Import CODA File is Select
