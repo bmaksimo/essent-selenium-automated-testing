@@ -7,6 +7,7 @@ import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
+import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 public class MarketBerichtenSteps extends DwpScenario {
@@ -38,7 +39,13 @@ public class MarketBerichtenSteps extends DwpScenario {
 
     @When("^Save EAN code of customer$")
     public void saveEANCodeOfCustomer() throws Throwable {
+        webDriver.waitForRequestsToFinish();
         eanCode = baseObject.getEANCode();
         System.out.println("EAN : " + eanCode);
+    }
+
+    @Then("^Validate rejection$")
+    public void validateRejection() throws Throwable {
+
     }
 }

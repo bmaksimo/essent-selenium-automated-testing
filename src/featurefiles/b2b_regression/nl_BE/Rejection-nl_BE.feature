@@ -15,16 +15,13 @@ Feature: Dwp test for rejecting contract - nl_BE
         When "Startdatum" date is "now"
         And "Testing" turn on
         And "Market mock" turn on
-#        And Save EAN code of customer
+        And Save EAN code of customer
         Then Changes are confirmed
 
-        When Left menu is sales-marketing
         And Top menu item is Klanten
         And Top action is Filters
-        And "B2C/B2B" selection is "B2B"
-        And "Type klant" selection is "Klant"
         And "EAN-code" input is "541449611000044685"
         Then Click on link in View List at 1st row and "Klantnummer & Naam" column
 
         When Dashboard menu is Marktberichten
-
+        Then Validate rejection
