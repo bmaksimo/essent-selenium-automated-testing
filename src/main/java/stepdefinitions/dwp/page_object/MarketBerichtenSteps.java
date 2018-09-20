@@ -9,6 +9,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.openqa.selenium.By;
 
 public class MarketBerichtenSteps extends DwpScenario {
     BaseObject baseObject = new BaseObject(webDriver);
@@ -46,6 +47,7 @@ public class MarketBerichtenSteps extends DwpScenario {
 
     @Then("^Validate rejection$")
     public void validateRejection() throws Throwable {
-
+        final String time = webDriver.findElementWhenVisible(By.xpath("//tbody[@id='rows']/tr[1]/td[6]/list-simple-two-liner-cell[@icon='null']/p/span[1]")).getText();
+        System.out.println("TIME is " + time);
     }
 }
