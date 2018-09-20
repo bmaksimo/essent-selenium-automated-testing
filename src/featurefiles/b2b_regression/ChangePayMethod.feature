@@ -22,4 +22,4 @@ Feature: Change Payment Method
         When Payment method is switched
         And IBAN is NL43ABNA0978459932 if not empty
         And Payment details are confirmed
-        Then 1st List element has updated cell value at column "Betalingstermijnen & betalingswijze"
+        Then Payment method is updated

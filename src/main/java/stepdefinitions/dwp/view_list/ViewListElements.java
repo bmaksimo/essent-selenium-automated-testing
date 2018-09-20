@@ -11,6 +11,8 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.navigation.NavigationElements;
 
 import javax.swing.table.DefaultTableModel;
@@ -334,13 +336,15 @@ public class ViewListElements extends NavigationElements {
         textInputParameters.put(key, numericValue);
     }
 
-    @And("^([^\"]*) List element has updated cell value at column \"([^\"]*)\"$")
+    @And("^Payment method is updated$")
     public void listSwitchedPaymentMethod(String ordinal, String columnName) throws Throwable {
-        int row = extractNumericValue(ordinal);
         String updatedPaymentMethodName = (String) SharedPropertiesSingleton.getInstance().getSharedProperties().get("paymentMethod");
-        boolean success = new ViewListModel().containsDataAt(row, updatedPaymentMethodName, columnName);
+        final String UPDATED_PAYMENT_METHOD = "//list-simple-two-liner-cell[contains(@line-2,'" + updatedPaymentMethodName + "')]";
+
+        WebElement element = webDriver.findElementOrNull(By.xpath(UPDATED_PAYMENT_METHOD));
+
         assertThat(String.format("View list did not contain payment method %s at %s row, column '%s'", updatedPaymentMethodName, ordinal, columnName),
-            success, is(true));
+            element, is(notNullValue()));
     }
 
     @And("^Select ([^\"]*) List row having cell value ([^\"]*) at column ([^\"]*)$")
