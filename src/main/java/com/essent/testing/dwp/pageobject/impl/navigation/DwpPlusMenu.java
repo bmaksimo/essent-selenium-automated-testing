@@ -7,32 +7,26 @@ import org.openqa.selenium.WebElement;
 
 public class DwpPlusMenu extends Component {
 
+    private final static String XPATH_CONTAINS_TEXT_TEMPLATE = "//span[contains(text(),'${text}')]";
+
     public DwpPlusMenu(SeleniumDriver seleniumDriver) {
         super(seleniumDriver);
     }
-
-    private WebElement plusIcon() {
-        return seleniumDriver.findElementWhenVisible(By.xpath("//a[@name='Plus Menu']"));
+    
+    public void findAndClickOnPlusIcon()  {
+        WebElement element = seleniumDriver.findElementWhenVisible(By.xpath("//a[@name='Plus Menu']"));
+        seleniumDriver.waitAndClick(element);
     }
 
-
-    public void clickOnplusIcon()  {
-        seleniumDriver.waitAndClick(plusIcon());
+    public void findAndClickPlusElement(String text)  {
+        String query = createQuery(XPATH_CONTAINS_TEXT_TEMPLATE, "text", text);
+        WebElement element = seleniumDriver.findElementWhenVisible(By.xpath(query));
+        seleniumDriver.waitAndClick(element);
     }
 
-    private WebElement plusElement(String element) {
-        return seleniumDriver.findElementWhenVisible(By.xpath("//span[contains(text(),'"+element+"')]"));
-    }
-
-    public void clickplusElement(String element)  {
-        seleniumDriver.waitAndClick(plusElement(element));
-    }
-
-    private WebElement serviceElemet(String key) {
-        return seleniumDriver.findElementWhenVisible(By.xpath("//span[contains(text(),'"+key+"')]"));
-    }
-
-    public void clickServiceElemet(String key)  {
-        seleniumDriver.waitAndClick(serviceElemet(key));
+    public void findAndClickServiceElement(String key)  {
+        String query = createQuery(XPATH_CONTAINS_TEXT_TEMPLATE, "text", key);
+        WebElement element = seleniumDriver.findElementWhenVisible(By.xpath(query));
+        seleniumDriver.waitAndClick(element);
     }
 }

@@ -8,16 +8,14 @@ import org.openqa.selenium.WebElement;
 
 public class DwpTopMenu extends Component {
 
-
     public DwpTopMenu(SeleniumDriver seleniumDriver) {
         super(seleniumDriver);
     }
 
-    private WebElement topMenu(String label) {
-        return seleniumDriver.findElementWhenVisible(By.xpath("//sub-menu-link[@label='" + label + "']//a"));
-    }
-
-    public void clickTopMenu(String label) {
-        seleniumDriver.waitAndClick(topMenu(label));
+    public void findAndClickTopMenu(String label) {
+        String XPATH_SUBMENU_TEMPLATE = "//sub-menu-link[@label='${label}']//a";
+        String query = createQuery(XPATH_SUBMENU_TEMPLATE, "label", label);
+        WebElement element = seleniumDriver.findElementWhenVisible(By.xpath(query));
+        seleniumDriver.waitAndClick(element);
     }
 }

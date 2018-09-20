@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.SIBLING_OVERLAYING_ICONS;
 
 public abstract class Component {
 
@@ -74,14 +73,14 @@ public abstract class Component {
         return AutocratExecutionAdapter.execute(seleniumDriver.getDriver(), execution);
     }
 
-    protected String createQuery(String template, String key, String name) {
+    protected String createQuery(String template, String key, String value) {
         Map<String, String> valuesMap = new HashMap<>();
-        valuesMap.put(key, name);
+        valuesMap.put(key, value);
         StrSubstitutor sub = new StrSubstitutor(valuesMap);
         return sub.replace(template);
     }
 
-    protected Model.Callback srollToView() {
+    protected Model.Callback scrollToView() {
         return new Model.Callback() {
             @Override
             public void onAccess(Autocrat.ExecutionContext context, Model.Step step, WebElement element) {
@@ -91,19 +90,20 @@ public abstract class Component {
         };
     }
 
-    public class HideIconOverlays implements Model.Callback {
-        @Override
-        public void onAccess(Autocrat.ExecutionContext context, Model.Step step, WebElement value) {
-            JavascriptExecutor jsExec = (JavascriptExecutor) context.driver;
-            List<WebElement> elements = value.findElements(By.xpath(SIBLING_OVERLAYING_ICONS.getQuery()));
-            elements.forEach(siblingIcon -> {
-                String setProperty = "style = 'display:none'";
-                logger().info("Executing javascript " + setProperty + " on target element");
-                jsExec.executeScript("arguments[0]." + setProperty, siblingIcon);
-            });
-        }
+    protected Model.Callback hideIconOverlays() {
+        return new Model.Callback() {
+            @Override
+            public void onAccess(Autocrat.ExecutionContext context, Model.Step step, WebElement element) {
+                JavascriptExecutor jsExec = (JavascriptExecutor) context.driver;
+                List<WebElement> elements = element.findElements(By.xpath("../span[contains(@class, 'icon')]"));
+                elements.forEach(siblingIcon -> {
+                    String setProperty = "style = 'display:none'";
+                    logger().info("Executing javascript " + setProperty + " on target element");
+                    jsExec.executeScript("arguments[0]." + setProperty, siblingIcon);
+                });
+            }
+        };
     }
-
     protected void waitForRequestsToFinish() {
         seleniumDriver.waitForRequestsToFinish();
     }

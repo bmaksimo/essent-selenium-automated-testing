@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.openqa.selenium.*;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -36,12 +37,11 @@ import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.billinghouse.test_automation.util.gherkin.DateTimeFormatUtil.printPeriod;
 import static org.junit.Assert.fail;
@@ -69,19 +69,19 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         private final SeleniumDriver seleniumDriver;
         private boolean withException;
 
-        public ExecuteJavascriptTest(SeleniumDriver seleniumDriver) {
+        ExecuteJavascriptTest(SeleniumDriver seleniumDriver) {
             this.seleniumDriver = seleniumDriver;
         }
 
-        public ExecuteJavascriptTest withException(boolean withException) {
+        ExecuteJavascriptTest withException(boolean withException) {
             this.withException = withException;
             return this;
         }
 
         /**
-         * @param registeredJsClass
-         * @param options
-         * @return
+         * @param registeredJsClass JavascriptTestRunner class name
+         * @param options Arguments to pass to Javascript
+         * @return <code>true</code> when executed successfully. <code>false</code> otherwise.
          */
         public boolean executeJavascriptTest(String registeredJsClass, Object options) {
             SeleniumDriver.logger.info("STEP:");
@@ -102,8 +102,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
                 if (withException) {
                     fail(reason);
                 }
-                File scrFile = ((TakesScreenshot) seleniumDriver.getDriver()).getScreenshotAs(OutputType.FILE);
-                SeleniumDriver.logger.info(" - ACTION: CAPTURE_SCREENSHOT: " + scrFile.getPath());
+                takeScreenshot(false);
             }
             return success;
         }
@@ -138,7 +137,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             options.addArguments("--no-sandbox"); // Bypass OS security model
             logger.info(" - OPTIONS: " + options.toString());
             ChromeDriver chromeDriver = new ChromeDriver(options);
-            chromeDriver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS).setScriptTimeout(1, TimeUnit.MINUTES);
+            chromeDriver.manage().timeouts().implicitlyWait(3, TimeUnit.MINUTES).setScriptTimeout(5, TimeUnit.MINUTES);
             return chromeDriver;
         }
 
@@ -308,7 +307,8 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             return;
         }
         File screenshot = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
-        Path currentRelativePath = Paths.get("").resolveSibling("target");
+        logger.info(" - ACTION: CAPTURE_SCREENSHOT: " + screenshot.getPath());
+        Path currentRelativePath = Paths.get("").resolveSibling("doc");
         String currentAbsolutePath = currentRelativePath.toAbsolutePath().toString();
         try {
             FileUtils.copyFile(screenshot, new File(FilenameUtils.concat(currentAbsolutePath, screenshot.getName())));
@@ -353,9 +353,13 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         logger.info("STEP:");
         DateTime startOfMeasurement = DateTime.now();
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)
-            .withTimeout(Duration.ofSeconds(30))
-            .pollingEvery(Duration.ofSeconds(5))
-            .ignoring(NoSuchElementException.class);
+            .withTimeout(Duration.ofMinutes(1))
+            .pollingEvery(Duration.ofSeconds(10))
+            .ignoreAll(
+                Arrays.asList(
+                    NoSuchElementException.class,
+                    StaleElementReferenceException.class)
+            );
         List<WebElement> elements = waiter.until(driver -> {
             logger.info(" - WAIT: polling findElementOrNull()");
             return driver.findElements(selector);
@@ -363,11 +367,11 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
         logger.info(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
         if(elements.isEmpty()) {
-            logger.info(" - RESULT: empty");
+            logger.warn(" - RESULT: empty");
             return null;
         } else  {
             WebElement webElement = elements.get(0);
-            logger.info(" - RESULT: web element " + webElement.getAttribute("innerHTML"));
+            logger.info(String.format(" - RESULT: %s -> %s", selector, webElement.getAttribute("innerHTML")));
             return webElement;
         }
     }

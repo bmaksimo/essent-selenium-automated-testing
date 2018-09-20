@@ -62,7 +62,7 @@ public class MenuElements extends NavigationElements {
     @When("^Top menu item is ([^\"]*)$")
     public void clickTopMenuItem(String tabName) throws Throwable {
         DwpTopMenu tm = new DwpTopMenu(webDriver);
-        tm.clickTopMenu(tabName);
+        tm.findAndClickTopMenu(tabName);
     }
 
     @When("^Left menu is ([^\"]*)$")

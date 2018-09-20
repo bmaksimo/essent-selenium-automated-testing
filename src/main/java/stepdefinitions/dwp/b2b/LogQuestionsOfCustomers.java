@@ -13,6 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 public class LogQuestionsOfCustomers extends DwpScenario {
@@ -56,6 +57,6 @@ public class LogQuestionsOfCustomers extends DwpScenario {
         assertThat("Log Case Form was not filled in",
             success, is(true));
         logCasePage.save("Opslaan");
-    }
 
+    }
 }

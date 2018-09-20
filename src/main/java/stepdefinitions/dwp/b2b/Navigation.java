@@ -19,14 +19,14 @@ public class Navigation extends DwpScenario {
     @And("^b2b Plus menu is \"([^\"]*)\"$")
     public void bBPlusMenuIs(String plus) throws Throwable {
         DwpPlusMenu pl = new DwpPlusMenu(webDriver);
-        pl.clickOnplusIcon();
-        pl.clickplusElement(plus);
+        pl.findAndClickOnPlusIcon();
+        pl.findAndClickPlusElement(plus);
     }
 
     @And("^b2b \"([^\"]*)\" is selected in Service$")
     public void bBIsSelectedInService(String menu) throws Throwable {
         DwpPlusMenu pl = new DwpPlusMenu(webDriver);
-            pl.clickServiceElemet(menu);
+            pl.findAndClickServiceElement(menu);
     }
 
 }

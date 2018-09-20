@@ -1,7 +1,7 @@
 package com.essent.testing.dwp.pageobject.impl.service_contracting;
 
-import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.Form;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.service_contracting.LogCasePage;
@@ -12,12 +12,14 @@ import org.awaitility.Duration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.util.concurrent.Callable;
+
 import static com.essent.automation.autocrat.Action.*;
 import static com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter.newExecution;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
 import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
-import static org.awaitility.Duration.ONE_SECOND;
+import static org.awaitility.Duration.TWO_SECONDS;
 
 public class LogCasePageImpl extends Component implements Form, LogCasePage {
 
@@ -46,8 +48,7 @@ public class LogCasePageImpl extends Component implements Form, LogCasePage {
         String solutionSolutionElement =  "element.solution.solution";
 
         Model.Execution execution = newExecution();
-
-            execution
+        execution
             .element(specificationsSubjectElement, createElement("SELECTOR", "#cases-name-field"))
             .element(specificationsPriorityElement, createElement("SELECTOR", "#cases-priority-field"))
             .element(questionQuestionElement, createElement("SELECTOR", "#cases-description-field"))
@@ -55,20 +56,11 @@ public class LogCasePageImpl extends Component implements Form, LogCasePage {
 
             .flow()
             .step(createStep(SELECT).element(specificationsSubjectElement).value(subject))
-            .step(createStep(SLEEP).sleepInMillis(500))
-
             .step(createStep(SELECT).element(specificationsPriorityElement).value(priority))
-            .step(createStep(SLEEP).sleepInMillis(500))
-
             .step(createStep(CLICK).element(questionQuestionElement))
-            .step(createStep(SLEEP).sleepInMillis(500))
             .step(createStep(TYPING).element(questionQuestionElement).value(description))
-            .step(createStep(SLEEP).sleepInMillis(500))
-            .step(createStep(ACCESS).element(solutionSolutionElement).callback(srollToView()))
-            .step(createStep(SLEEP).sleepInMillis(500))
-            .step(createStep(TYPING).element(solutionSolutionElement).value(solution))
-            .step(createStep(SLEEP).sleepInMillis(500));
-
+            .step(createStep(ACCESS).element(solutionSolutionElement).callback(scrollToView()))
+            .step(createStep(TYPING).element(solutionSolutionElement).value(solution));
         return execute(execution);
     }
 
@@ -100,20 +92,29 @@ public class LogCasePageImpl extends Component implements Form, LogCasePage {
     @Override
     public void save(String buttonText) {
         String query = createQuery(BUTTON_SELECTOR_TEMPLATE, "text", buttonText);
+        findAndClickButton(query);
+    }
+
+    private void findAndClickButton(String query) {
+        waitUntil(FIVE_HUNDRED_MILLISECONDS, TWO_SECONDS, () -> isEnabled(query));
+        seleniumDriver.findElementOrNull(By.xpath(query));
+        waitUntil(FIVE_HUNDRED_MILLISECONDS, TWO_SECONDS, () -> isEnabled(query));
         WebElement button = seleniumDriver.findElementOrNull(By.xpath(query));
-        if (button == null) {
-            return;
-        }
-        given().await()
-            .pollInterval(FIVE_HUNDRED_MILLISECONDS)
-            .pollDelay(ONE_SECOND)
-            .atMost(new Duration(30, SECONDS)).until(() -> isEnabled(query));
-        button = seleniumDriver.findElementOrNull(By.xpath(query));
+        Sleeper.sleepTightInSeconds(2);
         button.click();
+    }
+
+    private void waitUntil(Duration pollInterval, Duration pollDelay, Callable<Boolean> findElement) {
+        given().await()
+            .pollInterval(pollInterval)
+            .pollDelay(pollDelay)
+            .atMost(new Duration(30, SECONDS)).until(findElement);
     }
 
     private Boolean isEnabled(String query) {
         WebElement button = seleniumDriver.findElementOrNull(By.xpath(query));
+        if(button == null)
+            return false;
         String disabled = button.getAttribute("disabled");
         return StringUtils.isEmpty(disabled) || !StringUtils.equals(disabled, "disabled");
     }
