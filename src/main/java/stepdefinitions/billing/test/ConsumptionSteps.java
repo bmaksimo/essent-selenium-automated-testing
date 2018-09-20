@@ -11,8 +11,6 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.joda.time.DateTime;
 import org.springframework.util.Assert;
-import stepdefinitions.dwp.view_list.ViewListElements;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 import java.io.StringReader;
@@ -20,6 +18,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.function.Predicate;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 public class ConsumptionSteps extends DwpScenario {
 
@@ -84,7 +85,7 @@ public class ConsumptionSteps extends DwpScenario {
             "        <measurementnature>ACTIVE_ENERGY</measurementnature>\n" +
             "        <timeframe>" + hourlyTariff + "</timeframe>\n" +
             "        <direction>CONSUMPTION</direction>\n" +
-            "        <deliverypoint>\" + deliveryPointId + \"</deliverypoint>\n" +
+            "        <deliverypoint>" + deliveryPointId + "</deliverypoint>\n" +
             "        <values>\n" +
             "            <number>1</number>\n" +
             "            <value>4321.0</value>\n" +
@@ -94,14 +95,25 @@ public class ConsumptionSteps extends DwpScenario {
             "</Consumption>\n";
     }
 
-    @Then("^Consumption is available at ([^\"]*) row$")
-    public void checkCreatedConsumption(String row) throws Throwable {
+    @Then("^Consumption is available at ([^\"]*) row in ([^\"]*) column$")
+    public void checkCreatedConsumption(String ordinal, String column) throws Throwable {
+        String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
         String fromDate = (String) SharedPropertiesSingleton.getInstance().getSharedProperties().get("fromDate");
         String toDate = (String) SharedPropertiesSingleton.getInstance().getSharedProperties().get("toDate");
 
-        ViewListElements viewListElements = new ViewListElements();
-        viewListElements.listElementWith(row, fromDate + " " + toDate, "Van - Aan");
+        DateTime dateFromDate = DateTime.parse(fromDate);
+        DateTime dateToDate = DateTime.parse(toDate);
+        fromDate = dateFromDate.toString("dd-MM-yyyy");
+        toDate = dateToDate.toString("dd-MM-yyyy");
 
+        Map<String, String> options = new HashMap<>();
+        options.put("data", fromDate + " " + toDate);
+        options.put("column", column);
+        options.put("index", rowIndex);
+
+        boolean success = new TableCellValueChecker().test(options);
+        assertThat(String.format("Consumption not available at row %s header '%s'", ordinal, column),
+            success, is(true));
     }
 
     private BasePayload generatePayloadFromString(String data) throws Exception {
@@ -110,10 +122,10 @@ public class ConsumptionSteps extends DwpScenario {
         return (BasePayload) unmarshaller.unmarshal(new StringReader(data));
     }
 
-    private class ConsumptionGenerator implements Predicate<Map> {
+    private class TableCellValueChecker implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
-            return executeJavascriptTest("TrCheckGeneratedConsumption", options);
+            return executeJavascriptTest("TrCheckTableCellValue", options);
         }
     }
 }

@@ -19,4 +19,4 @@ Feature: Received consumption
         When Consumption at current deliverypointid with NIGHT_EXCLUSIVE hourly-tariff is generated from now until 6 months after
         And Click on link in "Actieve en toekomstige connecties" View List at 1st row and "EAN-code" column
         And View list header is "Verbruiken"
-        Then Consumption is available at 1st row
+        Then Consumption is available at 1st row in Van - Aan column
