@@ -308,7 +308,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         }
         File screenshot = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
         logger.info(" - ACTION: CAPTURE_SCREENSHOT: " + screenshot.getPath());
-        Path currentRelativePath = Paths.get("").resolveSibling("doc");
+        Path currentRelativePath = Paths.get("").resolveSibling("target");
         String currentAbsolutePath = currentRelativePath.toAbsolutePath().toString();
         try {
             FileUtils.copyFile(screenshot, new File(FilenameUtils.concat(currentAbsolutePath, screenshot.getName())));
