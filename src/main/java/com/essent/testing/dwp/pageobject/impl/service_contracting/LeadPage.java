@@ -31,25 +31,26 @@ public class LeadPage extends BaseObject {
     }
 
     public void createLead(String companyName) {
-        setCompanyNumber(companyNumber);
-        waitForRequestsToFinish();
         setCompanyName(companyName);
         waitForRequestsToFinish();
         setContactPerson(contactPerson);
+        waitForRequestsToFinish();
+        setCompanyNumber(companyNumber);
+        waitForRequestsToFinish();
         setAddress(street, number, number, number, postalCode, city);
+        waitForRequestsToFinish();
         setTelephone(telephone);
+        waitForRequestsToFinish();
         setMobile(mobile);
+        waitForRequestsToFinish();
         setEmail(email);
+        waitForRequestsToFinish();
+        setCompanyNumber(companyNumber);
+        waitForRequestsToFinish();
     }
 
     private void setCompanyName(String companyNumber) {
-        findElementWhenVisible(By.id("company-name-c-field")).click();
-        waitForRequestsToFinish();
-        findElementWhenVisible(By.id("company-name-c-field")).clear();
-        waitForRequestsToFinish();
         findElementWhenVisible(By.id("company-name-c-field")).sendKeys(companyNumber);
-        waitForRequestsToFinish();
-        findElementWhenVisible(By.id("company-name-c-field")).click();
         waitForRequestsToFinish();
     }
 
@@ -62,6 +63,9 @@ public class LeadPage extends BaseObject {
     }
 
     private void setCompanyNumber(String contactPerson) {
+        findElementWhenVisible(By.id("company-number-c-field")).click();
+        waitForRequestsToFinish();
+        findElementWhenVisible(By.id("company-number-c-field")).clear();
         waitForRequestsToFinish();
         findElementWhenVisible(By.id("company-number-c-field")).sendKeys(contactPerson);
         waitForRequestsToFinish();

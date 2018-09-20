@@ -2,6 +2,7 @@ package stepdefinitions.dwp;
 
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
+import com.essent.automation.util.Sleeper;
 import com.essent.roles.UserRoles;
 import com.essent.testing.dwp.pageobject.Window;
 import com.essent.testing.dwp.pageobject.impl.modal.login.LoginAction;
@@ -25,6 +26,7 @@ public class GenericSteps extends DwpScenario {
 
     @Given("^I logged in to DWP as ([^\"]*)$")
     public void loginAs(String username) throws Throwable {
+        Sleeper.sleepTight(15000);
         UserRoles dwpUser = UserRoles.get(username);
         Window application = new LoginAction(webDriver).doLogin(dwpUser.getUsername(), dwpUser.getPassword());
         assertNotNull("DWP application did not appear after a login", application);
