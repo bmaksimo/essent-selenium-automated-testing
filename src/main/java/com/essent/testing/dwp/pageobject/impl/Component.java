@@ -50,8 +50,12 @@ public abstract class Component {
         return seleniumDriver.executeJavascriptTest(registeredJsClass, options);
     }
 
-    public WebElement findElementWhenVisible(By selector) {
+    protected WebElement findElementWhenVisible(By selector) {
         return seleniumDriver.findElementWhenVisible(selector);
+    }
+
+    protected WebElement findElementWhenClickable(By selector) {
+        return seleniumDriver.findElementWhenClickable(selector);
     }
 
     protected Model.Execution createExecution() {
