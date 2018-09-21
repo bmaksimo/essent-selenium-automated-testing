@@ -27,6 +27,6 @@ public class BaseObject extends Component {
     }
 
     public void plusSubaction(String action) {
-        findElementWhenVisible(By.xpath("//list-row-action[@label='" + action + "']")).click();
+        findElementWhenVisible(By.xpath("//list-row-action[@label='" + action + "']/a")).click();
     }
 }
