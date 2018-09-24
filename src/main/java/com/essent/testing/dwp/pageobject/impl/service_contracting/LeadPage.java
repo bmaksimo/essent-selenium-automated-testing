@@ -34,16 +34,10 @@ public class LeadPage extends BaseObject {
         waitForRequestsToFinish();
         setContactPerson(contactPerson);
         waitForRequestsToFinish();
-        setCompanyNumber(companyNumber);
-        waitForRequestsToFinish();
-        setAddress(street, number, number, number, postalCode, city);
-        waitForRequestsToFinish();
         setTelephone(telephone);
         waitForRequestsToFinish();
         setMobile(mobile);
         waitForRequestsToFinish();
-//        setTelephone(telephone);
-//        waitForRequestsToFinish();
         setEmail(email);
         waitForRequestsToFinish();
         saveLead();
@@ -52,7 +46,7 @@ public class LeadPage extends BaseObject {
 
     private void setCompanyName(String companyNumber) {
         findElementWhenVisible(By.id("company-name-c-field")).sendKeys(companyNumber);
-        findElementWhenVisible(By.xpath("//b[.='ESSENT BELGIUM - BE0476243769 - Veldkant 7 Kontich']")).click();
+        findElementWhenVisible(By.xpath("//b[.='" + companyNumber + " - BE0476243769 - Veldkant 7 Kontich']")).click();
         waitForRequestsToFinish();
     }
 
@@ -62,19 +56,16 @@ public class LeadPage extends BaseObject {
 
     private void setContactPerson(String contactPerson) {
         findElementWhenVisible(By.id("first-name-field")).sendKeys(contactPerson);
+        waitForRequestsToFinish();
         findElementWhenVisible(By.id("last-name-field")).sendKeys(contactPerson);
-    }
-
-    private void setCompanyNumber(String contactPerson) {
-        findElementWhenVisible(By.id("company-number-c-field")).click();
-        findElementWhenVisible(By.id("company-number-c-field")).clear();
-        findElementWhenVisible(By.id("company-number-c-field")).sendKeys(contactPerson);
+        waitForRequestsToFinish();
+        findElementWhenVisible(By.id("first-name-field")).sendKeys(contactPerson);
+        waitForRequestsToFinish();
     }
 
     private void setTelephone(String telephone) {
         waitForRequestsToFinish();
         findElementWhenVisible(By.id("leads-contact-details-contact-details-phone-type-work-phone-contact-details-type-phone-contact-details-value-field")).click();
-//        findElementWhenVisible(By.id("leads-contact-details-contact-details-phone-type-work-phone-contact-details-type-phone-contact-details-value-field")).clear();
         findElementWhenVisible(By.id("leads-contact-details-contact-details-phone-type-work-phone-contact-details-type-phone-contact-details-value-field")).sendKeys(telephone);
         System.out.println("JEBEM LI GA");
     }
@@ -85,18 +76,5 @@ public class LeadPage extends BaseObject {
 
     private void setEmail(String email) {
         findElementWhenVisible(By.id("leads-contact-details-contact-details-type-email-contact-details-value-field")).sendKeys(email);
-    }
-
-    private void setAddress(String street, String houseNumber, String addition, String boxNumber, String postalCode, String city) {
-        findElementWhenVisible(By.id("address-street-field")).sendKeys(street);
-        findElementWhenVisible(By.id("address-number-field")).sendKeys(houseNumber);
-        findElementWhenVisible(By.id("address-addition-field")).sendKeys(addition);
-        findElementWhenVisible(By.id("address-bus-field")).sendKeys(boxNumber);
-        findElementWhenVisible(By.id("address-postalcode-field")).sendKeys(postalCode);
-        findElementWhenVisible(By.id("address-city-field")).sendKeys(city);
-    }
-
-    private void naceCode() {
-
     }
 }
