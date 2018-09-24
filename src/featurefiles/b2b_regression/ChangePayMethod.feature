@@ -1,5 +1,4 @@
 @B2B_REGRESSION
-    @PAY
 Feature: Change Payment Method
 
     Background:
@@ -10,7 +9,7 @@ Feature: Change Payment Method
         And Top menu item is Klanten
         And Top action is Filters
         And "B2C/B2B" selection is "B2B"
-        And "Type klant" input is "CUSTOMER"
+        And Label input for "Type klant" is "CUSTOMER"
         And Click on link in View List at 1st row and "Klantnummer & Naam" column
         And Dashboard menu is Details
         Then View list header is "Billing customer"

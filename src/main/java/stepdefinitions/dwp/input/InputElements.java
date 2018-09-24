@@ -90,10 +90,15 @@ public class InputElements extends DwpScenario {
         String inputValue = getValue(value);
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
-        options.put("value", "string:" + inputValue);
+        options.put("value", inputValue);
         boolean success = new ApplyInput().test(options);
         assertThat(String.format("Input field %s is undefined.", label),
             success, is(true));
+    }
+
+    @And("^Label input for \"([^\"]*)\" is \"([^\"]*)\"$")
+    public void setLabelInput(String label, String value) throws Throwable {
+        setInput(label, "string:"+value);
     }
 
 

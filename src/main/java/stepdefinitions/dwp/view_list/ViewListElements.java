@@ -337,13 +337,13 @@ public class ViewListElements extends NavigationElements {
     }
 
     @And("^Payment method is updated$")
-    public void listSwitchedPaymentMethod(String ordinal, String columnName) throws Throwable {
+    public void listSwitchedPaymentMethod() throws Throwable {
         String updatedPaymentMethodName = (String) SharedPropertiesSingleton.getInstance().getSharedProperties().get("paymentMethod");
         final String UPDATED_PAYMENT_METHOD = "//list-simple-two-liner-cell[contains(@line-2,'" + updatedPaymentMethodName + "')]";
 
         WebElement element = webDriver.findElementOrNull(By.xpath(UPDATED_PAYMENT_METHOD));
 
-        assertThat(String.format("View list did not contain payment method %s at %s row, column '%s'", updatedPaymentMethodName, ordinal, columnName),
+        assertThat(String.format("View list did not contain payment method %s", updatedPaymentMethodName),
             element, is(notNullValue()));
     }
 
