@@ -5,24 +5,34 @@ import com.essent.belgium.energycomm.ws_to_bo.BasePayload;
 import com.essent.restclients.BillingEnergyCommRest;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.util.SharedPropertiesSingleton;
+import com.essent.testing.util.resource.ResourceUtil;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.text.StrSubstitutor;
+import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.springframework.util.Assert;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
+import java.io.File;
+import java.io.IOException;
 import java.io.StringReader;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.nio.charset.Charset;
+import java.util.*;
 import java.util.function.Predicate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class ConsumptionSteps extends DwpScenario {
+
+    private static final Logger logger = Logger.getLogger(ConsumptionSteps.class);
+
+    private static final String PATH = "/xml/";
+    private static final String CONSUMPTION_FILE = "consumption.xml";
 
     @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
@@ -52,49 +62,45 @@ public class ConsumptionSteps extends DwpScenario {
         Assert.isTrue(resp.getResult(), resp.getMsg());
     }
 
-    private String getConsumptionRequest(String deliveryPointId, String hourlyTariff, String months) {
-        UUID randomUUID = UUID.randomUUID();
-        String now = DateTime.now().toString("yyyy-MM-dd");
-        String toDate = DateTime.now().plusMonths(Integer.parseInt(months)).toString("yyyy-MM-dd");
-
-        SharedPropertiesSingleton.getInstance().getSharedProperties().put("fromDate", now);
-        SharedPropertiesSingleton.getInstance().getSharedProperties().put("toDate", toDate);
-
-        return "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
-            "<Consumption xmlns=\"EnergyComm-out-bo\">\n" +
-            "    <messageid>" + randomUUID + "</messageid>\n" +
-            "    <sender>5414488000608</sender>\n" +
-            "    <recipient>5499764826400</recipient>\n" +
-            "    <transactionid>" + randomUUID + "</transactionid>\n" +
-            "    <externalmessageid>EdielTransactionId[envid=378,txnbr=1]</externalmessageid>\n" +
-            "    <externaltimestamp>2012-02-27T15:30:00+01:00</externaltimestamp>\n" +
-            "    <gsrn>" + deliveryPointId + "</gsrn>\n" +
-            "    <consumptionid>79</consumptionid>\n" +
-            "    <release>1</release>\n" +
-            "    <continuous>false</continuous>\n" +
-            "    <direction>CONSUMPTION</direction>\n" +
-            "    <readingfrequency>YEAR</readingfrequency>\n" +
-            "    <measurementfrequency>YEARLY</measurementfrequency>\n" +
-            "    <fromdate>" + now + "</fromdate>\n" +
-            "    <todate>" + toDate + "</todate>\n" +
-            "    <rectification>false</rectification>\n" +
-            "    <historical>false</historical>\n" +
-            "    <measurementperiod>1</measurementperiod>\n" +
-            "    <context>PERIODIC_METERING</context>\n" +
-            "    <register>\n" +
-            "        <measurementnature>ACTIVE_ENERGY</measurementnature>\n" +
-            "        <timeframe>" + hourlyTariff + "</timeframe>\n" +
-            "        <direction>CONSUMPTION</direction>\n" +
-            "        <deliverypoint>" + deliveryPointId + "</deliverypoint>\n" +
-            "        <values>\n" +
-            "            <number>1</number>\n" +
-            "            <value>4321.0</value>\n" +
-            "            <quality>DEFAULT</quality>\n" +
-            "        </values>\n" +
-            "    </register>\n" +
-            "</Consumption>\n";
+    public static void main(String[] args) {
+        ConsumptionSteps consumptionSteps = new ConsumptionSteps();
+        String request = consumptionSteps.getConsumptionRequest("12455", "NIGHTLY", "6");
+        System.out.println(request);
     }
 
+    private String getConsumptionRequest(String deliveryPoint, String hourlyTariff, String months) {
+        UUID uuid = UUID.randomUUID();
+        String fromDate = DateTime.now().toString("yyyy-MM-dd");
+        String toDate = DateTime.now().plusMonths(Integer.parseInt(months)).toString("yyyy-MM-dd");
+
+        SharedPropertiesSingleton.getInstance().getSharedProperties().put("fromDate", fromDate);
+        SharedPropertiesSingleton.getInstance().getSharedProperties().put("toDate", toDate);
+
+        Map<String, String> consumptionData = new HashMap<>();
+        consumptionData.put("uuid", String.valueOf(uuid));
+        consumptionData.put("fromDate", fromDate);
+        consumptionData.put("toDate", toDate);
+        consumptionData.put("deliveryPoint", deliveryPoint);
+        consumptionData.put("hourlyTariff", hourlyTariff);
+
+        return getConsumptionRequestFromTemplate(consumptionData);
+    }
+
+    private String getConsumptionRequestFromTemplate(Map<String, String> data) {
+        String consumptionTemplatePath = ResourceUtil.toPath(PATH + CONSUMPTION_FILE);
+        File consumptionTemplateFile = new File(consumptionTemplatePath);
+        try {
+            String consumptionRequest = FileUtils.readFileToString(consumptionTemplateFile, Charset.defaultCharset());
+            StrSubstitutor substitutor = new StrSubstitutor(data);
+            consumptionRequest = substitutor.replace(consumptionRequest);
+
+            return consumptionRequest;
+        } catch (IOException e) {
+            logger.warn("Something went wrong while creating consumption request.");
+        }
+
+        return null;
+    }
     @Then("^Consumption is available at ([^\"]*) row in ([^\"]*) column$")
     public void checkCreatedConsumption(String ordinal, String column) throws Throwable {
         String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
