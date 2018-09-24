@@ -39,17 +39,6 @@ public class ConsumptionSteps extends DwpScenario {
         registerActiveScenario(scenario);
     }
 
-    @When("^Consumption at deliverypointid ([^\"]*) with ([^\"]*) hourly-tariff is generated from now until ([^\"]*) months after$")
-    public void generateConsumption(String deliveryPointId, String hourlyTariff, String months) throws Exception {
-        String consumptionData = getConsumptionRequest(deliveryPointId, hourlyTariff, months);
-
-        BasePayload msg = generatePayloadFromString(consumptionData);
-
-        BillingEnergyCommRest bERest = new BillingEnergyCommRest();
-        RestResponse resp = bERest.postEnergyCommMessage(msg);
-        Assert.isTrue(resp.getResult(), resp.getMsg());
-    }
-
     @When("^Consumption at current deliverypointid with ([^\"]*) hourly-tariff is generated from now until ([^\"]*) months after$")
     public void generateConsumption(String hourlyTariff, String months) throws Exception {
         String deliveryPointId = (String) SharedPropertiesSingleton.getInstance().getSharedProperties().get("EAN-code");
@@ -60,12 +49,6 @@ public class ConsumptionSteps extends DwpScenario {
         BillingEnergyCommRest bERest = new BillingEnergyCommRest();
         RestResponse resp = bERest.postEnergyCommMessage(msg);
         Assert.isTrue(resp.getResult(), resp.getMsg());
-    }
-
-    public static void main(String[] args) {
-        ConsumptionSteps consumptionSteps = new ConsumptionSteps();
-        String request = consumptionSteps.getConsumptionRequest("12455", "NIGHTLY", "6");
-        System.out.println(request);
     }
 
     private String getConsumptionRequest(String deliveryPoint, String hourlyTariff, String months) {
