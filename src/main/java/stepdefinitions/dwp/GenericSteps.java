@@ -2,7 +2,6 @@ package stepdefinitions.dwp;
 
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
-import com.essent.automation.util.Sleeper;
 import com.essent.roles.UserRoles;
 import com.essent.testing.dwp.pageobject.Window;
 import com.essent.testing.dwp.pageobject.impl.modal.login.LoginAction;
@@ -17,7 +16,7 @@ import static org.junit.Assert.assertNotNull;
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 public class GenericSteps extends DwpScenario {
 
-    @Before("@QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @SMOKE, @B2B_REGRESSION, @CONSUMPTION")
+    @Before("@QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @SMOKE, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
         setUpWebDriver();
@@ -28,7 +27,6 @@ public class GenericSteps extends DwpScenario {
     public void loginAs(String username) throws Throwable {
         UserRoles dwpUser = UserRoles.get(username);
         Window application = new LoginAction(webDriver).doLogin(dwpUser.getUsername(), dwpUser.getPassword());
-        Sleeper.sleepTightInSeconds(20);
         assertNotNull("DWP application did not appear after a login", application);
         injectJavaScriptTestRunner();
         discardPreviousFlow();

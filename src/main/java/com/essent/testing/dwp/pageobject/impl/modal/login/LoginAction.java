@@ -1,6 +1,5 @@
 package com.essent.testing.dwp.pageobject.impl.modal.login;
 
-import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.Window;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
@@ -16,7 +15,6 @@ public class LoginAction {
     }
 
     public Window doLogin(String username, String password) throws Throwable {
-        Sleeper.sleepTightInSeconds(20);
         LoginComponent loginComponent = getCurrentLoginDialog();
         if (null == loginComponent) return null;
         return loginComponent.login(username, password);
