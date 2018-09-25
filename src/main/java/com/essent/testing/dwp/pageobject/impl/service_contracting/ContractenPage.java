@@ -27,7 +27,7 @@ public class ContractenPage extends Component {
             action = findElementWhenVisible(By.xpath("(//h6)[" + counter + "]")).getText();
             System.out.println("other action " + action);
         }
-        eanCode = findElementWhenVisible(By.xpath("//tbody[@id='rows']/tr[" + counter +"]/td[3]/list-link-bold-top-two-liner-cell[@icon='null']//a/h5")).getText();
+        eanCode = findElementWhenVisible(By.xpath("(//h5)[" + (counter - 1) +"]")).getText();
         System.out.println("ean code " + eanCode);
 
         return eanCode;
