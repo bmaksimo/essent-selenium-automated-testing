@@ -4,6 +4,10 @@ import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class BaseObject extends Component {
 
     private String eanCode;
@@ -42,5 +46,10 @@ public class BaseObject extends Component {
         findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + label + "?']//toggle-form-element")).click();
     }
 
-
+    public String getDate(){
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        Date date = new Date();
+        System.out.println("time from getdate method: " + dateFormat.format(date));
+        return dateFormat.format(date);
+    }
 }

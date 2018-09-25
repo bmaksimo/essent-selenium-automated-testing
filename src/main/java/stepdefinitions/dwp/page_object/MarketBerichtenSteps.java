@@ -9,11 +9,13 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 
 public class MarketBerichtenSteps extends DwpScenario {
     BaseObject baseObject = new BaseObject(webDriver);
     private static String eanCode = null;
+    private static String date;
 
     @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
@@ -43,11 +45,14 @@ public class MarketBerichtenSteps extends DwpScenario {
         webDriver.waitForRequestsToFinish();
         eanCode = baseObject.getEANCode();
         System.out.println("EAN : " + eanCode);
+        date = baseObject.getDate();
     }
 
     @Then("^Validate rejection$")
     public void validateRejection() throws Throwable {
         final String time = webDriver.findElementWhenVisible(By.xpath("//tbody[@id='rows']/tr[1]/td[6]/list-simple-two-liner-cell[@icon='null']/p/span[1]")).getText();
         System.out.println("TIME is " + time);
+        System.out.println("Assert: " + date.equalsIgnoreCase(time));
+        Assert.assertTrue(date.equalsIgnoreCase(time));
     }
 }
