@@ -2,14 +2,12 @@ package stepdefinitions.dwp.page_object;
 
 import com.essent.testing.dwp.pageobject.impl.service_contracting.ContractenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.openqa.selenium.By;
 
 public class ContractenSteps extends DwpScenario {
 
@@ -27,10 +25,6 @@ public class ContractenSteps extends DwpScenario {
         super.tearDown();
     }
 
-    @When("^Find active contract$")
-    public void findActiveContract() throws Throwable {
-        eanCode = contractenPage.findActiveContract();
-    }
 
     @And("^Search for ean code$")
     public void searchForEanCode() throws Throwable {
@@ -40,7 +34,7 @@ public class ContractenSteps extends DwpScenario {
     @When("^Input in ([^\"]*) is \"([^\"]*)\"$")
     public void inputInModuleIs(String label, String input) throws Throwable {
         System.out.println("INPUT : " + input);
-        contractenPage.fielInputModule(label, input);
+        contractenPage.fieldDropDownLabel(label, input);
     }
 
     @And("^Check toggle \"([^\"]*)\"$")
@@ -48,8 +42,13 @@ public class ContractenSteps extends DwpScenario {
         contractenPage.turnOnCheckBox(label);
     }
 
-    @Then("^Confirm task was non residential$")
-    public void confirmTaskWasNonResidential() throws Throwable {
-        contractenPage.confirmNonResidential();
+    @When("^Find \"([^\"]*)\" contract$")
+    public void findContract(String input) throws Throwable {
+        eanCode = contractenPage.findActiveContract(input);
+    }
+
+    @Then("^Confirm task was \"([^\"]*)\"$")
+    public void confirmTaskWas(String input) throws Throwable {
+        contractenPage.confirmTaskStatus(input);
     }
 }

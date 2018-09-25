@@ -15,7 +15,7 @@ Feature: End of contract for bankruptcy - nl_BE version
             And Click on link in View List at 1st row and "Klantnummer & Naam" column
             Then Dashboard menu is Contracten
 
-            When Find active contract
+            When Find "actief" contract
             And Dashboard menu is Marktberichten
             And Click on Start nieuw marktbericht
             And Click Select Contractline
@@ -27,4 +27,4 @@ Feature: End of contract for bankruptcy - nl_BE version
             And Check toggle "Testing"
             And Check toggle "Market mocK"
             And Changes are confirmed
-            Then Confirm task was non residential
+            Then Confirm task was "Non-Residential End-of-Contract"

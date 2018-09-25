@@ -4,6 +4,7 @@ import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class ContractenPage extends Component {
@@ -16,17 +17,18 @@ public class ContractenPage extends Component {
         super(element, seleniumDriver);
     }
 
-    public String findActiveContract() {
-        waitForRequestsToFinish();
-        int counter = 1;
+    public String findActiveContract(String input) {
+        int counter = 2;
         final String eanCode;
-        String cActive = "actief";
-        String active = findElementWhenVisible(By.xpath("//tbody[@id='rows']/tr[" + counter + "]/td[4]/list-link-bold-top-two-liner-cell[@icon='null']//h6")).getText();
-        while (!active.equalsIgnoreCase(cActive)) {
+        String action = findElementWhenVisible(By.xpath("(//h6)[2]")).getText();
+        System.out.println("frist action " + action);
+        while (!action.equalsIgnoreCase(input)){
             counter = counter + 2;
-            active = findElementWhenVisible(By.xpath("//tbody[@id='rows']/tr[" + counter + "]/td[4]/list-link-bold-top-two-liner-cell[@icon='null']//h6")).getText();
+            action = findElementWhenVisible(By.xpath("(//h6)[" + counter + "]")).getText();
+            System.out.println("other action " + action);
         }
         eanCode = findElementWhenVisible(By.xpath("//tbody[@id='rows']/tr[" + counter +"]/td[3]/list-link-bold-top-two-liner-cell[@icon='null']//a/h5")).getText();
+        System.out.println("ean code " + eanCode);
 
         return eanCode;
     }
@@ -44,7 +46,7 @@ public class ContractenPage extends Component {
         findElementWhenVisible(By.xpath("//section[@class='view__modal']//a[@href='']")).click();
     }
 
-    public void fielInputModule(String label, String input) {
+    public void fieldDropDownLabel(String label, String input) {
         waitForRequestsToFinish();
         findElementWhenVisible(By.xpath("//select[@id='dwp-mig-" + label.toLowerCase() + "-c-field']/option[@label='" + input + "']")).click();
     }
@@ -57,9 +59,8 @@ public class ContractenPage extends Component {
         }
     }
 
-    public void confirmNonResidential() {
+    public void confirmTaskStatus(String input) {
         waitForRequestsToFinish();
-        Assert.assertTrue(findElementWhenVisible(By.xpath("//tbody[@id='rows']/tr[1]/td[2]/list-link-bold-top-two-liner-cell[@icon='null']//a/h5[.='INITIATE STOP ACCESS']")).isDisplayed());
-        Assert.assertTrue(findElementWhenVisible(By.xpath("//tbody[@id='rows']/tr[1]/td[2]/list-link-bold-top-two-liner-cell[@icon='null']//h6[.='Non-Residential End-of-Contract']")).isDisplayed());
+        Assert.assertTrue(findElementWhenVisible(By.xpath("//tbody[@id='rows']/tr[1]/td[2]/list-link-bold-top-two-liner-cell[@icon='null']//h6[.='" + input + "']")).isDisplayed());
     }
 }
