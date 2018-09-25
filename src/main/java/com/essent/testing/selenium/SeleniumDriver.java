@@ -7,7 +7,7 @@ import com.billinghouse.test_automation.javascript.testrunner.impl.SeleniumJsTes
 import com.essent.automation.core.WebDriverWait;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
-import com.essent.testing.util.ResourceUtils;
+import com.essent.testing.util.resource.ResourceUtil;
 import com.paulhammant.ngwebdriver.NgWebDriver;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.io.FileUtils;
@@ -17,12 +17,16 @@ import org.apache.commons.lang.text.StrSubstitutor;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.StringEscapeUtils;
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
+import org.joda.time.Period;
 import org.openqa.selenium.*;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 
@@ -30,17 +34,20 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import static com.billinghouse.test_automation.util.gherkin.DateTimeFormatUtil.printPeriod;
 import static org.junit.Assert.fail;
-
 /**
  * This class is a wrapper around the selenium webdriver.
+ *
  * @author Peter Wessels
  * @author Dmitry Che
  */
@@ -62,38 +69,40 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         private final SeleniumDriver seleniumDriver;
         private boolean withException;
 
-        public ExecuteJavascriptTest(SeleniumDriver seleniumDriver) {
+        ExecuteJavascriptTest(SeleniumDriver seleniumDriver) {
             this.seleniumDriver = seleniumDriver;
         }
 
-        public ExecuteJavascriptTest withException(boolean withException) {
+        ExecuteJavascriptTest withException(boolean withException) {
             this.withException = withException;
             return this;
         }
 
         /**
-         * @param registeredJsClass
-         * @param options
-         * @return
+         * @param registeredJsClass JavascriptTestRunner class name
+         * @param options Arguments to pass to Javascript
+         * @return <code>true</code> when executed successfully. <code>false</code> otherwise.
          */
         public boolean executeJavascriptTest(String registeredJsClass, Object options) {
-            seleniumDriver.waitUntilAngularPageIsLoaded();
-            String executeTest = SeleniumJsTestExpanderService.get().expandToJavascript(registeredJsClass, options);
             SeleniumDriver.logger.info("STEP:");
             SeleniumDriver.logger.info(" - ACTION: EXEC_JAVASCRIPT_TEST");
+            DateTime startOfMeasurement = DateTime.now();
+            seleniumDriver.waitForRequestsToFinish();
+            String executeTest = SeleniumJsTestExpanderService.get().expandToJavascript(registeredJsClass, options);
             SeleniumDriver.logger.info(" - TEST: " + executeTest);
             Map result = (Map) ((JavascriptExecutor) seleniumDriver.getDriver()).executeAsyncScript(executeTest);
+            Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
+            logger.info(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
             String status = ((String) result.get("status"));
             boolean success = StringUtils.equals("PASSED", status);
             SeleniumDriver.logger.info(" - RESULT: " + status);
             if (StringUtils.equals("FAILED", status)) {
                 String reason = ((String) result.get("reason"));
                 SeleniumDriver.logger.info(" - REASON: " + reason);
-                if(withException) {
+                if (withException) {
                     fail(reason);
                 }
-                File scrFile = ((TakesScreenshot)seleniumDriver.getDriver()).getScreenshotAs(OutputType.FILE);
-                SeleniumDriver.logger.info(" - ACTION: CAPTURE_SCREENSHOT: " + scrFile.getPath());
+                takeScreenshot(false);
             }
             return success;
         }
@@ -128,7 +137,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             options.addArguments("--no-sandbox"); // Bypass OS security model
             logger.info(" - OPTIONS: " + options.toString());
             ChromeDriver chromeDriver = new ChromeDriver(options);
-            chromeDriver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS).setScriptTimeout(1, TimeUnit.MINUTES);
+            chromeDriver.manage().timeouts().implicitlyWait(3, TimeUnit.MINUTES).setScriptTimeout(5, TimeUnit.MINUTES);
             return chromeDriver;
         }
 
@@ -146,7 +155,6 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             }
         }
     }
-
 
 
     public void setUp() {
@@ -187,8 +195,11 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     }
 
     private void injectJavaScriptInline(File functionFile) {
+        logger.info("STEP:");
+        logger.info(" - ACTION: INJECT_JAVASCRIPT");
         JavascriptExecutor jsExec = (JavascriptExecutor) driver;
-        String path = ResourceUtils.toPath(PATH + "DwpInjectScript.js.template");
+        DateTime startOfMeasurement = DateTime.now();
+        String path = ResourceUtil.toPath(PATH + "DwpInjectScript.js.template");
         File injectionFile = new File(path);
         try {
             String injection = FileUtils.readFileToString(injectionFile, Charset.defaultCharset());
@@ -197,20 +208,21 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             values.put("function", StringEscapeUtils.escapeEcmaScript(function));
             StrSubstitutor sub = new StrSubstitutor(values);
             injection = sub.replace(injection);
-            logger.info("STEP:");
-            logger.info(" - ACTION: INJECT_JAVASCRIPT");
             jsExec.executeScript(injection);
+            Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
+            logger.info(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
             logger.info(" - SCRIPT: " + function);
+
         } catch (IOException e) {
             throw new CucumberException(e);
         }
     }
 
     public void injectJavaScriptTestRunner() {
-       String testRunnerClassPath = ResourceUtils.toPath(PATH + TEST_RUNNER_CLASS);
+        String testRunnerClassPath = ResourceUtil.toPath(PATH + TEST_RUNNER_CLASS);
         File testRunnerClassFile = new File(testRunnerClassPath);
         injectJavaScriptInline(testRunnerClassFile);
-        String pathToClasses = ResourceUtils.toPath(PATH_TO_INLINE_CLASSES);
+        String pathToClasses = ResourceUtil.toPath(PATH_TO_INLINE_CLASSES);
         File dirClasses = new File(pathToClasses);
         FileFilter fileFilterClasses = new WildcardFileFilter("*.js");
         for (File file : Objects.requireNonNull(dirClasses.listFiles(fileFilterClasses))) {
@@ -234,26 +246,29 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     }
 
     public Map executeJavascriptMethod(String registeredJsClass, Object options, Object address) {
-        waitUntilAngularPageIsLoaded();
-        String jsTestCall = SeleniumJsTestExpanderService.get().expandToJavascript(registeredJsClass, options);
         logger.info("STEP:");
         logger.info(" - ACTION: EVALUATE_JAVASCRIPT_METHOD");
+        DateTime startOfMeasurement = DateTime.now();
+        waitForRequestsToFinish();
+        String jsTestCall = SeleniumJsTestExpanderService.get().expandToJavascript(registeredJsClass, options);
         logger.info(" - TEST: " + jsTestCall);
         Map result = (Map) ((JavascriptExecutor) driver).executeAsyncScript(jsTestCall);
+        Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
+        logger.info(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
         String status = ((String) result.get("status"));
-        if(StringUtils.isEmpty(status)) {
+        if (StringUtils.isEmpty(status)) {
             status = "UNDEFINED";
         }
         logger.info(" - RESULT: " + status);
         if (StringUtils.equals("FAILED", status)) {
             String reason = ((String) result.get("reason"));
             logger.info(" - REASON: " + reason);
+            takeScreenshot(false);
         }
         return result;
     }
 
     /**
-     *
      * @param registeredJsClass
      * @param options
      * @return
@@ -263,7 +278,6 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     }
 
     /**
-     *
      * @param registeredJsClass
      * @param options
      * @return
@@ -280,12 +294,27 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         });
     }
 
-    public void waitUntilAngularPageIsLoaded() {
+    public void waitForRequestsToFinish() {
         awaitJqueryNotActive(200);
         logger.info("STEP:");
         logger.info(" - WAIT: waiting for all angular requests to finish on page at url: " + getDriver().getCurrentUrl());
         ngWebDriver.waitForAngularRequestsToFinish();
         logger.info(" - RESULT: all angular requests finished! " + getDriver().getCurrentUrl());
+    }
+
+    public void takeScreenshot(boolean success) {
+        if (success) {
+            return;
+        }
+        File screenshot = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
+        logger.info(" - ACTION: CAPTURE_SCREENSHOT: " + screenshot.getPath());
+        Path currentRelativePath = Paths.get("").resolveSibling("target");
+        String currentAbsolutePath = currentRelativePath.toAbsolutePath().toString();
+        try {
+            FileUtils.copyFile(screenshot, new File(FilenameUtils.concat(currentAbsolutePath, screenshot.getName())));
+        } catch (IOException e) {
+            logger.warn(String.format("- ACTION: failed copying screenshot to %s", currentAbsolutePath));
+        }
     }
 
     public void goToHomePage() {
@@ -321,30 +350,121 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     }
 
     public WebElement findElementOrNull(By selector) {
+        logger.info("STEP:");
+        DateTime startOfMeasurement = DateTime.now();
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)
-            .withTimeout(Duration.ofSeconds(30))
-            .pollingEvery(Duration.ofSeconds(5))
-            .ignoring(NoSuchElementException.class);
-
-        return waiter.until(driver -> driver.findElement(selector));
+            .withTimeout(Duration.ofMinutes(1))
+            .pollingEvery(Duration.ofSeconds(10))
+            .ignoreAll(
+                Arrays.asList(
+                    NoSuchElementException.class,
+                    StaleElementReferenceException.class)
+            );
+        List<WebElement> elements = waiter.until(driver -> {
+            logger.info(" - WAIT: polling findElementOrNull()");
+            return driver.findElements(selector);
+        });
+        Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
+        logger.info(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
+        if(elements.isEmpty()) {
+            logger.warn(" - RESULT: empty");
+            return null;
+        } else  {
+            WebElement webElement = elements.get(0);
+            logger.info(String.format(" - RESULT: %s -> %s", selector, webElement.getAttribute("innerHTML")));
+            return webElement;
+        }
     }
 
     public WebElement findElementWhenVisible(By selector) {
+        logger.info("STEP:");
+        logger.info(" - WAIT: polling findElementWhenVisible()");
+        DateTime startOfMeasurement = DateTime.now();
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)
             .withTimeout(Duration.ofSeconds(30))
             .pollingEvery(Duration.ofSeconds(5))
             .ignoring(ElementNotVisibleException.class);
         WebElement element = waiter.until(ExpectedConditions.visibilityOfElementLocated(selector));
+        ngWebDriver.waitForAngularRequestsToFinish();
+        Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
+        logger.info(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
+        logger.info(" - RESULT: web element " + element == null? "null": element.getAttribute("innerHTML"));
         return element;
     }
 
     public WebElement findElementWhenClickable(By selector) {
+        logger.info("STEP:");
+        logger.info(" - WAIT: polling findElementWhenVisible()");
+        DateTime startOfMeasurement = DateTime.now();
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)
             .withTimeout(Duration.ofSeconds(30))
             .pollingEvery(Duration.ofSeconds(5))
             .ignoring(ElementNotVisibleException.class);
         WebElement element = waiter.until(ExpectedConditions.elementToBeClickable(selector));
+        ngWebDriver.waitForAngularRequestsToFinish();
+        Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
+        logger.info(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
+        logger.info(" - RESULT: web element " + element == null? "null": element.getAttribute("innerHTML"));
         return element;
+    }
+
+    public <V> void waitForExpectedCondition(final ExpectedCondition<?> expectedCondition, final long timeoutInSeconds, final long sleepInMillis) {
+        final WebDriverWait driverWait = new WebDriverWait(driver, timeoutInSeconds, sleepInMillis);
+        driverWait.until((Function<? super WebDriver, V>) expectedCondition);
+    }
+
+    private void driverWaitFor(final ExpectedCondition<?> expectedCondition, final long timeoutInSeconds, final long sleepInMillis) {
+        ngWebDriver.waitForAngularRequestsToFinish();
+        waitForExpectedCondition(expectedCondition, timeoutInSeconds, sleepInMillis);
+    }
+    public void waitForElementToBeVisibleBy (final By by, final long timeoutInSeconds, final long sleepInMillis) {
+        driverWaitFor(ExpectedConditions.visibilityOfElementLocated(by), timeoutInSeconds,sleepInMillis);
+    }
+
+    public void waitForElementToBeVisible(final WebElement element, final long timeoutInSeconds, final long sleepInMillis) {
+        driverWaitFor(ExpectedConditions.visibilityOf(element), timeoutInSeconds,sleepInMillis);
+    }
+
+    public void waitForElementToBeClickable(final WebElement element, final long timeoutInSeconds, final long sleepInMillis) {
+        driverWaitFor(ExpectedConditions.elementToBeClickable(element), timeoutInSeconds, sleepInMillis);
+    }
+
+    public void waitForElementNotToBeDisplayed(final WebElement element, final long timeoutInSeconds, final long sleepInMillis) {
+        driverWaitFor(ExpectedConditions.stalenessOf(element), timeoutInSeconds,sleepInMillis );
+    }
+    public void waitForElement(final WebElement element) {
+        logger.info("STEP:");
+        logger.info(" - WAIT: waitForElement()");
+        DateTime startOfMeasurement = DateTime.now();
+        ngWebDriver.waitForAngularRequestsToFinish();
+        waitForElementToBeVisible(element, 30,5);
+        waitForElementToBeClickable(element, 30, 5);
+        Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
+        logger.info(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
+    }
+
+    public void waitAndClick(final WebElement element) {
+        logger.info("STEP:");
+        logger.info(" - WAIT: waitAndClick()");
+        DateTime startOfMeasurement = DateTime.now();
+        waitForElement(element);
+        element.click();
+        ngWebDriver.waitForAngularRequestsToFinish();
+        Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
+        logger.info(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
+    }
+
+    public void waitAndSendKeys(final WebElement element, final String keysToSend) {
+        logger.info("STEP:");
+        logger.info(" - WAIT: waitAndClick()");
+        DateTime startOfMeasurement = DateTime.now();
+        waitForElement(element);
+        element.clear();
+        element.click();
+        element.sendKeys(keysToSend);
+        ngWebDriver.waitForAngularRequestsToFinish();
+        Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
+        logger.info(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
     }
 
 }

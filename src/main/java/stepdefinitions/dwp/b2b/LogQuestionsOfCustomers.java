@@ -1,17 +1,19 @@
 package stepdefinitions.dwp.b2b;
 
-import cucumber.api.java.en.And;
-import org.junit.Assert;
-import org.springframework.test.context.ContextConfiguration;
-
-import com.essent.testing.dwp.pageobject.impl.Page.DwpAccountOverviewPage;
-import com.essent.testing.dwp.pageobject.impl.Page.DwpServicePage;
-
+import com.essent.testing.dwp.pageobject.impl.page.DwpAccountOverviewPage;
+import com.essent.testing.dwp.pageobject.impl.page.DwpServicePage;
+import com.essent.testing.dwp.pageobject.impl.service_contracting.LogCasePageImpl;
 import com.essent.testing.dwp.scenario.DwpScenario;
-
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
+import org.springframework.test.context.ContextConfiguration;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 public class LogQuestionsOfCustomers extends DwpScenario {
@@ -23,15 +25,14 @@ public class LogQuestionsOfCustomers extends DwpScenario {
 
     }
 
-    @Then("^b2b Case details are visible when case is opened$")
+    @Then("^Case details are visible$")
     public void checkSuccess() throws Throwable {
         DwpAccountOverviewPage daop = new DwpAccountOverviewPage(webDriver);
         String complaintText = "TextForComplaint";
         String solutionText = "TextForSolution";
-        Assert.assertTrue(daop.getComplaintText().equalsIgnoreCase(complaintText));
-        Assert.assertTrue(daop.getSolutionFieldText().equalsIgnoreCase(solutionText));
-        Assert.assertTrue(daop.checkIfPriorityIsHigh());
-
+        assertTrue(daop.getComplaintText().equalsIgnoreCase(complaintText));
+        assertTrue(daop.getSolutionFieldText().equalsIgnoreCase(solutionText));
+        assertTrue(daop.checkIfPriorityIsHigh());
     }
 
     @And("^b2b New case for account is created$")
@@ -41,10 +42,21 @@ public class LogQuestionsOfCustomers extends DwpScenario {
         String complaintText = "TextForComplaint";
         String solutionText = "TextForSolution";
         daop.setAllForNewCaseForCustomer(complaintText, solutionText);
-        webDriver.waitUntilAngularPageIsLoaded();
         dsp.clickOnFirstCaseInTheList();
-        webDriver.waitUntilAngularPageIsLoaded();
-        Assert.assertTrue(dsp.caseDetailsheader().isDisplayed());
+        assertTrue(dsp.caseDetailsheader().isDisplayed());
     }
 
+    @And("^New case for account is created$")
+    public void createCaseForAccount() throws Throwable {
+        LogCasePageImpl logCasePage = new LogCasePageImpl(webDriver);
+        logCasePage.setSubjectSelection("Afrekeningsfactuur");
+        logCasePage.setDescription("TextForComplaint");
+        logCasePage.setSolution("TextForSolution");
+        logCasePage.setPriority("Hoog");
+        boolean success = logCasePage.fillInFormData();
+        assertThat("Log Case Form was not filled in",
+            success, is(true));
+        logCasePage.save("Opslaan");
+
+    }
 }

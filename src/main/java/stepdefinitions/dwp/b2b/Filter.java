@@ -1,16 +1,12 @@
 package stepdefinitions.dwp.b2b;
 
-import com.essent.testing.dwp.pageobject.impl.DwpFilter;
-
-import org.junit.Assert;
-import org.springframework.test.context.ContextConfiguration;
-
-
+import com.essent.testing.dwp.pageobject.impl.filter.DwpFilter;
 import com.essent.testing.dwp.scenario.DwpScenario;
-
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.When;
+import org.junit.Assert;
+import org.springframework.test.context.ContextConfiguration;
 
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 
@@ -32,7 +28,6 @@ public class Filter extends DwpScenario {
                 fp.searchByAccountNumberFieldClearAndClick();
                 String accountId = "150638828"; //TO DO remove hardcoded accountId when generate contract is implemented
                 fp.enterAccountId(accountId);
-                webDriver.waitUntilAngularPageIsLoaded();
                 Assert.assertTrue(fp.accountWithAppropriateId(accountId).isDisplayed());
                 fp.clickOnAccountWithAppropriateId(accountId);
                 break;

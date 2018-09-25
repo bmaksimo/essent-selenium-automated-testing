@@ -10,6 +10,7 @@ class TrListPlusMenuAction extends TestRunnerBase {
         result.status = 'UNDEFINED';
         result.reason = 'Not executed';
         let matches = [];
+
         $('list-row-actions[grid-key="action-bar"] div').children('list-row-action').each(function(index, element) {
             if(options.item != $(this).attr('label')) {
                 return;
@@ -24,7 +25,7 @@ class TrListPlusMenuAction extends TestRunnerBase {
             result.reason = '';
         } else {
             result.status = 'FAILED';
-            result.reason = 'Element ' + options.label + ' not found';
+            result.reason = 'Element ' + options.item + ' not found';
         }
         setTimeout(()=> {
             this.resolveCallback(result);
