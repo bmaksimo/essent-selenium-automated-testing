@@ -28,7 +28,6 @@ public class OdooLogin extends LoginComponent implements Dialog {
         element.clear();
         element.sendKeys(password);
         element.submit();
-        seleniumDriver.waitForRequestsToFinish();
         return new OdooMainWindow(seleniumDriver);
     }
 }

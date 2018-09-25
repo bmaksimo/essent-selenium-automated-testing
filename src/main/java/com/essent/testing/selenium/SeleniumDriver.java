@@ -342,6 +342,15 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         } else  return elements.get(0);
     }
 
+    public WebElement findElement(By selector) {
+        FluentWait<WebDriver> waiter = new FluentWait<>(driver)
+            .withTimeout(Duration.ofSeconds(30))
+            .pollingEvery(Duration.ofSeconds(5))
+            .ignoring(NoSuchElementException.class);
+        WebElement element = waiter.until(driver -> driver.findElement(selector));
+        return element;
+    }
+
     public WebElement findElementWhenVisible(By selector) {
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)
             .withTimeout(Duration.ofSeconds(30))

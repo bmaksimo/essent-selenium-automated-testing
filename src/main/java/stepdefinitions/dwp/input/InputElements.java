@@ -22,7 +22,7 @@ import static org.hamcrest.Matchers.is;
 
 public class InputElements extends DwpScenario {
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @BILLING, @B2B_REGRESSION")
+    @Before("@SMOKE, @E2E_B2C, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @BILLING, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -129,7 +129,7 @@ public class InputElements extends DwpScenario {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @BILLING, @B2B_REGRESSION")
+    @After("@SMOKE, @E2E_B2C, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @BILLING, @B2B_REGRESSION")
     public void tearDown() throws Exception {
         super.tearDown();
     }
