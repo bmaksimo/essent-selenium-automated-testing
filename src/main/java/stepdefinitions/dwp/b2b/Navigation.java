@@ -26,7 +26,7 @@ public class Navigation extends DwpScenario {
     @And("^b2b \"([^\"]*)\" is selected in Service$")
     public void bBIsSelectedInService(String menu) throws Throwable {
         DwpPlusMenu pl = new DwpPlusMenu(webDriver);
-        pl.findAndClickServiceElement(menu);
+            pl.findAndClickServiceElement(menu);
     }
 
 }
