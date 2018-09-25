@@ -1,7 +1,6 @@
 package com.essent.testing.dwp.pageobject;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;

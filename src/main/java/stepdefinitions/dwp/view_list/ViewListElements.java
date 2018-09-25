@@ -269,6 +269,19 @@ public class ViewListElements extends NavigationElements {
             success, is(true));
     }
 
+    @When("^Click on link in View List at ([^\"]*) row and \"([^\"]*)\" column polling (\\d+) seconds?$")
+    public void clickOnViewListAtRowAndColumn(String ordinal, String column, int seconds) throws Throwable {
+        String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
+        Map<String, String> columnIndexListOptions = new HashMap<>();
+        columnIndexListOptions.put("column", column);
+        columnIndexListOptions.put("index", rowIndex);
+        ClickTableCellUrl clickFunction = new ClickTableCellUrl();
+        given().await()
+            .pollInterval(FIVE_HUNDRED_MILLISECONDS)
+            .pollDelay(TWO_SECONDS)
+            .atMost(new Duration(seconds, SECONDS)).until(()-> clickFunction.test(columnIndexListOptions));
+    }
+
     @When("^Click on link in \"([^\"]*)\" View List at ([^\"]*) row and \"([^\"]*)\" column$")
     public void clickOnSuppliedViewListAtRowAndColumn(String viewListName, String ordinal, String column) throws Throwable {
         String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
@@ -356,6 +369,7 @@ public class ViewListElements extends NavigationElements {
         assertThat(message,
             success, is(true));
     }
+
     @And("^Plus actions at ([^\"]*) list row having cell value \"([^\"]*)\" at column \"([^\"]*)\" are open$")
     public void openPlusActions(String ordinal, String value, String columnName) throws Throwable {
         int row = extractNumericValue(ordinal);

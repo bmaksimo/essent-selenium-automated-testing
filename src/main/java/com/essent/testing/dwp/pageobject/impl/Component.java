@@ -5,14 +5,16 @@ import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
 import com.essent.testing.selenium.SeleniumDriver;
 import com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter;
+import org.apache.commons.text.StrSubstitutor;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.SIBLING_OVERLAYING_ICONS;
 
 public abstract class Component {
 
@@ -61,24 +63,47 @@ public abstract class Component {
     protected Model.Step createStep(Action action) {
         return new Model.Step().action(action);
     }
+    protected Model.Element createElement(String searchType, String query) {
+        return new Model.Element()
+            .search(searchType)
+            .query(query);
+    }
 
     protected boolean execute(final Model.Execution execution) {
         return AutocratExecutionAdapter.execute(seleniumDriver.getDriver(), execution);
     }
 
-    public class HideIconOverlays implements Model.Callback {
-        @Override
-        public void onAccess(Autocrat.ExecutionContext context, Model.Step step, WebElement value) {
-            JavascriptExecutor jsExec = (JavascriptExecutor) context.driver;
-            List<WebElement> elements = value.findElements(By.xpath(SIBLING_OVERLAYING_ICONS.getQuery()));
-            elements.forEach(siblingIcon -> {
-                String setProperty = "style = 'display:none'";
-                logger().info("Executing javascript " + setProperty + " on target element");
-                jsExec.executeScript("arguments[0]." + setProperty, siblingIcon);
-            });
-        }
+    protected String createQuery(String template, String key, String value) {
+        Map<String, String> valuesMap = new HashMap<>();
+        valuesMap.put(key, value);
+        StrSubstitutor sub = new StrSubstitutor(valuesMap);
+        return sub.replace(template);
     }
 
+    protected Model.Callback scrollToView() {
+        return new Model.Callback() {
+            @Override
+            public void onAccess(Autocrat.ExecutionContext context, Model.Step step, WebElement element) {
+                JavascriptExecutor jsExec = (JavascriptExecutor) context.driver;
+                jsExec.executeScript("arguments[0].scrollIntoView()", element);
+            }
+        };
+    }
+
+    protected Model.Callback hideIconOverlays() {
+        return new Model.Callback() {
+            @Override
+            public void onAccess(Autocrat.ExecutionContext context, Model.Step step, WebElement element) {
+                JavascriptExecutor jsExec = (JavascriptExecutor) context.driver;
+                List<WebElement> elements = element.findElements(By.xpath("../span[contains(@class, 'icon')]"));
+                elements.forEach(siblingIcon -> {
+                    String setProperty = "style = 'display:none'";
+                    logger().info("Executing javascript " + setProperty + " on target element");
+                    jsExec.executeScript("arguments[0]." + setProperty, siblingIcon);
+                });
+            }
+        };
+    }
     protected void waitForRequestsToFinish() {
         seleniumDriver.waitForRequestsToFinish();
     }
