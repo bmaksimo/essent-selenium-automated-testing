@@ -522,9 +522,11 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${maven-surefire-plugin.version}</version>
+        <!--
         <configuration>
           <testFailureIgnore>true</testFailureIgnore>
         </configuration>
+        -->
         <dependencies>
           <dependency>
             <groupId>org.apache.maven.surefire</groupId>

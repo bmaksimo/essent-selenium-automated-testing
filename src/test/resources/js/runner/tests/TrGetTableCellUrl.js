@@ -1,4 +1,4 @@
-class TrClickTableCellUrl extends TestRunnerBase {
+class TrGetTableCellUrl extends TestRunnerBase {
 
     /**
      * Checks if Table Cell is present in the DOM

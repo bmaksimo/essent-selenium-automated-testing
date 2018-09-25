@@ -1,5 +1,7 @@
 package stepdefinitions.dwp.navigation;
 
+import com.essent.testing.dwp.pageobject.impl.navigation.TopActionsPageImpl;
+import com.essent.testing.dwp.pageobject.navigation.TopActionsPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 
 import java.util.HashMap;
@@ -26,10 +28,8 @@ public abstract class NavigationElements extends DwpScenario {
     private class ClickTopAction implements Predicate<String> {
         @Override
         public boolean test(String name) {
-            Map<String, String> options = new HashMap<>();
-            options.put("name", name);
-            boolean success = executeJavascriptTest("TrGetTopAction", options);
-            return success;
+            TopActionsPage topActions = new TopActionsPageImpl(webDriver);
+            return topActions.executeTopAction(name);
         }
     }
 
