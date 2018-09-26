@@ -101,8 +101,6 @@ public class InputElements extends DwpScenario {
         setInput(label, "string:"+value);
     }
 
-
-
     @And("^\"([^\"]*)\" date is \"([^\"]*)\"$")
     public void setDateInput(String label, String value) throws Throwable {
         String inputValue = getDateValue(value);

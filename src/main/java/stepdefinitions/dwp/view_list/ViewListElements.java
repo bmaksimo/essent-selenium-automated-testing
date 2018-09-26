@@ -360,6 +360,18 @@ public class ViewListElements extends NavigationElements {
             element, is(notNullValue()));
     }
 
+    @Then("^([^\"]*) List element with value at column \"([^\"]*)\" is checked$")
+    public void storeColumnValueInSharedProperties(String ordinal, String columnName) throws Throwable {
+        int row = extractNumericValue(ordinal);
+        String value = new ViewListModel().getCellValueAt(row, columnName);
+        boolean success = StringUtils.isNotBlank(value);
+        assertThat(String.format("View list did not contain any value at %s row, column '%s'", ordinal, columnName),
+            success, is(true));
+        String splitValue = value.split(" ")[0];
+        SharedPropertiesSingleton.getInstance().getSharedProperties().put(columnName, splitValue);
+
+    }
+
     @And("^Select ([^\"]*) List row having cell value ([^\"]*) at column ([^\"]*)$")
     public void selectListRows(String ordinal, String value, String columnName) throws Throwable {
         int row = extractNumericValue(ordinal);

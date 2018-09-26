@@ -11,10 +11,7 @@ import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
 import stepdefinitions.dwp.navigation.NavigationElements;
 import stepdefinitions.dwp.tables.plus.Item;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
