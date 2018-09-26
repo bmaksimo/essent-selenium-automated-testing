@@ -2,7 +2,6 @@ package com.essent.testing.selenium;
 
 import com.billinghouse.test_automation.javascript.testrunner.JavascriptTestRunner;
 import com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry;
-import com.billinghouse.test_automation.javascript.testrunner.dwp.system.Queries;
 import com.billinghouse.test_automation.javascript.testrunner.impl.SeleniumJsTestExpanderService;
 import com.essent.automation.core.WebDriverWait;
 import com.essent.testing.config.ConfigKey;
@@ -40,8 +39,6 @@ import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static com.billinghouse.test_automation.util.gherkin.DateTimeFormatUtil.printPeriod;
 import static org.junit.Assert.fail;
@@ -63,6 +60,8 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
 
     private static final String PATH_TO_INLINE_CLASSES = "/js/runner/tests/";
     private static final String TEST_RUNNER_CLASS = "TestRunnerBase.js";
+
+    private static final String JQUERY_IS_NOT_ACTIVE = "return window.jQuery != undefined && jQuery.active === 0";
 
     public class ExecuteJavascriptTest {
 
@@ -242,10 +241,6 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     }
 
     public Map executeJavascriptMethod(String registeredJsClass, Object options) {
-        return executeJavascriptMethod(registeredJsClass, options, null);
-    }
-
-    public Map executeJavascriptMethod(String registeredJsClass, Object options, Object address) {
         logger.info("STEP:");
         logger.info(" - ACTION: EVALUATE_JAVASCRIPT_METHOD");
         DateTime startOfMeasurement = DateTime.now();
@@ -269,18 +264,19 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     }
 
     /**
-     * @param registeredJsClass
-     * @param options
-     * @return
+     * @param registeredJsClass Name of registered Javascript test
+     * @param options arguments given to registered Javascript test
+     * @return <code>true</code> when test was successfulyexecuted by JavascriptTestRunnr, <code>false</code> otherwise.
      */
     public boolean executeJavascriptTest(String registeredJsClass, Object options) {
         return new ExecuteJavascriptTest(this).executeJavascriptTest(registeredJsClass, options);
     }
 
     /**
-     * @param registeredJsClass
-     * @param options
-     * @return
+     * @param registeredJsClass Name of registered Javascript test
+     * @param options arguments given to registered Javascript test
+     * @param withException <code>true</code> to generate Cucumner exception on test failure, <code>false</code> to proceed without exception.
+     * @return <code>true</code> when test was successfulyexecuted by JavascriptTestRunnr, <code>false</code> otherwise.
      */
     public boolean executeJavascriptTest(String registeredJsClass, Object options, boolean withException) {
         return new ExecuteJavascriptTest(this).withException(withException).executeJavascriptTest(registeredJsClass, options);
@@ -290,7 +286,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         new WebDriverWait(driver, milliseconds).until(webDriver -> {
             final JavascriptExecutor js = (JavascriptExecutor) driver;
             return (Boolean) js
-                .executeScript(Queries.JQUERY_IS_NOT_ACTIVE.getTest());
+                .executeScript(JQUERY_IS_NOT_ACTIVE);
         });
     }
 
@@ -377,38 +373,25 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     }
 
     public WebElement findElementWhenVisible(By selector) {
-        logger.info("STEP:");
-        logger.info(" - WAIT: polling findElementWhenVisible()");
-        DateTime startOfMeasurement = DateTime.now();
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)
             .withTimeout(Duration.ofSeconds(30))
             .pollingEvery(Duration.ofSeconds(5))
             .ignoring(ElementNotVisibleException.class);
         WebElement element = waiter.until(ExpectedConditions.visibilityOfElementLocated(selector));
-        ngWebDriver.waitForAngularRequestsToFinish();
-        Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
-        logger.info(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
-        logger.info(" - RESULT: web element " + element == null? "null": element.getAttribute("innerHTML"));
         return element;
     }
 
     public WebElement findElementWhenClickable(By selector) {
-        logger.info("STEP:");
-        logger.info(" - WAIT: polling findElementWhenVisible()");
-        DateTime startOfMeasurement = DateTime.now();
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)
             .withTimeout(Duration.ofSeconds(30))
             .pollingEvery(Duration.ofSeconds(5))
             .ignoring(ElementNotVisibleException.class);
         WebElement element = waiter.until(ExpectedConditions.elementToBeClickable(selector));
         ngWebDriver.waitForAngularRequestsToFinish();
-        Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
-        logger.info(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
-        logger.info(" - RESULT: web element " + element == null? "null": element.getAttribute("innerHTML"));
         return element;
     }
 
-    public <V> void waitForExpectedCondition(final ExpectedCondition<?> expectedCondition, final long timeoutInSeconds, final long sleepInMillis) {
+    private <V> void waitForExpectedCondition(final ExpectedCondition<?> expectedCondition, final long timeoutInSeconds, final long sleepInMillis) {
         final WebDriverWait driverWait = new WebDriverWait(driver, timeoutInSeconds, sleepInMillis);
         driverWait.until((Function<? super WebDriver, V>) expectedCondition);
     }
@@ -421,50 +404,36 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         driverWaitFor(ExpectedConditions.visibilityOfElementLocated(by), timeoutInSeconds,sleepInMillis);
     }
 
-    public void waitForElementToBeVisible(final WebElement element, final long timeoutInSeconds, final long sleepInMillis) {
+    private void waitForElementToBeVisible(final WebElement element, final long timeoutInSeconds, final long sleepInMillis) {
         driverWaitFor(ExpectedConditions.visibilityOf(element), timeoutInSeconds,sleepInMillis);
     }
 
-    public void waitForElementToBeClickable(final WebElement element, final long timeoutInSeconds, final long sleepInMillis) {
+    private void waitForElementToBeClickable(final WebElement element, final long timeoutInSeconds, final long sleepInMillis) {
         driverWaitFor(ExpectedConditions.elementToBeClickable(element), timeoutInSeconds, sleepInMillis);
     }
 
     public void waitForElementNotToBeDisplayed(final WebElement element, final long timeoutInSeconds, final long sleepInMillis) {
         driverWaitFor(ExpectedConditions.stalenessOf(element), timeoutInSeconds,sleepInMillis );
     }
-    public void waitForElement(final WebElement element) {
-        logger.info("STEP:");
-        logger.info(" - WAIT: waitForElement()");
-        DateTime startOfMeasurement = DateTime.now();
+
+    private void waitForElement(final WebElement element) {
         ngWebDriver.waitForAngularRequestsToFinish();
         waitForElementToBeVisible(element, 30,5);
         waitForElementToBeClickable(element, 30, 5);
-        Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
-        logger.info(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
     }
 
     public void waitAndClick(final WebElement element) {
-        logger.info("STEP:");
-        logger.info(" - WAIT: waitAndClick()");
-        DateTime startOfMeasurement = DateTime.now();
         waitForElement(element);
         element.click();
         ngWebDriver.waitForAngularRequestsToFinish();
-        Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
-        logger.info(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
     }
 
     public void waitAndSendKeys(final WebElement element, final String keysToSend) {
-        logger.info("STEP:");
-        logger.info(" - WAIT: waitAndClick()");
-        DateTime startOfMeasurement = DateTime.now();
         waitForElement(element);
         element.clear();
         element.click();
         element.sendKeys(keysToSend);
         ngWebDriver.waitForAngularRequestsToFinish();
-        Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
-        logger.info(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
     }
 
 }

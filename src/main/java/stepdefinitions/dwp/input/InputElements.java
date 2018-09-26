@@ -96,7 +96,10 @@ public class InputElements extends DwpScenario {
             success, is(true));
     }
 
-
+    @And("^Label input for \"([^\"]*)\" is \"([^\"]*)\"$")
+    public void setLabelInput(String label, String value) throws Throwable {
+        setInput(label, "string:"+value);
+    }
 
     @And("^\"([^\"]*)\" date is \"([^\"]*)\"$")
     public void setDateInput(String label, String value) throws Throwable {
