@@ -17,18 +17,17 @@ public class ContractenPage extends Component {
         super(element, seleniumDriver);
     }
 
-    public String findActiveContract(String input) {
+    public String findActiveContract(String input) throws InterruptedException {
+        Thread.sleep(2500);
         int counter = 2;
         final String eanCode;
-        String action = findElementWhenVisible(By.xpath("(//h6)[2]")).getText();
-        System.out.println("frist action " + action);
+        String action = findElementWhenVisible(By.xpath("(//h6)[" + counter + "]")).getText();
         while (!action.equalsIgnoreCase(input)){
             counter = counter + 2;
             action = findElementWhenVisible(By.xpath("(//h6)[" + counter + "]")).getText();
-            System.out.println("other action " + action);
         }
+        counter--;
         eanCode = findElementWhenVisible(By.xpath("(//h5)[" + (counter - 1) +"]")).getText();
-        System.out.println("ean code " + eanCode);
 
         return eanCode;
     }
@@ -61,6 +60,6 @@ public class ContractenPage extends Component {
 
     public void confirmTaskStatus(String input) {
         waitForRequestsToFinish();
-        Assert.assertTrue(findElementWhenVisible(By.xpath("//tbody[@id='rows']/tr[1]/td[2]/list-link-bold-top-two-liner-cell[@icon='null']//h6[.='" + input + "']")).isDisplayed());
+        Assert.assertTrue(findElementWhenVisible(By.xpath("(//h6)[.='" + input + "']")).isDisplayed());
     }
 }
