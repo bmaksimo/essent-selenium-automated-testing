@@ -1,5 +1,4 @@
 @SMOKE
-    @CONSUMPTION
 Feature: Received consumption
 
     Background:
