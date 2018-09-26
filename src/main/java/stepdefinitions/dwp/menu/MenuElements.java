@@ -68,7 +68,7 @@ public class MenuElements extends NavigationElements {
     @When("^Left menu is ([^\"]*)$")
     public void clickLeftMenuItem(String tabName) throws Throwable {
         DwpLeftMenu lm = new DwpLeftMenu(webDriver);
-        lm.clickOnLeftElemet(tabName.toLowerCase());
+        lm.clickOnLeftElemet(tabName);
     }
 
 
