@@ -22,7 +22,7 @@ import static org.hamcrest.Matchers.is;
 
 public class InputElements extends DwpScenario {
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @BILLING, @B2B_REGRESSION")
+    @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @BILLING, @B2B_REGRESSION, @CONSUMPTION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -99,12 +99,6 @@ public class InputElements extends DwpScenario {
     @And("^Label input for \"([^\"]*)\" is \"([^\"]*)\"$")
     public void setLabelInput(String label, String value) throws Throwable {
         setInput(label, "string:"+value);
-    }
-
-
-    @And("^\"([^\"]*)\" input in list is \"([^\"]*)\"$")
-    public void setInputInList(String label, String value) throws Throwable {
-        setInput(label, "string:" + value);
     }
 
     @And("^\"([^\"]*)\" date is \"([^\"]*)\"$")
