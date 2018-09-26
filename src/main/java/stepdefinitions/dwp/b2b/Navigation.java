@@ -1,7 +1,9 @@
 package stepdefinitions.dwp.b2b;
 
 import com.essent.testing.dwp.pageobject.impl.navigation.DwpPlusMenu;
+import com.essent.testing.dwp.pageobject.impl.page.DwpHomePage;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
@@ -29,4 +31,10 @@ public class Navigation extends DwpScenario {
             pl.findAndClickServiceElement(menu);
     }
 
+    @And("^\"([^\"]*)\" is clicked$")
+    public void isClicked(String srt) throws Throwable {
+        DwpHomePage hp= new DwpHomePage(webDriver);
+        hp.clickOnNewCase();
+
+    }
 }
