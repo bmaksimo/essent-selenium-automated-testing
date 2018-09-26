@@ -4,7 +4,6 @@ import com.essent.automation.autocrat.Model;
 
 public enum CommonSelectors {
     VIEW("XPATH", "//dwp-app//div[@ui-view = 'focus-mode']"),
-    SIBLING_OVERLAYING_ICONS("XPATH", "../span[contains(@class, 'icon')]"),
     NEXT_BUTTON("SELECTOR", "#primaryButton:not([disabled])");
 
     private String searchBy;

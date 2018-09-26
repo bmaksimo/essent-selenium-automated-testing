@@ -9,7 +9,7 @@ Feature: Change Payment Method
         And Top menu item is Klanten
         And Top action is Filters
         And "B2C/B2B" selection is "B2B"
-        And "Type klant" input is "CUSTOMER"
+        And Label input for "Type klant" is "CUSTOMER"
         And Click on link in View List at 1st row and "Klantnummer & Naam" column
         And Dashboard menu is Details
         Then View list header is "Billing customer"
@@ -19,6 +19,6 @@ Feature: Change Payment Method
         Then Modal "Update billing customer" is displayed
 
         When Payment method is switched
-        And IBAN is NL43ABNA0978459932
+        And IBAN is NL43ABNA0978459932 if not empty
         And Payment details are confirmed
-        Then 1st List element has updated cell value at column "Betalingstermijnen & betalingswijze"
+        Then Payment method is updated

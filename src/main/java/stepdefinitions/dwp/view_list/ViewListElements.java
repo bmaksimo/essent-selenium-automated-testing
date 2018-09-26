@@ -11,6 +11,8 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.navigation.NavigationElements;
 
 import javax.swing.table.DefaultTableModel;
@@ -268,6 +270,19 @@ public class ViewListElements extends NavigationElements {
             success, is(true));
     }
 
+    @When("^Click on link in View List at ([^\"]*) row and \"([^\"]*)\" column polling (\\d+) seconds?$")
+    public void clickOnViewListAtRowAndColumn(String ordinal, String column, int seconds) throws Throwable {
+        String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
+        Map<String, String> columnIndexListOptions = new HashMap<>();
+        columnIndexListOptions.put("column", column);
+        columnIndexListOptions.put("index", rowIndex);
+        ClickTableCellUrl clickFunction = new ClickTableCellUrl();
+        given().await()
+            .pollInterval(FIVE_HUNDRED_MILLISECONDS)
+            .pollDelay(TWO_SECONDS)
+            .atMost(new Duration(seconds, SECONDS)).until(()-> clickFunction.test(columnIndexListOptions));
+    }
+
     @When("^Click on link in \"([^\"]*)\" View List at ([^\"]*) row and \"([^\"]*)\" column$")
     public void clickOnSuppliedViewListAtRowAndColumn(String viewListName, String ordinal, String column) throws Throwable {
         String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
@@ -294,7 +309,7 @@ public class ViewListElements extends NavigationElements {
         assertThat("Payment method has not been switched", success, is(true));
     }
 
-    @And("IBAN is ([^\"]*)$")
+    @And("IBAN is ([^\"]*) if not empty$")
     public void changeIBAN(String iban) {
         Map<String, String> options = new HashMap<>();
         options.put("iban", iban);
@@ -334,13 +349,15 @@ public class ViewListElements extends NavigationElements {
         textInputParameters.put(key, numericValue);
     }
 
-    @And("^([^\"]*) List element has updated cell value at column \"([^\"]*)\"$")
-    public void listSwitchedPaymentMethod(String ordinal, String columnName) throws Throwable {
-        int row = extractNumericValue(ordinal);
+    @And("^Payment method is updated$")
+    public void listSwitchedPaymentMethod() throws Throwable {
         String updatedPaymentMethodName = (String) SharedPropertiesSingleton.getInstance().getSharedProperties().get("paymentMethod");
-        boolean success = new ViewListModel().containsDataAt(row, updatedPaymentMethodName, columnName);
-        assertThat(String.format("View list did not contain payment method %s at %s row, column '%s'", updatedPaymentMethodName, ordinal, columnName),
-            success, is(true));
+        final String UPDATED_PAYMENT_METHOD = "//list-simple-two-liner-cell[contains(@line-2,'" + updatedPaymentMethodName + "')]";
+
+        WebElement element = webDriver.findElementOrNull(By.xpath(UPDATED_PAYMENT_METHOD));
+
+        assertThat(String.format("View list did not contain payment method %s", updatedPaymentMethodName),
+            element, is(notNullValue()));
     }
 
     @Then("^([^\"]*) List element with value at column \"([^\"]*)\" is checked$")
@@ -367,6 +384,7 @@ public class ViewListElements extends NavigationElements {
         assertThat(message,
             success, is(true));
     }
+
     @And("^Plus actions at ([^\"]*) list row having cell value \"([^\"]*)\" at column \"([^\"]*)\" are open$")
     public void openPlusActions(String ordinal, String value, String columnName) throws Throwable {
         int row = extractNumericValue(ordinal);
