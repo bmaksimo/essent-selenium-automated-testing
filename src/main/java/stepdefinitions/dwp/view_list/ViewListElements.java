@@ -11,6 +11,8 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.navigation.NavigationElements;
 
 import javax.swing.table.DefaultTableModel;
@@ -307,7 +309,7 @@ public class ViewListElements extends NavigationElements {
         assertThat("Payment method has not been switched", success, is(true));
     }
 
-    @And("IBAN is ([^\"]*)$")
+    @And("IBAN is ([^\"]*) if not empty$")
     public void changeIBAN(String iban) {
         Map<String, String> options = new HashMap<>();
         options.put("iban", iban);
@@ -347,13 +349,15 @@ public class ViewListElements extends NavigationElements {
         textInputParameters.put(key, numericValue);
     }
 
-    @And("^([^\"]*) List element has updated cell value at column \"([^\"]*)\"$")
-    public void listSwitchedPaymentMethod(String ordinal, String columnName) throws Throwable {
-        int row = extractNumericValue(ordinal);
+    @And("^Payment method is updated$")
+    public void listSwitchedPaymentMethod() throws Throwable {
         String updatedPaymentMethodName = (String) SharedPropertiesSingleton.getInstance().getSharedProperties().get("paymentMethod");
-        boolean success = new ViewListModel().containsDataAt(row, updatedPaymentMethodName, columnName);
-        assertThat(String.format("View list did not contain payment method %s at %s row, column '%s'", updatedPaymentMethodName, ordinal, columnName),
-            success, is(true));
+        final String UPDATED_PAYMENT_METHOD = "//list-simple-two-liner-cell[contains(@line-2,'" + updatedPaymentMethodName + "')]";
+
+        WebElement element = webDriver.findElementOrNull(By.xpath(UPDATED_PAYMENT_METHOD));
+
+        assertThat(String.format("View list did not contain payment method %s", updatedPaymentMethodName),
+            element, is(notNullValue()));
     }
 
     @And("^Select ([^\"]*) List row having cell value ([^\"]*) at column ([^\"]*)$")
