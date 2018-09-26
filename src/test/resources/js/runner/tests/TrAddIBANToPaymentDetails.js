@@ -9,15 +9,19 @@ class TrAddIBANToPaymentDetails extends TestRunnerBase {
 
         const iban = options.iban;
         const ibanField = $('#bankaccounts-iban-field');
-        ibanField.prop('value', iban);
 
-        if (iban === ibanField.val()) {
+        if (ibanField !== '') {
             result.status = 'PASSED';
             result.reason = '';
         } else {
-            result.reason = 'IBAN field failed to update.';
+            ibanField.prop('value', iban);
+            if (iban === ibanField.val()) {
+                result.status = 'PASSED';
+                result.reason = '';
+            } else {
+                result.reason = 'IBAN field failed to update.';
+            }
         }
-
         this.resolveCallback(result);
     }
 }
