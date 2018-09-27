@@ -40,6 +40,7 @@
 
     <!-- Essent dependencies -->
     <jbilling.client.version>2.53.0-SNAPSHOT</jbilling.client.version>
+    <haulogy-jaxb.version>2.53.0-SNAPSHOT</haulogy-jaxb.version>
 
     <!-- Dependency versions. -->
     <awaitility.version>3.1.1</awaitility.version>
@@ -240,6 +241,11 @@
         <groupId>net.masterthought</groupId>
         <artifactId>cucumber-reporting</artifactId>
         <version>${cucumber-reporting.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.essent</groupId>
+        <artifactId>haulogy-jaxb</artifactId>
+        <version>${haulogy-jaxb.version}</version>
       </dependency>
       <dependency>
         <groupId>mysql</groupId>
@@ -473,6 +479,10 @@
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.essent</groupId>
+      <artifactId>haulogy-jaxb</artifactId>
     </dependency>
   <!-- XMLRPC -->
     <dependency>
