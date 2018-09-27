@@ -60,7 +60,6 @@ public class QuoteSteps extends DwpScenario {
             options.put("schedule_seconds", sec);
             options.put("header", header);
             boolean success = executeJavascriptTest("TrCheckFormHeader", options);
-            takeScreenshot(success);
             return success;
         }
     }

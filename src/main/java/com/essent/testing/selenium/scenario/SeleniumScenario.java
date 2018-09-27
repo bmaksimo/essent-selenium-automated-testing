@@ -51,11 +51,6 @@ public class SeleniumScenario extends RegisteredScenario {
         return map;
     }
 
-    protected Map executeJavascriptMethod(String registeredJsClass, Object options, Object address)  {
-        Map map = webDriver.executeJavascriptMethod(registeredJsClass, options, address);
-        return map;
-    }
-
     protected void takeScreenshot(boolean success)  {
         webDriver.takeScreenshot(success);
     }
