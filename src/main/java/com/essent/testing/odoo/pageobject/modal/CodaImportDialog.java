@@ -1,7 +1,10 @@
 package com.essent.testing.odoo.pageobject.modal;
 
-public interface CodaImportDialog extends Dialog {
-    String getTitle();
-    boolean selectFile(String path);
-    boolean importFile();
+import com.essent.testing.dwp.pageobject.Form;
+public interface CodaImportDialog extends Dialog, Form {
+    String  getTitle();
+    void    setUploadFile(String path);
+    void    setImportButton(String text);
+    void    confirm();
+    String getImportReport();
 }

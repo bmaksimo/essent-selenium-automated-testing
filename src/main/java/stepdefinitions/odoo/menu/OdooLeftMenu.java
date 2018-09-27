@@ -27,14 +27,12 @@ public class OdooLeftMenu extends OdooNavigationElements {
             menu.equals("CODA Bank Statements") ||
             menu.equals("CODA Bank Statement lines")
         ) {
-            By xpath = By.xpath("//span[normalize-space(text())='CODA Processing']/ancestor::a");
-            WebElement codaElement = webDriver.findElementOrNull(xpath);
             FluentWait<WebDriver> waiter = new FluentWait<>(webDriver.getDriver()).withTimeout(Duration.ofSeconds(5));
+            WebElement codaElement = waiter.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[normalize-space(text())='CODA Processing']/ancestor::a")));
             waiter.until(ExpectedConditions.elementToBeClickable(codaElement));
             codaElement.click();
+            WebElement menuCommand = waiter.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[normalize-space(text())='Import CODA Files']")));
+            menuCommand.click();
         }
-
-        WebElement element = webDriver.findElementOrNull(By.xpath("//span[normalize-space(text())='Import CODA Files']"));
-        element.click();
     }
 }

@@ -36,14 +36,13 @@ public abstract class Component {
     public Component(By selector, SeleniumDriver seleniumDriver) {
         logger().info("STEP:");
         logger().info(" - ACTION: LOAD_PAGE_OBJECT");
-        WebElement webElement = seleniumDriver.findElementOrNull(selector);
+        element = seleniumDriver.findElementOrNull(selector);
         if(element == null) {
             logger().fatal(" - RESULT: FAILED");
             logger().fatal(" - REASON: " + getClass() + "{null}: Web element was not found. ");
             throw new CucumberException(getClass() + ": Web element was not found.");
         }
         logger.info(String.format(" - TARGET: %s -> %s", selector, element.getAttribute("innerHTML")));
-        this.element = webElement;
         this.seleniumDriver = seleniumDriver;
     }
 
