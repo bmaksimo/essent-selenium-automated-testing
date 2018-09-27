@@ -1,5 +1,6 @@
 package com.essent.testing.selenium;
 
+import com.essent.automation.util.Sleeper;
 import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.*;
@@ -71,11 +72,11 @@ public class SeleniumPage
   }
 
   public void clickSave(WebDriver driver)
-          throws InterruptedException
+
   {
     final WebElement submitElement = driver.findElement(By.id("SAVE_FOOTER"));
     assertNotNull(submitElement);
-    Thread.sleep(500);
+    Sleeper.sleepTight(500);
     submitElement.click();
     waitForReady();
 
