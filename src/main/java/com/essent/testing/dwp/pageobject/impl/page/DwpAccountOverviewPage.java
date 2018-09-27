@@ -2,11 +2,14 @@ package com.essent.testing.dwp.pageobject.impl.page;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.selenium.SeleniumDriver;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 
 public class DwpAccountOverviewPage extends Component {
+
+    private static final Logger logger = Logger.getLogger(SeleniumDriver.class);
 
     public DwpAccountOverviewPage(SeleniumDriver seleniumDriver) {
         super(seleniumDriver);
@@ -138,6 +141,11 @@ public class DwpAccountOverviewPage extends Component {
         return seleniumDriver.findElementWhenVisible(By.id("dunning-stop-c-field"));
     }
 
+    public boolean checkIfDunningStopCheckboxIsChecked()  {
+        String classValue = duningStopCheckbox().getAttribute("class");
+        return classValue.contains("not-empty");
+    }
+
     public void clickOnDuningStopCheckbox()  {
         if (checkIfDunningStopCheckboxIsChecked()) {
             seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("dunning_stop_c")));
@@ -155,10 +163,6 @@ public class DwpAccountOverviewPage extends Component {
         seleniumDriver.waitAndClick(saveButtonForFinanceAndLegalSection());
     }
 
-    public boolean checkIfDunningStopCheckboxIsChecked()  {
-        String classValue = duningStopCheckbox().getAttribute("class");
-       return classValue.contains("not-empty");
-    }
 
     public void putDuningStopBackToOff()  {
         clickOnplusIcon();
@@ -286,4 +290,22 @@ public class DwpAccountOverviewPage extends Component {
     public void refreshMarketTransactions()  {
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//span[contains(text(),'REFRESH MARKET TRANSACTIONS')]")));
     }
+
+
+
+    public WebElement checkBox (String box) {
+        return seleniumDriver.findElementWhenVisible(By.xpath("//input[contains(text(),'"+box+"')]"));
+    }
+
+    public boolean checkIfCheckboxIsChecked(String box)  {
+        String classValue = checkBox(box).getAttribute("class");
+        return classValue.contains("not-empty");
+    }
+
+    public void clickCheckbox(String box)  {
+        if (!checkIfCheckboxIsChecked(box)) {
+              seleniumDriver.waitAndClick(checkBox(box));
+        }
+    }
+
 }
