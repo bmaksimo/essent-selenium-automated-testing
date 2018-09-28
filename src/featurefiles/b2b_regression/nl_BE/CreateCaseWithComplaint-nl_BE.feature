@@ -1,5 +1,5 @@
 @B2B_REGRESSION
-Feature: Log questions of customers
+Feature: Create a case with complaint
 
     Background:
         Given  I logged in to DWP as businessdesk.testautomation.b2b@essent.be
