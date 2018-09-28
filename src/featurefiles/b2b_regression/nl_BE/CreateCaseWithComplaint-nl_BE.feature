@@ -15,7 +15,7 @@ Feature: Create a case with complaint
     Scenario:
         When Plus menu is "Service -> Case aanmaken voor de klant"
         And New case for account is created
-        And View list header is "Cases" appears within 10 seconds
+        And View list header is "Cases" appears within 20 seconds
         And Click on link in View List at 1st row and "Nummer & Aanmaakdatum" column polling 20 seconds
         Then Case details are visible
 
@@ -23,6 +23,6 @@ Feature: Create a case with complaint
         When Dashboard menu is Service
         And "CASE TOEVOEGEN" is clicked
         And New case for account is created
-        And View list header is "Cases" appears within 10 seconds
+        And View list header is "Cases" appears within 20 seconds
         And Click on link in View List at 1st row and "Nummer & Aanmaakdatum" column polling 20 seconds
         And Case details are visible
