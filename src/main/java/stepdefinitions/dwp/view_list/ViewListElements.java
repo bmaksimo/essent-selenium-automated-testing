@@ -259,7 +259,6 @@ public class ViewListElements extends NavigationElements {
 
     @When("^Click on link in View List at ([^\"]*) row and \"([^\"]*)\" column$")
     public void clickOnViewListAtRowAndColumn(String ordinal, String column) throws Throwable {
-        Thread.sleep(5000);
         String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
         Map<String, String> columnIndexListOptions = new HashMap<>();
         columnIndexListOptions.put("column", column);
