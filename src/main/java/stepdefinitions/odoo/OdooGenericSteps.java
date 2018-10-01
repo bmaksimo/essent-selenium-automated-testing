@@ -2,7 +2,6 @@ package stepdefinitions.odoo;
 
 import com.essent.roles.UserRoles;
 import com.essent.testing.dwp.pageobject.Window;
-import com.essent.testing.dwp.pageobject.impl.modal.login.LoginAction;
 import com.essent.testing.odoo.pageobject.impl.modal.login.OdooLogin;
 import com.essent.testing.odoo.scenario.OdooScenario;
 import cucumber.api.Scenario;

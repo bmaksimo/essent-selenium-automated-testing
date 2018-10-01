@@ -1,17 +1,16 @@
+/**
+ *  TrOpenListPlusActions
+ *  Clicks on Plus and opens Plus actions row at given row
+ * * @param {object} options - Arguments passed from Java.
+ * * @param {function} callback - The Java callback that handles the result.
+ *
+ * Java example:
+ *  * Java example:
+ * Map<String, String> options = new HashMap<>();
+ * options.put("index", 1);
+ * boolean result = executeJavascriptTest("TrOpenListPlusActions", options);
+ */
 class TrOpenListPlusActions extends TestRunnerBase {
-
-    /**
-     *  TrOpenListPlusActions
-     *  Clicks on Plus and opens Plus actions row at given row
-     * * @param {object} options - Arguments passed from Java.
-     * * @param {function} callback - The Java callback that handles the result.
-     *
-     * Java example:
-     *  * Java example:
-     * Map<String, String> options = new HashMap<>();
-     * options.put("index", 1);
-     * boolean result = executeJavascriptTest("TrOpenListPlusActions", options);
-     */
 
     constructor(options, callback) {
         super(options, callback, 1000);

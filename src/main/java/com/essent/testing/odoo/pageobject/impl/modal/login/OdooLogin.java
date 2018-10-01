@@ -1,7 +1,6 @@
 package com.essent.testing.odoo.pageobject.impl.modal.login;
 
 import com.essent.testing.dwp.pageobject.Window;
-import com.essent.testing.dwp.pageobject.impl.main.MainWindow;
 import com.essent.testing.dwp.pageobject.impl.modal.login.LoginComponent;
 import com.essent.testing.dwp.pageobject.modal.Dialog;
 import com.essent.testing.odoo.pageobject.impl.main.OdooMainWindow;

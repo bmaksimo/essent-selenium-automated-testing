@@ -107,6 +107,8 @@ public abstract class NavigationElements extends DwpScenario {
             return executeJavascriptTest("TrFindCustomer", name);
         }
     }
+
+
     public class SearchCustomer implements Predicate<String> {
         @Override
         public boolean test(String name) {
@@ -139,23 +141,12 @@ public abstract class NavigationElements extends DwpScenario {
             success, is(true));
     }
 
-    protected void clickConfirm(String confirm) {
-        boolean success = new ClickConfirm().test(confirm);
-        assertThat(String.format("Button %s was not available.", confirm),
-            success, is(true));
-    }
-
     protected void clickTopArrow(String arrow) throws Throwable {
         boolean success = new ClickTopArrowButton().test(arrow);
         assertThat(String.format("Top Arrow %s is undefined.", arrow),
             success, is(true));
     }
 
-    protected void searchForCustomer(String name) throws Throwable {
-        boolean success = new SearchForCustomer().test(name);
-        assertThat(String.format("Search for %s customer.", name),
-            success, is(true));
-    }
 
     protected void clickPlusAction(String path) {
         boolean success = new ClickPlusAction().test(path);

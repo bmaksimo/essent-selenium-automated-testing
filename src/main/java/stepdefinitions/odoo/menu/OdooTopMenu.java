@@ -1,20 +1,11 @@
 package stepdefinitions.odoo.menu;
 
-import com.essent.testing.odoo.scenario.OdooScenario;
-import com.essent.testing.selenium.SeleniumDriver;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.By;
-import org.openqa.selenium.ElementNotVisibleException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
 import stepdefinitions.odoo.navigation.OdooNavigationElements;
-
-import java.time.Duration;
 
 public class OdooTopMenu extends OdooNavigationElements {
 

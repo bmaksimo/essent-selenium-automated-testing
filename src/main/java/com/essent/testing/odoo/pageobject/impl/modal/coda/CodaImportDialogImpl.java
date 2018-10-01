@@ -1,8 +1,6 @@
 package com.essent.testing.odoo.pageobject.impl.modal.coda;
 
-import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
-import com.essent.testing.dwp.pageobject.Form;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.odoo.pageobject.modal.CodaImportDialog;
 import com.essent.testing.selenium.SeleniumDriver;
@@ -14,11 +12,8 @@ import org.openqa.selenium.support.ui.FluentWait;
 
 import java.time.Duration;
 
-import static com.essent.automation.autocrat.Action.CLICK;
 import static com.essent.automation.autocrat.Action.UPLOAD;
-import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.NEXT_STEP;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.UPLOAD_FILE;
-import static org.junit.Assert.assertNotNull;
 
 public class CodaImportDialogImpl extends Component implements CodaImportDialog {
 

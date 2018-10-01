@@ -16,8 +16,6 @@ class TrStartNewMarketSection extends TestRunnerBase {
             result.status = 'FAILED';
             result.reason = 'Start new market scenario ' + options.element + 'not found';
         }
-        setTimeout(()=> {
-            this.resolveCallback(result);
-        }, 1000);
+        this.resolveCallback(result);
     }
 }

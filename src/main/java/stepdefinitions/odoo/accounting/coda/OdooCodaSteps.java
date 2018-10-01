@@ -3,18 +3,13 @@ package stepdefinitions.odoo.accounting.coda;
 import com.essent.testing.odoo.pageobject.impl.modal.coda.CodaImportDialogImpl;
 import com.essent.testing.odoo.pageobject.modal.CodaImportDialog;
 import com.essent.testing.util.resource.ResourceUtil;
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import stepdefinitions.odoo.navigation.OdooNavigationElements;
 
-import java.awt.*;
-import java.awt.datatransfer.StringSelection;
 import java.io.File;
 
 import static org.hamcrest.MatcherAssert.assertThat;

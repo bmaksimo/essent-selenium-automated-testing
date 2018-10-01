@@ -1,16 +1,15 @@
+/**
+ * Evaluates the Xpath expression
+ *
+ * * @param {object} options - Arguments passed from Java.
+ * * @param {function} callback - The Java callback that handles the result.
+ *
+ * Java example:
+ * Map<String, String> xpathOptions = new HashMap<>();
+ * xpathOptions.put("xpath", "//div[@class='top-menu']/sub-menu/sub-menu-link/a[@id='market-transactions-dashboard-link']");
+ * executeJsMethod("TrEvaluateXpath", xpathOptions);
+ */
 class TrEvaluateXpath extends TestRunnerBase {
-
-    /**
-     * Evaluates the Xpath expression
-     *
-     * * @param {object} options - Arguments passed from Java.
-     * * @param {function} callback - The Java callback that handles the result.
-     *
-     * Java example:
-     * Map<String, String> xpathOptions = new HashMap<>();
-     * xpathOptions.put("xpath", "//div[@class='top-menu']/sub-menu/sub-menu-link/a[@id='market-transactions-dashboard-link']");
-     * executeJsMethod("TrEvaluateXpath", xpathOptions);
-     */
 
     constructor(options, callback) {
         super(options, callback, 100);
