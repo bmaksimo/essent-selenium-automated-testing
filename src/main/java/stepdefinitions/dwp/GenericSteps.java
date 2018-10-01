@@ -26,7 +26,6 @@ public class GenericSteps extends DwpScenario {
 
     @Given("^I logged in to DWP as ([^\"]*)$")
     public void loginAs(String username) throws Throwable {
-        Sleeper.sleepTight(15000);
         UserRoles dwpUser = UserRoles.get(username);
         Window application = new LoginAction(webDriver).doLogin(dwpUser.getUsername(), dwpUser.getPassword());
         assertNotNull("DWP application did not appear after a login", application);

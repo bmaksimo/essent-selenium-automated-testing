@@ -8,21 +8,12 @@ import org.openqa.selenium.WebElement;
 public class LeadPage extends BaseObject {
     //TODO: Change Hard Coded data with Test Data
     private final static String contactPerson = "Test";
-    private final static String companyNumber = "BE0531816752";
     private final static String telephone = "+32 78 15 79 79";
     private final static String mobile = "+32 498 12 34 56";
     private final static String email = "test@test.com";
-    private final static String street = "Testeltsesteenweg";
-    private final static String number = "1";
-    private final static String postalCode = "3201";
-    private final static String city = "LANGDORP";
 
     public LeadPage(SeleniumDriver seleniumDriver) {
         super(seleniumDriver);
-    }
-
-    public LeadPage(WebElement element, SeleniumDriver seleniumDriver) {
-        super(element, seleniumDriver);
     }
 
     public void plusAddLead() {
