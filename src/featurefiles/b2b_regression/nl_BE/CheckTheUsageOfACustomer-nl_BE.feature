@@ -1,4 +1,4 @@
-#@B2B_REGRESSION
+@B2B_REGRESSION
 Feature: Dwp test for checking usage of a customer
 
     Background:
@@ -15,4 +15,3 @@ Feature: Dwp test for checking usage of a customer
             When Plus menu is "Billing -> Verbruiken voor klant"
             And View list header is "Verbruiken"
             Then View list is not empty
-            And Enter ean number
