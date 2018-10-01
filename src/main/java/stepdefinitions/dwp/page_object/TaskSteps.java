@@ -46,7 +46,6 @@ public class TaskSteps extends DwpScenario {
     public void saveTaskIDOfFirstCustomerInList() throws Throwable {
         BaseObject baseObject = new BaseObject(webDriver);
         taskId = baseObject.getTaskId();
-        System.out.println("WHY");
     }
 
     @And("^Resolution input is \"([^\"]*)\"$")

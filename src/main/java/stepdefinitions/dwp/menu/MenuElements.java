@@ -1,5 +1,7 @@
 package stepdefinitions.dwp.menu;
 
+import com.essent.testing.dwp.pageobject.impl.navigation.DwpLeftMenu;
+import com.essent.testing.dwp.pageobject.impl.navigation.DwpTopMenu;
 import cucumber.api.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -9,10 +11,7 @@ import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
 import stepdefinitions.dwp.navigation.NavigationElements;
 import stepdefinitions.dwp.tables.plus.Item;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -65,7 +64,8 @@ public class MenuElements extends NavigationElements {
 
     @When("^Top menu item is ([^\"]*)$")
     public void clickTopMenuItem(String tabName) throws Throwable {
-        super.visitTopMenuItem(tabName);
+        DwpTopMenu tm = new DwpTopMenu(webDriver);
+        tm.findAndClickTopMenu(tabName);
     }
 
     @When("^Left Tab is ([^\"]*)$")
@@ -73,10 +73,6 @@ public class MenuElements extends NavigationElements {
         clickLeftMenuItem(itemName);
     }
 
-    @When("^Top Tab is ([^\"]*)$")
-    public void check_top_menu_item(String itemName) throws Throwable {
-        clickTopMenuItem(itemName);
-    }
 
     @And("^The following Plus menu items are available at positions:$")
     public void checkPositionsOfPlusMenuItems(DataTable plusItems) throws Throwable {
