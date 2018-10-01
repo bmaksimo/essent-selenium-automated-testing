@@ -1,6 +1,8 @@
 package stepdefinitions.dwp.input;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import com.essent.testing.util.SharedPropertiesSingleton;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -38,7 +40,7 @@ public class MultipleInputElements extends DwpScenario {
     public void setMultipleInput(String product) {
 
         Map<String, String> options = new HashMap<>();
-        options.put("product", product);
+        options.put("searchInput", product);
 
         boolean openedDialog = new MultipleInputDialog().test(options);
         assertThat("Dialog could not be opened.",
@@ -46,6 +48,21 @@ public class MultipleInputElements extends DwpScenario {
 
         boolean success = new ApplyMultipleInput().test(options);
         assertThat(String.format("Product %s is undefined.", product),
+            success, is(true));
+    }
+
+    @When("^Dialog search input is current \"([^\"]*)\"$")
+    public void runDialogSearch(String searchInput) {
+
+        String currentSearchInputValue = (String) SharedPropertiesSingleton.getInstance().getSharedProperties().get(searchInput);
+
+        Map<String, String> options = new HashMap<>();
+        options.put("searchInput", currentSearchInputValue);
+
+        Sleeper.sleepTightInSeconds(3);
+
+        boolean success = new ApplyMultipleInput().test(options);
+        assertThat(String.format("Search term %s was not found.", currentSearchInputValue),
             success, is(true));
     }
 
