@@ -16,7 +16,7 @@ Feature: Dwp test for changing amount for a customer
         When Dashboard menu is Contracten
         And Change amount for a customer
         And Contract plus and "Voorschotbedrag aanpassen"
-        And Amount values is 88
+        And Amount values is 99
         Then Changes are confirmed
 
         When Contract plus and "Bekijk voorschotdata"
