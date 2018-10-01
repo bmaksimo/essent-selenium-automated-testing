@@ -33,11 +33,8 @@ public class LeadPage extends BaseObject {
         setCompanyName(companyName);
         waitForRequestsToFinish();
         setContactPerson(contactPerson);
-        waitForRequestsToFinish();
         setTelephone(telephone);
-        waitForRequestsToFinish();
         setMobile(mobile);
-        waitForRequestsToFinish();
         setEmail(email);
         waitForRequestsToFinish();
         saveLead();
@@ -58,9 +55,7 @@ public class LeadPage extends BaseObject {
         findElementWhenVisible(By.id("first-name-field")).sendKeys(contactPerson);
         waitForRequestsToFinish();
         findElementWhenVisible(By.id("last-name-field")).sendKeys(contactPerson);
-        waitForRequestsToFinish();
         findElementWhenVisible(By.id("first-name-field")).sendKeys(contactPerson);
-        waitForRequestsToFinish();
     }
 
     private void setTelephone(String telephone) {
