@@ -1,5 +1,5 @@
 @B2B_REGRESSION
-Feature: End of contract for bankruptcy - nl_BE version
+Feature: End of contract via DWP - nl_BE version
 
     Background:
         Given I logged in to DWP as businessdesk.testautomation.b2b@essent.be
