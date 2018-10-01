@@ -4,8 +4,6 @@ import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 public class ContractenPage extends Component {
 
@@ -13,21 +11,21 @@ public class ContractenPage extends Component {
         super(seleniumDriver);
     }
 
-    public ContractenPage(WebElement element, SeleniumDriver seleniumDriver) {
-        super(element, seleniumDriver);
-    }
-
     public String findActiveContract(String input) throws InterruptedException {
         Thread.sleep(2500);
         int counter = 2;
         final String eanCode;
-        String action = findElementWhenVisible(By.xpath("(//h6)[" + counter + "]")).getText();
-        while (!action.equalsIgnoreCase(input)){
+        findElementWhenVisible(By.xpath("(//h5)[1")).getText();
+        String action = findElementWhenVisible(By.xpath("//?/h6[@innertext='Actief']")).getText();
+        System.out.println("active : " + action);
+        while (!action.equalsIgnoreCase(input)) {
             counter = counter + 2;
             action = findElementWhenVisible(By.xpath("(//h6)[" + counter + "]")).getText();
         }
         counter--;
-        eanCode = findElementWhenVisible(By.xpath("(//h5)[" + (counter - 1) +"]")).getText();
+        System.out.println("counter " + counter);
+        eanCode = findElementWhenVisible(By.xpath("//a/h5[@innertext='541448812000503030']")).getText();
+        System.out.println("ean code " + eanCode);
 
         return eanCode;
     }

@@ -1,5 +1,6 @@
 package stepdefinitions.dwp.page_object;
 
+import com.essent.testing.dwp.pageobject.BaseObject;
 import com.essent.testing.dwp.pageobject.impl.service_contracting.ContractenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
@@ -44,6 +45,7 @@ public class ContractenSteps extends DwpScenario {
 
     @When("^Find \"([^\"]*)\" contract$")
     public void findContract(String input) throws Throwable {
+        System.out.println("input is : " + input);
         eanCode = contractenPage.findActiveContract(input);
     }
 
