@@ -2,6 +2,7 @@ package stepdefinitions.dwp.b2b;
 
 import com.essent.testing.dwp.pageobject.impl.page.DwpAccountOverviewPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
@@ -19,8 +20,9 @@ public class Account extends DwpScenario {
     }
 
     @And("^Activate dunning stop$")
-    public void activateDunningstop() {
+    public void activateDunningstop() throws InterruptedException {
         DwpAccountOverviewPage aop = new DwpAccountOverviewPage(webDriver);
+        Thread.sleep(2500);
         webDriver.waitForRequestsToFinish();
         aop.clickOnDuningStopCheckbox();
         aop.clickOnSaveButtonForFinanceAndLegalSection();
@@ -34,8 +36,17 @@ public class Account extends DwpScenario {
     public void changeIsImmediatelyVisibleInFinanceLegalSection() throws Throwable {
         DwpAccountOverviewPage daop = new DwpAccountOverviewPage(webDriver);
         assertTrue(daop.checkIfDunningStopCheckboxIsChecked());
-        daop.putDuningStopBackToOff();
+        //daop.putDuningStopBackToOff();
 
+    }
+
+    @And("^Activate \"([^\"]*)\"$")
+    public void activate(String box) throws Throwable {
+        DwpAccountOverviewPage aop = new DwpAccountOverviewPage(webDriver);
+        Thread.sleep(2500);
+        webDriver.waitForRequestsToFinish();
+        aop.clickCheckbox(box);
+        aop.clickOnSaveButtonForFinanceAndLegalSection();
     }
 }
 

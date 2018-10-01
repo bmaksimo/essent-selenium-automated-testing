@@ -138,7 +138,8 @@ public class DwpAccountOverviewPage extends Component {
     }
 
     public WebElement duningStopCheckbox() {
-        return seleniumDriver.findElementWhenVisible(By.id("dunning-stop-c-field"));
+        //return seleniumDriver.findElementWhenVisible(By.id("dunning-stop-c-field"));
+        return seleniumDriver.findElementWhenVisible(By.xpath("//*[@id='dunning_stop_c']"));
     }
 
     public boolean checkIfDunningStopCheckboxIsChecked()  {
@@ -147,9 +148,9 @@ public class DwpAccountOverviewPage extends Component {
     }
 
     public void clickOnDuningStopCheckbox()  {
-        if (checkIfDunningStopCheckboxIsChecked()) {
-            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("dunning_stop_c")));
-            seleniumDriver.waitAndClick(duningStopCheckbox());
+        if (checkIfDunningStopCheckboxIsChecked()){
+//            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("dunning_stop_c")));
+//            seleniumDriver.waitAndClick(duningStopCheckbox());
         } else {
             seleniumDriver.waitAndClick(duningStopCheckbox());
         }
@@ -294,7 +295,8 @@ public class DwpAccountOverviewPage extends Component {
 
 
     public WebElement checkBox (String box) {
-        return seleniumDriver.findElementWhenVisible(By.xpath("//input[contains(text(),'"+box+"')]"));
+        //return seleniumDriver.findElementWhenVisible(By.xpath("//input[contains(text(),'"+box+"')]"));
+        return  seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + box + "?']//toggle-form-element/label"));
     }
 
     public boolean checkIfCheckboxIsChecked(String box)  {
