@@ -21,8 +21,8 @@ public class ContractPage extends BaseObject {
     }
 
     public void contractPlus() {
-        findElementWhenVisible(By.xpath("//tbody[@id='rows']/tr[1]/td[12]")).click();
         waitForRequestsToFinish();
+        findElementWhenVisible(By.xpath("//tbody[@id='rows']/tr[1]/td[12]")).click();
     }
 
     public void changeAmount(String value) {
