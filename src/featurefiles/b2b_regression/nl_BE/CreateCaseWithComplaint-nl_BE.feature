@@ -3,7 +3,7 @@ Feature: Create a case with complaint
 
     Background:
         Given  I logged in to DWP as businessdesk.testautomation.b2b@essent.be
-        When Left menu is Sales-marketing
+        When Left menu is sales-marketing
         And  Top menu item is Klanten
         Then View list header is "Klanten" appears within 25 seconds
 
