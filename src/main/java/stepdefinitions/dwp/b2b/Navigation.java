@@ -23,17 +23,4 @@ public class Navigation extends DwpScenario {
         pl.findAndClickOnPlusIcon();
         pl.findAndClickPlusElement(plus);
     }
-
-    @And("^b2b \"([^\"]*)\" is selected in Service$")
-    public void bBIsSelectedInService(String menu) throws Throwable {
-        DwpPlusMenu pl = new DwpPlusMenu(webDriver);
-            pl.findAndClickServiceElement(menu);
-    }
-
-    @And("^Wijzigingen klant menu is \"([^\"]*)\"$")
-    public void wijzigingenKlantMenuIs(String menu) throws Throwable {
-        DwpPlusMenu pl = new DwpPlusMenu(webDriver);
-        pl.findAndClickUpdateAccountDetailsElement(menu);
-
-    }
 }
