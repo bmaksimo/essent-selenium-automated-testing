@@ -9,7 +9,7 @@ class TrApplyMultipleFilterInput extends TestRunnerBase {
         result.status = 'UNDEFINED';
         result.reason = 'Not executed';
         const options = this.options;
-        let searchInput = $('#search-input');
+            let searchInput = $('#search-input');
         const searchButton = $('input[type="submit"]');
         if (searchInput.length === 0 || searchButton.length === 0) {
             result.status = 'FAILED';

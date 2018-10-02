@@ -22,9 +22,14 @@ Feature: End order (drop) messaging
 
         When Click on Start nieuw marktbericht
         And Click Select Contractline
-#        And Dialog search input is current "EAN-code & Producttype"
-#        Then Open Select Contractline
-#
-#        And EAN check box
+        And Dialog search input is current "EAN-code & Producttype"
+        Then Confirm is clicked
 
+        When "Module" selection is "INITIATE STOP ACCESS"
+        And "Label" selection is "Drop/Request Budget Meter"
+        And "Effective Date" date is "now"
+        And Option "Testing?" is On
+        And Confirm is clicked
+
+ 
 
