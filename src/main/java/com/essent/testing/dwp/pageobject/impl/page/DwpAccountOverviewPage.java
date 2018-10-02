@@ -165,19 +165,8 @@ public class DwpAccountOverviewPage extends Component {
     }
 
 
-    public void putDuningStopBackToOff()  {
-        clickOnplusIcon();
-        clickOnServiceDropdownMenu();
-        clickOnAccountChangesDropdownSubMenu();
-        clickOnUpdateAccountDetailsOption();
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("dunning_stop_c")));//seleniumDriver.findElementWhenVisible(By.id("dunning_stop_c")).click();
-        clickOnSaveButtonForFinanceAndLegalSection();
-
-    }
-
     public WebElement channelDropdownMenu() {
         return seleniumDriver.findElementWhenVisible(By.id("cases-interaction-channel-c-field"));
-
     }
 
     public void clickOnChannelDropdownMenu()  {
@@ -295,7 +284,6 @@ public class DwpAccountOverviewPage extends Component {
 
 
     public WebElement checkBox (String box) {
-        //return seleniumDriver.findElementWhenVisible(By.xpath("//input[contains(text(),'"+box+"')]"));
         return  seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + box + "?']//toggle-form-element/label"));
     }
 
@@ -305,8 +293,10 @@ public class DwpAccountOverviewPage extends Component {
     }
 
     public void clickCheckbox(String box)  {
-        if (!checkIfCheckboxIsChecked(box)) {
-              seleniumDriver.waitAndClick(checkBox(box));
+        if (checkIfCheckboxIsChecked(box)) {
+
+        }else {
+            seleniumDriver.waitAndClick(checkBox(box));
         }
     }
 

@@ -36,6 +36,7 @@ public class Account extends DwpScenario {
     public void changeIsImmediatelyVisibleInFinanceLegalSection() throws Throwable {
         DwpAccountOverviewPage daop = new DwpAccountOverviewPage(webDriver);
         assertTrue(daop.checkIfDunningStopCheckboxIsChecked());
+       // assertTrue(daop.checkBox().getAttribute("checked"));
         //daop.putDuningStopBackToOff();
 
     }
@@ -47,6 +48,13 @@ public class Account extends DwpScenario {
         webDriver.waitForRequestsToFinish();
         aop.clickCheckbox(box);
         aop.clickOnSaveButtonForFinanceAndLegalSection();
+    }
+
+    @And("^clik on chechbox$")
+    public void clikOnChechbox() throws Throwable {
+        DwpAccountOverviewPage aop = new DwpAccountOverviewPage(webDriver);
+        webDriver.waitForRequestsToFinish();
+        aop.duningStopCheckbox().click();
     }
 }
 
