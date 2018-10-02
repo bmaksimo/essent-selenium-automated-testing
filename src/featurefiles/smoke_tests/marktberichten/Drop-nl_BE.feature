@@ -1,6 +1,4 @@
 @SMOKE
-@MARKT
-@DROP
 
 Feature: End order (drop) messaging
 
@@ -26,10 +24,7 @@ Feature: End order (drop) messaging
         Then Confirm is clicked
 
         When "Module" selection is "INITIATE STOP ACCESS"
-        And "Label" selection is "Drop/Request Budget Meter"
-        And "Effective Date" date is "now"
+        And Label input for "Label" is "Drop/Request Budget Meter"
         And Option "Testing?" is On
         And Confirm is clicked
-
- 
-
+        Then 1st list element has cell value INITIATE STOP ACCESS at column Module & Label
