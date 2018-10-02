@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -69,7 +70,7 @@ public class PlusMenuNavigation extends Component {
 
     void executeAction(String menuPath) {
         String pathSeparator = "\\s*->\\s*";
-        List<String> menu = Arrays.asList(menuPath.split(pathSeparator));
+        List<String> menu = new ArrayList<>(Arrays.asList(menuPath.split(pathSeparator)));
         List<String> path = menu.subList(0, menu.size() - 1);
         String action = menu.get(menu.size() - 1);
         WebElement match = findMenu(null, path);
