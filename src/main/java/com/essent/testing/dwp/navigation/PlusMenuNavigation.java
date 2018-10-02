@@ -1,4 +1,4 @@
-package com.billinghouse.test_automation.javascript.runner.test;
+package com.essent.testing.dwp.navigation;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
@@ -13,22 +13,18 @@ import org.openqa.selenium.support.ui.FluentWait;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 
 import static com.billinghouse.test_automation.util.gherkin.DateTimeFormatUtil.printPeriod;
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.awaitility.Awaitility.given;
 
 /**
  * Migrated version of TrPlusMenuSelectAction
  */
-public class PlusMenuSelectAction extends Component {
+public class PlusMenuNavigation extends Component {
     private String status = "UNDEFINED";
     private String reason = "Not executed";
 
-    public PlusMenuSelectAction(SeleniumDriver seleniumDriver) {
+    public PlusMenuNavigation(SeleniumDriver seleniumDriver) {
         super(seleniumDriver);
     }
 
@@ -71,7 +67,7 @@ public class PlusMenuSelectAction extends Component {
     }
      */
 
-    void run(String menuPath) {
+    void executeAction(String menuPath) {
         String pathSeparator = "\\s*->\\s*";
         List<String> menu = Arrays.asList(menuPath.split(pathSeparator));
         List<String> path = menu.subList(0, menu.size() - 1);

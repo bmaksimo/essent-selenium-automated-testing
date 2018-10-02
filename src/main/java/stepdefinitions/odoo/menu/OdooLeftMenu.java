@@ -1,5 +1,6 @@
 package stepdefinitions.odoo.menu;
 
+import com.essent.testing.odoo.navigation.menu.LeftMenuNavigation;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.When;
@@ -20,19 +21,9 @@ public class OdooLeftMenu extends OdooNavigationElements {
     }
 
     @When("^Odoo left menu is ([^\"]*)$")
-    public void OdooCheckTopMenuAction(String menu) throws Throwable {
-        if(
-            menu.equals("Import CODA Files") ||
-            menu.equals("Imported CODA Files") ||
-            menu.equals("CODA Bank Statements") ||
-            menu.equals("CODA Bank Statement lines")
-        ) {
-            FluentWait<WebDriver> waiter = new FluentWait<>(webDriver.getDriver()).withTimeout(Duration.ofSeconds(5));
-            WebElement codaElement = waiter.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[normalize-space(text())='CODA Processing']/ancestor::a")));
-            waiter.until(ExpectedConditions.elementToBeClickable(codaElement));
-            codaElement.click();
-            WebElement menuCommand = waiter.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[normalize-space(text())='Import CODA Files']")));
-            menuCommand.click();
-        }
+    public void OdooCheckTopMenuAction(String menuPath) throws Throwable {
+        LeftMenuNavigation odooLeftMenuNavigation = new LeftMenuNavigation(webDriver);
+        odooLeftMenuNavigation.executeAction(menuPath);
+        logger().info("Success");
     }
 }
