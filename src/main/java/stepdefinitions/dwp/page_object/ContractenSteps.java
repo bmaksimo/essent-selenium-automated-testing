@@ -33,7 +33,6 @@ public class ContractenSteps extends DwpScenario {
 
     @When("^Input in ([^\"]*) is \"([^\"]*)\"$")
     public void inputInModuleIs(String label, String input) throws Throwable {
-        System.out.println("INPUT : " + input);
         fieldDropDownLabel(label, input);
     }
 
@@ -56,17 +55,13 @@ public class ContractenSteps extends DwpScenario {
         webDriver.waitForRequestsToFinish();
         int counter = 2;
         String eanCode;
-        System.out.println("find : " + webDriver.findElementWhenVisible(By.xpath("(//h6)[.='" + input + "'][1]")).getText());
         String action = webDriver.findElementWhenVisible(By.xpath("(//h6)[" + counter + "]")).getText();
-        System.out.println("active : " + action);
         while (!action.equalsIgnoreCase(input)) {
             counter = counter + 2;
             action = webDriver.findElementWhenVisible(By.xpath("(//h6)[.='" + counter + "'][1]")).getText();
         }
         counter--;
-        System.out.println("counter " + counter);
         eanCode = webDriver.findElementWhenVisible(By.xpath("(//h5)[" + counter + "]")).getText();
-        System.out.println("ean code " + eanCode);
 
         return eanCode;
     }
