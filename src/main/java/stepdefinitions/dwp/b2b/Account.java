@@ -19,26 +19,10 @@ public class Account extends DwpScenario {
 
     }
 
-    @And("^Activate dunning stop$")
-    public void activateDunningstop() throws InterruptedException {
-        DwpAccountOverviewPage aop = new DwpAccountOverviewPage(webDriver);
-        Thread.sleep(2500);
-        webDriver.waitForRequestsToFinish();
-        aop.clickOnDuningStopCheckbox();
-        aop.clickOnSaveButtonForFinanceAndLegalSection();
-
-//        if(!aop.checkIfCheckboxIsChecked(box)){
-//            aop.clickOnDuningStopCheckbox();
-//        }
-    }
-
     @Then("^Change is immediately visible in Finance & Legal section that \"([^\"]*)\" is active$")
     public void changeIsImmediatelyVisibleInFinanceLegalSectionThatIsActive(String box) throws Throwable {
         DwpAccountOverviewPage daop = new DwpAccountOverviewPage(webDriver);
         assertTrue(daop.checkIfCheckboxIsChecked(box));
-       // assertTrue(daop.checkBox().getAttribute("checked"));
-        //daop.putDuningStopBackToOff();
-
     }
 
     @And("^Activate \"([^\"]*)\"$")
@@ -50,11 +34,12 @@ public class Account extends DwpScenario {
         aop.clickOnSaveButtonForFinanceAndLegalSection();
     }
 
-    @And("^clik on chechbox$")
+    @And("^clik on chechbox for testing$")
     public void clikOnChechbox() throws Throwable {
         DwpAccountOverviewPage aop = new DwpAccountOverviewPage(webDriver);
         webDriver.waitForRequestsToFinish();
         aop.duningStopCheckbox().click();
+        aop.clickOnSaveButtonForFinanceAndLegalSection();
     }
 
 }

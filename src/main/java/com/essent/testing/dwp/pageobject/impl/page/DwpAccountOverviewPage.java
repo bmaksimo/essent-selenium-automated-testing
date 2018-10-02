@@ -139,22 +139,7 @@ public class DwpAccountOverviewPage extends Component {
     }
 
     public WebElement duningStopCheckbox() {
-        //return seleniumDriver.findElementWhenVisible(By.id("dunning-stop-c-field"));
         return seleniumDriver.findElementWhenVisible(By.xpath("//*[@id='dunning_stop_c']"));
-    }
-
-    public boolean checkIfDunningStopCheckboxIsChecked()  {
-        String classValue = duningStopCheckbox().getAttribute("class");
-        return classValue.contains("not-empty");
-    }
-
-    public void clickOnDuningStopCheckbox()  {
-        if (checkIfDunningStopCheckboxIsChecked()){
-//            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("dunning_stop_c")));
-//            seleniumDriver.waitAndClick(duningStopCheckbox());
-        } else {
-            seleniumDriver.waitAndClick(duningStopCheckbox());
-        }
     }
 
     public WebElement saveButtonForFinanceAndLegalSection()  {
@@ -290,16 +275,13 @@ public class DwpAccountOverviewPage extends Component {
     }
 
     public boolean checkIfCheckboxIsChecked(String box)  {
-        String classValue = checkBox(box).findElement(By.cssSelector("input")).getAttribute("class"); //By.cssSelector("label[class=\"input__toggle\"] input")
+        String classValue = checkBox(box).findElement(By.cssSelector("input")).getAttribute("class");
         return classValue.contains("not-empty");
 
     }
 
     public void clickCheckbox(String box)  {
-        if (checkIfCheckboxIsChecked(box)) {
-//            seleniumDriver.waitAndClick(checkBox(box));
-//            seleniumDriver.waitAndClick(checkBox(box));
-        }else {
+        if (checkIfCheckboxIsChecked(box)==false) {
             seleniumDriver.waitAndClick(checkBox(box));
         }
     }
