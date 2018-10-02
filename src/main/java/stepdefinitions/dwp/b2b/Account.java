@@ -32,10 +32,10 @@ public class Account extends DwpScenario {
 //        }
     }
 
-    @Then("^Change is immediately visible in Finance & Legal section$")
-    public void changeIsImmediatelyVisibleInFinanceLegalSection() throws Throwable {
+    @Then("^Change is immediately visible in Finance & Legal section that \"([^\"]*)\" is active$")
+    public void changeIsImmediatelyVisibleInFinanceLegalSectionThatIsActive(String box) throws Throwable {
         DwpAccountOverviewPage daop = new DwpAccountOverviewPage(webDriver);
-        assertTrue(daop.checkIfDunningStopCheckboxIsChecked());
+        assertTrue(daop.checkIfCheckboxIsChecked(box));
        // assertTrue(daop.checkBox().getAttribute("checked"));
         //daop.putDuningStopBackToOff();
 
@@ -56,6 +56,7 @@ public class Account extends DwpScenario {
         webDriver.waitForRequestsToFinish();
         aop.duningStopCheckbox().click();
     }
+
 }
 
 

@@ -14,9 +14,8 @@ Feature: Update customer details - dunning stop
         And "Klantnummer" input is "150638828"
         And Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
         And Plus menu is "Service -> Wijzigingen klant -> Bijwerken details klant"
-        #And Activate dunning stop
         And Activate "Aanmaningsstop"
-        Then Change is immediately visible in Finance & Legal section
+        Then Change is immediately visible in Finance & Legal section that "Aanmaningsstop" is active
         And Plus menu is "Service -> Wijzigingen klant -> Bijwerken details klant"
         And clik on chechbox
-        #Aanmaningsstop
+

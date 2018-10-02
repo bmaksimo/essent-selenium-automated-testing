@@ -5,6 +5,7 @@ import com.essent.testing.selenium.SeleniumDriver;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import sun.awt.geom.AreaOp;
 
 
 public class DwpAccountOverviewPage extends Component {
@@ -285,16 +286,19 @@ public class DwpAccountOverviewPage extends Component {
 
     public WebElement checkBox (String box) {
         return  seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + box + "?']//toggle-form-element/label"));
+
     }
 
     public boolean checkIfCheckboxIsChecked(String box)  {
-        String classValue = checkBox(box).getAttribute("class");
+        String classValue = checkBox(box).findElement(By.cssSelector("input")).getAttribute("class"); //By.cssSelector("label[class=\"input__toggle\"] input")
         return classValue.contains("not-empty");
+
     }
 
     public void clickCheckbox(String box)  {
         if (checkIfCheckboxIsChecked(box)) {
-
+//            seleniumDriver.waitAndClick(checkBox(box));
+//            seleniumDriver.waitAndClick(checkBox(box));
         }else {
             seleniumDriver.waitAndClick(checkBox(box));
         }
