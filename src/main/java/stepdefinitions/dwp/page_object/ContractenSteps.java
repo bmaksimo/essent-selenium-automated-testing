@@ -38,7 +38,7 @@ public class ContractenSteps extends DwpScenario {
 
     @And("^Check toggle \"([^\"]*)\"$")
     public void checkToggle(String label) throws Throwable {
-        turnOnCheckBox(label);
+        turnOnTestingAndMarketMock(label);
     }
 
     @When("^Find \"([^\"]*)\" contract$")
@@ -82,7 +82,7 @@ public class ContractenSteps extends DwpScenario {
         webDriver.findElementWhenVisible(By.xpath("//select[@id='dwp-mig-" + label.toLowerCase() + "-c-field']/option[@label='" + input + "']")).click();
     }
 
-    private void turnOnCheckBox(String label) {
+    private void turnOnTestingAndMarketMock(String label) {
         if (label.equalsIgnoreCase("Testing")) {
             webDriver.findElementWhenVisible(By.id("dwp|toggle_testing")).click();
         } else if (label.equalsIgnoreCase("Market mock")) {
