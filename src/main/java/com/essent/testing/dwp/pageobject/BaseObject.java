@@ -10,7 +10,6 @@ import java.util.Date;
 
 public class BaseObject extends Component {
 
-    private String eanCode;
 
     public BaseObject(SeleniumDriver seleniumDriver) {
         super(seleniumDriver);
@@ -20,12 +19,6 @@ public class BaseObject extends Component {
         final String taskId;
         taskId = findElementWhenVisible(By.xpath("//tbody[@id='rows']/tr[1]/td[2]/list-link-bold-top-two-liner-cell[@icon='null']//a/h5")).getText();
         return taskId;
-    }
-
-    public String getEANCode() {
-        final String customerEAN;
-        customerEAN = findElementWhenVisible(By.id("aos-products-quotes-ean-c-field")).getText();
-        return customerEAN;
     }
 
     public void insertEANcode(String eanCode) {
@@ -39,16 +32,5 @@ public class BaseObject extends Component {
 
     public void plusSubaction(String action) {
         findElementWhenVisible(By.xpath("//list-row-action[@label='" + action + "']")).click();
-    }
-
-    public void clickOnToggle(String label) {
-        waitForRequestsToFinish();
-        findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + label + "?']//toggle-form-element")).click();
-    }
-
-    public String getDate(){
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-        Date date = new Date();
-        return dateFormat.format(date);
     }
 }

@@ -15,7 +15,7 @@ import org.openqa.selenium.By;
 public class MarketBerichtenSteps extends DwpScenario {
     BaseObject baseObject = new BaseObject(webDriver);
     private static String eanCode = null;
-    private static String date;
+    private static String moveIn = "MOVE IN";
 
     @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
@@ -29,8 +29,9 @@ public class MarketBerichtenSteps extends DwpScenario {
     }
 
     @And("^\"([^\"]*)\" turn on$")
-    public void turnOn(String input) throws Throwable {
-        baseObject.clickOnToggle(input);
+    public void turnOn(String label) throws Throwable {
+//        baseObject.clickOnToggle(input);
+        webDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + label + "?']//toggle-form-element")).click();
     }
 
     @And("^Insert EAN of customer$")
@@ -43,13 +44,12 @@ public class MarketBerichtenSteps extends DwpScenario {
     @When("^Save EAN code of customer$")
     public void saveEANCodeOfCustomer() throws Throwable {
         webDriver.waitForRequestsToFinish();
-        eanCode = baseObject.getEANCode();
-        date = baseObject.getDate();
+        eanCode = webDriver.findElementWhenVisible(By.id("aos-products-quotes-ean-c-field")).getText();
     }
 
     @Then("^Validate rejection$")
     public void validateRejection() throws Throwable {
-        final String time = webDriver.findElementWhenVisible(By.xpath("//tbody[@id='rows']/tr[1]/td[6]/list-simple-two-liner-cell[@icon='null']/p/span[1]")).getText();
-        Assert.assertTrue(date.equalsIgnoreCase(time));
+        Assert.assertTrue(webDriver.findElementWhenVisible(By.xpath("(//h5)[.='" + eanCode + "'][1]")).isDisplayed());
+        Assert.assertTrue(webDriver.findElementWhenVisible(By.xpath("(//h5)[.='" + moveIn + "'][1]")).isDisplayed());
     }
 }
