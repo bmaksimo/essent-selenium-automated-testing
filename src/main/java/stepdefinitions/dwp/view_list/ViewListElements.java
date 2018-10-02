@@ -216,7 +216,7 @@ public class ViewListElements extends NavigationElements {
             boolean success = StringUtils.equals("PASSED", status);
             if (success) {
                 String switchedPaymentMethod = ((String) result.get("paymentMethod")).equalsIgnoreCase("string:OV") ?
-                    "Overschrijving" : "DomiciliÃ«ring";
+                    "Overschrijving" : "Domiciliëring";
                 SharedPropertiesSingleton.getInstance().getSharedProperties().put("paymentMethod", switchedPaymentMethod);
             }
 
@@ -262,7 +262,6 @@ public class ViewListElements extends NavigationElements {
 
     @When("^Click on link in View List at ([^\"]*) row and \"([^\"]*)\" column$")
     public void clickOnViewListAtRowAndColumn(String ordinal, String column) throws Throwable {
-        Thread.sleep(2500);
         String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
         Map<String, String> columnIndexListOptions = new HashMap<>();
         columnIndexListOptions.put("column", column);
