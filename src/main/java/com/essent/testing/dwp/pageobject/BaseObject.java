@@ -49,7 +49,6 @@ public class BaseObject extends Component {
     public String getDate(){
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         Date date = new Date();
-        System.out.println("time from getdate method: " + dateFormat.format(date));
         return dateFormat.format(date);
     }
 }
