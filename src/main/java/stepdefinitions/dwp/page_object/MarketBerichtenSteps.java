@@ -44,15 +44,12 @@ public class MarketBerichtenSteps extends DwpScenario {
     public void saveEANCodeOfCustomer() throws Throwable {
         webDriver.waitForRequestsToFinish();
         eanCode = baseObject.getEANCode();
-        System.out.println("EAN : " + eanCode);
         date = baseObject.getDate();
     }
 
     @Then("^Validate rejection$")
     public void validateRejection() throws Throwable {
         final String time = webDriver.findElementWhenVisible(By.xpath("//tbody[@id='rows']/tr[1]/td[6]/list-simple-two-liner-cell[@icon='null']/p/span[1]")).getText();
-        System.out.println("TIME is " + time);
-        System.out.println("Assert: " + date.equalsIgnoreCase(time));
         Assert.assertTrue(date.equalsIgnoreCase(time));
     }
 }
