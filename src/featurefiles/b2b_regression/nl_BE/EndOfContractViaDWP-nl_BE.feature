@@ -11,7 +11,6 @@ Feature: End of contract via DWP - nl_BE version
             And "B2C/B2B" selection is "B2B"
             And "Type klant" selection is "Klant"
             And "Klantnummer" input is "150715682"
-#            Before DEMO find right customer
             And Click on link in View List at 1st row and "Klantnummer & Naam" column
             Then Dashboard menu is Contracten
 
