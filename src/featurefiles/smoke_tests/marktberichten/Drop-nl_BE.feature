@@ -1,4 +1,5 @@
 @SMOKE
+@DROP
 
 Feature: End order (drop) messaging
 
@@ -7,7 +8,7 @@ Feature: End order (drop) messaging
 
     Scenario: Create end order (drop) market message for a customer
         When Left menu is contracting-switching
-        And  Top menu item is Klanten
+        And Top menu item is Klanten
         And Top action is Filters
         And "B2C/B2B" selection is "B2C"
         And Label input for "Type klant" is "CUSTOMER"

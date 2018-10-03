@@ -21,26 +21,18 @@ public class SearchContractLinesDialog extends Component implements ConfirmDialo
     }
 
     public void searchContractLine(String searchInput) {
-        
+
         WebElement searchField = seleniumDriver.findElementOrNull(By.xpath("//input[@id='search-input']"));
         searchField.sendKeys(searchInput);
 
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//input[@type='submit']")));
 
-        //wait for search results to load
         Sleeper.sleepTightInSeconds(5);
-        List<WebElement> checkboxes = seleniumDriver.findElements(By.xpath("//input[@type='checkbox']"));
-        
-        //TODO you can try this alternative
-        String query = createQuery("//label[starts-with(normalize-space(), '${text}')]/input[@type='checkbox']", "text", searchInput);
-        List<WebElement> elements = seleniumDriver.findElements(By.xpath(query));
-
-        //Asserts are normally not written in POs
+        String checkBoxesQuery = createQuery("//label[starts-with(normalize-space(), '${text}')]/input[@type='checkbox']", "text", searchInput);
+        List<WebElement> checkboxes = seleniumDriver.findElements(By.xpath(checkBoxesQuery));
         assertThat(String.format("Search term %s was not found.", searchInput),
-            checkboxes.size() > 1, is(true));
-        checkboxes.get(1).click();
-        //get(1) looks like hard-coded assumption
-        //"//a[@class='button'and starts-with(normalize-space(), '${text}')]" is exact xpath
+            checkboxes.isEmpty(), is(false));
+        checkboxes.get(0).click();
 
         WebElement sendButton = seleniumDriver.findElements(By.xpath("//a[@class='button']")).get(1);
         seleniumDriver.waitAndClick(sendButton);
@@ -50,7 +42,6 @@ public class SearchContractLinesDialog extends Component implements ConfirmDialo
     public boolean confirm() {
         Sleeper.sleepTightInSeconds(5);
         seleniumDriver.waitAndClick(seleniumDriver.findElementOrNull(By.id("confirm-button")));
-        //might be different logic there. E.g. wait until element is not present
         return true;
     }
 
