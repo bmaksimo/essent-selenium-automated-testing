@@ -17,8 +17,7 @@ Feature: Javascript DWP testing
         Then 1 List row having cell value MOVE IN Move In at column Module & Label is selected
 
     Scenario:
-        When Top action is Plus Menu
-        And Plus menu is "Contracting -> UP-TK2 - Om contracten te hernieuwen"
+        When Plus menu is "Contracting -> UP-TK2 - Om contracten te hernieuwen"
         Then View list header is "UP-TK2 - Om contracten te hernieuwen" appears within 10 seconds
 
         When Top action is Filters

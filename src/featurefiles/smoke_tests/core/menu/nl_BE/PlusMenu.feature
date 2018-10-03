@@ -9,5 +9,4 @@ Feature: Log questions of customers
         And  Top menu item is Klanten
         Then View list header is "Klanten" appears within 25 seconds
         And Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
-        And Top action is Plus Menu
         And Plus menu is "Service -> Wijzigingen klant -> Bijwerken details klant"
