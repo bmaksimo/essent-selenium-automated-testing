@@ -1,5 +1,6 @@
 package stepdefinitions.dwp.b2b;
 
+import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import com.essent.testing.dwp.pageobject.impl.page.DwpAccountOverviewPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.PendingException;
@@ -21,16 +22,17 @@ public class Account extends DwpScenario {
 
     @Then("^Change is immediately visible in Finance & Legal section that \"([^\"]*)\" is active$")
     public void changeIsImmediatelyVisibleInFinanceLegalSectionThatIsActive(String box) throws Throwable {
-        DwpAccountOverviewPage daop = new DwpAccountOverviewPage(webDriver);
-        assertTrue(daop.checkIfCheckboxIsChecked(box));
+        ToggleImpl tg= new ToggleImpl(webDriver);
+        assertTrue(tg.checkIfCheckboxIsChecked(box));
     }
 
     @And("^Activate \"([^\"]*)\"$")
     public void activate(String box) throws Throwable {
         DwpAccountOverviewPage aop = new DwpAccountOverviewPage(webDriver);
+        ToggleImpl tg= new ToggleImpl(webDriver);
         Thread.sleep(2500);
         webDriver.waitForRequestsToFinish();
-        aop.clickCheckbox(box);
+        tg.clickCheckbox(box);
         aop.clickOnSaveButtonForFinanceAndLegalSection();
     }
 

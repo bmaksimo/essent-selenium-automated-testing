@@ -266,24 +266,4 @@ public class DwpAccountOverviewPage extends Component {
     public void refreshMarketTransactions()  {
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//span[contains(text(),'REFRESH MARKET TRANSACTIONS')]")));
     }
-
-
-
-    public WebElement checkBox (String box) {
-        return  seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + box + "?']//toggle-form-element/label"));
-
-    }
-
-    public boolean checkIfCheckboxIsChecked(String box)  {
-        String classValue = checkBox(box).findElement(By.cssSelector("input")).getAttribute("class");
-        return classValue.contains("not-empty");
-
-    }
-
-    public void clickCheckbox(String box)  {
-        if (checkIfCheckboxIsChecked(box)==false) {
-            seleniumDriver.waitAndClick(checkBox(box));
-        }
-    }
-
 }
