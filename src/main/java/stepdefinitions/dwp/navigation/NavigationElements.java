@@ -1,5 +1,7 @@
 package stepdefinitions.dwp.navigation;
 
+
+import com.essent.testing.dwp.pageobject.impl.navigation.DwpPlusMenu;
 import com.essent.testing.dwp.pageobject.impl.navigation.TopActionsPageImpl;
 import com.essent.testing.dwp.pageobject.navigation.TopActionsPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
@@ -149,7 +151,8 @@ public abstract class NavigationElements extends DwpScenario {
 
 
     protected void clickPlusAction(String path) {
-        boolean success = new ClickPlusAction().test(path);
+        DwpPlusMenu plusMenu = new DwpPlusMenu(webDriver);
+        boolean success = plusMenu.executeAction(path);
         assertThat(String.format("Plus Menu Path %s undefined.", path),
             success, is(true));
     }

@@ -27,44 +27,10 @@ public class LeftMenuNavigation extends Component {
         super(seleniumDriver);
     }
 
-    /*
-    findAction(accordion, actionLabel) {
-        if (accordion != undefined) {
-            let resultAction = $(accordion).find("[label='" + actionLabel + "']").find('.accordion-button');
-            if(resultAction.index() == 0) {
-                return resultAction;
-            }
-        }
-        return undefined;
-    }
-     */
+
     private static String MENU_LEAF_SELECTOR_TEMPLATE      = "//a[span[normalize-space() = '${text}'] and starts-with(@class,'oe_menu_leaf')]";
     private static String MENU_TOGGLER_SELECTOR_TEMPLATE   = "//a[span[normalize-space() = '${text}'] and starts-with(@class,'oe_menu_toggler')]";
 
-    /*
-    run() {
-        const PATH_PATTERN = new RegExp('\\s*->\\s*');
-        let result = this.result;
-        const options = this.options;
-        result.status = 'UNDEFINED';
-        result.reason = 'Not executed';
-        let items = options.path.split(PATH_PATTERN);
-        let path = items.slice(0, items.length - 1);
-        let actionPath = items[items.length - 1];
-        let match = this.findMenu(undefined, path);
-        let action = this.findAction(match, actionPath);
-        if(action == undefined) {
-            result.status = 'FAILED';
-            result.reason = "Menu path " + options.path + " was not found";
-        } else {
-            result.status = 'PASSED';
-            result.reason = '';
-            $(action).trigger('click');
-        }
-        this.resolveCallback(result);
-
-    }
-     */
 
     public void executeAction(String menuPath) {
         String pathSeparator = "\\s*->\\s*";
@@ -91,31 +57,6 @@ public class LeftMenuNavigation extends Component {
        return null;
     }
 
-    /*
-    findMenu(item, menu) {
-        if(menu == undefined) {
-            return undefined;
-        }
-        let menuItem = menu.shift();
-        if(menuItem == undefined) {
-            return item;
-        }
-        let context;
-        if(item != undefined) {
-            context = $(item).find('labeled-accordion-wrapper');
-        } else {
-            context = $('labeled-accordion-wrapper');
-        }
-        context = context.filter((i, e)=>{
-            return $(e).attr('label') === menuItem;
-        });
-        if (context.index() >= 0) {
-            $(context[0]).find('a')[0].click();
-            return this.findMenu(context[0], menu);
-        }
-        return undefined;
-    }
-    */
     private WebElement findMenu(WebElement item, List<String> menu) {
          if(menu == null) {
             return null;
@@ -175,5 +116,4 @@ public class LeftMenuNavigation extends Component {
         waiter.until(ExpectedConditions.elementToBeClickable(childElement));
         childElement.click();
     }
-
 }
