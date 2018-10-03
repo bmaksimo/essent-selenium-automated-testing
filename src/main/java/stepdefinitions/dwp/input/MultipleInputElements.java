@@ -1,18 +1,12 @@
 package stepdefinitions.dwp.input;
 
-import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.scenario.DwpScenario;
-import com.essent.testing.util.SharedPropertiesSingleton;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
-import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 

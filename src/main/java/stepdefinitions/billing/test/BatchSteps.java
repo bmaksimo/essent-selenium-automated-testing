@@ -33,7 +33,7 @@ public class BatchSteps extends BillingScenario {
 	// Time between calls to figure out when a job has finished
 	private long POLLING_INTERVAL = 250;
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
+    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @DROP, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }

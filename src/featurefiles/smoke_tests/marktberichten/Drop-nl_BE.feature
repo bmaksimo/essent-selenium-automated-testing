@@ -21,11 +21,11 @@ Feature: End order (drop) messaging
 
         When Click on Start nieuw marktbericht
         And Click Select Contractline
-        And Dialog search input is current "EAN-code & Producttype"
-        Then Confirm is clicked
+        And  Dialog search input is current "EAN-code & Producttype"
+        Then Select Contractline dialog is confirmed
 
         When "Module" selection is "INITIATE STOP ACCESS"
         And Label input for "Label" is "Drop/Request Budget Meter"
         And Option "Testing?" is On
-        And Confirm is clicked
+        And Select Contractline dialog is confirmed
         Then 1st list element has cell value INITIATE STOP ACCESS at column Module & Label

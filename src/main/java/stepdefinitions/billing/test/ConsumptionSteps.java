@@ -15,13 +15,16 @@ import org.apache.commons.lang.text.StrSubstitutor;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.springframework.util.Assert;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.charset.Charset;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import java.util.function.Predicate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -34,7 +37,7 @@ public class ConsumptionSteps extends DwpScenario {
     private static final String PATH = "/xml/";
     private static final String CONSUMPTION_FILE = "consumption.xml";
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
+    @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @DROP, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }

@@ -1,14 +1,13 @@
 package com.essent.restclients;
 
-import com.essent.testing.client.billing.BillingRootClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.essent.be.jbilling.api.rest.energycomm.MarketMessageResponse;
 import com.essent.be.jbilling.api.rest.energycomm.RSCheckGridfeeToRectifyBilledResponse;
 import com.essent.be.jbilling.api.rest.energycomm.UpdateMasterDataResponse;
 import com.essent.be.jbilling.api.rest.energycomm.ValidateGridfeeResponse;
 import com.essent.belgium.energycomm.ws_to_bo.BasePayload;
+import com.essent.testing.client.billing.BillingRootClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BillingEnergyCommRest extends BillingRootClient {
     private static final Logger LOG = LoggerFactory.getLogger(BillingEnergyCommRest.class);
