@@ -1,6 +1,6 @@
 package com.essent.testing.dwp.pageobject.impl.service_contracting;
 
-import com.essent.testing.dwp.pageobject.BaseObject;
+import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
 
@@ -69,10 +69,6 @@ public class LeadPage extends BaseObject {
         findElementWhenVisible(By.id("address-bus-field")).sendKeys(boxNumber);
         findElementWhenVisible(By.id("address-postalcode-field")).sendKeys(postalCode);
         findElementWhenVisible(By.id("address-city-field")).sendKeys(city);
-
-    }
-
-    private void naceCode() {
 
     }
 }

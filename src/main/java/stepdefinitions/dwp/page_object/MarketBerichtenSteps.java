@@ -1,8 +1,8 @@
 package stepdefinitions.dwp.page_object;
 
-import com.essent.testing.dwp.pageobject.BaseObject;
+import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
+import com.essent.testing.dwp.pageobject.impl.page.MarktberichtenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -30,26 +30,27 @@ public class MarketBerichtenSteps extends DwpScenario {
 
     @And("^\"([^\"]*)\" turn on$")
     public void turnOn(String label) throws Throwable {
-//        baseObject.clickOnToggle(input);
-        webDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + label + "?']//toggle-form-element")).click();
+        BaseObject baseObject = new BaseObject(webDriver);
+        baseObject.clickOnToggle(label);
     }
 
     @And("^Insert EAN of customer$")
     public void insertEANOfCustomer() throws Throwable {
         webDriver.waitForRequestsToFinish();
         baseObject.insertEANcode(eanCode);
-        webDriver.waitForRequestsToFinish();
     }
 
     @When("^Save EAN code of customer$")
     public void saveEANCodeOfCustomer() throws Throwable {
+        MarktberichtenPage marktberichtenPage = new MarktberichtenPage(webDriver);
         webDriver.waitForRequestsToFinish();
-        eanCode = webDriver.findElementWhenVisible(By.id("aos-products-quotes-ean-c-field")).getText();
+        eanCode = marktberichtenPage.getEanCode();
     }
 
     @Then("^Validate rejection$")
     public void validateRejection() throws Throwable {
-        Assert.assertTrue(webDriver.findElementWhenVisible(By.xpath("(//h5)[.='" + eanCode + "'][1]")).isDisplayed());
-        Assert.assertTrue(webDriver.findElementWhenVisible(By.xpath("(//h5)[.='" + moveIn + "'][1]")).isDisplayed());
+        MarktberichtenPage marktberichtenPage = new MarktberichtenPage(webDriver);
+        Assert.assertTrue(marktberichtenPage.validateRejectionHeader(eanCode));
+        Assert.assertTrue(marktberichtenPage.validateRejectionHeader(moveIn));
     }
 }
