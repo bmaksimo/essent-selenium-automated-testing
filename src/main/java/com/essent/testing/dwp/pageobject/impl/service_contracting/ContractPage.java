@@ -32,8 +32,11 @@ public class ContractPage extends BaseObject {
     }
 
     public boolean getAmountOfACustomer(String amount) {
-        String amountValue = findElementWhenVisible(By.id("advance-amount-incl-vat-c-field")).getText();
+        String amountValue = findElementWhenVisible(By.id("advance-amount-field")).getText();
         String amountParameter = amount + ",00";
-        return amountParameter.equals(amountValue);
+        String[] value = amountValue.split(" ", 2);
+        for(String i : value)
+
+        return amountParameter.equals(value[1]);
     }
 }
