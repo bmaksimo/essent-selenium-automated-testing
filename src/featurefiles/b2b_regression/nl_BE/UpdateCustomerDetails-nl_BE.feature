@@ -16,4 +16,3 @@ Feature: Update customer details - dunning stop
         And Plus menu is "Service -> Wijzigingen klant -> Bijwerken details klant"
         And Activate "Aanmaningsstop"
         Then Change is immediately visible in Finance & Legal section that "Aanmaningsstop" is active
-        And Plus menu is "Service -> Wijzigingen klant -> Bijwerken details klant"
