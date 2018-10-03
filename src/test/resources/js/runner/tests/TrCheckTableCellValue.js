@@ -1,4 +1,4 @@
-class TrGetTableCellUrl extends TestRunnerBase {
+class TrCheckTableCellValue extends TestRunnerBase {
 
     /**
      * Checks if Table Cell is present in the DOM
@@ -19,9 +19,10 @@ class TrGetTableCellUrl extends TestRunnerBase {
         result.status = 'FAILED';
         result.reason = 'Not executed';
         result.column = {"index": -1, "caption": options.column};
-        result.data = '';
-        let caption = options.column;
-        let row = parseInt(options.index) * 2 - 1;
+        const caption = options.column;
+        const row = parseInt(options.index) * 2 - 1;
+        const data = options.data;
+
         let index = $(".list__content th:contains('" + caption + "')").index();
         if (index < 0) {
             result.status = 'FAILED';
@@ -30,22 +31,18 @@ class TrGetTableCellUrl extends TestRunnerBase {
             result.status = 'FAILED';
             result.reason = 'Row ' +  caption + ' was not found.';
         } else {
-            let query = "#rows tr:nth-child(" + row + ") td:nth-child(" + ++index + ") div a";
-            let elem = $(query);
-            console.log("--QUERY: " + query);
-            console.log("--CELL TEXT: " + elem.text());
-            console.log("--ELEM index(): " + elem.index());
-            if(elem.index()  > -1) {
-            	result.data = elem.text();
+            const query = "#rows tr:nth-child(" + row + ") td:nth-child(" + ++index + ") list-simple-two-liner-cell";
+            const elem = $(query).text().indexOf(data);
+            if(elem > -1) {
                 result.status = 'PASSED';
                 result.column.index = index;
                 result.reason = '';
             } else {
-                result.reason  = 'Navigation, click on ' + elem.text();
+                result.reason  = 'Input provided was not found: ' + data;
                 result.column  = options.column;
             }
-
         }
+
         this.resolveCallback(result);
     }
 }

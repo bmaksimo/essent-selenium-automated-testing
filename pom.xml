@@ -40,6 +40,7 @@
 
     <!-- Essent dependencies -->
     <jbilling.client.version>2.53.0-SNAPSHOT</jbilling.client.version>
+    <haulogy-jaxb.version>2.53.0-SNAPSHOT</haulogy-jaxb.version>
 
     <!-- Dependency versions. -->
     <awaitility.version>3.1.1</awaitility.version>
@@ -240,6 +241,11 @@
         <groupId>net.masterthought</groupId>
         <artifactId>cucumber-reporting</artifactId>
         <version>${cucumber-reporting.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.essent</groupId>
+        <artifactId>haulogy-jaxb</artifactId>
+        <version>${haulogy-jaxb.version}</version>
       </dependency>
       <dependency>
         <groupId>mysql</groupId>
@@ -474,6 +480,10 @@
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.essent</groupId>
+      <artifactId>haulogy-jaxb</artifactId>
+    </dependency>
   <!-- XMLRPC -->
     <dependency>
       <groupId>org.apache.xmlrpc</groupId>
@@ -528,9 +538,11 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${maven-surefire-plugin.version}</version>
+        <!--
         <configuration>
           <testFailureIgnore>true</testFailureIgnore>
         </configuration>
+        -->
         <dependencies>
           <dependency>
             <groupId>org.apache.maven.surefire</groupId>

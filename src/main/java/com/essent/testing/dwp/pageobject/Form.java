@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.quote;
+package com.essent.testing.dwp.pageobject;
 
 public interface Form {
     boolean fillInFormData();

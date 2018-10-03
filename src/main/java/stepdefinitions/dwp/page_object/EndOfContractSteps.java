@@ -13,6 +13,7 @@ import org.openqa.selenium.By;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
+
 public class EndOfContractSteps extends DwpScenario {
 
     @Before("@SMOKE, @QUOTE, @BILLING, @B2B_REGRESSION")
