@@ -32,11 +32,8 @@ public class ContractPage extends BaseObject {
     }
 
     public boolean getAmountOfACustomer(String amount) {
-        String amountValue = findElementWhenVisible(By.id("advance-amount-field")).getText();
-        String amountParameter = "€ " + amount + ",00";
-        System.out.println("AMOUNT VALUE : " + amountValue);
-        System.out.println("AMOUNT PARAMETER : " + amount);
-        System.out.println("AMOUNT PARAMETER2 : " + amountParameter);
+        String amountValue = findElementWhenVisible(By.id("advance-amount-incl-vat-c-field")).getText();
+        String amountParameter = amount + ",00";
         return amountParameter.equals(amountValue);
     }
 }

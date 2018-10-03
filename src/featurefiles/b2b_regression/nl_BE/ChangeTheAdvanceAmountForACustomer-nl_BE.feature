@@ -19,5 +19,5 @@ Feature: Dwp test for changing amount for a customer
         And Amount values is 99
         Then Changes are confirmed
 
-        When Contract plus and "Bekijk voorschotdata"
+        When Contract plus and "Details bekijken"
         Then Amount of a customer value
