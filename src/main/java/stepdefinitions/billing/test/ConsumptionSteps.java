@@ -37,7 +37,7 @@ public class ConsumptionSteps extends DwpScenario {
     private static final String PATH = "/xml/";
     private static final String CONSUMPTION_FILE = "consumption.xml";
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @DROP, @B2B_REGRESSION")
+    @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }

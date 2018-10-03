@@ -16,7 +16,7 @@ import static org.hamcrest.Matchers.is;
 
 public class TopActions extends NavigationElements {
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @DROP, @BILLING, @B2B_REGRESSION")
+    @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @BILLING, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -62,7 +62,7 @@ public class TopActions extends NavigationElements {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @DROP, @BILLING, @B2B_REGRESSION")
+    @After("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @BILLING, @B2B_REGRESSION")
     public void tearDown() throws Exception {
         super.tearDown();
     }

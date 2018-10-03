@@ -33,11 +33,11 @@ public class BatchSteps extends BillingScenario {
 	// Time between calls to figure out when a job has finished
 	private long POLLING_INTERVAL = 250;
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @DROP, @B2B_REGRESSION")
+    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
-	
+
     @After("@QUOTE, @QUOTE_MI, @QUOTE_SS")
     public void afterScenario(Scenario scenario) {
         // We need to kill any pending jobs and wait until they are finished.
@@ -66,7 +66,7 @@ public class BatchSteps extends BillingScenario {
 
         }
     }
-    
+
 
 	@When("^[E|e]xecute mediation job \"([^\"]*)\"$")
 	public void execute_mediation_job(String jobName) throws InterruptedException {
@@ -87,7 +87,7 @@ public class BatchSteps extends BillingScenario {
     public void try_second_job_no_wait_for_settlement_date(String jobName, @Transform(DateMapper.class) Date settlementDate) throws InterruptedException {
         run_and_do_not_wait_for_mediation_job(jobName, null, null, settlementDate, false);
     }
-	
+
     @Then("^Execute mediation job \"([^\"]*)\" for billingid \"([^\"]*)\" and settlement date \"([^\"]*)\"$")
     public void execute_mediation_job_for_billingid_and_settlement_date(String jobName, String billingid,
             @Transform(DateMapper.class) Date settlementDate) throws Throwable {
@@ -109,7 +109,7 @@ public class BatchSteps extends BillingScenario {
 	    public void start_bill_run_for_process_date_no_invoice_created(String jobName, @Transform(DateMapper.class) Date processDate) throws Throwable {
 	        startBillRun(jobName, null, processDate, null, null, true, false);
 	    }
-	   
+
 	@And("^Execute billing run \"([^\"]*)\" for billingUser \"([^\"]*)\" and process date \"([^\"]*)\"$")
 	public void start_bill_run_for_billingUser_and_process_date(String jobName, String billingCustomerId,
 			@Transform(DateMapper.class) Date processDate) {
@@ -121,7 +121,7 @@ public class BatchSteps extends BillingScenario {
 	    // Write code here that turns the phrase above into concrete actions
         startBillRun(jobName, null, processDate, selectionDay, null, true, true);
 	}
-	
+
     @And("^Execute billing run \"([^\"]*)\" for process date \"([^\"]*)\" and invoice date \"([^\"]*)\"$")
     public void execute_billing_run_for_process_date_and_invoice_date(String jobName,
             @Transform(DateMapper.class) Date processDate, String invoiceDate) throws Throwable {
@@ -142,14 +142,14 @@ public class BatchSteps extends BillingScenario {
         // Write code here that turns the phrase above into concrete actions
         startBillRun(jobName, null, processDate, null, new SimpleDateFormat("yyyy-MM-dd").format(new Date()), false, false);
     }
-    
+
     @And("^Execute billing run \"([^\"]*)\" for billingUser \"([^\"]*)\" and process date \"([^\"]*)\" and invoice date \"([^\"]*)\"$")
     public void execute_billing_run_for_billingUser_process_date_and_invoice_date(String jobName, String billingCustomerId,
             @Transform(DateMapper.class) Date processDate, String invoiceDate) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         startBillRun(jobName, billingCustomerId, processDate, null, invoiceDate, true, true);
     }
- 
+
     @And("^Terminate all running jobs")
     public void terminate_all_running_jobs() throws Throwable {
     	BillingBatch billingBatch=new BillingBatch();
@@ -160,19 +160,19 @@ public class BatchSteps extends BillingScenario {
 			RestResponse restResponse = billingBatch.stopRunningJob(request);
 			Assert.assertTrue(restResponse.getMsg(), restResponse.getResult());
 		}
-		
+
     }
- 
+
     @And("^Terminate job \"([^\"]*)\"")
     public void terminate_job(String jobId) throws Throwable {
     	BillingBatch billingBatch=new BillingBatch();
 		RSStopRunningJobRequest request = new RSStopRunningJobRequest();
 		request.setJobId(Long.valueOf(Long.valueOf(jobId)));
 		RestResponse restResponse = billingBatch.stopRunningJob(request);
-		Assert.assertTrue(restResponse.getResult());		
+		Assert.assertTrue(restResponse.getResult());
     }
 
-    
+
     @And("^Wait for slave threads to start")
     public void wait_for_slave_threads_to_start() throws Throwable {
 
@@ -181,27 +181,27 @@ public class BatchSteps extends BillingScenario {
             // Stand alone, we're done.
             return;
         }
-        
+
         LocalTime timeOutAfter = LocalTime.now().plusSeconds(5);
         while (running == 0 && timeOutAfter.isAfter(LocalTime.now())) {
             waitMillis(POLLING_INTERVAL);
             running = getNrThreadsExecutingJob();
         }
-        
+
         if (running == 0 ) {
             fail("No threads started processing job within 5 seconds");
         }
 
     }
 
-    
+
     @Then("^I expect a single running job of type \"([^\"]*)\"$")
     public void i_expect_a_single_running_job_of_type(String jobType) throws Throwable {
 		RSShowRunningJobsResponse restResponse = new BillingBatch().showRunningJobs();
 		Assert.assertEquals(1, restResponse.getJobs().size());
 		Assert.assertEquals(jobType, restResponse.getJobs().get(0).getJobName());
     }
-    
+
     @Then("^I expect no running jobs")
     public void i_expect_no_running_jobs() throws Throwable {
 		RSShowRunningJobsResponse restResponse = new BillingBatch().showRunningJobs();
@@ -211,18 +211,18 @@ public class BatchSteps extends BillingScenario {
 		}
 		Assert.assertEquals("jobsStillRunning: " + jobs, 0, restResponse.getJobs().size());
     }
-    
+
     @Then("^I expect more than zero running threads")
     public void i_expect_more_than_zero_running_threads() throws Throwable {
         Assert.assertTrue("No threads processing a job", getNrThreadsExecutingJob() > 0);
     }
-    
+
     @Then("^I expect no running threads")
     public void i_expect_no_running_threads() throws Throwable{
         // number of active threads can also be -1, if it is a standalone instance
         Assert.assertTrue("There were unexpected running threads", getNrThreadsExecutingJob() <= 0);
     }
-    
+
   public void startBillRun(String jobName, String billingCustomerId, Date processDate, String selectionDay,
       String invoiceDateAsString, boolean wait, boolean expectSuccess)
 	{
@@ -249,9 +249,9 @@ public class BatchSteps extends BillingScenario {
 		}
 		RestResponse resp = new BillingBatch().triggerBilling(request);
 		if( expectSuccess ) {
-            Assert.assertTrue(resp.getMsg(), resp.getResult());		    
+            Assert.assertTrue(resp.getMsg(), resp.getResult());
 		} else {
-            Assert.assertFalse("Expected start billing run to fail, but didn't fail", resp.getResult());         
+            Assert.assertFalse("Expected start billing run to fail, but didn't fail", resp.getResult());
 		}
 		if (wait) {
 			waitForBillingRunFinished();
@@ -318,7 +318,7 @@ public class BatchSteps extends BillingScenario {
 		}
 	}
 
-	
+
 	private void waitForMediationRunFinished() {
 		BillingBatch mediationRun = new BillingBatch();
 		boolean running = true;
@@ -333,24 +333,24 @@ public class BatchSteps extends BillingScenario {
 		}
 
 	}
-	
+
 	private int getNrThreadsExecutingJob() {
         RSGetThreadsExecutingJobResponse restResponse = new BillingBatch().getThreadsExecutingJob();
-        
-        Assert.assertNotNull("No response received", restResponse); 
-        Assert.assertTrue(restResponse.getMsg(), restResponse.getResult()); 
-        
+
+        Assert.assertNotNull("No response received", restResponse);
+        Assert.assertTrue(restResponse.getMsg(), restResponse.getResult());
+
         return restResponse.getNumberOfActiveThreads();
-	    
+
 	}
-	
+
 	private void waitForAllRunsFinished() {
 		int threadsRunning = getNrThreadsExecutingJob();
 
 		// This should be null
 		Assert.assertTrue("Not all slave threads were stopped when stopping job", threadsRunning <= 0);
 
-		// We can wait forever in the thread that initiated the stop, but the job will not get stopped 
+		// We can wait forever in the thread that initiated the stop, but the job will not get stopped
 		// status there. So we wait here.
 		boolean jobsRunning=true;
 		while (jobsRunning) {
