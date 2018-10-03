@@ -1,5 +1,4 @@
 @SMOKE
-@DROP
 
 Feature: End order (drop) messaging
 
