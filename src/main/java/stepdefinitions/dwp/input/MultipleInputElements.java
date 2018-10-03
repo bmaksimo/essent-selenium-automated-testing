@@ -38,7 +38,7 @@ public class MultipleInputElements extends DwpScenario {
     public void setMultipleInput(String product) {
 
         Map<String, String> options = new HashMap<>();
-        options.put("searchInput", product);
+        options.put("product", product);
 
         boolean openedDialog = new MultipleInputDialog().test(options);
         assertThat("Dialog could not be opened.",
