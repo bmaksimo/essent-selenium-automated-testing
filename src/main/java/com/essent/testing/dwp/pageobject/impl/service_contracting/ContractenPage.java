@@ -1,0 +1,57 @@
+package com.essent.testing.dwp.pageobject.impl.service_contracting;
+
+import com.essent.testing.dwp.pageobject.impl.Component;
+import com.essent.testing.selenium.SeleniumDriver;
+import org.junit.Assert;
+import org.openqa.selenium.By;
+
+public class ContractenPage extends Component {
+
+    public ContractenPage(SeleniumDriver seleniumDriver) {
+        super(seleniumDriver);
+    }
+
+    public String findActiveContract(String input) throws InterruptedException {
+        waitForRequestsToFinish();
+        int counter = 2;
+        String eanCode;
+        String action = findElementWhenVisible(By.xpath("(//h6)[" + counter + "]")).getText();
+        while (!action.equalsIgnoreCase(input)) {
+            counter = counter + 2;
+            action = findElementWhenVisible(By.xpath("(//h6)[.='" + counter + "'][1]")).getText();
+        }
+        counter--;
+        eanCode = findElementWhenVisible(By.xpath("(//h5)[" + counter + "]")).getText();
+
+        return eanCode;
+    }
+
+    public void searchForEanCode(String eanCode) {
+        waitForRequestsToFinish();
+        findElementWhenVisible(By.id("search-input")).clear();
+        findElementWhenVisible(By.id("search-input")).sendKeys(eanCode);
+        findElementWhenVisible(By.xpath("//input[@value='Search']")).click();
+        waitForRequestsToFinish();
+        findElementWhenVisible(By.xpath("//div[@class='multi-select__results']//ul[2]")).click();
+        waitForRequestsToFinish();
+        findElementWhenVisible(By.xpath("//section[@class='view__modal']//a[@href='']")).click();
+    }
+
+    public void fieldDropDownLabel(String label, String input) {
+       waitForRequestsToFinish();
+       findElementWhenVisible(By.xpath("//select[@id='dwp-mig-" + label.toLowerCase() + "-c-field']/option[@label='" + input + "']")).click();
+    }
+
+    public void turnOnTestingAndMarketMock(String label) {
+        if (label.equalsIgnoreCase("Testing")) {
+            findElementWhenVisible(By.id("dwp|toggle_testing")).click();
+        } else if (label.equalsIgnoreCase("Market mock")) {
+            findElementWhenVisible(By.id("aos_products_quotes|market_mock_c")).click();
+        }
+    }
+
+    public void confirmTaskStatus(String input) {
+        waitForRequestsToFinish();
+        Assert.assertTrue(findElementWhenVisible(By.xpath("(//h6)[.='" + input + "']")).isDisplayed());
+    }
+}
