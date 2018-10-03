@@ -25,7 +25,7 @@ public class CreateContractTC1B2B extends CreateQuoteB2BBase implements CreateQu
 	@Override
 	public void setPreconditions(String accountName, String contractStartDate, String contractEndDate) throws Exception{
 		logger.info("Set preconditions before starting: " + this.getClass().getSimpleName());
-		super.setPreconditions(accountName, contractStartDate, contractEndDate);
+		super.setPreconditions(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_TC1_B2B, accountName, contractStartDate, contractEndDate);
 		logger.info("Set preconditions after starting: " + this.getClass().getSimpleName() + " - PASSED");
 	}
 	
@@ -55,7 +55,7 @@ public class CreateContractTC1B2B extends CreateQuoteB2BBase implements CreateQu
 		verifyContractCreated(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_TC1_B2B, ConstantsContractB2B.SIGNED_EN.toUpperCase(), ConstantsContractB2B.ACCEPTED_EN.toUpperCase());
 		
 		logger.info("createContractB2B: " + this.getClass().getSimpleName() + " - PASSED");
-		//Should be checked is this should be removed or not after we start to use CREATING OF CONTRACTS from jenkins job
+		//Should be checked: is this should be removed or not, after we start to use CREATING OF CONTRACTS from jenkins job
 		/*if (numberOfAttempts < ConstantsContractB2B.MAX_NUMBER_OF_ATTEMPTS_TO_FIND_APPROPRIATE_START_CONTRACT_DATE) {
 			
 			ContractStatus contractStatus = checkContractIsActive(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_TC1_B2B);

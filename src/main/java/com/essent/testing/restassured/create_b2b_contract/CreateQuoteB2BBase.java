@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
+
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.restassured.create_b2b_contract.constants.ApiPathsContractB2B;
@@ -25,6 +27,8 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 public class CreateQuoteB2BBase {
+	
+	private static final Logger logger = Logger.getLogger(CreateQuoteB2BBase.class);
 	
 	private String CRMusername = ConfigProvider.getProperty(ConfigKey.DWP_USER_SOAPUI_B2B);
 	private String CRMpassword = ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_SOAPUI_B2B);
@@ -91,7 +95,7 @@ public class CreateQuoteB2BBase {
 		RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 	}
 	
-	protected void setPreconditions(String accountName, String contractStartDate, String contractEndDate) throws Exception{
+	protected void setPreconditions(String path, String accountName, String contractStartDate, String contractEndDate) throws Exception{
 		numberOfAttempts = 0;
 		
 		this.accountName = PrepareDataForB2BContract.setAccountName(accountName);
@@ -99,8 +103,15 @@ public class CreateQuoteB2BBase {
 		yesterdayDate = PrepareDataForB2BContract.getYesterdayDate();
 		todayDate = PrepareDataForB2BContract.getTodayDate();
 		generatedIban = PrepareDataForB2BContract.getValidIbanBE();
-		this.upStartDate = PrepareDataForB2BContract.getRandomStartContractDate(contractStartDate, contractEndDate);
 		
+		// Set appropriate start contract date in create quote page of DWP
+		String currentContractStartDateInDWP = getLastSetContractStartDateFromDWP(path);
+		this.upStartDate = PrepareDataForB2BContract.getStartContractDate(contractStartDate, contractEndDate, currentContractStartDateInDWP);
+		
+		if(this.upStartDate.equals("NOT_VALID")) {
+			logger.info("ALL START CONTRACT DATES ARE USED FOR ADDRESS STREET: " + addressStreet + " EAN: " + ean_c + "; PLEASE USE ANOTHER ADDRESS AND EAN");
+			throw new Exception("ALL START CONTRACT DATES ARE USED FOR ADDRESS STREET: " + addressStreet + " EAN: " + ean_c + "; PLEASE USE ANOTHER ADDRESS AND EAN");
+		}
 	}
 	
 	protected void login() {
@@ -478,6 +489,30 @@ public class CreateQuoteB2BBase {
 		switchType = prop.getProperty("switchtype_c");
 		migLabel = prop.getProperty("mig_label_c");
 		
+	}
+	
+	private String getLastSetContractStartDateFromDWP(String path) throws IOException{
+		
+		String upStartDate = "";
+		
+		String payloadFilterByEan = path
+				+ "filter_quotes_by_ean.json.template";
+		String originalpayloadFilterByEan = path
+				+ "filter_quotes_by_ean.json";
+
+		String jsonBody = PrepareDataForB2BContract.createRequestJsonPayload(payloadFilterByEan, originalpayloadFilterByEan, "${ean_c}", ean_c);
+
+		Response response = RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
+				.body(jsonBody).when().post(ApiPathsContractB2B.API_LIST_QUOTES).then().statusCode(200)
+				.extract().response();
+		
+		String isContractExist = new JsonPath(response.getBody().asString()).get("data.rows[0]");
+		
+		if(isContractExist != null) {
+			upStartDate = new JsonPath(response.getBody().asString()).get("data.rows[0].rowData.aos_products_quotes|up_start_date_c");
+		}
+		
+		return upStartDate;
 	}
 	
 }

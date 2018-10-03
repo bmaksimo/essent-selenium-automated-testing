@@ -26,4 +26,6 @@ public class ApiPathsContractB2B {
 
 	public static final String API_CONTRACTED_EAN = CRM_ROOT_API + "/V8_Custom/List/ContractedEansOnAccount";
 	public static final String API_GET_ACCOUNT_NUMBER = CRM_ROOT_API + "/V8_Custom/BlueSidebar/Accounts/{recordId}";
+	
+	public static final String API_LIST_QUOTES = CRM_ROOT_API + "/V8_Custom/List/Quotes";
 }

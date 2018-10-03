@@ -112,17 +112,44 @@ public final class PrepareDataForB2BContract {
 			return randomNumberForEAN + String.valueOf(Math.round(Math.ceil(sum/10))*10 - sum);
 	}
 	
-	public static String getRandomStartContractDate(String startContractDate, String todayDate) throws ParseException {
-
+	private static String increaseByOneStartContractDate(String startContractDate, String todayDate, String currentContractStartDateInDWP) throws ParseException {
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+		Date dateTodayDate = sdf1.parse(todayDate);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar c = Calendar.getInstance();
+		c.setTime(sdf.parse(currentContractStartDateInDWP));
+		c.add(Calendar.DATE, 1);  // number of days to add
+		currentContractStartDateInDWP = sdf.format(c.getTime());  // currentContractStartDateInDWP is now the new date
+		Date dateCurrentContractStartDateInDWP = sdf.parse(currentContractStartDateInDWP);
+		
+		if((dateCurrentContractStartDateInDWP.after(dateTodayDate) || dateCurrentContractStartDateInDWP.equals(dateTodayDate) )) {
+			return "NOT_VALID";
+		}
+		
+		return currentContractStartDateInDWP;
+	}
+	
+	private static String getRandomStartContractDate(String startContractDate, String todayDate, String currentContractStartDateInDWP) throws ParseException {
+				
 		Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(startContractDate);
 		Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse(todayDate);
-
+		
 		long random = ThreadLocalRandom.current().nextLong(date1.getTime(), date2.getTime());
 		Date date = new Date(random);
-
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		
 		return dateFormat.format(date);
 
+	}
+	
+	public static String getStartContractDate(String startContractDate, String todayDate, String currentContractStartDateInDWP) throws ParseException {
+
+		if(currentContractStartDateInDWP.equals("")) {
+			return startContractDate;
+		}
+		
+		return increaseByOneStartContractDate(startContractDate, todayDate, currentContractStartDateInDWP);
 	}
 	
 	public static String getRandomAddressNumber() {
