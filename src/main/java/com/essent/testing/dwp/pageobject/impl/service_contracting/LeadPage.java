@@ -7,7 +7,8 @@ import org.openqa.selenium.WebElement;
 
 public class LeadPage extends BaseObject {
     //TODO: Change Hard Coded data with Test Data
-    private final static String contactPerson = "Test";
+    private final static String contactPersonName = "Strahinja";
+    private final static String contactPersonLastName = "Vuckovic";
     private final static String telephone = "+32 78 15 79 79";
     private final static String mobile = "+32 498 12 34 56";
     private final static String email = "test@test.com";
@@ -23,7 +24,7 @@ public class LeadPage extends BaseObject {
     public void createLead(String companyName) {
         setCompanyName(companyName);
         waitForRequestsToFinish();
-        setContactPerson(contactPerson);
+        setContactPerson(contactPersonName, contactPersonLastName);
         setTelephone(telephone);
         setMobile(mobile);
         setEmail(email);
@@ -42,11 +43,11 @@ public class LeadPage extends BaseObject {
         findElementWhenVisible(By.id("primaryButton")).click();
     }
 
-    private void setContactPerson(String contactPerson) {
-        findElementWhenVisible(By.id("first-name-field")).sendKeys(contactPerson);
+    private void setContactPerson(String contactPersonName, String contactPersonLastName) {
+        findElementWhenVisible(By.id("first-name-field")).sendKeys(contactPersonName);
         waitForRequestsToFinish();
-        findElementWhenVisible(By.id("last-name-field")).sendKeys(contactPerson);
-        findElementWhenVisible(By.id("first-name-field")).sendKeys(contactPerson);
+        findElementWhenVisible(By.id("last-name-field")).sendKeys(contactPersonLastName);
+        findElementWhenVisible(By.id("first-name-field")).sendKeys(contactPersonName);
     }
 
     private void setTelephone(String telephone) {
