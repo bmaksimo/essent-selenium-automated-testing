@@ -1,18 +1,13 @@
 package com.essent.testing.dwp.pageobject.impl.service_contracting;
 
-import com.essent.testing.dwp.pageobject.BaseObject;
+import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 public class ContractPage extends BaseObject {
 
     public ContractPage(SeleniumDriver seleniumDriver) {
         super(seleniumDriver);
-    }
-
-    public ContractPage(WebElement element, SeleniumDriver seleniumDriver) {
-        super(element, seleniumDriver);
     }
 
     public void openFirstContractFromList() {
@@ -35,7 +30,8 @@ public class ContractPage extends BaseObject {
         String amountValue = findElementWhenVisible(By.id("advance-amount-field")).getText();
         String amountParameter = amount + ",00";
         String[] value = amountValue.split(" ", 2);
-        for(String i : value){}
+        for (String i : value) {
+        }
 
         return amountParameter.equals(value[1]);
     }
