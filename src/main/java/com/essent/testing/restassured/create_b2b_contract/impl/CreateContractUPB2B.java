@@ -1,5 +1,8 @@
 package com.essent.testing.restassured.create_b2b_contract.impl;
 
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -47,32 +50,6 @@ public class CreateContractUPB2B extends CreateQuoteB2BBase implements CreateQuo
 		verifyContractCreated(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_UP_B2B, ConstantsContractB2B.SIGNED_EN.toUpperCase(), ConstantsContractB2B.ACCEPTED_EN.toUpperCase());
 		
 		logger.info("createContractB2B: " + this.getClass().getSimpleName() + " - PASSED");
-		
-		//Should be checked: is this should be removed or not, after we start to use CREATING OF CONTRACTS from jenkins job
-		/*
-		if (numberOfAttempts < ConstantsContractB2B.MAX_NUMBER_OF_ATTEMPTS_TO_FIND_APPROPRIATE_START_CONTRACT_DATE) {
-			
-			ContractStatus contractStatus = checkContractIsActive(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_UP_B2B);
-			
-			switch (contractStatus) {
-				case TO_BE_ACTIVATED:
-				{
-					++numberOfAttempts;
-					createContractB2B();
-					break;
-				}
-				case ACTIVE:
-				{
-					assertTrue(true, "Contract status is: " + contractStatus);
-					break;
-				}
-				default:
-				{
-					assertFalse(false, "Contract status is not ACTIVE and it is: " + contractStatus);
-					break;
-				}
-			}
-		}*/
 		
 		return getAccountNumber(recordId, cookie);
 		
@@ -125,6 +102,65 @@ public class CreateContractUPB2B extends CreateQuoteB2BBase implements CreateQuo
 		logger.info("signMandatePaper: " + this.getClass().getSimpleName());
 		super.signMandatePaper(path);
 		logger.info("signMandatePaper: " + this.getClass().getSimpleName() + " - PASSED");
+	}
+	
+	@Override
+	public void verifyContractCreated(String path, String quoteStage, String quoteStatus) throws IOException {
+		logger.info("verifyContractCreated: " + this.getClass().getSimpleName());
+		super.verifyContractCreated(path, quoteStage, quoteStatus);
+		logger.info("verifyContractCreated: " + this.getClass().getSimpleName() + " - PASSED");
+	}
+
+	@Override
+	public String createContractB2BAndCheckContractStatus() throws Exception {
+		logger.info("createContractB2BAndCheckContractStatus: " + this.getClass().getSimpleName());
+		login();
+		setPreconditions(ConstantsContractB2B.ACCOUNT_NAME_PREFIX_TC1_B2B, upStartDate, PrepareDataForB2BContract.getTodayDate());
+		createQuoteB2B(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_TC1_B2B, ConstantsContractB2B.PATH_TO_JSON_FILES_CREATE_QUOTE_B2B_TC1, ApiPathsContractB2B.API_CREATE_QUOTE_B2B_TC1);		
+		verifyQuoteStatus(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_TC1_B2B, ConstantsContractB2B.SENT_TO_CUSTOMER_EN.toUpperCase(), ConstantsContractB2B.ACCEPTED_EN.toUpperCase());
+		sendToCustomer(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_TC1_B2B);
+		verifyQuoteStatus(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_TC1_B2B, ConstantsContractB2B.SENT_TO_CUSTOMER_EN.toUpperCase(), ConstantsContractB2B.ACCEPTED_EN.toUpperCase());
+		signatureReceived(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_TC1_B2B, pricingDate, priceValidUntilDate, signatureReceivedDate);
+		verifyQuoteStatus(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_TC1_B2B, ConstantsContractB2B.SIGNATURE_RECEIVED_EN.toUpperCase(), ConstantsContractB2B.ACCEPTED_EN.toUpperCase());
+		confirmSigning(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_TC1_B2B, ConstantsContractB2B.PATH_TO_JSON_FILES_SIGN_QUOTE_MODAL_TC1, ApiPathsContractB2B.API_SIGN_QUOTE_MODAL_TC1);
+		signMandatePaper(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_TC1_B2B);
+		verifyContractCreated(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_TC1_B2B, ConstantsContractB2B.SIGNED_EN.toUpperCase(), ConstantsContractB2B.ACCEPTED_EN.toUpperCase());
+		
+		ContractStatus contractStatus = null;
+		
+		//Should be checked: is this should be removed or not, after we start to use CREATING OF CONTRACTS from jenkins job
+		if (numberOfAttempts < ConstantsContractB2B.MAX_NUMBER_OF_ATTEMPTS_TO_FIND_APPROPRIATE_START_CONTRACT_DATE) {
+			
+			contractStatus = checkContractIsActive(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_TC1_B2B);
+			
+			switch (contractStatus) {
+				case TO_BE_ACTIVATED:
+				{
+					++numberOfAttempts;
+					createContractB2BAndCheckContractStatus();
+					break;
+				}
+				case ACTIVE:
+				{
+					assertTrue(true, "Contract status is: " + contractStatus);
+					break;
+				}
+				default:
+				{
+					assertFalse(false, "Contract status is not ACTIVE and it is: " + contractStatus);
+					break;
+				}
+			}
+		}
+		
+		if(contractStatus != ContractStatus.ACTIVE) {
+			logger.error("Contract status is not ACTIVE and it status is: " + contractStatus);
+			assertFalse(false, "Contract status is not ACTIVE and it status is: " + contractStatus);
+		}
+		
+		logger.info("createContractB2BAndCheckContractStatus: " + this.getClass().getSimpleName() + " - PASSED");
+		
+		return getAccountNumber(recordId, cookie);
 	}
 	
 }

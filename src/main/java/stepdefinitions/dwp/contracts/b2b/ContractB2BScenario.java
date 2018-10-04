@@ -65,6 +65,46 @@ public class ContractB2BScenario extends DwpScenario {
 
 		return accountNumber;
 	}
+	
+	@Given("^B2B Active Contract is \"([^\"]*)\"$")
+	public String createContractB2BAndCheckContractStatus(String productType) {
+
+		accountNumber = "";
+
+		B2BProductTypes b2bProductTypes = B2BProductTypes.valueOf(productType);
+		try {
+			switch (b2bProductTypes) {
+
+				case UP: {
+					CreateQuoteB2B createQuoteB2BUP = new CreateContractUPB2B();
+	
+					accountNumber = createQuoteB2BUP.createContractB2BAndCheckContractStatus();
+	
+					break;
+				}
+				case TC1: {
+					CreateQuoteB2B createQuoteB2BTC1 = new CreateContractTC1B2B();
+					accountNumber = createQuoteB2BTC1.createContractB2BAndCheckContractStatus();
+					break;
+				}
+				case TC2: {
+					CreateQuoteB2B createQuoteB2BTC2 = new CreateContractTC2B2B();
+					accountNumber = createQuoteB2BTC2.createContractB2BAndCheckContractStatus();
+					break;
+				}
+				default:
+					throw new AssertionError("Not supported product type used " + productType);
+			}
+
+		} catch (Exception e) {			
+			logger.error("Creation of B2B contract failed", e);
+			Assert.fail("Creation of B2B contract failed: " + e.getMessage());
+		}
+		
+		logger.info("ACCOUNT NUMBER: " + accountNumber);
+
+		return accountNumber;
+	}
 
 	public String getAccountNumber() {
 		return accountNumber;

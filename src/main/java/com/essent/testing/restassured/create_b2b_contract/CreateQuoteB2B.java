@@ -21,6 +21,9 @@ public interface CreateQuoteB2B {
 	
 	public String createContractB2B() throws Exception;
 	
+	public String createContractB2BAndCheckContractStatus() throws Exception;
+	
 	public ContractStatus checkContractIsActive(String path) throws Exception;
 	
+	public void verifyContractCreated(String path, String quoteStage, String quoteStatus) throws Exception;	
 }
