@@ -30,20 +30,10 @@ public class Account extends DwpScenario {
     public void activate(String box) throws Throwable {
         DwpAccountOverviewPage aop = new DwpAccountOverviewPage(webDriver);
         ToggleImpl tg= new ToggleImpl(webDriver);
-        Thread.sleep(2500);
         webDriver.waitForRequestsToFinish();
         tg.clickCheckbox(box);
         aop.clickOnSaveButtonForFinanceAndLegalSection();
     }
-
-    @And("^clik on chechbox for testing$")
-    public void clikOnChechbox() throws Throwable {
-        DwpAccountOverviewPage aop = new DwpAccountOverviewPage(webDriver);
-        webDriver.waitForRequestsToFinish();
-        aop.duningStopCheckbox().click();
-        aop.clickOnSaveButtonForFinanceAndLegalSection();
-    }
-
 }
 
 

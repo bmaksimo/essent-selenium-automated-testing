@@ -10,8 +10,6 @@ import sun.awt.geom.AreaOp;
 
 public class DwpAccountOverviewPage extends Component {
 
-    private static final Logger logger = Logger.getLogger(SeleniumDriver.class);
-
     public DwpAccountOverviewPage(SeleniumDriver seleniumDriver) {
         super(seleniumDriver);
     }
@@ -136,10 +134,6 @@ public class DwpAccountOverviewPage extends Component {
 
     public void clickOnUpdateAccountDetailsOption()  {
         seleniumDriver.waitAndClick(updateAccountDetailsOption());
-    }
-
-    public WebElement duningStopCheckbox() {
-        return seleniumDriver.findElementWhenVisible(By.xpath("//*[@id='dunning_stop_c']"));
     }
 
     public WebElement saveButtonForFinanceAndLegalSection()  {
