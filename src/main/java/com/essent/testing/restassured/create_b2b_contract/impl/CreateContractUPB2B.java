@@ -131,7 +131,7 @@ public class CreateContractUPB2B extends CreateQuoteB2BBase implements CreateQuo
 		//Should be checked: is this should be removed or not, after we start to use CREATING OF CONTRACTS from jenkins job
 		if (numberOfAttempts < ConstantsContractB2B.MAX_NUMBER_OF_ATTEMPTS_TO_FIND_APPROPRIATE_START_CONTRACT_DATE) {
 			
-			contractStatus = checkContractIsActive(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_TC1_B2B);
+			contractStatus = checkContractIsActive(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_UP_B2B);
 			
 			switch (contractStatus) {
 				case TO_BE_ACTIVATED:
@@ -147,7 +147,7 @@ public class CreateContractUPB2B extends CreateQuoteB2BBase implements CreateQuo
 				}
 				default:
 				{
-					assertFalse(false, "Contract status is not ACTIVE and it is: " + contractStatus);
+					assertFalse(false, "Contract status is not ACTIVE and it status is: " + contractStatus);
 					break;
 				}
 			}

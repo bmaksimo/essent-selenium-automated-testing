@@ -150,7 +150,7 @@ public class CreateContractTC1B2B extends CreateQuoteB2BBase implements CreateQu
 				}
 				default:
 				{
-					assertFalse(false, "Contract status is not ACTIVE and it is: " + contractStatus);
+					assertFalse(false, "Contract status is not ACTIVE and it status is: " + contractStatus);
 					break;
 				}
 			}
