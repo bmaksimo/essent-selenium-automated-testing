@@ -7,12 +7,17 @@ import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.selenium.scenario.SeleniumScenario;
 import cucumber.api.Scenario;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import stepdefinitions.dwp.TestData;
 
 import static org.junit.Assert.assertTrue;
 
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 public abstract class OdooScenario extends SeleniumScenario {
+
+    @Autowired
+    protected TestData world;
 
     private  final static Logger logger = Logger.getLogger(OdooScenario.class);
 

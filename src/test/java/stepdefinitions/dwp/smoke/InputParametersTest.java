@@ -9,6 +9,8 @@ import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.springframework.beans.factory.annotation.Autowired;
+import stepdefinitions.dwp.TestData;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -16,6 +18,7 @@ import static org.hamcrest.Matchers.notNullValue;
 
 
 public class InputParametersTest extends DwpScenario {
+
 
     @Before
     public void setUp(Scenario scenario) {
@@ -33,6 +36,7 @@ public class InputParametersTest extends DwpScenario {
     public void printContractorTenureDate() throws Throwable {
         assertThat("'employee' was null", employee, is(notNullValue()));
         assertThat("'startOfTenure' was null", startOfTenure, is(notNullValue()));
+        assertThat("world", world.getBillingCustomer(), is(notNullValue()));
         DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("DD-MM-YYYY");
         logger().info("STEP:");
         logger().info(" - ACTION: GET_INPUT_PARAM");
