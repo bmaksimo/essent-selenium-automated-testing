@@ -35,12 +35,3 @@ public class Account extends DwpScenario {
         aop.clickOnSaveButtonForFinanceAndLegalSection();
     }
 }
-
-
-
-
-
-
-
-
-
