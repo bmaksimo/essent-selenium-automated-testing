@@ -29,6 +29,7 @@ public class LeadSteps extends DwpScenario {
 
     @And("^Insert company name \"([^\"]*)\" for creating lead$")
     public void insertCompanyNameForCreatingLead(String companyName) throws Throwable {
+        LeadPage leadPage = new LeadPage(webDriver);
         leadPage.createLead(companyName);
     }
 }

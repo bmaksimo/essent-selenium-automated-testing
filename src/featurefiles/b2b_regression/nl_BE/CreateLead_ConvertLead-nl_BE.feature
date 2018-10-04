@@ -9,4 +9,4 @@ Feature: Dwp test for Creating Lead - nl_BE
         Then Top menu item is Leads
 
         When Add lead
-        And Insert company name "ESSENT BELGIUM" for creating lead
+        Then Insert company name "ESSENT BELGIUM" for creating lead

@@ -6,7 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class LeadPage extends BaseObject {
-    //TODO: Change Hard Coded data with Test Data
+    //TODO: Look at Dmitry Quote implementation
     private final static String contactPersonName = "Strahinja";
     private final static String contactPersonLastName = "Vuckovic";
     private final static String telephone = "+32 78 15 79 79";
@@ -34,7 +34,7 @@ public class LeadPage extends BaseObject {
     }
 
     private void setCompanyName(String companyNumber) {
-        findElementWhenVisible(By.id("company-name-c-field")).sendKeys(companyNumber);
+        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("company-name-c-field")), companyNumber);
         findElementWhenVisible(By.xpath("//b[.='" + companyNumber + " - BE0476243769 - Veldkant 7 Kontich']")).click();
         waitForRequestsToFinish();
     }
@@ -44,23 +44,24 @@ public class LeadPage extends BaseObject {
     }
 
     private void setContactPerson(String contactPersonName, String contactPersonLastName) {
-        findElementWhenVisible(By.id("first-name-field")).sendKeys(contactPersonName);
+        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("first-name-field")), contactPersonName);
         waitForRequestsToFinish();
-        findElementWhenVisible(By.id("last-name-field")).sendKeys(contactPersonLastName);
-        findElementWhenVisible(By.id("first-name-field")).sendKeys(contactPersonName);
+        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("last-name-field")), contactPersonLastName);
     }
 
     private void setTelephone(String telephone) {
         waitForRequestsToFinish();
-        findElementWhenVisible(By.id("leads-contact-details-contact-details-phone-type-work-phone-contact-details-type-phone-contact-details-value-field")).click();
-        findElementWhenVisible(By.id("leads-contact-details-contact-details-phone-type-work-phone-contact-details-type-phone-contact-details-value-field")).sendKeys(telephone);
+        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("leads-contact-details-contact-details-phone-type-work-phone-contact-details-type-phone-contact-details-value-field")),
+            telephone);
     }
 
     private void setMobile(String mobile) {
-        findElementWhenVisible(By.id("leads-contact-details-contact-details-phone-type-mobile-phone-contact-details-type-phone-contact-details-value-field")).sendKeys(mobile);
+        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("leads-contact-details-contact-details-phone-type-mobile-phone-contact-details-type-phone-contact-details-value-field")),
+            mobile);
     }
 
     private void setEmail(String email) {
-        findElementWhenVisible(By.id("leads-contact-details-contact-details-type-email-contact-details-value-field")).sendKeys(email);
+        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("leads-contact-details-contact-details-type-email-contact-details-value-field")),
+            email);
     }
 }
