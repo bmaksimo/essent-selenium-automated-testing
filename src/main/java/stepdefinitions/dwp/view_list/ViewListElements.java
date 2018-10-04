@@ -9,6 +9,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import gherkin.lexer.Th;
 import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
 import org.openqa.selenium.By;
@@ -215,7 +216,7 @@ public class ViewListElements extends NavigationElements {
             boolean success = StringUtils.equals("PASSED", status);
             if (success) {
                 String switchedPaymentMethod = ((String) result.get("paymentMethod")).equalsIgnoreCase("string:OV") ?
-                    "Overschrijving" : "DomiciliÃ«ring";
+                    "Overschrijving" : "Domiciliëring";
                 SharedPropertiesSingleton.getInstance().getSharedProperties().put("paymentMethod", switchedPaymentMethod);
             }
 

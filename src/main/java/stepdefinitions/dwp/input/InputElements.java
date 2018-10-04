@@ -105,6 +105,7 @@ public class InputElements extends DwpScenario {
 
     @And("^\"([^\"]*)\" date is \"([^\"]*)\"$")
     public void setDateInput(String label, String value) throws Throwable {
+        webDriver.waitForRequestsToFinish();
         String inputValue = getDateValue(value);
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
