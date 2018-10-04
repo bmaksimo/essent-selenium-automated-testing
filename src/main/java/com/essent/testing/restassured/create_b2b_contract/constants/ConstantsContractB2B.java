@@ -6,9 +6,7 @@ public class ConstantsContractB2B {
 	
 	public static final int TIMEOUT_SET_CONTRACT_ACTIVE = 12;
 	
-	public static final int MAX_NUMBER_OF_ATTEMPTS_TO_FIND_APPROPRIATE_START_CONTRACT_DATE = 3;
-	
-	
+	public static final int MAX_NUMBER_OF_ATTEMPTS_TO_FIND_APPROPRIATE_START_CONTRACT_DATE = 2;
 	
 	// Paths to the pdf files
 	public static final String PATH_TO_PDF = ResourceUtil.toPath("/data/contract_b2b/pdf/customer-signature.pdf");

@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
 import com.essent.testing.restassured.create_b2b_contract.constants.ContractStatus;
 
@@ -17,13 +16,16 @@ import io.restassured.response.Response;
 
 public class ContractB2BUtil {
 	
+	private static long WAIT_CONTRACT_ACTIVE = 90000;
+	private static long STEP_UNTIL_CONTRACT_ACTIVE = 15000;
+	
 	public static String waitUntilStringFoundInResponse(Cookies cookie, String apiPath, String payload, ContractStatus findMe, String jsonPathFromResponse, int TIMEOUT) throws Exception {
 	    String contractStatus = "";
 	    int i = 0;
 	    while (i < TIMEOUT) {
 	    	
-	    	Response response = RestAssured.given().log().all().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
-	    			.when().body(payload).post(apiPath).then().log().all().statusCode(200).extract().response();
+	    	Response response = RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
+	    			.when().body(payload).post(apiPath).then().statusCode(200).extract().response();
 	    			
 	    	contractStatus = new JsonPath(response.getBody().asString()).get(jsonPathFromResponse);
 	    	
@@ -31,9 +33,9 @@ public class ContractB2BUtil {
 	            break;
 	        } else {
 	        	if(i == 0) {
-	        		TimeUnit.MINUTES.sleep(3);
+	        		Thread.sleep(WAIT_CONTRACT_ACTIVE);
 	        	}else {
-	        		TimeUnit.SECONDS.sleep(15);
+	        		Thread.sleep(STEP_UNTIL_CONTRACT_ACTIVE);
 	        	}
 	            ++i;
 	            if (i == TIMEOUT) {

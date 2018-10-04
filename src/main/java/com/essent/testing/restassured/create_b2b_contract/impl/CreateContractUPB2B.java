@@ -1,12 +1,10 @@
 package com.essent.testing.restassured.create_b2b_contract.impl;
 
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
+import org.junit.Assert;
 
 import com.essent.testing.restassured.create_b2b_contract.CreateQuoteB2B;
 import com.essent.testing.restassured.create_b2b_contract.CreateQuoteB2BBase;
@@ -113,18 +111,20 @@ public class CreateContractUPB2B extends CreateQuoteB2BBase implements CreateQuo
 
 	@Override
 	public String createContractB2BAndCheckContractStatus() throws Exception {
+		
 		logger.info("createContractB2BAndCheckContractStatus: " + this.getClass().getSimpleName());
+		
 		login();
-		setPreconditions(ConstantsContractB2B.ACCOUNT_NAME_PREFIX_TC1_B2B, upStartDate, PrepareDataForB2BContract.getTodayDate());
-		createQuoteB2B(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_TC1_B2B, ConstantsContractB2B.PATH_TO_JSON_FILES_CREATE_QUOTE_B2B_TC1, ApiPathsContractB2B.API_CREATE_QUOTE_B2B_TC1);		
-		verifyQuoteStatus(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_TC1_B2B, ConstantsContractB2B.SENT_TO_CUSTOMER_EN.toUpperCase(), ConstantsContractB2B.ACCEPTED_EN.toUpperCase());
-		sendToCustomer(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_TC1_B2B);
-		verifyQuoteStatus(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_TC1_B2B, ConstantsContractB2B.SENT_TO_CUSTOMER_EN.toUpperCase(), ConstantsContractB2B.ACCEPTED_EN.toUpperCase());
-		signatureReceived(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_TC1_B2B, pricingDate, priceValidUntilDate, signatureReceivedDate);
-		verifyQuoteStatus(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_TC1_B2B, ConstantsContractB2B.SIGNATURE_RECEIVED_EN.toUpperCase(), ConstantsContractB2B.ACCEPTED_EN.toUpperCase());
-		confirmSigning(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_TC1_B2B, ConstantsContractB2B.PATH_TO_JSON_FILES_SIGN_QUOTE_MODAL_TC1, ApiPathsContractB2B.API_SIGN_QUOTE_MODAL_TC1);
-		signMandatePaper(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_TC1_B2B);
-		verifyContractCreated(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_TC1_B2B, ConstantsContractB2B.SIGNED_EN.toUpperCase(), ConstantsContractB2B.ACCEPTED_EN.toUpperCase());
+		setPreconditions(ConstantsContractB2B.ACCOUNT_NAME_PREFIX_UP_B2B, upStartDate, PrepareDataForB2BContract.getTodayDate());
+		createQuoteB2B(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_UP_B2B, ConstantsContractB2B.PATH_TO_JSON_FILES_CREATE_QUOTE_B2B_UP, ApiPathsContractB2B.API_CREATE_QUOTE_B2B_TC2_UP);
+		verifyQuoteStatus(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_UP_B2B, ConstantsContractB2B.PRICED_EN.toUpperCase(), ConstantsContractB2B.ACCEPTED_EN.toUpperCase());
+		sendToCustomer(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_UP_B2B);
+		verifyQuoteStatus(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_UP_B2B, ConstantsContractB2B.SENT_TO_CUSTOMER_EN.toUpperCase(), ConstantsContractB2B.ACCEPTED_EN.toUpperCase());
+		signatureReceived(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_UP_B2B, pricingDate, priceValidUntilDate, signatureReceivedDate);
+		verifyQuoteStatus(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_UP_B2B, ConstantsContractB2B.SIGNATURE_RECEIVED_EN.toUpperCase(), ConstantsContractB2B.ACCEPTED_EN.toUpperCase());
+		confirmSigning(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_UP_B2B, ConstantsContractB2B.PATH_TO_JSON_FILES_SIGN_QUOTE_MODAL_TC2_UP, ApiPathsContractB2B.API_SIGN_QUOTE_MODAL_TC2_UP);
+		signMandatePaper(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_UP_B2B);
+		verifyContractCreated(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_UP_B2B, ConstantsContractB2B.SIGNED_EN.toUpperCase(), ConstantsContractB2B.ACCEPTED_EN.toUpperCase());
 		
 		ContractStatus contractStatus = null;
 		
@@ -142,12 +142,12 @@ public class CreateContractUPB2B extends CreateQuoteB2BBase implements CreateQuo
 				}
 				case ACTIVE:
 				{
-					assertTrue(true, "Contract status is: " + contractStatus);
+					Assert.assertTrue(contractStatus == ContractStatus.ACTIVE);
 					break;
 				}
 				default:
 				{
-					assertFalse(false, "Contract status is not ACTIVE and it status is: " + contractStatus);
+					Assert.fail("Contract status is not ACTIVE and it status is: " + contractStatus);
 					break;
 				}
 			}
@@ -155,7 +155,7 @@ public class CreateContractUPB2B extends CreateQuoteB2BBase implements CreateQuo
 		
 		if(contractStatus != ContractStatus.ACTIVE) {
 			logger.error("Contract status is not ACTIVE and it status is: " + contractStatus);
-			assertFalse(false, "Contract status is not ACTIVE and it status is: " + contractStatus);
+			Assert.fail("Contract status is not ACTIVE and it status is: " + contractStatus);
 		}
 		
 		logger.info("createContractB2BAndCheckContractStatus: " + this.getClass().getSimpleName() + " - PASSED");

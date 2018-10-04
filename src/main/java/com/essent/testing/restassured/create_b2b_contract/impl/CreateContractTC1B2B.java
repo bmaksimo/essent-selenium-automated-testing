@@ -1,13 +1,10 @@
 package com.essent.testing.restassured.create_b2b_contract.impl;
 
-import static org.junit.Assert.assertFalse;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
+import org.junit.Assert;
 
 import com.essent.testing.restassured.create_b2b_contract.CreateQuoteB2B;
 import com.essent.testing.restassured.create_b2b_contract.CreateQuoteB2BBase;
@@ -145,12 +142,12 @@ public class CreateContractTC1B2B extends CreateQuoteB2BBase implements CreateQu
 				}
 				case ACTIVE:
 				{
-					assertTrue(true, "Contract status is: " + contractStatus);
+					Assert.assertTrue(contractStatus == ContractStatus.ACTIVE);
 					break;
 				}
 				default:
 				{
-					assertFalse(false, "Contract status is not ACTIVE and it status is: " + contractStatus);
+					Assert.fail("Contract status is not ACTIVE and it status is: " + contractStatus);
 					break;
 				}
 			}
@@ -158,7 +155,7 @@ public class CreateContractTC1B2B extends CreateQuoteB2BBase implements CreateQu
 		
 		if(contractStatus != ContractStatus.ACTIVE) {
 			logger.error("Contract status is not ACTIVE and it status is: " + contractStatus);
-			assertFalse(false, "Contract status is not ACTIVE and it status is: " + contractStatus);
+			Assert.fail("Contract status is not ACTIVE and it status is: " + contractStatus);
 		}
 		
 		logger.info("createContractB2BAndCheckContractStatus: " + this.getClass().getSimpleName() + " - PASSED");

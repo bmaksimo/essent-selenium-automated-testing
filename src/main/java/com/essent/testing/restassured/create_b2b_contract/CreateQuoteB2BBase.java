@@ -90,13 +90,13 @@ public class CreateQuoteB2BBase {
 	
 
 	public CreateQuoteB2BBase() {
+		numberOfAttempts = 0;
 		gson = new Gson();
 		
 		RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 	}
 	
 	protected void setPreconditions(String path, String accountName, String contractStartDate, String contractEndDate) throws Exception{
-		numberOfAttempts = 0;
 		
 		this.accountName = PrepareDataForB2BContract.setAccountName(accountName);
 		companyNumber = PrepareDataForB2BContract.generateValidBECompanyNumber();
