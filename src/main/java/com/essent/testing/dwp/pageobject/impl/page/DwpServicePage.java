@@ -93,4 +93,12 @@ public class DwpServicePage extends Component {
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("confirm-button")));
     }
 
+    public WebElement addCaseButton(String addCase){
+        return seleniumDriver.findElementWhenVisible(By.name(addCase));
+    }
+
+    public void clickOnAddCaseButton(String addCase)throws InterruptedException {
+        addCaseButton(addCase).click();
+    }
+
 }

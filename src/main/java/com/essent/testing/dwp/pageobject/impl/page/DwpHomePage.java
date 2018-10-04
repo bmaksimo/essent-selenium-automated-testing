@@ -42,7 +42,7 @@ public class DwpHomePage extends Component {
 
     public WebElement filterButton() {
 
-    return seleniumDriver.findElementWhenVisible(By.className("icon-filters"));
+        return seleniumDriver.findElementWhenVisible(By.className("icon-filters"));
     }
 
     public void clickOnFilterButton()  {
@@ -79,5 +79,14 @@ public class DwpHomePage extends Component {
 
     public void ClickOnContractsLink()  {
         seleniumDriver.findElementWhenVisible(By.id("contract-list-link")).click();
+    }
+
+
+    public WebElement newCase() {
+        return seleniumDriver.findElementWhenVisible(By.name("CASE TOEVOEGEN"));
+    }
+
+    public void clickOnNewCase(){
+        seleniumDriver.waitAndClick(newCase());
     }
 }
