@@ -9,4 +9,6 @@ Feature: Dwp test for Creating Lead - nl_BE
         Then Top menu item is Leads
 
         When Add lead
-        Then Insert company name "ESSENT BELGIUM" for creating lead
+        Then New lead is
+            | companyName    | firstName | secondName | telephone       | mobile           | email        |
+            | ESSENT BELGIUM | Levi      | Nine       | +32 78 15 79 79 | +32 498 12 34 56 | test@test.be |

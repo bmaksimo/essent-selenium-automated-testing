@@ -3,15 +3,10 @@ package com.essent.testing.dwp.pageobject.impl.service_contracting;
 import com.essent.testing.dwp.pageobject.BaseObject;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 public class LeadPage extends BaseObject {
-    //TODO: Look at Dmitry Quote implementation
-    private final static String contactPersonName = "Strahinja";
-    private final static String contactPersonLastName = "Vuckovic";
-    private final static String telephone = "+32 78 15 79 79";
-    private final static String mobile = "+32 498 12 34 56";
-    private final static String email = "test@test.com";
 
     public LeadPage(SeleniumDriver seleniumDriver) {
         super(seleniumDriver);
@@ -21,13 +16,13 @@ public class LeadPage extends BaseObject {
         findElementWhenVisible(By.xpath("//span[@class='icon-plus']")).click();
     }
 
-    public void createLead(String companyName) {
-        setCompanyName(companyName);
+    public void createLead(List<List<String>> table) {
+        setCompanyName(table.get(1).get(0));
         waitForRequestsToFinish();
-        setContactPerson(contactPersonName, contactPersonLastName);
-        setTelephone(telephone);
-        setMobile(mobile);
-        setEmail(email);
+        setContactPerson(table.get(1).get(1), table.get(1).get(2));
+        setTelephone(table.get(1).get(3));
+        setMobile(table.get(1).get(4));
+        setEmail(table.get(1).get(5));
         waitForRequestsToFinish();
         saveLead();
         waitForRequestsToFinish();
@@ -44,6 +39,7 @@ public class LeadPage extends BaseObject {
     }
 
     private void setContactPerson(String contactPersonName, String contactPersonLastName) {
+        waitForRequestsToFinish();
         seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("first-name-field")), contactPersonName);
         waitForRequestsToFinish();
         seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("last-name-field")), contactPersonLastName);
