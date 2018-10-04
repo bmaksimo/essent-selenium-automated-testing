@@ -41,9 +41,8 @@ public class CreateContractTC1B2B extends CreateQuoteB2BBase implements CreateQu
 	public String createContractB2B() throws Exception {
 		
 		logger.info("createContractB2B: " + this.getClass().getSimpleName());
-		
-		setPreconditions(ConstantsContractB2B.ACCOUNT_NAME_PREFIX_TC1_B2B, upStartDate, PrepareDataForB2BContract.getTodayDate());
 		login();
+		setPreconditions(ConstantsContractB2B.ACCOUNT_NAME_PREFIX_TC1_B2B, upStartDate, PrepareDataForB2BContract.getTodayDate());
 		createQuoteB2B(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_TC1_B2B, ConstantsContractB2B.PATH_TO_JSON_FILES_CREATE_QUOTE_B2B_TC1, ApiPathsContractB2B.API_CREATE_QUOTE_B2B_TC1);		
 		verifyQuoteStatus(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_TC1_B2B, ConstantsContractB2B.SENT_TO_CUSTOMER_EN.toUpperCase(), ConstantsContractB2B.ACCEPTED_EN.toUpperCase());
 		sendToCustomer(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_TC1_B2B);

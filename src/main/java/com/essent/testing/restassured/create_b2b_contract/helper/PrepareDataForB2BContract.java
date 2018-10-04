@@ -143,7 +143,7 @@ public final class PrepareDataForB2BContract {
 
 	}
 	
-	public static String getStartContractDate(String startContractDate, String todayDate, String currentContractStartDateInDWP) throws ParseException {
+	public static String setStartContractDate(String startContractDate, String todayDate, String currentContractStartDateInDWP) throws ParseException {
 
 		if(currentContractStartDateInDWP.equals("")) {
 			return startContractDate;

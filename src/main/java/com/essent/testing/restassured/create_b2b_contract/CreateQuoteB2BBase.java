@@ -105,8 +105,8 @@ public class CreateQuoteB2BBase {
 		generatedIban = PrepareDataForB2BContract.getValidIbanBE();
 		
 		// Set appropriate start contract date in create quote page of DWP
-		String currentContractStartDateInDWP = getLastSetContractStartDateFromDWP(path);
-		this.upStartDate = PrepareDataForB2BContract.getStartContractDate(contractStartDate, contractEndDate, currentContractStartDateInDWP);
+		String currentContractStartDateInDWP = getCurrentContractStartDateFromDWP(path);
+		this.upStartDate = PrepareDataForB2BContract.setStartContractDate(contractStartDate, contractEndDate, currentContractStartDateInDWP);
 		
 		if(this.upStartDate.equals("NOT_VALID")) {
 			logger.info("ALL START CONTRACT DATES ARE USED FOR ADDRESS STREET: " + addressStreet + " EAN: " + ean_c + "; PLEASE USE ANOTHER ADDRESS AND EAN");
@@ -491,7 +491,7 @@ public class CreateQuoteB2BBase {
 		
 	}
 	
-	private String getLastSetContractStartDateFromDWP(String path) throws IOException{
+	private String getCurrentContractStartDateFromDWP(String path) throws IOException{
 		
 		String upStartDate = "";
 		
@@ -506,15 +506,14 @@ public class CreateQuoteB2BBase {
 				.body(jsonBody).when().post(ApiPathsContractB2B.API_LIST_QUOTES).then().statusCode(200)
 				.extract().response();
 		
-		String isContractExist = new JsonPath(response.getBody().asString()).get("data.rows[0]");
-		
+		HashMap isContractExist = new JsonPath(response.getBody().asString()).get("data.rows[0]");
 		if(isContractExist != null) {
-			upStartDate = new JsonPath(response.getBody().asString()).get("data.rows[0].rowData.aos_products_quotes|up_start_date_c");
+			HashMap rowData = (HashMap) isContractExist.get("rowData");
+			upStartDate = (String) rowData.get("aos_products_quotes|up_start_date_c");
 		}
 		
 		return upStartDate;
 	}
 	
 }
-
 
