@@ -42,7 +42,7 @@ public class DwpHomePage extends Component {
 
     public WebElement filterButton() {
 
-    return seleniumDriver.findElementWhenVisible(By.className("icon-filters"));
+        return seleniumDriver.findElementWhenVisible(By.className("icon-filters"));
     }
 
     public void clickOnFilterButton()  {
