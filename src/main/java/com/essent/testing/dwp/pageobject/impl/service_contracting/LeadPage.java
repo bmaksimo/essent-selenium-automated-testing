@@ -54,7 +54,6 @@ public class LeadPage extends BaseObject {
         waitForRequestsToFinish();
         findElementWhenVisible(By.id("leads-contact-details-contact-details-phone-type-work-phone-contact-details-type-phone-contact-details-value-field")).click();
         findElementWhenVisible(By.id("leads-contact-details-contact-details-phone-type-work-phone-contact-details-type-phone-contact-details-value-field")).sendKeys(telephone);
-        System.out.println("JEBEM LI GA");
     }
 
     private void setMobile(String mobile) {
