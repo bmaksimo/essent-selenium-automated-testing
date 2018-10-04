@@ -2,6 +2,7 @@ package stepdefinitions.dwp.page_object;
 
 import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -12,6 +13,7 @@ import org.openqa.selenium.By;
 
 public class TaskSteps extends DwpScenario {
     private String taskId;
+    BaseObject baseObject = new BaseObject(webDriver);
 
     @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
@@ -31,7 +33,6 @@ public class TaskSteps extends DwpScenario {
     @When("^Plus action and \"([^\"]*)\" of first customer from list$")
     public void plusActionAndOfFirstCustomerFromList(String action) throws Throwable {
         webDriver.waitForRequestsToFinish();
-        BaseObject baseObject = new BaseObject(webDriver);
         baseObject.clickOnPlus();
         baseObject.plusSubaction(action);
     }
