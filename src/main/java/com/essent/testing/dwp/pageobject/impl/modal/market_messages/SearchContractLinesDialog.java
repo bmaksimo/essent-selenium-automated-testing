@@ -23,16 +23,13 @@ public class SearchContractLinesDialog extends Component implements ConfirmDialo
     public void searchContractLine(String searchInput) {
 
         WebElement searchField = seleniumDriver.findElementOrNull(By.xpath("//input[@id='search-input']"));
-        searchField.sendKeys(searchInput);
+        seleniumDriver.waitAndSendKeys(searchField, searchInput);
 
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//input[@type='submit']")));
 
         Sleeper.sleepTightInSeconds(5);
         String checkBoxesQuery = createQuery("//label[starts-with(normalize-space(), '${text}')]/input[@type='checkbox']", "text", searchInput);
-        List<WebElement> checkboxes = seleniumDriver.findElements(By.xpath(checkBoxesQuery));
-        assertThat(String.format("Search term %s was not found.", searchInput),
-            checkboxes.isEmpty(), is(false));
-        checkboxes.get(0).click();
+        seleniumDriver.findElements(By.xpath(checkBoxesQuery)).get(0).click();
 
         WebElement sendButton = seleniumDriver.findElements(By.xpath("//a[@class='button']")).get(1);
         seleniumDriver.waitAndClick(sendButton);
