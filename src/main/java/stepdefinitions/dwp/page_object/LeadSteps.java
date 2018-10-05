@@ -7,12 +7,12 @@ import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
+import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 import java.util.List;
 
 public class LeadSteps extends DwpScenario {
-    LeadPage leadPage = new LeadPage(webDriver);
 
     @Before("@SMOKE, @QUOTE, @RENEWAL, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) {
@@ -27,6 +27,7 @@ public class LeadSteps extends DwpScenario {
 
     @When("^Add lead$")
     public void addLead() throws Throwable {
+        LeadPage leadPage = new LeadPage(webDriver);
         leadPage.plusAddLead();
     }
 
@@ -36,5 +37,11 @@ public class LeadSteps extends DwpScenario {
         List<List<String>> db = dbTabel.raw();
 
         leadPage.createLead(db);
+    }
+
+    @Then("^\"([^\"]*)\" lead was created$")
+    public void leadWasCreated(String name) throws Throwable {
+        LeadPage leadPage = new LeadPage(webDriver);
+        leadPage.validateCreatingLead(name);
     }
 }

@@ -30,7 +30,7 @@ public class LeadPage extends BaseObject {
 
     private void setCompanyName(String companyNumber) {
         seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("company-name-c-field")), companyNumber);
-        findElementWhenVisible(By.xpath("//b[.='" + companyNumber + " - BE0476243769 - Veldkant 7 Kontich']")).click();
+        findElementWhenVisible(By.xpath(".//*[@id='company_name_c']/div/autocomplete/ul/li[2]")).click();
         waitForRequestsToFinish();
     }
 
@@ -41,7 +41,6 @@ public class LeadPage extends BaseObject {
     private void setContactPerson(String contactPersonName, String contactPersonLastName) {
         waitForRequestsToFinish();
         seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("first-name-field")), contactPersonName);
-        waitForRequestsToFinish();
         seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("last-name-field")), contactPersonLastName);
     }
 
@@ -59,5 +58,10 @@ public class LeadPage extends BaseObject {
     private void setEmail(String email) {
         seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("leads-contact-details-contact-details-type-email-contact-details-value-field")),
             email);
+    }
+
+    public void validateCreatingLead(String name) {
+        waitForRequestsToFinish();
+        seleniumDriver.findElementWhenVisible(By.xpath("(//h5)[.='" + name + "'][1]")).isDisplayed();
     }
 }
