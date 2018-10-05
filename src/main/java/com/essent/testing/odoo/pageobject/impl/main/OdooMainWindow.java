@@ -1,7 +1,8 @@
 package com.essent.testing.odoo.pageobject.impl.main;
 
-import com.essent.testing.dwp.pageobject.Window;
-import com.essent.testing.dwp.pageobject.impl.Component;
+
+import com.essent.testing.odoo.pageobject.Window;
+import com.essent.testing.odoo.pageobject.impl.Component;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
 

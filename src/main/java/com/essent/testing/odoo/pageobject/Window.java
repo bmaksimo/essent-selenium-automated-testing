@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject;
+package com.essent.testing.odoo.pageobject;
 
 public interface Window {
     String getTitle();

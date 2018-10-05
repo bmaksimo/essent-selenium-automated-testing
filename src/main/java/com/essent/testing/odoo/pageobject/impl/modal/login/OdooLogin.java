@@ -1,9 +1,9 @@
 package com.essent.testing.odoo.pageobject.impl.modal.login;
 
-import com.essent.testing.dwp.pageobject.Window;
-import com.essent.testing.dwp.pageobject.impl.modal.login.LoginComponent;
-import com.essent.testing.dwp.pageobject.modal.Dialog;
+
+import com.essent.testing.odoo.pageobject.Window;
 import com.essent.testing.odoo.pageobject.impl.main.OdooMainWindow;
+import com.essent.testing.odoo.pageobject.modal.Dialog;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -11,6 +11,7 @@ import org.openqa.selenium.WebElement;
 import static org.junit.Assert.assertNotNull;
 
 public class OdooLogin extends LoginComponent implements Dialog {
+
     private final static By SELECTOR = By.cssSelector(".oe_login_form");
 
     public OdooLogin(SeleniumDriver seleniumDriver) {
