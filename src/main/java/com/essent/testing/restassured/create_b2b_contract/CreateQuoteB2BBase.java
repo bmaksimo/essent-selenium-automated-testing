@@ -56,12 +56,10 @@ public class CreateQuoteB2BBase {
 	protected String priceValidUntilDate = "";
 	protected String signatureReceivedDate = "";	
 
-	// This date is from SOAPUI. 
-	// Each time new contract is created this date should be incremented by 1, and
-	// normally a customer switch can only be sent 30 days in the future or in the past. On devint01 we do not have this validation, for UAT* I do not know
+	// Start contract date
+	protected String upStartDate = ""; 
 	
-	//Contract 1: I should set some date in file: create_quote_b2b_tc1.json. Once I started with creation of new contract, I should read upStartDate from file, and increment by 1, and so on
-	protected String upStartDate = "";  
+	// End contract date
 	protected String upEndDate = "";
 	
 	
@@ -71,13 +69,7 @@ public class CreateQuoteB2BBase {
 	protected String addressPostalCode = "";
 	protected String addressCity = "";
 	
-	/* This is address from SOAPUI
-	private String addressNumber = "195457";
-	private String addressStreet = "Pierre Marchandstraat";
-	private String addressPostalCode = "1970";
-	private String addressCity = "Wezembeek-Oppem";*/
-	
-	// This ean should be any from src/test/resources/data/contract_b2b/address_b2b/adress_b2B.XLSX which correspond appropriate address
+	// This ean should be any from adress_b2B.XLSX which correspond appropriate address
 	protected String ean_c = "";
 	
 	protected String paymentMethod = ""; // DOM or OV

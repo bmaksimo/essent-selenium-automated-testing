@@ -124,7 +124,7 @@ public class CreateContractTC2B2B extends CreateQuoteB2BBase implements CreateQu
 		
 		ContractStatus contractStatus = null;
 		
-		//Should be checked: is this should be removed or not, after we start to use CREATING OF CONTRACTS from jenkins job
+		// Checking is contract ACTIVE, because once contract is created a lot of stuff is triggered in jbilling, bpm and odoo and after that contract become ACTIVE
 		if (numberOfAttempts < ConstantsContractB2B.MAX_NUMBER_OF_ATTEMPTS_TO_FIND_APPROPRIATE_START_CONTRACT_DATE) {
 			
 			contractStatus = checkContractIsActive(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_TC2_B2B);

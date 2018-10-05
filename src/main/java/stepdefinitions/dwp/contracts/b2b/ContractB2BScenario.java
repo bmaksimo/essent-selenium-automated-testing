@@ -18,6 +18,7 @@ import stepdefinitions.dwp.contracts.b2b.product_types.B2BProductTypes;
 public class ContractB2BScenario extends DwpScenario {
 	
 	private static final Logger logger = Logger.getLogger(ContractB2BScenario.class);
+	private static final String EMPTY_STRING = "";
 
 	private String accountNumber;
 
@@ -29,7 +30,7 @@ public class ContractB2BScenario extends DwpScenario {
 	@Given("^B2B Contract is \"([^\"]*)\"$")
 	public String createB2BContract(String productType) {
 
-		accountNumber = "";
+		accountNumber = EMPTY_STRING;
 
 		B2BProductTypes b2bProductTypes = B2BProductTypes.valueOf(productType);
 		try {
@@ -59,6 +60,11 @@ public class ContractB2BScenario extends DwpScenario {
 		} catch (Exception e) {			
 			logger.error("Creation of B2B contract failed", e);
 			Assert.fail("Creation of B2B contract failed: " + e.getMessage());
+		}
+		
+		if(accountNumber.equals(EMPTY_STRING)) {
+			Assert.fail("Creation of B2B contract failed");
+			logger.error("Something went wrong with creation of B2B contract");
 		}
 		
 		logger.info("ACCOUNT NUMBER: " + accountNumber);
@@ -97,8 +103,13 @@ public class ContractB2BScenario extends DwpScenario {
 			}
 
 		} catch (Exception e) {			
-			logger.error("Creation of B2B contract failed", e);
-			Assert.fail("Creation of B2B contract failed: " + e.getMessage());
+			logger.error("B2B contract is not ACTIVE", e);
+			Assert.fail("B2B contract is not ACTIVE: " + e.getMessage());
+		}
+		
+		if(accountNumber.equals(EMPTY_STRING)) {
+			Assert.fail("B2B contract is not ACTIVE");
+			logger.error("Something went wrong with creation of ACTIVE B2B contract");
 		}
 		
 		logger.info("ACCOUNT NUMBER: " + accountNumber);
