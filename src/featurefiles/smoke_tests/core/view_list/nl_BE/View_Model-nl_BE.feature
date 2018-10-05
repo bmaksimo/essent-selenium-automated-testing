@@ -1,5 +1,5 @@
 @DWP
-@SMOKE
+@_SMOKE
 Feature: Javascript DWP testing
 
     Background:
@@ -13,5 +13,6 @@ Feature: Javascript DWP testing
         And "Module" selection is "CANCEL"
         And "Label" selection is "By Essent"
         Then 3 List rows having cell value CANCEL By Essent at column Module & Label are selected
-        And  Selected list rows at column "EC Status & Effective date" are put to global parameter "ec_status"
+        And  Cell values from selected rows and column "EC Status & Effective date" are put to parameter "ec_status"
+        And  Cell value from "1st" row and "Billing klant & Tariefdatum" column is put to parameter "id-billing-customer"
         And Selected List rows have cell value "CANCEL By Essent" at column "Module & Label"

@@ -1,4 +1,4 @@
-@SMOKE
+@_SMOKE
 Feature: Log questions of customers
 
     Background:

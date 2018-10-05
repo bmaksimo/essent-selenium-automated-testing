@@ -1,6 +1,6 @@
 @DWP
 @E2E_B2C
-@SMOKE
+@_SMOKE
 @REGRESSION
 Feature: Creating a B2C Quote TC1 with move in - Dutch version
     The test creates a contract with start date and pricing date set to 3 months before now.
@@ -58,7 +58,7 @@ Feature: Creating a B2C Quote TC1 with move in - Dutch version
         And Modal dialog is Sign quote
         And  Contract signature is confirmed
         Then 1st list element has cell value Sales Getekend - Geaccepteerd at column Type & status
-        And  Number parameter "id-billing-customer" is put from "1st" row and "Billing klant & Tariefdatum" column
+        And  Cell value from "1st" row and "Billing klant & Tariefdatum" column is put to parameter "id-billing-customer"
 
         
     

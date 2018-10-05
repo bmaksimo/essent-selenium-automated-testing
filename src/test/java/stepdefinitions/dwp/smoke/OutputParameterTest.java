@@ -1,21 +1,17 @@
 package stepdefinitions.dwp.smoke;
 
 import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
-import com.essent.testing.context.ContextService;
-import com.essent.testing.dwp.scenario.DwpScenario;
+import com.essent.testing.scenario.RegisteredScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 import org.joda.time.DateTime;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import stepdefinitions.dwp.TestData;
 
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.expandFrom;
 
 
-public class OutputParameterTest extends DwpScenario {
+public class OutputParameterTest extends RegisteredScenario {
 
     @Before
     public void setUp(Scenario scenario) {
@@ -36,7 +32,6 @@ public class OutputParameterTest extends DwpScenario {
         logger().info(" - NAME: contractor");
         logger().info(" - VALUE: " + contractor);
         this.contractor = contractor;
-        world.setBillingCustomer(contractor);
     }
 
     @And("^Start of tenure is ([^\"]*)$")

@@ -1,5 +1,4 @@
-@SMOKE
-@REGRESSION
+@PAREMETER_PROVIDER
 Feature: DWP Tool Framework: Annotations, Zephyre
 
     Scenario: Support global parameters that could keep the values through the scenario execution cycle,

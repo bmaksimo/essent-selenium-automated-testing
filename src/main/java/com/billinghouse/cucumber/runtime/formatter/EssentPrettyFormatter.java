@@ -4,6 +4,7 @@ import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
 import com.billinghouse.cucumber.runtime.parameter.ParameterProvider;
 import com.billinghouse.cucumber.runtime.parameter.ParametersUtil;
 import com.billinghouse.cucumber.runtime.scenario.ActiveScenarioProvider;
+import com.essent.testing.context.ContextService;
 import com.essent.testing.scenario.RegisteredScenario;
 import cucumber.runtime.CucumberException;
 import cucumber.runtime.formatter.ColorAware;
@@ -19,8 +20,8 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-public class EssentPrettyFormatter extends PrettyFormatter implements ColorAware {
 
+public class EssentPrettyFormatter extends PrettyFormatter implements ColorAware {
 
     private static final Logger logger = Logger.getLogger(EssentPrettyFormatter.class);
     private static final Map<Class, BiConsumer> annotationRules  = new HashMap<>();
@@ -29,7 +30,7 @@ public class EssentPrettyFormatter extends PrettyFormatter implements ColorAware
 
     static {
         annotationRules.put(OutputParameter.class, (BiConsumer<String, Object>) (n, p) -> {
-            ParameterProvider.get().put(n, p);
+            ((ParameterProvider) ContextService.getContext().getBean("parameterProvider")).consumingNullValues(true).put(n, p);
         });
     }
 
@@ -77,8 +78,9 @@ public class EssentPrettyFormatter extends PrettyFormatter implements ColorAware
     }
 
     private void assignInputFromOuputParameters(Object activeScenario) {
+        ParameterProvider  parameterProvider = ((ParameterProvider) ContextService.getContext().getBean("parameterProvider")).consumingNullValues(true);
         ParametersUtil.assignOutToEachInputParam((Function<String, Object>) (s)->{
-            return ParameterProvider.get().get(s);
+            return parameterProvider.get(s);
         }, activeScenario);
     }
 

@@ -35,9 +35,6 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.fail;
 public class ViewListElements extends NavigationElements {
 
-
-
-
     private class CheckViewListHeader implements Predicate<String> {
         @Override
         public boolean test(String header) {
@@ -339,14 +336,21 @@ public class ViewListElements extends NavigationElements {
             success, is(true));
     }
 
-    @OutputParameter(name = "@text-parameters")
-    private Map<String, String> textInputParameters = new HashMap<>();
-    @And("^Number parameter \"([^\"]*)\" is put from \"([^\"]*)\" row and \"([^\"]*)\" column$")
-    public void putNumberParameter(String key, String ordinal, String column) throws Throwable {
+    @And("^Cell value from \"([^\"]*)\" row and \"([^\"]*)\" column is put to parameter \"([^\"]*)\"$")
+    public void putParameter(String key, String ordinal, String column) throws Throwable {
         int row = extractNumericValue(ordinal);
         String rawValue = new ViewListModel().getCellValueAt(row, column);
         String numericValue = extractFirstNumericPart(rawValue);
-        textInputParameters.put(key, numericValue);
+        parameterProvider.put(key, numericValue);
+    }
+
+    @And("^Cell values? from selected rows? and column \"([^\"]*)\" are put to parameter \"([^\"]*)\"$")
+    public void storeDataSelectionOutputParameter(String columnName, String outParamName) throws Throwable {
+        ViewListModel viewListModel = new ViewListModel();
+        List<String> cellSelection = viewListModel.fetchDataSelection(columnName);
+        parameterProvider.put(outParamName, cellSelection);
+        assertThat(String.format("Data selection at column %s is empty", columnName),
+            cellSelection, not(hasSize(0)));
     }
 
     @And("^Payment method is updated$")
@@ -404,19 +408,6 @@ public class ViewListElements extends NavigationElements {
             success, is(true));
     }
 
-    @OutputParameter(name = "toRenewContractsContact")
-    private Map<String, Object> toRenewContractsContacts = new HashMap<>();
-    @And("^Selected list rows at column \"([^\"]*)\" are put to global parameter \"([^\"]*)\"$")
-    public void storeDataSelectionOutputParameter(String columnName, String outParamName) throws Throwable {
-        ViewListModel viewListModel = new ViewListModel();
-        List<String> cellSelection = viewListModel.fetchDataSelection(columnName);
-        toRenewContractsContacts.put(outParamName, cellSelection);
-        assertThat(String.format("Data selection at column %s is empty", columnName),
-            cellSelection, not(hasSize(0)));
-    }
-
-    @InputParameter(name = "toRenewContractsContact")
-    private  Map<String, Object> selection;
     @Then("^Selected List rows have cell value \"([^\"]*)\" at column \"([^\"]*)\"$")
     public void checkSelectionData(String value, String columnName) throws Throwable {
         ViewListModel viewListModel = new ViewListModel();
