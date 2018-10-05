@@ -1,4 +1,4 @@
-#@B2B_REGRESSION
+@B2B_REGRESSION
 Feature: End of contract for bankruptcy - nl_BE version
 
     Background:
@@ -16,8 +16,7 @@ Feature: End of contract for bankruptcy - nl_BE version
         And Click Select Contractline
         And EAN check box
         Then Changes are confirmed
-        And "Module" selection is "INITIATE STOP ACCESS"
-        And "Label" selection is "Non-Residential End-of-Contract"
-        And "Label" selection is "Non-Residential End-of-Contract"
+        And "Module" input is "INITIATE STOP ACCESS"
+        And "Label" input is "Non-Residential End-of-Contract"
         And "Effective Date" date is "now"
         Then Changes are confirmed

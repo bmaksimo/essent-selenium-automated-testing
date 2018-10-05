@@ -1,4 +1,4 @@
-#@B2B_REGRESSION
+@B2B_REGRESSION
 @SMOKE
 Feature: Javascript DWP testing
 

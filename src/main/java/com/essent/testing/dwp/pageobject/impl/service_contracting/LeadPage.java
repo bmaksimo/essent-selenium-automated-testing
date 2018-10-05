@@ -1,6 +1,6 @@
 package com.essent.testing.dwp.pageobject.impl.service_contracting;
 
-import com.essent.testing.dwp.pageobject.BaseObject;
+import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
 
