@@ -1,10 +1,10 @@
 @DWP
 @SMOKE
-Feature: Javascript DWP testing
+Feature: view list functions, scrapping and storing info from page
 
     Background:
         Given   I logged in to DWP as contracting.testautomation.b2c@essent.be
-    Scenario:
+    Scenario: Navigate, then store values selected in list view
         When Left menu is contracting-switching
         And Top menu item is Marktberichten
         Then View list header is "Marktberichten" appears within 25 seconds

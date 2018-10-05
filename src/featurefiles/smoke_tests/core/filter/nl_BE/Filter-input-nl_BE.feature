@@ -1,11 +1,11 @@
 @DWP
 @SMOKE
-Feature: Javascript DWP testing
+Feature: DWP core: menu navigation, filter options, Plus menu, View List Header check with waiter
 
     Background:
         Given   I logged in to DWP as contracting.testautomation.b2c@essent.be
 
-    Scenario:
+    Scenario: Manu navigation and filter input
         When Left menu is contracting-switching
         And Top menu item is Marktberichten
         Then View list header is "Marktberichten" appears within 25 seconds
@@ -13,10 +13,10 @@ Feature: Javascript DWP testing
         When Top action is Filters
         And "Aangemaakt na" date is "3 months before now"
         And "Aangemaakt voor" date is "1 day from now"
-        And "EAN-code" input is "541448820045086029"
+        And "Label" selection is "Move In"
         Then 1 List row having cell value MOVE IN Move In at column Module & Label is selected
 
-    Scenario:
+    Scenario: Plus Menu navigation to view list
         When Plus menu is "Contracting -> UP-TK2 - Om contracten te hernieuwen"
         Then View list header is "UP-TK2 - Om contracten te hernieuwen" appears within 10 seconds
 

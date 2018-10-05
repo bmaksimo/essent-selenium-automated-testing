@@ -1,18 +1,12 @@
 @DWP
-@E2E_B2C
+@E2E
 @SMOKE
 @REGRESSION
-Feature: Creating a B2C Quote TC1 with move in - Dutch version
-    The test creates a contract with start date and pricing date set to 3 months before now.
-    The existing valid address not known to Nova is used.
-    The new Dutch-speaking customer is generated randomly,
-    with pronounceable first and last name and valid date of birth.
-    DWP application Closes the electricity meter, and  MIG from supplier switch to customer switch automatically.
-
+Feature: Creating a B2C Quote TC1 with move in
     Background:
         Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
 
-    Scenario: Create a B2C Quote with customer switch
+    Scenario: Create a B2C Quote with move in
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         #Then Form header is "Details van de offerte"
         Then Form header is "Quote details"
@@ -59,6 +53,3 @@ Feature: Creating a B2C Quote TC1 with move in - Dutch version
         And  Contract signature is confirmed
         Then 1st list element has cell value Sales Getekend - Geaccepteerd at column Type & status
         And  Number parameter "id-billing-customer" is put from "1st" row and "Billing klant & Tariefdatum" column
-
-        
-    

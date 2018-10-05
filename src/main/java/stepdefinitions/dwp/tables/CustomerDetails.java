@@ -2,15 +2,15 @@ package stepdefinitions.dwp.tables;
 
 public class CustomerDetails
 {
-    String firstName;
-    String lastName;
-    String gender;
-    String birthDate;
-    String phoneNumber;
-    String mobile;
-    String email;
-    String language;
-    String street;
+    private String firstName;
+    private String lastName;
+    private String gender;
+    private String birthDate;
+    private String phoneNumber;
+    private String mobile;
+    private String email;
+    private String language;
+    private String street;
 
     public String getFirstName() {
         return firstName;

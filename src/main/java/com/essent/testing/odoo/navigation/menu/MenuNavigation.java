@@ -19,18 +19,38 @@ import static com.billinghouse.test_automation.util.gherkin.DateTimeFormatUtil.p
 /**
  * Migrated version of TrPlusMenuSelectAction
  */
-public class LeftMenuNavigation extends Component {
-    private String status = "UNDEFINED";
-    private String reason = "Not executed";
+public class MenuNavigation extends Component {
 
-    public LeftMenuNavigation(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver);
-    }
-
-
+    private static String MAIN_NEMU_ITEM_SELECTOR_TEMPLATE = "//div[@id='oe_main_menu_placeholder']//a[normalize-space()='${text}']";
     private static String MENU_LEAF_SELECTOR_TEMPLATE      = "//a[span[normalize-space() = '${text}'] and starts-with(@class,'oe_menu_leaf')]";
     private static String MENU_TOGGLER_SELECTOR_TEMPLATE   = "//a[span[normalize-space() = '${text}'] and starts-with(@class,'oe_menu_toggler')]";
 
+    private String status = "UNDEFINED";
+    private String reason = "Not executed";
+
+    public MenuNavigation(SeleniumDriver seleniumDriver) {
+        super(seleniumDriver);
+    }
+    public String getStatus() {
+        return status;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public boolean findAndClickMainMenuItem(String item) {
+        By by = By.xpath(createQuery(MAIN_NEMU_ITEM_SELECTOR_TEMPLATE, "text", item));
+        WebElement elementOrNull = seleniumDriver.findElementOrNull(by);
+        if(elementOrNull == null) {
+            status = "FAILED";
+            reason = "Main menu item" + item + "is not found";
+            return false;
+        }
+        Sleeper.sleepTightInSeconds(1);
+        elementOrNull.click();
+        return true;
+    }
 
     public void executeAction(String menuPath) {
         String pathSeparator = "\\s*->\\s*";

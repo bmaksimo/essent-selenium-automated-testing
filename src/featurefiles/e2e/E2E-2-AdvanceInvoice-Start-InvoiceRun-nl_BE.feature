@@ -1,14 +1,14 @@
 @DWP
+@E2E
 @SMOKE
 @REGRESSION
-Feature: Billing - Invoices 01 - Start invoiceRun
+Feature: Billing - Advanec Invoice
 
     Background:
 
         Given I logged in to DWP as billing.testautomation@essent.be
-        #And   Text parameter "id-billing-customer" is "1000901009"
 
-    Scenario: Start Invoicerun
+    Scenario: Start Invoicerun will generate advance invoide
         When Plus menu is "Billing -> Start facturatierun"
         And Modal dialog is Start invoicerun
         And "Naam job" selection is "recurrent"
@@ -16,6 +16,6 @@ Feature: Billing - Invoices 01 - Start invoiceRun
         Then Invoice run is scheduled
 
     #Scenario: Check Advance Invoice
-    #    When Left menu is contracting-switching
+    #    When Left tab is contracting-switching
     #    And Top menu item is Contracten
 

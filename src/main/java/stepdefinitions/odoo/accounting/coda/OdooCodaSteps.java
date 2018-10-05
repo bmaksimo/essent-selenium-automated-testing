@@ -2,20 +2,20 @@ package stepdefinitions.odoo.accounting.coda;
 
 import com.essent.testing.odoo.pageobject.impl.modal.coda.CodaImportDialogImpl;
 import com.essent.testing.odoo.pageobject.modal.CodaImportDialog;
+import com.essent.testing.odoo.scenario.OdooScenario;
 import com.essent.testing.util.resource.ResourceUtil;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
-import stepdefinitions.odoo.navigation.OdooNavigationElements;
 
 import java.io.File;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class OdooCodaSteps extends OdooNavigationElements {
+public class OdooCodaSteps extends OdooScenario {
     @Before("@SMOKE, @ODOO, @CODA")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);

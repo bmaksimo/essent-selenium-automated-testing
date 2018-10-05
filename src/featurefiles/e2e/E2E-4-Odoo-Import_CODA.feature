@@ -1,4 +1,5 @@
 @ODOO
+@E2E
 @CODA
 Feature: Import a coda file
 
