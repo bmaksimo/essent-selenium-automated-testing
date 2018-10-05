@@ -1,6 +1,7 @@
 package stepdefinitions.dwp.input;
 
 import com.billinghouse.cucumber.runtime.annotations.InputParameter;
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -98,6 +99,7 @@ public class InputElements extends DwpScenario {
 
     @And("^Label input for \"([^\"]*)\" is \"([^\"]*)\"$")
     public void setLabelInput(String label, String value) throws Throwable {
+        Sleeper.sleepTightInSeconds(5);
         setInput(label, "string:"+value);
     }
 
