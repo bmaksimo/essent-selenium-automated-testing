@@ -1,13 +1,16 @@
 package com.essent.testing.dwp.pageobject.impl.service_contracting;
 
+import com.essent.testing.dwp.pageobject.Form;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
+import stepdefinitions.dwp.tables.LeadInfo;
 
 import java.util.List;
 
-public class LeadPage extends BaseObject {
+public class LeadPage extends BaseObject implements Form {
 
+    private LeadInfo leadInfo;
     public LeadPage(SeleniumDriver seleniumDriver) {
         super(seleniumDriver);
     }
@@ -28,13 +31,26 @@ public class LeadPage extends BaseObject {
         waitForRequestsToFinish();
     }
 
+    private boolean createLead2() {
+        setCompanyName(leadInfo.getCompanyName());
+        waitForRequestsToFinish();
+        setContactPerson(leadInfo.getFirstName(), leadInfo.getSecondName());
+        setTelephone(leadInfo.getTelephone());
+        setMobile(leadInfo.getMobile());
+        setEmail(leadInfo.getEmail());
+        waitForRequestsToFinish();
+        //optional checks can be here
+        return true;
+    }
+
     private void setCompanyName(String companyNumber) {
         seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("company-name-c-field")), companyNumber);
         findElementWhenVisible(By.xpath(".//*[@id='company_name_c']/div/autocomplete/ul/li[2]")).click();
         waitForRequestsToFinish();
     }
 
-    private void saveLead() {
+    public void saveLead() {
+        waitForRequestsToFinish();
         findElementWhenVisible(By.id("primaryButton")).click();
     }
 
@@ -63,5 +79,14 @@ public class LeadPage extends BaseObject {
     public void validateCreatingLead(String name) {
         waitForRequestsToFinish();
         seleniumDriver.findElementWhenVisible(By.xpath("(//h5)[.='" + name + "'][1]")).isDisplayed();
+    }
+
+    public void setLead(LeadInfo leadInfo) {
+        this.leadInfo = leadInfo;
+    }
+
+    @Override
+    public boolean fillInFormData() {
+        return createLead2();
     }
 }
