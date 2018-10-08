@@ -1,6 +1,7 @@
 package stepdefinitions.dwp.page_object;
 
 import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
+import com.essent.testing.dwp.pageobject.impl.service_contracting.ContractenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -12,7 +13,6 @@ import org.openqa.selenium.By;
 
 public class TaskSteps extends DwpScenario {
     private String taskId;
-    BaseObject baseObject = new BaseObject(webDriver);
 
     @Before("@SMOKE, @E2E, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
@@ -31,13 +31,13 @@ public class TaskSteps extends DwpScenario {
 
     @When("^Plus action and \"([^\"]*)\" of first customer from list$")
     public void plusActionAndOfFirstCustomerFromList(String action) throws Throwable {
-        webDriver.waitForRequestsToFinish();
+        BaseObject baseObject = new BaseObject(webDriver);
         baseObject.clickOnPlus();
         baseObject.plusSubaction(action);
     }
 
     private void inputResolution(String text) {
-        webDriver.findElementWhenVisible(By.id("task-resolution-c-field")).sendKeys(text);
+        webDriver.waitAndSendKeys(webDriver.findElementWhenVisible(By.id("task-resolution-c-field")), text);
     }
 
     @When("^Save task ID of first customer in list$")
@@ -59,5 +59,17 @@ public class TaskSteps extends DwpScenario {
     private void findTaskId(String taskId) {
         webDriver.findElementWhenVisible(By.id("task-number-c-default-value-field")).sendKeys(taskId);
 
+    }
+
+    @And("^Search for task id$")
+    public void searchForTaskId() throws Throwable {
+        ContractenPage contractenPage = new ContractenPage(webDriver);
+        contractenPage.searchForTaskId(taskId);
+    }
+
+    @Then("^\"([^\"]*)\" was rejection reason$")
+    public void wasRejectionReason(String input) throws Throwable {
+        ContractenPage contractenPage = new ContractenPage(webDriver);
+        contractenPage.findRejectionReason(input);
     }
 }

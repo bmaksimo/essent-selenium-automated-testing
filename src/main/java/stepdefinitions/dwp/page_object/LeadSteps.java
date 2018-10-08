@@ -2,14 +2,18 @@ package stepdefinitions.dwp.page_object;
 
 import com.essent.testing.dwp.pageobject.impl.service_contracting.LeadPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import cucumber.api.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
+import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import stepdefinitions.dwp.tables.LeadInfo;
+
+import java.util.List;
 
 public class LeadSteps extends DwpScenario {
-    LeadPage leadPage = new LeadPage(webDriver);
 
     @Before("@SMOKE, @QUOTE, @RENEWAL, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) {
@@ -24,11 +28,22 @@ public class LeadSteps extends DwpScenario {
 
     @When("^Add lead$")
     public void addLead() throws Throwable {
+        LeadPage leadPage = new LeadPage(webDriver);
         leadPage.plusAddLead();
     }
 
-    @And("^Insert company name \"([^\"]*)\" for creating lead$")
-    public void insertCompanyNameForCreatingLead(String companyName) throws Throwable {
-        leadPage.createLead(companyName);
+    @And("^New lead is$")
+    public void insertCompanyNameForCreatingLead(DataTable lead) throws Throwable {
+        List<List<String>> db = lead.raw();
+        LeadPage leadPage = new LeadPage(webDriver);
+        leadPage.createLead(db);
+        List<LeadInfo> list = lead.asList(LeadInfo.class);
+        leadPage.setLead(list.get(0));
+    }
+
+    @Then("^\"([^\"]*)\" lead was created$")
+    public void leadWasCreated(String name) throws Throwable {
+        LeadPage leadPage = new LeadPage(webDriver);
+        leadPage.validateCreatingLead(name);
     }
 }
