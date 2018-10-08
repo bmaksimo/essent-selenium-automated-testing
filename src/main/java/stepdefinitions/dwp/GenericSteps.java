@@ -2,6 +2,7 @@ package stepdefinitions.dwp;
 
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
+import com.essent.automation.util.Sleeper;
 import com.essent.roles.UserRoles;
 import com.essent.testing.dwp.pageobject.Window;
 import com.essent.testing.dwp.pageobject.impl.modal.login.LoginAction;
