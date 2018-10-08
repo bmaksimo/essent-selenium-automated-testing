@@ -9,7 +9,6 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import stepdefinitions.dwp.tables.LeadInfo;
 
 import java.util.List;
 
@@ -33,12 +32,11 @@ public class LeadSteps extends DwpScenario {
     }
 
     @And("^New lead is$")
-    public void insertCompanyNameForCreatingLead(DataTable lead) throws Throwable {
-        List<List<String>> db = lead.raw();
+    public void insertCompanyNameForCreatingLead(DataTable dbTabel) throws Throwable {
         LeadPage leadPage = new LeadPage(webDriver);
+        List<List<String>> db = dbTabel.raw();
+
         leadPage.createLead(db);
-        List<LeadInfo> list = lead.asList(LeadInfo.class);
-        leadPage.setLead(list.get(0));
     }
 
     @Then("^\"([^\"]*)\" lead was created$")
