@@ -26,10 +26,6 @@ public class UploadB2BContractPrices {
 	private static final String privateKeyPassword = ConfigProvider.getProperty(ConfigKey.SSH_PASSPHRASE);
 	private static final String locationOfPrivateKey = ConfigProvider.getProperty(ConfigKey.SSH_KEYPATH);
 	private static final String ftpUserName = ConfigProvider.getProperty(ConfigKey.SSH_USER);
-    
-    //String ftpUserName = "dj.kovacevic";
-	//String locationOfPrivateKey = "C:\\Users\\dj.kovacevic\\.ssh\\id_rsa";
-	//String privateKeyPassword = "";
 
 	public void uploadB2BPrices() {
 
