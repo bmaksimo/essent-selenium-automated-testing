@@ -17,25 +17,23 @@ public class BaseObject extends Component {
 
     public String getTaskId() {
         final String taskId;
-        taskId = seleniumDriver.findElementWhenVisible(By.xpath("//tbody[@id='rows']/tr[1]/td[2]/list-link-bold-top-two-liner-cell[@icon='null']//a/h5")).getText();
+        taskId = seleniumDriver.findElementWhenVisible(By.xpath("(//h6)[2]")).getText();
         return taskId;
     }
 
     public void insertEANcode(String eanCode) {
-        seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.findElementWhenVisible(By.id("sql-i-aos-contracts-i-aos-products-quotes-i-ean-c-default-value-field")).sendKeys(eanCode);
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id("sql-i-aos-contracts-i-aos-products-quotes-i-ean-c-default-value-field")),eanCode);
     }
 
     public void clickOnPlus() {
-        seleniumDriver.findElementWhenVisible(By.xpath("(//a[@class='show-actions icon-plus'])[1]")).click();
+        seleniumDriver.waitAndClick(seleniumDriver.findElementOrNull(By.xpath("(//tbody[@id='rows']//list-plus-cell//a[@class='show-actions icon-plus'])[1]")));
     }
 
     public void plusSubaction(String action) {
-        seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[@label='" + action + "']")).click();
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[@label='" + action + "']")));
     }
 
     public void clickOnToggle(String label) {
-        seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + label + "?']//toggle-form-element")).click();
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + label + "?']//toggle-form-element")));
     }
 }
