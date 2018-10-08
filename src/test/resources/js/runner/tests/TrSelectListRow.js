@@ -1,17 +1,16 @@
+/**
+ *  TrSelectListRow DWP table model and returns to Java as JSon object
+ *
+ * * @param {object} options - Arguments passed from Java.
+ * * @param {function} callback - The Java callback that handles the result.
+ *
+ * Java example:
+ *  * Java example:
+ * Map<String, String> options = new HashMap<>();
+ * options.put("index", 1);
+ * boolean result = executeJavascriptTest("TrSelectListRow", options);
+ */
 class TrSelectListRow extends TestRunnerBase {
-
-    /**
-     *  TrSelectListRow DWP table model and returns to Java as JSon object
-     *
-     * * @param {object} options - Arguments passed from Java.
-     * * @param {function} callback - The Java callback that handles the result.
-     *
-     * Java example:
-     *  * Java example:
-     * Map<String, String> options = new HashMap<>();
-     * options.put("index", 1);
-     * boolean result = executeJavascriptTest("TrSelectListRow", options);
-     */
 
     constructor(options, callback) {
         super(options, callback, 1000);

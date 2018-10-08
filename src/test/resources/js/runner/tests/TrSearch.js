@@ -22,8 +22,8 @@ class TrSearch extends TestRunnerBase {
             result.status = "FAILED";
             result.reason = 'TextArea element ' + label + ' undefined.';
         }
-        setTimeout(()=> {
-            this.resolveCallback(result);
-        }, 1000);
+
+        this.resolveCallback(result);
+
     }
 }

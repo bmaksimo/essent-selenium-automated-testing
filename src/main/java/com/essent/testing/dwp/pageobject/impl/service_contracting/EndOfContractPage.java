@@ -1,9 +1,7 @@
 package com.essent.testing.dwp.pageobject.impl.service_contracting;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.selenium.SeleniumDriver;
-import stepdefinitions.dwp.view_list.ViewListElements;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,8 +11,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class EndOfContractPage extends Component {
-
-    private DwpScenario dwpScenario = new ViewListElements();
 
     public EndOfContractPage(SeleniumDriver seleniumDriver) {
         super(seleniumDriver);

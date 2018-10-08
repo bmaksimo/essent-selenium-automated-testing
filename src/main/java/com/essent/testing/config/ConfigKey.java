@@ -117,15 +117,10 @@ public enum ConfigKey {
     TUNNEL_BPM("tunnel.bpm"),
     ENERGYCOMM_URL("energycomm.url"),
     MARKET_MOCK_URL("marketmock.url");
-	// formatter:on
-
-
-    private String resourceKey;
-
+	private String resourceKey;
     ConfigKey(String resourceKey) {
         this.resourceKey = resourceKey;
     }
-
     public String getResourceKey() {
         return resourceKey;
     }

@@ -2,13 +2,13 @@ package stepdefinitions.dwp.tables;
 
 public class CustomerAddress
 {
-    String street;
-    int houseNr;
-    String houseNrAdd;
-    String bus;
-    String postalCode;
-    String city;
-    String country;
+    private String street;
+    private int houseNr;
+    private String houseNrAdd;
+    private String bus;
+    private String postalCode;
+    private String city;
+    private String country;
 
     public String getStreet() {
         return street;

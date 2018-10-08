@@ -13,8 +13,7 @@ Feature: Creating a B2C Quote with customer switch - Dutch version
         Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
 
     Scenario: Create a B2C Quote with customer switch
-        When Top action is Plus Menu
-        And Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
+        When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Details van de offerte"
 
         When B2C sales channel is Inbound

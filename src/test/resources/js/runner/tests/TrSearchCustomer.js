@@ -1,7 +1,7 @@
 class TrSearchCustomer extends TestRunnerBase {
 
     constructor(options, callback) {
-    super(options,callback, 500);
+    super(options,callback, 1000);
     }
 
     run() {
@@ -20,8 +20,6 @@ class TrSearchCustomer extends TestRunnerBase {
             result.status = "FAILED";
             result.reason = 'Search element ' + label + ' undefined.';
         }
-        setTimeout(()=> {
-            this.resolveCallback(result);
-        }, 500);
+        this.resolveCallback(result);
     }
 }

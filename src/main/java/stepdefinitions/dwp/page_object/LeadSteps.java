@@ -9,7 +9,6 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import stepdefinitions.dwp.tables.LeadInfo;
 
 import java.util.List;
 
@@ -33,17 +32,11 @@ public class LeadSteps extends DwpScenario {
     }
 
     @And("^New lead is$")
-    public void insertCompanyNameForCreatingLead(DataTable lead) throws Throwable {
-        List<List<String>> db = lead.raw();
+    public void insertCompanyNameForCreatingLead(DataTable dbTabel) throws Throwable {
         LeadPage leadPage = new LeadPage(webDriver);
-        leadPage.createLead(db);
+        List<List<String>> db = dbTabel.raw();
 
-        //Below is Gherkin standard
-        List<LeadInfo> list = lead.asList(LeadInfo.class);
-        leadPage.setLead(list.get(0));
-        //below is page object alternative if your test needs to analyse in between info if the execution failed
-        //leadPage.fillInFormData();
-        //leadPage.saveLead();
+        leadPage.createLead(db);
     }
 
     @Then("^\"([^\"]*)\" lead was created$")

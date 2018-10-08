@@ -1,17 +1,16 @@
+/**
+ * Checks if a menu-item is present in the DOM
+ * Then clicks on left menu item
+ *
+ * * @param {object.menu} options - kebab case menu label argument passed from Java.
+ * * @param {function} callback - The Java callback that handles the result.
+ *
+ * Java example:
+ * Map<String, String> options = new HashMap<>();
+ * options.put("menu",kebabCaseLabel);
+ * boolean result = executeJavascriptTest("TrGetLeftMenu", options);
+ */
 class TrGetLeftMenu extends TestRunnerBase {
-
-    /**
-     * Checks if a menu-item is present in the DOM
-     * Then clicks on left menu item
-     *
-     * * @param {object.menu} options - kebab case menu label argument passed from Java.
-     * * @param {function} callback - The Java callback that handles the result.
-     *
-     * Java example:
-     * Map<String, String> options = new HashMap<>();
-     * options.put("menu",kebabCaseLabel);
-     * boolean result = executeJavascriptTest("TrGetLeftMenu", options);
-     */
 
     constructor(options, callback) {
         super(options, callback, 100);

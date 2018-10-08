@@ -1,20 +1,19 @@
+/**
+ * Checks if a top tab (top menu item) is present in the DOM
+ * Then clicks on it, if it is available
+ *
+ * * @param {object.name}  - menu item argument passed from Java.
+ * * @param {function} callback - The Java callback that handles the result.
+ *
+ * Java example:
+ * Map<String, String> options = new HashMap<>();
+ * options.put("label", "Contracts");
+ * boolean result = executeJavascriptTest("TrGetTopTab", options);
+ */
 class TrGetTopTab extends TestRunnerBase {
 
-    /**
-     * Checks if a top tab (top menu item) is present in the DOM
-     * Then clicks on it, if it is available
-     *
-     * * @param {object.name}  - menu item argument passed from Java.
-     * * @param {function} callback - The Java callback that handles the result.
-     *
-     * Java example:
-     * Map<String, String> options = new HashMap<>();
-     * options.put("label", "Contracts");
-     * boolean result = executeJavascriptTest("TrGetTopTab", options);
-     */
-
     constructor(options, callback) {
-        super(options, callback, 100);
+        super(options, callback, 2000);
     }
 
     run() {
@@ -39,8 +38,7 @@ class TrGetTopTab extends TestRunnerBase {
             result.status = 'FAILED';
             result.reason = 'Element ' + options.label + ' not found';
         }
-        setTimeout(()=> {
-            this.resolveCallback(result);
-        }, 5000);
+
+        this.resolveCallback(result);
     }
 }

@@ -23,7 +23,7 @@ public class DocumentsMenu extends NavigationElements {
         }
     }
 
-    @Before("@SMOKE, @QUOTE, @BILLING")
+    @Before("@SMOKE, @E2E, @QUOTE, @BILLING")
     public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
     }
@@ -36,7 +36,7 @@ public class DocumentsMenu extends NavigationElements {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @BILLING")
+    @After("@SMOKE, @E2E, @QUOTE, @BILLING")
     public void tearDown() throws Exception {
         super.tearDown();
     }

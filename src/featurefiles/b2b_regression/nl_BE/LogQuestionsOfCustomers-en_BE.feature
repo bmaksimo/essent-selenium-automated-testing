@@ -13,13 +13,7 @@ Feature: Log questions of customers
         When Top action is Filters
         And "Klantnummer" input is "150638828"
         And Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
-        #Did now work in headless mode
-        #And b2b Account is selected by using "Klantnummer" in filter
         And Plus menu is "Service -> Case aanmaken voor de klant"
-        # Ugly synthax
-        # And b2b "Case aanmaken voor de klant" is selected in Service
-        #Did now work in headless mode
-        #And b2b New case for account is created
         And New case for account is created
         And View list header is "Cases" appears within 10 seconds
         And Click on link in View List at 1st row and "Nummer & Aanmaakdatum" column polling 20 seconds

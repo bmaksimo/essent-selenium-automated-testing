@@ -6,7 +6,7 @@ public enum PaymentMethod {
     DOM("Domiciliëring"),
     Overschrijving("Overschrijving");
     private String label;
-    private PaymentMethod(String label) {
+    PaymentMethod(String label) {
         this.label = label;
     }
     public String getLabel() {

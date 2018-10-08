@@ -282,7 +282,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         return new ExecuteJavascriptTest(this).withException(withException).executeJavascriptTest(registeredJsClass, options);
     }
 
-    private void awaitJqueryNotActive(long milliseconds) {
+    public void awaitJqueryNotActive(long milliseconds) {
         new WebDriverWait(driver, milliseconds).until(webDriver -> {
             final JavascriptExecutor js = (JavascriptExecutor) driver;
             return (Boolean) js
@@ -370,6 +370,15 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             logger.info(String.format(" - RESULT: %s -> %s", selector, webElement.getAttribute("innerHTML")));
             return webElement;
         }
+    }
+
+    public WebElement findElement(By selector) {
+        FluentWait<WebDriver> waiter = new FluentWait<>(driver)
+            .withTimeout(Duration.ofSeconds(30))
+            .pollingEvery(Duration.ofSeconds(5))
+            .ignoring(NoSuchElementException.class);
+        WebElement element = waiter.until(driver -> driver.findElement(selector));
+        return element;
     }
 
     public WebElement findElementWhenVisible(By selector) {
