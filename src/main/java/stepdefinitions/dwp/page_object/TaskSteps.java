@@ -13,7 +13,6 @@ import org.openqa.selenium.By;
 
 public class TaskSteps extends DwpScenario {
     private String taskId;
-    BaseObject baseObject = new BaseObject(webDriver);
 
     @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
@@ -32,6 +31,7 @@ public class TaskSteps extends DwpScenario {
 
     @When("^Plus action and \"([^\"]*)\" of first customer from list$")
     public void plusActionAndOfFirstCustomerFromList(String action) throws Throwable {
+        BaseObject baseObject = new BaseObject(webDriver);
         webDriver.waitForRequestsToFinish();
         baseObject.clickOnPlus();
         baseObject.plusSubaction(action);
