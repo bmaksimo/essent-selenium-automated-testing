@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.impl.page;
+package com.essent.testing.dwp.pageobject.impl.service_contracting;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.selenium.SeleniumDriver;

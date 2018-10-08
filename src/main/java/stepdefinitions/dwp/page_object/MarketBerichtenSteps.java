@@ -1,7 +1,7 @@
 package stepdefinitions.dwp.page_object;
 
 import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
-import com.essent.testing.dwp.pageobject.impl.page.MarktberichtenPage;
+import com.essent.testing.dwp.pageobject.impl.service_contracting.MarktberichtenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -10,7 +10,6 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
-import org.openqa.selenium.By;
 
 public class MarketBerichtenSteps extends DwpScenario {
     BaseObject baseObject = new BaseObject(webDriver);
