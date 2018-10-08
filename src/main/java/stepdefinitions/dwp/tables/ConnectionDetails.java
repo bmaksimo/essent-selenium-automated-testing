@@ -1,9 +1,9 @@
 package stepdefinitions.dwp.tables;
 
 public class ConnectionDetails {
-    ProductType productType;
-    String      meterNumber;
-    String      ean;
+    private ProductType productType;
+    private String      meterNumber;
+    private String      ean;
 
     public ProductType getProductType() {
         return productType;

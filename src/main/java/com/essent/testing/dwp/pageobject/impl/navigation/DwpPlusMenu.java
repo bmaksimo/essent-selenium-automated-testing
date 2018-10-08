@@ -16,7 +16,6 @@ import java.util.List;
 
 public class DwpPlusMenu extends Component {
 
-
     private static String ACCORDION_BUTTON_SELECTOR_TEMPLATE = "[label='${text}'] .accordion-button";
     private static String LABELED_ACCORDION_WRAPPER_SELECTOR  =  "labeled-accordion-wrapper[label='${text}'] > a";
 
@@ -25,7 +24,6 @@ public class DwpPlusMenu extends Component {
     public DwpPlusMenu(SeleniumDriver seleniumDriver) {
         super(seleniumDriver);
     }
-
 
     /**
      * @deprecated Use {@link #executeAction(String)}
@@ -93,5 +91,4 @@ public class DwpPlusMenu extends Component {
         Sleeper.sleepTight(200);
         return this.findMenu(result, menu);
     }
-
 }

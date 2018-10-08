@@ -21,7 +21,6 @@ public class ContextService implements ApplicationContextAware
   public void setApplicationContext(ApplicationContext applicationContext)
       throws BeansException
   {
-
     context = applicationContext;
   }
 

@@ -6,7 +6,6 @@ import com.essent.testing.dwp.pageobject.Form;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.service_contracting.LogCasePage;
 import com.essent.testing.selenium.SeleniumDriver;
-import cucumber.runtime.CucumberException;
 import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
 import org.openqa.selenium.By;
@@ -82,11 +81,6 @@ public class LogCasePageImpl extends Component implements Form, LogCasePage {
     @Override
     public void setPriority(String priority) {
         this.priority = priority;
-    }
-
-    @Override
-    public void cancel() {
-        throw new CucumberException("Not yet implemented.");
     }
 
     @Override

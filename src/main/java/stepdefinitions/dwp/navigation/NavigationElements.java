@@ -17,15 +17,6 @@ import static org.hamcrest.Matchers.is;
 
 public abstract class NavigationElements extends DwpScenario {
 
-    private class ClickLeftTab implements Predicate<String> {
-        @Override
-        public boolean test(String label) {
-            Map<String, String> options = new HashMap<>();
-            options.put("menu", label);
-            boolean success = executeJavascriptTest("TrGetLeftMenu", options);
-            return success;
-        }
-    }
 
     private class ClickTopAction implements Predicate<String> {
         @Override
@@ -75,16 +66,6 @@ public abstract class NavigationElements extends DwpScenario {
         }
     }
 
-    private class SearchForCustomer implements Predicate<String> {
-        @Override
-        public boolean test(String name) {
-            Map<String, Object> options = new HashMap<>();
-            options.put("name", name);
-            boolean success = executeJavascriptTest("TrSearchCustomer", options);
-            return success;
-        }
-    }
-
     private class VisitTopItem implements Predicate<String> {
         @Override
         public boolean test(String label) {
@@ -110,7 +91,6 @@ public abstract class NavigationElements extends DwpScenario {
         }
     }
 
-
     public class SearchCustomer implements Predicate<String> {
         @Override
         public boolean test(String name) {
@@ -118,23 +98,15 @@ public abstract class NavigationElements extends DwpScenario {
         }
     }
 
+    public class CheckViewListIsNotEmpty implements Predicate<String> {
+        @Override
+        public boolean test(String s) {
+            return executeJavascriptTest("TrListIsNotEmpty", "");
+        }
+    }
 
     protected int extractNumericValue(String ordinal) {
         return numericValue(ordinal);
-    }
-
-
-    protected void visitLeftMenuItem(String leftTab) throws Throwable {
-        ClickLeftTab goToLeftItem = new ClickLeftTab();
-        boolean success = goToLeftItem.test(leftTab);
-        assertThat(String.format("Left menu item %s was not visited", leftTab),
-            success, is(true));
-    }
-
-    protected void visitTopMenuItem(String label) throws Throwable {
-        boolean success = new VisitTopItem().test(label);
-        assertThat(String.format("Top Menu item %s was not available.", label),
-            success, is(true));
     }
 
     protected void clickTopAction(String name) {
@@ -148,7 +120,6 @@ public abstract class NavigationElements extends DwpScenario {
         assertThat(String.format("Top Arrow %s is undefined.", arrow),
             success, is(true));
     }
-
 
     protected void clickPlusAction(String path) {
         DwpPlusMenu plusMenu = new DwpPlusMenu(webDriver);
@@ -167,13 +138,5 @@ public abstract class NavigationElements extends DwpScenario {
         boolean success = new ClickListPlusAction().test(item);
         assertThat(String.format("List Plus Action %s undefined.", item),
             success, is(true));
-    }
-
-    public class CheckViewListIsNotEmpty implements Predicate<String> {
-
-        @Override
-        public boolean test(String s) {
-            return executeJavascriptTest("TrListIsNotEmpty", "");
-        }
     }
 }

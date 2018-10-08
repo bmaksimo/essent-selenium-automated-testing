@@ -22,24 +22,14 @@ public enum B2CQuoteElements {
     DELIVERY_ADDR_COUNTRY("XPATH", "//div[@id='accounts-aos-quotes-aos-products-quotes-addresses-aos-products-quotes-field-container']//select[@id='address_country']");
     private String searchBy;
     private String query;
-    private String pick;
 
-    private B2CQuoteElements(String searchBy, String query, String pick) {
-        this.searchBy = searchBy;
-        this.query = query;
-        this.pick = pick;
-    }
-    private B2CQuoteElements(String searchBy, String query) {
+    B2CQuoteElements(String searchBy, String query) {
         this.searchBy = searchBy;
         this.query = query;
     }
 
     public Model.Element element() {
         Model.Element element = new Model.Element().search(searchBy).query(this.query).key(this.name());
-        if(pick == null) {
-            return element;
-        } else {
-            return element.pick(pick);
-        }
+        return element;
     }
 }

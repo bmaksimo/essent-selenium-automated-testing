@@ -18,16 +18,8 @@ public class QuoteDetailsPage extends QuoteCreationGuidedStep {
 
     private SalesChannel salesChannel;
 
-    public boolean isRegularisation() {
-        return regularisation;
-    }
-
     public void setRegularisation(boolean regularisation) {
         this.regularisation = regularisation;
-    }
-
-    public SalesChannel getSalesChannel() {
-        return salesChannel;
     }
 
     public void setSalesChannel(SalesChannel salesChannel) {

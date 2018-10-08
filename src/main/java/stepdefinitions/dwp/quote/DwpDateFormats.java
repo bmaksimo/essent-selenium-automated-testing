@@ -14,10 +14,6 @@ public enum DwpDateFormats {
         this.formatter  = DateTimeFormat.forPattern(format);
     }
 
-    public String print() {
-        return this.print(new DateTime());
-    }
-
     public String print(final DateTime dateTime) {
         return formatter.print(dateTime);
     }

@@ -284,7 +284,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         return new ExecuteJavascriptTest(this).withException(withException).executeJavascriptTest(registeredJsClass, options);
     }
 
-    private void awaitJqueryNotActive(long milliseconds) {
+    public void awaitJqueryNotActive(long milliseconds) {
         new WebDriverWait(driver, milliseconds).until(webDriver -> {
             final JavascriptExecutor js = (JavascriptExecutor) driver;
             return (Boolean) js

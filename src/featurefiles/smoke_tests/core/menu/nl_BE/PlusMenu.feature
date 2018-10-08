@@ -1,10 +1,11 @@
-@_SMOKE
-Feature: Log questions of customers
+@DWP
+@SMOKE
+Feature: Menu navigation
 
     Background:
         Given  I logged in to DWP as businessdesk.testautomation.b2b@essent.be
 
-    Scenario:
+    Scenario: Navigation menu -> view list -> view -> poll and click cell item  -> cockpit -> plus menu
         When Left menu is sales-marketing
         And  Top menu item is Klanten
         Then View list header is "Klanten" appears within 25 seconds

@@ -1,11 +1,11 @@
 @DWP
-@_SMOKE
-Feature: Javascript DWP testing
+@SMOKE
+Feature: DWP Gui navigation  elements
 
     Background:
         Given I logged in to DWP as contracting.testautomation.b2c@essent.be
 
-    Scenario: We can access the main gui elements
+    Scenario: Using DWp navigation elements (top, filter, plus- buttons)
         When Left menu is contracting-switching
         And  Top menu item is Marktberichten
         Then View list header is "Marktberichten" appears within 25 seconds
@@ -17,7 +17,6 @@ Feature: Javascript DWP testing
         And  Top arrow button is Up
         And  Plus menu is "Switching -> Marktbericht Taken"
         Then View list header is "Taken Marktberichten" appears within 25 seconds
-        And  Find web element by Xpath "//div[@class='top-menu']/sub-menu/sub-menu-link[@label='Marktberichten']/a"
 
         When Top action is Filters
         And  Top action is Plus Menu

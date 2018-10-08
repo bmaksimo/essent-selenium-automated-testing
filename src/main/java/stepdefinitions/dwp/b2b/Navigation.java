@@ -3,7 +3,6 @@ package stepdefinitions.dwp.b2b;
 import com.essent.testing.dwp.pageobject.impl.navigation.DwpPlusMenu;
 import com.essent.testing.dwp.pageobject.impl.page.DwpHomePage;
 import com.essent.testing.dwp.scenario.DwpScenario;
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
@@ -28,7 +27,7 @@ public class Navigation extends DwpScenario {
     @And("^b2b \"([^\"]*)\" is selected in Service$")
     public void bBIsSelectedInService(String menu) throws Throwable {
         DwpPlusMenu pl = new DwpPlusMenu(webDriver);
-            pl.findAndClickServiceElement(menu);
+        pl.findAndClickServiceElement(menu);
     }
 
     @And("^\"([^\"]*)\" is clicked$")

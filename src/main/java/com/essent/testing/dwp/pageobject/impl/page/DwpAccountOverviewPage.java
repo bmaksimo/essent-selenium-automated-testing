@@ -134,19 +134,6 @@ public class DwpAccountOverviewPage extends Component {
         seleniumDriver.waitAndClick(updateAccountDetailsOption());
     }
 
-    public WebElement duningStopCheckbox() {
-        return seleniumDriver.findElementWhenVisible(By.id("dunning-stop-c-field"));
-    }
-
-    public void clickOnDuningStopCheckbox()  {
-        if (checkIfDunningStopCheckboxIsChecked()) {
-            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("dunning_stop_c")));
-            seleniumDriver.waitAndClick(duningStopCheckbox());
-        } else {
-            seleniumDriver.waitAndClick(duningStopCheckbox());
-        }
-    }
-
     public WebElement saveButtonForFinanceAndLegalSection()  {
         return seleniumDriver.findElementWhenVisible(By.xpath("//*[contains(text(),' Finance & legal ')]/preceding-sibling::*[1]"));
     }
@@ -155,24 +142,9 @@ public class DwpAccountOverviewPage extends Component {
         seleniumDriver.waitAndClick(saveButtonForFinanceAndLegalSection());
     }
 
-    public boolean checkIfDunningStopCheckboxIsChecked()  {
-        String classValue = duningStopCheckbox().getAttribute("class");
-       return classValue.contains("not-empty");
-    }
-
-    public void putDuningStopBackToOff()  {
-        clickOnplusIcon();
-        clickOnServiceDropdownMenu();
-        clickOnAccountChangesDropdownSubMenu();
-        clickOnUpdateAccountDetailsOption();
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("dunning_stop_c")));//seleniumDriver.findElementWhenVisible(By.id("dunning_stop_c")).click();
-        clickOnSaveButtonForFinanceAndLegalSection();
-
-    }
 
     public WebElement channelDropdownMenu() {
         return seleniumDriver.findElementWhenVisible(By.id("cases-interaction-channel-c-field"));
-
     }
 
     public void clickOnChannelDropdownMenu()  {

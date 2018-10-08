@@ -6,6 +6,7 @@ import com.essent.be.billing.invoice.BillingInvoiceOrderLine;
 import com.essent.be.jbilling.api.rest.invoice.RSGetInvoicesForBillingIDs;
 import com.essent.be.jbilling.api.rest.invoice.RSInvoicesForBillingIDsResp;
 import com.essent.testing.client.billing.BillingInvoiceRest;
+import com.essent.testing.scenario.RegisteredScenario;
 import cucumber.api.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
@@ -14,7 +15,6 @@ import cucumber.api.java.en.When;
 import org.apache.commons.lang3.time.DateUtils;
 import org.joda.time.DateTime;
 import org.junit.Assert;
-import stepdefinitions.billing.generic.BillingScenario;
 import stepdefinitions.billing.test.tables.PeriodTable;
 
 import java.math.BigDecimal;
@@ -22,11 +22,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
-public class BillRun extends BillingScenario {
+public class BillRun extends RegisteredScenario {
 
 	private List<BillingInvoice> billingInvoiceCache = new ArrayList<>();
 
-	@Before("@SMOKE, @E2E_B2C, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
+	@Before("@SMOKE, @E2E, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }

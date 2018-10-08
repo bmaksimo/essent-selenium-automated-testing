@@ -1,11 +1,9 @@
 package com.essent.testing.odoo.scenario;
 
-import com.billinghouse.cucumber.runtime.scenario.ActiveScenarioProvider;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.selenium.scenario.SeleniumScenario;
-import cucumber.api.Scenario;
 import org.apache.log4j.Logger;
 
 import static org.junit.Assert.assertTrue;
@@ -34,12 +32,4 @@ public abstract class OdooScenario extends SeleniumScenario {
         assertTrue(currentUrl.startsWith(webDriver.getBaseUrl()));
     }
 
-    protected void odooRegisterActiveScenario(Scenario scenario) {
-        logger.info("STEP:");
-        logger.info(" - ACTION: REGISTER_GHERKIN_SCENARIO");
-        logger.info(" - CLASS: " + this.getClass().getSimpleName());
-        name = scenario.getName();
-        logger.info(" - NAME: " + name);
-        ActiveScenarioProvider.get().setActiveScenario(this.getClass().getSimpleName(), this);
-    }
 }

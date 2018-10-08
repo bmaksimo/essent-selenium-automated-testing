@@ -1,7 +1,7 @@
 package com.essent.testing.odoo.pageobject.impl.modal.coda;
 
 import com.essent.automation.autocrat.Model;
-import com.essent.testing.dwp.pageobject.impl.Component;
+import com.essent.testing.odoo.pageobject.impl.Component;
 import com.essent.testing.odoo.pageobject.modal.CodaImportDialog;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
