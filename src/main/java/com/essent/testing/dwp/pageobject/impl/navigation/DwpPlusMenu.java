@@ -29,4 +29,11 @@ public class DwpPlusMenu extends Component {
         WebElement element = seleniumDriver.findElementWhenVisible(By.xpath(query));
         seleniumDriver.waitAndClick(element);
     }
+
+    public void findAndClickUpdateAccountDetailsElement(String key){
+        String query = createQuery(XPATH_CONTAINS_TEXT_TEMPLATE, "text", key);
+        WebElement element = seleniumDriver.findElementWhenVisible(By.xpath(query));
+        seleniumDriver.waitAndClick(element);
+    }
+
 }

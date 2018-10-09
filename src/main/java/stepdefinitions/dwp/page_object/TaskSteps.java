@@ -1,7 +1,8 @@
-package stepdefinitions.dwp.service_contracting;
+package stepdefinitions.dwp.page_object;
 
-import com.essent.testing.dwp.pageobject.BaseObject;
+import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -30,8 +31,8 @@ public class TaskSteps extends DwpScenario {
 
     @When("^Plus action and \"([^\"]*)\" of first customer from list$")
     public void plusActionAndOfFirstCustomerFromList(String action) throws Throwable {
-        webDriver.waitForRequestsToFinish();
         BaseObject baseObject = new BaseObject(webDriver);
+        webDriver.waitForRequestsToFinish();
         baseObject.clickOnPlus();
         baseObject.plusSubaction(action);
     }

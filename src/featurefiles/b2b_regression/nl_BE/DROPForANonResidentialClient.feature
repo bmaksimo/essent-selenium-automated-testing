@@ -18,7 +18,11 @@ Feature: DROP for a Non-residential client
         And Dashboard menu is Marktberichten
         And Select "START NIEUW MARKTBERICHT" on Marktberichten page
         And Changes are confirmed
-        And New martetberich is created
-        Then Confirm task was "Non-Residential End-of-Contract
-        #Then Proper Module and label status is displayed
+        When Input in Module is "INITIATE STOP ACCESS"
+        And Input in Label is "Drop/Request Budget Meter"
+        And Check toggle "Testing"
+        And Check toggle "Market mocK"
+        And Changes are confirmed
+        Then Confirm task was "Non-Residential Drop"
+
 

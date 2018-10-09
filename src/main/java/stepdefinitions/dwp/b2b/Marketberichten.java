@@ -30,23 +30,4 @@ public class Marketberichten extends DwpScenario {
         mb.clickOnTheFirstContract();
         mb.clickOnSubmitButton();
     }
-
-    @And("^New martetberich is created$")
-    public void newMartetberichIsCreated() throws Throwable {
-        MarketberichtenPage mb = new MarketberichtenPage(webDriver);
-        mb.clickOnModuleDropdownMenu();
-        mb.clickOnInitiateStopAccessOption();
-        mb.clickOnLabelDropdownMenu();
-        mb.clickOnNonResidentialEndOfContractOption();
-        mb.clickOnDropBudgetMeterOption();
-        mb.clickOnConfirmButton();
-    }
-
-
-
-    @Then("^Proper Module and label status is displayed$")
-    public void properModuleAndLabelStatusIsDisplayed() throws Throwable {
-
-    }
-
 }

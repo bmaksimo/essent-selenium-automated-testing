@@ -25,7 +25,6 @@ public class MarketberichtenPage  extends Component {
 
     public WebElement selectNewContractlineButton() {
         return seleniumDriver.findElementWhenVisible(By.xpath("//button[contains(.,'Select Contractline')]"));
-        //return seleniumDriver.findElementWhenVisible(By.xpath("//button[class='button-placeholder'][1]"));
     }
 
     public void clickOnSelectNewContractlineButton() throws InterruptedException {
@@ -64,53 +63,6 @@ public class MarketberichtenPage  extends Component {
     public void clickOnSubmitButton() throws InterruptedException {
         seleniumDriver.waitAndClick(submitButton());
     }
-
-    public WebElement selectButton() {
-        return seleniumDriver.findElementWhenVisible(By.id("confirm-button"));
-    }
-
-    public void clickOnSelectButton() throws InterruptedException {
-        seleniumDriver.waitAndClick(selectButton());
-    }
-
-    public WebElement moduleDropdownMenu() throws InterruptedException {
-        //return seleniumDriver.findElementWhenVisible(By.id("dwp-mig-module-c-field"));  //label[class='input__checkbox'][2] //*[@id='dwp-mig-module-c-field']/option[1]"
-        //return seleniumDriver.findElementWhenVisible(By.xpath("//label[class='input__checkbox']")).findElement(By.id("dwp-mig-module-c-field"));
-        return seleniumDriver.findElementWhenVisible(By.xpath("//select[@id='dwp-mig-module-c-field']"));
-    }
-
-    public void clickOnModuleDropdownMenu() throws InterruptedException {
-        seleniumDriver.waitAndClick(moduleDropdownMenu());
-    }
-
-    public void clickOnInitiateStopAccessOption() throws InterruptedException {
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//option[@label=//option[@label='INITIATE STOP ACCESS']]")));
-     }
-
-    public WebElement labelDropdownMenu() {
-        return seleniumDriver.findElementWhenVisible(By.id("dwp-mig-label-c-field"));
-    }
-
-    public void clickOnLabelDropdownMenu() throws InterruptedException {
-        seleniumDriver.waitAndClick(labelDropdownMenu());
-    }
-
-    public void clickOnNonResidentialEndOfContractOption() throws InterruptedException {
-
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("(//option[@label='Non-Residential End-of-Contract'])[1]")));
-    }
-
-    public void clickOnDropBudgetMeterOption() throws InterruptedException {
-
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//option[@label='Drop/Request Budget Meter']")));
-    }
-
-    public void clickOnConfirmButton() throws InterruptedException {
-
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//a[@class='button']")));
-
-    }
-
 
 }
 

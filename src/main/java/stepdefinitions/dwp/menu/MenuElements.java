@@ -11,7 +11,10 @@ import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
 import stepdefinitions.dwp.navigation.NavigationElements;
 import stepdefinitions.dwp.tables.plus.Item;
-import java.util.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -56,16 +59,21 @@ public class MenuElements extends NavigationElements {
             + StringUtils.join(failedUpperItems, ", "), failedUpperItems.isEmpty(), is(true));
     }
 
+    @When("^Left menu is ([^\"]*)$")
+    public void clickLeftMenuItem(String tabName) throws Throwable {
+        webDriver.waitForRequestsToFinish();
+        super.visitLeftMenuItem(tabName);
+    }
+
     @When("^Top menu item is ([^\"]*)$")
     public void clickTopMenuItem(String tabName) throws Throwable {
         DwpTopMenu tm = new DwpTopMenu(webDriver);
         tm.findAndClickTopMenu(tabName);
     }
 
-    @When("^Left menu is ([^\"]*)$")
-    public void clickLeftMenuItem(String tabName) throws Throwable {
-        DwpLeftMenu lm = new DwpLeftMenu(webDriver);
-        lm.clickOnLeftElemet(tabName);
+    @When("^Left Tab is ([^\"]*)$")
+    public void check_left_menu_item(String itemName) throws Throwable {
+        clickLeftMenuItem(itemName);
     }
 
 
