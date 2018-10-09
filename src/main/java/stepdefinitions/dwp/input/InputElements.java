@@ -131,6 +131,12 @@ public class InputElements extends DwpScenario {
             success, is(true));
     }
 
+    @And("^Form is submitted$")
+    public void formIsSubmitted() throws Throwable {
+        Map<String, String> options = new HashMap<>();
+        boolean success = executeJavascriptTest("TrSubmitForm", options);
+    }
+
     @Override
     @After("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @BILLING, @B2B_REGRESSION")
     public void tearDown() throws Exception {
