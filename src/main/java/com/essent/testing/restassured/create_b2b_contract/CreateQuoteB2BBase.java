@@ -20,6 +20,7 @@ import com.essent.testing.restassured.create_b2b_contract.helper.ContractB2BUtil
 import com.essent.testing.restassured.create_b2b_contract.helper.PrepareDataForB2BContract;
 import com.google.gson.Gson;
 
+import cucumber.runtime.CucumberException;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookies;
@@ -102,7 +103,7 @@ public class CreateQuoteB2BBase {
 		
 		if(this.upStartDate.equals("NOT_VALID")) {
 			logger.info("ALL START CONTRACT DATES ARE USED FOR ADDRESS STREET: " + addressStreet + " EAN: " + ean_c + "; PLEASE USE ANOTHER ADDRESS AND EAN");
-			throw new Exception("ALL START CONTRACT DATES ARE USED FOR ADDRESS STREET: " + addressStreet + " EAN: " + ean_c + "; PLEASE USE ANOTHER ADDRESS AND EAN");
+			throw new CucumberException("ALL START CONTRACT DATES ARE USED FOR ADDRESS STREET: " + addressStreet + " EAN: " + ean_c + "; PLEASE USE ANOTHER ADDRESS AND EAN");
 		}
 	}
 	
