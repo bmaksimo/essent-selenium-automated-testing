@@ -12,4 +12,9 @@ public class MainWindow extends Component implements Window {
     public MainWindow(SeleniumDriver seleniumDriver) {
         super(seleniumDriver.findElementOrNull(MAIN_WINDOW_SELECTOR), seleniumDriver);
     }
+
+    @Override
+    public String getTitle() {
+        return null;
+    }
 }

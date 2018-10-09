@@ -39,7 +39,7 @@ import static org.hamcrest.Matchers.is;
 
 public class QuoteSteps extends DwpScenario {
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_CS,@QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
+    @Before("@SMOKE, @E2E, @QUOTE, @QUOTE_CS,@QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -139,8 +139,6 @@ public class QuoteSteps extends DwpScenario {
         quoteDetailsPage.next();
     }
 
-    @OutputParameter(name = "customer")
-    private CustomerDetails newCustomer;
 
     @Then("^Form header is \"([^\"]*)\"$")
     public void checkFormHeader(String formHeader) throws Throwable {
@@ -231,7 +229,7 @@ public class QuoteSteps extends DwpScenario {
             .ignoreExceptions()
             .pollInterval(FIVE_HUNDRED_MILLISECONDS)
             .pollDelay(ONE_HUNDRED_MILLISECONDS)
-            .atMost(new Duration(10, SECONDS)).until(()->connectionDetailsView.isNextButtonEnabled());
+            .atMost(new Duration(10, SECONDS)).until(connectionDetailsView::isNextButtonEnabled);
         connectionDetailsView.toggleMeter(productType, meterState);
     }
 
@@ -242,7 +240,7 @@ public class QuoteSteps extends DwpScenario {
             .ignoreExceptions()
             .pollInterval(FIVE_HUNDRED_MILLISECONDS)
             .pollDelay(ONE_HUNDRED_MILLISECONDS)
-            .atMost(new Duration(10, SECONDS)).until(()->connectionDetailsView.isNextButtonEnabled());
+            .atMost(new Duration(10, SECONDS)).until(connectionDetailsView::isNextButtonEnabled);
         connectionDetailsView.toggleMarketMockTest(productType, state);
     }
 
@@ -304,7 +302,7 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
+    @After("@SMOKE, @E2E, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void tearDown() throws Exception {
         super.tearDown();
     }
