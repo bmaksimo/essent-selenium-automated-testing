@@ -1,5 +1,4 @@
 @B2B_REGRESSION
-    @J
 Feature: DROP for a Non-residential client
 
     Background:

@@ -2,8 +2,10 @@ package com.essent.testing.dwp.pageobject.impl.page;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.selenium.SeleniumDriver;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import sun.awt.geom.AreaOp;
 
 
 public class DwpAccountOverviewPage extends Component {
