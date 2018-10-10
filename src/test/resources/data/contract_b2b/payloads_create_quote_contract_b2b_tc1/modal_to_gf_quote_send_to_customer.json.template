@@ -1,0 +1,6 @@
+{
+   "id":"modal_to_gf_quote_send_to_customer",
+   "recordId":"${rowId}",
+   "listKey":"Quotes",
+   "recordType":"AOS_Quotes"
+}

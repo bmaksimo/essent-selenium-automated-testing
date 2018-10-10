@@ -1,0 +1,17 @@
+{
+	"recordId":"cb25ab27-f1e6-5024-b2db-5b7c085ac371",
+	"page":1,
+	"sortBy":"ca5f6491-17f5-84aa-bcd6-5746bc18b073",
+    "stage": {
+      "default": {
+        "value": [
+          "NEW",
+          "SEND TO CUSTOMER",
+          "SIGNATURE RECEIVED",
+          "SIGNED"
+        ],
+        "operator": "IN",
+        "fieldId": "cf765a65-1014-5a29-68a5-576cee76904d"
+      }
+    }
+}
