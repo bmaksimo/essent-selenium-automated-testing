@@ -7,11 +7,6 @@ import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import java.util.List;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
 public class SearchContractLinesDialog extends Component implements ConfirmDialog  {
 
     private final static By SELECTOR = By.cssSelector(".view__modal .modal__header");

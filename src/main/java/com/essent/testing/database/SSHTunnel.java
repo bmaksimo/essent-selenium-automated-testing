@@ -16,22 +16,22 @@ public class SSHTunnel {
     private  final static Logger logger = Logger.getLogger(SSHTunnel.class);
 
     protected int port = 5432;
-    protected Session session;
+    private Session session;
     private final ConfigKey useTunnelPropertyKey;
 
-    public SSHTunnel(ConfigKey useTunnelPropertyKey) {
+    SSHTunnel(ConfigKey useTunnelPropertyKey) {
     	this.useTunnelPropertyKey = useTunnelPropertyKey;
     }
 
-    protected void pushHost(String newHostName) {
+    private void pushHost(String newHostName) {
     	// Default do nothing.
     }
 
-    protected void popHost() {
+    private void popHost() {
     	// default do nothing.
     }
 
-    protected boolean useTunnel() {
+    private boolean useTunnel() {
         String useTunnel = ConfigProvider.getProperty(useTunnelPropertyKey).trim();
         return "true".equalsIgnoreCase(useTunnel) || "yes".equalsIgnoreCase(useTunnel);
     }
@@ -45,7 +45,7 @@ public class SSHTunnel {
      * @param sshDbHostname
      * @throws JSchException
      */
-    public void makeTunnel(String sshHostname, int sshRemoteport, String sshDbHostname) throws JSchException {
+    private void makeTunnel(String sshHostname, int sshRemoteport, String sshDbHostname) throws JSchException {
         if (useTunnel()) {
             // real tunnel
             if (StringUtils.isBlank(sshDbHostname)) {
@@ -114,17 +114,17 @@ public class SSHTunnel {
      * @param sshDbHostnameConfigKey
      * @throws JSchException
      */
-    protected void makeTunnel(ConfigKey sshHostnameConfigKey, ConfigKey sshRemoteportConfigKey,
-            ConfigKey sshDbHostnameConfigKey) throws JSchException {
+    private void makeTunnel(ConfigKey sshHostnameConfigKey, ConfigKey sshRemoteportConfigKey,
+                            ConfigKey sshDbHostnameConfigKey) throws JSchException {
         makeTunnel(ConfigProvider.getProperty(sshHostnameConfigKey),
                 Integer.parseInt(ConfigProvider.getProperty(sshRemoteportConfigKey)),
                 ConfigProvider.getProperty(sshDbHostnameConfigKey));
     }
 
-    protected void makeBillingTunnel() throws JSchException {
+    void makeBillingTunnel() throws JSchException {
         this.makeTunnel(ConfigKey.SSH_BILLING_HOSTNAME, ConfigKey.SSH_BILLING_REMOTE_PORT, ConfigKey.BILLING_DB_HOST); }
 
-    public void cleanUpTunnel() throws JSchException {
+    void cleanUpTunnel() throws JSchException {
         if (useTunnel()) {
             session.delPortForwardingL(port);
             session.disconnect();
@@ -145,9 +145,7 @@ public class SSHTunnel {
      *             if unable to find a free port
      */
     private static int findFreePort() {
-        ServerSocket socket = null;
-        try {
-            socket = new ServerSocket(0);
+        try (ServerSocket socket = new ServerSocket(0)) {
             socket.setReuseAddress(true);
             int port = socket.getLocalPort();
             try {
@@ -156,23 +154,12 @@ public class SSHTunnel {
                 // Ignore IOException on close()
             }
             return port;
-        } catch (IOException e) {
-        } finally {
-            if (socket != null) {
-                try {
-                    socket.close();
-                } catch (IOException e) {
-                }
-            }
+        } catch (IOException ignored) {
         }
         throw new IllegalStateException("Could not find a free TCP/IP port to create a tunnel on");
     }
 
-    public int getLocalPort() {
+    int getLocalPort() {
         return port;
-    }
-
-    public Session getSession() {
-        return session;
     }
 }

@@ -4,6 +4,7 @@ import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 
 public class ContractenPage extends Component {
 
@@ -53,5 +54,16 @@ public class ContractenPage extends Component {
     public void confirmTaskStatus(String input) {
         waitForRequestsToFinish();
         Assert.assertTrue(findElementWhenVisible(By.xpath("(//h6)[.='" + input + "']")).isDisplayed());
+    }
+
+    public void searchForTaskId(String taskId) {
+        waitForRequestsToFinish();
+        findElementWhenVisible(By.xpath("//input[@type='search']")).clear();
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//input[@type='search']")), taskId);
+        findElementWhenVisible(By.xpath("//input[@type='search']")).sendKeys(Keys.ENTER);
+    }
+
+    public void findRejectionReason(String input) {
+        Assert.assertTrue(seleniumDriver.findElementWhenVisible(By.xpath("(//span[.='" + input + "'])[1]")).isDisplayed());
     }
 }

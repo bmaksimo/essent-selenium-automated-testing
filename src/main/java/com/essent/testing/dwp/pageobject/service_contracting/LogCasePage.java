@@ -10,8 +10,6 @@ public interface LogCasePage {
 
     void setPriority(String priority);
 
-    void cancel();
-
     void save(String buttonText);
 
 }

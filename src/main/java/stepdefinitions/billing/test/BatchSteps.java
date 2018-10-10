@@ -8,6 +8,7 @@ import com.essent.be.jbilling.api.rest.batch.admin.RSShowRunningJobsResponse;
 import com.essent.be.jbilling.api.rest.batch.admin.RSStopRunningJobRequest;
 import com.essent.be.jbilling.api.rest.batch.admin.RunningJobItem;
 import com.essent.testing.client.billing.BillingBatch;
+import com.essent.testing.scenario.RegisteredScenario;
 import cucumber.api.Scenario;
 import cucumber.api.Transform;
 import cucumber.api.java.After;
@@ -19,7 +20,6 @@ import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.junit.Assert;
-import stepdefinitions.billing.generic.BillingScenario;
 import stepdefinitions.transformers.DateMapper;
 
 import java.text.SimpleDateFormat;
@@ -28,12 +28,12 @@ import java.util.Date;
 
 import static org.junit.Assert.fail;
 
-public class BatchSteps extends BillingScenario {
+public class BatchSteps extends RegisteredScenario {
 
 	// Time between calls to figure out when a job has finished
 	private long POLLING_INTERVAL = 250;
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
+    @Before("@SMOKE, @E2E, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }

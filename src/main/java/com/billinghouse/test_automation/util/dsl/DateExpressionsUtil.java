@@ -26,17 +26,17 @@ public class DateExpressionsUtil {
         Map<String, Function<Integer, DateTime>> operations = new HashMap<>();
         DateTime dateTime = new DateTime();
 
-        if (matcher.find() == true) {
+        if (matcher.find()) {
             if(matcher.group(0).equals("now"))
                 return dateTime;
-            operations.put("month from", (i) -> dateTime.plusMonths(i));
-            operations.put("month before", (i) -> dateTime.minusMonths(i));
-            operations.put("day from", (i) -> dateTime.plusDays(i));
-            operations.put("day before", (i) -> dateTime.minusDays(i));
-            operations.put("year from", (i) -> dateTime.plusYears(i));
-            operations.put("year before", (i) -> dateTime.minusYears(i));
-            operations.put("week from", (i) -> dateTime.plusWeeks(i));
-            operations.put("week before", (i) -> dateTime.minusWeeks(i));
+            operations.put("month from", dateTime::plusMonths);
+            operations.put("month before", dateTime::minusMonths);
+            operations.put("day from", dateTime::plusDays);
+            operations.put("day before", dateTime::minusDays);
+            operations.put("year from", dateTime::plusYears);
+            operations.put("year before", dateTime::minusYears);
+            operations.put("week from", dateTime::plusWeeks);
+            operations.put("week before", dateTime::minusWeeks);
             return operations.get(matcher.group(3) + " " + matcher.group(5)).apply(parseInt(matcher.group(2)));
         } else {
             throw new CucumberException(format("--Date-time input '%s' doesn't match the pattern '%s'", expression, DATE_EXPR_REGEX));
@@ -52,7 +52,7 @@ public class DateExpressionsUtil {
 
     private static final String DWP_DATE_FORMAT_REGEX = "[0-9]{2}/[0-9]{2}/[0-9]{4}";
 
-    public static boolean matchesDwpDateFormat(String date) {
+    static boolean matchesDwpDateFormat(String date) {
         return date.matches(DWP_DATE_FORMAT_REGEX);
     }
 

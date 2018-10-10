@@ -24,4 +24,4 @@ Feature: Dwp test for rejecting contract - nl_BE
         Then Click on link in View List at 1st row and "Klantnummer & Naam" column
 
         When Dashboard menu is Marktberichten
-        Then Validate rejection
+        Then Validate rejection status is "MOVE IN"

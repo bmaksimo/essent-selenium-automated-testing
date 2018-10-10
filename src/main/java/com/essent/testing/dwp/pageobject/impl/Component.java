@@ -5,6 +5,7 @@ import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
 import com.essent.testing.selenium.SeleniumDriver;
 import com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter;
+import cucumber.runtime.CucumberException;
 import org.apache.commons.text.StrSubstitutor;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -33,6 +34,19 @@ public abstract class Component {
         this.seleniumDriver = seleniumDriver;
     }
 
+    public Component(By selector, SeleniumDriver seleniumDriver) {
+        logger().info("STEP:");
+        logger().info(" - ACTION: LOAD_PAGE_OBJECT");
+        element = seleniumDriver.findElementOrNull(selector);
+        if(element == null) {
+            logger().fatal(" - RESULT: FAILED");
+            logger().fatal(" - REASON: " + getClass() + "{null}: Web element was not found. ");
+            throw new CucumberException(getClass() + ": Web element was not found.");
+        }
+        logger.info(String.format(" - TARGET: %s -> %s", selector, element.getAttribute("innerHTML")));
+        this.seleniumDriver = seleniumDriver;
+    }
+
     public Component(WebElement element, SeleniumDriver seleniumDriver) {
         logger.info("STEP:");
         logger.info(" - ACTION: LOAD_PAGE_OBJECT");
@@ -40,7 +54,7 @@ public abstract class Component {
         if (element == null) {
             logger.error(" - RESULT: FAILED");
             logger.error(" - REASON: " + getClass() + "{null}: Web element was not found. ");
-            throw new IllegalArgumentException(getClass() + ": Web element was not found.");
+            throw new CucumberException(getClass() + ": Web element was not found.");
         }
 
         logger.info(" - RESULT: " + element);
@@ -52,8 +66,12 @@ public abstract class Component {
         return seleniumDriver.executeJavascriptTest(registeredJsClass, options);
     }
 
-    public WebElement findElementWhenVisible(By selector) {
+    protected WebElement findElementWhenVisible(By selector) {
         return seleniumDriver.findElementWhenVisible(selector);
+    }
+
+    protected WebElement findElementWhenClickable(By selector) {
+        return seleniumDriver.findElementWhenClickable(selector);
     }
 
     protected Model.Execution createExecution() {

@@ -18,14 +18,13 @@ public class DashboardMenu extends NavigationElements {
     private class ClickDashboardMenu implements Predicate<String> {
         @Override
         public boolean test(String menu) {
-            int sec = 5;
             Map<String, Object> options = new HashMap<>();
             options.put("menu", menu);
             return executeJavascriptTest("TrClickDashboardMenuButton", options);
         }
     }
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @BILLING, @B2B_REGRESSION")
+    @Before("@SMOKE, @E2E, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @BILLING, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -38,7 +37,7 @@ public class DashboardMenu extends NavigationElements {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @QUOTE_CS,  @QUOTE_MI, @QUOTE_SS, @BILLING, @B2B_REGRESSION")
+    @After("@SMOKE, @E2E, @QUOTE, @QUOTE_CS,  @QUOTE_MI, @QUOTE_SS, @BILLING, @B2B_REGRESSION")
     public void tearDown() throws Exception {
         super.tearDown();
     }

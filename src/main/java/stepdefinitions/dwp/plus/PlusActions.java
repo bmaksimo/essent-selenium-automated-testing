@@ -8,13 +8,14 @@ import stepdefinitions.dwp.navigation.NavigationElements;
 
 public class PlusActions extends NavigationElements {
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
+    @Before("@SMOKE, @E2E, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
 
     @And("^Plus menu is \"([^\"]*)\"$")
     public void checkPlusMenu(String path) throws Throwable {
+        clickTopAction("Plus Menu");
         clickPlusAction(path);
     }
 
@@ -24,7 +25,7 @@ public class PlusActions extends NavigationElements {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
+    @After("@SMOKE, @E2E, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void tearDown() throws Exception {
         super.tearDown();
     }
