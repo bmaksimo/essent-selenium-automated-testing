@@ -11,7 +11,7 @@ import cucumber.api.java.en.And;
 public class Navigation extends DwpScenario {
 
 
-    @Before("@B2B_REGRESSION")
+    @Before("@REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
 

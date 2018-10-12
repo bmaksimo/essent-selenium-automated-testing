@@ -1,6 +1,6 @@
 @DWP
 @E2E
-@SMOKE
+@_CORE
 Feature: End order (drop) messaging
 
     Background:
@@ -21,7 +21,7 @@ Feature: End order (drop) messaging
 
         When Click on Start nieuw marktbericht
         And Click Select Contractline
-        And  Dialog search input is current "EAN-code & Producttype"
+        And  Dialog search input is current "parameter:EAN-code & Producttype"
         Then Select Contractline dialog is confirmed
 
         When "Module" selection is "INITIATE STOP ACCESS"

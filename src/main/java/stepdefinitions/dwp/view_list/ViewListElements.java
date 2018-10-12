@@ -1,7 +1,5 @@
 package stepdefinitions.dwp.view_list;
 
-import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
-import com.essent.testing.util.SharedPropertiesSingleton;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -209,7 +207,7 @@ public class ViewListElements extends NavigationElements {
             if (success) {
                 String switchedPaymentMethod = ((String) result.get("paymentMethod")).equalsIgnoreCase("string:OV") ?
                     "Overschrijving" : "Domicili�ring";
-                SharedPropertiesSingleton.getInstance().getSharedProperties().put("paymentMethod", switchedPaymentMethod);
+                parameterProvider.put("paymentMethod", switchedPaymentMethod);
             }
 
             return success;
@@ -223,7 +221,7 @@ public class ViewListElements extends NavigationElements {
         }
     }
 
-   @Before("@SMOKE, @E2E, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
+   @Before("@CORE, @E2E, @QUOTE, @QUOTE_MI, @QUOTE_SS, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -351,7 +349,7 @@ public class ViewListElements extends NavigationElements {
 
     @And("^Payment method is updated$")
     public void listSwitchedPaymentMethod() throws Throwable {
-        String updatedPaymentMethodName = (String) SharedPropertiesSingleton.getInstance().getSharedProperties().get("paymentMethod");
+        String updatedPaymentMethodName = parameterProvider.getValueOrParameterAsString("parameter:paymentMethod");
         final String UPDATED_PAYMENT_METHOD = "//list-simple-two-liner-cell[contains(@line-2,'" + updatedPaymentMethodName + "')]";
 
         WebElement element = webDriver.findElementOrNull(By.xpath(UPDATED_PAYMENT_METHOD));
@@ -368,7 +366,7 @@ public class ViewListElements extends NavigationElements {
         assertThat(String.format("View list did not contain any value at %s row, column '%s'", ordinal, columnName),
             success, is(true));
         String splitValue = value.split(" ")[0];
-        SharedPropertiesSingleton.getInstance().getSharedProperties().put(columnName, splitValue);
+        parameterProvider.put(columnName, splitValue);
 
     }
 
@@ -429,7 +427,7 @@ public class ViewListElements extends NavigationElements {
     }
 
     @Override
-    @After("@SMOKE, @E2E, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
+    @After("@CORE, @E2E, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @REGRESSION")
     public void tearDown() throws Exception {
         super.tearDown();
     }

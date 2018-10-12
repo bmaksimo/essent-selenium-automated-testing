@@ -33,7 +33,7 @@ public class BatchSteps extends RegisteredScenario {
 	// Time between calls to figure out when a job has finished
 	private long POLLING_INTERVAL = 250;
 
-    @Before("@SMOKE, @E2E, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
+    @Before("@CORE, @E2E, @QUOTE, @QUOTE_MI, @QUOTE_SS, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }

@@ -14,13 +14,13 @@ import java.util.List;
 
 public class LeadSteps extends DwpScenario {
 
-    @Before("@SMOKE, @QUOTE, @RENEWAL, @B2B_REGRESSION")
+    @Before("@CORE, @QUOTE, @RENEWAL, @REGRESSION")
     public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @RENEWAL, @B2B_REGRESSION")
+    @After("@CORE, @QUOTE, @RENEWAL, @REGRESSION")
     public void tearDown() throws Exception {
         super.tearDown();
     }

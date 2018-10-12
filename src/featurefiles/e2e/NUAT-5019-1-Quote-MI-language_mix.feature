@@ -1,12 +1,14 @@
 @DWP
 @E2E
-@SMOKE
-@REGRESSION
+@_CORE
+@QUOTE
+@SALESMARKETING
 Feature: Creating a B2C Quote TC1 with move in
     Background:
         Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
 
     Scenario: Create a B2C Quote with move in
+        https://emagine-reality.atlassian.net/browse/NUAT-5019
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         #Then Form header is "Details van de offerte"
         Then Form header is "Quote details"

@@ -4,7 +4,7 @@ import com.essent.be.jbilling.api.rest.RestResponse;
 import com.essent.belgium.energycomm.ws_to_bo.BasePayload;
 import com.essent.restclients.BillingEnergyCommRest;
 import com.essent.testing.dwp.scenario.DwpScenario;
-import com.essent.testing.util.SharedPropertiesSingleton;
+
 import com.essent.testing.util.resource.ResourceUtil;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
@@ -37,14 +37,15 @@ public class ConsumptionSteps extends DwpScenario {
     private static final String PATH = "/xml/";
     private static final String CONSUMPTION_FILE = "consumption.xml";
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
+    @Before("@CORE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
 
     @When("^Consumption at current deliverypointid with ([^\"]*) hourly-tariff is generated from now until ([^\"]*) months after$")
     public void generateConsumption(String hourlyTariff, String months) throws Exception {
-        String deliveryPointId = (String) SharedPropertiesSingleton.getInstance().getSharedProperties().get("EAN-code");
+        String deliveryPointId = parameterProvider.getValueOrParameterAsString("parameter:EAN-code");
+        //String deliveryPointId = (String) SharedPropertiesSingleton.getInstance().getSharedProperties().get("EAN-code");
         String consumptionData = getConsumptionRequest(deliveryPointId, hourlyTariff, months);
 
         BasePayload msg = generatePayloadFromString(consumptionData);
@@ -59,8 +60,8 @@ public class ConsumptionSteps extends DwpScenario {
         String fromDate = DateTime.now().toString("yyyy-MM-dd");
         String toDate = DateTime.now().plusMonths(Integer.parseInt(months)).toString("yyyy-MM-dd");
 
-        SharedPropertiesSingleton.getInstance().getSharedProperties().put("fromDate", fromDate);
-        SharedPropertiesSingleton.getInstance().getSharedProperties().put("toDate", toDate);
+        parameterProvider.put("fromDate", fromDate);
+        parameterProvider.put("toDate", toDate);
 
         Map<String, String> consumptionData = new HashMap<>();
         consumptionData.put("uuid", String.valueOf(uuid));
@@ -90,8 +91,8 @@ public class ConsumptionSteps extends DwpScenario {
     @Then("^Consumption is available at ([^\"]*) row in ([^\"]*) column$")
     public void checkCreatedConsumption(String ordinal, String column) throws Throwable {
         String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
-        String fromDate = (String) SharedPropertiesSingleton.getInstance().getSharedProperties().get("fromDate");
-        String toDate = (String) SharedPropertiesSingleton.getInstance().getSharedProperties().get("toDate");
+        String fromDate = parameterProvider.getValueOrParameterAsString("parameter:fromDate");
+        String toDate = parameterProvider.getValueOrParameterAsString("parameter:toDate");
 
         DateTime dateFromDate = DateTime.parse(fromDate);
         DateTime dateToDate = DateTime.parse(toDate);

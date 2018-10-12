@@ -3,6 +3,7 @@ package com.essent.testing.dwp.pageobject.impl.quote;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.testing.selenium.SeleniumDriver;
+import org.openqa.selenium.By;
 import stepdefinitions.dwp.tables.SignatureData;
 
 import static com.essent.testing.dwp.autocrat.element.quote.SignatureElements.SIGN_LOCATION;
@@ -34,6 +35,7 @@ public class QuoteOverviewPage extends QuoteCreationGuidedStep {
             .step(createStep(Action.REQUIRE).element(SIGN_UPLOAD_DOC.name()).requireDisplayed(false))
             .step(createStep(Action.UPLOAD).element(SIGN_UPLOAD_DOC.name()).value(filePath).requireDisplayed(false), UPLOAD_FILE.getSleepInMillis())
             .step(createStep(Action.TYPING).element(SIGN_LOCATION.name()).value(place), INPUT.getSleepInMillis());
+        //seleniumDriver.findElementWhenVisible(By.cssSelector("#accounts-aos-quotes-signed-contract-docguid-c-field:not([disabled])")).sendKeys(filePath);
         return execute(execution);
     }
 }

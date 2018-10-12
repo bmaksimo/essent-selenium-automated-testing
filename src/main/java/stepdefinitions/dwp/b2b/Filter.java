@@ -12,7 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 public class Filter extends DwpScenario {
 
-    @Before("@B2B_REGRESSION")
+    @Before("@REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
 

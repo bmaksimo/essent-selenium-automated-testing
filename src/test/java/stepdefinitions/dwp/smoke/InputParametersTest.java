@@ -32,7 +32,7 @@ public class InputParametersTest extends RegisteredScenario {
     public void printContractorTenureDate() throws Throwable {
         assertThat("'employee' was null", employee, is(notNullValue()));
         assertThat("'startOfTenure' was null", startOfTenure, is(notNullValue()));
-        assertThat("'startOfTenure' was null", parameterProvider.get("startOfTenure"), is(notNullValue()));
+        assertThat("'startOfTenure' was null", parameterProvider.getValueOrParameterAsString("parameter:startOfTenure"), is(notNullValue()));
         DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("DD-MM-YYYY");
         logger().info("STEP:");
         logger().info(" - ACTION: GET_INPUT_PARAM");

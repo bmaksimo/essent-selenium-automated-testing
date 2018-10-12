@@ -14,7 +14,7 @@ import static org.junit.Assert.assertTrue;
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 
 public class Account extends DwpScenario {
-    @Before("@B2B_REGRESSION")
+    @Before("@REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
 

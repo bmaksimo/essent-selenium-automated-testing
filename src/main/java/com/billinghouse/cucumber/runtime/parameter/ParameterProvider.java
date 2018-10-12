@@ -3,9 +3,8 @@ package com.billinghouse.cucumber.runtime.parameter;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -14,7 +13,7 @@ import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.chec
 
 public class ParameterProvider {
 
-    private static final Logger            log = Logger.getLogger(ParameterProvider.class);
+    private static final Logger log = Logger.getLogger(ParameterProvider.class);
 
     private static final String TEST_PARAMETER_PREFIX = "parameter:";
 
@@ -25,14 +24,8 @@ public class ParameterProvider {
     }
 
     public String getValueOrParameterAsString(String value) {
-        return (String)getValueOrParameter(value);
+        return (String)getValueOrParameter(value).toString();
     }
-
-    public String getValueOrParameterAsDate(String value) {
-        String valueOrParameter = (String) getValueOrParameter(value);
-        return checkAndConvertToDwpDate(valueOrParameter);
-    }
-
 
     public Object getValueOrParameter(String value) {
         if (value.startsWith(TEST_PARAMETER_PREFIX)) {
@@ -73,9 +66,4 @@ public class ParameterProvider {
         this.consumeNullValues = consumingNullValues;
         return this;
     }
-
-    private String convertToDwpDate(String formattedDate)  {
-        return checkAndConvertToDwpDate(formattedDate);
-    }
-
 }

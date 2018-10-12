@@ -1,6 +1,5 @@
 @DWP
 @E2E
-@SMOKE
 Feature: Received consumption
 
     Background:

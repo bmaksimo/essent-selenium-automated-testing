@@ -1,7 +1,7 @@
 @DWP
 @E2E
-@SMOKE
-@REGRESSION
+@_CORE
+@INVOICE
 Feature: Billing - Advanec Invoice
 
     Background:

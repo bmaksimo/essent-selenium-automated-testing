@@ -26,7 +26,7 @@ public class BillRun extends RegisteredScenario {
 
 	private List<BillingInvoice> billingInvoiceCache = new ArrayList<>();
 
-	@Before("@SMOKE, @E2E, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
+	@Before("@CORE, @E2E, @QUOTE, @QUOTE_MI, @QUOTE_SS, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }

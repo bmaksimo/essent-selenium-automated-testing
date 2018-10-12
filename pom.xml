@@ -39,8 +39,8 @@
     <essent.project.version>${project.version}</essent.project.version>
 
     <!-- Essent dependencies -->
-    <jbilling.client.version>2.53.0-SNAPSHOT</jbilling.client.version>
-    <haulogy-jaxb.version>2.53.0-SNAPSHOT</haulogy-jaxb.version>
+    <jbilling.client.version>2.52.6-1</jbilling.client.version>
+    <haulogy-jaxb.version>2.52.6-1</haulogy-jaxb.version>
 
     <!-- Dependency versions. -->
     <awaitility.version>3.1.1</awaitility.version>

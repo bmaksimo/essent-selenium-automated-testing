@@ -9,13 +9,13 @@ import cucumber.api.java.en.Then;
 
 public class ServiceStep extends DwpScenario {
 
-    @Before("@SMOKE, @E2E, @QUOTE, @RENEWAL, @B2B_REGRESSION")
+    @Before("@CORE, @E2E, @QUOTE, @RENEWAL, @REGRESSION")
     public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
     }
 
     @Override
-    @After("@SMOKE, @E2E, @QUOTE, @RENEWAL, @B2B_REGRESSION")
+    @After("@CORE, @E2E, @QUOTE, @RENEWAL, @REGRESSION")
     public void tearDown() throws Exception {
         super.tearDown();
     }
