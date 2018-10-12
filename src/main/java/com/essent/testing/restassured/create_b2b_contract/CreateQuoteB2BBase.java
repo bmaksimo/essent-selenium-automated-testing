@@ -10,12 +10,14 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
+import org.junit.Assert;
 
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.restassured.create_b2b_contract.constants.ApiPathsContractB2B;
 import com.essent.testing.restassured.create_b2b_contract.constants.ConstantsContractB2B;
 import com.essent.testing.restassured.create_b2b_contract.constants.ContractStatus;
+import com.essent.testing.restassured.create_b2b_contract.constants.SwitchTypes;
 import com.essent.testing.restassured.create_b2b_contract.helper.ContractB2BUtil;
 import com.essent.testing.restassured.create_b2b_contract.helper.PrepareDataForB2BContract;
 import com.google.gson.Gson;
@@ -80,7 +82,10 @@ public class CreateQuoteB2BBase {
 	protected String moveIn = "";
 	protected String switchType = "";
 	protected String migLabel = "";
+	protected String migModul = "";
+	protected String meterOpen = "";
 	
+	protected String isFakeAddress="";
 
 	public CreateQuoteB2BBase() {
 		numberOfAttempts = 0;
@@ -97,13 +102,15 @@ public class CreateQuoteB2BBase {
 		todayDate = PrepareDataForB2BContract.getTodayDate();
 		generatedIban = PrepareDataForB2BContract.getValidIbanBE();
 		
-		// Set appropriate start contract date in create quote page of DWP
-		String currentContractStartDateInDWP = getCurrentContractStartDateFromDWP(path);
-		this.upStartDate = PrepareDataForB2BContract.setStartContractDate(contractStartDate, contractEndDate, currentContractStartDateInDWP);
-		
-		if(this.upStartDate.equals("NOT_VALID")) {
-			logger.info("ALL START CONTRACT DATES ARE USED FOR ADDRESS STREET: " + addressStreet + " EAN: " + ean_c + "; PLEASE USE ANOTHER ADDRESS AND EAN");
-			throw new CucumberException("ALL START CONTRACT DATES ARE USED FOR ADDRESS STREET: " + addressStreet + " EAN: " + ean_c + "; PLEASE USE ANOTHER ADDRESS AND EAN");
+		if(!this.isFakeAddress.equals("FAKE")) {
+			// Set appropriate start contract date in create quote page of DWP (only use if addresses are real)
+			String currentContractStartDateInDWP = getCurrentContractStartDateFromDWP(path);
+			this.upStartDate = PrepareDataForB2BContract.setStartContractDate(path, contractStartDate, contractEndDate, currentContractStartDateInDWP);
+			
+			if(this.upStartDate.equals("NOT_VALID")) {
+				logger.info("ALL START CONTRACT DATES ARE USED FOR ADDRESS STREET: " + addressStreet + " EAN: " + ean_c + "; PLEASE USE ANOTHER ADDRESS AND EAN");
+				throw new CucumberException("ALL START CONTRACT DATES ARE USED FOR ADDRESS STREET: " + addressStreet + " EAN: " + ean_c + "; PLEASE USE ANOTHER ADDRESS AND EAN");
+			}
 		}
 	}
 	
@@ -332,6 +339,8 @@ public class CreateQuoteB2BBase {
 		testMap.put("${moveIn}", moveIn);
 		testMap.put("${switchType}", switchType);
 		testMap.put("${migLabel}", migLabel);
+		testMap.put("${migModul}", migModul);
+		testMap.put("${meterOpen}", meterOpen);
 
 		String jsonBody = PrepareDataForB2BContract.createRequestJsonPayload(payloadCreateQuoteB2B, originalPayloadCreateQuoteB2B, testMap);
 		
@@ -340,7 +349,7 @@ public class CreateQuoteB2BBase {
 
 		recordId = new JsonPath(response.getBody().asString()).get("data.arguments.params.recordId");
 		
-		if(path != ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_TC1_B2B) {
+		if(!path.equals(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_TC1_B2B)) {
 			paymentDetailsId  = new JsonPath(response.getBody().asString()).get("data.relatedBeans.Paym_Details[0]");
 		}
 		
@@ -458,7 +467,9 @@ public class CreateQuoteB2BBase {
 		
 	}
 	
-	protected void getQuoteProperties(String path) throws FileNotFoundException, IOException {
+	protected void getQuoteProperties(String path, String isFakeAddress, String switchType) throws FileNotFoundException, IOException {
+		
+		this.isFakeAddress = isFakeAddress;
 		
 		Properties prop = ContractB2BUtil.loadProperties(path);
 		
@@ -469,19 +480,25 @@ public class CreateQuoteB2BBase {
 		upStartDate = prop.getProperty("up_start_date");
 		upEndDate = prop.getProperty("up_end_date");
 		
-		addressNumber = prop.getProperty("address_number");
-		addressStreet = prop.getProperty("address_street");
-		addressPostalCode = prop.getProperty("address_postal_code");
-		addressCity = prop.getProperty("address_city");
-		
-		ean_c = prop.getProperty("ean_c");
 		paymentMethod = prop.getProperty("payment_method");
 		legalCommunicationBy = prop.getProperty("legal_communication_by");
 		
-		moveIn = prop.getProperty("move_in_c");
-		switchType = prop.getProperty("switchtype_c");
-		migLabel = prop.getProperty("mig_label_c");
-		
+		if(!isFakeAddress.equals("FAKE")) {
+			addressNumber = prop.getProperty("address_number");
+			addressStreet = prop.getProperty("address_street");
+			addressPostalCode = prop.getProperty("address_postal_code");
+			addressCity = prop.getProperty("address_city");
+			
+			ean_c = prop.getProperty("ean_c");
+			
+			moveIn = prop.getProperty("move_in_c");
+			switchType = prop.getProperty("switchtype_c");
+			migLabel = prop.getProperty("mig_label_c");
+			migModul = prop.getProperty("mig_modul_c");
+			meterOpen = prop.getProperty("meter_open");
+		}else {
+			getAddressEANSwitchType(prop, switchType);
+		}
 	}
 	
 	private String getCurrentContractStartDateFromDWP(String path) throws IOException{
@@ -506,6 +523,57 @@ public class CreateQuoteB2BBase {
 		}
 		
 		return upStartDate;
+	}
+	
+	private void getAddressEANSwitchType(Properties prop, String typeSwitch) {
+		
+		addressStreet = prop.getProperty("fake_address_street");
+		addressPostalCode = prop.getProperty("fake_address_postal_code");
+		addressCity = prop.getProperty("fake_address_city");
+		addressNumber = PrepareDataForB2BContract.getRandomAddressNumber();
+		
+		ean_c = PrepareDataForB2BContract.generateEAN();
+		
+		SwitchTypes switchTypeStatus = SwitchTypes.fromString(typeSwitch);
+		
+		switch (switchTypeStatus) {
+		
+		case SUPPLIER_SWITCH:{
+			moveIn = "false";
+			switchType  = "SUPPLY_START_REQUEST";
+			migLabel = "Supplier Switch";
+			migModul = "START ACCESS";
+			meterOpen = "true";
+			break;
+		}
+		case MOVE_IN:{
+			moveIn = "false";
+			switchType  = "ACTIVATION_REQUEST";
+			migLabel = "Move In";
+			migModul = "MOVE IN";
+			meterOpen = "false";
+			break;
+		}
+		case CUSTOMER_SWITCH:{
+			moveIn = "true";
+			switchType  = "CUSTOMER_SWITCH_NOTIFICATION";
+			migLabel = "Customer Switch";
+			migModul = "START ACCESS";
+			meterOpen = "true";
+			break;
+		}
+		case COMBINED_CUSTOMER_SWITCH:{
+			moveIn = "true";
+			switchType  = "ACTIVATION_REQUEST";
+			migLabel = "Combined Customer Switchh";
+			migModul = "START ACCESS";
+			meterOpen = "true";
+			break;
+		}
+		default:
+			logger.error("Switch type: " + typeSwitch + " doesn't exist. Please use another switch type.");
+			Assert.fail("Switch type: " + typeSwitch + " doesn't exist. Please use another switch type.");
+		}
 	}
 	
 }

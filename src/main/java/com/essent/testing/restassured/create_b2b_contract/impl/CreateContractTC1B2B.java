@@ -18,9 +18,9 @@ public class CreateContractTC1B2B extends CreateQuoteB2BBase implements CreateQu
 	
 	private static final Logger logger = Logger.getLogger(CreateContractTC1B2B.class);
 
-	public CreateContractTC1B2B() throws FileNotFoundException, IOException {
+	public CreateContractTC1B2B(String isFakeAddress, String switchType) throws FileNotFoundException, IOException {
 		super();
-		getQuoteProperties(ConstantsContractB2B.PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_B2B_TC1);
+		getQuoteProperties(ConstantsContractB2B.PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_B2B_TC1, isFakeAddress, switchType);
 	}
 	
 	@Override
