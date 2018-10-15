@@ -1,0 +1,50 @@
+{
+   "model":{
+      "recordTypeOfRecordId":"AOS_Quotes",
+      "recordId":"3b49198a-5cf4-efe1-4ff4-5b62e9fee4dc",
+      "baseModule":"AOS_Quotes",
+      "dwp|id":"3b49198a-5cf4-efe1-4ff4-5b62e9fee4dc",
+      "dwp|tasks(task_subtype_c = 'quote_price_validity')|id":"",
+      "changed_guarantee_amount_c":false,
+      "dwp|aos_products_quotes|prev_contract_lines|id":"",
+      "stage":"SIGNED",
+	  "payment_details|payment_methods(valid_to is null)|payment_method":"${paymentMethod}",
+      "pricing_group_c":"UP",
+      "dwp|aos_products_quotes|prev_contract_lines|supply_stop_reason_c":"",
+      "accounts|company_number_c":"${companyNumber}",
+      "id":"3b49198a-5cf4-efe1-4ff4-5b62e9fee4dc",
+      "aos_products_quotes|id":"${aosProductsQuotesId}",
+      "dwp|signed_contract_docguid_c":"",
+      "accounts|name":"${accountName}",
+      "dwp|tasks(task_subtype_c = 'quote_price_validity')|status":"",
+      "accounts|record_type":"B2B",
+      "signature_option_c":"HAS_SIGNED",
+	  "payment_details|payment_methods(valid_to is null)|id":"",
+      "dwp|recordType":"AOS_Quotes",
+      "accounts|id":"${recordId}",
+      "payment_details|id":"d46e9eb7-ccdd-e8ec-418d-5b62e96203ac",
+      "complete":true,
+      "signed_contract_docguid_c":[
+         {
+            "name":"signed-document.pdf",
+            "id":"670bb2ea-53c1-c080-628c-5b62e9016cd1",
+            "url":"http://",
+            "type":"docbase"
+         }
+      ],
+      "sign_date_c":"2018-08-01",
+      "aos_products_quotes|dgo_id_c":[
+         {
+            "key":"d72a137d-d57a-199a-b7c0-573343edd248",
+            "label":"EANDIS (Imewo)"
+         }
+      ],
+      "do_auto_communication_c":true,
+      "dwp|alreadyContracted":false,
+      "dwp|alreadyContractedForDifferentClient":false,
+      "flag|confirmCommandKey":"reloadQuotesList"
+   },
+   "action":{
+      "event":"CONFIRM"
+   }
+}
