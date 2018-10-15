@@ -1,5 +1,7 @@
 local.properties.idea
 
+### Rest templating output files
+**/data/contract_b2b/**/*.json
 
 ### JetBrains stuff
 *.iml
