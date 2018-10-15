@@ -145,6 +145,18 @@ public final class PrepareDataForB2BContract {
 		return currentContractStartDateInDWP;
 	}
 	
+	private static String setThirtyDaysInPast(String startContractDate) throws ParseException {
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar c1 = Calendar.getInstance();
+		c1.setTime(sdf1.parse(startContractDate));
+		c1.add(Calendar.MONTH, -1);
+		c1.add(Calendar.DATE, 1); 
+		startContractDate = sdf1.format(c1.getTime());
+		
+		return startContractDate;
+		
+	}
+	
 	private static String decreaseByOneStartContractDate(String startContractDate, String todayDate, String currentContractStartDateInDWP) throws ParseException {
 		// 1 month is past
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
@@ -185,6 +197,9 @@ public final class PrepareDataForB2BContract {
 	public static String setStartContractDate(String path, String startContractDate, String todayDate, String currentContractStartDateInDWP) throws ParseException {
 
 		if(currentContractStartDateInDWP.equals("")) {
+			if(path.equals(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_UP_B2B)) {
+				setThirtyDaysInPast(startContractDate);
+			}
 			return startContractDate;
 		}
 		
