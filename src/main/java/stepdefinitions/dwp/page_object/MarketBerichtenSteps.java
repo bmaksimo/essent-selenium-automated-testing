@@ -52,6 +52,7 @@ public class MarketBerichtenSteps extends DwpScenario {
         marktberichtenPage.setEanCodeInFilter(eanCode);
     }
 
+
     @Override
     @After("@DWP, @REGRESSION")
     public void tearDown() throws Exception {
