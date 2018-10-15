@@ -10,8 +10,7 @@ public class ApiPathsContract {
 	public static final String API_LOGIN_CRM = CRM_ROOT_API + "/V8/login";
 	public static final String API_CREATE_QUOTE_B2B_TC1 = CRM_ROOT_API + "/V8_Custom/Flow/B2B_CQ_TC1";
 	public static final String API_CREATE_QUOTE_B2B_TC2_UP = CRM_ROOT_API + "/V8_Custom/Flow/CUPQ";
-	public static final String API_CREATE_QUOTE_B2C_TC2_UP = CRM_ROOT_API + "/V8_Custom/Flow/B2C_CQ";
-	public static final String API_CREATE_QUOTE_B2C_TC1 = CRM_ROOT_API + "/V8_Custom/Flow/B2C_CQ";
+	public static final String API_CREATE_QUOTE_B2C = CRM_ROOT_API + "/V8_Custom/Flow/B2C_CQ";
 	public static final String API_QUOTES_ON_ACCOUNT = CRM_ROOT_API + "/V8_Custom/List/QuotesOnAccount";
 	public static final String API_CONTRACT_ON_ACCOUNT = CRM_ROOT_API + "/V8_Custom/List/ContractsOnAccount";
 	public static final String API_MODAL_TO_GF_QUOTE_SEND_TO_CUSTOMER = CRM_ROOT_API + "/V8_Custom/Action/modal_to_gf_quote_send_to_customer";

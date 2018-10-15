@@ -1,7 +1,0 @@
-{
-   "model":{"dwp|attachment":"{\"name\":\"customer-signature.pdf\",\"id\":\"2ce79c2c-8fd7-0f9a-b34b-5bc4e415d6e3\",\"type\":\"docbase\",\"url\":\"http://\"}","dwp|alreadyContractedForDifferentClient":false,"baseModule":"Paym_Details","dwp|storeDoc|mainDocType":"Misc","payment_methods(valid_to is null)|sign_date":"2018-10-15 21:03:13","recordId":"4eebbd0b-e692-a390-0230-5bc4e45e007f","dwp|storeDoc|subDocType":"Signed mandate","id":"4eebbd0b-e692-a390-0230-5bc4e45e007f","recordTypeOfRecordId":"Paym_Details","dwp|id":"67f1befc-8ef5-7ea0-551e-5bc4e432cfdf","payment_methods(valid_to is null)|id":"51f92963-e002-9afc-4589-5bc4e4678982","dwp|recordType":"Accounts","payment_methods(valid_to is null)|dom_status_c":"ACTIVE","dwp|alreadyContracted":false,"accounts|id":"67f1befc-8ef5-7ea0-551e-5bc4e432cfdf"},
-   "action":{
-      "event":"CONFIRM",
-      "currentStep":"gf_sign_mandate_paper"
-   }
-}

@@ -20,7 +20,7 @@ public class ContractUPB2BCreator extends QuoteCreatorB2BBase implements QuoteCr
 	public ContractUPB2BCreator() throws FileNotFoundException, IOException{
 		super();
 
-		getQuoteProperties(ContractConstants.PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_B2B_UP);
+		getQuoteProperties(ContractConstants.PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_UP);
 	}
 
 	@Override

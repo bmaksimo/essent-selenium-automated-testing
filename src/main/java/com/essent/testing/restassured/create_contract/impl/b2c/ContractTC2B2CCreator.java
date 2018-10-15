@@ -19,13 +19,13 @@ public class ContractTC2B2CCreator extends QuoteCreatorB2CBase implements QuoteC
 
 	public ContractTC2B2CCreator() throws FileNotFoundException, IOException{
 		super();
-		getQuoteProperties(ContractConstants.PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_B2B_TC2, "FAKE", SwitchTypes.MOVE_IN.getSwitchTypes());
+		getQuoteProperties(ContractConstants.PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_TC2, "FAKE", SwitchTypes.MOVE_IN.getSwitchTypes());
 	}
 
 	@Override
 	public void setPreconditions(String accountName, String contractStartDate, String contractEndDate) throws Exception{
 		logger.info("Set preconditions before starting: " + this.getClass().getSimpleName());
-		super.setPreconditions(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC2_B2B, accountName, contractStartDate, contractEndDate);
+		super.setPreconditions(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC2_B2C, accountName, contractStartDate, contractEndDate);
 		logger.info("Set preconditions after starting: " + this.getClass().getSimpleName() + " - PASSED");
 	}
 
@@ -35,7 +35,7 @@ public class ContractTC2B2CCreator extends QuoteCreatorB2CBase implements QuoteC
 
 		login();
 		setPreconditions(ContractConstants.ACCOUNT_NAME_PREFIX_TC2_B2C, upStartDate, PrepareDataForContract.getTodayDate());
-		createQuote(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC2_B2C, ContractConstants.PATH_TO_JSON_FILES_CREATE_QUOTE_B2C_TC2, ApiPathsContract.API_CREATE_QUOTE_B2C_TC2_UP);
+		createQuote(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC2_B2C, ContractConstants.PATH_TO_JSON_FILES_CREATE_QUOTE_B2C_TC2, ApiPathsContract.API_CREATE_QUOTE_B2C);
 		verifyQuoteStatus(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC2_B2C, ContractConstants.SENT_TO_CUSTOMER_EN.toUpperCase(), ContractConstants.ACCEPTED_EN.toUpperCase());
 		sendToCustomer(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC2_B2C);
 		verifyQuoteStatus(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC2_B2C, ContractConstants.SENT_TO_CUSTOMER_EN.toUpperCase(), ContractConstants.ACCEPTED_EN.toUpperCase());
@@ -112,7 +112,7 @@ public class ContractTC2B2CCreator extends QuoteCreatorB2CBase implements QuoteC
 
         login();
         setPreconditions(ContractConstants.ACCOUNT_NAME_PREFIX_TC2_B2C, upStartDate, PrepareDataForContract.getTodayDate());
-        createQuote(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC2_B2C, ContractConstants.PATH_TO_JSON_FILES_CREATE_QUOTE_B2C_TC2, ApiPathsContract.API_CREATE_QUOTE_B2C_TC2_UP);
+        createQuote(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC2_B2C, ContractConstants.PATH_TO_JSON_FILES_CREATE_QUOTE_B2C_TC2, ApiPathsContract.API_CREATE_QUOTE_B2C);
         verifyQuoteStatus(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC2_B2C, ContractConstants.SENT_TO_CUSTOMER_EN.toUpperCase(), ContractConstants.ACCEPTED_EN.toUpperCase());
         sendToCustomer(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC2_B2C);
         verifyQuoteStatus(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC2_B2C, ContractConstants.SENT_TO_CUSTOMER_EN.toUpperCase(), ContractConstants.ACCEPTED_EN.toUpperCase());

@@ -44,7 +44,6 @@ public class QuoteCreatorB2CBase {
 	protected String docId = "";
 	protected String bilingCustomerId = "";
 	protected String accountName = "";
-//	protected String companyNumber = "";
 	protected String yesterdayDate = "";
 	protected String todayDate = "";
 	protected String generatedIban = "";
@@ -492,16 +491,15 @@ public class QuoteCreatorB2CBase {
         } else getAddressEANSwitchType(prop, switchType);
 	}
 
-	private String getCurrentContractStartDateFromDWP(String path) throws IOException{
+	private String getCurrentContractStartDateFromDWP(String path) throws IOException {
 
 		String upStartDate = "";
 
-		String payloadFilterByEan = path
-				+ "filter_quotes_by_ean.json.template";
-		String originalpayloadFilterByEan = path
-				+ "filter_quotes_by_ean.json";
+		String payloadFilterByEan = path + "filter_quotes_by_ean.json.template";
+		String originalpayloadFilterByEan = path + "filter_quotes_by_ean.json";
 
-		String jsonBody = PrepareDataForContract.createRequestJsonPayload(payloadFilterByEan, originalpayloadFilterByEan, "${ean_c}", ean_c);
+		String jsonBody = PrepareDataForContract
+            .createRequestJsonPayload(payloadFilterByEan, originalpayloadFilterByEan, "${ean_c}", ean_c);
 
 		Response response = RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
 				.body(jsonBody).when().post(ApiPathsContract.API_LIST_QUOTES).then().statusCode(200)
