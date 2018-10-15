@@ -207,6 +207,13 @@ public class ViewListElements extends NavigationElements {
         }
     }
 
+    private class CheckEmptyTableAction implements Predicate<Map> {
+        @Override
+        public boolean test(Map options) {
+            return executeJavascriptTest("TrCheckEmptyTable", options);
+        }
+    }
+
     private class PaymentMethodSwitch implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
@@ -438,6 +445,15 @@ public class ViewListElements extends NavigationElements {
     public void getListAction(String name) throws Throwable {
         boolean success = new GetListAction().test(name);
         assertThat(String.format("List Action '%s' undefined.", name),
+            success, is(true));
+    }
+
+    @Then("([^\"]*) list is not empty")
+    public void viewIsNotEmpty(String table) throws Throwable {
+        Map<String, String> options = new HashMap<>();
+        options.put("table", table);
+        boolean success = new CheckEmptyTableAction().test(options);
+        assertThat(String.format(table + " doesn't exist"),
             success, is(true));
     }
 
