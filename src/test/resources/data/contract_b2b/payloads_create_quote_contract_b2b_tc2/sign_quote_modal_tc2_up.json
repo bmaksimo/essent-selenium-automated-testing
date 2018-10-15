@@ -1,18 +1,18 @@
 {
    "model":{
       "recordTypeOfRecordId":"AOS_Quotes",
-      "recordId":"70bd8770-568d-4cba-0048-5b6450e86dc6",
+      "recordId":"5825dc40-b261-1b60-37f3-5bc4e12596d5",
       "baseModule":"AOS_Quotes",
-      "dwp|id":"70bd8770-568d-4cba-0048-5b6450e86dc6",
+      "dwp|id":"5825dc40-b261-1b60-37f3-5bc4e12596d5",
       "dwp|tasks(task_subtype_c = 'quote_price_validity')|id":"",
       "changed_guarantee_amount_c":false,
       "dwp|aos_products_quotes|prev_contract_lines|id":"",
       "stage":"SIGNED",
 	  "payment_details|payment_methods(valid_to is null)|payment_method":"${paymentMethod}",
-      "pricing_group_c":"UP",
+      "pricing_group_c":"TC2",
       "dwp|aos_products_quotes|prev_contract_lines|supply_stop_reason_c":"",
       "accounts|company_number_c":"${companyNumber}",
-      "id":"70bd8770-568d-4cba-0048-5b6450e86dc6",
+      "id":"5825dc40-b261-1b60-37f3-5bc4e12596d5",
       "aos_products_quotes|id":"${aosProductsQuotesId}",
       "dwp|signed_contract_docguid_c":"",
       "accounts|name":"${accountName}",
@@ -22,17 +22,17 @@
 	  "payment_details|payment_methods(valid_to is null)|id":"",
       "dwp|recordType":"AOS_Quotes",
       "accounts|id":"${recordId}",
-      "payment_details|id":"f0436ea0-452c-577e-590a-5b645047cc55",
+      "payment_details|id":"2d0ea830-118c-e802-6265-5bc4e13b66e0",
       "complete":true,
       "signed_contract_docguid_c":[
          {
             "name":"signed-document.pdf",
-            "id":"be93d383-7651-9cf0-991e-5b64509983a8",
+            "id":"b6da1ccb-c145-2ace-398b-5bc4e16b669c",
             "url":"http://",
             "type":"docbase"
          }
       ],
-      "sign_date_c":"2018-08-02",
+      "sign_date_c":"2018-10-14",
       "aos_products_quotes|dgo_id_c":[
          {
             "key":"d72a137d-d57a-199a-b7c0-573343edd248",

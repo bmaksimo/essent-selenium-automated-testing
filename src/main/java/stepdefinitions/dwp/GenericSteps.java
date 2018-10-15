@@ -2,7 +2,6 @@ package stepdefinitions.dwp;
 
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
-import com.essent.automation.util.Sleeper;
 import com.essent.roles.UserRoles;
 import com.essent.testing.dwp.pageobject.Window;
 import com.essent.testing.dwp.pageobject.impl.modal.login.LoginAction;
@@ -17,7 +16,7 @@ import static org.junit.Assert.assertNotNull;
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 public class GenericSteps extends DwpScenario {
 
-    @Before("@QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @SMOKE, @E2E, @B2B_REGRESSION")
+    @Before("@QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @SMOKE, @E2E, @B2B_REGRESSION, @A1")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
         setUpWebDriver();

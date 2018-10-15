@@ -12,7 +12,7 @@ import cucumber.api.java.en.Given;
 import static org.junit.Assert.assertNotNull;
 
 public class OdooGenericSteps extends OdooScenario {
-    @Before("@SMOKE, @CODA, @ODOO")
+    @Before("@CODA, @ODOO")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
         setUpWebDriver();

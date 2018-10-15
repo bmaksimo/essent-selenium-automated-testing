@@ -1,0 +1,9 @@
+{
+  "id": "modal_to_gf_quote_send_to_customer_and_reload_list",
+  "recordId": "70e301af-f21f-f1cd-511d-5bc4e4a779db",
+  "listKey": "Quotes",
+  "recordType": "AOS_Quotes",
+  "actionData": {
+    "parentId": ""
+  }
+}
