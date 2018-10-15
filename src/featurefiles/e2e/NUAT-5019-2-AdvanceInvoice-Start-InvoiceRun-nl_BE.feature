@@ -1,14 +1,12 @@
 @DWP
 @E2E
-@_CORE
-@INVOICE
 Feature: Billing - Advanec Invoice
 
     Background:
 
         Given I logged in to DWP as billing.testautomation@essent.be
 
-    Scenario: Start Invoicerun will generate advance invoide
+    Scenario: Trigger Invoicerun process
         When Plus menu is "Billing -> Start facturatierun"
         And Modal dialog is Start invoicerun
         And "Naam job" selection is "recurrent"

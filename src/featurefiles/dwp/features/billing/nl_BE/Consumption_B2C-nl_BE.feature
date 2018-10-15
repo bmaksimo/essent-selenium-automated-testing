@@ -1,4 +1,5 @@
-@_SMOKE
+@DWP
+@SERVICE-DESK
 Feature: Received consumption
 
     Background:

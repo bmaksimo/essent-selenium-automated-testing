@@ -221,7 +221,7 @@ public class ViewListElements extends NavigationElements {
         }
     }
 
-   @Before("@CORE, @E2E, @QUOTE, @QUOTE_MI, @QUOTE_SS, @REGRESSION")
+    @Before("@DWP, @CORE, @E2E, @REGRESSION, @SALES-MARKETING, @CONTRACTING-SWITCHING, @BUSINESS-DESK, @BILLING")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -331,7 +331,7 @@ public class ViewListElements extends NavigationElements {
     }
 
     @And("^Cell value from \"([^\"]*)\" row and \"([^\"]*)\" column is put to parameter \"([^\"]*)\"$")
-    public void putParameter(String key, String ordinal, String column) throws Throwable {
+    public void putParameter(String ordinal, String column, String key) throws Throwable {
         int row = extractNumericValue(ordinal);
         String rawValue = new ViewListModel().getCellValueAt(row, column);
         String numericValue = extractFirstNumericPart(rawValue);
@@ -427,7 +427,7 @@ public class ViewListElements extends NavigationElements {
     }
 
     @Override
-    @After("@CORE, @E2E, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @REGRESSION")
+    @After("@DWP, @CORE, @E2E, @REGRESSION, @SALES-MARKETING, @CONTRACTING-SWITCHING, @BUSINESS-DESK, @BILLING")
     public void tearDown() throws Exception {
         super.tearDown();
     }

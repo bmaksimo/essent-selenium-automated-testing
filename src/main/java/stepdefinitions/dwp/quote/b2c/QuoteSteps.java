@@ -39,7 +39,7 @@ import static org.hamcrest.Matchers.is;
 
 public class QuoteSteps extends DwpScenario {
 
-    @Before("@CORE, @E2E, @QUOTE, @QUOTE_CS,@QUOTE_MI, @QUOTE_SS, @REGRESSION")
+    @Before("@DWP, @E2E, @SALES-MARKETING, @CONTRACTING-SWITCHING, @BUSINESS-DESK, @BILLING")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -175,7 +175,8 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^Package is \"([^\"]*)\"$")
-    public void selectPackage(String packaqe) throws Throwable {
+    public void
+    selectPackage(String packaqe) throws Throwable {
         TariffTable tariff = new TariffTable();
         tariff.setPackageName(packaqe);
         PackageAndFuelTypeSelectionPage selectPackageAndFuelTypeView = new PackageAndFuelTypeSelectionPage(webDriver);
@@ -302,7 +303,7 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @Override
-    @After("@CORE, @E2E, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @REGRESSION")
+    @After("@DWP, @E2E, @SALES-MARKETING, @CONTRACTING-SWITCHING, @BUSINESS-DESK, @BILLING")
     public void tearDown() throws Exception {
         super.tearDown();
     }

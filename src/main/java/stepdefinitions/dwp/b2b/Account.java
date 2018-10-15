@@ -4,6 +4,7 @@ import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import com.essent.testing.dwp.pageobject.impl.page.DwpAccountOverviewPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
+import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
@@ -14,7 +15,7 @@ import static org.junit.Assert.assertTrue;
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 
 public class Account extends DwpScenario {
-    @Before("@REGRESSION")
+    @Before("@DWP, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
 
@@ -33,5 +34,10 @@ public class Account extends DwpScenario {
         webDriver.waitForRequestsToFinish();
         tg.clickCheckbox(box);
         aop.clickOnSaveButtonForFinanceAndLegalSection();
+    }
+
+    @After("@DWP, @REGRESSION")
+    public void tearDown() throws Exception {
+        super.tearDown();
     }
 }

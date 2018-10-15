@@ -16,7 +16,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 public class OdooCodaSteps extends OdooScenario {
-    @Before("@CORE, @ODOO, @CODA")
+    @Before("@ODOO, @E2E, @SALES-MARKETING, @REGRESSION, @CONTRACTING-SWITCHING, @BUSINESS-DESK, @BILLING")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -46,16 +46,17 @@ public class OdooCodaSteps extends OdooScenario {
         dialog.confirm();
     }
 
-    @Override
-    @After("@CORE, @ODOO, @CODA")
-    public void tearDown() throws Exception {
-        super.tearDown();
-    }
-
     @And("^Odoo file import report$")
     public void odooFileImportReport() throws Throwable {
         CodaImportDialog dialog = new CodaImportDialogImpl(webDriver);
         String report = dialog.getImportReport();
         assertThat(report, not(isEmptyString()));
     }
+
+    @Override
+    @After("@ODOO, @E2E, @SALES-MARKETING, @REGRESSION, @CONTRACTING-SWITCHING, @BUSINESS-DESK, @BILLING")
+    public void tearDown() throws Exception {
+        super.tearDown();
+    }
+
 }

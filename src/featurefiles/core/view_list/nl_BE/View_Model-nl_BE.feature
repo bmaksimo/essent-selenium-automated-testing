@@ -1,6 +1,7 @@
 @DWP
-@_CORE
-Feature: view list functions, scrapping and storing info from page
+@CORE
+Feature: Essent Web Automation testing with Cucumber-JVM  and Selenium.
+    Framework, view list functions, extracting info from web page and populating to the other (eexternal) scenarios.
     Background:
         Given   I logged in to DWP as contracting.testautomation.b2c@essent.be
     Scenario: Navigate, then store values selected in list view

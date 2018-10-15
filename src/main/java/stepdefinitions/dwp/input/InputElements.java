@@ -14,13 +14,9 @@ import java.util.function.Predicate;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-
-
 public class InputElements extends DwpScenario {
 
-
-
-    @Before("@CORE, @E2E, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @BILLING, @REGRESSION")
+    @Before("@DWP, @CORE, @E2E, @REGRESSION, @SALES-MARKETING, @CONTRACTING-SWITCHING, @BUSINESS-DESK, @BILLING")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -64,7 +60,7 @@ public class InputElements extends DwpScenario {
 
     @And("^\"([^\"]*)\" date is \"([^\"]*)\"$")
     public void setDateInput(String label, String value) throws Throwable {
-        String inputValue = parameterProvider.getValueOrParameterAsString(value);
+        String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(value));
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
         options.put("value", inputValue);
@@ -93,7 +89,7 @@ public class InputElements extends DwpScenario {
     }
 
     @Override
-    @After("@CORE, @E2E, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @BILLING, @REGRESSION")
+    @After("@DWP, @CORE, @E2E, @REGRESSION, @SALES-MARKETING, @CONTRACTING-SWITCHING, @BUSINESS-DESK, @BILLING")
     public void tearDown() throws Exception {
         super.tearDown();
     }

@@ -1,13 +1,6 @@
 @DWP
-@REGRESSION
 @SALESMARKETING
-@_QUOTE
-Feature: Creating a B2C Quote TC1 with move in - Dutch version
-    The test creates a contract with start date and pricing date set to 3 months before now.
-    The existing valid address not known to Nova is used.
-    The new Dutch-speaking customer is generated randomly,
-    with pronounceable first and last name and valid date of birth.
-    DWP application Closes the electricity meter, and  MIG from supplier switch to customer switch automatically.
+Feature: Creating a B2C Quote TC1 with move in - Dutch language version
 
     Background:
         Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be

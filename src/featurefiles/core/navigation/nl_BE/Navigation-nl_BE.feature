@@ -1,11 +1,12 @@
 @DWP
-@_CORE
-Feature: DWP Gui navigation  elements
+@CORE
+Feature: Essent Web Automation testing with Cucumber-JVM  and Selenium.
+    Framework, GUI navigation elements.
 
     Background:
         Given I logged in to DWP as contracting.testautomation.b2c@essent.be
 
-    Scenario: Using DWp navigation elements (top, filter, plus- buttons)
+    Scenario: Using DWP GUI navigation elements: top-, filter-, plus- buttons.
         When Left menu is contracting-switching
         And  Top menu item is Marktberichten
         Then View list header is "Marktberichten" appears within 25 seconds

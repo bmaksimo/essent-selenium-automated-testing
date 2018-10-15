@@ -1,6 +1,5 @@
 package com.essent.testing.dwp.scenario;
 
-import com.billinghouse.cucumber.runtime.parameter.ParameterProvider;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model.Execution;
 import com.essent.automation.autocrat.Model.Step;
@@ -9,8 +8,8 @@ import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter;
 import com.essent.testing.selenium.scenario.SeleniumScenario;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpDate;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -43,5 +42,9 @@ public abstract class DwpScenario extends SeleniumScenario {
 
     protected boolean execute(final Execution execution) {
         return AutocratExecutionAdapter.execute(webDriver.getDriver(), execution);
+    }
+
+    protected String toDwpDate(String parameter) {
+        return checkAndConvertToDwpDate(parameter);
     }
 }

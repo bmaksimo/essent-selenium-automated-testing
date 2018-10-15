@@ -1,6 +1,7 @@
 @DWP
-@_CORE
-Feature: Menu navigation
+@CORE
+Feature: Essent Web Automation testing with Cucumber-JVM  and Selenium.
+    Framework, menu navigation.
 
     Background:
         Given  I logged in to DWP as businessdesk.testautomation.b2b@essent.be

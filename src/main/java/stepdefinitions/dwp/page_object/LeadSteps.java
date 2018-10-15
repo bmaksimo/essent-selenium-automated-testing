@@ -14,16 +14,11 @@ import java.util.List;
 
 public class LeadSteps extends DwpScenario {
 
-    @Before("@CORE, @QUOTE, @RENEWAL, @REGRESSION")
+    @Before("@DWP, @REGRESSION")
     public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
     }
 
-    @Override
-    @After("@CORE, @QUOTE, @RENEWAL, @REGRESSION")
-    public void tearDown() throws Exception {
-        super.tearDown();
-    }
 
     @When("^Add lead$")
     public void addLead() throws Throwable {
@@ -43,5 +38,11 @@ public class LeadSteps extends DwpScenario {
     public void leadWasCreated(String name) throws Throwable {
         LeadPage leadPage = new LeadPage(webDriver);
         leadPage.validateCreatingLead(name);
+    }
+
+    @Override
+    @After("@DWP, @REGRESSION")
+    public void tearDown() throws Exception {
+        super.tearDown();
     }
 }

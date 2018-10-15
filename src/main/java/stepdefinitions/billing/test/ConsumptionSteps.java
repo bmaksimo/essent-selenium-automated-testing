@@ -4,9 +4,9 @@ import com.essent.be.jbilling.api.rest.RestResponse;
 import com.essent.belgium.energycomm.ws_to_bo.BasePayload;
 import com.essent.restclients.BillingEnergyCommRest;
 import com.essent.testing.dwp.scenario.DwpScenario;
-
 import com.essent.testing.util.resource.ResourceUtil;
 import cucumber.api.Scenario;
+import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -37,7 +37,7 @@ public class ConsumptionSteps extends DwpScenario {
     private static final String PATH = "/xml/";
     private static final String CONSUMPTION_FILE = "consumption.xml";
 
-    @Before("@CORE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @REGRESSION")
+    @Before("@DWP, CORE, @E2E, @SALES-MARKETING, @CONTRACTING-SWITCHING, @BUSINESS-DESK, @BILLING")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -120,5 +120,11 @@ public class ConsumptionSteps extends DwpScenario {
         public boolean test(Map options) {
             return executeJavascriptTest("TrCheckTableCellValue", options);
         }
+    }
+
+    @Override
+    @After("@DWP, CORE, @E2E, @SALES-MARKETING, @CONTRACTING-SWITCHING, @BUSINESS-DESK, @BILLING")
+    public void tearDown() throws Exception {
+        super.tearDown();
     }
 }

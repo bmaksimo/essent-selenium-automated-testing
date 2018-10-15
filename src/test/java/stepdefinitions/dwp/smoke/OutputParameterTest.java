@@ -34,7 +34,13 @@ public class OutputParameterTest extends RegisteredScenario {
         this.contractor = contractor;
     }
 
-    @And("^Start of tenure is ([^\"]*)$")
+    @When("^Contractor \"?([^\"]*)\"? is put as \"?([^\"]*)\"?$")
+    public void putContractor(String contractor, String parameterName) throws Throwable {
+        setContractor(contractor);
+        parameterProvider.put(parameterName, contractor);
+    }
+
+    @And("^Start of tenure is \"?([^\"]*)\"?$")
     public void startOfTenureIs(String startOfTenure) throws Throwable {
         logger().info("STEP:");
         logger().info(" - ACTION: SET_OUTPUT_PARAM");
@@ -44,4 +50,9 @@ public class OutputParameterTest extends RegisteredScenario {
     }
 
 
+    @And("^Start of tenure \"?([^\"]*)\"? is put as \"?([^\"]*)\"?$")
+    public void putStartOfTenure(String value, String parameterName) throws Throwable {
+        startOfTenureIs(value);
+        parameterProvider.put(parameterName, startOfTenure);
+    }
 }

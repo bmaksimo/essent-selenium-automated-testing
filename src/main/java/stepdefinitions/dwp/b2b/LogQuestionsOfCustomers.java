@@ -5,6 +5,7 @@ import com.essent.testing.dwp.pageobject.impl.page.DwpServicePage;
 import com.essent.testing.dwp.pageobject.impl.service_contracting.LogCasePageImpl;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
+import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
@@ -18,7 +19,7 @@ import static org.junit.Assert.assertTrue;
 public class LogQuestionsOfCustomers extends DwpScenario {
 
 
-    @Before("@REGRESSION")
+    @Before("@DWP, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
 
@@ -34,17 +35,6 @@ public class LogQuestionsOfCustomers extends DwpScenario {
         assertTrue(daop.checkIfPriorityIsHigh());
     }
 
-    @And("^b2b New case for account is created$")
-    public void bBNewCaseForAccountIsCreated() throws Throwable {
-        DwpAccountOverviewPage daop = new DwpAccountOverviewPage(webDriver);
-        DwpServicePage dsp = new DwpServicePage(webDriver);
-        String complaintText = "TextForComplaint";
-        String solutionText = "TextForSolution";
-        daop.setAllForNewCaseForCustomer(complaintText, solutionText);
-        dsp.clickOnFirstCaseInTheList();
-        assertTrue(dsp.caseDetailsheader().isDisplayed());
-    }
-
     @And("^New case for account is created$")
     public void createCaseForAccount() throws Throwable {
         LogCasePageImpl logCasePage = new LogCasePageImpl(webDriver);
@@ -57,5 +47,11 @@ public class LogQuestionsOfCustomers extends DwpScenario {
             success, is(true));
         logCasePage.save("Opslaan");
 
+    }
+
+    @Override
+    @After("@DWP, @REGRESSION")
+    public void tearDown() throws Exception {
+        super.tearDown();
     }
 }

@@ -1,6 +1,5 @@
 @DWP
 @E2E
-@_CORE
 Feature: End order (drop) messaging
 
     Background:

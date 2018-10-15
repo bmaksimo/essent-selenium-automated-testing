@@ -9,21 +9,21 @@ import cucumber.api.java.en.Then;
 
 public class ServiceStep extends DwpScenario {
 
-    @Before("@CORE, @E2E, @QUOTE, @RENEWAL, @REGRESSION")
+    @Before("@DWP, @REGRESSION")
     public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
-    }
-
-    @Override
-    @After("@CORE, @E2E, @QUOTE, @RENEWAL, @REGRESSION")
-    public void tearDown() throws Exception {
-        super.tearDown();
     }
 
     @Then("^\"([^\"]*)\" is created$")
     public void isCreated(String input) throws Throwable {
         ServicePage servicePage = new ServicePage(webDriver);
         servicePage.validateCreatedTask(input);
+    }
+
+    @Override
+    @After("@DWP, @REGRESSION")
+    public void tearDown() throws Exception {
+        super.tearDown();
     }
 
 }

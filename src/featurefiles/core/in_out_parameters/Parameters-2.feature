@@ -1,7 +1,8 @@
-@INTEGRATION
-Feature: DWP Tool Framework: Annotations, Zephyre
+@SCENARIO_INTEGRATION
+Feature: Essent Web Automation testing with Cucumber-JVM  and Selenium. Framework, integration of the scenarios.
 
-    Scenario: Support global parameters that could keep the values through the scenario execution cycle,
-               even if scenario steps are defined in the different Java classes.
+    Scenario: Retrieve test input parameter, populated by the other (external) scenarios.
+    https://emagine-reality.atlassian.net/browse/NSTA-220
 
-        When  Print period of tenure
+        When  Period of tenure is printed
+        And   Contractor "parameter:contractor-name" has value "Sjaak van Vliet"

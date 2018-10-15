@@ -11,15 +11,9 @@ import static org.hamcrest.Matchers.is;
 
 public class ConsumptionsTest extends NavigationElements {
 
-    @Before("@CORE, @E2E, @QUOTE, @QUOTE_MI, @QUOTE_SS, @REGRESSION")
+    @Before("@DWP, @E2E, @BUSINESS-DESK, @BILLING")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
-    }
-
-    @Override
-    @After("@CORE, @E2E, @QUOTE, @QUOTE_MI, @QUOTE_SS, @REGRESSION")
-    public void tearDown() throws Exception {
-        super.tearDown();
     }
 
     @Then("^View list is not empty$")
@@ -27,5 +21,11 @@ public class ConsumptionsTest extends NavigationElements {
         boolean success = new CheckViewListIsNotEmpty().test("");
         assertThat(String.format("View list did not contain header '%s'", ""),
             success, is(true));
+    }
+
+    @Override
+    @After("@DWP, @E2E, @BUSINESS-DESK, @BILLING")
+    public void tearDown() throws Exception {
+        super.tearDown();
     }
 }

@@ -1,6 +1,7 @@
 @DWP
-@_CORE
-Feature: DWP core: menu navigation, filter options, Plus menu, View List Header check with waiter
+@CORE
+Feature: Essent Web Automation testing with Cucumber-JVM  and Selenium.
+    Framework, menu navigation, filter options, Plus menu, View List Header check with waiter.
 
     Background:
         Given   I logged in to DWP as contracting.testautomation.b2c@essent.be
