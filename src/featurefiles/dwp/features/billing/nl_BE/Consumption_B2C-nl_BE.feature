@@ -1,5 +1,6 @@
 @DWP
-@SERVICE-DESK
+@BUSINESS-DESK
+@BILLING
 Feature: Received consumption
 
     Background:
