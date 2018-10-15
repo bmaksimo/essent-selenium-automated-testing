@@ -1,6 +1,5 @@
 package stepdefinitions.dwp.b2b;
 
-import com.essent.testing.dwp.pageobject.impl.navigation.DwpPlusMenu;
 import com.essent.testing.dwp.pageobject.impl.page.DwpHomePage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;

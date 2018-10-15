@@ -1,7 +1,6 @@
 package stepdefinitions.dwp.b2b;
 
 import com.essent.testing.dwp.pageobject.impl.page.DwpAccountOverviewPage;
-import com.essent.testing.dwp.pageobject.impl.page.DwpServicePage;
 import com.essent.testing.dwp.pageobject.impl.service_contracting.LogCasePageImpl;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
