@@ -1,9 +1,0 @@
-{
-   "id":"Modal_to_gf_sign_mandate_paper",
-   "recordId":"83886e4d-d8a5-ff00-b3f3-5bc4dd1f2a38",
-   "listKey":"BillingCustomerOnaccount",
-   "recordType":"Paym_Details",
-   "actionData":{
-      "parentId":"c93ab0be-7add-94f8-b39a-5bc4ddcea135"
-   }
-}
