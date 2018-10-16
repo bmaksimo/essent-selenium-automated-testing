@@ -17,9 +17,9 @@ public class ContractUPB2CCreator extends QuoteCreatorB2CBase implements QuoteCr
 
 	private static final Logger logger = Logger.getLogger(ContractUPB2CCreator.class);
 
-	public ContractUPB2CCreator() throws FileNotFoundException, IOException{
+	public ContractUPB2CCreator(String isFakeAddress, String switchType) throws FileNotFoundException, IOException{
 		super();
-		getQuoteProperties(ContractConstants.PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_UP, "FAKE", SwitchTypes.MOVE_IN.getSwitchTypes());
+		getQuoteProperties(ContractConstants.PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_UP, isFakeAddress, switchType);
 	}
 
 	@Override

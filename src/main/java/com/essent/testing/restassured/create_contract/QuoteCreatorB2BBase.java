@@ -9,7 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import com.essent.testing.restassured.create_contract.constants.SwitchTypes;
 import org.apache.log4j.Logger;
+import org.junit.Assert;
 
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
@@ -80,6 +82,10 @@ public class QuoteCreatorB2BBase {
 	protected String moveIn = "";
 	protected String switchType = "";
 	protected String migLabel = "";
+	protected String migModul = "";
+	protected String meterOpen = "";
+
+	protected String isFakeAddress="";
 
 
 	public QuoteCreatorB2BBase() {
@@ -90,7 +96,6 @@ public class QuoteCreatorB2BBase {
 	}
 
 	protected void setPreconditions(String path, String accountName, String contractStartDate, String contractEndDate) throws Exception{
-
 		this.accountName = PrepareDataForContract.setAccountName(accountName);
 		companyNumber = PrepareDataForContract.generateValidBECompanyNumber();
 		yesterdayDate = PrepareDataForContract.getYesterdayDate();
@@ -332,6 +337,8 @@ public class QuoteCreatorB2BBase {
 		testMap.put("${moveIn}", moveIn);
 		testMap.put("${switchType}", switchType);
 		testMap.put("${migLabel}", migLabel);
+		testMap.put("${migModul}", migModul);
+		testMap.put("${meterOpen}", meterOpen);
 
 		String jsonBody = PrepareDataForContract.createRequestJsonPayload(payloadCreateQuoteB2B, originalPayloadCreateQuoteB2B, testMap);
 
@@ -339,7 +346,6 @@ public class QuoteCreatorB2BBase {
 				.when().body(jsonBody).post(pathApiPath).then().statusCode(201).body("data.arguments.errors", equalTo(null)).extract().response();
 
 		recordId = new JsonPath(response.getBody().asString()).get("data.arguments.params.recordId");
-
 		if(path != ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2B) {
 			paymentDetailsId  = new JsonPath(response.getBody().asString()).get("data.relatedBeans.Paym_Details[0]");
 		}
@@ -458,7 +464,9 @@ public class QuoteCreatorB2BBase {
 
 	}
 
-	protected void getQuoteProperties(String path) throws FileNotFoundException, IOException {
+	protected void getQuoteProperties(String path, String isFakeAddress, String switchType) throws FileNotFoundException, IOException {
+
+		this.isFakeAddress = isFakeAddress;
 
 		Properties prop = ContractUtil.loadProperties(path);
 
@@ -469,25 +477,29 @@ public class QuoteCreatorB2BBase {
 		upStartDate = prop.getProperty("up_start_date");
 		upEndDate = prop.getProperty("up_end_date");
 
-		addressNumber = prop.getProperty("address_number");
-		addressStreet = prop.getProperty("address_street");
-		addressPostalCode = prop.getProperty("address_postal_code");
-		addressCity = prop.getProperty("address_city");
-
-		ean_c = prop.getProperty("ean_c");
 		paymentMethod = prop.getProperty("payment_method");
 		legalCommunicationBy = prop.getProperty("legal_communication_by");
 
-		moveIn = prop.getProperty("move_in_c");
-		switchType = prop.getProperty("switchtype_c");
-		migLabel = prop.getProperty("mig_label_c");
+		if(!isFakeAddress.equals("FAKE")) {
+			addressNumber = prop.getProperty("address_number");
+			addressStreet = prop.getProperty("address_street");
+			addressPostalCode = prop.getProperty("address_postal_code");
+			addressCity = prop.getProperty("address_city");
 
+			ean_c = prop.getProperty("ean_c");
+
+			moveIn = prop.getProperty("move_in_c");
+			switchType = prop.getProperty("switchtype_c");
+			migLabel = prop.getProperty("mig_label_c");
+			migModul = prop.getProperty("mig_modul_c");
+			meterOpen = prop.getProperty("meter_open");
+		}else {
+			getAddressEANSwitchType(prop, switchType);
+		}
 	}
 
-	private String getCurrentContractStartDateFromDWP(String path) throws IOException{
-
+	private String getCurrentContractStartDateFromDWP(String path) throws IOException {
 		String upStartDate = "";
-
 		String payloadFilterByEan = path
 				+ "filter_quotes_by_ean.json.template";
 		String originalpayloadFilterByEan = path
@@ -508,5 +520,55 @@ public class QuoteCreatorB2BBase {
 		return upStartDate;
 	}
 
+	private void getAddressEANSwitchType(Properties prop, String typeSwitch) {
+
+		addressStreet = prop.getProperty("fake_address_street");
+		addressPostalCode = prop.getProperty("fake_address_postal_code");
+		addressCity = prop.getProperty("fake_address_city");
+		addressNumber = PrepareDataForContract.getRandomAddressNumber();
+
+		ean_c = PrepareDataForContract.generateEAN();
+
+		SwitchTypes switchTypeStatus = SwitchTypes.fromString(typeSwitch);
+
+		switch (switchTypeStatus) {
+
+		case SUPPLIER_SWITCH:{
+			moveIn = "false";
+			switchType  = "SUPPLY_START_REQUEST";
+			migLabel = "Supplier Switch";
+			migModul = "START ACCESS";
+			meterOpen = "true";
+			break;
+		}
+		case MOVE_IN:{
+			moveIn = "false";
+			switchType  = "ACTIVATION_REQUEST";
+			migLabel = "Move In";
+			migModul = "MOVE IN";
+			meterOpen = "false";
+			break;
+		}
+		case CUSTOMER_SWITCH:{
+			moveIn = "true";
+			switchType  = "CUSTOMER_SWITCH_NOTIFICATION";
+			migLabel = "Customer Switch";
+			migModul = "START ACCESS";
+			meterOpen = "true";
+			break;
+		}
+		case COMBINED_CUSTOMER_SWITCH:{
+			moveIn = "true";
+			switchType  = "ACTIVATION_REQUEST";
+			migLabel = "Combined Customer Switchh";
+			migModul = "START ACCESS";
+			meterOpen = "true";
+			break;
+		}
+		default:
+			logger.error("Switch type: " + typeSwitch + " doesn't exist. Please use another switch type.");
+			Assert.fail("Switch type: " + typeSwitch + " doesn't exist. Please use another switch type.");
+		}
+	}
 }
 

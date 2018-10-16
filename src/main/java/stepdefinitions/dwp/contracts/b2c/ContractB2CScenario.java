@@ -2,9 +2,6 @@ package stepdefinitions.dwp.contracts.b2c;
 
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.restassured.create_contract.QuoteCreator;
-import com.essent.testing.restassured.create_contract.impl.b2b.ContractTC1B2BCreator;
-import com.essent.testing.restassured.create_contract.impl.b2b.ContractTC2B2BCreator;
-import com.essent.testing.restassured.create_contract.impl.b2b.ContractUPB2BCreator;
 import com.essent.testing.restassured.create_contract.impl.b2c.ContractTC1B2CCreator;
 import com.essent.testing.restassured.create_contract.impl.b2c.ContractTC2B2CCreator;
 import com.essent.testing.restassured.create_contract.impl.b2c.ContractUPB2CCreator;
@@ -28,8 +25,8 @@ public class ContractB2CScenario extends DwpScenario {
 		registerActiveScenario(scenario);
 	}
 
-	@Given("^B2C Contract is \"([^\"]*)\"$")
-	public String createB2CContract(String productType) {
+    @Given("^B2C Contract is \"([^\"]*)\" product type and use \"([^\"]*)\" address and switch type is \"([^\"]*)\"$")
+	public String createB2CContract(String productType, String isFakeAddress, String switchType) {
 
 		accountNumber = EMPTY_STRING;
 
@@ -38,17 +35,17 @@ public class ContractB2CScenario extends DwpScenario {
 			switch (productTypes) {
 
 				case UP: {
-					QuoteCreator quoteB2CUP = new ContractUPB2CCreator();
+					QuoteCreator quoteB2CUP = new ContractUPB2CCreator(isFakeAddress, switchType);
 					accountNumber = quoteB2CUP.createContract();
 					break;
 				}
 				case TC1: {
-					QuoteCreator quoteB2CTC1 = new ContractTC1B2CCreator();
+					QuoteCreator quoteB2CTC1 = new ContractTC1B2CCreator(isFakeAddress, switchType);
 					accountNumber = quoteB2CTC1.createContract();
 					break;
 				}
 				case TC2: {
-					QuoteCreator quoteB2CTC2 = new ContractTC2B2CCreator();
+					QuoteCreator quoteB2CTC2 = new ContractTC2B2CCreator(isFakeAddress, switchType);
 					accountNumber = quoteB2CTC2.createContract();
 					break;
 				}
@@ -71,8 +68,8 @@ public class ContractB2CScenario extends DwpScenario {
 		return accountNumber;
 	}
 
-	@Given("^B2C Active Contract is \"([^\"]*)\"$")
-	public String createContractB2CAndCheckContractStatus(String productType) {
+    @Given("^B2C Active Contract is \"([^\"]*)\" product type and use \"([^\"]*)\" address and switch type is \"([^\"]*)\"$")
+	public String createContractB2CAndCheckContractStatus(String productType, String isFakeAddress, String switchType) {
 
 		accountNumber = "";
 
@@ -81,17 +78,17 @@ public class ContractB2CScenario extends DwpScenario {
 			switch (productTypes) {
 
 				case UP: {
-					QuoteCreator quoteB2CUP = new ContractUPB2CCreator();
+					QuoteCreator quoteB2CUP = new ContractUPB2CCreator(isFakeAddress, switchType);
 					accountNumber = quoteB2CUP.createContractAndCheckContractStatus();
 					break;
 				}
 				case TC1: {
-					QuoteCreator quoteB2CTC1 = new ContractTC1B2CCreator();
+					QuoteCreator quoteB2CTC1 = new ContractTC1B2CCreator(isFakeAddress, switchType);
 					accountNumber = quoteB2CTC1.createContractAndCheckContractStatus();
 					break;
 				}
 				case TC2: {
-					QuoteCreator quoteB2CTC2 = new ContractTC2B2CCreator();
+					QuoteCreator quoteB2CTC2 = new ContractTC2B2CCreator(isFakeAddress, switchType);
 					accountNumber = quoteB2CTC2.createContractAndCheckContractStatus();
 					break;
 				}

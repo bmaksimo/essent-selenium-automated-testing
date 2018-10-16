@@ -18,9 +18,9 @@ public class ContractTC1B2CCreator extends QuoteCreatorB2CBase implements QuoteC
 
 	private static final Logger logger = Logger.getLogger(ContractTC1B2CCreator.class);
 
-	public ContractTC1B2CCreator() throws FileNotFoundException, IOException {
+	public ContractTC1B2CCreator(String isFakeAddress, String switchType) throws FileNotFoundException, IOException {
 		super();
-		getQuoteProperties(ContractConstants.PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_TC1, "FAKE", SwitchTypes.MOVE_IN.getSwitchTypes());
+		getQuoteProperties(ContractConstants.PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_TC1, isFakeAddress, switchType);
 	}
 
 	@Override

@@ -3,24 +3,22 @@ package com.essent.testing.restassured.create_contract.impl.b2b;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
-import org.junit.Assert;
-
 import com.essent.testing.restassured.create_contract.QuoteCreator;
 import com.essent.testing.restassured.create_contract.QuoteCreatorB2BBase;
 import com.essent.testing.restassured.create_contract.constants.ApiPathsContract;
 import com.essent.testing.restassured.create_contract.constants.ContractConstants;
 import com.essent.testing.restassured.create_contract.constants.ContractStatus;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
-
+import org.apache.log4j.Logger;
+import org.junit.Assert;
 
 public class ContractTC1B2BCreator extends QuoteCreatorB2BBase implements QuoteCreator {
 
 	private static final Logger logger = Logger.getLogger(ContractTC1B2BCreator.class);
 
-	public ContractTC1B2BCreator() throws FileNotFoundException, IOException {
+	public ContractTC1B2BCreator(String isFakeAddress, String switchType) throws FileNotFoundException, IOException {
 		super();
-		getQuoteProperties(ContractConstants.PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_TC1);
+		getQuoteProperties(ContractConstants.PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_TC1, isFakeAddress, switchType);
 	}
 
 	@Override
@@ -41,10 +39,10 @@ public class ContractTC1B2BCreator extends QuoteCreatorB2BBase implements QuoteC
 	@Override
 	public String createContract() throws Exception {
 
-		logger.info("createContract: " + this.getClass().getSimpleName());
+		logger.info("createContractB2B: " + this.getClass().getSimpleName());
 		login();
 		setPreconditions(ContractConstants.ACCOUNT_NAME_PREFIX_TC1_B2B, upStartDate, PrepareDataForContract.getTodayDate());
-		createQuote(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2B, ContractConstants.PATH_TO_JSON_FILES_CREATE_QUOTE_B2B_TC1, ApiPathsContract.API_CREATE_QUOTE_B2B_TC1);
+		createQuoteB2B(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2B, ContractConstants.PATH_TO_JSON_FILES_CREATE_QUOTE_B2B_TC1, ApiPathsContract.API_CREATE_QUOTE_B2B_TC1);
 		verifyQuoteStatus(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2B, ContractConstants.SENT_TO_CUSTOMER_EN.toUpperCase(), ContractConstants.ACCEPTED_EN.toUpperCase());
 		sendToCustomer(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2B);
 		verifyQuoteStatus(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2B, ContractConstants.SENT_TO_CUSTOMER_EN.toUpperCase(), ContractConstants.ACCEPTED_EN.toUpperCase());
@@ -54,7 +52,7 @@ public class ContractTC1B2BCreator extends QuoteCreatorB2BBase implements QuoteC
 		signMandatePaper(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2B);
 		verifyContractCreated(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2B, ContractConstants.SIGNED_EN.toUpperCase(), ContractConstants.ACCEPTED_EN.toUpperCase());
 
-		logger.info("createContract: " + this.getClass().getSimpleName() + " - PASSED");
+		logger.info("createContractB2B: " + this.getClass().getSimpleName() + " - PASSED");
 
 		return getAccountNumber(recordId, cookie);
 	}
@@ -113,10 +111,10 @@ public class ContractTC1B2BCreator extends QuoteCreatorB2BBase implements QuoteC
 
 	@Override
 	public String createContractAndCheckContractStatus() throws Exception {
-		logger.info("createContractAndCheckContractStatus: " + this.getClass().getSimpleName());
+		logger.info("createContractB2BAndCheckContractStatus: " + this.getClass().getSimpleName());
 		login();
 		setPreconditions(ContractConstants.ACCOUNT_NAME_PREFIX_TC1_B2B, upStartDate, PrepareDataForContract.getTodayDate());
-		createQuote(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2B, ContractConstants.PATH_TO_JSON_FILES_CREATE_QUOTE_B2B_TC1, ApiPathsContract.API_CREATE_QUOTE_B2B_TC1);
+		createQuoteB2B(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2B, ContractConstants.PATH_TO_JSON_FILES_CREATE_QUOTE_B2B_TC1, ApiPathsContract.API_CREATE_QUOTE_B2B_TC1);
 		verifyQuoteStatus(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2B, ContractConstants.SENT_TO_CUSTOMER_EN.toUpperCase(), ContractConstants.ACCEPTED_EN.toUpperCase());
 		sendToCustomer(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2B);
 		verifyQuoteStatus(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2B, ContractConstants.SENT_TO_CUSTOMER_EN.toUpperCase(), ContractConstants.ACCEPTED_EN.toUpperCase());
@@ -158,7 +156,7 @@ public class ContractTC1B2BCreator extends QuoteCreatorB2BBase implements QuoteC
 			Assert.fail("Contract status is not ACTIVE and it status is: " + contractStatus);
 		}
 
-		logger.info("createContractAndCheckContractStatus: " + this.getClass().getSimpleName() + " - PASSED");
+		logger.info("createContractB2BAndCheckContractStatus: " + this.getClass().getSimpleName() + " - PASSED");
 
 		return getAccountNumber(recordId, cookie);
 	}

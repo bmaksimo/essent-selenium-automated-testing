@@ -21,12 +21,14 @@ public class UploadB2BContractPrices {
 
 	private static final String ftpDomain = ConfigProvider.getProperty(ConfigKey.ENVIRONMENT) + "-sftp.nova.essent.be";
 
+	// See how below field values are implemented in jBilling gherklin tests from JBilling team (also for jenkins on REG02 environment)
 	private static final int ftpPort = 22;
 	private static final String remoteFileLocation = "/home/ESSENT/sa_sftpcrm_smx/data/generic";
-	private static final String privateKeyPassword = ConfigProvider.getProperty(ConfigKey.SSH_PASSPHRASE);
-	private static final String locationOfPrivateKey = ConfigProvider.getProperty(ConfigKey.SSH_KEYPATH);
-	private static final String ftpUserName = ConfigProvider.getProperty(ConfigKey.SSH_USER);
+	private static final String privateKeyPassword = ConfigProvider.getProperty(ConfigKey.SSH_PASSPHRASE); // example: can be empty string also
+	private static final String locationOfPrivateKey = ConfigProvider.getProperty(ConfigKey.SSH_KEYPATH);  // example: ..\id_rsa
+	private static final String ftpUserName = ConfigProvider.getProperty(ConfigKey.SSH_USER);              // example: dj.kovacevic
 
+	// Method upload prices to specific location on sftp, which them will be picked by CRM and imported in CRM
 	public void uploadB2BPrices() {
 
 		Session session = null;
