@@ -1,4 +1,4 @@
-@B2B_REGRESSION
+#@B2B_REGRESSION
 Feature: Dwp for handling task for rejection - nl_BE
 
     Background:

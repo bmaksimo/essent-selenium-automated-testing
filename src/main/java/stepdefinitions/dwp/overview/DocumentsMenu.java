@@ -37,7 +37,7 @@ public class DocumentsMenu extends NavigationElements {
 
     @Override
     @After("@SMOKE, @E2E, @QUOTE, @BILLING")
-    public void tearDown() throws Exception {
-        super.tearDown();
+    public void tearDown(Scenario scenario) throws Exception {
+        super.tearDown(scenario);
     }
 }

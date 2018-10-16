@@ -21,8 +21,8 @@ public class TaskSteps extends DwpScenario {
 
     @Override
     @After("@SMOKE, @E2E, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
-    public void tearDown() throws Exception {
-        super.tearDown();
+    public void tearDown(Scenario scenario) throws Exception {
+        super.tearDown(scenario);
     }
 
     @When("^Plus action of first customer from list$")

@@ -21,8 +21,8 @@ public class LeadSteps extends DwpScenario {
 
     @Override
     @After("@SMOKE, @QUOTE, @RENEWAL, @B2B_REGRESSION")
-    public void tearDown() throws Exception {
-        super.tearDown();
+    public void tearDown(Scenario scenario) throws Exception {
+        super.tearDown(scenario);
     }
 
     @When("^Add lead$")

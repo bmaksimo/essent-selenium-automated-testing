@@ -23,8 +23,8 @@ public class EndOfContractSteps extends DwpScenario {
 
     @Override
     @After("@SMOKE, @E2E, @QUOTE, @BILLING, @B2B_REGRESSION")
-    public void tearDown() throws Exception {
-        super.tearDown();
+    public void tearDown(Scenario scenario) throws Exception {
+        super.tearDown(scenario);
     }
 
     @When("^Click on ([^\"]*)$")

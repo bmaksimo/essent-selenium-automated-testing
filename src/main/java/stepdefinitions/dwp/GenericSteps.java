@@ -20,7 +20,7 @@ public class GenericSteps extends DwpScenario {
     @Before("@QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @SMOKE, @E2E, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
-        setUpWebDriver();
+        setUpWebDriver(scenario);
         isDwpRunning();
     }
 
@@ -43,8 +43,8 @@ public class GenericSteps extends DwpScenario {
 
 
     @After({"@QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @SMOKE, @E2E, @B2B_REGRESSION"})
-    public void tearDown() throws Exception {
-        tidyUp();
+    public void tearDown(Scenario scenario) throws Exception {
+        tidyUp(scenario);
     }
 
     @After({"@QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @SMOKE"})

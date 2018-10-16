@@ -3,6 +3,7 @@ package com.essent.testing.selenium.scenario;
 
 import com.essent.testing.scenario.RegisteredScenario;
 import com.essent.testing.selenium.SeleniumDriver;
+import cucumber.api.Scenario;
 import org.junit.AfterClass;
 
 import java.util.Map;
@@ -12,19 +13,19 @@ public class SeleniumScenario extends RegisteredScenario {
 
     static protected SeleniumDriver webDriver;
 
-    public void tidyUp() {
+    public void tidyUp(Scenario scenario) throws Exception {
         if(webDriver != null) {
-            webDriver.tearDown();
+            webDriver.tearDown(scenario);
             webDriver = null;
         }
     }
 
-    public void setUpWebDriver() throws Exception {
+    public void setUpWebDriver(Scenario scenario) throws Exception {
         if (webDriver == null) {
             webDriver = new SeleniumDriver();
             webDriver.setUp();
         } else {
-            tidyUp();
+            tidyUp(scenario);
             webDriver = new SeleniumDriver();
             webDriver.setUp();
         }
@@ -54,9 +55,9 @@ public class SeleniumScenario extends RegisteredScenario {
     }
 
     @AfterClass
-    public void tearDown() throws Exception {
+    public void tearDown(Scenario scenario) throws Exception {
         if (webDriver != null) {
-            tidyUp();
+            tidyUp(scenario);
         }
     }
 }

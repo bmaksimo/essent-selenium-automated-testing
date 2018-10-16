@@ -23,12 +23,13 @@ public class MarketBerichtenSteps extends DwpScenario {
 
     @Override
     @After("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
-    public void tearDown() throws Exception {
-        super.tearDown();
+    public void tearDown(Scenario scenario) throws Exception {
+        super.tearDown(scenario);
     }
 
     @And("^\"([^\"]*)\" turn on$")
     public void turnOn(String label) throws Throwable {
+        webDriver.waitForRequestsToFinish();
         BaseObject baseObject = new BaseObject(webDriver);
         baseObject.clickOnToggle(label);
     }

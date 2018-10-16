@@ -48,8 +48,8 @@ public class OdooCodaSteps extends OdooScenario {
 
     @Override
     @After("@SMOKE, @ODOO, @CODA")
-    public void tearDown() throws Exception {
-        super.tearDown();
+    public void tearDown(Scenario scenario) throws Exception {
+        super.tearDown(scenario);
     }
 
     @And("^Odoo file import report$")

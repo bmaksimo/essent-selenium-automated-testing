@@ -16,8 +16,8 @@ public class ServiceStep extends DwpScenario {
 
     @Override
     @After("@SMOKE, @E2E, @QUOTE, @RENEWAL, @B2B_REGRESSION")
-    public void tearDown() throws Exception {
-        super.tearDown();
+    public void tearDown(Scenario scenario) throws Exception {
+        super.tearDown(scenario);
     }
 
     @Then("^\"([^\"]*)\" is created$")
