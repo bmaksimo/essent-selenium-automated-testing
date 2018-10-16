@@ -48,7 +48,7 @@ Feature: Change Status of Bankrupt, External, WCO dwp scenario
 
         When Plus menu is "Service -> Wijzigingen klant -> Accountstatus wijzigen"
         And Update account status on "Faillissement met fiscaal attest"
-        And Upload file
+        And Client signature file is uploaded
         And "Startdatum" date is "now"
         And "Extern" turn on
         And "Externe startdatum" date is "now"

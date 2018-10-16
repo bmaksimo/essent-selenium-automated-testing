@@ -7,10 +7,9 @@ import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
-import org.openqa.selenium.By;
 
-import java.io.File;
-
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 public class ChangeAccountStatusSteps extends DwpScenario {
     @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @BILLING, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
@@ -29,14 +28,11 @@ public class ChangeAccountStatusSteps extends DwpScenario {
         changeAccountStatusPage.chooseAccountStatus(status);
     }
 
-    @And("^Upload file$")
+    @And("^Client signature file is uploaded$")
     public void uploadFile() throws Throwable {
-        String filePath = ResourceUtil.toPath("data/dwp/customer-signature.pdf");
-        final String jacobdllarch = System.getProperty("sun.arch.data.model")
-            .contains("32") ? "jacob-1.18-x86.dll" : "jacob-1.18-x64.dll";
-        String jacobdllpath = filePath + "\\" + jacobdllarch;
-        File filejacob = new File(jacobdllpath);
-        System.setProperty(LibraryLoader.JACOB_DLL_PATH,
-            filejacob.getAbsolutePath());
+        String filePath = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
+        ChangeAccountStatusPage changeAccountStatusPage = new ChangeAccountStatusPage(webDriver);
+        boolean success = changeAccountStatusPage.uploadFile(filePath);
+        assertThat(String.format("Signature file %s upload failed.", filePath), success, is(true));
     }
 }
