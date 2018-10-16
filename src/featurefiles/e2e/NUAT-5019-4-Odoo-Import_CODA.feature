@@ -3,7 +3,7 @@
 Feature: Import a coda file
 
     Background:
-        Given I logged in to Odoo as payments.testautomation
+        Given I logged in to Odoo as p.paulussen
 
     Scenario: Create and match CODA file in Odoo
 
