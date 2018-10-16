@@ -1,8 +1,10 @@
 package stepdefinitions.dwp.b2b;
 
 import com.essent.testing.dwp.pageobject.impl.navigation.DwpPlusMenu;
+import com.essent.testing.dwp.pageobject.impl.navigation.DwpTopMenu;
 import com.essent.testing.dwp.pageobject.impl.page.DwpHomePage;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
@@ -35,5 +37,11 @@ public class Navigation extends DwpScenario {
         DwpHomePage hp= new DwpHomePage(webDriver);
         hp.clickOnNewCase();
 
+    }
+
+    @And("^Go back to home screen$")
+    public void goBackToHomeScreen() throws Throwable {
+        DwpTopMenu tm = new DwpTopMenu(webDriver);
+        tm.goBackToHomePage();
     }
 }
