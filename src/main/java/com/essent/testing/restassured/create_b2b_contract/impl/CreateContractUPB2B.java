@@ -17,10 +17,9 @@ public class CreateContractUPB2B extends CreateQuoteB2BBase implements CreateQuo
 	
 	private static final Logger logger = Logger.getLogger(CreateContractUPB2B.class);
 
-	public CreateContractUPB2B() throws FileNotFoundException, IOException{
+	public CreateContractUPB2B(String isFakeAddress, String switchType) throws FileNotFoundException, IOException{
 		super();
-		
-		getQuoteProperties(ConstantsContractB2B.PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_B2B_UP);
+		getQuoteProperties(ConstantsContractB2B.PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_B2B_UP, isFakeAddress, switchType);
 	}
 	
 	@Override
