@@ -3,19 +3,16 @@ package stepdefinitions.dwp.contracts.b2b;
 import com.essent.testing.restassured.create_contract.impl.b2b.ContractTC1B2BCreator;
 import com.essent.testing.restassured.create_contract.impl.b2b.ContractTC2B2BCreator;
 import com.essent.testing.restassured.create_contract.impl.b2b.ContractUPB2BCreator;
+import com.essent.testing.scenario.RegisteredScenario;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
-
-import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.restassured.create_contract.QuoteCreator;
-
 import cucumber.api.Scenario;
-import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import stepdefinitions.dwp.contracts.product_types.ProductTypes;
 
-public class ContractB2BScenario extends DwpScenario {
+public class ContractB2BScenario extends RegisteredScenario {
 
 	private static final Logger logger = Logger.getLogger(ContractB2BScenario.class);
 	private static final String EMPTY_STRING = "";
@@ -159,11 +156,5 @@ public class ContractB2BScenario extends DwpScenario {
 
 	public String getAccountNumber() {
 		return accountNumber;
-	}
-
-	@Override
-	@After("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL, @B2B_REGRESSION")
-	public void tearDown() throws Exception {
-		super.tearDown();
 	}
 }

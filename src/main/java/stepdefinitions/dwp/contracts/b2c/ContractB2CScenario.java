@@ -1,19 +1,18 @@
 package stepdefinitions.dwp.contracts.b2c;
 
-import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.restassured.create_contract.QuoteCreator;
 import com.essent.testing.restassured.create_contract.impl.b2c.ContractTC1B2CCreator;
 import com.essent.testing.restassured.create_contract.impl.b2c.ContractTC2B2CCreator;
 import com.essent.testing.restassured.create_contract.impl.b2c.ContractUPB2CCreator;
+import com.essent.testing.scenario.RegisteredScenario;
 import cucumber.api.Scenario;
-import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import stepdefinitions.dwp.contracts.product_types.ProductTypes;
 
-public class ContractB2CScenario extends DwpScenario {
+public class ContractB2CScenario extends RegisteredScenario {
 
 	private static final Logger logger = Logger.getLogger(ContractB2CScenario.class);
 	private static final String EMPTY_STRING = "";
@@ -33,7 +32,6 @@ public class ContractB2CScenario extends DwpScenario {
 		ProductTypes productTypes = ProductTypes.valueOf(productType);
 		try {
 			switch (productTypes) {
-
 				case UP: {
 					QuoteCreator quoteB2CUP = new ContractUPB2CCreator(isFakeAddress, switchType);
 					accountNumber = quoteB2CUP.createContract();
@@ -113,11 +111,5 @@ public class ContractB2CScenario extends DwpScenario {
 
 	public String getAccountNumber() {
 		return accountNumber;
-	}
-
-	@Override
-	@After("@SMOKE, @QUOTE, @MENU, @FILTER, @RENEWAL, @B2B_REGRESSION")
-	public void tearDown() throws Exception {
-		super.tearDown();
 	}
 }
