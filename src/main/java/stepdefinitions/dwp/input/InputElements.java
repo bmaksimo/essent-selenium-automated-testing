@@ -1,6 +1,7 @@
 package stepdefinitions.dwp.input;
 
 import com.billinghouse.cucumber.runtime.annotations.InputParameter;
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -22,7 +23,7 @@ import static org.hamcrest.Matchers.is;
 
 public class InputElements extends DwpScenario {
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @BILLING, @B2B_REGRESSION")
+    @Before("@SMOKE, @E2E, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @BILLING, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -98,11 +99,13 @@ public class InputElements extends DwpScenario {
 
     @And("^Label input for \"([^\"]*)\" is \"([^\"]*)\"$")
     public void setLabelInput(String label, String value) throws Throwable {
+        Sleeper.sleepTightInSeconds(5);
         setInput(label, "string:"+value);
     }
 
     @And("^\"([^\"]*)\" date is \"([^\"]*)\"$")
     public void setDateInput(String label, String value) throws Throwable {
+        webDriver.waitForRequestsToFinish();
         String inputValue = getDateValue(value);
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
@@ -138,7 +141,7 @@ public class InputElements extends DwpScenario {
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @BILLING, @B2B_REGRESSION")
+    @After("@SMOKE, @E2E, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @BILLING, @B2B_REGRESSION")
     public void tearDown() throws Exception {
         super.tearDown();
     }

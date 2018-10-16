@@ -1,14 +1,11 @@
 package com.essent.testing.driver.gecko;
 
 import org.apache.commons.lang3.StringUtils;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.internal.ProfilesIni;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.MalformedURLException;
 
@@ -27,14 +24,10 @@ public class GeckoDriverTest {
             System.setProperty("webdriver.gecko.driver", "C:/Users/dmitr/scoop/apps/geckodriver/0.19.1/geckodriver.exe");
         }
         FirefoxOptions firefoxOptions = new FirefoxOptions();
-        String firefoxProfile = System.getProperty(FIREFOX_PROFILE_PROPERTY_KEY);
         //firefoxOptions.setCapability("marionette", false);
         //setupFirefoxProfile(firefoxOptions, firefoxProfile);
         WebDriver driver = new FirefoxDriver(firefoxOptions);
-
-        Wait<WebDriver> wait = new WebDriverWait(driver, 3000);
         final String url = "https://www.google.com/";
-        JavascriptExecutor js = (JavascriptExecutor) driver;
         try {
             driver.navigate().to(url);
         } finally {

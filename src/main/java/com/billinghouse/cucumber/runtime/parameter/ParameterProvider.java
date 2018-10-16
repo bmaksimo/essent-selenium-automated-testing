@@ -23,10 +23,6 @@ public class ParameterProvider {
         return parameters.remove(key);
     }
 
-    public void putAll(Map<? extends String, ? extends Object> m) {
-        parameters.putAll(m);
-    }
-
     public boolean remove(Object key, Object value) {
         return parameters.remove(key, value);
     }

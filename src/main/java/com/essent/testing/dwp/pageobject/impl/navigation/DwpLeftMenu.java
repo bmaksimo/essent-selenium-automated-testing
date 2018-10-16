@@ -11,8 +11,8 @@ public class DwpLeftMenu extends Component {
         super(seleniumDriver);
     }
 
-    private  WebElement leftElement(String element)  {
-        return seleniumDriver.findElementWhenVisible(By.xpath("//main-menu-link[@name='" + element + "']//a"));
+    private  WebElement leftElement(String name)  {
+        return seleniumDriver.findElementWhenVisible(By.xpath("//main-menu-link[@name='" + name + "']//a"));
     }
 
     public void clickOnLeftElemet(String element) {

@@ -1,17 +1,16 @@
+/**
+ *  TrFetchDataSelection fetches the DWP table model and returns to Java as JSon object
+ *
+ * * @param {object} options - Arguments passed from Java.
+ * * @param {function} callback - The Java callback that handles the result.
+ *
+ * Java example:
+ *  * Java example:
+ * Map<String, Object> options = new HashMap<>();
+ * options.put("include_selection", true);
+ * boolean result = executeJavascriptTest("TrFetchDataSelection", options);
+ */
 class TrFetchDataSelection extends TestRunnerBase {
-
-    /**
-     *  TrFetchDataSelection fetches the DWP table model and returns to Java as JSon object
-     *
-     * * @param {object} options - Arguments passed from Java.
-     * * @param {function} callback - The Java callback that handles the result.
-     *
-     * Java example:
-     *  * Java example:
-     * Map<String, Object> options = new HashMap<>();
-     * options.put("include_selection", true);
-     * boolean result = executeJavascriptTest("TrFetchDataSelection", options);
-     */
 
     constructor(options, callback) {
         super(options, callback, 1000);

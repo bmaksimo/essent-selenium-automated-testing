@@ -1,15 +1,10 @@
 package com.essent.testing.selenium;
 
-import com.essent.automation.util.Sleeper;
-import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.*;
 
+import java.time.Duration;
 import java.util.List;
-import java.util.NoSuchElementException;
-
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.junit.Assert.assertNotNull;
 
 
 public class SeleniumPage
@@ -32,15 +27,17 @@ public class SeleniumPage
     this.driver = driver;
   }
 
-  public void waitForReady()  {
+  protected void waitForReady()  {
     waitForReady(200);
   }
 
-  /*For some steps we must use a hardcoded delay. It should be avoided and
-    should be the last resort. This method will allow you to provide user
-    defined wait time.
+  /**
+   * For some steps we must use a hardcoded delay.
+   * It should be avoided and should be the last resort.
+   * This method will allow you to provide user
+   *  defined wait time.
    */
-  public void waitForReady(long milliseconds)
+  private void waitForReady(long milliseconds)
   {
     try {
       Thread.sleep(milliseconds);
@@ -60,78 +57,8 @@ public class SeleniumPage
     });
   }
 
-  public void SetTextInField(String id, String Text)
-  {
 
-    final WebElement element = driver.findElement(By.id(id));
-
-    Assert.assertNotNull(element);
-    element.clear();
-
-    element.sendKeys(Text);
-  }
-
-  public void clickSave(WebDriver driver)
-
-  {
-    final WebElement submitElement = driver.findElement(By.id("SAVE_FOOTER"));
-    assertNotNull(submitElement);
-    Sleeper.sleepTight(500);
-    submitElement.click();
-    waitForReady();
-
-  }
-
-  public void findByNameAndClick(
-          WebElement webElement, String name, By byFirst, By bySecond)
-  {
-    final WebElement we = findByName(webElement, name, byFirst, bySecond);
-    if (we == null)
-      throw new NoSuchElementException(name);
-
-    we.click();
-  }
-
-  public WebElement findByName(
-          WebElement webElement, String name, By byFirst, By bySecond)
-  {
-    final List<WebElement> we_collection = webElement.findElements(byFirst);
-    for (final WebElement we : we_collection) {
-      final WebElement result = findByName(we, name, bySecond);
-      if (result != null)
-        return result;
-    }
-
-    return null;
-  }
-
-  public WebElement findByName(WebElement webElement, String name, By by)
-  {
-    final List<WebElement> we_collection = webElement.findElements(by);
-    for (final WebElement we : we_collection)
-      if (name == null || we.getText().startsWith(name))
-        return we;
-
-    return null;
-  }
-
-  /*
-    This method is written to handle the cases where id is available
-    and no other information about the element exists.
-    For ex- temp.put("company_name_c", "Tuincentrum Janssens");
-    Ids have changed and there is no way to determine what kind of element it is.
-
-    This method will still find out which element type is most relevant and
-    will perform the actions like- setting text, selecting a value from dropdown
-    , setting a checkbox or doing a click.
-
-    Some examples-
-    temp.put("company_name_c", "Tuincentrum Janssens");
-    temp.put("legal_form_c", "string:bvba");
-    temp.put("primaryButton", "click");
-   */
-
-  public void dealWithElement(String id, String value){
+  protected void dealWithElement(String id, String value){
 
     WebElement element = waitAndPollUntilElementIsFound(id,30,5);
     if (value.compareToIgnoreCase("click") == 0){
@@ -159,7 +86,7 @@ public class SeleniumPage
     }
   }
 
-  public WebElement waitAndPollUntilElementIsFound(String id, int totalTimeoutInSeconds, int pollTimeoutInSeconds){
+  private WebElement waitAndPollUntilElementIsFound(String id, int totalTimeoutInSeconds, int pollTimeoutInSeconds){
     waitForReady();
     WebElement element = createStubbornWait(totalTimeoutInSeconds,pollTimeoutInSeconds).until(driver1 -> {
       List <WebElement> elements = driver1.findElements(By.xpath("//*[contains(@id, '" + id + "')]"));
@@ -168,13 +95,12 @@ public class SeleniumPage
     return element;
   }
 
-  public Wait<WebDriver> createStubbornWait(int totalTimeoutInSeconds, int pollTimeoutInSeconds){
-    return new FluentWait<WebDriver>(driver)
-            .withTimeout(totalTimeoutInSeconds, SECONDS)
-            .pollingEvery(pollTimeoutInSeconds, SECONDS)
+  private Wait<WebDriver> createStubbornWait(int totalTimeoutInSeconds, int pollTimeoutInSeconds){
+    return new FluentWait<>(driver)
+            .withTimeout(Duration.ofSeconds(totalTimeoutInSeconds))
+            .pollingEvery(Duration.ofSeconds(pollTimeoutInSeconds))
             .ignoring(org.openqa.selenium.NoSuchElementException.class)
             .ignoring(StaleElementReferenceException.class);
   }
-
 
 }
