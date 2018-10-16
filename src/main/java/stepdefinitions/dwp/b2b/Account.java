@@ -18,7 +18,6 @@ public class Account extends DwpScenario {
     @Before("@DWP, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
-
     }
 
     @Then("^Change is immediately visible in Finance & Legal section that \"([^\"]*)\" is active$")
