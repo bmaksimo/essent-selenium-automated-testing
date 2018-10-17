@@ -86,7 +86,7 @@ public class LeadPage extends BaseObject implements Form {
     }
 
     @Override
-    public boolean fillInFormData() {
+    public boolean fillInFormData() throws InterruptedException {
         return createLead2();
     }
 }

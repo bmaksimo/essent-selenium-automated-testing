@@ -26,8 +26,9 @@ Feature: Contract take over
         And "Contracttype" selection is "Overname"
         Then Click on link in View List at 1st row and "Bedrijfsnaam & Contactpersoon" column polling 20 seconds
 
-        When Plus action and " Overnamecontract " of first customer from list
+        When Plus action of "1" element from "ContractsOnAccount" and click on "Overnamecontract"
         And Search by client number
+        And Contract startdatum is today
+        #And "Contract startdatum" date is "now"
         And Changes are confirmed
-#        And Contract startdatum is today
-        #contract-start-date-field=id
+
