@@ -18,8 +18,8 @@ public class ConsumptionsTest extends NavigationElements {
 
     @Override
     @After("@SMOKE, @E2E, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
-    public void tearDown(Scenario scenario) throws Exception {
-        super.tearDown(scenario);
+    public void tearDown() throws Exception {
+        super.tearDown();
     }
 
     @Then("^View list is not empty$")

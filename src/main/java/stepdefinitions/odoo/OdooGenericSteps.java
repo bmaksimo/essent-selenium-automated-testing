@@ -15,7 +15,7 @@ public class OdooGenericSteps extends OdooScenario {
     @Before("@SMOKE, @CODA, @ODOO")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
-        setUpWebDriver(scenario);
+        setUpWebDriver();
         isOdooRunning();
     }
 
@@ -27,7 +27,7 @@ public class OdooGenericSteps extends OdooScenario {
     }
 
     @After("@SMOKE, @CODA, @ODOO")
-    public void tearDown(Scenario scenario) throws Exception {
-        super.tearDown(scenario);
+    public void tearDown() throws Exception {
+        super.tearDown();
     }
 }

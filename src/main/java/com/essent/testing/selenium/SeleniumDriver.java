@@ -192,17 +192,9 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         return driver;
     }
 
-    public void tearDown(Scenario scenario) throws Exception {
-
-        if (scenario.isFailed()) {
-            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd_HH:mm:ss");
-            Date date = new Date();
-            String pictureName = dateFormat.format(date);
-            takeSnapShot(driver, "D://Essent//Screenshot//test.png");
-            System.out.println("TEST '" + scenario.getName() + "' WAS FAILED.");
-        }
-//        driver.close();
-//        driver.quit();
+    public void tearDown() throws Exception {
+        driver.close();
+        driver.quit();
     }
 
     private void injectJavaScriptInline(File functionFile) {

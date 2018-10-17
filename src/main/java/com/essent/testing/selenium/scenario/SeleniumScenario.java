@@ -13,19 +13,19 @@ public class SeleniumScenario extends RegisteredScenario {
 
     static protected SeleniumDriver webDriver;
 
-    public void tidyUp(Scenario scenario) throws Exception {
+    public void tidyUp() throws Exception {
         if(webDriver != null) {
-            webDriver.tearDown(scenario);
+            webDriver.tearDown();
             webDriver = null;
         }
     }
 
-    public void setUpWebDriver(Scenario scenario) throws Exception {
+    public void setUpWebDriver() throws Exception {
         if (webDriver == null) {
             webDriver = new SeleniumDriver();
             webDriver.setUp();
         } else {
-            tidyUp(scenario);
+            tidyUp();
             webDriver = new SeleniumDriver();
             webDriver.setUp();
         }
@@ -55,9 +55,9 @@ public class SeleniumScenario extends RegisteredScenario {
     }
 
     @AfterClass
-    public void tearDown(Scenario scenario) throws Exception {
+    public void tearDown() throws Exception {
         if (webDriver != null) {
-            tidyUp(scenario);
+            tidyUp();
         }
     }
 }
