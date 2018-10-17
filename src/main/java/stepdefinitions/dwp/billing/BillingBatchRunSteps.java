@@ -13,7 +13,7 @@ import static org.hamcrest.Matchers.is;
 
 public class BillingBatchRunSteps extends DwpScenario {
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_CS,@QUOTE_MI, @QUOTE_SS, @BILLING")
+    @Before("@SMOKE, @E2E, @QUOTE, @QUOTE_CS,@QUOTE_MI, @QUOTE_SS, @BILLING")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -22,14 +22,14 @@ public class BillingBatchRunSteps extends DwpScenario {
     public void invoiceRunIsScheduled() throws Throwable {
         ConfirmSignatureDialog dialog = new ConfirmSignatureDialogImpl(webDriver);
         boolean success = dialog.confirm();
-        assertThat("Invoice run dialog was not confirmed.",
+        assertThat("Invoice rin dialog was not confirmed.",
             success,
             is(true));
     }
 
 
     @Override
-    @After("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @BILLING")
+    @After("@SMOKE, @E2E, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @BILLING")
     public void tearDown() throws Exception {
         super.tearDown();
     }

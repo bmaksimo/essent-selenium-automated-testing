@@ -11,6 +11,7 @@ public enum ConfigKey {
     CRM_PASSWORD("crm.password"),
 	CRM_REST_USER("crm.rest.user"),
 	CRM_REST_PASSWORD("crm.rest.password"),
+	CRM_ROOT_API("suitecrm.root.api"),
     ACTIVITI_REST_URL("activiti.resturl"),
     BPM_API_URL("bpm.api.url"),
     BPM_USER("bpm.user"),
@@ -117,15 +118,10 @@ public enum ConfigKey {
     TUNNEL_BPM("tunnel.bpm"),
     ENERGYCOMM_URL("energycomm.url"),
     MARKET_MOCK_URL("marketmock.url");
-	// formatter:on
-
-
-    private String resourceKey;
-
+	private String resourceKey;
     ConfigKey(String resourceKey) {
         this.resourceKey = resourceKey;
     }
-
     public String getResourceKey() {
         return resourceKey;
     }

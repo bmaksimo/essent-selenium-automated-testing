@@ -50,17 +50,6 @@ public class EssentPrettyFormatter extends PrettyFormatter implements ColorAware
         }
     }
 
-    private String extractStepFailureInfo(Throwable error) {
-        StackTraceElement[] stackTrace = error.getStackTrace();
-        if(stackTrace.length > 0) {
-            StackTraceElement element = stackTrace[stackTrace.length - 1];
-            return " feature: " +
-                element.getFileName() + " step: " + element.getMethodName() + " line number: " + element.getLineNumber();
-        } else {
-            return location;
-        }
-    }
-
     @Override
     public void step(Step step) {
         super.step(step);

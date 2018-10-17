@@ -1,6 +1,5 @@
 package stepdefinitions.dwp.view_list;
 
-import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
 import com.essent.testing.util.SharedPropertiesSingleton;
 import cucumber.api.Scenario;
@@ -35,9 +34,6 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.fail;
 public class ViewListElements extends NavigationElements {
 
-
-
-
     private class CheckViewListHeader implements Predicate<String> {
         @Override
         public boolean test(String header) {
@@ -70,42 +66,40 @@ public class ViewListElements extends NavigationElements {
     }
 
     private class ViewListModel {
-        public DefaultTableModel getViewTableModel() {
+        DefaultTableModel getViewTableModel() {
             DefaultTableModel tableModel = new DefaultTableModel();
             Map viewTable = executeJavascriptMethod("TrGetTableModel", new HashMap<>());
             List columnNames = (List) viewTable.get("column_names");
             List rows = getData(viewTable);
             tableModel.setColumnIdentifiers(columnNames.toArray());
-            for (int i = 0; i < rows.size(); i++) {
-                Object[] row = ((List) rows.get(i)).toArray();
+            for (Object row1 : rows) {
+                Object[] row = ((List) row1).toArray();
                 tableModel.addRow(row);
             }
             return tableModel;
         }
 
-        public boolean containsDataAt(int row, String value, String columnName) {
+        boolean containsDataAt(int row, String value, String columnName) {
             String cell = getCellValueAt(row, columnName);
             boolean success = cell.contains(value);
             return success;
         }
 
-        public boolean selectListRow(int row) {
+        boolean selectListRow(int row) {
             Map<String, Object> options = new HashMap<>();
             options.put("index", row);
             boolean success = executeJavascriptTest("TrSelectListRow", options);
             return success;
         }
 
-        public boolean openListPlusActions(int row) {
+        boolean openListPlusActions(int row) {
             Map<String, Object> options = new HashMap<>();
             options.put("index", row);
             boolean success = executeJavascriptTest("TrOpenListPlusActions", options);
             return success;
         }
 
-
-
-        public List<Integer> fetchListRowsIndices(String value, String columnName) {
+        List<Integer> fetchListRowsIndices(String value, String columnName) {
             Map viewTable = executeJavascriptMethod("TrGetTableModel", new HashMap<>());
             int index = getColimnNameIndex(columnName, viewTable);
             if (index < 0) {
@@ -113,20 +107,20 @@ public class ViewListElements extends NavigationElements {
             }
             List<ArrayList> rows = getData(viewTable);
             AtomicInteger idx = new AtomicInteger(1);
-            List<Integer> indices = IntStream.range(1, rows.size() + 1)
+            List<Integer> collect = IntStream.range(1, rows.size() + 1)
                 .filter(i ->
                     idx.compareAndSet(i, i + 1) & ((ArrayList<String>) rows.get(i - 1)).get(index).contains(value))
                 .boxed()
                 .collect(Collectors.toList());
-            return indices;
+            return collect;
         }
 
-        public boolean selectListRow(int row, String value, String columnName) {
+        boolean selectListRow(int row, String value, String columnName) {
             List<Integer> indices = fetchListRowsIndices(value, columnName);
             return indices.size() > 0 && row <= indices.size();
         }
 
-        public boolean selectListRows(int numRows, String value, String columnName) {
+        boolean selectListRows(int numRows, String value, String columnName) {
             List<Integer> rows = fetchListRowsIndices(value, columnName);
             if (numRows > rows.size()) {
                 return false;
@@ -138,7 +132,7 @@ public class ViewListElements extends NavigationElements {
             return success;
         }
 
-        public List<String> fetchDataSelection(String columnName) {
+        List<String> fetchDataSelection(String columnName) {
             Map<String, Object> options = new HashMap<>();
             options.put("include_selection", true);
             Map viewTable = executeJavascriptMethod("TrFetchDataSelection", options);
@@ -147,9 +141,8 @@ public class ViewListElements extends NavigationElements {
                 fail(String.format("View List did not contain column %s", columnName));
             }
             List<ArrayList> rows = getData(viewTable);
-            List<String> selection = (List) rows.stream().map((e) -> {
-                return e.get(index);
-            }).collect(Collectors.toList());
+            List selection;
+            selection = rows.stream().map((e) -> e.get(index)).collect(Collectors.toList());
             return selection;
         }
 
@@ -207,13 +200,6 @@ public class ViewListElements extends NavigationElements {
         }
     }
 
-    private class CheckEmptyTableAction implements Predicate<Map> {
-        @Override
-        public boolean test(Map options) {
-            return executeJavascriptTest("TrCheckEmptyTable", options);
-        }
-    }
-
     private class PaymentMethodSwitch implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
@@ -222,7 +208,7 @@ public class ViewListElements extends NavigationElements {
             boolean success = StringUtils.equals("PASSED", status);
             if (success) {
                 String switchedPaymentMethod = ((String) result.get("paymentMethod")).equalsIgnoreCase("string:OV") ?
-                    "Overschrijving" : "Domiciliëring";
+                    "Overschrijving" : "Domicili�ring";
                 SharedPropertiesSingleton.getInstance().getSharedProperties().put("paymentMethod", switchedPaymentMethod);
             }
 
@@ -237,7 +223,7 @@ public class ViewListElements extends NavigationElements {
         }
     }
 
-   @Before("@SMOKE, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
+   @Before("@SMOKE, @E2E, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -406,7 +392,7 @@ public class ViewListElements extends NavigationElements {
     public void selectListRowHavingCellValueAtColumn(int row, String value, String columnName) throws Throwable {
         ViewListModel viewListModel = new ViewListModel();
         boolean success = viewListModel.selectListRows(row, value, columnName);
-        String message = String.format("View list did not %s rows having cell value %s at column '%s'", row, value, columnName);
+        String message = String.format("View list did not contain %s rows having cell value %s at column '%s'", row, value, columnName);
         assertThat(message,
             success, is(true));
     }
@@ -422,8 +408,6 @@ public class ViewListElements extends NavigationElements {
             cellSelection, not(hasSize(0)));
     }
 
-    @InputParameter(name = "toRenewContractsContact")
-    private  Map<String, Object> selection;
     @Then("^Selected List rows have cell value \"([^\"]*)\" at column \"([^\"]*)\"$")
     public void checkSelectionData(String value, String columnName) throws Throwable {
         ViewListModel viewListModel = new ViewListModel();
@@ -448,17 +432,8 @@ public class ViewListElements extends NavigationElements {
             success, is(true));
     }
 
-    @Then("([^\"]*) list is not empty")
-    public void viewIsNotEmpty(String table) throws Throwable {
-        Map<String, String> options = new HashMap<>();
-        options.put("table", table);
-        boolean success = new CheckEmptyTableAction().test(options);
-        assertThat(String.format(table + " doesn't exist"),
-            success, is(true));
-    }
-
     @Override
-    @After("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
+    @After("@SMOKE, @E2E, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
     public void tearDown() throws Exception {
         super.tearDown();
     }

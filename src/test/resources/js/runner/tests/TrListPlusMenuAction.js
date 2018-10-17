@@ -1,7 +1,7 @@
 class TrListPlusMenuAction extends TestRunnerBase {
 
     constructor(options, callback) {
-        super(options, callback, 100);
+        super(options, callback, 5000);
     }
 
     run() {
@@ -27,8 +27,7 @@ class TrListPlusMenuAction extends TestRunnerBase {
             result.status = 'FAILED';
             result.reason = 'Element ' + options.item + ' not found';
         }
-        setTimeout(()=> {
-            this.resolveCallback(result);
-        }, 5000);
+
+        this.resolveCallback(result);
     }
 }
