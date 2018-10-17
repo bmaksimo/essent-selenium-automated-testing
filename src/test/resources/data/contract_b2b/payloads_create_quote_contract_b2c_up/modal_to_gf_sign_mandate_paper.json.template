@@ -1,9 +1,0 @@
-{
-   "id":"Modal_to_gf_sign_mandate_paper",
-   "recordId":"${billingCustomerId}",
-   "listKey":"BillingCustomerOnaccount",
-   "recordType":"Paym_Details",
-   "actionData":{
-      "parentId":"${recordId}"
-   }
-}

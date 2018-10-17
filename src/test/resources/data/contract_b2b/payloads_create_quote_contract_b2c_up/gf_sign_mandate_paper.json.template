@@ -1,7 +1,0 @@
-{
-   "model":${modelMandatePaper},
-   "action":{
-      "event":"CONFIRM",
-      "currentStep":"gf_sign_mandate_paper"
-   }
-}

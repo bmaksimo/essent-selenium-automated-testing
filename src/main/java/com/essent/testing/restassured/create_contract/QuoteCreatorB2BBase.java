@@ -66,7 +66,7 @@ public class QuoteCreatorB2BBase {
 	protected String upEndDate = "";
 
 
-	// This address params should be any from src/test/resources/data/contract_b2b/address_b2b/adress_b2B.XLSX
+	// This address params should be any from src/test/resources/data/contract/address_b2b/adress_b2B.XLSX
 	protected String addressNumber = "";
 	protected String addressStreet = "";
 	protected String addressPostalCode = "";
@@ -208,7 +208,6 @@ public class QuoteCreatorB2BBase {
 		String payloadConfirmSigning = path + pathJsonFileSignQuote + ".template";
 		String originalPayloadConfirmSigning = path + pathJsonFileSignQuote;
 
-		//rowId, docId, date
 		HashMap<String, String> testMap = new HashMap<>();
 		testMap.put("${rowId}", rowId);
 		testMap.put("${docId}", docId);

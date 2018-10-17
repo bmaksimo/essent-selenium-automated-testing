@@ -63,7 +63,7 @@ public class QuoteCreatorB2CBase {
 	protected String upEndDate = "";
 
 
-	// This address params should be any from src/test/resources/data/contract_b2b/address_b2b/adress_b2B.XLSX
+	// This address params should be any from src/test/resources/data/contract/address_b2b/adress_b2B.XLSX
 	protected String addressNumber = "";
 	protected String addressStreet = "";
 	protected String addressPostalCode = "";
