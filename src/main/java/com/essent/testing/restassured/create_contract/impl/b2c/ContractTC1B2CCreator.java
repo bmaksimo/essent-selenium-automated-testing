@@ -5,7 +5,6 @@ import com.essent.testing.restassured.create_contract.QuoteCreatorB2CBase;
 import com.essent.testing.restassured.create_contract.constants.ApiPathsContract;
 import com.essent.testing.restassured.create_contract.constants.ContractConstants;
 import com.essent.testing.restassured.create_contract.constants.ContractStatus;
-import com.essent.testing.restassured.create_contract.constants.SwitchTypes;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
 import org.apache.log4j.Logger;
 import org.junit.Assert;

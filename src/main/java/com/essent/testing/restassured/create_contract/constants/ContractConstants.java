@@ -18,9 +18,9 @@ public class ContractConstants {
 	public static final String PATH_TO_JSON_FILES_QUOTE_TC2_B2B = ResourceUtil.toPath("/data/contract/b2b/payloads_create_quote_contract_b2b_tc2/");
 	public static final String PATH_TO_JSON_FILES_QUOTE_UP_B2B = ResourceUtil.toPath("/data/contract/b2b/payloads_create_quote_contract_b2b_up/");
 
-	public static final String PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_TC1 = ResourceUtil.toPath("/data/contractspecific_quote_properties/quote_tc1.properties");
-	public static final String PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_TC2 = ResourceUtil.toPath("/data/contractspecific_quote_properties/quote_tc2.properties");
-	public static final String PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_UP = ResourceUtil.toPath("/data/contractspecific_quote_properties/quote_up.properties");
+	public static final String PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_TC1 = ResourceUtil.toPath("/data/contract/specific_quote_properties/quote_tc1.properties");
+	public static final String PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_TC2 = ResourceUtil.toPath("/data/contract/specific_quote_properties/quote_tc2.properties");
+	public static final String PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_UP = ResourceUtil.toPath("/data/contract/specific_quote_properties/quote_up.properties");
 
 	public static final String PATH_TO_JSON_FILES_CREATE_QUOTE_B2B_TC1 = "create_quote_b2b_tc1.json";
 	public static final String PATH_TO_JSON_FILES_CREATE_QUOTE_B2C_TC1 = "create_quote_b2c_tc1.json";

@@ -196,7 +196,7 @@ public final class PrepareDataForContract {
     public static String setStartContractDate(String path, String startContractDate, String todayDate, String currentContractStartDateInDWP) throws ParseException {
 
         if(currentContractStartDateInDWP.equals("")) {
-            if(isKnownPathToJsonFilesQuoteUp(path)) {
+            if(path.equals(ContractConstants.PATH_TO_JSON_FILES_QUOTE_UP_B2B)) {
                 setThirtyDaysInPast(startContractDate);
             }
             return startContractDate;
@@ -204,10 +204,6 @@ public final class PrepareDataForContract {
 
         return increaseByOneStartContractDate(path, startContractDate, todayDate, currentContractStartDateInDWP);
     }
-
-    private static boolean isKnownPathToJsonFilesQuoteUp(String path) {
-	    return path.equals(ContractConstants.PATH_TO_JSON_FILES_QUOTE_UP_B2B) || path.equals(ContractConstants.PATH_TO_JSON_FILES_QUOTE_UP_B2C);
-	}
 
     public static String getRandomAddressNumber() {
         return "1" + (long)(Math.random()*(99999-10000)+10000);
