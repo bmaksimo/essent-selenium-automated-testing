@@ -214,6 +214,11 @@ public class QuoteCreatorB2BBase {
 		testMap.put("${docId}", docId);
 		testMap.put("${date}", yesterdayDate);
 		testMap.put("${paymentDetailsId}", paymentDetailsId);
+		testMap.put("${companyNumber}", companyNumber);
+		testMap.put("${paymentMethod}", paymentMethod);
+		testMap.put("${aosProductsQuotesId}", aosProductsQuotesId);
+		testMap.put("${accountName}", accountName);
+		testMap.put("${recordId}", recordId);
 
 		String jsonBody = PrepareDataForContract.createRequestJsonPayload(payloadConfirmSigning, originalPayloadConfirmSigning, testMap);
 
