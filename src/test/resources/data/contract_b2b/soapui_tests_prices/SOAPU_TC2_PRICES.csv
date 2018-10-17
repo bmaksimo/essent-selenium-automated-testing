@@ -1,0 +1,247 @@
+Component type;Selling Product name;Dealer name;sourcing_product;Default loadprofile;Timeframe;Caloric value;passive renew;Volume from (kWh);Volume to (kWh);Duration from;Duration to;UoM;Rate ;Valid from;Valid to;Timezone
+component_id;selling_product_id;primary_group_id;sourcing_product;default_load_profile;time_frame;caloric_value;tariff_prices.passive_renew;volume_from;volume_to;duration_from;duration_to;uom;tariff_prices.rate;tariff_prices.valid_from;tariff_prices.valid_to;
+PURCHASE_UP;;;Fixed_TC2;TC2;High;;;0;500000;;;KWH;0,04972;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+PURCHASE_UP;;;Fixed_TC2;TC2;Low;;;0;500000;;;KWH;0,02758;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+PURCHASE_UP;;;Fixed_TC2;TC2;TotalHours;;;0;500000;;;KWH;0,04972;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+PURCHASE_UP;;;Fixed_TC2;TC2;ExclusiveNight;;;0;500000;;;KWH;0,02758;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+PURCHASE_UP;;;G_Fixed_TC2;TC2;TotalHours;;;0;1000000;;;KWH;0,00196;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Skoropinski Peter;;;High;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Skoropinski Peter;;;Low;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Skoropinski Peter;;;TotalHours;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Skoropinski Peter;;;ExclusiveNight;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Smart connect;;;High;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Smart connect;;;Low;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Smart connect;;;TotalHours;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Smart connect;;;ExclusiveNight;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;All In Consulting;;;High;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;All In Consulting;;;Low;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;All In Consulting;;;TotalHours;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;All In Consulting;;;ExclusiveNight;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;BMC Sales & Marketing;;;High;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;BMC Sales & Marketing;;;Low;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;BMC Sales & Marketing;;;TotalHours;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;BMC Sales & Marketing;;;ExclusiveNight;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Vicom International;;;High;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Vicom International;;;Low;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Vicom International;;;TotalHours;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Vicom International;;;ExclusiveNight;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;B2A Sales;;;High;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;B2A Sales;;;Low;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;B2A Sales;;;TotalHours;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;B2A Sales;;;ExclusiveNight;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Full Serv;;;High;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Full Serv;;;Low;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Full Serv;;;TotalHours;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Full Serv;;;ExclusiveNight;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;BK Sales Elites;;;High;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;BK Sales Elites;;;Low;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;BK Sales Elites;;;TotalHours;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;BK Sales Elites;;;ExclusiveNight;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Liliane Kocken;;;High;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Liliane Kocken;;;Low;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Liliane Kocken;;;TotalHours;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Liliane Kocken;;;ExclusiveNight;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;TDS;;;High;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;TDS;;;Low;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;TDS;;;TotalHours;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;TDS;;;ExclusiveNight;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;DM Comm;;;High;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;DM Comm;;;Low;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;DM Comm;;;TotalHours;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;DM Comm;;;ExclusiveNight;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Power2B;;;High;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Power2B;;;Low;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Power2B;;;TotalHours;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Power2B;;;ExclusiveNight;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Telco;;;High;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Telco;;;Low;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Telco;;;TotalHours;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Telco;;;ExclusiveNight;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Zamboo;;;High;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Zamboo;;;Low;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Zamboo;;;TotalHours;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Zamboo;;;ExclusiveNight;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Business Desk;;;High;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Business Desk;;;Low;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Business Desk;;;TotalHours;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Business Desk;;;ExclusiveNight;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Enbro;;;High;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Enbro;;;Low;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Enbro;;;TotalHours;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Enbro;;;ExclusiveNight;;0;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;Skoropinski Peter;;;TotalHours;;0;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;Smart connect;;;TotalHours;;0;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;All In Consulting;;;TotalHours;;0;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;BMC Sales & Marketing;;;TotalHours;;0;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;Vicom International;;;TotalHours;;0;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;B2A Sales;;;TotalHours;;0;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;Full Serv;;;TotalHours;;0;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;BK Sales Elites;;;TotalHours;;0;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;Liliane Kocken;;;TotalHours;;0;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;TDS;;;TotalHours;;0;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;DM Comm;;;TotalHours;;0;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;Power2B;;;TotalHours;;0;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;Telco;;;TotalHours;;0;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;Zamboo;;;TotalHours;;0;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;Business Desk;;;TotalHours;;0;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;Enbro;;;TotalHours;;0;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Skoropinski Peter;;;High;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Skoropinski Peter;;;Low;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Skoropinski Peter;;;TotalHours;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Skoropinski Peter;;;ExclusiveNight;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Smart connect;;;High;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Smart connect;;;Low;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Smart connect;;;TotalHours;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Smart connect;;;ExclusiveNight;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;All In Consulting;;;High;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;All In Consulting;;;Low;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;All In Consulting;;;TotalHours;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;All In Consulting;;;ExclusiveNight;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;BMC Sales & Marketing;;;High;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;BMC Sales & Marketing;;;Low;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;BMC Sales & Marketing;;;TotalHours;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;BMC Sales & Marketing;;;ExclusiveNight;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Vicom International;;;High;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Vicom International;;;Low;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Vicom International;;;TotalHours;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Vicom International;;;ExclusiveNight;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;B2A Sales;;;High;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;B2A Sales;;;Low;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;B2A Sales;;;TotalHours;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;B2A Sales;;;ExclusiveNight;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Full Serv;;;High;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Full Serv;;;Low;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Full Serv;;;TotalHours;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Full Serv;;;ExclusiveNight;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;BK Sales Elites;;;High;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;BK Sales Elites;;;Low;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;BK Sales Elites;;;TotalHours;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;BK Sales Elites;;;ExclusiveNight;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Liliane Kocken;;;High;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Liliane Kocken;;;Low;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Liliane Kocken;;;TotalHours;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Liliane Kocken;;;ExclusiveNight;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;TDS;;;High;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;TDS;;;Low;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;TDS;;;TotalHours;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;TDS;;;ExclusiveNight;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;DM Comm;;;High;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;DM Comm;;;Low;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;DM Comm;;;TotalHours;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;DM Comm;;;ExclusiveNight;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Power2B;;;High;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Power2B;;;Low;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Power2B;;;TotalHours;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Power2B;;;ExclusiveNight;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Telco;;;High;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Telco;;;Low;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Telco;;;TotalHours;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Telco;;;ExclusiveNight;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Zamboo;;;High;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Zamboo;;;Low;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Zamboo;;;TotalHours;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Zamboo;;;ExclusiveNight;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Business Desk;;;High;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Business Desk;;;Low;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Business Desk;;;TotalHours;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Business Desk;;;ExclusiveNight;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Enbro;;;High;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Enbro;;;Low;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Enbro;;;TotalHours;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Electricity fix TC2;Enbro;;;ExclusiveNight;;1;0;500000;0;60;KWH;0,00365;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;Skoropinski Peter;;;TotalHours;;1;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;Smart connect;;;TotalHours;;1;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;All In Consulting;;;TotalHours;;1;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;BMC Sales & Marketing;;;TotalHours;;1;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;Vicom International;;;TotalHours;;1;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;B2A Sales;;;TotalHours;;1;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;Full Serv;;;TotalHours;;1;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;BK Sales Elites;;;TotalHours;;1;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;Liliane Kocken;;;TotalHours;;1;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;TDS;;;TotalHours;;1;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;DM Comm;;;TotalHours;;1;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;Power2B;;;TotalHours;;1;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;Telco;;;TotalHours;;1;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;Zamboo;;;TotalHours;;1;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;Business Desk;;;TotalHours;;1;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+MARGIN;Gas fix TC2;Enbro;;;TotalHours;;1;0;1000000;0;60;KWH;0,00467;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Skoropinski Peter;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Skoropinski Peter;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Skoropinski Peter;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Skoropinski Peter;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Smart connect;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Smart connect;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Smart connect;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Smart connect;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;All In Consulting;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;All In Consulting;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;All In Consulting;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;All In Consulting;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;BMC Sales & Marketing;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;BMC Sales & Marketing;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;BMC Sales & Marketing;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;BMC Sales & Marketing;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Vicom International;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Vicom International;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Vicom International;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Vicom International;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;B2A Sales;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;B2A Sales;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;B2A Sales;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;B2A Sales;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Full Serv;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Full Serv;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Full Serv;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Full Serv;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;BK Sales Elites;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;BK Sales Elites;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;BK Sales Elites;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;BK Sales Elites;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Liliane Kocken;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Liliane Kocken;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Liliane Kocken;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Liliane Kocken;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;TDS;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;TDS;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;TDS;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;TDS;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;DM Comm;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;DM Comm;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;DM Comm;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;DM Comm;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Power2B;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Power2B;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Power2B;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Power2B;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Telco;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Telco;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Telco;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Telco;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Zamboo;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Zamboo;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Zamboo;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Zamboo;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Business Desk;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Business Desk;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Business Desk;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Business Desk;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Enbro;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Enbro;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Enbro;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Electricity fix TC2;Enbro;;;;;;0;500000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Gas fix TC2;Skoropinski Peter;;;;;;0;1000000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Gas fix TC2;Smart connect;;;;;;0;1000000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Gas fix TC2;All In Consulting;;;;;;0;1000000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Gas fix TC2;BMC Sales & Marketing;;;;;;0;1000000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Gas fix TC2;Vicom International;;;;;;0;1000000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Gas fix TC2;B2A Sales;;;;;;0;1000000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Gas fix TC2;Full Serv;;;;;;0;1000000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Gas fix TC2;BK Sales Elites;;;;;;0;1000000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Gas fix TC2;Liliane Kocken;;;;;;0;1000000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Gas fix TC2;TDS;;;;;;0;1000000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Gas fix TC2;DM Comm;;;;;;0;1000000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Gas fix TC2;Power2B;;;;;;0;1000000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Gas fix TC2;Telco;;;;;;0;1000000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Gas fix TC2;Zamboo;;;;;;0;1000000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Gas fix TC2;Business Desk;;;;;;0;1000000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels
+FIXED_FEE;Gas fix TC2;Enbro;;;;;;0;1000000;0;60;Year;109,5;1/11/2016 0:00;3/11/2019 0:00;Europe/Brussels

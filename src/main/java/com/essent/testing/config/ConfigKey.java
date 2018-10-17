@@ -11,6 +11,7 @@ public enum ConfigKey {
     CRM_PASSWORD("crm.password"),
 	CRM_REST_USER("crm.rest.user"),
 	CRM_REST_PASSWORD("crm.rest.password"),
+	CRM_ROOT_API("suitecrm.root.api"),
     ACTIVITI_REST_URL("activiti.resturl"),
     BPM_API_URL("bpm.api.url"),
     BPM_USER("bpm.user"),

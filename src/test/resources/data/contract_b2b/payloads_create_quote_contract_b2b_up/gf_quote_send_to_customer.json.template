@@ -1,0 +1,7 @@
+{
+   "model":${model},
+   "action":{
+      "event":"CONFIRM",
+      "currentStep":"quote_send_to_customer"
+   }
+}
