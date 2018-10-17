@@ -22,7 +22,7 @@ public class BillingBatchRunSteps extends DwpScenario {
     public void invoiceRunIsScheduled() throws Throwable {
         ConfirmSignatureDialog dialog = new ConfirmSignatureDialogImpl(webDriver);
         boolean success = dialog.confirm();
-        assertThat("Invoice run dialog was not confirmed.",
+        assertThat("Invoice rin dialog was not confirmed.",
             success,
             is(true));
     }
