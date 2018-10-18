@@ -39,8 +39,8 @@
     <essent.project.version>${project.version}</essent.project.version>
 
     <!-- Essent dependencies -->
-    <jbilling.client.version>2.53.0-SNAPSHOT</jbilling.client.version>
-    <haulogy-jaxb.version>2.53.0-SNAPSHOT</haulogy-jaxb.version>
+    <jbilling.client.version>2.52.6-1</jbilling.client.version>
+    <haulogy-jaxb.version>2.52.6-1</haulogy-jaxb.version>
 
     <!-- Dependency versions. -->
     <awaitility.version>3.1.1</awaitility.version>
@@ -565,7 +565,7 @@
         <executions>
           <execution>
             <id>execution</id>
-            <phase>verify</phase>
+            <phase>test</phase>
             <goals>
               <goal>generate</goal>
             </goals>
@@ -574,7 +574,7 @@
               <outputDirectory>${project.build.directory}/cucumber-html-reports2</outputDirectory>
               <cucumberOutput>${project.build.directory}/cucumber.json</cucumberOutput>
               <buildNumber>1</buildNumber>
-              <checkBuildResult>false</checkBuildResult>
+              <checkBuildResult>true</checkBuildResult>
             </configuration>
           </execution>
         </executions>

@@ -15,15 +15,9 @@ public class ContractSteps extends DwpScenario {
 
     ContractPage contractPage = new ContractPage(webDriver);
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @BILLING, @B2B_REGRESSION")
+    @Before("@DWP, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
-    }
-
-    @Override
-    @After("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
-    public void tearDown() throws Exception {
-        super.tearDown();
     }
 
     @And("^Change amount for a customer$")
@@ -49,5 +43,10 @@ public class ContractSteps extends DwpScenario {
         Assert.assertTrue("Amount is not correct.", contractPage.getAmountOfACustomer(amount));
     }
 
+    @Override
+    @After("@DWP, @REGRESSION")
+    public void tearDown() throws Exception {
+        super.tearDown();
+    }
 
 }

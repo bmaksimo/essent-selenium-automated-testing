@@ -1,7 +1,7 @@
 package stepdefinitions.dwp.smoke;
 
 import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
-import com.essent.testing.dwp.scenario.DwpScenario;
+import com.essent.testing.scenario.RegisteredScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
@@ -10,7 +10,8 @@ import org.joda.time.DateTime;
 
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.expandFrom;
 
-public class OutputParameterTest extends DwpScenario {
+
+public class OutputParameterTest extends RegisteredScenario {
 
     @Before
     public void setUp(Scenario scenario) {
@@ -33,7 +34,13 @@ public class OutputParameterTest extends DwpScenario {
         this.contractor = contractor;
     }
 
-    @And("^Start of tenure is ([^\"]*)$")
+    @When("^Contractor \"?([^\"]*)\"? is put as \"?([^\"]*)\"?$")
+    public void putContractor(String contractor, String parameterName) throws Throwable {
+        setContractor(contractor);
+        parameterProvider.put(parameterName, contractor);
+    }
+
+    @And("^Start of tenure is \"?([^\"]*)\"?$")
     public void startOfTenureIs(String startOfTenure) throws Throwable {
         logger().info("STEP:");
         logger().info(" - ACTION: SET_OUTPUT_PARAM");
@@ -43,4 +50,9 @@ public class OutputParameterTest extends DwpScenario {
     }
 
 
+    @And("^Start of tenure \"?([^\"]*)\"? is put as \"?([^\"]*)\"?$")
+    public void putStartOfTenure(String value, String parameterName) throws Throwable {
+        startOfTenureIs(value);
+        parameterProvider.put(parameterName, startOfTenure);
+    }
 }
