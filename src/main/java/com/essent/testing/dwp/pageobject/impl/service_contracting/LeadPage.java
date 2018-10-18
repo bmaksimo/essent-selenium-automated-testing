@@ -23,8 +23,11 @@ public class LeadPage extends BaseObject implements Form {
         setCompanyName(table.get(1).get(0));
         waitForRequestsToFinish();
         setContactPerson(table.get(1).get(1), table.get(1).get(2));
+        waitForRequestsToFinish();
         setTelephone(table.get(1).get(3));
+        waitForRequestsToFinish();
         setMobile(table.get(1).get(4));
+        waitForRequestsToFinish();
         setEmail(table.get(1).get(5));
         waitForRequestsToFinish();
         saveLead();
@@ -56,8 +59,9 @@ public class LeadPage extends BaseObject implements Form {
 
     private void setContactPerson(String contactPersonName, String contactPersonLastName) {
         waitForRequestsToFinish();
-        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("first-name-field")), contactPersonName);
-        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("last-name-field")), contactPersonLastName);
+        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.xpath("//input[@id='first-name-field']")), contactPersonName);
+        waitForRequestsToFinish();
+        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.xpath("//input[@id='last-name-field']")), contactPersonLastName);
     }
 
     private void setTelephone(String telephone) {
@@ -86,7 +90,7 @@ public class LeadPage extends BaseObject implements Form {
     }
 
     @Override
-    public boolean fillInFormData() throws InterruptedException {
+    public boolean fillInFormData() {
         return createLead2();
     }
 }

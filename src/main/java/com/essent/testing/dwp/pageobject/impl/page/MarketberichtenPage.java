@@ -57,7 +57,7 @@ public class MarketberichtenPage  extends Component {
     }
 
     public WebElement submitButton() {
-        return seleniumDriver.findElementWhenClickable(By.xpath("//div[@class='modal__header']/a"));
+        return seleniumDriver.findElementWhenClickable(By.xpath("//select-with-search-modal/section[@class='view__modal']//a[@href='']"));
     }
 
     public void clickOnSubmitButton() throws InterruptedException {
