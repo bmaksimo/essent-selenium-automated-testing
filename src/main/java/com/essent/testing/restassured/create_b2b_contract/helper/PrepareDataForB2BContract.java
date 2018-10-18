@@ -19,6 +19,8 @@ import org.apache.commons.io.FileUtils;
 import org.iban4j.CountryCode;
 import org.iban4j.Iban;
 
+import com.essent.testing.restassured.create_b2b_contract.constants.ConstantsContractB2B;
+
 public final class PrepareDataForB2BContract {
 	
 	private PrepareDataForB2BContract() {
@@ -108,22 +110,71 @@ public final class PrepareDataForB2BContract {
 			(Character.getNumericValue(charArray[11]))+
 			(Character.getNumericValue(charArray[13]))+
 			(Character.getNumericValue(charArray[15]))));
+			
+			long result = 0;
+			while(sum % 10 != 0 )
+			{
+				result++;
+			     sum++;
+			}
 
-			return randomNumberForEAN + String.valueOf(Math.round(Math.ceil(sum/10))*10 - sum);
+			return randomNumberForEAN + String.valueOf(result);
 	}
 	
-	private static String increaseByOneStartContractDate(String startContractDate, String todayDate, String currentContractStartDateInDWP) throws ParseException {
+	private static String increaseByOneStartContractDate(String path, String startContractDate, String todayDate, String currentContractStartDateInDWP) throws ParseException {
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
 		Date dateTodayDate = sdf1.parse(todayDate);
+		
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+		Date dateStartContractDate = sdf2.parse(startContractDate);
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar c1 = Calendar.getInstance();
+		c1.setTime(sdf.parse(currentContractStartDateInDWP));
+		c1.add(Calendar.DATE, 1);  // number of days to add
+		currentContractStartDateInDWP = sdf.format(c1.getTime());  // currentContractStartDateInDWP is now the new date
+		Date dateCurrentContractStartDateInDWP = sdf.parse(currentContractStartDateInDWP);
+		
+		if(path.equals(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_UP_B2B)) {
+			if(dateCurrentContractStartDateInDWP.after(dateStartContractDate))
+				return "NOT_VALID";
+		}else if((dateCurrentContractStartDateInDWP.after(dateTodayDate) || dateCurrentContractStartDateInDWP.equals(dateTodayDate) )) {
+				return "NOT_VALID";
+		}
+
+		return currentContractStartDateInDWP;
+	}
+	
+	private static String setThirtyDaysInPast(String startContractDate) throws ParseException {
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar c1 = Calendar.getInstance();
+		c1.setTime(sdf1.parse(startContractDate));
+		c1.add(Calendar.MONTH, -1);
+		c1.add(Calendar.DATE, 1); 
+		startContractDate = sdf1.format(c1.getTime());
+		
+		return startContractDate;
+		
+	}
+	
+	private static String decreaseByOneStartContractDate(String startContractDate, String todayDate, String currentContractStartDateInDWP) throws ParseException {
+		// 1 month is past
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar c1 = Calendar.getInstance();
+		c1.setTime(sdf1.parse(startContractDate));
+		c1.add(Calendar.MONTH, -1);
+		startContractDate = sdf1.format(c1.getTime());
+		Date dateStartContractDate = sdf1.parse(startContractDate);
+		
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar c = Calendar.getInstance();
 		c.setTime(sdf.parse(currentContractStartDateInDWP));
-		c.add(Calendar.DATE, 1);  // number of days to add
+		c.add(Calendar.DATE, -1);
 		currentContractStartDateInDWP = sdf.format(c.getTime());  // currentContractStartDateInDWP is now the new date
 		Date dateCurrentContractStartDateInDWP = sdf.parse(currentContractStartDateInDWP);
 		
-		if((dateCurrentContractStartDateInDWP.after(dateTodayDate) || dateCurrentContractStartDateInDWP.equals(dateTodayDate) )) {
+		if((dateCurrentContractStartDateInDWP.before(dateStartContractDate) || dateCurrentContractStartDateInDWP.equals(dateStartContractDate) )) {
 			return "NOT_VALID";
 		}
 		
@@ -143,13 +194,16 @@ public final class PrepareDataForB2BContract {
 
 	}
 	
-	public static String setStartContractDate(String startContractDate, String todayDate, String currentContractStartDateInDWP) throws ParseException {
+	public static String setStartContractDate(String path, String startContractDate, String todayDate, String currentContractStartDateInDWP) throws ParseException {
 
 		if(currentContractStartDateInDWP.equals("")) {
+			if(path.equals(ConstantsContractB2B.PATH_TO_JSON_FILES_QUOTE_UP_B2B)) {
+				setThirtyDaysInPast(startContractDate);
+			}
 			return startContractDate;
 		}
 		
-		return increaseByOneStartContractDate(startContractDate, todayDate, currentContractStartDateInDWP);
+		return increaseByOneStartContractDate(path, startContractDate, todayDate, currentContractStartDateInDWP);
 	}
 	
 	public static String getRandomAddressNumber() {

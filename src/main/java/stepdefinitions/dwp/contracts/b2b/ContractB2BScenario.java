@@ -24,8 +24,31 @@ public class ContractB2BScenario extends DwpScenario {
 		registerActiveScenario(scenario);
 	}
 
-	@Given("^B2B Contract is \"([^\"]*)\"$")
-	public String createB2BContract(String productType) {
+	 /**
+	   * This method is used to create B2B contract without checking is contract ACTIVE or not.
+	   * @param productType This is product type and values of productType can be: UP, TC1, TC2
+	   * @param isFakeAddress  This is used to select fake or real addresses during creation of B2B quote.
+	   * Values can be: FAKE and any other value except FAKE. FAKE means we will use FAKE address to create B2B contract
+	   * @param switchType This is switch type which we select during creation of B2B quote and values of switchType
+	   * can be: SUPPLIER SWITCH, CUSTOMER SWITCH, COMBINED CUSTOMER SWITCH, MOVE IN
+	   * @return accountNumber This returns account number of B2B contract
+	   * 
+	   * Following cases work: 
+	   * 
+	   * B2B Contract is "TC2" and use "NOT FAKE" address and switch type is "MOVE IN"
+	   * B2B Contract is "UP" and use "FAKE" address and switch type is "MOVE IN"
+	   * B2B Contract is "UP" and use "FAKE" address and switch type is "SUPPLIER SWITCH"
+	   * B2B Contract is "UP" and use "FAKE" address and switch type is "COMBINED CUSTOMER SWITCH"
+	   * B2B Contract is "TC2" and use "FAKE" address and switch type is "SUPPLIER SWITCH"
+	   * 
+	   * 
+	   * Any combination for TC1 won't work due to missing tariffsheets I think.
+	   * 
+	   * Before running test for creation of B2B quote, prices should be uploaded already. We upload prices in SOAPUI tests or can use 
+	   * class UploadB2BContractPrices, but fields locationOfPrivateKey and ftpUserName must be set. This is only relevant for B2B
+	   */
+	@Given("^B2B Contract is \"([^\"]*)\" product type and use \"([^\"]*)\" address and switch type is \"([^\"]*)\"$")
+	public String createB2BContract(String productType, String isFakeAddress, String switchType) {
 
 		accountNumber = StringUtils.EMPTY;
 
@@ -34,19 +57,18 @@ public class ContractB2BScenario extends DwpScenario {
 			switch (b2bProductTypes) {
 
 				case UP: {
-					CreateQuoteB2B createQuoteB2BUP = new CreateContractUPB2B();
-	
+					CreateQuoteB2B createQuoteB2BUP = new CreateContractUPB2B(isFakeAddress, switchType);
 					accountNumber = createQuoteB2BUP.createContractB2B();
 	
 					break;
 				}
 				case TC1: {
-					CreateQuoteB2B createQuoteB2BTC1 = new CreateContractTC1B2B();
+					CreateQuoteB2B createQuoteB2BTC1 = new CreateContractTC1B2B(isFakeAddress, switchType);
 					accountNumber = createQuoteB2BTC1.createContractB2B();
 					break;
 				}
 				case TC2: {
-					CreateQuoteB2B createQuoteB2BTC2 = new CreateContractTC2B2B();
+					CreateQuoteB2B createQuoteB2BTC2 = new CreateContractTC2B2B(isFakeAddress, switchType);
 					accountNumber = createQuoteB2BTC2.createContractB2B();
 					break;
 				}
@@ -66,10 +88,31 @@ public class ContractB2BScenario extends DwpScenario {
 		logger().info("ACCOUNT NUMBER: " + accountNumber);
 		return accountNumber;
 	}
-	
-	@Given("^B2B Active Contract is \"([^\"]*)\"$")
 
-	public String createContractB2BAndCheckContractStatus(String productType) {
+	/**
+	   * This method is used to create B2B contract with checking is contract ACTIVE or not.
+	   * @param productType This is product type and values of productType can be: UP, TC1, TC2
+	   * @param isFakeAddress  This is used to select fake or real addresses during creation of B2B quote.
+	   * Values can be: FAKE and any other value except FAKE. FAKE means we will use FAKE address to create B2B contract
+	   * @param switchType This is switch type which we select during creation of B2B quote and values of switchType
+	   * can be: SUPPLIER SWITCH, CUSTOMER SWITCH, COMBINED CUSTOMER SWITCH, MOVE IN
+	   * @return accountNumber This returns account number of B2B contract
+	   *  
+	   *  Following cases work: 
+	   * 
+	   * B2B Contract is "TC2" and use "NOT FAKE" address and switch type is "MOVE IN"
+	   * B2B Contract is "UP" and use "FAKE" address and switch type is "MOVE IN"
+	   * B2B Contract is "UP" and use "FAKE" address and switch type is "SUPPLIER SWITCH"
+	   * B2B Contract is "UP" and use "FAKE" address and switch type is "COMBINED CUSTOMER SWITCH"
+	   * B2B Contract is "TC2" and use "FAKE" address and switch type is "SUPPLIER SWITCH"
+	   * 
+	   * Any combination for TC1 won't work due to missing tariffsheets I think.
+	   * 
+	   * Before running test for creation of B2B quote, prices should be uploaded already. We upload prices in SOAPUI tests or can use 
+	   * class UploadB2BContractPrices, but fields locationOfPrivateKey and ftpUserName must be set. This is only relevant for B2B
+	   */
+	@Given("^B2B Active Contract is \"([^\"]*)\" product type and use \"([^\"]*)\" address and switch type is \"([^\"]*)\"$")
+	public String createContractB2BAndCheckContractStatus(String productType, String isFakeAddress, String switchType) {
 
 		accountNumber = "";
 
@@ -78,19 +121,18 @@ public class ContractB2BScenario extends DwpScenario {
 			switch (b2bProductTypes) {
 
 				case UP: {
-					CreateQuoteB2B createQuoteB2BUP = new CreateContractUPB2B();
-	
+					CreateQuoteB2B createQuoteB2BUP = new CreateContractUPB2B(isFakeAddress, switchType);
 					accountNumber = createQuoteB2BUP.createContractB2BAndCheckContractStatus();
 	
 					break;
 				}
 				case TC1: {
-					CreateQuoteB2B createQuoteB2BTC1 = new CreateContractTC1B2B();
+					CreateQuoteB2B createQuoteB2BTC1 = new CreateContractTC1B2B(isFakeAddress, switchType);
 					accountNumber = createQuoteB2BTC1.createContractB2BAndCheckContractStatus();
 					break;
 				}
 				case TC2: {
-					CreateQuoteB2B createQuoteB2BTC2 = new CreateContractTC2B2B();
+					CreateQuoteB2B createQuoteB2BTC2 = new CreateContractTC2B2B(isFakeAddress, switchType);
 					accountNumber = createQuoteB2BTC2.createContractB2BAndCheckContractStatus();
 					break;
 				}
