@@ -28,7 +28,8 @@ Feature: Contract take over
 
         When Plus action of "1" element from "ContractsOnAccount" and click on "Overnamecontract"
         And Search by client number
+        And Changes are confirmed
         And Contract startdatum is today
-        #And "Contract startdatum" date is "now"
+        And "Contract startdatum" date is "now"
         And Changes are confirmed
 

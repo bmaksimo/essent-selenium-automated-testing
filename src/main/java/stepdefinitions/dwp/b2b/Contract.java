@@ -2,6 +2,7 @@ package stepdefinitions.dwp.b2b;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
 import com.essent.testing.dwp.pageobject.impl.page.ContractPage;
 import com.essent.testing.dwp.pageobject.impl.page.MarketberichtenPage;
+import com.essent.testing.dwp.pageobject.impl.service_contracting.ContractenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.selenium.SeleniumDriver;
 import cucumber.api.PendingException;
@@ -46,12 +47,14 @@ public class Contract extends DwpScenario {
     @And("^Search by client number$")
     public void searchByClientNumber() throws Throwable {
         ContractPage cp = new ContractPage(webDriver);
+        ContractenPage contractenPage = new ContractenPage(webDriver);
         MarketberichtenPage mb = new MarketberichtenPage(webDriver);
         cp.selectAccount();
         cp.searchByClientNuiber(Klantnummer);
-        mb.clickOnSearchButton();
-        cp.clickOnChecBox();
-        mb.submitButton();
+        contractenPage.searchForEanCode(Klantnummer);
+//        mb.clickOnSearchButton();
+//        cp.clickOnChecBox();
+//        mb.submitButton();
     }
 
     @When("^Plus action of \"([^\"]*)\" element from \"([^\"]*)\" and click on \"([^\"]*)\"$")

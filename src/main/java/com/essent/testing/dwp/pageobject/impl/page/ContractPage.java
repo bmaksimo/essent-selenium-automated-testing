@@ -34,7 +34,8 @@ public class ContractPage extends Component {
     }
 
     public String getClientNumber()throws InterruptedException {
-        return seleniumDriver.findElementWhenVisible(By.xpath("(//h4)[2]")).getText();
+        System.out.println("debug : " + seleniumDriver.findElementWhenVisible(By.xpath("//blue-sidebar//h4")).getText());
+        return seleniumDriver.findElementWhenVisible(By.xpath("//blue-sidebar//h4")).getText();
     }
 
     public void selectAccount(){
