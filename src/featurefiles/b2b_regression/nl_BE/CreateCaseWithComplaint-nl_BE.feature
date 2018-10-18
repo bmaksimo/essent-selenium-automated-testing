@@ -1,4 +1,4 @@
-#@B2B_REGRESSION
+@B2B_REGRESSION
 Feature: Create a case with complaint
 
     Background:

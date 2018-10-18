@@ -1,4 +1,4 @@
-#@B2B_REGRESSION
+@B2B_REGRESSION
 Feature: End of contract via DWP - nl_BE version
 
     Background:
@@ -10,7 +10,7 @@ Feature: End of contract via DWP - nl_BE version
             And Top action is Filters
             And "B2C/B2B" selection is "B2B"
             And "Type klant" selection is "Klant"
-            And "Klantnummer" input is "151004094"
+            And "Klantnummer" input is "151004675"
             And Click on link in View List at 1st row and "Klantnummer & Naam" column polling 15 seconds
             Then Dashboard menu is Contracten
 

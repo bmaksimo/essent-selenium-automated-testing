@@ -1,4 +1,4 @@
-#@B2B_REGRESSION
+@B2B_REGRESSION
 Feature: Dwp test for rejecting contract - nl_BE
 
     Background:
@@ -12,16 +12,15 @@ Feature: Dwp test for rejecting contract - nl_BE
         And "Status EC" selection is "Geweigerd"
         Then Plus action and "Herstuur marktbericht" of first customer from list
 
-        When "Startdatum" date is "now"
+        When "Startdatum" date is "3 weeks from now"
+        And "Module" selection is "MOVE IN"
         And "Testing" turn on
         And "Market mock" turn on
         And Save EAN code of customer
         Then Changes are confirmed
 
-        And Top menu item is Klanten
-        And Top action is Filters
-        And "EAN-code" input is "541449611000044685"
-        Then Click on link in View List at 1st row and "Klantnummer & Naam" column
-
-        When Dashboard menu is Marktberichten
+        When Left menu is sales-marketing
+        And Search field input is "541449611000044685"
+        And Click on link in View List at 1st row and "Klantnaam & nummer" column polling 10 seconds
+        And Dashboard menu is Marktberichten
         Then Validate rejection status is "MOVE IN"
