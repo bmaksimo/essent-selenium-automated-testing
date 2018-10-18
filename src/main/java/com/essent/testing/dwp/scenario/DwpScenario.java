@@ -9,6 +9,7 @@ import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter;
 import com.essent.testing.selenium.scenario.SeleniumScenario;
 
+import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpDate;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -16,7 +17,6 @@ import static org.junit.Assert.assertTrue;
  *
  */
 public abstract class DwpScenario extends SeleniumScenario {
-
 
     protected void isDwpRunning() throws Exception {
         String dwpUrl = ConfigProvider.getProperty(ConfigKey.DWP_BASE_URL);
@@ -40,9 +40,11 @@ public abstract class DwpScenario extends SeleniumScenario {
         return new Step().action(action);
     }
 
-
     protected boolean execute(final Execution execution) {
         return AutocratExecutionAdapter.execute(webDriver.getDriver(), execution);
     }
 
+    protected String toDwpDate(String parameter) {
+        return checkAndConvertToDwpDate(parameter);
+    }
 }

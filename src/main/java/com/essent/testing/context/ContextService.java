@@ -36,5 +36,4 @@ public class ContextService implements ApplicationContextAware
       throw new Exception("No Environment property specified in the configuration file. This should never happen.");
     }
   }
-
 }

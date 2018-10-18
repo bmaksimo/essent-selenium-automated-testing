@@ -1,12 +1,11 @@
 @DWP
 @E2E
-@SMOKE
 Feature: Received consumption
 
     Background:
         Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
 
-    Scenario: Generate consumption for settlement and verify in DWP
+    Scenario: Generate consumption for given settlement and verify the result in DWP
         When Left menu is sales-marketing
         And Top menu item is Klanten
         And Top action is Filters

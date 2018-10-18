@@ -13,15 +13,9 @@ public class ContractenSteps extends DwpScenario {
 
     private String eanCode = null;
 
-    @Before("@SMOKE, @QUOTE, @RENEWAL, @B2B_REGRESSION")
+    @Before("@DWP, @REGRESSION")
     public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
-    }
-
-    @Override
-    @After("@SMOKE, @QUOTE, @RENEWAL, @B2B_REGRESSION")
-    public void tearDown() throws Exception {
-        super.tearDown();
     }
 
 
@@ -53,5 +47,11 @@ public class ContractenSteps extends DwpScenario {
     public void confirmTaskWas(String input) throws Throwable {
         ContractenPage contractenPage = new ContractenPage(webDriver);
         contractenPage.confirmTaskStatus(input);
+    }
+
+    @Override
+    @After("@DWP, @REGRESSION")
+    public void tearDown() throws Exception {
+        super.tearDown();
     }
 }
