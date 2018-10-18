@@ -4,9 +4,11 @@ import com.essent.testing.restassured.create_contract.impl.b2b.ContractTC1B2BCre
 import com.essent.testing.restassured.create_contract.impl.b2b.ContractTC2B2BCreator;
 import com.essent.testing.restassured.create_contract.impl.b2b.ContractUPB2BCreator;
 import com.essent.testing.scenario.RegisteredScenario;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import com.essent.testing.restassured.create_contract.QuoteCreator;
+import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
@@ -17,10 +19,11 @@ public class ContractB2BScenario extends RegisteredScenario {
 	private static final Logger logger = Logger.getLogger(ContractB2BScenario.class);
 	private static final String EMPTY_STRING = "";
 
-	private String accountNumber;
+    @OutputParameter(name="account-nr")
+    private String accountNumber;
 
-	@Before("@QUOTE, @MENU, @RENEWAL, @FILTER, @SMOKE, @B2B_REGRESSION, @HB1")
-	public void setupTest(Scenario scenario) throws Throwable {
+	@Before("@DWP, @CORE, @E2E, @REGRESSION, @SALES-MARKETING, @CONTRACTING-SWITCHING, @BUSINESS-DESK, @BILLING")
+    public void setupTest(Scenario scenario) throws Throwable {
 		registerActiveScenario(scenario);
 	}
 
@@ -50,7 +53,7 @@ public class ContractB2BScenario extends RegisteredScenario {
 	@Given("^B2B Contract is \"([^\"]*)\" product type and use \"([^\"]*)\" address and switch type is \"([^\"]*)\"$")
 	public String createB2BContract(String productType, String isFakeAddress, String switchType) {
 
-		accountNumber = EMPTY_STRING;
+		accountNumber = StringUtils.EMPTY;
 
 		ProductTypes productTypes = ProductTypes.valueOf(productType);
 		try {
@@ -78,17 +81,16 @@ public class ContractB2BScenario extends RegisteredScenario {
 			}
 
 		} catch (Exception e) {
-			logger.error("Creation of B2B contract failed", e);
+			logger().error("Creation of B2B contract failed", e);
 			Assert.fail("Creation of B2B contract failed: " + e.getMessage());
 		}
 
-		if(accountNumber.equals(EMPTY_STRING)) {
+		if(StringUtils.isEmpty(accountNumber)) {
 			Assert.fail("Creation of B2B contract failed");
-			logger.error("Something went wrong with creation of B2B contract");
+			logger().error("Something went wrong with creation of B2B contract");
 		}
 
-		logger.info("ACCOUNT NUMBER: " + accountNumber);
-
+		logger().info("ACCOUNT NUMBER: " + accountNumber);
 		return accountNumber;
 	}
 
@@ -140,17 +142,16 @@ public class ContractB2BScenario extends RegisteredScenario {
 					throw new AssertionError("Not supported product type used " + productType);
 			}
 		} catch (Exception e) {
-			logger.error("B2B contract is not ACTIVE", e);
+			logger().error("B2B contract is not ACTIVE", e);
 			Assert.fail("B2B contract is not ACTIVE: " + e.getMessage());
 		}
 
-		if(accountNumber.equals(EMPTY_STRING)) {
+		if(StringUtils.isEmpty(accountNumber)) {
 			Assert.fail("B2B contract is not ACTIVE");
-			logger.error("Something went wrong with creation of ACTIVE B2B contract");
+			logger().error("Something went wrong with creation of ACTIVE B2B contract");
 		}
 
-		logger.info("ACCOUNT NUMBER: " + accountNumber);
-
+		logger().info("ACCOUNT NUMBER: " + accountNumber);
 		return accountNumber;
 	}
 

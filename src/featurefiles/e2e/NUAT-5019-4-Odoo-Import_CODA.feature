@@ -1,12 +1,12 @@
 @ODOO
 @E2E
-@CODA
 Feature: Import a coda file
 
     Background:
-        Given I logged in to Odoo as payments.testautomation
+        Given I logged in to Odoo as p.paulussen
 
-    Scenario: Create a CODA file
+    Scenario: Create and match CODA file in Odoo
+
         When Odoo top menu is Accounting
         And  Odoo left menu is CODA Processing->Import CODA Files
         Then Odoo file upload dialog is Import CODA File

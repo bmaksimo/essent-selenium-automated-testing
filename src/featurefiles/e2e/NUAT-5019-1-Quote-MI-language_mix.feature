@@ -1,11 +1,12 @@
-﻿@E2E
-@SMOKE
-@REGRESSION
-Feature: Creating a B2C Quote TC1 with move in
+﻿@DWP
+@E2E
+Feature: Creating a B2C Quote TC1 with move in, Dutch language version with form headers in English language
     Background:
         Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
 
     Scenario: Create a B2C Quote with move in
+        https://emagine-reality.atlassian.net/browse/NUAT-5019
+
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         #Then Form header is "Details van de offerte"
         Then Form header is "Quote details"
@@ -23,7 +24,7 @@ Feature: Creating a B2C Quote TC1 with move in
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
 
-        When Package is "TC_FIX_B2C"
+        When Package is "Vast"
         And Checkbox "Gas Fix B2C (TC1)" is Unchecked
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
@@ -51,4 +52,4 @@ Feature: Creating a B2C Quote TC1 with move in
         And Modal dialog is Sign quote
         And  Contract signature is confirmed
         Then 1st list element has cell value Sales Getekend - Geaccepteerd at column Type & status
-        And  Number parameter "id-billing-customer" is put from "1st" row and "Billing klant & Tariefdatum" column
+        And  Cell value from "1st" row and "Billing klant & Tariefdatum" column is put to parameter "id-billing-customer"

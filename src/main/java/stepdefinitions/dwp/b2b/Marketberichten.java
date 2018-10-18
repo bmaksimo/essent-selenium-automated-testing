@@ -13,7 +13,7 @@ public class Marketberichten extends DwpScenario {
 
     public  static String EAN;
 
-    @Before("@B2B_REGRESSION")
+    @Before("@DWP, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
 

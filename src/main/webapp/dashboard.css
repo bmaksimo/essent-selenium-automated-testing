@@ -1,0 +1,82 @@
+body {
+    font-family:Verdana;
+    background-color: grey;
+}
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    margin-top: -250px;
+    margin-left: -700px;
+
+    width:1450px;
+    height:250px;
+
+    color: white;
+}
+.centered-top {
+    position: absolute;
+    top: 0pt;
+    left: 50%;
+
+    width:650px;
+    margin-left: -250px;
+
+    color: white;
+    font-size: 30pt;
+}
+.centered-top-subtext {
+    font-size: 20pt;
+    padding-left: 10px;
+    padding-top: 5px;
+}
+.bottom-right {
+    position: absolute;
+    bottom: 10pt;
+    right: 10pt;
+
+    color: white;
+    font-size: 18pt;
+}
+.failure {
+    background-color: #840f0f;
+}
+.success {
+    background-color: #0a6306;
+}
+.area {
+    width: 310px;
+    float:left;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 75px;
+    text-align: center;
+}
+.area_name {
+    font-size: 40pt;
+}
+.failure_text {
+    font-size: 30pt;
+    margin-top: 30px;
+    margin-bottom: 34px;
+}
+.total_text {
+    font-size: 30pt;
+}
+.nr_of_failures {
+    font-size: 90pt;
+}
+.ok_image {
+    margin-top: 10px;
+    width: 200px;
+    height: 200px;
+}
+.total {
+    padding-top: 40px;
+    clear: both;
+    font-size: 45pt;
+    text-align: center;
+    width: 100%;
+}

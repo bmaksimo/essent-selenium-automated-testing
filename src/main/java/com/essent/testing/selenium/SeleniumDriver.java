@@ -189,6 +189,8 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     }
 
     public void tearDown() {
+        if (driver == null)
+            return;
         driver.close();
         driver.quit();
     }

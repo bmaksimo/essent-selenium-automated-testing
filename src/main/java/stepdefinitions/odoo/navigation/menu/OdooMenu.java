@@ -10,7 +10,7 @@ import cucumber.runtime.CucumberException;
 
 public class OdooMenu extends OdooScenario {
 
-    @Before("@SMOKE, @ODOO, @CODA")
+    @Before("@ODOO, @E2E, @SALES-MARKETING, @REGRESSION, @CONTRACTING-SWITCHING, @BUSINESS-DESK, @BILLING")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -31,7 +31,7 @@ public class OdooMenu extends OdooScenario {
     }
 
     @Override
-    @After("@SMOKE, @ODOO, @CODA")
+    @After("@ODOO, @E2E, @SALES-MARKETING, @REGRESSION, @CONTRACTING-SWITCHING, @BUSINESS-DESK, @BILLING")
     public void tearDown() throws Exception {
         super.tearDown();
     }
