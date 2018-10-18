@@ -45,7 +45,6 @@ public class ConsumptionSteps extends DwpScenario {
     @When("^Consumption at current deliverypointid with ([^\"]*) hourly-tariff is generated from now until ([^\"]*) months after$")
     public void generateConsumption(String hourlyTariff, String months) throws Exception {
         String deliveryPointId = parameterProvider.getValueOrParameterAsString("parameter:EAN-code");
-        //String deliveryPointId = (String) SharedPropertiesSingleton.getInstance().getSharedProperties().get("EAN-code");
         String consumptionData = getConsumptionRequest(deliveryPointId, hourlyTariff, months);
 
         BasePayload msg = generatePayloadFromString(consumptionData);
