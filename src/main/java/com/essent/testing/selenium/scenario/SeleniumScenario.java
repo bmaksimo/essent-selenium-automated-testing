@@ -3,7 +3,6 @@ package com.essent.testing.selenium.scenario;
 
 import com.essent.testing.scenario.RegisteredScenario;
 import com.essent.testing.selenium.SeleniumDriver;
-import cucumber.api.Scenario;
 import org.junit.AfterClass;
 
 import java.util.Map;
@@ -13,8 +12,8 @@ public class SeleniumScenario extends RegisteredScenario {
 
     static protected SeleniumDriver webDriver;
 
-    public void tidyUp() throws Exception {
-        if(webDriver != null) {
+    public void tidyUp() {
+        if (webDriver != null) {
             webDriver.tearDown();
             webDriver = null;
         }
@@ -37,7 +36,7 @@ public class SeleniumScenario extends RegisteredScenario {
         webDriver.injectJavaScriptTestRunner();
     }
 
-    protected boolean executeJavascriptTest(String registeredJsClass, Object options)  {
+    protected boolean executeJavascriptTest(String registeredJsClass, Object options) {
         return webDriver.executeJavascriptTest(registeredJsClass, options);
     }
 
@@ -45,12 +44,12 @@ public class SeleniumScenario extends RegisteredScenario {
         return webDriver.executeJavascriptTest(registeredJsClass, options, withException);
     }
 
-    protected Map executeJavascriptMethod(String registeredJsClass, Object options)  {
+    protected Map executeJavascriptMethod(String registeredJsClass, Object options) {
         Map map = webDriver.executeJavascriptMethod(registeredJsClass, options);
         return map;
     }
 
-    protected void takeScreenshot(boolean success)  {
+    protected void takeScreenshot(boolean success) {
         webDriver.takeScreenshot(success);
     }
 
