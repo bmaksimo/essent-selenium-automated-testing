@@ -12,8 +12,8 @@ Feature: Dwp test for changing amount for a customer
         And "B2C/B2B" selection is "B2B"
         And "Type klant" selection is "Klant"
         And "Naam" input is "steve"
-        Then Click on link in View List at 1st row and "Klantnummer & Naam" column
-        
+        Then Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
+
         When Dashboard menu is Contracten
         And Change amount for a customer
         And Contract plus and "Voorschotbedrag aanpassen"
