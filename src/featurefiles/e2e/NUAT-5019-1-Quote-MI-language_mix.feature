@@ -1,5 +1,6 @@
 @DWP
 @E2E
+@SIGN_IN
 Feature: Creating a B2C Quote TC1 with move in, Dutch language version with form headers in English language
     Background:
         Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
@@ -31,6 +32,7 @@ Feature: Creating a B2C Quote TC1 with move in, Dutch language version with form
 
         When "Startdatum" date is "now"
         And Electricity EAN code is selected
+        And Electricity EAN code is put as output parameter "ean-code"
         And Electricity meter is Closed
         And Electricity market mock test is Open
         And Connection details are confirmed
