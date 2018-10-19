@@ -27,6 +27,7 @@ public enum ConfigKey {
     DWP_BUSINESS_PASSWORD("dwp.password.business"),
     DWP_USER_PARTNER_B2C_EXT("dwp.user.partner.b2c.external"),
     DWP_USER_SOAPUI_B2B("dwp.user.soapui_b2b"),
+    DWP_USER_SOAPUI_B2C("dwp.user.soapui_b2c"),
     DWP_PASSWORD("dwp.password"),
 
     DWP_PASSWORD_SERVICEDESK_B2B("dwp.password.b2b"),
@@ -43,6 +44,7 @@ public enum ConfigKey {
     DWP_PASSWORD_SERVICEDESK_B2C("dwp.password.b2c"),
     DWP_PASSWORD_PARTNER_B2C_EXT("dwp.password.partner.b2c.external"),
     DWP_PASSWORD_SOAPUI_B2B("dwp.password.soapui_b2b"),
+    DWP_PASSWORD_SOAPUI_B2C("dwp.password.soapui_b2c"),
     SERVICEMIX_BASE_URL("servicemix.baseurl"),
     BILLING_URL("billing.url"),
     BILLING_DB_HOST("billing.db.host"),

@@ -206,7 +206,7 @@ public class ViewListElements extends NavigationElements {
             boolean success = StringUtils.equals("PASSED", status);
             if (success) {
                 String switchedPaymentMethod = ((String) result.get("paymentMethod")).equalsIgnoreCase("string:OV") ?
-                    "Overschrijving" : "Domicili�ring";
+                    "Overschrijving" : "Domiciliëring";
                 parameterProvider.put("paymentMethod", switchedPaymentMethod);
             }
 
