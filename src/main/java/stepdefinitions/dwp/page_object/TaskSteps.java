@@ -14,15 +14,9 @@ import org.openqa.selenium.By;
 public class TaskSteps extends DwpScenario {
     private String taskId;
 
-    @Before("@SMOKE, @E2E, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
+    @Before("@DWP, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
-    }
-
-    @Override
-    @After("@SMOKE, @E2E, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
-    public void tearDown() throws Exception {
-        super.tearDown();
     }
 
     @When("^Plus action of first customer from list$")
@@ -71,5 +65,11 @@ public class TaskSteps extends DwpScenario {
     public void wasRejectionReason(String input) throws Throwable {
         ContractenPage contractenPage = new ContractenPage(webDriver);
         contractenPage.findRejectionReason(input);
+    }
+
+    @Override
+    @After("@DWP, @REGRESSION")
+    public void tearDown() throws Exception {
+        super.tearDown();
     }
 }

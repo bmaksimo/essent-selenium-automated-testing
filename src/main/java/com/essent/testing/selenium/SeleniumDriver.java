@@ -192,7 +192,9 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         return driver;
     }
 
-    public void tearDown() throws Exception {
+    public void tearDown() {
+        if (driver == null)
+            return;
         driver.close();
         driver.quit();
     }
@@ -450,23 +452,4 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         ngWebDriver.waitForAngularRequestsToFinish();
     }
 
-    public static void takeSnapShot(WebDriver webdriver, String fileWithPath) throws Exception {
-
-        //Convert web driver object to TakeScreenshot
-
-        TakesScreenshot scrShot = ((TakesScreenshot) webdriver);
-
-        //Call getScreenshotAs method to create image file
-
-        File SrcFile = scrShot.getScreenshotAs(OutputType.FILE);
-
-        //Move image file to new destination
-
-        File DestFile = new File(fileWithPath);
-
-        //Copy file at destination
-
-        FileUtils.copyFile(SrcFile, DestFile);
-
-    }
 }

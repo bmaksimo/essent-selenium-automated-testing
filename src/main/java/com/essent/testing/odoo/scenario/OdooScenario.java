@@ -5,11 +5,9 @@ import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.selenium.scenario.SeleniumScenario;
 import org.apache.log4j.Logger;
-import org.springframework.test.context.ContextConfiguration;
 
 import static org.junit.Assert.assertTrue;
 
-@ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 public abstract class OdooScenario extends SeleniumScenario {
 
     private  final static Logger logger = Logger.getLogger(OdooScenario.class);

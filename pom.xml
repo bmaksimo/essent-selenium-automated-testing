@@ -565,7 +565,7 @@
         <executions>
           <execution>
             <id>execution</id>
-            <phase>verify</phase>
+            <phase>test</phase>
             <goals>
               <goal>generate</goal>
             </goals>
@@ -574,7 +574,7 @@
               <outputDirectory>${project.build.directory}/cucumber-html-reports2</outputDirectory>
               <cucumberOutput>${project.build.directory}/cucumber.json</cucumberOutput>
               <buildNumber>1</buildNumber>
-              <checkBuildResult>false</checkBuildResult>
+              <checkBuildResult>true</checkBuildResult>
             </configuration>
           </execution>
         </executions>

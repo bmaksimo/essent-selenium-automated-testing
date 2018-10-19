@@ -15,15 +15,9 @@ public class MarketBerichtenSteps extends DwpScenario {
     BaseObject baseObject = new BaseObject(webDriver);
     private static String eanCode = null;
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
+    @Before("@DWP, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
-    }
-
-    @Override
-    @After("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
-    public void tearDown() throws Exception {
-        super.tearDown();
     }
 
     @And("^\"([^\"]*)\" turn on$")
@@ -57,5 +51,12 @@ public class MarketBerichtenSteps extends DwpScenario {
     public void searchForEanCodeFromFillter() throws Throwable {
         MarktberichtenPage marktberichtenPage = new MarktberichtenPage(webDriver);
         marktberichtenPage.setEanCodeInFilter(eanCode);
+    }
+
+
+    @Override
+    @After("@DWP, @REGRESSION")
+    public void tearDown() throws Exception {
+        super.tearDown();
     }
 }

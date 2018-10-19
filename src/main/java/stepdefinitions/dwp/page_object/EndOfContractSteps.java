@@ -16,7 +16,7 @@ import static org.hamcrest.Matchers.is;
 
 public class EndOfContractSteps extends DwpScenario {
 
-    @Before("@SMOKE, @E2E, @QUOTE, @BILLING, @B2B_REGRESSION")
+    @Before("@DWP, @E2E, @REGRESSION, @BUSINESS-DESK, @BILLING")
     public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
     }

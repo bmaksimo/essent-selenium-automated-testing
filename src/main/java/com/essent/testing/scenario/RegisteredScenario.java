@@ -1,12 +1,18 @@
 package com.essent.testing.scenario;
 
+import com.billinghouse.cucumber.runtime.parameter.ParameterProvider;
 import com.billinghouse.cucumber.runtime.scenario.ActiveScenarioProvider;
 import cucumber.api.Scenario;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class RegisteredScenario {
 
+    @Autowired
+    protected ParameterProvider parameterProvider;
+
     private  final static Logger logger = Logger.getLogger(RegisteredScenario.class);
+
     private String name;
 
     protected final Logger logger() {

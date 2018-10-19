@@ -36,6 +36,7 @@ public class ParametersUtil {
             throw new CucumberException("Failure when accessing the parameter", e);
         }
     }
+
     public static void visitOutputParameters(Object visitableTest, BiConsumer<String, Object> parameterVisitor) {
         Class<?> objectClass = requireNonNull(visitableTest).getClass();
         Set<String> uniqueNames = new HashSet<>();
