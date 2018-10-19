@@ -51,8 +51,8 @@ public class TaskSteps extends DwpScenario {
     }
 
     private void findTaskId(String taskId) {
-        webDriver.findElementWhenVisible(By.id("task-number-c-default-value-field")).sendKeys(taskId);
-
+        webDriver.waitForRequestsToFinish();
+        webDriver.waitAndSendKeys(webDriver.findElementWhenVisible(By.id("task-number-c-default-value-field")), taskId);
     }
 
     @And("^Search for task id$")

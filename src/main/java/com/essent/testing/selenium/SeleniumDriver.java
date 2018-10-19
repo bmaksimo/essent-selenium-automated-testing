@@ -8,6 +8,7 @@ import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.util.resource.ResourceUtil;
 import com.paulhammant.ngwebdriver.NgWebDriver;
+import cucumber.api.Scenario;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -35,6 +36,8 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -42,6 +45,7 @@ import java.util.function.Function;
 
 import static com.billinghouse.test_automation.util.gherkin.DateTimeFormatUtil.printPeriod;
 import static org.junit.Assert.fail;
+
 /**
  * This class is a wrapper around the selenium webdriver.
  *
@@ -79,7 +83,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
 
         /**
          * @param registeredJsClass JavascriptTestRunner class name
-         * @param options Arguments to pass to Javascript
+         * @param options           Arguments to pass to Javascript
          * @return <code>true</code> when executed successfully. <code>false</code> otherwise.
          */
         public boolean executeJavascriptTest(String registeredJsClass, Object options) {
@@ -267,7 +271,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
 
     /**
      * @param registeredJsClass Name of registered Javascript test
-     * @param options arguments given to registered Javascript test
+     * @param options           arguments given to registered Javascript test
      * @return <code>true</code> when test was successfulyexecuted by JavascriptTestRunnr, <code>false</code> otherwise.
      */
     public boolean executeJavascriptTest(String registeredJsClass, Object options) {
@@ -276,8 +280,8 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
 
     /**
      * @param registeredJsClass Name of registered Javascript test
-     * @param options arguments given to registered Javascript test
-     * @param withException <code>true</code> to generate Cucumner exception on test failure, <code>false</code> to proceed without exception.
+     * @param options           arguments given to registered Javascript test
+     * @param withException     <code>true</code> to generate Cucumner exception on test failure, <code>false</code> to proceed without exception.
      * @return <code>true</code> when test was successfulyexecuted by JavascriptTestRunnr, <code>false</code> otherwise.
      */
     public boolean executeJavascriptTest(String registeredJsClass, Object options, boolean withException) {
@@ -364,10 +368,10 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         });
         Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
         logger.info(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
-        if(elements.isEmpty()) {
+        if (elements.isEmpty()) {
             logger.warn(" - RESULT: empty");
             return null;
-        } else  {
+        } else {
             WebElement webElement = elements.get(0);
             logger.info(String.format(" - RESULT: %s -> %s", selector, webElement.getAttribute("innerHTML")));
             return webElement;
@@ -411,12 +415,13 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         ngWebDriver.waitForAngularRequestsToFinish();
         waitForExpectedCondition(expectedCondition, timeoutInSeconds, sleepInMillis);
     }
-    public void waitForElementToBeVisibleBy (final By by, final long timeoutInSeconds, final long sleepInMillis) {
-        driverWaitFor(ExpectedConditions.visibilityOfElementLocated(by), timeoutInSeconds,sleepInMillis);
+
+    public void waitForElementToBeVisibleBy(final By by, final long timeoutInSeconds, final long sleepInMillis) {
+        driverWaitFor(ExpectedConditions.visibilityOfElementLocated(by), timeoutInSeconds, sleepInMillis);
     }
 
     private void waitForElementToBeVisible(final WebElement element, final long timeoutInSeconds, final long sleepInMillis) {
-        driverWaitFor(ExpectedConditions.visibilityOf(element), timeoutInSeconds,sleepInMillis);
+        driverWaitFor(ExpectedConditions.visibilityOf(element), timeoutInSeconds, sleepInMillis);
     }
 
     private void waitForElementToBeClickable(final WebElement element, final long timeoutInSeconds, final long sleepInMillis) {
@@ -424,12 +429,12 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     }
 
     public void waitForElementNotToBeDisplayed(final WebElement element, final long timeoutInSeconds, final long sleepInMillis) {
-        driverWaitFor(ExpectedConditions.stalenessOf(element), timeoutInSeconds,sleepInMillis );
+        driverWaitFor(ExpectedConditions.stalenessOf(element), timeoutInSeconds, sleepInMillis);
     }
 
     private void waitForElement(final WebElement element) {
         ngWebDriver.waitForAngularRequestsToFinish();
-        waitForElementToBeVisible(element, 30,5);
+        waitForElementToBeVisible(element, 30, 5);
         waitForElementToBeClickable(element, 30, 5);
     }
 

@@ -22,7 +22,7 @@ public class ToggleImpl extends Component {
     }
 
     public void clickCheckbox(String box)  {
-        if (checkIfCheckboxIsChecked(box)==false) {
+        if (!checkIfCheckboxIsChecked(box)) {
             seleniumDriver.waitAndClick(checkBox(box));
         }
     }
