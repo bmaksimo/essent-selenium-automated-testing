@@ -1,5 +1,6 @@
 @DWP
 @E2E
+@ONBOARDING
 Feature: Creating a B2C Quote TC1 with move in, Dutch language version with form headers in English language
     Background:
         Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
@@ -20,7 +21,7 @@ Feature: Creating a B2C Quote TC1 with move in, Dutch language version with form
         When Customer is random
         And Customer address is
             | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-            | Mechelsesteenweg| 2   |            |      | 2550       | Kontich  |         |
+            | Mechelsesteenweg| 3   |            |      | 2550       | Kontich  |         |
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
 

@@ -1,5 +1,6 @@
 @DWP
 @CORE
+@FILTER
 Feature: Essent Web Automation testing with Cucumber-JVM  and Selenium.
     Framework, menu navigation, filter options, Plus menu, View List Header check with waiter.
 

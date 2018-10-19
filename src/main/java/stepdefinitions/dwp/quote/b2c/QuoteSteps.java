@@ -39,7 +39,7 @@ import static org.hamcrest.Matchers.is;
 
 public class QuoteSteps extends DwpScenario {
 
-    @Before("@DWP, @E2E, @SALES-MARKETING, @CONTRACTING-SWITCHING, @BUSINESS-DESK, @BILLING")
+    @Before("@DWP, @E2E, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -303,7 +303,7 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @Override
-    @After("@DWP, @E2E, @SALES-MARKETING, @CONTRACTING-SWITCHING, @BUSINESS-DESK, @BILLING")
+    @After("@DWP, @E2E, @REGRESSION")
     public void tearDown() throws Exception {
         super.tearDown();
     }

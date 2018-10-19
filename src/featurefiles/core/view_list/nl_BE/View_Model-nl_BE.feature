@@ -1,5 +1,6 @@
 @DWP
 @CORE
+@VIEW_LIST
 Feature: Essent Web Automation testing with Cucumber-JVM  and Selenium.
     Framework, view list functions, extracting info from web page and populating to the other (eexternal) scenarios.
     Background:

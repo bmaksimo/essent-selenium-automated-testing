@@ -16,7 +16,7 @@ import static org.hamcrest.Matchers.is;
 
 public class InputElements extends DwpScenario {
 
-    @Before("@DWP, @CORE, @E2E, @REGRESSION, @SALES-MARKETING, @CONTRACTING-SWITCHING, @BUSINESS-DESK, @BILLING")
+    @Before("@DWP, @CORE, @E2E, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -89,7 +89,7 @@ public class InputElements extends DwpScenario {
     }
 
     @Override
-    @After("@DWP, @CORE, @E2E, @REGRESSION, @SALES-MARKETING, @CONTRACTING-SWITCHING, @BUSINESS-DESK, @BILLING")
+    @After("@DWP, @CORE, @E2E, @REGRESSION")
     public void tearDown() throws Exception {
         super.tearDown();
     }

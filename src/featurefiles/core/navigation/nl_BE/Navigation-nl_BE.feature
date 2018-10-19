@@ -1,5 +1,6 @@
 @DWP
 @CORE
+@NAVIGATION
 Feature: Essent Web Automation testing with Cucumber-JVM  and Selenium.
     Framework, GUI navigation elements.
 

@@ -125,7 +125,7 @@ public class MenuNavigation extends Component {
             return null;
         } else  {
             WebElement webElement = elements.get(0);
-            logger().info(String.format(" - RESULT: %s -> %s", selector, webElement.getAttribute("innerHTML")));
+            logger().debug(String.format(" - RESULT: %s -> %s", selector, webElement.getAttribute("innerHTML")));
             return webElement;
         }
     }

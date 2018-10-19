@@ -19,7 +19,7 @@ public class ContractB2BScenario extends DwpScenario {
     @OutputParameter(name="account-nr")
     private String accountNumber;
 
-	@Before("@DWP, @CORE, @E2E, @REGRESSION, @SALES-MARKETING, @CONTRACTING-SWITCHING, @BUSINESS-DESK, @BILLING")
+	@Before("@DWP, @E2E, @REGRESSION")
 	public void setupTest(Scenario scenario) throws Throwable {
 		registerActiveScenario(scenario);
 	}
@@ -159,7 +159,7 @@ public class ContractB2BScenario extends DwpScenario {
 	}
 
 	@Override
-	@After("@DWP, @CORE, @E2E, @REGRESSION, @SALES-MARKETING, @CONTRACTING-SWITCHING, @BUSINESS-DESK, @BILLING")
+	@After("@DWP, @E2E, @REGRESSION")
 	public void tearDown() throws Exception {
 		super.tearDown();
 	}
