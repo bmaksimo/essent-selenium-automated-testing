@@ -25,7 +25,7 @@ public class SetupWebDriver extends SeleniumScenario {
     }
 
     @After("@DWP, @ODOO, @CORE, @E2E, @REGRESSION")
-    public void tearDown() throws Exception {
+    public void tearDown() {
         tidyUp();
     }
 

@@ -21,12 +21,10 @@ Feature: Dwp test for rejecting contract - nl_BE
         And Save EAN code of customer
         Then Changes are confirmed
 
-        And Top menu item is Klanten
-        And Top action is Filters
-        And Search for ean code from filters
-        Then Click on link in View List at 1st row and "Klantnummer & Naam" column
-
-        When Dashboard menu is Marktberichten
+        When Left menu is sales-marketing
+        And Search field input is "541449611000044685"
+        And Click on link in View List at 1st row and "Klantnaam & Nummer" column polling 10 seconds
+        And Dashboard menu is Marktberichten
         Then Validate rejection status is "START ACCESS"
 
 

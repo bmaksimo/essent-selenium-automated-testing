@@ -32,7 +32,7 @@ public class OdooMenu extends OdooScenario {
 
     @Override
     @After("@ODOO, @E2E, @REGRESSION")
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }

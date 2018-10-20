@@ -30,7 +30,7 @@ public class BillingBatchRunSteps extends DwpScenario {
 
     @Override
     @After("@DWP, @E2E")
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }

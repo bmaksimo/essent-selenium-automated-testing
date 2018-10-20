@@ -38,7 +38,7 @@ public class DashboardMenu extends NavigationElements {
 
     @Override
     @After("@DWP, @CORE, @E2E, @REGRESSION")
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }

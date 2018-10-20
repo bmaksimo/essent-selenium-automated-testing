@@ -123,7 +123,7 @@ public class ConsumptionSteps extends DwpScenario {
 
     @Override
     @After("@DWP, @E2E, @REGRESSION")
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }

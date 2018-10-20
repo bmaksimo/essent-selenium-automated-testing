@@ -36,7 +36,7 @@ public class Account extends DwpScenario {
     }
 
     @After("@DWP, @REGRESSION")
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }

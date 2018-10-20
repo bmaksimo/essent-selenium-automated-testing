@@ -26,7 +26,7 @@ public class BillRun extends RegisteredScenario {
 
 	private List<BillingInvoice> billingInvoiceCache = new ArrayList<>();
 
-	@Before("@DWP, @CORE, @E2E, @REGRESSIO")
+	@Before("@DWP, @CORE, @E2E, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }

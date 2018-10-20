@@ -25,7 +25,7 @@ public class ConsumptionsTest extends NavigationElements {
 
     @Override
     @After("@DWP, @E2E")
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }

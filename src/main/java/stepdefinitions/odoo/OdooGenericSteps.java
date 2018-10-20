@@ -26,7 +26,7 @@ public class OdooGenericSteps extends OdooScenario {
     }
 
     @After("@ODOO, @E2E, @REGRESSION")
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }

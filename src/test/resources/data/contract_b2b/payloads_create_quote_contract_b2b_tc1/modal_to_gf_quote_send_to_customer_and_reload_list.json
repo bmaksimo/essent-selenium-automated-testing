@@ -1,9 +1,0 @@
-{
-  "id": "modal_to_gf_quote_send_to_customer_and_reload_list",
-  "recordId": "47e099da-06f0-67af-735f-5b62dc5a8a51",
-  "listKey": "Quotes",
-  "recordType": "AOS_Quotes",
-  "actionData": {
-    "parentId": ""
-  }
-}

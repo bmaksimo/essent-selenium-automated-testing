@@ -62,9 +62,10 @@ public class EndOfContractSteps extends DwpScenario {
         assertThat(String.format("Top Menu item %s was not available.", element),
             success, is(true));
     }
+
     @Override
     @After("@DWP, @E2E, @REGRESSION")
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }

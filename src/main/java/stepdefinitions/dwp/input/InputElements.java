@@ -90,7 +90,7 @@ public class InputElements extends DwpScenario {
 
     @Override
     @After("@DWP, @CORE, @E2E, @REGRESSION")
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }

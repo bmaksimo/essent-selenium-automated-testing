@@ -1,0 +1,25 @@
+{
+   "model":{
+      "recordTypeOfRecordId":"AOS_Quotes",
+      "recordId":"${rowId}",
+      "baseModule":"AOS_Quotes",
+      "dwp|id":"${rowId}",
+      "id":"${rowId}",
+      "stage":"SIGNED",
+      "dwp|signed_contract_docguid_c":"${docId}",
+      "dwp|recordType":"AOS_Quotes",
+      "complete":true,
+      "signature_option_c":"HAS_SIGNED",
+      "signed_contract_docguid_c":[
+
+      ],
+      "sign_date_c":"${date}",
+      "do_auto_communication_c":true,
+      "dwp|alreadyContracted":false,
+      "dwp|alreadyContractedForDifferentClient":false
+   },
+   "action":{
+      "event":"CONFIRM",
+      "currentStep":"sign_quote_modal_tc1"
+   }
+}
