@@ -30,11 +30,11 @@ public class RegisteredScenario {
      * @param scenario
      */
     protected void registerActiveScenario(Scenario scenario) {
-        logger().info("STEP:");
-        logger().info(" - ACTION: REGISTER_GHERKIN_SCENARIO");
-        logger().info(" - CLASS: " + this.getClass().getSimpleName());
+        logger().debug("STEP:");
+        logger().debug(" - ACTION: REGISTER_GHERKIN_SCENARIO");
+        logger().debug(" - CLASS: " + this.getClass().getSimpleName());
         name = scenario.getName();
-        logger().info(" - NAME: " + name);
+        logger().debug(" - NAME: " + name);
         ActiveScenarioProvider.get().setActiveScenario(this.getClass().getSimpleName(), this);
     }
 }

@@ -1,7 +1,7 @@
 var nrOfScenarios = 0;
 var nrOfFailedScenarios = 0;
 var scenariosPerArea = {
-    payment : {
+    core : {
         tag : "@CORE",
         passedScenarios : [],
         failedScenarios : []
