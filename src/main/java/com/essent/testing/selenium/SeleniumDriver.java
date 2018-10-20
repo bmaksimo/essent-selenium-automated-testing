@@ -216,7 +216,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             jsExec.executeScript(injection);
             Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
             logger.info(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
-            logger.info(" - SCRIPT: " + function);
+            logger.debug(" - SCRIPT: " + function);
 
         } catch (IOException e) {
             throw new CucumberException(e);
@@ -373,7 +373,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             return null;
         } else {
             WebElement webElement = elements.get(0);
-            logger.info(String.format(" - RESULT: %s -> %s", selector, webElement.getAttribute("innerHTML")));
+            logger.debug(String.format(" - RESULT: %s -> %s", selector, webElement.getAttribute("innerHTML")));
             return webElement;
         }
     }
