@@ -216,7 +216,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             jsExec.executeScript(injection);
             Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
             logger.info(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
-            logger.info(" - SCRIPT: " + functionFile);
+            logger.debug(" - SCRIPT: " + function);
 
         } catch (IOException e) {
             throw new CucumberException(e);
