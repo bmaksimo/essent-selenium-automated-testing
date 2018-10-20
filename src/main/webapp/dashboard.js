@@ -6,18 +6,13 @@ var scenariosPerArea = {
         passedScenarios : [],
         failedScenarios : []
     },
-    payment : {
-        tag : "@PAYMENTS",
+    regression : {
+        tag : "@REGRESSION",
         passedScenarios : [],
         failedScenarios : []
     },
     contracting : {
         tag : "@CONTRACTING",
-        passedScenarios : [],
-        failedScenarios : []
-    },
-    service : {
-        tag : "@SERVICING",
         passedScenarios : [],
         failedScenarios : []
     },
