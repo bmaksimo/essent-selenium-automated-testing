@@ -1,8 +1,7 @@
 @DWP
 @CORE
 @NAVIGATION
-Feature: Essent Web Automation testing with Cucumber-JVM  and Selenium.
-    Framework, GUI navigation elements.
+Feature: GUI navigation elements.
 
     Background:
         Given I logged in to DWP as contracting.testautomation.b2c@essent.be

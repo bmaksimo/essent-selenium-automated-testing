@@ -1,5 +1,6 @@
 @DWP
 @E2E
+@NUAT-5019
 Feature: Received consumption
 
     Background:

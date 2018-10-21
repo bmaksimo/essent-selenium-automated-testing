@@ -1,8 +1,8 @@
 @DWP
 @CORE
-@VIEW_LIST
-Feature: Essent Web Automation testing with Cucumber-JVM  and Selenium.
-    Framework, view list functions, extracting info from web page and populating to the other (eexternal) scenarios.
+@VIEW_LIST_MODEL
+@OUTPUT_PARAMETERS
+Feature: View list model functions, extracting data from web page and passing parameters to the other scenarios
     Background:
         Given   I logged in to DWP as contracting.testautomation.b2c@essent.be
     Scenario: Navigate, then store values selected in list view

@@ -1,5 +1,6 @@
 @ODOO
 @E2E
+@NUAT-5019
 Feature: Import a coda file
 
     Background:
