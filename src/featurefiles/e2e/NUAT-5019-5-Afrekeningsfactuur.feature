@@ -12,7 +12,7 @@ Feature: Billing - Invoices 03 - Afrekeningsfactuur
         And "Naam job" selection is "Voorschot"
         And "ID Billing customer" input is "parameter:id-billing-customer"
 
-        And "EAN-code" input is "parameter:ean-code"
+        And "EAN-code" input is "parameter:EAN-code"
         And "Datum afrekeningsfactuur" date is "now"
         And Form is submitted
 

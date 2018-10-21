@@ -21,7 +21,7 @@ Feature: Creating a B2C Quote TC1 with move in, Dutch language version with form
         When Customer is random
         And Customer address is
             | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-            | Mechelsesteenweg| 2   |            |      | 2550       | Kontich  |         |
+            | Mechelsesteenweg| 3   |            |      | 2550       | Kontich  |         |
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
 
@@ -32,7 +32,7 @@ Feature: Creating a B2C Quote TC1 with move in, Dutch language version with form
 
         When "Startdatum" date is "now"
         And Electricity EAN code is selected
-        And Electricity EAN code is put as output parameter "ean-code"
+        And Electricity EAN code is put as output parameter "EAN-code"
         And Electricity meter is Closed
         And Electricity market mock test is Open
         And Connection details are confirmed
