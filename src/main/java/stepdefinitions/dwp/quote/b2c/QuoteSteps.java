@@ -302,6 +302,14 @@ public class QuoteSteps extends DwpScenario {
         assertThat(success, is(true));
     }
 
+    @And("^Electricity EAN code is put as output parameter \"?([^\"]*)\"?$")
+    public void putElectricityEanCode(String parameter) throws Throwable {
+        ConnectionDetailsPage page = new ConnectionDetailsPage(webDriver);
+        String eanCode = page.getEan();
+        assertThat(StringUtils.isNotEmpty(eanCode), is(true));
+        parameterProvider.put(parameter, eanCode);
+    }
+
     @Override
     @After("@DWP, @E2E, @REGRESSION")
     public void tearDown() {

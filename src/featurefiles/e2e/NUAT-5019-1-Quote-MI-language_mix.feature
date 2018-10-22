@@ -1,7 +1,7 @@
 ﻿@DWP
 @E2E
 @ONBOARDING
-@CONTRACTING
+@CREDIT-AND-CONTROL
 @NUAT-5019
 Feature: Creating a B2C Quote TC1 with move in, Dutch language version with form headers in English language
     Background:
@@ -34,6 +34,7 @@ Feature: Creating a B2C Quote TC1 with move in, Dutch language version with form
 
         When "Startdatum" date is "now"
         And Electricity EAN code is selected
+        And Electricity EAN code is put as output parameter "EAN-code"
         And Electricity meter is Closed
         And Electricity market mock test is Open
         And Connection details are confirmed
