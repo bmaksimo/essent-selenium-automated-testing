@@ -13,7 +13,7 @@ import static org.hamcrest.Matchers.is;
 
 public class BillingBatchRunSteps extends DwpScenario {
 
-    @Before("@DWP, @E2E, @BUSINESS-DESK, @BILLING")
+    @Before("@DWP, @E2E")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -29,8 +29,8 @@ public class BillingBatchRunSteps extends DwpScenario {
 
 
     @Override
-    @After("@DWP, @E2E, @BUSINESS-DESK, @BILLING")
-    public void tearDown() throws Exception {
+    @After("@DWP, @E2E")
+    public void tearDown() {
         super.tearDown();
     }
 }

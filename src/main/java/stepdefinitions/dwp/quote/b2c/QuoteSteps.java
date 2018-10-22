@@ -39,7 +39,7 @@ import static org.hamcrest.Matchers.is;
 
 public class QuoteSteps extends DwpScenario {
 
-    @Before("@DWP, @E2E, @SALES-MARKETING, @CONTRACTING-SWITCHING, @BUSINESS-DESK, @BILLING")
+    @Before("@DWP, @E2E, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -302,9 +302,17 @@ public class QuoteSteps extends DwpScenario {
         assertThat(success, is(true));
     }
 
+    @And("^Electricity EAN code is put as output parameter \"?([^\"]*)\"?$")
+    public void putElectricityEanCode(String parameter) throws Throwable {
+        ConnectionDetailsPage page = new ConnectionDetailsPage(webDriver);
+        String eanCode = page.getEan();
+        assertThat(StringUtils.isNotEmpty(eanCode), is(true));
+        parameterProvider.put(parameter, eanCode);
+    }
+
     @Override
-    @After("@DWP, @E2E, @SALES-MARKETING, @CONTRACTING-SWITCHING, @BUSINESS-DESK, @BILLING")
-    public void tearDown() throws Exception {
+    @After("@DWP, @E2E, @REGRESSION")
+    public void tearDown() {
         super.tearDown();
     }
 
