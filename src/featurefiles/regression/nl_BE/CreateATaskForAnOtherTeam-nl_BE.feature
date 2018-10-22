@@ -18,7 +18,7 @@ Feature: Create a task for an other team
         And "Subtype" input is "settlement"
         And "Subtype" selection is "settlement"
         And "Onderwerp" input is "Test"
-        And "Omschrijving" input is "Test Nuat - 432"
+        And "Test Nuat - 432" input in omschrijving
         Then Changes are confirmed
 
         When Dashboard menu is Service
