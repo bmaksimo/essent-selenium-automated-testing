@@ -11,11 +11,42 @@ var scenariosPerArea = {
         passedScenarios : [],
         failedScenarios : []
     },
-    contracting : {
-        tag : "@CONTRACTING",
+    billing : {
+        tag : "@BILLING",
         passedScenarios : [],
         failedScenarios : []
     },
+    business_desk : {
+        tag : "@BUSINESS-DESK",
+        passedScenarios : [],
+        failedScenarios : []
+    },
+    credit_and_collection : {
+        tag : "@CREDIT-AND-COLLECTION",
+        passedScenarios : [],
+        failedScenarios : []
+    },
+    credit_and_control : {
+        tag : "@CREDIT-AND-CONTROL",
+        passedScenarios : [],
+        failedScenarios : []
+    },
+    service_contracting : {
+        tag : "@SERVICE-CONTRACTING",
+        passedScenarios : [],
+        failedScenarios : []
+    },
+    contracting_switching : {
+        tag : "@CONTRACTING-SWITCHING",
+        passedScenarios : [],
+        failedScenarios : []
+    },
+    my_essent : {
+       tag : "@MY-ESSENT",
+       passedScenarios : [],
+       failedScenarios : []
+     },
+
     unassigned : {
         passedScenarios : [],
         failedScenarios : []
