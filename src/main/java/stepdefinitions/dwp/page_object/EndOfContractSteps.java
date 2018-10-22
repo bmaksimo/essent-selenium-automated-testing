@@ -21,6 +21,12 @@ public class EndOfContractSteps extends DwpScenario {
         registerActiveScenario(scenario);
     }
 
+    @Override
+    @After("@SMOKE, @E2E, @QUOTE, @BILLING, @B2B_REGRESSION")
+    public void tearDown( ) throws Exception {
+        super.tearDown();
+    }
+
     @When("^Click on ([^\"]*)$")
     public void clickOn(String element) {
         clickOnElement(element.toLowerCase());
@@ -61,10 +67,5 @@ public class EndOfContractSteps extends DwpScenario {
         boolean success = endOfContractPage.startNewMarketSection(element);
         assertThat(String.format("Top Menu item %s was not available.", element),
             success, is(true));
-    }
-    @Override
-    @After("@DWP, @E2E, @REGRESSION, @BUSINESS-DESK, @BILLING")
-    public void tearDown() throws Exception {
-        super.tearDown();
     }
 }

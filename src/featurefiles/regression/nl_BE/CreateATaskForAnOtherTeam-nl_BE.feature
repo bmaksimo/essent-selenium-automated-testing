@@ -5,7 +5,7 @@ Feature: Create a task for an other team
     Background:
         Given I logged in to DWP as businessdesk.testautomation.b2b@essent.be
 
-    Scenario:
+    Scenario: Create a task for an other team
         When Left menu is sales-marketing
         And Top menu item is Klanten
         And Top action is Filters

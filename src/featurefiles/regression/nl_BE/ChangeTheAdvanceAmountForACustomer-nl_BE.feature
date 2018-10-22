@@ -5,7 +5,7 @@ Feature: Dwp test for changing amount for a customer
     Background:
         Given   I logged in to DWP as businessdesk.testautomation.b2b@essent.be
 
-    Scenario:
+    Scenario: Change amount for a customer
         When Left menu is sales-marketing
         And Top menu item is Klanten
         And Top action is Filters
