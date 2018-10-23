@@ -1,4 +1,5 @@
-#@B2B_REGRESSION
+@DWP
+@REGRESSION
 Feature: Change Status of Bankrupt, External, WCO dwp scenario
 
     Background:
