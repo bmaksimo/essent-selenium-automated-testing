@@ -12,7 +12,7 @@ import cucumber.api.java.en.Given;
 import static org.junit.Assert.assertNotNull;
 
 public class OdooGenericSteps extends OdooScenario {
-    @Before("@ODOO, @E2E, @SALES-MARKETING, @REGRESSION, @CONTRACTING-SWITCHING, @BUSINESS-DESK, @BILLING")
+    @Before("@ODOO, @E2E, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -25,8 +25,8 @@ public class OdooGenericSteps extends OdooScenario {
         assertNotNull("DWP application did not appear after a login", application);
     }
 
-    @After("@ODOO, @E2E, @SALES-MARKETING, @REGRESSION, @CONTRACTING-SWITCHING, @BUSINESS-DESK, @BILLING")
-    public void tearDown() throws Exception {
+    @After("@ODOO, @E2E, @REGRESSION")
+    public void tearDown() {
         super.tearDown();
     }
 }

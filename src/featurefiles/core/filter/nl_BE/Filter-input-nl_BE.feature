@@ -1,12 +1,12 @@
 @DWP
 @CORE
-Feature: Essent Web Automation testing with Cucumber-JVM  and Selenium.
-    Framework, menu navigation, filter options, Plus menu, View List Header check with waiter.
+@FILTER
+Feature: Applying filters, View List Header check with waiter
 
     Background:
         Given   I logged in to DWP as contracting.testautomation.b2c@essent.be
 
-    Scenario: Manu navigation and filter input
+    Scenario: Menu navigation and filter input
         When Left menu is contracting-switching
         And Top menu item is Marktberichten
         Then View list header is "Marktberichten" appears within 25 seconds

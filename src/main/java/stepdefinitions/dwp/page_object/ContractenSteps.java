@@ -52,7 +52,7 @@ public class ContractenSteps extends DwpScenario {
 
     @Override
     @After("@DWP, @REGRESSION")
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 

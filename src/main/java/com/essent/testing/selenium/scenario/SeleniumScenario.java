@@ -54,7 +54,7 @@ public class SeleniumScenario extends RegisteredScenario {
     }
 
     @AfterClass
-    public void tearDown() throws Exception {
+    public void tearDown()  {
         if (webDriver != null) {
             tidyUp();
         }

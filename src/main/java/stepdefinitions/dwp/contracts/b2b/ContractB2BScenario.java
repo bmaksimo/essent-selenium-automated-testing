@@ -4,6 +4,7 @@ import com.essent.testing.restassured.create_contract.impl.b2b.ContractTC1B2BCre
 import com.essent.testing.restassured.create_contract.impl.b2b.ContractTC2B2BCreator;
 import com.essent.testing.restassured.create_contract.impl.b2b.ContractUPB2BCreator;
 import com.essent.testing.scenario.RegisteredScenario;
+import cucumber.api.java.After;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
@@ -19,13 +20,13 @@ public class ContractB2BScenario extends RegisteredScenario {
 	private static final Logger logger = Logger.getLogger(ContractB2BScenario.class);
 	private static final String EMPTY_STRING = "";
 
+	@Before("@DWP, @E2E, @REGRESSION")
+    public void setupTest(Scenario scenario) throws Throwable {
+        registerActiveScenario(scenario);
+    }
+
     @OutputParameter(name="account-nr")
     private String accountNumber;
-
-	@Before("@DWP, @CORE, @E2E, @REGRESSION, @SALES-MARKETING, @CONTRACTING-SWITCHING, @BUSINESS-DESK, @BILLING")
-    public void setupTest(Scenario scenario) throws Throwable {
-		registerActiveScenario(scenario);
-	}
 
 	 /**
 	   * This method is used to create B2B contract without checking is contract ACTIVE or not.
