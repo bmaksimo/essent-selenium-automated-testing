@@ -5,7 +5,7 @@ Feature: Log questions of customers
     Background:
         Given  I logged in to DWP as businessdesk.testautomation.b2b@essent.be
 
-    Scenario:
+    Scenario: Log questions of customers
         When Left menu is sales-marketing
         And  Top menu item is Klanten
         Then View list header is "Klanten" appears within 25 seconds

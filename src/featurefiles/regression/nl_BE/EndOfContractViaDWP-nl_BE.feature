@@ -5,7 +5,7 @@ Feature: End of contract via DWP - nl_BE version
     Background:
         Given I logged in to DWP as businessdesk.testautomation.b2b@essent.be
 
-        Scenario:
+        Scenario: End of contract via DWP
             When Left menu is sales-marketing
             And Top menu item is Klanten
             And Top action is Filters

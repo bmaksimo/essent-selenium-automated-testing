@@ -27,7 +27,7 @@ public class BaseObject extends Component {
     }
 
     public void plusSubaction(String action) {
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[@label='" + action + "']")));
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[@label='" + action + "']/a")));
     }
 
     public void clickOnToggle(String label) {
