@@ -16,7 +16,7 @@ public class ContractB2CScenario extends RegisteredScenario {
 
 	private String accountNumber;
 
-	@Before("@QUOTE, @MENU, @RENEWAL, @FILTER, @SMOKE, @B2B_REGRESSION, @HB1")
+    @Before("@DWP, @E2E, @REGRESSION")
 	public void setupTest(Scenario scenario) throws Throwable {
 		registerActiveScenario(scenario);
 	}

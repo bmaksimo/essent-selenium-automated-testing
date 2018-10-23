@@ -20,7 +20,7 @@ public class ChangeAccountStatusSteps extends DwpScenario {
 
     @Override
     @After("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 

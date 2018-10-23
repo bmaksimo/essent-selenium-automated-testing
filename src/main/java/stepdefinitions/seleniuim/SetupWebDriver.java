@@ -18,14 +18,14 @@ import static org.junit.Assert.assertNotNull;
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 public class SetupWebDriver extends SeleniumScenario {
 
-    @Before("@DWP, @ODOO, @CORE, @E2E, @REGRESSION, @SALES-MARKETING, @CONTRACTING-SWITCHING, @BUSINESS-DESK, @BILLING")
+    @Before("@DWP, @ODOO, @CORE, @E2E, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
         setUpWebDriver();
     }
 
-    @After("@DWP, @ODOO, @CORE, @E2E, @REGRESSION, @SALES-MARKETING, @CONTRACTING-SWITCHING, @BUSINESS-DESK, @BILLING")
-    public void tearDown() throws Exception {
+    @After("@DWP, @ODOO, @CORE, @E2E, @REGRESSION")
+    public void tearDown() {
         tidyUp();
     }
 

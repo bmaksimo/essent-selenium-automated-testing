@@ -5,7 +5,7 @@ Feature: Dwp test for rejecting contract - nl_BE
     Background:
         Given I logged in to DWP as businessdesk.testautomation.b2b@essent.be
 
-    Scenario:
+    Scenario: Rejecting contract
         When Left menu is contracting-switching
         And Top menu item is Marktberichten
         And Top action is Filters

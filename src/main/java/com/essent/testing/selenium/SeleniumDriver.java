@@ -200,8 +200,8 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     }
 
     private void injectJavaScriptInline(File functionFile) {
-        logger.info("STEP:");
-        logger.info(" - ACTION: INJECT_JAVASCRIPT");
+        logger.debug("STEP:");
+        logger.debug(" - ACTION: INJECT_JAVASCRIPT");
         JavascriptExecutor jsExec = (JavascriptExecutor) driver;
         DateTime startOfMeasurement = DateTime.now();
         String path = ResourceUtil.toPath(PATH + "DwpInjectScript.js.template");
@@ -215,8 +215,8 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             injection = sub.replace(injection);
             jsExec.executeScript(injection);
             Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
-            logger.info(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
-            logger.info(" - SCRIPT: " + function);
+            logger.debug(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
+            logger.debug(" - SCRIPT: " + function);
 
         } catch (IOException e) {
             throw new CucumberException(e);
@@ -299,9 +299,9 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     public void waitForRequestsToFinish() {
         awaitJqueryNotActive(200);
         logger.info("STEP:");
-        logger.info(" - WAIT: waiting for all angular requests to finish on page at url: " + getDriver().getCurrentUrl());
+        logger.debug(" - WAIT: waiting for all angular requests to finish on page at url: " + getDriver().getCurrentUrl());
         ngWebDriver.waitForAngularRequestsToFinish();
-        logger.info(" - RESULT: all angular requests finished! " + getDriver().getCurrentUrl());
+        logger.info(" - RESULT: all angular requests are finished on page at url: " + getDriver().getCurrentUrl());
     }
 
     public void takeScreenshot(boolean success) {
@@ -309,7 +309,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             return;
         }
         File screenshot = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
-        logger.info(" - ACTION: CAPTURE_SCREENSHOT: " + screenshot.getPath());
+        logger.debug(" - ACTION: CAPTURE_SCREENSHOT: " + screenshot.getPath());
         Path currentRelativePath = Paths.get("").resolveSibling("target");
         String currentAbsolutePath = currentRelativePath.toAbsolutePath().toString();
         try {
@@ -352,7 +352,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     }
 
     public WebElement findElementOrNull(By selector) {
-        logger.info("STEP:");
+        logger.debug("STEP:");
         DateTime startOfMeasurement = DateTime.now();
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)
             .withTimeout(Duration.ofMinutes(1))
@@ -363,17 +363,17 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
                     StaleElementReferenceException.class)
             );
         List<WebElement> elements = waiter.until(driver -> {
-            logger.info(" - WAIT: polling findElementOrNull()");
+            logger.debug(" - WAIT: polling findElementOrNull()");
             return driver.findElements(selector);
         });
         Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
-        logger.info(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
+        logger.debug(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
         if (elements.isEmpty()) {
             logger.warn(" - RESULT: empty");
             return null;
         } else {
             WebElement webElement = elements.get(0);
-            logger.info(String.format(" - RESULT: %s -> %s", selector, webElement.getAttribute("innerHTML")));
+            logger.debug(String.format(" - RESULT: %s -> %s", selector, webElement.getAttribute("innerHTML")));
             return webElement;
         }
     }

@@ -2,6 +2,7 @@ package stepdefinitions.dwp.page_object;
 
 import com.essent.testing.dwp.pageobject.impl.service_contracting.ContractenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -51,7 +52,13 @@ public class ContractenSteps extends DwpScenario {
 
     @Override
     @After("@DWP, @REGRESSION")
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
+    }
+
+    @And("^\"([^\"]*)\" input in omschrijving$")
+    public void inputInOmschrijving(String text) throws Throwable {
+        ContractenPage contractenPage = new ContractenPage(webDriver);
+        contractenPage.inputText(text);
     }
 }

@@ -1,8 +1,5 @@
 package stepdefinitions.dwp.billing;
 
-import com.essent.be.jbilling.api.rest.RestResponse;
-import com.essent.be.jbilling.api.rest.batch.RSTriggerMediationRequest;
-import com.essent.testing.client.billing.BillingBatch;
 import com.essent.testing.database.DBUtility;
 import com.essent.testing.dwp.pageobject.impl.modal.confirm.ConfirmSignatureDialogImpl;
 import com.essent.testing.dwp.pageobject.modal.confirm.ConfirmSignatureDialog;
@@ -14,13 +11,11 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Assert;
 import stepdefinitions.billing.test.BatchSteps;
 import stepdefinitions.billing.test.DunningSteps;
 import stepdefinitions.transformers.DateMapper;
 
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -86,8 +81,8 @@ public class BillingBatchRunSteps extends DwpScenario {
     }
 
     @Override
-    @After("@DWP, @E2E, @BUSINESS-DESK, @BILLING")
-    public void tearDown() throws Exception {
+    @After("@DWP, @E2E")
+    public void tearDown() {
         super.tearDown();
     }
 }
