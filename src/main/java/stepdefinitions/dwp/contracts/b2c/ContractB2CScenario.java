@@ -63,6 +63,8 @@ public class ContractB2CScenario extends RegisteredScenario {
 
 		logger.info("ACCOUNT NUMBER: " + this.getAccountNumber());
 
+		parameterProvider.put("accountNumber", this.getAccountNumber());
+
 		return this.getAccountNumber();
 	}
 

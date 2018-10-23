@@ -1,5 +1,6 @@
 package stepdefinitions.dwp.input;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -55,7 +56,9 @@ public class InputElements extends DwpScenario {
 
     @And("^Label input for \"([^\"]*)\" is \"([^\"]*)\"$")
     public void setLabelInput(String label, String value) throws Throwable {
+        webDriver.waitForRequestsToFinish();
         setInput(label, "string:"+value);
+        webDriver.waitForRequestsToFinish();
     }
 
     @And("^\"([^\"]*)\" date is \"([^\"]*)\"$")

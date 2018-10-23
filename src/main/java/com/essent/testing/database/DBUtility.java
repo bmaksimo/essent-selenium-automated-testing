@@ -735,6 +735,22 @@ public class DBUtility {
         }
     }
 
+    public static long getBillingCustomerIdByUserId(String userId) throws SQLException, JSchException {
+        try (Connection conn = new DBConnector().getBillingConnection()) {
+            String sql = "SELECT user_name FROM base_user WHERE id=?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, userId);
+
+                try (ResultSet resultset = stmt.executeQuery()) {
+                    if (resultset.next()) {
+                        return DBUtility.asLong(resultset.getObject(1));
+                    }
+                    return -1;
+                }
+            }
+        }
+    }
+
     public static long getInvoiceId(String invoiceNr) throws SQLException, JSchException {
         try (Connection conn = new DBConnector().getBillingConnection()) {
             String sql = "SELECT id FROM invoice WHERE public_number=?";

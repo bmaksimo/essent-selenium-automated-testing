@@ -1,5 +1,6 @@
 package stepdefinitions.dwp.view_list;
 
+import com.essent.automation.util.Sleeper;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -31,6 +32,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.fail;
 public class ViewListElements extends NavigationElements {
+
+    private HashMap strongElementSelectors;
 
     private class CheckViewListHeader implements Predicate<String> {
         @Override
@@ -224,6 +227,21 @@ public class ViewListElements extends NavigationElements {
     @Before("@DWP, @CORE, @E2E, @REGRESSION, @SALES-MARKETING, @CONTRACTING-SWITCHING, @BUSINESS-DESK, @BILLING")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
+        populateStrongElementsIdsSelectors();
+    }
+
+    private void populateStrongElementsIdsSelectors() {
+        this.strongElementSelectors = new HashMap();
+        this.strongElementSelectors.put("Status aanmaningsprocedure", "//strong[@id='dunning-status-field']");
+    }
+
+    @Then("^Field \"([^\"]*)\" is \"([^\"]*)\"$")
+    public void checkElementDetailsValue(String field, String expected) {
+        String selectorId = (String) this.strongElementSelectors.get(field);
+        WebElement element = webDriver.findElementOrNull(By.xpath(selectorId));
+        String result = element.getText();
+        assertThat(String.format("Element '%s' is different from '%s'", expected, result),
+            expected.equalsIgnoreCase(result), is(true));
     }
 
     @When("^View list header is \"([^\"]*)\"$")
@@ -256,6 +274,7 @@ public class ViewListElements extends NavigationElements {
         Map<String, String> columnIndexListOptions = new HashMap<>();
         columnIndexListOptions.put("column", column);
         columnIndexListOptions.put("index", rowIndex);
+        Sleeper.sleepTightInSeconds(3);
         boolean success = new ClickTableCellUrl().test(columnIndexListOptions);
         assertThat(String.format("View list did not contain URL at row %s header '%s'", ordinal, column),
             success, is(true));

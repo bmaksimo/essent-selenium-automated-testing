@@ -5,6 +5,9 @@ import com.essent.testing.dwp.pageobject.impl.navigation.DwpPlusMenu;
 import com.essent.testing.dwp.pageobject.impl.navigation.TopActionsPageImpl;
 import com.essent.testing.dwp.pageobject.navigation.TopActionsPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -138,5 +141,15 @@ public abstract class NavigationElements extends DwpScenario {
         boolean success = new ClickListPlusAction().test(item);
         assertThat(String.format("List Plus Action %s undefined.", item),
             success, is(true));
+    }
+
+    protected void refreshScreen() {
+        webDriver.getDriver().navigate().refresh();
+        try {
+            Alert alert = webDriver.getDriver().switchTo().alert();
+            alert.accept();
+        } catch (Exception e) {
+            // do nothing, if the flow reached this point it means that no alert has been displayed
+        }
     }
 }
