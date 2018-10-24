@@ -1,8 +1,8 @@
 ﻿@DWP
 @E2E
-@ONBOARDING
 @CREDIT-AND-CONTROL
 @NUAT-5019
+@ONBOARDING
 Feature: Creating a B2C Quote TC1 with move in, Dutch language version with form headers in English language
     Background:
         Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be

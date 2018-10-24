@@ -2,6 +2,7 @@
 @E2E
 @CREDIT-AND-CONTROL
 @NUAT-5019
+@IMPORT-CODA
 Feature: Import a coda file
 
     Background:

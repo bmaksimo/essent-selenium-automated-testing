@@ -1,5 +1,8 @@
 @DWP
 @E2E
+@CREDIT-AND-CONTROL
+@NUAT-5019
+@AFREKENINGSFACTUUR
 Feature: Billing - Invoices 03 - Afrekeningsfactuur
 
     Background:
