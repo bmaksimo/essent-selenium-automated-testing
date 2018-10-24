@@ -7,8 +7,7 @@ Feature: Creating a B2C Quote TC1 with move in, Dutch language version with form
     Background:
         Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
 
-    Scenario: Create a B2C Quote with move in
-        https://emagine-reality.atlassian.net/browse/NUAT-5019
+    Scenario: Create a B2C Quote with move in https://emagine-reality.atlassian.net/browse/NUAT-5019
 
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         #Then Form header is "Details van de offerte"
@@ -23,7 +22,7 @@ Feature: Creating a B2C Quote TC1 with move in, Dutch language version with form
         When Customer is random
         And Customer address is
             | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-            | Mechelsesteenweg| 3   |            |      | 2550       | Kontich  |         |
+            | Mechelsesteenweg| 154     |            |      | 2550       | Kontich  |         |
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
 
@@ -57,3 +56,10 @@ Feature: Creating a B2C Quote TC1 with move in, Dutch language version with form
         And  Contract signature is confirmed
         Then 1st list element has cell value Sales Getekend - Geaccepteerd at column Type & status
         And  Cell value from "1st" row and "Billing klant & Tariefdatum" column is put to parameter "id-billing-customer"
+
+        When Dashboard menu is Contracten
+        Then View list header is "Actieve en toekomstige connecties"
+        And  1st list element has cell value Actief at column "Contractnummer" polling 450 seconds
+
+
+
