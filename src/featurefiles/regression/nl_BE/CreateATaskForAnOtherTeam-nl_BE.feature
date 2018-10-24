@@ -5,7 +5,7 @@ Feature: Create a task for an other team
     Background:
         Given I logged in to DWP as businessdesk.testautomation.b2b@essent.be
 
-    Scenario:
+    Scenario: Create a task for an other team
         When Left menu is sales-marketing
         And Top menu item is Klanten
         And Top action is Filters
@@ -18,7 +18,7 @@ Feature: Create a task for an other team
         And "Subtype" input is "settlement"
         And "Subtype" selection is "settlement"
         And "Onderwerp" input is "Test"
-        And "Omschrijving" input is "Test Nuat - 432"
+        And "Test Nuat - 432" input in omschrijving
         Then Changes are confirmed
 
         When Dashboard menu is Service

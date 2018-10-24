@@ -108,13 +108,6 @@ public abstract class NavigationElements extends DwpScenario {
         }
     }
 
-    public class CheckViewListIsNotEmpty implements Predicate<String> {
-        @Override
-        public boolean test(String s) {
-            return executeJavascriptTest("TrListIsNotEmpty", "");
-        }
-    }
-
     protected int extractNumericValue(String ordinal) {
         return numericValue(ordinal);
     }
