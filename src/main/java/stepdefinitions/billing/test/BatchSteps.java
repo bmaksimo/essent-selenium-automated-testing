@@ -33,7 +33,7 @@ public class BatchSteps extends RegisteredScenario {
 	// Time between calls to figure out when a job has finished
 	private long POLLING_INTERVAL = 250;
 
-    @Before("@DWP, @E2E, @SALES-MARKETING, @CONTRACTING-SWITCHING, @BUSINESS-DESK, @BILLING")
+    @Before("@DWP, @E2E")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -331,7 +331,7 @@ public class BatchSteps extends RegisteredScenario {
 		}
 	}
 
-    @After("@DWP, @E2E, @SALES-MARKETING, @CONTRACTING-SWITCHING, @BUSINESS-DESK, @BILLING")
+    @After("@DWP, @E2E")
     public void afterScenario(Scenario scenario) {
         // We need to kill any pending jobs and wait until they are finished.
         if( scenario.isFailed() ) {

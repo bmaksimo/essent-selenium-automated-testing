@@ -39,8 +39,8 @@ public class ContractenPage extends Component {
     }
 
     public void fieldDropDownLabel(String label, String input) {
-       waitForRequestsToFinish();
-       findElementWhenVisible(By.xpath("//select[@id='dwp-mig-" + label.toLowerCase() + "-c-field']/option[@label='" + input + "']")).click();
+        waitForRequestsToFinish();
+        seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + label + "']/div/div/ng-form/div/select-form-element/div/select/option[@label='" + input + "']")).click();
     }
 
     public void turnOnTestingAndMarketMock(String label) {
@@ -65,5 +65,9 @@ public class ContractenPage extends Component {
 
     public void findRejectionReason(String input) {
         Assert.assertTrue(seleniumDriver.findElementWhenVisible(By.xpath("(//span[.='" + input + "'])[1]")).isDisplayed());
+    }
+
+    public void inputText(String text) {
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//text-angular[@id='description-field']/div[2]/div[.=' ']")), text);
     }
 }

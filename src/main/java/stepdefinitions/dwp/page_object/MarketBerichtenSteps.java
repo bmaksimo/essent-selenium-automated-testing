@@ -22,6 +22,7 @@ public class MarketBerichtenSteps extends DwpScenario {
 
     @And("^\"([^\"]*)\" turn on$")
     public void turnOn(String label) throws Throwable {
+        webDriver.waitForRequestsToFinish();
         BaseObject baseObject = new BaseObject(webDriver);
         baseObject.clickOnToggle(label);
     }
@@ -55,7 +56,7 @@ public class MarketBerichtenSteps extends DwpScenario {
 
     @Override
     @After("@DWP, @REGRESSION")
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }

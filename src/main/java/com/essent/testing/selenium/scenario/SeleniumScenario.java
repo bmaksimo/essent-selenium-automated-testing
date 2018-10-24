@@ -13,7 +13,7 @@ public class SeleniumScenario extends RegisteredScenario {
     static protected SeleniumDriver webDriver;
 
     public void tidyUp() {
-        if(webDriver != null) {
+        if (webDriver != null) {
             webDriver.tearDown();
             webDriver = null;
         }
@@ -36,7 +36,7 @@ public class SeleniumScenario extends RegisteredScenario {
         webDriver.injectJavaScriptTestRunner();
     }
 
-    protected boolean executeJavascriptTest(String registeredJsClass, Object options)  {
+    protected boolean executeJavascriptTest(String registeredJsClass, Object options) {
         return webDriver.executeJavascriptTest(registeredJsClass, options);
     }
 
@@ -44,17 +44,17 @@ public class SeleniumScenario extends RegisteredScenario {
         return webDriver.executeJavascriptTest(registeredJsClass, options, withException);
     }
 
-    protected Map executeJavascriptMethod(String registeredJsClass, Object options)  {
+    protected Map executeJavascriptMethod(String registeredJsClass, Object options) {
         Map map = webDriver.executeJavascriptMethod(registeredJsClass, options);
         return map;
     }
 
-    protected void takeScreenshot(boolean success)  {
+    protected void takeScreenshot(boolean success) {
         webDriver.takeScreenshot(success);
     }
 
     @AfterClass
-    public void tearDown() throws Exception {
+    public void tearDown()  {
         if (webDriver != null) {
             tidyUp();
         }

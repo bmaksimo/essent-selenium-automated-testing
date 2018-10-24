@@ -5,14 +5,14 @@ Feature: End of contract via DWP - nl_BE version
     Background:
         Given I logged in to DWP as businessdesk.testautomation.b2b@essent.be
 
-        Scenario:
+        Scenario: End of contract via DWP
             When Left menu is sales-marketing
             And Top menu item is Klanten
             And Top action is Filters
             And "B2C/B2B" selection is "B2B"
             And "Type klant" selection is "Klant"
-            And "Klantnummer" input is "150715682"
-            And Click on link in View List at 1st row and "Klantnummer & Naam" column
+            And "Klantnummer" input is "151004675"
+            And Click on link in View List at 1st row and "Klantnummer & Naam" column polling 15 seconds
             Then Dashboard menu is Contracten
 
             When Find "Actief" contract

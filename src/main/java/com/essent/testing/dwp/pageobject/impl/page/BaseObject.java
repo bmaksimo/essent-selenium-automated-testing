@@ -1,6 +1,7 @@
 package com.essent.testing.dwp.pageobject.impl.page;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
+import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
 
@@ -26,10 +27,13 @@ public class BaseObject extends Component {
     }
 
     public void plusSubaction(String action) {
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[@label='" + action + "']")));
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[@label='" + action + "']/a")));
     }
 
     public void clickOnToggle(String label) {
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + label + "?']//toggle-form-element")));
+        ToggleImpl toggle = new ToggleImpl(seleniumDriver);
+        if (!toggle.checkIfCheckboxIsChecked(label)) {
+            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + label + "?']//toggle-form-element/label")));
+        }
     }
 }

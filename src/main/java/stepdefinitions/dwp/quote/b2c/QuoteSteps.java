@@ -10,7 +10,6 @@ import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.util.resource.ResourceUtil;
 import com.google.gson.Gson;
 import cucumber.api.DataTable;
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -302,6 +301,7 @@ public class QuoteSteps extends DwpScenario {
         boolean success = executeJavascriptTest("TrSelectEanCode", options);
         assertThat(success, is(true));
     }
+
     @And("^Electricity EAN code is put as output parameter \"?([^\"]*)\"?$")
     public void putElectricityEanCode(String parameter) throws Throwable {
         ConnectionDetailsPage page = new ConnectionDetailsPage(webDriver);
@@ -312,8 +312,7 @@ public class QuoteSteps extends DwpScenario {
 
     @Override
     @After("@DWP, @E2E, @REGRESSION")
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
-
 }
