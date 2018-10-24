@@ -2,26 +2,22 @@ package stepdefinitions.dwp.page_object;
 
 import com.essent.testing.dwp.pageobject.impl.service_contracting.ContractenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.openqa.selenium.By;
 
 public class ContractenSteps extends DwpScenario {
 
     private String eanCode = null;
 
-    @Before("@SMOKE, @QUOTE, @RENEWAL, @B2B_REGRESSION")
+    @Before("@DWP, @REGRESSION")
     public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
-    }
-
-    @Override
-    @After("@SMOKE, @QUOTE, @RENEWAL, @B2B_REGRESSION")
-    public void tearDown() throws Exception {
-        super.tearDown();
     }
 
 
@@ -53,5 +49,17 @@ public class ContractenSteps extends DwpScenario {
     public void confirmTaskWas(String input) throws Throwable {
         ContractenPage contractenPage = new ContractenPage(webDriver);
         contractenPage.confirmTaskStatus(input);
+    }
+
+    @Override
+    @After("@DWP, @REGRESSION")
+    public void tearDown() {
+        super.tearDown();
+    }
+
+    @And("^Offertes plus options is \"([^\"]*)\"$")
+    public void sendEMailToCustomer(String test) throws Throwable {
+        ContractenPage contractenPage = new ContractenPage(webDriver);
+        contractenPage.sendEmailToCustomer(test);
     }
 }

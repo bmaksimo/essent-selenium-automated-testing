@@ -1,0 +1,27 @@
+@DWP
+@REGRESSION
+Feature: Dwp test for rejecting contract - nl_BE
+
+    Background:
+        Given I logged in to DWP as businessdesk.testautomation.b2b@essent.be
+
+    Scenario:
+        When Left menu is contracting-switching
+        And Top menu item is Marktberichten
+        And Top action is Filters
+        And "Label" selection is "Move In"
+        And "Status EC" selection is "Geweigerd"
+        Then Plus action and "Herstuur marktbericht" of first customer from list
+
+        When "Startdatum" date is "3 weeks from now"
+        And "Module" selection is "MOVE IN"
+        And "Testing" turn on
+        And "Market mock" turn on
+        And Save EAN code of customer
+        Then Changes are confirmed
+
+        When Left menu is sales-marketing
+        And Search field input is "541449611000044685"
+        And Click on link in View List at 1st row and "Klantnaam & nummer" column polling 10 seconds
+        And Dashboard menu is Marktberichten
+        Then Validate rejection status is "MOVE IN"

@@ -1,6 +1,7 @@
 package com.essent.testing.dwp.pageobject.impl.service_contracting;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
+import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.junit.Assert;
 import org.openqa.selenium.By;
@@ -39,8 +40,8 @@ public class ContractenPage extends Component {
     }
 
     public void fieldDropDownLabel(String label, String input) {
-       waitForRequestsToFinish();
-       findElementWhenVisible(By.xpath("//select[@id='dwp-mig-" + label.toLowerCase() + "-c-field']/option[@label='" + input + "']")).click();
+        waitForRequestsToFinish();
+        seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + label + "']/div/div/ng-form/div/select-form-element/div/select/option[@label='" + input + "']")).click();
     }
 
     public void turnOnTestingAndMarketMock(String label) {
@@ -65,5 +66,13 @@ public class ContractenPage extends Component {
 
     public void findRejectionReason(String input) {
         Assert.assertTrue(seleniumDriver.findElementWhenVisible(By.xpath("(//span[.='" + input + "'])[1]")).isDisplayed());
+    }
+
+    public void sendEmailToCustomer(String test) {
+        waitForRequestsToFinish();
+        BaseObject baseObject = new BaseObject(seleniumDriver);
+        baseObject.clickOnPlus();
+        waitForRequestsToFinish();
+        seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[@label='"+test+"']/a")).click();
     }
 }

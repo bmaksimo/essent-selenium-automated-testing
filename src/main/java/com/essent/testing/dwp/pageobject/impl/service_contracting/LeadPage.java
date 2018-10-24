@@ -1,6 +1,7 @@
 package com.essent.testing.dwp.pageobject.impl.service_contracting;
 
 import com.essent.testing.dwp.pageobject.Form;
+import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
@@ -11,6 +12,7 @@ import java.util.List;
 public class LeadPage extends BaseObject implements Form {
 
     private LeadInfo leadInfo;
+    private static final String box = "Bel me niet";
     public LeadPage(SeleniumDriver seleniumDriver) {
         super(seleniumDriver);
     }
@@ -20,17 +22,26 @@ public class LeadPage extends BaseObject implements Form {
     }
 
     public void createLead(List<List<String>> table) {
+        ToggleImpl tg= new ToggleImpl(seleniumDriver);
         setCompanyName(table.get(1).get(0));
         waitForRequestsToFinish();
         setContactPerson(table.get(1).get(1), table.get(1).get(2));
+        setGender(table.get(1).get(6));
         waitForRequestsToFinish();
         setTelephone(table.get(1).get(3));
         waitForRequestsToFinish();
         setMobile(table.get(1).get(4));
         waitForRequestsToFinish();
         setEmail(table.get(1).get(5));
+        tg.clickCheckbox(box);
         waitForRequestsToFinish();
         saveLead();
+        waitForRequestsToFinish();
+    }
+
+    private void setGender(String gender) {
+        waitForRequestsToFinish();
+        findElementWhenVisible(By.xpath("//select[@id='gender-c-field']/option[@label='" + gender + "']")).click();
         waitForRequestsToFinish();
     }
 
@@ -61,11 +72,13 @@ public class LeadPage extends BaseObject implements Form {
         waitForRequestsToFinish();
         seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.xpath("//input[@id='first-name-field']")), contactPersonName);
         waitForRequestsToFinish();
+        seleniumDriver.findElementWhenVisible(By.xpath("//input[@id='last-name-field']")).clear();
         seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.xpath("//input[@id='last-name-field']")), contactPersonLastName);
     }
 
     private void setTelephone(String telephone) {
         waitForRequestsToFinish();
+        findElementWhenVisible(By.id("leads-contact-details-contact-details-phone-type-work-phone-contact-details-type-phone-contact-details-value-field")).clear();
         seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("leads-contact-details-contact-details-phone-type-work-phone-contact-details-type-phone-contact-details-value-field")),
             telephone);
     }

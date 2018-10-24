@@ -1,12 +1,18 @@
 package com.essent.testing.scenario;
 
+import com.billinghouse.cucumber.runtime.parameter.ParameterProvider;
 import com.billinghouse.cucumber.runtime.scenario.ActiveScenarioProvider;
 import cucumber.api.Scenario;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class RegisteredScenario {
 
+    @Autowired
+    protected ParameterProvider parameterProvider;
+
     private  final static Logger logger = Logger.getLogger(RegisteredScenario.class);
+
     private String name;
 
     protected final Logger logger() {
@@ -24,11 +30,11 @@ public class RegisteredScenario {
      * @param scenario
      */
     protected void registerActiveScenario(Scenario scenario) {
-        logger().info("STEP:");
-        logger().info(" - ACTION: REGISTER_GHERKIN_SCENARIO");
-        logger().info(" - CLASS: " + this.getClass().getSimpleName());
+        logger().debug("STEP:");
+        logger().debug(" - ACTION: REGISTER_GHERKIN_SCENARIO");
+        logger().debug(" - CLASS: " + this.getClass().getSimpleName());
         name = scenario.getName();
-        logger().info(" - NAME: " + name);
+        logger().debug(" - NAME: " + name);
         ActiveScenarioProvider.get().setActiveScenario(this.getClass().getSimpleName(), this);
     }
 }

@@ -4,6 +4,8 @@ import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.apache.commons.lang3.BooleanUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.tables.ConnectionDetails;
 import stepdefinitions.dwp.tables.ProductType;
 import stepdefinitions.dwp.tables.plus.CheckBoxState;
@@ -13,6 +15,8 @@ import java.util.Map;
 
 import static com.essent.testing.dwp.autocrat.element.quote.ConnectionElements.*;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.INPUT;
+
+import static com.essent.testing.dwp.autocrat.element.quote.B2CQuoteElements.*;
 
 public class ConnectionDetailsPage extends QuoteCreationGuidedStep {
 
@@ -88,5 +92,10 @@ public class ConnectionDetailsPage extends QuoteCreationGuidedStep {
         Map options = new HashMap<>();
         Map result = seleniumDriver.executeJavascriptMethod("TrIsNextButtonEnabled", options);
         return BooleanUtils.toBoolean((String)result.get("enabled"));
+    }
+
+    public String getEan() {
+        WebElement element = seleniumDriver.findElement(By.cssSelector(ELECTRICITY_EAN_CODE.element().query));
+        return element.getAttribute("value");
     }
 }

@@ -10,13 +10,14 @@ import stepdefinitions.dwp.navigation.NavigationElements;
 
 public class MenuElements extends NavigationElements {
 
-    @Before("@SMOKE, @E2E, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
+    @Before("@DWP, @CORE, @E2E, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
 
     @When("^Left menu is ([^\"]*)$")
     public void clickLeftMenuItem(String tabName) throws Throwable {
+        webDriver.waitForRequestsToFinish();
         DwpLeftMenu lm = new DwpLeftMenu(webDriver);
         lm.clickOnLeftElemet(tabName);
     }
@@ -28,14 +29,15 @@ public class MenuElements extends NavigationElements {
 
     @When("^Top menu item is ([^\"]*)$")
     public void clickTopMenuItem(String tabName) throws Throwable {
+        webDriver.waitForRequestsToFinish();
         DwpTopMenu tm = new DwpTopMenu(webDriver);
         tm.findAndClickTopMenu(tabName);
     }
 
 
     @Override
-    @After("@SMOKE, @E2E, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
-    public void tearDown() throws Exception {
+    @After("@DWP, @CORE, @E2E, @REGRESSION")
+    public void tearDown() {
         super.tearDown();
     }
 }

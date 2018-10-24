@@ -2,7 +2,6 @@ package stepdefinitions.dwp;
 
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
-import com.essent.automation.util.Sleeper;
 import com.essent.roles.UserRoles;
 import com.essent.testing.dwp.pageobject.Window;
 import com.essent.testing.dwp.pageobject.impl.modal.login.LoginAction;
@@ -17,15 +16,14 @@ import static org.junit.Assert.assertNotNull;
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 public class GenericSteps extends DwpScenario {
 
-    @Before("@QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @SMOKE, @E2E, @B2B_REGRESSION")
+    @Before("@DWP, @CORE, @E2E, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
-        setUpWebDriver();
-        isDwpRunning();
     }
 
     @Given("^I logged in to DWP as ([^\"]*)$")
     public void loginAs(String username) throws Throwable {
+        isDwpRunning();
         UserRoles dwpUser = UserRoles.get(username);
         Window application = new LoginAction(webDriver).doLogin(dwpUser.getUsername(), dwpUser.getPassword());
         assertNotNull("DWP application did not appear after a login", application);
@@ -42,16 +40,9 @@ public class GenericSteps extends DwpScenario {
     }
 
 
-    @After({"@QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @SMOKE, @E2E, @B2B_REGRESSION"})
-    public void tearDown() throws Exception {
+    @After("@DWP, @CORE, @E2E, @REGRESSION")
+    public void tearDown() {
         tidyUp();
-    }
-
-    @After({"@QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @SMOKE"})
-    public void failedScenario(Scenario scenario) throws Exception {
-        if (scenario.isFailed()) {
-            logger().error("The scenario '" + scenario.getName() + "' failed");
-        }
     }
 
 }

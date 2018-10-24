@@ -24,7 +24,7 @@ public class DashboardMenu extends NavigationElements {
         }
     }
 
-    @Before("@SMOKE, @E2E, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @BILLING, @B2B_REGRESSION")
+    @Before("@DWP, @CORE, @E2E, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -37,8 +37,8 @@ public class DashboardMenu extends NavigationElements {
     }
 
     @Override
-    @After("@SMOKE, @E2E, @QUOTE, @QUOTE_CS,  @QUOTE_MI, @QUOTE_SS, @BILLING, @B2B_REGRESSION")
-    public void tearDown() throws Exception {
+    @After("@DWP, @CORE, @E2E, @REGRESSION")
+    public void tearDown() {
         super.tearDown();
     }
 }

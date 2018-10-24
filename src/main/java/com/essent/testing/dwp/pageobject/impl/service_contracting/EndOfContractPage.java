@@ -2,6 +2,8 @@ package com.essent.testing.dwp.pageobject.impl.service_contracting;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.selenium.SeleniumDriver;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,19 +29,8 @@ public class EndOfContractPage extends Component {
     }
 
     public void searchInputField(String input) {
-        boolean success = new SearchInputField().test(input);
-        assertThat(String.format("Filter element %s is undefined.", input),
-            success, is(true));
-    }
-
-    public class SearchInputField implements Predicate<String> {
-        @Override
-        public boolean test(String value) {
-            Map<String, String> options = new HashMap<>();
-            options.put("value", value);
-            boolean success = executeJavascriptTest("TrSearch", options);
-            return success;
-        }
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//top-search/div[@class='top-search']/input[@type='search']")), input);
+        seleniumDriver.findElementWhenVisible(By.xpath("//top-search/div[@class='top-search']/input[@type='search']")).sendKeys(Keys.ENTER);
     }
 
     public void simpleExecuteJavaScript(String nameOfJavaScript) {

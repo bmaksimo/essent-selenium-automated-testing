@@ -1,7 +1,5 @@
 package stepdefinitions.dwp.view_list;
 
-import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
-import com.essent.testing.util.SharedPropertiesSingleton;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -208,8 +206,8 @@ public class ViewListElements extends NavigationElements {
             boolean success = StringUtils.equals("PASSED", status);
             if (success) {
                 String switchedPaymentMethod = ((String) result.get("paymentMethod")).equalsIgnoreCase("string:OV") ?
-                    "Overschrijving" : "Domicili�ring";
-                SharedPropertiesSingleton.getInstance().getSharedProperties().put("paymentMethod", switchedPaymentMethod);
+                    "Overschrijving" : "Domiciliëring";
+                parameterProvider.put("paymentMethod", switchedPaymentMethod);
             }
 
             return success;
@@ -223,7 +221,7 @@ public class ViewListElements extends NavigationElements {
         }
     }
 
-   @Before("@SMOKE, @E2E, @QUOTE, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
+    @Before("@DWP, @CORE, @E2E, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -332,19 +330,26 @@ public class ViewListElements extends NavigationElements {
             success, is(true));
     }
 
-    @OutputParameter(name = "@text-parameters")
-    private Map<String, String> textInputParameters = new HashMap<>();
-    @And("^Number parameter \"([^\"]*)\" is put from \"([^\"]*)\" row and \"([^\"]*)\" column$")
-    public void putNumberParameter(String key, String ordinal, String column) throws Throwable {
+    @And("^Cell value from \"([^\"]*)\" row and \"([^\"]*)\" column is put to parameter \"([^\"]*)\"$")
+    public void putParameter(String ordinal, String column, String key) throws Throwable {
         int row = extractNumericValue(ordinal);
         String rawValue = new ViewListModel().getCellValueAt(row, column);
         String numericValue = extractFirstNumericPart(rawValue);
-        textInputParameters.put(key, numericValue);
+        parameterProvider.put(key, numericValue);
+    }
+
+    @And("^Cell values? from selected rows? and column \"([^\"]*)\" are put to parameter \"([^\"]*)\"$")
+    public void storeDataSelectionOutputParameter(String columnName, String outParamName) throws Throwable {
+        ViewListModel viewListModel = new ViewListModel();
+        List<String> cellSelection = viewListModel.fetchDataSelection(columnName);
+        parameterProvider.put(outParamName, cellSelection);
+        assertThat(String.format("Data selection at column %s is empty", columnName),
+            cellSelection, not(hasSize(0)));
     }
 
     @And("^Payment method is updated$")
     public void listSwitchedPaymentMethod() throws Throwable {
-        String updatedPaymentMethodName = (String) SharedPropertiesSingleton.getInstance().getSharedProperties().get("paymentMethod");
+        String updatedPaymentMethodName = parameterProvider.getValueOrParameterAsString("parameter:paymentMethod");
         final String UPDATED_PAYMENT_METHOD = "//list-simple-two-liner-cell[contains(@line-2,'" + updatedPaymentMethodName + "')]";
 
         WebElement element = webDriver.findElementOrNull(By.xpath(UPDATED_PAYMENT_METHOD));
@@ -361,7 +366,7 @@ public class ViewListElements extends NavigationElements {
         assertThat(String.format("View list did not contain any value at %s row, column '%s'", ordinal, columnName),
             success, is(true));
         String splitValue = value.split(" ")[0];
-        SharedPropertiesSingleton.getInstance().getSharedProperties().put(columnName, splitValue);
+        parameterProvider.put(columnName, splitValue);
 
     }
 
@@ -397,17 +402,6 @@ public class ViewListElements extends NavigationElements {
             success, is(true));
     }
 
-    @OutputParameter(name = "toRenewContractsContact")
-    private Map<String, Object> toRenewContractsContacts = new HashMap<>();
-    @And("^Selected list rows at column \"([^\"]*)\" are put to global parameter \"([^\"]*)\"$")
-    public void storeDataSelectionOutputParameter(String columnName, String outParamName) throws Throwable {
-        ViewListModel viewListModel = new ViewListModel();
-        List<String> cellSelection = viewListModel.fetchDataSelection(columnName);
-        toRenewContractsContacts.put(outParamName, cellSelection);
-        assertThat(String.format("Data selection at column %s is empty", columnName),
-            cellSelection, not(hasSize(0)));
-    }
-
     @Then("^Selected List rows have cell value \"([^\"]*)\" at column \"([^\"]*)\"$")
     public void checkSelectionData(String value, String columnName) throws Throwable {
         ViewListModel viewListModel = new ViewListModel();
@@ -433,8 +427,8 @@ public class ViewListElements extends NavigationElements {
     }
 
     @Override
-    @After("@SMOKE, @E2E, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
-    public void tearDown() throws Exception {
+    @After("@DWP, @CORE, @E2E, @REGRESSION")
+    public void tearDown() {
         super.tearDown();
     }
 }

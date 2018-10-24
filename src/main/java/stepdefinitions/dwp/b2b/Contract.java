@@ -20,7 +20,7 @@ import static org.junit.Assert.assertTrue;
 public class Contract extends DwpScenario {
     public static String Klantnummer;
 
-    @Before("@B2B_REGRESSION")
+    @Before("@REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -32,12 +32,6 @@ public class Contract extends DwpScenario {
     }
 
 
-    @And("^Save changes$")
-    public void savaChanges() throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
-        cp.saveButtton();
-    }
-
     @And("^Get client number$")
     public void getClientNumber() throws Throwable {
         ContractPage cp = new ContractPage(webDriver);
@@ -48,13 +42,9 @@ public class Contract extends DwpScenario {
     public void searchByClientNumber() throws Throwable {
         ContractPage cp = new ContractPage(webDriver);
         ContractenPage contractenPage = new ContractenPage(webDriver);
-        MarketberichtenPage mb = new MarketberichtenPage(webDriver);
         cp.selectAccount();
         cp.searchByClientNuiber(Klantnummer);
         contractenPage.searchForEanCode(Klantnummer);
-//        mb.clickOnSearchButton();
-//        cp.clickOnChecBox();
-//        mb.submitButton();
     }
 
     @When("^Plus action of \"([^\"]*)\" element from \"([^\"]*)\" and click on \"([^\"]*)\"$")
