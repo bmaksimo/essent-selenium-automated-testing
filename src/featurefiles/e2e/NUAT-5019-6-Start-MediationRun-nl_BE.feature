@@ -31,7 +31,5 @@ Feature: Billing - Triggering mediation run via DWP
         And "Datum afrekeningsfactuur" date is "now"
         Then Form is submitted
 
-    #Scenario: Check Advance Invoice
-    #    When Left tab is contracting-switching
-    #    And Top menu item is Contracten
+
 

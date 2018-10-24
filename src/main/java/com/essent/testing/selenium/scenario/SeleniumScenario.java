@@ -5,7 +5,6 @@ import com.essent.testing.scenario.RegisteredScenario;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.junit.AfterClass;
 
-import java.util.HashMap;
 import java.util.Map;
 
 

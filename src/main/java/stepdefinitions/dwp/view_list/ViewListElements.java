@@ -26,6 +26,7 @@ import static com.billinghouse.test_automation.util.dsl.NumericExpressionsUtil.e
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
 import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
+import static org.awaitility.Duration.ONE_SECOND;
 import static org.awaitility.Duration.TWO_SECONDS;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -278,8 +279,9 @@ public class ViewListElements extends NavigationElements {
         columnIndexListOptions.put("index", rowIndex);
         ClickTableCellUrl clickFunction = new ClickTableCellUrl();
         given().await()
-            .pollInterval(FIVE_HUNDRED_MILLISECONDS)
-            .pollDelay(TWO_SECONDS)
+            .ignoreExceptions()
+            .pollInterval(ONE_SECOND)
+            .pollDelay(new Duration(seconds / 2, SECONDS))
             .atMost(new Duration(seconds, SECONDS)).until(()-> clickFunction.test(columnIndexListOptions));
     }
 
@@ -458,13 +460,22 @@ public class ViewListElements extends NavigationElements {
             success, is(true));
     }
 
-    @Then("([^\"]*) list is not empty")
+    @And("([^\"]*) list is not empty")
     public void viewIsNotEmpty(String table) throws Throwable {
         Map<String, String> options = new HashMap<>();
         options.put("table", table);
         boolean success = new CheckEmptyTableAction().test(options);
         assertThat(String.format(table + " doesn't exist"),
             success, is(true));
+    }
+
+    @And("([^\"]*) list is empty")
+    public void isViewEmpty(String header) throws Throwable {
+        Map<String, String> options = new HashMap<>();
+        options.put("table", header);
+        boolean hasData = new CheckEmptyTableAction().test(options);
+        assertThat(String.format(header + " is not empty"),
+            hasData, is(false));
     }
 
     @Override

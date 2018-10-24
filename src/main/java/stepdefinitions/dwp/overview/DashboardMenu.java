@@ -6,13 +6,6 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.When;
 import stepdefinitions.dwp.navigation.NavigationElements;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Predicate;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
 public class DashboardMenu extends NavigationElements {
 
 

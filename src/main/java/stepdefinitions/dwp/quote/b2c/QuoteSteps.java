@@ -152,7 +152,7 @@ public class QuoteSteps extends DwpScenario {
     public void findRandomUser() throws Throwable {
         CustomerDetails customer = new CustomerDetails();
         boolean success = new GetRandomUser().test(customer);
-        parameterProvider.put("suitecrm-custoner-name", customer.getFirstName() + " " + customer.getLanguage());
+        parameterProvider.put("suitecrm-customer-name", customer.getFirstName() + " " + customer.getLastName());
         assertThat("Random customer data was not fetched.", success,
             is(true));
     }

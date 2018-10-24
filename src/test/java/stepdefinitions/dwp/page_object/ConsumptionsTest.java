@@ -8,9 +8,6 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import stepdefinitions.dwp.navigation.NavigationElements;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
 public class ConsumptionsTest extends NavigationElements {
 
     @Before("@DWP, @E2E")
