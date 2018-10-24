@@ -27,7 +27,6 @@ public class BaseObject extends Component {
     }
 
     public void plusSubaction(String action) {
-        seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[@label='" + action + "']/a")));
     }
 

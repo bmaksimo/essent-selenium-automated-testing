@@ -5,7 +5,7 @@ Feature: Dwp for handling task for canceling - nl_BE
     Background:
         Given I logged in to DWP as businessdesk.testautomation.b2b@essent.be
 
-    Scenario:
+    Scenario: Handle task for canceling
         When Left menu is Werkbakken
         And Top action is Filters
         Then "Status" selection is "Open"

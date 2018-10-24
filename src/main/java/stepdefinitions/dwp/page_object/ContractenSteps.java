@@ -57,6 +57,12 @@ public class ContractenSteps extends DwpScenario {
         super.tearDown();
     }
 
+    @And("^\"([^\"]*)\" input in omschrijving$")
+    public void inputInOmschrijving(String text) throws Throwable {
+        ContractenPage contractenPage = new ContractenPage(webDriver);
+        contractenPage.inputText(text);
+    }
+
     @And("^Offertes plus options is \"([^\"]*)\"$")
     public void sendEMailToCustomer(String test) throws Throwable {
         ContractenPage contractenPage = new ContractenPage(webDriver);

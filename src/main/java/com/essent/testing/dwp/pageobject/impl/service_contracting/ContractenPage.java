@@ -68,6 +68,10 @@ public class ContractenPage extends Component {
         Assert.assertTrue(seleniumDriver.findElementWhenVisible(By.xpath("(//span[.='" + input + "'])[1]")).isDisplayed());
     }
 
+    public void inputText(String text) {
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//text-angular[@id='description-field']/div[2]/div[.=' ']")), text);
+    }
+
     public void sendEmailToCustomer(String test) {
         waitForRequestsToFinish();
         BaseObject baseObject = new BaseObject(seleniumDriver);

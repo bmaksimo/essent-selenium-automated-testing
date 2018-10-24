@@ -27,12 +27,10 @@ public class LeadPage extends BaseObject implements Form {
         waitForRequestsToFinish();
         setContactPerson(table.get(1).get(1), table.get(1).get(2));
         setGender(table.get(1).get(6));
-        waitForRequestsToFinish();
         setTelephone(table.get(1).get(3));
-        waitForRequestsToFinish();
         setMobile(table.get(1).get(4));
-        waitForRequestsToFinish();
         setEmail(table.get(1).get(5));
+        waitForRequestsToFinish();
         tg.clickCheckbox(box);
         waitForRequestsToFinish();
         saveLead();
@@ -70,10 +68,8 @@ public class LeadPage extends BaseObject implements Form {
 
     private void setContactPerson(String contactPersonName, String contactPersonLastName) {
         waitForRequestsToFinish();
-        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.xpath("//input[@id='first-name-field']")), contactPersonName);
-        waitForRequestsToFinish();
-        seleniumDriver.findElementWhenVisible(By.xpath("//input[@id='last-name-field']")).clear();
-        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.xpath("//input[@id='last-name-field']")), contactPersonLastName);
+        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("first-name-field")), contactPersonName);
+        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("last-name-field")), contactPersonLastName);
     }
 
     private void setTelephone(String telephone) {

@@ -5,7 +5,7 @@ Feature: Dwp test for rejecting contract - nl_BE
     Background:
         Given I logged in to DWP as businessdesk.testautomation.b2b@essent.be
 
-    Scenario:
+    Scenario: Restart for SA Or MI
         When Left menu is sales-marketing
         And Top menu item is Marktberichten
         And Top action is Filters
@@ -23,7 +23,7 @@ Feature: Dwp test for rejecting contract - nl_BE
 
         When Left menu is sales-marketing
         And Search field input is "541449611000044685"
-        And Click on link in View List at 1st row and "Klantnaam & Nummer" column polling 10 seconds
+        And Click on link in View List at 1st row and "Klantnaam & nummer" column polling 20 seconds
         And Dashboard menu is Marktberichten
         Then Validate rejection status is "START ACCESS"
 
