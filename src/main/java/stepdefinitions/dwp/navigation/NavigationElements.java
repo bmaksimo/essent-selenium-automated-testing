@@ -84,6 +84,16 @@ public abstract class NavigationElements extends DwpScenario {
         }
     }
 
+    private class ClickDashboardMenu implements Predicate<String> {
+        @Override
+        public boolean test(String menu) {
+            Map<String, Object> options = new HashMap<>();
+            options.put("menu", menu);
+            return executeJavascriptTest("TrClickDashboardMenuButton", options);
+        }
+    }
+
+
     public class ValidateCustomer implements Predicate<Map> {
         @Override
         public boolean test(Map name) {
@@ -108,7 +118,7 @@ public abstract class NavigationElements extends DwpScenario {
             success, is(true));
     }
 
-    protected void clickTopArrow(String arrow) throws Throwable {
+    protected void clickTopArrow(String arrow)  {
         boolean success = new ClickTopArrowButton().test(arrow);
         assertThat(String.format("Top Arrow %s is undefined.", arrow),
             success, is(true));
@@ -130,6 +140,12 @@ public abstract class NavigationElements extends DwpScenario {
     protected void clickListPlusAction(String item) {
         boolean success = new ClickListPlusAction().test(item);
         assertThat(String.format("List Plus Action %s undefined.", item),
+            success, is(true));
+    }
+
+    protected void clickDashboardMenu(String menu) {
+        boolean success = new ClickDashboardMenu().test(menu);
+        assertThat(String.format("Dashboard Menu  %s is undefined.", menu),
             success, is(true));
     }
 }

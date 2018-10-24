@@ -1,18 +1,20 @@
 @DWP
 @E2E
 @CREDIT-AND-CONTROL
+@CONSUMPTIONS
 @NUAT-5019
 Feature: Received consumption
 
     Background:
         Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
 
-    Scenario: Generate consumption for given settlement and verify the result in DWP
+    Scenario: Generate consumption for given customer, and verify the result in DWP
+
         When Left menu is sales-marketing
         And Top menu item is Klanten
         And Top action is Filters
-        And "B2C/B2B" selection is "B2C"
-        And Label input for "Type klant" is "CUSTOMER"
+        And "Naam" input is "parameter:suitecrm-custoner-name"
+        #And "Naam" input is "Bowe te braak"
         And Click on link in View List at 1st row and "Klantnummer & Naam" column
         And Dashboard menu is Contracten
         Then View list header is "Actieve en toekomstige connecties"
