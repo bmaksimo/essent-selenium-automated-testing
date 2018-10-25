@@ -18,7 +18,7 @@ import static org.junit.Assert.assertTrue;
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 
 public class Contract extends DwpScenario {
-    public static String Klantnummer;
+    private static String Klantnummer;
 
     @Before("@REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
