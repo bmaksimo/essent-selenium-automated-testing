@@ -1,5 +1,7 @@
 @DWP
-@SALES-MARKETING
+@CREDIT-AND-CONTROL
+@DEV
+@QUOTE-SS
 Feature: Creating a B2C Quote TC1 with supplier switch - Dutch language version.
 
     Background:

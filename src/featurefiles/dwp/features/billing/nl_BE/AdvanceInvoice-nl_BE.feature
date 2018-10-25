@@ -1,6 +1,8 @@
 @DWP
-@BUSINESS-DESK
+@CREDIT-AND-CONTROL
 @BILLING
+@VOORSCHOOT-FACTUUR
+@DEV
 Feature: Billing - Invoices - Check - InBetween Document
 
     Background:

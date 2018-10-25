@@ -1,5 +1,7 @@
 @DWP
-@SALES-MARKETING
+@CREDIT-AND-CONTROL
+@DEV
+@QUOTE-MI
 Feature: Creating a B2C Quote TC1 with move in - Dutch language version
 
     Background:
