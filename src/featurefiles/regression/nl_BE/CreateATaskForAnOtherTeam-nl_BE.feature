@@ -1,5 +1,4 @@
 @DWP
-@REGRESSION
 Feature: Create a task for an other team
 
     Background:

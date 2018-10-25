@@ -1,5 +1,4 @@
 @DWP
-@REGRESSION
 Feature: Dwp test for duplicating customer - nl_BE
 
     Background:

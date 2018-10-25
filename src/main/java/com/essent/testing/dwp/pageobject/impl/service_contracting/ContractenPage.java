@@ -70,4 +70,8 @@ public class ContractenPage extends Component {
     public void inputText(String text) {
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//text-angular[@id='description-field']/div[2]/div[.=' ']")), text);
     }
+
+    public void openListOption(String option) {
+        seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//span[.='" + option + "']")));
+    }
 }

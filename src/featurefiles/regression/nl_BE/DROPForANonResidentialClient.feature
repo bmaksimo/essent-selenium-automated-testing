@@ -1,5 +1,4 @@
 @DWP
-@REGRESSION
 Feature: DROP for a Non-residential client
 
     Background:

@@ -1,5 +1,4 @@
 @DWP
-@REGRESSION
 Feature: Dwp for handling task for rejection - nl_BE
 
     Background:

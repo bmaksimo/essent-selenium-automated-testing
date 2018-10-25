@@ -2,7 +2,6 @@ package stepdefinitions.dwp.page_object;
 
 import com.essent.testing.dwp.pageobject.impl.service_contracting.ContractenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -60,5 +59,11 @@ public class ContractenSteps extends DwpScenario {
     public void inputInOmschrijving(String text) throws Throwable {
         ContractenPage contractenPage = new ContractenPage(webDriver);
         contractenPage.inputText(text);
+    }
+
+    @And("^List option is \"([^\"]*)\"$")
+    public void openInvoiceOnly(String option) throws Throwable {
+        ContractenPage contractenPage = new ContractenPage(webDriver);
+        contractenPage.openListOption(option);
     }
 }

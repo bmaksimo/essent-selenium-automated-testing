@@ -1,5 +1,4 @@
 @DWP
-@REGRESSION
 Feature: Dwp test for rejecting contract - nl_BE
 
     Background:

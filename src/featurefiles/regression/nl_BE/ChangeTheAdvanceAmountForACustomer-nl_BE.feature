@@ -1,5 +1,4 @@
 @DWP
-@REGRESSION
 Feature: Dwp test for changing amount for a customer
 
     Background:

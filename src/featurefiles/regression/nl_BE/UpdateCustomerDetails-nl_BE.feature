@@ -1,5 +1,4 @@
 @DWP
-@REGRESSION
 Feature: Update customer details - dunning stop
 
     Background:

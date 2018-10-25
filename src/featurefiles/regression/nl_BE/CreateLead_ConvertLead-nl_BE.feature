@@ -1,5 +1,4 @@
 @DWP
-@REGRESSION
 Feature: Dwp test for Creating Lead - nl_BE
 
     Background:
