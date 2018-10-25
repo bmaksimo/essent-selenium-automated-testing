@@ -21,9 +21,9 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 
-public class EssentPrettyFormatter extends PrettyFormatter implements ColorAware {
+public class E2EPrettyFormatter extends PrettyFormatter implements ColorAware {
 
-    private static final Logger logger = Logger.getLogger(EssentPrettyFormatter.class);
+    private static final Logger logger = Logger.getLogger(E2EPrettyFormatter.class);
     private static final Map<Class, BiConsumer> annotationRules  = new HashMap<>();
     private String    location;
 
@@ -60,9 +60,20 @@ public class EssentPrettyFormatter extends PrettyFormatter implements ColorAware
     public void match(Match match) {
         super.match(match);
         logger.info("CUCUMBER_HOOK (match)");
+        checkAndTerminate();
         this.location = match.getLocation();
         assignInputFromOuputParameters(getActiveScenario(location));
         logger.info(" - LOCATION: " + location);
+    }
+
+    private void checkAndTerminate() {
+        ParameterProvider  parameterProvider = ((ParameterProvider) ContextService.getContext().getBean("parameterProvider")).consumingNullValues(true);
+        if(parameterProvider.containsKey("cucumber-scenario-status")) {
+            if(parameterProvider.containsKey("cucumber-scenario-failure")) {
+                Throwable failure = (Throwable) parameterProvider.get("cucumber-scenario-failure");
+                throw new CucumberException("Cannot execute scenario, previous scenario failed. ", failure);
+            }
+        }
     }
 
     private void assignInputFromOuputParameters(Object activeScenario) {
@@ -89,7 +100,7 @@ public class EssentPrettyFormatter extends PrettyFormatter implements ColorAware
         return parameter;
     }
 
-    public EssentPrettyFormatter(Appendable out) {
+    public E2EPrettyFormatter(Appendable out) {
         super(out, false, true);
     }
 
