@@ -446,6 +446,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
 
     public void waitAndSendKeys(final WebElement element, final String keysToSend) {
         waitForElement(element);
+        element.click();
         element.clear();
         element.click();
         element.sendKeys(keysToSend);

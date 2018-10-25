@@ -9,6 +9,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.openqa.selenium.By;
 
 public class ContractenSteps extends DwpScenario {
 
@@ -60,5 +61,11 @@ public class ContractenSteps extends DwpScenario {
     public void inputInOmschrijving(String text) throws Throwable {
         ContractenPage contractenPage = new ContractenPage(webDriver);
         contractenPage.inputText(text);
+    }
+
+    @And("^Offertes plus options is \"([^\"]*)\"$")
+    public void sendEMailToCustomer(String test) throws Throwable {
+        ContractenPage contractenPage = new ContractenPage(webDriver);
+        contractenPage.sendEmailToCustomer(test);
     }
 }

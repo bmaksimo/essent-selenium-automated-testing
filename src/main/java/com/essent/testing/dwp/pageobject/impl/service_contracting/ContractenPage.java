@@ -1,6 +1,7 @@
 package com.essent.testing.dwp.pageobject.impl.service_contracting;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
+import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.junit.Assert;
 import org.openqa.selenium.By;
@@ -69,5 +70,13 @@ public class ContractenPage extends Component {
 
     public void inputText(String text) {
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//text-angular[@id='description-field']/div[2]/div[.=' ']")), text);
+    }
+
+    public void sendEmailToCustomer(String test) {
+        waitForRequestsToFinish();
+        BaseObject baseObject = new BaseObject(seleniumDriver);
+        baseObject.clickOnPlus();
+        waitForRequestsToFinish();
+        seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[@label='"+test+"']/a")).click();
     }
 }
