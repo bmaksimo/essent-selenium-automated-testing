@@ -16,6 +16,10 @@ public class ParameterProvider {
 
     private boolean consumeNullValues;
 
+    public boolean containsKey(Object key) {
+        return parameters.containsKey(key);
+    }
+
     public Object get(Object key) {
         return parameters.get(key);
     }
@@ -64,5 +68,9 @@ public class ParameterProvider {
     public ParameterProvider consumingNullValues(boolean consumingNullValues) {
         this.consumeNullValues = consumingNullValues;
         return this;
+    }
+
+    public String toString() {
+        return parameters.toString();
     }
 }
