@@ -1,4 +1,5 @@
 @DWP
+@REGRESSION
 Feature: Dwp for handling task for canceling - nl_BE
 
     Background:

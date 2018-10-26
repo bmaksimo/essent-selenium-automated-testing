@@ -1,4 +1,5 @@
 @DWP
+@REGRESSION
 Feature: Dwp test for checking usage of a customer
 
     Background:

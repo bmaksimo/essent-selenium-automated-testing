@@ -1,4 +1,5 @@
 @DWP
+@REGRESSION
 Feature: Contract take over
 
     Background:

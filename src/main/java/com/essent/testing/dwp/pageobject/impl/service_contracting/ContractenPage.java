@@ -90,13 +90,16 @@ public class ContractenPage extends Component {
         Assert.assertFalse("Date was not changed. Old date is : " + payDate + ", and new date is same : " + newPayDate, newPayDate.equalsIgnoreCase(payDate));
     }
 
-    public void getPayDate() {
-        waitForRequestsToFinish();
-        payDate = findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell[@icon='null']//span)[6]")).getText();
-        System.out.println("debug : " + payDate);
-    }
-
     public void findIssuedAndPayDelay(String type, String option) {
-
+        /* I must use tr and td html elements to locate correct list element*/
+        int counter = 1;
+        String payType = findElementWhenVisible(By.xpath("//*[@id='rows']/tr[1]/td[8]//span[1]")).getText();
+        while(!payType.equalsIgnoreCase(type)){
+            counter = counter + 2;
+            payType = findElementWhenVisible(By.xpath("//*[@id='rows']/tr[" + counter + "]/td[8]//span[1]")).getText();
+        }
+        payDate = findElementWhenVisible(By.xpath("//*[@id='rows']/tr[" + counter + "]/td[7]//span[2]")).getText();
+        findElementWhenVisible(By.xpath("(//*[@id='rows']/tr[" + counter + "]/td[10]/list-plus-cell//a)[1]")).click();
+        findElementWhenVisible(By.xpath("//list-row-action[@label='" + option + "']/a")).click();
     }
 }

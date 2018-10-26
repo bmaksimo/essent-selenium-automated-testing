@@ -75,12 +75,6 @@ public class ContractenSteps extends DwpScenario {
         contractenPage.openListOption(option);
     }
 
-    @And("^Get pay date$")
-    public void getPayDate() throws Throwable {
-        ContractenPage contractenPage = new ContractenPage(webDriver);
-        contractenPage.getPayDate();
-    }
-
     @Then("^Payment delayed$")
     public void paymentDelayed() throws Throwable {
         ContractenPage contractenPage = new ContractenPage(webDriver);

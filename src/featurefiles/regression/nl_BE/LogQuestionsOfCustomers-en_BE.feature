@@ -1,4 +1,5 @@
 @DWP
+@REGRESSION
 Feature: Log questions of customers
 
     Background:

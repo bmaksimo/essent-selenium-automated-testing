@@ -1,4 +1,5 @@
 @DWP
+@REGRESSION
 Feature: End of contract for bankruptcy - nl_BE version
 
     Background:

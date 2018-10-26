@@ -1,4 +1,5 @@
 @DWP
+@REGRESSION
 Feature: Create a case with complaint
 
     Background:

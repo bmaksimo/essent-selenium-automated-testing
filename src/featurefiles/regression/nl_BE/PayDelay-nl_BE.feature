@@ -1,3 +1,4 @@
+@DWP
 @REGRESSION
 Feature: Test scenario for move pay date
 
@@ -16,7 +17,6 @@ Feature: Test scenario for move pay date
         When Dashboard menu is Billing
         And List option is "ENKEL FACTUREN"
         And Find "Issued" facture and "Betalingsuitstel"
-        And Get pay date
         And "Selecteer nieuwe vervaldatum" date is "3 week from now"
         And Changes are confirmed
         Then Payment delayed

@@ -1,4 +1,5 @@
 @DWP
+@REGRESSION
 Feature: Change Payment Method
 
     Background:
