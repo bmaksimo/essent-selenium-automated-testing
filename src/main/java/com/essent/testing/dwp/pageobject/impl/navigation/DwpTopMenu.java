@@ -18,4 +18,8 @@ public class DwpTopMenu extends Component {
         WebElement element = seleniumDriver.findElementWhenVisible(By.xpath(query));
         seleniumDriver.waitAndClick(element);
     }
+
+    public void goBackToHomePage(){
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//div[@class='top']/a[2]/span")));
+    }
 }

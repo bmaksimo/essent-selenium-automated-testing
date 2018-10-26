@@ -2,12 +2,14 @@ package stepdefinitions.dwp.page_object;
 
 import com.essent.testing.dwp.pageobject.impl.service_contracting.ContractenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.openqa.selenium.By;
 
 public class ContractenSteps extends DwpScenario {
 
@@ -61,9 +63,33 @@ public class ContractenSteps extends DwpScenario {
         contractenPage.inputText(text);
     }
 
+    @And("^Offertes plus options is \"([^\"]*)\"$")
+    public void sendEMailToCustomer(String test) throws Throwable {
+        ContractenPage contractenPage = new ContractenPage(webDriver);
+        contractenPage.sendEmailToCustomer(test);
+    }
+
     @And("^List option is \"([^\"]*)\"$")
     public void openInvoiceOnly(String option) throws Throwable {
         ContractenPage contractenPage = new ContractenPage(webDriver);
         contractenPage.openListOption(option);
+    }
+
+    @And("^Get pay date$")
+    public void getPayDate() throws Throwable {
+        ContractenPage contractenPage = new ContractenPage(webDriver);
+        contractenPage.getPayDate();
+    }
+
+    @Then("^Payment delayed$")
+    public void paymentDelayed() throws Throwable {
+        ContractenPage contractenPage = new ContractenPage(webDriver);
+        contractenPage.checkPayDate();
+    }
+
+    @And("^Find \"([^\"]*)\" facture and \"([^\"]*)\"$")
+    public void findFactureAnd(String type, String option) throws Throwable {
+        ContractenPage contractenPage = new ContractenPage(webDriver);
+        contractenPage.findIssuedAndPayDelay(type, option);
     }
 }

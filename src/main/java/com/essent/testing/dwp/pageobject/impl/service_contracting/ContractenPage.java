@@ -1,12 +1,14 @@
 package com.essent.testing.dwp.pageobject.impl.service_contracting;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
+import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 
 public class ContractenPage extends Component {
+    private static  String payDate;
 
     public ContractenPage(SeleniumDriver seleniumDriver) {
         super(seleniumDriver);
@@ -71,7 +73,30 @@ public class ContractenPage extends Component {
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//text-angular[@id='description-field']/div[2]/div[.=' ']")), text);
     }
 
+    public void sendEmailToCustomer(String test) {
+        waitForRequestsToFinish();
+        BaseObject baseObject = new BaseObject(seleniumDriver);
+        baseObject.clickOnPlus();
+        waitForRequestsToFinish();
+        seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[@label='"+test+"']/a")).click();
+    }
+
     public void openListOption(String option) {
         seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//span[.='" + option + "']")));
+    }
+
+    public void checkPayDate() {
+        final String newPayDate = findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell[@icon='null']//span)[6]")).getText();
+        Assert.assertFalse("Date was not changed. Old date is : " + payDate + ", and new date is same : " + newPayDate, newPayDate.equalsIgnoreCase(payDate));
+    }
+
+    public void getPayDate() {
+        waitForRequestsToFinish();
+        payDate = findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell[@icon='null']//span)[6]")).getText();
+        System.out.println("debug : " + payDate);
+    }
+
+    public void findIssuedAndPayDelay(String type, String option) {
+
     }
 }
