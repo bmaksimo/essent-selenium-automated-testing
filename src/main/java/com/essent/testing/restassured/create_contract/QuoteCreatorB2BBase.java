@@ -102,14 +102,16 @@ public class QuoteCreatorB2BBase {
 		todayDate = PrepareDataForContract.getTodayDate();
 		generatedIban = PrepareDataForContract.getValidIbanBE();
 
-		// Set appropriate start contract date in create quote page of DWP
-		String currentContractStartDateInDWP = getCurrentContractStartDateFromDWP(path);
-		this.upStartDate = PrepareDataForContract.setStartContractDate(path, contractStartDate, contractEndDate, currentContractStartDateInDWP);
+        if(!this.isFakeAddress.equals("FAKE")) {
+            // Set appropriate start contract date in create quote page of DWP
+            String currentContractStartDateInDWP = getCurrentContractStartDateFromDWP(path);
+            this.upStartDate = PrepareDataForContract.setStartContractDate(path, contractStartDate, contractEndDate, currentContractStartDateInDWP);
 
-		if(this.upStartDate.equals("NOT_VALID")) {
-			logger.info("ALL START CONTRACT DATES ARE USED FOR ADDRESS STREET: " + addressStreet + " EAN: " + ean_c + "; PLEASE USE ANOTHER ADDRESS AND EAN");
-			throw new CucumberException("ALL START CONTRACT DATES ARE USED FOR ADDRESS STREET: " + addressStreet + " EAN: " + ean_c + "; PLEASE USE ANOTHER ADDRESS AND EAN");
-		}
+            if (this.upStartDate.equals("NOT_VALID")) {
+                logger.info("ALL START CONTRACT DATES ARE USED FOR ADDRESS STREET: " + addressStreet + " EAN: " + ean_c + "; PLEASE USE ANOTHER ADDRESS AND EAN");
+                throw new CucumberException("ALL START CONTRACT DATES ARE USED FOR ADDRESS STREET: " + addressStreet + " EAN: " + ean_c + "; PLEASE USE ANOTHER ADDRESS AND EAN");
+            }
+        }
 	}
 
 	protected void login() {

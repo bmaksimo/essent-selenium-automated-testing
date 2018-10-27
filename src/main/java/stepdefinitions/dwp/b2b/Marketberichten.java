@@ -1,5 +1,6 @@
 package stepdefinitions.dwp.b2b;
 
+import com.essent.testing.dwp.pageobject.impl.page.ContractPage;
 import com.essent.testing.dwp.pageobject.impl.page.MarketberichtenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.PendingException;
@@ -26,6 +27,22 @@ public class Marketberichten extends DwpScenario {
         mb.clickOnListActionsElemet(element);
         mb.clickOnSelectNewContractlineButton();
         mb.enterContractNumber(EAN);
+        mb.clickOnSearchButton();
+        mb.clickOnTheFirstContract();
+        mb.clickOnSubmitButton();
+    }
+
+    @And("^Click on \"([^\"]*)\"$")
+    public void clickOn(String newMarktbericht) throws Throwable {
+        MarketberichtenPage mp = new MarketberichtenPage(webDriver);
+        mp.createNewMarktericht(newMarktbericht);
+    }
+
+    @And("^Search by \"([^\"]*)\"$")
+    public void searchBy(String str) throws Throwable {
+        String ean=parameterProvider.getValueOrParameterAsString(str);
+        MarketberichtenPage mb = new MarketberichtenPage(webDriver);
+        mb.enterContractNumber(ean);
         mb.clickOnSearchButton();
         mb.clickOnTheFirstContract();
         mb.clickOnSubmitButton();

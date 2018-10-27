@@ -54,4 +54,10 @@ public class Contract extends DwpScenario {
         cp.clickOnPlusMeniInTable(row,table);
         baseObject.plusSubaction(action);
     }
+
+    @And("^Save EAN from active contract$")
+    public void saveEANFromActiveContract() throws Throwable {
+        ContractPage cp = new ContractPage(webDriver);
+        parameterProvider.put("EAN-active-contract",cp.getActiveContractEAN());
+    }
 }

@@ -71,5 +71,9 @@ public class MarketberichtenPage  extends Component {
         Assert.assertEquals(taken, line1);
         Assert.assertEquals(signed, line2);
     }
+
+    public void createNewMarktericht(String newMarktbericht){
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.name(newMarktbericht)));
+    }
 }
 
