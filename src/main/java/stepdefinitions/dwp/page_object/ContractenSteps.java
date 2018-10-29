@@ -68,4 +68,10 @@ public class ContractenSteps extends DwpScenario {
         ContractenPage contractenPage = new ContractenPage(webDriver);
         contractenPage.sendEmailToCustomer(test);
     }
+
+    @Then("^Validate bank account was changed on \"([^\"]*)\"$")
+    public void validateBankAccountWasChangedOn(String iban) throws Throwable {
+        ContractenPage contractenPage = new ContractenPage(webDriver);
+        contractenPage.findIban(iban);
+    }
 }
