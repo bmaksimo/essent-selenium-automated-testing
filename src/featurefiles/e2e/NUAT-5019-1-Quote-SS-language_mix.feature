@@ -3,6 +3,7 @@
 @CREDIT-AND-CONTROL
 @NUAT-5019
 @ONBOARDING
+
 Feature: Creating a B2C Quote TC1 via DWP, Dutch language version with form headers in English language
 
     Background:
@@ -24,7 +25,7 @@ Feature: Creating a B2C Quote TC1 via DWP, Dutch language version with form head
         When Customer is random
         And Customer address is
             | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-            | Mechelsesteenweg| 156     |            |      | 2550       | Kontich  |         |
+            | Mechelsesteenweg| 4       |            |      | 2550       | Kontich  |         |
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
 
@@ -46,16 +47,22 @@ Feature: Creating a B2C Quote TC1 via DWP, Dutch language version with form head
         Then  Form header is "Quote overview"
 
         When Option "Heeft de klant al getekend?" is On
+        And "Kanaal ondertekening" selection is "Papier"
         And Quote is signed in Kontich
         And "Datum ondertekening" date is "now"
         And Quote is confirmed
         Then View list header is "Offertes"
-
-        When Plus actions at 1st list row having cell value "Sales Handtekening ontvangen - Geaccepteerd" at column "Type & status" are open
-        And List plus action is Bevestig
-        And Modal dialog is Sign quote
-        And  Contract signature is confirmed
         Then 1st list element has cell value Sales Getekend - Geaccepteerd at column Type & status
+
+
+
+
+        #Confirm signature
+        #When Plus actions at 1st list row having cell value "Sales Handtekening ontvangen - Geaccepteerd" at column "Type & status" are open
+        #And List plus action is Bevestig
+        #And Modal dialog is Sign quote
+        #And  Contract signature is confirmed
+        #Then 1st list element has cell value Sales Getekend - Geaccepteerd at column Type & status
 
         When Dashboard menu is Contracten
         Then View list header is "Actieve en toekomstige connecties"

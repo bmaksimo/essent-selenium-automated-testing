@@ -1,7 +1,5 @@
 @DWP
-@E2E
 @CREDIT-AND-CONTROL
-@NUAT-5019
 @MEDIATION-RUN
 Feature: Billing - Triggering mediation run via DWP
 

@@ -274,7 +274,8 @@ public class QuoteSteps extends DwpScenario {
             path);
         QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage(webDriver);
         quoteOverviewView.setSignatureData(signature);
-        quoteOverviewView.fillInFormData();
+        boolean success = quoteOverviewView.fillInFormData();
+        assertThat("Failure when signing up the quote.", success, is(true));
     }
 
 
