@@ -68,4 +68,22 @@ public class ContractenSteps extends DwpScenario {
         ContractenPage contractenPage = new ContractenPage(webDriver);
         contractenPage.sendEmailToCustomer(test);
     }
+
+    @And("^List option is \"([^\"]*)\"$")
+    public void openInvoiceOnly(String option) throws Throwable {
+        ContractenPage contractenPage = new ContractenPage(webDriver);
+        contractenPage.openListOption(option);
+    }
+
+    @Then("^Payment delayed$")
+    public void paymentDelayed() throws Throwable {
+        ContractenPage contractenPage = new ContractenPage(webDriver);
+        contractenPage.checkPayDate();
+    }
+
+    @And("^Find \"([^\"]*)\" facture and \"([^\"]*)\"$")
+    public void findFactureAnd(String type, String option) throws Throwable {
+        ContractenPage contractenPage = new ContractenPage(webDriver);
+        contractenPage.findIssuedAndPayDelay(type, option);
+    }
 }
