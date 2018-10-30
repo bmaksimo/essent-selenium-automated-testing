@@ -1,5 +1,6 @@
 @DWP
 @REGRESSION
+@B2B
 @BUSINESS-DESK
 Feature: Dwp test for rejecting contract - nl_BE
 

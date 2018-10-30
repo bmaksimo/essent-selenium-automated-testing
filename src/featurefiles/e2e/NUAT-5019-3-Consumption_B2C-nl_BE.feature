@@ -1,5 +1,6 @@
 @DWP
 @E2E
+@B2C
 @CREDIT-AND-CONTROL
 @NUAT-5019
 Feature: Received consumption

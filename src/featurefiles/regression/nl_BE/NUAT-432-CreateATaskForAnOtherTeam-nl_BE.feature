@@ -1,5 +1,6 @@
 @DWP
 @REGRESSION
+@B2B
 @BUSINESS-DESK
 Feature: Create a task for an other team
 

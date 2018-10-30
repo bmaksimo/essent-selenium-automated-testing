@@ -1,5 +1,6 @@
 @DWP
 @REGRESSION
+@B2B
 @CREDIT-AND-CONTROL
 Feature: Update customer details - dunning stop
 

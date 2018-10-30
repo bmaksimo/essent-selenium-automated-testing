@@ -1,5 +1,6 @@
 @DWP
 @REGRESSION
+@B2B
 @CREDIT-AND-CONTROL
 Feature: End of contract for bankruptcy - nl_BE version
 

@@ -1,5 +1,6 @@
 @DWP
 @REGRESSION
+@B2B
 @BUSINESS-DESK
 Feature: Dwp for handling task for rejection - nl_BE
 

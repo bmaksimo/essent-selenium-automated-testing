@@ -1,4 +1,5 @@
 @DWP
+@B2C
 @BUSINESS-DESK
 @BILLING
 Feature: Billing - Invoices - Check - InBetween Document
