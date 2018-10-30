@@ -58,4 +58,8 @@ public class ContractPage extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"rows\"]//list-link-bold-top-two-liner-cell//a/h5")).getText();
     }
 
+    public String status(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("//list-simple-two-liner-cell/p/span[1]")).getText();
+    }
+
 }

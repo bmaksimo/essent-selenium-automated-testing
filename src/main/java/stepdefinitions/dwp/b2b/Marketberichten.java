@@ -3,6 +3,7 @@ package stepdefinitions.dwp.b2b;
 import com.essent.testing.dwp.pageobject.impl.page.ContractPage;
 import com.essent.testing.dwp.pageobject.impl.page.MarketberichtenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import com.essent.testing.selenium.SeleniumDriver;
 import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
@@ -43,8 +44,15 @@ public class Marketberichten extends DwpScenario {
         String ean=parameterProvider.getValueOrParameterAsString(str);
         MarketberichtenPage mb = new MarketberichtenPage(webDriver);
         mb.enterContractNumber(ean);
+        webDriver.waitForRequestsToFinish();
         mb.clickOnSearchButton();
         mb.clickOnTheFirstContract();
         mb.clickOnSubmitButton();
+    }
+
+    @And("^Label \"([^\"]*)\" is \"([^\"]*)\"$")
+    public void labelIs(String label, String value) throws Throwable {
+        MarketberichtenPage mb = new MarketberichtenPage(webDriver);
+        mb.clickOnLabel(label,value);
     }
 }
