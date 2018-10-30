@@ -28,7 +28,7 @@ Feature: Billing - Triggering Advanced Invoice via DWP
         And "Naam job" selection is "recurrent"
         And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
         And "Factuurdatum" date is "now"
-        And "Procesdatum" date is "1 month after now"
+        And "Procesdatum" date is "1 month from now"
         Then Invoice run is scheduled
 
     #Scenario: Check Advance Invoice

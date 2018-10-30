@@ -25,7 +25,7 @@ Feature: Creating a B2C Quote TC1 via DWP, Dutch language version with form head
         When Customer is random
         And Customer address is
             | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-            | Mechelsesteenweg| 4       |            |      | 2550       | Kontich  |         |
+            | Mechelsesteenweg| 5       |            |      | 2550       | Kontich  |         |
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
 
