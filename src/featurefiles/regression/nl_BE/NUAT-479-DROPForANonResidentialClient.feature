@@ -1,5 +1,6 @@
 @DWP
 @REGRESSION
+@BUSINESS-DESK
 Feature: DROP for a Non-residential client
 
     Background:

@@ -1,5 +1,6 @@
 @DWP
 @REGRESSION
+@SERVICE-CONTRACTING
 Feature: End of contract via DWP - nl_BE version
 
     Background:

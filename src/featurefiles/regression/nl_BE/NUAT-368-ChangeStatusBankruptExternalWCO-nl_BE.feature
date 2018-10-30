@@ -1,5 +1,6 @@
 @DWP
 @REGRESSION
+@CREDIT-AND-CONTROL
 Feature: Change Status of Bankrupt, External, WCO dwp scenario
 
     Background:

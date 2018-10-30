@@ -1,5 +1,6 @@
 @DWP
 @REGRESSION
+@CREDIT-AND-CONTROL
 Feature: Dwp test for duplicating customer - nl_BE
 
     Background:

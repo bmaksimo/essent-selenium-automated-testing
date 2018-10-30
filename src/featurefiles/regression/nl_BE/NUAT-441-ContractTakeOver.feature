@@ -1,5 +1,6 @@
 @DWP
 @REGRESSION
+@BUSINESS-DESK
 Feature: Contract take over
 
     Background:

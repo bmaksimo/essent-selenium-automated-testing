@@ -1,5 +1,6 @@
 @DWP
 @REGRESSION
+@CREDIT-AND-CONTROL
 Feature: Change Payment Method
 
     Background:

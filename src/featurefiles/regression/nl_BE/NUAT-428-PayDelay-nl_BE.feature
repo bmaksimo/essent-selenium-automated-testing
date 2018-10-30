@@ -1,5 +1,6 @@
 @DWP
 @REGRESSION
+@CREDIT-AND-CONTROL
 Feature: Test scenario for move pay date
 
     Background:

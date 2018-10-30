@@ -1,5 +1,6 @@
 @DWP
 @REGRESSION
+@BUSINESS-DESK
 Feature: Log questions of customers
 
     Background:
