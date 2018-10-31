@@ -1,8 +1,8 @@
 @DWP
-@B2C
-@BUSINESS-DESK
-@BILLING
-Feature: Billing - Invoices - Check - InBetween Document
+@CREDIT-AND-CONTROL
+@VOORSCHOOT-FACTUUR
+@DEV
+Feature: Credit and control. Check InBetween Invoice
 
     Background:
 

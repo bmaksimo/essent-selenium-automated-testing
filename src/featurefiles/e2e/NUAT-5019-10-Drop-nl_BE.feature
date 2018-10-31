@@ -3,6 +3,7 @@
 @B2C
 @CREDIT-AND-CONTROL
 @NUAT-5019
+@CLIENT-DROP
 Feature: NUAT-5019-6: End order (drop) messaging
 
     Background:

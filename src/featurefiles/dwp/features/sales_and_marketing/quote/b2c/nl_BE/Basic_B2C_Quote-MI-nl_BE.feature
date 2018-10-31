@@ -1,12 +1,13 @@
 @DWP
-@B2C
 @SALES-MARKETING
-Feature: Creating a B2C Quote with customer switch - Dutch language version.
+@QUOTE-MI
+@DEV
+Feature: Creating a B2C Quote TC1 with move in - Dutch language version
 
     Background:
         Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
 
-    Scenario: Create a B2C Quote with customer switch
+    Scenario: Create a B2C Quote with move in
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Details van de offerte"
 
@@ -17,7 +18,7 @@ Feature: Creating a B2C Quote with customer switch - Dutch language version.
         When Customer is random
         And Customer address is
             | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-            | Mechelsesteenweg| 13   |            |      | 2550       | Kontich  |         |
+            | Mechelsesteenweg| 21   |            |      | 2550       | Kontich  |         |
         And Customer details are confirmed
         Then Form header is "Selecteer pakket en product"
 
@@ -29,6 +30,7 @@ Feature: Creating a B2C Quote with customer switch - Dutch language version.
 
         When "Startdatum" date is "now"
         And Electricity EAN code is selected
+        And Electricity meter is Closed
         And Electricity market mock test is Open
         And Connection details are confirmed
         Then Form header is "Facturatiedetails"

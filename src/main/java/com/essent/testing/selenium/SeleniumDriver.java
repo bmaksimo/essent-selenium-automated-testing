@@ -8,7 +8,6 @@ import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.util.resource.ResourceUtil;
 import com.paulhammant.ngwebdriver.NgWebDriver;
-import cucumber.api.Scenario;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -36,8 +35,6 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -373,7 +370,6 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             return null;
         } else {
             WebElement webElement = elements.get(0);
-            logger.debug(String.format(" - RESULT: %s -> %s", selector, webElement.getAttribute("innerHTML")));
             return webElement;
         }
     }

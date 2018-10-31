@@ -1,6 +1,7 @@
 @DWP
-@B2C
 @SALES-MARKETING
+@QUOTE-SS
+@DEV
 Feature: Creating a B2C Quote TC1 with supplier switch - Dutch language version.
 
     Background:
@@ -15,7 +16,6 @@ Feature: Creating a B2C Quote TC1 with supplier switch - Dutch language version.
         Then Form header is "Persoonsgegevens"
 
         When Customer is random
-        #Increase houseNr by 2 (evens from 14)
         And Customer address is
             | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
             | Mechelsesteenweg| 2     |            |      | 2550       | Kontich  |         |

@@ -1,6 +1,6 @@
 @DWP
 @CORE
-@MENU
+@CORE-MENU
 Feature: DWP left-, top- and Plus- menu navigation
 
     Background:

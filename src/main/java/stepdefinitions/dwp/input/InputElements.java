@@ -88,6 +88,12 @@ public class InputElements extends DwpScenario {
             success, is(true));
     }
 
+    @And("^Form is submitted$")
+    public void formIsSubmitted() throws Throwable {
+        Map<String, String> options = new HashMap<>();
+        boolean success = executeJavascriptTest("TrSubmitForm", options);
+    }
+
     @Override
     @After("@DWP, @CORE, @E2E, @REGRESSION")
     public void tearDown() {

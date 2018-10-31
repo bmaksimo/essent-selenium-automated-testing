@@ -1,21 +1,21 @@
+/**
+ * Checks if Filter element is available in the DOM
+ * Then initialises the filter value with given value
+ *
+ * * @param {object.name} options - Action name argument passed from Java.
+ * * @param {function} callback - The Java callback that handles the result.
+ *
+ * Java example:
+ * Map<String, String> options = new HashMap<>();
+ * options.put("label", "Contract number");
+ * boolean result = executeJavascriptTest("TrFormInput", options);
+ */
 class BaseFormInput extends TestRunnerBase {
-
-    /**
-     * Checks if Filter element is available in the DOM
-     * Then initialises the filter value with given value
-     *
-     * * @param {object.name} options - Action name argument passed from Java.
-     * * @param {function} callback - The Java callback that handles the result.
-     *
-     * Java example:
-     * Map<String, String> options = new HashMap<>();
-     * options.put("label", "Contract number");
-     * boolean result = executeJavascriptTest("TrFormInput", options);
-     */
 
     constructor(options, callback) {
         super(options, callback, 500);
     }
+
     run() {
         let result = this.result;
         result.status = 'UNDEFINED';
