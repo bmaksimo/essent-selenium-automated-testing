@@ -20,15 +20,9 @@ public class SeleniumScenario extends RegisteredScenario {
     }
 
     public void setUpWebDriver() throws Exception {
-        if (webDriver == null) {
-            webDriver = new SeleniumDriver();
-            webDriver.setUp();
-        } else {
-            tidyUp();
-            webDriver = new SeleniumDriver();
-            webDriver.setUp();
-        }
-        webDriver.getDriver().manage().window().maximize();
+        tidyUp();
+        webDriver = new SeleniumDriver();
+        webDriver.setUp();
     }
 
 

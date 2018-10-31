@@ -33,6 +33,7 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.fail;
 public class ViewListElements extends NavigationElements {
 
+    private static final String EAN_FIELD_XPATH_SELECTOR = "//strong[@id='ean-c-field']";
     private HashMap strongElementSelectors;
 
     private class CheckViewListHeader implements Predicate<String> {
@@ -102,7 +103,7 @@ public class ViewListElements extends NavigationElements {
 
         List<Integer> fetchListRowsIndices(String value, String columnName) {
             Map viewTable = executeJavascriptMethod("TrGetTableModel", new HashMap<>());
-            int index = getColimnNameIndex(columnName, viewTable);
+            int index = getColumnNameIndex(columnName, viewTable);
             if (index < 0) {
                 fail(String.format("View List did not contain column %s", columnName));
             }
@@ -137,7 +138,7 @@ public class ViewListElements extends NavigationElements {
             Map<String, Object> options = new HashMap<>();
             options.put("include_selection", true);
             Map viewTable = executeJavascriptMethod("TrFetchDataSelection", options);
-            int index = getColimnNameIndex(columnName, viewTable);
+            int index = getColumnNameIndex(columnName, viewTable);
             if (index < 0) {
                 fail(String.format("View List did not contain column %s", columnName));
             }
@@ -149,7 +150,7 @@ public class ViewListElements extends NavigationElements {
 
         private String getCellValueAt(int row, String columnName) {
             Map viewTable = executeJavascriptMethod("TrGetTableModel", new HashMap<>());
-            int index = getColimnNameIndex(columnName, viewTable);
+            int index = getColumnNameIndex(columnName, viewTable);
             if (index < 0) {
                 fail(String.format("View List did not contain column %s", columnName));
             }
@@ -157,16 +158,15 @@ public class ViewListElements extends NavigationElements {
             if (row > rows.size()) {
                 fail(String.format("--Error in Test Input: Given %s row index cannot be greater that actual View List size %s", row, rows.size()));
             }
-            List<String> allRows = new ArrayList<>();
-            for (List internalRow : rows) allRows.addAll(internalRow);
-            return allRows.get(index);
+            List currentRow = rows.get(row - 1);
+            return (String) currentRow.get(index);
         }
 
         private List<ArrayList> getData(Map viewTable) {
             return (List) viewTable.get("rows");
         }
 
-        private int getColimnNameIndex(String columnName, Map viewTable) {
+        private int getColumnNameIndex(String columnName, Map viewTable) {
             List<String> columnNames = (List) viewTable.get("column_names");
             return columnNames.indexOf(columnName);
         }
@@ -443,6 +443,38 @@ public class ViewListElements extends NavigationElements {
         boolean success = new GetListAction().test(name);
         assertThat(String.format("List Action '%s' undefined.", name),
             success, is(true));
+    }
+
+    @And("^View List element \"([^\"]*)\" is collected as parameter at ([^\"]*) list row$")
+    public void collectViewListElementAsParameter(String viewListElement, String ordinal) {
+        String parameter = getViewListElementAtRow(viewListElement, ordinal);
+        parameterProvider.put(viewListElement, parameter);
+    }
+
+    @And("^View List element \"([^\"]*)\" using \"([^\"]*)\" as alias is collected as parameter at ([^\"]*) list row$")
+    public void collectViewListElementWithAliasAsParameter(String viewListElement, String viewListElementAlias, String ordinal) {
+        String parameter = getViewListElementAtRow(viewListElement, ordinal);
+        parameterProvider.put(viewListElementAlias, parameter);
+    }
+
+    @And("^EAN is collected")
+    public void collectEANField() {
+        WebElement element = webDriver.findElementOrNull(By.xpath(EAN_FIELD_XPATH_SELECTOR));
+        String deliverypointid = element.getText();
+
+        parameterProvider.put("EAN-code",deliverypointid);
+    }
+
+    private String getViewListElementAtRow(String viewListElement, String ordinal) {
+        int row = extractNumericValue(ordinal);
+        ViewListModel viewListModel = new ViewListModel();
+        String parameter = viewListModel.getCellValueAt(row, viewListElement);
+
+        assertThat(String.format("View List element '%s' was not found.", viewListElement),
+            StringUtils.isNotBlank(parameter), is(true));
+
+        return parameter;
+
     }
 
     @Override

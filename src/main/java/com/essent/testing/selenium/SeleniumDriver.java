@@ -124,7 +124,8 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
                 if (StringUtils.isNotEmpty(windowSize)) {
                     options.addArguments("window-size=" + windowSize);
                 }
-            }
+            } else { options.addArguments("--start-maximized"); }
+
             String userDataPath = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_USER_DATA_PATH);
             if (StringUtils.isNotEmpty(userDataPath)) {
                 options.addArguments("user-data-dir=" + userDataPath);
@@ -193,10 +194,10 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     }
 
     public void tearDown() {
-//        if (driver == null)
-//            return;
-//        driver.close();
-//        driver.quit();
+        if (driver == null)
+            return;
+        driver.close();
+        driver.quit();
     }
 
     private void injectJavaScriptInline(File functionFile) {

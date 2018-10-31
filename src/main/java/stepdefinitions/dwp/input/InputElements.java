@@ -6,6 +6,7 @@ import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
+import org.apache.tools.ant.taskdefs.Sleep;
 import stepdefinitions.dwp.tables.plus.CheckBoxState;
 
 import java.util.HashMap;
@@ -50,6 +51,7 @@ public class InputElements extends DwpScenario {
         options.put("label", label);
         options.put("value", inputValue);
         boolean success = new ApplyInput().test(options);
+        Sleeper.sleepTightInSeconds(2);
         assertThat(String.format("Input field %s is undefined.", label),
             success, is(true));
     }
@@ -80,6 +82,7 @@ public class InputElements extends DwpScenario {
         boolean success = new ApplySelection().test(options);
         assertThat(String.format("Selection %s is undefined.", label),
             success, is(true));
+        Sleeper.sleepTightInSeconds(3);
     }
 
     @And("^Option \"([^\"]*)\" is ([^\"]*)$")
