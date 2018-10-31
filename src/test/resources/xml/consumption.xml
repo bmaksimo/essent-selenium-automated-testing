@@ -27,7 +27,7 @@
     <values>
       <number>1</number>
       <value>4321.0</value>
-      <quality>DEFAULT</quality>
+      <quality>VALIDATED</quality>
     </values>
   </register>
 </Consumption>

@@ -1,19 +1,13 @@
 package com.essent.testing.restassured.create_contract.helper;
 
-import java.io.File;
-
-import org.apache.log4j.Logger;
-import org.junit.Assert;
-
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.restassured.create_contract.constants.ContractConstants;
-import com.jcraft.jsch.Channel;
-import com.jcraft.jsch.ChannelSftp;
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.Session;
-import com.jcraft.jsch.SftpException;
+import com.jcraft.jsch.*;
+import org.apache.log4j.Logger;
+import org.junit.Assert;
+
+import java.io.File;
 
 public class UploadB2BContractPrices {
 

@@ -36,6 +36,15 @@ public class ChangeAccountStatusPage extends Component {
             .step(createStep(Action.UPLOAD).element(elementName).value(path).requireDisplayed(false), UPLOAD_FILE.getSleepInMillis());
         return execute(execution);
     }
+    public boolean uploadFileForSign(String path) {
+        String elementName = "dwp.attachment.field";
+        String query = "#signed-contract-docguid-c-field";
+        Model.Execution execution = createExecution();
+        execution
+            .element(elementName, createElement("SELECTOR", query))
+            .step(createStep(Action.UPLOAD).element(elementName).value(path).requireDisplayed(false), UPLOAD_FILE.getSleepInMillis());
+        return execute(execution);
+    }
 
     public void findDocument() {
         waitForRequestsToFinish();

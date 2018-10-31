@@ -1,6 +1,5 @@
 package stepdefinitions.dwp.quote.b2c;
 
-import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
 import com.billinghouse.random.RandomUser;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
@@ -89,8 +88,8 @@ public class QuoteSteps extends DwpScenario {
             Map reply = executeJavascriptMethod("TrGetRandomUser", options);
             String status = ((String) reply.get("status"));
             boolean success = StringUtils.equals("PASSED", status);
-            if(success) {
-                Map userData  = (Map)reply.get("user");
+            if (success) {
+                Map userData = (Map) reply.get("user");
                 RandomUser randomUser = randomUser(userData);
                 customer.setLastName(randomUser.getName().getLast());
                 customer.setFirstName(randomUser.getName().getFirst());
@@ -116,7 +115,7 @@ public class QuoteSteps extends DwpScenario {
     private class InitialiseCustomerAddress implements Predicate<CustomerAddress> {
         @Override
         public boolean test(CustomerAddress customerAddress) {
-           return fillInCustomerAddress(customerAddress);
+            return fillInCustomerAddress(customerAddress);
         }
 
         private boolean fillInCustomerAddress(CustomerAddress customerAddress) {
@@ -146,17 +145,15 @@ public class QuoteSteps extends DwpScenario {
         given().await()
             .pollInterval(FIVE_HUNDRED_MILLISECONDS)
             .pollDelay(ONE_SECOND)
-            .atMost(new Duration(30, SECONDS)).until(()->new CheckFormHeader().test(formHeader));
+            .atMost(new Duration(30, SECONDS)).until(() -> new CheckFormHeader().test(formHeader));
     }
 
-    @OutputParameter(name = "customers")
-    private Map<String, CustomerDetails> customers = new HashMap<>();
 
     @And("^Customer is random$")
     public void findRandomUser() throws Throwable {
         CustomerDetails customer = new CustomerDetails();
         boolean success = new GetRandomUser().test(customer);
-        customers.put("onboarding", customer);
+        parameterProvider.put("suitecrm-customer-name", customer.getFirstName() + " " + customer.getLastName());
         assertThat("Random customer data was not fetched.", success,
             is(true));
     }
@@ -278,7 +275,8 @@ public class QuoteSteps extends DwpScenario {
             path);
         QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage(webDriver);
         quoteOverviewView.setSignatureData(signature);
-        quoteOverviewView.fillInFormData();
+        boolean success = quoteOverviewView.fillInFormData();
+        assertThat("Failure when signing up the quote.", success, is(true));
     }
 
 
@@ -316,5 +314,4 @@ public class QuoteSteps extends DwpScenario {
     public void tearDown() {
         super.tearDown();
     }
-
 }

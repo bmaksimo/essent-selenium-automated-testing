@@ -36,11 +36,6 @@ public class MenuElements extends NavigationElements {
         tm.findAndClickTopMenu(tabName);
     }
 
-    @When("^Refresh current page$")
-    public void refreshPage() {
-        refreshScreen();
-    }
-
     @Then("^Sleep for (\\d+) seconds$")
     public void sleepForSeconds(int seconds) {
         Sleeper.sleepTightInSeconds(seconds);

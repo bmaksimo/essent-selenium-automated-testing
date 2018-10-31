@@ -26,7 +26,6 @@ public class EssentPrettyFormatter extends PrettyFormatter implements ColorAware
     private static final Logger logger = Logger.getLogger(EssentPrettyFormatter.class);
     private static final Map<Class, BiConsumer> annotationRules  = new HashMap<>();
     private String    location;
-    private Throwable scenarioFailure;
 
     static {
         annotationRules.put(OutputParameter.class, (BiConsumer<String, Object>) (n, p) -> {
@@ -37,18 +36,19 @@ public class EssentPrettyFormatter extends PrettyFormatter implements ColorAware
     @Override
     public void result(Result result) {
         super.result(result);
-        logger.info("STEP:");
-        logger.info(" - ACTION: CUCUMBER_HOOK");
-        logger.info(" - HOOK: result: " + result.getStatus());
+        logger.info("CUCUMBER_HOOK (result)");
         RegisteredScenario activeScenario = (RegisteredScenario) getActiveScenario(location);
+        ParameterProvider  parameterProvider = ((ParameterProvider) ContextService.getContext().getBean("parameterProvider")).consumingNullValues(true);
         switch(result.getStatus()) {
             case Result.PASSED:
                 collectOutputParameters(OutputParameter.class, activeScenario);
                 break;
-            case Result.FAILED:
-                scenarioFailure = result.getError();
+            default:
+                parameterProvider.put("cucumber-scenario-status", result.getStatus());
+                parameterProvider.consumingNullValues(true).put("cucumber-scenario-failure", result.getError());
                 break;
         }
+        logger.info(" - TEST SCENARIO PARAMETERS: " + parameterProvider.toString());
     }
 
     @Override
@@ -59,11 +59,10 @@ public class EssentPrettyFormatter extends PrettyFormatter implements ColorAware
     @Override
     public void match(Match match) {
         super.match(match);
+        logger.info("CUCUMBER_HOOK (match)");
         this.location = match.getLocation();
         assignInputFromOuputParameters(getActiveScenario(location));
-        logger.info("STEP:");
-        logger.info(" - ACTION: CUCUMBER_HOOK");
-        logger.info(" - HOOK:  match, location: " + location);
+        logger.info(" - LOCATION: " + location);
     }
 
     private void assignInputFromOuputParameters(Object activeScenario) {
@@ -100,11 +99,9 @@ public class EssentPrettyFormatter extends PrettyFormatter implements ColorAware
 
     @Override
     public void endOfScenarioLifeCycle(Scenario scenario) {
-        logger.info("STEP:");
-        logger.info(" - ACTION: CUCUMBER_HOOK");
-        logger.info(" - HOOK: endOfScenarioLifeCycle");
+        logger.info("CUCUMBER_HOOK (endOfScenarioLifeCycle)");
         super.endOfScenarioLifeCycle(scenario);
-        scenarioFailure = null;
+
     }
 }
 

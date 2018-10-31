@@ -54,6 +54,17 @@ public class ConsumptionSteps extends DwpScenario {
         Assert.isTrue(resp.getResult(), resp.getMsg());
     }
 
+    @When("^Consumption at deliverypointid ([^\"]*) with ([^\"]*) hourly-tariff is generated from now until ([^\"]*) months after$")
+    public void generateConsumptionatDeliveryPoint(String deliveryPoint, String hourlyTariff, String months) throws Exception {
+        String deliveryPointId = parameterProvider.getValueOrParameterAsString(deliveryPoint);
+        String consumptionData = getConsumptionRequest(deliveryPointId, hourlyTariff, months);
+        BasePayload msg = generatePayloadFromString(consumptionData);
+
+        BillingEnergyCommRest bERest = new BillingEnergyCommRest();
+        RestResponse resp = bERest.postEnergyCommMessage(msg);
+        Assert.isTrue(resp.getResult(), resp.getMsg());
+    }
+
     private String getConsumptionRequest(String deliveryPoint, String hourlyTariff, String months) {
         UUID uuid = UUID.randomUUID();
         String fromDate = DateTime.now().toString("yyyy-MM-dd");

@@ -1,6 +1,7 @@
 package stepdefinitions.dwp.page_object;
 
 import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
+import com.essent.testing.dwp.pageobject.impl.page.MarketberichtenPage;
 import com.essent.testing.dwp.pageobject.impl.service_contracting.MarktberichtenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
@@ -58,5 +59,11 @@ public class MarketBerichtenSteps extends DwpScenario {
     @After("@DWP, @REGRESSION")
     public void tearDown() {
         super.tearDown();
+    }
+
+    @Then("^Validate contract was \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void validateContractWasTakenOver(String taken, String signed) throws Throwable {
+        MarketberichtenPage marketberichtenPage = new MarketberichtenPage(webDriver);
+        marketberichtenPage.takenOver(taken, signed);
     }
 }

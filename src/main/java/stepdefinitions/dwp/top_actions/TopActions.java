@@ -27,7 +27,7 @@ public class TopActions extends NavigationElements {
     }
 
     @And("^Top arrow button is ([^\"]*)$")
-    public void clickTopArrow(String arrow) throws Throwable {
+    public void clickTopArrowButton(String arrow) throws Throwable {
         super.clickTopArrow(arrow.toLowerCase());
     }
 

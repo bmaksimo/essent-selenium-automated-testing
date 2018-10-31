@@ -13,10 +13,9 @@ import stepdefinitions.dwp.tables.plus.CheckBoxState;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.essent.testing.dwp.autocrat.element.quote.B2CQuoteElements.ELECTRICITY_EAN_CODE;
 import static com.essent.testing.dwp.autocrat.element.quote.ConnectionElements.*;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.INPUT;
-
-import static com.essent.testing.dwp.autocrat.element.quote.B2CQuoteElements.*;
 
 public class ConnectionDetailsPage extends QuoteCreationGuidedStep {
 

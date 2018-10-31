@@ -87,6 +87,16 @@ public abstract class NavigationElements extends DwpScenario {
         }
     }
 
+    private class ClickDashboardMenu implements Predicate<String> {
+        @Override
+        public boolean test(String menu) {
+            Map<String, Object> options = new HashMap<>();
+            options.put("menu", menu);
+            return executeJavascriptTest("TrClickDashboardMenuButton", options);
+        }
+    }
+
+
     public class ValidateCustomer implements Predicate<Map> {
         @Override
         public boolean test(Map name) {
@@ -111,7 +121,7 @@ public abstract class NavigationElements extends DwpScenario {
             success, is(true));
     }
 
-    protected void clickTopArrow(String arrow) throws Throwable {
+    protected void clickTopArrow(String arrow)  {
         boolean success = new ClickTopArrowButton().test(arrow);
         assertThat(String.format("Top Arrow %s is undefined.", arrow),
             success, is(true));
@@ -136,13 +146,9 @@ public abstract class NavigationElements extends DwpScenario {
             success, is(true));
     }
 
-    protected void refreshScreen() {
-        webDriver.getDriver().navigate().refresh();
-        try {
-            Alert alert = webDriver.getDriver().switchTo().alert();
-            alert.accept();
-        } catch (Exception e) {
-            // do nothing, if the flow reached this point it means that no alert has been displayed
-        }
+    protected void clickDashboardMenu(String menu) {
+        boolean success = new ClickDashboardMenu().test(menu);
+        assertThat(String.format("Dashboard Menu  %s is undefined.", menu),
+            success, is(true));
     }
 }

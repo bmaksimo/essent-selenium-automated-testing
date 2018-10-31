@@ -1,8 +1,5 @@
 package com.essent.testing.restassured.create_contract.impl.b2b;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import com.essent.testing.restassured.create_contract.QuoteCreator;
 import com.essent.testing.restassured.create_contract.QuoteCreatorB2BBase;
 import com.essent.testing.restassured.create_contract.constants.ApiPathsContract;
@@ -11,6 +8,9 @@ import com.essent.testing.restassured.create_contract.constants.ContractStatus;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class ContractTC1B2BCreator extends QuoteCreatorB2BBase implements QuoteCreator {
 
