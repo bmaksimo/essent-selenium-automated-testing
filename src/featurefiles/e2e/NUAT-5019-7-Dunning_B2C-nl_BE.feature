@@ -7,7 +7,7 @@ Feature: Billing - Dunning
 
     Background:
         Given B2C TC1 Active Contract uses "FAKE" address and switch type is "MOVE IN"
-        And I logged in to DWP as sandhya.srinivasan@billinghouse.nl
+        And I logged in to DWP as billing.testautomation@essent.be
 
     @HB1
     Scenario: Reach HB1 dunning level and verify created invoices in DWP
