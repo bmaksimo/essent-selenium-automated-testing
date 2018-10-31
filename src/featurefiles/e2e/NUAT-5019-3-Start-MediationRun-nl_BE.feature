@@ -1,7 +1,8 @@
 @DWP
 @CREDIT-AND-CONTROL
+@NUAT-5019
 @MEDIATION-RUN
-Feature: Billing - Triggering mediation run via DWP
+Feature: NUAT-5019-3: Billing - Triggering mediation run
 
     Background:
 
@@ -26,7 +27,7 @@ Feature: Billing - Triggering mediation run via DWP
         And "Naam job" selection is "Voorschot"
         And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
         And "EAN-code" input is "parameter:EAN-code"
-        And "Datum afrekeningsfactuur" date is "now"
+        And "Datum afrekeningsfactuur" date is "1 month from now"
         Then Form is submitted
 
     #Scenario: Check Advance Invoice

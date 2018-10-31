@@ -1,5 +1,6 @@
 package stepdefinitions.dwp.b2b;
 
+import com.essent.testing.dwp.pageobject.impl.navigation.DwpTopMenu;
 import com.essent.testing.dwp.pageobject.impl.page.DwpHomePage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
@@ -52,5 +53,11 @@ public class Navigation extends DwpScenario {
         String externalFromPage = webDriver.findElementWhenVisible(By.xpath("//gridlr[@class='']//blue-sidebar/div/div[2]")).getText();
         String statusFromPage = webDriver.findElementWhenVisible(By.xpath("//gridlr[@class='']//blue-sidebar/div/div[3]")).getText();
         return externalFromPage.equalsIgnoreCase(external) && statusFromPage.equalsIgnoreCase(status);
+    }
+
+    @And("^Go back to home screen$")
+    public void goBackToHomeScreen() throws Throwable {
+        DwpTopMenu tm = new DwpTopMenu(webDriver);
+        tm.goBackToHomePage();
     }
 }

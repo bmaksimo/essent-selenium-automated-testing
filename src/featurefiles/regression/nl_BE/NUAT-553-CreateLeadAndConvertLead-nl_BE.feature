@@ -1,6 +1,8 @@
 @DWP
 @REGRESSION
-Feature: Dwp test for Creating Lead - nl_BE
+@B2B
+@BUSINESS-DESK
+Feature: NUAT-553: Create Lead And Convert Lead - nl_BE
 
     Background:
         Given I logged in to DWP as businessdesk.testautomation.b2b@essent.be

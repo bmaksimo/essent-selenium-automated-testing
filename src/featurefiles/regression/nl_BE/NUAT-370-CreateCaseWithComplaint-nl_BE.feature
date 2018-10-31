@@ -1,6 +1,8 @@
 @DWP
 @REGRESSION
-Feature: Create a case with complaint
+@B2B
+@CREDIT-AND-CONTROL
+Feature: NUAT-370: Create Case With Complaint - nl_BE
 
     Background:
         Given  I logged in to DWP as businessdesk.testautomation.b2b@essent.be

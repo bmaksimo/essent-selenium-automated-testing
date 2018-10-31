@@ -12,13 +12,13 @@ import cucumber.api.java.en.Then;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 public class ChangeAccountStatusSteps extends DwpScenario {
-    @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @BILLING, @B2B_REGRESSION")
+    @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @BILLING, @B2B_REGRESSION, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
 
     @Override
-    @After("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION")
+    @After("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION, @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }
@@ -34,6 +34,14 @@ public class ChangeAccountStatusSteps extends DwpScenario {
         String filePath = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
         ChangeAccountStatusPage changeAccountStatusPage = new ChangeAccountStatusPage(webDriver);
         boolean success = changeAccountStatusPage.uploadFile(filePath);
+        assertThat(String.format("Signature file %s upload failed.", filePath), success, is(true));
+    }
+
+    @And("^Getekend document is uploaded$")
+    public void uploadFileForSign() throws InterruptedException {
+        String filePath = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
+        ChangeAccountStatusPage changeAccountStatusPage = new ChangeAccountStatusPage(webDriver);
+        boolean success = changeAccountStatusPage.uploadFileForSign(filePath);
         assertThat(String.format("Signature file %s upload failed.", filePath), success, is(true));
     }
 

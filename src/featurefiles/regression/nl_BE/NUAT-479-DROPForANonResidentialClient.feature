@@ -1,6 +1,8 @@
 @DWP
 @REGRESSION
-Feature: DROP for a Non-residential client
+@B2B
+@BUSINESS-DESK
+Feature: NUAT-479: DROP For A Non Residential Client
 
     Background:
         Given  I logged in to DWP as businessdesk.testautomation.b2b@essent.be

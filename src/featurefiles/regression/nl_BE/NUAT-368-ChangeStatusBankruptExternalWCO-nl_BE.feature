@@ -1,6 +1,8 @@
 @DWP
 @REGRESSION
-Feature: Change Status of Bankrupt, External, WCO dwp scenario
+@B2B
+@CREDIT-AND-CONTROL
+Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
 
     Background:
         Given I logged in to DWP as businessdesk.testautomation.b2b@essent.be

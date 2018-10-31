@@ -1,6 +1,6 @@
 @DWP
 @CREDIT-AND-CONTROL
-@BILLING
+@RECEIVED_CONSUMPTION
 @DEV
 Feature: Received consumption
 

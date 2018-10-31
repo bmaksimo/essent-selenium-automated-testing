@@ -1,6 +1,8 @@
 @DWP
 @REGRESSION
-Feature: Dwp for handling task for rejection - nl_BE
+@B2B
+@BUSINESS-DESK
+Feature: NAUT-489: Handle Task For Rejection - nl_BE
 
     Background:
         Given I logged in to DWP as businessdesk.testautomation.b2b@essent.be

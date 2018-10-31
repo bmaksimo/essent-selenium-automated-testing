@@ -25,9 +25,7 @@ import java.util.stream.IntStream;
 import static com.billinghouse.test_automation.util.dsl.NumericExpressionsUtil.extractFirstNumericPart;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
-import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
-import static org.awaitility.Duration.ONE_SECOND;
-import static org.awaitility.Duration.TWO_SECONDS;
+import static org.awaitility.Duration.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.fail;
@@ -363,19 +361,11 @@ public class ViewListElements extends NavigationElements {
         return true;
     }
 
-    @And("^Cell value from \"([^\"]*)\" row and \"([^\"]*)\" column is put to parameter \"([^\"]*)\"$")
-    public void putParameter(String ordinal, String column, String key) throws Throwable {
-        int row = extractNumericValue(ordinal);
-        String rawValue = new ViewListModel().getCellValueAt(row, column);
-        String numericValue = extractFirstNumericPart(rawValue);
-        parameterProvider.put(key, numericValue);
-    }
-
-    @And("^Cell values? from selected rows? and column \"([^\"]*)\" are put to parameter \"([^\"]*)\"$")
-    public void storeDataSelectionOutputParameter(String columnName, String outParamName) throws Throwable {
+    @And("^Cell values? from selected rows? and column \"([^\"]*)\" (?:are|is) checked$")
+    public void checkDataSelection(String columnName) throws Throwable {
         ViewListModel viewListModel = new ViewListModel();
         List<String> cellSelection = viewListModel.fetchDataSelection(columnName);
-        parameterProvider.put(outParamName, cellSelection);
+        parameterProvider.put(columnName, cellSelection);
         assertThat(String.format("Data selection at column %s is empty", columnName),
             cellSelection, not(hasSize(0)));
     }
@@ -439,6 +429,12 @@ public class ViewListElements extends NavigationElements {
     @Then("^Selected List rows have cell value \"([^\"]*)\" at column \"([^\"]*)\"$")
     public void checkSelectionData(String value, String columnName) throws Throwable {
         ViewListModel viewListModel = new ViewListModel();
+        given()
+            .ignoreExceptions()
+            .pollDelay(Duration.FIVE_HUNDRED_MILLISECONDS)
+            .pollInterval(TWO_SECONDS)
+            .atMost(TEN_SECONDS)
+            .until(() -> !viewListModel.fetchDataSelection(columnName).isEmpty());
         List<String> cellSelection = viewListModel.fetchDataSelection(columnName);
         assertThat(String.format("Selection of rows by column %s was empty", columnName),
             cellSelection.isEmpty(), is(false));

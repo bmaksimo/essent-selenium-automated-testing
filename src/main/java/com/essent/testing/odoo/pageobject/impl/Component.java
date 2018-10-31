@@ -42,7 +42,7 @@ public abstract class Component {
             logger().fatal(" - REASON: " + getClass() + "{null}: Web element was not found. ");
             throw new CucumberException(getClass() + ": Web element was not found.");
         }
-        logger.info(String.format(" - TARGET: %s -> %s", selector, element.getAttribute("innerHTML")));
+        logger.debug(String.format(" - TARGET: %s -> %s", selector, element.getAttribute("innerHTML")));
         this.seleniumDriver = seleniumDriver;
     }
 

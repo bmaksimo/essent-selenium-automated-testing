@@ -370,7 +370,6 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             return null;
         } else {
             WebElement webElement = elements.get(0);
-            logger.debug(String.format(" - RESULT: %s -> %s", selector, webElement.getAttribute("innerHTML")));
             return webElement;
         }
     }
@@ -443,6 +442,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
 
     public void waitAndSendKeys(final WebElement element, final String keysToSend) {
         waitForElement(element);
+        element.click();
         element.clear();
         element.click();
         element.sendKeys(keysToSend);

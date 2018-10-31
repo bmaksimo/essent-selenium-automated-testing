@@ -1,6 +1,6 @@
 @ODOO
 @DEV
-@CODA-IMPORT
+@DEV-CODA-IMPORT
 Feature: Import a coda file
 
     Background:

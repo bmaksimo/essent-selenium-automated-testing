@@ -1,9 +1,10 @@
 @ODOO
 @E2E
+@B2C
 @CREDIT-AND-CONTROL
 @NUAT-5019
 @IMPORT-CODA
-Feature: Import a coda file
+Feature: NUAT-5019-5: Import a coda file
 
     Background:
         Given I logged in to Odoo as p.paulussen

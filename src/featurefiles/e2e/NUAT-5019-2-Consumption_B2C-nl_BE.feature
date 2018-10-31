@@ -1,7 +1,8 @@
 @DWP
 @CREDIT-AND-CONTROL
+@NUAT-5019
 @CONSUMPTIONS
-Feature: DB Import billable received consumption values for given B2C customer
+Feature: NUAT-5019-2: Received consumption
 
     Background:
 
