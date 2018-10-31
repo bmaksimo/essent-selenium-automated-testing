@@ -3,7 +3,7 @@
 @B2C
 @CREDIT-AND-CONTROL
 @NUAT-5019
-Feature: Billing - Advanec Invoice
+Feature: NUAT-5019-2: Billing - Advance Invoice
 
     Background:
 

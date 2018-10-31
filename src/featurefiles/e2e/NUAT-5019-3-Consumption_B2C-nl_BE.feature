@@ -3,7 +3,7 @@
 @B2C
 @CREDIT-AND-CONTROL
 @NUAT-5019
-Feature: Received consumption
+Feature: NUAT-5019-3: Received consumption
 
     Background:
         Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be

@@ -2,7 +2,7 @@
 @REGRESSION
 @B2B
 @BUSINESS-DESK
-Feature: Dwp for handling task for canceling - nl_BE
+Feature: NAUT-490: Handle Task For Cancel - nl_BE
 
     Background:
         Given I logged in to DWP as businessdesk.testautomation.b2b@essent.be

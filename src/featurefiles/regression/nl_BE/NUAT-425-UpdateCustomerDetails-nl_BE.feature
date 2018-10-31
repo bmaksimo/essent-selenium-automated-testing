@@ -2,7 +2,7 @@
 @REGRESSION
 @B2B
 @CREDIT-AND-CONTROL
-Feature: Update customer details - dunning stop
+Feature: NUAT-425: Update Customer Details - nl_BE
 
     Background:
         Given  I logged in to DWP as businessdesk.testautomation.b2b@essent.be

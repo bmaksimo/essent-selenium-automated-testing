@@ -2,7 +2,7 @@
 @REGRESSION
 @B2B
 @CREDIT-AND-CONTROL
-Feature: End of contract for bankruptcy - nl_BE version
+Feature: NUAT-373: End Of Contract For Bankruptcy - nl_BE
 
     Background:
         Given I logged in to DWP as businessdesk.testautomation.b2b@essent.be

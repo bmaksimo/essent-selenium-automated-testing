@@ -3,7 +3,7 @@
 @B2C
 @CREDIT-AND-CONTROL
 @NUAT-5019
-Feature: End order (drop) messaging
+Feature: NUAT-5019-6: End order (drop) messaging
 
     Background:
         Given I logged in to DWP as contracting.testautomation.b2c@essent.be

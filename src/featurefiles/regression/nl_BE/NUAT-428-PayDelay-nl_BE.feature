@@ -2,7 +2,7 @@
 @REGRESSION
 @B2B
 @CREDIT-AND-CONTROL
-Feature: Test scenario for move pay date
+Feature: NUAT-428: Pay Delay - nl_BE
 
     Background:
         Given I logged in to DWP as businessdesk.testautomation.b2b@essent.be

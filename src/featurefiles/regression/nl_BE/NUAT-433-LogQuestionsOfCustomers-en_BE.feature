@@ -2,7 +2,7 @@
 @REGRESSION
 @B2B
 @BUSINESS-DESK
-Feature: Log questions of customers
+Feature: NUAT-433: Log Questions Of Customers - en_BE
 
     Background:
         Given  I logged in to DWP as businessdesk.testautomation.b2b@essent.be

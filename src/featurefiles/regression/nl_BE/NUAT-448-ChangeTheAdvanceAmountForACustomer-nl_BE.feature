@@ -2,7 +2,7 @@
 @REGRESSION
 @B2B
 @BUSINESS-DESK
-Feature: Dwp test for changing amount for a customer
+Feature: NUAT-448: Change The Advance Amount For A Customer - nl_BE
 
     Background:
         Given   I logged in to DWP as businessdesk.testautomation.b2b@essent.be

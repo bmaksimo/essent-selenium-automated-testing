@@ -2,7 +2,7 @@
 @REGRESSION
 @B2B
 @BUSINESS-DESK
-Feature: Contract take over
+Feature: NUAT-441: Contract Take Over
 
     Background:
         Given  I logged in to DWP as businessdesk.testautomation.b2b@essent.be

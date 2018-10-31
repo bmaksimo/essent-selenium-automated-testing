@@ -2,7 +2,7 @@
 @REGRESSION
 @B2B
 @CREDIT-AND-CONTROL
-Feature: Dwp test for duplicating customer - nl_BE
+Feature: NUAT-372: Duplicate Customer - nl_BE
 
     Background:
         Given I logged in to DWP as businessdesk.testautomation.b2b@essent.be
