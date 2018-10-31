@@ -11,9 +11,9 @@ Feature: DROP for a Non-residential client
         Then View list header is "Klanten" appears within 25 seconds
 
 
-        When Top action is Filters
-        And "Naam" input is "%Steven%"
-        And "Klantnummer" input is "150638828"
+        When B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
+        And Top action is Filters
+        And "Klantnummer" input is "parameter:accountNumber"
         And Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
         And Dashboard menu is Marktberichten
         And Select "START NIEUW MARKTBERICHT" on Marktberichten page
@@ -21,7 +21,7 @@ Feature: DROP for a Non-residential client
         When Input in Module is "INITIATE STOP ACCESS"
         And Input in Label is "Drop/Request Budget Meter"
         And Check toggle "Testing"
-        And Check toggle "Market mocK"
+        And Check toggle "Market mock"
         And Changes are confirmed
         Then Confirm task was "Non-Residential Drop"
 

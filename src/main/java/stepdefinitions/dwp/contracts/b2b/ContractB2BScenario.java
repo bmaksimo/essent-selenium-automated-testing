@@ -153,6 +153,7 @@ public class ContractB2BScenario extends RegisteredScenario {
 		}
 
 		logger().info("ACCOUNT NUMBER: " + accountNumber);
+		parameterProvider.put("accountNumber", accountNumber);
 		return accountNumber;
 	}
 

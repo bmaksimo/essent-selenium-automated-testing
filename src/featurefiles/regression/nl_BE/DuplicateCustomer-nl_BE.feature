@@ -8,14 +8,14 @@ Feature: Dwp test for duplicating customer - nl_BE
     Scenario: Duplicate customer
         When Left menu is sales-marketing
         And Top menu item is Klanten
+        And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Top action is Filters
-        And "Naam" input is "%Steven%"
-        And "Klantnummer" input is "150638828"
-        And Click on link in View List at 1st row and "Klantnummer & Naam" column
+        And "Klantnummer" input is "parameter:accountNumber"
+        And Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
         And Plus menu is "Service -> Dupliceer klant"
-        When "Bedrijfsnaam" input is "Van Hauwaert Steven - Test Nuat 372"
+        When "Bedrijfsnaam" input is "Test Nuat 372"
         Then Changes are confirmed
         And Top arrow button is Up
-        And Search input is Van Hauwaert Steven - Test Nuat 372
-        Then Customer "Van Hauwaert Steven - Test Nuat 372" is found
+        And Search input is Test Nuat 372
+        Then Customer "Test Nuat 372" is found
 

@@ -8,10 +8,10 @@ Feature: Create a task for an other team
     Scenario: Create a task for an other team
         When Left menu is sales-marketing
         And Top menu item is Klanten
+        And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Top action is Filters
-        And "B2C/B2B" selection is "B2B"
-        And "Type klant" selection is "Klant"
-        Then Click on link in View List at 1st row and "Klantnummer & Naam" column
+        And "Klantnummer" input is "parameter:accountNumber"
+        Then Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
         
         When Plus menu is "Service -> Een taak aanmaken voor de klant"
         And "Type" selection is "invoicing"
