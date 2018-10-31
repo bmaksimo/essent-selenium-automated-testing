@@ -1,6 +1,6 @@
 @DWP
 @REGRESSION
-Feature: Change bank account for a customer
+Feature: NUAT-423: Change Bank Account - nl_BE
 
     Background:
         Given I logged in to DWP as businessdesk.testautomation.b2b@essent.be

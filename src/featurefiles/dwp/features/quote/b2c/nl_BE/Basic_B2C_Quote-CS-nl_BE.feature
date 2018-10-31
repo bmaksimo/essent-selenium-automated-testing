@@ -1,4 +1,5 @@
 @DWP
+@B2C
 @SALES-MARKETING
 Feature: Creating a B2C Quote with customer switch - Dutch language version.
 

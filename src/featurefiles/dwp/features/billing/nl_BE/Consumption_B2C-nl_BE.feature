@@ -1,6 +1,7 @@
 @DWP
 @BUSINESS-DESK
 @BILLING
+@B2C
 Feature: Received consumption
 
     Background:

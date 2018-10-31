@@ -1,6 +1,8 @@
 @DWP
 @REGRESSION
-Feature: Dwp test for checking usage of a customer
+@B2B
+@BUSINESS-DESK
+Feature: NUAT-446: Check The Usage Of A Customer - nl_BE
 
     Background:
         Given   I logged in to DWP as businessdesk.testautomation.b2b@essent.be

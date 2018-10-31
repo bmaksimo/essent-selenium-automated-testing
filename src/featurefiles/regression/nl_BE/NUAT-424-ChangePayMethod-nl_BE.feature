@@ -1,6 +1,8 @@
 @DWP
 @REGRESSION
-Feature: Change Payment Method
+@B2B
+@CREDIT-AND-CONTROL
+Feature: NUAT-424: Change Pay Method - nl_BE
 
     Background:
         Given I logged in to DWP as businessdesk.testautomation.b2b@essent.be
