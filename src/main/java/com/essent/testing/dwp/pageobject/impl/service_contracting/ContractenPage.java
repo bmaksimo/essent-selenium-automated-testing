@@ -102,4 +102,9 @@ public class ContractenPage extends Component {
         findElementWhenVisible(By.xpath("(//*[@id='rows']/tr[" + counter + "]/td[10]/list-plus-cell//a)[1]")).click();
         findElementWhenVisible(By.xpath("//list-row-action[@label='" + option + "']/a")).click();
     }
+
+    public void findIban(String iban) {
+        waitForRequestsToFinish();
+        Assert.assertTrue(seleniumDriver.findElementWhenVisible(By.xpath("//span[.='" + iban + "']")).isDisplayed());
+    }
 }
