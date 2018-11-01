@@ -25,8 +25,7 @@ import java.util.stream.IntStream;
 import static com.billinghouse.test_automation.util.dsl.NumericExpressionsUtil.extractFirstNumericPart;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
-import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
-import static org.awaitility.Duration.TWO_SECONDS;
+import static org.awaitility.Duration.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.fail;
@@ -99,7 +98,7 @@ public class ViewListElements extends NavigationElements {
 
         List<Integer> fetchListRowsIndices(String value, String columnName) {
             Map viewTable = executeJavascriptMethod("TrGetTableModel", new HashMap<>());
-            int index = getColimnNameIndex(columnName, viewTable);
+            int index = getColumnNameIndex(columnName, viewTable);
             if (index < 0) {
                 fail(String.format("View List did not contain column %s", columnName));
             }
@@ -134,7 +133,7 @@ public class ViewListElements extends NavigationElements {
             Map<String, Object> options = new HashMap<>();
             options.put("include_selection", true);
             Map viewTable = executeJavascriptMethod("TrFetchDataSelection", options);
-            int index = getColimnNameIndex(columnName, viewTable);
+            int index = getColumnNameIndex(columnName, viewTable);
             if (index < 0) {
                 fail(String.format("View List did not contain column %s", columnName));
             }
@@ -145,8 +144,10 @@ public class ViewListElements extends NavigationElements {
         }
 
         private String getCellValueAt(int row, String columnName) {
+            logger().info("STEP: JAVASCRIPT_FETCH_DATA");
             Map viewTable = executeJavascriptMethod("TrGetTableModel", new HashMap<>());
-            int index = getColimnNameIndex(columnName, viewTable);
+            logger().info(" - RESULT: " + viewTable);
+            int index = getColumnNameIndex(columnName, viewTable);
             if (index < 0) {
                 fail(String.format("View List did not contain column %s", columnName));
             }
@@ -163,7 +164,7 @@ public class ViewListElements extends NavigationElements {
             return (List) viewTable.get("rows");
         }
 
-        private int getColimnNameIndex(String columnName, Map viewTable) {
+        private int getColumnNameIndex(String columnName, Map viewTable) {
             List<String> columnNames = (List) viewTable.get("column_names");
             return columnNames.indexOf(columnName);
         }
@@ -195,6 +196,13 @@ public class ViewListElements extends NavigationElements {
         @Override
         public boolean test(Map options) {
             return executeJavascriptTest("TrPaymentDetailsModalSaveAction", options);
+        }
+    }
+
+    private class CheckEmptyTableAction implements Predicate<Map> {
+        @Override
+        public boolean test(Map options) {
+            return executeJavascriptTest("TrCheckEmptyTable", options);
         }
     }
 
@@ -269,8 +277,9 @@ public class ViewListElements extends NavigationElements {
         columnIndexListOptions.put("index", rowIndex);
         ClickTableCellUrl clickFunction = new ClickTableCellUrl();
         given().await()
-            .pollInterval(FIVE_HUNDRED_MILLISECONDS)
-            .pollDelay(TWO_SECONDS)
+            .ignoreExceptions()
+            .pollInterval(ONE_SECOND)
+            .pollDelay(new Duration(seconds / 2, SECONDS))
             .atMost(new Duration(seconds, SECONDS)).until(()-> clickFunction.test(columnIndexListOptions));
     }
 
@@ -330,19 +339,33 @@ public class ViewListElements extends NavigationElements {
             success, is(true));
     }
 
-    @And("^Cell value from \"([^\"]*)\" row and \"([^\"]*)\" column is put to parameter \"([^\"]*)\"$")
-    public void putParameter(String ordinal, String column, String key) throws Throwable {
+    @And("^([^\"]*) list element has cell value ([^\"]*) at column \"([^\"]*)\" polling (\\d+) seconds?$")
+    public void containsElementAt(String ordinal, String value, String columnName, int seconds) throws Throwable {
         int row = extractNumericValue(ordinal);
-        String rawValue = new ViewListModel().getCellValueAt(row, column);
-        String numericValue = extractFirstNumericPart(rawValue);
-        parameterProvider.put(key, numericValue);
+        ViewListModel viewListModel = new ViewListModel();
+        given()
+            .await()
+            .ignoreExceptions()
+            .pollInterval(new Duration(20, SECONDS))
+            .pollDelay(TWO_SECONDS)
+            .atMost(new Duration(seconds, SECONDS)).until(()->
+                loopBack() &&
+                viewListModel.containsDataAt(row, value, columnName));
     }
 
-    @And("^Cell values? from selected rows? and column \"([^\"]*)\" are put to parameter \"([^\"]*)\"$")
-    public void storeDataSelectionOutputParameter(String columnName, String outParamName) throws Throwable {
+    private boolean loopBack()  {
+        String arrow = parameterProvider.getValueOrParameterAsString("parameter:navigation");
+        String dashboardMenu = parameterProvider.getValueOrParameterAsString("parameter:dashboard-menu");
+        clickTopArrow(arrow);
+        clickDashboardMenu(dashboardMenu);
+        return true;
+    }
+
+    @And("^Cell values? from selected rows? and column \"([^\"]*)\" (?:are|is) checked$")
+    public void checkDataSelection(String columnName) throws Throwable {
         ViewListModel viewListModel = new ViewListModel();
         List<String> cellSelection = viewListModel.fetchDataSelection(columnName);
-        parameterProvider.put(outParamName, cellSelection);
+        parameterProvider.put(columnName, cellSelection);
         assertThat(String.format("Data selection at column %s is empty", columnName),
             cellSelection, not(hasSize(0)));
     }
@@ -402,9 +425,16 @@ public class ViewListElements extends NavigationElements {
             success, is(true));
     }
 
+
     @Then("^Selected List rows have cell value \"([^\"]*)\" at column \"([^\"]*)\"$")
     public void checkSelectionData(String value, String columnName) throws Throwable {
         ViewListModel viewListModel = new ViewListModel();
+        given()
+            .ignoreExceptions()
+            .pollDelay(Duration.FIVE_HUNDRED_MILLISECONDS)
+            .pollInterval(TWO_SECONDS)
+            .atMost(TEN_SECONDS)
+            .until(() -> !viewListModel.fetchDataSelection(columnName).isEmpty());
         List<String> cellSelection = viewListModel.fetchDataSelection(columnName);
         assertThat(String.format("Selection of rows by column %s was empty", columnName),
             cellSelection.isEmpty(), is(false));
@@ -424,6 +454,24 @@ public class ViewListElements extends NavigationElements {
         boolean success = new GetListAction().test(name);
         assertThat(String.format("List Action '%s' undefined.", name),
             success, is(true));
+    }
+
+    @And("([^\"]*) list is not empty")
+    public void viewIsNotEmpty(String table) throws Throwable {
+        Map<String, String> options = new HashMap<>();
+        options.put("table", table);
+        boolean success = new CheckEmptyTableAction().test(options);
+        assertThat(String.format(table + " doesn't exist"),
+            success, is(true));
+    }
+
+    @And("([^\"]*) list is empty")
+    public void isViewEmpty(String header) throws Throwable {
+        Map<String, String> options = new HashMap<>();
+        options.put("table", header);
+        boolean hasData = new CheckEmptyTableAction().test(options);
+        assertThat(String.format(header + " is not empty"),
+            hasData, is(false));
     }
 
     @Override

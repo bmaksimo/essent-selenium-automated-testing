@@ -1,0 +1,30 @@
+@DWP
+@REGRESSION
+@B2B
+@CREDIT-AND-CONTROL
+Feature: NUAT-373: End Of Contract For Bankruptcy - nl_BE
+
+    Background:
+        Given I logged in to DWP as businessdesk.testautomation.b2b@essent.be
+
+    Scenario: End of contract for bankruptcy
+        When Left menu is sales-marketing
+        And Top menu item is Klanten
+        And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
+        And Top action is Filters
+        And "Klantnummer" input is "parameter:accountNumber"
+        And Click on link in View List at 1st row and "Klantnummer & Naam" column polling 15 seconds
+        Then Dashboard menu is Contracten
+
+        When Find "Actief" contract
+        And Dashboard menu is Marktberichten
+        And Click on Start nieuw marktbericht
+        And Click Select Contractline
+        And Search for ean code
+        Then Changes are confirmed
+
+        When Input in Module is "INITIATE STOP ACCESS"
+        And Input in Label is "Non-Residential End-of-Contract"
+        And "Effective Date" date is "now"
+        And Changes are confirmed
+        Then Confirm task was "Non-Residential End-of-Contract"

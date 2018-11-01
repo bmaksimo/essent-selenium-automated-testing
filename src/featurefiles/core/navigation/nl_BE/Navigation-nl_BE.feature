@@ -1,6 +1,6 @@
 @DWP
 @CORE
-@NAVIGATION
+@CORE-NAVIGATION
 Feature: GUI navigation elements.
 
     Background:

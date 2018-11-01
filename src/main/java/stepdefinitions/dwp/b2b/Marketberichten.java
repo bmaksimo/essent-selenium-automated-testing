@@ -2,12 +2,9 @@ package stepdefinitions.dwp.b2b;
 
 import com.essent.testing.dwp.pageobject.impl.page.MarketberichtenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
-import cucumber.api.java.en.Then;
-import org.junit.Assert;
 
 public class Marketberichten extends DwpScenario {
 

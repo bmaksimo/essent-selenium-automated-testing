@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 log=errors.log
-directory="mvn clean test -Dtest=DwpEssentRunnerTest -Denvironment=UAT08 -Dwebdriver.chrome.driver=C:/Users/dmitr/scoop/apps/chromedriver/current/chromedriver.exe \"-Dchrome.user.data.path=C:/Users/dmitr/development/essent-be/Chrome/Profiles/DWP Testing\" \"-Dcucumber.options=--tags @ODOO\" -DreuseForks=false -Dwebdriver.chrome.headless=headless -Dwebdriver.chrome.headless.window.size=1280x800"
+directory="mvn clean test -Dtest=DwpEssentRunnerTest -Denvironment=UAT06 -Dwebdriver.chrome.driver=C:/Users/dmitr/scoop/apps/chromedriver/current/chromedriver.exe \"-Dchrome.user.data.path=C:/Users/dmitr/development/essent-be/Chrome/Profiles/DWP Testing\" \"-Dcucumber.options=--tags @CORE-VIEW_LIST_MODEL\" -DreuseForks=false -Dwebdriver.chrome.headless=headless -Dwebdriver.chrome.headless.window.size=1280x800"
 for i in `seq 1 20`;
 do
    eval ${directory//\//\\/}

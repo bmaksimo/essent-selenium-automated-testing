@@ -16,6 +16,10 @@ public class ParameterProvider {
 
     private boolean consumeNullValues;
 
+    public boolean containsKey(Object key) {
+        return parameters.containsKey(key);
+    }
+
     public Object get(Object key) {
         return parameters.get(key);
     }
@@ -37,11 +41,13 @@ public class ParameterProvider {
     }
 
     public Object put(String key, Object value) {
+        log.info("STEP:");
+        log.info(" - ACTION: PUT_GLOBAL_PARAMETER");
         if(consumeNullValues && value == null) {
-            log.warn("Null value for output param '" + key);
+            log.warn("WARNING: Null value for output param " + key);
             return null;
         }
-        log.info("Registering Output param '" + key + ", value: " + value);
+        log.info(" - RESULT: Registered global parameter '" + key + "' = " + value);
         return parameters.put(key, value);
     }
 
@@ -62,5 +68,9 @@ public class ParameterProvider {
     public ParameterProvider consumingNullValues(boolean consumingNullValues) {
         this.consumeNullValues = consumingNullValues;
         return this;
+    }
+
+    public String toString() {
+        return parameters.toString();
     }
 }
