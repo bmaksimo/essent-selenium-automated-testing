@@ -69,6 +69,7 @@ public class LeadPage extends BaseObject implements Form {
     private void setContactPerson(String contactPersonName, String contactPersonLastName) {
         waitForRequestsToFinish();
         seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("first-name-field")), contactPersonName);
+        waitForRequestsToFinish();
         seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("last-name-field")), contactPersonLastName);
     }
 

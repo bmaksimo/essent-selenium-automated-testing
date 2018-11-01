@@ -23,7 +23,7 @@ public class BaseObject extends Component {
     }
 
     public void clickOnPlus() {
-        seleniumDriver.waitAndClick(seleniumDriver.findElementOrNull(By.xpath("(//tbody[@id='rows']//list-plus-cell//a)[1]")));
+        seleniumDriver.waitAndClick(seleniumDriver.findElementOrNull(By.xpath("(//list-plus-cell//a)[1]")));
     }
 
     public void plusSubaction(String action) {
