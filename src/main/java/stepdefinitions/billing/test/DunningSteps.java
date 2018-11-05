@@ -74,20 +74,4 @@ public class DunningSteps extends DwpScenario {
     private LocalDate dayToDate(int days) {
         return dunningStartDate.plusDays(days);
     }
-
-    @When("I change the balance of invoice with public number \"([^\"]*)\" to \"([^\"]*)\":?")
-    public void i_change_the_balance_of_invoice_to(String invoiceNumber, String newBalance) {
-        RSChangeInvoiceBalanceRequest request = new RSChangeInvoiceBalanceRequest();
-        request.setInvoiceNumber(invoiceNumber);
-        request.setNewBalance(new BigDecimal(newBalance));
-        BillingInvoiceRest service = new BillingInvoiceRest();
-        balanceResponse = service.changeInvoiceBalance(request);
-    }
-
-    @When("^I adjust invoice with number \"([^\"]*)\" for due on day (\\d+)$")
-    public void i_adjust_invoice_for_due_on_day(String invoiceNr, int dueDay) throws Throwable {
-        LocalDate dueDate = dayToDate(dueDay);
-        LocalDate creationDate = dayToDate(dueDay - 10);
-        DBUtility.setInvoiceDates(DBUtility.getInvoiceId(invoiceNr), creationDate, dueDate);
-    }
 }

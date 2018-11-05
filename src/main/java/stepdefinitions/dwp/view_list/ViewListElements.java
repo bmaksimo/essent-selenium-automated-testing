@@ -235,21 +235,6 @@ public class ViewListElements extends NavigationElements {
     @Before("@DWP, @CORE, @E2E, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
-        populateStrongElementsIdsSelectors();
-    }
-
-    private void populateStrongElementsIdsSelectors() {
-        this.strongElementSelectors = new HashMap();
-        this.strongElementSelectors.put("Status aanmaningsprocedure", "//strong[@id='dunning-status-field']");
-    }
-
-    @Then("^Field \"([^\"]*)\" is \"([^\"]*)\"$")
-    public void checkElementDetailsValue(String field, String expected) {
-        String selectorId = (String) this.strongElementSelectors.get(field);
-        WebElement element = webDriver.findElementOrNull(By.xpath(selectorId));
-        String result = element.getText();
-        assertThat(String.format("Element '%s' is different from '%s'", expected, result),
-            expected.equalsIgnoreCase(result), is(true));
     }
 
     @When("^View list header is \"([^\"]*)\"$")
@@ -485,14 +470,6 @@ public class ViewListElements extends NavigationElements {
     public void collectViewListElementWithAliasAsParameter(String viewListElement, String viewListElementAlias, String ordinal) {
         String parameter = getViewListElementAtRow(viewListElement, ordinal);
         parameterProvider.put(viewListElementAlias, parameter);
-    }
-
-    @And("^EAN is collected")
-    public void collectEANField() {
-        WebElement element = webDriver.findElementOrNull(By.xpath(EAN_FIELD_XPATH_SELECTOR));
-        String deliverypointid = element.getText();
-
-        parameterProvider.put("EAN-code",deliverypointid);
     }
 
     private String getViewListElementAtRow(String viewListElement, String ordinal) {
