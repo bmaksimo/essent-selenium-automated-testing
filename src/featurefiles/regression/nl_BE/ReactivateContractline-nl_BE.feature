@@ -32,8 +32,6 @@ Feature: Reactivate contractline
         And Click on link in "ContractsOnAccount" View List at 1 row and "Nummer & Aanmaakdatum" column
         And Plus action and "Reactiveer contractlijn" of first customer from list
         And "Nieuwe startdatum" date is "now"
-        And "Einddatum" date is "96 week from now"
-#      And "Einddatum" date is "24 months from now"
         And Label "Mig module" is "START ACCESS"
         And Changes are confirmed
         Then Contract is in "Te activeren" state
