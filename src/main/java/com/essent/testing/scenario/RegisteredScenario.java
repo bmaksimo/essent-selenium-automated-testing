@@ -37,4 +37,8 @@ public class RegisteredScenario {
         logger().debug(" - NAME: " + name);
         ActiveScenarioProvider.get().setActiveScenario(this.getClass().getSimpleName(), this);
     }
+
+    public void tidyUp() {
+
+    }
 }

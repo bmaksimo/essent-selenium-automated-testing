@@ -13,7 +13,8 @@ Feature: NUAT-5019-2: Received consumption
         When Left menu is sales-marketing
         And Top menu item is Klanten
         And Top action is Filters
-        And "Naam" input is "parameter:suitecrm-customer-name"
+        #And "Naam" input is "parameter:suitecrm-customer-name"
+        And "Naam" input is "Zakia Op 't hoog"
         And 1st List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
         And Click on link in View List at 1st row and "Klantnummer & Naam" column
         And Dashboard menu is Contracten
@@ -28,4 +29,4 @@ Feature: NUAT-5019-2: Received consumption
         When Consumption at current deliverypointid with NIGHT_EXCLUSIVE hourly-tariff is generated from now until 6 months after
         And Click on link in "Actieve en toekomstige connecties" View List at 1st row and "EAN-code" column
         And View list header is "Verbruiken"
-        Then Verbruiken list is not empty
+        Then Consumption is available at 1st row in Van - Aan column
