@@ -42,10 +42,4 @@ public class Account extends DwpScenario {
         super.tearDown();
     }
 
-    @And("^Create a new active account$")
-    public void creatANewActiveAccount() throws Throwable {
-        ContractB2BScenario con = new ContractB2BScenario();
-        String acountNumber = con.createContractB2BAndCheckContractStatus("UP" ,"FAKE" , "MOVE IN");
-        parameterProvider.put("acountNumber",acountNumber);
-    }
 }
