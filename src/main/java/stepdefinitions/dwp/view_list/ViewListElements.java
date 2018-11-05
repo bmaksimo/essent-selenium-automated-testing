@@ -23,7 +23,6 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static com.billinghouse.test_automation.util.dsl.NumericExpressionsUtil.extractFirstNumericPart;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
 import static org.awaitility.Duration.*;
@@ -31,9 +30,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.fail;
 public class ViewListElements extends NavigationElements {
-
-    private static final String EAN_FIELD_XPATH_SELECTOR = "//strong[@id='ean-c-field']";
-    private HashMap strongElementSelectors;
 
     private class CheckViewListHeader implements Predicate<String> {
         @Override
