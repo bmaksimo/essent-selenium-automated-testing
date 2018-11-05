@@ -44,6 +44,7 @@ public class Marketberichten extends DwpScenario {
         mb.enterContractNumber(ean);
         webDriver.waitForRequestsToFinish();
         mb.clickOnSearchButton();
+        webDriver.waitForRequestsToFinish();
         mb.clickOnTheFirstContract();
         mb.clickOnSubmitButton();
     }
