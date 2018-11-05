@@ -1,5 +1,4 @@
 @REGRESSION
-@J
 @LONGDURATION
 Feature: Reactivate contractline
 
