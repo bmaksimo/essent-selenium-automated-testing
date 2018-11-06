@@ -11,6 +11,16 @@ Feature: NUAT-447: Check validity prices
     Scenario: Check validity prices
         When B2B signed quote by customer "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Left menu is contracting-switching
+        And Top menu item is Offertes
+        And Label input for "Type offerte" is "Sales"
+        And Label input for "Status" is "Verstuurd naar klant"
+        And Plus action and "Verzenden naar klant" of first customer from list
+        And "Ja, ik wil de offerte met de nieuwe tarieven goedkeuren." turn on
+        Then Changes are confirmed
+
+        When Click on link in View List at 1st row and "Nummer & Getekend contractnummer" column polling 20 seconds
+        And Plus menu is "Offertes -> Check geldigheid tarieven"
+
 #        And Click on link in View List at first row and "<string>" column polling 20 seconds
 #        And
 #        And Top action is Filters
