@@ -158,4 +158,49 @@ public class ContractB2BScenario extends RegisteredScenario {
 	public String getAccountNumber() {
 		return accountNumber;
 	}
+
+    @Given("^B2B signed quote by customer \"([^\"]*)\" product type and use \"([^\"]*)\" address and switch type is \"([^\"]*)\"$")
+    public String createB2BQueteSignedByCustomer(String productType, String isFakeAddress, String switchType) {
+
+        accountNumber = StringUtils.EMPTY;
+
+        ProductTypes productTypes = ProductTypes.valueOf(productType);
+        try {
+            switch (productTypes) {
+
+                case UP: {
+                    QuoteCreator quoteB2BUP = new ContractUPB2BCreator(isFakeAddress, switchType);
+
+                    accountNumber = quoteB2BUP.createQuoteWithoutSignature();
+
+                    break;
+                }
+                case TC1: {
+                    QuoteCreator quoteB2BTC1 = new ContractTC1B2BCreator(isFakeAddress, switchType);
+                    accountNumber = quoteB2BTC1.createQuoteWithoutSignature();
+                    break;
+                }
+                case TC2: {
+                    QuoteCreator quoteB2BTC2 = new ContractTC2B2BCreator(isFakeAddress, switchType);
+                    accountNumber = quoteB2BTC2.createQuoteWithoutSignature();
+                    break;
+                }
+                default:
+                    throw new AssertionError("Not supported product type used " + productType);
+            }
+
+        } catch (Exception e) {
+            logger().error("Creation of B2B contract failed", e);
+            Assert.fail("Creation of B2B contract failed: " + e.getMessage());
+        }
+
+        if(StringUtils.isEmpty(accountNumber)) {
+            Assert.fail("Creation of B2B contract failed");
+            logger().error("Something went wrong with creation of B2B contract");
+        }
+
+        logger().info("ACCOUNT NUMBER: " + accountNumber);
+        parameterProvider.put("accountNumber",accountNumber);
+        return accountNumber;
+    }
 }

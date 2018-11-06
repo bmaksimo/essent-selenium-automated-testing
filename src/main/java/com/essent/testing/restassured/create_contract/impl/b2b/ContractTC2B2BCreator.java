@@ -49,7 +49,12 @@ public class ContractTC2B2BCreator extends QuoteCreatorB2BBase implements QuoteC
 		return getAccountNumber(recordId, cookie);
 	}
 
-	@Override
+    @Override
+    public String createQuoteWithoutSignature() throws Exception {
+        return null;
+    }
+
+    @Override
 	public ContractStatus checkContractIsActive(String path) throws Exception {
 		logger.info("checkContractIsActive: " + this.getClass().getSimpleName());
 		return super.checkContractIsActive(path);
