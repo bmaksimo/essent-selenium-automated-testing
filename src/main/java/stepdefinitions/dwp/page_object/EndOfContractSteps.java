@@ -39,7 +39,8 @@ public class EndOfContractSteps extends DwpScenario {
     @And("^Search field input is \"([^\"]*)\"$")
     public void searchFieldInputIs(String input) {
         EndOfContractPage endOfContractPage = new EndOfContractPage(webDriver);
-        endOfContractPage.searchInputField(input);
+        String inputValue = parameterProvider.getValueOrParameterAsString(input);
+        endOfContractPage.searchInputField(inputValue);
     }
 
     @And("^Click Select Contractline$")

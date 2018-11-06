@@ -56,9 +56,10 @@ public class TopActions extends NavigationElements {
     @And("^Customer \"([^\"]*)\" is found$")
     public void customerFind(String name) throws Throwable {
         Map<String, String> customerName = new HashMap<>();
-        customerName.put("name", name);
+        String inputName = parameterProvider.getValueOrParameterAsString(name);
+        customerName.put("name", inputName);
         boolean success = new ValidateCustomer().test(customerName);
-        assertThat(String.format("View list did not contain customer '%s'", name),
+        assertThat(String.format("View list did not contain customer '%s'", inputName),
             success, is(true));
     }
 

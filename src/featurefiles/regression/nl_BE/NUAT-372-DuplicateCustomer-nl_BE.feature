@@ -18,6 +18,5 @@ Feature: NUAT-372: Duplicate Customer - nl_BE
         When "Bedrijfsnaam" input is "Test Nuat 372"
         Then Changes are confirmed
         And Top arrow button is Up
-        And Search field input is "Test Nuat 372"
-        Then Customer "Test Nuat 372" is found
-
+        And Search field input is "parameter:duplicateUserName"
+        Then Customer "parameter:duplicateUserName" is found
