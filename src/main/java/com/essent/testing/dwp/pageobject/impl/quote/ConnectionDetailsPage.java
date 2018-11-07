@@ -48,6 +48,14 @@ public class ConnectionDetailsPage extends QuoteCreationGuidedStep {
 
     }
 
+    public boolean fillInElectricityEanCode() {
+        Model.Execution execution = createExecution();
+        execution.
+            element(ELEC_EAN.element()).
+            step(createStep(Action.TYPING).element(ELEC_EAN.name()).value(electroConnectionDetails.getEan()), INPUT.getSleepInMillis());
+        return execute(execution);
+    }
+
     public void setElectroConnectionDetails(ConnectionDetails electroConnectionDetails) {
         this.electroConnectionDetails = electroConnectionDetails;
     }

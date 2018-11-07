@@ -23,7 +23,7 @@ Feature: NUAT-5019-1: Creating a B2C Quote TC1 with move in, Dutch language vers
         When Customer is random
         And Customer address is
             | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-            | Mechelsesteenweg| 5       |            |      | 2550       | Kontich  |         |
+            | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
 
@@ -33,8 +33,8 @@ Feature: NUAT-5019-1: Creating a B2C Quote TC1 with move in, Dutch language vers
         Then Form header is "Connection details"
 
         When "Startdatum" date is "now"
-        And Electricity EAN code is selected
-        #And Electricity meter is Closed
+        And Electricity EAN code is "random"
+        And Switch type is Move in
         And Electricity market mock test is Open
         And Connection details are confirmed
         Then Form header is "Billing details"
