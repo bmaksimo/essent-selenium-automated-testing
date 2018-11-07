@@ -27,6 +27,7 @@ public class ContractenSteps extends DwpScenario {
 
     @When("^Input in ([^\"]*) is \"([^\"]*)\"$")
     public void inputInModuleIs(String label, String input) throws Throwable {
+        webDriver.waitForRequestsToFinish();
         ContractenPage contractenPage = new ContractenPage(webDriver);
         contractenPage.fieldDropDownLabel(label, input);
     }
@@ -88,6 +89,7 @@ public class ContractenSteps extends DwpScenario {
     @Then("^Validate bank account was changed on \"([^\"]*)\"$")
     public void validateBankAccountWasChangedOn(String iban) throws Throwable {
         ContractenPage contractenPage = new ContractenPage(webDriver);
-        contractenPage.findIban(iban);
+        String inputIban = parameterProvider.getValueOrParameterAsString(iban);
+        contractenPage.findIban(inputIban);
     }
 }

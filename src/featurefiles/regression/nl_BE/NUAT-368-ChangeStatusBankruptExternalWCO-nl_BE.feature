@@ -47,7 +47,7 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
         And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Top action is Filters
         And "Klantnummer" input is "parameter:accountNumber"
-        Then Click on link in View List at 1st row and "Klantnummer & Naam" column
+        Then Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
 
         When Plus menu is "Service -> Wijzigingen klant -> Accountstatus wijzigen"
         And Update account status on "Faillissement met fiscaal attest"
@@ -348,4 +348,3 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
         And Input in Externe partij is "Hilde Derde"
         And Changes are confirmed
         Then Verify status is "External @ Hilde Derde" and "In vereffening"
-

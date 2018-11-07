@@ -45,7 +45,7 @@ public class InputElements extends DwpScenario {
     @And("^\"([^\"]*)\" input is \"([^\"]*)\"$")
     public void setInput(String label, String value) throws Throwable {
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
-        parameterProvider.put("duplicateUserName", value);
+        parameterProvider.put("inputValue", value);
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
         options.put("value", inputValue);
@@ -61,6 +61,7 @@ public class InputElements extends DwpScenario {
 
     @And("^\"([^\"]*)\" date is \"([^\"]*)\"$")
     public void setDateInput(String label, String value) throws Throwable {
+        Thread.sleep(1500);
         String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(value));
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
