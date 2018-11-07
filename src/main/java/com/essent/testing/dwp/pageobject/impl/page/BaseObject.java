@@ -33,6 +33,7 @@ public class BaseObject extends Component {
     public void clickOnToggle(String label) {
         ToggleImpl toggle = new ToggleImpl(seleniumDriver);
         if (!toggle.checkIfCheckboxIsChecked(label)) {
+            seleniumDriver.waitForRequestsToFinish();
             seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + label + "?']//toggle-form-element/label")));
         }
     }

@@ -1,0 +1,26 @@
+package com.essent.testing.dwp.pageobject.impl.page;
+
+
+import com.essent.testing.dwp.pageobject.impl.Component;
+import com.essent.testing.selenium.SeleniumDriver;
+import org.junit.Assert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+public class OffertePage  extends Component {
+
+    public OffertePage(SeleniumDriver seleniumDriver) {
+
+        super(seleniumDriver);
+    }
+
+    public String getOfferteNumber(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("//list-link-bold-top-two-liner-cell//a/h5")).getText();
+    }
+
+    public void resetFilter(){
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("(//div[@class=\"form__footer\"])[1]//button ")));
+    }
+
+
+}
