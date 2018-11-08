@@ -1,6 +1,5 @@
 package stepdefinitions.dwp.view_list;
 
-import com.essent.automation.util.Sleeper;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -263,10 +262,14 @@ public class ViewListElements extends NavigationElements {
         Map<String, String> columnIndexListOptions = new HashMap<>();
         columnIndexListOptions.put("column", column);
         columnIndexListOptions.put("index", rowIndex);
-        Sleeper.sleepTightInSeconds(3);
-        boolean success = new ClickTableCellUrl().test(columnIndexListOptions);
-        assertThat(String.format("View list did not contain URL at row %s header '%s'", ordinal, column),
-            success, is(true));
+        given().await()
+            .ignoreExceptions()
+            .pollInterval(TWO_SECONDS)
+            .pollDelay(new Duration(FIVE_SECONDS.getValue(), SECONDS))
+            .atMost(new Duration(TEN_SECONDS.getValue(), SECONDS)).until(()-> new ClickTableCellUrl().test(columnIndexListOptions));
+//        boolean success = new ClickTableCellUrl().test(columnIndexListOptions);
+//        assertThat(String.format("View list did not contain URL at row %s header '%s'", ordinal, column),
+//            success, is(true));
     }
 
     @When("^Click on link in View List at ([^\"]*) row and \"([^\"]*)\" column polling (\\d+) seconds?$")
