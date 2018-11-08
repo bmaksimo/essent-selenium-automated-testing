@@ -1,10 +1,12 @@
 package stepdefinitions.dwp.menu;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.navigation.DwpLeftMenu;
 import com.essent.testing.dwp.pageobject.impl.navigation.DwpTopMenu;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import stepdefinitions.dwp.navigation.NavigationElements;
 
@@ -34,6 +36,10 @@ public class MenuElements extends NavigationElements {
         tm.findAndClickTopMenu(tabName);
     }
 
+    @Then("^Sleep for (\\d+) seconds$")
+    public void sleepForSeconds(int seconds) {
+        Sleeper.sleepTightInSeconds(seconds);
+    }
 
     @Override
     @After("@DWP, @CORE, @E2E, @REGRESSION")
