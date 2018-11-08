@@ -47,7 +47,6 @@ public class E2EPrettyFormatter extends PrettyFormatter implements ColorAware {
                 parameterProvider.consumingNullValues(true).put("cucumber-scenario-failure", result.getError());
                 break;
         }
-        logger.info(" - TEST SCENARIO PARAMETERS: " + parameterProvider.toString());
     }
 
     @Override
@@ -136,6 +135,7 @@ public class E2EPrettyFormatter extends PrettyFormatter implements ColorAware {
         tags.addAll(scenario.getTags());
         ParameterProvider  parameterProvider = ((ParameterProvider) ContextService.getContext().getBean("parameterProvider")).consumingNullValues(true);
         parameterProvider.put("scenario-tags", tags);
+        logger.info(" - TEST SCENARIO PARAMETERS: " + parameterProvider.toString());
     }
 }
 

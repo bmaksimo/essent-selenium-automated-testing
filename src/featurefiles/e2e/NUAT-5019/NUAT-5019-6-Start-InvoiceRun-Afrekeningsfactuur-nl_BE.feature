@@ -2,20 +2,20 @@
 @E2E
 @CREDIT-AND-CONTROL
 @NUAT-5019
-@INVOICE-RUN-AF
 Feature: Billing - Triggering End Invoice via DWP
 
     Background:
 
         Given I logged in to DWP as billing.testautomation@essent.be
 
+    @INVOICE-RUN-AF
     Scenario: Trigger Invoice run process
 
         When Left menu is billing
         And Top menu item is Klanten
         And Top action is Filters
-        #And "Naam" input is "parameter:suitecrm-customer-name"
-        And "Naam" input is "Ale van puffelen"
+        And "Naam" input is "parameter:suitecrm-customer-name"
+        #And "Naam" input is "Ale van puffelen"
 
         And 1st List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
         And Click on link in View List at 1st row and "Klantnummer & Naam" column

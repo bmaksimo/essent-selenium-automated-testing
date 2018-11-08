@@ -1,13 +1,13 @@
 @DWP
 @CREDIT-AND-CONTROL
 @NUAT-5019
-@MEDIATION-RUN
 Feature: NUAT-5019-3: Billing - Triggering mediation run
 
     Background:
 
         Given I logged in to DWP as billing.testautomation@essent.be
 
+    @MEDIATION-RUN
     Scenario: Trigger Mediation run process
 
         When Left menu is billing

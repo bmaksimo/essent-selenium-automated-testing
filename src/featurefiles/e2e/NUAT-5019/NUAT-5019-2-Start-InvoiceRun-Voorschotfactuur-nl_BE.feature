@@ -2,13 +2,13 @@
 @E2E
 @CREDIT-AND-CONTROL
 @NUAT-5019
-@INVOICE-RUN-VF
-Feature: NUAT-5019-4: Billing - Triggering invoice run, advanced Invoice
+Feature: NUAT-5019-2: Billing - Triggering invoice run, advanced Invoice
 
     Background:
 
         Given I logged in to DWP as billing.testautomation@essent.be
 
+    @INVOICE-RUN-VF
     Scenario: Trigger Invoice run process
 
         When Left menu is billing
@@ -28,7 +28,8 @@ Feature: NUAT-5019-4: Billing - Triggering invoice run, advanced Invoice
         And "Naam job" selection is "recurrent"
         And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
         And "Factuurdatum" date is "now"
-        And "Procesdatum" date is "1 month from now"
+        #And "Procesdatum" date is "1 month from now"
+        And "Procesdatum" date is "2 days from now"
         Then Invoice run is scheduled
 
     #Scenario: Check Advance Invoice

@@ -8,13 +8,13 @@ Feature: NUAT-5019-2: Received consumption
 
         Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
 
+    @CONSUMPTIONS
     Scenario: Generate consumption for given customer, and verify the result in DWP
 
         When Left menu is sales-marketing
         And Top menu item is Klanten
         And Top action is Filters
-        #And "Naam" input is "parameter:suitecrm-customer-name"
-        And "Naam" input is "Zakia Op 't hoog"
+        And "Naam" input is "parameter:suitecrm-customer-name"
         And 1st List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
         And Click on link in View List at 1st row and "Klantnummer & Naam" column
         And Dashboard menu is Contracten
