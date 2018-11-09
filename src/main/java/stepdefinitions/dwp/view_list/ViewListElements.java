@@ -22,7 +22,6 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static com.billinghouse.test_automation.util.dsl.NumericExpressionsUtil.extractFirstNumericPart;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
 import static org.awaitility.Duration.*;
@@ -155,9 +154,8 @@ public class ViewListElements extends NavigationElements {
             if (row > rows.size()) {
                 fail(String.format("--Error in Test Input: Given %s row index cannot be greater that actual View List size %s", row, rows.size()));
             }
-            List<String> allRows = new ArrayList<>();
-            for (List internalRow : rows) allRows.addAll(internalRow);
-            return allRows.get(index);
+            List currentRow = rows.get(row - 1);
+            return (String) currentRow.get(index);
         }
 
         private List<ArrayList> getData(Map viewTable) {
@@ -264,9 +262,14 @@ public class ViewListElements extends NavigationElements {
         Map<String, String> columnIndexListOptions = new HashMap<>();
         columnIndexListOptions.put("column", column);
         columnIndexListOptions.put("index", rowIndex);
-        boolean success = new ClickTableCellUrl().test(columnIndexListOptions);
-        assertThat(String.format("View list did not contain URL at row %s header '%s'", ordinal, column),
-            success, is(true));
+        given().await()
+            .ignoreExceptions()
+            .pollInterval(TWO_SECONDS)
+            .pollDelay(new Duration(FIVE_SECONDS.getValue(), SECONDS))
+            .atMost(new Duration(TEN_SECONDS.getValue(), SECONDS)).until(()-> new ClickTableCellUrl().test(columnIndexListOptions));
+//        boolean success = new ClickTableCellUrl().test(columnIndexListOptions);
+//        assertThat(String.format("View list did not contain URL at row %s header '%s'", ordinal, column),
+//            success, is(true));
     }
 
     @When("^Click on link in View List at ([^\"]*) row and \"([^\"]*)\" column polling (\\d+) seconds?$")
@@ -454,6 +457,29 @@ public class ViewListElements extends NavigationElements {
         boolean success = new GetListAction().test(name);
         assertThat(String.format("List Action '%s' undefined.", name),
             success, is(true));
+    }
+
+    @And("^View List element \"([^\"]*)\" is collected as parameter at ([^\"]*) list row$")
+    public void collectViewListElementAsParameter(String viewListElement, String ordinal) {
+        String parameter = getViewListElementAtRow(viewListElement, ordinal);
+        parameterProvider.put(viewListElement, parameter);
+    }
+
+    @And("^View List element \"([^\"]*)\" using \"([^\"]*)\" as alias is collected as parameter at ([^\"]*) list row$")
+    public void collectViewListElementWithAliasAsParameter(String viewListElement, String viewListElementAlias, String ordinal) {
+        String parameter = getViewListElementAtRow(viewListElement, ordinal);
+        parameterProvider.put(viewListElementAlias, parameter);
+    }
+
+    private String getViewListElementAtRow(String viewListElement, String ordinal) {
+        int row = extractNumericValue(ordinal);
+        ViewListModel viewListModel = new ViewListModel();
+        String parameter = viewListModel.getCellValueAt(row, viewListElement);
+
+        assertThat(String.format("View List element '%s' was not found.", viewListElement),
+            StringUtils.isNotBlank(parameter), is(true));
+
+        return parameter;
     }
 
     @And("([^\"]*) list is not empty")

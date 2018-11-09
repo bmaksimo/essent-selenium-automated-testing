@@ -1,10 +1,12 @@
 package stepdefinitions.dwp.input;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
+import org.apache.tools.ant.taskdefs.Sleep;
 import stepdefinitions.dwp.tables.plus.CheckBoxState;
 
 import java.util.HashMap;
@@ -50,13 +52,16 @@ public class InputElements extends DwpScenario {
         options.put("label", label);
         options.put("value", inputValue);
         boolean success = new ApplyInput().test(options);
+        Sleeper.sleepTightInSeconds(2);
         assertThat(String.format("Input field %s is undefined.", label),
             success, is(true));
     }
 
     @And("^Label input for \"([^\"]*)\" is \"([^\"]*)\"$")
     public void setLabelInput(String label, String value) throws Throwable {
+        webDriver.waitForRequestsToFinish();
         setInput(label, "string:"+value);
+        webDriver.waitForRequestsToFinish();
     }
 
     @And("^\"([^\"]*)\" date is \"([^\"]*)\"$")
@@ -79,6 +84,7 @@ public class InputElements extends DwpScenario {
         boolean success = new ApplySelection().test(options);
         assertThat(String.format("Selection %s is undefined.", label),
             success, is(true));
+        Sleeper.sleepTightInSeconds(3);
     }
 
     @And("^Option \"([^\"]*)\" is ([^\"]*)$")
