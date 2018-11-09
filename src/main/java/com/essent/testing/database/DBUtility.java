@@ -1697,4 +1697,18 @@ public class DBUtility {
         }
 
     }
+    public static void enableDunningForCrmId(String crmCustomerId) throws Exception {
+        // @formatter:off
+        String sql = "" + "update dunning_account " +  "set bre_id = 14 " +  "where external_id = ? ";
+        // @formatter:on
+        try (Connection conn = new DBConnector().getBillingConnection()) {
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, crmCustomerId);
+                int count = stmt.executeUpdate();
+                if (count != 1) {
+                    throw new SQLException("Update preference failed, hitcount = " + count);
+                }
+            }
+        }
+    }
 }

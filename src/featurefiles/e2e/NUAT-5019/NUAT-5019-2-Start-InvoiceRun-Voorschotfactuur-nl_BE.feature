@@ -17,6 +17,7 @@ Feature: NUAT-5019-2: Billing - Triggering invoice run, advanced Invoice
         And "Naam" input is "parameter:suitecrm-customer-name"
 
         And 1st List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
+        And 1st List element with value at column "Klantnummer & Naam" is checked
         And Click on link in View List at 1st row and "Klantnummer & Naam" column
         And Dashboard menu is Contracten
         Then View list header is "Actieve en toekomstige connecties"
@@ -28,9 +29,11 @@ Feature: NUAT-5019-2: Billing - Triggering invoice run, advanced Invoice
         And "Naam job" selection is "recurrent"
         And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
         And "Factuurdatum" date is "now"
-        #And "Procesdatum" date is "1 month from now"
-        And "Procesdatum" date is "2 days from now"
+        And "Procesdatum" date is "1 month from now"
         Then Invoice run is scheduled
+    @PREPARE-DUNNING-CUSTOMER
+    Scenario: Prepare dunning customer
+        When Dunning customer is "parameter:Klantnummer & Naam"
 
     #Scenario: Check Advance Invoice
     #    When Left tab is contracting-switching

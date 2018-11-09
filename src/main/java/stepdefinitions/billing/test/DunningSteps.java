@@ -3,6 +3,7 @@ package stepdefinitions.billing.test;
 import com.essent.be.jbilling.api.rest.RestResponse;
 import com.essent.be.jbilling.api.rest.batch.RSTriggerDunningRequest;
 import com.essent.testing.client.billing.BillingBatch;
+import com.essent.testing.database.DBUtility;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
@@ -17,7 +18,7 @@ public class DunningSteps  extends DwpScenario {
     public LocalDate dunningStartDate = null;
     private int days_passed;
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @BILLING, @B2B_REGRESSION, @DUNNING")
+    @Before("@DWP, @E2E, @REGRESSION, @DUNNING")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -56,5 +57,11 @@ public class DunningSteps  extends DwpScenario {
 
     private LocalDate dayToDate(int days) {
         return dunningStartDate.plusDays(days);
+    }
+
+    @When("^Dunning customer is \"([^\"]*)\"$")
+    public void dunningCustomerIs(String suiteCRMCustomer) throws Throwable {
+        String customerId = parameterProvider.getValueOrParameterAsString(suiteCRMCustomer);
+        DBUtility.enableDunningForCrmId(suiteCRMCustomer);
     }
 }
