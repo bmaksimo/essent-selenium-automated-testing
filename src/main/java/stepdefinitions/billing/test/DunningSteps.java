@@ -62,6 +62,6 @@ public class DunningSteps  extends DwpScenario {
     @When("^Dunning customer is \"([^\"]*)\"$")
     public void dunningCustomerIs(String suiteCRMCustomer) throws Throwable {
         String customerId = parameterProvider.getValueOrParameterAsString(suiteCRMCustomer);
-        DBUtility.enableDunningForCrmId(suiteCRMCustomer);
+        DBUtility.enableDunningForCrmId(customerId);
     }
 }

@@ -31,9 +31,6 @@ Feature: NUAT-5019-2: Billing - Triggering invoice run, advanced Invoice
         And "Factuurdatum" date is "now"
         And "Procesdatum" date is "1 month from now"
         Then Invoice run is scheduled
-    @PREPARE-DUNNING-CUSTOMER
-    Scenario: Prepare dunning customer
-        When Dunning customer is "parameter:Klantnummer & Naam"
 
     #Scenario: Check Advance Invoice
     #    When Left tab is contracting-switching

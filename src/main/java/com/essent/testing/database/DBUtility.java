@@ -1700,6 +1700,8 @@ public class DBUtility {
     public static void enableDunningForCrmId(String crmCustomerId) throws Exception {
         // @formatter:off
         String sql = "" + "update dunning_account " +  "set bre_id = 14 " +  "where external_id = ? ";
+        logger.info("STEP:");
+        logger.info(" - ACTION: SQL_UPDATE " + sql);
         // @formatter:on
         try (Connection conn = new DBConnector().getBillingConnection()) {
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
