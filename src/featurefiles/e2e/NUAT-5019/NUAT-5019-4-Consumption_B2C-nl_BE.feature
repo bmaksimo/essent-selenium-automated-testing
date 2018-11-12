@@ -26,7 +26,7 @@ Feature: NUAT-5019-2: Received consumption
         Then Verbruiken list is empty
         And Top arrow button is Back
 
-        When Consumption at current deliverypointid with NIGHT_EXCLUSIVE hourly-tariff is generated from now until 6 months after
+        When Consumption at deliverypointid parameter:EAN-code is generated from now until 2019-09-30
         And Click on link in "Actieve en toekomstige connecties" View List at 1st row and "EAN-code" column
         And View list header is "Verbruiken"
         Then Consumption is available at 1st row in Van - Aan column

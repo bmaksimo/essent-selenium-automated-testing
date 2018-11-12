@@ -29,7 +29,7 @@ Feature: Billing - Triggering End Invoice via DWP
         And "Naam job" selection is "Eenmalig"
         And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
         And "Factuurdatum" date is "now"
-        And "Procesdatum" date is "now"
+        And "Procesdatum" date is "parameter:consumption-date-to"
         Then Invoice run is scheduled
 
         And Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds

@@ -65,6 +65,34 @@ public class ConsumptionSteps extends DwpScenario {
         Assert.isTrue(resp.getResult(), resp.getMsg());
     }
 
+    @When("^Consumption at deliverypointid ([^\"]*) is generated from now until ([^\"]*)$")
+    public void generateConsumptionUntilDate(String deliveryPoint, String dateTo) throws Exception {
+        String deliveryPointId = parameterProvider.getValueOrParameterAsString(deliveryPoint);
+        parameterProvider.put("consumption-date-to", dateTo);
+        String consumptionData = getConsumptionRequest(deliveryPointId, dateTo);
+        BasePayload msg = generatePayloadFromString(consumptionData);
+
+        BillingEnergyCommRest bERest = new BillingEnergyCommRest();
+        RestResponse resp = bERest.postEnergyCommMessage(msg);
+        Assert.isTrue(resp.getResult(), resp.getMsg());
+    }
+
+    private String getConsumptionRequest(String deliveryPoint, String dateTo) {
+        UUID uuid = UUID.randomUUID();
+        String fromDate = DateTime.now().toString("yyyy-MM-dd");
+
+        parameterProvider.put("fromDate", fromDate);
+        parameterProvider.put("toDate", dateTo);
+
+        Map<String, String> consumptionData = new HashMap<>();
+        consumptionData.put("uuid", String.valueOf(uuid));
+        consumptionData.put("fromDate", fromDate);
+        consumptionData.put("toDate", dateTo);
+        consumptionData.put("deliveryPoint", deliveryPoint);
+
+        return getConsumptionRequestFromTemplate(consumptionData);
+    }
+
     private String getConsumptionRequest(String deliveryPoint, String hourlyTariff, String months) {
         UUID uuid = UUID.randomUUID();
         String fromDate = DateTime.now().toString("yyyy-MM-dd");
@@ -82,6 +110,8 @@ public class ConsumptionSteps extends DwpScenario {
 
         return getConsumptionRequestFromTemplate(consumptionData);
     }
+
+
 
     private String getConsumptionRequestFromTemplate(Map<String, String> data) {
         String consumptionTemplatePath = ResourceUtil.toPath(PATH + CONSUMPTION_FILE);
