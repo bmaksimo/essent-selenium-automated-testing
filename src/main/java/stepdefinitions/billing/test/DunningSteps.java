@@ -59,7 +59,7 @@ public class DunningSteps  extends DwpScenario {
         return dunningStartDate.plusDays(days);
     }
 
-    @When("^Dunning customer is \"([^\"]*)\"$")
+    @When("^Dunning customer CRM Id is ([^\"]*)$")
     public void dunningCustomerIs(String suiteCRMCustomer) throws Throwable {
         String customerId = parameterProvider.getValueOrParameterAsString(suiteCRMCustomer);
         DBUtility.enableDunningForCrmId(customerId);

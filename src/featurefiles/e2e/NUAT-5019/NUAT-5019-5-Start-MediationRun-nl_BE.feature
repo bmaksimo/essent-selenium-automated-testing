@@ -26,8 +26,8 @@ Feature: NUAT-5019-3: Billing - Triggering mediation run
         And Modal dialog is Start mediationrun
         And "Naam job" selection is "Voorschot"
         And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
-        And "EAN-code" input is "parameter:EAN-code"
-        And "Datum afrekeningsfactuur" date is "parameter:consumption-date-to"
+        #And "EAN-code" input is "parameter:EAN-code"
+        And "Datum afrekeningsfactuur" date is "parameter:billrun-date"
         Then Form is submitted
 
     #Scenario: Check Advance Invoice

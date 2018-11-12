@@ -1,5 +1,6 @@
 package stepdefinitions.billing.test;
 
+import com.billinghouse.test_automation.util.dsl.DateExpressionsUtil;
 import com.essent.be.jbilling.api.rest.RestResponse;
 import com.essent.belgium.energycomm.ws_to_bo.BasePayload;
 import com.essent.restclients.BillingEnergyCommRest;
@@ -68,7 +69,7 @@ public class ConsumptionSteps extends DwpScenario {
     @When("^Consumption at deliverypointid ([^\"]*) is generated from now until ([^\"]*)$")
     public void generateConsumptionUntilDate(String deliveryPoint, String dateTo) throws Exception {
         String deliveryPointId = parameterProvider.getValueOrParameterAsString(deliveryPoint);
-        parameterProvider.put("consumption-date-to", dateTo);
+        parameterProvider.put("billrun-date", DateExpressionsUtil.toDwpDate(dateTo));
         String consumptionData = getConsumptionRequest(deliveryPointId, dateTo);
         BasePayload msg = generatePayloadFromString(consumptionData);
 

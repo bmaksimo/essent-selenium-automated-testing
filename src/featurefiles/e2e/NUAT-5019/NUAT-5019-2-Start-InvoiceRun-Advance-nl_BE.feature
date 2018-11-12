@@ -8,7 +8,7 @@ Feature: NUAT-5019-2: Billing - Triggering invoice run, advanced Invoice
 
         Given I logged in to DWP as billing.testautomation@essent.be
 
-    @INVOICE-RUN-VF
+    @INVOICE-RUN-ADVANCE
     Scenario: Trigger Invoice run process
 
         When Left menu is billing

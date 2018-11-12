@@ -8,7 +8,7 @@ Feature: Billing - Triggering End Invoice via DWP
 
         Given I logged in to DWP as billing.testautomation@essent.be
 
-    @INVOICE-RUN-AF
+    @INVOICE-RUN-SETTLMENT
     Scenario: Trigger Invoice run process
 
         When Left menu is billing
@@ -29,7 +29,7 @@ Feature: Billing - Triggering End Invoice via DWP
         And "Naam job" selection is "Eenmalig"
         And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
         And "Factuurdatum" date is "now"
-        And "Procesdatum" date is "parameter:consumption-date-to"
+        And "Procesdatum" date is "parameter:billrun-date"
         Then Invoice run is scheduled
 
         And Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds

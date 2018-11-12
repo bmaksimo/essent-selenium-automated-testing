@@ -30,3 +30,5 @@ Feature: NUAT-5019-2: Received consumption
         And Click on link in "Actieve en toekomstige connecties" View List at 1st row and "EAN-code" column
         And View list header is "Verbruiken"
         Then Consumption is available at 1st row in Van - Aan column
+
+
