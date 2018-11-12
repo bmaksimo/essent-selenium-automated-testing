@@ -1,7 +1,7 @@
 @SCENARIO_INTEGRATION
 Feature: Essent Web Automation testing with Cucumber-JVM  and Selenium. Framework, integration of the scenarios.
 
-    @NUAT-5021
+    @FLAG1
     Scenario: 1 Retrieve test input parameter, populated by the other (external) scenarios.
     https://emagine-reality.atlassian.net/browse/NSTA-220
 
