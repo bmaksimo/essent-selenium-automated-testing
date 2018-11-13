@@ -43,8 +43,8 @@ public class OfferteStep extends DwpScenario {
     }
 
     @And("^Label \"([^\"]*)\" is \"([^\"]*)\"$")
-    public void labelIs(String arg0, String arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void labelIs(String label, String value) throws Throwable {
+        OffertePage op = new OffertePage(webDriver);
+        op.clickOnLabel(label, value);
     }
 }

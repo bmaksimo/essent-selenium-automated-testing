@@ -177,7 +177,7 @@ public class QuoteCreatorB2BBase {
 	protected void signatureReceived(String path, String pricingDate, String priceValidUntilDate, String signatureReceivedDate) throws IOException {
 
 		String payloadQuoteSignatureReceived = path + "gf_quote_signatureReceived.json.template";
-		String originalPayloadQuoteSignatureReceived = path + "gf_quote_signatureReceived.json";
+		String originalPayloadQuoteSignatureReceived = path + "gf_quocreateQuoteWithoutSignaturete_signatureReceived.json";
 
 		//pricingDate, rowId, recordId, priceValidUntilDate, signatureReceivedDate
 		HashMap<String, String> testMap = new HashMap<>();
