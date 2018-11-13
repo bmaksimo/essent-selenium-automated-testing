@@ -30,5 +30,6 @@ Feature: NUAT-5019-6: End order (drop) messaging
         When "Module" selection is "INITIATE STOP ACCESS"
         And Label input for "Label" is "Drop/Request Budget Meter"
         And Option "Testing?" is On
+        And Option "Market mock?" is On
         And Select Contractline dialog is confirmed
         Then 1st list element has cell value INITIATE STOP ACCESS at column Module & Label
