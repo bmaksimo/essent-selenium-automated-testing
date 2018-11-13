@@ -1,5 +1,4 @@
 @DWP
-@REGRESSION
 @B2B
 @BUSINESS-DESK
 Feature: NAUT-482: Restart SA or MI - nl_BE

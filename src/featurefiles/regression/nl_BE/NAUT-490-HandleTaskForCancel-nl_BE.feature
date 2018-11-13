@@ -1,5 +1,4 @@
 @DWP
-@REGRESSION
 @B2B
 @BUSINESS-DESK
 Feature: NAUT-490: Handle Task For Cancel - nl_BE

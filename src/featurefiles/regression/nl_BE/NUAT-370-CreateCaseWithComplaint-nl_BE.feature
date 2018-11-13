@@ -1,5 +1,4 @@
 @DWP
-@REGRESSION
 @B2B
 @CREDIT-AND-CONTROL
 Feature: NUAT-370: Create Case With Complaint - nl_BE

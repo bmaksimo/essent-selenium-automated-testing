@@ -1,5 +1,4 @@
 @DWP
-@REGRESSION
 @B2B
 @BUSINESS-DESK
 Feature: NUAT-432: Create A Task For An Other Team - nl_BE

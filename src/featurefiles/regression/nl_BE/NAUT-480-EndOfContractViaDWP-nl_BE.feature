@@ -1,5 +1,4 @@
 @DWP
-@REGRESSION
 @B2B
 @SERVICE-CONTRACTING
 Feature: NAUT-480: End Of Contract Via DWP - nl_BE
