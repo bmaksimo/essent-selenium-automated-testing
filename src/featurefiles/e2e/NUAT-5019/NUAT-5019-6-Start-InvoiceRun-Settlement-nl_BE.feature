@@ -15,25 +15,23 @@ Feature: Billing - Triggering End Invoice via DWP
         And Top menu item is Klanten
         And Top action is Filters
         And "Naam" input is "parameter:suitecrm-customer-name"
-        #And "Naam" input is "Ale van puffelen"
+        Then 1st List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
 
-        And 1st List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
-        And Click on link in View List at 1st row and "Klantnummer & Naam" column
-        And Dashboard menu is Contracten
+        Given Click on link in View List at 1st row and "Klantnummer & Naam" column
+        When  Dashboard menu is Contracten
         Then View list header is "Actieve en toekomstige connecties"
         And 1st List element with value at column "EAN-code" is checked
-        And Top arrow button is Up
 
-        When Plus menu is "Billing -> Start facturatierun"
-        And Modal dialog is Start invoicerun
+        Given Top arrow button is Up
+        And Plus menu is "Billing -> Start facturatierun"
+        When Modal dialog is Start invoicerun
         And "Naam job" selection is "Eenmalig"
         And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
         And "Factuurdatum" date is "now"
         And "Procesdatum" date is "parameter:billrun-date"
         Then Invoice run is scheduled
 
-        And Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
-        And Dashboard menu is Contracten
-
-        And Click on link in View List at 1st row and "EAN-code" column polling 5 seconds
-        Then Afrekeningsfacturen list is not empty
+        Given Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
+        When Dashboard menu is Billing
+        Then View list header is "Transacties"
+        And 1st list element has cell value Invoice (SETTLEMENT) at column ID & Type

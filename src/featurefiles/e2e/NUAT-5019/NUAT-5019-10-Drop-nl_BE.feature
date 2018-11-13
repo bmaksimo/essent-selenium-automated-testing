@@ -3,12 +3,13 @@
 @B2C
 @CREDIT-AND-CONTROL
 @NUAT-5019
-@CLIENT-DROP
+
 Feature: NUAT-5019-6: End order (drop) messaging
 
     Background:
         Given I logged in to DWP as contracting.testautomation.b2c@essent.be
 
+    @CLIENT-DROP
     Scenario: Create end order (drop) market message for a customer
         When Left menu is contracting-switching
         And Top menu item is Klanten
