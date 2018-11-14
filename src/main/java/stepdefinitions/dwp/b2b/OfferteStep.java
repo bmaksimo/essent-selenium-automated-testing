@@ -47,4 +47,10 @@ public class OfferteStep extends DwpScenario {
         OffertePage op = new OffertePage(webDriver);
         op.clickOnLabel(label, value);
     }
+
+    @And("^Filter button is clicked$")
+    public void filterButtonIsClicked() throws Throwable {
+        OffertePage of = new OffertePage(webDriver);
+        of.clickOnFilter();
+    }
 }

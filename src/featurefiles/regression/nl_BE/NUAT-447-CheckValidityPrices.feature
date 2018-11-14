@@ -9,10 +9,11 @@ Feature: NUAT-447: Check validity prices
         Given   I logged in to DWP as businessdesk.testautomation.b2b@essent.be
 
     Scenario: Check validity prices
-        When B2B signed quote by customer "UP" product type and use "FAKE" address and switch type is "MOVE IN"
+#        When B2B signed quote by customer "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Left menu is contracting-switching
         And Top menu item is Offertes
-        And I click on the filter button
+#        And I click on the filter button
+        And Filter button is clicked
         And Label "Type offerte" is "Sales"
         And Label "Status" is "Verstuurd naar klant"
 #        And Take Offertenummer from firs offerte
