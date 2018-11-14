@@ -10,6 +10,7 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
+import org.junit.Assert;
 import org.springframework.test.context.ContextConfiguration;
 
 import static org.junit.Assert.assertTrue;
@@ -23,8 +24,8 @@ public class OfferteStep extends DwpScenario {
     }
 
 
-    @And("^Take Offertenummer from firs offerte$")
-    public void takeOffertenummerFromFirsOfferte() throws Throwable {
+    @And("^Take Offertenummer from first offerte$")
+    public void takeOffertenummerFromFirstOfferte() throws Throwable {
         OffertePage op = new OffertePage(webDriver);
         String offertenummer = op.getOfferteNumber();
         parameterProvider.put("offertenummer", offertenummer);
@@ -34,23 +35,38 @@ public class OfferteStep extends DwpScenario {
     public void resetFilter() throws Throwable {
         OffertePage op = new OffertePage(webDriver);
         op.resetFilter();
-    }
-
-    @And("^Click on Offerte with \"([^\"]*)\"$")
-    public void clickOnOfferteWith(String offertenummer) throws Throwable {
-        String offerteNummer = parameterProvider.getValueOrParameterAsString(offertenummer);
-
+        webDriver.waitForRequestsToFinish();
     }
 
     @And("^Label \"([^\"]*)\" is \"([^\"]*)\"$")
     public void labelIs(String label, String value) throws Throwable {
+        String input = parameterProvider.getValueOrParameterAsString(value);
         OffertePage op = new OffertePage(webDriver);
-        op.clickOnLabel(label, value);
+        op.clickOnLabel(label, input);
     }
 
     @And("^Filter button is clicked$")
     public void filterButtonIsClicked() throws Throwable {
         OffertePage of = new OffertePage(webDriver);
         of.clickOnFilter();
+    }
+
+    @And("^Offertenummer input is \"([^\"]*)\"$")
+    public void offertenummerInputIs(String value) throws Throwable {
+        String input = parameterProvider.getValueOrParameterAsString(value);
+        OffertePage of = new OffertePage(webDriver);
+        of.offerteNumberFieldSendKeys(input);
+    }
+
+    @And("^Oplossing text is \"([^\"]*)\"$")
+    public void oplossingTextIs(String input) throws Throwable {
+        OffertePage of = new OffertePage(webDriver);
+        of.markAsDoneOplossingSendKeys(input);
+    }
+
+    @Then("^Offerte status is \"([^\"]*)\"$")
+    public void statusIs(String status) throws Throwable {
+        OffertePage of = new OffertePage(webDriver);
+        Assert.assertTrue(of.getStatus().contains(status));
     }
 }

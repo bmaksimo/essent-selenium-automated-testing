@@ -33,4 +33,15 @@ public class OffertePage extends Component {
          seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//top-actions/div/a[2]")));
      }
 
+     public void offerteNumberFieldSendKeys(String input){
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id("number-default-value-field")),input);
+     }
+
+    public void markAsDoneOplossingSendKeys(String input){
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id("task-resolution-c-field")),input);
+    }
+
+    public String getStatus(){
+        return seleniumDriver.findElementWhenVisible(By.id("stage-field")).getText();
+    }
 }
