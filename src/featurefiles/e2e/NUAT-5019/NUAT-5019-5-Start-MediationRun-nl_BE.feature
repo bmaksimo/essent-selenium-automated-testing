@@ -1,5 +1,6 @@
 @DWP
 @CREDIT-AND-CONTROL
+@B2C
 @NUAT-5019
 Feature: NUAT-5019-3: Billing - Triggering mediation run
 

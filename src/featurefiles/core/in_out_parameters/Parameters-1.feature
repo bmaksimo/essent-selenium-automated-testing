@@ -6,7 +6,7 @@ Feature: Essent Web Automation testing with Cucumber-JVM  and Selenium. Framewor
 
 
 
-    @FLAG1
+    @GLOBAL-TEST-PARAMETERS
     Scenario: Populate test output parameter for the other (external) scenarios.
     https://emagine-reality.atlassian.net/browse/NSTA-220
 

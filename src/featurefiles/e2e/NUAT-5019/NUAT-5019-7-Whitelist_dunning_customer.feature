@@ -1,5 +1,6 @@
 @DWP
 @E2E
+@B2C
 @CREDIT-AND-CONTROL
 Feature: NUAT-5019-2: White-list a customer for dunning process by SuiteCRM customer ID
 

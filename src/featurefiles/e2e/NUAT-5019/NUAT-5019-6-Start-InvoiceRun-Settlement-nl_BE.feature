@@ -1,6 +1,7 @@
 @DWP
 @E2E
 @CREDIT-AND-CONTROL
+@B2C
 @NUAT-5019
 Feature: Billing - Triggering End Invoice via DWP
 

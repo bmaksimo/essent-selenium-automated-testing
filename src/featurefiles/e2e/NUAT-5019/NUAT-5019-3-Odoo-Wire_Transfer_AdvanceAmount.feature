@@ -3,12 +3,12 @@
 @B2C
 @CREDIT-AND-CONTROL
 @NUAT-5019
-@IMPORT-CODA
 Feature: NUAT-5019-5: Import a coda file
 
     Background:
         Given I logged in to Odoo as p.paulussen
 
+    @IMPORT-CODA
     Scenario: Create and match CODA file in Odoo
 
         When Odoo top menu is Accounting

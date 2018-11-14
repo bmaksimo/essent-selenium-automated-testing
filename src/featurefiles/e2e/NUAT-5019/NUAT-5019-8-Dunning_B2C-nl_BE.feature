@@ -1,6 +1,7 @@
 @SWP
 @BILLING
 @E2E
+@B2C
 @CREDIT-AND-CONTROL
 Feature: Billing - Dunning
 
@@ -14,8 +15,7 @@ Feature: Billing - Dunning
         When Left menu is billing
         And Top menu item is Klanten
         And Top action is Filters
-        #And "Naam" input is "parameter:suitecrm-customer-name"
-        And "Naam" input is "beatrijs burg"
+        And "Naam" input is "parameter:suitecrm-customer-name"
         And  1st List element with value at column "Klantnummer & Naam" is checked
         Then Click on link in View List at 1st row and "Klantnummer & Naam" column
 
