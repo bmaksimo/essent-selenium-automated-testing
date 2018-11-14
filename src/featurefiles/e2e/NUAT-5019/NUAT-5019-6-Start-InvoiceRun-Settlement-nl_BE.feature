@@ -3,13 +3,13 @@
 @CREDIT-AND-CONTROL
 @B2C
 @NUAT-5019
-Feature: Billing - Triggering End Invoice via DWP
+Feature: NUAT-5019 Step 6. Triggering billrun, produce a settlement invoice
 
     Background:
-
         Given I logged in to DWP as billing.testautomation@essent.be
 
     @INVOICE-RUN-SETTLMENT
+    @NUAT-5019-STEP-6
     Scenario: Trigger Invoice run process
 
         When Left menu is billing

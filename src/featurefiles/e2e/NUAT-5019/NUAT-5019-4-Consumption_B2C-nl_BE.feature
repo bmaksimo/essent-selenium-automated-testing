@@ -1,15 +1,17 @@
 @DWP
+@E2E
 @CREDIT-AND-CONTROL
 @B2C
 @NUAT-5019
 @CONSUMPTIONS
-Feature: NUAT-5019-2: Received consumption
+Feature: NUAT-5019 Step 4. Import received consumption data
 
     Background:
 
         Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
 
     @CONSUMPTIONS
+    @NUAT-5019-STEP-4
     Scenario: Generate consumption for given customer, and verify the result in DWP
 
         When Left menu is sales-marketing

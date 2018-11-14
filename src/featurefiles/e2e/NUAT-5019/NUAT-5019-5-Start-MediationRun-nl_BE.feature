@@ -1,14 +1,16 @@
 @DWP
+@E2E
 @CREDIT-AND-CONTROL
 @B2C
 @NUAT-5019
-Feature: NUAT-5019-3: Billing - Triggering mediation run
+Feature: NUAT-5019 Step 5. Billing - Triggering mediation run, including the received consumptions data into new order
 
     Background:
 
         Given I logged in to DWP as billing.testautomation@essent.be
 
     @MEDIATION-RUN
+    @NUAT-5019-STEP-5
     Scenario: Trigger Mediation run process
 
         When Left menu is billing

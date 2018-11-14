@@ -3,13 +3,14 @@
 @B2C
 @CREDIT-AND-CONTROL
 @NUAT-5019
-Feature: NUAT-5019-2: Billing - Triggering invoice run, advanced Invoice
+Feature: NUAT-5019 Step 2. Billing - Triggering billrun, produce an advanced invoice
 
     Background:
 
         Given I logged in to DWP as billing.testautomation@essent.be
 
     @INVOICE-RUN-ADVANCE
+    @NUAT-5019-STEP-2
     Scenario: Trigger Invoice run process
 
         When Left menu is billing

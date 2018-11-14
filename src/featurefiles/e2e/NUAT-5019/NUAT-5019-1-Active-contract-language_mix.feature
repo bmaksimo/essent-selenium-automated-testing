@@ -3,13 +3,13 @@
 @B2C
 @CREDIT-AND-CONTROL
 @NUAT-5019
-Feature: NUAT-5019-1: Creating a B2C Quote TC1 with move in, Dutch language version with form headers in English language
+Feature: NUAT-5019 Step 1. Creating a B2C Quote TC1 with move in, Dutch language version with form headers in English language, ELectricity only, random EAN code, random Dutch customer identity.
 
     Background:
-
         Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
 
     @ONBOARDING
+    @NUAT-5019-STEP-1
     Scenario: Create a B2C Quote with move in https://emagine-reality.atlassian.net/browse/NUAT-5019
 
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
