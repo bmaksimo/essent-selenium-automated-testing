@@ -1,5 +1,6 @@
 @DWP
 @B2B
+@REGRESSION
 @CREDIT-AND-CONTROL
 Feature: NUAT-373: End Of Contract For Bankruptcy - nl_BE
 

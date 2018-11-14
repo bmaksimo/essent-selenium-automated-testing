@@ -1,5 +1,6 @@
 @DWP
 @B2B
+@REGRESSION
 @CREDIT-AND-CONTROL
 Feature: NUAT-424: Change Pay Method - nl_BE
 

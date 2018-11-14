@@ -1,5 +1,6 @@
 @DWP
 @B2B
+@REGRESSION
 @CREDIT-AND-CONTROL
 Feature: NUAT-372: Duplicate Customer - nl_BE
 

@@ -1,5 +1,6 @@
 @DWP
 @B2B
+@REGRESSION
 @BUSINESS-DESK
 Feature: NAUT-489: Handle Task For Rejection - nl_BE
 

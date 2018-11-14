@@ -1,5 +1,6 @@
 @DWP
 @B2B
+@REGRESSION
 @BUSINESS-DESK
 Feature: NUAT-448: Change The Advance Amount For A Customer - nl_BE
 
