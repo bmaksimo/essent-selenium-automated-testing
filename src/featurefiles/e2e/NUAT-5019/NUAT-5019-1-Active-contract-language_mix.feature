@@ -1,13 +1,15 @@
 ﻿@DWP
 @E2E
+@B2C
 @CREDIT-AND-CONTROL
 @NUAT-5019
-@ONBOARDING
-Feature: NUAT-5019-1: Creating a B2C Quote TC1 with move in, Dutch language version with form headers in English language
-    Background:
+Feature: NUAT-5019 Step 1. Creating a B2C Quote TC1 with move in, Dutch language version with form headers in English language, ELectricity only, random EAN code, random Dutch customer identity.
 
+    Background:
         Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
 
+    @ONBOARDING
+    @NUAT-5019-STEP-1
     Scenario: Create a B2C Quote with move in https://emagine-reality.atlassian.net/browse/NUAT-5019
 
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
@@ -23,7 +25,7 @@ Feature: NUAT-5019-1: Creating a B2C Quote TC1 with move in, Dutch language vers
         When Customer is random
         And Customer address is
             | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-            | Mechelsesteenweg| 5       |            |      | 2550       | Kontich  |         |
+            | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
 
@@ -33,8 +35,8 @@ Feature: NUAT-5019-1: Creating a B2C Quote TC1 with move in, Dutch language vers
         Then Form header is "Connection details"
 
         When "Startdatum" date is "now"
-        And Electricity EAN code is selected
-        #And Electricity meter is Closed
+        And Electricity EAN code is "random"
+        And Switch type is Move in
         And Electricity market mock test is Open
         And Connection details are confirmed
         Then Form header is "Billing details"

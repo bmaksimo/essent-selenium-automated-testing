@@ -59,4 +59,9 @@ public class DateExpressionsUtil {
     public static int numericValue(String ordinal) {
         return Integer.parseInt(ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", ""));
     }
+
+    public static String toDwpDate(String consumptionsFormatDate) {
+        DateTime dateTime = DateTime.parse(consumptionsFormatDate);
+        return dateTime.toString(FRENCH_DATE_FOMAT);
+    }
 }
