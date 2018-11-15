@@ -2,6 +2,8 @@
 @REGRESSION
 @B2B
 @BUSINESS-DESK
+
+
 Feature: NAUT-481: Rejection - nl_BE
 
     Background:
@@ -23,7 +25,7 @@ Feature: NAUT-481: Rejection - nl_BE
         Then Changes are confirmed
 
         When Left menu is sales-marketing
-        And Search field input is "541449611000044685"
+        And Search field input is "parameter:eanCode"
         And Click on link in View List at 1st row and "Klantnaam & nummer" column polling 10 seconds
         And Dashboard menu is Marktberichten
         Then Validate rejection status is "MOVE IN"
