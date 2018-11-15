@@ -10,11 +10,13 @@ import cucumber.runtime.CucumberException;
 import cucumber.runtime.formatter.ColorAware;
 import gherkin.formatter.PrettyFormatter;
 import gherkin.formatter.model.*;
-import org.apache.commons.collections.ListUtils;
 import org.apache.commons.collections.SetUtils;
 import org.apache.log4j.Logger;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 

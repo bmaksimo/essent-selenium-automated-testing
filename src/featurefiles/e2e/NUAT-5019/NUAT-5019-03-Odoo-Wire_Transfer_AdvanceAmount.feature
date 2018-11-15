@@ -2,12 +2,12 @@
 @E2E
 @B2C
 @CREDIT-AND-CONTROL
-@NUAT-5019
 Feature: NUAT-5019 Step 3. Import a coda file and make payment for advanced invoice
 
     Background:
         Given I logged in to Odoo as p.paulussen
 
+    #@NUAT-5019
     @IMPORT-CODA
     @NUAT-5019-STEP-3
     Scenario: Create and match CODA file in Odoo
