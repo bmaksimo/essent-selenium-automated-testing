@@ -21,7 +21,7 @@ public class ContractenPage extends Component {
         String action = findElementWhenVisible(By.xpath("(//h6)[" + counter + "]")).getText();
         while (!action.equalsIgnoreCase(input)) {
             counter = counter + 2;
-            action = findElementWhenVisible(By.xpath("(//h6)[.='" + counter + "'][1]")).getText();
+            action = findElementWhenVisible(By.xpath("(//h6)[" + counter + "]")).getText();
         }
         counter--;
         eanCode = findElementWhenVisible(By.xpath("(//h5)[" + counter + "]")).getText();
