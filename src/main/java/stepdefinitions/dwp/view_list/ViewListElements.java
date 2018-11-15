@@ -13,10 +13,7 @@ import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.navigation.NavigationElements;
 
 import javax.swing.table.DefaultTableModel;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -29,6 +26,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.fail;
 public class ViewListElements extends NavigationElements {
+
+    private static final String INTERACTIONS = "InteractionsOnAccount";
 
     private class CheckViewListHeader implements Predicate<String> {
         @Override
@@ -77,6 +76,12 @@ public class ViewListElements extends NavigationElements {
 
         boolean containsDataAt(int row, String value, String columnName) {
             String cell = getCellValueAt(row, columnName);
+            boolean success = cell.contains(value);
+            return success;
+        }
+
+        boolean containsDataAtFromTable(int row, String value, String columnName, String tableName) {
+            String cell = getCellValueAtFromTable(row, columnName, tableName);
             boolean success = cell.contains(value);
             return success;
         }
@@ -158,6 +163,22 @@ public class ViewListElements extends NavigationElements {
             return (String) currentRow.get(index);
         }
 
+        private String getCellValueAtFromTable(int row, String columnName, String tableName) {
+            logger().info("STEP: JAVASCRIPT_FETCH_DATA");
+            Map viewTable = executeJavascriptMethod("TrGetTableModel", new HashMap<>());
+            logger().info(" - RESULT: " + viewTable);
+            int index = getColumnNameIndexFromTable(columnName, tableName);
+            if (index < 0) {
+                fail(String.format("View List did not contain column %s", columnName));
+            }
+            List<ArrayList> rows = getData(viewTable);
+            if (row > rows.size()) {
+                fail(String.format("--Error in Test Input: Given %s row index cannot be greater that actual View List size %s", row, rows.size()));
+            }
+            List currentRow = rows.get(row - 1);
+            return (String) currentRow.get(index);
+        }
+
         private List<ArrayList> getData(Map viewTable) {
             return (List) viewTable.get("rows");
         }
@@ -165,6 +186,18 @@ public class ViewListElements extends NavigationElements {
         private int getColumnNameIndex(String columnName, Map viewTable) {
             List<String> columnNames = (List) viewTable.get("column_names");
             return columnNames.indexOf(columnName);
+        }
+
+        private int getColumnNameIndexFromTable(String columnName, String tableName) {
+            String tableNameSelector;
+            if ("Interacties".equalsIgnoreCase(tableName)) {
+                tableNameSelector = INTERACTIONS;
+                List<WebElement> columns = webDriver.getDriver().findElements(By.xpath("//list[@list-key='"+tableNameSelector+"']//div//table[@class='list__content']//thead//tr//th"));
+                List<String> mappedColumns = columns.stream().map(c -> c.getText().toLowerCase()).collect(Collectors.toList());
+
+                return mappedColumns.indexOf(columnName.toLowerCase());
+            }
+            return 0;
         }
 
     }
@@ -267,9 +300,6 @@ public class ViewListElements extends NavigationElements {
             .pollInterval(TWO_SECONDS)
             .pollDelay(new Duration(FIVE_SECONDS.getValue(), SECONDS))
             .atMost(new Duration(TEN_SECONDS.getValue(), SECONDS)).until(()-> new ClickTableCellUrl().test(columnIndexListOptions));
-//        boolean success = new ClickTableCellUrl().test(columnIndexListOptions);
-//        assertThat(String.format("View list did not contain URL at row %s header '%s'", ordinal, column),
-//            success, is(true));
     }
 
     @When("^Click on link in View List at ([^\"]*) row and \"([^\"]*)\" column polling (\\d+) seconds?$")
@@ -338,6 +368,14 @@ public class ViewListElements extends NavigationElements {
     public void listElementWith(String ordinal, String value, String columnName) throws Throwable {
         int row = extractNumericValue(ordinal);
         boolean success = new ViewListModel().containsDataAt(row, value, columnName);
+        assertThat(String.format("View list did not contain cell value %s at %s row, column '%s'", value, ordinal, columnName),
+            success, is(true));
+    }
+
+    @And("^Table ([^\"]*) contains cell value ([^\"]*) at column ([^\"]*) on ([^\"]*) row$")
+    public void listElementWithFromTable(String tableName, String value, String columnName, String ordinal) throws Throwable {
+        int row = extractNumericValue(ordinal);
+        boolean success = new ViewListModel().containsDataAtFromTable(row, value, columnName, tableName);
         assertThat(String.format("View list did not contain cell value %s at %s row, column '%s'", value, ordinal, columnName),
             success, is(true));
     }
@@ -468,7 +506,20 @@ public class ViewListElements extends NavigationElements {
     @And("^View List element \"([^\"]*)\" using \"([^\"]*)\" as alias is collected as parameter at ([^\"]*) list row$")
     public void collectViewListElementWithAliasAsParameter(String viewListElement, String viewListElementAlias, String ordinal) {
         String parameter = getViewListElementAtRow(viewListElement, ordinal);
+        parameter = getPossibleNumeric(parameter);
         parameterProvider.put(viewListElementAlias, parameter);
+    }
+
+    private String getPossibleNumeric(String input) {
+        String[] possibleAccountNumbers = input.split(" ");
+        if (possibleAccountNumbers.length > 1) {
+            for (int i = 0; i < possibleAccountNumbers.length - 1; i++) {
+                if (StringUtils.isNumeric(possibleAccountNumbers[i])) return possibleAccountNumbers[i];
+            }
+            return "";
+        }
+
+        return StringUtils.isNumeric(input) ? input : "";
     }
 
     private String getViewListElementAtRow(String viewListElement, String ordinal) {
