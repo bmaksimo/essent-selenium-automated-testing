@@ -24,14 +24,14 @@ Feature: NUAT-447: Check validity prices
         And Offertenummer input is "parameter:offertenummer"
         And Click on link in View List at 1st row and "Nummer & Getekend contractnummer" column polling 20 seconds
         And Plus menu is "Offertes -> Check geldigheid tarieven"
-        And "Ja, ik wil de offerte met de nieuwe tarieven goedkeuren." turn on
-        Then Changes are confirmed
+        And "Ja, ik wil de offerte met de nieuwe tarieven goedkeuren" turn on with dot
+        Then Bevestigen
 
         When Plus action of "1" element from "TasksOnQuotes" and click on "Mark as done"
         And Oplossing text is "ja"
         Then Changes are confirmed
 
         When Plus menu is "Offertes -> Status - getekend"
-        And Client signature file is uploaded
+        And Sign quote file is uploaded
         And Changes are confirmed
         Then Offerte status is "Getekend"

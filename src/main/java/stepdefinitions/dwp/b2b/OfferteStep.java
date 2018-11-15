@@ -3,7 +3,9 @@ package stepdefinitions.dwp.b2b;
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import com.essent.testing.dwp.pageobject.impl.page.DwpAccountOverviewPage;
 import com.essent.testing.dwp.pageobject.impl.page.OffertePage;
+import com.essent.testing.dwp.pageobject.impl.service_contracting.ChangeAccountStatusPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import com.essent.testing.util.resource.ResourceUtil;
 import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -13,6 +15,8 @@ import cucumber.api.java.en.Then;
 import org.junit.Assert;
 import org.springframework.test.context.ContextConfiguration;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertTrue;
 
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
@@ -67,6 +71,27 @@ public class OfferteStep extends DwpScenario {
     @Then("^Offerte status is \"([^\"]*)\"$")
     public void statusIs(String status) throws Throwable {
         OffertePage of = new OffertePage(webDriver);
-        Assert.assertTrue(of.getStatus().contains(status));
+        Assert.assertTrue(of.getStatus().equalsIgnoreCase(status));
+    }
+
+    @And("^\"([^\"]*)\" turn on with dot$")
+    public void turnOnWithDot(String label) throws Throwable {
+        ToggleImpl tgl = new ToggleImpl(webDriver);
+        tgl.clickCheckboxWithDot(label);
+
+    }
+
+    @Then("^Bevestigen$")
+    public void bevestigen() throws Throwable {
+        OffertePage of = new OffertePage(webDriver);
+        of.clickOnBevestigen();
+    }
+
+    @And("^Sign quote file is uploaded$")
+    public void signQuoteFileIsUploaded() throws Throwable {
+        String filePath = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
+        ChangeAccountStatusPage changeAccountStatusPage = new ChangeAccountStatusPage(webDriver);
+        boolean success = changeAccountStatusPage.uploadFileForSign(filePath);
+        assertThat(String.format("Signature file %s upload failed.", filePath), success, is(true));
     }
 }

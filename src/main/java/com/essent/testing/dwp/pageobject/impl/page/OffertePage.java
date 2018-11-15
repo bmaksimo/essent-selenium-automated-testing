@@ -42,6 +42,11 @@ public class OffertePage extends Component {
     }
 
     public String getStatus(){
+        seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.id("stage-field")).getText();
+    }
+
+    public void clickOnBevestigen(){
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("primaryButton")));
     }
 }

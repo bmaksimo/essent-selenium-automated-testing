@@ -26,4 +26,22 @@ public class ToggleImpl extends Component {
             seleniumDriver.waitAndClick(checkBox(box));
         }
     }
+
+    public WebElement checkBoxWithDot (String box) {
+        return  seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + box + ".']//toggle-form-element/label"));
+
+    }
+    public boolean checkIfCheckboxIsCheckedWithDot(String box)  {
+        String classValue = checkBoxWithDot(box).findElement(By.cssSelector("input")).getAttribute("class");
+        return classValue.contains("not-empty");
+
+    }
+
+    public void clickCheckboxWithDot(String box)  {
+        if (!checkIfCheckboxIsCheckedWithDot(box)) {
+            seleniumDriver.waitForRequestsToFinish();
+            seleniumDriver.waitAndClick(checkBoxWithDot(box));
+        }
+    }
+
 }
