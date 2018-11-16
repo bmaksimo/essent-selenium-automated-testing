@@ -75,10 +75,11 @@ public class MarketberichtenPage  extends Component {
     public void createNewMarktericht(String newMarktbericht){
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.name(newMarktbericht)));
     }
+
     public void refreshByName(String name)  {
-//       seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.name(name)));
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//a[@name='REFRESH MARKTBERICHTEN']/span[@class='icon-pijl']")));
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//a[@name='"+name+"']/span[@class='icon-pijl']")));
     }
+
     public void clickOnLabel(String label, String value)  {
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='"+label+"']//option[@label = '"+value+"']")));
     }
