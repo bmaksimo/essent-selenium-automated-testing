@@ -24,7 +24,7 @@ Feature: NAUT-482: Restart SA or MI - nl_BE
         Then Changes are confirmed
 
         When Left menu is sales-marketing
-        And Search field input is "541449611000044685"
+        And Search field input is "parameter:eanCode"
         And Click on link in View List at 1st row and "Klantnaam & nummer" column polling 20 seconds
         And Dashboard menu is Marktberichten
         Then Validate rejection status is "START ACCESS"

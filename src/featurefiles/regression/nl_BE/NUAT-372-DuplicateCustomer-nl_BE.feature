@@ -18,6 +18,6 @@ Feature: NUAT-372: Duplicate Customer - nl_BE
         When "Bedrijfsnaam" input is "Van Hauwaert Steven - Test Nuat 372"
         Then Changes are confirmed
         And Top arrow button is Up
-        And Search input is Van Hauwaert Steven - Test Nuat 372
-        Then Customer "Van Hauwaert Steven - Test Nuat 372" is found
+        And Search input is parameter:inputValue
+        Then Customer "parameter:inputValue" is found
 

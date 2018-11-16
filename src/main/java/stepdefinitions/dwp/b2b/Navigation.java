@@ -35,6 +35,7 @@ public class Navigation extends DwpScenario {
 
     @Then("^Verify status is \"([^\"]*)\" and \"([^\"]*)\"$")
     public void verifyStatusIsAnd(String external, String status) throws Throwable {
+        webDriver.waitForRequestsToFinish();
         if (status.equalsIgnoreCase("Normaal") || (status.equalsIgnoreCase("Normal"))) {
             Assert.assertTrue(checkStatusIsNormal(external));
         } else {
