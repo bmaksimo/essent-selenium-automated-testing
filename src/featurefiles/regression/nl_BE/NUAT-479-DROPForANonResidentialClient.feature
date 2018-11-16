@@ -1,6 +1,6 @@
 @DWP
-@REGRESSION
 @B2B
+@REGRESSION
 @BUSINESS-DESK
 Feature: NUAT-479: DROP For A Non Residential Client
 

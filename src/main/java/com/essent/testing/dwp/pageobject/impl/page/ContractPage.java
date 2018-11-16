@@ -30,7 +30,8 @@ public class ContractPage extends Component {
     }
 
     public void saveButtton()throws InterruptedException {
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("confirm-button")));
+        waitForRequestsToFinish();
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("primaryButton")));
     }
 
     public String getClientNumber()throws InterruptedException {
@@ -43,10 +44,6 @@ public class ContractPage extends Component {
 
     public void searchByClientNuiber(String nubmer)throws InterruptedException{
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id("search-input")),nubmer);
-    }
-
-    public void clickOnChecBox(){
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//select-with-search-modal//span[@class='icon-checkmark']")));
     }
 
     public void clickOnPlusMeniInTable(String row, String table) {

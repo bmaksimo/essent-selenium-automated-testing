@@ -1,6 +1,6 @@
 @DWP
-@REGRESSION
 @B2B
+@REGRESSION
 @BUSINESS-DESK
 Feature: NAUT-481: Rejection - nl_BE
 
