@@ -1,6 +1,8 @@
+@DWP
 @REGRESSION
+@B2B
 @LONGDURATION
-Feature: Reactivate contractline
+Feature: NUAT-3886-Reactivate contractline
 
     Background:
         Given  I logged in to DWP as businessdesk.testautomation.b2b@essent.be
