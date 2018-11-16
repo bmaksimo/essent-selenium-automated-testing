@@ -94,4 +94,10 @@ public class OfferteStep extends DwpScenario {
         boolean success = changeAccountStatusPage.uploadFileForSign(filePath);
         assertThat(String.format("Signature file %s upload failed.", filePath), success, is(true));
     }
+
+    @And("^Client signature receive data is \"([^\"]*)\"$")
+    public void clientSignatureReceiveDataIs(String date) throws Throwable {
+        OffertePage of = new OffertePage(webDriver);
+        of.setSinganureReceivedDate(date);
+    }
 }

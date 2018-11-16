@@ -47,6 +47,18 @@ public class OffertePage extends Component {
     }
 
     public void clickOnBevestigen(){
+        waitForRequestsToFinish();
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("primaryButton")));
     }
+
+    public WebElement kalender(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"signature_received_date_c\"]//div[@class='input__with-button']/span"));
+    }
+
+    public void setSinganureReceivedDate(String date){
+        waitForRequestsToFinish();
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='Datum handtekening ontvangen']//input[@id='signature-received-date-c-field']")),date);
+        seleniumDriver.waitAndClick(kalender());
+    }
+
 }
