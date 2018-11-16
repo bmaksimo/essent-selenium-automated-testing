@@ -7,7 +7,6 @@ Feature: Billing - Soft dunning process tasks check
     Background:
         Given I logged in to DWP as billing.testautomation@essent.be
 
-    @NUAT-5019
     @DUNNING-TASKS
     @NUAT-5019-STEP-9
     Scenario: Check if tasks have been generated when reaching HB3 dunning level

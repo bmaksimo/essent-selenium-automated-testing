@@ -7,7 +7,6 @@ Feature: NUAT-5019 Step 1. Creating a B2C Quote TC1 with move in, Dutch language
     Background:
         Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
 
-    @NUAT-5019
     @ONBOARDING
     @NUAT-5019-STEP-1
     Scenario: Create a B2C Quote with move in https://emagine-reality.atlassian.net/browse/NUAT-5019

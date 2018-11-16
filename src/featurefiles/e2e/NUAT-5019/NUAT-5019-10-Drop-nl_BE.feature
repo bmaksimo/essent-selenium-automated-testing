@@ -7,7 +7,6 @@ Feature: NUAT-5019 Step 10. End order (drop) messaging
     Background:
         Given I logged in to DWP as contracting.testautomation.b2c@essent.be
 
-    @NUAT-5019
     @CLIENT-DROP
     @NUAT-5019-STEP-10
     Scenario: Create end order (drop) market message for a customer

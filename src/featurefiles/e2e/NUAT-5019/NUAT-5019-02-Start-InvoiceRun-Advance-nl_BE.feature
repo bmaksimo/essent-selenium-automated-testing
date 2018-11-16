@@ -8,7 +8,6 @@ Feature: NUAT-5019 Step 2. Billing - Triggering billrun, produce an advanced inv
 
         Given I logged in to DWP as billing.testautomation@essent.be
 
-    @NUAT-5019
     @INVOICE-RUN-ADVANCE
     @NUAT-5019-STEP-2
     Scenario: Trigger Invoice run process

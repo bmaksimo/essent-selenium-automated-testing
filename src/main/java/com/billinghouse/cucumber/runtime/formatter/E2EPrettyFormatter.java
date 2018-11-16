@@ -78,12 +78,6 @@ public class E2EPrettyFormatter extends PrettyFormatter implements ColorAware {
         ParameterProvider  parameterProvider = ((ParameterProvider) ContextService.getContext().getBean("parameterProvider")).consumingNullValues(true);
         Set<Tag> previousScenarioTags = (Set)parameterProvider.get("scenario-tags");
 
-        if(!SetUtils.isEqualSet(previousScenarioTags, tags)){
-            logger.info("E2E scenario switched");
-            parameterProvider.remove("cucumber-scenario-failure");
-            logger.info("Previous scanario failure info is removed");
-        }
-
     }
 
     private void checkAndTerminate(RegisteredScenario activeScenario) {

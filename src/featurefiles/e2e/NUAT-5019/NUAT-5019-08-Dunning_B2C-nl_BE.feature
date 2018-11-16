@@ -9,7 +9,6 @@ Feature: NUAT-5019 Step 8. Billing - Trigger soft dunning process
         #Given B2C TC1 Active Contract uses "FAKE" address and switch type is "MOVE IN"
         Given I logged in to DWP as billing.testautomation@essent.be
 
-    @NUAT-5019
     @DUNNING
     @NUAT-5019-STEP-8
     Scenario: Reach HB3 dunning level and check if stop access (drop) has initiated

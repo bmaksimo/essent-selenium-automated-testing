@@ -8,7 +8,6 @@ Feature: NUAT-5019 Step 5. Billing - Triggering mediation run, including the rec
 
         Given I logged in to DWP as billing.testautomation@essent.be
 
-    @NUAT-5019
     @MEDIATION-RUN
     @NUAT-5019-STEP-5
     Scenario: Trigger Mediation run process
