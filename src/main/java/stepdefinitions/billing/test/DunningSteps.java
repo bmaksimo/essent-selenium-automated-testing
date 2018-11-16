@@ -32,6 +32,8 @@ public class DunningSteps extends DwpScenario {
 
     @When("^Dunning day countdown for \"([^\"]*)\" goes down (\\d+) days$")
     public void dunningStepRequest(String accountNumberParam, int count) throws Throwable {
+
+
         DunningStepRequest request = new DunningStepRequest();
         String accountNumber = parameterProvider.getValueOrParameterAsString(accountNumberParam);
         request.setAccountUUID(accountNumber);
