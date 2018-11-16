@@ -450,4 +450,8 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         ngWebDriver.waitForAngularRequestsToFinish();
     }
 
+    public Set<Cookie> getCookies() {
+        return driver.manage().getCookies();
+    }
+
 }
