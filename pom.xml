@@ -83,6 +83,11 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context-support</artifactId>
+        <version>4.2.4.RELEASE</version>
+      </dependency>
+      <dependency>
         <groupId>com.essent.be</groupId>
         <artifactId>jbilling.client</artifactId>
         <version>${jbilling.client.version}</version>
@@ -530,7 +535,17 @@
 	    <artifactId>iban4j</artifactId>
 	    <version>3.2.0</version>
 	</dependency>
-    
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context-support</artifactId>
+      <version>4.2.4.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.mail</groupId>
+      <artifactId>javax.mail</artifactId>
+      <version>1.5.2</version>
+    </dependency>
+
   </dependencies>
   <build>
     <plugins>
