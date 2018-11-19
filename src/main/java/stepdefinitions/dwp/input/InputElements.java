@@ -46,6 +46,7 @@ public class InputElements extends DwpScenario {
     @And("^\"([^\"]*)\" input is \"([^\"]*)\"$")
     public void setInput(String label, String value) throws Throwable {
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
+        parameterProvider.put("inputValue", inputValue);
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
         options.put("value", inputValue);

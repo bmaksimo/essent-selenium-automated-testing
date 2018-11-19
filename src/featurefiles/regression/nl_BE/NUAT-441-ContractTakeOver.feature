@@ -1,7 +1,6 @@
 @DWP
-@REGRESSION
-@B2B
 @BUSINESS-DESK
+@REGRESSION
 Feature: NUAT-441: Contract Take Over
 
     Background:
