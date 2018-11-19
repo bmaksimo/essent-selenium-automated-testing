@@ -66,7 +66,8 @@ public class InputElements extends DwpScenario {
 
     @And("^\"([^\"]*)\" date is \"([^\"]*)\"$")
     public void setDateInput(String label, String value) throws Throwable {
-        Thread.sleep(1500);
+//        Thread.sleep(1500);
+        Sleeper.sleepTightInSeconds(1.5);
         String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(value));
         Map<String, String> options = new HashMap<>();
         options.put("label", label);

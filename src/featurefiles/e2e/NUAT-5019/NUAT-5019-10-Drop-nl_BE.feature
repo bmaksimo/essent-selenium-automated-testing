@@ -3,12 +3,13 @@
 @B2C
 @CREDIT-AND-CONTROL
 @NUAT-5019
-@CLIENT-DROP
-Feature: NUAT-5019-6: End order (drop) messaging
+Feature: NUAT-5019 Step 10. End order (drop) messaging
 
     Background:
         Given I logged in to DWP as contracting.testautomation.b2c@essent.be
 
+    @CLIENT-DROP
+    @NUAT-5019-STEP-10
     Scenario: Create end order (drop) market message for a customer
         When Left menu is contracting-switching
         And Top menu item is Klanten
@@ -30,5 +31,6 @@ Feature: NUAT-5019-6: End order (drop) messaging
         When "Module" selection is "INITIATE STOP ACCESS"
         And Label input for "Label" is "Drop/Request Budget Meter"
         And Option "Testing?" is On
+        And Option "Market mock?" is On
         And Select Contractline dialog is confirmed
         Then 1st list element has cell value INITIATE STOP ACCESS at column Module & Label

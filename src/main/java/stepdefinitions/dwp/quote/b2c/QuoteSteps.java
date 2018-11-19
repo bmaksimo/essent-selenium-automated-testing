@@ -7,9 +7,11 @@ import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.quote.*;
 import com.essent.testing.dwp.pageobject.quote.GuidedStep;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
 import com.essent.testing.util.resource.ResourceUtil;
 import com.google.gson.Gson;
 import cucumber.api.DataTable;
+import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -51,6 +53,7 @@ public class QuoteSteps extends DwpScenario {
         boolean formInitialized = quoteDetailsPage.fillInFormData();
         assertThat("Failure occurred when filling in input values", formInitialized, is(true));
     }
+
 
     private class CheckFormHeader implements Predicate<String> {
         @Override
@@ -232,6 +235,17 @@ public class QuoteSteps extends DwpScenario {
         connectionDetailsView.toggleMeter(productType, meterState);
     }
 
+    @And("^Switch type is Move in")
+    public void setMoveIn() throws Throwable {
+        ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage(webDriver);
+        given().await()
+            .ignoreExceptions()
+            .pollInterval(FIVE_HUNDRED_MILLISECONDS)
+            .pollDelay(ONE_HUNDRED_MILLISECONDS)
+            .atMost(new Duration(10, SECONDS)).until(connectionDetailsView::isNextButtonEnabled);
+        connectionDetailsView.toggleMeter(ProductType.Electricity, CheckBoxState.Closed);
+    }
+
     @And("^([^\"]*) market mock test is ([^\"]*)$")
     public void setMarketMockTest(final ProductType productType, final CheckBoxState state) throws Throwable {
         ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage(webDriver);
@@ -299,6 +313,25 @@ public class QuoteSteps extends DwpScenario {
         Map<String, String> options = new HashMap<>();
         boolean success = executeJavascriptTest("TrSelectEanCode", options);
         assertThat(success, is(true));
+    }
+
+    @And("^Electricity EAN code is \"([^\"]*)\"$")
+    public void electricityEANCodeIs(String ean) throws Throwable {
+        ConnectionDetails electricityConnectionDetails = new ConnectionDetails();
+        switch (ean) {
+            case "selected":
+                selectEanCode();
+                return;
+            case "random":
+                electricityConnectionDetails.setEan(PrepareDataForContract.generateEAN());
+                break;
+            default:
+                electricityConnectionDetails.setEan(ean);
+        }
+        ConnectionDetailsPage page = new ConnectionDetailsPage(webDriver);
+        page.setElectroConnectionDetails(electricityConnectionDetails);
+        boolean success = page.fillInElectricityEanCode();
+        assertThat("Electricity EAN code filling in failure", success, is(true));
     }
 
     @And("^Electricity EAN code is put as output parameter \"?([^\"]*)\"?$")

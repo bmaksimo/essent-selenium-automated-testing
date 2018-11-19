@@ -21,13 +21,38 @@
   <context>PERIODIC_METERING</context>
   <register>
     <measurementnature>ACTIVE_ENERGY</measurementnature>
+    <!--
     <timeframe>${hourlyTariff}</timeframe>
+    -->
+    <timeframe>NIGHT_EXCLUSIVE</timeframe>
     <direction>CONSUMPTION</direction>
     <deliverypoint>${deliveryPoint}</deliverypoint>
     <values>
       <number>1</number>
       <value>4321.0</value>
       <quality>VALIDATED</quality>
+    </values>
+  </register>
+  <register>
+    <measurementnature>ACTIVE_ENERGY</measurementnature>
+    <timeframe>HIGH</timeframe>
+    <direction>CONSUMPTION</direction>
+    <deliverypoint>${deliveryPoint}</deliverypoint>
+    <values>
+      <number>1</number>
+      <value>4321.0</value>
+      <quality>DEFAULT</quality>
+    </values>
+  </register>
+  <register>
+    <measurementnature>ACTIVE_ENERGY</measurementnature>
+    <timeframe>LOW</timeframe>
+    <direction>CONSUMPTION</direction>
+    <deliverypoint>${deliveryPoint}</deliverypoint>
+    <values>
+      <number>1</number>
+      <value>8341.0</value>
+      <quality>DEFAULT</quality>
     </values>
   </register>
 </Consumption>

@@ -1,6 +1,6 @@
 @DWP
-@REGRESSION
 @B2B
+@REGRESSION
 @BUSINESS-DESK
 Feature: NUAT-433: Log Questions Of Customers - en_BE
 
