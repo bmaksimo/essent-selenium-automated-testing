@@ -119,7 +119,13 @@ public enum ConfigKey {
     TUNNEL_SUITE("tunnel.suite"),
     TUNNEL_BPM("tunnel.bpm"),
     ENERGYCOMM_URL("energycomm.url"),
-    MARKET_MOCK_URL("marketmock.url");
+    MARKET_MOCK_URL("marketmock.url"),
+    ESSENT_SMTP_HOST("essent.smtp.host"),
+    ESSENT_SMTP_PORT("essent.smtp.port"),
+    ESSENT_SMTP_USER("essent.smtp.user"),
+    ESSENT_SMTP_PASSWORD("essent.smtp.password"),
+    ESSENT_EMAIL_FROM("essent.email.from"),
+    ESSENT_EMAIL_TO("essent.email.to");
 	private String resourceKey;
     ConfigKey(String resourceKey) {
         this.resourceKey = resourceKey;
