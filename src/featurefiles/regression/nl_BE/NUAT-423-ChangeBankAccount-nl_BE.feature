@@ -20,4 +20,4 @@ Feature: NUAT-423: Change Bank Account - nl_BE
         And "Betalingswijze" selection is "Domiciliëring"
         And "IBAN" input is "BE71096123456769"
         And Changes are confirmed
-        Then Validate bank account was changed on "BE71096123456769"
+        Then Validate bank account was changed on "parameter:inputValue"
