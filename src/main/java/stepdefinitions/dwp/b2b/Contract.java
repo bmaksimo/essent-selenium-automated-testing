@@ -49,6 +49,7 @@ public class Contract extends DwpScenario {
 
     @When("^Plus action of \"([^\"]*)\" element from \"([^\"]*)\" and click on \"([^\"]*)\"$")
     public void plusActionOfElementFromAndClickOn(String row, String table, String action) throws Throwable {
+        webDriver.waitForRequestsToFinish();
         ContractPage cp = new ContractPage(webDriver);
         BaseObject baseObject = new BaseObject(webDriver);
         cp.clickOnPlusMeniInTable(row,table);

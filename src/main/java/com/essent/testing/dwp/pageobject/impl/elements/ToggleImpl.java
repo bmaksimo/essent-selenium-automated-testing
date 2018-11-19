@@ -38,8 +38,8 @@ public class ToggleImpl extends Component {
     }
 
     public void clickCheckboxWithDot(String box)  {
+        seleniumDriver.waitForRequestsToFinish();
         if (!checkIfCheckboxIsCheckedWithDot(box)) {
-            seleniumDriver.waitForRequestsToFinish();
             seleniumDriver.waitAndClick(checkBoxWithDot(box));
         }
     }
