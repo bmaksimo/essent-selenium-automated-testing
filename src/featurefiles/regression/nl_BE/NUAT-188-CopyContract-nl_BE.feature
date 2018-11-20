@@ -2,7 +2,7 @@
 @B2B
 @REGRESSION
 @BUSINESS-DESK
-Feature: Scenario for copy contract
+Feature: NUAT-188: Scenario for copy contract
         Background:
             Given I logged in to DWP as businessdesk.testautomation.b2b@essent.be
 

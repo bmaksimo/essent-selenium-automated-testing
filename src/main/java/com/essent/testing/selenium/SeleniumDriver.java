@@ -193,8 +193,8 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     public void tearDown() {
         if (driver == null)
             return;
-        driver.close();
-        driver.quit();
+//        driver.close();
+//        driver.quit();
     }
 
     private void injectJavaScriptInline(File functionFile) {
@@ -443,9 +443,9 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
 
     public void waitAndSendKeys(final WebElement element, final String keysToSend) {
         waitForElement(element);
-        element.click();
+//        element.click();
         element.clear();
-        element.click();
+//        element.click();
         element.sendKeys(keysToSend);
         ngWebDriver.waitForAngularRequestsToFinish();
     }

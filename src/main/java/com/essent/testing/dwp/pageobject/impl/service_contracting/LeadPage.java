@@ -57,7 +57,7 @@ public class LeadPage extends BaseObject implements Form {
 
     private void setCompanyName(String companyNumber) {
         seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("company-name-c-field")), companyNumber);
-        findElementWhenVisible(By.xpath(".//*[@id='company_name_c']/div/autocomplete/ul/li[2]")).click();
+        findElementWhenVisible(By.xpath(".//*[@id='company_name_c']/div/autocomplete/ul/li[4]")).click();
         waitForRequestsToFinish();
     }
 
@@ -76,8 +76,7 @@ public class LeadPage extends BaseObject implements Form {
     private void setTelephone(String telephone) {
         waitForRequestsToFinish();
         findElementWhenVisible(By.id("leads-contact-details-contact-details-phone-type-work-phone-contact-details-type-phone-contact-details-value-field")).clear();
-        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("leads-contact-details-contact-details-phone-type-work-phone-contact-details-type-phone-contact-details-value-field")),
-            telephone);
+        findElementWhenVisible(By.id("leads-contact-details-contact-details-phone-type-work-phone-contact-details-type-phone-contact-details-value-field")).sendKeys(telephone);
     }
 
     private void setMobile(String mobile) {
