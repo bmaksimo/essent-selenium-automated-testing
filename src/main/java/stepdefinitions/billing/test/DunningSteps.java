@@ -4,7 +4,6 @@ import com.essent.be.jbilling.api.rest.RestResponse;
 import com.essent.be.jbilling.api.rest.batch.RSTriggerDunningRequest;
 import com.essent.be.jbilling.api.rest.dunning.DunningStepRequest;
 import com.essent.testing.client.billing.BillingBatch;
-
 import com.essent.testing.database.DBUtility;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;

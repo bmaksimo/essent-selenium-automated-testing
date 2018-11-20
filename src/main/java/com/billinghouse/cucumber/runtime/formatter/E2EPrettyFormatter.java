@@ -10,11 +10,13 @@ import cucumber.runtime.CucumberException;
 import cucumber.runtime.formatter.ColorAware;
 import gherkin.formatter.PrettyFormatter;
 import gherkin.formatter.model.*;
-import org.apache.commons.collections.ListUtils;
 import org.apache.commons.collections.SetUtils;
 import org.apache.log4j.Logger;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -75,12 +77,6 @@ public class E2EPrettyFormatter extends PrettyFormatter implements ColorAware {
 
         ParameterProvider  parameterProvider = ((ParameterProvider) ContextService.getContext().getBean("parameterProvider")).consumingNullValues(true);
         Set<Tag> previousScenarioTags = (Set)parameterProvider.get("scenario-tags");
-
-        if(!SetUtils.isEqualSet(previousScenarioTags, tags)){
-            logger.info("E2E scenario switched");
-            parameterProvider.remove("cucumber-scenario-failure");
-            logger.info("Previous scanario failure info is removed");
-        }
 
     }
 

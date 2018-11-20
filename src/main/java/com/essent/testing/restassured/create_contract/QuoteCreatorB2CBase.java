@@ -19,7 +19,6 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
 import java.io.FileNotFoundException;
