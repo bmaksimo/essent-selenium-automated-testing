@@ -52,6 +52,7 @@ public class Contract extends DwpScenario {
         webDriver.waitForRequestsToFinish();
         ContractPage cp = new ContractPage(webDriver);
         BaseObject baseObject = new BaseObject(webDriver);
+        Thread.sleep(5000);
         cp.clickOnPlusMeniInTable(row,table);
         baseObject.plusSubaction(action);
     }
