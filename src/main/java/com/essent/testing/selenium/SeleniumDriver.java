@@ -430,8 +430,8 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
 
     private void waitForElement(final WebElement element) {
         ngWebDriver.waitForAngularRequestsToFinish();
-        waitForElementToBeVisible(element, 30, 5);
-        waitForElementToBeClickable(element, 30, 5);
+        waitForElementToBeVisible(element, 60, 5);
+        waitForElementToBeClickable(element, 60, 5);
     }
 
     public void waitAndClick(final WebElement element) {

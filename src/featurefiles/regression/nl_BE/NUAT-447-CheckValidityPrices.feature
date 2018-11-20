@@ -1,6 +1,7 @@
 @DWP
 @REGRESSION
 @B2B
+    @J
 Feature: NUAT-447: Check validity prices
 
     Background:

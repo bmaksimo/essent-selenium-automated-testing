@@ -83,6 +83,7 @@ public class OfferteStep extends DwpScenario {
 
     @Then("^Bevestigen$")
     public void bevestigen() throws Throwable {
+        webDriver.waitForRequestsToFinish();
         OffertePage of = new OffertePage(webDriver);
         of.clickOnBevestigen();
     }

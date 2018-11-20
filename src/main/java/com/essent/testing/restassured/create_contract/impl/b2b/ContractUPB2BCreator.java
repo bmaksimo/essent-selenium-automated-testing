@@ -170,9 +170,6 @@ public class ContractUPB2BCreator extends QuoteCreatorB2BBase implements QuoteCr
         setPreconditions(ContractConstants.ACCOUNT_NAME_PREFIX_UP_B2B, upStartDate, PrepareDataForContract.getTodayDate());
         createQuoteB2B(ContractConstants.PATH_TO_JSON_FILES_QUOTE_UP_B2B, ContractConstants.PATH_TO_JSON_FILES_CREATE_QUOTE_B2B_UP, ApiPathsContract.API_CREATE_QUOTE_B2B_TC2_UP);
         sendToCustomer(ContractConstants.PATH_TO_JSON_FILES_QUOTE_UP_B2B);
-//        verifyQuoteStatus(ContractConstants.PATH_TO_JSON_FILES_QUOTE_UP_B2B, ContractConstants.SENT_TO_CUSTOMER_EN.toUpperCase(), ContractConstants.ACCEPTED_EN.toUpperCase());
-//        signatureReceived(ContractConstants.PATH_TO_JSON_FILES_QUOTE_UP_B2B, pricingDate, priceValidUntilDate, signatureReceivedDate);
-//        verifyQuoteStatus(ContractConstants.PATH_TO_JSON_FILES_QUOTE_UP_B2B, ContractConstants.SIGNATURE_RECEIVED_EN.toUpperCase(), ContractConstants.ACCEPTED_EN.toUpperCase());
 
         logger.info("createContractB2B: " + this.getClass().getSimpleName() + " - PASSED");
 

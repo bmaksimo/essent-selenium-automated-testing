@@ -29,12 +29,13 @@ public class ToggleImpl extends Component {
 
     public WebElement checkBoxWithDot (String box) {
         return  seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + box + ".']//toggle-form-element/label"));
-
     }
-    public boolean checkIfCheckboxIsCheckedWithDot(String box)  {
-        String classValue = checkBoxWithDot(box).findElement(By.cssSelector("input")).getAttribute("class");
-        return classValue.contains("not-empty");
 
+    public boolean checkIfCheckboxIsCheckedWithDot(String box)  {
+        WebElement cb =checkBoxWithDot(box);
+        waitForRequestsToFinish();
+        String classValue = cb.findElement(By.cssSelector("input")).getAttribute("class");
+        return classValue.contains("not-empty");
     }
 
     public void clickCheckboxWithDot(String box)  {
