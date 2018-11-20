@@ -48,7 +48,14 @@ public class OffertePage extends Component {
 
     public void clickOnBevestigen(){
         waitForRequestsToFinish();
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("primaryButton")));
+        try {
+            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("primaryButton")));;
+        }
+        catch(org.openqa.selenium.StaleElementReferenceException ex) {
+            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("primaryButton")));;
+        }
+
+
     }
 
     public WebElement kalender(){

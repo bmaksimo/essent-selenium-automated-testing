@@ -27,7 +27,6 @@ public class TaskSteps extends DwpScenario {
     public void plusActionAndOfFirstCustomerFromList(String action) throws Throwable {
         BaseObject baseObject = new BaseObject(webDriver);
         baseObject.clickOnPlus();
-        baseObject.clickOnPlus();
         webDriver.waitForRequestsToFinish();
         baseObject.plusSubaction(action);
     }

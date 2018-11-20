@@ -23,11 +23,21 @@ public class BaseObject extends Component {
     }
 
     public void clickOnPlus() {
-        seleniumDriver.waitAndClick(seleniumDriver.findElementOrNull(By.xpath("(//tbody[@id='rows']//list-plus-cell//a)[1]")));
+        try {
+            seleniumDriver.waitAndClick(seleniumDriver.findElementOrNull(By.xpath("(.//tbody[@id='rows']//list-plus-cell//a)[1]")));
+        }
+        catch(org.openqa.selenium.StaleElementReferenceException ex) {
+            seleniumDriver.waitAndClick(seleniumDriver.findElementOrNull(By.xpath("(.//tbody[@id='rows']//list-plus-cell//a)[1]")));
+        }
     }
 
     public void plusSubaction(String action) {
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[@label='" + action + "']/a")));
+        try {
+            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[@label='" + action + "']/a")));
+        }
+        catch(org.openqa.selenium.StaleElementReferenceException ex) {
+            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[@label='" + action + "']/a")));
+        }
     }
 
     public void clickOnToggle(String label) {
