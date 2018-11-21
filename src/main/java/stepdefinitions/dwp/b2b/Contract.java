@@ -1,4 +1,5 @@
 package stepdefinitions.dwp.b2b;
+
 import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
 import com.essent.testing.dwp.pageobject.impl.page.ContractPage;
 import com.essent.testing.dwp.pageobject.impl.service_contracting.ContractenPage;
@@ -6,9 +7,9 @@ import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
-import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.springframework.test.context.ContextConfiguration;
+import cucumber.api.java.en.Then;
 import static org.junit.Assert.assertEquals;
 
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
