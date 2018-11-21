@@ -5,10 +5,8 @@ import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.scenario.RegisteredScenario;
 import cucumber.api.Scenario;
-import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.When;
-import org.junit.Assert;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,10 +16,6 @@ import static org.hamcrest.Matchers.is;
 
 public class EmailReporter extends RegisteredScenario {
 
-    public static void main(String[] args) {
-        new EmailReporter().sendEmailToSMEs();
-    }
-
     @Before("@DWP, @CORE, @E2E, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
@@ -29,16 +23,11 @@ public class EmailReporter extends RegisteredScenario {
 
     @When("^Send email to SMEs$")
     public void sendEmailToSMEs() {
-//        String environment = ConfigProvider.getProperty(ConfigKey.ENVIRONMENT);
-        String environment = "UAT06";
-//        String crmName = parameterProvider.getValueOrParameterAsString("parameter:suitecrm-customer-name");
-        String crmName = "Jan van B2C";
-//        String crmId = parameterProvider.getValueOrParameterAsString("parameter:accountNumber");
-        String crmId = "100000123";
-//        String billingId = parameterProvider.getValueOrParameterAsString("parameter:billingCustomerId");
-        String billingId = "100000321";
-//        String ean = parameterProvider.getValueOrParameterAsString("parameter:EAN-code");
-        String ean = "7826372836218732163";
+        String environment = ConfigProvider.getProperty(ConfigKey.ENVIRONMENT);
+        String crmName = parameterProvider.getValueOrParameterAsString("parameter:suitecrm-customer-name");
+        String crmId = parameterProvider.getValueOrParameterAsString("parameter:accountNumber");
+        String billingId = parameterProvider.getValueOrParameterAsString("parameter:billingCustomerId");
+        String ean = parameterProvider.getValueOrParameterAsString("parameter:EAN-code");
 
         Map<String, String> input = new HashMap<>();
         input.put("env", environment);
