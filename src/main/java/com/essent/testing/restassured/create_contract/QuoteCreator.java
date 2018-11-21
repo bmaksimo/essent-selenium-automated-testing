@@ -21,6 +21,8 @@ public interface QuoteCreator {
 
 	String createContract() throws Exception;
 
+    String createQuoteWithoutSignature() throws Exception;
+
 	String createContractAndCheckContractStatus() throws Exception;
 
 	ContractStatus checkContractIsActive(String path) throws Exception;

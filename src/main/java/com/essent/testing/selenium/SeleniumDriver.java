@@ -386,7 +386,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
 
     public WebElement findElementWhenVisible(By selector) {
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)
-            .withTimeout(Duration.ofSeconds(30))
+            .withTimeout(Duration.ofSeconds(120))
             .pollingEvery(Duration.ofSeconds(5))
             .ignoring(ElementNotVisibleException.class);
         WebElement element = waiter.until(ExpectedConditions.visibilityOfElementLocated(selector));
@@ -431,8 +431,8 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
 
     private void waitForElement(final WebElement element) {
         ngWebDriver.waitForAngularRequestsToFinish();
-        waitForElementToBeVisible(element, 30, 5);
-        waitForElementToBeClickable(element, 30, 5);
+        waitForElementToBeVisible(element, 120, 5);
+        waitForElementToBeClickable(element, 120, 5);
     }
 
     public void waitAndClick(final WebElement element) {

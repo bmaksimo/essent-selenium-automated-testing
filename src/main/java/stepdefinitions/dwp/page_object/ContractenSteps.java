@@ -93,8 +93,9 @@ public class ContractenSteps extends DwpScenario {
 
     @Then("^Validate bank account was changed on \"([^\"]*)\"$")
     public void validateBankAccountWasChangedOn(String iban) throws Throwable {
+        String inputIban = parameterProvider.getValueOrParameterAsString(iban);
         ContractenPage contractenPage = new ContractenPage(webDriver);
-        contractenPage.findIban(iban);
+        contractenPage.findIban(inputIban);
     }
 
     @And("^Get Contract Ean Code$")

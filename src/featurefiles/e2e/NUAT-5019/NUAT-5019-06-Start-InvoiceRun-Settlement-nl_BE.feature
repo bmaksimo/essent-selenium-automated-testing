@@ -2,7 +2,6 @@
 @E2E
 @CREDIT-AND-CONTROL
 @B2C
-@NUAT-5019
 Feature: NUAT-5019 Step 6. Triggering billrun, produce a settlement invoice
 
     Background:
@@ -30,9 +29,12 @@ Feature: NUAT-5019 Step 6. Triggering billrun, produce a settlement invoice
         And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
         And "Factuurdatum" date is "now"
         And "Procesdatum" date is "parameter:billrun-date"
+
         Then Invoice run is scheduled
 
         Given Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
         When Dashboard menu is Billing
         Then View list header is "Transacties"
         And 1st list element has cell value Invoice (SETTLEMENT) at column ID & Type
+
+

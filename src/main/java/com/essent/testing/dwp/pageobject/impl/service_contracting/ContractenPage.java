@@ -68,6 +68,7 @@ public class ContractenPage extends Component {
     }
 
     public void findRejectionReason(String input) {
+        waitForRequestsToFinish();
         Assert.assertTrue(seleniumDriver.findElementWhenVisible(By.xpath("(//span[.='" + input + "'])[1]")).isDisplayed());
     }
 

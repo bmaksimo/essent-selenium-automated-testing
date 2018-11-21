@@ -101,7 +101,8 @@ public class EssentPrettyFormatter extends PrettyFormatter implements ColorAware
     public void endOfScenarioLifeCycle(Scenario scenario) {
         logger.info("CUCUMBER_HOOK (endOfScenarioLifeCycle)");
         super.endOfScenarioLifeCycle(scenario);
-
+        ParameterProvider  parameterProvider = ((ParameterProvider) ContextService.getContext().getBean("parameterProvider")).consumingNullValues(true);
+        logger.info(" - TEST SCENARIO PARAMETERS: " + parameterProvider.toString());
     }
 }
 
