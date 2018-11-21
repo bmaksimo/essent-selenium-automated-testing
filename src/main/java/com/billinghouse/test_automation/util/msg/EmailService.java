@@ -44,8 +44,6 @@ public class EmailService {
     private JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost(ConfigProvider.getProperty(ConfigKey.ESSENT_SMTP_HOST));
-        mailSender.setUsername(ConfigProvider.getProperty(ConfigKey.ESSENT_SMTP_USER));
-        mailSender.setPassword(ConfigProvider.getProperty(ConfigKey.ESSENT_SMTP_PASSWORD));
         Integer port = Integer.parseInt(ConfigProvider.getProperty(ConfigKey.ESSENT_SMTP_PORT));
         mailSender.setPort(port);
 
@@ -94,28 +92,6 @@ public class EmailService {
             return false;
         }
     }
-
-//    private MimeMessage getEmailMessage(String messageBody, JavaMailSender emailSender) throws MessagingException {
-//        MimeMessage mimeMailMessage = emailSender.createMimeMessage();
-//        MimeMessageHelper helper = new MimeMessageHelper(mimeMailMessage, true);
-//        helper.setFrom("noreply@essent.be");
-//        helper.setTo("sme@essent.be");
-//        helper.setSubject("NUAT-5019 Scenario Execution");
-//        helper.setText(messageBody);
-//
-//        return mimeMailMessage;
-//    }
-//
-//    private JavaMailSender getJavaMailSender() {
-//        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-//        mailSender.setHost("smtp.essent.be");
-//        mailSender.setPort(587);
-//
-//        mailSender.setUsername("essentmailer@essent.be");
-//        mailSender.setPassword("pass1234");
-//
-//        return mailSender;
-//    }
 
     private MimeMessage getEmailMessage(String messageBody, JavaMailSender emailSender) throws MessagingException {
         MimeMessage mimeMailMessage = emailSender.createMimeMessage();
