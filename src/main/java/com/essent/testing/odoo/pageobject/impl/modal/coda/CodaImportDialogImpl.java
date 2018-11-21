@@ -68,7 +68,7 @@ public class CodaImportDialogImpl extends Component implements CodaImportDialog 
 
     public String getImportReport() {
         FluentWait<WebDriver> waiter = new FluentWait<>(seleniumDriver.getDriver()).withTimeout(Duration.ofSeconds(20));
-        WebElement reportElement = waiter.ignoring(org.openqa.selenium.NoSuchElementException.class).until(ExpectedConditions.presenceOfElementLocated(RESULTS_NOTE_SELECTOR));
+        WebElement reportElement = waiter.until(ExpectedConditions.presenceOfElementLocated(RESULTS_NOTE_SELECTOR));
         return reportElement.getAttribute("value");
     }
 }
