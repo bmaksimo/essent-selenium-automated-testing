@@ -1,8 +1,5 @@
 package com.essent.testing.restassured.create_contract.impl.b2b;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import com.essent.testing.restassured.create_contract.QuoteCreator;
 import com.essent.testing.restassured.create_contract.QuoteCreatorB2BBase;
 import com.essent.testing.restassured.create_contract.constants.ApiPathsContract;
@@ -11,6 +8,9 @@ import com.essent.testing.restassured.create_contract.constants.ContractStatus;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class ContractUPB2BCreator extends QuoteCreatorB2BBase implements QuoteCreator {
 
@@ -51,7 +51,7 @@ public class ContractUPB2BCreator extends QuoteCreatorB2BBase implements QuoteCr
 
 	}
 
-	@Override
+    @Override
 	public ContractStatus checkContractIsActive(String path) throws Exception {
 		logger.info("checkContractIsActive: " + this.getClass().getSimpleName());
 		return super.checkContractIsActive(path);
@@ -160,5 +160,20 @@ public class ContractUPB2BCreator extends QuoteCreatorB2BBase implements QuoteCr
 
 		return getAccountNumber(recordId, cookie);
 	}
+
+
+    @Override
+    public String createQuoteWithoutSignature() throws Exception {
+        logger.info("createContractB2B: " + this.getClass().getSimpleName());
+
+        login();
+        setPreconditions(ContractConstants.ACCOUNT_NAME_PREFIX_UP_B2B, upStartDate, PrepareDataForContract.getTodayDate());
+        createQuoteB2B(ContractConstants.PATH_TO_JSON_FILES_QUOTE_UP_B2B, ContractConstants.PATH_TO_JSON_FILES_CREATE_QUOTE_B2B_UP, ApiPathsContract.API_CREATE_QUOTE_B2B_TC2_UP);
+        sendToCustomer(ContractConstants.PATH_TO_JSON_FILES_QUOTE_UP_B2B);
+
+        logger.info("createContractB2B: " + this.getClass().getSimpleName() + " - PASSED");
+
+        return getAccountNumber(recordId, cookie);
+    }
 
 }

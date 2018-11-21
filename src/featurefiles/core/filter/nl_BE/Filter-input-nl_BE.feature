@@ -1,6 +1,6 @@
 @DWP
 @CORE
-@FILTER
+@CORE-FILTER
 Feature: Applying filters, View List Header check with waiter
 
     Background:
@@ -19,7 +19,7 @@ Feature: Applying filters, View List Header check with waiter
 
     Scenario: Plus Menu navigation to view list
         When Plus menu is "Contracting -> UP-TK2 - Om contracten te hernieuwen"
-        Then View list header is "UP-TK2 - Om contracten te hernieuwen" appears within 10 seconds
+        Then View list header is "UP-TK2 - Om contracten te hernieuwen" appears within 25 seconds
 
         When Top action is Filters
         And "Klantnummer" input is "6574"

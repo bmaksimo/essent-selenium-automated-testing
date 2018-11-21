@@ -1,6 +1,22 @@
 package com.essent.testing.restassured.create_contract;
 
-import static org.hamcrest.Matchers.equalTo;
+import com.essent.testing.config.ConfigKey;
+import com.essent.testing.config.ConfigProvider;
+import com.essent.testing.restassured.create_contract.constants.ApiPathsContract;
+import com.essent.testing.restassured.create_contract.constants.ContractConstants;
+import com.essent.testing.restassured.create_contract.constants.ContractStatus;
+import com.essent.testing.restassured.create_contract.constants.SwitchTypes;
+import com.essent.testing.restassured.create_contract.helper.ContractUtil;
+import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
+import com.google.gson.Gson;
+import cucumber.runtime.CucumberException;
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.http.Cookies;
+import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
+import org.apache.log4j.Logger;
+import org.junit.Assert;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,25 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import com.essent.testing.restassured.create_contract.constants.SwitchTypes;
-import org.apache.log4j.Logger;
-import org.junit.Assert;
-
-import com.essent.testing.config.ConfigKey;
-import com.essent.testing.config.ConfigProvider;
-import com.essent.testing.restassured.create_contract.constants.ApiPathsContract;
-import com.essent.testing.restassured.create_contract.constants.ContractConstants;
-import com.essent.testing.restassured.create_contract.constants.ContractStatus;
-import com.essent.testing.restassured.create_contract.helper.ContractUtil;
-import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
-import com.google.gson.Gson;
-
-import cucumber.runtime.CucumberException;
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
-import io.restassured.http.Cookies;
-import io.restassured.path.json.JsonPath;
-import io.restassured.response.Response;
+import static org.hamcrest.Matchers.equalTo;
 
 public class QuoteCreatorB2BBase {
 

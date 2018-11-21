@@ -60,7 +60,12 @@ public class ContractTC1B2CCreator extends QuoteCreatorB2CBase implements QuoteC
 		return getAccountNumber(recordId, cookie);
 	}
 
-	@Override
+    @Override
+    public String createQuoteWithoutSignature() throws Exception {
+        return null;
+    }
+
+    @Override
 	public ContractStatus checkContractIsActive(String path) throws Exception {
 
 		logger.info("checkContractIsActive: " + this.getClass().getSimpleName());
@@ -115,6 +120,7 @@ public class ContractTC1B2CCreator extends QuoteCreatorB2CBase implements QuoteC
 	@Override
 	public String createContractAndCheckContractStatus() throws Exception {
 		logger.info("createContractAndCheckContractStatus: " + this.getClass().getSimpleName());
+        long startTime = System.currentTimeMillis();
 
         login();
         setPreconditions(ContractConstants.ACCOUNT_NAME_PREFIX_TC1_B2C, upStartDate, PrepareDataForContract.getTodayDate());
@@ -160,7 +166,8 @@ public class ContractTC1B2CCreator extends QuoteCreatorB2CBase implements QuoteC
 			Assert.fail("Contract status is not ACTIVE and it status is: " + contractStatus);
 		}
 
-		logger.info("createContractAndCheckContractStatus: " + this.getClass().getSimpleName() + " - PASSED");
+        long estimatedTime = System.currentTimeMillis() - startTime;
+		logger.info("createContractAndCheckContractStatus: " + this.getClass().getSimpleName() + " - PASSED - Elapsed time: " + estimatedTime + "ms");
 
 		return getAccountNumber(recordId, cookie);
 	}

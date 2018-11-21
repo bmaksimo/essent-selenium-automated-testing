@@ -1,7 +1,9 @@
 package com.essent.testing.restassured.create_contract;
 
+import com.billinghouse.cucumber.runtime.parameter.ParameterProvider;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
+import com.essent.testing.context.ContextService;
 import com.essent.testing.restassured.create_contract.constants.ApiPathsContract;
 import com.essent.testing.restassured.create_contract.constants.ContractConstants;
 import com.essent.testing.restassured.create_contract.constants.ContractStatus;
@@ -30,6 +32,8 @@ import static org.hamcrest.Matchers.equalTo;
 public class QuoteCreatorB2CBase {
 
 	private static final Logger logger = Logger.getLogger(QuoteCreatorB2CBase.class);
+
+	private ParameterProvider parameterProvider;
 
 	private String CRMusername = ConfigProvider.getProperty(ConfigKey.DWP_USER_SOAPUI_B2C);
 	private String CRMpassword = ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_SOAPUI_B2C);
@@ -88,6 +92,7 @@ public class QuoteCreatorB2CBase {
 		numberOfAttempts = 0;
 		gson = new Gson();
 
+        parameterProvider = ((ParameterProvider) ContextService.getContext().getBean("parameterProvider")).consumingNullValues(true);
 		RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 	}
 
@@ -483,6 +488,7 @@ public class QuoteCreatorB2CBase {
             addressPostalCode = prop.getProperty("address_postal_code");
             addressCity = prop.getProperty("address_city");
             ean_c = prop.getProperty("ean_c");
+            parameterProvider.put("deliverypointid", ean_c);
             moveIn = prop.getProperty("move_in_c");
             switchType = prop.getProperty("switchtype_c");
             migLabel = prop.getProperty("mig_label_c");
@@ -522,6 +528,7 @@ public class QuoteCreatorB2CBase {
         addressNumber = PrepareDataForContract.getRandomAddressNumber();
 
         ean_c = PrepareDataForContract.generateEAN();
+        parameterProvider.put("deliverypointid", ean_c);
 
         SwitchTypes switchTypeStatus = SwitchTypes.fromString(typeSwitch);
 

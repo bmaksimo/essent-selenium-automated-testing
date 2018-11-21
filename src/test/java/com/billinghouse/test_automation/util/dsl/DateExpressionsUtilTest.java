@@ -2,8 +2,7 @@ package com.billinghouse.test_automation.util.dsl;
 
 import org.junit.Test;
 
-import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.expandFrom;
-import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.matchesDwpDateFormat;
+import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.*;
 import static java.lang.String.format;
 import static java.lang.System.out;
 
@@ -38,5 +37,10 @@ public class DateExpressionsUtilTest {
         };
         for (String date : dateF)
             matchesDwpDateFormat(date);
+    }
+
+    @Test
+    public void testConvertDateFormat() throws Exception {
+        out.println("--To DWP date:" + toDwpDate("2019-09-30"));
     }
 }

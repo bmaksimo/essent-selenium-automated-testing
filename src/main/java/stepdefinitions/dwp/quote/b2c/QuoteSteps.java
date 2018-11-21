@@ -1,15 +1,16 @@
 package stepdefinitions.dwp.quote.b2c;
 
-import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
 import com.billinghouse.random.RandomUser;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.testing.dwp.pageobject.impl.quote.*;
 import com.essent.testing.dwp.pageobject.quote.GuidedStep;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
 import com.essent.testing.util.resource.ResourceUtil;
 import com.google.gson.Gson;
 import cucumber.api.DataTable;
+import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -52,6 +53,7 @@ public class QuoteSteps extends DwpScenario {
         assertThat("Failure occurred when filling in input values", formInitialized, is(true));
     }
 
+
     private class CheckFormHeader implements Predicate<String> {
         @Override
         public boolean test(String header) {
@@ -88,8 +90,8 @@ public class QuoteSteps extends DwpScenario {
             Map reply = executeJavascriptMethod("TrGetRandomUser", options);
             String status = ((String) reply.get("status"));
             boolean success = StringUtils.equals("PASSED", status);
-            if(success) {
-                Map userData  = (Map)reply.get("user");
+            if (success) {
+                Map userData = (Map) reply.get("user");
                 RandomUser randomUser = randomUser(userData);
                 customer.setLastName(randomUser.getName().getLast());
                 customer.setFirstName(randomUser.getName().getFirst());
@@ -115,7 +117,7 @@ public class QuoteSteps extends DwpScenario {
     private class InitialiseCustomerAddress implements Predicate<CustomerAddress> {
         @Override
         public boolean test(CustomerAddress customerAddress) {
-           return fillInCustomerAddress(customerAddress);
+            return fillInCustomerAddress(customerAddress);
         }
 
         private boolean fillInCustomerAddress(CustomerAddress customerAddress) {
@@ -145,17 +147,15 @@ public class QuoteSteps extends DwpScenario {
         given().await()
             .pollInterval(FIVE_HUNDRED_MILLISECONDS)
             .pollDelay(ONE_SECOND)
-            .atMost(new Duration(30, SECONDS)).until(()->new CheckFormHeader().test(formHeader));
+            .atMost(new Duration(30, SECONDS)).until(() -> new CheckFormHeader().test(formHeader));
     }
 
-    @OutputParameter(name = "customers")
-    private Map<String, CustomerDetails> customers = new HashMap<>();
 
     @And("^Customer is random$")
     public void findRandomUser() throws Throwable {
         CustomerDetails customer = new CustomerDetails();
         boolean success = new GetRandomUser().test(customer);
-        customers.put("onboarding", customer);
+        parameterProvider.put("suitecrm-customer-name", customer.getFirstName() + " " + customer.getLastName());
         assertThat("Random customer data was not fetched.", success,
             is(true));
     }
@@ -234,6 +234,17 @@ public class QuoteSteps extends DwpScenario {
         connectionDetailsView.toggleMeter(productType, meterState);
     }
 
+    @And("^Switch type is Move in")
+    public void setMoveIn() throws Throwable {
+        ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage(webDriver);
+        given().await()
+            .ignoreExceptions()
+            .pollInterval(FIVE_HUNDRED_MILLISECONDS)
+            .pollDelay(ONE_HUNDRED_MILLISECONDS)
+            .atMost(new Duration(10, SECONDS)).until(connectionDetailsView::isNextButtonEnabled);
+        connectionDetailsView.toggleMeter(ProductType.Electricity, CheckBoxState.Closed);
+    }
+
     @And("^([^\"]*) market mock test is ([^\"]*)$")
     public void setMarketMockTest(final ProductType productType, final CheckBoxState state) throws Throwable {
         ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage(webDriver);
@@ -277,7 +288,8 @@ public class QuoteSteps extends DwpScenario {
             path);
         QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage(webDriver);
         quoteOverviewView.setSignatureData(signature);
-        quoteOverviewView.fillInFormData();
+        boolean success = quoteOverviewView.fillInFormData();
+        assertThat("Failure when signing up the quote.", success, is(true));
     }
 
 
@@ -302,6 +314,25 @@ public class QuoteSteps extends DwpScenario {
         assertThat(success, is(true));
     }
 
+    @And("^Electricity EAN code is \"([^\"]*)\"$")
+    public void electricityEANCodeIs(String ean) throws Throwable {
+        ConnectionDetails electricityConnectionDetails = new ConnectionDetails();
+        switch (ean) {
+            case "selected":
+                selectEanCode();
+                return;
+            case "random":
+                electricityConnectionDetails.setEan(PrepareDataForContract.generateEAN());
+                break;
+            default:
+                electricityConnectionDetails.setEan(ean);
+        }
+        ConnectionDetailsPage page = new ConnectionDetailsPage(webDriver);
+        page.setElectroConnectionDetails(electricityConnectionDetails);
+        boolean success = page.fillInElectricityEanCode();
+        assertThat("Electricity EAN code filling in failure", success, is(true));
+    }
+
     @And("^Electricity EAN code is put as output parameter \"?([^\"]*)\"?$")
     public void putElectricityEanCode(String parameter) throws Throwable {
         ConnectionDetailsPage page = new ConnectionDetailsPage(webDriver);
@@ -315,5 +346,4 @@ public class QuoteSteps extends DwpScenario {
     public void tearDown() {
         super.tearDown();
     }
-
 }

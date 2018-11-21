@@ -1,5 +1,10 @@
 package com.essent.testing.restassured.create_contract.helper;
 
+import com.essent.testing.restassured.create_contract.constants.ContractConstants;
+import org.apache.commons.io.FileUtils;
+import org.iban4j.CountryCode;
+import org.iban4j.Iban;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -14,11 +19,6 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-
-import com.essent.testing.restassured.create_contract.constants.ContractConstants;
-import org.apache.commons.io.FileUtils;
-import org.iban4j.CountryCode;
-import org.iban4j.Iban;
 
 public final class PrepareDataForContract {
 

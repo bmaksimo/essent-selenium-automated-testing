@@ -13,10 +13,9 @@ import stepdefinitions.dwp.tables.plus.CheckBoxState;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.essent.testing.dwp.autocrat.element.quote.B2CQuoteElements.ELECTRICITY_EAN_CODE;
 import static com.essent.testing.dwp.autocrat.element.quote.ConnectionElements.*;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.INPUT;
-
-import static com.essent.testing.dwp.autocrat.element.quote.B2CQuoteElements.*;
 
 public class ConnectionDetailsPage extends QuoteCreationGuidedStep {
 
@@ -47,6 +46,14 @@ public class ConnectionDetailsPage extends QuoteCreationGuidedStep {
             step(createStep(Action.TYPING).element(GAS_METER_NR.name()).value(gasConnectionDetails.getMeterNumber()), INPUT.getSleepInMillis());
         return execute(execution);
 
+    }
+
+    public boolean fillInElectricityEanCode() {
+        Model.Execution execution = createExecution();
+        execution.
+            element(ELEC_EAN.element()).
+            step(createStep(Action.TYPING).element(ELEC_EAN.name()).value(electroConnectionDetails.getEan()), INPUT.getSleepInMillis());
+        return execute(execution);
     }
 
     public void setElectroConnectionDetails(ConnectionDetails electroConnectionDetails) {

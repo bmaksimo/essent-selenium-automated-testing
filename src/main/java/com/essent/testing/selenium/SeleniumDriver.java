@@ -8,7 +8,6 @@ import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.util.resource.ResourceUtil;
 import com.paulhammant.ngwebdriver.NgWebDriver;
-import cucumber.api.Scenario;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -36,8 +35,6 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -124,7 +121,8 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
                 if (StringUtils.isNotEmpty(windowSize)) {
                     options.addArguments("window-size=" + windowSize);
                 }
-            }
+            } else { options.addArguments("--start-maximized"); }
+
             String userDataPath = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_USER_DATA_PATH);
             if (StringUtils.isNotEmpty(userDataPath)) {
                 options.addArguments("user-data-dir=" + userDataPath);
@@ -373,7 +371,6 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             return null;
         } else {
             WebElement webElement = elements.get(0);
-            logger.debug(String.format(" - RESULT: %s -> %s", selector, webElement.getAttribute("innerHTML")));
             return webElement;
         }
     }
@@ -389,7 +386,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
 
     public WebElement findElementWhenVisible(By selector) {
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)
-            .withTimeout(Duration.ofSeconds(30))
+            .withTimeout(Duration.ofSeconds(120))
             .pollingEvery(Duration.ofSeconds(5))
             .ignoring(ElementNotVisibleException.class);
         WebElement element = waiter.until(ExpectedConditions.visibilityOfElementLocated(selector));
@@ -434,8 +431,8 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
 
     private void waitForElement(final WebElement element) {
         ngWebDriver.waitForAngularRequestsToFinish();
-        waitForElementToBeVisible(element, 30, 5);
-        waitForElementToBeClickable(element, 30, 5);
+        waitForElementToBeVisible(element, 120, 5);
+        waitForElementToBeClickable(element, 120, 5);
     }
 
     public void waitAndClick(final WebElement element) {
@@ -451,6 +448,10 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         element.click();
         element.sendKeys(keysToSend);
         ngWebDriver.waitForAngularRequestsToFinish();
+    }
+
+    public Set<Cookie> getCookies() {
+        return driver.manage().getCookies();
     }
 
 }

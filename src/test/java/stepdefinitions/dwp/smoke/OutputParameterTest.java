@@ -7,6 +7,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 import org.joda.time.DateTime;
+import org.junit.Assert;
 
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.expandFrom;
 
@@ -54,5 +55,11 @@ public class OutputParameterTest extends RegisteredScenario {
     public void putStartOfTenure(String value, String parameterName) throws Throwable {
         startOfTenureIs(value);
         parameterProvider.put(parameterName, startOfTenure);
+    }
+
+
+    @And("^Fail$")
+    public void fail() throws Throwable {
+        Assert.fail("Checkpoint failure.");
     }
 }

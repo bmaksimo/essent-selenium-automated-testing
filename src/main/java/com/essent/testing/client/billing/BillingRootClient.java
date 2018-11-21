@@ -33,7 +33,7 @@ public class BillingRootClient {
 	protected final String restUrl;
 
 	protected static RestTemplate restTemplate = null;
-	
+
 	protected static DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
 
 	public BillingRootClient(String restUrl, Logger logger) {
@@ -114,13 +114,13 @@ public class BillingRootClient {
 			throw new AssertionError("BillingRootClient.call invoked, but restUrl not set, fix class " + this.getClass().getName()
 			        + " to use the BillingRootClient(String,Logger) ctor");
 		}
-	
+
 		String url = baseUrl + restUrl + methodUrl;
 		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url);
 		if( queryParams != null && !queryParams.isEmpty()){
 			builder.queryParams(queryParams);
-		}	
-		
+		}
+
 		try {
 			long startedAt = System.currentTimeMillis();
 			RestTemplate template = createRestTemplate();
@@ -138,7 +138,7 @@ public class BillingRootClient {
 			throw new AssertionError("Failed to call JBilling, url='" + url + "', excpetion="+e.getMessage());
 		}
 	}
-	
+
 	public <T extends RestResponse> T callWithStringPayload(String methodUrl, String request, Class<T> responseClass) {
 
         String url = baseUrl + restUrl + methodUrl;
@@ -149,7 +149,7 @@ public class BillingRootClient {
             // Convertor for converting the outgoing message, this is a string.
             MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
             List<MediaType> supportedMediaTypes = new ArrayList<MediaType>();
-            supportedMediaTypes.add(MediaType.APPLICATION_OCTET_STREAM);    
+            supportedMediaTypes.add(MediaType.APPLICATION_OCTET_STREAM);
             jsonConverter.setSupportedMediaTypes(supportedMediaTypes);
             messageConverters.add(jsonConverter);
 
@@ -167,7 +167,7 @@ public class BillingRootClient {
             template.setMessageConverters(messageConverters);
 
             HttpEntity<Object> httpEntity = new HttpEntity<Object>(request, getStandardTracingHeaders());
-            
+
             long startedAt = System.currentTimeMillis();
             T result = template.postForObject(url, httpEntity, responseClass);
             logResult(url, result, startedAt);
@@ -181,11 +181,11 @@ public class BillingRootClient {
         }
 
 	}
-	
+
 	public <T extends RestResponse> T callWithQueryParams(String methodUrl, MultiValueMap<String, String> queryParams, Class<T> responseClass) {
 		return call(methodUrl, queryParams, responseClass, true);
 	}
-	
+
 	public <T extends RestResponse> T call(String methodUrl, Class<T> responseClass) {
 		return call(methodUrl, responseClass, true);
 	}

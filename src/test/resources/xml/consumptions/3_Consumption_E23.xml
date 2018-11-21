@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><Consumption xmlns="EnergyComm-out-bo">
+  <messageid>10050061</messageid>
+  <sender>5414488001001</sender>
+  <recipient>5425012001015</recipient>
+  <transactionid>ECB1f6842c0385b431a95ca01932b25e139</transactionid>
+  <transactionid context="Market">I41112974_201604300016_15</transactionid>
+  <externalmessageid>EdielTransactionId[envid=11017,txnbr=1]</externalmessageid>
+  <externaltimestamp>2016-04-29T23:16:00+02:00</externaltimestamp>
+  <gsrn>541448820058052134</gsrn>
+  <consumptionid>9308</consumptionid>
+  <release>1</release>
+  <continuous>false</continuous>
+  <readingfrequency>YEAR</readingfrequency>
+  <measurementfrequency>YEARLY</measurementfrequency>
+  <fromdate>2017-09-15T06:00:00+02:00</fromdate>
+  <todate>2018-09-01T06:00:00+02:00</todate>
+  <rectification>false</rectification>
+  <historical>false</historical>
+  <measurementperiod>1</measurementperiod>
+  <context>PERIODIC_METERING</context>
+  <register>
+    <name>B37B31KWH</name>
+    <measurementnature>ACTIVE_ENERGY</measurementnature>
+    <timeframe>TOTAL_HOUR</timeframe>
+    <direction>CONSUMPTION</direction>
+    <values>
+      <number>1</number>
+      <value>12215.59</value>
+      <quality>VALIDATED</quality>
+      <validation>SET1</validation>
+    </values>
+  </register>
+  <source>DGO</source>
+</Consumption>
