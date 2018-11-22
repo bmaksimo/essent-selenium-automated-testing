@@ -15,6 +15,7 @@ public class PlusActions extends NavigationElements {
 
     @And("^Plus menu is \"([^\"]*)\"$")
     public void checkPlusMenu(String path) throws Throwable {
+        webDriver.waitForRequestsToFinish();
         clickTopAction("Plus Menu");
         clickPlusAction(path);
     }

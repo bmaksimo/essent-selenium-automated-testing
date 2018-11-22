@@ -14,7 +14,7 @@ Feature: NUAT-441: Contract Take Over
         When Add lead
         And New lead is
             | companyName    | firstName | secondName | telephone       | mobile           | email        | gender |
-            | ESSENT BELGIUM | Levi      | Nine       | +32 78 15 79 79 | +32 498 12 34 56 | test@test.be | Onbekend |
+            | ESSENT BELGIUM | Levi      | Nine       | +32 78 15 79 79 | +32 498 12 34 56 | test@test.be | Male |
         And Plus action and "Converteer lead" of first customer from list
         And Changes are confirmed
         And Get client number

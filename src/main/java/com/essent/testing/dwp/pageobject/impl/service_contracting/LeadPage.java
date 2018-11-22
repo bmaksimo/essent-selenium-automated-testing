@@ -57,7 +57,7 @@ public class LeadPage extends BaseObject implements Form {
 
     private void setCompanyName(String companyNumber) {
         seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("company-name-c-field")), companyNumber);
-        findElementWhenVisible(By.xpath(".//*[@id='company_name_c']/div/autocomplete/ul/li[2]")).click();
+        findElementWhenVisible(By.xpath(".//*[@id='company_name_c']/div/autocomplete/ul/li[4]")).click();
         waitForRequestsToFinish();
     }
 
@@ -69,22 +69,28 @@ public class LeadPage extends BaseObject implements Form {
     private void setContactPerson(String contactPersonName, String contactPersonLastName) {
         waitForRequestsToFinish();
         seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("first-name-field")), contactPersonName);
+        waitForRequestsToFinish();
         seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("last-name-field")), contactPersonLastName);
     }
 
     private void setTelephone(String telephone) {
         waitForRequestsToFinish();
         findElementWhenVisible(By.id("leads-contact-details-contact-details-phone-type-work-phone-contact-details-type-phone-contact-details-value-field")).clear();
+        waitForRequestsToFinish();
         seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("leads-contact-details-contact-details-phone-type-work-phone-contact-details-type-phone-contact-details-value-field")),
             telephone);
     }
 
     private void setMobile(String mobile) {
+        waitForRequestsToFinish();
         seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("leads-contact-details-contact-details-phone-type-mobile-phone-contact-details-type-phone-contact-details-value-field")),
             mobile);
     }
 
     private void setEmail(String email) {
+        waitForRequestsToFinish();
+        findElementWhenVisible(By.id("leads-contact-details-contact-details-type-email-contact-details-value-field")).clear();
+        waitForRequestsToFinish();
         seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("leads-contact-details-contact-details-type-email-contact-details-value-field")),
             email);
     }

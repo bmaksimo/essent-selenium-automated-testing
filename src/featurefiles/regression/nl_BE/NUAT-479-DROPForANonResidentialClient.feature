@@ -13,7 +13,7 @@ Feature: NUAT-479: DROP For A Non Residential Client
         And Top action is Filters
         And "B2C/B2B" selection is "B2B"
         And "Type klant" selection is "Klant"
-        And "Klantnummer" input is "1000015412"
+        And "Klantnummer" input is "151005206"
         Then Click on link in View List at 1st row and "Klantnummer & Naam" column polling 15 seconds
 
         When Dashboard menu is Contracten

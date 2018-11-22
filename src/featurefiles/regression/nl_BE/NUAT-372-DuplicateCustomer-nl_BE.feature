@@ -11,11 +11,11 @@ Feature: NUAT-372: Duplicate Customer - nl_BE
         When Left menu is sales-marketing
         And Top menu item is Klanten
         And Top action is Filters
-        And "Naam" input is "%Steven%"
-        And "Klantnummer" input is "150638828"
-        And Click on link in View List at 1st row and "Klantnummer & Naam" column
+        And "B2C/B2B" selection is "B2B"
+        And "Type klant" selection is "Klant"
+        And Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
         And Plus menu is "Service -> Dupliceer klant"
-        When "Bedrijfsnaam" input is "Van Hauwaert Steven - Test Nuat 372"
+        When "Bedrijfsnaam" input is "Test Nuat 372"
         Then Changes are confirmed
         And Top arrow button is Up
         And Search input is parameter:inputValue
