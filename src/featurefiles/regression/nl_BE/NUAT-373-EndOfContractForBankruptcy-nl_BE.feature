@@ -26,6 +26,8 @@ Feature: NUAT-373: End Of Contract For Bankruptcy - nl_BE
 
         When Input in Module is "INITIATE STOP ACCESS"
         And Input in Label is "Non-Residential End-of-Contract"
+        And "Testing" turn on
+        And "Market mock" turn on
         And "Effective Date" date is "now"
         And Changes are confirmed
         Then Confirm task was "Non-Residential End-of-Contract"
