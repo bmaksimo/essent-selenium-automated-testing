@@ -9,7 +9,7 @@ class TrCheckFirstRowByOption extends TestRunnerBase {
         result.status = 'FAILED';
         result.reason = 'The text ' + options.text + 'cannot be found in the column ' + options.column + ' for the row selected by ' + options.option;
 
-        let list = $(".list__header").find("h2:contains('"+options.list+"')").parent().parent().parent().get(0);
+        let list = $("h2:contains('Transacties')").closest("list").get(0)
         $(list).find("th").each(function(index) {
             if($(this).text() == options.column) {
                 let row = $(list).find("tr:has(td:contains('"+options.option+"'))").get(0);

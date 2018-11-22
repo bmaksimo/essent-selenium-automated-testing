@@ -1,5 +1,5 @@
 @DWP
-@OV
+@BETALING-OVERSCHRIJWING
 Feature: Check if payment is reconciled
 
     Background:
@@ -9,7 +9,7 @@ Feature: Check if payment is reconciled
         When Left menu is contracting-switching
         And Top menu item is Klanten
         And Top action is Filters
-        And Label input for "Naam" is "ISE REUS"
+        And "Naam" input is "parameter:suitecrm-customer-name"
         Then View list header is "Klanten"
 
         And Click on link in View List at 1st row and "Klantnummer & Naam" column

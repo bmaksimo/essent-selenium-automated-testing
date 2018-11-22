@@ -59,7 +59,7 @@ public class InputElements extends DwpScenario {
     @And("^Label input for \"([^\"]*)\" is \"([^\"]*)\"$")
     public void setLabelInput(String label, String value) throws Throwable {
         webDriver.waitForRequestsToFinish();
-        setInput(label, value);
+        setInput(label, "string:"+value);
         webDriver.waitForRequestsToFinish();
     }
 

@@ -73,8 +73,10 @@ public class MenuNavigation extends Component {
        if (accordion != null) {
            By menuLeaf = By.xpath(createQuery(MENU_LEAF_SELECTOR_TEMPLATE, "text", actionText));
            return  findElementOrNull(accordion, menuLeaf);
+       } else {
+           By mainMenu = By.xpath(createQuery(MENU_LEAF_SELECTOR_TEMPLATE, "text", actionText));
+           return findElementWhenVisible(mainMenu);
        }
-       return null;
     }
 
     private WebElement findMenu(WebElement item, List<String> menu) {
