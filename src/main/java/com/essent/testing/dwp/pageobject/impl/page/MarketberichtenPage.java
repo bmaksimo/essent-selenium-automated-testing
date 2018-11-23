@@ -21,5 +21,14 @@ public class MarketberichtenPage  extends Component {
         Assert.assertEquals(taken, line1);
         Assert.assertEquals(signed, line2);
     }
+
+    public String marketberichtStatus(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[1])[1]")).getText();
+    }
+
+
+    public void refreshByName(String name)  {
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//a[@name='"+name+"']/span[@class='icon-pijl']")));
+    }
 }
 
