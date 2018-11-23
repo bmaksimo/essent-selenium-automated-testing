@@ -1,7 +1,3 @@
-@DWP
-@B2B
-@REGRESSION
-@CREDIT-AND-CONTROL
 Feature: NUAT-428: Pay Delay - nl_BE
 
     Background:

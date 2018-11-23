@@ -46,6 +46,7 @@ public class ContractenSteps extends DwpScenario {
     public void findContract(String input) throws Throwable {
         ContractenPage contractenPage = new ContractenPage(webDriver);
         eanCode = contractenPage.findActiveContract(input);
+        logger().info("EAN CODE: " + eanCode);
         parameterProvider.put("contractEanCode", eanCode);
     }
 
@@ -114,6 +115,7 @@ public class ContractenSteps extends DwpScenario {
     public void confirmContractWithEanWasCopied(String eanCode) throws Throwable {
         webDriver.waitForRequestsToFinish();
         String inputEanCode = parameterProvider.getValueOrParameterAsString(eanCode);
+        logger().info("input EAN CODE: " + inputEanCode);
         Assert.assertTrue("Correct ean code was not found.", webDriver.findElementWhenVisible(By.xpath("//h5[.='" + inputEanCode + "']")).isDisplayed());
     }
 }
