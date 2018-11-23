@@ -34,5 +34,3 @@ Feature: NUAT-373: End Of Contract For Bankruptcy - nl_BE
 
         When Refresh "REFRESH MARKTBERICHTEN" till "Geaccepteerd" is visible
         Then Confirm status is "Geaccepteerd"
-
-
