@@ -55,6 +55,7 @@ public class ContractUPB2BCreator extends QuoteCreatorB2BBase implements QuoteCr
 	public ContractStatus checkContractIsActive(String path) throws Exception {
 		logger.info("checkContractIsActive: " + this.getClass().getSimpleName());
 		return super.checkContractIsActive(path);
+
 	}
 
 	@Override

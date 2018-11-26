@@ -193,8 +193,8 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     public void tearDown() {
         if (driver == null)
             return;
-//        driver.close();
-//        driver.quit();
+        driver.close();
+        driver.quit();
     }
 
     private void injectJavaScriptInline(File functionFile) {
@@ -386,7 +386,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
 
     public WebElement findElementWhenVisible(By selector) {
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)
-            .withTimeout(Duration.ofSeconds(30))
+            .withTimeout(Duration.ofSeconds(50))
             .pollingEvery(Duration.ofSeconds(5))
             .ignoring(ElementNotVisibleException.class);
         WebElement element = waiter.until(ExpectedConditions.visibilityOfElementLocated(selector));

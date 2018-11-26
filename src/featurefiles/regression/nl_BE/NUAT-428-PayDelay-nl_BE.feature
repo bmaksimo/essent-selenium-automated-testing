@@ -8,7 +8,7 @@ Feature: NUAT-428: Pay Delay - nl_BE
     #because in preparing section we use different user credentials, credentials for billing user.
     #In Pay Delay scenario we use user who can not create invoice but this user can execute real scenario for dwp
 
-    Scenario: Preparing data for pay delay scenarion
+    Scenario: Preparing data for pay delay scenario
         Given I logged in to DWP as billing.testautomation@essent.be
         When Left menu is billing
         And Top menu item is Klanten
