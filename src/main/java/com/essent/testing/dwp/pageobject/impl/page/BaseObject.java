@@ -1,7 +1,5 @@
 package com.essent.testing.dwp.pageobject.impl.page;
 
-import com.essent.automation.autocrat.Action;
-import com.essent.automation.autocrat.Model;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import com.essent.testing.selenium.SeleniumDriver;
@@ -9,11 +7,6 @@ import org.openqa.selenium.By;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import static com.essent.automation.autocrat.Action.CLICK;
-import static com.essent.automation.autocrat.Action.SLEEP;
-import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.UPLOAD_FILE;
-import static com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter.newExecution;
 
 public class BaseObject extends Component {
 
