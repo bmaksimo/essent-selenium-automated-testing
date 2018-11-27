@@ -7,4 +7,5 @@ Feature: NUAT-5019 Step 7. White-list a customer with given SuiteCRM customer Id
     @ENABLE-DUNNING-CUSTOMER
     @NUAT-5019-STEP-7
     Scenario: Prepare dunning customer
-        When Customer with CRM Id parameter:Klantnummer & Naam is added to dunning whitelist
+        #When Customer with CRM Id parameter:Klantnummer & Naam is added to dunning whitelist
+        When Customer with CRM Id 1234567 is added to dunning whitelist
