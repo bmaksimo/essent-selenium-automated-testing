@@ -69,4 +69,10 @@ public class MarketBerichtenSteps extends DwpScenario {
         marketberichtenPage.takenOver(taken, signed);
     }
 
+    @And("^\"([^\"]*)\" is now$")
+    public void isNow(String label) throws Throwable {
+        BaseObject bo = new BaseObject(webDriver);
+        bo.dateIsNow(label);
+
+    }
 }

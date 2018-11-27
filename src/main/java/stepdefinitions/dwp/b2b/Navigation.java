@@ -70,9 +70,16 @@ public class Navigation extends DwpScenario {
     public void refreshTillIsVisible(String name, String status) throws Throwable {
         webDriver.waitForRequestsToFinish();
         MarketberichtenPage mp = new MarketberichtenPage(webDriver);
-        while(!webDriver.findElementWhenVisible(By.xpath("//list-simple-two-liner-cell/p/span[1]")).getText().equalsIgnoreCase(status)){
-            Thread.sleep(15000);
-            mp.refreshByName(name);
+        if (webDriver.findElement(By.xpath("//tr[1]//list-link-bold-top-two-liner-cell/div/a/h5")).isDisplayed()) {
+            while (!webDriver.findElementWhenVisible(By.xpath("//tr[1]//list-simple-two-liner-cell/p/span[1]")).getText().equalsIgnoreCase(status)) {
+                Thread.sleep(10000);
+                mp.refreshByName(name);
+            }
+        }else if (webDriver.findElement(By.xpath("//tr[3]//list-link-bold-top-two-liner-cell/div/a/h5")).isDisplayed()) {
+            while (!webDriver.findElementWhenVisible(By.xpath("//tr[3]//list-simple-two-liner-cell/p/span[1]")).getText().equalsIgnoreCase(status)) {
+                Thread.sleep(10000);
+                mp.refreshByName(name);
+            }
         }
     }
 }

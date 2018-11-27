@@ -24,6 +24,7 @@ Feature: NUAT-3886-Reactivate contractline
         And Changes are confirmed
         And Label "Module" is "INITIATE STOP ACCESS"
         And Label "Label" is "Non-Residential End-of-Contract"
+        And "Effective Date" is now
         And "Testing" turn on
         And "Market mock" turn on
         Then Changes are confirmed
@@ -32,7 +33,7 @@ Feature: NUAT-3886-Reactivate contractline
         And Dashboard menu is Contracten
         And Click on link in "ContractsOnAccount" View List at 1 row and "Nummer & Aanmaakdatum" column
         And Plus action and "Reactiveer contractlijn" of first customer from list
-        And "Nieuwe startdatum" date is "now"
+        And "Nieuwe startdatum" is now
         And Label "Mig module" is "START ACCESS"
         And Changes are confirmed
         Then Contract is in "Te activeren" state
