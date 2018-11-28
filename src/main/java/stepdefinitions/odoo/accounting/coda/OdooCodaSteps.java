@@ -30,11 +30,17 @@ public class OdooCodaSteps extends OdooScenario {
     @When("^CODA file is selected")
     public void inputUploadValue() throws Throwable {
         String path = ResourceUtil.toPath("/data/odoo/6860012583.COD");
-        File document = new File(path);
+        setCodaPath(path);
+    }
+
+    @When("^CODA file is ([^\"]*)$")
+    public void setCodaPath(String codeFile) throws Throwable {
+        String home = System.getProperty("user.home");
+        File document = new File(home + "/Downloads/" + codeFile);
         assertThat("File at path " + document.getAbsolutePath() + " doesn't exist.", true,
             is(document.exists()));
         CodaImportDialog dialog = new CodaImportDialogImpl(webDriver);
-        dialog.setUploadFile(path);
+        dialog.setUploadFile(document.getAbsolutePath());
         boolean success = dialog.fillInFormData();
         assertThat(success, is(true));
     }
