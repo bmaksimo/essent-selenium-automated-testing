@@ -5,7 +5,7 @@
 Feature: NUAT-5019 Step 3. Import a coda file and make payment for advanced invoice
 
     Background:
-        Given I logged in to Odoo as p.paulussen
+        Given I logged in to Odoo as t.geets
 
     @IMPORT-CODA
     @NUAT-5019-STEP-3
