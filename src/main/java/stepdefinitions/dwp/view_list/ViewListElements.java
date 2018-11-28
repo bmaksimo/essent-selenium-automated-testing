@@ -147,6 +147,21 @@ public class ViewListElements extends NavigationElements {
             return selection;
         }
 
+        List<String> fetchColumnData(String table, String columnName) {
+            Map<String, Object> options = new HashMap<>();
+            options.put("include_selection", false);
+            options.put("table", table);
+            Map viewTable = executeJavascriptMethod("TrFetchDataSelection", options);
+            int index = getColumnNameIndex(columnName, viewTable);
+            if (index < 0) {
+                fail(String.format("View List did not contain column %s", columnName));
+            }
+            List<ArrayList> rows = getData(viewTable);
+            List selection;
+            selection = rows.stream().map((e) -> e.get(index)).collect(Collectors.toList());
+            return selection;
+        }
+
         private String getCellValueAt(int row, String columnName) {
             logger().info("STEP: JAVASCRIPT_FETCH_DATA");
             Map viewTable = executeJavascriptMethod("TrGetTableModel", new HashMap<>());
@@ -270,6 +285,7 @@ public class ViewListElements extends NavigationElements {
         boolean success = new CheckViewListHeader().test(header);
         assertThat(String.format("View list did not contain header '%s'", header),
             success, is(true));
+        parameterProvider.put("currrent-view-list", header);
     }
 
     @When("^View list header is \"([^\"]*)\" appears within (\\d+) seconds?$")
@@ -304,6 +320,7 @@ public class ViewListElements extends NavigationElements {
 
     @When("^Click on link in View List at ([^\"]*) row and \"([^\"]*)\" column polling (\\d+) seconds?$")
     public void clickOnViewListAtRowAndColumn(String ordinal, String column, int seconds) throws Throwable {
+        webDriver.waitForRequestsToFinish();
         String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
         Map<String, String> columnIndexListOptions = new HashMap<>();
         columnIndexListOptions.put("column", column);
@@ -549,6 +566,15 @@ public class ViewListElements extends NavigationElements {
         boolean hasData = new CheckEmptyTableAction().test(options);
         assertThat(String.format(header + " is not empty"),
             hasData, is(false));
+    }
+
+    @And("^Table ([^\"]*) contains value \"([^\"]*)\" at column ([^\"]*)$")
+    public void viewListContainsValueAtColumn(String table, String value, String column) throws Throwable {
+        ViewListModel viewListModel = new ViewListModel();
+        List<String> columnData = viewListModel.fetchColumnData(table, column);
+        List<String> found = columnData.stream().filter(element -> element.contains(value)).collect(Collectors.toList());
+        assertThat(String.format("Table %s did not contain %s value at column %s", table, value, column),
+            found, not(empty()));
     }
 
     @Override

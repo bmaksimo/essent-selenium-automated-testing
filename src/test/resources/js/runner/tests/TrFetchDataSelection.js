@@ -22,8 +22,15 @@ class TrFetchDataSelection extends TestRunnerBase {
         result.column_names = [];
         result.rows = [];
         let includeSelection = options.include_selection;
-        $('.list__content th').filter((i, e)=>{result.column_names.push($(e).text()); return true;});
-        let rows = $('.list__content tr:not(".row__actions, .list__column-headers")');
+        let table = options.table;
+        let query_th = '.list__content th';
+        let query_tr = '.list__content tr:not(".row__actions, .list__column-headers")';
+        if(table != undefined && table.length > 0) {
+            query_th = `.list__header:contains("${table}") ~.list__content th`;
+            query_tr = `.list__header:contains("${table}") ~.list__content tr:not(".row__actions, .list__column-headers")`;
+        }
+        $(query_th).filter((i, e)=>{result.column_names.push($(e).text()); return true;});
+        let rows = $(query_tr);
         if(includeSelection == true) {
             rows = rows.filter((i, e) => $(e).find('td [type=checkbox]').is(":checked"));
         }

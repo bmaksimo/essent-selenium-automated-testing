@@ -2,7 +2,6 @@
 @E2E
 @B2C
 @CREDIT-AND-CONTROL
-@NUAT-5019
 Feature: NUAT-5019 Step 2. Billing - Triggering billrun, produce an advanced invoice
 
     Background:

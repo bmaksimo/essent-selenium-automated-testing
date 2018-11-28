@@ -76,15 +76,21 @@ public class LeadPage extends BaseObject implements Form {
     private void setTelephone(String telephone) {
         waitForRequestsToFinish();
         findElementWhenVisible(By.id("leads-contact-details-contact-details-phone-type-work-phone-contact-details-type-phone-contact-details-value-field")).clear();
-        findElementWhenVisible(By.id("leads-contact-details-contact-details-phone-type-work-phone-contact-details-type-phone-contact-details-value-field")).sendKeys(telephone);
+        waitForRequestsToFinish();
+        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("leads-contact-details-contact-details-phone-type-work-phone-contact-details-type-phone-contact-details-value-field")),
+            telephone);
     }
 
     private void setMobile(String mobile) {
+        waitForRequestsToFinish();
         seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("leads-contact-details-contact-details-phone-type-mobile-phone-contact-details-type-phone-contact-details-value-field")),
             mobile);
     }
 
     private void setEmail(String email) {
+        waitForRequestsToFinish();
+        findElementWhenVisible(By.id("leads-contact-details-contact-details-type-email-contact-details-value-field")).clear();
+        waitForRequestsToFinish();
         seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("leads-contact-details-contact-details-type-email-contact-details-value-field")),
             email);
     }

@@ -2,7 +2,6 @@
 @E2E
 @B2C
 @CREDIT-AND-CONTROL
-@NUAT-5019
 Feature: NUAT-5019 Step 10. End order (drop) messaging
 
     Background:
@@ -34,3 +33,4 @@ Feature: NUAT-5019 Step 10. End order (drop) messaging
         And Option "Market mock?" is On
         And Select Contractline dialog is confirmed
         Then 1st list element has cell value INITIATE STOP ACCESS at column Module & Label
+        And Send email to SMEs

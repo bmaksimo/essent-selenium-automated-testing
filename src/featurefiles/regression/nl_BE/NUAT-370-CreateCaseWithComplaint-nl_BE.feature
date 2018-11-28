@@ -8,8 +8,6 @@ Feature: NUAT-370: Create Case With Complaint - nl_BE
         Given  I logged in to DWP as businessdesk.testautomation.b2b@essent.be
         When Left menu is sales-marketing
         And  Top menu item is Klanten
-        Then View list header is "Klanten" appears within 25 seconds
-
 
         When B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Top action is Filters

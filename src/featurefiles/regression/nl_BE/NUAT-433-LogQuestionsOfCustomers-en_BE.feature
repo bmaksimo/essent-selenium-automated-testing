@@ -10,8 +10,6 @@ Feature: NUAT-433: Log Questions Of Customers - en_BE
     Scenario: Log questions of customers
         When Left menu is sales-marketing
         And  Top menu item is Klanten
-        Then View list header is "Klanten" appears within 25 seconds
-
 
         When B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Top action is Filters
