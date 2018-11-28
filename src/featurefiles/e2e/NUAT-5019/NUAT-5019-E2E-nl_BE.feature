@@ -1,5 +1,6 @@
 #@5019-FULL-E2E
 @E2E
+@ODOO
 Feature: NUAT-5019
 
     @5019-FULL-E2E
@@ -33,10 +34,11 @@ Feature: NUAT-5019
         Then View list header is "Transacties"
         And 1st list element has cell value Invoice (ADVANCE) at column ID & Type
 
-        Given Browser session is closed
+
 
         #odoo import coda - NOT YET WORKING
-#        Given I logged in to Odoo as p.paulussen
+        Given I renew login to Odoo as t.geets
+
 #
 #        When Odoo top menu is Accounting
 #        And  Odoo left menu is CODA Processing->Import CODA Files
@@ -45,7 +47,10 @@ Feature: NUAT-5019
 #        And  Odoo file upload confirm button is Import
 #        And  Odoo file import report
 
-        #generate consumptions
+
+        Given I renew login to DWP as contracting.testautomation.b2c@essent.be
+
+#generate consumptions
         When Top arrow button is Up
 #        And Left menu is billing
 #        And Top menu item is Klanten
