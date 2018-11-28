@@ -34,9 +34,9 @@ public class OdooCodaSteps extends OdooScenario {
     }
 
     @When("^CODA file is ([^\"]*)$")
-    public void setCodaPath(String codeFile) throws Throwable {
-        String home = System.getProperty("user.home");
-        File document = new File(home + "/Downloads/" + codeFile);
+    public void setCodaPath(String codaFile) throws Throwable {
+        String path = parameterProvider.getValueOrParameterAsString(codaFile);
+        File document = new File(path);
         assertThat("File at path " + document.getAbsolutePath() + " doesn't exist.", true,
             is(document.exists()));
         CodaImportDialog dialog = new CodaImportDialogImpl(webDriver);
