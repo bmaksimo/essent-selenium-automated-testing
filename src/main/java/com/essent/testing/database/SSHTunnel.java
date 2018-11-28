@@ -56,6 +56,7 @@ public class SSHTunnel {
             final String path = ConfigProvider.getProperty(ConfigKey.SSH_KEYPATH);
             final String sshUser = ConfigProvider.getProperty(ConfigKey.SSH_USER);
             final int localPort = findFreePort();
+            logger.info(String.format("Making tunnel to %s, ssh_keypath: %s, userid: %s", sshDbHostname, path, sshUser));
 
             int nrFailedTries = 0;
             boolean tunnelCreated = false;
@@ -77,6 +78,7 @@ public class SSHTunnel {
                     // We should now connect to localhost instead of the given sshDbHostname in PSQLUtility
                     pushHost("localhost");
                 } catch (JSchException e) {
+                    logger.error(String.format("Making tunnel to %s failed", sshDbHostname));
                     try {
                         if (session != null) {
                             session.disconnect();

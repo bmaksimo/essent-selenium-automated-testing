@@ -350,11 +350,15 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     }
 
     public WebElement findElementOrNull(By selector) {
+        return findElementOrNull(selector, Duration.ofMinutes(1), Duration.ofSeconds(10));
+    }
+
+    public WebElement findElementOrNull(By selector, Duration timeout, Duration pollingEvery) {
         logger.debug("STEP:");
         DateTime startOfMeasurement = DateTime.now();
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)
-            .withTimeout(Duration.ofMinutes(1))
-            .pollingEvery(Duration.ofSeconds(10))
+            .withTimeout(timeout)
+            .pollingEvery(pollingEvery)
             .ignoreAll(
                 Arrays.asList(
                     NoSuchElementException.class,
@@ -440,6 +444,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         element.click();
         ngWebDriver.waitForAngularRequestsToFinish();
     }
+
 
     public void waitAndSendKeys(final WebElement element, final String keysToSend) {
         waitForElement(element);
