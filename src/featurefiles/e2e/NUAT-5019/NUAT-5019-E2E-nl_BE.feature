@@ -33,6 +33,8 @@ Feature: NUAT-5019
         Then View list header is "Transacties"
         And 1st list element has cell value Invoice (ADVANCE) at column ID & Type
 
+        Given Browser session is closed
+
         #odoo import coda - NOT YET WORKING
 #        Given I logged in to Odoo as p.paulussen
 #
