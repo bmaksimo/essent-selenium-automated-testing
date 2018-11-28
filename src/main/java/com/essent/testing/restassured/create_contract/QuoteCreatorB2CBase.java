@@ -333,6 +333,7 @@ public class QuoteCreatorB2CBase {
 		testMap.put("${paymentMethod}", paymentMethod);
 		testMap.put("${generatedIban}", generatedIban);
 		testMap.put("${ean_c}", ean_c);
+		parameterProvider.put("EAN-code", ean_c);
 		testMap.put("${up_start_date}", upStartDate);
 		testMap.put("${upEndDate}", upEndDate);
 		testMap.put("${moveIn}", moveIn);
