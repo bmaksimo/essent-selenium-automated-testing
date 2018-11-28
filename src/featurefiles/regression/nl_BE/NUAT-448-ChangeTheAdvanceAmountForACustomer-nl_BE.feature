@@ -12,7 +12,7 @@ Feature: NUAT-448: Change The Advance Amount For A Customer - nl_BE
         And Top menu item is Klanten
         And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Top action is Filters
-        And "Klantnummer" input is "parameter:accountNumber"
+        And "Klantnummer" input is "1000025807"
         Then Click on link in View List at 1st row and "Klantnummer & Naam" column polling 40 seconds
 
         When Dashboard menu is Contracten
