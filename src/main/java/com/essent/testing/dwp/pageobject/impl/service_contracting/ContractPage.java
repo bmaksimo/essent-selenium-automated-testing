@@ -13,17 +13,12 @@ public class ContractPage extends BaseObject {
 
     public void openFirstContractFromList() {
         seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//div[@class = 'col-1-1']/div[@class = 'row-']/list[@list-key = 'ContractedEansOnAccount']//tbody[@id = 'rows']/tr[1]/td[4]")));
-
-    //    findElementWhenVisible(By.xpath(".//tr[@class='list__row']/td[4]")).click();
-
-
         waitForRequestsToFinish();
     }
 
     public void contractPlus() {
         waitForRequestsToFinish();
         seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//tbody[@id='rows']/tr[1]/td[12]")));
-//        findElementWhenVisible(By.xpath("//tbody[@id='rows']/tr[1]/td[12]")).click();
     }
 
     public void changeAmount(String value) {
