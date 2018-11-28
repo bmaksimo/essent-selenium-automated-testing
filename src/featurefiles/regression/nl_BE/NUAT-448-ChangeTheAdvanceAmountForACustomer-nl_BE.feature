@@ -1,6 +1,6 @@
 @DWP
-@REGRESSION
 @B2B
+@REGRESSION
 @BUSINESS-DESK
 Feature: NUAT-448: Change The Advance Amount For A Customer - nl_BE
 
@@ -13,7 +13,7 @@ Feature: NUAT-448: Change The Advance Amount For A Customer - nl_BE
         And Top action is Filters
         And "B2C/B2B" selection is "B2B"
         And "Type klant" selection is "Klant"
-        And "Naam" input is "steve"
+        And "Klantnummer" input is "150319788"
         Then Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
 
         When Dashboard menu is Contracten

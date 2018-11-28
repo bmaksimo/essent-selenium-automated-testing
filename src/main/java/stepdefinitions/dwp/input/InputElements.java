@@ -6,7 +6,6 @@ import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
-import org.apache.tools.ant.taskdefs.Sleep;
 import stepdefinitions.dwp.tables.plus.CheckBoxState;
 
 import java.util.HashMap;
@@ -47,6 +46,7 @@ public class InputElements extends DwpScenario {
     @And("^\"([^\"]*)\" input is \"([^\"]*)\"$")
     public void setInput(String label, String value) throws Throwable {
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
+        parameterProvider.put("inputValue", inputValue);
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
         options.put("value", inputValue);
@@ -65,6 +65,7 @@ public class InputElements extends DwpScenario {
 
     @And("^\"([^\"]*)\" date is \"([^\"]*)\"$")
     public void setDateInput(String label, String value) throws Throwable {
+        Sleeper.sleepTightInSeconds(1.5);
         String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(value));
         Map<String, String> options = new HashMap<>();
         options.put("label", label);

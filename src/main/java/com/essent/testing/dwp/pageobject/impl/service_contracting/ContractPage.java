@@ -11,8 +11,8 @@ public class ContractPage extends BaseObject {
     }
 
     public void openFirstContractFromList() {
-        findElementWhenVisible(By.xpath("//tr[@class='list__row']/td[4]")).click();
         waitForRequestsToFinish();
+        findElementWhenVisible(By.xpath("//tr[@class='list__row']/td[4]")).click();
     }
 
     public void contractPlus() {

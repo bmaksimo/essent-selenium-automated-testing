@@ -3,9 +3,7 @@ package stepdefinitions.billing.test;
 import com.essent.be.jbilling.api.rest.RestResponse;
 import com.essent.be.jbilling.api.rest.batch.RSTriggerDunningRequest;
 import com.essent.be.jbilling.api.rest.dunning.DunningStepRequest;
-import com.essent.be.jbilling.api.rest.invoice.RSChangeInvoiceBalanceRequest;
 import com.essent.testing.client.billing.BillingBatch;
-import com.essent.testing.client.billing.BillingInvoiceRest;
 import com.essent.testing.database.DBUtility;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
@@ -15,7 +13,6 @@ import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,13 +24,15 @@ public class DunningSteps extends DwpScenario {
     protected RestResponse balanceResponse = null;
     private int days_passed;
 
-    @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @BILLING, @B2B_REGRESSION, @DUNNING")
+    @Before("@DWP, @E2E, @REGRESSION, @DUNNING")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
 
     @When("^Dunning day countdown for \"([^\"]*)\" goes down (\\d+) days$")
     public void dunningStepRequest(String accountNumberParam, int count) throws Throwable {
+
+
         DunningStepRequest request = new DunningStepRequest();
         String accountNumber = parameterProvider.getValueOrParameterAsString(accountNumberParam);
         request.setAccountUUID(accountNumber);
@@ -73,5 +72,11 @@ public class DunningSteps extends DwpScenario {
 
     private LocalDate dayToDate(int days) {
         return dunningStartDate.plusDays(days);
+    }
+
+    @When("^Customer with CRM Id ([^\"]*) is added to dunning whitelist$")
+    public void whitelistDunningCustomer(String suiteCRMCustomer) throws Throwable {
+        String customerId = parameterProvider.getValueOrParameterAsString(suiteCRMCustomer);
+        DBUtility.enableDunningForCrmId(customerId);
     }
 }

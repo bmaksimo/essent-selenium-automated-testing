@@ -13,7 +13,7 @@ Feature: NAUT-480: End Of Contract Via DWP - nl_BE
             And Top action is Filters
             And "B2C/B2B" selection is "B2B"
             And "Type klant" selection is "Klant"
-            And "Klantnummer" input is "151004675"
+            And "Klantnummer" input is "151005206"
             And Click on link in View List at 1st row and "Klantnummer & Naam" column polling 15 seconds
             Then Dashboard menu is Contracten
 

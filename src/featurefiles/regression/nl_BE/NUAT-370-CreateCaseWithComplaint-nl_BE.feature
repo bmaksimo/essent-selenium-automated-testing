@@ -1,6 +1,6 @@
 @DWP
-@REGRESSION
 @B2B
+@REGRESSION
 @CREDIT-AND-CONTROL
 Feature: NUAT-370: Create Case With Complaint - nl_BE
 
@@ -8,8 +8,6 @@ Feature: NUAT-370: Create Case With Complaint - nl_BE
         Given  I logged in to DWP as businessdesk.testautomation.b2b@essent.be
         When Left menu is sales-marketing
         And  Top menu item is Klanten
-        Then View list header is "Klanten" appears within 25 seconds
-
 
         When Top action is Filters
         And "Klantnummer" input is "150638828"

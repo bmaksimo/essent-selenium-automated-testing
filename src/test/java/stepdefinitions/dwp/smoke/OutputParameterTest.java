@@ -2,12 +2,10 @@ package stepdefinitions.dwp.smoke;
 
 import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
 import com.essent.testing.scenario.RegisteredScenario;
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
-import cucumber.runtime.CucumberException;
 import org.joda.time.DateTime;
 import org.junit.Assert;
 

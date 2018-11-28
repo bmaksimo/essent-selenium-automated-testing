@@ -39,6 +39,7 @@ public class MarketBerichtenSteps extends DwpScenario {
         MarktberichtenPage marktberichtenPage = new MarktberichtenPage(webDriver);
         webDriver.waitForRequestsToFinish();
         eanCode = marktberichtenPage.getEanCode();
+        parameterProvider.put("eanCode", eanCode);
     }
 
     @Then("^Validate rejection status is \"([^\"]*)\"$")

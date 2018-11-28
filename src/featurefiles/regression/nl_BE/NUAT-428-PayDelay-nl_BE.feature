@@ -1,7 +1,3 @@
-@DWP
-@REGRESSION
-@B2B
-@CREDIT-AND-CONTROL
 Feature: NUAT-428: Pay Delay - nl_BE
 
     Background:
@@ -13,7 +9,6 @@ Feature: NUAT-428: Pay Delay - nl_BE
         And Top action is Filters
         And "B2C/B2B" selection is "B2B"
         And "Type klant" selection is "Klant"
-        And "Naam" input is "essent"
         Then Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
         
         When Dashboard menu is Billing

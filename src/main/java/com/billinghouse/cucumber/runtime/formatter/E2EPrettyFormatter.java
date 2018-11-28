@@ -9,19 +9,20 @@ import com.essent.testing.scenario.RegisteredScenario;
 import cucumber.runtime.CucumberException;
 import cucumber.runtime.formatter.ColorAware;
 import gherkin.formatter.PrettyFormatter;
-import gherkin.formatter.model.Match;
-import gherkin.formatter.model.Result;
-import gherkin.formatter.model.Scenario;
-import gherkin.formatter.model.Step;
+import gherkin.formatter.model.*;
+import org.apache.commons.collections.SetUtils;
 import org.apache.log4j.Logger;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 
 public class E2EPrettyFormatter extends PrettyFormatter implements ColorAware {
+
 
     private static final Logger logger = Logger.getLogger(E2EPrettyFormatter.class);
     private static final Map<Class, BiConsumer> annotationRules  = new HashMap<>();
@@ -48,7 +49,6 @@ public class E2EPrettyFormatter extends PrettyFormatter implements ColorAware {
                 parameterProvider.consumingNullValues(true).put("cucumber-scenario-failure", result.getError());
                 break;
         }
-        logger.info(" - TEST SCENARIO PARAMETERS: " + parameterProvider.toString());
     }
 
     @Override
@@ -60,17 +60,32 @@ public class E2EPrettyFormatter extends PrettyFormatter implements ColorAware {
     public void match(Match match) {
         super.match(match);
         logger.info("CUCUMBER_HOOK (match)");
-        checkAndTerminate();
         this.location = match.getLocation();
-        assignInputFromOuputParameters(getActiveScenario(location));
+        RegisteredScenario activeScenario = getActiveScenario(location);
+        checkAndTerminate(activeScenario);
+        assignInputFromOuputParameters(activeScenario);
         logger.info(" - LOCATION: " + location);
     }
 
-    private void checkAndTerminate() {
+    @Override
+    public void startOfScenarioLifeCycle(Scenario scenario) {
+        super.startOfScenarioLifeCycle(scenario);
+        logger.info("CUCUMBER_HOOK (startOfScenarioLifeCycle)");
+
+        Set<Tag> tags = new HashSet<>();
+        tags.addAll(scenario.getTags());
+
+        ParameterProvider  parameterProvider = ((ParameterProvider) ContextService.getContext().getBean("parameterProvider")).consumingNullValues(true);
+        Set<Tag> previousScenarioTags = (Set)parameterProvider.get("scenario-tags");
+
+    }
+
+    private void checkAndTerminate(RegisteredScenario activeScenario) {
         ParameterProvider  parameterProvider = ((ParameterProvider) ContextService.getContext().getBean("parameterProvider")).consumingNullValues(true);
         if(parameterProvider.containsKey("cucumber-scenario-status")) {
             if(parameterProvider.containsKey("cucumber-scenario-failure")) {
                 Throwable failure = (Throwable) parameterProvider.get("cucumber-scenario-failure");
+                activeScenario.tidyUp();
                 throw new CucumberException("Cannot execute scenario, previous scenario failed. ", failure);
             }
         }
@@ -87,9 +102,9 @@ public class E2EPrettyFormatter extends PrettyFormatter implements ColorAware {
         ParametersUtil.visitOutputParameters(activeScenario, annotationRules.get(clazz));
     }
 
-    private Object getActiveScenario(String location) {
+    private RegisteredScenario getActiveScenario(String location) {
         String name = location.substring(0, location.indexOf("."));
-        Object activeScenario = provideNotNull(ActiveScenarioProvider.get().getActiveScenario(name));
+        RegisteredScenario activeScenario = (RegisteredScenario)provideNotNull(ActiveScenarioProvider.get().getActiveScenario(name));
         return activeScenario;
     }
 
@@ -112,7 +127,11 @@ public class E2EPrettyFormatter extends PrettyFormatter implements ColorAware {
     public void endOfScenarioLifeCycle(Scenario scenario) {
         logger.info("CUCUMBER_HOOK (endOfScenarioLifeCycle)");
         super.endOfScenarioLifeCycle(scenario);
-
+        HashSet<Tag> tags = new HashSet<>();
+        tags.addAll(scenario.getTags());
+        ParameterProvider  parameterProvider = ((ParameterProvider) ContextService.getContext().getBean("parameterProvider")).consumingNullValues(true);
+        parameterProvider.put("scenario-tags", tags);
+        logger.info(" - TEST SCENARIO PARAMETERS: " + parameterProvider.toString());
     }
 }
 

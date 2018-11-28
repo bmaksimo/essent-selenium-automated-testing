@@ -4,7 +4,7 @@
 Feature: Import a coda file
 
     Background:
-        Given I logged in to Odoo as p.paulussen
+        Given I logged in to Odoo as t.geets
 
     Scenario: Create a CODA file
         When Odoo top menu is Accounting
