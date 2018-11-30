@@ -55,4 +55,8 @@ public class BaseObject extends Component {
             seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + label + "?']//toggle-form-element/label")));
         }
     }
+
+    public String documentText(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[1])[2]")).getText();
+    }
 }
