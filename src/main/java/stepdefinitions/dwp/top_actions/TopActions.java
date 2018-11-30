@@ -58,9 +58,10 @@ public class TopActions extends NavigationElements {
     public void customerFind(String inputName) throws Throwable {
         String name = parameterProvider.getValueOrParameterAsString(inputName);
         Map<String, String> customerName = new HashMap<>();
-        customerName.put("name", name);
+        String Inputname = parameterProvider.getValueOrParameterAsString(name);
+        customerName.put("name", Inputname);
         boolean success = new ValidateCustomer().test(customerName);
-        assertThat(String.format("View list did not contain customer '%s'", name),
+        assertThat(String.format("View list did not contain customer '%s'", inputName),
             success, is(true));
     }
 

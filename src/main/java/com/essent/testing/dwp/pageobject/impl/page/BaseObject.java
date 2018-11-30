@@ -30,13 +30,8 @@ public class BaseObject extends Component {
     }
 
     public void clickOnPlus() {
-        seleniumDriver.waitForRequestsToFinish();
-        try {
-            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("(.//tbody[@id='rows']//list-plus-cell//a)[1]")));
-        }
-        catch(org.openqa.selenium.StaleElementReferenceException ex) {
-            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("(.//tbody[@id='rows']//list-plus-cell//a)[1]")));
-        }
+
+        seleniumDriver.waitAndClick(seleniumDriver.findElementOrNull(By.xpath("(//list-plus-cell//a)[1]")));
     }
 
     public void plusSubaction(String action) {
