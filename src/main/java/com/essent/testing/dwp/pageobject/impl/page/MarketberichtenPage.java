@@ -22,12 +22,16 @@ public class MarketberichtenPage  extends Component {
         Assert.assertEquals(signed, line2);
     }
 
-    public void createNewMarktericht(String newMarktbericht){
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.name(newMarktbericht)));
+    public String marketberichtStatus(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[1])[1]")).getText();
     }
 
     public void refreshByName(String name)  {
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//a[@name='"+name+"']/span[@class='icon-pijl']")));
+    }
+
+    public void createNewMarktericht(String newMarktbericht){
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.name(newMarktbericht)));
     }
 
     public void clickOnLabel(String label, String value)  {

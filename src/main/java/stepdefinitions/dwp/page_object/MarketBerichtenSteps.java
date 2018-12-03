@@ -68,6 +68,22 @@ public class MarketBerichtenSteps extends DwpScenario {
         marketberichtenPage.takenOver(taken, signed);
     }
 
+    @When("^Refresh \"([^\"]*)\" till \"([^\"]*)\" is visible$")
+    public void refreshTillIsVisible(String name, String status) throws Throwable {
+        webDriver.waitForRequestsToFinish();
+        MarketberichtenPage mp = new MarketberichtenPage(webDriver);
+        Thread.sleep(15000);
+        while(!mp.marketberichtStatus().equalsIgnoreCase(status)){
+            mp.refreshByName(name);
+        }
+    }
+
+    @Then("^Confirm status is \"([^\"]*)\"$")
+    public void confirmStatusIs(String status) throws Throwable {
+        MarketberichtenPage mp = new MarketberichtenPage(webDriver);
+        Assert.assertTrue(mp.marketberichtStatus().equalsIgnoreCase(status));
+    }
+
     @And("^\"([^\"]*)\" is now$")
     public void isNow(String label) throws Throwable {
         BaseObject bo = new BaseObject(webDriver);
