@@ -25,3 +25,6 @@ Feature: NUAT-424: Change Pay Method - nl_BE
         And IBAN is NL43ABNA0978459932 if not empty
         And Payment details are confirmed
         Then Payment method is updated
+        
+        When Dashboard menu is Documenten
+        Then Check if document "customer-signature.pdf" is present

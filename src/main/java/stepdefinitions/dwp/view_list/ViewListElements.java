@@ -320,6 +320,7 @@ public class ViewListElements extends NavigationElements {
 
     @When("^Click on link in View List at ([^\"]*) row and \"([^\"]*)\" column polling (\\d+) seconds?$")
     public void clickOnViewListAtRowAndColumn(String ordinal, String column, int seconds) throws Throwable {
+        webDriver.waitForRequestsToFinish();
         String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
         Map<String, String> columnIndexListOptions = new HashMap<>();
         columnIndexListOptions.put("column", column);

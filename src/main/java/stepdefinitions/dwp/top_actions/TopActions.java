@@ -45,7 +45,8 @@ public class TopActions extends NavigationElements {
     }
 
     @And("Search input is ([^\"]*)$")
-    public void input(String name) throws Throwable {
+    public void input(String inputName) throws Throwable {
+        String name = parameterProvider.getValueOrParameterAsString(inputName);
         Map<String, String> customerName = new HashMap<>();
         customerName.put("name", name);
         boolean success = new SearchCustomer().test(name);
@@ -54,11 +55,13 @@ public class TopActions extends NavigationElements {
     }
 
     @And("^Customer \"([^\"]*)\" is found$")
-    public void customerFind(String name) throws Throwable {
+    public void customerFind(String inputName) throws Throwable {
+        String name = parameterProvider.getValueOrParameterAsString(inputName);
         Map<String, String> customerName = new HashMap<>();
-        customerName.put("name", name);
+        String Inputname = parameterProvider.getValueOrParameterAsString(name);
+        customerName.put("name", Inputname);
         boolean success = new ValidateCustomer().test(customerName);
-        assertThat(String.format("View list did not contain customer '%s'", name),
+        assertThat(String.format("View list did not contain customer '%s'", inputName),
             success, is(true));
     }
 

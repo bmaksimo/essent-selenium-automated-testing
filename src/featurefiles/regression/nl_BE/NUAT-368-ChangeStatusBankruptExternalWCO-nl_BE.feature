@@ -10,10 +10,10 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
     Scenario: I Change status CSR and Externe partij is Contentia
         When Left menu is sales-marketing
         And Top menu item is Klanten
+        And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Top action is Filters
-        And "B2C/B2B" selection is "B2B"
-        And "Klantnummer" input is "150319788"
-        Then Click on link in View List at 1st row and "Klantnummer & Naam" column
+        And "Klantnummer" input is "parameter:accountNumber"
+        Then Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
 
         When Plus menu is "Service -> Wijzigingen klant -> Accountstatus wijzigen"
         And Update account status on "csr"
@@ -27,10 +27,10 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
     Scenario: II Change status CSR and Externe partij is Hilde Derde
         When Left menu is sales-marketing
         And Top menu item is Klanten
+        And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Top action is Filters
-        And "B2C/B2B" selection is "B2B"
-        And "Klantnummer" input is "150319788"
-        Then Click on link in View List at 1st row and "Klantnummer & Naam" column
+        And "Klantnummer" input is "parameter:accountNumber"
+        Then Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
 
         When Plus menu is "Service -> Wijzigingen klant -> Accountstatus wijzigen"
         And Update account status on "csr"
@@ -44,10 +44,10 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
     Scenario: III Change status Faillissement met fiscaal attest and Externe partij is Contentia
         When Left menu is sales-marketing
         And Top menu item is Klanten
+        And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Top action is Filters
-        And "B2C/B2B" selection is "B2B"
-        And "Klantnummer" input is "150319788"
-        Then Click on link in View List at 1st row and "Klantnummer & Naam" column
+        And "Klantnummer" input is "parameter:accountNumber"
+        Then Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
 
         When Plus menu is "Service -> Wijzigingen klant -> Accountstatus wijzigen"
         And Update account status on "Faillissement met fiscaal attest"
@@ -65,10 +65,10 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
     Scenario: IV Change status Faillissement met fiscaal attest and Externe partij is Hilde Derde
         When Left menu is sales-marketing
         And Top menu item is Klanten
+        And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Top action is Filters
-        And "B2C/B2B" selection is "B2B"
-        And "Klantnummer" input is "150319788"
-        Then Click on link in View List at 1st row and "Klantnummer & Naam" column
+        And "Klantnummer" input is "parameter:accountNumber"
+        Then Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
 
         When Plus menu is "Service -> Wijzigingen klant -> Accountstatus wijzigen"
         And Update account status on "Faillissement met fiscaal attest"
@@ -86,10 +86,10 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
     Scenario: V Change status Faillissement zonder fiscaal attest and Externe partij is Contentia
         When Left menu is sales-marketing
         And Top menu item is Klanten
+        And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Top action is Filters
-        And "B2C/B2B" selection is "B2B"
-        And "Klantnummer" input is "150319788"
-        Then Click on link in View List at 1st row and "Klantnummer & Naam" column
+        And "Klantnummer" input is "parameter:accountNumber"
+        Then Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
 
         When Plus menu is "Service -> Wijzigingen klant -> Accountstatus wijzigen"
         And Update account status on "Faillissement zonder fiscaal attest"
@@ -103,10 +103,10 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
     Scenario: VI Change status Faillissement zonder fiscaal attest and Externe partij is Hilde Derde
         When Left menu is sales-marketing
         And Top menu item is Klanten
+        And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Top action is Filters
-        And "B2C/B2B" selection is "B2B"
-        And "Klantnummer" input is "150319788"
-        Then Click on link in View List at 1st row and "Klantnummer & Naam" column
+        And "Klantnummer" input is "parameter:accountNumber"
+        Then Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
 
         When Plus menu is "Service -> Wijzigingen klant -> Accountstatus wijzigen"
         And Update account status on "Faillissement zonder fiscaal attest"
@@ -120,10 +120,10 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
     Scenario: VII Change status In WCO and Externe partij is Contentia
         When Left menu is sales-marketing
         And Top menu item is Klanten
+        And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Top action is Filters
-        And "B2C/B2B" selection is "B2B"
-        And "Klantnummer" input is "150319788"
-        Then Click on link in View List at 1st row and "Klantnummer & Naam" column
+        And "Klantnummer" input is "parameter:accountNumber"
+        Then Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
 
         When Plus menu is "Service -> Wijzigingen klant -> Accountstatus wijzigen"
         And Update account status on "In WCO"
@@ -137,10 +137,10 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
     Scenario: VIII Change status In WCO and Externe partij is Hilde Derde
         When Left menu is sales-marketing
         And Top menu item is Klanten
+        And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Top action is Filters
-        And "B2C/B2B" selection is "B2B"
-        And "Klantnummer" input is "150319788"
-        Then Click on link in View List at 1st row and "Klantnummer & Naam" column
+        And "Klantnummer" input is "parameter:accountNumber"
+        Then Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
 
         When Plus menu is "Service -> Wijzigingen klant -> Accountstatus wijzigen"
         And Update account status on "In WCO"
@@ -154,10 +154,10 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
     Scenario: IX Change status Normaal and Externe partij is Contentia
         When Left menu is sales-marketing
         And Top menu item is Klanten
+        And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Top action is Filters
-        And "B2C/B2B" selection is "B2B"
-        And "Klantnummer" input is "150319788"
-        Then Click on link in View List at 1st row and "Klantnummer & Naam" column
+        And "Klantnummer" input is "parameter:accountNumber"
+        Then Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
 
         When Plus menu is "Service -> Wijzigingen klant -> Accountstatus wijzigen"
         And Update account status on "Normaal"
@@ -170,10 +170,10 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
     Scenario: X Change status Normaal and Externe partij is Hilde Derde
         When Left menu is sales-marketing
         And Top menu item is Klanten
+        And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Top action is Filters
-        And "B2C/B2B" selection is "B2B"
-        And "Klantnummer" input is "150319788"
-        Then Click on link in View List at 1st row and "Klantnummer & Naam" column
+        And "Klantnummer" input is "parameter:accountNumber"
+        Then Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
 
         When Plus menu is "Service -> Wijzigingen klant -> Accountstatus wijzigen"
         And Update account status on "Normaal"
@@ -186,10 +186,10 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
     Scenario: XI Change status OCMW assistance and Externe partij is Contentia
         When Left menu is sales-marketing
         And Top menu item is Klanten
+        And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Top action is Filters
-        And "B2C/B2B" selection is "B2B"
-        And "Klantnummer" input is "150319788"
-        Then Click on link in View List at 1st row and "Klantnummer & Naam" column
+        And "Klantnummer" input is "parameter:accountNumber"
+        Then Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
 
         When Plus menu is "Service -> Wijzigingen klant -> Accountstatus wijzigen"
         And Update account status on "OCMW assistance"
@@ -203,10 +203,10 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
     Scenario: XII Change status OCMW assistance and Externe partij is Hilde Derde
         When Left menu is sales-marketing
         And Top menu item is Klanten
+        And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Top action is Filters
-        And "B2C/B2B" selection is "B2B"
-        And "Klantnummer" input is "150319788"
-        Then Click on link in View List at 1st row and "Klantnummer & Naam" column
+        And "Klantnummer" input is "parameter:accountNumber"
+        Then Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
 
         When Plus menu is "Service -> Wijzigingen klant -> Accountstatus wijzigen"
         And Update account status on "OCMW assistance"
@@ -220,10 +220,10 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
     Scenario: XIII Change status OCMW budget management and Externe partij is Contentia
         When Left menu is sales-marketing
         And Top menu item is Klanten
+        And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Top action is Filters
-        And "B2C/B2B" selection is "B2B"
-        And "Klantnummer" input is "150319788"
-        Then Click on link in View List at 1st row and "Klantnummer & Naam" column
+        And "Klantnummer" input is "parameter:accountNumber"
+        Then Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
 
         When Plus menu is "Service -> Wijzigingen klant -> Accountstatus wijzigen"
         And Update account status on "OCMW budget management"
@@ -237,10 +237,10 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
     Scenario: XIV Change status OCMW budget management and Externe partij is Hilde Derde
         When Left menu is sales-marketing
         And Top menu item is Klanten
+        And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Top action is Filters
-        And "B2C/B2B" selection is "B2B"
-        And "Klantnummer" input is "150319788"
-        Then Click on link in View List at 1st row and "Klantnummer & Naam" column
+        And "Klantnummer" input is "parameter:accountNumber"
+        Then Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
 
         When Plus menu is "Service -> Wijzigingen klant -> Accountstatus wijzigen"
         And Update account status on "OCMW budget management"
@@ -254,10 +254,10 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
     Scenario: XV Change status overleden and Externe partij is Contentia
         When Left menu is sales-marketing
         And Top menu item is Klanten
+        And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Top action is Filters
-        And "B2C/B2B" selection is "B2B"
-        And "Klantnummer" input is "150319788"
-        Then Click on link in View List at 1st row and "Klantnummer & Naam" column
+        And "Klantnummer" input is "parameter:accountNumber"
+        Then Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
 
         When Plus menu is "Service -> Wijzigingen klant -> Accountstatus wijzigen"
         And Update account status on "overleden"
@@ -270,10 +270,10 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
     Scenario: XVI Change status overleden and Externe partij is Hilde Derde
         When Left menu is sales-marketing
         And Top menu item is Klanten
+        And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Top action is Filters
-        And "B2C/B2B" selection is "B2B"
-        And "Klantnummer" input is "150319788"
-        Then Click on link in View List at 1st row and "Klantnummer & Naam" column
+        And "Klantnummer" input is "parameter:accountNumber"
+        Then Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
 
         When Plus menu is "Service -> Wijzigingen klant -> Accountstatus wijzigen"
         And Update account status on "overleden"
@@ -286,10 +286,10 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
     Scenario: XVII Change status Provisional administration and Externe partij is Contentia
         When Left menu is sales-marketing
         And Top menu item is Klanten
+        And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Top action is Filters
-        And "B2C/B2B" selection is "B2B"
-        And "Klantnummer" input is "150319788"
-        Then Click on link in View List at 1st row and "Klantnummer & Naam" column
+        And "Klantnummer" input is "parameter:accountNumber"
+        Then Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
 
         When Plus menu is "Service -> Wijzigingen klant -> Accountstatus wijzigen"
         And Update account status on "Provisional administration"
@@ -303,10 +303,10 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
     Scenario: XVIII Change status Provisional administration and Externe partij is Hilde Derde
         When Left menu is sales-marketing
         And Top menu item is Klanten
+        And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Top action is Filters
-        And "B2C/B2B" selection is "B2B"
-        And "Klantnummer" input is "150319788"
-        Then Click on link in View List at 1st row and "Klantnummer & Naam" column
+        And "Klantnummer" input is "parameter:accountNumber"
+        Then Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
 
         When Plus menu is "Service -> Wijzigingen klant -> Accountstatus wijzigen"
         And Update account status on "Provisional administration"
@@ -320,10 +320,10 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
     Scenario: XIX Change status Vereffening and Externe partij is Contentia
         When Left menu is sales-marketing
         And Top menu item is Klanten
+        And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Top action is Filters
-        And "B2C/B2B" selection is "B2B"
-        And "Klantnummer" input is "150319788"
-        Then Click on link in View List at 1st row and "Klantnummer & Naam" column
+        And "Klantnummer" input is "parameter:accountNumber"
+        Then Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
 
         When Plus menu is "Service -> Wijzigingen klant -> Accountstatus wijzigen"
         And Update account status on "Vereffening"
@@ -336,10 +336,10 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
     Scenario: XX Change status Vereffening and Externe partij is Hilde Derde
         When Left menu is sales-marketing
         And Top menu item is Klanten
+        And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Top action is Filters
-        And "B2C/B2B" selection is "B2B"
-        And "Klantnummer" input is "150319788"
-        Then Click on link in View List at 1st row and "Klantnummer & Naam" column
+        And "Klantnummer" input is "parameter:accountNumber"
+        Then Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
 
         When Plus menu is "Service -> Wijzigingen klant -> Accountstatus wijzigen"
         And Update account status on "Vereffening"

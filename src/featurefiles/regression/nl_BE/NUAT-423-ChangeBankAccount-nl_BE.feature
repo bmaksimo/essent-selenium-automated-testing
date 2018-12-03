@@ -10,10 +10,10 @@ Feature: NUAT-423: Change Bank Account - nl_BE
     Scenario: I Change status CSR and Externe partij is Contentia
         When Left menu is sales-marketing
         And Top menu item is Klanten
+        And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Top action is Filters
-        And "B2C/B2B" selection is "B2B"
-        And "Klantnummer" input is "1000000338"
-        Then Click on link in View List at 1st row and "Klantnummer & Naam" column
+        And "Klantnummer" input is "parameter:accountNumber"
+        Then Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
 
         When Dashboard menu is Details
         And Plus action of "1" element from "BillingCustomerOnaccount" and click on "Update"
