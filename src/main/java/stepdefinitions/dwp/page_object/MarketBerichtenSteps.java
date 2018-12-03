@@ -69,7 +69,7 @@ public class MarketBerichtenSteps extends DwpScenario {
         marketberichtenPage.takenOver(taken, signed);
     }
 
-    @When("^Refresh \"([^\"]*)\" till \"([^\"]*)\" is visible in table$")
+    @When("^Refresh \"([^\"]*)\" till \"([^\"]*)\" is visible$")
     public void refreshTillIsVisible(String name, String status) throws Throwable {
         webDriver.waitForRequestsToFinish();
         MarketberichtenPage mp = new MarketberichtenPage(webDriver);

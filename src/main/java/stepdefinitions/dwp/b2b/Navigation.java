@@ -64,7 +64,7 @@ public class Navigation extends DwpScenario {
         tm.goBackToHomePage();
     }
 
-    @When("^Refresh \"([^\"]*)\" till \"([^\"]*)\" is visible$")
+    @When("^Refresh \"([^\"]*)\" till \"([^\"]*)\" is visible in table$")
     public void refreshTillIsVisible(String name, String status) throws Throwable {
         webDriver.waitForRequestsToFinish();
         MarketberichtenPage mp = new MarketberichtenPage(webDriver);
