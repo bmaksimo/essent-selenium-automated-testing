@@ -1,12 +1,16 @@
 package com.essent.testing.dwp.pageobject.impl.page;
 
+import com.essent.automation.autocrat.Action;
+import com.essent.automation.autocrat.Model;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import static com.essent.automation.autocrat.Action.CLICK;
+import static com.essent.automation.autocrat.Action.SLEEP;
+import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.UPLOAD_FILE;
+import static com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter.newExecution;
 
 public class BaseObject extends Component {
 
@@ -14,11 +18,6 @@ public class BaseObject extends Component {
     public BaseObject(SeleniumDriver seleniumDriver) {
         super(seleniumDriver);
     }
-
-    String pattern = "dd/MM/yyyy";
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-
-    String date = simpleDateFormat.format(new Date());
 
     public String getTaskId() {
         final String taskId;
@@ -31,13 +30,8 @@ public class BaseObject extends Component {
     }
 
     public void clickOnPlus() {
-        seleniumDriver.waitForRequestsToFinish();
-        try {
-            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("(.//tbody[@id='rows']//list-plus-cell//a)[1]")));
-        }
-        catch(org.openqa.selenium.StaleElementReferenceException ex) {
-            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("(.//tbody[@id='rows']//list-plus-cell//a)[1]")));
-        }
+
+        seleniumDriver.waitAndClick(seleniumDriver.findElementOrNull(By.xpath("(//list-plus-cell//a)[1]")));
     }
 
     public void plusSubaction(String action) {
@@ -60,6 +54,11 @@ public class BaseObject extends Component {
     public String documentText(){
         return seleniumDriver.findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[1])[2]")).getText();
     }
+
+    String pattern = "dd/MM/yyyy";
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+    String date = simpleDateFormat.format(new Date());
 
     public void dateIsNow(String label) throws InterruptedException {
         seleniumDriver.waitForRequestsToFinish();
