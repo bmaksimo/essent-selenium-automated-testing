@@ -10,6 +10,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import org.springframework.test.context.ContextConfiguration;
+import stepdefinitions.dwp.contracts.b2b.ContractB2BScenario;
 
 import static org.junit.Assert.assertTrue;
 
@@ -40,4 +41,5 @@ public class Account extends DwpScenario {
     public void tearDown() {
         super.tearDown();
     }
+
 }

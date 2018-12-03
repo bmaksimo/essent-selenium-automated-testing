@@ -8,7 +8,9 @@ import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
+import cucumber.api.java.en.Then;
 import org.springframework.test.context.ContextConfiguration;
+import static org.testng.AssertJUnit.assertEquals;
 
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 
@@ -50,5 +52,18 @@ public class Contract extends DwpScenario {
         Thread.sleep(5000);
         cp.clickOnPlusMeniInTable(row,table);
         baseObject.plusSubaction(action);
+    }
+
+    @And("^Save EAN from active contract$")
+    public void saveEANFromActiveContract() throws Throwable {
+        ContractPage cp = new ContractPage(webDriver);
+        parameterProvider.put("EAN-active-contract",cp.getActiveContractEAN());
+    }
+
+    @Then("^Contract is in \"([^\"]*)\" state$")
+    public void contractIsInState(String status) throws Throwable {
+        ContractPage cp = new ContractPage(webDriver);
+        webDriver.waitForRequestsToFinish();
+        assertEquals(cp.status(),status);
     }
 }
