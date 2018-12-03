@@ -57,6 +57,10 @@ public class BaseObject extends Component {
         }
     }
 
+    public String documentText(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[1])[2]")).getText();
+    }
+
     public void dateIsNow(String label) throws InterruptedException {
         seleniumDriver.waitForRequestsToFinish();
         Thread.sleep(2000);

@@ -4,7 +4,7 @@ import com.essent.testing.util.resource.ResourceUtil;
 
 public class ContractConstants {
 
-	public static final int TIMEOUT_SET_CONTRACT_ACTIVE = 10;
+	public static final int TIMEOUT_SET_CONTRACT_ACTIVE = 15;
 
 	public static final int MAX_NUMBER_OF_ATTEMPTS_TO_FIND_APPROPRIATE_START_CONTRACT_DATE = 2;
 
