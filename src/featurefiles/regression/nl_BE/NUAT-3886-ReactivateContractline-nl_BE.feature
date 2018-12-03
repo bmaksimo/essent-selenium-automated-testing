@@ -29,7 +29,7 @@ Feature: NUAT-3886-Reactivate contractline
         And "Market mock" turn on
         Then Changes are confirmed
 
-        When Refresh "REFRESH MARKTBERICHTEN" till "Geaccepteerd" is visible
+        When Refresh "REFRESH MARKTBERICHTEN" till "Geaccepteerd" is visible in table
         And Dashboard menu is Contracten
         And Click on link in "ContractsOnAccount" View List at 1 row and "Nummer & Aanmaakdatum" column
         And Plus action and "Reactiveer contractlijn" of first customer from list
