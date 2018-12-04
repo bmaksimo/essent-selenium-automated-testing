@@ -1,8 +1,9 @@
 @DWP
 @REGRESSION
 @B2B
+@BUSINESS-DESK
 @LONGDURATION
-Feature: NUAT-3886-Reactivate contractline
+Feature: NUAT-549 Send manual drop
 
     Background:
         Given  I logged in to DWP as businessdesk.testautomation.b2b@essent.be
