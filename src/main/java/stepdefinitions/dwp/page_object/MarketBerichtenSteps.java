@@ -92,4 +92,13 @@ public class MarketBerichtenSteps extends DwpScenario {
 
     }
 
+    @Then("^Marketbericht with EAN \"([^\"]*)\" and module \"([^\"]*)\" is in status \"([^\"]*)\"$")
+    public void marketbirichWithEANAndModuleIsInStatus(String enaP, String modul, String status) throws Throwable {
+        String ean = parameterProvider.getValueOrParameterAsString(enaP);
+        MarketberichtenPage mp = new MarketberichtenPage(webDriver);
+        Assert.assertEquals(ean, mp.getEanFromTheFirstTransaction());
+        Assert.assertEquals(modul,mp.getModulFromTheFirstTransaction());
+        Assert.assertEquals(status,mp.marketberichtStatus());
+
+    }
 }
