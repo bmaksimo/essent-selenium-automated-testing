@@ -30,4 +30,4 @@ Feature: NUAT-549 Send manual drop
         Then Changes are confirmed
 
         When Refresh "REFRESH MARKTBERICHTEN" till "Geaccepteerd" is visible in table
-        Then Marketbirich with EAN "parameter:EAN-active-contract" and module "INITIATE STOP ACCESS" is in status "Geaccepteerd"
+        Then Marketbericht with EAN "parameter:EAN-active-contract" and module "INITIATE STOP ACCESS" is in status "Geaccepteerd"
