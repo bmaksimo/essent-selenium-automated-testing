@@ -32,6 +32,7 @@ public class ContractenSteps extends DwpScenario {
 
     @When("^Input in ([^\"]*) is \"([^\"]*)\"$")
     public void inputInModuleIs(String label, String input) throws Throwable {
+        webDriver.waitForRequestsToFinish();
         ContractenPage contractenPage = new ContractenPage(webDriver);
         contractenPage.fieldDropDownLabel(label, input);
     }

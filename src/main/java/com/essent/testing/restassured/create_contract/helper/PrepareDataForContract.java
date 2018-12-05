@@ -22,9 +22,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public final class PrepareDataForContract {
 
-	private PrepareDataForContract() {
+    private PrepareDataForContract() {
 
-	}
+    }
 
     public static String getYesterdayDate() {
         Calendar cal = Calendar.getInstance();
@@ -43,13 +43,13 @@ public final class PrepareDataForContract {
     }
 
     //This logic is took from SOAPUI tests
-    public static String generateValidBECompanyNumber(){
+    public static String generateValidBECompanyNumber() {
         int lengthPart2 = 0;
         String part1 = "";
         String part2 = "";
 
-        while(lengthPart2 != 2){
-            part1 = String.valueOf((long)(Math.random()*(9999999L-1000000L)+1000000L));
+        while (lengthPart2 != 2) {
+            part1 = String.valueOf((long) (Math.random() * (9999999L - 1000000L) + 1000000L));
             part2 = Integer.toString((97 - (Integer.parseInt(part1) % 97)));
             lengthPart2 = part2.length();
         }
@@ -88,31 +88,30 @@ public final class PrepareDataForContract {
     }
 
     //This logic is took from SOAPUI tests
-    public static String generateEAN(){
-        String randomNumberForEAN = "54144" + (long)(Math.random()*(9999999999L-1000000000L)+1000000000L) + "40";
+    public static String generateEAN() {
+        String randomNumberForEAN = "54144" + (long) (Math.random() * (9999999999L - 1000000000L) + 1000000000L) + "40";
         char[] charArray = randomNumberForEAN.toCharArray();
 
-        int sum = (((Character.getNumericValue(charArray[0]))+
-            (Character.getNumericValue(charArray[2]))+
-            (Character.getNumericValue(charArray[4]))+
-            (Character.getNumericValue(charArray[6]))+
-            (Character.getNumericValue(charArray[8]))+
-            (Character.getNumericValue(charArray[10]))+
-            (Character.getNumericValue(charArray[12]))+
-            (Character.getNumericValue(charArray[14]))+
-            (Character.getNumericValue(charArray[16])))*3) +
-            (((Character.getNumericValue(charArray[1]))+
-                (Character.getNumericValue(charArray[3]))+
-                (Character.getNumericValue(charArray[5]))+
-                (Character.getNumericValue(charArray[7]))+
-                (Character.getNumericValue(charArray[9]))+
-                (Character.getNumericValue(charArray[11]))+
-                (Character.getNumericValue(charArray[13]))+
+        int sum = (((Character.getNumericValue(charArray[0])) +
+            (Character.getNumericValue(charArray[2])) +
+            (Character.getNumericValue(charArray[4])) +
+            (Character.getNumericValue(charArray[6])) +
+            (Character.getNumericValue(charArray[8])) +
+            (Character.getNumericValue(charArray[10])) +
+            (Character.getNumericValue(charArray[12])) +
+            (Character.getNumericValue(charArray[14])) +
+            (Character.getNumericValue(charArray[16]))) * 3) +
+            (((Character.getNumericValue(charArray[1])) +
+                (Character.getNumericValue(charArray[3])) +
+                (Character.getNumericValue(charArray[5])) +
+                (Character.getNumericValue(charArray[7])) +
+                (Character.getNumericValue(charArray[9])) +
+                (Character.getNumericValue(charArray[11])) +
+                (Character.getNumericValue(charArray[13])) +
                 (Character.getNumericValue(charArray[15]))));
 
         long result = 0;
-        while(sum % 10 != 0 )
-        {
+        while (sum % 10 != 0) {
             result++;
             sum++;
         }
@@ -137,7 +136,7 @@ public final class PrepareDataForContract {
         if (path.equals(ContractConstants.PATH_TO_JSON_FILES_QUOTE_UP_B2B)) {
             if (dateCurrentContractStartDateInDWP.after(dateStartContractDate))
                 return "NOT_VALID";
-        } else if((dateCurrentContractStartDateInDWP.after(dateTodayDate) || dateCurrentContractStartDateInDWP.equals(dateTodayDate) )) {
+        } else if ((dateCurrentContractStartDateInDWP.after(dateTodayDate) || dateCurrentContractStartDateInDWP.equals(dateTodayDate))) {
             return "NOT_VALID";
         }
 
@@ -173,7 +172,7 @@ public final class PrepareDataForContract {
         currentContractStartDateInDWP = sdf.format(c.getTime());  // currentContractStartDateInDWP is now the new date
         Date dateCurrentContractStartDateInDWP = sdf.parse(currentContractStartDateInDWP);
 
-        if((dateCurrentContractStartDateInDWP.before(dateStartContractDate) || dateCurrentContractStartDateInDWP.equals(dateStartContractDate) )) {
+        if ((dateCurrentContractStartDateInDWP.before(dateStartContractDate) || dateCurrentContractStartDateInDWP.equals(dateStartContractDate))) {
             return "NOT_VALID";
         }
 
@@ -195,8 +194,8 @@ public final class PrepareDataForContract {
 
     public static String setStartContractDate(String path, String startContractDate, String todayDate, String currentContractStartDateInDWP) throws ParseException {
 
-        if(currentContractStartDateInDWP.equals("")) {
-            if(path.equals(ContractConstants.PATH_TO_JSON_FILES_QUOTE_UP_B2B)) {
+        if (currentContractStartDateInDWP.equals("")) {
+            if (path.equals(ContractConstants.PATH_TO_JSON_FILES_QUOTE_UP_B2B)) {
                 setThirtyDaysInPast(startContractDate);
             }
             return startContractDate;
@@ -206,7 +205,7 @@ public final class PrepareDataForContract {
     }
 
     public static String getRandomAddressNumber() {
-        return "1" + (long)(Math.random()*(99999-10000)+10000);
+        return "1" + (long) (Math.random() * (99999 - 10000) + 10000);
     }
 
     public static String generateStringFromResource(String path) throws IOException {
@@ -227,7 +226,7 @@ public final class PrepareDataForContract {
         String fileContext = FileUtils.readFileToString(pathTemplateFile, Charset.forName("utf-8"));
 
         for (Entry<String, String> entry : mapValues.entrySet()) {
-            if(fileContext.contains(entry.getKey())) {
+            if (fileContext.contains(entry.getKey())) {
                 fileContext = fileContext.replace(entry.getKey(), entry.getValue());
             }
         }

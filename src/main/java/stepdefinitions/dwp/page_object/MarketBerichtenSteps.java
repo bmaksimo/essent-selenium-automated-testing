@@ -4,6 +4,7 @@ import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
 import com.essent.testing.dwp.pageobject.impl.page.MarketberichtenPage;
 import com.essent.testing.dwp.pageobject.impl.service_contracting.MarktberichtenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -66,5 +67,38 @@ public class MarketBerichtenSteps extends DwpScenario {
     public void validateContractWasTakenOver(String taken, String signed) throws Throwable {
         MarketberichtenPage marketberichtenPage = new MarketberichtenPage(webDriver);
         marketberichtenPage.takenOver(taken, signed);
+    }
+
+    @When("^Refresh \"([^\"]*)\" till \"([^\"]*)\" is visible$")
+    public void refreshTillIsVisible(String name, String status) throws Throwable {
+        webDriver.waitForRequestsToFinish();
+        MarketberichtenPage mp = new MarketberichtenPage(webDriver);
+        Thread.sleep(15000);
+        while(!mp.marketberichtStatus().equalsIgnoreCase(status)){
+            mp.refreshByName(name);
+        }
+    }
+
+    @Then("^Confirm status is \"([^\"]*)\"$")
+    public void confirmStatusIs(String status) throws Throwable {
+        MarketberichtenPage mp = new MarketberichtenPage(webDriver);
+        Assert.assertTrue(mp.marketberichtStatus().equalsIgnoreCase(status));
+    }
+
+    @And("^\"([^\"]*)\" is now$")
+    public void isNow(String label) throws Throwable {
+        BaseObject bo = new BaseObject(webDriver);
+        bo.dateIsNow(label);
+
+    }
+
+    @Then("^Marketbericht with EAN \"([^\"]*)\" and module \"([^\"]*)\" is in status \"([^\"]*)\"$")
+    public void marketbirichWithEANAndModuleIsInStatus(String enaP, String modul, String status) throws Throwable {
+        String ean = parameterProvider.getValueOrParameterAsString(enaP);
+        MarketberichtenPage mp = new MarketberichtenPage(webDriver);
+        Assert.assertEquals(ean, mp.getEanFromTheFirstTransaction());
+        Assert.assertEquals(modul,mp.getModulFromTheFirstTransaction());
+        Assert.assertEquals(status,mp.marketberichtStatus());
+
     }
 }
