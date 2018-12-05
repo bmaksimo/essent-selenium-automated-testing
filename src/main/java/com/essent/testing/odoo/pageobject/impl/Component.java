@@ -3,6 +3,7 @@ package com.essent.testing.odoo.pageobject.impl;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
+import com.essent.automation.core.WebDriverWait;
 import com.essent.testing.selenium.SeleniumDriver;
 import com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter;
 import cucumber.runtime.CucumberException;
@@ -102,11 +103,12 @@ public abstract class Component {
             }
         };
     }
-    protected void waitForRequestsToFinish() {
-        seleniumDriver.awaitJqueryNotActive(500);
-    }
 
     public String getTitle() {
         return null;
+    }
+
+    public void awaitOdooRequestToFinish(int seconds) {
+        new WebDriverWait(seleniumDriver.getDriver(), seconds).until(webDriver -> webDriver.findElements(By.cssSelector(".oe_wait")).isEmpty());
     }
 }

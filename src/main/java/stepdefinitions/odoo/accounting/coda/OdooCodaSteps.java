@@ -1,6 +1,5 @@
 package stepdefinitions.odoo.accounting.coda;
 
-import com.essent.automation.util.Sleeper;
 import com.essent.testing.odoo.pageobject.impl.modal.coda.CodaImportDialogImpl;
 import com.essent.testing.odoo.pageobject.modal.CodaImportDialog;
 import com.essent.testing.odoo.scenario.OdooScenario;
@@ -13,15 +12,19 @@ import cucumber.api.java.en.When;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.io.filefilter.WildcardFileFilter;
+import org.awaitility.Duration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import java.io.File;
 import java.util.Collection;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.awaitility.Awaitility.given;
+import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
+import static org.awaitility.Duration.TWO_SECONDS;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -82,11 +85,16 @@ public class OdooCodaSteps extends OdooScenario {
     public void odooDownloadGeneratedCodaFile() throws Throwable {
         WebElement downloadLink = webDriver.findElement(By.xpath("//div[@class='modal-content openerp']//a[@class='oe_form_uri']"));
         if (null == downloadLink) throw new CucumberException("CODA file download link was not found");
-
         downloadLink.click();
-        Sleeper.sleepTightInSeconds(5);
+
         String path = ResourceUtil.toPath(File.separator + "data" + File.separator + "odoo" + File.separator);
-        Collection<File> codaFiles = FileUtils.listFiles(new File(path), TrueFileFilter.INSTANCE, null);
+        Collection<File> codaFiles = FileUtils.listFiles(new File(path), new WildcardFileFilter("*.COD"), TrueFileFilter.INSTANCE);
+        given().await()
+            .pollInterval(FIVE_HUNDRED_MILLISECONDS)
+            .pollDelay(TWO_SECONDS)
+            .atMost(new Duration(10, SECONDS)).until(()-> !codaFiles.isEmpty());
+        if (codaFiles.isEmpty()) throw new CucumberException("CODA file download link was not found");
+
 
         assertThat("File could not be downloaded", !codaFiles.isEmpty());
 

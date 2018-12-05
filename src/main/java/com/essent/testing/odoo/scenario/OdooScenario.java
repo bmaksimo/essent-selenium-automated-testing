@@ -1,10 +1,13 @@
 package com.essent.testing.odoo.scenario;
 
+import com.essent.automation.core.WebDriverWait;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.selenium.scenario.SeleniumScenario;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 
 import static org.junit.Assert.assertTrue;
 
@@ -30,6 +33,10 @@ public abstract class OdooScenario extends SeleniumScenario {
         Sleeper.sleepTightInSeconds(3);
         logger.info("Current URL: " + currentUrl);
         assertTrue(currentUrl.startsWith(webDriver.getBaseUrl()));
+    }
+
+    public void awaitOdooRequestToFinish(int seconds) {
+        new WebDriverWait(webDriver.getDriver(), seconds).until(webDriver -> webDriver.findElements(By.cssSelector(".oe_wait")).isEmpty());
     }
 
 }

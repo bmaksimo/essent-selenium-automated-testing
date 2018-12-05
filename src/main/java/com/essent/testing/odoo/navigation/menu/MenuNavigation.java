@@ -42,18 +42,19 @@ public class MenuNavigation extends Component {
 
     public boolean findAndClickMainMenuItem(String item) {
         By by = By.xpath(createQuery(MAIN_NEMU_ITEM_SELECTOR_TEMPLATE, "text", item));
-        WebElement elementOrNull = seleniumDriver.findElementOrNull(by);
+        WebElement elementOrNull = seleniumDriver.findElementOrNull(by, Duration.ofSeconds(30), Duration.ofSeconds(5));
         if(elementOrNull == null) {
             status = "FAILED";
             reason = "Main menu item" + item + "is not found";
             return false;
         }
-        Sleeper.sleepTightInSeconds(1);
+        awaitOdooRequestToFinish(10);
         elementOrNull.click();
         return true;
     }
 
     public void executeAction(String menuPath) {
+        awaitOdooRequestToFinish(2);
         String pathSeparator = "\\s*->\\s*";
         List<String> menu = new ArrayList<>(Arrays.asList(menuPath.split(pathSeparator)));
         List<String> path = menu.subList(0, menu.size() - 1);
@@ -65,7 +66,7 @@ public class MenuNavigation extends Component {
             reason = "Menu path " + menuPath + " was not found";
         } else {
             status = "PASSED";
-            Sleeper.sleepTightInSeconds(3);
+            awaitOdooRequestToFinish(3);
             clickAction.click();
         }
     }
