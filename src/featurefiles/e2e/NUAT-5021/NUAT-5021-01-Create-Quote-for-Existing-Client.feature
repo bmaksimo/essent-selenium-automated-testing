@@ -1,8 +1,7 @@
 @DWP
 @E2E
 @B2C
-@BI-FUEL-CONTRACT-QUOTE
-Feature: NUAT-5021 Step 1. Quote for bi-fuel contract
+Feature: NUAT-5021 Step 1. Create an account for de-duplication.
 
     Background:
 
