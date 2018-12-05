@@ -6,6 +6,7 @@ import com.essent.testing.selenium.SeleniumDriver;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 
@@ -64,8 +65,8 @@ public class MenuNavigation extends Component {
             reason = "Menu path " + menuPath + " was not found";
         } else {
             status = "PASSED";
-            Sleeper.sleepTightInSeconds(1);
-            clickAction.click();;
+            Sleeper.sleepTightInSeconds(3);
+            clickAction.click();
         }
     }
 

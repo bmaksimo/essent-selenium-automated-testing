@@ -18,7 +18,7 @@ import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.UPLOAD_
 public class CodaImportDialogImpl extends Component implements CodaImportDialog {
 
     private final static By     SELECTOR                        = By.cssSelector(".modal-content");
-    private final static String FILE_SELECTOR                   = "input[name='ufile']";
+    private final static String FILE_SELECTOR                   = "form[action='/web/binary/upload'] > input[name='ufile']";
 
     private final static String IMPORT_BUTTON_SELECTOR_TEMPLATE = "//button[span[normalize-space(text())='${text}']]";
 
@@ -51,7 +51,8 @@ public class CodaImportDialogImpl extends Component implements CodaImportDialog 
     @Override
     public boolean fillInFormData() {
         Model.Execution execution = createExecution();
-        execution.element("odoo.coda.upload.file.input", createElement("SELECTOR", FILE_SELECTOR))
+        Model.Element element = createElement("SELECTOR", FILE_SELECTOR);
+        execution.element("odoo.coda.upload.file.input", element)
         .flow()
         .step(createStep(UPLOAD).element("odoo.coda.upload.file.input").requireDisplayed(false).value(uploadFile).sleepInMillis(UPLOAD_FILE.getSleepInMillis()));
         return execute(execution);
@@ -60,7 +61,7 @@ public class CodaImportDialogImpl extends Component implements CodaImportDialog 
     @Override
     public void confirm() {
         String query = createQuery(IMPORT_BUTTON_SELECTOR_TEMPLATE, "text", importButton);
-        FluentWait<WebDriver> waiter = new FluentWait<>(seleniumDriver.getDriver()).withTimeout(Duration.ofSeconds(1));
+        FluentWait<WebDriver> waiter = new FluentWait<>(seleniumDriver.getDriver()).withTimeout(Duration.ofSeconds(10));
         WebElement codaElement = waiter.until(ExpectedConditions.presenceOfElementLocated(By.xpath(query)));
         waiter.until(ExpectedConditions.elementToBeClickable(codaElement));
         codaElement.click();

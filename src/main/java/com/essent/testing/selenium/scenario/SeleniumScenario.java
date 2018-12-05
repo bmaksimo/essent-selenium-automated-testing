@@ -4,6 +4,8 @@ package com.essent.testing.selenium.scenario;
 import com.essent.testing.scenario.RegisteredScenario;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.junit.AfterClass;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 import java.util.Map;
 
@@ -45,6 +47,11 @@ public class SeleniumScenario extends RegisteredScenario {
 
     protected void takeScreenshot(boolean success) {
         webDriver.takeScreenshot(success);
+    }
+
+    protected void moveToElementAndClick(WebElement element) {
+        Actions actions = new Actions(webDriver.getDriver());
+        actions.moveToElement(element).click();
     }
 
     @AfterClass
