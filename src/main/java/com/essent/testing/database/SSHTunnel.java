@@ -123,10 +123,17 @@ public class SSHTunnel {
                 ConfigProvider.getProperty(sshDbHostnameConfigKey));
     }
 
-    void makeBillingTunnel() throws JSchException {
-        this.makeTunnel(ConfigKey.SSH_BILLING_HOSTNAME, ConfigKey.SSH_BILLING_REMOTE_PORT, ConfigKey.BILLING_DB_HOST); }
+    public void makeBillingTunnel() throws JSchException {
+        this.makeTunnel(ConfigKey.SSH_BILLING_HOSTNAME, ConfigKey.SSH_BILLING_REMOTE_PORT, ConfigKey.BILLING_DB_HOST);
+    }
+    public  void makeSuiteCRMTunnel() throws JSchException {
+        this.makeTunnel(ConfigKey.SSH_SUITE_HOSTNAME,
+            ConfigKey.SSH_SUITE_REMOTE_PORT,
+            ConfigKey.SUITE_DB_HOST);
+    }
 
-    void cleanUpTunnel() throws JSchException {
+
+    public void cleanUpTunnel() throws JSchException {
         if (useTunnel()) {
             session.delPortForwardingL(port);
             session.disconnect();
