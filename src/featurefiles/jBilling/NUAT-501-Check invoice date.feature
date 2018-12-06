@@ -4,7 +4,7 @@
 Feature: NAUT-501: Check invoice date
 
     Background:
-        Given I logged in to JBilling as n.sondered-vermeulen
+        Given I logged in to JBilling as billing_testautomation
 
     Scenario: Check invoice date
         When JBilling top menu item is "Configuration"
