@@ -1,6 +1,7 @@
 package stepdefinitions.odoo.navigation.menu;
 
 import com.essent.testing.odoo.navigation.menu.MenuNavigation;
+import com.essent.testing.odoo.pageobject.impl.elements.ButtonImpl;
 import com.essent.testing.odoo.scenario.OdooScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -37,84 +38,15 @@ public class OdooMenu extends OdooScenario {
     }
 
     @When("^Odoo left menu is ([^\"]*)$")
-    public void OdooCheckTopMenuAction(String menuPath) {
+    public void executeLeftMenuAction(String menuPath) {
         MenuNavigation odooMenuNavigation = new MenuNavigation(webDriver);
         odooMenuNavigation.executeAction(menuPath);
     }
 
-    @When("^Odoo filter is ([^\"]*)$")
-    public void OdooFilter(String expression) {
-        String filter = parameterProvider.getValueOrParameterAsString(expression) == null ?
-            expression : parameterProvider.getValueOrParameterAsString(expression);
-        awaitOdooRequestToFinish(10);
-        List<WebElement> filterElements = webDriver.findElements(By.xpath("//div[@class='oe_searchview_input']"), Duration.ofSeconds(30), Duration.ofSeconds(5));
-        if (filterElements.isEmpty()) throw new CucumberException("Button was not found");
-        WebElement filterElement = filterElements.get(1);
-        filterElement.click();
-        filterElement.sendKeys(filter);
-        filterElement.sendKeys(Keys.RETURN);
-    }
 
-    @Then("^The value in the column \"([^\"]*)\" of the \"([^\"]*)\" row is \"([^\"]*)\"$")
-    public void OdooCheckValueInColumn(String column, String ordinal, String value) {
-        String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
-
-        Map<String, String> menuMap = OdooMenuList.menuMap;
-
-        MenuNavigation check = new MenuNavigation(webDriver);
-        By xpathCheck = By.xpath("//table[@class='oe_list_content'][1]//tbody//tr["+rowIndex+"]//td[@data-field='"+OdooMenuList.getKey(menuMap, column)+"'][1]");
-
-        awaitOdooRequestToFinish(5);
-        String cellText = check.findElementWhenVisible(xpathCheck).getText();
-
-        if (!value.equals(cellText)) throw new CucumberException("The value does not match the expected one");
-
-    }
-
-    @Then("^The value in the column \"([^\"]*)\" is \"([^\"]*)\"$")
-    public void OdooCheckValueInColumn(String column, String value) {
-        List<WebElement> rows = webDriver.findElements(By.xpath("//table[@class='oe_list_content'][1]//tbody//tr"));
-        WebElement currentRow;
-        for (int i = 1; i <= rows.size(); i++) {
-            currentRow = webDriver.findElementWhenVisible(By.xpath("//table[@class='oe_list_content'][1]//tbody//tr["+i+"]//td[@data-field='"+OdooMenuList.getKey(OdooMenuList.menuMap, column)+"'][1]"));
-            if (currentRow != null && value.equalsIgnoreCase(currentRow.getText())) {
-                return;
-            }
-        }
-        throw new CucumberException("Row was not found");
-    }
-
-    @Then("^Column \"([^\"]*)\" of the \"([^\"]*)\" row is clicked$")
-    public void odooClickValueInColumn(String column, String ordinal) {
-        String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
-        awaitOdooRequestToFinish(5);
-        List<WebElement> rows = webDriver.findElements(By.xpath("//table[@class='oe_list_content'][1]//tbody//tr["+rowIndex+"]//td[@data-field='"+OdooMenuList.getKey(OdooMenuList.menuMap, column)+"'][1]"));
-        awaitOdooRequestToFinish(5);
-        if (CollectionUtils.isEmpty(rows)) throw new CucumberException("Row was not found");
-
-        rows.get(rows.size()-1).click();
-    }
-
-    @Then("^Column \"([^\"]*)\" with value \"([^\"]*)\" is clicked$")
-    public void odooClickSpecificValueInColumn(String column, String value) {
-        String input = parameterProvider.getValueOrParameterAsString(value) == null ?
-            value : parameterProvider.getValueOrParameterAsString(value);
-        awaitOdooRequestToFinish(10);
-        List<WebElement> rows = webDriver.findElements(By.xpath("//table[@class='oe_list_content'][1]//tbody//tr"));
-        WebElement currentRow;
-        for (int i = 1; i <= rows.size(); i++) {
-            currentRow = webDriver.findElement(By.xpath("//table[@class='oe_list_content'][1]//tbody//tr["+i+"]//td[@data-field='"+OdooMenuList.getKey(OdooMenuList.menuMap, column)+"'][1]"));
-            if (currentRow != null && input.equalsIgnoreCase(currentRow.getText())) {
-                currentRow.click();
-                awaitOdooRequestToFinish(10);
-                return;
-            }
-        }
-        throw new CucumberException("Row was not found");
-    }
 
     @Then("^Generate CODA in the \"([^\"]*)\" row is clicked$")
-    public void odooClickGenerateCoda(String ordinal) {
+    public void clickCodaUrl(String ordinal) {
         String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
         WebElement button = webDriver.findElementWhenVisible(By.xpath("//table[@class='oe_list_content'][1]//tbody//tr["+rowIndex+"]//td[@data-field='generate_coda']//button[1]"));
         if (null == button) throw new CucumberException("Button was not found");
@@ -123,11 +55,11 @@ public class OdooMenu extends OdooScenario {
     }
 
     @Then("^Button \"([^\"]*)\" is clicked$")
-    public void odooButtonClick(String label) {
+    public void clickButton(String label) {
         awaitOdooRequestToFinish(10);
-        WebElement button = webDriver.findElement(By.xpath("//button//div[contains(., '" + label + "')]"));
-        if (null == button) throw new CucumberException("Button was not found");
-        button.click();
+        WebElement webElement = webDriver.findElement(By.xpath("//button//div[contains(., '" + label + "')]"));
+        if (null == webElement) throw new CucumberException("Button was not found");
+        new ButtonImpl(webElement).click();
     }
 
     @Then("^Modal title contains \"([^\"]*)\"$")

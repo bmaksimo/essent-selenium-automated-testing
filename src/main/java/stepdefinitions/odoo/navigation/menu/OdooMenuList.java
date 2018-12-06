@@ -5,7 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OdooMenuList {
-    static Map<String, String> menuMap = new HashMap<>();
+
+    private static Map<String, String> menuMap = new HashMap<>();
 
     static {
         menuMap.put("name", "Reference");
@@ -19,16 +20,16 @@ public class OdooMenuList {
         menuMap.put("generate_coda", "generate_coda");
     }
 
-    static <K, V> K getKey(Map<K, V> map, V value) {
-        for (K key : map.keySet()) {
-            if (value.equals(map.get(key))) {
+    public static <V> String getKey(V value) {
+        for (String key : menuMap.keySet()) {
+            if (value.equals(menuMap.get(key))) {
                 return key;
             }
         }
         return null;
     }
 
-    public Map getMenu() {
+    public static Map getMenu() {
         return menuMap;
     }
 }

@@ -62,9 +62,6 @@ public abstract class Component {
         this.seleniumDriver = seleniumDriver;
     }
 
-    public boolean executeJavascriptTest(String registeredJsClass, Object options) {
-        return seleniumDriver.executeJavascriptTest(registeredJsClass, options);
-    }
 
     public WebElement findElementWhenVisible(By selector) {
         return seleniumDriver.findElementWhenVisible(selector);
@@ -77,6 +74,7 @@ public abstract class Component {
     protected Model.Step createStep(Action action) {
         return new Model.Step().action(action);
     }
+
     protected Model.Element createElement(String searchType, String query) {
         return new Model.Element()
             .search(searchType)
