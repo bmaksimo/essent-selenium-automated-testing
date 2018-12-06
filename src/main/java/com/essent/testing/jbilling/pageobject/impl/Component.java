@@ -1,19 +1,10 @@
 package com.essent.testing.jbilling.pageobject.impl;
 
-import com.essent.automation.autocrat.Action;
-import com.essent.automation.autocrat.Autocrat;
-import com.essent.automation.autocrat.Model;
 import com.essent.testing.selenium.SeleniumDriver;
-import com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter;
 import cucumber.runtime.CucumberException;
-import org.apache.commons.text.StrSubstitutor;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 public abstract class Component {
@@ -65,39 +56,6 @@ public abstract class Component {
         return seleniumDriver.findElementWhenVisible(selector);
     }
 
-    protected Model.Execution createExecution() {
-        return AutocratExecutionAdapter.newExecution();
-    }
-
-    protected Model.Step createStep(Action action) {
-        return new Model.Step().action(action);
-    }
-    protected Model.Element createElement(String searchType, String query) {
-        return new Model.Element()
-            .search(searchType)
-            .query(query);
-    }
-
-    protected boolean execute(final Model.Execution execution) {
-        return AutocratExecutionAdapter.execute(seleniumDriver.getDriver(), execution);
-    }
-
-    protected String createQuery(String template, String key, String value) {
-        Map<String, String> valuesMap = new HashMap<>();
-        valuesMap.put(key, value);
-        StrSubstitutor sub = new StrSubstitutor(valuesMap);
-        return sub.replace(template);
-    }
-
-    protected Model.Callback scrollToView() {
-        return new Model.Callback() {
-            @Override
-            public void onAccess(Autocrat.ExecutionContext context, Model.Step step, WebElement element) {
-                JavascriptExecutor jsExec = (JavascriptExecutor) context.driver;
-                jsExec.executeScript("arguments[0].scrollIntoView()", element);
-            }
-        };
-    }
     protected void waitForRequestsToFinish() {
         seleniumDriver.awaitJqueryNotActive(500);
     }

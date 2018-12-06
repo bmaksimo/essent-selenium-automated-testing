@@ -1,7 +1,7 @@
 package stepdefinitions.jbilling.Page;
 
 import com.essent.testing.dwp.scenario.DwpScenario;
-import com.essent.testing.jbilling.pageobject.impl.Page.BillingProcessPage;
+import com.essent.testing.jbilling.pageobject.impl.page.BillingProcessPage;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;

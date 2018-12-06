@@ -1,7 +1,7 @@
 package stepdefinitions.jbilling.navigation.menu;
 
-import com.essent.testing.jbilling.pageobject.impl.Navigation.ConfigurationManuPage;
-import com.essent.testing.jbilling.pageobject.impl.Navigation.TopMenuPage;
+import com.essent.testing.jbilling.pageobject.impl.navigation.ConfigurationManuPage;
+import com.essent.testing.jbilling.pageobject.impl.navigation.TopMenuPage;
 import com.essent.testing.jbilling.scenario.JBillingScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;

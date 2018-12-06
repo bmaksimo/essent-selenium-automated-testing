@@ -1,4 +1,4 @@
-package com.essent.testing.jbilling.pageobject.impl.Page;
+package com.essent.testing.jbilling.pageobject.impl.page;
 
 import com.essent.testing.jbilling.pageobject.impl.Component;
 import com.essent.testing.selenium.SeleniumDriver;
