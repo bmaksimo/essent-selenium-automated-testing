@@ -12,8 +12,8 @@ Feature: NUAT-5019 Step 3. Generate mock CODA file for account,  import the gene
         Given Cleanup Odoo CODA files
         When Odoo top menu is Accounting
         And  Odoo left menu is Customers
-        And Odoo filter is 1000026534
-        When Column "Account Number" with value "1000026534" is clicked
+        And Odoo filter is parameter:accountNumber
+        When Column "Account Number" with value "parameter:accountNumber" is clicked
         And Button "Journal Items" is clicked
         And Generate CODA in the "1st" row is clicked
         Then Modal title contains "Download CODA"
