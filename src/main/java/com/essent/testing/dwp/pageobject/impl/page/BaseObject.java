@@ -7,6 +7,9 @@ import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import static com.essent.automation.autocrat.Action.CLICK;
 import static com.essent.automation.autocrat.Action.SLEEP;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.UPLOAD_FILE;
@@ -30,13 +33,8 @@ public class BaseObject extends Component {
     }
 
     public void clickOnPlus() {
-        seleniumDriver.waitForRequestsToFinish();
-        try {
-            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("(.//tbody[@id='rows']//list-plus-cell//a)[1]")));
-        }
-        catch(org.openqa.selenium.StaleElementReferenceException ex) {
-            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("(.//tbody[@id='rows']//list-plus-cell//a)[1]")));
-        }
+
+        seleniumDriver.waitAndClick(seleniumDriver.findElementOrNull(By.xpath("(//list-plus-cell//a)[1]")));
     }
 
     public void plusSubaction(String action) {
@@ -55,4 +53,21 @@ public class BaseObject extends Component {
             seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + label + "?']//toggle-form-element/label")));
         }
     }
+
+    public String documentText(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[1])[2]")).getText();
+    }
+
+    String pattern = "dd/MM/yyyy";
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+    String date = simpleDateFormat.format(new Date());
+
+    public void dateIsNow(String label) throws InterruptedException {
+        seleniumDriver.waitForRequestsToFinish();
+        Thread.sleep(2000);
+        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.xpath("//validation-wrapper[@label='"+label+"']//input")),date);
+        seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//span[@class='icon-kalender']")));
+    }
+
 }

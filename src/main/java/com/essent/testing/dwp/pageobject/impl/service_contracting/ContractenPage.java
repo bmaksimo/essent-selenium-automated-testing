@@ -89,6 +89,7 @@ public class ContractenPage extends Component {
     }
 
     public void checkPayDate() {
+        waitForRequestsToFinish();
         final String newPayDate = findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell[@icon='null']//span)[6]")).getText();
         Assert.assertFalse("Date was not changed. Old date is : " + payDate + ", and new date is same : " + newPayDate, newPayDate.equalsIgnoreCase(payDate));
     }

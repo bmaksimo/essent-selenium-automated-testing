@@ -59,4 +59,12 @@ public class Name {
 
     }
 
+    @Override
+    public String toString() {
+        return "Name{" +
+            "first='" + first + '\'' +
+            ", last='" + last + '\'' +
+            ", title='" + title + '\'' +
+            '}';
+    }
 }

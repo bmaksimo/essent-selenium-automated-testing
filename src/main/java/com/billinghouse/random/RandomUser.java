@@ -174,6 +174,15 @@ public class RandomUser {
             return randomUser;
         }
 
+        @Override
+        public String toString() {
+            return "RandomUser{" +
+                "cell='" + cell + '\'' +
+                ", email='" + email + '\'' +
+                ", gender='" + gender + '\'' +
+                ", name=" + name +
+                '}';
+        }
     }
 
 }

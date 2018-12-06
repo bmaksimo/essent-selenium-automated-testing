@@ -16,8 +16,8 @@ import java.util.Properties;
 
 public class ContractUtil {
 
-	private static long WAIT_CONTRACT_ACTIVE = 90000;
-	private static long STEP_UNTIL_CONTRACT_ACTIVE = 15000;
+	private static long WAIT_CONTRACT_ACTIVE = 220000;
+	private static long STEP_UNTIL_CONTRACT_ACTIVE = 30000;
 
 	public static String waitUntilStringFoundInResponse(Cookies cookie, String apiPath, String payload, ContractStatus findMe, String jsonPathFromResponse, int TIMEOUT) throws Exception {
 	    String contractStatus = "";
