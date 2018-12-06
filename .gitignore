@@ -15,6 +15,7 @@ atlassian-ide-plugin.xml
 
 # Odoo CODA files
 **/data/odoo/*.*
+!*.gitkeep
 
 # Crashlytics plugin (for Android Studio and IntelliJ)
 com_crashlytics_export_strings.xml
