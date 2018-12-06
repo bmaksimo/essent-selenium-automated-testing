@@ -2,15 +2,14 @@ package stepdefinitions.jbilling.navigation.menu;
 
 import com.essent.testing.jBilling.pageobject.impl.Navigation.ConfigurationManuPage;
 import com.essent.testing.jBilling.pageobject.impl.Navigation.TopMenuPage;
-import com.essent.testing.odoo.scenario.OdooScenario;
-import cucumber.api.PendingException;
+import com.essent.testing.jBilling.scenario.JBillingScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 
-public class JBillingMenu extends OdooScenario {
+public class JBillingMenu extends JBillingScenario {
 
     @Before("@JBILLING, @B2B, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
