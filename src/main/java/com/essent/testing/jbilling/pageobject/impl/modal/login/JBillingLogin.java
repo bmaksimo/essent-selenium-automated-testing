@@ -1,9 +1,9 @@
-package com.essent.testing.jBilling.pageobject.impl.modal.login;
+package com.essent.testing.jbilling.pageobject.impl.modal.login;
 
 
-import com.essent.testing.jBilling.pageobject.Window;
-import com.essent.testing.jBilling.pageobject.impl.main.JBillingMainWindow;
-import com.essent.testing.jBilling.pageobject.modal.Dialog;
+import com.essent.testing.jbilling.pageobject.Window;
+import com.essent.testing.jbilling.pageobject.impl.main.JBillingMainWindow;
+import com.essent.testing.jbilling.pageobject.modal.Dialog;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;

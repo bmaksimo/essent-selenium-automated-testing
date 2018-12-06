@@ -1,12 +1,11 @@
-package com.essent.testing.jBilling.pageobject.impl.Page;
+package com.essent.testing.jbilling.pageobject.impl.Page;
 
-import com.essent.testing.jBilling.pageobject.impl.Component;
+import com.essent.testing.jbilling.pageobject.impl.Component;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.joda.time.DateTime;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import java.security.PublicKey;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -15,9 +14,9 @@ public class BillingProcessPage extends Component {
     public BillingProcessPage(SeleniumDriver seleniumDriver) {
         super(seleniumDriver);
     }
-    String pattern = "MM/dd/yyyy";
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-    String date = simpleDateFormat.format(new Date());
+    private String pattern = "MM/dd/yyyy";
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+    private String date = simpleDateFormat.format(new Date());
 
     public void onTimeBillingProcess(){
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("701")));

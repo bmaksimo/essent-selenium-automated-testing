@@ -1,4 +1,4 @@
-package com.essent.testing.jBilling.scenario;
+package com.essent.testing.jbilling.scenario;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.config.ConfigKey;

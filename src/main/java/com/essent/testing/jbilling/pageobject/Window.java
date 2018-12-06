@@ -1,4 +1,4 @@
-package com.essent.testing.jBilling.pageobject;
+package com.essent.testing.jbilling.pageobject;
 
 public interface Window {
     String getTitle();

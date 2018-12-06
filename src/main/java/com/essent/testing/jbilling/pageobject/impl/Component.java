@@ -1,4 +1,4 @@
-package com.essent.testing.jBilling.pageobject.impl;
+package com.essent.testing.jbilling.pageobject.impl;
 
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Autocrat;

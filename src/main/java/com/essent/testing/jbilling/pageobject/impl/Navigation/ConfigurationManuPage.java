@@ -1,6 +1,6 @@
-package com.essent.testing.jBilling.pageobject.impl.Navigation;
+package com.essent.testing.jbilling.pageobject.impl.Navigation;
 
-import com.essent.testing.jBilling.pageobject.impl.Component;
+import com.essent.testing.jbilling.pageobject.impl.Component;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
 
