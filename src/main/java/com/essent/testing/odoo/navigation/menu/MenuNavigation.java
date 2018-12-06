@@ -1,12 +1,10 @@
 package com.essent.testing.odoo.navigation.menu;
 
-import com.essent.automation.util.Sleeper;
 import com.essent.testing.odoo.pageobject.impl.Component;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 
@@ -54,7 +52,6 @@ public class MenuNavigation extends Component {
     }
 
     public void executeAction(String menuPath) {
-        awaitOdooRequestToFinish(2);
         String pathSeparator = "\\s*->\\s*";
         List<String> menu = new ArrayList<>(Arrays.asList(menuPath.split(pathSeparator)));
         List<String> path = menu.subList(0, menu.size() - 1);
@@ -66,7 +63,6 @@ public class MenuNavigation extends Component {
             reason = "Menu path " + menuPath + " was not found";
         } else {
             status = "PASSED";
-            awaitOdooRequestToFinish(3);
             clickAction.click();
         }
     }

@@ -29,10 +29,10 @@ public class OdooMenu extends OdooScenario {
 
     @When("^Odoo top menu is ([^\"]*)$")
     public void clickTopMenu(String menu) {
-        MenuNavigation menuuNavigation = new MenuNavigation(webDriver);
-        boolean success = menuuNavigation.findAndClickMainMenuItem(menu);
+        MenuNavigation menuNavigation = new MenuNavigation(webDriver);
+        boolean success = menuNavigation.findAndClickMainMenuItem(menu);
         if(! success) {
-            throw new CucumberException(menuuNavigation.getReason());
+            throw new CucumberException(menuNavigation.getReason());
         }
     }
 
@@ -46,7 +46,7 @@ public class OdooMenu extends OdooScenario {
     public void OdooFilter(String expression) {
         String filter = parameterProvider.getValueOrParameterAsString(expression) == null ?
             expression : parameterProvider.getValueOrParameterAsString(expression);
-        awaitOdooRequestToFinish(5);
+        awaitOdooRequestToFinish(10);
         List<WebElement> filterElements = webDriver.findElements(By.xpath("//div[@class='oe_searchview_input']"), Duration.ofSeconds(30), Duration.ofSeconds(5));
         if (filterElements.isEmpty()) throw new CucumberException("Button was not found");
         WebElement filterElement = filterElements.get(1);
@@ -76,7 +76,7 @@ public class OdooMenu extends OdooScenario {
         List<WebElement> rows = webDriver.findElements(By.xpath("//table[@class='oe_list_content'][1]//tbody//tr"));
         WebElement currentRow;
         for (int i = 1; i <= rows.size(); i++) {
-            currentRow = webDriver.findElement(By.xpath("//table[@class='oe_list_content'][1]//tbody//tr["+i+"]//td[@data-field='"+OdooMenuList.getKey(OdooMenuList.menuMap, column)+"'][1]"));
+            currentRow = webDriver.findElementWhenVisible(By.xpath("//table[@class='oe_list_content'][1]//tbody//tr["+i+"]//td[@data-field='"+OdooMenuList.getKey(OdooMenuList.menuMap, column)+"'][1]"));
             if (currentRow != null && value.equalsIgnoreCase(currentRow.getText())) {
                 return;
             }
@@ -87,7 +87,7 @@ public class OdooMenu extends OdooScenario {
     @Then("^Column \"([^\"]*)\" of the \"([^\"]*)\" row is clicked$")
     public void odooClickValueInColumn(String column, String ordinal) {
         String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
-        awaitOdooRequestToFinish(2);
+        awaitOdooRequestToFinish(5);
         List<WebElement> rows = webDriver.findElements(By.xpath("//table[@class='oe_list_content'][1]//tbody//tr["+rowIndex+"]//td[@data-field='"+OdooMenuList.getKey(OdooMenuList.menuMap, column)+"'][1]"));
         awaitOdooRequestToFinish(5);
         if (CollectionUtils.isEmpty(rows)) throw new CucumberException("Row was not found");
@@ -116,10 +116,10 @@ public class OdooMenu extends OdooScenario {
     @Then("^Generate CODA in the \"([^\"]*)\" row is clicked$")
     public void odooClickGenerateCoda(String ordinal) {
         String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
-        awaitOdooRequestToFinish(10);
-        WebElement button = webDriver.findElement(By.xpath("//table[@class='oe_list_content'][1]//tbody//tr["+rowIndex+"]//td[@data-field='generate_coda']//button[1]"));
+        WebElement button = webDriver.findElementWhenVisible(By.xpath("//table[@class='oe_list_content'][1]//tbody//tr["+rowIndex+"]//td[@data-field='generate_coda']//button[1]"));
         if (null == button) throw new CucumberException("Button was not found");
-        button.click();
+
+        moveToElementAndClick(button, webDriver.getDriver());
     }
 
     @Then("^Button \"([^\"]*)\" is clicked$")
@@ -132,7 +132,7 @@ public class OdooMenu extends OdooScenario {
 
     @Then("^Modal title contains \"([^\"]*)\"$")
     public void odooContainsModalTitle(String modalTitle) {
-        WebElement title = webDriver.findElement(By.xpath("//h3[@class='modal-title']"));
+        WebElement title = webDriver.findElementWhenVisible(By.xpath("//h3[@class='modal-title']"));
         if (null == title || StringUtils.isBlank(title.getText())) throw new CucumberException("Title was not found");
         assertThat("Current title does not contain " + modalTitle, title.getText().contains(modalTitle));
     }

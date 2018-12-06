@@ -68,7 +68,7 @@ Feature: NUAT-5019
 
         Given Top arrow button is Up
         And Plus menu is "Billing -> Start facturatierun"
-        When Modal dialog is Start invoicerun@5019-FULL-E2E
+        When Modal dialog is Start invoicerun
         And "Naam job" selection is "recurrent"
         And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
         And "Factuurdatum" date is "now"
@@ -103,23 +103,22 @@ Feature: NUAT-5019
         When Column "Reference" of the "1st" row is clicked
         And Modal button "Close" is clicked
 
-        Given I renew login to DWP as billing.testautomation@essent.be
-
         #check if payment is reconciled
+        Given I renew login to DWP as billing.testautomation@essent.be
         Given Left menu is contracting-switching
         And Top menu item is Klanten
         And Top action is Filters
         When "Klantnummer" input is "parameter:accountNumber"
         Then View list header is "Klanten"
-
-        Given Click on link in View List at 1st row and "Klantnummer & Naam" column
-        When Dashboard menu is Billing
-        Then Transacties list is not empty
-        And "Openstaand bedrag" in the first "Paid by OV" row of "Transacties" table is "0"
+#
+#        Given Click on link in View List at 1st row and "Klantnummer & Naam" column
+#        When Dashboard menu is Billing
+#        Then Transacties list is not empty
+#        And "Openstaand bedrag" in the first "Paid by OV" row of "Transacties" table is "0"
 
 
         #generate consumptions
-        When Top arrow button is Up
+#        When Top arrow button is Up
 
         And Click on link in View List at 1st row and "Klantnummer & Naam" column
         And Dashboard menu is Contracten
@@ -202,8 +201,8 @@ Feature: NUAT-5019
         And  Table Taken contains value "Soft-Dunning Call POST HB1 B2C HIGH" at column Naam & Type & Subtype
 
         #Navigate to GUI checks
-        When Dashboard menu is Marktberichten
-        Then 1st list element has cell value INITIATE STOP ACCESS at column Module & Label
+#        When Dashboard menu is Marktberichten
+#        Then 1st list element has cell value INITIATE STOP ACCESS at column Module & Label
 
 #        #Send email to SME with test results
 #        Then Send email to SMEs

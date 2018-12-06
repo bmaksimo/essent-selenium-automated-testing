@@ -31,8 +31,6 @@ import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -149,7 +147,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             chromePrefs.put("download.default_directory", downloadFilepath);
             options.setExperimentalOption("prefs", chromePrefs);
 
-            ChromeDriver chromeDriver = null;
+            ChromeDriver chromeDriver;
 
             //workaround enabling the file download behaviour for headless mode
             String headless = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_HEADLESS);
@@ -346,7 +344,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         return new ExecuteJavascriptTest(this).withException(withException).executeJavascriptTest(registeredJsClass, options);
     }
 
-    public void awaitJqueryNotActive(long milliseconds) {
+    private void awaitJqueryNotActive(long milliseconds) {
         new WebDriverWait(driver, milliseconds).until(webDriver -> {
             final JavascriptExecutor js = (JavascriptExecutor) driver;
             return (Boolean) js
@@ -434,8 +432,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             logger.warn(" - RESULT: empty");
             return null;
         } else {
-            WebElement webElement = elements.get(0);
-            return webElement;
+            return elements.get(0);
         }
     }
     public List<WebElement> findElements(By selector, Duration timeout, Duration pollingEvery) {
@@ -474,7 +471,8 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)
             .withTimeout(Duration.ofSeconds(50))
             .pollingEvery(Duration.ofSeconds(5))
-            .ignoring(ElementNotVisibleException.class);
+            .ignoring(ElementNotVisibleException.class)
+            .ignoring(NoSuchElementException.class);
         WebElement element = waiter.until(ExpectedConditions.visibilityOfElementLocated(selector));
         return element;
     }
@@ -483,7 +481,8 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)
             .withTimeout(Duration.ofSeconds(30))
             .pollingEvery(Duration.ofSeconds(5))
-            .ignoring(ElementNotVisibleException.class);
+            .ignoring(ElementNotVisibleException.class)
+            .ignoring(NoSuchElementException.class);
         WebElement element = waiter.until(ExpectedConditions.elementToBeClickable(selector));
         ngWebDriver.waitForAngularRequestsToFinish();
         return element;

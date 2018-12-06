@@ -7,6 +7,7 @@ Feature: Import a coda file
     Background:
         Given Cleanup Odoo CODA files
         #GUI contract creation
+        Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
@@ -52,9 +53,8 @@ Feature: Import a coda file
         And  1st List element with value at column "EAN-code" is checked
         And  1st list element has cell value Actief at column "Contractnummer" polling 450 seconds
 
-        Given I renew login to DWP as billing.testautomation@essent.be
-
         #invoice run advance
+        Given I renew login to DWP as billing.testautomation@essent.be
         When Left menu is billing
         And Top menu item is Klanten
         And Top action is Filters
@@ -68,7 +68,7 @@ Feature: Import a coda file
 
         Given Top arrow button is Up
         And Plus menu is "Billing -> Start facturatierun"
-        When Modal dialog is Start invoicerun@5019-FULL-E2E
+        When Modal dialog is Start invoicerun
         And "Naam job" selection is "recurrent"
         And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
         And "Factuurdatum" date is "now"
@@ -82,7 +82,7 @@ Feature: Import a coda file
 
     @CODA
     Scenario: Create a new CODA file
-        Given I logged in to Odoo as t.geets
+        Given I renew login to Odoo as t.geets
         When Odoo top menu is Accounting
         And  Odoo left menu is Customers
         And Odoo filter is parameter:accountNumber
