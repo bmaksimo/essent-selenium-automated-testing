@@ -62,9 +62,6 @@ public abstract class Component {
         this.seleniumDriver = seleniumDriver;
     }
 
-    public boolean executeJavascriptTest(String registeredJsClass, Object options) {
-        return seleniumDriver.executeJavascriptTest(registeredJsClass, options);
-    }
 
     public WebElement findElementWhenVisible(By selector) {
         return seleniumDriver.findElementWhenVisible(selector);
@@ -77,6 +74,7 @@ public abstract class Component {
     protected Model.Step createStep(Action action) {
         return new Model.Step().action(action);
     }
+
     protected Model.Element createElement(String searchType, String query) {
         return new Model.Element()
             .search(searchType)
@@ -91,6 +89,10 @@ public abstract class Component {
         Map<String, String> valuesMap = new HashMap<>();
         valuesMap.put(key, value);
         StrSubstitutor sub = new StrSubstitutor(valuesMap);
+        return sub.replace(template);
+    }
+    protected String createQuery(String template, Map<String, String> valuesMapper) {
+        StrSubstitutor sub = new StrSubstitutor(valuesMapper);
         return sub.replace(template);
     }
 
