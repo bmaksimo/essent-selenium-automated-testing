@@ -1728,8 +1728,8 @@ public class DBUtility {
         // @formatter:on
         try (Connection conn = new DBConnector().getSuiteCRMConnection()) {
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setString(1, "" +  statusExternal.getState());
-                stmt.setString(2, "" + crmCustomerId);
+                stmt.setInt(1, statusExternal.getState());
+                stmt.setInt(2, crmCustomerId);
                 int count = stmt.executeUpdate();
                 if (count != 1) {
                     logger.error(" - RESULT: SQL_UPDATE hitcount " + count + " != 1");
