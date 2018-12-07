@@ -3,4 +3,4 @@ Feature: NUAT Test Framework accessing jBilling (PostGreeSQL) and SuiteDB (MySQL
 
     @DB-CORE
     Scenario:
-        When External status is "On" for SuiteCRM Customer Number "1000025647"
+        When External status is "On" for SuiteCRM Customer Number "parameter:Klantnummer & Naam"
