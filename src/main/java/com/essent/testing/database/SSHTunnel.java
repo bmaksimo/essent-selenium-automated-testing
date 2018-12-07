@@ -147,7 +147,7 @@ class SSHTunnel {
         try {
             this.makeTunnel(ConfigKey.SSH_BILLING_HOSTNAME, ConfigKey.SSH_BILLING_REMOTE_PORT, ConfigKey.BILLING_DB_HOST);
         } catch (JSchException e) {
-            throw new CucumberException("Opening SuiteCRM tunnel failed.", e);
+            throw new CucumberException("Opening jBilling DB tunnel failed.", e);
         }
     }
 
@@ -157,7 +157,7 @@ class SSHTunnel {
                 ConfigKey.SSH_SUITE_REMOTE_PORT,
                 ConfigKey.SUITE_DB_HOST);
         } catch (JSchException e) {
-            throw new CucumberException("Opening SuiteCRM tunnel failed.", e);
+            throw new CucumberException("Opening SuiteCRM DB tunnel failed.", e);
         }
     }
 
