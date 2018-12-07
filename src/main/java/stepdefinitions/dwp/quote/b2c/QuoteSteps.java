@@ -95,6 +95,7 @@ public class QuoteSteps extends DwpScenario {
                 customer.setLastName(randomUser.getName().getLast());
                 customer.setFirstName(randomUser.getName().getFirst());
                 success = fillInCustomerDetails(randomUser);
+                parameterProvider.put("suitecrm-customer", randomUser);
             }
             return success;
         }

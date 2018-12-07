@@ -87,5 +87,9 @@ public class MarketberichtenPage  extends Component {
     public void clickOnSubmitButton() throws InterruptedException {
         seleniumDriver.waitAndClick(submitButton());
     }
+
+    public String getModulFromTheFirstTransaction() throws InterruptedException {
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//h5)[2]")).getText();
+    }
 }
 
