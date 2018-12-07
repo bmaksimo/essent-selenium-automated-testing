@@ -1,5 +1,4 @@
 @ODOO
-@E2E
 @B2C
 @CREDIT-AND-CONTROL
 Feature: NUAT-5019 Step 3. Generate mock CODA file for account,  import the generated coda file /and check payment for advance invoice/

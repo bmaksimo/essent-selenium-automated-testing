@@ -31,6 +31,7 @@ import static org.junit.Assert.fail;
 public class ViewListElements extends NavigationElements {
 
     private static final String INTERACTIONS = "InteractionsOnAccount";
+
     private class CheckViewListHeader implements Predicate<String> {
         @Override
         public boolean test(String header) {

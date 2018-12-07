@@ -1,6 +1,5 @@
 @ODOO
 @DEV
-@E2E
 @DEV-CODA-IMPORT
 Feature: Import a coda file
 
@@ -28,7 +27,7 @@ Feature: Import a coda file
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        When "Startdatum" date is "now"
+        When "Startdatum" date is "2 weeks before now"
         And Electricity EAN code is "random"
         And Switch type is Move in
         And Electricity market mock test is Open

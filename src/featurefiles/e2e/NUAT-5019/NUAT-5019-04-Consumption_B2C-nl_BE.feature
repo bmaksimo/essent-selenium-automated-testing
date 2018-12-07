@@ -1,5 +1,4 @@
 @DWP
-@E2E
 @CREDIT-AND-CONTROL
 @B2C
 Feature: NUAT-5019 Step 4. Import received consumption data

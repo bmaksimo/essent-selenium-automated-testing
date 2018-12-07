@@ -27,13 +27,12 @@ Feature: NUAT-5019
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        When "Startdatum" date is "now"
+        When "Startdatum" date is "2 weeks before now"
         And Electricity EAN code is "random"
         And Switch type is Move in
         And Electricity market mock test is Open
         And Connection details are confirmed
         Then Form header is "Billing details"
-
 
         When Payment details are: method Overschrijving, IBAN "NL57ABNA0874253356", bic "ABNANL2A"
         And Billing details are confirmed
@@ -110,36 +109,24 @@ Feature: NUAT-5019
         And Top action is Filters
         When "Klantnummer" input is "parameter:accountNumber"
         Then View list header is "Klanten"
-#
+
 #        Given Click on link in View List at 1st row and "Klantnummer & Naam" column
 #        When Dashboard menu is Billing
 #        Then Transacties list is not empty
 #        And "Openstaand bedrag" in the first "Paid by OV" row of "Transacties" table is "0"
 
-
         #generate consumptions
 #        When Top arrow button is Up
-
         And Click on link in View List at 1st row and "Klantnummer & Naam" column
         And Dashboard menu is Contracten
         Then View list header is "Actieve en toekomstige connecties"
 
-        When Click on link in "Actieve en toekomstige connecties" View List at 1st row and "EAN-code" column
-        Then View list header is "Verbruiken"
-        And Verbruiken list is empty
-
-        Given Top arrow button is Back
         When Consumption at deliverypointid parameter:EAN-code is generated from now until 2019-09-30
         And Click on link in "Actieve en toekomstige connecties" View List at 1st row and "EAN-code" column
         Then View list header is "Verbruiken"
-        And Consumption is available at 1st row in Van - Aan column
+        And Verbruiken list is not empty
 
         #mediation run
-        Given Top arrow button is Up
-        And Click on link in View List at 1st row and "Klantnummer & Naam" column
-        When Dashboard menu is Contracten
-        Then View list header is "Actieve en toekomstige connecties"
-
         Given Top arrow button is Up
         When Plus menu is "Billing -> Start mediationrun"
         Then Modal dialog is Start mediationrun
@@ -166,7 +153,6 @@ Feature: NUAT-5019
         Given Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
         When Dashboard menu is Billing
         Then View list header is "Transacties"
-        # invoice is still not being created - CHECKING NEEDED
         And 1st list element has cell value Invoice (SETTLEMENT) at column ID & Type
 
 
@@ -187,7 +173,7 @@ Feature: NUAT-5019
         And 2nd list element has cell value Invoice (DUNNINGCOST) at column ID & Type
         And 3rd list element has cell value Invoice (DUNNINGCOST) at column ID & Type
 
-        # COLLECT LETTERS ARE NOT BEING CREATED IN UAT08
+        # COLLECT LETTERS ARE NOT BEING CREATED IN UAT08/UAT06
         When Dashboard menu is Service
 
 #        Then Table Interacties contains cell value Outbound document: CollectionLetter at column Type & Onderwerp on 1st row
@@ -201,8 +187,8 @@ Feature: NUAT-5019
         And  Table Taken contains value "Soft-Dunning Call POST HB1 B2C HIGH" at column Naam & Type & Subtype
 
         #Navigate to GUI checks
-#        When Dashboard menu is Marktberichten
-#        Then 1st list element has cell value INITIATE STOP ACCESS at column Module & Label
+        When Dashboard menu is Marktberichten
+        Then 1st list element has cell value INITIATE STOP ACCESS at column Module & Label
 
 #        #Send email to SME with test results
 #        Then Send email to SMEs
