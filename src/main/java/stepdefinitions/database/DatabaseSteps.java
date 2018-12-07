@@ -16,7 +16,6 @@ import static com.essent.testing.database.DBUtility.switchSuiteCrmStatusExternal
 
 public class DatabaseSteps extends RegisteredScenario {
 
-    private Map<String, Integer> numberMap = new HashMap<>();
 
     @Before("@DWP, @CORE, @E2E, @REGRESSION, @DB-CORE")
     public void setUp(Scenario scenario) throws Throwable {
@@ -26,7 +25,7 @@ public class DatabaseSteps extends RegisteredScenario {
     @Then("^External status is \"([^\"]*)\" for SuiteCRM Customer Number \"([^\"]*)\"$")
     public void externalStatusIsForSuiteCRMCustomerNumber(SwitchState state, String suiteCrmCustomer) throws Throwable {
         String inputValue = parameterProvider.getValueOrParameterAsString(suiteCrmCustomer);
-        Integer value = numberMap.computeIfAbsent(inputValue, String::length);
+        Integer value = Integer.parseInt(inputValue);
         switchSuiteCrmStatusExternal(state, value);
     }
 

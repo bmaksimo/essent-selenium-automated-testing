@@ -1,15 +1,11 @@
-@DWP
 @E2E
-@B2C
-Feature: NUAT-5021 Step 1. Create an account for de-duplication.
-
-    Background:
+@DWP
+    Feature: NUAT-5021 Complete scenario from de-duplication of client with guarantee to inactive client
+     @NUAT-5021
+     Scenario: From de-duplication of client to inactive client via passive renewal
 
         Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
 
-    @ONBOARDING-EXTERNAL
-    @NUAT-5021-STEP-1
-    Scenario: Create an electricity only contract quote
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
@@ -53,7 +49,7 @@ Feature: NUAT-5021 Step 1. Create an account for de-duplication.
         When Dashboard menu is Contracten
         Then View list header is "Actieve en toekomstige connecties"
         And  1st List element with value at column "EAN-code" is checked
-        And  1st list element has cell value Actief at column "Contractnummer" polling 450 seconds
+        #And  1st list element has cell value Actief at column "Contractnummer" polling 450 seconds
 
         When Top arrow button is Up
         And Left menu is sales-marketing
@@ -63,9 +59,4 @@ Feature: NUAT-5021 Step 1. Create an account for de-duplication.
 
         Given 1st List element with value at column "Klantnummer & Naam" is checked
         Then  External status is "On" for SuiteCRM Customer Number "parameter:Klantnummer & Naam"
-
-
-
-
-
 
