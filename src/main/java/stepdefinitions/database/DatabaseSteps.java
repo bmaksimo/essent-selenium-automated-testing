@@ -18,7 +18,7 @@ public class DatabaseSteps extends RegisteredScenario {
 
     private Map<String, Integer> numberMap = new HashMap<>();
 
-    @Before("@DWP, @CORE, @E2E, @REGRESSION")
+    @Before("@DWP, @CORE, @E2E, @REGRESSION, @DB-CORE")
     public void setUp(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }

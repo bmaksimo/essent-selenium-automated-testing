@@ -7,6 +7,7 @@ Feature: NUAT-5021 Step 1. Create an account for de-duplication.
 
         Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
 
+    @ONBOARDING-EXTERNAL
     @NUAT-5021-STEP-1
     Scenario: Create a bi-fuel contract quote
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
@@ -53,6 +54,15 @@ Feature: NUAT-5021 Step 1. Create an account for de-duplication.
         Then View list header is "Actieve en toekomstige connecties"
         And  1st List element with value at column "EAN-code" is checked
         And  1st list element has cell value Actief at column "Contractnummer" polling 450 seconds
+
+        And Top menu item is Klanten
+        And Top action is Filters
+        And "Naam" input is "parameter:suitecrm-customer-name"
+
+        Given 1st List element with value at column "Klantnummer & Naam" is checked
+        Then  External status is "On" for SuiteCRM Customer Number "parameter:Klantnummer & Naam"
+
+
 
 
 
