@@ -13,3 +13,4 @@ public enum SalesChannel {
         return label;
     }
 }
+
