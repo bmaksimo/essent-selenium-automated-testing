@@ -28,7 +28,8 @@
 
         When "Startdatum" date is "now"
         And Electricity EAN code is "random"
-        And Switch type is Move in
+        #Uncomment for "move in" flow
+        #And Switch type is Move in
         And Electricity market mock test is Open
         And Connection details are confirmed
         Then Form header is "Billing details"
