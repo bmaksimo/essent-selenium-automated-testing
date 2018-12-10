@@ -12,7 +12,6 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 
 
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -32,13 +31,6 @@ public class EndOfContractSteps extends DwpScenario {
     @When("^Click on ([^\"]*)$")
     public void clickOn(String element) {
         clickOnElement(element.toLowerCase());
-    }
-
-    @And("^Clicked on sign X")
-    public void clickedOn() {
-        webDriver.waitAndClick(webDriver.findElementWhenVisible(By.xpath("//div[@class = 'modal__header']/a")));
-        webDriver.waitForRequestsToFinish();
-
     }
 
     @And("^Open Select Contractline$")

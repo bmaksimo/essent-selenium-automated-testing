@@ -36,6 +36,4 @@ public class QuoteOverviewPage extends QuoteCreationGuidedStep {
             .step(createStep(Action.TYPING).element(SIGN_LOCATION.name()).value(place), INPUT.getSleepInMillis());
         return execute(execution);
     }
-
-
 }
