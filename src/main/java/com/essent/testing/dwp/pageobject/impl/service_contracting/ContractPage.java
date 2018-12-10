@@ -4,12 +4,12 @@ import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import stepdefinitions.dwp.tables.LegalForm;
 
 
 public class ContractPage extends BaseObject {
 
     public ContractPage(SeleniumDriver seleniumDriver) { super(seleniumDriver); }
+
 
     public void openFirstContractFromList() {
         seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//div[@class = 'col-1-1']/div[@class = 'row-']/list[@list-key = 'ContractedEansOnAccount']//tbody[@id = 'rows']/tr[1]/td[4]")));
