@@ -53,7 +53,6 @@ public class QuoteSteps extends DwpScenario {
         assertThat("Failure occurred when filling in input values", formInitialized, is(true));
     }
 
-
     private class CheckFormHeader implements Predicate<String> {
         @Override
         public boolean test(String header) {
@@ -340,6 +339,7 @@ public class QuoteSteps extends DwpScenario {
         assertThat(StringUtils.isNotEmpty(eanCode), is(true));
         parameterProvider.put(parameter, eanCode);
     }
+
 
     @Override
     @After("@DWP, @E2E, @REGRESSION")
