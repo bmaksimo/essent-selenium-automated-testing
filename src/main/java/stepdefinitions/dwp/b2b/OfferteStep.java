@@ -1,14 +1,11 @@
 package stepdefinitions.dwp.b2b;
 
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
-import com.essent.testing.dwp.pageobject.impl.page.DwpAccountOverviewPage;
 import com.essent.testing.dwp.pageobject.impl.page.OffertePage;
 import com.essent.testing.dwp.pageobject.impl.service_contracting.ChangeAccountStatusPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.util.resource.ResourceUtil;
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
-import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
@@ -17,7 +14,6 @@ import org.springframework.test.context.ContextConfiguration;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertTrue;
 
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 

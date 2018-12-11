@@ -2,12 +2,10 @@ package stepdefinitions.dwp.page_object;
 
 import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
 import com.essent.testing.dwp.scenario.DwpScenario;
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Then;
 import org.junit.Assert;
-import org.openqa.selenium.By;
 
 public class DocumentSteps extends DwpScenario {
 

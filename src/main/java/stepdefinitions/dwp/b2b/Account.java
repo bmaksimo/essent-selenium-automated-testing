@@ -3,14 +3,12 @@ package stepdefinitions.dwp.b2b;
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import com.essent.testing.dwp.pageobject.impl.page.DwpAccountOverviewPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import org.springframework.test.context.ContextConfiguration;
-import stepdefinitions.dwp.contracts.b2b.ContractB2BScenario;
 
 import static org.junit.Assert.assertTrue;
 

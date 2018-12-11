@@ -10,7 +10,6 @@ import cucumber.runtime.CucumberException;
 import cucumber.runtime.formatter.ColorAware;
 import gherkin.formatter.PrettyFormatter;
 import gherkin.formatter.model.*;
-import org.apache.commons.collections.SetUtils;
 import org.apache.log4j.Logger;
 
 import java.util.HashMap;

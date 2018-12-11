@@ -3,7 +3,6 @@ package com.essent.testing.dwp.pageobject.impl.page;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.selenium.SeleniumDriver;
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
