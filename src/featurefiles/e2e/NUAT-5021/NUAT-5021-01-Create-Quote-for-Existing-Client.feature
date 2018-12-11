@@ -32,7 +32,7 @@ Feature: NUAT-5021 Step 1. Create an account for de-duplication.
 
         When "Startdatum" date is "now"
         And Electricity EAN code is "random"
-        And Switch type is Move in
+        #And Switch type is Move in
         And Electricity market mock test is Open
         And Connection details are confirmed
         Then Form header is "Billing details"
