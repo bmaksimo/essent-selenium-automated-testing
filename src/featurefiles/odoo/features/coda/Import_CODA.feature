@@ -82,6 +82,7 @@ Feature: Import a coda file
     @CODA
     Scenario: Create a new CODA file
         Given I renew login to Odoo as t.geets
+        And Cleanup Odoo CODA files
         When Odoo top menu is Accounting
         And  Odoo left menu is Customers
         And Odoo filter is parameter:accountNumber
