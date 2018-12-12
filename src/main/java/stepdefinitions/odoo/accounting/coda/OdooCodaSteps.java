@@ -108,9 +108,18 @@ public class OdooCodaSteps extends OdooScenario {
 
     @And("^Cleanup Odoo CODA files$")
     public void odooCleanupOdooCodaFiles() throws Throwable {
-        FileUtils.cleanDirectory(new File(ResourceUtil.toPath(File.separator + "data" + File.separator + "odoo" + File.separator)));
+        cleanCodaFilesFromDirectory();
     }
 
+    private void cleanCodaFilesFromDirectory() {
+        File directory = new File(ResourceUtil.toPath(File.separator + "data" + File.separator + "odoo" + File.separator));
+
+        for (File file: directory.listFiles()) {
+            if(null != file && file.getName().endsWith(".COD")) {
+                file.delete();
+            }
+        }
+    }
 
 
     @Override
