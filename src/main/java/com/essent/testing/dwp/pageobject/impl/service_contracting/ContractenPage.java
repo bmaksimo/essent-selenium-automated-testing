@@ -109,4 +109,9 @@ public class ContractenPage extends Component {
         waitForRequestsToFinish();
         Assert.assertTrue(seleniumDriver.findElementWhenVisible(By.xpath("//span[.='" + iban + "']")).isDisplayed());
     }
+
+    public void findContractNumber(String contractNumber) {
+        waitForRequestsToFinish();
+        contractNumber = findElementWhenVisible(By.xpath("//*[@id=\"account_number_c\"]/div")).getText();
+    }
 }

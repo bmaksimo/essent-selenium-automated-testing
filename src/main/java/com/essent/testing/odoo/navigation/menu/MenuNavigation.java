@@ -1,6 +1,5 @@
 package com.essent.testing.odoo.navigation.menu;
 
-import com.essent.automation.util.Sleeper;
 import com.essent.testing.odoo.pageobject.impl.Component;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.joda.time.DateTime;
@@ -41,13 +40,13 @@ public class MenuNavigation extends Component {
 
     public boolean findAndClickMainMenuItem(String item) {
         By by = By.xpath(createQuery(MAIN_NEMU_ITEM_SELECTOR_TEMPLATE, "text", item));
-        WebElement elementOrNull = seleniumDriver.findElementOrNull(by);
+        WebElement elementOrNull = seleniumDriver.findElementOrNull(by, Duration.ofSeconds(30), Duration.ofSeconds(5));
         if(elementOrNull == null) {
             status = "FAILED";
             reason = "Main menu item" + item + "is not found";
             return false;
         }
-        Sleeper.sleepTightInSeconds(1);
+        awaitOdooRequestToFinish(10);
         elementOrNull.click();
         return true;
     }
@@ -64,8 +63,7 @@ public class MenuNavigation extends Component {
             reason = "Menu path " + menuPath + " was not found";
         } else {
             status = "PASSED";
-            Sleeper.sleepTightInSeconds(1);
-            clickAction.click();;
+            clickAction.click();
         }
     }
 
@@ -73,8 +71,10 @@ public class MenuNavigation extends Component {
        if (accordion != null) {
            By menuLeaf = By.xpath(createQuery(MENU_LEAF_SELECTOR_TEMPLATE, "text", actionText));
            return  findElementOrNull(accordion, menuLeaf);
+       } else {
+           By mainMenu = By.xpath(createQuery(MENU_LEAF_SELECTOR_TEMPLATE, "text", actionText));
+           return findElementWhenVisible(mainMenu);
        }
-       return null;
     }
 
     private WebElement findMenu(WebElement item, List<String> menu) {

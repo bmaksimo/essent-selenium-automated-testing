@@ -3,6 +3,7 @@ package com.essent.testing.odoo.pageobject.impl;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
+import com.essent.automation.core.WebDriverWait;
 import com.essent.testing.selenium.SeleniumDriver;
 import com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter;
 import cucumber.runtime.CucumberException;
@@ -61,9 +62,6 @@ public abstract class Component {
         this.seleniumDriver = seleniumDriver;
     }
 
-    public boolean executeJavascriptTest(String registeredJsClass, Object options) {
-        return seleniumDriver.executeJavascriptTest(registeredJsClass, options);
-    }
 
     public WebElement findElementWhenVisible(By selector) {
         return seleniumDriver.findElementWhenVisible(selector);
@@ -76,6 +74,7 @@ public abstract class Component {
     protected Model.Step createStep(Action action) {
         return new Model.Step().action(action);
     }
+
     protected Model.Element createElement(String searchType, String query) {
         return new Model.Element()
             .search(searchType)
@@ -92,6 +91,10 @@ public abstract class Component {
         StrSubstitutor sub = new StrSubstitutor(valuesMap);
         return sub.replace(template);
     }
+    protected String createQuery(String template, Map<String, String> valuesMapper) {
+        StrSubstitutor sub = new StrSubstitutor(valuesMapper);
+        return sub.replace(template);
+    }
 
     protected Model.Callback scrollToView() {
         return new Model.Callback() {
@@ -102,11 +105,12 @@ public abstract class Component {
             }
         };
     }
-    protected void waitForRequestsToFinish() {
-        seleniumDriver.awaitJqueryNotActive(500);
-    }
 
     public String getTitle() {
         return null;
+    }
+
+    public void awaitOdooRequestToFinish(int seconds) {
+        new WebDriverWait(seleniumDriver.getDriver(), seconds).until(webDriver -> webDriver.findElements(By.cssSelector(".oe_wait")).isEmpty());
     }
 }

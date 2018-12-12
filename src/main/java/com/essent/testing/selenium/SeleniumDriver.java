@@ -7,6 +7,8 @@ import com.essent.automation.core.WebDriverWait;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.util.resource.ResourceUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.paulhammant.ngwebdriver.NgWebDriver;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.io.FileUtils;
@@ -15,12 +17,17 @@ import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.commons.lang.text.StrSubstitutor;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.StringEscapeUtils;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
@@ -32,6 +39,7 @@ import org.openqa.selenium.support.ui.FluentWait;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -63,6 +71,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     private static final String TEST_RUNNER_CLASS = "TestRunnerBase.js";
 
     private static final String JQUERY_IS_NOT_ACTIVE = "return window.jQuery != undefined && jQuery.active === 0";
+
 
     public class ExecuteJavascriptTest {
 
@@ -113,15 +122,8 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         default WebDriver createWebDriver() {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("chrome.switches", "--disable-extensions");
-            String headless = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_HEADLESS);
-            if (StringUtils.isNotEmpty(headless)) {
-                options.setHeadless(true);
-                options.addArguments("--headless");
-                String windowSize = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_HEADLESS_WINDOW_SIZE);
-                if (StringUtils.isNotEmpty(windowSize)) {
-                    options.addArguments("window-size=" + windowSize);
-                }
-            } else { options.addArguments("--start-maximized"); }
+            options.addArguments("window-size=1920,1080");
+
 
             String userDataPath = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_USER_DATA_PATH);
             if (StringUtils.isNotEmpty(userDataPath)) {
@@ -133,11 +135,67 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
                     logger.error(" - CLEAN_DIR: " + userDataPath);
                 }
             }
-
             options.addArguments("--disable-dev-shm-usage"); // overcome limited resource problems
             options.addArguments("--no-sandbox"); // Bypass OS security model
             logger.info(" - OPTIONS: " + options.toString());
-            ChromeDriver chromeDriver = new ChromeDriver(options);
+
+
+            //odoo download/upload file location settings
+            String downloadFilepath = ResourceUtil.toPath(File.separator + "data" + File.separator + "odoo" + File.separator);
+            HashMap<String, Object> chromePrefs = new HashMap<>();
+            chromePrefs.put("profile.default_content_settings.popups", 0);
+            chromePrefs.put("download.default_directory", downloadFilepath);
+            options.setExperimentalOption("prefs", chromePrefs);
+
+            ChromeDriver chromeDriver;
+
+            //workaround enabling the file download behaviour for headless mode
+            String headless = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_HEADLESS);
+            if (StringUtils.isNotEmpty(headless)) {
+                options.setHeadless(true);
+                String windowSize = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_HEADLESS_WINDOW_SIZE);
+                if (StringUtils.isNotEmpty(windowSize)) {
+                    options.addArguments("window-size=" + windowSize);
+                } else {
+                    options.addArguments("--start-maximized");
+                }
+                ChromeDriverService driverService = ChromeDriverService.createDefaultService();
+                chromeDriver = new ChromeDriver(driverService, options);
+
+                //Workaround for the headless file download
+                Map<String, Object> commandParams = new HashMap<>();
+                commandParams.put("cmd", "Page.setDownloadBehavior");
+                Map<String, String> params = new HashMap<>();
+                params.put("behavior", "allow");
+                params.put("downloadPath", downloadFilepath);
+                commandParams.put("params", params);
+                ObjectMapper objectMapper = new ObjectMapper();
+                HttpClient httpClient = HttpClientBuilder.create().build();
+                String command = null;
+                try {
+                    command = objectMapper.writeValueAsString(commandParams);
+                } catch (JsonProcessingException e) {
+                    //Consume the exception: it is unlikely to happen for this usage example
+                }
+                String remoteBrowserUrl = driverService.getUrl().toString() + "/session/" + chromeDriver.getSessionId() + "/chromium/send_command";
+                HttpPost request = new HttpPost(remoteBrowserUrl);
+                request.addHeader("content-type", "application/json");
+                try {
+                    request.setEntity(new StringEntity(command));
+                } catch (UnsupportedEncodingException e) {
+                    //Consume the exception: it is unlikely to happen for this usage example
+                }
+                try {
+                    httpClient.execute(request);
+                } catch (IOException e2) {
+                    logger.error(" - ERROR_CONFIGURE_HEADLESS_DOWNLOAD: request" + request.toString() + "comand: " + command);
+                }
+
+            } else {
+                options.addArguments("--start-maximized");
+                chromeDriver = new ChromeDriver(options);
+
+            }
             chromeDriver.manage().timeouts().implicitlyWait(3, TimeUnit.MINUTES).setScriptTimeout(5, TimeUnit.MINUTES);
             return chromeDriver;
         }
@@ -374,9 +432,30 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             logger.warn(" - RESULT: empty");
             return null;
         } else {
-            WebElement webElement = elements.get(0);
-            return webElement;
+            return elements.get(0);
         }
+    }
+    public List<WebElement> findElements(By selector, Duration timeout, Duration pollingEvery) {
+        logger.debug("STEP:");
+        DateTime startOfMeasurement = DateTime.now();
+        FluentWait<WebDriver> waiter = new FluentWait<>(driver)
+            .withTimeout(timeout)
+            .pollingEvery(pollingEvery)
+            .ignoreAll(
+                Arrays.asList(
+                    NoSuchElementException.class,
+                    StaleElementReferenceException.class)
+            );
+        List<WebElement> elements = waiter.until(driver -> {
+            logger.debug(" - WAIT: polling findElementOrNull()");
+            return driver.findElements(selector);
+        });
+        Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
+        logger.debug(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
+        if (elements.isEmpty()) {
+            logger.warn(" - RESULT: empty");
+        }
+        return elements;
     }
 
     public WebElement findElement(By selector) {
@@ -392,7 +471,8 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)
             .withTimeout(Duration.ofSeconds(50))
             .pollingEvery(Duration.ofSeconds(5))
-            .ignoring(ElementNotVisibleException.class);
+            .ignoring(ElementNotVisibleException.class)
+            .ignoring(NoSuchElementException.class);
         WebElement element = waiter.until(ExpectedConditions.visibilityOfElementLocated(selector));
         return element;
     }
@@ -401,7 +481,8 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)
             .withTimeout(Duration.ofSeconds(30))
             .pollingEvery(Duration.ofSeconds(5))
-            .ignoring(ElementNotVisibleException.class);
+            .ignoring(ElementNotVisibleException.class)
+            .ignoring(NoSuchElementException.class);
         WebElement element = waiter.until(ExpectedConditions.elementToBeClickable(selector));
         ngWebDriver.waitForAngularRequestsToFinish();
         return element;
@@ -448,10 +529,8 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
 
     public void waitAndSendKeys(final WebElement element, final String keysToSend) {
         waitForElement(element);
-//        element.click();
         element.clear();
         waitForElement(element);
-//        element.click();
         element.sendKeys(keysToSend);
         ngWebDriver.waitForAngularRequestsToFinish();
     }
