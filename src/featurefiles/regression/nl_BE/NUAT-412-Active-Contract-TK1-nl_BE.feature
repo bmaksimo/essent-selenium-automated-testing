@@ -2,9 +2,10 @@
 @B2B
 @REGRESSION
 @CREDIT-AND-CONTROL
+@NUAT-412
 
 Feature: NUAT-412 part: Create TK1 Contract
-@NUAT-412
+
     Background:
         Given  I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
 
