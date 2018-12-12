@@ -27,7 +27,7 @@ Feature: NUAT-5019
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        When "Startdatum" date is "2 weeks before now"
+        When "Startdatum" date is "now"
         And Electricity EAN code is "random"
         And Switch type is Move in
         And Electricity market mock test is Open
@@ -57,6 +57,7 @@ Feature: NUAT-5019
         When Left menu is billing
         And Top menu item is Klanten
         And Top action is Filters
+#        And "Naam" input is "Suzana Leusink"
         And "Naam" input is "parameter:suitecrm-customer-name"
 
         Given View List element "Id Billing customer & persoon/familie sleutel" is collected as parameter at 1st list row
@@ -82,10 +83,13 @@ Feature: NUAT-5019
 
         #generate and import CODA file
         Given I renew login to Odoo as t.geets
+#        Given I logged in to Odoo as t.geets
         And Cleanup Odoo CODA files
         When Odoo top menu is Accounting
         And  Odoo left menu is Customers
+#        And Odoo filter is 1000025712
         And Odoo filter is parameter:accountNumber
+#        When Column "Account Number" with value "1000025712" is clicked
         When Column "Account Number" with value "parameter:accountNumber" is clicked
         And Button "Journal Items" is clicked
         And Generate CODA in the "1st" row is clicked

@@ -88,20 +88,22 @@ public class OdooCodaSteps extends OdooScenario {
         downloadLink.click();
 
         String path = ResourceUtil.toPath(File.separator + "data" + File.separator + "odoo" + File.separator);
-        Collection<File> codaFiles = FileUtils.listFiles(new File(path), new WildcardFileFilter("*.COD"), TrueFileFilter.INSTANCE);
         given().await()
             .pollInterval(FIVE_HUNDRED_MILLISECONDS)
             .pollDelay(TWO_SECONDS)
-            .atMost(new Duration(10, SECONDS)).until(()-> !codaFiles.isEmpty());
-        if (codaFiles.isEmpty()) throw new CucumberException("CODA file download link was not found");
+            .atMost(new Duration(10, SECONDS)).until(()-> CollectionUtils.isNotEmpty(retrieveDownloadedCodaFiles(path)));
+        if (CollectionUtils.isEmpty(retrieveDownloadedCodaFiles(path))) throw new CucumberException("CODA file download link was not found");
 
+        assertThat("File could not be downloaded", CollectionUtils.isNotEmpty(retrieveDownloadedCodaFiles(path)));
 
-        assertThat("File could not be downloaded", !codaFiles.isEmpty());
-
-        File downloadedCodaFile = codaFiles.iterator().next();
+        File downloadedCodaFile = retrieveDownloadedCodaFiles(path).iterator().next();
         String downloadedCodaFilePath = path + downloadedCodaFile.getName();
 
         parameterProvider.put("codaFile" , downloadedCodaFilePath);
+    }
+
+    private Collection<File> retrieveDownloadedCodaFiles(String path) {
+        return FileUtils.listFiles(new File(path), new WildcardFileFilter("*.COD"), TrueFileFilter.INSTANCE);
     }
 
     @And("^Cleanup Odoo CODA files$")
