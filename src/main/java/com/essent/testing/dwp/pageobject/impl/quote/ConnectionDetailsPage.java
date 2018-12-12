@@ -8,7 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.tables.ConnectionDetails;
 import stepdefinitions.dwp.tables.ProductType;
-import stepdefinitions.dwp.tables.plus.CheckBoxState;
+import stepdefinitions.dwp.tables.plus.SwitchState;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -64,7 +64,7 @@ public class ConnectionDetailsPage extends QuoteCreationGuidedStep {
         this.gasConnectionDetails = gasConnectionDetails;
     }
 
-    public boolean toggleMeter(ProductType productType, CheckBoxState state) {
+    public boolean toggleMeter(ProductType productType, SwitchState state) {
         String query = ELEC_METER_OPEN_CHECKBOX.getQuery();
         switch (productType) {
             case Gas:
@@ -79,7 +79,7 @@ public class ConnectionDetailsPage extends QuoteCreationGuidedStep {
         return result;
     }
 
-    public boolean toggleMarketMockTest(ProductType productType, CheckBoxState state) {
+    public boolean toggleMarketMockTest(ProductType productType, SwitchState state) {
         String query = ELEC_MARKET_MOCK.getQuery();
         switch (productType) {
             case Gas:
