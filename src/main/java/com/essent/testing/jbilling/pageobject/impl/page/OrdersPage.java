@@ -15,6 +15,7 @@ public class OrdersPage extends Component {
     }
     
 	public boolean checkOrderTableNotEmpty() {
+		waitForRequestsToFinish();
 		List<WebElement> rows = seleniumDriver.findElements(By.xpath("//table[@id='orders']/tbody"));
 		
 		if(rows.size() > 0) {

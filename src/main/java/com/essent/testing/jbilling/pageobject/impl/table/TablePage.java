@@ -36,14 +36,16 @@ public class TablePage extends Component {
 	}
 
 	public void clickOnRowInTable(String rowNumber) {
-		seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//table//tr['"+rowNumber+"']/td['"+rowNumber+"']/a")));
+		waitForRequestsToFinish();
+		seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//table//tr["+rowNumber+"]/td["+rowNumber+"]/a")));
 	}
 
 	public String checkValueNextToLabel(String label, String columnNumber) {
-		return seleniumDriver.findElementWhenVisible(By.xpath("//tr[td[contains(text(),'"+label+"')]]/td['"+columnNumber+"']")).getText();
+		return seleniumDriver.findElementWhenVisible(By.xpath("//tr[td[contains(text(),'"+label+"')]]/td["+columnNumber+"]")).getText();
 	}
 	
 	public boolean checkInnerTablesNotEmpty() {
+		waitForRequestsToFinish();
 		List<WebElement> rows = seleniumDriver.findElements(By.xpath("//table[@class='innerTable']/tbody"));
 		
 		if(rows.size() > 0) {

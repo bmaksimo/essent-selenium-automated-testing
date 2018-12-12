@@ -1,18 +1,17 @@
 package stepdefinitions.jbilling.tables;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
 import org.junit.Assert;
 
 import com.essent.testing.dwp.scenario.DwpScenario;
-import com.essent.testing.jbilling.pageobject.impl.page.OrdersPage;
 import com.essent.testing.jbilling.pageobject.impl.table.TablePage;
 
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.When;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
 
 public class TableElements extends DwpScenario {
 
@@ -59,7 +58,7 @@ public class TableElements extends DwpScenario {
 		
 		TablePage tablePage = new TablePage(webDriver);
 		String actualResult = tablePage.checkValueNextToLabel(label, columnNumber);
-		assertThat("Value " + expectedValue + " is not shown next to label " + label, actualResult.equalsIgnoreCase(expectedResult), is(true));
+		assertThat("Value " + expectedResult + " is not shown next to label " + label, actualResult.equalsIgnoreCase(expectedResult), is(true));
 	}
 	
 	@When("Inner tables are not empty$")

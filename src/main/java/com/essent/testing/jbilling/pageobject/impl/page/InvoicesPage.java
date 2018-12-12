@@ -15,6 +15,7 @@ public class InvoicesPage extends Component {
     }
     
 	public boolean checkInvoicesTableNotEmpty() {
+		waitForRequestsToFinish();
 		List<WebElement> rows = seleniumDriver.findElements(By.xpath("//table[@id='invoices']/tbody"));
 		
 		if(rows.size() > 0) {
