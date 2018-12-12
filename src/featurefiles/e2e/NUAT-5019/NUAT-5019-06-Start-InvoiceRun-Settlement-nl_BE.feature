@@ -1,4 +1,5 @@
 @DWP
+@E2E
 @CREDIT-AND-CONTROL
 @B2C
 Feature: NUAT-5019 Step 6. Triggering billrun, produce a settlement invoice

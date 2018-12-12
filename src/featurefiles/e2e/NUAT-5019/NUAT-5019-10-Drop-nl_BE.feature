@@ -1,4 +1,5 @@
 @DWP
+@E2E
 @B2C
 @CREDIT-AND-CONTROL
 Feature: NUAT-5019 Step 10. End order (drop) messaging

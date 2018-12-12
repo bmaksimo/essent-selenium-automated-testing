@@ -196,6 +196,7 @@ public class ViewListElements extends NavigationElements {
             List currentRow = rows.get(row - 1);
             return (String) currentRow.get(index);
         }
+
         private List<ArrayList> getData(Map viewTable) {
             return (List) viewTable.get("rows");
         }
@@ -216,6 +217,7 @@ public class ViewListElements extends NavigationElements {
             }
             return 0;
         }
+
     }
 
     private class ClickTableCellUrl implements Predicate<Map> {
@@ -274,11 +276,6 @@ public class ViewListElements extends NavigationElements {
         public boolean test(Map options) {
             return executeJavascriptTest("TrAddIBANToPaymentDetails", options);
         }
-    }
-
-    private class CheckFirstRowByOption implements Predicate<Map> {
-        @Override
-        public boolean test(Map options) { return executeJavascriptTest("TrCheckFirstRowByOption", options); }
     }
 
     @Before("@DWP, @CORE, @E2E, @REGRESSION")
@@ -582,20 +579,6 @@ public class ViewListElements extends NavigationElements {
         assertThat(String.format("Table %s did not contain %s value at column %s", table, value, column),
             found, not(empty()));
     }
-
-    @And("^\"([^\"]*)\" in the first \"([^\"]*)\" row of \"([^\"]*)\" table is \"([^\"]*)\"$")
-    public void firstRowByOptionContains(String columnToSearch, String optionToSearch, String list, String textToCheck) {
-        Map<String, String> options = new HashMap<>();
-        options.put("column", columnToSearch);
-        options.put("option", optionToSearch);
-        options.put("list", list);
-        options.put("text", textToCheck);
-        boolean success = new CheckFirstRowByOption().test(options);
-        assertThat(String.format("The column cannot be found, no rows were found or value does not match" +
-                "the one requested. Please check all the parameters passed, remember that they are case sensitive!"),
-            success, is(true));
-    }
-
 
     @Override
     @After("@DWP, @CORE, @E2E, @REGRESSION")

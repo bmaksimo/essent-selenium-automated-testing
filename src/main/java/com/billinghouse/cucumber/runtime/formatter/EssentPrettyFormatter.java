@@ -78,7 +78,6 @@ public class EssentPrettyFormatter extends PrettyFormatter implements ColorAware
 
     private Object getActiveScenario(String location) {
         String name = location.substring(0, location.indexOf("."));
-        logger.info("Getting active scenario " + name);
         Object activeScenario = provideNotNull(ActiveScenarioProvider.get().getActiveScenario(name));
         return activeScenario;
     }

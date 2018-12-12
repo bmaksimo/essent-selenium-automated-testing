@@ -1,4 +1,5 @@
 @DWP
+@E2E
 @B2C
 @DEV-CREDIT-AND-CONTROL
 Feature: Billing - Soft dunning process tasks check
