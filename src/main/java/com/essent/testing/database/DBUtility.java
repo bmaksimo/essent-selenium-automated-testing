@@ -8,6 +8,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.junit.Assert;
+import stepdefinitions.dwp.tables.plus.SwitchState;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -29,7 +30,10 @@ import java.util.Map;
 public class DBUtility {
 
     private  final static Logger logger = Logger.getLogger(DBUtility.class);
-    protected static final DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+
+    private static final DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+
+    private static DBConnector dbConnector = new DBConnector();
 
     public static List<String> distinctEventsOnNovaAuditLog(String tableName) throws SQLException, JSchException {
         try (Connection conn = new DBConnector().getBillingConnection()) {
@@ -466,7 +470,7 @@ public class DBUtility {
         }
     }
 
-    public static String selectValueOfLatestRecordInTable(String tableName, String columnName)
+    private static String selectValueOfLatestRecordInTable(String tableName, String columnName)
             throws SQLException, JSchException {
         try (Connection conn = new DBConnector().getBillingConnection()) {
             String sql = "SELECT " + columnName + " FROM " + tableName + " WHERE id = " + //
@@ -735,7 +739,7 @@ public class DBUtility {
         }
     }
 
-    public static long getInvoiceId(String invoiceNr) throws SQLException, JSchException {
+    private static long getInvoiceId(String invoiceNr) throws SQLException, JSchException {
         try (Connection conn = new DBConnector().getBillingConnection()) {
             String sql = "SELECT id FROM invoice WHERE public_number=?";
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -1620,7 +1624,7 @@ public class DBUtility {
 
     }
 
-    public static Integer asInteger(Object object) {
+    private static Integer asInteger(Object object) {
         if (object instanceof Integer)
             return (Integer) object;
         if (object instanceof Long) {
@@ -1650,7 +1654,7 @@ public class DBUtility {
      * @param object
      * @return
      */
-    public static Long asLong(Object object) {
+    private static Long asLong(Object object) {
         if (object == null)
             return null;
         if (object instanceof Integer)
@@ -1697,6 +1701,7 @@ public class DBUtility {
         }
 
     }
+
     public static void enableDunningForCrmId(String crmCustomerId) throws Exception {
         // @formatter:off
         String sql = "" + "update dunning_account " +  "set bre_id = 14 " +  "where external_id = ? ";
@@ -1708,6 +1713,26 @@ public class DBUtility {
                 stmt.setString(1, crmCustomerId);
                 int count = stmt.executeUpdate();
                 if (count != 1) {
+                    throw new SQLException("Update preference failed, hitcount = " + count);
+                }
+            }
+        }
+    }
+
+    public static void switchSuiteCrmStatusExternal(SwitchState statusExternal, int crmCustomerId) throws Exception {
+        // @formatter:off
+        String sql = "" + "update accounts " + "set status_external = ? " + "where account_number_c = ? ";
+        logger.info("STEP:");
+        logger.info(" - ACTION: SQL_UPDATE " + sql);
+
+        // @formatter:on
+        try (Connection conn = new DBConnector().getSuiteCRMConnection()) {
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1, statusExternal.getState());
+                stmt.setInt(2, crmCustomerId);
+                int count = stmt.executeUpdate();
+                if (count != 1) {
+                    logger.error(" - RESULT: SQL_UPDATE hitcount " + count + " != 1");
                     throw new SQLException("Update preference failed, hitcount = " + count);
                 }
             }

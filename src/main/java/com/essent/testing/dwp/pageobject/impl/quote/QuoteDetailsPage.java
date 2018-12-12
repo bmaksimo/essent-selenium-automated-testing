@@ -33,4 +33,6 @@ public class QuoteDetailsPage extends QuoteCreationGuidedStep {
             step(createStep(Action.SELECT).element(SALES_CHANNEL_FIELD.name()).value(salesChannel.getLabel()), INPUT.getSleepInMillis());
         return execute(toggleReguCheckbox);
     }
+
+
 }

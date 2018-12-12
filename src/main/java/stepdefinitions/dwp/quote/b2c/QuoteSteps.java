@@ -10,7 +10,6 @@ import com.essent.testing.restassured.create_contract.helper.PrepareDataForContr
 import com.essent.testing.util.resource.ResourceUtil;
 import com.google.gson.Gson;
 import cucumber.api.DataTable;
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -22,7 +21,7 @@ import org.awaitility.Duration;
 import stepdefinitions.dwp.autocrat.flow.FlowAwarePredicate;
 import stepdefinitions.dwp.quote.DwpDateFormats;
 import stepdefinitions.dwp.tables.*;
-import stepdefinitions.dwp.tables.plus.CheckBoxState;
+import stepdefinitions.dwp.tables.plus.SwitchState;
 
 import java.io.File;
 import java.util.HashMap;
@@ -99,13 +98,6 @@ public class QuoteSteps extends DwpScenario {
                 parameterProvider.put("suitecrm-customer", randomUser);
             }
             return success;
-        }
-
-        private RandomUser randomUser(Map reply) {
-            Gson gson = new Gson();
-            String randomUserJs = gson.toJson(reply);
-            RandomUser randomUser = gson.fromJson(randomUserJs, RandomUser.class);
-            return randomUser;
         }
 
         private boolean fillInCustomerDetails(RandomUser randomUser) {
@@ -189,7 +181,7 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^Checkbox \"([^\"]*)\" is ([^\"]*)$")
-    public void toggleCheckbox(String label, CheckBoxState state) throws Throwable {
+    public void toggleCheckbox(String label, SwitchState state) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
@@ -225,7 +217,7 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^([^\"]*) meter is ([^\"]*)$")
-    public void setMeterState(final ProductType productType, final CheckBoxState meterState) throws Throwable {
+    public void setMeterState(final ProductType productType, final SwitchState meterState) throws Throwable {
         ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage(webDriver);
         given().await()
             .ignoreExceptions()
@@ -243,11 +235,11 @@ public class QuoteSteps extends DwpScenario {
             .pollInterval(FIVE_HUNDRED_MILLISECONDS)
             .pollDelay(ONE_HUNDRED_MILLISECONDS)
             .atMost(new Duration(10, SECONDS)).until(connectionDetailsView::isNextButtonEnabled);
-        connectionDetailsView.toggleMeter(ProductType.Electricity, CheckBoxState.Closed);
+        connectionDetailsView.toggleMeter(ProductType.Electricity, SwitchState.Closed);
     }
 
     @And("^([^\"]*) market mock test is ([^\"]*)$")
-    public void setMarketMockTest(final ProductType productType, final CheckBoxState state) throws Throwable {
+    public void setMarketMockTest(final ProductType productType, final SwitchState state) throws Throwable {
         ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage(webDriver);
         given().await()
             .ignoreExceptions()

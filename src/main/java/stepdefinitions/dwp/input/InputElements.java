@@ -6,7 +6,7 @@ import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
-import stepdefinitions.dwp.tables.plus.CheckBoxState;
+import stepdefinitions.dwp.tables.plus.SwitchState;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -87,7 +87,7 @@ public class InputElements extends DwpScenario {
     }
 
     @And("^Option \"([^\"]*)\" is ([^\"]*)$")
-    public void switchOption(String option, CheckBoxState state) throws Throwable {
+    public void switchOption(String option, SwitchState state) throws Throwable {
         Map<String, String> options = new HashMap<>();
         options.put("label", option);
         boolean success = executeJavascriptTest("TrClickToggleInput", options);
