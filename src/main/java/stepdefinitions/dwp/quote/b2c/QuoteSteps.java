@@ -100,13 +100,6 @@ public class QuoteSteps extends DwpScenario {
             return success;
         }
 
-        private RandomUser randomUser(Map reply) {
-            Gson gson = new Gson();
-            String randomUserJs = gson.toJson(reply);
-            RandomUser randomUser = gson.fromJson(randomUserJs, RandomUser.class);
-            return randomUser;
-        }
-
         private boolean fillInCustomerDetails(RandomUser randomUser) {
             PersonalDetailsPage customerDetailsView = new PersonalDetailsPage(webDriver);
             customerDetailsView.setRandomUser(randomUser);
