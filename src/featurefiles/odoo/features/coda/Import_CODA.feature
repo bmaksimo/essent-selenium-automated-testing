@@ -1,5 +1,4 @@
 @ODOO
-    @E2E
 @DEV
 @DEV-CODA-IMPORT
 Feature: Import a coda file
