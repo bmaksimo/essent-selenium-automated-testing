@@ -1,0 +1,26 @@
+package com.essent.testing.jbilling.pageobject.impl.page;
+
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import com.essent.testing.jbilling.pageobject.impl.Component;
+import com.essent.testing.selenium.SeleniumDriver;
+
+public class InvoicesPage extends Component {
+	
+    public InvoicesPage(SeleniumDriver seleniumDriver){
+        super(seleniumDriver);
+    }
+    
+	public boolean checkInvoicesTableNotEmpty() {
+		List<WebElement> rows = seleniumDriver.findElements(By.xpath("//table[@id='invoices']/tbody"));
+		
+		if(rows.size() > 0) {
+			return true;
+		}
+		
+		return false;
+	}
+}
