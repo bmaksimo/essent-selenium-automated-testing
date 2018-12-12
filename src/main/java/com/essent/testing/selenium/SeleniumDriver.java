@@ -69,6 +69,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
 
     private static final String PATH_TO_INLINE_CLASSES = "/js/runner/tests/";
     private static final String TEST_RUNNER_CLASS = "TestRunnerBase.js";
+    private static final String ODOO_CODA_FILES_LOCATION = ResourceUtil.toPath(File.separator + "data" + File.separator + "odoo" + File.separator);
 
     private static final String JQUERY_IS_NOT_ACTIVE = "return window.jQuery != undefined && jQuery.active === 0";
 
@@ -140,17 +141,10 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             options.addArguments("--no-sandbox"); // Bypass OS security model
             logger.info(" - OPTIONS: " + options.toString());
 
-
-            //odoo download/upload file location settings
-            String downloadFilepath = ResourceUtil.toPath(File.separator + "data" + File.separator + "odoo" + File.separator);
-            HashMap<String, Object> chromePrefs = new HashMap<>();
-            chromePrefs.put("profile.default_content_settings.popups", 0);
-            chromePrefs.put("download.default_directory", downloadFilepath);
-            options.setExperimentalOption("prefs", chromePrefs);
+            setUpOdooFileDownloadLocation(options);
 
             ChromeDriver chromeDriver;
 
-            //workaround enabling the file download behaviour for headless mode
             String headless = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_HEADLESS);
             if (StringUtils.isNotEmpty(headless)) {
                 options.setHeadless(true);
@@ -162,36 +156,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
                 }
                 ChromeDriverService driverService = ChromeDriverService.createDefaultService();
                 chromeDriver = new ChromeDriver(driverService, options);
-
-                //Workaround for the headless file download
-                Map<String, Object> commandParams = new HashMap<>();
-                commandParams.put("cmd", "Page.setDownloadBehavior");
-                Map<String, String> params = new HashMap<>();
-                params.put("behavior", "allow");
-                params.put("downloadPath", downloadFilepath);
-                commandParams.put("params", params);
-                ObjectMapper objectMapper = new ObjectMapper();
-                HttpClient httpClient = HttpClientBuilder.create().build();
-                String command = null;
-                try {
-                    command = objectMapper.writeValueAsString(commandParams);
-                } catch (JsonProcessingException e) {
-                    //Consume the exception: it is unlikely to happen for this usage example
-                }
-                String remoteBrowserUrl = driverService.getUrl().toString() + "/session/" + chromeDriver.getSessionId() + "/chromium/send_command";
-                HttpPost request = new HttpPost(remoteBrowserUrl);
-                request.addHeader("content-type", "application/json");
-                try {
-                    request.setEntity(new StringEntity(command));
-                } catch (UnsupportedEncodingException e) {
-                    //Consume the exception: it is unlikely to happen for this usage example
-                }
-                try {
-                    httpClient.execute(request);
-                } catch (IOException e2) {
-                    logger.error(" - ERROR_CONFIGURE_HEADLESS_DOWNLOAD: request" + request.toString() + "comand: " + command);
-                }
-
+                enableFileDownloadInHeadlessMode(driverService, chromeDriver);
             } else {
                 options.addArguments("--start-maximized");
                 chromeDriver = new ChromeDriver(options);
@@ -199,6 +164,43 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             }
             chromeDriver.manage().timeouts().implicitlyWait(3, TimeUnit.MINUTES).setScriptTimeout(5, TimeUnit.MINUTES);
             return chromeDriver;
+        }
+
+        default void setUpOdooFileDownloadLocation(ChromeOptions options) {
+            HashMap<String, Object> chromePrefs = new HashMap<>();
+            chromePrefs.put("profile.default_content_settings.popups", 0);
+            chromePrefs.put("download.default_directory", ODOO_CODA_FILES_LOCATION);
+            options.setExperimentalOption("prefs", chromePrefs);
+        }
+
+        default void enableFileDownloadInHeadlessMode(ChromeDriverService driverService, ChromeDriver chromeDriver) {
+            Map<String, Object> commandParams = new HashMap<>();
+            commandParams.put("cmd", "Page.setDownloadBehavior");
+            Map<String, String> params = new HashMap<>();
+            params.put("behavior", "allow");
+            params.put("downloadPath", ODOO_CODA_FILES_LOCATION);
+            commandParams.put("params", params);
+            ObjectMapper objectMapper = new ObjectMapper();
+            HttpClient httpClient = HttpClientBuilder.create().build();
+            String command = null;
+            try {
+                command = objectMapper.writeValueAsString(commandParams);
+            } catch (JsonProcessingException e) {
+                logger.error("Object serialization has failed. Reason: " + e.getMessage());
+            }
+            String remoteBrowserUrl = driverService.getUrl().toString() + "/session/" + chromeDriver.getSessionId() + "/chromium/send_command";
+            HttpPost request = new HttpPost(remoteBrowserUrl);
+            request.addHeader("content-type", "application/json");
+            try {
+                request.setEntity(new StringEntity(command));
+            } catch (UnsupportedEncodingException e) {
+                logger.error("Error on HttpPost request creation. Reason: " + e.getMessage());
+            }
+            try {
+                httpClient.execute(request);
+            } catch (IOException e2) {
+                logger.error(" - ERROR_CONFIGURE_HEADLESS_DOWNLOAD: request" + request.toString() + "comand: " + command);
+            }
         }
 
         class FirefoxWebdriverInitialingStrategy implements WebDriverInitializingStrategy {
