@@ -123,6 +123,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             ChromeOptions options = new ChromeOptions();
             options.addArguments("chrome.switches", "--disable-extensions");
             options.addArguments("window-size=1920,1080");
+            options.addArguments("--incognito");
 
 
             String userDataPath = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_USER_DATA_PATH);
