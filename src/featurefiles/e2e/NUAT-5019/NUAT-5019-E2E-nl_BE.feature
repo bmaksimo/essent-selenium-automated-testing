@@ -27,7 +27,7 @@ Feature: NUAT-5019
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        When "Startdatum" date is "now"
+        When "Startdatum" date is "2 weeks before now"
         And Electricity EAN code is "random"
         And Switch type is Move in
         And Electricity market mock test is Open
@@ -83,13 +83,10 @@ Feature: NUAT-5019
 
         #generate and import CODA file
         Given I renew login to Odoo as t.geets
-#        Given I logged in to Odoo as t.geets
         And Cleanup Odoo CODA files
         When Odoo top menu is Accounting
         And  Odoo left menu is Customers
-#        And Odoo filter is 1000025712
         And Odoo filter is parameter:accountNumber
-#        When Column "Account Number" with value "1000025712" is clicked
         When Column "Account Number" with value "parameter:accountNumber" is clicked
         And Button "Journal Items" is clicked
         And Generate CODA in the "1st" row is clicked
@@ -114,13 +111,13 @@ Feature: NUAT-5019
         When "Klantnummer" input is "parameter:accountNumber"
         Then View list header is "Klanten"
 
-#        Given Click on link in View List at 1st row and "Klantnummer & Naam" column
-#        When Dashboard menu is Billing
-#        Then Transacties list is not empty
-#        And "Openstaand bedrag" in the first "Paid by OV" row of "Transacties" table is "0"
+        Given Click on link in View List at 1st row and "Klantnummer & Naam" column
+        When Dashboard menu is Billing
+        Then Transacties list is not empty
+        And "Openstaand bedrag" in the first "Paid by OV" row of "Transacties" table is "0"
 
         #generate consumptions
-#        When Top arrow button is Up
+        When Top arrow button is Up
         And Click on link in View List at 1st row and "Klantnummer & Naam" column
         And Dashboard menu is Contracten
         Then View list header is "Actieve en toekomstige connecties"
