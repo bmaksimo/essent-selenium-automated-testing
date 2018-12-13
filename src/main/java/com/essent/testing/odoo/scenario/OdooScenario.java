@@ -8,7 +8,6 @@ import com.essent.testing.selenium.scenario.SeleniumScenario;
 import org.apache.commons.text.StrSubstitutor;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 
 import java.util.Map;
 

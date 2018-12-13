@@ -69,7 +69,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
 
     private static final String PATH_TO_INLINE_CLASSES = "/js/runner/tests/";
     private static final String TEST_RUNNER_CLASS = "TestRunnerBase.js";
-    private static final String ODOO_CODA_FILES_LOCATION = ResourceUtil.toPath(File.separator + "data" + File.separator + "odoo" + File.separator);
+    private static final String DEFAULT_DOWNLOAD_LOCATION = ResourceUtil.toPath(File.separator + "data" + File.separator + "odoo" + File.separator);
 
     private static final String JQUERY_IS_NOT_ACTIVE = "return window.jQuery != undefined && jQuery.active === 0";
 
@@ -141,7 +141,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             options.addArguments("--no-sandbox"); // Bypass OS security model
             logger.info(" - OPTIONS: " + options.toString());
 
-            setUpOdooFileDownloadLocation(options);
+            setUpDefaultFileDownloadLocation(options);
 
             ChromeDriver chromeDriver;
 
@@ -166,10 +166,10 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             return chromeDriver;
         }
 
-        default void setUpOdooFileDownloadLocation(ChromeOptions options) {
+        default void setUpDefaultFileDownloadLocation(ChromeOptions options) {
             HashMap<String, Object> chromePrefs = new HashMap<>();
             chromePrefs.put("profile.default_content_settings.popups", 0);
-            chromePrefs.put("download.default_directory", ODOO_CODA_FILES_LOCATION);
+            chromePrefs.put("download.default_directory", DEFAULT_DOWNLOAD_LOCATION);
             options.setExperimentalOption("prefs", chromePrefs);
         }
 
@@ -178,7 +178,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             commandParams.put("cmd", "Page.setDownloadBehavior");
             Map<String, String> params = new HashMap<>();
             params.put("behavior", "allow");
-            params.put("downloadPath", ODOO_CODA_FILES_LOCATION);
+            params.put("downloadPath", DEFAULT_DOWNLOAD_LOCATION);
             commandParams.put("params", params);
             ObjectMapper objectMapper = new ObjectMapper();
             HttpClient httpClient = HttpClientBuilder.create().build();
