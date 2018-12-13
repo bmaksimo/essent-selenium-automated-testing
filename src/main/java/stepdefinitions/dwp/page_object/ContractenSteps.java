@@ -124,8 +124,5 @@ public class ContractenSteps extends DwpScenario {
         String contractNumber = webDriver.findElementWhenVisible(By.xpath("//*[@id=\"account_number_c\"]/div")).getText();
         parameterProvider.put("contractNumber", contractNumber);
 
-//        String getContractNumber = parameterProvider.getValueOrParameterAsString(contractNumber);
-//        ContractenPage contractenPage = new ContractenPage(webDriver);
-//        contractenPage.findContractNumber(contractNumber);
     }
 }

@@ -91,7 +91,7 @@ public class OdooCodaSteps extends OdooScenario {
         given().await()
             .pollInterval(FIVE_HUNDRED_MILLISECONDS)
             .pollDelay(TWO_SECONDS)
-            .atMost(new Duration(10, SECONDS)).until(()-> CollectionUtils.isNotEmpty(retrieveDownloadedCodaFiles(path)));
+            .atMost(new Duration(20, SECONDS)).until(()-> CollectionUtils.isNotEmpty(retrieveDownloadedCodaFiles(path)));
         if (CollectionUtils.isEmpty(retrieveDownloadedCodaFiles(path))) throw new CucumberException("CODA file download link was not found");
 
         assertThat("File could not be downloaded", CollectionUtils.isNotEmpty(retrieveDownloadedCodaFiles(path)));
