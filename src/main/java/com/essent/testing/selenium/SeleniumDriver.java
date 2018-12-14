@@ -152,55 +152,56 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
 
             ChromeDriver chromeDriver;
 
-            //workaround enabling the file download behaviour for headless mode
-            String headless = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_HEADLESS);
-            if (StringUtils.isNotEmpty(headless)) {
-                options.setHeadless(true);
-                String windowSize = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_HEADLESS_WINDOW_SIZE);
-                if (StringUtils.isNotEmpty(windowSize)) {
-                    options.addArguments("window-size=" + windowSize);
-                } else {
-                    options.addArguments("--start-maximized");
-                }
-                ChromeDriverService driverService = ChromeDriverService.createDefaultService();
-                chromeDriver = new ChromeDriver(driverService, options);
-
-                //Workaround for the headless file download
-                Map<String, Object> commandParams = new HashMap<>();
-                commandParams.put("cmd", "Page.setDownloadBehavior");
-                Map<String, String> params = new HashMap<>();
-                params.put("behavior", "allow");
-                params.put("downloadPath", downloadFilepath);
-                commandParams.put("params", params);
-                ObjectMapper objectMapper = new ObjectMapper();
-                HttpClient httpClient = HttpClientBuilder.create().build();
-                String command = null;
-                try {
-                    command = objectMapper.writeValueAsString(commandParams);
-                } catch (JsonProcessingException e) {
-                    //Consume the exception: it is unlikely to happen for this usage example
-                }
-                String remoteBrowserUrl = driverService.getUrl().toString() + "/session/" + chromeDriver.getSessionId() + "/chromium/send_command";
-                HttpPost request = new HttpPost(remoteBrowserUrl);
-                request.addHeader("content-type", "application/json");
-                try {
-                    request.setEntity(new StringEntity(command));
-                } catch (UnsupportedEncodingException e) {
-                    //Consume the exception: it is unlikely to happen for this usage example
-                }
-                try {
-                    httpClient.execute(request);
-                } catch (IOException e2) {
-                    logger.error(" - ERROR_CONFIGURE_HEADLESS_DOWNLOAD: request" + request.toString() + "comand: " + command);
-                }
-
-            } else {
-                options.addArguments("--start-maximized");
-                chromeDriver = new ChromeDriver(options);
-
-            }
+          //workaround enabling the file download behaviour for headless mode
+//            String headless = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_HEADLESS);
+//            if (StringUtils.isNotEmpty(headless)) {
+//                options.setHeadless(true);
+//                String windowSize = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_HEADLESS_WINDOW_SIZE);
+//                if (StringUtils.isNotEmpty(windowSize)) {
+//                    options.addArguments("window-size=" + windowSize);
+//                } else {
+//                    options.addArguments("--start-maximized");
+//                }
+//                ChromeDriverService driverService = ChromeDriverService.createDefaultService();
+//                chromeDriver = new ChromeDriver(driverService, options);
+//
+//                //Workaround for the headless file download
+//                Map<String, Object> commandParams = new HashMap<>();
+//                commandParams.put("cmd", "Page.setDownloadBehavior");
+//                Map<String, String> params = new HashMap<>();
+//                params.put("behavior", "allow");
+//                params.put("downloadPath", downloadFilepath);
+//                commandParams.put("params", params);
+//                ObjectMapper objectMapper = new ObjectMapper();
+//                HttpClient httpClient = HttpClientBuilder.create().build();
+//                String command = null;
+//                try {
+//                    command = objectMapper.writeValueAsString(commandParams);
+//                } catch (JsonProcessingException e) {
+//                    //Consume the exception: it is unlikely to happen for this usage example
+//                }
+//                String remoteBrowserUrl = driverService.getUrl().toString() + "/session/" + chromeDriver.getSessionId() + "/chromium/send_command";
+//                HttpPost request = new HttpPost(remoteBrowserUrl);
+//                request.addHeader("content-type", "application/json");
+//                try {
+//                    request.setEntity(new StringEntity(command));
+//                } catch (UnsupportedEncodingException e) {
+//                    //Consume the exception: it is unlikely to happen for this usage example
+//                }
+//                try {
+//                    httpClient.execute(request);
+//                } catch (IOException e2) {
+//                    logger.error(" - ERROR_CONFIGURE_HEADLESS_DOWNLOAD: request" + request.toString() + "comand: " + command);
+//                }
+//
+//            } else {
+//                options.addArguments("--start-maximized");
+//                chromeDriver = new ChromeDriver(options);
+//
+//            }
+//
+//            chromeDriver.manage().timeouts().implicitlyWait(3, TimeUnit.MINUTES).setScriptTimeout(5, TimeUnit.MINUTES);
             chromeDriver = new ChromeDriver(options);
-            chromeDriver.manage().timeouts().implicitlyWait(3, TimeUnit.MINUTES).setScriptTimeout(5, TimeUnit.MINUTES);
             return chromeDriver;
         }
 
