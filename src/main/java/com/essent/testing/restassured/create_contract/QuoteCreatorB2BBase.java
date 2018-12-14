@@ -84,7 +84,8 @@ public class QuoteCreatorB2BBase {
 	protected String meterOpen = "";
 
 	protected String isFakeAddress="";
-
+	
+	protected String meterType="";
 
 	public QuoteCreatorB2BBase() {
 		numberOfAttempts = 0;
@@ -343,6 +344,7 @@ public class QuoteCreatorB2BBase {
 		testMap.put("${migLabel}", migLabel);
 		testMap.put("${migModul}", migModul);
 		testMap.put("${meterOpen}", meterOpen);
+		testMap.put("${meterType}", meterType);
 
 		String jsonBody = PrepareDataForContract.createRequestJsonPayload(payloadCreateQuoteB2B, originalPayloadCreateQuoteB2B, testMap);
 
@@ -483,6 +485,7 @@ public class QuoteCreatorB2BBase {
 
 		paymentMethod = prop.getProperty("payment_method");
 		legalCommunicationBy = prop.getProperty("legal_communication_by");
+		meterType = prop.getProperty("meter_type");
 
 		if(!isFakeAddress.equals("FAKE")) {
 			addressNumber = prop.getProperty("address_number");
@@ -497,6 +500,7 @@ public class QuoteCreatorB2BBase {
 			migLabel = prop.getProperty("mig_label_c");
 			migModul = prop.getProperty("mig_modul_c");
 			meterOpen = prop.getProperty("meter_open");
+			
 		}else {
 			getAddressEANSwitchType(prop, switchType);
 		}

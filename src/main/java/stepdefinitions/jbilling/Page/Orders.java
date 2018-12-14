@@ -25,6 +25,14 @@ public class Orders extends DwpScenario {
 		
 		assertThat("Rows in orders table are empty", isNotEmpty, is(true));
 	}
+	
+	@When("JBilling Inner Table label \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\"$")
+	public void checkValueNextToLabel(String label, String expectedValue, String columnNumber) throws Throwable {
+		
+		OrdersPage orderPage = new OrdersPage(webDriver);
+		String actualResult = orderPage.checkValueNextToLabel(label, columnNumber);
+		assertThat("Value " + expectedValue + " is not shown next to label " + label, actualResult.equalsIgnoreCase(expectedValue), is(true));
+	}
 
 	@Override
 	@After("@JBILLING, @B2B, @REGRESSION")

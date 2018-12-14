@@ -25,4 +25,8 @@ public class OrdersPage extends Component {
 		return false;
 	}
 
+	public String checkValueNextToLabel(String label, String columnNumber) {
+		return seleniumDriver.findElementWhenVisible(By.xpath("//table[@class='innerTable']//tr[td[contains(text(),'"+label+"')]]/td["+columnNumber+"]")).getText();
+	}
+
 }

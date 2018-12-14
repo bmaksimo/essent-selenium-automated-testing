@@ -17,10 +17,12 @@ public class FilterElements extends DwpScenario {
 
 	@When("JBilling \"([^\"]*)\" input is \"([^\"]*)\"$")
 	public void setInput(String label, String value) throws Throwable {
-		String inputValue = parameterProvider.getValueOrParameterAsString(value);
+		if(value.startsWith("parameter:")) {
+			value = parameterProvider.getValueOrParameterAsString(value);
+		}
 
 		FilterPage filterPage = new FilterPage(webDriver);
-		filterPage.filterBy(label, inputValue);
+		filterPage.filterBy(label, value);
 	}
 	
 	@When("JBilling Click on \"([^\"]*)\"$")
