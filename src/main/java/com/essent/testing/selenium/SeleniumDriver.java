@@ -69,6 +69,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
 
     private static final String PATH_TO_INLINE_CLASSES = "/js/runner/tests/";
     private static final String TEST_RUNNER_CLASS = "TestRunnerBase.js";
+    private static final String DEFAULT_DOWNLOAD_LOCATION = ResourceUtil.toPath(File.separator + "data" + File.separator + "odoo" + File.separator);
 
     private static final String JQUERY_IS_NOT_ACTIVE = "return window.jQuery != undefined && jQuery.active === 0";
 
@@ -122,9 +123,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         default WebDriver createWebDriver() {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("chrome.switches", "--disable-extensions");
-            options.addArguments("--start-maximized");
             options.addArguments("window-size=1920,1080");
-            options.addArguments("--headless");
             options.addArguments("--incognito");
 
 
@@ -142,68 +141,66 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
             options.addArguments("--no-sandbox"); // Bypass OS security model
             logger.info(" - OPTIONS: " + options.toString());
 
+            setUpDefaultFileDownloadLocation(options);
 
-
-            //odoo download/upload file location settings
-            String downloadFilepath = ResourceUtil.toPath(File.separator + "data" + File.separator + "odoo" + File.separator);
-            HashMap<String, Object> chromePrefs = new HashMap<>();
-            chromePrefs.put("profile.default_content_settings.popups", 0);
-            chromePrefs.put("download.default_directory", downloadFilepath);
-            options.setExperimentalOption("prefs", chromePrefs);
             ChromeDriver chromeDriver;
 
+            String headless = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_HEADLESS);
+            if (StringUtils.isNotEmpty(headless)) {
+                options.setHeadless(true);
+                String windowSize = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_HEADLESS_WINDOW_SIZE);
+                if (StringUtils.isNotEmpty(windowSize)) {
+                    options.addArguments("window-size=" + windowSize);
+                } else {
+                    options.addArguments("--start-maximized");
+                }
+                ChromeDriverService driverService = ChromeDriverService.createDefaultService();
+                chromeDriver = new ChromeDriver(driverService, options);
+                enableFileDownloadInHeadlessMode(driverService, chromeDriver);
+            } else {
+                options.addArguments("--start-maximized");
+                chromeDriver = new ChromeDriver(options);
 
-          //workaround enabling the file download behaviour for headless mode
-          String headless = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_HEADLESS);
-          if (StringUtils.isNotEmpty(headless)) {
-              options.setHeadless(true);
-              String windowSize = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_HEADLESS_WINDOW_SIZE);
-              if (StringUtils.isNotEmpty(windowSize)) {
-                  options.addArguments("window-size=" + windowSize);
-              } else {
-                  options.addArguments("--start-maximized");
-              }
-              ChromeDriverService driverService = ChromeDriverService.createDefaultService();
-              chromeDriver = new ChromeDriver(driverService, options);
-
-              //Workaround for the headless file download
-              Map<String, Object> commandParams = new HashMap<>();
-              commandParams.put("cmd", "Page.setDownloadBehavior");
-              Map<String, String> params = new HashMap<>();
-              params.put("behavior", "allow");
-              params.put("downloadPath", downloadFilepath);
-              commandParams.put("params", params);
-              ObjectMapper objectMapper = new ObjectMapper();
-              HttpClient httpClient = HttpClientBuilder.create().build();
-              String command = null;
-              try {
-                  command = objectMapper.writeValueAsString(commandParams);
-              } catch (JsonProcessingException e) {
-                  //Consume the exception: it is unlikely to happen for this usage example
-              }
-              String remoteBrowserUrl = driverService.getUrl().toString() + "/session/" + chromeDriver.getSessionId() + "/chromium/send_command";
-              HttpPost request = new HttpPost(remoteBrowserUrl);
-              request.addHeader("content-type", "application/json");
-              try {
-                  request.setEntity(new StringEntity(command));
-              } catch (UnsupportedEncodingException e) {
-                  //Consume the exception: it is unlikely to happen for this usage example
-              }
-              try {
-                  httpClient.execute(request);
-              } catch (IOException e2) {
-                  logger.error(" - ERROR_CONFIGURE_HEADLESS_DOWNLOAD: request" + request.toString() + "comand: " + command);
-              }
-
-          } else {
-              options.addArguments("--start-maximized");
-              chromeDriver = new ChromeDriver(options);
-
-          }
-
-          chromeDriver.manage().timeouts().implicitlyWait(3, TimeUnit.MINUTES).setScriptTimeout(5, TimeUnit.MINUTES);
-            chromeDriver = new ChromeDriver(options);
+            }
+            chromeDriver.manage().timeouts().implicitlyWait(3, TimeUnit.MINUTES).setScriptTimeout(5, TimeUnit.MINUTES);
             return chromeDriver;
+        }
+
+        default void setUpDefaultFileDownloadLocation(ChromeOptions options) {
+            HashMap<String, Object> chromePrefs = new HashMap<>();
+            chromePrefs.put("profile.default_content_settings.popups", 0);
+            chromePrefs.put("download.default_directory", DEFAULT_DOWNLOAD_LOCATION);
+            options.setExperimentalOption("prefs", chromePrefs);
+        }
+
+        default void enableFileDownloadInHeadlessMode(ChromeDriverService driverService, ChromeDriver chromeDriver) {
+            Map<String, Object> commandParams = new HashMap<>();
+            commandParams.put("cmd", "Page.setDownloadBehavior");
+            Map<String, String> params = new HashMap<>();
+            params.put("behavior", "allow");
+            params.put("downloadPath", DEFAULT_DOWNLOAD_LOCATION);
+            commandParams.put("params", params);
+            ObjectMapper objectMapper = new ObjectMapper();
+            HttpClient httpClient = HttpClientBuilder.create().build();
+            String command = null;
+            try {
+                command = objectMapper.writeValueAsString(commandParams);
+            } catch (JsonProcessingException e) {
+                logger.error("Object serialization has failed. Reason: " + e.getMessage());
+            }
+            String remoteBrowserUrl = driverService.getUrl().toString() + "/session/" + chromeDriver.getSessionId() + "/chromium/send_command";
+            HttpPost request = new HttpPost(remoteBrowserUrl);
+            request.addHeader("content-type", "application/json");
+            try {
+                request.setEntity(new StringEntity(command));
+            } catch (UnsupportedEncodingException e) {
+                logger.error("Error on HttpPost request creation. Reason: " + e.getMessage());
+            }
+            try {
+                httpClient.execute(request);
+            } catch (IOException e2) {
+                logger.error(" - ERROR_CONFIGURE_HEADLESS_DOWNLOAD: request" + request.toString() + "comand: " + command);
+            }
         }
 
         class FirefoxWebdriverInitialingStrategy implements WebDriverInitializingStrategy {

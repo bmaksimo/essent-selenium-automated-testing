@@ -1,4 +1,5 @@
 @DWP
+@E2E
 @CREDIT-AND-CONTROL
 @B2C
 Feature: NUAT-5019 Step 5. Billing - Triggering mediation run, including the received consumptions data into new order

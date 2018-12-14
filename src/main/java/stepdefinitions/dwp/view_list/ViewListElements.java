@@ -413,7 +413,7 @@ public class ViewListElements extends NavigationElements {
             .pollInterval(new Duration(20, SECONDS))
             .pollDelay(TWO_SECONDS)
             .atMost(new Duration(seconds, SECONDS)).until(()->
-                loopBack() &&
+            loopBack() &&
                 viewListModel.containsDataAt(row, value, columnName));
     }
 
