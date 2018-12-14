@@ -88,8 +88,8 @@ Feature: NUAT-412 part: Create / import coda file
         Given Cleanup Odoo CODA files
         When Odoo top menu is Accounting
         And  Odoo left menu is Customers
-        And Odoo filter is 1000025737
-        When Column "Account Number" with value "1000025737" is clicked
+        And Odoo filter is parameter:contractNumber
+        When Column "Account Number" with value "parameter:contractNumber" is clicked
         And Button "Journal Items" is clicked
         And Generate CODA in the "1st" row is clicked
         Then Modal title contains "Download CODA"
@@ -97,15 +97,15 @@ Feature: NUAT-412 part: Create / import coda file
         And Modal button "Close" is clicked
 
      #import coda file
-    @IMPORT-CODA
-    Scenario: Import CODA file in Odoo
-        Given I renew login to Odoo as t.geets
-        When Odoo top menu is Accounting
-        When Odoo left menu is CODA Processing->Import CODA Files
-        Then Odoo file upload dialog is Import CODA File
-        Then CODA file is parameter:codaFile
-        And  Odoo file upload confirm button is Import
-        And  Odoo file import report
-        And Modal button "View Bank Statement" is clicked
-        When Column "Reference" of the "1st" row is clicked
-        And Modal button "Close" is clicked
+#    @IMPORT-CODA
+#    Scenario: Import CODA file in Odoo
+#        Given I renew login to Odoo as t.geets
+#        When Odoo top menu is Accounting
+#        When Odoo left menu is CODA Processing->Import CODA Files
+#        Then Odoo file upload dialog is Import CODA File
+#        Then CODA file is parameter:codaFile
+#        And  Odoo file upload confirm button is Import
+#        And  Odoo file import report
+#        And Modal button "View Bank Statement" is clicked
+#        When Column "Reference" of the "1st" row is clicked
+#        And Modal button "Close" is clicked
