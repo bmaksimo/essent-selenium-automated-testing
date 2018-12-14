@@ -122,8 +122,10 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         default WebDriver createWebDriver() {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("chrome.switches", "--disable-extensions");
+            options.addArguments("--start-maximized");
             options.addArguments("window-size=1920,1080");
             options.addArguments("--incognito");
+            options.addArguments("--headless");
 
 
             String userDataPath = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_USER_DATA_PATH);
@@ -197,6 +199,7 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
                 chromeDriver = new ChromeDriver(options);
 
             }
+            chromeDriver = new ChromeDriver(options);
             chromeDriver.manage().timeouts().implicitlyWait(3, TimeUnit.MINUTES).setScriptTimeout(5, TimeUnit.MINUTES);
             return chromeDriver;
         }
