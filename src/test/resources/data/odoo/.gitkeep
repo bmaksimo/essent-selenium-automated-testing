@@ -1,0 +1,4 @@
+PLEASE DO NOT REMOVE THIS FILE!!!
+
+This folder is needed for CODA file download and cleanup. Since git ignores empty folders, this file is being added in order to keep this folder in git. In addition, this folder has also been added to .gitignore so that files created here are not staged, with the exception of this file.
+
