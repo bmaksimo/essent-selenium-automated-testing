@@ -1,5 +1,6 @@
 package stepdefinitions.dwp.view_list;
 
+import com.essent.automation.util.Sleeper;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -594,6 +595,11 @@ public class ViewListElements extends NavigationElements {
         assertThat(String.format("The column cannot be found, no rows were found or value does not match" +
                 "the one requested. Please check all the parameters passed, remember that they are case sensitive!"),
             success, is(true));
+    }
+
+    @And("^Wait for (\\d+) seconds$")
+    public void waitForSeconds(int seconds) {
+        Sleeper.sleepTightInSeconds(seconds);
     }
 
 

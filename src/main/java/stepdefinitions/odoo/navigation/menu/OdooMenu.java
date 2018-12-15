@@ -48,6 +48,7 @@ public class OdooMenu extends OdooScenario {
     @Then("^Generate CODA in the \"([^\"]*)\" row is clicked$")
     public void clickCodaUrl(String ordinal) {
         String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
+        awaitOdooRequestToFinish(10);
         WebElement button = webDriver.findElementWhenVisible(By.xpath("//table[@class='oe_list_content'][1]//tbody//tr["+rowIndex+"]//td[@data-field='generate_coda']//button[1]"));
         if (null == button) throw new CucumberException("Button was not found");
 

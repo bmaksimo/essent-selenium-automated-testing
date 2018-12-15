@@ -1,5 +1,4 @@
 @ODOO
-@E2E
 @B2C
 @CREDIT-AND-CONTROL
 Feature: NUAT-5019 Step 3. Import a coda file and make payment for advanced invoice
