@@ -6,6 +6,9 @@ import com.essent.testing.restassured.create_contract.constants.ApiPathsContract
 import com.essent.testing.restassured.create_contract.constants.ContractConstants;
 import com.essent.testing.restassured.create_contract.constants.ContractStatus;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
+
+import stepdefinitions.dwp.contracts.b2b.QuoteB2B;
+
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 
@@ -19,6 +22,11 @@ public class ContractTC1B2BCreator extends QuoteCreatorB2BBase implements QuoteC
 	public ContractTC1B2BCreator(String isFakeAddress, String switchType) throws FileNotFoundException, IOException {
 		super();
 		getQuoteProperties(ContractConstants.PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_TC1, isFakeAddress, switchType);
+	}
+
+	public ContractTC1B2BCreator(QuoteB2B quoteB2B) throws FileNotFoundException, IOException{
+		super();
+		getQuoteProperties(ContractConstants.PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_TC1, quoteB2B);
 	}
 
 	@Override

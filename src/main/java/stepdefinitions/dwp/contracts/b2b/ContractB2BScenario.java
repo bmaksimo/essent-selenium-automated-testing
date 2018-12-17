@@ -1,23 +1,24 @@
 package stepdefinitions.dwp.contracts.b2b;
 
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
+import org.junit.Assert;
+
 import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
 import com.essent.testing.restassured.create_contract.QuoteCreator;
 import com.essent.testing.restassured.create_contract.impl.b2b.ContractTC1B2BCreator;
 import com.essent.testing.restassured.create_contract.impl.b2b.ContractTC2B2BCreator;
 import com.essent.testing.restassured.create_contract.impl.b2b.ContractUPB2BCreator;
 import com.essent.testing.scenario.RegisteredScenario;
+
+import cucumber.api.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-import org.junit.Assert;
 import stepdefinitions.dwp.contracts.product_types.ProductTypes;
 
 public class ContractB2BScenario extends RegisteredScenario {
-
-	private static final Logger logger = Logger.getLogger(ContractB2BScenario.class);
-	private static final String EMPTY_STRING = "";
 
 	@Before("@DWP, @E2E, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
@@ -38,11 +39,11 @@ public class ContractB2BScenario extends RegisteredScenario {
 	   *
 	   * Following cases work:
 	   *
-	   * B2B Contract is "TC2" and use "NOT FAKE" address and switch type is "MOVE IN"
-	   * B2B Contract is "UP" and use "FAKE" address and switch type is "MOVE IN"
-	   * B2B Contract is "UP" and use "FAKE" address and switch type is "SUPPLIER SWITCH"
-	   * B2B Contract is "UP" and use "FAKE" address and switch type is "COMBINED CUSTOMER SWITCH"
-	   * B2B Contract is "TC2" and use "FAKE" address and switch type is "SUPPLIER SWITCH"
+	   * B2B Contract is "TC2" product type and use "NOT FAKE" address and switch type is "MOVE IN"
+	   * B2B Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
+	   * B2B Contract is "UP" product type and use "FAKE" address and switch type is "SUPPLIER SWITCH"
+	   * B2B Contract is "UP" product type and use "FAKE" address and switch type is "COMBINED CUSTOMER SWITCH"
+	   * B2B Contract is "TC2" product type and use "FAKE" address and switch type is "SUPPLIER SWITCH"
 	   *
 	   *
 	   * Any combination for TC1 won't work due to missing tariffsheets I think.
@@ -106,11 +107,11 @@ public class ContractB2BScenario extends RegisteredScenario {
 	   *
 	   *  Following cases work:
 	   *
-	   * B2B Contract is "TC2" and use "NOT FAKE" address and switch type is "MOVE IN"
-	   * B2B Contract is "UP" and use "FAKE" address and switch type is "MOVE IN"
-	   * B2B Contract is "UP" and use "FAKE" address and switch type is "SUPPLIER SWITCH"
-	   * B2B Contract is "UP" and use "FAKE" address and switch type is "COMBINED CUSTOMER SWITCH"
-	   * B2B Contract is "TC2" and use "FAKE" address and switch type is "SUPPLIER SWITCH"
+	   * B2B Active Contract is "TC2" product type and use "NOT FAKE" address and switch type is "MOVE IN"
+	   * B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
+	   * B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "SUPPLIER SWITCH"
+	   * B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "COMBINED CUSTOMER SWITCH"
+	   * B2B Active Contract is "TC2" product type and use "FAKE" address and switch type is "SUPPLIER SWITCH"
 	   *
 	   * Any combination for TC1 won't work due to missing tariffsheets I think.
 	   *
@@ -204,5 +205,50 @@ public class ContractB2BScenario extends RegisteredScenario {
         logger().info("ACCOUNT NUMBER: " + accountNumber);
         parameterProvider.put("accountNumber",accountNumber);
         return accountNumber;
+    }
+
+    @Given("^B2B Active Contract is$")
+    public String createContractB2B(final DataTable quote) throws Throwable {
+        accountNumber = "";
+
+        List<QuoteB2B> list = quote.asList(QuoteB2B.class);
+        QuoteB2B quoteB2B = list.get(0);
+
+        ProductTypes productTypes = ProductTypes.valueOf(quoteB2B.getProductType());
+
+		try {
+			switch (productTypes) {
+				case UP: {
+					QuoteCreator quoteB2BUP = new ContractUPB2BCreator(quoteB2B);
+					accountNumber = quoteB2BUP.createContractAndCheckContractStatus();
+					break;
+				}
+				case TC1: {
+					QuoteCreator quoteB2BTC1 = new ContractTC1B2BCreator(quoteB2B);
+					accountNumber = quoteB2BTC1.createContractAndCheckContractStatus();
+					break;
+				}
+				case TC2: {
+					QuoteCreator quoteB2BTC2 = new ContractTC2B2BCreator(quoteB2B);
+					accountNumber = quoteB2BTC2.createContractAndCheckContractStatus();
+					break;
+				}
+				default:
+					throw new AssertionError("Not supported product type used " + quoteB2B.getProductType());
+			}
+		} catch (Exception e) {
+			logger().error("B2B contract is not ACTIVE", e);
+			Assert.fail("B2B contract is not ACTIVE: " + e.getMessage());
+		}
+
+		if(StringUtils.isEmpty(accountNumber)) {
+			Assert.fail("B2B contract is not ACTIVE");
+			logger().error("Something went wrong with creation of ACTIVE B2B contract");
+		}
+
+		logger().info("ACCOUNT NUMBER: " + accountNumber);
+		parameterProvider.put("accountNumber", accountNumber);
+		return accountNumber;
+
     }
 }

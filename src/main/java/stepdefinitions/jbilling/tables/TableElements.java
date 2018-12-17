@@ -25,19 +25,25 @@ public class TableElements extends DwpScenario {
         }
 
 		TablePage tablePage = new TablePage(webDriver);
-		tablePage.clickFirstCellInTable(expectedResult);
+		boolean success = tablePage.clickFirstCellInTable(expectedResult);
+		
+		assertThat("First cell in table is not clicked", success, is(true));
 	}
 
 	@When("JBilling Click on row \"([^\"]*)\" in Table$")
 	public void clickOnRowInTable(String rowNumber) throws Throwable {
 		TablePage tablePage = new TablePage(webDriver);
-		tablePage.clickOnRowInTable(rowNumber);
+		boolean success = tablePage.clickOnRowInTable(rowNumber);
+		
+		assertThat("Row: " + rowNumber + " in the table is not clicked", success, is(true));
 	}
 
 	@When("JBilling Click on text link \"([^\"]*)\"$")
 	public void clickTextLink(String label) throws Throwable {
 		TablePage tablePage = new TablePage(webDriver);
-		tablePage.clickTextLink(label);
+		boolean success = tablePage.clickTextLink(label);
+		
+		assertThat("Text link: " + label + " is not clicked", success, is(true));
 	}
 
 	@When("JBilling First cell value in first row is \"([^\"]*)\"$")

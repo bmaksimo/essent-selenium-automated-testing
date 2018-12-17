@@ -8,6 +8,9 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.When;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
 public class FilterElements extends DwpScenario {
 
 	@Before("@JBILLING, @B2B, @REGRESSION")
@@ -22,13 +25,17 @@ public class FilterElements extends DwpScenario {
 		}
 
 		FilterPage filterPage = new FilterPage(webDriver);
-		filterPage.filterBy(label, value);
+        boolean success = filterPage.filterBy(label, value);
+
+        assertThat("Filter by: " + label + " with input value: " + value + " is not confirmed", success, is(true));
 	}
-	
+
 	@When("JBilling Click on \"([^\"]*)\"$")
 	public void clickApplyFilters(String label) throws Throwable {
 		FilterPage filterPage = new FilterPage(webDriver);
-		filterPage.clickApplyFilters(label);
+        boolean success = filterPage.clickApplyFilters(label);
+
+        assertThat("Button: " + label + " is not clicked", success, is(true));
 	}
 
 	@Override

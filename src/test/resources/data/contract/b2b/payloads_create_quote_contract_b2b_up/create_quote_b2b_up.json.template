@@ -140,7 +140,7 @@
        "accounts|aos_quotes|aos_products_quotes|usage_high_c":"30000",
        "accounts|aos_quotes|aos_products_quotes|usage_low_c":"5000",
        "accounts|aos_quotes|aos_products_quotes|usage_excl_night_c":null,
-       "accounts|aos_quotes|aos_products_quotes|kwMax_c":"50000",
+       "accounts|aos_quotes|aos_products_quotes|kwMax_c":"${kwMax}",
        "accounts|aos_quotes|primary_group_id":[
           {
              "key":"a3059b3f-55c2-4b67-9c7b-57d270a74950",
