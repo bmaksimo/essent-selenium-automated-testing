@@ -28,12 +28,12 @@ public class FilterElements extends DwpScenario {
         boolean success = filterPage.filterBy(label, value);
 
         assertThat("Filter by: " + label + " with input value: " + value + " is not confirmed", success, is(true));
-	}
+    }
 
-	@When("JBilling Click on \"([^\"]*)\"$")
-	public void clickApplyFilters(String label) throws Throwable {
+	@When("JBilling Click on \"([^\"]*)\" filter button$")
+	public void clickFilterButton(String label) throws Throwable {
 		FilterPage filterPage = new FilterPage(webDriver);
-        boolean success = filterPage.clickApplyFilters(label);
+        boolean success = filterPage.clickFilterButton(label);
 
         assertThat("Button: " + label + " is not clicked", success, is(true));
 	}

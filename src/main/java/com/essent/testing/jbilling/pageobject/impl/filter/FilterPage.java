@@ -24,7 +24,7 @@ public class FilterPage extends Component {
         return false;
     }
 
-	public boolean clickApplyFilters(String label) {
+	public boolean clickFilterButton(String label) {
         WebElement we = seleniumDriver.findElementWhenVisible(By.xpath("//a[span[contains(translate(., 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'),'"+label+"')]]"));
         if(we != null){
             seleniumDriver.waitAndClick(we);

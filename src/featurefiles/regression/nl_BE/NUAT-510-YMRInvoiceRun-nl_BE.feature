@@ -37,7 +37,7 @@ Feature: NUAT-510 Triggering advance invoice run. Check is invoice created in DW
         Given I logged in to JBilling as billing_testautomation
         When JBilling top menu item is "Customers"
         And JBilling "LOGIN NAME" input is "parameter:Id Billing customer & persoon/familie sleutel"
-        And JBilling Click on "APPLY FILTERS"
+        And JBilling Click on "APPLY FILTERS" filter button
         And JBilling Click on row "1" in Table
         And JBilling Click on text link "Show all invoices"
         Then Invoices table is not empty
@@ -51,7 +51,7 @@ Feature: NUAT-510 Triggering advance invoice run. Check is invoice created in DW
         # Check orders in jbilling
         When JBilling top menu item is "Orders"
         And JBilling "LOGIN NAME" input is "parameter:Id Billing customer & persoon/familie sleutel"
-        And JBilling Click on "APPLY FILTERS"
+        And JBilling Click on "APPLY FILTERS" filter button
         Then Order table is not empty
         When JBilling Click on row "1" in Table
         Then JBilling label "User Name:" contains value "parameter:Id Billing customer & persoon/familie sleutel" at column "2"
