@@ -17,18 +17,18 @@ public class Orders extends DwpScenario {
 	public void setupTest(Scenario scenario) throws Throwable {
 		registerActiveScenario(scenario);
 	}
-	
+
 	@When("Order table is not empty$")
 	public void checkOrderTableNotEmpty() throws Throwable {
 		OrdersPage ordersPage = new OrdersPage(webDriver);
-		boolean isNotEmpty = ordersPage.checkOrderTableNotEmpty();
-		
-		assertThat("Rows in orders table are empty", isNotEmpty, is(true));
+		boolean success = ordersPage.checkOrderTableNotEmpty();
+
+		assertThat("Rows in order table are empty", success, is(true));
 	}
-	
+
 	@When("JBilling Inner Table label \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\"$")
 	public void checkValueNextToLabel(String label, String expectedValue, String columnNumber) throws Throwable {
-		
+
 		OrdersPage orderPage = new OrdersPage(webDriver);
 		String actualResult = orderPage.checkValueNextToLabel(label, columnNumber);
 		assertThat("Value " + expectedValue + " is not shown next to label " + label, actualResult.equalsIgnoreCase(expectedValue), is(true));

@@ -9,19 +9,19 @@ import com.essent.testing.jbilling.pageobject.impl.Component;
 import com.essent.testing.selenium.SeleniumDriver;
 
 public class InvoicesPage extends Component {
-	
+
     public InvoicesPage(SeleniumDriver seleniumDriver){
         super(seleniumDriver);
     }
-    
-	public boolean checkInvoicesTableNotEmpty() {
+
+	public boolean checkInvoiceTableNotEmpty() {
 		waitForRequestsToFinish();
 		List<WebElement> rows = seleniumDriver.findElements(By.xpath("//table[@id='invoices']/tbody"));
-		
+
 		if(rows.size() > 0) {
 			return true;
 		}
-		
+
 		return false;
 	}
 }

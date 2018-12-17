@@ -40,7 +40,7 @@ Feature: NUAT-510 Triggering advance invoice run. Check is invoice created in DW
         And JBilling Click on "APPLY FILTERS" filter button
         And JBilling Click on row "1" in Table
         And JBilling Click on text link "Show all invoices"
-        Then Invoices table is not empty
+        Then Invoice table is not empty
         And JBilling First cell value in first row is "parameter:ID & Type"
         When JBilling Click on row "1" in Table
         Then JBilling label "Invoice Number" contains value "parameter:ID & Type" at column "2"

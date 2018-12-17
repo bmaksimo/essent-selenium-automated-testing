@@ -17,13 +17,13 @@ public class Invoices extends DwpScenario {
 	public void setupTest(Scenario scenario) throws Throwable {
 		registerActiveScenario(scenario);
 	}
-	
-	@When("Invoices table is not empty$")
-	public void checkOrderTableNotEmpty() throws Throwable {
+
+	@When("Invoice table is not empty$")
+	public void checkInvoiceTableNotEmpty() throws Throwable {
 		InvoicesPage invoicesPage = new InvoicesPage(webDriver);
-		boolean isNotEmpty = invoicesPage.checkInvoicesTableNotEmpty();
-		
-		assertThat("Rows in invoices table are empty", isNotEmpty, is(true));
+		boolean success = invoicesPage.checkInvoiceTableNotEmpty();
+
+		assertThat("Rows in invoice table are empty", success, is(true));
 	}
 
 	@Override
