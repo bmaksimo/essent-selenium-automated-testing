@@ -118,4 +118,11 @@ public class ContractenSteps extends DwpScenario {
         logger().info("input EAN CODE: " + inputEanCode);
         Assert.assertTrue("Correct ean code was not found.", webDriver.findElementWhenVisible(By.xpath("//h5[.='" + inputEanCode + "']")).isDisplayed());
     }
+
+    @Then("^Get Contract Number$")
+    public void searchForContractNumber() throws Throwable {
+        String contractNumber = webDriver.findElementWhenVisible(By.xpath("//*[@id=\"account_number_c\"]/div")).getText();
+        parameterProvider.put("contractNumber", contractNumber);
+
+    }
 }

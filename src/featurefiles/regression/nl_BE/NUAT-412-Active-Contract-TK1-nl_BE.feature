@@ -53,3 +53,5 @@ Feature: NUAT-412 part: Create TK1 Contract
         And Quote is confirmed
         Then View list header is "Offertes"
         Then 1st list element has cell value Sales Getekend - Waarborg at column Type & status
+
+

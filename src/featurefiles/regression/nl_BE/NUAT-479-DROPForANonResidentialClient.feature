@@ -10,11 +10,11 @@ Feature: NUAT-479: DROP For A Non Residential Client
     Scenario: DROP for a Non-residential client
         When Left menu is sales-marketing
         And Top menu item is Klanten
-#        When B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
+        When B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Top action is Filters
         And "B2C/B2B" selection is "B2B"
         And "Type klant" selection is "Klant"
-#        And "Klantnummer" input is "parameter:accountNumber"
+        And "Klantnummer" input is "parameter:accountNumber"
         Then Click on link in View List at 1st row and "Klantnummer & Naam" column polling 15 seconds
 
         When Dashboard menu is Contracten

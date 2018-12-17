@@ -109,4 +109,5 @@ public class ContractenPage extends Component {
         waitForRequestsToFinish();
         Assert.assertTrue(seleniumDriver.findElementWhenVisible(By.xpath("//span[.='" + iban + "']")).isDisplayed());
     }
+
 }

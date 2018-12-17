@@ -31,6 +31,13 @@ public class GenericSteps extends DwpScenario {
         discardPreviousFlow();
     }
 
+    @Given("^I renew login to DWP as ([^\"]*)$")
+    public void renewLoginAs(String username) throws Throwable {
+        setUpWebDriver();
+        loginAs(username);
+    }
+
+
     private void discardPreviousFlow() throws Throwable {
         Model.Execution execution = createExecution();
         execution
