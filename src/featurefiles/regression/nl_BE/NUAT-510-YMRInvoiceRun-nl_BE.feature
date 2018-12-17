@@ -43,9 +43,9 @@ Feature: NUAT-510 Triggering advance invoice run. Check is invoice created in DW
         Then Invoice table is not empty
         And JBilling First cell value in first row is "parameter:ID & Type"
         When JBilling Click on row "1" in Table
-        Then JBilling label "Invoice Number" contains value "parameter:ID & Type" at column "2"
-        And JBilling label "InvoiceType" contains value "ADVANCE" at column "2"
-        And JBilling label "Status" contains value "Unpaid" at column "2"
+        Then JBilling Value next to label "Invoice Number" is "parameter:ID & Type"
+        And JBilling Value next to label "InvoiceType" is "ADVANCE"
+        And JBilling Value next to label "Status" is "Unpaid"
         And Inner tables are not empty
 
         # Check orders in jbilling
@@ -54,7 +54,7 @@ Feature: NUAT-510 Triggering advance invoice run. Check is invoice created in DW
         And JBilling Click on "APPLY FILTERS" filter button
         Then Order table is not empty
         When JBilling Click on row "1" in Table
-        Then JBilling label "User Name:" contains value "parameter:Id Billing customer & persoon/familie sleutel" at column "2"
-        And JBilling label "OrderType" contains value "RECURRING_ADVANCE_PAYMENT" at column "2"
-        And JBilling Inner Table label "OrderLineType" contains value "ADVANCE" at column "2"
+        Then JBilling Value next to label "User Name:" is "parameter:Id Billing customer & persoon/familie sleutel"
+        And JBilling Value next to label "OrderType" is "RECURRING_ADVANCE_PAYMENT"
+        And JBilling Value next to label "OrderLineType" is "ADVANCE" in Inner Table
         And Inner tables are not empty

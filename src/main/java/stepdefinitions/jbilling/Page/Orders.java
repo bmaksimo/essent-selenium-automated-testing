@@ -26,11 +26,11 @@ public class Orders extends DwpScenario {
 		assertThat("Rows in order table are empty", success, is(true));
 	}
 
-	@When("JBilling Inner Table label \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\"$")
-	public void checkValueNextToLabel(String label, String expectedValue, String columnNumber) throws Throwable {
+    @When("JBilling Value next to label \"([^\"]*)\" is \"([^\"]*)\" in Inner Table$")
+	public void checkValueNextToLabel(String label, String expectedValue) throws Throwable {
 
 		OrdersPage orderPage = new OrdersPage(webDriver);
-		String actualResult = orderPage.checkValueNextToLabel(label, columnNumber);
+		String actualResult = orderPage.checkValueNextToLabel(label);
 		assertThat("Value " + expectedValue + " is not shown next to label " + label, actualResult.equalsIgnoreCase(expectedValue), is(true));
 	}
 

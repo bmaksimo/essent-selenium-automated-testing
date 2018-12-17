@@ -26,7 +26,7 @@ public class TableElements extends DwpScenario {
 
 		TablePage tablePage = new TablePage(webDriver);
 		boolean success = tablePage.clickFirstCellInTable(expectedResult);
-		
+
 		assertThat("First cell in table is not clicked", success, is(true));
 	}
 
@@ -34,7 +34,7 @@ public class TableElements extends DwpScenario {
 	public void clickOnRowInTable(String rowNumber) throws Throwable {
 		TablePage tablePage = new TablePage(webDriver);
 		boolean success = tablePage.clickOnRowInTable(rowNumber);
-		
+
 		assertThat("Row: " + rowNumber + " in the table is not clicked", success, is(true));
 	}
 
@@ -42,7 +42,7 @@ public class TableElements extends DwpScenario {
 	public void clickTextLink(String label) throws Throwable {
 		TablePage tablePage = new TablePage(webDriver);
 		boolean success = tablePage.clickTextLink(label);
-		
+
 		assertThat("Text link: " + label + " is not clicked", success, is(true));
 	}
 
@@ -59,14 +59,14 @@ public class TableElements extends DwpScenario {
 
 	}
 
-	@When("JBilling label \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\"$")
-	public void checkValueNextToLabel(String label, String expectedResult, String columnNumber) throws Throwable {
+	@When("JBilling Value next to label \"([^\"]*)\" is \"([^\"]*)\"$")
+	public void checkValueNextToLabel(String label, String expectedResult) throws Throwable {
 		if(expectedResult.startsWith("parameter:")) {
 			expectedResult = parameterProvider.getValueOrParameterAsString(expectedResult);
 		}
 
 		TablePage tablePage = new TablePage(webDriver);
-		String actualResult = tablePage.checkValueNextToLabel(label, columnNumber);
+		String actualResult = tablePage.checkValueNextToLabel(label);
 		assertThat("Value " + expectedResult + " is not shown next to label " + label, actualResult.equalsIgnoreCase(expectedResult), is(true));
 	}
 

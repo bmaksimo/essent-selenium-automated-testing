@@ -2,6 +2,7 @@ package com.essent.testing.jbilling.pageobject.impl.table;
 
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -48,19 +49,15 @@ public class TablePage extends Component {
 		return false;
 	}
 
-	public String checkValueNextToLabel(String label, String columnNumber) {
-		return seleniumDriver.findElementWhenVisible(By.xpath("//tr[td[contains(text(),'"+label+"')]]/td["+columnNumber+"]")).getText();
+	public String checkValueNextToLabel(String label) {
+		return seleniumDriver.findElementWhenVisible(By.xpath("//tr[td[contains(text(),'"+label+"')]]/td[2]")).getText();
 	}
 
 	public boolean checkInnerTablesNotEmpty() {
 		waitForRequestsToFinish();
 		List<WebElement> rows = seleniumDriver.findElements(By.xpath("//table[@class='innerTable']/tbody"));
 
-		if(rows.size() > 0) {
-			return true;
-		}
-
-		return false;
+		return CollectionUtils.isNotEmpty(rows);
 	}
 
 }
