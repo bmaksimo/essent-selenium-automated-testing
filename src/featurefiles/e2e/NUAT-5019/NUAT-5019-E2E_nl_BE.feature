@@ -79,14 +79,11 @@ Feature: NUAT-5019 end-to-end testing
 
         # 3 - import and match CODA
         Given I renew login to Odoo as t.geets
-#        Given I logged in to Odoo as t.geets
         And Cleanup Odoo CODA files
         When Odoo top menu is Accounting
         And  Odoo left menu is Customers
         And Odoo filter is parameter:accountNumber
-#        And Odoo filter is 1000025833
         When Column "Account Number" with value "parameter:accountNumber" is clicked
-#        When Column "Account Number" with value "1000025833" is clicked
         And Button "Journal Items" is clicked
         And Generate CODA in the "1st" row is clicked
         Then Modal title contains "Download CODA"
@@ -111,9 +108,8 @@ Feature: NUAT-5019 end-to-end testing
 
         And Click on link in View List at 1st row and "Klantnummer & Naam" column
         And Dashboard menu is Billing
-        Then Transacties list is not empty
-
-        Then "Openstaand bedrag" in the first "Paid by OV" row of "Transacties" table is "0"
+#        And 1st list element has cell value Paid by OV at column Extra info
+#        Then "Openstaand bedrag" in the first "Paid by OV" row of "Transacties" table is "0"
 
         # 4 - Create consumptions
         Given I renew login to DWP as salesmarketing.testautomation.b2c@essent.be
@@ -208,12 +204,12 @@ Feature: NUAT-5019 end-to-end testing
 
         When Dashboard menu is Billing
         Then View list header is "Transacties"
-        And 1st list element has cell value Invoice (DUNNINGCOST) at column ID & Type
-        And 2nd list element has cell value Invoice (DUNNINGCOST) at column ID & Type
         And 3rd list element has cell value Invoice (DUNNINGCOST) at column ID & Type
+        And 1st list element has cell value Invoice (DUNNINGCOST) at column ID & Type
+        And 2nd list element has cell value Invoice (DUNNINGCOST) at column "ID & Type" polling 450 seconds
         And 4th list element has cell value Invoice (SETTLEMENT) at column ID & Type
         And 5th list element has cell value Invoice (ADVANCE) at column ID & Type
-        And 6th list element has cell value PAYMENT at column ID & Type
+#        And 6th list element has cell value Payment at column ID & Type
 
         # 9 - Soft dunning
         And Dashboard menu is Service
@@ -223,18 +219,36 @@ Feature: NUAT-5019 end-to-end testing
         And  Table Taken contains value "Soft-Dunning Call POST HB1 B2C HIGH" at column Naam & Type & Subtype
 
         # 10 - Check for INITIATE STOP ACCESS market message creation
+        Given I renew login to DWP as contracting.testautomation.b2c@essent.be
+        When Left menu is contracting-switching
+        And Top menu item is Klanten
+        And Top action is Filters
+        And "Naam" input is "parameter:suitecrm-customer-name"
+        Then 1st List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
+
+        Given Click on link in View List at 1st row and "Klantnummer & Naam" column
         When Dashboard menu is Marktberichten
-        Then 1st list element has cell value INITIATE STOP ACCESS at column Module & Label
+        Then 1st list element has cell value INITIATE STOP ACCESS at column "Module & Label" polling 450 seconds
 
         # 11 - Cancel INITIATE STOP ACCESS market message and create a new INITIATE STOP ACCESS market message effective from NOW
         When Click on link in "Marktberichten" View List at 1st row and "Plus Action" column
         And Row actions "Annuleer Marktbericht" is clicked
         And Select Contractline dialog is confirmed
+#        Then Wait for 180 seconds
+
+        When Click on Start nieuw marktbericht
+        And Click Select Contractline
+        And  Dialog search input is current "parameter:EAN-code"
+        Then Select Contractline dialog is confirmed
+        When "Module" selection is "INITIATE STOP ACCESS"
+        And Label input for "Label" is "Non-Residential End-of-Contract"
+        And "Effective Date" date is "now"
+        And Option "Testing?" is On
+        And Select Contractline dialog is confirmed
+        Then 1st list element has cell value INITIATE STOP ACCESS at column "Module & Label" polling 450 seconds
         Then Wait for 180 seconds
 
-        # 12 - Check if contract is now inactive
         When Dashboard menu is Contracten
         Then View list header is "Actieve en toekomstige connecties"
         And Actieve en toekomstige connecties list is empty
-        And View list header is "Contracten"
-        And 1st list element has cell value Inactief at column Type & status
+        And Table Contracten contains value "Inactief" at column Type & status
