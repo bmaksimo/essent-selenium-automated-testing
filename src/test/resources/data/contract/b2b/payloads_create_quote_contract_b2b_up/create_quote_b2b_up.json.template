@@ -65,7 +65,7 @@
        "accounts|aos_quotes|aos_products_quotes|contract_line_status_c":null,
        "accounts|aos_quotes|aos_products_quotes|product_type_c":"ELEC",
        "dwp|returnModule":"Accounts",
-       "accounts|aos_quotes|aos_products_quotes|meter_type_c":"AMR",
+       "accounts|aos_quotes|aos_products_quotes|meter_type_c":"${meterType}",
        "accounts|aos_quotes|aos_products_quotes|meter_configuration_c":"DOUBLE",
        "accounts|aos_quotes|aos_products_quotes|reset_point_c":false,
        "accounts|aos_quotes|aos_products_quotes|addresses_aos_products_quotes":{
@@ -140,7 +140,7 @@
        "accounts|aos_quotes|aos_products_quotes|usage_high_c":"30000",
        "accounts|aos_quotes|aos_products_quotes|usage_low_c":"5000",
        "accounts|aos_quotes|aos_products_quotes|usage_excl_night_c":null,
-       "accounts|aos_quotes|aos_products_quotes|kwMax_c":"50",
+       "accounts|aos_quotes|aos_products_quotes|kwMax_c":"${kwMax}",
        "accounts|aos_quotes|primary_group_id":[
           {
              "key":"a3059b3f-55c2-4b67-9c7b-57d270a74950",
@@ -236,7 +236,7 @@
        "first_name":"2M6vMEtEA",
        "last_name":"NNlREoNif",
        "dwp|accounts|aos_quotes|aos_products_quotes|meter_type_c|matchedCondition":"model['accounts|aos_quotes|aos_products_quotes|product_type_c'] === 'ELEC'",
-       "dwp|accounts|aos_quotes|aos_products_quotes|meter_configuration_c|matchedCondition":"model['accounts|aos_quotes|aos_products_quotes|product_type_c'] === 'ELEC' && model['accounts|aos_quotes|aos_products_quotes|meter_type_c'] !== 'AMR'",
+       "dwp|accounts|aos_quotes|aos_products_quotes|meter_configuration_c|matchedCondition":"model['accounts|aos_quotes|aos_products_quotes|product_type_c'] === 'ELEC' && model['accounts|aos_quotes|aos_products_quotes|meter_type_c'] !== '${meterType}'",
        "dwp|dwp|external_message_GUID_4|matchedCondition":"model['accounts|aos_quotes|aos_products_quotes|mig_version'] === '4' || model['accounts|aos_quotes|aos_products_quotes|market_mock_c'] === false ",
        "dwp|dwp|external_message_GUID_1|matchedCondition":"model['accounts|aos_quotes|aos_products_quotes|mig_version'] === '4' || model['accounts|aos_quotes|aos_products_quotes|market_mock_c'] === false ",
        "dwp|dwp|external_message_GUID_2|matchedCondition":"model['accounts|aos_quotes|aos_products_quotes|mig_version'] === '4' || model['accounts|aos_quotes|aos_products_quotes|market_mock_c'] === false ",

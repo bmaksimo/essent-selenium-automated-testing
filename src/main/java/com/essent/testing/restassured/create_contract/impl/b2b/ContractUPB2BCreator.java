@@ -1,16 +1,19 @@
 package com.essent.testing.restassured.create_contract.impl.b2b;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import org.apache.log4j.Logger;
+import org.junit.Assert;
+
 import com.essent.testing.restassured.create_contract.QuoteCreator;
 import com.essent.testing.restassured.create_contract.QuoteCreatorB2BBase;
 import com.essent.testing.restassured.create_contract.constants.ApiPathsContract;
 import com.essent.testing.restassured.create_contract.constants.ContractConstants;
 import com.essent.testing.restassured.create_contract.constants.ContractStatus;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
-import org.apache.log4j.Logger;
-import org.junit.Assert;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import stepdefinitions.dwp.contracts.b2b.QuoteB2B;
 
 public class ContractUPB2BCreator extends QuoteCreatorB2BBase implements QuoteCreator {
 
@@ -19,6 +22,11 @@ public class ContractUPB2BCreator extends QuoteCreatorB2BBase implements QuoteCr
 	public ContractUPB2BCreator(String isFakeAddress, String switchType) throws FileNotFoundException, IOException{
 		super();
 		getQuoteProperties(ContractConstants.PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_UP, isFakeAddress, switchType);
+	}
+
+	public ContractUPB2BCreator(QuoteB2B quoteB2B) throws FileNotFoundException, IOException{
+		super();
+		getQuoteProperties(ContractConstants.PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_UP, quoteB2B);
 	}
 
 	@Override
