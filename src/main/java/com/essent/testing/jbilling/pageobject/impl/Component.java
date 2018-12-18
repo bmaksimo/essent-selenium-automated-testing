@@ -1,10 +1,16 @@
 package com.essent.testing.jbilling.pageobject.impl;
 
-import com.essent.testing.selenium.SeleniumDriver;
-import cucumber.runtime.CucumberException;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.text.StrSubstitutor;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+
+import com.essent.testing.selenium.SeleniumDriver;
+
+import cucumber.runtime.CucumberException;
 
 
 public abstract class Component {
@@ -58,6 +64,13 @@ public abstract class Component {
 
     protected void waitForRequestsToFinish() {
         seleniumDriver.awaitJqueryNotActive(500);
+    }
+    
+    protected String createQuery(String template, String key, String value) {
+        Map<String, String> valuesMap = new HashMap<>();
+        valuesMap.put(key, value);
+        StrSubstitutor sub = new StrSubstitutor(valuesMap);
+        return sub.replace(template);
     }
 
     public String getTitle() {
