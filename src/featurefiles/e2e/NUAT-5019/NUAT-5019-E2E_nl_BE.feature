@@ -252,3 +252,4 @@ Feature: NUAT-5019 end-to-end testing
         Then View list header is "Actieve en toekomstige connecties"
         And Actieve en toekomstige connecties list is empty
         And Table Contracten contains value "Inactief" at column Type & status
+        And Send email to SMEs
