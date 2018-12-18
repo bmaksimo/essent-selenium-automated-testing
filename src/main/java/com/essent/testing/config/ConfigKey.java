@@ -103,9 +103,9 @@ public enum ConfigKey {
     ODOO_PASSWORD("odoo.password"),
     ODOO_MASTERPASSWORD("odoo.masterPassword"),
 
-    JBILLING_BASE_URL("billing.baseurl"),
-    JBILLING_USER("billing.user.b2b"),
-    JBILLING_PASSWORD("billing.password.b2b"),
+    JBILLING_BASE_URL("jbilling.baseurl"),
+    JBILLING_USER("jbilling.user.b2b"),
+    JBILLING_PASSWORD("jbilling.password.b2b"),
 
     WEBDRIVER_FIREFOX_DRIVER("webdriver.firefox.driver"),
     WEBDRIVER_GECKO_DRIVER("webdriver.gecko.driver"),
