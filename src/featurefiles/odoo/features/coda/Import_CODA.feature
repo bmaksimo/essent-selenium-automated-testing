@@ -4,7 +4,6 @@
 Feature: Import a coda file
 
     Background:
-        Given Cleanup Odoo CODA files
         #GUI contract creation
         Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"

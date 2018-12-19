@@ -24,8 +24,12 @@ class TrClickTableCellUrl extends TestRunnerBase {
         let viewListName = options.view_list_name;
         if ("Plus Action" === caption && null !== viewListName) {
             if ("Billing customer" === viewListName) {
-                viewListName = "BillingCustomerOnaccount";
-                $("list-plus-cell[list-key='" + viewListName + "'] > div > a").trigger("click");
+                $("list-plus-cell[list-key='BillingCustomerOnaccount'] > div > a").trigger("click");
+                result.status = 'PASSED';
+                result.reason = '';
+            } else if ("Marktberichten" === viewListName) {
+                let chosenRow = options.index - 1;
+                $("list-plus-cell[list-key='MarketTransactionsOnAccount'] > div > a")[chosenRow].click();
                 result.status = 'PASSED';
                 result.reason = '';
             } else {

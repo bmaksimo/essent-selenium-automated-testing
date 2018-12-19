@@ -9,7 +9,7 @@ import cucumber.api.java.en.When;
 
 public class MarketMessagesSteps extends DwpScenario {
 
-    @Before("@DWP, @REGRESSION")
+    @Before("@DWP, @REGRESSION, @E2E")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -28,7 +28,7 @@ public class MarketMessagesSteps extends DwpScenario {
     }
 
     @Override
-    @After("@DWP, @REGRESSION")
+    @After("@DWP, @REGRESSION, @E2E")
     public void tearDown() {
         super.tearDown();
     }

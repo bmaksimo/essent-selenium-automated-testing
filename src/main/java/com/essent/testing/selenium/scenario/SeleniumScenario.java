@@ -1,6 +1,7 @@
 package com.essent.testing.selenium.scenario;
 
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.scenario.RegisteredScenario;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.junit.AfterClass;
@@ -52,7 +53,10 @@ public class SeleniumScenario extends RegisteredScenario {
 
     protected void moveToElementAndClick(WebElement element, WebDriver driver) {
         Actions actions = new Actions(driver);
-        actions.moveToElement(element).click().perform();
+        Actions elementMovedTo = actions.moveToElement(element);
+        elementMovedTo.perform();
+        Sleeper.sleepTightInSeconds(3);
+        elementMovedTo.click().perform();
     }
 
     @AfterClass
