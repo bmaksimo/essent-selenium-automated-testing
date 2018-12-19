@@ -26,12 +26,15 @@ Feature: NUAT-5021 Step 2. Deduplicate to 1 customer number
         And Quote details are confirmed
         Then Form header is "Personal details"
 
-        And "Aanspreking" selection is "Meneer"
-        And "Voornaam" input is "parameter:customer-first-name"
-        And "Familienaam" input is "parameter.customer-last-name"
-        And "E-mailadres" input is "parameter.customer-email"
-        And "Geboortedatum" input is "parameter.customer-birth-name"
-        And "Gsm-nummer" input is "parameter.customer-gsm-number"
+#        And "Aanspreking" selection is "Meneer"
+#        And "Voornaam" input is "parameter:customer-first-name"
+#        And "Familienaam" input is "parameter:customer-last-name"
+#        And "E-mailadres" input is "parameter:customer-email"
+#        And "Geboortedatum" input is "parameter:customer-birth-name"
+#        And "Gsm-nummer" input is "parameter:customer-gsm-number"
+
+        When Customer is random
+
 
         And Customer address is
             | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |

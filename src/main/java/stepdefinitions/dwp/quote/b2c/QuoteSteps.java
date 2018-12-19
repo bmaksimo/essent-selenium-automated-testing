@@ -10,7 +10,6 @@ import com.essent.testing.restassured.create_contract.helper.PrepareDataForContr
 import com.essent.testing.util.resource.ResourceUtil;
 import com.google.gson.Gson;
 import cucumber.api.DataTable;
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -83,7 +82,7 @@ public class QuoteSteps extends DwpScenario {
         }
     }
 
-    private class GetRandomUser implements Predicate<CustomerDetails> {
+    private class RandomUserActions implements Predicate<CustomerDetails> {
         @Override
         public boolean test(CustomerDetails customer) {
             Map<String, String> options = new HashMap<>();
@@ -153,12 +152,23 @@ public class QuoteSteps extends DwpScenario {
 
 
     @And("^Customer is random$")
-    public void findRandomUser() throws Throwable {
-        CustomerDetails customer = new CustomerDetails();
-        boolean success = new GetRandomUser().test(customer);
-        parameterProvider.put("suitecrm-customer-name", customer.getFirstName() + " " + customer.getLastName());
+    public void checkAndGetRandomUser() throws Throwable {
+        RandomUser randomUser = (RandomUser) parameterProvider.get("suitecrm-customer");
+        boolean success;
+        if(randomUser != null) {
+            success = new RandomUserActions().fillInCustomerDetails(randomUser);
+        } else {
+            success = generateRandomUser();
+        }
         assertThat("Random customer data was not fetched.", success,
             is(true));
+    }
+
+    private boolean generateRandomUser() {
+        CustomerDetails customer = new CustomerDetails();
+        boolean success = new RandomUserActions().test(customer);
+        parameterProvider.put("suitecrm-customer-name", customer.getFirstName() + " " + customer.getLastName());
+        return success;
     }
 
     @And("^Customer address is$")
