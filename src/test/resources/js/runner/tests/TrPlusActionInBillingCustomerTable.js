@@ -6,7 +6,7 @@
  * * @param {function} callback - The Java callback that handles the result.
  *
  * Java example:
- * boolean result = executeJavascriptTest("TrPlusActionInMarketMessageTable", options);
+ * boolean result = executeJavascriptTest("TrPlusActionInBillingCustomerTable", options);
  */
 class TrPlusActionInBillingCustomerTable extends TestRunnerBase {
 
