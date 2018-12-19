@@ -80,7 +80,7 @@ public class EmailService {
         MimeMessage mimeMailMessage = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMailMessage, true);
         helper.setFrom(ConfigProvider.getProperty(ConfigKey.ESSENT_EMAIL_FROM));
-        helper.setTo(ConfigProvider.getProperty(ConfigKey.ESSENT_EMAIL_TO));
+        helper.setTo(ConfigProvider.getProperty(ConfigKey.ESSENT_EMAIL_TO).split(","));
         helper.setSubject("NUAT-5019 Scenario Execution");
         helper.setText(messageBody);
 
