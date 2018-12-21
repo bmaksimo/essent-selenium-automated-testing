@@ -153,13 +153,15 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^Customer is random$")
     public void checkAndGetRandomUser() throws Throwable {
-        RandomUser randomUser = (RandomUser) parameterProvider.get("suitecrm-customer");
-        boolean success;
-        if(randomUser != null) {
-            success = new RandomUserActions().fillInCustomerDetails(randomUser);
-        } else {
-            success = generateRandomUser();
-        }
+        boolean success = generateRandomUser();
+        assertThat("Random customer data was not fetched.", success,
+            is(true));
+    }
+
+    @And("^Customer is duplicated$")
+    public void duplicateRandomUser() throws Throwable {
+        RandomUser randomUser = (RandomUser) parameterProvider.getValueOrParameter("parameter:suitecrm-customer");
+        boolean success = new RandomUserActions().fillInCustomerDetails(randomUser);
         assertThat("Random customer data was not fetched.", success,
             is(true));
     }

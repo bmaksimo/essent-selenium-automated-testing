@@ -331,33 +331,4 @@ public class BatchSteps extends RegisteredScenario {
 		}
 	}
 
-    @After("@DWP, @E2E")
-    public void afterScenario(Scenario scenario) {
-        // We need to kill any pending jobs and wait until they are finished.
-        if( scenario.isFailed() ) {
-            logger().error("Cleaning up after failure.....");
-            try {
-                BillingBatch billingBatch=new BillingBatch();
-                RSShowRunningJobsResponse showJobsResponse = billingBatch.showRunningJobs();
-                for (RunningJobItem job:showJobsResponse.getJobs()) {
-                    RSStopRunningJobRequest request = new RSStopRunningJobRequest();
-                    request.setJobId(Long.valueOf(job.getJobId()));
-                    RestResponse restResponse = billingBatch.stopRunningJob(request);
-                    Assert.assertTrue(restResponse.getMsg(), restResponse.getResult());
-                }
-
-                waitForAllRunsFinished();
-            } catch (Throwable t) {
-                // if soft method failed, just wait for 60 seconds and hope for the best.
-                logger().error("Cleaning up FAILED, waiting for one minute (fingers crossed)");
-                waitMillis(60_000L);
-            }
-
-        }
-        else {
-            System.out.println("No Cleaning up needed");
-
-        }
-    }
-
 }
