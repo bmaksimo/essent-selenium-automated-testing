@@ -1,13 +1,11 @@
 package com.essent.testing.dwp.pageobject.impl.service_contracting;
 
-import com.billinghouse.cucumber.runtime.parameter.ParameterProvider;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import stepdefinitions.dwp.contracts.product_types.ProductTypes;
 
 public class ContractenPage extends Component {
     private static  String payDate;
@@ -111,4 +109,5 @@ public class ContractenPage extends Component {
         waitForRequestsToFinish();
         Assert.assertTrue(seleniumDriver.findElementWhenVisible(By.xpath("//span[.='" + iban + "']")).isDisplayed());
     }
+
 }

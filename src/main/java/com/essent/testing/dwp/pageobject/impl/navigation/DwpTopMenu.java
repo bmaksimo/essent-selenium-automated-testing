@@ -27,7 +27,7 @@ public class DwpTopMenu extends Component {
 
     private void checkAndOpenTopMenu() {
         String query = ".top.mobile-menu [name='top-menu-toggle']";
-        WebElement hamburger = seleniumDriver.findElementOrNull(By.cssSelector(query), Duration.ofSeconds(2), Duration.ofMillis(100));
+        WebElement hamburger = seleniumDriver.findElementOrNull(By.cssSelector(query), Duration.ofSeconds(30), Duration.ofMillis(100));
         if(hamburger!=null) {
             Button hamButton = new ButtonImpl(hamburger);
             hamButton.click();

@@ -3,7 +3,6 @@ package stepdefinitions.dwp.page_object;
 import com.essent.testing.dwp.pageobject.impl.page.ContractPage;
 import com.essent.testing.dwp.pageobject.impl.service_contracting.ContractenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -118,5 +117,12 @@ public class ContractenSteps extends DwpScenario {
         String inputEanCode = parameterProvider.getValueOrParameterAsString(eanCode);
         logger().info("input EAN CODE: " + inputEanCode);
         Assert.assertTrue("Correct ean code was not found.", webDriver.findElementWhenVisible(By.xpath("//h5[.='" + inputEanCode + "']")).isDisplayed());
+    }
+
+    @Then("^Get Contract Number$")
+    public void searchForContractNumber() throws Throwable {
+        String contractNumber = webDriver.findElementWhenVisible(By.xpath("//*[@id=\"account_number_c\"]/div")).getText();
+        parameterProvider.put("contractNumber", contractNumber);
+
     }
 }

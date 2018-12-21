@@ -15,6 +15,8 @@ import io.restassured.http.ContentType;
 import io.restassured.http.Cookies;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import stepdefinitions.dwp.contracts.b2b.QuoteB2B;
+
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 
@@ -85,6 +87,8 @@ public class QuoteCreatorB2BBase {
 
 	protected String isFakeAddress="";
 
+	protected String meterType="";
+	protected String kwMax = "";
 
 	public QuoteCreatorB2BBase() {
 		numberOfAttempts = 0;
@@ -343,6 +347,8 @@ public class QuoteCreatorB2BBase {
 		testMap.put("${migLabel}", migLabel);
 		testMap.put("${migModul}", migModul);
 		testMap.put("${meterOpen}", meterOpen);
+		testMap.put("${meterType}", meterType);
+		testMap.put("${kwMax}", kwMax);
 
 		String jsonBody = PrepareDataForContract.createRequestJsonPayload(payloadCreateQuoteB2B, originalPayloadCreateQuoteB2B, testMap);
 
@@ -483,6 +489,8 @@ public class QuoteCreatorB2BBase {
 
 		paymentMethod = prop.getProperty("payment_method");
 		legalCommunicationBy = prop.getProperty("legal_communication_by");
+		meterType = prop.getProperty("meter_type");
+		kwMax = prop.getProperty("kwMax");
 
 		if(!isFakeAddress.equals("FAKE")) {
 			addressNumber = prop.getProperty("address_number");
@@ -497,9 +505,47 @@ public class QuoteCreatorB2BBase {
 			migLabel = prop.getProperty("mig_label_c");
 			migModul = prop.getProperty("mig_modul_c");
 			meterOpen = prop.getProperty("meter_open");
+
 		}else {
 			getAddressEANSwitchType(prop, switchType);
 		}
+	}
+
+	protected void getQuoteProperties(String path, QuoteB2B quoteB2B) throws FileNotFoundException, IOException {
+		this.isFakeAddress = quoteB2B.getIsFakeAddress();
+
+		Properties prop = ContractUtil.loadProperties(path);
+
+		pricingDate = prop.getProperty("pricing_date");
+		priceValidUntilDate = prop.getProperty("price_valid_until_date");
+		signatureReceivedDate = prop.getProperty("signature_received_date");
+
+		upStartDate = prop.getProperty("up_start_date");
+		upEndDate = prop.getProperty("up_end_date");
+
+		paymentMethod = prop.getProperty("payment_method");
+		legalCommunicationBy = prop.getProperty("legal_communication_by");
+		meterType = quoteB2B.getMeterType();
+		kwMax = quoteB2B.getKwMax();
+
+		if(!isFakeAddress.equals("FAKE")) {
+			addressNumber = prop.getProperty("address_number");
+			addressStreet = prop.getProperty("address_street");
+			addressPostalCode = prop.getProperty("address_postal_code");
+			addressCity = prop.getProperty("address_city");
+
+			ean_c = prop.getProperty("ean_c");
+
+			moveIn = prop.getProperty("move_in_c");
+			switchType = prop.getProperty("switchtype_c");
+			migLabel = prop.getProperty("mig_label_c");
+			migModul = prop.getProperty("mig_modul_c");
+			meterOpen = prop.getProperty("meter_open");
+
+		}else {
+			getAddressEANSwitchType(prop, quoteB2B.getSwitchType());
+		}
+
 	}
 
 	private String getCurrentContractStartDateFromDWP(String path) throws IOException {
