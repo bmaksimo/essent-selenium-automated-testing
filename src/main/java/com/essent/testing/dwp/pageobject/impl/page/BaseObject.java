@@ -51,10 +51,10 @@ public class BaseObject extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[1])[2]")).getText();
     }
 
-    String pattern = "dd/MM/yyyy";
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+    private String pattern = "dd/MM/yyyy";
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
-    String date = simpleDateFormat.format(new Date());
+    private String date = simpleDateFormat.format(new Date());
 
     public void dateIsNow(String label) throws InterruptedException {
         seleniumDriver.waitForRequestsToFinish();
