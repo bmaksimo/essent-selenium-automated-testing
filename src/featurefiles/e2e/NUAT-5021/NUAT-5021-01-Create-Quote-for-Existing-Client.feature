@@ -1,5 +1,4 @@
 @DWP
-@E2E
 @B2C
 Feature: NUAT-5021 Step 1. Create an account for de-duplication.
 
@@ -33,8 +32,6 @@ Feature: NUAT-5021 Step 1. Create an account for de-duplication.
         When "Startdatum" date is "now"
         And Electricity EAN code is "random"
 
-        #And Switch type is Move in
-        #And Electricity market mock test is Open
 
         And Connection details are confirmed
         Then Form header is "Billing details"
@@ -55,7 +52,6 @@ Feature: NUAT-5021 Step 1. Create an account for de-duplication.
         When Dashboard menu is Contracten
         Then View list header is "Actieve en toekomstige connecties"
         And  1st List element with value at column "EAN-code" is checked
-        #And  1st list element has cell value Actief at column "Contractnummer" polling 450 seconds
 
         When Top arrow button is Up
         And Left menu is sales-marketing

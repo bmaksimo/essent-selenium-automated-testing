@@ -1,5 +1,6 @@
 @E2E
 @DWP
+@E2E
     Feature: NUAT-5021 Complete scenario from de-duplication of client with guarantee to inactive client
      @NUAT-5021
      Scenario: From de-duplication of client to inactive client via passive renewal
@@ -28,8 +29,6 @@
 
         When "Startdatum" date is "now"
         And Electricity EAN code is "random"
-        #Uncomment for "move in" flow
-        #And Switch type is Move in
         And Electricity market mock test is Open
         And Connection details are confirmed
         Then Form header is "Billing details"
@@ -50,7 +49,6 @@
         When Dashboard menu is Contracten
         Then View list header is "Actieve en toekomstige connecties"
         And  1st List element with value at column "EAN-code" is checked
-        And  1st list element has cell value Actief at column "Contractnummer" polling 450 seconds
 
         When Top arrow button is Up
         And Left menu is sales-marketing

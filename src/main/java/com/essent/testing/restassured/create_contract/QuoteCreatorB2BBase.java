@@ -15,10 +15,9 @@ import io.restassured.http.ContentType;
 import io.restassured.http.Cookies;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import stepdefinitions.dwp.contracts.b2b.QuoteB2B;
-
 import org.apache.log4j.Logger;
 import org.junit.Assert;
+import stepdefinitions.dwp.contracts.b2b.QuoteB2B;
 
 import java.io.File;
 import java.io.FileNotFoundException;

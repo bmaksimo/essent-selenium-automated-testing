@@ -440,6 +440,8 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
     }
     public List<WebElement> findElements(By selector, Duration timeout, Duration pollingEvery) {
         logger.debug("STEP:");
+        logger.debug(" - ELEMENT QUERY: " + selector.toString());
+
         DateTime startOfMeasurement = DateTime.now();
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)
             .withTimeout(timeout)

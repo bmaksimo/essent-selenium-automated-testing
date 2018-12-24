@@ -1,9 +1,9 @@
 package stepdefinitions.jbilling;
 
 import com.essent.roles.UserRoles;
-import com.essent.testing.jbilling.scenario.JBillingScenario;
 import com.essent.testing.jbilling.pageobject.Window;
 import com.essent.testing.jbilling.pageobject.impl.modal.login.JBillingLogin;
+import com.essent.testing.jbilling.scenario.JBillingScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
