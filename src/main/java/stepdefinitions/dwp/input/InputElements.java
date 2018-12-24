@@ -57,7 +57,7 @@ public class InputElements extends DwpScenario {
             Model.Execution initializeField = createExecution();
             initializeField
                 .element(new Model.Element().search("XPATH").query(query).key(elementName))
-                .step(createStep(SELECT).element(elementName).value(value).timeoutInSeconds(4), INPUT.getSleepInMillis());
+                .step(createStep(SELECT).element(elementName).value(value).timeoutInSeconds(4), 100);
             webDriver.waitForRequestsToFinish();
             boolean success =  execute(initializeField);
             webDriver.waitForRequestsToFinish();
