@@ -21,44 +21,30 @@ class TrClickTableCellUrl extends TestRunnerBase {
         let caption = options.column;
         let row = parseInt(options.index) * 2 - 1;
 
-        let viewListName = options.view_list_name;
-        if ("Plus Action" === caption && null !== viewListName) {
-            if ("Billing customer" === viewListName) {
-                viewListName = "BillingCustomerOnaccount";
-                $("list-plus-cell[list-key='" + viewListName + "'] > div > a").trigger("click");
+        let index = $(".list__content th:contains('" + caption + "')").index();
+        console.log("ROW: " + row);
+        console.log("INDEX: " + index);
+        if (index < 0) {
+            result.status = 'FAILED';
+            result.reason = 'Column ' + caption + ' was not found.';
+        } else if ($("#rows tr:nth-child(" + row + ")") < 0) {
+            result.status = 'FAILED';
+            result.reason = 'Row ' +  caption + ' was not found.';
+        } else {
+            let query = "#rows tr:nth-child(" + row + ") td:nth-child(" + ++index + ") div a";
+            let elem = $(query);
+            console.log("--QUERY: " + query);
+            console.log("--CELL TEXT: " + elem.text());
+            console.log("--ELEM index(): " + elem.index());
+            if(elem.index()  > -1) {
+                console.log(elem.text);
+                elem.click();
                 result.status = 'PASSED';
+                result.column.index = index;
                 result.reason = '';
             } else {
-                result.status = 'FAILED';
-                result.reason = 'Unknown view list ' + viewListName;
-            }
-        }
-        else {
-            let index = $(".list__content th:contains('" + caption + "')").index();
-            console.log("ROW: " + row);
-            console.log("INDEX: " + index);
-            if (index < 0) {
-                result.status = 'FAILED';
-                result.reason = 'Column ' + caption + ' was not found.';
-            } else if ($("#rows tr:nth-child(" + row + ")") < 0) {
-                result.status = 'FAILED';
-                result.reason = 'Row ' +  caption + ' was not found.';
-            } else {
-                let query = "#rows tr:nth-child(" + row + ") td:nth-child(" + ++index + ") div a";
-                let elem = $(query);
-                console.log("--QUERY: " + query);
-                console.log("--CELL TEXT: " + elem.text());
-                console.log("--ELEM index(): " + elem.index());
-                if(elem.index()  > -1) {
-                    console.log(elem.text);
-                    elem.click();
-                    result.status = 'PASSED';
-                    result.column.index = index;
-                    result.reason = '';
-                } else {
-                    result.reason  = 'Navigation, click on ' + elem.text();
-                    result.column  = options.column;
-                }
+                result.reason  = 'Navigation, click on ' + elem.text();
+                result.column  = options.column;
             }
         }
 

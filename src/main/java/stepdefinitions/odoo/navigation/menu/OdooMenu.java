@@ -10,19 +10,9 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.And;
 import cucumber.runtime.CucumberException;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-
-
-
-
-import java.time.Duration;
-import java.util.List;
-import java.util.Map;
-
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -53,6 +43,7 @@ public class OdooMenu extends OdooScenario {
     @Then("^Generate CODA in the \"([^\"]*)\" row is clicked$")
     public void clickCodaUrl(String ordinal) {
         String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
+        awaitOdooRequestToFinish(10);
         WebElement button = webDriver.findElementWhenVisible(By.xpath("//table[@class='oe_list_content'][1]//tbody//tr["+rowIndex+"]//td[@data-field='generate_coda']//button[1]"));
         if (null == button) throw new CucumberException("Button was not found");
 
@@ -76,7 +67,7 @@ public class OdooMenu extends OdooScenario {
 
     @Then("^Modal button \"([^\"]*)\" is clicked$")
     public void odooClickButton(String buttonLabel) {
-        WebElement button = webDriver.findElement(By.xpath("//button//span[contains(., '" + buttonLabel + "')]"));
+        WebElement button = webDriver.findElementWhenVisible(By.xpath("//button//span[contains(., '" + buttonLabel + "')]"));
         if (null == button) throw new CucumberException("Button " + buttonLabel + " was not found.");
 
         button.click();

@@ -19,7 +19,7 @@ Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR,
             And "Klantnummer" input is "parameter:accountNumber"
             Then 1st List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
 
-#            run invoice
+            #run invoice
             When Plus menu is "Billing -> Start facturatierun"
             And Modal dialog is Start invoicerun
             And "Naam job" selection is "recurrent"
@@ -100,7 +100,7 @@ Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR,
             And Top action is Filters
             And "B2C/B2B" selection is "B2B"
             And "Type klant" selection is "Klant"
-            And "Klantnummer" input is "1000025944"
+            And "Klantnummer" input is "parameter:accountNumber"
             Given Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
             When Dashboard menu is Billing
             Then View list header is "Afbetalingsplannen"

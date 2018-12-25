@@ -1,5 +1,6 @@
 package stepdefinitions.dwp.view_list;
 
+import com.essent.automation.util.Sleeper;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -32,6 +33,11 @@ public class ViewListElements extends NavigationElements {
 
     private static final String INTERACTIONS = "InteractionsOnAccount";
     private static final String PAYMENTS = "PaymentPlansOnAccount";
+    private static final String MARKET_MESSAGES = "Marktberichten";
+    private static final String MARKET_MESSAGES_VIEW_LIST = "MarketTransactionsOnAccount";
+    private static final String BILLING_CUSTOMER = "Billing customer";
+    private static final String BILLING_CUSTOMER_VIEW_LIST = "BillingCustomerOnaccount";
+    private static final String PLUS_ACTION = "Plus Action";
 
     private class CheckViewListHeader implements Predicate<String> {
         @Override
@@ -232,7 +238,20 @@ public class ViewListElements extends NavigationElements {
     private class ClickTableCellUrl implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
-            return executeJavascriptTest("TrClickTableCellUrl", options);
+            String viewList = (String) options.get("view_list_name");
+            if (null == viewList)
+                return executeJavascriptTest("TrClickTableCellUrl", options);
+
+            String column = (String) options.get("column");
+            if (PLUS_ACTION.equalsIgnoreCase(column)) {
+                if (MARKET_MESSAGES_VIEW_LIST.equalsIgnoreCase(viewList))
+                    return executeJavascriptTest("TrPlusActionInMarketMessageTable", options);
+                else if (BILLING_CUSTOMER_VIEW_LIST.equalsIgnoreCase(viewList))
+                    return executeJavascriptTest("TrPlusActionInBillingCustomerTable", options);
+                else throw new IllegalArgumentException(String.format("Table '%s' has no implementation. Please use an implemented table or implement a new one.", viewList));
+            }
+
+            return false;
         }
     }
 
@@ -324,10 +343,7 @@ public class ViewListElements extends NavigationElements {
 
     @When("^Click on link in View List at ([^\"]*) row and \"([^\"]*)\" column$")
     public void clickOnViewListAtRowAndColumn(String ordinal, String column) throws Throwable {
-        String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
-        Map<String, String> columnIndexListOptions = new HashMap<>();
-        columnIndexListOptions.put("column", column);
-        columnIndexListOptions.put("index", rowIndex);
+        Map<String, String> columnIndexListOptions = getColumnIndexListOptions(column, null, ordinal);
         given().await()
             .ignoreExceptions()
             .pollInterval(TWO_SECONDS)
@@ -338,10 +354,7 @@ public class ViewListElements extends NavigationElements {
     @When("^Click on link in View List at ([^\"]*) row and \"([^\"]*)\" column polling (\\d+) seconds?$")
     public void clickOnViewListAtRowAndColumn(String ordinal, String column, int seconds) throws Throwable {
         webDriver.waitForRequestsToFinish();
-        String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
-        Map<String, String> columnIndexListOptions = new HashMap<>();
-        columnIndexListOptions.put("column", column);
-        columnIndexListOptions.put("index", rowIndex);
+        Map<String, String> columnIndexListOptions = getColumnIndexListOptions(column, null, ordinal);
         ClickTableCellUrl clickFunction = new ClickTableCellUrl();
         given().await()
             .ignoreExceptions()
@@ -352,14 +365,26 @@ public class ViewListElements extends NavigationElements {
 
     @When("^Click on link in \"([^\"]*)\" View List at ([^\"]*) row and \"([^\"]*)\" column$")
     public void clickOnSuppliedViewListAtRowAndColumn(String viewListName, String ordinal, String column) throws Throwable {
-        String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
-        Map<String, String> columnIndexListOptions = new HashMap<>();
-        columnIndexListOptions.put("column", column);
-        columnIndexListOptions.put("view_list_name", viewListName);
-        columnIndexListOptions.put("index", rowIndex);
+        Map<String, String> columnIndexListOptions = getColumnIndexListOptions(column, viewListName, ordinal);
         boolean success = new ClickTableCellUrl().test(columnIndexListOptions);
         assertThat(String.format("View list did not contain URL at row %s header '%s' and '%s' view list", ordinal, column, viewListName),
             success, is(true));
+    }
+
+    private Map<String, String> getColumnIndexListOptions(String column, String viewListName, String ordinal) {
+        String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
+        Map<String, String> columnIndexListOptions = new HashMap<>();
+        columnIndexListOptions.put("column", column);
+        columnIndexListOptions.put("index", rowIndex);
+
+        if (PLUS_ACTION.equalsIgnoreCase(column)) {
+            if (MARKET_MESSAGES.equalsIgnoreCase(viewListName))
+                columnIndexListOptions.put("view_list_name", MARKET_MESSAGES_VIEW_LIST);
+            else if (BILLING_CUSTOMER.equalsIgnoreCase(viewListName))
+                columnIndexListOptions.put("view_list_name", BILLING_CUSTOMER_VIEW_LIST);
+        }
+
+        return columnIndexListOptions;
     }
 
     @When("^Modal \"([^\"]*)\" is displayed$")
@@ -465,7 +490,6 @@ public class ViewListElements extends NavigationElements {
             success, is(true));
         String splitValue = value.split(" ")[0];
         parameterProvider.put(columnName, splitValue);
-        
 
     }
 
@@ -608,6 +632,10 @@ public class ViewListElements extends NavigationElements {
             success, is(true));
     }
 
+    @And("^Wait for (\\d+) seconds$")
+    public void waitForSeconds(int seconds) {
+        Sleeper.sleepTightInSeconds(seconds);
+    }
 
 
     @Override
