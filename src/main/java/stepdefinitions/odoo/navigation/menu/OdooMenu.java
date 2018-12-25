@@ -8,6 +8,7 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import cucumber.api.java.en.And;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -15,9 +16,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
+
+
+
 import java.time.Duration;
 import java.util.List;
 import java.util.Map;
+
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -76,6 +81,37 @@ public class OdooMenu extends OdooScenario {
 
         button.click();
     }
+
+    @And("^Journal entry is open$")
+    public void journalEntry() {
+        awaitOdooRequestToFinish(3);
+
+            WebElement journal = webDriver.findElement(By.xpath("//table[@class='oe_list_content'][1]//tbody//tr[1]//td[@data-field='move_id'][1]"));
+            journal.click();
+            awaitOdooRequestToFinish(3);
+            WebElement move = webDriver.findElement(By.xpath("//span[@data-fieldname='move_id']/a[@class='oe_m2o_cm_button oe_e']"));
+            move.click();
+            awaitOdooRequestToFinish(3);
+
+    }
+
+   @And("^Modal buttons \"([^\"]*)\" are clicked$")
+   public void modalButtons(String name) {
+       awaitOdooRequestToFinish(3);
+       WebElement reverse1 = webDriver.findElement(By.xpath("//header//button//span[contains(., '" + name + "')]"));
+       if (null == reverse1) throw new CucumberException("Button was not found");
+       new ButtonImpl(reverse1).click();
+
+       awaitOdooRequestToFinish(3);
+       WebElement reverse2 = webDriver.findElement(By.xpath("//footer//button//span[contains(., '" + name + "')]"));
+       if (null == reverse2) throw new CucumberException("Button was not found");
+       new ButtonImpl(reverse2).click();
+       awaitOdooRequestToFinish(8);
+   }
+
+
+
+
 
     @Override
     @After("@ODOO, @E2E, @REGRESSION")

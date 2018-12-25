@@ -31,6 +31,7 @@ import static org.junit.Assert.fail;
 public class ViewListElements extends NavigationElements {
 
     private static final String INTERACTIONS = "InteractionsOnAccount";
+    private static final String PAYMENTS = "PaymentPlansOnAccount";
 
     private class CheckViewListHeader implements Predicate<String> {
         @Override
@@ -214,6 +215,16 @@ public class ViewListElements extends NavigationElements {
 
                 return mappedColumns.indexOf(columnName.toLowerCase());
             }
+
+            if ("Afbetalingsplannen".equalsIgnoreCase(tableName)) {
+                tableNameSelector = PAYMENTS;
+                List<WebElement> columns = webDriver.getDriver().findElements(By.xpath("//list[@list-key='"+tableNameSelector+"']//div//table[@class='list__content']//thead//tr//th"));
+                List<String> mappedColumns = columns.stream().map(c -> c.getText().toLowerCase()).collect(Collectors.toList());
+
+                return mappedColumns.indexOf(columnName.toLowerCase());
+            }
+
+
             return 0;
         }
     }
@@ -454,6 +465,7 @@ public class ViewListElements extends NavigationElements {
             success, is(true));
         String splitValue = value.split(" ")[0];
         parameterProvider.put(columnName, splitValue);
+        
 
     }
 
@@ -595,6 +607,7 @@ public class ViewListElements extends NavigationElements {
                 "the one requested. Please check all the parameters passed, remember that they are case sensitive!"),
             success, is(true));
     }
+
 
 
     @Override
