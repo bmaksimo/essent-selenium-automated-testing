@@ -7,6 +7,7 @@ import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
+import org.junit.Assert;
 
 import java.util.List;
 
@@ -26,35 +27,56 @@ public class JournalEntriesSteps extends OdooScenario {
     @And("^Create new Journal Entries is clicked$")
     public void createNewJournalEntriesIsClicked() throws Throwable {
         JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
-        je.ClickOnCreateJournalEntery();
+        je.clickOnCreateJournalEntery();
     }
 
     @And("^Journal is \"([^\"]*)\"$")
     public void journalIs(String journal) throws Throwable {
         JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
-        je.ChooseDiverseDagboekKlanten(journal);
+        je.chooseDiverseDagboekKlanten(journal);
     }
 
     @And("^Date document is now$")
     public void dateDocumentIsNow() throws Throwable {
         JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
-        je.DateDocumentIsToday();
+        je.dateDocumentIsToday();
     }
 
     @And("^New item is$")
     public void newItemIs(DataTable dbTabel) throws Throwable {
         JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
         List<List<String>> db = dbTabel.raw();
-        je.ClickOnAddAnItem();
+        je.clickOnAddAnItem();
         je.createNewItem(db,1);
-        je.ClickOnAddAnItem();
+        je.clickOnAddAnItem();
         je.createNewItem(db,2);
     }
 
     @And("^Save and Post journal entry")
     public void saveAndPost() throws Throwable {
         JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
-        je.SaveJournal();
-        je.PostJournal();
+        je.saveJournal();
+        je.postJournal();
+    }
+
+    @And("^Mark first two journal items one with credit and one with debit \"([^\"]*)\"$")
+    public void markFirstTwoJournalItemsOneWithCreditAndOneWithDebit(String money) throws Throwable {
+        JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
+        Assert.assertEquals(je.journalImtesDebit(81), money);
+        je.clickOnJournalItemsCheckBox(81);
+        Assert.assertEquals(je.journalImtesCredit(82), money);
+        je.clickOnJournalItemsCheckBox(82);
+    }
+
+    @And("^More menu is \"([^\"]*)\"$")
+    public void moreMenuIs(String item) throws Throwable {
+        JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
+        je.clickOnMoreMenuItem(item);
+    }
+
+    @And("^Confirm$")
+    public void confirm() throws Throwable {
+        JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
+        je.clickOnconfirm();
     }
 }
