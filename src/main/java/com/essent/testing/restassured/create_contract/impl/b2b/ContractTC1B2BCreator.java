@@ -140,29 +140,7 @@ public class ContractTC1B2BCreator extends QuoteCreatorB2BBase implements QuoteC
 		ContractStatus contractStatus = null;
 
 		// Checking is contract ACTIVE, because once contract is created a lot of stuff is triggered in jbilling, bpm and odoo and after that contract become ACTIVE
-		if (numberOfAttempts < ContractConstants.MAX_NUMBER_OF_ATTEMPTS_TO_FIND_APPROPRIATE_START_CONTRACT_DATE) {
-
-			contractStatus = checkContractIsActive(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2B);
-
-			switch (contractStatus) {
-				case TO_BE_ACTIVATED:
-				{
-					++numberOfAttempts;
-					createContractAndCheckContractStatus();
-					break;
-				}
-				case ACTIVE:
-				{
-					Assert.assertTrue(contractStatus == ContractStatus.ACTIVE);
-					break;
-				}
-				default:
-				{
-					Assert.fail("Contract status is not ACTIVE and it status is: " + contractStatus);
-					break;
-				}
-			}
-		}
+		contractStatus = checkContractIsActive(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2B);
 
 		if(contractStatus != ContractStatus.ACTIVE) {
 			logger.error("Contract status is not ACTIVE and it status is: " + contractStatus);

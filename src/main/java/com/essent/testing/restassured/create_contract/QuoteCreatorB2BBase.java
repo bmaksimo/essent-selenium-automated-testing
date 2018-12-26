@@ -51,7 +51,6 @@ public class QuoteCreatorB2BBase {
 	protected String todayDate = "";
 	protected String generatedIban = "";
 	protected String paymentDetailsId = "";
-	protected int numberOfAttempts;
 
 
 	// It is set this date, because for this date we have tariff, tariff prices, ...
@@ -91,7 +90,6 @@ public class QuoteCreatorB2BBase {
 	protected String kwMax = "";
 
 	public QuoteCreatorB2BBase() {
-		numberOfAttempts = 0;
 		gson = new Gson();
 
 		RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
