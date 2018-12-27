@@ -144,4 +144,11 @@ public class ContractenSteps extends DwpScenario {
 
     }
 
+    @Then("^Get Company Number$")
+    public void searchForCompanyNumber() throws Throwable {
+        String companyNumber = webDriver.findElementWhenVisible(By.xpath("//*//*[@id=\"company-number-c-field\"]")).getText();
+        parameterProvider.put("companyNumber", companyNumber);
+
+    }
+
 }
