@@ -1,6 +1,7 @@
 package stepdefinitions.dwp.view_list;
 
 import com.essent.automation.util.Sleeper;
+import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -37,6 +38,14 @@ public class ViewListElements extends NavigationElements {
     private static final String BILLING_CUSTOMER = "Billing customer";
     private static final String BILLING_CUSTOMER_VIEW_LIST = "BillingCustomerOnaccount";
     private static final String PLUS_ACTION = "Plus Action";
+
+    private class ViewListNavigation {
+        public void goToCockpit(String linkText) {
+            WebElement link = webDriver.findElement(By.linkText(linkText));
+            link.click();
+        }
+    }
+
 
     private class CheckViewListHeader implements Predicate<String> {
         @Override
@@ -314,7 +323,7 @@ public class ViewListElements extends NavigationElements {
     }
 
     @When("^View list header is \"([^\"]*)\" appears within (\\d+) seconds?$")
-    public void checkViewListHeaderUntil(String header, int seconds) throws Throwable {
+    public void zcheckViewListHeaderUntil(String header, int seconds) throws Throwable {
         CheckViewListHeader checkViewListHeader = new CheckViewListHeader();
         given().await()
             .pollInterval(FIVE_HUNDRED_MILLISECONDS)
@@ -329,6 +338,13 @@ public class ViewListElements extends NavigationElements {
         assertThat("View Table list is not empty",
             success, is(true));
     }
+
+    @When("^Click on \"([^\"]*)\" link$")
+    public void clickOnLink(String input) throws Throwable {
+        String linkText = parameterProvider.getValueOrParameterAsString(input);
+        new ViewListNavigation().goToCockpit(linkText);
+    }
+
 
     @When("^Click on link in View List at ([^\"]*) row and \"([^\"]*)\" column$")
     public void clickOnViewListAtRowAndColumn(String ordinal, String column) throws Throwable {
