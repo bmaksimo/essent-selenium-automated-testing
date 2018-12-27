@@ -6,8 +6,6 @@ import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
 import com.essent.testing.selenium.SeleniumDriver;
 import com.essent.testing.dwp.scenario.DwpScenario;
 
-import cucumber.api.java.en.Then;
-
 import org.junit.Assert;
 import org.openqa.selenium.By;
 
