@@ -5,8 +5,7 @@
 @NUAT-558
 
 Feature: NUAT-558: Check status of customer with Customer Acceptance Tool
-
-    Background:
+    
         Scenario: Check status of customer with Customer Acceptance Tool
         Given  I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
         When Left menu is sales-marketing
