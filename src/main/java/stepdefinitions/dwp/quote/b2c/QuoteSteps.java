@@ -8,7 +8,6 @@ import com.essent.testing.dwp.pageobject.quote.GuidedStep;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
 import com.essent.testing.util.resource.ResourceUtil;
-import com.google.gson.Gson;
 import cucumber.api.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -18,6 +17,8 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.autocrat.flow.FlowAwarePredicate;
 import stepdefinitions.dwp.quote.DwpDateFormats;
 import stepdefinitions.dwp.tables.*;
@@ -340,6 +341,17 @@ public class QuoteSteps extends DwpScenario {
         String eanCode = page.getEan();
         assertThat(StringUtils.isNotEmpty(eanCode), is(true));
         parameterProvider.put(parameter, eanCode);
+    }
+
+    @And("^EAN-code autocomplete value from the \"([^\"]*)\" row is checked$")
+    public void selectEanCodeFromAutoComplete(String ordinal) throws Throwable {
+        Integer rowIndex = Integer.parseInt(ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", ""));
+        WebElement eanElement = webDriver.findElementOrNull(By.xpath("//input-form-element//autocomplete//ul//li[" + rowIndex + "]/a/b"));
+
+        String ean = eanElement.getAttribute("textContent").split(" ")[0];
+        boolean eanWasFound = StringUtils.isNotBlank(ean);
+        assertThat(String.format("EAN code '%s' was not found.", ean), eanWasFound, is(true));
+        parameterProvider.put("EAN-code", ean);
     }
 
     @Override
