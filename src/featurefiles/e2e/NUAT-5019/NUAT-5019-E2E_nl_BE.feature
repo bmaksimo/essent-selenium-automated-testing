@@ -33,7 +33,7 @@ Feature: NUAT-5019 end-to-end testing
         Then Form header is "Billing details"
 
 
-        When Payment details are: method Overschrijving, IBAN "NL57ABNA0874253356", bic "ABNANL2A"
+        When Payment details are: method Overschrijving, random IBAN, bic "ABNANL2A"
         And Billing details are confirmed
         Then  Form header is "Quote overview"
 
@@ -96,6 +96,7 @@ Feature: NUAT-5019 end-to-end testing
         And  Odoo file upload confirm button is Import
         And  Odoo file import report
         And Modal button "View Bank Statement" is clicked
+        And Wait for 30 seconds
         When Column "Reference" of the "1st" row is clicked
         And Modal button "Close" is clicked
 
@@ -109,7 +110,7 @@ Feature: NUAT-5019 end-to-end testing
         And Click on link in View List at 1st row and "Klantnummer & Naam" column
         And Dashboard menu is Billing
 #        And 1st list element has cell value Paid by OV at column Extra info
-#        Then "Openstaand bedrag" in the first "Paid by OV" row of "Transacties" table is "0"
+        Then "Openstaand bedrag" in the first "Paid by OV" row of "Transacties" table is "0"
 
         # 4 - Create consumptions
         Given I renew login to DWP as salesmarketing.testautomation.b2c@essent.be
