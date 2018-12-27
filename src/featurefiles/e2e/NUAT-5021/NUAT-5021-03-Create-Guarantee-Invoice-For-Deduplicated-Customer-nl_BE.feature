@@ -73,7 +73,6 @@
             And Placeholder "Housenumber" input is "2"
             And Placeholder "Postalcode" input is "2550"
             And Placeholder "City" input is "Kontich"
-            And EAN-code autocomplete value from the "1st" row is checked
             And "EAN-code" input is "parameter:EAN-code"
             And Connection details are confirmed
             Then Form header is "Billing details"
