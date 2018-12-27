@@ -2,6 +2,8 @@
 @B2B
 @REGRESSION
 @CREDIT-AND-CONTROL
+@NUAT-558
+
 Feature: NUAT-558: Check status of customer with Customer Acceptance Tool
 
     Background:
@@ -14,8 +16,5 @@ Feature: NUAT-558: Check status of customer with Customer Acceptance Tool
         When Plus menu is "Sales -> TK1 -> Klantacceptatie tool"
         And "Ondernemingsnummer" input is "parameter:accountNumber"
         Then Customer Status is "Geaccepteerd"
-
-
-
 
 
