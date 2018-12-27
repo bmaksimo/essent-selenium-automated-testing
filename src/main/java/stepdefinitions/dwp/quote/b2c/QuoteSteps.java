@@ -256,11 +256,19 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^Payment details are: method ([^\"]*), IBAN \"([^\"]*)\", bic \"([^\"]*)\"$")
-    public void selectPaymentMethod(String paymetnMethod, String iban, String bic) throws Throwable {
+    public void selectPaymentMethod(String paymetnMethod, String iban, String bic) {
         BillingInformation billingInfo = new BillingInformation(paymetnMethod, iban, bic);
         BillingDetailsPage billingDetailsView = new BillingDetailsPage(webDriver);
         billingDetailsView.setBillingInformation(billingInfo);
         billingDetailsView.fillInFormData();
+    }
+
+    @And("^Payment details are: method ([^\"]*), random IBAN, bic \"([^\"]*)\"$")
+    public void selectPaymentMethod(String paymetnMethod, String bic) {
+        String iban = PrepareDataForContract.getValidIbanBE();
+        selectPaymentMethod(paymetnMethod, iban, bic);
+
+        parameterProvider.put("iban", iban);
     }
 
     @And("^Billing details are confirmed$")
