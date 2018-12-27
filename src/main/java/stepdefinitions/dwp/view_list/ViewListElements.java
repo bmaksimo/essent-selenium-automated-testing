@@ -33,6 +33,7 @@ import static org.junit.Assert.fail;
 public class ViewListElements extends NavigationElements {
 
     private static final String INTERACTIONS = "InteractionsOnAccount";
+    private static final String PAYMENTS = "PaymentPlansOnAccount";
     private static final String MARKET_MESSAGES = "Marktberichten";
     private static final String MARKET_MESSAGES_VIEW_LIST = "MarketTransactionsOnAccount";
     private static final String BILLING_CUSTOMER = "Billing customer";
@@ -229,6 +230,16 @@ public class ViewListElements extends NavigationElements {
 
                 return mappedColumns.indexOf(columnName.toLowerCase());
             }
+
+            if ("Afbetalingsplannen".equalsIgnoreCase(tableName)) {
+                tableNameSelector = PAYMENTS;
+                List<WebElement> columns = webDriver.getDriver().findElements(By.xpath("//list[@list-key='"+tableNameSelector+"']//div//table[@class='list__content']//thead//tr//th"));
+                List<String> mappedColumns = columns.stream().map(c -> c.getText().toLowerCase()).collect(Collectors.toList());
+
+                return mappedColumns.indexOf(columnName.toLowerCase());
+            }
+
+
             return 0;
         }
     }

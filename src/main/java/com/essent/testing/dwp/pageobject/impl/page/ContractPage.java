@@ -124,5 +124,9 @@ public class ContractPage extends Component {
 
     }
 
+    public void checkInvoiceOpenBalance(String key) {
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-checkbox-cell[@list-key='"+key+"']")));
+    }
+
 
 }

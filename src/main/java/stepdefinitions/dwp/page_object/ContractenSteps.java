@@ -1,5 +1,6 @@
 package stepdefinitions.dwp.page_object;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.page.ContractPage;
 import com.essent.testing.dwp.pageobject.impl.service_contracting.ContractenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
@@ -32,6 +33,7 @@ public class ContractenSteps extends DwpScenario {
     @When("^Input in ([^\"]*) is \"([^\"]*)\"$")
     public void inputInModuleIs(String label, String input) throws Throwable {
         webDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(3);
         ContractenPage contractenPage = new ContractenPage(webDriver);
         contractenPage.fieldDropDownLabel(label, input);
     }
@@ -125,4 +127,13 @@ public class ContractenSteps extends DwpScenario {
         parameterProvider.put("contractNumber", contractNumber);
 
     }
+
+
+    @And("^Invoice with key ([^\"]*) is checked$")
+    public void CheckInvoiceOpenBalance(String text) {
+        webDriver.waitForRequestsToFinish();
+        ContractPage contractenPage = new ContractPage(webDriver);
+        contractenPage.checkInvoiceOpenBalance(text);
+    }
+
 }

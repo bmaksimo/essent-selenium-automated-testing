@@ -52,8 +52,6 @@ public class QuoteCreatorB2CBase {
 	protected String todayDate = "";
 	protected String generatedIban = "";
 	protected String paymentDetailsId = "";
-	protected int numberOfAttempts;
-
 
 	// It is set this date, because for this date we have tariff, tariff prices, ...
 	protected String pricingDate = "";
@@ -89,7 +87,6 @@ public class QuoteCreatorB2CBase {
 	protected String isFakeAddress="";
 
 	public QuoteCreatorB2CBase() {
-		numberOfAttempts = 0;
 		gson = new Gson();
 
         parameterProvider = ((ParameterProvider) ContextService.getContext().getBean("parameterProvider")).consumingNullValues(true);
