@@ -1,9 +1,11 @@
 @B2C
-@GUARANTEE-INVOICE
 @E2E
 
     Feature: Guarantee invoice
+        @GUARANTEE-INVOICE
         Scenario: Create guarantee invoice after customer deduplication
+
+            # Step 1: create customer with guarantee
             Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
 
             When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
@@ -69,10 +71,10 @@
             And Package and Fuel Type is confirmed
             Then Form header is "Connection details"
 
-            When Placeholder "Street" input is "Mechelsesteenweg"
-            And Placeholder "Housenumber" input is "2"
-            And Placeholder "Postalcode" input is "2550"
-            And Placeholder "City" input is "Kontich"
+            When Field "Street" input is "Mechelsesteenweg"
+            And Field "Housenumber" input is "2"
+            And Field "Postalcode" input is "2550"
+            And Field "City" input is "Kontich"
             And EAN-code autocomplete value from the "1st" row is checked
             And "EAN-code" input is "parameter:EAN-code"
             And Connection details are confirmed

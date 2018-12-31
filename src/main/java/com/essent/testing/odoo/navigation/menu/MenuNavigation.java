@@ -40,13 +40,12 @@ public class MenuNavigation extends Component {
 
     public boolean findAndClickMainMenuItem(String item) {
         By by = By.xpath(createQuery(MAIN_NEMU_ITEM_SELECTOR_TEMPLATE, "text", item));
-        WebElement elementOrNull = seleniumDriver.findElementOrNull(by, Duration.ofSeconds(30), Duration.ofSeconds(5));
+        WebElement elementOrNull = seleniumDriver.findElementOrNull(by, Duration.ofSeconds(45), Duration.ofSeconds(1));
         if(elementOrNull == null) {
             status = "FAILED";
             reason = "Main menu item" + item + "is not found";
             return false;
         }
-        awaitOdooRequestToFinish(10);
         elementOrNull.click();
         return true;
     }
@@ -88,6 +87,7 @@ public class MenuNavigation extends Component {
         List<WebElement> result;
         String query = createQuery(MENU_TOGGLER_SELECTOR_TEMPLATE, "text", menuItem);
         By menuTogglerQuery = By.xpath(query);
+
         if(item != null) {
             result  = item.findElements(menuTogglerQuery);
         } else {

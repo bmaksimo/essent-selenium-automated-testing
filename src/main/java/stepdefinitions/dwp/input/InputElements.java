@@ -103,7 +103,7 @@ public class InputElements extends DwpScenario {
         boolean success = executeJavascriptTest("TrSubmitForm", options);
     }
 
-    @And("^Placeholder \"([^\"]*)\" input is \"([^\"]*)\"$")
+    @And("^Field \"([^\"]*)\" input is \"([^\"]*)\"$")
     public void setInputByPlaceholder(String placeholder, String value) {
         WebElement placeHolderInputElement = webDriver.findElement(By.xpath("//input[@placeholder='"+placeholder+"']"));
         boolean placeHolderWasFound = placeHolderInputElement != null;

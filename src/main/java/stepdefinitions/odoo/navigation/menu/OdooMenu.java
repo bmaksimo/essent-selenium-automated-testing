@@ -10,10 +10,15 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.And;
 import cucumber.runtime.CucumberException;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.awaitility.Duration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.awaitility.Awaitility.given;
+import static org.awaitility.Duration.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class OdooMenu extends OdooScenario {
@@ -27,7 +32,7 @@ public class OdooMenu extends OdooScenario {
     public void clickTopMenu(String menu) {
         MenuNavigation menuNavigation = new MenuNavigation(webDriver);
         boolean success = menuNavigation.findAndClickMainMenuItem(menu);
-        if(! success) {
+        if(!success) {
             throw new CucumberException(menuNavigation.getReason());
         }
     }
@@ -73,16 +78,41 @@ public class OdooMenu extends OdooScenario {
         button.click();
     }
 
+    @Then("^Bank Statement \"([^\"]*)\" button is clicked$")
+    public void odooBankStatementClickButton(String buttonLabel) {
+        given()
+            .await()
+            .ignoreExceptions()
+            .pollInterval(new Duration(20, SECONDS))
+            .pollDelay(TWO_SECONDS)
+            .atMost(new Duration(300, SECONDS)).until(()-> inputBankStatementButtonProcessed(buttonLabel));
+    }
+
+    private boolean inputBankStatementButtonProcessed(String buttonLabel) {
+        WebElement buttonAvailable = webDriver.findElement(By.xpath("//span[contains(@attrs, 'False')]//button//span[contains(., '"+ buttonLabel +"')]"));
+        if (null != buttonAvailable) {
+            buttonAvailable.click();
+            return true;
+        }
+        refreshCurrentPage();
+        return false;
+    }
+
+    private void refreshCurrentPage() {
+        webDriver.getDriver().navigate().to(webDriver.getDriver().getCurrentUrl());
+        awaitOdooRequestToFinish(10);
+    }
+
     @And("^Journal entry is open$")
     public void journalEntry() {
         awaitOdooRequestToFinish(3);
 
-            WebElement journal = webDriver.findElement(By.xpath("//table[@class='oe_list_content'][1]//tbody//tr[1]//td[@data-field='move_id'][1]"));
-            journal.click();
-            awaitOdooRequestToFinish(3);
-            WebElement move = webDriver.findElement(By.xpath("//span[@data-fieldname='move_id']/a[@class='oe_m2o_cm_button oe_e']"));
-            move.click();
-            awaitOdooRequestToFinish(3);
+        WebElement journal = webDriver.findElement(By.xpath("//table[@class='oe_list_content'][1]//tbody//tr[1]//td[@data-field='move_id'][1]"));
+        journal.click();
+        awaitOdooRequestToFinish(3);
+        WebElement move = webDriver.findElement(By.xpath("//span[@data-fieldname='move_id']/a[@class='oe_m2o_cm_button oe_e']"));
+        move.click();
+        awaitOdooRequestToFinish(3);
 
     }
 

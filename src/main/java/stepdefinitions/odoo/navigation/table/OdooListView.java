@@ -1,5 +1,6 @@
 package stepdefinitions.odoo.navigation.table;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.odoo.pageobject.elements.ListView;
 import com.essent.testing.odoo.pageobject.impl.elements.DefaultListView;
 import com.essent.testing.odoo.scenario.OdooScenario;
@@ -27,16 +28,16 @@ public class OdooListView extends OdooScenario  {
 
     @When("^Odoo filter is ([^\"]*)$")
     public void setSearchFilter(String expression) {
+        awaitOdooRequestToFinish(20);
 
         String filter = parameterProvider.getValueOrParameterAsString(expression) == null ?
             expression : parameterProvider.getValueOrParameterAsString(expression);
-        awaitOdooRequestToFinish(10);
         String selector = "//div[@class='oe_searchview_input']";
 
         By xpath = By.xpath(selector);
         List<WebElement> filterElements = webDriver.findElements(xpath,
-            Duration.ofSeconds(30),
-            Duration.ofSeconds(5));
+            Duration.ofSeconds(45),
+            Duration.ofSeconds(1));
         if (filterElements.isEmpty()) throw new CucumberException("Button was not found");
 
         WebElement filterElement = filterElements.get(1);
