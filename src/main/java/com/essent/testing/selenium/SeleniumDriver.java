@@ -378,6 +378,18 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
         }
     }
 
+    public void takeScreenshot(String name) {
+        File screenshot = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
+        logger.debug(" - ACTION: CAPTURE_SCREENSHOT: " + screenshot.getPath());
+        Path currentRelativePath = Paths.get("").resolveSibling("target");
+        String currentAbsolutePath = currentRelativePath.toAbsolutePath().toString();
+        try {
+            FileUtils.copyFile(screenshot, new File(FilenameUtils.concat(currentAbsolutePath, name + "_" + screenshot.getName())));
+        } catch (IOException e) {
+            logger.warn(String.format("- ACTION: failed copying screenshot to %s", currentAbsolutePath));
+        }
+    }
+
     public void goToHomePage() {
         driver.get(baseUrl);
     }

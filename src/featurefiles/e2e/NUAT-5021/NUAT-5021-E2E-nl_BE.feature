@@ -10,8 +10,7 @@
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
-        When "Tariefdatum" date is "now"
-        And B2C sales channel is Inbound
+        When B2C sales channel is Inbound
         And Quote details are confirmed
         Then Form header is "Personal details"
 
@@ -56,6 +55,40 @@
         And Top action is Filters
         And "Naam" input is "parameter:suitecrm-customer-name"
 
-        Given 1st List element with value at column "Klantnummer & Naam" is checked
-        Then  External status is "On" for SuiteCRM Customer Number "parameter:Klantnummer & Naam"
+        Then 1st List element with value at column "Klantnummer & Naam" is checked
+        #Then  External status is "On" for SuiteCRM Customer Number "parameter:Klantnummer & Naam"
+
+        Given Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
+        Then Form header is "Quote details"
+        And B2C sales channel is Inbound
+        And Quote details are confirmed
+        Then Form header is "Personal details"
+
+        Given Customer address is
+            | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
+            | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
+        And Customer is duplicated
+        Then   Deduplication dialogue "Soortgelijke klanten" is shown
+
+        Given  Deduplication dialogue link "Create quote for account" is clicked
+        Then Form header is "Quote details"
+
+         When "Sales kanaal" selection is "Inbound"
+         And Quote details are confirmed
+         Then Form header is "Select package & fuel type"
+
+         When "Pakket" selection is "Vast"
+         And Checkbox "Gas Fix B2C (TC1)" is Unchecked
+         And Package and Fuel Type is confirmed
+         Then Form header is "Connection details"
+
+         When Customer address is
+             | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
+             | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
+
+
+
+
+
+
 

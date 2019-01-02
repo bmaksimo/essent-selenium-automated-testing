@@ -3,7 +3,9 @@ package stepdefinitions.dwp.quote.b2c;
 import com.billinghouse.random.RandomUser;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
+import com.essent.testing.dwp.pageobject.impl.modal.quote.SimilarAccountDialogImpl;
 import com.essent.testing.dwp.pageobject.impl.quote.*;
+import com.essent.testing.dwp.pageobject.modal.quote.SimilarAccountDialog;
 import com.essent.testing.dwp.pageobject.quote.GuidedStep;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
@@ -34,6 +36,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
 import static org.awaitility.Duration.*;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 public class QuoteSteps extends DwpScenario {
@@ -49,6 +52,20 @@ public class QuoteSteps extends DwpScenario {
         quoteDetailsPage.setSalesChannel(salesChannel);
         boolean formInitialized = quoteDetailsPage.fillInFormData();
         assertThat("Failure occurred when filling in input values", formInitialized, is(true));
+    }
+
+    @And("^Deduplication dialogue \"([^\"]*)\" is shown$")
+    public void deduplicationDialogueIsShown(String title) throws Throwable {
+        SimilarAccountDialog dialog = new SimilarAccountDialogImpl(webDriver, title);
+        assertThat("Similar clients dialogue was not shown.",
+            dialog.getTitle(),
+            equalTo(title));
+    }
+
+    @And("^Deduplication dialogue link \"([^\"]*)\" is clicked$")
+    public void deduplicationDialogueLinkIsClicked(String linkText) throws Throwable {
+        SimilarAccountDialog dialog = new SimilarAccountDialogImpl(webDriver);
+        dialog.clickOnLink(linkText);
     }
 
 

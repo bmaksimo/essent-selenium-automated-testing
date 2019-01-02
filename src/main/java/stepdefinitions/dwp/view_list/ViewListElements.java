@@ -1,7 +1,6 @@
 package stepdefinitions.dwp.view_list;
 
 import com.essent.automation.util.Sleeper;
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -41,7 +40,8 @@ public class ViewListElements extends NavigationElements {
     private static final String PLUS_ACTION = "Plus Action";
 
     private class ViewListNavigation {
-        public void goToCockpit(String linkText) {
+        public void goToLink(String linkText) {
+            webDriver.waitForRequestsToFinish();
             WebElement link = webDriver.findElement(By.linkText(linkText));
             link.click();
         }
@@ -353,7 +353,7 @@ public class ViewListElements extends NavigationElements {
     @When("^Click on \"([^\"]*)\" link$")
     public void clickOnLink(String input) throws Throwable {
         String linkText = parameterProvider.getValueOrParameterAsString(input);
-        new ViewListNavigation().goToCockpit(linkText);
+        new ViewListNavigation().goToLink(linkText);
     }
 
 
