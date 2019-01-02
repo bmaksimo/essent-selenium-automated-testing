@@ -314,6 +314,21 @@ public class QuoteSteps extends DwpScenario {
         assertThat("Failure when signing up the quote.", success, is(true));
     }
 
+    @And("^Quote is signed$")
+    public void submitQuote() throws Throwable {
+        String path = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
+        File document = new File(path);
+        assertThat("File at path " + document.getAbsolutePath() + " doesn't exist.", true,
+            is(document.exists()));
+        SignatureData signature = new SignatureData(
+            DwpDateFormats.DWP_TODAY,
+            path);
+        QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage(webDriver);
+        quoteOverviewView.setSignatureData(signature);
+        boolean success = quoteOverviewView.fillInFormData();
+        assertThat("Failure when signing up the quote.", success, is(true));
+    }
+
 
     @And("^Quote is confirmed$")
     public void confirmQuote() throws Throwable {

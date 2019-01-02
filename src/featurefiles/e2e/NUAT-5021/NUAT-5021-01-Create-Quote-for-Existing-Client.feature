@@ -31,25 +31,28 @@ Feature: NUAT-5021 Step 1. Create an account for de-duplication.
 
         When "Startdatum" date is "now"
         And Electricity EAN code is "random"
-
-
         And Connection details are confirmed
         Then Form header is "Billing details"
 
+        #When Payment details are: method Overschrijving, IBAN "NL57ABNA0874253356", bic "ABNANL2A"
+        When "Advance frequency" selection is "Maandelijks"
+        And "Betalingswijze" selection is "Overschrijving"
+        And "IBAN" input is "NL57ABNA0874253356"
+        And  "BIC-code" input is "ABNANL2A"
 
-        When Payment details are: method Overschrijving, IBAN "NL57ABNA0874253356", bic "ABNANL2A"
         And Billing details are confirmed
         Then  Form header is "Quote overview"
 
         When Option "Heeft de klant al getekend?" is On
         And "Kanaal ondertekening" selection is "Papier"
-        And Quote is signed in Kontich
+        And "Plaats ondertekening" input is "Kontich"
         And "Datum ondertekening" date is "now"
+        And Quote is signed
         And Quote is confirmed
         Then View list header is "Offertes"
-        Then 1st list element has cell value Sales Getekend - Geaccepteerd at column Type & status
 
-        When Dashboard menu is Contracten
+        When 1st list element has cell value Sales Getekend - Geaccepteerd at column Type & status
+        And Dashboard menu is Contracten
         Then View list header is "Actieve en toekomstige connecties"
         And  1st List element with value at column "EAN-code" is checked
 
@@ -61,9 +64,3 @@ Feature: NUAT-5021 Step 1. Create an account for de-duplication.
 
         Given 1st List element with value at column "Klantnummer & Naam" is checked
         Then  External status is "On" for SuiteCRM Customer Number "parameter:Klantnummer & Naam"
-
-
-
-
-
-
