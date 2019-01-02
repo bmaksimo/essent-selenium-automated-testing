@@ -40,7 +40,7 @@ public class MenuNavigation extends Component {
 
     public boolean findAndClickMainMenuItem(String item) {
         By by = By.xpath(createQuery(MAIN_NEMU_ITEM_SELECTOR_TEMPLATE, "text", item));
-        WebElement elementOrNull = seleniumDriver.findElementOrNull(by, Duration.ofSeconds(45), Duration.ofSeconds(1));
+        WebElement elementOrNull = seleniumDriver.findElementOrNull(by, Duration.ofSeconds(30), Duration.ofSeconds(5));
         if(elementOrNull == null) {
             status = "FAILED";
             reason = "Main menu item" + item + "is not found";

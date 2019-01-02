@@ -71,14 +71,13 @@ public class DefaultListView extends Component implements ListView {
         logger().info("STEP: clickValueAt");
         awaitOdooRequestToFinish(30);
         List<WebElement> rows = extractTable();
-        logger().info("--- ROWS: " + rows.size());
         WebElement currentRow;
         for (int i = 1; i <= rows.size(); i++) {
             currentRow = seleniumDriver.findElementWhenVisible(By.xpath("//table[@class='oe_list_content'][1]//tbody//tr[" + i + "]//td[@data-field='"
                 + getKey(columnName)
                 + "'][1]"));
 
-            if (currentRow != null && currentRow.isDisplayed() && value.equalsIgnoreCase(currentRow.getText())) {
+            if (currentRowEquals(currentRow, value)) {
                 logger().info(" - CELL_TEXT: " + currentRow.getText());
                 currentRow.click();
                 logger().info(" - CELL_ACTION: click()");
@@ -88,6 +87,10 @@ public class DefaultListView extends Component implements ListView {
         }
         logger().error(" - CELL_NOT_FOUND: column name" + columnName + " cell text: " + value);
         throw new CucumberException(String.format("Cell at column %s having value %s was not found", columnName, value));
+    }
+
+    private boolean currentRowEquals(WebElement currentRow, String value) {
+        return currentRow != null && currentRow.isDisplayed() && value.equalsIgnoreCase(currentRow.getText());
     }
 
     @Override
@@ -113,8 +116,8 @@ public class DefaultListView extends Component implements ListView {
 
     private List<WebElement> extractTable() {
         List<WebElement> rows = seleniumDriver.findElements(By.xpath("//table[@class='oe_list_content'][1]//tbody//tr"),
-            Duration.ofSeconds(45),
-            Duration.ofSeconds(1));
+            Duration.ofSeconds(30),
+            Duration.ofSeconds(5));
         if(rows.isEmpty()) {
             throw new CucumberException("Table is empty");
         }

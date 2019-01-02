@@ -36,8 +36,8 @@ public class OdooListView extends OdooScenario  {
 
         By xpath = By.xpath(selector);
         List<WebElement> filterElements = webDriver.findElements(xpath,
-            Duration.ofSeconds(45),
-            Duration.ofSeconds(1));
+            Duration.ofSeconds(30),
+            Duration.ofSeconds(5));
         if (filterElements.isEmpty()) throw new CucumberException("Button was not found");
 
         WebElement filterElement = filterElements.get(1);

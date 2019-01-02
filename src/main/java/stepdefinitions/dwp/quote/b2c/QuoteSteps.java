@@ -265,9 +265,9 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^Payment details are: method ([^\"]*), random IBAN, bic \"([^\"]*)\"$")
-    public void selectPaymentMethod(String paymetnMethod, String bic) {
+    public void selectPaymentMethod(String paymentMethod, String bic) {
         String iban = PrepareDataForContract.getValidIbanBE();
-        selectPaymentMethod(paymetnMethod, iban, bic);
+        selectPaymentMethod(paymentMethod, iban, bic);
 
         parameterProvider.put("iban", iban);
     }
