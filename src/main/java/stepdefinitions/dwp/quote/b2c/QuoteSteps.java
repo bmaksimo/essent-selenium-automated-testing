@@ -298,9 +298,15 @@ public class QuoteSteps extends DwpScenario {
     public void selectPaymentMethod(String paymentMethod, String bic) {
         String iban = PrepareDataForContract.getValidIbanBE();
         selectPaymentMethod(paymentMethod, iban, bic);
-
         parameterProvider.put("iban", iban);
     }
+
+    @And("^IBAN is generated$")
+    public void generateIban() {
+        String iban = PrepareDataForContract.getValidIbanBE();
+        parameterProvider.put("iban", iban);
+    }
+
 
     @And("^Billing details are confirmed$")
     public void confirmBillingDetaile() throws Throwable {

@@ -19,8 +19,8 @@ Feature: NUAT-5021 Step 1. Create an account for de-duplication.
 
         When Customer is random
         And Customer address is
-            | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-            | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
+            | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
+            | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
 
@@ -36,26 +36,28 @@ Feature: NUAT-5021 Step 1. Create an account for de-duplication.
         Then Form header is "Billing details"
 
         #When Payment details are: method Overschrijving, IBAN "NL57ABNA0874253356", bic "ABNANL2A"
-        When "Advance frequency" selection is "Maandelijks"
-        And "Betalingswijze" selection is "Overschrijving"
-        And "IBAN" input is "NL57ABNA0874253356"
-        And  "BIC-code" input is "ABNANL2A"
-
-        And Billing details are confirmed
+        #When "Advance frequency" selection is "Maandelijks"
+        When "Betalingswijze" selection is "Overschrijving"
+        #And IBAN is generated
+        #And "IBAN" input is "parameter:iban"
+        #And  "BIC-code" input is "GEBABEBB"
+        And  Billing details are confirmed
         Then  Form header is "Quote overview"
 
-        When Option "Heeft de klant al getekend?" is On
-        And "Kanaal ondertekening" selection is "Papier"
-        And "Plaats ondertekening" input is "Kontich"
-        And "Datum ondertekening" date is "now"
-        And Quote is signed
-        And Quote is confirmed
+        #When Option "Heeft de klant al getekend?" is On
+        #And "Kanaal ondertekening" selection is "Papier"
+        #And "Plaats ondertekening" input is "Kontich"
+        #And "Datum ondertekening" date is "now"
+        #And Quote is signed
+        When Quote is confirmed
         Then View list header is "Offertes"
 
-        When 1st list element has cell value Sales Getekend - Geaccepteerd at column Type & status
-        And Dashboard menu is Contracten
-        Then View list header is "Actieve en toekomstige connecties"
-        And  1st List element with value at column "EAN-code" is checked
+
+        # When 1st list element has cell value Sales Getekend - Geaccepteerd at column Type & status
+        When 1st list element has cell value Sales Verstuurd naar de klant - Geaccepteerd at column Type & status
+        #And Dashboard menu is Contracten
+        #Then View list header is "Actieve en toekomstige connecties"
+        #And  1st List element with value at column "EAN-code" is checked
 
         When Top arrow button is Up
         And Left menu is sales-marketing
@@ -64,4 +66,4 @@ Feature: NUAT-5021 Step 1. Create an account for de-duplication.
         And "Naam" input is "parameter:suitecrm-customer-name"
 
         Given 1st List element with value at column "Klantnummer & Naam" is checked
-        Then  External status is "On" for SuiteCRM Customer Number "parameter:Klantnummer & Naam"
+        #Then  External status is "On" for SuiteCRM Customer Number "parameter:Klantnummer & Naam"

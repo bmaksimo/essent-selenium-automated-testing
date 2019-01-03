@@ -3,7 +3,7 @@
 @E2E
 Feature: NUAT-5021 Complete scenario from de-duplication of client with guarantee to inactive client
 
-    @NUAT-5021
+    @NUAT-5021-01-02
     Scenario: From de-duplication of client to inactive client via passive renewal
 
         Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
@@ -37,8 +37,11 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         #When Payment details are: method Overschrijving, IBAN "NL57ABNA0874253356", bic "ABNANL2A"
         When "Advance frequency" selection is "Maandelijks"
         And "Betalingswijze" selection is "Overschrijving"
-        And "IBAN" input is "NL57ABNA0874253356"
-        And  "BIC-code" input is "ABNANL2A"
+        And IBAN is generated
+        And "IBAN" input is "parameter:iban"
+        And  "BIC-code" input is "GEBABEBB"
+        And Billing details are confirmed
+        Then  Form header is "Quote overview"
 
         And Billing details are confirmed
         Then  Form header is "Quote overview"
@@ -64,9 +67,11 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
 
         Given 1st List element with value at column "Klantnummer & Naam" is checked
         Then  External status is "On" for SuiteCRM Customer Number "parameter:Klantnummer & Naam"
-        Given Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
+
+        When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
-        And B2C sales channel is Inbound
+
+        When B2C sales channel is Inbound
         And Quote details are confirmed
         Then Form header is "Personal details"
 
