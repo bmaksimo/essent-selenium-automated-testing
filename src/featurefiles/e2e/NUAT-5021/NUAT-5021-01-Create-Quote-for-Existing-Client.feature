@@ -13,7 +13,7 @@ Feature: NUAT-5021 Step 1. Create an account for de-duplication.
         Then Form header is "Quote details"
 
         When "Tariefdatum" date is "now"
-        And B2C sales channel is Inbound
+        And "Sales kanaal" selection is "Inbound"
         And Quote details are confirmed
         Then Form header is "Personal details"
 
@@ -29,8 +29,9 @@ Feature: NUAT-5021 Step 1. Create an account for de-duplication.
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        When "Startdatum" date is "now"
-        And Electricity EAN code is "random"
+
+        When Electricity EAN code is "random"
+        And  "Startdatum" date is "now"
         And Connection details are confirmed
         Then Form header is "Billing details"
 

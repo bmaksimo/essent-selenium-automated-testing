@@ -1,23 +1,25 @@
 @E2E
 @DWP
 @E2E
-    Feature: NUAT-5021 Complete scenario from de-duplication of client with guarantee to inactive client
-     @NUAT-5021
-     Scenario: From de-duplication of client to inactive client via passive renewal
+Feature: NUAT-5021 Complete scenario from de-duplication of client with guarantee to inactive client
+
+    @NUAT-5021
+    Scenario: From de-duplication of client to inactive client via passive renewal
 
         Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
 
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
-        When B2C sales channel is Inbound
+        When "Tariefdatum" date is "now"
+        And "Sales kanaal" selection is "Inbound"
         And Quote details are confirmed
         Then Form header is "Personal details"
 
         When Customer is random
         And Customer address is
-            | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-            | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
+            | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
+            | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
 
@@ -26,26 +28,31 @@
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        When "Startdatum" date is "now"
-        And Electricity EAN code is "random"
-        And Electricity market mock test is Open
+
+        When Electricity EAN code is "random"
+        And  "Startdatum" date is "now"
         And Connection details are confirmed
         Then Form header is "Billing details"
 
+        #When Payment details are: method Overschrijving, IBAN "NL57ABNA0874253356", bic "ABNANL2A"
+        When "Advance frequency" selection is "Maandelijks"
+        And "Betalingswijze" selection is "Overschrijving"
+        And "IBAN" input is "NL57ABNA0874253356"
+        And  "BIC-code" input is "ABNANL2A"
 
-        When Payment details are: method Overschrijving, IBAN "NL57ABNA0874253356", bic "ABNANL2A"
         And Billing details are confirmed
         Then  Form header is "Quote overview"
 
         When Option "Heeft de klant al getekend?" is On
         And "Kanaal ondertekening" selection is "Papier"
-        And Quote is signed in Kontich
+        And "Plaats ondertekening" input is "Kontich"
         And "Datum ondertekening" date is "now"
+        And Quote is signed
         And Quote is confirmed
         Then View list header is "Offertes"
-        Then 1st list element has cell value Sales Getekend - Geaccepteerd at column Type & status
 
-        When Dashboard menu is Contracten
+        When 1st list element has cell value Sales Getekend - Geaccepteerd at column Type & status
+        And Dashboard menu is Contracten
         Then View list header is "Actieve en toekomstige connecties"
         And  1st List element with value at column "EAN-code" is checked
 
@@ -55,9 +62,8 @@
         And Top action is Filters
         And "Naam" input is "parameter:suitecrm-customer-name"
 
-        Then 1st List element with value at column "Klantnummer & Naam" is checked
-        #Then  External status is "On" for SuiteCRM Customer Number "parameter:Klantnummer & Naam"
-
+        Given 1st List element with value at column "Klantnummer & Naam" is checked
+        Then  External status is "On" for SuiteCRM Customer Number "parameter:Klantnummer & Naam"
         Given Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
         And B2C sales channel is Inbound
@@ -65,26 +71,26 @@
         Then Form header is "Personal details"
 
         Given Customer address is
-            | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-            | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
+            | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
+            | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
         And Customer is duplicated
         Then   Deduplication dialogue "Soortgelijke klanten" is shown
 
         Given  Deduplication dialogue link "Create quote for account" is clicked
         Then Form header is "Quote details"
 
-         When "Sales kanaal" selection is "Inbound"
-         And Quote details are confirmed
-         Then Form header is "Select package & fuel type"
+        When "Sales kanaal" selection is "Inbound"
+        And Quote details are confirmed
+        Then Form header is "Select package & fuel type"
 
-         When "Pakket" selection is "Vast"
-         And Checkbox "Gas Fix B2C (TC1)" is Unchecked
-         And Package and Fuel Type is confirmed
-         Then Form header is "Connection details"
+        When "Pakket" selection is "Vast"
+        And Checkbox "Gas Fix B2C (TC1)" is Unchecked
+        And Package and Fuel Type is confirmed
+        Then Form header is "Connection details"
 
-         When Customer address is
-             | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-             | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
+        When Customer address is
+            | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
+            | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
 
 
 
