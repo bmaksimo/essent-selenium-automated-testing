@@ -35,7 +35,7 @@ public class SearchContractLinesDialog extends Component implements ConfirmDialo
             .ignoreExceptions()
             .pollInterval(new Duration(20, SECONDS))
             .pollDelay(TWO_SECONDS)
-            .atMost(new Duration(450, SECONDS)).until(()-> CollectionUtils.isNotEmpty(seleniumDriver.findElements(By.xpath(checkBoxesQuery))));
+            .atMost(new Duration(600, SECONDS)).until(()-> CollectionUtils.isNotEmpty(seleniumDriver.findElements(By.xpath(checkBoxesQuery))));
 
         seleniumDriver.findElements(By.xpath(checkBoxesQuery)).get(0).click();
 
