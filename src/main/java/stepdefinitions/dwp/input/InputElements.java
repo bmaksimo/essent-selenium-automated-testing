@@ -8,6 +8,9 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import org.apache.commons.lang.text.StrSubstitutor;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
 import stepdefinitions.dwp.tables.plus.SwitchState;
 
 import java.util.HashMap;
@@ -110,6 +113,14 @@ public class InputElements extends DwpScenario {
     public void formIsSubmitted() throws Throwable {
         Map<String, String> options = new HashMap<>();
         boolean success = executeJavascriptTest("TrSubmitForm", options);
+    }
+
+    @And("^Field \"([^\"]*)\" input is \"([^\"]*)\"$")
+    public void setInputByPlaceholder(String placeholder, String value) {
+        WebElement placeHolderInputElement = webDriver.findElement(By.xpath("//input[@placeholder='"+placeholder+"']"));
+        boolean placeHolderWasFound = placeHolderInputElement != null;
+        assertThat(String.format("Placeholder element '%s' was not found.", placeholder), placeHolderWasFound, is(true));
+        placeHolderInputElement.sendKeys(value);
     }
 
     @Override

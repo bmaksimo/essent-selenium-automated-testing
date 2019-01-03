@@ -136,4 +136,19 @@ public class ContractenSteps extends DwpScenario {
         contractenPage.checkInvoiceOpenBalance(text);
     }
 
+    @Then("^Customer Status is \"([^\"]*)\"$")
+    public void customerStatus(String status) {
+        webDriver.waitForRequestsToFinish();
+        CustomerAcceptance customerAcceptance = new CustomerAcceptance(webDriver);
+        customerAcceptance.customerStatus(status);
+
+    }
+
+    @Then("^Get Company Number$")
+    public void searchForCompanyNumber() throws Throwable {
+        String companyNumber = webDriver.findElementWhenVisible(By.xpath("//*//*[@id=\"company-number-c-field\"]")).getText();
+        parameterProvider.put("companyNumber", companyNumber);
+
+    }
+
 }

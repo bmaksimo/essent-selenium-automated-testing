@@ -88,13 +88,11 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        When Customer address is
-            | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
-            | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
-
-
-
-
-
-
-
+        When Field "Street" input is "Mechelsesteenweg"
+        And Field "Housenumber" input is "2"
+        And Field "Postalcode" input is "2550"
+        And Field "City" input is "Kontich"
+        And EAN-code autocomplete value from the "1st" row is checked
+        And "EAN-code" input is "parameter:EAN-code"
+        And Connection details are confirmed
+        Then Form header is "Billing details"

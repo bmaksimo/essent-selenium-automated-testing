@@ -33,7 +33,7 @@ Feature: NUAT-5019 end-to-end testing
         Then Form header is "Billing details"
 
 
-        When Payment details are: method Overschrijving, IBAN "NL57ABNA0874253356", bic "ABNANL2A"
+        When Payment details are: method Overschrijving, random IBAN, bic "ABNANL2A"
         And Billing details are confirmed
         Then  Form header is "Quote overview"
 
@@ -96,8 +96,9 @@ Feature: NUAT-5019 end-to-end testing
         And  Odoo file upload confirm button is Import
         And  Odoo file import report
         And Modal button "View Bank Statement" is clicked
+        And Wait for 30 seconds
         When Column "Reference" of the "1st" row is clicked
-        And Modal button "Close" is clicked
+        And Bank Statement "Close" button is clicked
 
         Given I renew login to DWP as billing.testautomation@essent.be
         When Left menu is contracting-switching
@@ -108,8 +109,7 @@ Feature: NUAT-5019 end-to-end testing
 
         And Click on link in View List at 1st row and "Klantnummer & Naam" column
         And Dashboard menu is Billing
-#        And 1st list element has cell value Paid by OV at column Extra info
-#        Then "Openstaand bedrag" in the first "Paid by OV" row of "Transacties" table is "0"
+        Then "Openstaand bedrag" in the first "Paid by OV" row of "Transacties" table is "0"
 
         # 4 - Create consumptions
         Given I renew login to DWP as salesmarketing.testautomation.b2c@essent.be
@@ -209,7 +209,7 @@ Feature: NUAT-5019 end-to-end testing
         And 2nd list element has cell value Invoice (DUNNINGCOST) at column "ID & Type" polling 450 seconds
         And 4th list element has cell value Invoice (SETTLEMENT) at column ID & Type
         And 5th list element has cell value Invoice (ADVANCE) at column ID & Type
-#        And 6th list element has cell value Payment at column ID & Type
+        And 6th list element has cell value Payment at column ID & Type
 
         # 9 - Soft dunning
         And Dashboard menu is Service
@@ -234,7 +234,6 @@ Feature: NUAT-5019 end-to-end testing
         When Click on link in "Marktberichten" View List at 1st row and "Plus Action" column
         And Row actions "Annuleer Marktbericht" is clicked
         And Select Contractline dialog is confirmed
-#        Then Wait for 180 seconds
 
         When Click on Start nieuw marktbericht
         And Click Select Contractline

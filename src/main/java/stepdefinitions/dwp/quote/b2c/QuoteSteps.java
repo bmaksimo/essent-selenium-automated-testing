@@ -19,6 +19,8 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.autocrat.flow.FlowAwarePredicate;
 import stepdefinitions.dwp.quote.DwpDateFormats;
 import stepdefinitions.dwp.tables.*;
@@ -285,11 +287,19 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^Payment details are: method ([^\"]*), IBAN \"([^\"]*)\", bic \"([^\"]*)\"$")
-    public void selectPaymentMethod(String paymetnMethod, String iban, String bic) throws Throwable {
+    public void selectPaymentMethod(String paymetnMethod, String iban, String bic) {
         BillingInformation billingInfo = new BillingInformation(paymetnMethod, iban, bic);
         BillingDetailsPage billingDetailsView = new BillingDetailsPage(webDriver);
         billingDetailsView.setBillingInformation(billingInfo);
         billingDetailsView.fillInFormData();
+    }
+
+    @And("^Payment details are: method ([^\"]*), random IBAN, bic \"([^\"]*)\"$")
+    public void selectPaymentMethod(String paymentMethod, String bic) {
+        String iban = PrepareDataForContract.getValidIbanBE();
+        selectPaymentMethod(paymentMethod, iban, bic);
+
+        parameterProvider.put("iban", iban);
     }
 
     @And("^Billing details are confirmed$")
@@ -376,6 +386,17 @@ public class QuoteSteps extends DwpScenario {
         String eanCode = page.getEan();
         assertThat(StringUtils.isNotEmpty(eanCode), is(true));
         parameterProvider.put(parameter, eanCode);
+    }
+
+    @And("^EAN-code autocomplete value from the \"([^\"]*)\" row is checked$")
+    public void selectEanCodeFromAutoComplete(String ordinal) throws Throwable {
+        Integer rowIndex = Integer.parseInt(ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", ""));
+        WebElement eanElement = webDriver.findElementOrNull(By.xpath("//input-form-element//autocomplete//ul//li[" + rowIndex + "]/a/b"));
+
+        String ean = eanElement.getAttribute("textContent").split(" ")[0];
+        boolean eanWasFound = StringUtils.isNotBlank(ean);
+        assertThat(String.format("EAN code '%s' was not found.", ean), eanWasFound, is(true));
+        parameterProvider.put("EAN-code", ean);
     }
 
     @Override
