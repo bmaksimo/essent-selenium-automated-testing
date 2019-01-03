@@ -1,5 +1,6 @@
 package stepdefinitions.odoo.navigation.table;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.odoo.pageobject.elements.ListView;
 import com.essent.testing.odoo.pageobject.impl.elements.DefaultListView;
 import com.essent.testing.odoo.scenario.OdooScenario;
@@ -27,10 +28,10 @@ public class OdooListView extends OdooScenario  {
 
     @When("^Odoo filter is ([^\"]*)$")
     public void setSearchFilter(String expression) {
+        awaitOdooRequestToFinish(20);
 
         String filter = parameterProvider.getValueOrParameterAsString(expression) == null ?
             expression : parameterProvider.getValueOrParameterAsString(expression);
-        awaitOdooRequestToFinish(10);
         String selector = "//div[@class='oe_searchview_input']";
 
         By xpath = By.xpath(selector);

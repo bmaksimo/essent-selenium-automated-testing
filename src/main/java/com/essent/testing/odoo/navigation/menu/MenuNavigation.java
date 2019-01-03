@@ -46,7 +46,6 @@ public class MenuNavigation extends Component {
             reason = "Main menu item" + item + "is not found";
             return false;
         }
-        awaitOdooRequestToFinish(10);
         elementOrNull.click();
         return true;
     }
@@ -88,6 +87,7 @@ public class MenuNavigation extends Component {
         List<WebElement> result;
         String query = createQuery(MENU_TOGGLER_SELECTOR_TEMPLATE, "text", menuItem);
         By menuTogglerQuery = By.xpath(query);
+
         if(item != null) {
             result  = item.findElements(menuTogglerQuery);
         } else {
