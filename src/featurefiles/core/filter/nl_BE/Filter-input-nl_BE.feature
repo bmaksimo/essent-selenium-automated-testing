@@ -4,14 +4,14 @@
 Feature: Applying filters, View List Header check with waiter
 
     Background:
-        Given   I logged in to DWP as contracting.testautomation.b2c@essent.be
+        Given   I logged in to DWP as "contracting.testautomation.b2c@essent.be"
 
     Scenario: Menu navigation and filter input
-        When Left menu is contracting-switching
-        And Top menu item is Marktberichten
+        When Left menu is "contracting-switching"
+        And Top menu item is "Marktberichten"
         Then View list header is "Marktberichten" appears within 25 seconds
 
-        When Top action is Filters
+        When Top action is "Filters"
         And "Aangemaakt na" date is "3 months before now"
         And "Aangemaakt voor" date is "1 day from now"
         And "Label" selection is "Move In"
@@ -21,7 +21,7 @@ Feature: Applying filters, View List Header check with waiter
         When Plus menu is "Contracting -> UP-TK2 - Om contracten te hernieuwen"
         Then View list header is "UP-TK2 - Om contracten te hernieuwen" appears within 25 seconds
 
-        When Top action is Filters
+        When Top action is "Filters"
         And "Klantnummer" input is "6574"
         Then View List is empty
 
