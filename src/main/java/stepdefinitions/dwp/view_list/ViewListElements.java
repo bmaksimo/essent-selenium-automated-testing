@@ -334,7 +334,7 @@ public class ViewListElements extends NavigationElements {
     }
 
     @When("^View list header is \"([^\"]*)\" appears within (\\d+) seconds?$")
-    public void zcheckViewListHeaderUntil(String header, int seconds) throws Throwable {
+    public void checkViewListHeaderUntil(String header, int seconds) throws Throwable {
         CheckViewListHeader checkViewListHeader = new CheckViewListHeader();
         given().await()
             .pollInterval(FIVE_HUNDRED_MILLISECONDS)
