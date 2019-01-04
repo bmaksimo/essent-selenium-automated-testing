@@ -21,7 +21,7 @@ public class GenericSteps extends DwpScenario {
         registerActiveScenario(scenario);
     }
 
-    @Given("^I logged in to DWP as ([^\"]*)$")
+    @Given("^I logged in to DWP as \"([^\"]*)\"$")
     public void loginAs(String username) throws Throwable {
         isDwpRunning();
         UserRoles dwpUser = UserRoles.get(username);
@@ -31,7 +31,7 @@ public class GenericSteps extends DwpScenario {
         discardPreviousFlow();
     }
 
-    @Given("^I renew login to DWP as ([^\"]*)$")
+    @Given("^I renew login to DWP as \"([^\"]*)\"$")
     public void renewLoginAs(String username) throws Throwable {
         setUpWebDriver();
         loginAs(username);

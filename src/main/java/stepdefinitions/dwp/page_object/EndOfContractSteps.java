@@ -22,7 +22,7 @@ public class EndOfContractSteps extends DwpScenario {
     }
 
 
-    @When("^Click on ([^\"]*)$")
+    @When("^Click on \"([^\"]*)\"$")
     public void clickOn(String element) {
         clickOnElement(element.toLowerCase());
     }

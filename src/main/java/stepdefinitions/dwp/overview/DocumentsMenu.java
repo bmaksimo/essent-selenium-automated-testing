@@ -28,7 +28,7 @@ public class DocumentsMenu extends NavigationElements {
         registerActiveScenario(scenario);
     }
 
-    @Then("^Document with document type ([^\"]*) is available")
+    @Then("^Document with document type \"([^\"]*)\" is available")
     public void checkDashboardMenuItem(String documentType) {
         boolean success = new DocumentsMenu.ClickDocumentsMenu().test(documentType);
         assertThat(String.format("Document with document type  %s was not found.", documentType),

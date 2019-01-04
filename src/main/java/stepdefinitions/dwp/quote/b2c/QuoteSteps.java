@@ -45,7 +45,7 @@ public class QuoteSteps extends DwpScenario {
         registerActiveScenario(scenario);
     }
 
-    @When("^B2C sales channel is ([^\"]*)$")
+    @When("^B2C sales channel is \"([^\"]*)\"$")
     public void initSalesChannel(SalesChannel salesChannel) throws Throwable {
         QuoteDetailsPage quoteDetailsPage = new QuoteDetailsPage(webDriver);
         quoteDetailsPage.setSalesChannel(salesChannel);
@@ -217,7 +217,7 @@ public class QuoteSteps extends DwpScenario {
         connectionDetailsView.fillInFormData();
     }
 
-    @And("^([^\"]*) meter is ([^\"]*)$")
+    @And("^\"([^\"]*)\" meter is \"([^\"]*)\"$")
     public void setMeterState(final ProductType productType, final SwitchState meterState) throws Throwable {
         ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage(webDriver);
         given().await()
@@ -239,7 +239,7 @@ public class QuoteSteps extends DwpScenario {
         connectionDetailsView.toggleMeter(ProductType.Electricity, SwitchState.Closed);
     }
 
-    @And("^([^\"]*) market mock test is ([^\"]*)$")
+    @And("^\"([^\"]*)\" market mock test is ([^\"]*)$")
     public void setMarketMockTest(final ProductType productType, final SwitchState state) throws Throwable {
         ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage(webDriver);
         given().await()
@@ -256,7 +256,7 @@ public class QuoteSteps extends DwpScenario {
         connectionDetailsView.next();
     }
 
-    @And("^Payment details are: method ([^\"]*), IBAN \"([^\"]*)\", bic \"([^\"]*)\"$")
+    @And("^Payment details are: method \"([^\"]*)\", IBAN \"([^\"]*)\", bic \"([^\"]*)\"$")
     public void selectPaymentMethod(String paymetnMethod, String iban, String bic) {
         BillingInformation billingInfo = new BillingInformation(paymetnMethod, iban, bic);
         BillingDetailsPage billingDetailsView = new BillingDetailsPage(webDriver);
@@ -264,7 +264,7 @@ public class QuoteSteps extends DwpScenario {
         billingDetailsView.fillInFormData();
     }
 
-    @And("^Payment details are: method ([^\"]*), random IBAN, bic \"([^\"]*)\"$")
+    @And("^Payment details are: method \"([^\"]*)\", random IBAN, bic \"([^\"]*)\"$")
     public void selectPaymentMethod(String paymentMethod, String bic) {
         String iban = PrepareDataForContract.getValidIbanBE();
         selectPaymentMethod(paymentMethod, iban, bic);
@@ -278,7 +278,7 @@ public class QuoteSteps extends DwpScenario {
         billingDetailsPage.next();
     }
 
-    @And("^Quote is signed in ([^\"]*)$")
+    @And("^Quote is signed in \"([^\"]*)\"$")
     public void submitSignedQuote(String location) throws Throwable {
         String path = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
         File document = new File(path);
@@ -301,7 +301,7 @@ public class QuoteSteps extends DwpScenario {
         quoteOverviewView.next();
     }
 
-    @When("^I select the ([^\"]*) element and click the link in the \"([^\"]*)\" column$")
+    @When("^I select the \"([^\"]*)\" element and click the link in the \"([^\"]*)\" column$")
     public void navigateToListCellLink(String ordinal, String column) throws Throwable {
         Map<String, String> options = new HashMap<>();
         options.put("column", column);
