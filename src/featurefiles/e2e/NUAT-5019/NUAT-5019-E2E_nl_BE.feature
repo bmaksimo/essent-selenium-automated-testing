@@ -35,7 +35,7 @@ Feature: NUAT-5019 end-to-end testing
 
         When Payment details are: method Overschrijving, random IBAN, bic "ABNANL2A"
         And Billing details are confirmed
-        Then  Form header is "Quote overview"
+        Then Form header is "Quote overview"
 
         When Option "Heeft de klant al getekend?" is On
         And "Kanaal ondertekening" selection is "Papier"
@@ -47,8 +47,8 @@ Feature: NUAT-5019 end-to-end testing
 
         When Dashboard menu is Contracten
         Then View list header is "Actieve en toekomstige connecties"
-        And  1st List element with value at column "EAN-code" is checked
-        And  1st list element has cell value Actief at column "Contractnummer" polling 450 seconds
+        And 1st List element with value at column "EAN-code" is checked
+        And 1st list element has cell value Actief at column "Contractnummer" polling 450 seconds
 
         # 2 - invoice run advance
         Given I renew login to DWP as billing.testautomation@essent.be
@@ -81,7 +81,7 @@ Feature: NUAT-5019 end-to-end testing
         Given I renew login to Odoo as t.geets
         And Cleanup Odoo CODA files
         When Odoo top menu is Accounting
-        And  Odoo left menu is Customers
+        And Odoo left menu is Customers
         And Odoo filter is parameter:accountNumber
         When Column "Account Number" with value "parameter:accountNumber" is clicked
         And Button "Journal Items" is clicked
@@ -93,8 +93,8 @@ Feature: NUAT-5019 end-to-end testing
         When Odoo left menu is CODA Processing->Import CODA Files
         Then Odoo file upload dialog is Import CODA File
         Then CODA file is parameter:codaFile
-        And  Odoo file upload confirm button is Import
-        And  Odoo file import report
+        And Odoo file upload confirm button is Import
+        And Odoo file import report
         And Modal button "View Bank Statement" is clicked
         And Wait for 30 seconds
         When Column "Reference" of the "1st" row is clicked
@@ -126,7 +126,7 @@ Feature: NUAT-5019 end-to-end testing
 
         Given Click on link in "Actieve en toekomstige connecties" View List at 1st row and "EAN-code" column
         Then View list header is "Verbruiken"
-        And  Verbruiken list is empty
+        And Verbruiken list is empty
 
         Given Top arrow button is Back
         When Consumption at deliverypointid parameter:EAN-code is generated from now until 2019-09-30
@@ -165,7 +165,7 @@ Feature: NUAT-5019 end-to-end testing
         Then 1st List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
 
         Given Click on link in View List at 1st row and "Klantnummer & Naam" column
-        When  Dashboard menu is Contracten
+        When Dashboard menu is Contracten
         Then View list header is "Actieve en toekomstige connecties"
         And 1st List element with value at column "EAN-code" is checked
 
@@ -214,9 +214,9 @@ Feature: NUAT-5019 end-to-end testing
         # 9 - Soft dunning
         And Dashboard menu is Service
 
-        And  Table Taken contains value "Soft-Dunning Call POST HB3 B2C HIGH" at column Naam & Type & Subtype
-        And  Table Taken contains value "Soft-Dunning Call POST HB2 B2C HIGH" at column Naam & Type & Subtype
-        And  Table Taken contains value "Soft-Dunning Call POST HB1 B2C HIGH" at column Naam & Type & Subtype
+        And Table Taken contains value "Soft-Dunning Call POST HB3 B2C HIGH" at column Naam & Type & Subtype
+        And Table Taken contains value "Soft-Dunning Call POST HB2 B2C HIGH" at column Naam & Type & Subtype
+        And Table Taken contains value "Soft-Dunning Call POST HB1 B2C HIGH" at column Naam & Type & Subtype
 
         # 10 - Check for INITIATE STOP ACCESS market message creation
         Given I renew login to DWP as contracting.testautomation.b2c@essent.be
@@ -237,7 +237,7 @@ Feature: NUAT-5019 end-to-end testing
 
         When Click on Start nieuw marktbericht
         And Click Select Contractline
-        And  Dialog search input is current "parameter:EAN-code"
+        And Dialog search input is current "parameter:EAN-code"
         Then Select Contractline dialog is confirmed
         When "Module" selection is "INITIATE STOP ACCESS"
         And Label input for "Label" is "Non-Residential End-of-Contract"
