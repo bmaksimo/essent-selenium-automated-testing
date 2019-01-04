@@ -2,10 +2,7 @@ package stepdefinitions.dwp.page_object;
 
 
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
 import com.essent.testing.selenium.SeleniumDriver;
-import com.essent.testing.dwp.scenario.DwpScenario;
-
 import org.junit.Assert;
 import org.openqa.selenium.By;
 

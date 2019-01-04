@@ -10,7 +10,6 @@ import cucumber.api.java.en.And;
 import org.apache.commons.lang.text.StrSubstitutor;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-
 import stepdefinitions.dwp.tables.plus.SwitchState;
 
 import java.util.HashMap;

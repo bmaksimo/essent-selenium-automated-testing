@@ -1,18 +1,19 @@
-package com.essent.testing.dwp.pageobject.impl.quote;
+package com.essent.testing.dwp.pageobject.impl.quote_for_account;
 
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
+import com.essent.testing.dwp.pageobject.impl.quote.QuoteCreationGuidedStep;
 import com.essent.testing.selenium.SeleniumDriver;
 import stepdefinitions.dwp.tables.SignatureData;
 
-import static com.essent.testing.dwp.autocrat.element.quote.SignatureElements.SIGN_UPLOAD_DOC;
+import static com.essent.testing.dwp.autocrat.element.quote_for_account.QuoteForAccountSignatureElements.SIGN_UPLOAD_DOC;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.UPLOAD_FILE;
 
-public class QuoteOverviewPage extends QuoteCreationGuidedStep {
+public class QuoteForAccountOverviewPage extends QuoteCreationGuidedStep {
 
     private SignatureData signatureData;
 
-    public QuoteOverviewPage(SeleniumDriver seleniumDriver) {
+    public QuoteForAccountOverviewPage(SeleniumDriver seleniumDriver) {
         super(seleniumDriver);
     }
 

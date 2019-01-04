@@ -29,41 +29,15 @@ Feature: NUAT-5021 Step 1. Create an account for de-duplication.
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-
         When Electricity EAN code is "random"
         And  "Startdatum" date is "now"
         And Connection details are confirmed
         Then Form header is "Billing details"
 
-        #When Payment details are: method Overschrijving, IBAN "NL57ABNA0874253356", bic "ABNANL2A"
-        #When "Advance frequency" selection is "Maandelijks"
         When "Betalingswijze" selection is "Overschrijving"
-        #And IBAN is generated
-        #And "IBAN" input is "parameter:iban"
-        #And  "BIC-code" input is "GEBABEBB"
         And  Billing details are confirmed
         Then  Form header is "Quote overview"
 
-        #When Option "Heeft de klant al getekend?" is On
-        #And "Kanaal ondertekening" selection is "Papier"
-        #And "Plaats ondertekening" input is "Kontich"
-        #And "Datum ondertekening" date is "now"
-        #And Quote is signed
         When Quote is confirmed
         Then View list header is "Offertes"
-
-
-        # When 1st list element has cell value Sales Getekend - Geaccepteerd at column Type & status
-        When 1st list element has cell value Sales Verstuurd naar de klant - Geaccepteerd at column Type & status
-        #And Dashboard menu is Contracten
-        #Then View list header is "Actieve en toekomstige connecties"
-        #And  1st List element with value at column "EAN-code" is checked
-
-        When Top arrow button is Up
-        And Left menu is sales-marketing
-        And Top menu item is Klanten
-        And Top action is Filters
-        And "Naam" input is "parameter:suitecrm-customer-name"
-
-        Given 1st List element with value at column "Klantnummer & Naam" is checked
-        #Then  External status is "On" for SuiteCRM Customer Number "parameter:Klantnummer & Naam"
+        And 1st list element has cell value Sales Verstuurd naar de klant - Geaccepteerd at column Type & status

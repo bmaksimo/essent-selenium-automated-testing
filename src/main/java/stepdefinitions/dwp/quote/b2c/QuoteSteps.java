@@ -5,6 +5,7 @@ import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.testing.dwp.pageobject.impl.modal.quote.SimilarAccountDialogImpl;
 import com.essent.testing.dwp.pageobject.impl.quote.*;
+import com.essent.testing.dwp.pageobject.impl.quote_for_account.QuoteForAccountOverviewPage;
 import com.essent.testing.dwp.pageobject.modal.quote.SimilarAccountDialog;
 import com.essent.testing.dwp.pageobject.quote.GuidedStep;
 import com.essent.testing.dwp.scenario.DwpScenario;
@@ -345,11 +346,30 @@ public class QuoteSteps extends DwpScenario {
         assertThat("Failure when signing up the quote.", success, is(true));
     }
 
+    @And("^Quote for account is signed$")
+    public void submitQuoteForAccount() throws Throwable {
+        String path = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
+        File document = new File(path);
+        assertThat("File at path " + document.getAbsolutePath() + " doesn't exist.", true,
+            is(document.exists()));
+        SignatureData signature = new SignatureData(
+            DwpDateFormats.DWP_TODAY,
+            path);
+        QuoteForAccountOverviewPage quoteOverviewView = new QuoteForAccountOverviewPage(webDriver);
+        quoteOverviewView.setSignatureData(signature);
+        boolean success = quoteOverviewView.fillInFormData();
+        assertThat("Failure when signing up the quote.", success, is(true));
+    }
+
 
     @And("^Quote is confirmed$")
     public void confirmQuote() throws Throwable {
         QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage(webDriver);
         quoteOverviewView.next();
+    }
+    @And("^Quote for account is confirmed$")
+    public void confirmQuoteForAccount() throws Throwable {
+       confirmQuote();
     }
 
     @When("^I select the ([^\"]*) element and click the link in the \"([^\"]*)\" column$")
@@ -366,6 +386,15 @@ public class QuoteSteps extends DwpScenario {
         boolean success = executeJavascriptTest("TrSelectEanCode", options);
         assertThat(success, is(true));
     }
+
+    @And("^EAN code is generated$")
+    public void generateEan() throws Throwable {
+        String eanCode = PrepareDataForContract.generateEAN();
+        parameterProvider.put("EAN-code-generated", eanCode);
+        logger().info(" - Generated EAN code: " + eanCode);
+    }
+
+
 
     @And("^Electricity EAN code is \"([^\"]*)\"$")
     public void electricityEANCodeIs(String ean) throws Throwable {

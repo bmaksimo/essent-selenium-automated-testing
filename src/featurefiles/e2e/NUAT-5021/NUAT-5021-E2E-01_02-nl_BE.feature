@@ -4,6 +4,7 @@
 Feature: NUAT-5021 Complete scenario from de-duplication of client with guarantee to inactive client
 
     @NUAT-5021-01-02
+    @DEDUPLICATE-CUSTOMER
     Scenario: From de-duplication of client to inactive client via passive renewal
 
         Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
@@ -28,36 +29,18 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-
         When Electricity EAN code is "random"
         And  "Startdatum" date is "now"
         And Connection details are confirmed
         Then Form header is "Billing details"
 
-        #When Payment details are: method Overschrijving, IBAN "NL57ABNA0874253356", bic "ABNANL2A"
-        When "Advance frequency" selection is "Maandelijks"
-        And "Betalingswijze" selection is "Overschrijving"
-        And IBAN is generated
-        And "IBAN" input is "parameter:iban"
-        And  "BIC-code" input is "GEBABEBB"
-        And Billing details are confirmed
+        When "Betalingswijze" selection is "Overschrijving"
+        And  Billing details are confirmed
         Then  Form header is "Quote overview"
 
-        And Billing details are confirmed
-        Then  Form header is "Quote overview"
-
-        When Option "Heeft de klant al getekend?" is On
-        And "Kanaal ondertekening" selection is "Papier"
-        And "Plaats ondertekening" input is "Kontich"
-        And "Datum ondertekening" date is "now"
-        And Quote is signed
-        And Quote is confirmed
+        When Quote is confirmed
         Then View list header is "Offertes"
-
-        When 1st list element has cell value Sales Getekend - Geaccepteerd at column Type & status
-        And Dashboard menu is Contracten
-        Then View list header is "Actieve en toekomstige connecties"
-        And  1st List element with value at column "EAN-code" is checked
+        And 1st list element has cell value Sales Verstuurd naar de klant - Geaccepteerd at column Type & status
 
         When Top arrow button is Up
         And Left menu is sales-marketing
@@ -79,9 +62,8 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
             | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
             | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
         And Customer is duplicated
-        Then   Deduplication dialogue "Soortgelijke klanten" is shown
-
-        Given  Deduplication dialogue link "Create quote for account" is clicked
+        And  Deduplication dialogue "Soortgelijke klanten" is shown
+        And  Deduplication dialogue link "Create quote for account" is clicked
         Then Form header is "Quote details"
 
         When "Sales kanaal" selection is "Inbound"
@@ -97,7 +79,20 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And Field "Housenumber" input is "2"
         And Field "Postalcode" input is "2550"
         And Field "City" input is "Kontich"
-        And EAN-code autocomplete value from the "1st" row is checked
-        And "EAN-code" input is "parameter:EAN-code"
+        And EAN code is generated
+        And "EAN-code" input is "parameter:EAN-code-generated"
         And Connection details are confirmed
         Then Form header is "Billing details"
+
+        When "Betalingswijze" selection is "Overschrijving"
+        And  Billing details are confirmed
+        Then  Form header is "Quote overview"
+
+        When Option "Heeft de klant al getekend?" is On
+        And "Kanaal ondertekening" selection is "Papier"
+        And "Plaats ondertekening" input is "Kontich"
+        And "Datum ondertekening" date is "now"
+        And Quote for account is signed
+        When Quote for account is confirmed
+        Then View list header is "Offertes"
+        And 1st list element has cell value Sales Getekend - Waarborg at column Type & status
