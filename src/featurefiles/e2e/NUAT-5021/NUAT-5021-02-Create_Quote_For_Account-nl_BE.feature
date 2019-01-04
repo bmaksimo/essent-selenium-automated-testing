@@ -6,6 +6,7 @@ Feature: NUAT-5021 Step 2. Deduplicate account
 
         Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
 
+    @NUAT-5021-STEP-2
     @CREATE-QUOTE-FOR-ACCOUNT
     Scenario: Trigger Deduplicate process
 
