@@ -3,7 +3,7 @@
 @E2E
 Feature: NUAT-5021 Complete scenario from de-duplication of client with guarantee to inactive client
 
-    @NUAT-5021-01-02
+    @NUAT-5021-01-02-03
     @DEDUPLICATE-CUSTOMER
     Scenario: From de-duplication of client to inactive client via passive renewal
 
@@ -30,7 +30,6 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         Then Form header is "Connection details"
 
         When Electricity EAN code is "random"
-        And  "Startdatum" date is "now"
         And Connection details are confirmed
         Then Form header is "Billing details"
 
@@ -51,6 +50,7 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         Given 1st List element with value at column "Klantnummer & Naam" is checked
         Then  External status is "On" for SuiteCRM Customer Number "parameter:Klantnummer & Naam"
 
+        #Step 2: should deduplicate customer
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
@@ -96,3 +96,49 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         When Quote for account is confirmed
         Then View list header is "Offertes"
         And 1st list element has cell value Sales Getekend - Waarborg at column Type & status
+
+        # Step 3 - Should create guarantee invoice
+        Given I renew login to DWP as billing.testautomation@essent.be
+        When Left menu is billing
+        And Top menu item is Klanten
+        And Top action is Filters
+        And "Naam" input is "parameter:suitecrm-customer-name"
+        And Click on link in View List at 1st row and "Klantnummer & Naam" column
+        And Dashboard menu is Billing
+        Then 1st list element has cell value Invoice (GUARANTEE) at column ID & Type
+
+        # Step 4 - Generate Odoo CODA for account
+        Given I renew login to Odoo as t.geets
+        And Cleanup Odoo CODA files
+        When Odoo top menu is Accounting
+        And Odoo left menu is Customers
+        And Odoo filter is parameter:Klantnummer & Naam
+        When Column "Account Number" with value "parameter:Klantnummer & Naam" is clicked
+        And Button "Journal Items" is clicked
+        And Generate CODA in the "1st" row is clicked
+        Then Modal title contains "Download CODA"
+        And Generated CODA file is downloaded
+        And Modal button "Close" is clicked
+
+        #Pay guarantee amount
+        When Odoo left menu is CODA Processing->Import CODA Files
+        Then Odoo file upload dialog is Import CODA File
+        Then CODA file is parameter:codaFile
+        And Odoo file upload confirm button is Import
+        And Odoo file import report
+        And Modal button "View Bank Statement" is clicked
+        And Wait for 30 seconds
+        When Column "Reference" of the "1st" row is clicked
+        And Bank Statement "Close" button is clicked
+
+        #Switch back to Odoo and verify Guarantee Payment
+        Given I renew login to DWP as billing.testautomation@essent.be
+        When Left menu is contracting-switching
+        And Top menu item is Klanten
+        And Top action is Filters
+        And "Naam" input is "parameter:suitecrm-customer-name"
+        Then View list header is "Klanten"
+
+        And Click on link in View List at 1st row and "Klantnummer & Naam" column
+        And Dashboard menu is Billing
+        Then "Openstaand bedrag" in the first "Paid by OV" row of "Transacties" table is "0"
