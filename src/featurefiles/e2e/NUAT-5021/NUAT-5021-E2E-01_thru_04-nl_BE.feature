@@ -131,7 +131,7 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         When Column "Reference" of the "1st" row is clicked
         And Bank Statement "Close" button is clicked
 
-        #Switch back to Odoo and verify Guarantee Payment
+        #Switch back to Dwp and verify Guarantee Payment
         Given I renew login to DWP as billing.testautomation@essent.be
         When Left menu is contracting-switching
         And Top menu item is Klanten
