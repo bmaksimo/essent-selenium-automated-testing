@@ -8,6 +8,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.awaitility.Duration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
@@ -23,19 +24,24 @@ public class SearchContractLinesDialog extends Component implements ConfirmDialo
 
     public void searchContractLine(String searchInput) {
 
-        WebElement searchField = seleniumDriver.findElementOrNull(By.xpath("//input[@id='search-input']"));
-        seleniumDriver.waitAndSendKeys(searchField, searchInput);
+        WebElement searchField = seleniumDriver.findElementWhenVisible(By.xpath("//input[@id='search-input']"));
+        searchField.sendKeys(searchInput);
 
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//input[@type='submit']")));
+        Sleeper.sleepTightInSeconds(1);
+
+        WebElement searchButton = seleniumDriver.findElementWhenVisible(By.xpath("//input[@type='submit']"));
+        searchButton.click();
+        Sleeper.sleepTightInSeconds(1);
+        searchButton.click();
 
         String checkBoxesQuery = createQuery("//label[starts-with(normalize-space(), '${text}')]/input[@type='checkbox']", "text", searchInput);
 
         given()
             .await()
             .ignoreExceptions()
-            .pollInterval(new Duration(20, SECONDS))
+            .pollInterval(new Duration(2, SECONDS))
             .pollDelay(TWO_SECONDS)
-            .atMost(new Duration(600, SECONDS)).until(()-> CollectionUtils.isNotEmpty(seleniumDriver.findElements(By.xpath(checkBoxesQuery))));
+            .atMost(new Duration(60, SECONDS)).until(()-> CollectionUtils.isNotEmpty(seleniumDriver.findElements(By.xpath(checkBoxesQuery))));
 
         seleniumDriver.findElements(By.xpath(checkBoxesQuery)).get(0).click();
 
