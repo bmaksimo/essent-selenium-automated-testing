@@ -1,16 +1,16 @@
-@DWP
+"@DWP
 @B2B
 @REGRESSION
 @BUSINESS-DESK
 Feature: NAUT-482: Restart SA or MI - nl_BE
 
     Background:
-        Given I logged in to DWP as businessdesk.testautomation.b2b@essent.be
+        Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
 
     Scenario: Restart for SA Or MI
-        When Left menu is sales-marketing
-        And Top menu item is Marktberichten
-        And Top action is Filters
+        When Left menu is "sales-marketing"
+        And Top menu item is "Marktberichten"
+        And Top action is "Filters"
         And "Label" selection is "Move In"
         And "Status EC" selection is "Geweigerd"
         Then Plus action and "Herstuur marktbericht" of first customer from list
@@ -23,10 +23,10 @@ Feature: NAUT-482: Restart SA or MI - nl_BE
         And Save EAN code of customer
         Then Changes are confirmed
 
-        When Left menu is sales-marketing
+        When Left menu is "sales-marketing"
         And Search field input is "parameter:eanCode"
-        And Click on link in View List at 1st row and "Klantnaam & nummer" column polling 20 seconds
-        And Dashboard menu is Marktberichten
+        And Click on link in View List at "1st" row and "Klantnaam & nummer" column polling 20 seconds
+        And Dashboard menu is "Marktberichten"
         Then Validate rejection status is "START ACCESS"
 
 
