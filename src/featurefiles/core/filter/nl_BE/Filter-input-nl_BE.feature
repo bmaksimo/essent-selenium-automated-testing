@@ -15,7 +15,7 @@ Feature: Applying filters, View List Header check with waiter
         And "Aangemaakt na" date is "3 months before now"
         And "Aangemaakt voor" date is "1 day from now"
         And "Label" selection is "Move In"
-        Then 1 List row having cell value MOVE IN Move In at column Module & Label is selected
+        Then "1" List row having cell value "MOVE IN Move In" at column "Module & Label" is selected
 
     Scenario: Plus Menu navigation to view list
         When Plus menu is "Contracting -> UP-TK2 - Om contracten te hernieuwen"

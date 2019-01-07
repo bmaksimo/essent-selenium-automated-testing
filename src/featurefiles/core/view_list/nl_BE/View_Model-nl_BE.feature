@@ -13,7 +13,7 @@ Feature: View list model functions, extracting data from web page and passing pa
         When Top action is "Filters"
         And "Module" selection is "CANCEL"
         And "Label" selection is "By Essent"
-        Then 3 List rows having cell value CANCEL By Essent at column Module & Label are selected
+        Then "3" List rows having cell value "CANCEL By Essent" at column "Module & Label" are selected
         And Selected List rows have cell value "CANCEL By Essent" at column "Module & Label"
         And Cell values from selected rows and column "EC Status & Effective date" are checked
 
