@@ -30,8 +30,8 @@ Feature: Creating a B2C Quote TC1 with move in - Dutch language version
 
         When "Startdatum" date is "now"
         And Electricity EAN code is selected
-        And Electricity meter is "Closed"
-        And Electricity market mock test is "Open"
+        And Electricity meter is Closed
+        And Electricity market mock test is Open
         And Connection details are confirmed
         Then Form header is "Facturatiedetails"
 

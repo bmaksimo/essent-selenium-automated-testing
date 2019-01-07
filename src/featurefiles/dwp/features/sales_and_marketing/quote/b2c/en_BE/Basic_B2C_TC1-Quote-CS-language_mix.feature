@@ -29,7 +29,7 @@ Feature: NUAT-5019-1: Creating a B2C Quote TC1 with move in, Dutch language vers
 
         When "Startdatum" date is "now"
         And Electricity EAN code is selected
-        And Electricity market mock test is "Open"
+        And Electricity market mock test is Open
         And Connection details are confirmed
         Then Form header is "Billing details"
 

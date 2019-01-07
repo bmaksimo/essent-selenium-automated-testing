@@ -217,7 +217,7 @@ public class QuoteSteps extends DwpScenario {
         connectionDetailsView.fillInFormData();
     }
 
-    @And("^\"([^\"]*)\" meter is \"([^\"]*)\"$")
+    @And("^([^\"]*) meter is ([^\"]*)$")
     public void setMeterState(final ProductType productType, final SwitchState meterState) throws Throwable {
         ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage(webDriver);
         given().await()
@@ -239,7 +239,7 @@ public class QuoteSteps extends DwpScenario {
         connectionDetailsView.toggleMeter(ProductType.Electricity, SwitchState.Closed);
     }
 
-    @And("^\"([^\"]*)\" market mock test is ([^\"]*)$")
+    @And("^([^\"]*) market mock test is ([^\"]*)$")
     public void setMarketMockTest(final ProductType productType, final SwitchState state) throws Throwable {
         ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage(webDriver);
         given().await()
