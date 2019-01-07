@@ -6,13 +6,13 @@
         Scenario: Create guarantee invoice after customer deduplication
 
             # Step 1: create customer with guarantee
-            Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
+            Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
             When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
             Then Form header is "Quote details"
 
             When "Tariefdatum" date is "now"
-            And B2C sales channel is Inbound
+            And B2C sales channel is "Inbound"
             And Quote details are confirmed
             Then Form header is "Personal details"
 
@@ -34,33 +34,33 @@
             And Connection details are confirmed
             Then Form header is "Billing details"
 
-            When Payment details are: method Overschrijving, random IBAN, bic "ABNANL2A"
+            When Payment details are: method "Overschrijving", random IBAN, bic "ABNANL2A"
             And Billing details are confirmed
             Then  Form header is "Quote overview"
 
             When Option "Heeft de klant al getekend?" is On
             And "Kanaal ondertekening" selection is "Papier"
-            And Quote is signed in Kontich
+            And Quote is signed in "Kontich"
             And "Datum ondertekening" date is "now"
             And Quote is confirmed
             Then View list header is "Offertes"
-            Then 1st list element has cell value Sales Getekend - Geaccepteerd at column Type & status
+            Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
 
-            When Dashboard menu is Contracten
+            When Dashboard menu is "Contracten"
             Then View list header is "Actieve en toekomstige connecties"
-            And  1st List element with value at column "EAN-code" is checked
+            And  "1st" List element with value at column "EAN-code" is checked
 
-            When Top arrow button is Up
-            And Left menu is sales-marketing
-            And Top menu item is Klanten
-            And Top action is Filters
+            When Top arrow button is "Up"
+            And Left menu is "sales-marketing"
+            And Top menu item is "Klanten"
+            And Top action is "Filters"
             And "Naam" input is "parameter:suitecrm-customer-name"
 
-            Given 1st List element with value at column "Klantnummer & Naam" is checked
+            Given "1st" List element with value at column "Klantnummer & Naam" is checked
             Then External status is "On" for SuiteCRM Customer Number "parameter:Klantnummer & Naam"
 
             #Step 2: should deduplicate customer
-            Given Click on link in View List at 1st row and "Klantnummer & Naam" column
+            Given Click on link in View List at "1st" row and "Klantnummer & Naam" column
             When Plus menu is "Sales -> Creëer nieuwe offerte  (TC1)"
             When "Sales kanaal" selection is "Inbound"
             And Quote details are confirmed
@@ -91,14 +91,14 @@
             And Getekend document is uploaded
             And Quote is confirmed
             Then View list header is "Offertes"
-            Then 1st list element has cell value Sales Getekend - Waarborg at column Type & status
+            Then "1st" list element has cell value "Sales Getekend - Waarborg" at column "Type & status"
 
             # Step 3 - Should create guarantee invoice
-            Given I renew login to DWP as billing.testautomation@essent.be
-            When Left menu is billing
-            And Top menu item is Klanten
-            And Top action is Filters
+            Given I renew login to DWP as "billing.testautomation@essent.be"
+            When Left menu is "billing"
+            And Top menu item is "Klanten"
+            And Top action is "Filters"
             And "Naam" input is "parameter:suitecrm-customer-name"
-            And Click on link in View List at 1st row and "Klantnummer & Naam" column
-            And Dashboard menu is Billing
-            Then 1st list element has cell value Invoice (GUARANTEE) at column ID & Type
+            And Click on link in View List at "1st" row and "Klantnummer & Naam" column
+            And Dashboard menu is "Billing"
+            Then "1st" list element has cell value "nvoice (GUARANTEE)" at column "ID & Type"

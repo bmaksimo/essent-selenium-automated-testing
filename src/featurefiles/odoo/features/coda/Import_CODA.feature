@@ -5,12 +5,12 @@ Feature: Import a coda file
 
     Background:
         #GUI contract creation
-        Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
+        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
         When "Tariefdatum" date is "now"
-        And B2C sales channel is Inbound
+        And B2C sales channel is "Inbound"
         And Quote details are confirmed
         Then Form header is "Personal details"
 
@@ -34,53 +34,53 @@ Feature: Import a coda file
         Then Form header is "Billing details"
 
 
-        When Payment details are: method Overschrijving, IBAN "NL57ABNA0874253356", bic "ABNANL2A"
+        When Payment details are: method "Overschrijving", IBAN "NL57ABNA0874253356", bic "ABNANL2A"
         And Billing details are confirmed
         Then  Form header is "Quote overview"
 
         When Option "Heeft de klant al getekend?" is On
         And "Kanaal ondertekening" selection is "Papier"
-        And Quote is signed in Kontich
+        And Quote is signed in "Kontich"
         And "Datum ondertekening" date is "now"
         And Quote is confirmed
         Then View list header is "Offertes"
-        Then 1st list element has cell value Sales Getekend - Geaccepteerd at column Type & status
+        Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
 
-        When Dashboard menu is Contracten
+        When Dashboard menu is "Contracten"
         Then View list header is "Actieve en toekomstige connecties"
-        And  1st List element with value at column "EAN-code" is checked
-        And  1st list element has cell value Actief at column "Contractnummer" polling 450 seconds
+        And  "1st" List element with value at column "EAN-code" is checked
+        And  "1st" list element has cell value Actief at column "Contractnummer" polling 450 seconds
 
         #invoice run advance
-        Given I renew login to DWP as billing.testautomation@essent.be
-        When Left menu is billing
-        And Top menu item is Klanten
-        And Top action is Filters
+        Given I renew login to DWP as "billing.testautomation@essent.be"
+        When Left menu is "billing"
+        And Top menu item is "Klanten"
+        And Top action is "Filters"
         And "Naam" input is "parameter:suitecrm-customer-name"
 
-        Given View List element "Id Billing customer & persoon/familie sleutel" is collected as parameter at 1st list row
-        And View List element "Klantnummer & Naam" using "accountNumber" as alias is collected as parameter at 1st list row
-        And Click on link in View List at 1st row and "Klantnummer & Naam" column
-        And Dashboard menu is Contracten
+        Given View List element "Id Billing customer & persoon/familie sleutel" is collected as parameter at "1st" list row
+        And View List element "Klantnummer & Naam" using "accountNumber" as alias is collected as parameter at "1st" list row
+        And Click on link in View List at "1st" row and "Klantnummer & Naam" column
+        And Dashboard menu is "Contracten"
         Then View list header is "Actieve en toekomstige connecties"
 
-        Given Top arrow button is Up
+        Given Top arrow button is "Up"
         And Plus menu is "Billing -> Start facturatierun"
-        When Modal dialog is Start invoicerun
+        When Modal dialog is "Start invoicerun"
         And "Naam job" selection is "recurrent"
         And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
         And "Factuurdatum" date is "now"
         And "Procesdatum" date is "1 month from now"
         Then Invoice run is scheduled
 
-        Given Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
-        When Dashboard menu is Billing
+        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
+        When Dashboard menu is "Billing"
         Then View list header is "Transacties"
-        And 1st list element has cell value Invoice (ADVANCE) at column ID & Type
+        And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
 
     @CODA
     Scenario: Create a new CODA file
-        Given I renew login to Odoo as t.geets
+        Given I renew login to Odoo as "t.geets"
         And Cleanup Odoo CODA files
         When Odoo top menu is Accounting
         And  Odoo left menu is Customers
@@ -93,9 +93,9 @@ Feature: Import a coda file
         And Modal button "Close" is clicked
 
         When Odoo left menu is CODA Processing->Import CODA Files
-        Then Odoo file upload dialog is Import CODA File
-        Then CODA file is parameter:codaFile
-        And  Odoo file upload confirm button is Import
+        Then Odoo file upload dialog is "Import CODA File"
+        Then CODA file is "parameter:codaFile"
+        And  Odoo file upload confirm button is "Import"
         And  Odoo file import report
         And Modal button "View Bank Statement" is clicked
         When Column "Reference" of the "1st" row is clicked
