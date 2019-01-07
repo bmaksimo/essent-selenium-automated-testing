@@ -40,7 +40,7 @@ public class InputElements extends DwpScenario {
             Model.Execution initializeField = createExecution();
             initializeField
                 .element(new Model.Element().search("XPATH").query(query).key(elementName))
-                .step(createStep(TYPING).element(elementName).value(value).timeoutInSeconds(4), 100);
+                .step(createStep(TYPING).element(elementName).value(value).timeoutInSeconds(10), 10);
             webDriver.waitForRequestsToFinish();
             return execute(initializeField);
         }
