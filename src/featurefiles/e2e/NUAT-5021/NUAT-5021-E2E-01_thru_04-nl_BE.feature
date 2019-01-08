@@ -29,6 +29,7 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         Then Form header is "Connection details"
 
         When Electricity EAN code is "random"
+        And  "Startdatum" date is "now"
         And Connection details are confirmed
         Then Form header is "Billing details"
 
@@ -96,7 +97,7 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         Then View list header is "Offertes"
         And 1st list element has cell value Sales Getekend - Waarborg at column Type & status
 
-        When Dashboard menu is Marktberichen
+        When Dashboard menu is Marktberichten
         Then View List is empty
 
         # Step 3 - Should create guarantee invoice

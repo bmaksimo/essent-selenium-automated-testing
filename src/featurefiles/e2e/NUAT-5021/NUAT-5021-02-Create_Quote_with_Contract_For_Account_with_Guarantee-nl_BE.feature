@@ -21,11 +21,11 @@ Feature: NUAT-5021 Step 2. Deduplicate account
             | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
             | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
         And "Aanspreking" selection is "Mevr."
-        And "Voornaam" input is "Sharona"
-        And "Familienaam" input is "Cok"
-        And "E-mailadres" input is "sharona.cok@example.com"
-        And "Gsm-nummer" input is "+31686353147"
-        And "Geboortedatum" date is "20/06/1975"
+        And "Voornaam" input is "Randa"
+        And "Familienaam" input is "Gomez"
+        And "E-mailadres" input is "randa.gomez@example.com"
+        And "Gsm-nummer" input is "+31683687691"
+        And "Geboortedatum" date is "04/03/1958"
         And  Deduplication dialogue "Soortgelijke klanten" is shown
         And  Deduplication dialogue link "Create quote for account" is clicked
         Then Form header is "Quote details"
