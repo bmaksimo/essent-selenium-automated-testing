@@ -39,7 +39,7 @@ Feature: NUAT-5019 Step 1. Creating a B2C Quote TC1 with move in, Dutch language
         And Connection details are confirmed
         Then Form header is "Billing details"
 
-        When Payment details are: method Overschrijving, random IBAN, bic "ABNANL2A"
+        When "Betalingswijze" selection is "Overschrijving"
         And Billing details are confirmed
         Then  Form header is "Quote overview"
 
