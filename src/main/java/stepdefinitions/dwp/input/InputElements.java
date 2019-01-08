@@ -8,6 +8,7 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import org.apache.commons.lang.text.StrSubstitutor;
+import org.awaitility.Duration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -20,6 +21,10 @@ import java.util.Map;
 
 import static com.essent.automation.autocrat.Action.SELECT;
 import static com.essent.automation.autocrat.Action.TYPING;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.awaitility.Awaitility.given;
+import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
+import static org.awaitility.Duration.ONE_SECOND;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -44,7 +49,9 @@ public class InputElements extends DwpScenario {
             initializeField
                 .element(new Model.Element().search("XPATH").query(query).key(elementName))
                 .step(createStep(TYPING).element(elementName).value(value).timeoutInSeconds(10), 10);
-            return execute(initializeField);
+            boolean success = execute(initializeField);
+            return success?
+            webDriver.findElement(By.xpath(query)).equals(value): success;
         }
     }
 
@@ -70,9 +77,14 @@ public class InputElements extends DwpScenario {
     public void setInput(String label, String value) throws Throwable {
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
         parameterProvider.put("inputValue", inputValue);
+        given().await()
+            .pollInterval(FIVE_HUNDRED_MILLISECONDS)
+            .atMost(new Duration(20, SECONDS)).until(() -> new ApplyInput().test(label, inputValue));
+        /*
         boolean success = new ApplyInput().test(label, inputValue);
         assertThat(String.format("Input '%s' = '$s' failed.", label, inputValue),
             success, is(true));
+            */
     }
 
     @And("^Label input for \"([^\"]*)\" is \"([^\"]*)\"$")
