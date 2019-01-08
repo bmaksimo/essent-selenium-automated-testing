@@ -3,8 +3,7 @@
 @E2E
 Feature: NUAT-5021 Complete scenario from de-duplication of client with guarantee to inactive client
 
-    @NUAT-5021-01-02-03
-    @DEDUPLICATE-CUSTOMER
+    @NUAT-5021-01-04
     Scenario: From de-duplication of client to inactive client via passive renewal
 
         Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
@@ -97,6 +96,9 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         Then View list header is "Offertes"
         And 1st list element has cell value Sales Getekend - Waarborg at column Type & status
 
+        When Dashboard menu is Marktberichen
+        Then View List is empty
+
         # Step 3 - Should create guarantee invoice
         Given I renew login to DWP as billing.testautomation@essent.be
         When Left menu is billing
@@ -140,5 +142,5 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         Then View list header is "Klanten"
 
         And Click on link in View List at 1st row and "Klantnummer & Naam" column
-        And Dashboard menu is Billing
+        And Dashboard menu is Billingempt
         Then "Openstaand bedrag" in the first "Paid by OV" row of "Transacties" table is "0"
