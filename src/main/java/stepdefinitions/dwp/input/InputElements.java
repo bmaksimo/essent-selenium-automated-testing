@@ -9,7 +9,10 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import org.apache.commons.lang.text.StrSubstitutor;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.seleniumhq.selenium.fluent.FluentBy;
 import stepdefinitions.dwp.tables.plus.SwitchState;
 
 import java.util.HashMap;
@@ -41,7 +44,6 @@ public class InputElements extends DwpScenario {
             initializeField
                 .element(new Model.Element().search("XPATH").query(query).key(elementName))
                 .step(createStep(TYPING).element(elementName).value(value).timeoutInSeconds(10), 10);
-            webDriver.waitForRequestsToFinish();
             return execute(initializeField);
         }
     }
@@ -58,9 +60,7 @@ public class InputElements extends DwpScenario {
             initializeField
                 .element(new Model.Element().search("XPATH").query(query).key(elementName))
                 .step(createStep(SELECT).element(elementName).value(value).timeoutInSeconds(4), 100);
-            webDriver.waitForRequestsToFinish();
             boolean success =  execute(initializeField);
-            webDriver.waitForRequestsToFinish();
             return success;
         }
     }
