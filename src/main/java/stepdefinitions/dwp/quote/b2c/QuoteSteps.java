@@ -3,6 +3,7 @@ package stepdefinitions.dwp.quote.b2c;
 import com.billinghouse.random.RandomUser;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.modal.quote.SimilarAccountDialogImpl;
 import com.essent.testing.dwp.pageobject.impl.quote.*;
 import com.essent.testing.dwp.pageobject.impl.quote_for_account.QuoteForAccountOverviewPage;
@@ -52,6 +53,7 @@ public class QuoteSteps extends DwpScenario {
     @When("^B2C sales channel is ([^\"]*)$")
     public void initSalesChannel(SalesChannel salesChannel) throws Throwable {
         QuoteDetailsPage quoteDetailsPage = new QuoteDetailsPage(webDriver);
+        Sleeper.sleepTightInSeconds(5);
         quoteDetailsPage.setSalesChannel(salesChannel);
         boolean formInitialized = quoteDetailsPage.fillInFormData();
         assertThat("Failure occurred when filling in input values", formInitialized, is(true));
@@ -156,7 +158,7 @@ public class QuoteSteps extends DwpScenario {
 
     @Then("^Form header is \"([^\"]*)\"$")
     public void checkFormHeader(String formHeader) throws Throwable {
-        given().await()
+         given().await()
             .pollInterval(FIVE_HUNDRED_MILLISECONDS)
             .pollDelay(ONE_SECOND)
             .atMost(new Duration(30, SECONDS)).until(() -> new CheckFormHeader().test(formHeader));
@@ -325,6 +327,7 @@ public class QuoteSteps extends DwpScenario {
             DwpDateFormats.DWP_TODAY,
             location,
             path);
+        Sleeper.sleepTightInSeconds(10);
         QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage(webDriver);
         quoteOverviewView.setSignatureData(signature);
         boolean success = quoteOverviewView.fillInFormData();
@@ -364,6 +367,7 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^Quote is confirmed$")
     public void confirmQuote() throws Throwable {
+        Sleeper.sleepTightInSeconds(5);
         QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage(webDriver);
         quoteOverviewView.next();
     }
@@ -410,6 +414,7 @@ public class QuoteSteps extends DwpScenario {
                 electricityConnectionDetails.setEan(ean);
         }
         ConnectionDetailsPage page = new ConnectionDetailsPage(webDriver);
+        Sleeper.sleepTightInSeconds(5);
         page.setElectroConnectionDetails(electricityConnectionDetails);
         boolean success = page.fillInElectricityEanCode();
         assertThat("Electricity EAN code filling in failure", success, is(true));

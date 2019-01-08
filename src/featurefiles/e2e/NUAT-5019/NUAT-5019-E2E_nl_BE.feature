@@ -9,7 +9,7 @@ Feature: NUAT-5019 end-to-end testing
         Then Form header is "Quote details"
 
         When "Tariefdatum" date is "now"
-        And B2C sales channel is Inbound
+        And "Sales kanaal" selection is "Inbound"
         And Quote details are confirmed
         Then Form header is "Personal details"
 
