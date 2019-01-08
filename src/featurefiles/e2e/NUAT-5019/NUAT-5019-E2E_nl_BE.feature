@@ -240,7 +240,7 @@ Feature: NUAT-5019 end-to-end testing
         And Dialog search input is current "parameter:EAN-code"
         Then Select Contractline dialog is confirmed
         When "Module" selection is "INITIATE STOP ACCESS"
-        And Label input for "Label" is "Non-Residential End-of-Contract"
+        And "Label" selection is "Non-Residential End-of-Contract"
         And "Effective Date" date is "now"
         And Option "Testing?" is On
         And Select Contractline dialog is confirmed
