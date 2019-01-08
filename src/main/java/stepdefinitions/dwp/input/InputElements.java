@@ -51,7 +51,7 @@ public class InputElements extends DwpScenario {
                 .step(createStep(TYPING).element(elementName).value(value).timeoutInSeconds(10), 10);
             boolean success = execute(initializeField);
             return success?
-            webDriver.findElement(By.xpath(query)).getText().equals(value): success;
+            webDriver.findElement(By.xpath(query)).getAttribute("value").equals(value): success;
         }
     }
 
