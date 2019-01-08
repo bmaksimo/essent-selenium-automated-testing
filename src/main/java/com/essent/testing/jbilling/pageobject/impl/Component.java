@@ -1,16 +1,14 @@
 package com.essent.testing.jbilling.pageobject.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import com.essent.testing.selenium.SeleniumDriver;
+import cucumber.runtime.CucumberException;
 import org.apache.commons.text.StrSubstitutor;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import com.essent.testing.selenium.SeleniumDriver;
-
-import cucumber.runtime.CucumberException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public abstract class Component {

@@ -27,7 +27,7 @@ Feature: NUAT-5019 Step 10. End order (drop) messaging
         Then Select Contractline dialog is confirmed
 
         When "Module" selection is "INITIATE STOP ACCESS"
-        And Label input for "Label" is "Drop/Request Budget Meter"
+        And "Label" selection is "Drop/Request Budget Meter"
         And Option "Testing?" is On
         And Option "Market mock?" is On
         And Select Contractline dialog is confirmed

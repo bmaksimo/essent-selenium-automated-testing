@@ -1,16 +1,10 @@
 package stepdefinitions.database;
 
-import com.essent.testing.database.DBConnector;
-import com.essent.testing.database.Database;
 import com.essent.testing.scenario.RegisteredScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
-import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import stepdefinitions.dwp.tables.plus.SwitchState;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.essent.testing.database.DBUtility.switchSuiteCrmStatusExternal;
 

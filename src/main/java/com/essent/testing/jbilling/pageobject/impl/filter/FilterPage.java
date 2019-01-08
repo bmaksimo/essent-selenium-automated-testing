@@ -1,10 +1,9 @@
 package com.essent.testing.jbilling.pageobject.impl.filter;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-
 import com.essent.testing.jbilling.pageobject.impl.Component;
 import com.essent.testing.selenium.SeleniumDriver;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 public class FilterPage extends Component {
 

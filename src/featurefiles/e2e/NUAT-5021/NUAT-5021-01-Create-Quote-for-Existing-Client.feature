@@ -4,7 +4,6 @@
 Feature: NUAT-5021 Step 1. Create an account for de-duplication.
 
     Background:
-
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
     @ONBOARDING-EXTERNAL

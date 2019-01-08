@@ -2,6 +2,7 @@
 @E2E
 
     Feature: Guarantee invoice
+        @NUAT-5021-STEP-3
         @GUARANTEE-INVOICE
         Scenario: Create guarantee invoice after customer deduplication
 

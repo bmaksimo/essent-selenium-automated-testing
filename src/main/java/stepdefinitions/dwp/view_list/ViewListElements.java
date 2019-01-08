@@ -39,6 +39,15 @@ public class ViewListElements extends NavigationElements {
     private static final String BILLING_CUSTOMER_VIEW_LIST = "BillingCustomerOnaccount";
     private static final String PLUS_ACTION = "Plus Action";
 
+    private class ViewListNavigation {
+        public void goToLink(String linkText) {
+            webDriver.waitForRequestsToFinish();
+            WebElement link = webDriver.findElement(By.linkText(linkText));
+            link.click();
+        }
+    }
+
+
     private class CheckViewListHeader implements Predicate<String> {
         @Override
         public boolean test(String header) {
@@ -339,6 +348,12 @@ public class ViewListElements extends NavigationElements {
         boolean success = viewTableModel.getRowCount() == 0;
         assertThat("View Table list is not empty",
             success, is(true));
+    }
+
+    @When("^Click on \"([^\"]*)\" link$")
+    public void clickOnLink(String input) throws Throwable {
+        String linkText = parameterProvider.getValueOrParameterAsString(input);
+        new ViewListNavigation().goToLink(linkText);
     }
 
     @When("^Click on link in View List at \"([^\"]*)\" row and \"([^\"]*)\" column$")
