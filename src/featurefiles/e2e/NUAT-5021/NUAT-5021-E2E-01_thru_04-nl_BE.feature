@@ -29,7 +29,6 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         Then Form header is "Connection details"
 
         When Electricity EAN code is "random"
-        And  "Startdatum" date is "now"
         And Connection details are confirmed
         Then Form header is "Billing details"
 
@@ -80,8 +79,8 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And Field "Postalcode" input is "2550"
         And Field "City" input is "Kontich"
         And EAN code is generated
-        And "EAN-code" input is "parameter:EAN-code-generated"
         And "Startdatum" date is "2 months from now"
+        And "EAN-code" input is "parameter:EAN-code-generated"
         And Connection details are confirmed
         Then Form header is "Billing details"
 

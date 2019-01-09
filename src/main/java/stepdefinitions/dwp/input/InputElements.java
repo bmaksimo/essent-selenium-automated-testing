@@ -8,12 +8,8 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import org.apache.commons.lang.text.StrSubstitutor;
-import org.awaitility.Duration;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.seleniumhq.selenium.fluent.FluentBy;
 import stepdefinitions.dwp.tables.plus.SwitchState;
 
 import java.util.HashMap;
@@ -21,10 +17,6 @@ import java.util.Map;
 
 import static com.essent.automation.autocrat.Action.SELECT;
 import static com.essent.automation.autocrat.Action.TYPING;
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.awaitility.Awaitility.given;
-import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
-import static org.awaitility.Duration.ONE_SECOND;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -39,37 +31,53 @@ public class InputElements extends DwpScenario {
 
     private class ApplyInput {
         public boolean test(String label, String value) {
-            Map<String, String> map = new HashMap<>();
-            map.put("label", label);
-            map.put("action", "input");
-            StrSubstitutor substitutor = new StrSubstitutor(map);
-            String query = substitutor.replace(INPUT_ELEMENT_LOCATOR_TEMPLATE);
+            String query = buildQuery(label,"input");
+            return testAndCheck(query, value);
+        }
+
+        private Model.Execution buildExecution(String query, String value) {
             String elementName = "INPUT_FIELD";
-            Model.Execution initializeField = createExecution();
-            initializeField
+            return createExecution()
                 .element(new Model.Element().search("XPATH").query(query).key(elementName))
-                .step(createStep(TYPING).element(elementName).value(value).timeoutInSeconds(10), 10);
+                .step(createStep(TYPING).element(elementName).value(value).timeoutInSeconds(30), 10);
+        }
+
+        private boolean testAndCheck(String query, String value) {
+            Model.Execution initializeField = buildExecution(query, value);
             boolean success = execute(initializeField);
-            return success?
-            webDriver.findElement(By.xpath(query)).getAttribute("value").equals(value): success;
+            return success && webDriver.findElement(By.xpath(query)).getAttribute("value").equals(value);
         }
     }
 
     private class ApplySelection {
         public boolean test(String label, String value) {
-            Map<String, String> map = new HashMap<>();
-            map.put("label", label);
-            map.put("action", "select");
-            StrSubstitutor substitutor = new StrSubstitutor(map);
-            String query = substitutor.replace(INPUT_ELEMENT_LOCATOR_TEMPLATE);
-            String elementName = "DROPDOWN";
-            Model.Execution initializeField = createExecution();
-            initializeField
-                .element(new Model.Element().search("XPATH").query(query).key(elementName))
-                .step(createStep(SELECT).element(elementName).value(value).timeoutInSeconds(4), 100);
-            boolean success =  execute(initializeField);
-            return success;
+            String query = buildQuery(label, "select");
+            return testAndCheck(query, value);
         }
+
+        private Model.Execution buildExecution(String query, String value) {
+            String elementName = "DROPDOWN";
+            return createExecution()
+                .element(new Model.Element().search("XPATH").query(query).key(elementName))
+                .step(createStep(SELECT).element(elementName).value(value).timeoutInSeconds(4), 10);
+        }
+
+        private boolean testAndCheck(String query, String value) {
+            Model.Execution initializeField = buildExecution(query, value);
+            boolean success = execute(initializeField);
+            String selectValue = webDriver.findElement(By.xpath(query)).getAttribute("value");
+            String query2 = String.format("//option[@value ='%s']", selectValue);
+            String actualValue = webDriver.findElement(By.xpath(query2)).getText();
+            return success && actualValue.equals(value);
+        }
+    }
+
+    private String buildQuery(String label, String action) {
+        Map<String, String> map = new HashMap<>();
+        map.put("label", label);
+        map.put("action", action);
+        StrSubstitutor substitutor = new StrSubstitutor(map);
+        return substitutor.replace(INPUT_ELEMENT_LOCATOR_TEMPLATE);
     }
 
 
@@ -77,14 +85,9 @@ public class InputElements extends DwpScenario {
     public void setInput(String label, String value) throws Throwable {
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
         parameterProvider.put("inputValue", inputValue);
-        given().await()
-            .pollInterval(FIVE_HUNDRED_MILLISECONDS)
-            .atMost(new Duration(20, SECONDS)).until(() -> new ApplyInput().test(label, inputValue));
-        /*
         boolean success = new ApplyInput().test(label, inputValue);
         assertThat(String.format("Input '%s' = '$s' failed.", label, inputValue),
             success, is(true));
-            */
     }
 
     @And("^Label input for \"([^\"]*)\" is \"([^\"]*)\"$")
