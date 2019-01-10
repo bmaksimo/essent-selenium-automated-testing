@@ -1,11 +1,10 @@
 @DWP
 @CORE
-@CORE-NAVIGATION
 Feature: GUI navigation elements.
 
     Background:
         Given I logged in to DWP as contracting.testautomation.b2c@essent.be
-
+    @CORE-NAVIGATION
     Scenario: Using DWP GUI navigation elements: top-, filter-, plus- buttons.
         When Left menu is contracting-switching
         And  Top menu item is Marktberichten

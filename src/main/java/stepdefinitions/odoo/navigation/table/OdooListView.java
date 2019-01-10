@@ -27,10 +27,10 @@ public class OdooListView extends OdooScenario  {
 
     @When("^Odoo filter is ([^\"]*)$")
     public void setSearchFilter(String expression) {
+        awaitOdooRequestToFinish(20);
 
         String filter = parameterProvider.getValueOrParameterAsString(expression) == null ?
             expression : parameterProvider.getValueOrParameterAsString(expression);
-        awaitOdooRequestToFinish(10);
         String selector = "//div[@class='oe_searchview_input']";
 
         By xpath = By.xpath(selector);

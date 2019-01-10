@@ -6,11 +6,9 @@ import com.essent.testing.restassured.create_contract.constants.ApiPathsContract
 import com.essent.testing.restassured.create_contract.constants.ContractConstants;
 import com.essent.testing.restassured.create_contract.constants.ContractStatus;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
-
-import stepdefinitions.dwp.contracts.b2b.QuoteB2B;
-
 import org.apache.log4j.Logger;
 import org.junit.Assert;
+import stepdefinitions.dwp.contracts.b2b.QuoteB2B;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
