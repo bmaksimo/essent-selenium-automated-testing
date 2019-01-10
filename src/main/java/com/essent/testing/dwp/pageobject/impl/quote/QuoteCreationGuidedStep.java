@@ -1,16 +1,24 @@
 package com.essent.testing.dwp.pageobject.impl.quote;
 
-import com.essent.automation.autocrat.Action;
-import com.essent.automation.autocrat.Model;
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.Form;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.quote.GuidedStep;
 import com.essent.testing.selenium.SeleniumDriver;
+import cucumber.runtime.CucumberException;
+import org.apache.commons.lang3.BooleanUtils;
+import org.awaitility.Duration;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
-import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.NEXT_STEP;
+import java.util.HashMap;
+import java.util.Map;
+
 import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.NEXT_BUTTON;
 import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.VIEW;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.awaitility.Awaitility.given;
+import static org.awaitility.Duration.*;
 
 public abstract class QuoteCreationGuidedStep extends Component implements GuidedStep, Form {
 
@@ -22,11 +30,27 @@ public abstract class QuoteCreationGuidedStep extends Component implements Guide
 
     @Override
     public void next() {
-        Model.Execution next = createExecution();
-        next.
-            element(NEXT_BUTTON.element())
-            .step(createStep(Action.CLICK).timeoutInSeconds(NEXT_STEP.getWaitInSeconds())
-            .element(NEXT_BUTTON.name()));
-        execute(next);
+        logger().info("Searching element by " + NEXT_BUTTON.getQuery());
+        given().await()
+            .ignoreExceptions()
+            .pollInterval(FIVE_HUNDRED_MILLISECONDS)
+            .pollDelay(TWO_SECONDS)
+            .atMost(new Duration(10, SECONDS)).until(this::isNextButtonEnabled);
+        WebElement nextButton = seleniumDriver.findElementWhenClickable(By.cssSelector(NEXT_BUTTON.getQuery()));
+        logger().info("Found  element: " + nextButton.getTagName());
+        seleniumDriver.takeScreenshot("guidance-confirm-");
+        if (nextButton != null && nextButton.isEnabled()) {
+            logger().info("CLICK ");
+            nextButton.click();
+        } else {
+            seleniumDriver.takeScreenshot("guidance-confirm-failure");
+            throw new CucumberException("Element not found by selector " + NEXT_BUTTON.getQuery());
+        }
+    }
+
+    public Boolean isNextButtonEnabled() {
+        Map options = new HashMap<>();
+        Map result = seleniumDriver.executeJavascriptMethod("TrIsNextButtonEnabled", options);
+        return BooleanUtils.toBoolean((String)result.get("enabled"));
     }
 }
