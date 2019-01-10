@@ -74,6 +74,7 @@ public class MarketberichtenPage  extends Component {
 
     public WebElement FirstContractInTheList() {
         return seleniumDriver.findElementWhenVisible(By.xpath("(//label[@class='input__checkbox'])[2]"));
+
     }
 
     public void clickOnTheFirstContract() throws InterruptedException {

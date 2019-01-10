@@ -100,4 +100,9 @@ public class MarketBerichtenSteps extends DwpScenario {
         Assert.assertEquals(status,mp.marketberichtStatus());
 
     }
+
+    @And("^End Date is changed to \"([^\\\"]*)\"$")
+    public void take(String ED) {
+        String ed = parameterProvider.getValueOrParameterAsString(ED);
+    }
 }
