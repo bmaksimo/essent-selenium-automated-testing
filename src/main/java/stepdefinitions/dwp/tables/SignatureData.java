@@ -8,14 +8,10 @@ public class SignatureData {
     private String place;
     private String filePath;
 
-    public SignatureData() {
-
-    }
-
     public SignatureData(DwpDateFormats date, String place, String pathToSingatureFile) {
 
         this(date, pathToSingatureFile);
-        this.place = place;;
+        this.place = place;
     }
     public SignatureData(DwpDateFormats date, String pathToSingatureFile) {
         this.date = date;
