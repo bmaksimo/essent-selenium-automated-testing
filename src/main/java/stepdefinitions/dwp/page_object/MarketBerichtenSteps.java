@@ -100,4 +100,13 @@ public class MarketBerichtenSteps extends DwpScenario {
         Assert.assertEquals(status,mp.marketberichtStatus());
 
     }
+
+    @Then("^Marketbericht with module \"([^\"]*)\" changed to status \"([^\"]*)\"$")
+    public void marketbirichWithEANAndModuleSecondTransactionIsInStatus(String modul, String status) throws Throwable {
+        MarketberichtenPage mp = new MarketberichtenPage(webDriver);
+        Assert.assertEquals(modul,mp.getModulFromCancelTransaction());
+        Assert.assertEquals(status,mp.marketberichtCancelStatus());
+
+    }
+
 }
