@@ -168,5 +168,11 @@ public class Contract extends DwpScenario {
         quoteInitial.saveInitialQuote();
     }
 
+    @And("^Save End Date from active contract$")
+    public void saveEndDateFromActiveContract() throws Throwable {
+        ContractPage cp = new ContractPage(webDriver);
+        parameterProvider.put("EndDate-active-contract",cp.getActiveContractEndDate());
+    }
+
 
 }
