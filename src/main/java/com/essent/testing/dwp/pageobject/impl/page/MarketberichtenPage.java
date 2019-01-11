@@ -26,7 +26,7 @@ public class MarketberichtenPage  extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[1])[1]")).getText();
     }
     public String marketberichtCancelStatus(){
-        return seleniumDriver.findElementWhenVisible(By.xpath("//list-simple-two-liner-cell[@line-1='Geannuleerd']/p/span[1]")).getText();
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[1])[5]")).getText();
     }
 
     public void refreshByName(String name)  {
