@@ -25,6 +25,9 @@ public class MarketberichtenPage  extends Component {
     public String marketberichtStatus(){
         return seleniumDriver.findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[1])[1]")).getText();
     }
+    public String marketberichtCancelStatus(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[1])[5]")).getText();
+    }
 
     public void refreshByName(String name)  {
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//a[@name='"+name+"']/span[@class='icon-pijl']")));
@@ -74,6 +77,7 @@ public class MarketberichtenPage  extends Component {
 
     public WebElement FirstContractInTheList() {
         return seleniumDriver.findElementWhenVisible(By.xpath("(//label[@class='input__checkbox'])[2]"));
+
     }
 
     public void clickOnTheFirstContract() throws InterruptedException {
@@ -90,6 +94,9 @@ public class MarketberichtenPage  extends Component {
 
     public String getModulFromTheFirstTransaction() throws InterruptedException {
         return seleniumDriver.findElementWhenVisible(By.xpath("(//h5)[2]")).getText();
+    }
+    public String getModulFromCancelTransaction() throws InterruptedException {
+        return seleniumDriver.findElementWhenVisible(By.xpath("//list-link-bold-top-two-liner-cell[@line-1='INITIATE STOP ACCESS']/div/a/h5")).getText();
     }
 }
 
