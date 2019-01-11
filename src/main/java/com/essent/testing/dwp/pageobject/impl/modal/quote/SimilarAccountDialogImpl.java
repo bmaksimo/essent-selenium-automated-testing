@@ -42,23 +42,22 @@ public class SimilarAccountDialogImpl extends Component implements SimilarAccoun
 
     private void goToLink(String linkText) {
         By byLinkText = By.linkText(linkText);
-        logger().info("Searching element by link text " + linkText);
+        logger().debug("Searching element by link text " + linkText);
         seleniumDriver.waitForElementToBeVisibleBy(byLinkText, 20, 200);
         WebElement link = seleniumDriver.findElement(byLinkText);
         new Actions(seleniumDriver.getDriver()).moveToElement(link).perform();
-        logger().info("Found  element: " + link.getTagName());
         if (link != null) {
-            logger().info("CLICK ");
+            logger().debug("Found  element: " + link.getTagName());
+            logger().debug("CLICK ");
             link.click();
         } else {
             seleniumDriver.takeScreenshot(linkText + "-");
             throw new CucumberException("Element not found by link text " + linkText);
         }
-        logger().info("ACTION REQIURED: CONFIRM_ALERT");
+        logger().debug("ACTION REQIURED: CONFIRM_ALERT");
         (new WebDriverWait(seleniumDriver.getDriver(), 2)).until(ExpectedConditions.alertIsPresent());
         Alert alert = seleniumDriver.getDriver().switchTo().alert();
-
         alert.accept();
-        logger().info("RESULT: ALERT_CONFIRMED");
+        logger().debug("RESULT: ALERT_CONFIRMED");
     }
 }

@@ -37,12 +37,12 @@ public abstract class QuoteCreationGuidedStep extends Component implements Guide
             .pollDelay(TWO_SECONDS)
             .atMost(new Duration(10, SECONDS)).until(this::isNextButtonEnabled);
         WebElement nextButton = seleniumDriver.findElementWhenClickable(By.cssSelector(NEXT_BUTTON.getQuery()));
-        logger().debug("Found  element: " + nextButton.getTagName());
         if(logger().isDebugEnabled())
         {
             seleniumDriver.takeScreenshot("guidance-confirm-");
         }
         if (nextButton != null && nextButton.isEnabled()) {
+            logger().debug("Found  element: " + nextButton.getTagName());
             logger().debug("CLICK ");
             nextButton.click();
         } else {
