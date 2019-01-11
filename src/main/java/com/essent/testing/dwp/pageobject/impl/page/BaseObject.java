@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import com.essent.automation.util.Sleeper;
 
 public class BaseObject extends Component {
 
@@ -41,7 +42,7 @@ public class BaseObject extends Component {
 
     public void clickOnToggle (String label) throws InterruptedException{
         seleniumDriver.waitForRequestsToFinish();
-        Thread.sleep(2000);
+        Sleeper.sleepTightInSeconds(2);
         ToggleImpl toggle = new ToggleImpl(seleniumDriver);
         if (!toggle.checkIfCheckboxIsChecked(label)) {
             seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + label + "?']//toggle-form-element/label")));
