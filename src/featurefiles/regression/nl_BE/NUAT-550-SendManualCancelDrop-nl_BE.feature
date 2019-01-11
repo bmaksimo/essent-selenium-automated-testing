@@ -34,10 +34,11 @@ Feature: NUAT-550 Send manual cancel drop
 
         When Refresh "REFRESH MARKTBERICHTEN" till "Geaccepteerd" is visible in table
         Then Marketbericht with EAN "parameter:EAN-active-contract" and module "INITIATE STOP ACCESS" is in status "Geaccepteerd"
-#        And End Date is changed to "parameter:inputValue"
 
-        When Plus action of "1" element from "MarketTransactionsOnAccount" and click on "ANNULEER MARKTBERICHT"
+        When Plus action of "1" element from "MarketTransactionsOnAccount" and click on "Annuleer Marktbericht"
         And "Testing" turn on
         And "Market mock" turn on
         Then Changes are confirmed
-        Then Marketbericht with EAN "parameter:EAN-active-contract" and module "INITIATE STOP ACCESS" is in status "geannuleerd"
+        When Refresh "REFRESH MARKTBERICHTEN" till "Gesloten" is visible in table
+        Then Marketbericht with module "INITIATE STOP ACCESS" changed to status "Geannuleerd"
+

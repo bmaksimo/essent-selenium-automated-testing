@@ -101,8 +101,12 @@ public class MarketBerichtenSteps extends DwpScenario {
 
     }
 
-    @And("^End Date is changed to \"([^\\\"]*)\"$")
-    public void take(String ED) {
-        String ed = parameterProvider.getValueOrParameterAsString(ED);
+    @Then("^Marketbericht with module \"([^\"]*)\" changed to status \"([^\"]*)\"$")
+    public void marketbirichWithEANAndModuleSecondTransactionIsInStatus(String modul, String status) throws Throwable {
+        MarketberichtenPage mp = new MarketberichtenPage(webDriver);
+        Assert.assertEquals(modul,mp.getModulFromCancelTransaction());
+        Assert.assertEquals(status,mp.marketberichtCancelStatus());
+
     }
+
 }

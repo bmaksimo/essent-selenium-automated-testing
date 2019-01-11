@@ -39,8 +39,9 @@ public class BaseObject extends Component {
         }
     }
 
-    public void clickOnToggle(String label) {
+    public void clickOnToggle (String label) throws InterruptedException{
         seleniumDriver.waitForRequestsToFinish();
+        Thread.sleep(2000);
         ToggleImpl toggle = new ToggleImpl(seleniumDriver);
         if (!toggle.checkIfCheckboxIsChecked(label)) {
             seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + label + "?']//toggle-form-element/label")));
