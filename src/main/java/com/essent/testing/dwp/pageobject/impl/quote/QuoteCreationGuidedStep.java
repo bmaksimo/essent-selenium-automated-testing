@@ -30,20 +30,25 @@ public abstract class QuoteCreationGuidedStep extends Component implements Guide
 
     @Override
     public void next() {
-        logger().info("Searching element by " + NEXT_BUTTON.getQuery());
+        logger().debug("Searching element by " + NEXT_BUTTON.getQuery());
         given().await()
             .ignoreExceptions()
             .pollInterval(FIVE_HUNDRED_MILLISECONDS)
             .pollDelay(TWO_SECONDS)
             .atMost(new Duration(10, SECONDS)).until(this::isNextButtonEnabled);
         WebElement nextButton = seleniumDriver.findElementWhenClickable(By.cssSelector(NEXT_BUTTON.getQuery()));
-        logger().info("Found  element: " + nextButton.getTagName());
-        seleniumDriver.takeScreenshot("guidance-confirm-");
+        logger().debug("Found  element: " + nextButton.getTagName());
+        if(logger().isDebugEnabled())
+        {
+            seleniumDriver.takeScreenshot("guidance-confirm-");
+        }
         if (nextButton != null && nextButton.isEnabled()) {
-            logger().info("CLICK ");
+            logger().debug("CLICK ");
             nextButton.click();
         } else {
-            seleniumDriver.takeScreenshot("guidance-confirm-failure");
+            if(logger().isDebugEnabled()) {
+                seleniumDriver.takeScreenshot("guidance-confirm-failure");
+            }
             throw new CucumberException("Element not found by selector " + NEXT_BUTTON.getQuery());
         }
     }
