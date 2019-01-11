@@ -3,6 +3,7 @@
 @B2B
 @BUSINESS-DESK
 @LONGDURATION
+@NUAT-550
 
 Feature: NUAT-550 Send manual cancel drop
 
