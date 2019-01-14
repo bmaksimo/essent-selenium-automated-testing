@@ -4,9 +4,11 @@ import com.essent.automation.core.WebDriverWait;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.modal.quote.SimilarAccountDialog;
 import com.essent.testing.selenium.SeleniumDriver;
+import cucumber.runtime.CucumberException;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class SimilarAccountDialogImpl extends Component implements SimilarAccountDialog {
@@ -39,11 +41,22 @@ public class SimilarAccountDialogImpl extends Component implements SimilarAccoun
     }
 
     private void goToLink(String linkText) {
-        waitForRequestsToFinish();
-        WebElement link = seleniumDriver.findElement(By.linkText(linkText));
-        link.click();
+        By byLinkText = By.linkText(linkText);
+        logger().debug("Searching element by link text " + linkText);
+        seleniumDriver.waitForElementToBeVisibleBy(byLinkText, 20, 200);
+        WebElement link = seleniumDriver.findElement(byLinkText);
+        if (link != null) {
+            logger().debug("Found  element: " + link.getTagName());
+            logger().debug("CLICK ");
+            link.click();
+        } else {
+            seleniumDriver.takeScreenshot(linkText + "-");
+            throw new CucumberException("Element not found by link text " + linkText);
+        }
+        logger().debug("ACTION REQIURED: CONFIRM_ALERT");
         (new WebDriverWait(seleniumDriver.getDriver(), 2)).until(ExpectedConditions.alertIsPresent());
         Alert alert = seleniumDriver.getDriver().switchTo().alert();
         alert.accept();
+        logger().debug("RESULT: ALERT_CONFIRMED");
     }
 }

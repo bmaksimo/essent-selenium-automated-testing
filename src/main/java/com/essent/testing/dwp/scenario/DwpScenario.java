@@ -81,6 +81,7 @@ public abstract class DwpScenario extends SeleniumScenario {
     }
 
     protected boolean execute(final Execution execution) {
+        webDriver.waitForRequestsToFinish();
         return AutocratExecutionAdapter.execute(webDriver.getDriver(), execution);
     }
 
