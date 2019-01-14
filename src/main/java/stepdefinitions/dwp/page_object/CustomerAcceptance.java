@@ -15,7 +15,12 @@ public class CustomerAcceptance extends Component {
 
     public void customerStatus(String status) {
         status = seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"accounts-aos-quotes-ca-status-c-field\"]")).getText();
-        Assert.assertEquals("Geaccepteerd", status);
+        if (status == "Geaccepteerd") {
+            Assert.assertEquals("Geaccepteerd", status);
+        }
+        else if (status == "Waarborg"){
+            Assert.assertEquals("Waarborg", status);
+        }
     }
 
 
