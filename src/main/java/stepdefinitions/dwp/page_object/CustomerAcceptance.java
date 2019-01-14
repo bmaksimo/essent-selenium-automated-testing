@@ -5,6 +5,7 @@ import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import cucumber.runtime.CucumberException;
 
 
 public class CustomerAcceptance extends Component {
@@ -18,9 +19,10 @@ public class CustomerAcceptance extends Component {
         if (status == "Geaccepteerd") {
             Assert.assertEquals("Geaccepteerd", status);
         }
-        else (status == "Waarborg"){
+        else if (status == "Waarborg"){
             Assert.assertEquals("Waarborg", status);
         }
+        else {  throw new CucumberException("Status not found by input " + status); }
     }
 
 
