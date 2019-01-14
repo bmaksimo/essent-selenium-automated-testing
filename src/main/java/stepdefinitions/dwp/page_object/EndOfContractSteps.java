@@ -21,12 +21,6 @@ public class EndOfContractSteps extends DwpScenario {
         registerActiveScenario(scenario);
     }
 
-
-    @When("^Click on \"([^\"]*)\"$")
-    public void clickOn(String element) {
-        clickOnElement(element.toLowerCase());
-    }
-
     @And("^Open Select Contractline$")
     public void openSelectContractline() {
         webDriver.findElementOrNull(By.id("id-field")).click();
@@ -55,13 +49,6 @@ public class EndOfContractSteps extends DwpScenario {
         EndOfContractPage endOfContractPage = new EndOfContractPage(webDriver);
         boolean success = endOfContractPage.checkEanCheckBox();
         assertThat(String.format("JavaScript file TrEanCheckBox is undefined."),
-            success, is(true));
-    }
-
-    private void clickOnElement(String element) {
-        EndOfContractPage endOfContractPage = new EndOfContractPage(webDriver);
-        boolean success = endOfContractPage.startNewMarketSection(element);
-        assertThat(String.format("Top Menu item %s was not available.", element),
             success, is(true));
     }
 

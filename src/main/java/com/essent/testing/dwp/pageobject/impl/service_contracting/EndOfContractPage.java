@@ -18,16 +18,6 @@ public class EndOfContractPage extends Component {
         super(seleniumDriver);
     }
 
-    public class ClickOnElement implements Predicate<String> {
-        @Override
-        public boolean test(String element) {
-            Map<String, String> options = new HashMap<>();
-            options.put("element", element);
-            boolean success = executeJavascriptTest("TrStartNewMarketSection", options);
-            return success;
-        }
-    }
-
     public void searchInputField(String input) {
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//top-search/div[@class='top-search']/input[@type='search']")), input);
         seleniumDriver.findElementWhenVisible(By.xpath("//top-search/div[@class='top-search']/input[@type='search']")).sendKeys(Keys.ENTER);
@@ -61,10 +51,5 @@ public class EndOfContractPage extends Component {
 
     public boolean checkEanCheckBox() {
         return new EanCheckBox().test("");
-    }
-
-
-    public boolean  startNewMarketSection(String element) {
-        return new ClickOnElement().test(element);
     }
 }

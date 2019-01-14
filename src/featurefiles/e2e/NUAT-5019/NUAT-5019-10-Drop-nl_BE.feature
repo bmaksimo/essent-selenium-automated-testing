@@ -1,5 +1,6 @@
 @DWP
 @B2C
+    @E2E
 @CREDIT-AND-CONTROL
 Feature: NUAT-5019 Step 10. End order (drop) messaging
 
@@ -13,7 +14,7 @@ Feature: NUAT-5019 Step 10. End order (drop) messaging
         And Top menu item is "Klanten"
         And Top action is "Filters"
         And "B2C/B2B" selection is "B2C"
-        And Label input for "Type klant" is "CUSTOMER"
+        And "Type klant" selection is "Klant"
         Then View list header is "Klanten"
 
         When Click on link in View List at "1st" row and "Klantnummer & Naam" column
@@ -21,7 +22,7 @@ Feature: NUAT-5019 Step 10. End order (drop) messaging
         Then View list header is "Marktberichten"
         And "1st" List element with value at column "EAN-code & Producttype" is checked
 
-        When Click on "Start nieuw marktbericht"
+        When Click on "START NIEUW MARKTBERICHT"
         And Click Select Contractline
         And Dialog search input is current "parameter:EAN-code & Producttype"
         Then Select Contractline dialog is confirmed
