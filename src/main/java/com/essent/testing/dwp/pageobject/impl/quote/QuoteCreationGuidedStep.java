@@ -1,6 +1,5 @@
 package com.essent.testing.dwp.pageobject.impl.quote;
 
-import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.Form;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.quote.GuidedStep;
@@ -18,7 +17,8 @@ import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.NEXT_BU
 import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.VIEW;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
-import static org.awaitility.Duration.*;
+import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
+import static org.awaitility.Duration.TWO_SECONDS;
 
 public abstract class QuoteCreationGuidedStep extends Component implements GuidedStep, Form {
 
@@ -37,12 +37,12 @@ public abstract class QuoteCreationGuidedStep extends Component implements Guide
             .pollDelay(TWO_SECONDS)
             .atMost(new Duration(10, SECONDS)).until(this::isNextButtonEnabled);
         WebElement nextButton = seleniumDriver.findElementWhenClickable(By.cssSelector(NEXT_BUTTON.getQuery()));
-        logger().debug("Found  element: " + nextButton.getTagName());
         if(logger().isDebugEnabled())
         {
             seleniumDriver.takeScreenshot("guidance-confirm-");
         }
         if (nextButton != null && nextButton.isEnabled()) {
+            logger().debug("Found  element: " + nextButton.getTagName());
             logger().debug("CLICK ");
             nextButton.click();
         } else {
