@@ -4,7 +4,6 @@
 Feature: NUAT-5021 Complete scenario from de-duplication of client with guarantee to inactive client
 
     @NUAT-5021-01-02
-    @DEDUPLICATE-CUSTOMER
     Scenario: From de-duplication of client to inactive client via passive renewal
 
         Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
@@ -30,7 +29,6 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         Then Form header is "Connection details"
 
         When Electricity EAN code is "random"
-        And  "Startdatum" date is "now"
         And Connection details are confirmed
         Then Form header is "Billing details"
 
@@ -51,6 +49,7 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         Given 1st List element with value at column "Klantnummer & Naam" is checked
         Then  External status is "On" for SuiteCRM Customer Number "parameter:Klantnummer & Naam"
 
+        #Step 2: should deduplicate customer
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
@@ -80,6 +79,7 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And Field "Postalcode" input is "2550"
         And Field "City" input is "Kontich"
         And EAN code is generated
+        And "Startdatum" date is "2 months from now"
         And "EAN-code" input is "parameter:EAN-code-generated"
         And Connection details are confirmed
         Then Form header is "Billing details"
@@ -96,3 +96,16 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         When Quote for account is confirmed
         Then View list header is "Offertes"
         And 1st list element has cell value Sales Getekend - Waarborg at column Type & status
+
+        When Dashboard menu is Marktberichten
+        Then View List is empty
+
+        # Step 3 - Should create guarantee invoice
+        Given I renew login to DWP as billing.testautomation@essent.be
+        When Left menu is billing
+        And Top menu item is Klanten
+        And Top action is Filters
+        And "Naam" input is "parameter:suitecrm-customer-name"
+        And Click on link in View List at 1st row and "Klantnummer & Naam" column
+        And Dashboard menu is Billing
+        Then 1st list element has cell value Invoice (GUARANTEE) at column ID & Type

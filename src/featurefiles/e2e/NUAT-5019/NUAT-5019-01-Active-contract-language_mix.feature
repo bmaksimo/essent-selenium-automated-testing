@@ -11,13 +11,11 @@ Feature: NUAT-5019 Step 1. Creating a B2C Quote TC1 with move in, Dutch language
     Scenario: Create a B2C Quote with move in https://emagine-reality.atlassian.net/browse/NUAT-5019
 
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
-        #Then Form header is "Details van de offerte"
         Then Form header is "Quote details"
 
         When "Tariefdatum" date is "now"
-        And B2C sales channel is "Inbound"
+        And "Sales kanaal" selection is "Inbound"
         And Quote details are confirmed
-        #Then Form header is "Persoonsgegevens"
         Then Form header is "Personal details"
 
         When Customer is random
@@ -32,23 +30,25 @@ Feature: NUAT-5019 Step 1. Creating a B2C Quote TC1 with move in, Dutch language
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        When "Startdatum" date is "now"
-        And Electricity EAN code is "random"
+
+        When EAN code is generated
+        And "EAN-code" input is "parameter:EAN-code-generated"
         And Switch type is Move in
         And Electricity market mock test is Open
+        And "Startdatum" date is "now"
         And Connection details are confirmed
         Then Form header is "Billing details"
 
-
-        When Payment details are: method "Overschrijving", IBAN "NL57ABNA0874253356", bic "ABNANL2A"
+        When "Betalingswijze" selection is "Overschrijving"
         And Billing details are confirmed
         Then  Form header is "Quote overview"
 
         When Option "Heeft de klant al getekend?" is On
         And "Kanaal ondertekening" selection is "Papier"
-        And Quote is signed in "Kontich"
+        And "Plaats ondertekening" input is "Kontich"
         And "Datum ondertekening" date is "now"
-        And Quote is confirmed
+        And Quote is signed
+        When Quote is confirmed
         Then View list header is "Offertes"
         Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
 

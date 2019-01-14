@@ -25,7 +25,7 @@ public class OdooListView extends OdooScenario  {
         registerActiveScenario(scenario);
     }
 
-    @When("^Odoo filter is ([^\"]*)$")
+    @When("^Odoo filter is \"([^\"]*)\"$")
     public void setSearchFilter(String expression) {
         awaitOdooRequestToFinish(20);
 

@@ -80,9 +80,9 @@ Feature: NUAT-5019 end-to-end testing
         # 3 - import and match CODA
         Given I renew login to Odoo as "t.geets"
         And Cleanup Odoo CODA files
-        When Odoo top menu is Accounting
-        And Odoo left menu is Customers
-        And Odoo filter is parameter:accountNumber
+        When Odoo top menu is "Accounting"
+        And Odoo left menu is "Customers"
+        And Odoo filter is "parameter:accountNumber"
         When Column "Account Number" with value "parameter:accountNumber" is clicked
         And Button "Journal Items" is clicked
         And Generate CODA in the "1st" row is clicked
@@ -90,7 +90,7 @@ Feature: NUAT-5019 end-to-end testing
         And Generated CODA file is downloaded
         And Modal button "Close" is clicked
 
-        When Odoo left menu is CODA Processing->Import CODA Files
+        When Odoo left menu is "CODA Processing->Import CODA Files"
         Then Odoo file upload dialog is "Import CODA File"
         Then CODA file is "parameter:codaFile"
         And Odoo file upload confirm button is "Import"
