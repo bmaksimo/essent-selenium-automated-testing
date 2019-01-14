@@ -408,7 +408,7 @@ public class ViewListElements extends NavigationElements {
         Map<String, String> options = new HashMap<>();
         options.put("headerText", headerText);
         boolean success = new CheckModalDialog().test(options);
-        assertThat(String.format("Action row %s was not found", headerText), success, is(true));
+        assertThat(String.format("Modal dialogue %s was not found", headerText), success, is(true));
     }
 
     @When("Payment method is switched$")
@@ -525,9 +525,10 @@ public class ViewListElements extends NavigationElements {
     @And("^Plus actions at ([^\"]*) list row having cell value \"([^\"]*)\" at column \"([^\"]*)\" are open$")
     public void openPlusActions(String ordinal, String value, String columnName) throws Throwable {
         int row = extractNumericValue(ordinal);
+        String columnValue = parameterProvider.getValueOrParameterAsString(value);
         ViewListModel viewListModel = new ViewListModel();
         boolean success = viewListModel.openListPlusActions(row);
-        String message = String.format("View list did not contain cell value %s at %s row, column '%s'", value, ordinal, columnName);
+        String message = String.format("View list did not contain cell value %s at %s row, column '%s'", columnValue, ordinal, columnName);
         assertThat(message,
             success, is(true));
     }
