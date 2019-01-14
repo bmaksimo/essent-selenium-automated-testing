@@ -18,7 +18,7 @@ public class CustomerAcceptance extends Component {
         if (status == "Geaccepteerd") {
             Assert.assertEquals("Geaccepteerd", status);
         }
-        else if (status == "Waarborg"){
+        else (status == "Waarborg"){
             Assert.assertEquals("Waarborg", status);
         }
     }
