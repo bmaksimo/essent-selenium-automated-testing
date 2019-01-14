@@ -126,13 +126,13 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         #Pay guarantee amount
         When Odoo left menu is "CODA Processing->Import CODA Files"
         Then Odoo file upload dialog is "Import CODA File"
-        Then CODA file is "parameter:codaFile"
+        When CODA file is "parameter:codaFile"
         And Odoo file upload confirm button is "Import"
-        And Odoo file import report
-        And Modal button "View Bank Statement" is clicked
+        Then Odoo file import report
+        When Modal button "View Bank Statement" is clicked
         And Wait for 30 seconds
-        When Column "Reference" of the "1st" row is clicked
-        And Bank Statement "Close" button is clicked
+        And Column "Reference" of the "1st" row is clicked
+        Then Bank Statement "Close" button is clicked
 
         #Switch back to Dwp and verify Guarantee Payment
         Given I renew login to DWP as billing.testautomation@essent.be

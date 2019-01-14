@@ -45,7 +45,6 @@ public class SimilarAccountDialogImpl extends Component implements SimilarAccoun
         logger().debug("Searching element by link text " + linkText);
         seleniumDriver.waitForElementToBeVisibleBy(byLinkText, 20, 200);
         WebElement link = seleniumDriver.findElement(byLinkText);
-        new Actions(seleniumDriver.getDriver()).moveToElement(link).perform();
         if (link != null) {
             logger().debug("Found  element: " + link.getTagName());
             logger().debug("CLICK ");
