@@ -34,7 +34,7 @@ public class OdooCodaSteps extends OdooScenario {
         registerActiveScenario(scenario);
     }
 
-    @And("^Odoo file upload dialog is ([^\"]*)$")
+    @And("^Odoo file upload dialog is \"([^\"]*)\"$")
     public void verifyDialogue(String title) {
         CodaImportDialog dialog = new CodaImportDialogImpl(webDriver);
         assertThat(dialog.getTitle(), equalToIgnoringCase(title));
@@ -54,7 +54,7 @@ public class OdooCodaSteps extends OdooScenario {
         assertThat(dialog.fillInFormData(), is(true));
     }
 
-    @When("^CODA file is ([^\"]*)$")
+    @When("^CODA file is \"([^\"]*)\"$")
     public void setCodaPath(String codaFile) {
         String path = parameterProvider.getValueOrParameterAsString(codaFile) == null ?
             codaFile : parameterProvider.getValueOrParameterAsString(codaFile);
@@ -67,7 +67,7 @@ public class OdooCodaSteps extends OdooScenario {
         assertThat(success, is(true));
     }
 
-    @And("^Odoo file upload confirm button is ([^\"]*)$")
+    @And("^Odoo file upload confirm button is \"([^\"]*)\"$")
     public void conformCodaImport(String button) {
         CodaImportDialog dialog = new CodaImportDialogImpl(webDriver);
         dialog.setImportButton(button);

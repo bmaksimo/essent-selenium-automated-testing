@@ -111,11 +111,11 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         Then 1st list element has cell value Invoice (GUARANTEE) at column ID & Type
 
         # Step 4 - Generate Odoo CODA for account
-        Given I renew login to Odoo as t.geets
+        Given I renew login to Odoo as "t.geets"
         And Cleanup Odoo CODA files
-        When Odoo top menu is Accounting
-        And Odoo left menu is Customers
-        And Odoo filter is parameter:Klantnummer & Naam
+        When Odoo top menu is "Accounting"
+        And Odoo left menu is "Customers"
+        And Odoo filter is "parameter:Klantnummer & Naam"
         When Column "Account Number" with value "parameter:Klantnummer & Naam" is clicked
         And Button "Journal Items" is clicked
         And Generate CODA in the "1st" row is clicked
@@ -124,10 +124,10 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And Modal button "Close" is clicked
 
         #Pay guarantee amount
-        When Odoo left menu is CODA Processing->Import CODA Files
-        Then Odoo file upload dialog is Import CODA File
-        Then CODA file is parameter:codaFile
-        And Odoo file upload confirm button is Import
+        When Odoo left menu is "CODA Processing->Import CODA Files"
+        Then Odoo file upload dialog is "Import CODA File"
+        Then CODA file is "parameter:codaFile"
+        And Odoo file upload confirm button is "Import"
         And Odoo file import report
         And Modal button "View Bank Statement" is clicked
         And Wait for 30 seconds

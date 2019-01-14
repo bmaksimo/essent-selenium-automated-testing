@@ -13,19 +13,19 @@ Feature: NUAT-5021 Step 2. Deduplicate account
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
-        When B2C sales channel is Inbound
+        When "Sales kanaal" selection is "Inbound"
         And Quote details are confirmed
         Then Form header is "Personal details"
 
         Given Customer address is
             | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
             | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
-        And "Aanspreking" selection is "Mevr."
-        And "Voornaam" input is "Randa"
-        And "Familienaam" input is "Gomez"
-        And "E-mailadres" input is "randa.gomez@example.com"
-        And "Gsm-nummer" input is "+31683687691"
-        And "Geboortedatum" date is "04/03/1958"
+        And "Aanspreking" selection is "parameter:title"
+        And "Voornaam" input is "parameter:customer-first-name"
+        And "Familienaam" input is "parameter:customer-last-name"
+        And "E-mailadres" input is "parameter:customer-email"
+        And "Gsm-nummer" input is "parameter:gustomer-mobile-phone"
+        And "Geboortedatum" date is "parameter:customer:birth-date"
         And  Deduplication dialogue "Soortgelijke klanten" is shown
         And  Deduplication dialogue link "Create quote for account" is clicked
         Then Form header is "Quote details"
