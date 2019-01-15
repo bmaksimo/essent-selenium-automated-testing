@@ -52,36 +52,58 @@ public class JournalEnteriesPage extends Component {
     public void setName(String name){
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='name']/input")), name);
     }
+
     public void setPartner(String partner){
         Sleeper.sleepTightInSeconds(3);
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='partner_id']/div/input")), partner);
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("(//li[@class='ui-menu-item']/a)[2]")));
+    }
+
+    public WebElement account(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='account_id']/div/input"));
     }
 
     public void setAccout(String accout){
         Sleeper.sleepTightInSeconds(5);
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='account_id']/div/input")));
-        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='account_id']/div/input")), accout);
+        seleniumDriver.waitAndClick(account());
+        account().clear();
+        seleniumDriver.waitAndSendKeys(account(), accout);
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("(//li[@class='ui-menu-item']/a)[4]")));
     }
+
+    public WebElement debit(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='debit']/input"));
+    }
+
     public void setDebit(String debit){
-        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='debit']/input")), debit);
+        Sleeper.sleepTightInSeconds(3);
+        seleniumDriver.waitAndClick(debit());
+        debit().clear();
+        seleniumDriver.waitAndSendKeys(debit(), debit);
     }
+
+    public WebElement credit(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='credit']/input"));
+    }
+
     public void setCredit(String credit){
-        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='credit']/input")), credit);
+        Sleeper.sleepTightInSeconds(3);
+        seleniumDriver.waitAndClick(credit());
+        credit().clear();
+        seleniumDriver.waitAndSendKeys(credit(), credit);
     }
 
     public void createNewItem(List<List<String>> table, Integer row) {
-//        if (row == 2){
-//            setPartner(table.get(row).get(1));
-//            setAccout(table.get(row).get(2));
-//            setDebit(table.get(row).get(3));
-//            setCredit(table.get(row).get(4));
-//        }else {
+        if (row == 2){
+            setPartner(table.get(row).get(1));
+            setAccout(table.get(row).get(2));
+        }else {
             setName(table.get(row).get(0));
             setPartner(table.get(row).get(1));
             setAccout(table.get(row).get(2));
             setDebit(table.get(row).get(3));
             setCredit(table.get(row).get(4));
-//        }
+        }
     }
 
     public WebElement journalItemsCheckBox(Integer row){

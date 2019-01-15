@@ -57,7 +57,9 @@ public class JournalEntriesSteps extends OdooScenario {
     @And("^Save and Post journal entry")
     public void saveAndPost() throws Throwable {
         JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
+        Sleeper.sleepTightInSeconds(5);
         je.saveJournal();
+        Sleeper.sleepTightInSeconds(5);
         je.postJournal();
     }
 
