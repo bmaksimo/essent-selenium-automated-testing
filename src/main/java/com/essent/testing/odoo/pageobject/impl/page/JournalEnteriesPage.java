@@ -1,5 +1,6 @@
 package com.essent.testing.odoo.pageobject.impl.page;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
@@ -11,7 +12,7 @@ import java.util.List;
 
 
 public class JournalEnteriesPage extends Component {
-    private String pattern = "dd/MM/yyyy";
+    private String pattern = "MM/dd/yyyy";
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
     private String date = simpleDateFormat.format(new Date());
@@ -29,11 +30,12 @@ public class JournalEnteriesPage extends Component {
     }
 
     public void chooseDiverseDagboekKlanten(String journal){
-        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id("oe-field-input-16")), journal);
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id("oe-field-input-10")), journal);
     }
 
     public void dateDocumentIsToday(){
-        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id("dp1545655698408")), date);
+        Sleeper.sleepTightInSeconds(3);
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//input[@name='date_document']")), date);
     }
 
     public void clickOnAddAnItem(){
@@ -48,38 +50,38 @@ public class JournalEnteriesPage extends Component {
     }
 
     public void setName(String name){
-        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='name']")), name);
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='name']/input")), name);
     }
     public void setPartner(String partner){
-        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='partner_id']")), partner);
+        Sleeper.sleepTightInSeconds(3);
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='partner_id']/div/input")), partner);
     }
+
     public void setAccout(String accout){
-        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='account_id']")), accout);
+        Sleeper.sleepTightInSeconds(5);
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='account_id']/div/input")));
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='account_id']/div/input")), accout);
     }
     public void setDebit(String debit){
-        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='debit']")), debit);
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='debit']/input")), debit);
     }
     public void setCredit(String credit){
-        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='credit']")), credit);
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='credit']/input")), credit);
     }
 
-//    public void set(String field, String value){
-//        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='"+field+"']")), value);
-//    }
-
     public void createNewItem(List<List<String>> table, Integer row) {
-        setName(table.get(row).get(0));
-        setPartner(table.get(row).get(1));
-        setAccout(table.get(row).get(2));
-        setDebit(table.get(row).get(3));
-        setCredit(table.get(row).get(4));
-
-//        set("name",table.get(row).get(0));
-//        set("partner_id",table.get(row).get(1));
-//        set("account_id",table.get(row).get(2));
-//        set("debit",table.get(row).get(3));
-//        set("credit",table.get(row).get(4));
-
+//        if (row == 2){
+//            setPartner(table.get(row).get(1));
+//            setAccout(table.get(row).get(2));
+//            setDebit(table.get(row).get(3));
+//            setCredit(table.get(row).get(4));
+//        }else {
+            setName(table.get(row).get(0));
+            setPartner(table.get(row).get(1));
+            setAccout(table.get(row).get(2));
+            setDebit(table.get(row).get(3));
+            setCredit(table.get(row).get(4));
+//        }
     }
 
     public WebElement journalItemsCheckBox(Integer row){

@@ -1,5 +1,6 @@
 package stepdefinitions.odoo.page;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.odoo.pageobject.impl.page.JournalEnteriesPage;
 import com.essent.testing.odoo.scenario.OdooScenario;
 import cucumber.api.DataTable;
@@ -27,6 +28,7 @@ public class JournalEntriesSteps extends OdooScenario {
     @And("^Create new Journal Entries is clicked$")
     public void createNewJournalEntriesIsClicked() throws Throwable {
         JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
+        Sleeper.sleepTightInSeconds(2);
         je.clickOnCreateJournalEntery();
     }
 
