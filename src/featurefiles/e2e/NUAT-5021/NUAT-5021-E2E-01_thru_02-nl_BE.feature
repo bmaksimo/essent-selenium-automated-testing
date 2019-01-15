@@ -1,4 +1,3 @@
-@E2E
 @DWP
 @B2C
 Feature: NUAT-5021 Complete scenario from de-duplication of client with guarantee to inactive client
