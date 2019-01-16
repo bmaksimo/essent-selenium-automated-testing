@@ -5,7 +5,7 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
     @NUAT-5021-01-04
     Scenario: From de-duplication of client to inactive client via passive renewal
 
-        Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
+        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
@@ -37,22 +37,22 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
 
         When Quote is confirmed
         Then View list header is "Offertes"
-        And 1st list element has cell value Sales Verstuurd naar de klant - Geaccepteerd at column Type & status
+        And "1st" list element has cell value "Sales Verstuurd naar de klant - Geaccepteerd" at column "Type & status"
 
-        When Top arrow button is Up
-        And Left menu is sales-marketing
-        And Top menu item is Klanten
-        And Top action is Filters
+        When Top arrow button is "Up"
+        And Left menu is "sales-marketing"
+        And Top menu item is "Klanten"
+        And Top action is "Filters"
         And "Naam" input is "parameter:suitecrm-customer-name"
 
-        Given 1st List element with value at column "Klantnummer & Naam" is checked
+        Given "1st" List element with value at column "Klantnummer & Naam" is checked
         Then  External status is "On" for SuiteCRM Customer Number "parameter:Klantnummer & Naam"
 
         #Step 2: should deduplicate customer
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
-        When B2C sales channel is Inbound
+        When B2C sales channel is "Inbound"
         And Quote details are confirmed
         Then Form header is "Personal details"
 
@@ -94,20 +94,20 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And Quote for account is signed
         When Quote for account is confirmed
         Then View list header is "Offertes"
-        And 1st list element has cell value Sales Getekend - Waarborg at column Type & status
+        And "1st" list element has cell value "Sales Getekend - Waarborg" at column "Type & status"
 
-        When Dashboard menu is Marktberichten
+        When Dashboard menu is "Marktberichten"
         Then View List is empty
 
         # Step 3 - Should create guarantee invoice
-        Given I renew login to DWP as billing.testautomation@essent.be
-        When Left menu is billing
-        And Top menu item is Klanten
-        And Top action is Filters
+        Given I renew login to DWP as "billing.testautomation@essent.be"
+        When Left menu is "billing"
+        And Top menu item is "Klanten"
+        And Top action is "Filters"
         And "Naam" input is "parameter:suitecrm-customer-name"
-        And Click on link in View List at 1st row and "Klantnummer & Naam" column
-        And Dashboard menu is Billing
-        Then 1st list element has cell value Invoice (GUARANTEE) at column ID & Type
+        And Click on link in View List at "1st" row and "Klantnummer & Naam" column
+        And Dashboard menu is "Billing"
+        Then "1st" list element has cell value "Invoice (GUARANTEE)" at column "ID & Type"
 
         # Step 4 - Generate Odoo CODA for account
         Given I renew login to Odoo as "t.geets"
@@ -134,13 +134,13 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         Then Bank Statement "Close" button is clicked
 
         #Switch back to Dwp and verify Guarantee Payment
-        Given I renew login to DWP as billing.testautomation@essent.be
-        When Left menu is contracting-switching
-        And Top menu item is Klanten
-        And Top action is Filters
+        Given I renew login to DWP as "billing.testautomation@essent.be"
+        When Left menu is "contracting-switching"
+        And Top menu item is "Klanten"
+        And Top action is "Filters"
         And "Naam" input is "parameter:suitecrm-customer-name"
         Then View list header is "Klanten"
 
-        And Click on link in View List at 1st row and "Klantnummer & Naam" column
-        And Dashboard menu is Billing
+        And Click on link in View List at "1st" row and "Klantnummer & Naam" column
+        And Dashboard menu is "Billing"
         Then "Openstaand bedrag" in the first "Paid by OV" row of "Transacties" table is "0"

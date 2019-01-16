@@ -103,7 +103,7 @@ public class Contract extends DwpScenario {
         cp.selectGender();
     }
 
-    @And("^E-mailadres is ([^\"]*)$")
+    @And("^E-mailadres is \"([^\"]*)\"$")
     public void emailContract(String emailContract) throws Throwable {
         ContractPage cp = new ContractPage(webDriver);
         cp.getEmail(emailContract);
@@ -128,33 +128,33 @@ public class Contract extends DwpScenario {
     }
 
 
-    @And("^Customer Details are populated with: Address is ([^\"]*) and HouseNumber is \"([^\"]*)\" and PostalCode is \"([^\"]*)\" and City is \"([^\"]*)\"$")
+    @And("^Customer Details are populated with: Address is \"([^\"]*)\" and HouseNumber is \"([^\"]*)\" and PostalCode is \"([^\"]*)\" and City is \"([^\"]*)\"$")
     public void populateAddress(String Address, String houseNumber, String postalCode, String City) throws Throwable {
         ContractPage cp = new ContractPage(webDriver);
         cp.setAddress(Address, houseNumber, postalCode, City);
     }
 
-    @And("^Telefoon is ([^\"]*)$")
+    @And("^Telefoon is \"([^\"]*)\"$")
     public void populateTelephone(String telephone) {
         ContractPage cp = new ContractPage(webDriver);
         cp.setTelephone(telephone);
 
     }
 
-    @And("^First Name is ([^\"]*) and Last Name is \"([^\"]*)\"$")
+    @And("^First Name is \"([^\"]*)\" and Last Name is \"([^\"]*)\"$")
     public void populateName(String fname, String lname) throws Throwable{
         ContractPage cp = new ContractPage(webDriver);
         cp.setName(fname, lname);
     }
 
-    @And("^BEDRIJFSNAAM is ([^\"]*)$")
+    @And("^BEDRIJFSNAAM is \"([^\"]*)\"$")
     public void companyName(String cname) {
         ContractPage cp = new ContractPage(webDriver);
         cp.setCompanyName(cname);
     }
 
 
-    @And("^Ean-Code is ([^\"]*)$")
+    @And("^Ean-Code is \"([^\"]*)\"$")
     public void eanCode(String eancode) {
         webDriver.waitForRequestsToFinish();
         ContractPage cp = new ContractPage(webDriver);

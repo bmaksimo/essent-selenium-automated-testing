@@ -2,7 +2,7 @@ package stepdefinitions.dwp.b2b;
 
 import com.essent.testing.dwp.pageobject.impl.navigation.DwpTopMenu;
 import com.essent.testing.dwp.pageobject.impl.page.DwpHomePage;
-import com.essent.testing.dwp.pageobject.impl.page.MarketberichtenPage;
+import com.essent.testing.dwp.pageobject.impl.page.MarktBerichtenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -67,7 +67,7 @@ public class Navigation extends DwpScenario {
     @When("^Refresh \"([^\"]*)\" till \"([^\"]*)\" is visible in table$")
     public void refreshTillIsVisible(String name, String status) throws Throwable {
         webDriver.waitForRequestsToFinish();
-        MarketberichtenPage mp = new MarketberichtenPage(webDriver);
+        MarktBerichtenPage mp = new MarktBerichtenPage(webDriver);
         if (webDriver.findElement(By.xpath("//tr[1]//list-link-bold-top-two-liner-cell/div/a/h5")).isDisplayed()) {
             while (!webDriver.findElementWhenVisible(By.xpath("//tr[1]//list-simple-two-liner-cell/p/span[1]")).getText().equalsIgnoreCase(status)) {
                 Thread.sleep(10000);

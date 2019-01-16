@@ -4,7 +4,7 @@ Feature: NUAT-5021 Step 2. Deduplicate account
 
     Background:
 
-        Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
+        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
     @NUAT-5021-STEP-2
     @CREATE-QUOTE-FOR-ACCOUNT
@@ -59,4 +59,4 @@ Feature: NUAT-5021 Step 2. Deduplicate account
         And Quote for account is signed
         When Quote for account is confirmed
         Then View list header is "Offertes"
-        And 1st list element has cell value Sales Getekend - Waarborg at column Type & status
+        And "1st" list element has cell value "Sales Getekend - Waarborg" at column "Type & status"

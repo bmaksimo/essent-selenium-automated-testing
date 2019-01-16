@@ -30,7 +30,7 @@ public class ContractenSteps extends DwpScenario {
         contractenPage.searchForEanCode(eanCode);
     }
 
-    @When("^Input in ([^\"]*) is \"([^\"]*)\"$")
+    @When("^Input in \"([^\"]*)\" is \"([^\"]*)\"$")
     public void inputInModuleIs(String label, String input) throws Throwable {
         webDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(3);
@@ -129,7 +129,7 @@ public class ContractenSteps extends DwpScenario {
     }
 
 
-    @And("^Invoice with key ([^\"]*) is checked$")
+    @And("^Invoice with key \"([^\"]*)\" is checked$")
     public void CheckInvoiceOpenBalance(String text) {
         webDriver.waitForRequestsToFinish();
         ContractPage contractenPage = new ContractPage(webDriver);
