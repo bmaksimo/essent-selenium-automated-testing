@@ -348,5 +348,4 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
         And Changes are confirmed
         Then Verify status is "External @ Hilde Derde" and "In vereffening"
 
-#@B2B
-##@REGRESSION
+
