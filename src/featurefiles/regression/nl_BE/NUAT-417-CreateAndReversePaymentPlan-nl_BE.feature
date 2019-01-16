@@ -7,89 +7,85 @@ Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR,
 
 
        Scenario: Create active UP contract, run advance invoice
-            Given I logged in to DWP as billing.testautomation@essent.be
-            When Left menu is billing
-            And Top menu item is Klanten
+            Given I logged in to DWP as "billing.testautomation@essent.be"
+            When Left menu is "billing"
+            And Top menu item is "Klanten"
             Given B2B Active Contract is
                 | productType    | isFakeAddress | switchType       | meterType | kwMax |
                 | UP             | FAKE          |  SUPPLIER SWITCH | YMR       | 50000 |
-            And Top action is Filters
+            And Top action is "Filters"
             And "B2C/B2B" selection is "B2B"
             And "Type klant" selection is "Klant"
             And "Klantnummer" input is "parameter:accountNumber"
-            Then 1st List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
+            Then "1st" List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
 
             #run invoice
             When Plus menu is "Billing -> Start facturatierun"
-            And Modal dialog is Start invoicerun
+            And Modal dialog is "Start invoicerun"
             And "Naam job" selection is "recurrent"
             And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
             And "Factuurdatum" date is "now"
             And "Procesdatum" date is "now"
             Then Invoice run is scheduled
 
-            Given Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
-            When Dashboard menu is Billing
+            Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
+            When Dashboard menu is "Billing"
             Then View list header is "Transacties"
-            And 1st list element has cell value Invoice (ADVANCE) at column ID & Type
-            And 1st List element with value at column "ID & Type" is checked
+            And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
+            And "1st" List element with value at column "ID & Type" is checked
 
 
         @payment-plan
        Scenario: Payment plan creation
-            Given I logged in to DWP as businessdesk.testautomation.b2b@essent.be
-            When Left menu is sales-marketing
-            And Top menu item is Klanten
-            And Top action is Filters
+            Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
+            When Left menu is "sales-marketing"
+            And Top menu item is "Klanten"
+            And Top action is "Filters"
             And "B2C/B2B" selection is "B2B"
             And "Type klant" selection is "Klant"
             And "Klantnummer" input is "parameter:accountNumber"
-            Given Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
-            When Dashboard menu is Billing
+            Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
+            When Dashboard menu is "Billing"
             Then View list header is "Transacties"
-            And 1st list element has cell value Invoice (ADVANCE) at column ID & Type
+            And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
             And List option is "ENKEL FACTUREN"
             And View list header is "Openstaande facturen"
-            And Invoice with key InvoicesOnAccountOpenBalance is checked
+            And Invoice with key "InvoicesOnAccountOpenBalance" is checked
             And List option is "AANVRAAG AFBETALINGSPLAN"
 
 
-            And Input in Type afbetalingsplan is "Bedrag"
-            And Input in Periode schijven is "Maandelijks"
+            And Input in "Type afbetalingsplan" is "Bedrag"
+            And Input in "Periode schijven" is "Maandelijks"
             And "Startdatum" date is "now"
             And "Aantal schijven" input is "5"
             And Contract signature is confirmed
 
-            Given I renew login to DWP as businessdesk.testautomation.b2b@essent.be
-            When Left menu is sales-marketing
-            And Top menu item is Klanten
-            And Top action is Filters
+            Given I renew login to DWP as "businessdesk.testautomation.b2b@essent.be"
+            When Left menu is "sales-marketing"
+            And Top menu item is "Klanten"
+            And Top action is "Filters"
             And "B2C/B2B" selection is "B2B"
             And "Type klant" selection is "Klant"
             And "Klantnummer" input is "parameter:accountNumber"
-            Given Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
+            Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
 
-            When Dashboard menu is Billing
+            When Dashboard menu is "Billing"
             Then View list header is "Afbetalingsplannen"
-            And Table Afbetalingsplannen contains value "open" at column Status
-
-
-
-
+            And Table "Afbetalingsplannen" contains value "open" at column "Status"
 
         #payment plan verification
         Scenario: Check is payment plan created when logged as billing user
-            Given I logged in to DWP as billing.testautomation@essent.be
-            When Left menu is billing
-            And Top menu item is Klanten
-            And Top action is Filters
+            Given I logged in to DWP as "billing.testautomation@essent.be"
+            When Left menu is "billing"
+            And Top menu item is "Klanten"
+            And Top action is "Filters"
             And "B2C/B2B" selection is "B2B"
             And "Type klant" selection is "Klant"
             And "Klantnummer" input is "parameter:accountNumber"
-            Given Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
-            When Dashboard menu is Billing
+            Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
+            When Dashboard menu is "Billing"
             Then View list header is "Transacties"
-            And 2nd list element has cell value Payment at column ID & Type
+            And "2nd" list element has cell value "Payment" at column "ID & Type"
 
         #Reverse Payment Plan
         Scenario: Reverse payment plan
@@ -105,17 +101,17 @@ Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR,
 
             #check in dwp is payment plan status reversed
         Scenario: Check is payment plan reversed
-            Given I logged in to DWP as businessdesk.testautomation.b2b@essent.be
-            When Left menu is sales-marketing
-            And Top menu item is Klanten
-            And Top action is Filters
+            Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
+            When Left menu is "sales-marketing"
+            And Top menu item is "Klanten"
+            And Top action is "Filters"
             And "B2C/B2B" selection is "B2B"
             And "Type klant" selection is "Klant"
             And "Klantnummer" input is "parameter:accountNumber"
-            Given Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
-            When Dashboard menu is Billing
+            Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
+            When Dashboard menu is "Billing"
             Then View list header is "Afbetalingsplannen"
-            And Table Afbetalingsplannen contains value "reversed" at column Status
+            And Table "Afbetalingsplannen" contains value "reversed" at column "Status"
 
 
 

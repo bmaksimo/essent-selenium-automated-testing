@@ -74,7 +74,7 @@ public class DunningSteps extends DwpScenario {
         return dunningStartDate.plusDays(days);
     }
 
-    @When("^Customer with CRM Id ([^\"]*) is added to dunning whitelist$")
+    @When("^Customer with CRM Id \"([^\"]*)\" is added to dunning whitelist$")
     public void whitelistDunningCustomer(String suiteCRMCustomer) throws Throwable {
         String customerId = parameterProvider.getValueOrParameterAsString(suiteCRMCustomer);
         DBUtility.enableDunningForCrmId(customerId);

@@ -17,7 +17,7 @@ public class JBillingGenericSteps extends JBillingScenario {
         registerActiveScenario(scenario);
     }
 
-    @Given("^I logged in to JBilling as ([^\"]*)$")
+    @Given("^I logged in to JBilling as \"([^\"]*)\"$")
     public void loginAs(String username) throws Throwable {
         isJBillingRunning();
         UserRoles jBillingUser = UserRoles.get(username);
