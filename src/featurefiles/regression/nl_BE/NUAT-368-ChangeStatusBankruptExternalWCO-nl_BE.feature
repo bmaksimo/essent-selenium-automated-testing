@@ -1,6 +1,5 @@
 @DWP
-#@B2B
-#@REGRESSION
+
 @CREDIT-AND-CONTROL
 Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
 
@@ -348,3 +347,6 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
         And Input in Externe partij is "Hilde Derde"
         And Changes are confirmed
         Then Verify status is "External @ Hilde Derde" and "In vereffening"
+
+#@B2B
+##@REGRESSION
