@@ -93,10 +93,10 @@ Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR,
 
         #Reverse Payment Plan
         Scenario: Reverse payment plan
-            Given I logged in to Odoo as t.geets
-            When Odoo top menu is Accounting
-            And  Odoo left menu is Customers
-            And Odoo filter is parameter:accountNumber
+            Given I logged in to Odoo as "t.geets"
+            When Odoo top menu is "Accounting"
+            And  Odoo left menu is "Customers"
+            And Odoo filter is "parameter:accountNumber"
             When Column "Account Number" with value "parameter:accountNumber" is clicked
             And Button "Journal Items" is clicked
             And Journal entry is open
