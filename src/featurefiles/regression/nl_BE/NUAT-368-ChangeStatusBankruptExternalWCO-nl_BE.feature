@@ -2,11 +2,13 @@
 @B2B
 @REGRESSION
 @CREDIT-AND-CONTROL
+@NUAT-368
 Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
 
     Background:
         Given I logged in to DWP as businessdesk.testautomation.b2b@essent.be
 
+    @NUAT-368-1
     Scenario: I Change status CSR and Externe partij is Contentia
         When Left menu is sales-marketing
         And Top menu item is Klanten
@@ -23,7 +25,7 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
         And Input in Externe partij is "Contentia"
         And Changes are confirmed
         Then Verify status is "External @ Contentia" and "CSR"
-
+    @NUAT-368-2
     Scenario: II Change status CSR and Externe partij is Hilde Derde
         When Left menu is sales-marketing
         And Top menu item is Klanten
