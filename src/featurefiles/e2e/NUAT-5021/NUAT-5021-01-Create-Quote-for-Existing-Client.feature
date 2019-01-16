@@ -1,5 +1,4 @@
 @DWP
-@E2E
 @B2C
 Feature: NUAT-5021 Step 1. Create an account for de-duplication.
 
