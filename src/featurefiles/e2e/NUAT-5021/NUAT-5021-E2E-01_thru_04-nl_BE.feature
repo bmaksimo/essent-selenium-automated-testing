@@ -5,6 +5,7 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
     @NUAT-5021-01-04
     Scenario: From de-duplication of client to inactive client via passive renewal
 
+        # Step 1: create customer with guarantee
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
