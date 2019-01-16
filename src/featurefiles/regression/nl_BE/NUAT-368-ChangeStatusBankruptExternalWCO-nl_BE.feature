@@ -1,5 +1,6 @@
 @DWP
-
+@B2B2
+@REGRESSION2
 @CREDIT-AND-CONTROL
 Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
 
