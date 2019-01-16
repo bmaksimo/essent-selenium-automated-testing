@@ -107,7 +107,8 @@ public class JournalEnteriesPage extends Component {
     }
 
     public WebElement journalItemsCheckBox(Integer row){
-        return  seleniumDriver.findElementWhenVisible(By.xpath(("//th[@class='oe_list_record_selector'])["+row+"]//input"))); // first row starts with 81
+//        return  seleniumDriver.findElementWhenVisible(By.xpath(("//th[@class='oe_list_record_selector'])["+row+"]//input"))); // first row starts with 81
+        return  seleniumDriver.findElementWhenVisible(By.xpath(("(//tbody/tr["+row+"]/th/input)[2]")));
     }
 
     public void clickOnJournalItemsCheckBox(Integer row){
@@ -121,12 +122,34 @@ public class JournalEnteriesPage extends Component {
         return journalItemsCheckBox(row).findElement(By.xpath("//td[@data-field='debit']")).getText();
     }
 
+    public WebElement more(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//button[@class='oe_dropdown_toggle oe_dropdown_arrow'])[8]"));
+    }
+
     public void clickOnMoreMenuItem(String item){
+        seleniumDriver.waitAndClick(more());
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//a[contains(text(),'"+item+"')]")));
     }
 
     public void clickOnconfirm(){
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//button[@class='oe_button oe_form_button oe_highlight']")));
+    }
+
+    public WebElement reconcile(Integer row){
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//td[@data-field='reconcile_id'])["+row+"]/a"));
+    }
+
+    public String reconcileText(Integer row){
+        return reconcile(row).getText();
+    }
+
+    public boolean isElementPresent(String xpath) {
+        try {
+            seleniumDriver.findElement(By.xpath(xpath));
+            return true;
+        } catch (org.openqa.selenium.NoSuchElementException e) {
+            return false;
+        }
     }
 
 }

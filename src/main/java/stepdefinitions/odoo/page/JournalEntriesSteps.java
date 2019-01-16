@@ -8,6 +8,8 @@ import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
+import cucumber.api.java.en.Then;
+import org.apache.bcel.generic.ClassGen;
 import org.junit.Assert;
 
 import java.util.List;
@@ -66,10 +68,10 @@ public class JournalEntriesSteps extends OdooScenario {
     @And("^Mark first two journal items one with credit and one with debit \"([^\"]*)\"$")
     public void markFirstTwoJournalItemsOneWithCreditAndOneWithDebit(String money) throws Throwable {
         JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
-        Assert.assertEquals(je.journalImtesDebit(81), money);
-        je.clickOnJournalItemsCheckBox(81);
-        Assert.assertEquals(je.journalImtesCredit(82), money);
-        je.clickOnJournalItemsCheckBox(82);
+        //Assert.assertEquals(je.journalImtesDebit(1), money);
+        je.clickOnJournalItemsCheckBox(1); //81
+       // Assert.assertEquals(je.journalImtesCredit(2), money);
+        je.clickOnJournalItemsCheckBox(2); //82
     }
 
     @And("^More menu is \"([^\"]*)\"$")
@@ -82,5 +84,36 @@ public class JournalEntriesSteps extends OdooScenario {
     public void confirm() throws Throwable {
         JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
         je.clickOnconfirm();
+    }
+
+    @Then("^Reconcile number is shown$")
+    public void reconcileNumberIsShown() throws Throwable {
+        JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
+        String reconcile1 = je.reconcileText(1);
+        String reconcile2 = je.reconcileText(2);
+        Assert.assertEquals(reconcile1,reconcile2);
+    }
+
+    @Then("^Reconcile number is removed$")
+    public void reconcileNumberIsRemoved() throws Throwable {
+        JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
+        Sleeper.sleepTightInSeconds(5);
+
+        Assert.assertFalse(je.isElementPresent("(//td[@data-field='reconcile_id'])[1]/a"));
+        Assert.assertFalse(je.isElementPresent("(//td[@data-field='reconcile_id'])[2]/a"));
+
+
+//        Assert.assertFalse(je.reconcile(1).isDisplayed());
+//        Assert.assertFalse(je.reconcile(2).isDisplayed());
+
+
+//        Assert.assertFalse(ExpectedConditions.visibilityOf(je.reconcile(1));
+//        Assert.assertFalse(ExpectedConditions.visibilityOf(je.reconcile(2));
+
+//        String reconcile11 = je.reconcileText(1);
+//        String reconcile22 = je.reconcileText(2);
+//        Assert.assertTrue(reconcile11.isEmpty());
+//        Assert.assertTrue(reconcile22.isEmpty());
+
     }
 }
