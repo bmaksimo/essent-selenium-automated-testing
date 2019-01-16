@@ -1,10 +1,12 @@
+@DWP
 @E2E
-Feature: NUAT-5019 end-to-end testing
+Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one payment and 3 dunning levels, with SS and Market Mock"
 
-    @INACTIVATE-CONTRACT
+    Background:
+        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
+    @NUAT-5019
     Scenario: Create active contract that after dunning the contract becomes inactive
         # 1 - GUI contract creation
-        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
@@ -27,13 +29,12 @@ Feature: NUAT-5019 end-to-end testing
 
         When "Startdatum" date is "2 weeks before now"
         And Electricity EAN code is "random"
-        And Switch type is Move in
         And Electricity market mock test is Open
         And Connection details are confirmed
         Then Form header is "Billing details"
 
 
-        When Payment details are: method "Overschrijving", random IBAN, bic "ABNANL2A"
+        When "Betalingswijze" selection is "Overschrijving"
         And Billing details are confirmed
         Then Form header is "Quote overview"
 

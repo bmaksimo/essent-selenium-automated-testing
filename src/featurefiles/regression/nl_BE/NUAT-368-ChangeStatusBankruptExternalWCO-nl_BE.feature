@@ -1,6 +1,6 @@
 @DWP
-@B2B
-@REGRESSION
+@B2B2
+@REGRESSION2
 @CREDIT-AND-CONTROL
 Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
 
@@ -146,7 +146,7 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
         And Update account status on "In WCO"
         And "Startdatum" date is "now"
         And "Extern" turn on
-        And "Externe startdatum" date is "now""
+        And "Externe startdatum" date is "now"
         And Input in "Externe partij" is "Hilde Derde"
         And Changes are confirmed
         Then Verify status is "External @ Hilde Derde" and "In WCO"
@@ -161,7 +161,7 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
 
         When Plus menu is "Service -> Wijzigingen klant -> Accountstatus wijzigen"
         And Update account status on "Normaal"
-        And "Extern" turn on"
+        And "Extern" turn on
         And "Externe startdatum" date is "now"
         And Input in "Externe partij" is "Contentia"
         And Changes are confirmed
@@ -339,7 +339,7 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
         And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Top action is "Filters"
         And "Klantnummer" input is "parameter:accountNumber"
-        Then Click on link in View List at "1s" row and "Klantnummer & Naam" column polling 20 seconds
+        Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
 
         When Plus menu is "Service -> Wijzigingen klant -> Accountstatus wijzigen"
         And Update account status on "Vereffening"
@@ -348,3 +348,5 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
         And Input in "Externe partij" is "Hilde Derde"
         And Changes are confirmed
         Then Verify status is "External @ Hilde Derde" and "In vereffening"
+
+

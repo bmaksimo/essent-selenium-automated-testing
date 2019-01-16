@@ -5,7 +5,7 @@
 Feature: NUAT-372: Duplicate Customer - nl_BE
 
     Background:
-        Given I logged in to DWP as "usinessdesk.testautomation.b2b@essent.be"
+        Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
 
     Scenario: Duplicate customer
         When Left menu is "sales-marketing"
