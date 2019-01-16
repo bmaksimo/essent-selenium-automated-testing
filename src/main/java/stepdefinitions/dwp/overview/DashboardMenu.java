@@ -13,7 +13,7 @@ public class DashboardMenu extends NavigationElements {
         registerActiveScenario(scenario);
     }
 
-    @When("^Dashboard menu is ([^\"]*)")
+    @When("^Dashboard menu is \"([^\"]*)\"")
     public void checkDashboardMenuItem(String menuItem) throws Throwable {
         clickDashboardMenu(menuItem);
         parameterProvider.put("navigation", "back");

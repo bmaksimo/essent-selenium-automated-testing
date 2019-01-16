@@ -5,26 +5,26 @@
 Feature: NAUT-480: End Of Contract Via DWP - nl_BE
 
     Background:
-        Given I logged in to DWP as businessdesk.testautomation.b2b@essent.be
+        Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
 
         Scenario: End of contract via DWP
-            When Left menu is sales-marketing
-            And Top menu item is Klanten
-            And Top action is Filters
+            When Left menu is "sales-marketing"
+            And Top menu item is "Klanten"
+            And Top action is "Filters"
             And "B2C/B2B" selection is "B2B"
             And "Type klant" selection is "Klant"
-            And Click on link in View List at 1st row and "Klantnummer & Naam" column polling 15 seconds
-            Then Dashboard menu is Contracten
+            And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 15 seconds
+            Then Dashboard menu is "Contracten"
 
             When Find "Actief" contract
-            And Dashboard menu is Marktberichten
-            And Click on Start nieuw marktbericht
+            And Dashboard menu is "Marktberichten"
+            And Click on "Start nieuw marktbericht"
             And Click Select Contractline
             And Search for ean code
             Then Changes are confirmed
 
-            When Input in Module is "INITIATE STOP ACCESS"
-            And Input in Label is "Non-Residential End-of-Contract"
+            When Input in "Module" is "INITIATE STOP ACCESS"
+            And Input in "Label" is "Non-Residential End-of-Contract"
             And Check toggle "Testing"
             And Check toggle "Market mocK"
             And Changes are confirmed

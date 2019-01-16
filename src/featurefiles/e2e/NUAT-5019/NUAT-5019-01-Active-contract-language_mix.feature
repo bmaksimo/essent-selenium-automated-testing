@@ -4,7 +4,7 @@
 Feature: NUAT-5019 Step 1. Creating a B2C Quote TC1 with move in, Dutch language version with form headers in English language, ELectricity only, random EAN code, random Dutch customer identity.
 
     Background:
-        Given I logged in to DWP as salesmarketing.testautomation.b2c@essent.be
+        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
     @ONBOARDING
     @NUAT-5019-STEP-1
@@ -33,7 +33,6 @@ Feature: NUAT-5019 Step 1. Creating a B2C Quote TC1 with move in, Dutch language
 
         When EAN code is generated
         And "EAN-code" input is "parameter:EAN-code-generated"
-        And Switch type is Move in
         And Electricity market mock test is Open
         And "Startdatum" date is "now"
         And Connection details are confirmed
@@ -50,13 +49,12 @@ Feature: NUAT-5019 Step 1. Creating a B2C Quote TC1 with move in, Dutch language
         And Quote is signed
         When Quote is confirmed
         Then View list header is "Offertes"
-        And 1st list element has cell value Sales Getekend - Geaccepteerd at column Type & status
+        Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
 
-
-        When Dashboard menu is Contracten
+        When Dashboard menu is "Contracten"
         Then View list header is "Actieve en toekomstige connecties"
-        And  1st List element with value at column "EAN-code" is checked
-        And  1st list element has cell value Actief at column "Contractnummer" polling 450 seconds
+        And  "1st" List element with value at column "EAN-code" is checked
+        And  "1st" list element has cell value "Actief" at column "Contractnummer" polling 450 seconds
 
 
 

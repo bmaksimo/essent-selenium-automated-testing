@@ -6,9 +6,9 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public class MarketberichtenPage  extends Component {
+public class MarktBerichtenPage extends Component {
 
-    public MarketberichtenPage(SeleniumDriver seleniumDriver) {
+    public MarktBerichtenPage(SeleniumDriver seleniumDriver) {
         super(seleniumDriver);
     }
     public WebElement listActionsElemet(String element) throws InterruptedException {
@@ -33,16 +33,11 @@ public class MarketberichtenPage  extends Component {
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//a[@name='"+name+"']/span[@class='icon-pijl']")));
     }
 
-    public void createNewMarktericht(String newMarktbericht){
+    public void createNewMarktBericht(String newMarktbericht){
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.name(newMarktbericht)));
     }
 
-    public void clickOnLabel(String label, String value)  {
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='"+label+"']//option[@label = '"+value+"']")));
-    }
-
     public void clickOnListActionsElemet(String element) throws InterruptedException {
-
         seleniumDriver.waitAndClick(listActionsElemet(element));
     }
 

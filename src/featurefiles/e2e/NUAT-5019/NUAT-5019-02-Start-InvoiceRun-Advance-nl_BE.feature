@@ -5,35 +5,35 @@ Feature: NUAT-5019 Step 2. Billing - Triggering billrun, produce an advanced inv
 
     Background:
 
-        Given I logged in to DWP as billing.testautomation@essent.be
+        Given I logged in to DWP as "billing.testautomation@essent.be"
 
     @INVOICE-RUN-ADVANCE
     @NUAT-5019-STEP-2
     Scenario: Trigger Invoice run process
 
-        When Left menu is billing
-        And Top menu item is Klanten
-        And Top action is Filters
+        When Left menu is "billing"
+        And Top menu item is "Klanten"
+        And Top action is "Filters"
         And "Naam" input is "parameter:suitecrm-customer-name"
 
-        Given 1st List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
-        And 1st List element with value at column "Klantnummer & Naam" is checked
-        And Click on link in View List at 1st row and "Klantnummer & Naam" column
-        And Dashboard menu is Contracten
+        Given "1st" List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
+        And "1st" List element with value at column "Klantnummer & Naam" is checked
+        And Click on link in View List at "1st" row and "Klantnummer & Naam" column
+        And Dashboard menu is "Contracten"
         Then View list header is "Actieve en toekomstige connecties"
-        And 1st List element with value at column "EAN-code" is checked
+        And "1st" List element with value at column "EAN-code" is checked
 
-        Given Top arrow button is Up
+        Given Top arrow button is "Up"
         And Plus menu is "Billing -> Start facturatierun"
-        When Modal dialog is Start invoicerun
+        When Modal dialog is "Start invoicerun"
         And "Naam job" selection is "recurrent"
         And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
         And "Factuurdatum" date is "now"
         And "Procesdatum" date is "1 month from now"
         Then Invoice run is scheduled
 
-        Given Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
-        When Dashboard menu is Billing
+        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
+        When Dashboard menu is "Billing"
         Then View list header is "Transacties"
-        And 1st list element has cell value Invoice (ADVANCE) at column ID & Type
+        And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
 

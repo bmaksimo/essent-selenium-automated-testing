@@ -13,8 +13,6 @@ import org.junit.Assert;
 public class ContractSteps extends DwpScenario {
     private String amount;
 
-    ContractPage contractPage = new ContractPage(webDriver);
-
     @Before("@DWP, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
@@ -30,12 +28,11 @@ public class ContractSteps extends DwpScenario {
     public void contractPlusAnd(String subaction) throws Throwable {
         ContractPage cp = new ContractPage(webDriver);
         cp.contractPlus();
-      //  contractPage.contractPlus();
         BaseObject baseObject = new BaseObject(webDriver);
         baseObject.plusSubaction(subaction);
     }
 
-    @And("^Amount values is ([^\"]*)$")
+    @And("^Amount values is \"([^\"]*)\"$")
     public void amountValuesIs(String value) throws Throwable {
         ContractPage cp = new ContractPage(webDriver);
         cp.changeAmount(value);
