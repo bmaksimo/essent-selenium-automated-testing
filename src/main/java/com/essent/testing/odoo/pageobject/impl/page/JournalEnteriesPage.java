@@ -12,8 +12,8 @@ import java.util.List;
 
 
 public class JournalEnteriesPage extends Component {
-    private String pattern = "MM/dd/yyyy";
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+    private static String DATE_PATTERN = "MM/dd/yyyy";
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN);
 
     private String date = simpleDateFormat.format(new Date());
 
@@ -25,7 +25,7 @@ public class JournalEnteriesPage extends Component {
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//button[@class='oe_button oe_list_add oe_highlight']")));
     }
 
-    public void clickOnDropDownButtonJurnal(){
+    public void clickOnDropDownButtonJournal(){
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//span[@class='oe_m2o_drop_down_button']")));
     }
 
@@ -59,38 +59,38 @@ public class JournalEnteriesPage extends Component {
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("(//li[@class='ui-menu-item']/a)[2]")));
     }
 
-    public WebElement account(){
+    public WebElement findAccountElement(){
         return seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='account_id']/div/input"));
     }
 
-    public void setAccout(String accout){
+    public void setAccout(String account){
         Sleeper.sleepTightInSeconds(5);
-        seleniumDriver.waitAndClick(account());
-        account().clear();
-        seleniumDriver.waitAndSendKeys(account(), accout);
+        seleniumDriver.waitAndClick(findAccountElement());
+        findAccountElement().clear();
+        seleniumDriver.waitAndSendKeys(findAccountElement(), account);
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("(//li[@class='ui-menu-item']/a)[4]")));
     }
 
-    public WebElement debit(){
+    public WebElement findDebitElement(){
         return seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='debit']/input"));
     }
 
     public void setDebit(String debit){
         Sleeper.sleepTightInSeconds(3);
-        seleniumDriver.waitAndClick(debit());
-        debit().clear();
-        seleniumDriver.waitAndSendKeys(debit(), debit);
+        seleniumDriver.waitAndClick(findDebitElement());
+        findDebitElement().clear();
+        seleniumDriver.waitAndSendKeys(findDebitElement(), debit);
     }
 
-    public WebElement credit(){
+    public WebElement findCreditElement(){
         return seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='credit']/input"));
     }
 
     public void setCredit(String credit){
         Sleeper.sleepTightInSeconds(3);
-        seleniumDriver.waitAndClick(credit());
-        credit().clear();
-        seleniumDriver.waitAndSendKeys(credit(), credit);
+        seleniumDriver.waitAndClick(findCreditElement());
+        findCreditElement().clear();
+        seleniumDriver.waitAndSendKeys(findCreditElement(), credit);
     }
 
     public void createNewItem(List<List<String>> table, Integer row, String partnerNumber) {
@@ -114,23 +114,23 @@ public class JournalEnteriesPage extends Component {
         seleniumDriver.waitAndClick(journalItemsCheckBox(row));
     }
 
-    public String journalImtesCredit(Integer row){
+    public String getJournalItemsCredit(Integer row){
         return journalItemsCheckBox(row).findElement(By.xpath("//td[@data-field='credit']")).getText();
     }
-    public String journalImtesDebit(Integer row){
+    public String getJournalItemsDebit(Integer row){
         return journalItemsCheckBox(row).findElement(By.xpath("//td[@data-field='debit']")).getText();
     }
 
-    public WebElement more(){
+    public WebElement findMoreElement(){
         return seleniumDriver.findElementWhenVisible(By.xpath("(//button[@class='oe_dropdown_toggle oe_dropdown_arrow'])[8]"));
     }
 
     public void clickOnMoreMenuItem(String item){
-        seleniumDriver.waitAndClick(more());
+        seleniumDriver.waitAndClick(findMoreElement());
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//a[contains(text(),'"+item+"')]")));
     }
 
-    public void clickOnconfirm(){
+    public void clickOnConfirm(){
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//button[@class='oe_button oe_form_button oe_highlight']")));
     }
 

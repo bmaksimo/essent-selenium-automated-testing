@@ -50,9 +50,9 @@ public class JournalEntriesSteps extends OdooScenario {
     }
 
     @And("^New item is$")
-    public void newItemIs(DataTable dbTabel) throws Throwable {
+    public void newItemIs(DataTable dbTable) throws Throwable {
         JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
-        List<List<String>> db = dbTabel.raw();
+        List<List<String>> db = dbTable.raw();
         je.clickOnAddAnItem();
         je.createNewItem(db,1,parameterProvider.getValueOrParameterAsString(db.get(1).get(1)));
         je.clickOnAddAnItem();
@@ -84,7 +84,7 @@ public class JournalEntriesSteps extends OdooScenario {
     @And("^Confirm$")
     public void confirm() throws Throwable {
         JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
-        je.clickOnconfirm();
+        je.clickOnConfirm();
     }
 
     @Then("^Reconcile number is shown$")
