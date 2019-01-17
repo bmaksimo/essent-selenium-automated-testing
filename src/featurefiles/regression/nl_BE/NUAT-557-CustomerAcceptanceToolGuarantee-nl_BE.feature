@@ -17,7 +17,7 @@ Feature: NUAT-558: Check guarantee status of customer with Customer Acceptance T
         And Dashboard menu is "Details"
         Then Get Company Number
 
-        When Top arrow button is "U"P
+        When Top arrow button is "UP"
         When Plus menu is "Sales -> TK1 -> Klantacceptatie tool"
         And "Ondernemingsnummer" input is "parameter:companyNumber"
         Then Customer Status is "Waarborg"
