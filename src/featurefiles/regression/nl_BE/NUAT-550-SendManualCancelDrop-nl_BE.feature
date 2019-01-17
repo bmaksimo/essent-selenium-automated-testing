@@ -8,20 +8,20 @@
 Feature: NUAT-550 Send manual cancel drop
 
     Background:
-        Given  I logged in to DWP as businessdesk.testautomation.b2b@essent.be
+        Given  I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
 
     Scenario:
-        When Left menu is sales-marketing
-        And Top menu item is Klanten
-        And Top action is Filters
+        When Left menu is "sales-marketing"
+        And Top menu item is "Klanten"
+        And Top action is "Filters"
         And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And "Klantnummer" input is "parameter:accountNumber"
-        Then Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
+        Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
 
-        When Dashboard menu is Contracten
+        When Dashboard menu is "Contracten"
         And Save EAN from active contract
         And Save End Date from active contract
-        And Dashboard menu is Marktberichten
+        And Dashboard menu is "Marktberichten"
         And Click on "START NIEUW MARKTBERICHT"
         And Click Select Contractline
         And Search by "parameter:EAN-active-contract"
