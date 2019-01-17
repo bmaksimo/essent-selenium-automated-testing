@@ -93,13 +93,13 @@ public class JournalEnteriesPage extends Component {
         seleniumDriver.waitAndSendKeys(credit(), credit);
     }
 
-    public void createNewItem(List<List<String>> table, Integer row) {
+    public void createNewItem(List<List<String>> table, Integer row, String partnerNumber) {
         if (row == 2){
-            setPartner(table.get(row).get(1));
+            setPartner(partnerNumber);
             setAccout(table.get(row).get(2));
         }else {
             setName(table.get(row).get(0));
-            setPartner(table.get(row).get(1));
+            setPartner(partnerNumber);
             setAccout(table.get(row).get(2));
             setDebit(table.get(row).get(3));
             setCredit(table.get(row).get(4));
@@ -107,7 +107,6 @@ public class JournalEnteriesPage extends Component {
     }
 
     public WebElement journalItemsCheckBox(Integer row){
-//        return  seleniumDriver.findElementWhenVisible(By.xpath(("//th[@class='oe_list_record_selector'])["+row+"]//input"))); // first row starts with 81
         return  seleniumDriver.findElementWhenVisible(By.xpath(("(//tbody/tr["+row+"]/th/input)[2]")));
     }
 
@@ -141,15 +140,6 @@ public class JournalEnteriesPage extends Component {
 
     public String reconcileText(Integer row){
         return reconcile(row).getText();
-    }
-
-    public boolean isElementPresent(String xpath) {
-        try {
-            seleniumDriver.findElement(By.xpath(xpath));
-            return true;
-        } catch (org.openqa.selenium.NoSuchElementException e) {
-            return false;
-        }
     }
 
 }

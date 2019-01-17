@@ -3,14 +3,16 @@ package stepdefinitions.odoo.page;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.odoo.pageobject.impl.page.JournalEnteriesPage;
 import com.essent.testing.odoo.scenario.OdooScenario;
-import cucumber.api.DataTable;
 import cucumber.api.Scenario;
+import cucumber.api.DataTable;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
-import org.apache.bcel.generic.ClassGen;
+
 import org.junit.Assert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
@@ -37,6 +39,7 @@ public class JournalEntriesSteps extends OdooScenario {
     @And("^Journal is \"([^\"]*)\"$")
     public void journalIs(String journal) throws Throwable {
         JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
+        Sleeper.sleepTightInSeconds(5);
         je.chooseDiverseDagboekKlanten(journal);
     }
 
@@ -51,9 +54,9 @@ public class JournalEntriesSteps extends OdooScenario {
         JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
         List<List<String>> db = dbTabel.raw();
         je.clickOnAddAnItem();
-        je.createNewItem(db,1);
+        je.createNewItem(db,1,parameterProvider.getValueOrParameterAsString(db.get(1).get(1)));
         je.clickOnAddAnItem();
-        je.createNewItem(db,2);
+        je.createNewItem(db,2,parameterProvider.getValueOrParameterAsString(db.get(2).get(1)));
     }
 
     @And("^Save and Post journal entry")
@@ -68,10 +71,8 @@ public class JournalEntriesSteps extends OdooScenario {
     @And("^Mark first two journal items one with credit and one with debit \"([^\"]*)\"$")
     public void markFirstTwoJournalItemsOneWithCreditAndOneWithDebit(String money) throws Throwable {
         JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
-        //Assert.assertEquals(je.journalImtesDebit(1), money);
-        je.clickOnJournalItemsCheckBox(1); //81
-       // Assert.assertEquals(je.journalImtesCredit(2), money);
-        je.clickOnJournalItemsCheckBox(2); //82
+        je.clickOnJournalItemsCheckBox(1);
+        je.clickOnJournalItemsCheckBox(2);
     }
 
     @And("^More menu is \"([^\"]*)\"$")
@@ -96,24 +97,7 @@ public class JournalEntriesSteps extends OdooScenario {
 
     @Then("^Reconcile number is removed$")
     public void reconcileNumberIsRemoved() throws Throwable {
-        JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
         Sleeper.sleepTightInSeconds(5);
-
-        Assert.assertFalse(je.isElementPresent("(//td[@data-field='reconcile_id'])[1]/a"));
-        Assert.assertFalse(je.isElementPresent("(//td[@data-field='reconcile_id'])[2]/a"));
-
-
-//        Assert.assertFalse(je.reconcile(1).isDisplayed());
-//        Assert.assertFalse(je.reconcile(2).isDisplayed());
-
-
-//        Assert.assertFalse(ExpectedConditions.visibilityOf(je.reconcile(1));
-//        Assert.assertFalse(ExpectedConditions.visibilityOf(je.reconcile(2));
-
-//        String reconcile11 = je.reconcileText(1);
-//        String reconcile22 = je.reconcileText(2);
-//        Assert.assertTrue(reconcile11.isEmpty());
-//        Assert.assertTrue(reconcile22.isEmpty());
-
+        ExpectedConditions.not(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[@data-field='reconcile_id'])[1]/a")));
     }
 }

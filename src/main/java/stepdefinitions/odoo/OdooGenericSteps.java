@@ -17,7 +17,7 @@ public class OdooGenericSteps extends OdooScenario {
         registerActiveScenario(scenario);
     }
 
-    @Given("^I logged in to Odoo as ([^\"]*)$")
+    @Given("^I logged in to Odoo as \"([^\"]*)\"$")
     public void loginAs(String username) throws Throwable {
         isOdooRunning();
         UserRoles odooUser = UserRoles.get(username);
