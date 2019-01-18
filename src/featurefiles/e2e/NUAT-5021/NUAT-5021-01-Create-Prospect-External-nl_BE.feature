@@ -42,7 +42,6 @@ Feature: NUAT-5021 Step 1. Create an account for de-duplication.
         And "1st" list element has cell value "Sales Verstuurd naar de klant - Geaccepteerd" at column "Type & status"
 
         When Dashboard menu is "Details"
-        Then  Form header is "Details"
         And "Klantnummer" field value is checked
 
         When Dashboard menu is "Marktberichten"

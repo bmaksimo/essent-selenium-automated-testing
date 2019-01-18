@@ -44,9 +44,8 @@ Feature: NUAT-5019 Step 1. Creating a B2C Quote TC1 with move in, Dutch language
 
         When Option "Heeft de klant al getekend?" is On
         And "Kanaal ondertekening" selection is "Papier"
-        And "Plaats ondertekening" input is "Kontich"
         And "Datum ondertekening" date is "now"
-        And Quote is signed
+        And Quote is signed in "Kontich"
         When Quote is confirmed
         Then View list header is "Offertes"
         Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
@@ -55,6 +54,9 @@ Feature: NUAT-5019 Step 1. Creating a B2C Quote TC1 with move in, Dutch language
         Then View list header is "Actieve en toekomstige connecties"
         And  "1st" List element with value at column "EAN-code" is checked
         And  "1st" list element has cell value "Actief" at column "Contractnummer" polling 450 seconds
+
+        When Dashboard menu is "Details"
+        And "Klantnummer" field value is checked
 
 
 
