@@ -18,7 +18,7 @@ Feature: NAUT-480: End Of Contract Via DWP - nl_BE
 
             When Find "Actief" contract
             And Dashboard menu is "Marktberichten"
-            And Click on "Start nieuw marktbericht"
+            And Click on "START NIEUW MARKTBERICHT"
             And Click Select Contractline
             And Search for ean code
             Then Changes are confirmed
