@@ -32,14 +32,14 @@ public class JournalEntriesSteps extends OdooScenario {
     @And("^Create new Journal Entries is clicked$")
     public void createNewJournalEntriesIsClicked() throws Throwable {
         JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
-        Sleeper.sleepTightInSeconds(2);
+        Sleeper.sleepTightInSeconds(3);
         je.clickOnCreateJournalEntery();
     }
 
     @And("^Journal is \"([^\"]*)\"$")
     public void journalIs(String journal) throws Throwable {
         JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
-        Sleeper.sleepTightInSeconds(5);
+        Sleeper.sleepTightInSeconds(2);
         je.chooseDiverseDagboekKlanten(journal);
     }
 

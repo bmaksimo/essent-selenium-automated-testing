@@ -30,7 +30,7 @@ public class JournalEnteriesPage extends Component {
     }
 
     public void chooseDiverseDagboekKlanten(String journal){
-        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id("oe-field-input-10")), journal);
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id("oe-field-input-8")), journal);
     }
 
     public void dateDocumentIsToday(){
@@ -56,6 +56,7 @@ public class JournalEnteriesPage extends Component {
     public void setPartner(String partner){
         Sleeper.sleepTightInSeconds(3);
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='partner_id']/div/input")), partner);
+        Sleeper.sleepTightInSeconds(3);
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("(//li[@class='ui-menu-item']/a)[2]")));
     }
 
@@ -68,6 +69,7 @@ public class JournalEnteriesPage extends Component {
         seleniumDriver.waitAndClick(findAccountElement());
         findAccountElement().clear();
         seleniumDriver.waitAndSendKeys(findAccountElement(), account);
+        Sleeper.sleepTightInSeconds(3);
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("(//li[@class='ui-menu-item']/a)[4]")));
     }
 

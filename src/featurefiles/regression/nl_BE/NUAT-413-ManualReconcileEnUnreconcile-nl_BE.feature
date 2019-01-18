@@ -19,7 +19,6 @@
             | name | partner | account | debit | credit |
             | new1 | parameter:accountNumber | 580100 | 0 | 10 |
             | new2 | parameter:accountNumber | 580100 | 10 | 0 |
-
         Then Save and Post journal entry
         When  Odoo left menu is "Customers"
         And Odoo filter is "parameter:accountNumber"
