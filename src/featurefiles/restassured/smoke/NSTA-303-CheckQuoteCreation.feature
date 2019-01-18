@@ -1,9 +1,10 @@
 @API 
 @QUOTE 
+@SMOKE
 
 Feature: Check Quote creation flow 
 
-Scenario: Check basic Quote creation flow 
+Scenario: Check basic Quote creation flow B2C
 	Given I login to iWelcome as "soapui_b2c" 
 	And "Create_Quote" flow is started 
 	When Data is prepared for Create qoute request for "prospect" 
