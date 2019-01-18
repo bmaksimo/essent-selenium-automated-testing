@@ -26,11 +26,11 @@
         Then Button "Journal Items" is clicked
         When Mark first two journal items one with credit and one with debit "10"
         And More menu is "Reconcile Entries"
-        And Confirm
+        And Confirm action
         Then Reconcile number is shown
         When Mark first two journal items one with credit and one with debit "10"
         And More menu is "Unreconcile Entries"
-        And Confirm
+        And Confirm action
         Then Reconcile number is removed
 
 

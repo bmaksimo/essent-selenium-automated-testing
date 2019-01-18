@@ -81,7 +81,7 @@ public class JournalEntriesSteps extends OdooScenario {
         je.clickOnMoreMenuItem(item);
     }
 
-    @And("^Confirm$")
+    @And("^Confirm action$")
     public void confirm() throws Throwable {
         JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
         je.clickOnConfirm();
