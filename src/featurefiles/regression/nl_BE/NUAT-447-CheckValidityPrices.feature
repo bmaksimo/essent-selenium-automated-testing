@@ -5,12 +5,12 @@
 Feature: NUAT-447: Check validity prices
 
     Background:
-        Given   I logged in to DWP as businessdesk.testautomation.b2b@essent.be
+        Given   I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
 
     Scenario: Check validity prices
         When B2B signed quote by customer "UP" product type and use "FAKE" address and switch type is "MOVE IN"
-        And Left menu is contracting-switching
-        And Top menu item is Offertes
+        And Left menu is "contracting-switching"
+        And Top menu item is "Offertes"
         And Filter button is clicked
         And Label "Type offerte" is "Sales"
         And Label "Status" is "Verstuurd naar klant"
@@ -22,7 +22,7 @@ Feature: NUAT-447: Check validity prices
 
         When Reset filter
         And Offertenummer input is "parameter:offertenummer"
-        And Click on link in View List at 1st row and "Nummer & Getekend contractnummer" column polling 20 seconds
+        And Click on link in View List at "1st" row and "Nummer & Getekend contractnummer" column polling 20 seconds
         And Plus menu is "Offertes -> Check geldigheid tarieven"
         And "Ja, ik wil de offerte met de nieuwe tarieven goedkeuren" turn on with dot
         Then Bevestigen

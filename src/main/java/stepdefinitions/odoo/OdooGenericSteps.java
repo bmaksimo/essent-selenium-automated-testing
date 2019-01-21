@@ -24,7 +24,7 @@ public class OdooGenericSteps extends OdooScenario {
         Window application = new OdooLogin(webDriver).login(odooUser.getUsername(), odooUser.getPassword());
         assertNotNull("DWP application did not appear after a login", application);
     }
-    @Given("^I renew login to Odoo as ([^\"]*)$")
+    @Given("^I renew login to Odoo as \"([^\"]*)\"$")
     public void renewLoginAs(String username) throws Throwable {
         setUpWebDriver();
         loginAs(username);

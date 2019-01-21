@@ -1,13 +1,12 @@
 package com.essent.testing.jbilling.pageobject.impl.table;
 
-import java.util.List;
-
+import com.essent.testing.jbilling.pageobject.impl.Component;
+import com.essent.testing.selenium.SeleniumDriver;
 import org.apache.commons.collections.CollectionUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import com.essent.testing.jbilling.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
+import java.util.List;
 
 public class TablePage extends Component {
 

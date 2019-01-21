@@ -95,12 +95,6 @@ public class ConnectionDetailsPage extends QuoteCreationGuidedStep {
     }
 
 
-    public Boolean isNextButtonEnabled() {
-        Map options = new HashMap<>();
-        Map result = seleniumDriver.executeJavascriptMethod("TrIsNextButtonEnabled", options);
-        return BooleanUtils.toBoolean((String)result.get("enabled"));
-    }
-
     public String getEan() {
         WebElement element = seleniumDriver.findElement(By.cssSelector(ELECTRICITY_EAN_CODE.element().query));
         return element.getAttribute("value");

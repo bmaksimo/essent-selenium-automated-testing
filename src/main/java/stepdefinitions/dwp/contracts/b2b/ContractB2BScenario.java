@@ -1,22 +1,20 @@
 package stepdefinitions.dwp.contracts.b2b;
 
-import java.util.List;
-
-import org.apache.commons.lang.StringUtils;
-import org.junit.Assert;
-
 import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
 import com.essent.testing.restassured.create_contract.QuoteCreator;
 import com.essent.testing.restassured.create_contract.impl.b2b.ContractTC1B2BCreator;
 import com.essent.testing.restassured.create_contract.impl.b2b.ContractTC2B2BCreator;
 import com.essent.testing.restassured.create_contract.impl.b2b.ContractUPB2BCreator;
 import com.essent.testing.scenario.RegisteredScenario;
-
 import cucumber.api.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
+import org.apache.commons.lang.StringUtils;
+import org.junit.Assert;
 import stepdefinitions.dwp.contracts.product_types.ProductTypes;
+
+import java.util.List;
 
 public class ContractB2BScenario extends RegisteredScenario {
 

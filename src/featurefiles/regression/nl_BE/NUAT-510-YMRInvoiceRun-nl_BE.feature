@@ -5,20 +5,20 @@
 Feature: NUAT-510 Triggering advance invoice run. Check is invoice created in DWP and jbilling
 
     Scenario: Trigger Invoice run process
-		Given I logged in to DWP as billing.testautomation@essent.be
-        When Left menu is billing
-        And Top menu item is Klanten
+		Given I logged in to DWP as "billing.testautomation@essent.be"
+        When Left menu is "billing"
+        And Top menu item is "Klanten"
         Given B2B Active Contract is
             | productType    | isFakeAddress | switchType       | meterType       | kwMax |
             | UP             | FAKE          |  SUPPLIER SWITCH | YMR             | 50000 |
-        And Top action is Filters
+        And Top action is "Filters"
         And "B2C/B2B" selection is "B2B"
         And "Type klant" selection is "Klant"
         And "Klantnummer" input is "parameter:accountNumber"
-        Then 1st List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
+        Then "1st" List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
 
         When Plus menu is "Billing -> Start facturatierun"
-        And Modal dialog is Start invoicerun
+        And Modal dialog is "Start invoicerun"
         And "Naam job" selection is "recurrent"
         And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
         And "Factuurdatum" date is "now"
@@ -26,15 +26,15 @@ Feature: NUAT-510 Triggering advance invoice run. Check is invoice created in DW
 
         Then Invoice run is scheduled
 
-        Given Click on link in View List at 1st row and "Klantnummer & Naam" column polling 20 seconds
-        When Dashboard menu is Billing
+        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
+        When Dashboard menu is "Billing"
         Then View list header is "Transacties"
-        And 1st list element has cell value Invoice (ADVANCE) at column ID & Type
-        And 1st List element with value at column "ID & Type" is checked
+        And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
+        And "1st" List element with value at column "ID & Type" is checked
 
     # JBilling
 	Scenario: Check invoices and orders in JBilling
-        Given I logged in to JBilling as billing_testautomation
+        Given I logged in to JBilling as "billing_testautomation"
         When JBilling top menu item is "Customers"
         And JBilling "LOGIN NAME" input is "parameter:Id Billing customer & persoon/familie sleutel"
         And JBilling Click on "APPLY FILTERS" filter button

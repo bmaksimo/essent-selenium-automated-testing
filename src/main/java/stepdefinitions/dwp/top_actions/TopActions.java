@@ -21,17 +21,17 @@ public class TopActions extends NavigationElements {
         registerActiveScenario(scenario);
     }
 
-    @When("^Top action is ([^\"]*)$")
+    @When("^Top action is \"([^\"]*)\"$")
     public void checkTopAction(String action) throws Throwable {
         clickTopAction(action);
     }
 
-    @And("^Top arrow button is ([^\"]*)$")
+    @And("^Top arrow button is \"([^\"]*)\"$")
     public void clickTopArrowButton(String arrow) throws Throwable {
         super.clickTopArrow(arrow.toLowerCase());
     }
 
-    @When("^Cockpit item is ([^\"]*)$")
+    @When("^Cockpit item is \"([^\"]*)\"$")
     public void checkCockpitItem(String item) throws Throwable {
         clickCockpitItem(item);
     }
@@ -44,7 +44,7 @@ public class TopActions extends NavigationElements {
             success, is(true));
     }
 
-    @And("Search input is ([^\"]*)$")
+    @And("Search input is \"([^\"]*)\"$")
     public void input(String inputName) throws Throwable {
         String name = parameterProvider.getValueOrParameterAsString(inputName);
         Map<String, String> customerName = new HashMap<>();

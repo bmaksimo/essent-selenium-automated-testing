@@ -6,16 +6,16 @@ import com.essent.testing.dwp.pageobject.impl.quote.QuoteDetailsPage;
 import com.essent.testing.dwp.pageobject.impl.service_contracting.ContractenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
-import static org.hamcrest.core.Is.is;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.springframework.test.context.ContextConfiguration;
-
-import static org.testng.AssertJUnit.assertEquals;
 import stepdefinitions.dwp.tables.SalesChannel;
+
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.testng.AssertJUnit.assertEquals;
 
 
 
@@ -103,7 +103,7 @@ public class Contract extends DwpScenario {
         cp.selectGender();
     }
 
-    @And("^E-mailadres is ([^\"]*)$")
+    @And("^E-mailadres is \"([^\"]*)\"$")
     public void emailContract(String emailContract) throws Throwable {
         ContractPage cp = new ContractPage(webDriver);
         cp.getEmail(emailContract);
@@ -128,33 +128,33 @@ public class Contract extends DwpScenario {
     }
 
 
-    @And("^Customer Details are populated with: Address is ([^\"]*) and HouseNumber is \"([^\"]*)\" and PostalCode is \"([^\"]*)\" and City is \"([^\"]*)\"$")
+    @And("^Customer Details are populated with: Address is \"([^\"]*)\" and HouseNumber is \"([^\"]*)\" and PostalCode is \"([^\"]*)\" and City is \"([^\"]*)\"$")
     public void populateAddress(String Address, String houseNumber, String postalCode, String City) throws Throwable {
         ContractPage cp = new ContractPage(webDriver);
         cp.setAddress(Address, houseNumber, postalCode, City);
     }
 
-    @And("^Telefoon is ([^\"]*)$")
+    @And("^Telefoon is \"([^\"]*)\"$")
     public void populateTelephone(String telephone) {
         ContractPage cp = new ContractPage(webDriver);
         cp.setTelephone(telephone);
 
     }
 
-    @And("^First Name is ([^\"]*) and Last Name is \"([^\"]*)\"$")
+    @And("^First Name is \"([^\"]*)\" and Last Name is \"([^\"]*)\"$")
     public void populateName(String fname, String lname) throws Throwable{
         ContractPage cp = new ContractPage(webDriver);
         cp.setName(fname, lname);
     }
 
-    @And("^BEDRIJFSNAAM is ([^\"]*)$")
+    @And("^BEDRIJFSNAAM is \"([^\"]*)\"$")
     public void companyName(String cname) {
         ContractPage cp = new ContractPage(webDriver);
         cp.setCompanyName(cname);
     }
 
 
-    @And("^Ean-Code is ([^\"]*)$")
+    @And("^Ean-Code is \"([^\"]*)\"$")
     public void eanCode(String eancode) {
         webDriver.waitForRequestsToFinish();
         ContractPage cp = new ContractPage(webDriver);
@@ -166,6 +166,12 @@ public class Contract extends DwpScenario {
     public void newQuoteSaved() throws Throwable {
         ContractPage quoteInitial = new ContractPage(webDriver);
         quoteInitial.saveInitialQuote();
+    }
+
+    @And("^Save End Date from active contract$")
+    public void saveEndDateFromActiveContract() throws Throwable {
+        ContractPage cp = new ContractPage(webDriver);
+        parameterProvider.put("EndDate-active-contract",cp.getActiveContractEndDate());
     }
 
 

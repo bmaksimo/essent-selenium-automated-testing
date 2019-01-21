@@ -18,7 +18,7 @@ public class ConfirmationSteps extends DwpScenario {
         registerActiveScenario(scenario);
     }
 
-    @And("^Modal dialog is ([^\"]*)$")
+    @And("^Modal dialog is \"([^\"]*)\"$")
     public void verifyDialogue(String title) {
         ConfirmSignatureDialog dialog = new ConfirmSignatureDialogImpl(webDriver, title);
         boolean success = dialog.isShown();

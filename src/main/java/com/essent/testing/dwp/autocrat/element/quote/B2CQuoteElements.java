@@ -13,13 +13,13 @@ public enum B2CQuoteElements {
     MOBILE_NR("SELECTOR", "#leads-contact-details-contact-details-phone-type-mobile-phone-contact-details-type-phone-contact-details-value-field"),
     WORK_PHONE_NR("SELECTOR", "#leads-contact-details-contact-details-phone-type-work-phone-contact-details-type-phone-contact-details-value-field"),
     DELIVERY_ADDR_STREET_SUGGESTION("XPATH", "//ul[@class='suggestions above-field']"),
-    DELIVERY_ADDR_STREET("XPATH", "//div[@id='accounts-aos-quotes-aos-products-quotes-addresses-aos-products-quotes-field-container']//input[@id='address-street-field']"),
-    DELIVERY_ADDR_HOUSE_NR("XPATH", "//div[@id='accounts-aos-quotes-aos-products-quotes-addresses-aos-products-quotes-field-container']//input[@id='address-number-field']"),
-    DELIVERY_ADDR_HOUSE_ADD("XPATH", "//div[@id='accounts-aos-quotes-aos-products-quotes-addresses-aos-products-quotes-field-container']//input[@id='address-addition-field']"),
-    DELIVERY_ADDR_BUS("XPATH", "//div[@id='accounts-aos-quotes-aos-products-quotes-addresses-aos-products-quotes-field-container']//input[@id='address-city-field']"),
-    DELIVERY_ADDR_ZIPCODE("XPATH", "//div[@id='accounts-aos-quotes-aos-products-quotes-addresses-aos-products-quotes-field-container']//input[@id='address-postalcode-field']"),
-    DELIVERY_ADDR_CITY("XPATH", "//div[@id='accounts-aos-quotes-aos-products-quotes-addresses-aos-products-quotes-field-container']//input[@id='address-city-field']"),
-    DELIVERY_ADDR_COUNTRY("XPATH", "//div[@id='accounts-aos-quotes-aos-products-quotes-addresses-aos-products-quotes-field-container']//select[@id='address_country']"),
+    DELIVERY_ADDR_STREET("XPATH", "(//input[@id='address-street-field'])[1]"),
+    DELIVERY_ADDR_HOUSE_NR("XPATH", "(//input[@id='address-number-field'])[1]"),
+    DELIVERY_ADDR_HOUSE_ADD("XPATH", "(//input[@id='address-addition-field'])[1]"),
+    DELIVERY_ADDR_BUS("XPATH", "(//input[@id='address-city-field'])[1]"),
+    DELIVERY_ADDR_ZIPCODE("XPATH", "(//input[@id='address-postalcode-field'])[1]"),
+    DELIVERY_ADDR_CITY("XPATH", "(//input[@id='address-city-field'])[1]"),
+    DELIVERY_ADDR_COUNTRY("XPATH", "(//select[@id='address_country'])[1]"),
     ELECTRICITY_EAN_CODE("SELECTOR", "#ean-c-accounts-aos-quotes-aos-products-quotes-c-0-f-94-c-2-f-72-e-0-51-b-9-ce-93-58930799-ecf-1-field");
     private String searchBy;
     private String query;

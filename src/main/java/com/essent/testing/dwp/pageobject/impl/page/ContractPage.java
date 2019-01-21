@@ -124,5 +124,14 @@ public class ContractPage extends Component {
 
     }
 
+    public void checkInvoiceOpenBalance(String key) {
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-checkbox-cell[@list-key='"+key+"']")));
+    }
+
+    public String getActiveContractEndDate(){
+        seleniumDriver.waitForRequestsToFinish();
+        return seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"rows\"]/tr[1]/td[5]/list-simple-two-liner-cell/p/span[2]")).getText();
+    }
+
 
 }

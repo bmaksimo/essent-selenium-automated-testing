@@ -20,7 +20,7 @@ public class PlusActions extends NavigationElements {
         clickPlusAction(path);
     }
 
-    @And("^List plus action is ([^\"]*)$")
+    @And("^List plus action is \"([^\"]*)\"$")
     public void checkPlusAction(String item) throws Exception {
         clickListPlusAction(item);
     }

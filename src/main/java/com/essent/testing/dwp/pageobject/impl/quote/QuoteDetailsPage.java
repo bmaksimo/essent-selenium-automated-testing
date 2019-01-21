@@ -31,6 +31,7 @@ public class QuoteDetailsPage extends QuoteCreationGuidedStep {
         toggleReguCheckbox.
             element(SALES_CHANNEL_FIELD.element()).
             step(createStep(Action.SELECT).element(SALES_CHANNEL_FIELD.name()).value(salesChannel.getLabel()), INPUT.getSleepInMillis());
+        seleniumDriver.takeScreenshot("quoteDetails");
         return execute(toggleReguCheckbox);
     }
 
