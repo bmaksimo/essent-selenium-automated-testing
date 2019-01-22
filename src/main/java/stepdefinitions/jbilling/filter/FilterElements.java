@@ -1,7 +1,7 @@
 package stepdefinitions.jbilling.filter;
 
-import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.jbilling.pageobject.impl.filter.FilterPage;
+import com.essent.testing.jbilling.scenario.JBillingScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -10,7 +10,7 @@ import cucumber.api.java.en.When;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class FilterElements extends DwpScenario {
+public class FilterElements extends JBillingScenario {
 
 	@Before("@JBILLING, @B2B, @REGRESSION")
 	public void setupTest(Scenario scenario) throws Throwable {
@@ -23,7 +23,7 @@ public class FilterElements extends DwpScenario {
 			value = parameterProvider.getValueOrParameterAsString(value);
 		}
 
-		FilterPage filterPage = new FilterPage(webDriver);
+		FilterPage filterPage = new FilterPage(getJBillingWebDriver());
         boolean success = filterPage.filterBy(label, value);
 
         assertThat("Filter by: " + label + " with input value: " + value + " is not confirmed", success, is(true));
@@ -31,7 +31,7 @@ public class FilterElements extends DwpScenario {
 
 	@When("JBilling Click on \"([^\"]*)\" filter button$")
 	public void clickFilterButton(String label) throws Throwable {
-		FilterPage filterPage = new FilterPage(webDriver);
+		FilterPage filterPage = new FilterPage(getJBillingWebDriver());
         boolean success = filterPage.clickFilterButton(label);
 
         assertThat("Button: " + label + " is not clicked", success, is(true));

@@ -27,7 +27,7 @@ public abstract class NavigationElements extends DwpScenario {
     private class ClickTopAction implements Predicate<String> {
         @Override
         public boolean test(String name) {
-            TopActionsPage topActions = new TopActionsPageImpl(webDriver);
+            TopActionsPage topActions = new TopActionsPageImpl(getDwpWebDriver());
             return topActions.executeTopAction(name);
         }
     }
@@ -135,7 +135,7 @@ public abstract class NavigationElements extends DwpScenario {
     }
 
     protected void clickPlusAction(String path) {
-        DwpPlusMenu plusMenu = new DwpPlusMenu(webDriver);
+        DwpPlusMenu plusMenu = new DwpPlusMenu(getDwpWebDriver());
         boolean success = plusMenu.executeAction(path);
         assertThat(String.format("Plus Menu Path %s undefined.", path),
             success, is(true));

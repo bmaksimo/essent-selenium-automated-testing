@@ -26,7 +26,7 @@ public class LogQuestionsOfCustomers extends DwpScenario {
 
     @Then("^Case details are visible$")
     public void checkSuccess() throws Throwable {
-        DwpAccountOverviewPage daop = new DwpAccountOverviewPage(webDriver);
+        DwpAccountOverviewPage daop = new DwpAccountOverviewPage(getDwpWebDriver());
         String complaintText = "TextForComplaint";
         String solutionText = "TextForSolution";
         assertTrue(daop.getComplaintText().equalsIgnoreCase(complaintText));
@@ -36,7 +36,7 @@ public class LogQuestionsOfCustomers extends DwpScenario {
 
     @And("^New case for account is created$")
     public void createCaseForAccount() throws Throwable {
-        LogCasePageImpl logCasePage = new LogCasePageImpl(webDriver);
+        LogCasePageImpl logCasePage = new LogCasePageImpl(getDwpWebDriver());
         logCasePage.setSubjectSelection("Afrekeningsfactuur");
         logCasePage.setDescription("TextForComplaint");
         logCasePage.setSolution("TextForSolution");

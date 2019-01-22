@@ -31,27 +31,27 @@ public class JournalEntriesSteps extends OdooScenario {
 
     @And("^Create new Journal Entries is clicked$")
     public void createNewJournalEntriesIsClicked() throws Throwable {
-        JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
+        JournalEnteriesPage je = new JournalEnteriesPage(getOdooWebDriver());
         Sleeper.sleepTightInSeconds(3);
         je.clickOnCreateJournalEntery();
     }
 
     @And("^Journal is \"([^\"]*)\"$")
     public void journalIs(String journal) throws Throwable {
-        JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
+        JournalEnteriesPage je = new JournalEnteriesPage(getOdooWebDriver());
         Sleeper.sleepTightInSeconds(2);
         je.chooseDiverseDagboekKlanten(journal);
     }
 
     @And("^Date document is now$")
     public void dateDocumentIsNow() throws Throwable {
-        JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
+        JournalEnteriesPage je = new JournalEnteriesPage(getOdooWebDriver());
         je.dateDocumentIsToday();
     }
 
     @And("^New item is$")
     public void newItemIs(DataTable dbTable) throws Throwable {
-        JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
+        JournalEnteriesPage je = new JournalEnteriesPage(getOdooWebDriver());
         List<List<String>> db = dbTable.raw();
         je.clickOnAddAnItem();
         je.createNewItem(db,1,parameterProvider.getValueOrParameterAsString(db.get(1).get(1)));
@@ -61,7 +61,7 @@ public class JournalEntriesSteps extends OdooScenario {
 
     @And("^Save and Post journal entry")
     public void saveAndPost() throws Throwable {
-        JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
+        JournalEnteriesPage je = new JournalEnteriesPage(getOdooWebDriver());
         Sleeper.sleepTightInSeconds(5);
         je.saveJournal();
         Sleeper.sleepTightInSeconds(5);
@@ -70,26 +70,26 @@ public class JournalEntriesSteps extends OdooScenario {
 
     @And("^Mark first two journal items one with credit and one with debit \"([^\"]*)\"$")
     public void markFirstTwoJournalItemsOneWithCreditAndOneWithDebit(String money) throws Throwable {
-        JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
+        JournalEnteriesPage je = new JournalEnteriesPage(getOdooWebDriver());
         je.clickOnJournalItemsCheckBox(1);
         je.clickOnJournalItemsCheckBox(2);
     }
 
     @And("^More menu is \"([^\"]*)\"$")
     public void moreMenuIs(String item) throws Throwable {
-        JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
+        JournalEnteriesPage je = new JournalEnteriesPage(getOdooWebDriver());
         je.clickOnMoreMenuItem(item);
     }
 
     @And("^Confirm action$")
     public void confirm() throws Throwable {
-        JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
+        JournalEnteriesPage je = new JournalEnteriesPage(getOdooWebDriver());
         je.clickOnConfirm();
     }
 
     @Then("^Reconcile number is shown$")
     public void reconcileNumberIsShown() throws Throwable {
-        JournalEnteriesPage je = new JournalEnteriesPage(webDriver);
+        JournalEnteriesPage je = new JournalEnteriesPage(getOdooWebDriver());
         String reconcile1 = je.reconcileText(1);
         String reconcile2 = je.reconcileText(2);
         Assert.assertEquals(reconcile1,reconcile2);

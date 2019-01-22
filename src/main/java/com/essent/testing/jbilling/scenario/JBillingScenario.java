@@ -20,7 +20,7 @@ public abstract class JBillingScenario extends AbstractSeleniumScenario {
         webDriver.setUp();
     }
 
-    protected SeleniumDriverJBillingImpl getSeleniumJBillingDriver() {
+    protected SeleniumDriverJBillingImpl getJBillingWebDriver() {
         return (SeleniumDriverJBillingImpl) webDriver;
     }
 

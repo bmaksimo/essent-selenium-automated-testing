@@ -26,7 +26,7 @@ public class ContractenSteps extends DwpScenario {
 
     @And("^Search for ean code$")
     public void searchForEanCode() throws Throwable {
-        ContractenPage contractenPage = new ContractenPage(webDriver);
+        ContractenPage contractenPage = new ContractenPage(getDwpWebDriver());
         contractenPage.searchForEanCode(eanCode);
     }
 
@@ -34,19 +34,19 @@ public class ContractenSteps extends DwpScenario {
     public void inputInModuleIs(String label, String input) throws Throwable {
         webDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(3);
-        ContractenPage contractenPage = new ContractenPage(webDriver);
+        ContractenPage contractenPage = new ContractenPage(getDwpWebDriver());
         contractenPage.fieldDropDownLabel(label, input);
     }
 
     @And("^Check toggle \"([^\"]*)\"$")
     public void checkToggle(String label) throws Throwable {
-        ContractenPage contractenPage = new ContractenPage(webDriver);
+        ContractenPage contractenPage = new ContractenPage(getDwpWebDriver());
         contractenPage.turnOnTestingAndMarketMock(label);
     }
 
     @When("^Find \"([^\"]*)\" contract$")
     public void findContract(String input) throws Throwable {
-        ContractenPage contractenPage = new ContractenPage(webDriver);
+        ContractenPage contractenPage = new ContractenPage(getDwpWebDriver());
         eanCode = contractenPage.findActiveContract(input);
         logger().info("EAN CODE: " + eanCode);
         parameterProvider.put("contractEanCode", eanCode);
@@ -54,7 +54,7 @@ public class ContractenSteps extends DwpScenario {
 
     @Then("^Confirm task was \"([^\"]*)\"$")
     public void confirmTaskWas(String input) throws Throwable {
-        ContractenPage contractenPage = new ContractenPage(webDriver);
+        ContractenPage contractenPage = new ContractenPage(getDwpWebDriver());
         contractenPage.confirmTaskStatus(input);
     }
 
@@ -66,38 +66,38 @@ public class ContractenSteps extends DwpScenario {
 
     @And("^\"([^\"]*)\" input in omschrijving$")
     public void inputInOmschrijving(String text) throws Throwable {
-        ContractenPage contractenPage = new ContractenPage(webDriver);
+        ContractenPage contractenPage = new ContractenPage(getDwpWebDriver());
         contractenPage.inputText(text);
     }
 
     @And("^Offertes plus options is \"([^\"]*)\"$")
     public void sendEMailToCustomer(String test) throws Throwable {
-        ContractenPage contractenPage = new ContractenPage(webDriver);
+        ContractenPage contractenPage = new ContractenPage(getDwpWebDriver());
         contractenPage.sendEmailToCustomer(test);
     }
 
     @And("^List option is \"([^\"]*)\"$")
     public void openInvoiceOnly(String option) throws Throwable {
-        ContractenPage contractenPage = new ContractenPage(webDriver);
+        ContractenPage contractenPage = new ContractenPage(getDwpWebDriver());
         contractenPage.openListOption(option);
     }
 
     @Then("^Payment delayed$")
     public void paymentDelayed() throws Throwable {
-        ContractenPage contractenPage = new ContractenPage(webDriver);
+        ContractenPage contractenPage = new ContractenPage(getDwpWebDriver());
         contractenPage.checkPayDate();
     }
 
     @And("^Find \"([^\"]*)\" facture and \"([^\"]*)\"$")
     public void findFactureAnd(String type, String option) throws Throwable {
-        ContractenPage contractenPage = new ContractenPage(webDriver);
+        ContractenPage contractenPage = new ContractenPage(getDwpWebDriver());
         contractenPage.findIssuedAndPayDelay(type, option);
     }
 
     @Then("^Validate bank account was changed on \"([^\"]*)\"$")
     public void validateBankAccountWasChangedOn(String iban) throws Throwable {
         String inputIban = parameterProvider.getValueOrParameterAsString(iban);
-        ContractenPage contractenPage = new ContractenPage(webDriver);
+        ContractenPage contractenPage = new ContractenPage(getDwpWebDriver());
         contractenPage.findIban(inputIban);
     }
 
@@ -109,7 +109,7 @@ public class ContractenSteps extends DwpScenario {
 
     @Then("^Save changes$")
     public void saveChanges() throws Throwable {
-        ContractPage contractenPage = new ContractPage(webDriver);
+        ContractPage contractenPage = new ContractPage(getDwpWebDriver());
         contractenPage.saveButtton();
     }
 
@@ -132,14 +132,14 @@ public class ContractenSteps extends DwpScenario {
     @And("^Invoice with key \"([^\"]*)\" is checked$")
     public void CheckInvoiceOpenBalance(String text) {
         webDriver.waitForRequestsToFinish();
-        ContractPage contractenPage = new ContractPage(webDriver);
+        ContractPage contractenPage = new ContractPage(getDwpWebDriver());
         contractenPage.checkInvoiceOpenBalance(text);
     }
 
     @Then("^Customer Status is \"([^\"]*)\"$")
     public void customerStatus(String status) {
         webDriver.waitForRequestsToFinish();
-        CustomerAcceptance customerAcceptance = new CustomerAcceptance(webDriver);
+        CustomerAcceptance customerAcceptance = new CustomerAcceptance(getDwpWebDriver());
         customerAcceptance.customerStatus(status);
 
     }

@@ -33,20 +33,20 @@ public class EndOfContractSteps extends DwpScenario {
 
     @And("^Search field input is \"([^\"]*)\"$")
     public void searchFieldInputIs(String input) {
-       EndOfContractPage endOfContractPage = new EndOfContractPage(webDriver);
+       EndOfContractPage endOfContractPage = new EndOfContractPage(getDwpWebDriver());
        String inputValue = parameterProvider.getValueOrParameterAsString(input);
        endOfContractPage.searchInputField(inputValue);
     }
 
     @And("^Click Select Contractline$")
     public void clickSelectContractline() {
-        EndOfContractPage endOfContractPage = new EndOfContractPage(webDriver);
+        EndOfContractPage endOfContractPage = new EndOfContractPage(getDwpWebDriver());
         endOfContractPage.simpleExecuteJavaScript("TrSelectContractline");
     }
 
     @And("^EAN check box$")
     public void eanCheckBox() {
-        EndOfContractPage endOfContractPage = new EndOfContractPage(webDriver);
+        EndOfContractPage endOfContractPage = new EndOfContractPage(getDwpWebDriver());
         boolean success = endOfContractPage.checkEanCheckBox();
         assertThat(String.format("JavaScript file TrEanCheckBox is undefined."),
             success, is(true));

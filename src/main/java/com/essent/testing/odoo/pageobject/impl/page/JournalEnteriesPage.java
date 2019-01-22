@@ -1,8 +1,9 @@
 package com.essent.testing.odoo.pageobject.impl.page;
 
 import com.essent.automation.util.Sleeper;
-import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
+
+import com.essent.testing.odoo.pageobject.impl.Component;
+import com.essent.testing.selenium.webdriver.odoo.SeleniumDriverOdooImpl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -17,7 +18,7 @@ public class JournalEnteriesPage extends Component {
 
     private String date = simpleDateFormat.format(new Date());
 
-    public JournalEnteriesPage(SeleniumDriverDwpImpl seleniumDriver) {
+    public JournalEnteriesPage(SeleniumDriverOdooImpl seleniumDriver) {
         super(seleniumDriver);
     }
 

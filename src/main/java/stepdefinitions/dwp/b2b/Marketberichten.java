@@ -18,7 +18,7 @@ public class Marketberichten extends DwpScenario {
 
     @And("^Select \"([^\"]*)\" on Marktberichten page$")
     public void selectOnMarktberichtenPage(String element) throws Throwable {
-        MarktBerichtenPage mb = new MarktBerichtenPage(webDriver);
+        MarktBerichtenPage mb = new MarktBerichtenPage(getDwpWebDriver());
         EAN = mb.getEanFromTheFirstTransaction();
         mb.clickOnListActionsElemet(element);
         mb.clickOnSelectNewContractlineButton();
@@ -30,14 +30,14 @@ public class Marketberichten extends DwpScenario {
 
     @And("^Click on \"([^\"]*)\"$")
     public void clickOn(String newMarktbericht) throws Throwable {
-        MarktBerichtenPage mp = new MarktBerichtenPage(webDriver);
+        MarktBerichtenPage mp = new MarktBerichtenPage(getDwpWebDriver());
         mp.createNewMarktBericht(newMarktbericht);
     }
 
     @And("^Search by \"([^\"]*)\"$")
     public void searchBy(String str) throws Throwable {
         String ean = parameterProvider.getValueOrParameterAsString(str);
-        MarktBerichtenPage mb = new MarktBerichtenPage(webDriver);
+        MarktBerichtenPage mb = new MarktBerichtenPage(getDwpWebDriver());
         mb.enterContractNumber(ean);
         webDriver.waitForRequestsToFinish();
         mb.clickOnSearchButton();

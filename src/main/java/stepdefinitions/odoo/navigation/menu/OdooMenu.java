@@ -29,7 +29,7 @@ public class OdooMenu extends OdooScenario {
 
     @When("^Odoo top menu is \"([^\"]*)\"$")
     public void clickTopMenu(String menu) {
-        MenuNavigation menuNavigation = new MenuNavigation(webDriver);
+        MenuNavigation menuNavigation = new MenuNavigation(getOdooWebDriver());
         boolean success = menuNavigation.findAndClickMainMenuItem(menu);
         if(!success) {
             throw new CucumberException(menuNavigation.getReason());
@@ -38,7 +38,7 @@ public class OdooMenu extends OdooScenario {
 
     @When("^Odoo left menu is \"([^\"]*)\"$")
     public void executeLeftMenuAction(String menuPath) {
-        MenuNavigation odooMenuNavigation = new MenuNavigation(webDriver);
+        MenuNavigation odooMenuNavigation = new MenuNavigation(getOdooWebDriver());
         odooMenuNavigation.executeAction(menuPath);
     }
 

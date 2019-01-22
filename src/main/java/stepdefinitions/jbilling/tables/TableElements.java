@@ -1,7 +1,7 @@
 package stepdefinitions.jbilling.tables;
 
-import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.jbilling.pageobject.impl.table.TablePage;
+import com.essent.testing.jbilling.scenario.JBillingScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -10,7 +10,7 @@ import cucumber.api.java.en.When;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class TableElements extends DwpScenario {
+public class TableElements extends JBillingScenario {
 
 	@Before("@JBILLING, @B2B, @REGRESSION")
 	public void setupTest(Scenario scenario) throws Throwable {
@@ -23,7 +23,7 @@ public class TableElements extends DwpScenario {
             expectedResult = parameterProvider.getValueOrParameterAsString(expectedResult);
         }
 
-		TablePage tablePage = new TablePage(webDriver);
+		TablePage tablePage = new TablePage(getJBillingWebDriver());
 		boolean success = tablePage.clickFirstCellInTable(expectedResult);
 
 		assertThat("First cell in table is not clicked", success, is(true));
@@ -31,7 +31,7 @@ public class TableElements extends DwpScenario {
 
 	@When("JBilling Click on row \"([^\"]*)\" in Table$")
 	public void clickOnRowInTable(String rowNumber) throws Throwable {
-		TablePage tablePage = new TablePage(webDriver);
+		TablePage tablePage = new TablePage(getJBillingWebDriver());
 		boolean success = tablePage.clickOnRowInTable(rowNumber);
 
 		assertThat("Row: " + rowNumber + " in the table is not clicked", success, is(true));
@@ -39,7 +39,7 @@ public class TableElements extends DwpScenario {
 
 	@When("JBilling Click on text link \"([^\"]*)\"$")
 	public void clickTextLink(String label) throws Throwable {
-		TablePage tablePage = new TablePage(webDriver);
+		TablePage tablePage = new TablePage(getJBillingWebDriver());
 		boolean success = tablePage.clickTextLink(label);
 
 		assertThat("Text link: " + label + " is not clicked", success, is(true));
@@ -51,7 +51,7 @@ public class TableElements extends DwpScenario {
             expectedResult = parameterProvider.getValueOrParameterAsString(expectedResult);
         }
 
-		TablePage tablePage = new TablePage(webDriver);
+		TablePage tablePage = new TablePage(getJBillingWebDriver());
 		String actualResult = tablePage.checkFirstCellValueInFirstRow();
 
         assertThat("Invoice " + expectedResult + " is not shown in table. Invoice shown in jbilling is: " + actualResult, actualResult.equalsIgnoreCase(expectedResult), is(true));
@@ -64,14 +64,14 @@ public class TableElements extends DwpScenario {
 			expectedResult = parameterProvider.getValueOrParameterAsString(expectedResult);
 		}
 
-		TablePage tablePage = new TablePage(webDriver);
+		TablePage tablePage = new TablePage(getJBillingWebDriver());
 		String actualResult = tablePage.checkValueNextToLabel(label);
 		assertThat("Value " + expectedResult + " is not shown next to label " + label, actualResult.equalsIgnoreCase(expectedResult), is(true));
 	}
 
 	@When("Inner tables are not empty$")
 	public void checkInnerOrderTablesNotEmpty() throws Throwable {
-		TablePage tablePage = new TablePage(webDriver);
+		TablePage tablePage = new TablePage(getJBillingWebDriver());
 		boolean isNotEmpty = tablePage.checkInnerTablesNotEmpty();
 
 		assertThat("Rows in inner tables are empty", isNotEmpty, is(true));

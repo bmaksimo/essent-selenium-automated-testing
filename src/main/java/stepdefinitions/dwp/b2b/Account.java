@@ -22,14 +22,14 @@ public class Account extends DwpScenario {
 
     @Then("^Change is immediately visible in Finance & Legal section that \"([^\"]*)\" is active$")
     public void changeIsImmediatelyVisibleInFinanceLegalSectionThatIsActive(String box) throws Throwable {
-        ToggleImpl tg= new ToggleImpl(webDriver);
+        ToggleImpl tg= new ToggleImpl(getDwpWebDriver());
         assertTrue(tg.checkIfCheckboxIsChecked(box));
     }
 
     @And("^Activate \"([^\"]*)\"$")
     public void activate(String box) throws Throwable {
-        DwpAccountOverviewPage aop = new DwpAccountOverviewPage(webDriver);
-        ToggleImpl tg= new ToggleImpl(webDriver);
+        DwpAccountOverviewPage aop = new DwpAccountOverviewPage(getDwpWebDriver());
+        ToggleImpl tg= new ToggleImpl(getDwpWebDriver());
         webDriver.waitForRequestsToFinish();
         tg.clickCheckbox(box);
         aop.clickOnSaveButtonForFinanceAndLegalSection();
