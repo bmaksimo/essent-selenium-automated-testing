@@ -34,6 +34,7 @@ Feature: NUAT-5019 Step 1. Creating a B2C Quote TC1 with move in, Dutch language
         When EAN code is generated
         And "EAN-code" input is "parameter:EAN-code-generated"
         And Electricity market mock test is Open
+        And Option "MM should respond?" is On
         And "Startdatum" date is "now"
         And Connection details are confirmed
         Then Form header is "Billing details"
