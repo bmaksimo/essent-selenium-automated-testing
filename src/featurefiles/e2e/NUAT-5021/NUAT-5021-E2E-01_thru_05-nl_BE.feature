@@ -1,4 +1,6 @@
 @DWP
+@ODOO
+@B2C
 Feature: NUAT-5021 Complete scenario from de-duplication of client with guarantee to inactive client
 
     @NUAT-5021-01-05
@@ -87,8 +89,8 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         When Option "Heeft de klant al getekend?" is On
         And "Datum ondertekening" date is "now"
         And "Plaats ondertekening" input is "Kontich"
-        And Getekend document is uploaded
-        And Quote is confirmed
+        And Quote for account is signed
+        When Quote for account is confirmed
         Then View list header is "Offertes"
         Then "1st" list element has cell value "Sales Getekend - Waarborg" at column "Type & status"
 
@@ -134,6 +136,6 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And "Naam" input is "parameter:suitecrm-customer-name"
         Then View list header is "Klanten"
 
-        And Click on link in View List at "1st" row and "Klantnummer & Naam" column
+        And Click on "parameter:Klantnummer & Naam"
         And Dashboard menu is "Billing"
         Then "Openstaand bedrag" in the first "Paid by OV" row of "Transacties" table is "0"
