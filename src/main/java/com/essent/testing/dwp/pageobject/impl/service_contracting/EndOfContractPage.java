@@ -1,7 +1,7 @@
 package com.essent.testing.dwp.pageobject.impl.service_contracting;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 
@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.is;
 
 public class EndOfContractPage extends Component {
 
-    public EndOfContractPage(SeleniumDriver seleniumDriver) {
+    public EndOfContractPage(SeleniumDriverDwpImpl seleniumDriver) {
         super(seleniumDriver);
     }
 

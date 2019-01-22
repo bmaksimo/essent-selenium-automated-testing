@@ -1,7 +1,7 @@
 package com.essent.testing.jbilling.pageobject.impl.filter;
 
 import com.essent.testing.jbilling.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -9,7 +9,7 @@ public class FilterPage extends Component {
 
 	private final static String XPATH_CONTAINS_TEXT_TEMPLATE          = "//div[span[contains(translate(., 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'),'${text}')]]//input";
 
-    public FilterPage(SeleniumDriver seleniumDriver){
+    public FilterPage(SeleniumDriverDwpImpl seleniumDriver){
         super(seleniumDriver);
     }
 

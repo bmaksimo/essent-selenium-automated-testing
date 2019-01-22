@@ -3,12 +3,11 @@ package com.essent.testing.dwp.pageobject.impl.modal.market_messages;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.modal.confirm.ConfirmDialog;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.apache.commons.collections.CollectionUtils;
 import org.awaitility.Duration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
@@ -18,7 +17,7 @@ public class SearchContractLinesDialog extends Component implements ConfirmDialo
 
     private final static By SELECTOR = By.cssSelector(".view__modal .modal__header");
 
-    public SearchContractLinesDialog(SeleniumDriver seleniumDriver) {
+    public SearchContractLinesDialog(SeleniumDriverDwpImpl seleniumDriver) {
         super(seleniumDriver);
     }
 

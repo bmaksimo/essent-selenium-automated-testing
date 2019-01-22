@@ -2,7 +2,7 @@ package com.essent.testing.dwp.pageobject.impl.quote;
 
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import stepdefinitions.dwp.tables.SignatureData;
 
 import static com.essent.testing.dwp.autocrat.element.quote.SignatureElements.SIGN_LOCATION;
@@ -14,7 +14,7 @@ public class QuoteOverviewPage extends QuoteCreationGuidedStep {
 
     private SignatureData signatureData;
 
-    public QuoteOverviewPage(SeleniumDriver seleniumDriver) {
+    public QuoteOverviewPage(SeleniumDriverDwpImpl seleniumDriver) {
         super(seleniumDriver);
     }
 

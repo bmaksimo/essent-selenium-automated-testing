@@ -1,7 +1,7 @@
 package com.essent.testing.jbilling.pageobject.impl.table;
 
 import com.essent.testing.jbilling.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.apache.commons.collections.CollectionUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class TablePage extends Component {
 
-    public TablePage(SeleniumDriver seleniumDriver){
+    public TablePage(SeleniumDriverDwpImpl seleniumDriver){
         super(seleniumDriver);
     }
 

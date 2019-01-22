@@ -3,7 +3,7 @@ package com.essent.testing.dwp.pageobject.impl.service_contracting;
 import com.essent.testing.dwp.pageobject.Form;
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.openqa.selenium.By;
 import stepdefinitions.dwp.tables.LeadInfo;
 
@@ -13,7 +13,7 @@ public class LeadPage extends BaseObject implements Form {
 
     private LeadInfo leadInfo;
     private static final String box = "Bel me niet";
-    public LeadPage(SeleniumDriver seleniumDriver) {
+    public LeadPage(SeleniumDriverDwpImpl seleniumDriver) {
         super(seleniumDriver);
     }
 

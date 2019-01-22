@@ -3,7 +3,7 @@ package com.essent.testing.dwp.pageobject.impl.quote;
 import com.essent.testing.dwp.pageobject.Form;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.quote.GuidedStep;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.lang3.BooleanUtils;
 import org.awaitility.Duration;
@@ -23,7 +23,7 @@ import static org.awaitility.Duration.TWO_SECONDS;
 public abstract class QuoteCreationGuidedStep extends Component implements GuidedStep, Form {
 
 
-    public QuoteCreationGuidedStep(SeleniumDriver seleniumDriver) {
+    public QuoteCreationGuidedStep(SeleniumDriverDwpImpl seleniumDriver) {
         super(seleniumDriver.findElementOrNull(By.xpath(VIEW.getQuery())),
             seleniumDriver);
     }

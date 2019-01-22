@@ -1,14 +1,14 @@
 package com.essent.testing.dwp.pageobject.impl.page;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class MarktBerichtenPage extends Component {
 
-    public MarktBerichtenPage(SeleniumDriver seleniumDriver) {
+    public MarktBerichtenPage(SeleniumDriverDwpImpl seleniumDriver) {
         super(seleniumDriver);
     }
     public WebElement listActionsElemet(String element) throws InterruptedException {

@@ -1,14 +1,14 @@
 package com.essent.testing.dwp.pageobject.impl.filter;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
 public class DwpFilter extends Component {
 
-    public DwpFilter(SeleniumDriver seleniumDriver) {
+    public DwpFilter(SeleniumDriverDwpImpl seleniumDriver) {
         super(seleniumDriver);
     }
 

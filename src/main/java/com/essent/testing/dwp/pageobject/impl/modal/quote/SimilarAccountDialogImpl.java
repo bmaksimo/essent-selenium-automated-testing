@@ -3,12 +3,11 @@ package com.essent.testing.dwp.pageobject.impl.modal.quote;
 import com.essent.automation.core.WebDriverWait;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.modal.quote.SimilarAccountDialog;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import cucumber.runtime.CucumberException;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class SimilarAccountDialogImpl extends Component implements SimilarAccountDialog {
@@ -18,12 +17,12 @@ public class SimilarAccountDialogImpl extends Component implements SimilarAccoun
 
     private String title;
 
-    public SimilarAccountDialogImpl(SeleniumDriver seleniumDriver) {
+    public SimilarAccountDialogImpl(SeleniumDriverDwpImpl seleniumDriver) {
         super(seleniumDriver);
         waitForRequestsToFinish();
     }
 
-    public SimilarAccountDialogImpl(SeleniumDriver seleniumDriver, String title) {
+    public SimilarAccountDialogImpl(SeleniumDriverDwpImpl seleniumDriver, String title) {
         super(seleniumDriver.findElementOrNull(SELECOR), seleniumDriver);
         this.title = title;
         waitForRequestsToFinish();

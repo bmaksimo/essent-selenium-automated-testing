@@ -3,7 +3,7 @@ package com.essent.testing.dwp.pageobject.impl.service_contracting;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -11,15 +11,15 @@ import org.openqa.selenium.WebElement;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.UPLOAD_FILE;
 
 public class ChangeAccountStatusPage extends Component {
-    public ChangeAccountStatusPage(SeleniumDriver seleniumDriver) {
+    public ChangeAccountStatusPage(SeleniumDriverDwpImpl seleniumDriver) {
         super(seleniumDriver);
     }
 
-    public ChangeAccountStatusPage(By selector, SeleniumDriver seleniumDriver) {
+    public ChangeAccountStatusPage(By selector, SeleniumDriverDwpImpl seleniumDriver) {
         super(selector, seleniumDriver);
     }
 
-    public ChangeAccountStatusPage(WebElement element, SeleniumDriver seleniumDriver) {
+    public ChangeAccountStatusPage(WebElement element, SeleniumDriverDwpImpl seleniumDriver) {
         super(element, seleniumDriver);
     }
 

@@ -2,7 +2,7 @@ package com.essent.testing.dwp.pageobject.impl.quote;
 
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import stepdefinitions.dwp.tables.BillingInformation;
 
 import static com.essent.testing.dwp.autocrat.element.quote.BillingElements.*;
@@ -14,7 +14,7 @@ public class BillingDetailsPage extends QuoteCreationGuidedStep {
     public void setBillingInformation(BillingInformation billingInformation) {
         this.billingInformation = billingInformation;
     }
-    public BillingDetailsPage(SeleniumDriver seleniumDriver) {
+    public BillingDetailsPage(SeleniumDriverDwpImpl seleniumDriver) {
         super(seleniumDriver);
     }
     @Override

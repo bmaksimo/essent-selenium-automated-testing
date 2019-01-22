@@ -4,7 +4,8 @@ import com.essent.automation.core.WebDriverWait;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
-import com.essent.testing.selenium.scenario.SeleniumScenario;
+import com.essent.testing.selenium.scenario.AbstractSeleniumScenario;
+import com.essent.testing.selenium.webdriver.odoo.SeleniumDriverOdooImpl;
 import org.apache.commons.text.StrSubstitutor;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -13,17 +14,23 @@ import java.util.Map;
 
 import static org.junit.Assert.assertTrue;
 
-public abstract class OdooScenario extends SeleniumScenario {
+public abstract class OdooScenario extends AbstractSeleniumScenario {
+
 
     private  final static Logger logger = Logger.getLogger(OdooScenario.class);
 
-    private String name;
+    public void setUpWebDriver() throws Exception {
+        tidyUp();
+        webDriver = new SeleniumDriverOdooImpl();
+        webDriver.setUp();
+    }
 
-    public String getName() {
-        return name;
+    protected SeleniumDriverOdooImpl getOdooWebDriver() {
+        return (SeleniumDriverOdooImpl) webDriver;
     }
 
     protected void isOdooRunning() throws Exception {
+
         String dwpUrl = ConfigProvider.getProperty(ConfigKey.ODOO_BASE_URL);
         webDriver.setBaseUrl(dwpUrl);
         webDriver.goToHomePage();

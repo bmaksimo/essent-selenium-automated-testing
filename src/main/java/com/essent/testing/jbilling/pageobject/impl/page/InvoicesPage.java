@@ -1,7 +1,7 @@
 package com.essent.testing.jbilling.pageobject.impl.page;
 
 import com.essent.testing.jbilling.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.apache.commons.collections.CollectionUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class InvoicesPage extends Component {
 
-    public InvoicesPage(SeleniumDriver seleniumDriver){
+    public InvoicesPage(SeleniumDriverDwpImpl seleniumDriver){
         super(seleniumDriver);
     }
 

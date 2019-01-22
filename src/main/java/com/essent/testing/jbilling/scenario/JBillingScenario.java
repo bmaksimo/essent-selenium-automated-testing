@@ -3,19 +3,25 @@ package com.essent.testing.jbilling.scenario;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
-import com.essent.testing.selenium.scenario.SeleniumScenario;
+import com.essent.testing.selenium.scenario.AbstractSeleniumScenario;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
+import com.essent.testing.selenium.webdriver.jbilling.SeleniumDriverJBillingImpl;
 import org.apache.log4j.Logger;
 
 import static org.junit.Assert.assertTrue;
 
-public abstract class JBillingScenario extends SeleniumScenario {
+public abstract class JBillingScenario extends AbstractSeleniumScenario {
 
     private  final static Logger logger = Logger.getLogger(JBillingScenario.class);
 
-    private String name;
+    public void setUpWebDriver() throws Exception {
+        tidyUp();
+        webDriver = new SeleniumDriverJBillingImpl();
+        webDriver.setUp();
+    }
 
-    public String getName() {
-        return name;
+    protected SeleniumDriverJBillingImpl getSeleniumJBillingDriver() {
+        return (SeleniumDriverJBillingImpl) webDriver;
     }
 
     protected void isJBillingRunning() throws Exception {

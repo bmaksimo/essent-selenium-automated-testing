@@ -3,7 +3,7 @@ package com.essent.testing.dwp.pageobject.impl.quote;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -23,7 +23,7 @@ public class PersonalDetailsAddressPage extends QuoteCreationGuidedStep {
         address = customerAddress;
     }
 
-    public PersonalDetailsAddressPage(SeleniumDriver seleniumDriver) {
+    public PersonalDetailsAddressPage(SeleniumDriverDwpImpl seleniumDriver) {
         super(seleniumDriver);
     }
 

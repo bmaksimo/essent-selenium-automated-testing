@@ -3,7 +3,7 @@ package com.essent.testing.dwp.pageobject.impl.quote_for_account;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.testing.dwp.pageobject.impl.quote.QuoteCreationGuidedStep;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import stepdefinitions.dwp.tables.SignatureData;
 
 import static com.essent.testing.dwp.autocrat.element.quote_for_account.QuoteForAccountSignatureElements.SIGN_UPLOAD_DOC;
@@ -13,7 +13,7 @@ public class QuoteForAccountOverviewPage extends QuoteCreationGuidedStep {
 
     private SignatureData signatureData;
 
-    public QuoteForAccountOverviewPage(SeleniumDriver seleniumDriver) {
+    public QuoteForAccountOverviewPage(SeleniumDriverDwpImpl seleniumDriver) {
         super(seleniumDriver);
     }
 

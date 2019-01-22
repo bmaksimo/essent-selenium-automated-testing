@@ -1,6 +1,7 @@
 package com.essent.testing.jbilling.pageobject.impl;
 
-import com.essent.testing.selenium.SeleniumDriver;
+
+import com.essent.testing.selenium.webdriver.jbilling.SeleniumDriverJBillingImpl;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.text.StrSubstitutor;
 import org.apache.log4j.Logger;
@@ -16,7 +17,7 @@ public abstract class Component {
     protected WebElement element;
 
 
-    protected SeleniumDriver seleniumDriver;
+    protected SeleniumDriverJBillingImpl seleniumDriver;
 
     private final Logger logger = Logger.getLogger(Component.class);
 
@@ -24,11 +25,11 @@ public abstract class Component {
         return logger;
     }
 
-    public Component(SeleniumDriver seleniumDriver) {
+    public Component(SeleniumDriverJBillingImpl seleniumDriver) {
         this.seleniumDriver = seleniumDriver;
     }
 
-    public Component(By selector, SeleniumDriver seleniumDriver) {
+    public Component(By selector, SeleniumDriverJBillingImpl seleniumDriver) {
         logger().info("STEP:");
         logger().info(" - ACTION: LOAD_PAGE_OBJECT");
         element = seleniumDriver.findElementOrNull(selector);
@@ -41,7 +42,7 @@ public abstract class Component {
         this.seleniumDriver = seleniumDriver;
     }
 
-    public Component(WebElement element, SeleniumDriver seleniumDriver) {
+    public Component(WebElement element, SeleniumDriverJBillingImpl seleniumDriver) {
         logger.info("STEP:");
         logger.info(" - ACTION: LOAD_PAGE_OBJECT");
 
@@ -61,7 +62,7 @@ public abstract class Component {
     }
 
     protected void waitForRequestsToFinish() {
-        seleniumDriver.awaitJqueryNotActive(500);
+        seleniumDriver.waitForRequestsToFinish();
     }
     
     protected String createQuery(String template, String key, String value) {

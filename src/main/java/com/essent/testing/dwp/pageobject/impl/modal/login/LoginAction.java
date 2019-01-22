@@ -2,16 +2,16 @@ package com.essent.testing.dwp.pageobject.impl.modal.login;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.Window;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.openqa.selenium.By;
 
 public class LoginAction {
     private final static By IWELCOME_SELECTOR = By.id("login-base");
     private final static By DWP_SELECTOR = By.cssSelector(".modal__container.login");
 
-    private SeleniumDriver seleniumDriver;
+    private SeleniumDriverDwpImpl seleniumDriver;
 
-    public LoginAction(SeleniumDriver seleniumDriver) {
+    public LoginAction(SeleniumDriverDwpImpl seleniumDriver) {
         this.seleniumDriver = seleniumDriver;
     }
 

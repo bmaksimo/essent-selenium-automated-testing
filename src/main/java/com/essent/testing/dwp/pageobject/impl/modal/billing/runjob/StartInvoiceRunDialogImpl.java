@@ -2,7 +2,7 @@ package com.essent.testing.dwp.pageobject.impl.modal.billing.runjob;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.modal.billing.runjob.RunJobDialog;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.openqa.selenium.By;
 
 public class StartInvoiceRunDialogImpl extends Component implements RunJobDialog {
@@ -19,12 +19,12 @@ public class StartInvoiceRunDialogImpl extends Component implements RunJobDialog
 
 
 
-    public StartInvoiceRunDialogImpl(SeleniumDriver seleniumDriver) {
+    public StartInvoiceRunDialogImpl(SeleniumDriverDwpImpl seleniumDriver) {
         super(seleniumDriver);
         waitForRequestsToFinish();
     }
 
-    public StartInvoiceRunDialogImpl(SeleniumDriver seleniumDriver, String title) {
+    public StartInvoiceRunDialogImpl(SeleniumDriverDwpImpl seleniumDriver, String title) {
         super(seleniumDriver.findElementOrNull(SELECTOR), seleniumDriver);
         this.title = title;
         waitForRequestsToFinish();

@@ -2,13 +2,13 @@ package com.essent.testing.dwp.pageobject.impl.page;
 
 
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class OffertePage extends Component {
 
-    public OffertePage(SeleniumDriver seleniumDriver) {
+    public OffertePage(SeleniumDriverDwpImpl seleniumDriver) {
 
         super(seleniumDriver);
     }

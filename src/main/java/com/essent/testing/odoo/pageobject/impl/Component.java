@@ -4,8 +4,8 @@ import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
 import com.essent.automation.core.WebDriverWait;
-import com.essent.testing.selenium.SeleniumDriver;
 import com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter;
+import com.essent.testing.selenium.webdriver.odoo.SeleniumDriverOdooImpl;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.text.StrSubstitutor;
 import org.apache.log4j.Logger;
@@ -22,7 +22,7 @@ public abstract class Component {
     protected WebElement element;
 
 
-    protected SeleniumDriver seleniumDriver;
+    protected SeleniumDriverOdooImpl seleniumDriver;
 
     private final Logger logger = Logger.getLogger(Component.class);
 
@@ -30,11 +30,11 @@ public abstract class Component {
         return logger;
     }
 
-    public Component(SeleniumDriver seleniumDriver) {
+    public Component(SeleniumDriverOdooImpl seleniumDriver) {
         this.seleniumDriver = seleniumDriver;
     }
 
-    public Component(By selector, SeleniumDriver seleniumDriver) {
+    public Component(By selector, SeleniumDriverOdooImpl seleniumDriver) {
         logger().info("STEP:");
         logger().info(" - ACTION: LOAD_PAGE_OBJECT");
         element = seleniumDriver.findElementOrNull(selector);
@@ -47,7 +47,7 @@ public abstract class Component {
         this.seleniumDriver = seleniumDriver;
     }
 
-    public Component(WebElement element, SeleniumDriver seleniumDriver) {
+    public Component(WebElement element, SeleniumDriverOdooImpl seleniumDriver) {
         logger.info("STEP:");
         logger.info(" - ACTION: LOAD_PAGE_OBJECT");
 

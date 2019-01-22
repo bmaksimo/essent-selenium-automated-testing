@@ -1,7 +1,8 @@
 package com.essent.testing.odoo.navigation.menu;
 
 import com.essent.testing.odoo.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
+import com.essent.testing.selenium.webdriver.odoo.SeleniumDriverOdooImpl;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.openqa.selenium.*;
@@ -27,7 +28,7 @@ public class MenuNavigation extends Component {
     private String status = "UNDEFINED";
     private String reason = "Not executed";
 
-    public MenuNavigation(SeleniumDriver seleniumDriver) {
+    public MenuNavigation(SeleniumDriverOdooImpl seleniumDriver) {
         super(seleniumDriver);
     }
     public String getStatus() {

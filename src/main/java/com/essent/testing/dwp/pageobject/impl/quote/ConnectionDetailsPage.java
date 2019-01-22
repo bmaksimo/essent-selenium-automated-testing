@@ -2,8 +2,7 @@ package com.essent.testing.dwp.pageobject.impl.quote;
 
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
-import com.essent.testing.selenium.SeleniumDriver;
-import org.apache.commons.lang3.BooleanUtils;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.tables.ConnectionDetails;
@@ -23,7 +22,7 @@ public class ConnectionDetailsPage extends QuoteCreationGuidedStep {
     private ConnectionDetails electroConnectionDetails;
     private ConnectionDetails gasConnectionDetails;
 
-    public ConnectionDetailsPage(SeleniumDriver seleniumDriver) {
+    public ConnectionDetailsPage(SeleniumDriverDwpImpl seleniumDriver) {
         super(seleniumDriver);
     }
 

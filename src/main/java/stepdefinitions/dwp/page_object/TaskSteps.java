@@ -25,7 +25,7 @@ public class TaskSteps extends DwpScenario {
 
     @When("^Plus action and \"([^\"]*)\" of first customer from list$")
     public void plusActionAndOfFirstCustomerFromList(String action) throws Throwable {
-        BaseObject baseObject = new BaseObject(webDriver);
+        BaseObject baseObject = new BaseObject(getDwpWebDriver());
         Thread.sleep(30000);
         baseObject.clickOnPlus();
         webDriver.waitForRequestsToFinish();
@@ -38,7 +38,7 @@ public class TaskSteps extends DwpScenario {
 
     @When("^Save task ID of first customer in list$")
     public void saveTaskIDOfFirstCustomerInList() throws Throwable {
-        BaseObject baseObject = new BaseObject(webDriver);
+        BaseObject baseObject = new BaseObject(getDwpWebDriver());
         taskId = baseObject.getTaskId();
     }
 
@@ -59,13 +59,13 @@ public class TaskSteps extends DwpScenario {
 
     @And("^Search for task id$")
     public void searchForTaskId() throws Throwable {
-        ContractenPage contractenPage = new ContractenPage(webDriver);
+        ContractenPage contractenPage = new ContractenPage(getDwpWebDriver());
         contractenPage.searchForTaskId(taskId);
     }
 
     @Then("^\"([^\"]*)\" was rejection reason$")
     public void wasRejectionReason(String input) throws Throwable {
-        ContractenPage contractenPage = new ContractenPage(webDriver);
+        ContractenPage contractenPage = new ContractenPage(getDwpWebDriver());
         contractenPage.findRejectionReason(input);
     }
 

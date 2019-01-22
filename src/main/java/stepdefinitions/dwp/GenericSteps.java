@@ -7,6 +7,7 @@ import com.essent.testing.dwp.pageobject.elements.Button;
 import com.essent.testing.dwp.pageobject.impl.elements.ButtonImpl;
 import com.essent.testing.dwp.pageobject.impl.modal.login.LoginAction;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -22,27 +23,32 @@ import static org.junit.Assert.assertNotNull;
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 public class GenericSteps extends DwpScenario {
 
+
     @Before("@DWP, @CORE, @E2E, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
 
-    @Given("^I logged in to DWP as \"([^\"]*)\"$")
-    public void loginAs(String username) throws Throwable {
+    private void login(String username) throws Throwable {
         isDwpRunning();
         UserRoles dwpUser = UserRoles.get(username);
-        Window application = new LoginAction(webDriver).doLogin(dwpUser.getUsername(), dwpUser.getPassword());
+        Window application = new LoginAction(getDwpWebDriver()).doLogin(dwpUser.getUsername(), dwpUser.getPassword());
         assertNotNull("DWP application did not appear after a login", application);
         injectJavaScriptTestRunner();
         discardPreviousFlow();
     }
 
+    @Given("^I logged in to DWP as \"([^\"]*)\"$")
+    public void loginAs(String username) throws Throwable {
+        setUpWebDriver();
+        login(username);
+    }
+
     @Given("^I renew login to DWP as \"([^\"]*)\"$")
     public void renewLoginAs(String username) throws Throwable {
         setUpWebDriver();
-        loginAs(username);
+        login(username);
     }
-
 
     private void discardPreviousFlow() throws Throwable {
         WebElement cancelWebElement = webDriver.findElementOrNull(By.id("cancel-button"), Duration.ofSeconds(1), Duration.ofMillis(50));

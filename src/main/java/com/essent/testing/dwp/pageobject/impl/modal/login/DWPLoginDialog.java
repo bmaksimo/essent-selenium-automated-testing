@@ -3,7 +3,7 @@ package com.essent.testing.dwp.pageobject.impl.modal.login;
 import com.essent.testing.dwp.pageobject.Window;
 import com.essent.testing.dwp.pageobject.impl.main.MainWindow;
 import com.essent.testing.dwp.pageobject.modal.Dialog;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -13,7 +13,7 @@ public class DWPLoginDialog extends LoginComponent implements Dialog {
     private final static By SELECOR = By.cssSelector(".modal__container.login");
 
 
-    public DWPLoginDialog(SeleniumDriver seleniumDriver) {
+    public DWPLoginDialog(SeleniumDriverDwpImpl seleniumDriver) {
         super(seleniumDriver.findElementOrNull(SELECOR), seleniumDriver);
     }
 

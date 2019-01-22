@@ -1,12 +1,12 @@
 package com.essent.testing.jbilling.pageobject.impl.navigation;
 
 import com.essent.testing.jbilling.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.openqa.selenium.By;
 
 public class ConfigurationManuPage extends Component {
 
-    public ConfigurationManuPage(SeleniumDriver seleniumDriver){
+    public ConfigurationManuPage(SeleniumDriverDwpImpl seleniumDriver){
         super(seleniumDriver);
     }
 

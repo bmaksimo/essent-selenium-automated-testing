@@ -21,8 +21,13 @@ public class JBillingGenericSteps extends JBillingScenario {
     public void loginAs(String username) throws Throwable {
         isJBillingRunning();
         UserRoles jBillingUser = UserRoles.get(username);
-        Window application = new JBillingLogin(webDriver).login(jBillingUser.getUsername(), jBillingUser.getPassword());
+        Window application = new JBillingLogin(getSeleniumJBillingDriver()).login(jBillingUser.getUsername(), jBillingUser.getPassword());
         assertNotNull("DWP application did not appear after a login", application);
+    }
+
+    @Override
+    public void setUpWebDriver() throws Exception {
+
     }
 
     @After("@JBILLING, @B2B, @REGRESSION")

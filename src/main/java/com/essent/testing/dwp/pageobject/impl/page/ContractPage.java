@@ -1,7 +1,7 @@
 package com.essent.testing.dwp.pageobject.impl.page;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -11,7 +11,7 @@ import java.util.Date;
 
 public class ContractPage extends Component {
 
-    public ContractPage(SeleniumDriver seleniumDriver) {
+    public ContractPage(SeleniumDriverDwpImpl seleniumDriver) {
         super(seleniumDriver);
     }
 

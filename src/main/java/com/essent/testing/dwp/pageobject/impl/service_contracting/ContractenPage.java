@@ -2,7 +2,7 @@ package com.essent.testing.dwp.pageobject.impl.service_contracting;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -10,7 +10,7 @@ import org.openqa.selenium.Keys;
 public class ContractenPage extends Component {
     private static  String payDate;
 
-    public ContractenPage(SeleniumDriver seleniumDriver) {
+    public ContractenPage(SeleniumDriverDwpImpl seleniumDriver) {
         super(seleniumDriver);
     }
 
