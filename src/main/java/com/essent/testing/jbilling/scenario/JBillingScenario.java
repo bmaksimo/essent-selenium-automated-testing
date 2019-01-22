@@ -4,7 +4,6 @@ import com.essent.automation.util.Sleeper;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.selenium.scenario.AbstractSeleniumScenario;
-import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import com.essent.testing.selenium.webdriver.jbilling.SeleniumDriverJBillingImpl;
 import org.apache.log4j.Logger;
 

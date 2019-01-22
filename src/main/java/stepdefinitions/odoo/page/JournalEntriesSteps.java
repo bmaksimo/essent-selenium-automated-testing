@@ -3,13 +3,12 @@ package stepdefinitions.odoo.page;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.odoo.pageobject.impl.page.JournalEnteriesPage;
 import com.essent.testing.odoo.scenario.OdooScenario;
-import cucumber.api.Scenario;
 import cucumber.api.DataTable;
+import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
-
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;

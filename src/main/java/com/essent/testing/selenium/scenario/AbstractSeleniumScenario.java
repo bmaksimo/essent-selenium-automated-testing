@@ -4,13 +4,10 @@ package com.essent.testing.selenium.scenario;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.scenario.RegisteredScenario;
 import com.essent.testing.selenium.webdriver.SeleniumDriver;
-import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.junit.AfterClass;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-
-import java.util.Map;
 
 
 public abstract class AbstractSeleniumScenario extends RegisteredScenario {

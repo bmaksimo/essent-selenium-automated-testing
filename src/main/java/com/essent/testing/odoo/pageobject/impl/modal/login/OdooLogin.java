@@ -4,7 +4,6 @@ package com.essent.testing.odoo.pageobject.impl.modal.login;
 import com.essent.testing.odoo.pageobject.Window;
 import com.essent.testing.odoo.pageobject.impl.main.OdooMainWindow;
 import com.essent.testing.odoo.pageobject.modal.Dialog;
-import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import com.essent.testing.selenium.webdriver.odoo.SeleniumDriverOdooImpl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;

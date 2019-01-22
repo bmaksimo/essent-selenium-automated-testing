@@ -1,5 +1,6 @@
 package com.essent.testing.dwp.pageobject.impl.page;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
@@ -7,7 +8,6 @@ import org.openqa.selenium.By;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import com.essent.automation.util.Sleeper;
 
 public class BaseObject extends Component {
 

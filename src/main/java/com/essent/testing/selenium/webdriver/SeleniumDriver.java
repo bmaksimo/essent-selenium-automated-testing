@@ -1,13 +1,11 @@
 package com.essent.testing.selenium.webdriver;
 
-import com.billinghouse.test_automation.javascript.testrunner.JavascriptTestRunner;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import com.essent.testing.util.resource.ResourceUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.paulhammant.ngwebdriver.NgWebDriver;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.HttpClient;

@@ -7,7 +7,6 @@ import com.essent.testing.dwp.pageobject.elements.Button;
 import com.essent.testing.dwp.pageobject.impl.elements.ButtonImpl;
 import com.essent.testing.dwp.pageobject.impl.modal.login.LoginAction;
 import com.essent.testing.dwp.scenario.DwpScenario;
-import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;

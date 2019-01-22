@@ -1,7 +1,6 @@
 package com.essent.testing.odoo.navigation.menu;
 
 import com.essent.testing.odoo.pageobject.impl.Component;
-import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import com.essent.testing.selenium.webdriver.odoo.SeleniumDriverOdooImpl;
 import org.joda.time.DateTime;
 import org.joda.time.Period;

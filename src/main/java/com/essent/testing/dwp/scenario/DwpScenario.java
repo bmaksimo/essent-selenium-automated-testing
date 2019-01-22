@@ -13,10 +13,8 @@ import com.essent.testing.selenium.scenario.AbstractSeleniumScenario;
 import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import com.google.gson.Gson;
 import cucumber.runtime.CucumberException;
-import org.apache.commons.lang3.StringUtils;
 import org.iban4j.CountryCode;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpDate;
