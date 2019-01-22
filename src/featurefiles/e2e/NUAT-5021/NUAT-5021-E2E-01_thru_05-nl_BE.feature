@@ -136,6 +136,6 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And "Naam" input is "parameter:suitecrm-customer-name"
         Then View list header is "Klanten"
 
-        And Click on "parameter:Klantnummer & Naam"
+        And Click on link in View List at "1st" row and "Klantnummer & Naam" column
         And Dashboard menu is "Billing"
         Then "Openstaand bedrag" in the first "Paid by OV" row of "Transacties" table is "0"
