@@ -9,7 +9,7 @@
         Given  I logged in to Odoo as "t.geets"
 #        And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
 
-    Scenario: Manual reconcile
+    Scenario: Manual reconcile and unreconcile
         When Odoo top menu is "Accounting"
         And Odoo left menu is "Journal Entries"
         And Create new Journal Entries is clicked
