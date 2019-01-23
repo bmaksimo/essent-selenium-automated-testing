@@ -544,61 +544,62 @@ public class SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner 
 
 
 
-//
-//    public WebElement findElementWhenVisibleOdoo(By selector) {
-//        FluentWait<WebDriver> waiter = new FluentWait<>(driver)
-//            .withTimeout(Duration.ofSeconds(300))
-//            .pollingEvery(Duration.ofSeconds(5))
-//            .ignoring(ElementNotVisibleException.class)
-//            .ignoring(NoSuchElementException.class);
-//        WebElement element = waiter.until(ExpectedConditions.visibilityOfElementLocated(selector));
-//        return element;
-//    }
-//
-//    public WebElement findElementWhenClickableOdoo(By selector) {
-//        FluentWait<WebDriver> waiter = new FluentWait<>(driver)
-//            .withTimeout(Duration.ofSeconds(300))
-//            .pollingEvery(Duration.ofSeconds(5))
-//            .ignoring(ElementNotVisibleException.class)
-//            .ignoring(NoSuchElementException.class);
-//        WebElement element = waiter.until(ExpectedConditions.elementToBeClickable(selector));
-//        return element;
-//    }
-//
-//    private <V> void waitForExpectedConditionOdoo(final ExpectedCondition<?> expectedCondition, final long timeoutInSeconds, final long sleepInMillis) {
-//        final WebDriverWait driverWait = new WebDriverWait(driver, timeoutInSeconds, sleepInMillis);
-//        driverWait.until((Function<? super WebDriver, V>) expectedCondition);
-//    }
-//
-//    private void driverWaitForOdoo(final ExpectedCondition<?> expectedCondition, final long timeoutInSeconds, final long sleepInMillis) {
-//          waitForExpectedCondition(expectedCondition, timeoutInSeconds, sleepInMillis);
-//    }
-//
-//    private void waitForElementToBeVisibleOdoo(final WebElement element, final long timeoutInSeconds, final long sleepInMillis) {
-//        driverWaitForOdoo(ExpectedConditions.visibilityOf(element), timeoutInSeconds, sleepInMillis);
-//    }
-//
-//    private void waitForElementToBeClickableOdoo(final WebElement element, final long timeoutInSeconds, final long sleepInMillis) {
-//        driverWaitForOdoo(ExpectedConditions.elementToBeClickable(element), timeoutInSeconds, sleepInMillis);
-//    }
-//
-//    private void waitForElementOdoo(final WebElement element) {
-//        waitForElementToBeVisibleOdoo(element, 300, 5);
-//        waitForElementToBeClickableOdoo(element, 300, 5);
-//    }
-//
-//    public void waitAndClickOdoo(final WebElement element) {
-//        waitForElementOdoo(element);
-//        element.click();
-//    }
-//
-//
-//    public void waitAndSendKeysOdoo(final WebElement element, final String keysToSend) {
-//        waitForElementOdoo(element);
-//        element.clear();
-//        waitForElement(element);
-//        element.sendKeys(keysToSend);
-//    }
+
+    public WebElement findElementWhenVisibleOdoo(By selector) {
+        FluentWait<WebDriver> waiter = new FluentWait<>(driver)
+            .withTimeout(Duration.ofSeconds(300))
+            .pollingEvery(Duration.ofSeconds(5))
+            .ignoring(ElementNotVisibleException.class)
+            .ignoring(NoSuchElementException.class);
+        WebElement element = waiter.until(ExpectedConditions.visibilityOfElementLocated(selector));
+        return element;
+    }
+
+    public WebElement findElementWhenClickableOdoo(By selector) {
+        FluentWait<WebDriver> waiter = new FluentWait<>(driver)
+            .withTimeout(Duration.ofSeconds(300))
+            .pollingEvery(Duration.ofSeconds(5))
+            .ignoring(ElementNotVisibleException.class)
+            .ignoring(NoSuchElementException.class);
+        WebElement element = waiter.until(ExpectedConditions.elementToBeClickable(selector));
+        return element;
+    }
+
+    private <V> void waitForExpectedConditionOdoo(final ExpectedCondition<?> expectedCondition, final long timeoutInSeconds, final long sleepInMillis) {
+        final WebDriverWait driverWait = new WebDriverWait(driver, timeoutInSeconds, sleepInMillis);
+        driverWait.until((Function<? super WebDriver, V>) expectedCondition);
+    }
+
+    private void driverWaitForOdoo(final ExpectedCondition<?> expectedCondition, final long timeoutInSeconds, final long sleepInMillis) {
+          waitForExpectedCondition(expectedCondition, timeoutInSeconds, sleepInMillis);
+    }
+
+    private void waitForElementToBeVisibleOdoo(final WebElement element, final long timeoutInSeconds, final long sleepInMillis) {
+        driverWaitForOdoo(ExpectedConditions.visibilityOf(element), timeoutInSeconds, sleepInMillis);
+    }
+
+    private void waitForElementToBeClickableOdoo(final WebElement element, final long timeoutInSeconds, final long sleepInMillis) {
+        driverWaitForOdoo(ExpectedConditions.elementToBeClickable(element), timeoutInSeconds, sleepInMillis);
+    }
+
+    private void waitForElementOdoo(final WebElement element) {
+        waitForElementToBeVisibleOdoo(element, 300, 5);
+        waitForElementToBeClickableOdoo(element, 300, 5);
+    }
+
+    public void waitAndClickOdoo(final WebElement element) {
+
+        waitForElementOdoo(element);
+        element.click();
+    }
+
+
+    public void waitAndSendKeysOdoo(final WebElement element, final String keysToSend) {
+        waitForElementOdoo(element);
+        element.clear();
+        waitForElement(element);
+        element.sendKeys(keysToSend);
+    }
 
 
 }

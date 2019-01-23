@@ -35,6 +35,7 @@ public class OdooMenu extends OdooScenario {
     public void executeLeftMenuAction(String menuPath) {
         MenuNavigation odooMenuNavigation = new MenuNavigation(webDriver);
         odooMenuNavigation.executeAction(menuPath);
+        awaitOdooRequestToFinish(5);
     }
 
 
