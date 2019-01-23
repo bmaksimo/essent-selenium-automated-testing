@@ -63,7 +63,8 @@ public class JournalEnteriesPage extends Component {
 //        Sleeper.sleepTightInSeconds(3);
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='partner_id']/div/input")), partner);
 //        Sleeper.sleepTightInSeconds(3);
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("(//li[@class='ui-menu-item']/a)[2]")));
+//        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("(//li[@class='ui-menu-item']/a)[2]")));
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//a[contains(text(),'B2B_UP')]")));
     }
 
     public WebElement findAccountElement(){
