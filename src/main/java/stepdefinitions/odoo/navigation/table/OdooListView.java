@@ -12,6 +12,8 @@ import cucumber.runtime.CucumberException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import stepdefinitions.odoo.navigation.search.AdvancedSearch;
+import stepdefinitions.odoo.navigation.search.AdvancedSearchComponent;
 
 import java.time.Duration;
 import java.util.List;
@@ -26,7 +28,7 @@ public class OdooListView extends OdooScenario  {
     }
 
     @When("^Odoo filter is \"([^\"]*)\"$")
-    public void setSearchFilter(String expression) {
+    public void setAdvancedSearchFilter(String expression) {
         awaitOdooRequestToFinish(20);
 
         String filter = parameterProvider.getValueOrParameterAsString(expression) == null ?
@@ -43,6 +45,12 @@ public class OdooListView extends OdooScenario  {
         filterElement.click();
         filterElement.sendKeys(filter);
         filterElement.sendKeys(Keys.RETURN);
+    }
+
+    @When("^Advanced search is \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$")
+    public void setAdvancedSearchFilter(String property, String operator, String inputSearchTerm) {
+        AdvancedSearch advancedSearch = new AdvancedSearch(property, operator, inputSearchTerm);
+        new AdvancedSearchComponent(webDriver).runAdvancedSearch(advancedSearch);
     }
 
     @Then("^The value in the column \"([^\"]*)\" of the \"([^\"]*)\" row is \"([^\"]*)\"$")
