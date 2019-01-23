@@ -13,8 +13,6 @@ import org.junit.Assert;
 public class ContractSteps extends DwpScenario {
     private String amount;
 
-    ContractPage contractPage = new ContractPage(webDriver);
-
     @Before("@DWP, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
@@ -22,29 +20,28 @@ public class ContractSteps extends DwpScenario {
 
     @And("^Change amount for a customer$")
     public void changeAmountForACustomer() throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage(getDwpWebDriver());
         cp.openFirstContractFromList();
     }
 
     @And("^Contract plus and \"([^\"]*)\"$")
     public void contractPlusAnd(String subaction) throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage(getDwpWebDriver());
         cp.contractPlus();
-      //  contractPage.contractPlus();
-        BaseObject baseObject = new BaseObject(webDriver);
+        BaseObject baseObject = new BaseObject(getDwpWebDriver());
         baseObject.plusSubaction(subaction);
     }
 
-    @And("^Amount values is ([^\"]*)$")
+    @And("^Amount values is \"([^\"]*)\"$")
     public void amountValuesIs(String value) throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage(getDwpWebDriver());
         cp.changeAmount(value);
         amount = value;
     }
 
     @Then("^Amount of a customer value$")
     public void amountOfACustomerValue() throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage(getDwpWebDriver());
         Assert.assertTrue("Amount is not correct.", cp.getAmountOfACustomer(amount));
     }
 

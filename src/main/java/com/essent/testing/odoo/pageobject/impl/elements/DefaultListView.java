@@ -2,7 +2,7 @@ package com.essent.testing.odoo.pageobject.impl.elements;
 
 import com.essent.testing.odoo.pageobject.elements.ListView;
 import com.essent.testing.odoo.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.odoo.SeleniumDriverOdooImpl;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.collections.CollectionUtils;
 import org.openqa.selenium.By;
@@ -19,7 +19,7 @@ public class DefaultListView extends Component implements ListView {
 
     private static final String TABLE_CELL_SELECTOR_TEMPLATE = "//table[@class='oe_list_content'][1]//tbody//tr[${rowIndex}]//td[@data-field='${key}'][1]";
 
-    public DefaultListView(SeleniumDriver seleniumDriver) {
+    public DefaultListView(SeleniumDriverOdooImpl seleniumDriver) {
         super(seleniumDriver);
     }
 
@@ -68,18 +68,16 @@ public class DefaultListView extends Component implements ListView {
 
     @Override
     public void clickValueAt(String columnName, String value) {
-        awaitOdooRequestToFinish(10);
         logger().info("STEP: clickValueAt");
+        awaitOdooRequestToFinish(30);
         List<WebElement> rows = extractTable();
         WebElement currentRow;
         for (int i = 1; i <= rows.size(); i++) {
-            currentRow = seleniumDriver.findElementOrNull(By.xpath("//table[@class='oe_list_content'][1]//tbody//tr[" + i + "]//td[@data-field='"
+            currentRow = seleniumDriver.findElementWhenVisible(By.xpath("//table[@class='oe_list_content'][1]//tbody//tr[" + i + "]//td[@data-field='"
                 + getKey(columnName)
-                + "'][1]"),
-                Duration.ofSeconds(30),
-                Duration.ofSeconds(5)
-                );
-            if (currentRow != null && value.equalsIgnoreCase(currentRow.getText())) {
+                + "'][1]"));
+
+            if (currentRowEquals(currentRow, value)) {
                 logger().info(" - CELL_TEXT: " + currentRow.getText());
                 currentRow.click();
                 logger().info(" - CELL_ACTION: click()");
@@ -89,6 +87,10 @@ public class DefaultListView extends Component implements ListView {
         }
         logger().error(" - CELL_NOT_FOUND: column name" + columnName + " cell text: " + value);
         throw new CucumberException(String.format("Cell at column %s having value %s was not found", columnName, value));
+    }
+
+    private boolean currentRowEquals(WebElement currentRow, String value) {
+        return currentRow != null && currentRow.isDisplayed() && value.equalsIgnoreCase(currentRow.getText());
     }
 
     @Override

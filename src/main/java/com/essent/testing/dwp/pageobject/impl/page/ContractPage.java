@@ -1,7 +1,7 @@
 package com.essent.testing.dwp.pageobject.impl.page;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -11,7 +11,7 @@ import java.util.Date;
 
 public class ContractPage extends Component {
 
-    public ContractPage(SeleniumDriver seleniumDriver) {
+    public ContractPage(SeleniumDriverDwpImpl seleniumDriver) {
         super(seleniumDriver);
     }
 
@@ -122,6 +122,15 @@ public class ContractPage extends Component {
     public void saveInitialQuote() {
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"primaryButton\"]/span[2]")));
 
+    }
+
+    public void checkInvoiceOpenBalance(String key) {
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-checkbox-cell[@list-key='"+key+"']")));
+    }
+
+    public String getActiveContractEndDate(){
+        seleniumDriver.waitForRequestsToFinish();
+        return seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"rows\"]/tr[1]/td[5]/list-simple-two-liner-cell/p/span[2]")).getText();
     }
 
 

@@ -3,7 +3,7 @@ package com.essent.testing.dwp.pageobject.impl.modal.login;
 import com.essent.testing.dwp.pageobject.Window;
 import com.essent.testing.dwp.pageobject.impl.main.MainWindow;
 import com.essent.testing.dwp.pageobject.modal.Dialog;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -15,7 +15,7 @@ public class IWelcomeLoginDialog extends LoginComponent implements Dialog {
     private final static By SELECTOR = By.id("login-base");
 
 
-    public IWelcomeLoginDialog(SeleniumDriver seleniumDriver) {
+    public IWelcomeLoginDialog(SeleniumDriverDwpImpl seleniumDriver) {
         super(seleniumDriver.findElementOrNull(SELECTOR), seleniumDriver);
     }
 

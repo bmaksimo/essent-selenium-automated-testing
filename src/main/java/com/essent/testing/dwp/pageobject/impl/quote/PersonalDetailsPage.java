@@ -3,7 +3,7 @@ package com.essent.testing.dwp.pageobject.impl.quote;
 import com.billinghouse.random.RandomUser;
 import com.billinghouse.test_automation.util.gherkin.DateTimeFormatUtil;
 import com.essent.automation.autocrat.Model;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.html5.WebStorage;
 
@@ -25,7 +25,7 @@ public class PersonalDetailsPage extends QuoteCreationGuidedStep {
         this.customer = randomUser;
     }
 
-    public PersonalDetailsPage(SeleniumDriver seleniumDriver) {
+    public PersonalDetailsPage(SeleniumDriverDwpImpl seleniumDriver) {
         super(seleniumDriver);
     }
 

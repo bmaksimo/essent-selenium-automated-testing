@@ -1,13 +1,13 @@
 package com.essent.testing.dwp.pageobject.impl.service_contracting;
 
 import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.openqa.selenium.By;
 
 
 public class ContractPage extends BaseObject {
 
-    public ContractPage(SeleniumDriver seleniumDriver) { super(seleniumDriver); }
+    public ContractPage(SeleniumDriverDwpImpl seleniumDriver) { super(seleniumDriver); }
 
 
     public void openFirstContractFromList() {

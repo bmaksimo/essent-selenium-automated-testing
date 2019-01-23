@@ -6,11 +6,11 @@
 Feature: NAUT-490: Handle Task For Cancel - nl_BE
 
     Background:
-        Given I logged in to DWP as businessdesk.testautomation.b2b@essent.be
+        Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
 
     Scenario: Handle task for canceling
-        When Left menu is Werkbakken
-        And Top action is Filters
+        When Left menu is "Werkbakken"
+        And Top action is "Filters"
         Then "Status" selection is "Open"
 
         When Save task ID of first customer in list

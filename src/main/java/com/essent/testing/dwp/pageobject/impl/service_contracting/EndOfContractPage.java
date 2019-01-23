@@ -1,7 +1,7 @@
 package com.essent.testing.dwp.pageobject.impl.service_contracting;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 
@@ -14,18 +14,8 @@ import static org.hamcrest.Matchers.is;
 
 public class EndOfContractPage extends Component {
 
-    public EndOfContractPage(SeleniumDriver seleniumDriver) {
+    public EndOfContractPage(SeleniumDriverDwpImpl seleniumDriver) {
         super(seleniumDriver);
-    }
-
-    public class ClickOnElement implements Predicate<String> {
-        @Override
-        public boolean test(String element) {
-            Map<String, String> options = new HashMap<>();
-            options.put("element", element);
-            boolean success = executeJavascriptTest("TrStartNewMarketSection", options);
-            return success;
-        }
     }
 
     public void searchInputField(String input) {
@@ -61,10 +51,5 @@ public class EndOfContractPage extends Component {
 
     public boolean checkEanCheckBox() {
         return new EanCheckBox().test("");
-    }
-
-
-    public boolean  startNewMarketSection(String element) {
-        return new ClickOnElement().test(element);
     }
 }

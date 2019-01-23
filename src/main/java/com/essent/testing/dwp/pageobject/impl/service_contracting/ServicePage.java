@@ -1,13 +1,13 @@
 package com.essent.testing.dwp.pageobject.impl.service_contracting;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 
 public class ServicePage extends Component {
 
-    public ServicePage(SeleniumDriver seleniumDriver) {
+    public ServicePage(SeleniumDriverDwpImpl seleniumDriver) {
         super(seleniumDriver);
     }
 

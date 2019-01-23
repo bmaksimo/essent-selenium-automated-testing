@@ -1,13 +1,13 @@
 package com.essent.testing.dwp.pageobject.impl.elements;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class ToggleImpl extends Component {
 
-    public ToggleImpl(SeleniumDriver seleniumDriver) {
+    public ToggleImpl(SeleniumDriverDwpImpl seleniumDriver) {
         super(seleniumDriver);
     }
     public WebElement checkBox (String box) {

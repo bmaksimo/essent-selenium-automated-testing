@@ -22,13 +22,13 @@ public class LeadSteps extends DwpScenario {
 
     @When("^Add lead$")
     public void addLead() throws Throwable {
-        LeadPage leadPage = new LeadPage(webDriver);
+        LeadPage leadPage = new LeadPage(getDwpWebDriver());
         leadPage.plusAddLead();
     }
 
     @And("^New lead is$")
     public void insertCompanyNameForCreatingLead(DataTable dbTabel) throws Throwable {
-        LeadPage leadPage = new LeadPage(webDriver);
+        LeadPage leadPage = new LeadPage(getDwpWebDriver());
         List<List<String>> db = dbTabel.raw();
 
         leadPage.createLead(db);
@@ -36,7 +36,7 @@ public class LeadSteps extends DwpScenario {
 
     @Then("^\"([^\"]*)\" lead was created$")
     public void leadWasCreated(String name) throws Throwable {
-        LeadPage leadPage = new LeadPage(webDriver);
+        LeadPage leadPage = new LeadPage(getDwpWebDriver());
         leadPage.validateCreatingLead(name);
     }
 

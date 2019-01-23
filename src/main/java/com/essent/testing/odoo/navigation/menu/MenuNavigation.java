@@ -1,7 +1,7 @@
 package com.essent.testing.odoo.navigation.menu;
 
 import com.essent.testing.odoo.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.odoo.SeleniumDriverOdooImpl;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.openqa.selenium.*;
@@ -27,7 +27,7 @@ public class MenuNavigation extends Component {
     private String status = "UNDEFINED";
     private String reason = "Not executed";
 
-    public MenuNavigation(SeleniumDriver seleniumDriver) {
+    public MenuNavigation(SeleniumDriverOdooImpl seleniumDriver) {
         super(seleniumDriver);
     }
     public String getStatus() {
@@ -46,7 +46,6 @@ public class MenuNavigation extends Component {
             reason = "Main menu item" + item + "is not found";
             return false;
         }
-        awaitOdooRequestToFinish(10);
         elementOrNull.click();
         return true;
     }
@@ -88,6 +87,7 @@ public class MenuNavigation extends Component {
         List<WebElement> result;
         String query = createQuery(MENU_TOGGLER_SELECTOR_TEMPLATE, "text", menuItem);
         By menuTogglerQuery = By.xpath(query);
+
         if(item != null) {
             result  = item.findElements(menuTogglerQuery);
         } else {

@@ -27,10 +27,10 @@ public class OdooListView extends OdooScenario  {
 
     @When("^Odoo filter is \"([^\"]*)\"$")
     public void setSearchFilter(String expression) {
+        awaitOdooRequestToFinish(20);
 
         String filter = parameterProvider.getValueOrParameterAsString(expression) == null ?
             expression : parameterProvider.getValueOrParameterAsString(expression);
-        awaitOdooRequestToFinish(10);
         String selector = "//div[@class='oe_searchview_input']";
 
         By xpath = By.xpath(selector);
@@ -50,7 +50,7 @@ public class OdooListView extends OdooScenario  {
         String input = parameterProvider.getValueOrParameterAsString(value) == null ?
             value : parameterProvider.getValueOrParameterAsString(value);
         String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
-        ListView odooList = new DefaultListView(webDriver);
+        ListView odooList = new DefaultListView(getOdooWebDriver());
         odooList.checkCellAt(column, rowIndex, input);
 
 
@@ -59,7 +59,7 @@ public class OdooListView extends OdooScenario  {
     @Then("^Column \"([^\"]*)\" of the \"([^\"]*)\" row is clicked$")
     public void clickCellAt(String column, String ordinal) {
         String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
-        ListView odooList = new DefaultListView(webDriver);
+        ListView odooList = new DefaultListView(getOdooWebDriver());
         odooList.clickCellAt(column, rowIndex);
     }
 
@@ -67,7 +67,7 @@ public class OdooListView extends OdooScenario  {
     public void clickValueAt(String column, String value) {
         String input = parameterProvider.getValueOrParameterAsString(value) == null ?
             value : parameterProvider.getValueOrParameterAsString(value);
-        ListView odooList = new DefaultListView(webDriver);
+        ListView odooList = new DefaultListView(getOdooWebDriver());
         odooList.clickValueAt(column, input);
     }
 
@@ -75,7 +75,7 @@ public class OdooListView extends OdooScenario  {
     public void checkValueAt(String column, String value) {
         String input = parameterProvider.getValueOrParameterAsString(value) == null ?
             value : parameterProvider.getValueOrParameterAsString(value);
-        ListView odooList = new DefaultListView(webDriver);
+        ListView odooList = new DefaultListView(getOdooWebDriver());
         odooList.checkValueAt(column, input);
     }
 

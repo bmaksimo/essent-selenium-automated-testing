@@ -12,6 +12,7 @@ public class ButtonImpl implements Button {
     private static final Logger logger = Logger.getLogger(ButtonImpl.class);
 
     private WebElement element;
+
     @Override
     public void click() {
         logger.info("STEP:");

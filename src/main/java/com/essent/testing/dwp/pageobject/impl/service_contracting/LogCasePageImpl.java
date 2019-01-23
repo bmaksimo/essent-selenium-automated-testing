@@ -5,7 +5,7 @@ import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.Form;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.service_contracting.LogCasePage;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
 import org.openqa.selenium.By;
@@ -33,7 +33,7 @@ public class LogCasePageImpl extends Component implements Form, LogCasePage {
 
     private String priority;
 
-    public LogCasePageImpl(SeleniumDriver seleniumDriver) {
+    public LogCasePageImpl(SeleniumDriverDwpImpl seleniumDriver) {
         super(seleniumDriver);
     }
 

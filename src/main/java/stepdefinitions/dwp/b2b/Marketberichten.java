@@ -1,6 +1,6 @@
 package stepdefinitions.dwp.b2b;
 
-import com.essent.testing.dwp.pageobject.impl.page.MarketberichtenPage;
+import com.essent.testing.dwp.pageobject.impl.page.MarktBerichtenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
@@ -18,7 +18,7 @@ public class Marketberichten extends DwpScenario {
 
     @And("^Select \"([^\"]*)\" on Marktberichten page$")
     public void selectOnMarktberichtenPage(String element) throws Throwable {
-        MarketberichtenPage mb = new MarketberichtenPage(webDriver);
+        MarktBerichtenPage mb = new MarktBerichtenPage(getDwpWebDriver());
         EAN = mb.getEanFromTheFirstTransaction();
         mb.clickOnListActionsElemet(element);
         mb.clickOnSelectNewContractlineButton();
@@ -30,14 +30,14 @@ public class Marketberichten extends DwpScenario {
 
     @And("^Click on \"([^\"]*)\"$")
     public void clickOn(String newMarktbericht) throws Throwable {
-        MarketberichtenPage mp = new MarketberichtenPage(webDriver);
-        mp.createNewMarktericht(newMarktbericht);
+        MarktBerichtenPage mp = new MarktBerichtenPage(getDwpWebDriver());
+        mp.createNewMarktBericht(newMarktbericht);
     }
 
     @And("^Search by \"([^\"]*)\"$")
     public void searchBy(String str) throws Throwable {
         String ean = parameterProvider.getValueOrParameterAsString(str);
-        MarketberichtenPage mb = new MarketberichtenPage(webDriver);
+        MarktBerichtenPage mb = new MarktBerichtenPage(getDwpWebDriver());
         mb.enterContractNumber(ean);
         webDriver.waitForRequestsToFinish();
         mb.clickOnSearchButton();

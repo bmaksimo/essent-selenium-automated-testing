@@ -1,13 +1,13 @@
 package com.essent.testing.dwp.pageobject.impl.navigation;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class DwpLeftMenu extends Component {
 
-    public DwpLeftMenu(SeleniumDriver seleniumDriver) {
+    public DwpLeftMenu(SeleniumDriverDwpImpl seleniumDriver) {
         super(seleniumDriver);
     }
 

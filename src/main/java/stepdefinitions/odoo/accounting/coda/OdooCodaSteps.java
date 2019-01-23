@@ -34,9 +34,9 @@ public class OdooCodaSteps extends OdooScenario {
         registerActiveScenario(scenario);
     }
 
-    @And("^Odoo file upload dialog is ([^\"]*)$")
+    @And("^Odoo file upload dialog is \"([^\"]*)\"$")
     public void verifyDialogue(String title) {
-        CodaImportDialog dialog = new CodaImportDialogImpl(webDriver);
+        CodaImportDialog dialog = new CodaImportDialogImpl(getOdooWebDriver());
         assertThat(dialog.getTitle(), equalToIgnoringCase(title));
     }
 
@@ -48,35 +48,35 @@ public class OdooCodaSteps extends OdooScenario {
         assertThat("No CODA file found in " + path, CollectionUtils.isNotEmpty(codaFiles));
 
         File codaFileToUpload = codaFiles.iterator().next();
-        CodaImportDialog dialog = new CodaImportDialogImpl(webDriver);
+        CodaImportDialog dialog = new CodaImportDialogImpl(getOdooWebDriver());
         dialog.setUploadFile(codaFileToUpload.getAbsolutePath());
 
         assertThat(dialog.fillInFormData(), is(true));
     }
 
-    @When("^CODA file is ([^\"]*)$")
+    @When("^CODA file is \"([^\"]*)\"$")
     public void setCodaPath(String codaFile) {
         String path = parameterProvider.getValueOrParameterAsString(codaFile) == null ?
             codaFile : parameterProvider.getValueOrParameterAsString(codaFile);
         File document = new File(path);
         assertThat("File at path " + document.getAbsolutePath() + " doesn't exist.", true,
             is(document.exists()));
-        CodaImportDialog dialog = new CodaImportDialogImpl(webDriver);
+        CodaImportDialog dialog = new CodaImportDialogImpl(getOdooWebDriver());
         dialog.setUploadFile(document.getAbsolutePath());
         boolean success = dialog.fillInFormData();
         assertThat(success, is(true));
     }
 
-    @And("^Odoo file upload confirm button is ([^\"]*)$")
+    @And("^Odoo file upload confirm button is \"([^\"]*)\"$")
     public void conformCodaImport(String button) {
-        CodaImportDialog dialog = new CodaImportDialogImpl(webDriver);
+        CodaImportDialog dialog = new CodaImportDialogImpl(getOdooWebDriver());
         dialog.setImportButton(button);
         dialog.confirm();
     }
 
     @And("^Odoo file import report$")
     public void odooFileImportReport() throws Throwable {
-        CodaImportDialog dialog = new CodaImportDialogImpl(webDriver);
+        CodaImportDialog dialog = new CodaImportDialogImpl(getOdooWebDriver());
         String report = dialog.getImportReport();
         assertThat(report, not(isEmptyString()));
     }

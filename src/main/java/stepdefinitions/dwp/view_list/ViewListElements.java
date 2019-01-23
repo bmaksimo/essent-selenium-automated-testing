@@ -32,6 +32,21 @@ import static org.junit.Assert.fail;
 public class ViewListElements extends NavigationElements {
 
     private static final String INTERACTIONS = "InteractionsOnAccount";
+    private static final String PAYMENTS = "PaymentPlansOnAccount";
+    private static final String MARKET_MESSAGES = "Marktberichten";
+    private static final String MARKET_MESSAGES_VIEW_LIST = "MarketTransactionsOnAccount";
+    private static final String BILLING_CUSTOMER = "Billing customer";
+    private static final String BILLING_CUSTOMER_VIEW_LIST = "BillingCustomerOnaccount";
+    private static final String PLUS_ACTION = "Plus Action";
+
+    private class ViewListNavigation {
+        public void goToLink(String linkText) {
+            webDriver.waitForRequestsToFinish();
+            WebElement link = webDriver.findElement(By.linkText(linkText));
+            link.click();
+        }
+    }
+
 
     private class CheckViewListHeader implements Predicate<String> {
         @Override
@@ -215,6 +230,16 @@ public class ViewListElements extends NavigationElements {
 
                 return mappedColumns.indexOf(columnName.toLowerCase());
             }
+
+            if ("Afbetalingsplannen".equalsIgnoreCase(tableName)) {
+                tableNameSelector = PAYMENTS;
+                List<WebElement> columns = webDriver.getDriver().findElements(By.xpath("//list[@list-key='"+tableNameSelector+"']//div//table[@class='list__content']//thead//tr//th"));
+                List<String> mappedColumns = columns.stream().map(c -> c.getText().toLowerCase()).collect(Collectors.toList());
+
+                return mappedColumns.indexOf(columnName.toLowerCase());
+            }
+
+
             return 0;
         }
     }
@@ -222,7 +247,20 @@ public class ViewListElements extends NavigationElements {
     private class ClickTableCellUrl implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
-            return executeJavascriptTest("TrClickTableCellUrl", options);
+            String viewList = (String) options.get("view_list_name");
+            if (null == viewList)
+                return executeJavascriptTest("TrClickTableCellUrl", options);
+
+            String column = (String) options.get("column");
+            if (PLUS_ACTION.equalsIgnoreCase(column)) {
+                if (MARKET_MESSAGES_VIEW_LIST.equalsIgnoreCase(viewList))
+                    return executeJavascriptTest("TrPlusActionInMarketMessageTable", options);
+                else if (BILLING_CUSTOMER_VIEW_LIST.equalsIgnoreCase(viewList))
+                    return executeJavascriptTest("TrPlusActionInBillingCustomerTable", options);
+                else throw new IllegalArgumentException(String.format("Table '%s' has no implementation. Please use an implemented table or implement a new one.", viewList));
+            }
+
+            return false;
         }
     }
 
@@ -312,12 +350,15 @@ public class ViewListElements extends NavigationElements {
             success, is(true));
     }
 
-    @When("^Click on link in View List at ([^\"]*) row and \"([^\"]*)\" column$")
+    @When("^Click on \"([^\"]*)\" link$")
+    public void clickOnLink(String input) throws Throwable {
+        String linkText = parameterProvider.getValueOrParameterAsString(input);
+        new ViewListNavigation().goToLink(linkText);
+    }
+
+    @When("^Click on link in View List at \"([^\"]*)\" row and \"([^\"]*)\" column$")
     public void clickOnViewListAtRowAndColumn(String ordinal, String column) throws Throwable {
-        String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
-        Map<String, String> columnIndexListOptions = new HashMap<>();
-        columnIndexListOptions.put("column", column);
-        columnIndexListOptions.put("index", rowIndex);
+        Map<String, String> columnIndexListOptions = getColumnIndexListOptions(column, null, ordinal);
         given().await()
             .ignoreExceptions()
             .pollInterval(TWO_SECONDS)
@@ -325,13 +366,10 @@ public class ViewListElements extends NavigationElements {
             .atMost(new Duration(TEN_SECONDS.getValue(), SECONDS)).until(()-> new ClickTableCellUrl().test(columnIndexListOptions));
     }
 
-    @When("^Click on link in View List at ([^\"]*) row and \"([^\"]*)\" column polling (\\d+) seconds?$")
+    @When("^Click on link in View List at \"([^\"]*)\" row and \"([^\"]*)\" column polling (\\d+) seconds?$")
     public void clickOnViewListAtRowAndColumn(String ordinal, String column, int seconds) throws Throwable {
         webDriver.waitForRequestsToFinish();
-        String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
-        Map<String, String> columnIndexListOptions = new HashMap<>();
-        columnIndexListOptions.put("column", column);
-        columnIndexListOptions.put("index", rowIndex);
+        Map<String, String> columnIndexListOptions = getColumnIndexListOptions(column, null, ordinal);
         ClickTableCellUrl clickFunction = new ClickTableCellUrl();
         given().await()
             .ignoreExceptions()
@@ -340,16 +378,28 @@ public class ViewListElements extends NavigationElements {
             .atMost(new Duration(seconds, SECONDS)).until(()-> clickFunction.test(columnIndexListOptions));
     }
 
-    @When("^Click on link in \"([^\"]*)\" View List at ([^\"]*) row and \"([^\"]*)\" column$")
+    @When("^Click on link in \"([^\"]*)\" View List at \"([^\"]*)\" row and \"([^\"]*)\" column$")
     public void clickOnSuppliedViewListAtRowAndColumn(String viewListName, String ordinal, String column) throws Throwable {
-        String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
-        Map<String, String> columnIndexListOptions = new HashMap<>();
-        columnIndexListOptions.put("column", column);
-        columnIndexListOptions.put("view_list_name", viewListName);
-        columnIndexListOptions.put("index", rowIndex);
+        Map<String, String> columnIndexListOptions = getColumnIndexListOptions(column, viewListName, ordinal);
         boolean success = new ClickTableCellUrl().test(columnIndexListOptions);
         assertThat(String.format("View list did not contain URL at row %s header '%s' and '%s' view list", ordinal, column, viewListName),
             success, is(true));
+    }
+
+    private Map<String, String> getColumnIndexListOptions(String column, String viewListName, String ordinal) {
+        String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
+        Map<String, String> columnIndexListOptions = new HashMap<>();
+        columnIndexListOptions.put("column", column);
+        columnIndexListOptions.put("index", rowIndex);
+
+        if (PLUS_ACTION.equalsIgnoreCase(column)) {
+            if (MARKET_MESSAGES.equalsIgnoreCase(viewListName))
+                columnIndexListOptions.put("view_list_name", MARKET_MESSAGES_VIEW_LIST);
+            else if (BILLING_CUSTOMER.equalsIgnoreCase(viewListName))
+                columnIndexListOptions.put("view_list_name", BILLING_CUSTOMER_VIEW_LIST);
+        }
+
+        return columnIndexListOptions;
     }
 
     @When("^Modal \"([^\"]*)\" is displayed$")
@@ -366,7 +416,7 @@ public class ViewListElements extends NavigationElements {
         assertThat("Payment method has not been switched", success, is(true));
     }
 
-    @And("IBAN is ([^\"]*) if not empty$")
+    @And("IBAN is \"([^\"]*)\" if not empty$")
     public void changeIBAN(String iban) {
         Map<String, String> options = new HashMap<>();
         options.put("iban", iban);
@@ -388,7 +438,7 @@ public class ViewListElements extends NavigationElements {
         assertThat(String.format("Action row %s was not found", rowAction), success, is(true));
     }
 
-    @And("^([^\"]*) list element has cell value ([^\"]*) at column ([^\"]*)$")
+    @And("^\"([^\"]*)\" list element has cell value \"([^\"]*)\" at column \"([^\"]*)\"$")
     public void listElementWith(String ordinal, String value, String columnName) throws Throwable {
         int row = extractNumericValue(ordinal);
         boolean success = new ViewListModel().containsDataAt(row, value, columnName);
@@ -396,7 +446,7 @@ public class ViewListElements extends NavigationElements {
             success, is(true));
     }
 
-    @And("^Table ([^\"]*) contains cell value ([^\"]*) at column ([^\"]*) on ([^\"]*) row$")
+    @And("^Table \"([^\"]*)\" contains cell value \"([^\"]*)\" at column \"([^\"]*)\" on \"([^\"]*)\" row$")
     public void listElementWithFromTable(String tableName, String value, String columnName, String ordinal) throws Throwable {
         int row = extractNumericValue(ordinal);
         boolean success = new ViewListModel().containsDataAtFromTable(row, value, columnName, tableName);
@@ -404,7 +454,7 @@ public class ViewListElements extends NavigationElements {
             success, is(true));
     }
 
-    @And("^([^\"]*) list element has cell value ([^\"]*) at column \"([^\"]*)\" polling (\\d+) seconds?$")
+    @And("^\"([^\"]*)\" list element has cell value \"([^\"]*)\" at column \"([^\"]*)\" polling (\\d+) seconds?$")
     public void containsElementAt(String ordinal, String value, String columnName, int seconds) throws Throwable {
         int row = extractNumericValue(ordinal);
         ViewListModel viewListModel = new ViewListModel();
@@ -446,7 +496,7 @@ public class ViewListElements extends NavigationElements {
             element, is(notNullValue()));
     }
 
-    @Then("^([^\"]*) List element with value at column \"([^\"]*)\" is checked$")
+    @Then("^\"([^\"]*)\" List element with value at column \"([^\"]*)\" is checked$")
     public void storeColumnValueInSharedProperties(String ordinal, String columnName) throws Throwable {
         int row = extractNumericValue(ordinal);
         String value = new ViewListModel().getCellValueAt(row, columnName);
@@ -458,7 +508,7 @@ public class ViewListElements extends NavigationElements {
 
     }
 
-    @And("^Select ([^\"]*) List row having cell value ([^\"]*) at column ([^\"]*)$")
+    @And("^Select \"([^\"]*)\" List row having cell value \"([^\"]*)\" at column \"([^\"]*)\"$")
     public void selectListRows(String ordinal, String value, String columnName) throws Throwable {
         int row = extractNumericValue(ordinal);
         ViewListModel viewListModel = new ViewListModel();
@@ -471,7 +521,7 @@ public class ViewListElements extends NavigationElements {
             success, is(true));
     }
 
-    @And("^Plus actions at ([^\"]*) list row having cell value \"([^\"]*)\" at column \"([^\"]*)\" are open$")
+    @And("^Plus actions at \"([^\"]*)\" list row having cell value \"([^\"]*)\" at column \"([^\"]*)\" are open$")
     public void openPlusActions(String ordinal, String value, String columnName) throws Throwable {
         int row = extractNumericValue(ordinal);
         ViewListModel viewListModel = new ViewListModel();
@@ -481,7 +531,7 @@ public class ViewListElements extends NavigationElements {
             success, is(true));
     }
 
-    @And("^([^\"]*) List rows? having cell value ([^\"]*) at column ([^\"]*) (?:is|are) selected$")
+    @And("^\"([^\"]*)\" List rows? having cell value \"([^\"]*)\" at column \"([^\"]*)\" (?:is|are) selected$")
     public void selectListRowHavingCellValueAtColumn(int row, String value, String columnName) throws Throwable {
         ViewListModel viewListModel = new ViewListModel();
         boolean success = viewListModel.selectListRows(row, value, columnName);
@@ -507,7 +557,7 @@ public class ViewListElements extends NavigationElements {
             cellSelection.get(0).contains(value), is(true));
     }
 
-    @When("^Submit Card is ([^\"]*)$")
+    @When("^Submit Card is \"([^\"]*)\"$")
     public void checkSubmitCard(String item) throws Exception {
         boolean success = new CheckSubmitCard().test(item);
         assertThat(String.format("Submit Card does not contain '%s'", item),
@@ -521,13 +571,13 @@ public class ViewListElements extends NavigationElements {
             success, is(true));
     }
 
-    @And("^View List element \"([^\"]*)\" is collected as parameter at ([^\"]*) list row$")
+    @And("^View List element \"([^\"]*)\" is collected as parameter at \"([^\"]*)\" list row$")
     public void collectViewListElementAsParameter(String viewListElement, String ordinal) {
         String parameter = getViewListElementAtRow(viewListElement, ordinal);
         parameterProvider.put(viewListElement, parameter);
     }
 
-    @And("^View List element \"([^\"]*)\" using \"([^\"]*)\" as alias is collected as parameter at ([^\"]*) list row$")
+    @And("^View List element \"([^\"]*)\" using \"([^\"]*)\" as alias is collected as parameter at \"([^\"]*)\" list row$")
     public void collectViewListElementWithAliasAsParameter(String viewListElement, String viewListElementAlias, String ordinal) {
         String parameter = getViewListElementAtRow(viewListElement, ordinal);
         parameter = getPossibleNumeric(parameter);
@@ -557,7 +607,7 @@ public class ViewListElements extends NavigationElements {
         return parameter;
     }
 
-    @And("([^\"]*) list is not empty")
+    @And("\"([^\"]*)\" list is not empty")
     public void viewIsNotEmpty(String table) throws Throwable {
         Map<String, String> options = new HashMap<>();
         options.put("table", table);
@@ -566,7 +616,7 @@ public class ViewListElements extends NavigationElements {
             success, is(true));
     }
 
-    @And("([^\"]*) list is empty")
+    @And("\"([^\"]*)\" list is empty")
     public void isViewEmpty(String header) throws Throwable {
         Map<String, String> options = new HashMap<>();
         options.put("table", header);
@@ -575,7 +625,7 @@ public class ViewListElements extends NavigationElements {
             hasData, is(false));
     }
 
-    @And("^Table ([^\"]*) contains value \"([^\"]*)\" at column ([^\"]*)$")
+    @And("^Table \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\"$")
     public void viewListContainsValueAtColumn(String table, String value, String column) throws Throwable {
         ViewListModel viewListModel = new ViewListModel();
         List<String> columnData = viewListModel.fetchColumnData(table, column);

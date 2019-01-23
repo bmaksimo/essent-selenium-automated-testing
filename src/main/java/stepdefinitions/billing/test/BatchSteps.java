@@ -11,7 +11,6 @@ import com.essent.testing.client.billing.BillingBatch;
 import com.essent.testing.scenario.RegisteredScenario;
 import cucumber.api.Scenario;
 import cucumber.api.Transform;
-import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -330,7 +329,6 @@ public class BatchSteps extends RegisteredScenario {
 		    }
 		}
 	}
-
 
     public void afterScenario(Scenario scenario) {
         // We need to kill any pending jobs and wait until they are finished.

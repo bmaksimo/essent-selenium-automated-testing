@@ -6,8 +6,6 @@ public class ContractConstants {
 
 	public static final int TIMEOUT_SET_CONTRACT_ACTIVE = 15;
 
-	public static final int MAX_NUMBER_OF_ATTEMPTS_TO_FIND_APPROPRIATE_START_CONTRACT_DATE = 2;
-
 	// Paths to the pdf files
 	public static final String PATH_TO_PDF = ResourceUtil.toPath("/data/contract/pdf/customer-signature.pdf");
 	public static final String PATH_TO_PRICES = ResourceUtil.toPath("/data/contract/soapui_tests_prices");

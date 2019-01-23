@@ -2,7 +2,7 @@ package com.essent.testing.dwp.pageobject.impl.navigation;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,7 +21,7 @@ public class DwpPlusMenu extends Component {
 
     private final static String XPATH_CONTAINS_TEXT_TEMPLATE = "//span[contains(text(),'${text}')]";
 
-    public DwpPlusMenu(SeleniumDriver seleniumDriver) {
+    public DwpPlusMenu(SeleniumDriverDwpImpl seleniumDriver) {
         super(seleniumDriver);
     }
 

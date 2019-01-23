@@ -1,13 +1,13 @@
 package com.essent.testing.jbilling.pageobject.impl.navigation;
 
 import com.essent.testing.jbilling.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.jbilling.SeleniumDriverJBillingImpl;
 import org.openqa.selenium.By;
 
 public class TopMenuPage extends Component {
 
 
-    public TopMenuPage(SeleniumDriver seleniumDriver) {
+    public TopMenuPage(SeleniumDriverJBillingImpl seleniumDriver) {
         super(seleniumDriver);
     }
 

@@ -5,12 +5,17 @@ import com.essent.testing.dwp.pageobject.impl.navigation.DwpPlusMenu;
 import com.essent.testing.dwp.pageobject.impl.navigation.TopActionsPageImpl;
 import com.essent.testing.dwp.pageobject.navigation.TopActionsPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import org.awaitility.Duration;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.numericValue;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.awaitility.Awaitility.given;
+import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
+import static org.awaitility.Duration.ONE_SECOND;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -21,7 +26,7 @@ public abstract class NavigationElements extends DwpScenario {
     private class ClickTopAction implements Predicate<String> {
         @Override
         public boolean test(String name) {
-            TopActionsPage topActions = new TopActionsPageImpl(webDriver);
+            TopActionsPage topActions = new TopActionsPageImpl(getDwpWebDriver());
             return topActions.executeTopAction(name);
         }
     }
@@ -89,7 +94,11 @@ public abstract class NavigationElements extends DwpScenario {
         public boolean test(String menu) {
             Map<String, Object> options = new HashMap<>();
             options.put("menu", menu);
-            return executeJavascriptTest("TrClickDashboardMenuButton", options);
+            given().await()
+                .pollInterval(FIVE_HUNDRED_MILLISECONDS)
+                .pollDelay(ONE_SECOND)
+                .atMost(new Duration(20, SECONDS)).until(() -> executeJavascriptTest("TrClickDashboardMenuButton", options));
+             return true;
         }
     }
 
@@ -125,7 +134,7 @@ public abstract class NavigationElements extends DwpScenario {
     }
 
     protected void clickPlusAction(String path) {
-        DwpPlusMenu plusMenu = new DwpPlusMenu(webDriver);
+        DwpPlusMenu plusMenu = new DwpPlusMenu(getDwpWebDriver());
         boolean success = plusMenu.executeAction(path);
         assertThat(String.format("Plus Menu Path %s undefined.", path),
             success, is(true));

@@ -3,7 +3,7 @@ package com.essent.testing.odoo.pageobject.impl.modal.coda;
 import com.essent.automation.autocrat.Model;
 import com.essent.testing.odoo.pageobject.impl.Component;
 import com.essent.testing.odoo.pageobject.modal.CodaImportDialog;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.selenium.webdriver.odoo.SeleniumDriverOdooImpl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -28,7 +28,7 @@ public class CodaImportDialogImpl extends Component implements CodaImportDialog 
 
     private String importButton;
 
-    public CodaImportDialogImpl(SeleniumDriver seleniumDriver) {
+    public CodaImportDialogImpl(SeleniumDriverOdooImpl seleniumDriver) {
         super(SELECTOR, seleniumDriver);
     }
 
@@ -68,8 +68,7 @@ public class CodaImportDialogImpl extends Component implements CodaImportDialog 
     }
 
     public String getImportReport() {
-        FluentWait<WebDriver> waiter = new FluentWait<>(seleniumDriver.getDriver()).withTimeout(Duration.ofSeconds(20));
-        WebElement reportElement = waiter.until(ExpectedConditions.presenceOfElementLocated(RESULTS_NOTE_SELECTOR));
+        WebElement reportElement = findElementWhenVisible(RESULTS_NOTE_SELECTOR);
         return reportElement.getAttribute("value");
     }
 }

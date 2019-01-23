@@ -43,7 +43,7 @@ public class ConsumptionSteps extends DwpScenario {
         registerActiveScenario(scenario);
     }
 
-    @When("^Consumption at current deliverypointid with ([^\"]*) hourly-tariff is generated from now until ([^\"]*) months after$")
+    @When("^Consumption at current deliverypointid with \"([^\"]*)\" hourly-tariff is generated from now until \"([^\"]*)\" months after$")
     public void generateConsumption(String hourlyTariff, String months) throws Exception {
         String deliveryPointId = parameterProvider.getValueOrParameterAsString("parameter:EAN-code");
         String consumptionData = getConsumptionRequest(deliveryPointId, hourlyTariff, months);
@@ -55,7 +55,7 @@ public class ConsumptionSteps extends DwpScenario {
         Assert.isTrue(resp.getResult(), resp.getMsg());
     }
 
-    @When("^Consumption at deliverypointid ([^\"]*) with ([^\"]*) hourly-tariff is generated from now until ([^\"]*) months after$")
+    @When("^Consumption at deliverypointid \"([^\"]*)\" with \"([^\"]*)\" hourly-tariff is generated from now until \"([^\"]*)\" months after$")
     public void generateConsumptionatDeliveryPoint(String deliveryPoint, String hourlyTariff, String months) throws Exception {
         String deliveryPointId = parameterProvider.getValueOrParameterAsString(deliveryPoint);
         String consumptionData = getConsumptionRequest(deliveryPointId, hourlyTariff, months);
@@ -66,7 +66,7 @@ public class ConsumptionSteps extends DwpScenario {
         Assert.isTrue(resp.getResult(), resp.getMsg());
     }
 
-    @When("^Consumption at deliverypointid ([^\"]*) is generated from now until ([^\"]*)$")
+    @When("^Consumption at deliverypointid \"([^\"]*)\" is generated from now until \"([^\"]*)\"$")
     public void generateConsumptionUntilDate(String deliveryPoint, String dateTo) throws Exception {
         String deliveryPointId = parameterProvider.getValueOrParameterAsString(deliveryPoint);
         parameterProvider.put("billrun-date", DateExpressionsUtil.toDwpDate(dateTo));
@@ -129,7 +129,7 @@ public class ConsumptionSteps extends DwpScenario {
 
         return null;
     }
-    @Then("^Consumption is available at ([^\"]*) row in ([^\"]*) column$")
+    @Then("^Consumption is available at \"([^\"]*)\" row in \"([^\"]*)\" column$")
     public void checkCreatedConsumption(String ordinal, String column) throws Throwable {
         String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
         String fromDate = parameterProvider.getValueOrParameterAsString("parameter:fromDate");

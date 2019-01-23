@@ -6,16 +6,16 @@ import com.essent.testing.dwp.pageobject.impl.quote.QuoteDetailsPage;
 import com.essent.testing.dwp.pageobject.impl.service_contracting.ContractenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
-import static org.hamcrest.core.Is.is;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.springframework.test.context.ContextConfiguration;
-
-import static org.testng.AssertJUnit.assertEquals;
 import stepdefinitions.dwp.tables.SalesChannel;
+
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.testng.AssertJUnit.assertEquals;
 
 
 
@@ -31,21 +31,21 @@ public class Contract extends DwpScenario {
 
     @And("^Contract startdatum is today$")
     public void contractStartdatumIsToday() throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage(getDwpWebDriver());
         cp.startDateIsToday();
     }
 
 
     @And("^Get client number$")
     public void getClientNumber() throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage(getDwpWebDriver());
         Klantnummer=cp.getClientNumber();
     }
 
     @And("^Search by client number$")
     public void searchByClientNumber() throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
-        ContractenPage contractenPage = new ContractenPage(webDriver);
+        ContractPage cp = new ContractPage(getDwpWebDriver());
+        ContractenPage contractenPage = new ContractenPage(getDwpWebDriver());
         cp.selectAccount();
         cp.searchByClientNuiber(Klantnummer);
         contractenPage.searchForEanCode(Klantnummer);
@@ -54,8 +54,8 @@ public class Contract extends DwpScenario {
     @When("^Plus action of \"([^\"]*)\" element from \"([^\"]*)\" and click on \"([^\"]*)\"$")
     public void plusActionOfElementFromAndClickOn(String row, String table, String action) throws Throwable {
         webDriver.waitForRequestsToFinish();
-        ContractPage cp = new ContractPage(webDriver);
-        BaseObject baseObject = new BaseObject(webDriver);
+        ContractPage cp = new ContractPage(getDwpWebDriver());
+        BaseObject baseObject = new BaseObject(getDwpWebDriver());
         Thread.sleep(5000);
         cp.clickOnPlusMeniInTable(row,table);
         baseObject.plusSubaction(action);
@@ -63,20 +63,20 @@ public class Contract extends DwpScenario {
 
     @And("^Save EAN from active contract$")
     public void saveEANFromActiveContract() throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage(getDwpWebDriver());
         parameterProvider.put("EAN-active-contract",cp.getActiveContractEAN());
     }
 
     @Then("^Contract is in \"([^\"]*)\" state$")
     public void contractIsInState(String status) throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage(getDwpWebDriver());
         webDriver.waitForRequestsToFinish();
         assertEquals(cp.status(),status);
     }
 
     @And("^Clicked on sign X$")
     public void clickOnX() throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage(getDwpWebDriver());
         webDriver.waitForRequestsToFinish();
         cp.clickOnX();
     }
@@ -84,7 +84,7 @@ public class Contract extends DwpScenario {
 
     @When("^B2B sales channel is ([^\"]*)$")
     public void initSalesChannelB2B(SalesChannel salesChannel) throws Throwable {
-        QuoteDetailsPage quoteDetailsPage = new QuoteDetailsPage(webDriver);
+        QuoteDetailsPage quoteDetailsPage = new QuoteDetailsPage(getDwpWebDriver());
         quoteDetailsPage.setSalesChannel(salesChannel);
         boolean formInitialized = quoteDetailsPage.fillInFormData();
         assertThat("Failure occurred when filling in input values", formInitialized, is(true));
@@ -93,19 +93,19 @@ public class Contract extends DwpScenario {
 
     @When("^Rechtsvorm is bvba")
     public void formLegal() throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage(getDwpWebDriver());
         cp.selectItemLegalForm();
     }
 
     @And("^Geslacht is Male")
     public void gender() throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage(getDwpWebDriver());
         cp.selectGender();
     }
 
-    @And("^E-mailadres is ([^\"]*)$")
+    @And("^E-mailadres is \"([^\"]*)\"$")
     public void emailContract(String emailContract) throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage(getDwpWebDriver());
         cp.getEmail(emailContract);
     }
 
@@ -114,13 +114,13 @@ public class Contract extends DwpScenario {
     public void select() throws Throwable {
         webDriver.waitForRequestsToFinish();
         Thread.sleep(2000);
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage(getDwpWebDriver());
         cp.clickNaceCode();
     }
 
     @And("^NaceCode in search is ([^\"]*)$")
     public void searchByNaceCode(String NaceCode) throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage(getDwpWebDriver());
         cp.searchByClientNuiber(NaceCode);
         cp.clickOnSearch();
         cp.checkNaceCode();
@@ -128,44 +128,50 @@ public class Contract extends DwpScenario {
     }
 
 
-    @And("^Customer Details are populated with: Address is ([^\"]*) and HouseNumber is \"([^\"]*)\" and PostalCode is \"([^\"]*)\" and City is \"([^\"]*)\"$")
+    @And("^Customer Details are populated with: Address is \"([^\"]*)\" and HouseNumber is \"([^\"]*)\" and PostalCode is \"([^\"]*)\" and City is \"([^\"]*)\"$")
     public void populateAddress(String Address, String houseNumber, String postalCode, String City) throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage(getDwpWebDriver());
         cp.setAddress(Address, houseNumber, postalCode, City);
     }
 
-    @And("^Telefoon is ([^\"]*)$")
+    @And("^Telefoon is \"([^\"]*)\"$")
     public void populateTelephone(String telephone) {
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage(getDwpWebDriver());
         cp.setTelephone(telephone);
 
     }
 
-    @And("^First Name is ([^\"]*) and Last Name is \"([^\"]*)\"$")
+    @And("^First Name is \"([^\"]*)\" and Last Name is \"([^\"]*)\"$")
     public void populateName(String fname, String lname) throws Throwable{
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage(getDwpWebDriver());
         cp.setName(fname, lname);
     }
 
-    @And("^BEDRIJFSNAAM is ([^\"]*)$")
+    @And("^BEDRIJFSNAAM is \"([^\"]*)\"$")
     public void companyName(String cname) {
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage(getDwpWebDriver());
         cp.setCompanyName(cname);
     }
 
 
-    @And("^Ean-Code is ([^\"]*)$")
+    @And("^Ean-Code is \"([^\"]*)\"$")
     public void eanCode(String eancode) {
         webDriver.waitForRequestsToFinish();
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage(getDwpWebDriver());
         cp.setEanCode(eancode);
     }
 
 
     @And("^New Quote is saved$")
     public void newQuoteSaved() throws Throwable {
-        ContractPage quoteInitial = new ContractPage(webDriver);
+        ContractPage quoteInitial = new ContractPage(getDwpWebDriver());
         quoteInitial.saveInitialQuote();
+    }
+
+    @And("^Save End Date from active contract$")
+    public void saveEndDateFromActiveContract() throws Throwable {
+        ContractPage cp = new ContractPage(getDwpWebDriver());
+        parameterProvider.put("EndDate-active-contract",cp.getActiveContractEndDate());
     }
 
 

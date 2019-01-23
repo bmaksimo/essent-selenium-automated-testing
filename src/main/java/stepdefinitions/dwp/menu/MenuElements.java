@@ -17,22 +17,22 @@ public class MenuElements extends NavigationElements {
         registerActiveScenario(scenario);
     }
 
-    @When("^Left menu is ([^\"]*)$")
+    @When("^Left menu is \"([^\"]*)\"$")
     public void clickLeftMenuItem(String tabName) throws Throwable {
         webDriver.waitForRequestsToFinish();
-        DwpLeftMenu lm = new DwpLeftMenu(webDriver);
+        DwpLeftMenu lm = new DwpLeftMenu(getDwpWebDriver());
         lm.clickOnLeftElemet(tabName);
     }
 
-    @When("^Left Tab is ([^\"]*)$")
+    @When("^Left Tab is \"([^\"]*)\"$")
     public void clickLeftTab(String itemName) throws Throwable {
         clickLeftMenuItem(itemName);
     }
 
-    @When("^Top menu item is ([^\"]*)$")
+    @When("^Top menu item is \"([^\"]*)\"$")
     public void clickTopMenuItem(String tabName) throws Throwable {
         webDriver.waitForRequestsToFinish();
-        DwpTopMenu tm = new DwpTopMenu(webDriver);
+        DwpTopMenu tm = new DwpTopMenu(getDwpWebDriver());
         tm.findAndClickTopMenu(tabName);
     }
 
