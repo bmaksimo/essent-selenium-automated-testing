@@ -32,8 +32,4 @@ public class SeleniumDriverOdooImpl extends AbstractSeleniumDriver implements Se
         super.waitAndSendKeys(element, keysToSend);
     }
 
-    @Override
-    public WebElement findElementWhenVisible(By selector) {
-        return super.findElementWhenVisible(selector);
-    }
 }

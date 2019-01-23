@@ -87,6 +87,10 @@ public class JournalEnteriesPage extends Component {
         seleniumDriver.waitAndSendKeys(findDebitElement(), debit);
     }
 
+    public String getValueOfCredit(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//td[@data-field='credit'])[2]")).getText();
+    }
+
     public WebElement findCreditElement(){
         return seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='credit']/input"));
     }
@@ -101,6 +105,7 @@ public class JournalEnteriesPage extends Component {
         if (row == 2){
             setPartner(partnerNumber);
             setAccout(table.get(row).get(2));
+            setDebit(table.get(row).get(3));
         }else {
             setName(table.get(row).get(0));
             setPartner(partnerNumber);
