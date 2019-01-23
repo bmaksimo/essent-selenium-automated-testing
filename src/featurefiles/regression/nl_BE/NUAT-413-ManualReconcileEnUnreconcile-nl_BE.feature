@@ -19,7 +19,7 @@
 #            | name | partner | account | debit | credit |
 #            | new1 | parameter:accountNumber | 580100 | 0 | 10 |
 #            | new2 | parameter:accountNumber | 580100 | 10 | 0 |
-#
+
             | name | partner | account | debit | credit |
             | new1 | 1000071170 | 580100 | 0 | 10 |
             | new2 | 1000071170 | 580100 | 10 | 0 |

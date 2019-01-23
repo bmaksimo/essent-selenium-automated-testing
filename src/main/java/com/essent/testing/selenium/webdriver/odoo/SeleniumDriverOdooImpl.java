@@ -22,13 +22,13 @@ public class SeleniumDriverOdooImpl extends AbstractSeleniumDriver implements Se
 
     @Override
     public void waitAndClick(WebElement element) {
-        Sleeper.sleepTightInSeconds(2);
+        Sleeper.sleepTightInSeconds(1.5);
         super.waitAndClick(element);
     }
 
     @Override
     public void waitAndSendKeys(WebElement element, String keysToSend) {
-        Sleeper.sleepTightInSeconds(3);
+        Sleeper.sleepTightInSeconds(1.5);
         super.waitAndSendKeys(element, keysToSend);
     }
 

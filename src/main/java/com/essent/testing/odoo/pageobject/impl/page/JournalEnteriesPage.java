@@ -60,10 +60,7 @@ public class JournalEnteriesPage extends Component {
     }
 
     public void setPartner(String partner){
-//        Sleeper.sleepTightInSeconds(3);
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='partner_id']/div/input")), partner);
-//        Sleeper.sleepTightInSeconds(3);
-//        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("(//li[@class='ui-menu-item']/a)[2]")));
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//a[contains(text(),'B2B_UP')]")));
     }
 
@@ -72,12 +69,10 @@ public class JournalEnteriesPage extends Component {
     }
 
     public void setAccout(String account){
-//        Sleeper.sleepTightInSeconds(5);
+
         seleniumDriver.waitAndClick(findAccountElement());
         findAccountElement().clear();
         seleniumDriver.waitAndSendKeys(findAccountElement(), account);
-//        Sleeper.sleepTightInSeconds(3);
-//        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("(//li[@class='ui-menu-item']/a)[4]")));
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenClickable(By.xpath("//a[contains(text(),'580100 B2C-B2B  OVERBOEKINGEN')]")));
     }
 
@@ -87,7 +82,6 @@ public class JournalEnteriesPage extends Component {
     }
 
     public void setDebit(String debit){
-//        Sleeper.sleepTightInSeconds(3);
         seleniumDriver.waitAndClick(findDebitElement());
         findDebitElement().clear();
         seleniumDriver.waitAndSendKeys(findDebitElement(), debit);
@@ -98,7 +92,6 @@ public class JournalEnteriesPage extends Component {
     }
 
     public void setCredit(String credit){
-//        Sleeper.sleepTightInSeconds(3);
         seleniumDriver.waitAndClick(findCreditElement());
         findCreditElement().clear();
         seleniumDriver.waitAndSendKeys(findCreditElement(), credit);

@@ -1,6 +1,5 @@
 package stepdefinitions.odoo.page;
 
-import com.essent.automation.util.Sleeper;
 import com.essent.testing.odoo.pageobject.impl.page.JournalEnteriesPage;
 import com.essent.testing.odoo.scenario.OdooScenario;
 import cucumber.api.DataTable;
@@ -31,7 +30,6 @@ public class JournalEntriesSteps extends OdooScenario {
     @And("^Create new Journal Entries is clicked$")
     public void createNewJournalEntriesIsClicked() throws Throwable {
         JournalEnteriesPage je = new JournalEnteriesPage(getOdooWebDriver());
-//        Sleeper.sleepTightInSeconds(3);
         je.clickOnCreateJournalEntery();
     }
 
@@ -60,7 +58,6 @@ public class JournalEntriesSteps extends OdooScenario {
     @And("^Save and Post journal entry")
     public void saveAndPost() throws Throwable {
         JournalEnteriesPage je = new JournalEnteriesPage(getOdooWebDriver());
-//        Sleeper.sleepTightInSeconds(5);
         je.saveJournal();
         je.postJournal();
     }
@@ -94,7 +91,6 @@ public class JournalEntriesSteps extends OdooScenario {
 
     @Then("^Reconcile number is removed$")
     public void reconcileNumberIsRemoved() throws Throwable {
-//        Sleeper.sleepTightInSeconds(5);
         ExpectedConditions.not(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[@data-field='reconcile_id'])[1]/a")));
     }
 
