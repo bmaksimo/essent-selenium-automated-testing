@@ -4,6 +4,7 @@ import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.page.ContractPage;
 import com.essent.testing.dwp.pageobject.impl.service_contracting.ContractenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -150,5 +151,4 @@ public class ContractenSteps extends DwpScenario {
         parameterProvider.put("companyNumber", companyNumber);
 
     }
-
 }

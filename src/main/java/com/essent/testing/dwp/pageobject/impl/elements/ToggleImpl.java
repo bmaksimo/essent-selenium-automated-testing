@@ -7,6 +7,8 @@ import org.openqa.selenium.WebElement;
 
 public class ToggleImpl extends Component {
 
+    private String box;
+
     public ToggleImpl(SeleniumDriver seleniumDriver) {
         super(seleniumDriver);
     }
@@ -39,10 +41,33 @@ public class ToggleImpl extends Component {
     }
 
     public void clickCheckboxWithDot(String box)  {
+        this.box = box;
         seleniumDriver.waitForRequestsToFinish();
         if (!checkIfCheckboxIsCheckedWithDot(box)) {
             seleniumDriver.waitAndClick(checkBoxWithDot(box));
         }
     }
+
+    public WebElement checkBoxWithout (String box) {
+        return  seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + box + "']//toggle-form-element/label"));
+    }
+
+    public boolean checkIfCheckboxIsCheckedWithout(String box)  {
+        WebElement cb = checkBoxWithout(box);
+        waitForRequestsToFinish();
+        String classValue = cb.findElement(By.cssSelector("input")).getAttribute("class");
+        return classValue.contains("not-empty");
+    }
+
+    public void clickCheckboxWithout(String box)  {
+        this.box = box;
+        seleniumDriver.waitForRequestsToFinish();
+        if (!checkIfCheckboxIsCheckedWithout(box)) {
+            seleniumDriver.waitAndClick(checkBoxWithout(box));
+        }
+    }
+
+
+
 
 }

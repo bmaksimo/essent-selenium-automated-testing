@@ -1,8 +1,10 @@
 package stepdefinitions.dwp.service_contracting;
 
+import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
 import com.essent.testing.dwp.pageobject.impl.service_contracting.ContractPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -51,4 +53,16 @@ public class ContractSteps extends DwpScenario {
         super.tearDown();
     }
 
+    @And("^Select EAN$")
+    public void selectEAN() throws Throwable {
+        ContractPage cp = new ContractPage(webDriver);
+        cp.selectEAN();
+
+    }
+
+    @And("^\"([^\"]*)\" is turned on$")
+    public void isTurnedOn(String box) throws Throwable {
+        ToggleImpl ti = new ToggleImpl(webDriver);
+        ti.clickCheckboxWithout(box);
+    }
 }

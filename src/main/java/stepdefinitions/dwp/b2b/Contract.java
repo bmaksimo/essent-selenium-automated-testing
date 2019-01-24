@@ -5,11 +5,13 @@ import com.essent.testing.dwp.pageobject.impl.page.ContractPage;
 import com.essent.testing.dwp.pageobject.impl.quote.QuoteDetailsPage;
 import com.essent.testing.dwp.pageobject.impl.service_contracting.ContractenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.openqa.selenium.By;
 import org.springframework.test.context.ContextConfiguration;
 import stepdefinitions.dwp.tables.SalesChannel;
 
@@ -54,11 +56,18 @@ public class Contract extends DwpScenario {
     @When("^Plus action of \"([^\"]*)\" element from \"([^\"]*)\" and click on \"([^\"]*)\"$")
     public void plusActionOfElementFromAndClickOn(String row, String table, String action) throws Throwable {
         webDriver.waitForRequestsToFinish();
-        ContractPage cp = new ContractPage(webDriver);
-        BaseObject baseObject = new BaseObject(webDriver);
-        Thread.sleep(5000);
-        cp.clickOnPlusMeniInTable(row,table);
-        baseObject.plusSubaction(action);
+//        ContractPage cp = new ContractPage(webDriver);
+//        BaseObject baseObject = new BaseObject(webDriver);
+//        Thread.sleep(5000);
+//        cp.clickOnPlusMeniInTable(row,table);
+//        baseObject.plusSubaction(action);
+
+    }
+
+    @And("^plus jtim$")
+    public void plusJtim() throws Throwable {
+        webDriver.waitAndClick(webDriver.findElementWhenVisible(By.xpath("//*[@id=\"365d0430-2267-915b-c03b-5c498d0280dc\"]/div/a")));
+        webDriver.waitAndClick(webDriver.findElementWhenVisible(By.xpath("//*[@id=\"365d0430-2267-915b-c03b-5c498d0280dc\"]/div/list-row-action/a")));
     }
 
     @And("^Save EAN from active contract$")
@@ -173,6 +182,4 @@ public class Contract extends DwpScenario {
         ContractPage cp = new ContractPage(webDriver);
         parameterProvider.put("EndDate-active-contract",cp.getActiveContractEndDate());
     }
-
-
 }
