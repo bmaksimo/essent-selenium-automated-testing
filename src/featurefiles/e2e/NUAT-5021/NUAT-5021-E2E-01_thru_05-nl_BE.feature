@@ -95,13 +95,7 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         Then "1st" list element has cell value "Sales Getekend - Waarborg" at column "Type & status"
 
         # Step 3 - Should create guarantee invoice
-        Given I renew login to DWP as "billing.testautomation@essent.be"
-        When Left menu is "billing"
-        And Top menu item is "Klanten"
-        And Top action is "Filters"
-        And "Naam" input is "parameter:suitecrm-customer-name"
-        And Click on link in View List at "1st" row and "Klantnummer & Naam" column
-        And Dashboard menu is "Billing"
+        When Dashboard menu is "Billing"
         Then "1st" list element has cell value "Invoice (GUARANTEE)" at column "ID & Type"
 
         # Step 4 - Generate Odoo CODA for account

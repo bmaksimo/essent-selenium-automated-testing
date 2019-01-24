@@ -101,12 +101,12 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         Then View List is empty
 
         # Step 3 - Should create guarantee invoice
-        Given I renew login to DWP as "billing.testautomation@essent.be"
-        When Left menu is "billing"
-        And Top menu item is "Klanten"
-        And Top action is "Filters"
-        And "Naam" input is "parameter:suitecrm-customer-name"
-        And Click on link in View List at "1st" row and "Klantnummer & Naam" column
+        #Given I renew login to DWP as "billing.testautomation@essent.be"
+        #When Left menu is "billing"
+        #And Top menu item is "Klanten"
+        #And Top action is "Filters"
+        #And "Naam" input is "parameter:suitecrm-customer-name"
+        #And Click on "parameter:Klantnummer" link
         And Dashboard menu is "Billing"
         Then "1st" list element has cell value "Invoice (GUARANTEE)" at column "ID & Type"
 
