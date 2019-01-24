@@ -7,6 +7,7 @@ import com.essent.testing.dwp.pageobject.impl.service_contracting.ContractenPage
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.PendingException;
 import cucumber.api.Scenario;
+import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
@@ -181,5 +182,9 @@ public class Contract extends DwpScenario {
     public void saveEndDateFromActiveContract() throws Throwable {
         ContractPage cp = new ContractPage(webDriver);
         parameterProvider.put("EndDate-active-contract",cp.getActiveContractEndDate());
+    }
+    @After("@REGRESSION")
+    public void tearDown() {
+        super.tearDown();
     }
 }

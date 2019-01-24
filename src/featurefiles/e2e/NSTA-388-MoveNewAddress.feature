@@ -1,6 +1,7 @@
 @DWP
 @B2C
-    @J
+@REGRESSION
+@J
 Feature: NSTA - 388 Move new address
 
     Background:
