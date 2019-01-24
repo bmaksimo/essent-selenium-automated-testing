@@ -53,7 +53,7 @@ Feature: NUAT-412 part: Create / import coda file
         Then View list header is "Offertes"
         Then "1st" list element has cell value "Sales Getekend - Waarborg" at column "Type & status"
 
-        When Dashboard menu is Details
+        When Dashboard menu is "Details"
         Then Get Contract Number
 
 

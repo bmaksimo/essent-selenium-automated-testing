@@ -1,8 +1,9 @@
-@E2E
+@B2C
 @DWP
 Feature: NUAT-5021 Complete scenario from de-duplication of client with guarantee to inactive client
 
-    @NUAT-5021
+    @NUAT-5021-1-5
+    @CREATE-SUPPLIER-SWITCH-MARKET-MESSAGE
     Scenario: From de-duplication of client to inactive client via passive renewal
 
         # Step 1: create customer with guarantee

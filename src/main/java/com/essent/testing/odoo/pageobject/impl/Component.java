@@ -111,6 +111,7 @@ public abstract class Component {
     }
 
     public void awaitOdooRequestToFinish(int seconds) {
-        new WebDriverWait(seleniumDriver.getDriver(), seconds).until(webDriver -> webDriver.findElements(By.cssSelector(".oe_wait")).isEmpty());
+            new WebDriverWait(seleniumDriver.getDriver(), seconds).withoutException()
+                .until(webDriver -> webDriver.findElements(By.cssSelector(".oe_wait")).isEmpty());
     }
 }
