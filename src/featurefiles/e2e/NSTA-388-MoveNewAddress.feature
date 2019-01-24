@@ -1,13 +1,13 @@
 @DWP
 @B2C
     @J
-Feature: NUAT-5021 Step 1. Create an account for de-duplication.
+Feature: NSTA - 388 Move new address
 
     Background:
 
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
-    Scenario: Create an electricity only contract quote
+    Scenario: Move new address
 #        When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
 #        Then Form header is "Quote details"
 #
@@ -69,8 +69,3 @@ Feature: NUAT-5021 Step 1. Create an account for de-duplication.
         And Select EAN
         And Changes are confirmed
 
-        
-        
-
-#        Given "1st" List element with value at column "Klantnummer & Naam" is checked
-#        And External status is "On" for SuiteCRM Customer Number "parameter:Klantnummer & Naam"
