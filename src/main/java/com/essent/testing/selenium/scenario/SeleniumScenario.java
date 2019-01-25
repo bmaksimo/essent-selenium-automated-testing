@@ -1,55 +1,53 @@
 package com.essent.testing.selenium.scenario;
 
 
+import com.billinghouse.cucumber.runtime.parameter.ParameterProvider;
+import com.billinghouse.cucumber.runtime.scenario.ActiveScenarioProvider;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.scenario.RegisteredScenario;
-import com.essent.testing.selenium.SeleniumDriver;
+import cucumber.api.Scenario;
+import org.apache.log4j.Logger;
 import org.junit.AfterClass;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Map;
+public abstract class SeleniumScenario implements RegisteredScenario {
 
+    private  final static Logger logger = Logger.getLogger(SeleniumScenario.class);
+    protected String name;
 
-public class SeleniumScenario extends RegisteredScenario {
+    @Autowired
+    protected ParameterProvider parameterProvider;
 
-    static protected SeleniumDriver webDriver;
+    public abstract void tidyUp();
 
-    public void tidyUp() {
-        if (webDriver != null) {
-            webDriver.tearDown();
-            webDriver = null;
-        }
+    protected final Logger logger() {
+        return logger;
     }
 
-    public void setUpWebDriver() throws Exception {
-        tidyUp();
-        webDriver = new SeleniumDriver();
-        webDriver.setUp();
-    }
+    public abstract void setUpWebDriver() throws Exception;
 
 
-    protected void injectJavaScriptTestRunner() {
-        webDriver.injectJavaScriptTestRunner();
+    /**
+     * The method will mapthe instance of active scenario to the simple scenario name.
+     * Then, EssentPretyFormatter plugin methods, such as match(),
+     * gain access to active scenario
+     * @param scenario
+     */
+    protected void registerActiveScenario(Scenario scenario) {
+        logger.debug("STEP:");
+        logger.debug(" - ACTION: REGISTER_GHERKIN_SCENARIO");
+        logger.debug(" - CLASS: " + this.getClass().getSimpleName());
+        name = scenario.getName();
+        logger.debug(" - NAME: " + name);
+        ActiveScenarioProvider.get().setActiveScenario(this.getClass().getSimpleName(), this);
     }
 
-    protected boolean executeJavascriptTest(String registeredJsClass, Object options) {
-        return webDriver.executeJavascriptTest(registeredJsClass, options);
-    }
-
-    public static boolean executeJavascriptTest(String registeredJsClass, Object options, boolean withException) {
-        return webDriver.executeJavascriptTest(registeredJsClass, options, withException);
-    }
-
-    protected Map executeJavascriptMethod(String registeredJsClass, Object options) {
-        Map map = webDriver.executeJavascriptMethod(registeredJsClass, options);
-        return map;
-    }
-
-    protected void takeScreenshot(boolean success) {
-        webDriver.takeScreenshot(success);
-    }
+//    protected void takeScreenshot(boolean success) {
+//        webDriver.takeScreenshot(success);
+//    }
 
     protected void moveToElementAndClick(WebElement element, WebDriver driver) {
         Actions actions = new Actions(driver);
@@ -59,10 +57,11 @@ public class SeleniumScenario extends RegisteredScenario {
         elementMovedTo.click().perform();
     }
 
-    @AfterClass
-    public void tearDown()  {
-        if (webDriver != null) {
-            tidyUp();
-        }
+    @Override
+    public String getName() {
+        return name;
     }
+
+    @AfterClass
+    public abstract void tearDown();
 }

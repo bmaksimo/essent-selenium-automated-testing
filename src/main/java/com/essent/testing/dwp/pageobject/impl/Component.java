@@ -3,6 +3,7 @@ package com.essent.testing.dwp.pageobject.impl;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
+import com.essent.testing.selenium.DWPSeleniumDriver;
 import com.essent.testing.selenium.SeleniumDriver;
 import com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter;
 import cucumber.runtime.CucumberException;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public abstract class Component {
+public abstract class Component extends DWPSeleniumDriver {
 
     protected WebElement element;
 
@@ -31,7 +32,7 @@ public abstract class Component {
     }
 
     public Component(SeleniumDriver seleniumDriver) {
-        this.seleniumDriver = seleniumDriver;
+        super();
     }
 
     public Component(By selector, SeleniumDriver seleniumDriver) {
@@ -63,16 +64,16 @@ public abstract class Component {
     }
 
     public boolean executeJavascriptTest(String registeredJsClass, Object options) {
-        return seleniumDriver.executeJavascriptTest(registeredJsClass, options);
+        return this.executeJavascriptTest(registeredJsClass, options);
     }
 
-    protected WebElement findElementWhenVisible(By selector) {
-        return seleniumDriver.findElementWhenVisible(selector);
-    }
+//    protected WebElement findElementWhenVisible(By selector) {
+//        return seleniumDriver.findElementWhenVisible(selector);
+//    }
 
-    protected WebElement findElementWhenClickable(By selector) {
-        return seleniumDriver.findElementWhenClickable(selector);
-    }
+//    protected WebElement findElementWhenClickable(By selector) {
+//        return this.findElementWhenClickable(selector);
+//    }
 
     protected Model.Execution createExecution() {
         return AutocratExecutionAdapter.newExecution();
@@ -88,7 +89,7 @@ public abstract class Component {
     }
 
     protected boolean execute(final Model.Execution execution) {
-        seleniumDriver.waitForRequestsToFinish();
+        this.waitForRequestsToFinish();
         return AutocratExecutionAdapter.execute(seleniumDriver.getDriver(), execution);
     }
 
@@ -122,8 +123,5 @@ public abstract class Component {
                 });
             }
         };
-    }
-    protected void waitForRequestsToFinish() {
-        seleniumDriver.waitForRequestsToFinish();
     }
 }
