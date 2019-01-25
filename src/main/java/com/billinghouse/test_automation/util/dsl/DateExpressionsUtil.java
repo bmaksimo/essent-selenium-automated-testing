@@ -2,6 +2,8 @@ package com.billinghouse.test_automation.util.dsl;
 
 import cucumber.runtime.CucumberException;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +17,9 @@ import static java.util.regex.Pattern.compile;
 public class DateExpressionsUtil {
 
     private static final String FRENCH_DATE_FOMAT = "dd/MM/yyyy";
+    private static final String DWP_DATE_FORMAT_REGEX = "[0-9]{2}/[0-9]{2}/[0-9]{4}";
+
+    private static final String SOCTAR_STARTDAT_ENDDATE = "1yyyyMMddyyyy1231";
 
 
     private static final String DATE_EXPR_REGEX = "((\\d+)\\s*(month|day|year|week)(s*)\\s+(from|before)\\s+)*now";
@@ -50,7 +55,18 @@ public class DateExpressionsUtil {
             return expandFrom(input).toString(FRENCH_DATE_FOMAT);
     }
 
-    private static final String DWP_DATE_FORMAT_REGEX = "[0-9]{2}/[0-9]{2}/[0-9]{4}";
+    public static String checkAndConvertToSoctarFileDate(String input) throws CucumberException {
+
+        if(matchesDwpDateFormat(input)) {
+            DateTimeFormatter fmt = DateTimeFormat.forPattern(FRENCH_DATE_FOMAT);
+            return fmt.parseDateTime(input).toString(SOCTAR_STARTDAT_ENDDATE);
+        }
+
+        else
+            return expandFrom(input).toString(SOCTAR_STARTDAT_ENDDATE);
+    }
+
+
 
     static boolean matchesDwpDateFormat(String date) {
         return date.matches(DWP_DATE_FORMAT_REGEX);

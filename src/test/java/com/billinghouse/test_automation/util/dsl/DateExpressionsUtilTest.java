@@ -43,4 +43,9 @@ public class DateExpressionsUtilTest {
     public void testConvertDateFormat() throws Exception {
         out.println("--To DWP date:" + toDwpDate("2019-09-30"));
     }
+
+    @Test
+    public void testConvertToSoctarFileDate() throws Exception {
+        out.println("--To Soctar File date:" + checkAndConvertToSoctarFileDate("01/02/2019"));
+    }
 }
