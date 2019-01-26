@@ -216,7 +216,7 @@ public class DwpAccountOverviewPage extends Component {
     }
 
     public String getComplaintText() {
-        return seleniumDriver.findElementWhenVisible(By.id("description-field")).getText();
+        return seleniumDriver.findElementWhenVisible(By.id("description")).getText();
     }
 
     public WebElement firstCaseInTheList() {
