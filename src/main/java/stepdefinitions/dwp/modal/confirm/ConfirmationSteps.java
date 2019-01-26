@@ -20,7 +20,7 @@ public class ConfirmationSteps extends DwpScenario {
 
     @And("^Modal dialog is \"([^\"]*)\"$")
     public void verifyDialogue(String title) {
-        ConfirmSignatureDialog dialog = new ConfirmSignatureDialogImpl(webDriver, title);
+        ConfirmSignatureDialog dialog = new ConfirmSignatureDialogImpl(title);
         boolean success = dialog.isShown();
         assertThat("Contract signature dialog was not shown.",
             success,
@@ -29,7 +29,7 @@ public class ConfirmationSteps extends DwpScenario {
 
     @And("^Contract signature is confirmed$")
     public void contractSignatureIsConfirmed() throws Throwable {
-        ConfirmSignatureDialog dialog = new ConfirmSignatureDialogImpl(webDriver);
+        ConfirmSignatureDialog dialog = new ConfirmSignatureDialogImpl();
         boolean success = dialog.confirm();
         assertThat("Contract signature was not confirmed.",
             success,

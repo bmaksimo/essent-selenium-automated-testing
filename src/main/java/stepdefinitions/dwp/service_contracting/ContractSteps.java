@@ -20,28 +20,28 @@ public class ContractSteps extends DwpScenario {
 
     @And("^Change amount for a customer$")
     public void changeAmountForACustomer() throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage();
         cp.openFirstContractFromList();
     }
 
     @And("^Contract plus and \"([^\"]*)\"$")
     public void contractPlusAnd(String subaction) throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage();
         cp.contractPlus();
-        BaseObject baseObject = new BaseObject(webDriver);
+        BaseObject baseObject = new BaseObject();
         baseObject.plusSubaction(subaction);
     }
 
     @And("^Amount values is \"([^\"]*)\"$")
     public void amountValuesIs(String value) throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage();
         cp.changeAmount(value);
         amount = value;
     }
 
     @Then("^Amount of a customer value$")
     public void amountOfACustomerValue() throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage();
         Assert.assertTrue("Amount is not correct.", cp.getAmountOfACustomer(amount));
     }
 

@@ -16,7 +16,7 @@ public class IWelcomeLoginDialog extends LoginComponent implements Dialog {
 
 
     public IWelcomeLoginDialog(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver.findElementOrNull(SELECTOR), seleniumDriver);
+        super(seleniumDriver.findElementOrNull(SELECTOR));
     }
 
     public Window login(String username, String password) throws Throwable {

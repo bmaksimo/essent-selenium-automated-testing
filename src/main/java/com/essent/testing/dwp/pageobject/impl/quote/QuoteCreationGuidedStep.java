@@ -22,10 +22,8 @@ import static org.awaitility.Duration.TWO_SECONDS;
 
 public abstract class QuoteCreationGuidedStep extends Component implements GuidedStep, Form {
 
-
     public QuoteCreationGuidedStep(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver.findElementOrNull(By.xpath(VIEW.getQuery())),
-            seleniumDriver);
+        super(seleniumDriver.findElementOrNull(By.xpath(VIEW.getQuery())));
     }
 
     @Override
@@ -36,7 +34,7 @@ public abstract class QuoteCreationGuidedStep extends Component implements Guide
             .pollInterval(FIVE_HUNDRED_MILLISECONDS)
             .pollDelay(TWO_SECONDS)
             .atMost(new Duration(10, SECONDS)).until(this::isNextButtonEnabled);
-        WebElement nextButton = seleniumDriver.findElementWhenClickable(By.cssSelector(NEXT_BUTTON.getQuery()));
+        WebElement nextButton = findElementWhenClickable(By.cssSelector(NEXT_BUTTON.getQuery()));
         if(logger().isDebugEnabled())
         {
             seleniumDriver.takeScreenshot("guidance-confirm-");

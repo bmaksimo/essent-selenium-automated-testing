@@ -3,7 +3,6 @@ package com.essent.testing.dwp.pageobject.impl.quote;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.testing.selenium.SeleniumDriver;
-import org.apache.commons.lang3.BooleanUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.tables.ConnectionDetails;
@@ -75,7 +74,7 @@ public class ConnectionDetailsPage extends QuoteCreationGuidedStep {
         }
         Map<String, String> options = new HashMap<>();
         options.put("id", query);
-        boolean result = seleniumDriver.executeJavascriptTest("TrToggleInputState", options);
+        boolean result = executeJavascriptTest("TrToggleInputState", options);
         return result;
     }
 
@@ -90,7 +89,7 @@ public class ConnectionDetailsPage extends QuoteCreationGuidedStep {
         }
         Map<String, String> options = new HashMap<>();
         options.put("id", query);
-        boolean result = seleniumDriver.executeJavascriptTest("TrToggleInputState", options);
+        boolean result = executeJavascriptTest("TrToggleInputState", options);
         return result;
     }
 

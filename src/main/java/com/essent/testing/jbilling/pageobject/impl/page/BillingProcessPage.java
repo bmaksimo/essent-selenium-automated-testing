@@ -11,9 +11,6 @@ import java.util.Date;
 
 public class BillingProcessPage extends Component {
 
-    public BillingProcessPage(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver);
-    }
     private String pattern = "MM/dd/yyyy";
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
     private String date = simpleDateFormat.format(new Date());

@@ -26,27 +26,27 @@ public class ContractenSteps extends DwpScenario {
 
     @And("^Search for ean code$")
     public void searchForEanCode() throws Throwable {
-        ContractenPage contractenPage = new ContractenPage(webDriver);
+        ContractenPage contractenPage = new ContractenPage();
         contractenPage.searchForEanCode(eanCode);
     }
 
     @When("^Input in \"([^\"]*)\" is \"([^\"]*)\"$")
     public void inputInModuleIs(String label, String input) throws Throwable {
-        webDriver.waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(3);
-        ContractenPage contractenPage = new ContractenPage(webDriver);
+        ContractenPage contractenPage = new ContractenPage();
         contractenPage.fieldDropDownLabel(label, input);
     }
 
     @And("^Check toggle \"([^\"]*)\"$")
     public void checkToggle(String label) throws Throwable {
-        ContractenPage contractenPage = new ContractenPage(webDriver);
+        ContractenPage contractenPage = new ContractenPage();
         contractenPage.turnOnTestingAndMarketMock(label);
     }
 
     @When("^Find \"([^\"]*)\" contract$")
     public void findContract(String input) throws Throwable {
-        ContractenPage contractenPage = new ContractenPage(webDriver);
+        ContractenPage contractenPage = new ContractenPage();
         eanCode = contractenPage.findActiveContract(input);
         logger().info("EAN CODE: " + eanCode);
         parameterProvider.put("contractEanCode", eanCode);
@@ -54,7 +54,7 @@ public class ContractenSteps extends DwpScenario {
 
     @Then("^Confirm task was \"([^\"]*)\"$")
     public void confirmTaskWas(String input) throws Throwable {
-        ContractenPage contractenPage = new ContractenPage(webDriver);
+        ContractenPage contractenPage = new ContractenPage();
         contractenPage.confirmTaskStatus(input);
     }
 
@@ -66,64 +66,64 @@ public class ContractenSteps extends DwpScenario {
 
     @And("^\"([^\"]*)\" input in omschrijving$")
     public void inputInOmschrijving(String text) throws Throwable {
-        ContractenPage contractenPage = new ContractenPage(webDriver);
+        ContractenPage contractenPage = new ContractenPage();
         contractenPage.inputText(text);
     }
 
     @And("^Offertes plus options is \"([^\"]*)\"$")
     public void sendEMailToCustomer(String test) throws Throwable {
-        ContractenPage contractenPage = new ContractenPage(webDriver);
+        ContractenPage contractenPage = new ContractenPage();
         contractenPage.sendEmailToCustomer(test);
     }
 
     @And("^List option is \"([^\"]*)\"$")
     public void openInvoiceOnly(String option) throws Throwable {
-        ContractenPage contractenPage = new ContractenPage(webDriver);
+        ContractenPage contractenPage = new ContractenPage();
         contractenPage.openListOption(option);
     }
 
     @Then("^Payment delayed$")
     public void paymentDelayed() throws Throwable {
-        ContractenPage contractenPage = new ContractenPage(webDriver);
+        ContractenPage contractenPage = new ContractenPage();
         contractenPage.checkPayDate();
     }
 
     @And("^Find \"([^\"]*)\" facture and \"([^\"]*)\"$")
     public void findFactureAnd(String type, String option) throws Throwable {
-        ContractenPage contractenPage = new ContractenPage(webDriver);
+        ContractenPage contractenPage = new ContractenPage();
         contractenPage.findIssuedAndPayDelay(type, option);
     }
 
     @Then("^Validate bank account was changed on \"([^\"]*)\"$")
     public void validateBankAccountWasChangedOn(String iban) throws Throwable {
         String inputIban = parameterProvider.getValueOrParameterAsString(iban);
-        ContractenPage contractenPage = new ContractenPage(webDriver);
+        ContractenPage contractenPage = new ContractenPage();
         contractenPage.findIban(inputIban);
     }
 
     @And("^Get Contract Ean Code$")
     public void getEanCode() throws Throwable {
-        String eanCode = webDriver.findElementWhenVisible(By.xpath("(//h5)[1]")).getText();
+        String eanCode = seleniumDriver.findElementWhenVisible(By.xpath("(//h5)[1]")).getText();
         parameterProvider.put("contractEanCode", eanCode);
     }
 
     @Then("^Save changes$")
     public void saveChanges() throws Throwable {
-        ContractPage contractenPage = new ContractPage(webDriver);
+        ContractPage contractenPage = new ContractPage();
         contractenPage.saveButtton();
     }
 
     @Then("^Confirm contract with ean \"([^\"]*)\" was copied$")
     public void confirmContractWithEanWasCopied(String eanCode) throws Throwable {
-        webDriver.waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         String inputEanCode = parameterProvider.getValueOrParameterAsString(eanCode);
         logger().info("input EAN CODE: " + inputEanCode);
-        Assert.assertTrue("Correct ean code was not found.", webDriver.findElementWhenVisible(By.xpath("//h5[.='" + inputEanCode + "']")).isDisplayed());
+        Assert.assertTrue("Correct ean code was not found.", seleniumDriver.findElementWhenVisible(By.xpath("//h5[.='" + inputEanCode + "']")).isDisplayed());
     }
 
     @Then("^Get Contract Number$")
     public void searchForContractNumber() throws Throwable {
-        String contractNumber = webDriver.findElementWhenVisible(By.xpath("//*[@id=\"account_number_c\"]/div")).getText();
+        String contractNumber = seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"account_number_c\"]/div")).getText();
         parameterProvider.put("contractNumber", contractNumber);
 
     }
@@ -131,22 +131,22 @@ public class ContractenSteps extends DwpScenario {
 
     @And("^Invoice with key \"([^\"]*)\" is checked$")
     public void CheckInvoiceOpenBalance(String text) {
-        webDriver.waitForRequestsToFinish();
-        ContractPage contractenPage = new ContractPage(webDriver);
+        seleniumDriver.waitForRequestsToFinish();
+        ContractPage contractenPage = new ContractPage();
         contractenPage.checkInvoiceOpenBalance(text);
     }
 
     @Then("^Customer Status is \"([^\"]*)\"$")
     public void customerStatus(String status) {
-        webDriver.waitForRequestsToFinish();
-        CustomerAcceptance customerAcceptance = new CustomerAcceptance(webDriver);
+        seleniumDriver.waitForRequestsToFinish();
+        CustomerAcceptance customerAcceptance = new CustomerAcceptance();
         customerAcceptance.customerStatus(status);
 
     }
 
     @Then("^Get Company Number$")
     public void searchForCompanyNumber() throws Throwable {
-        String companyNumber = webDriver.findElementWhenVisible(By.xpath("//*//*[@id=\"company-number-c-field\"]")).getText();
+        String companyNumber = seleniumDriver.findElementWhenVisible(By.xpath("//*//*[@id=\"company-number-c-field\"]")).getText();
         parameterProvider.put("companyNumber", companyNumber);
 
     }

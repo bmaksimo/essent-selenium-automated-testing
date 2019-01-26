@@ -15,7 +15,7 @@ public class OdooLogin extends LoginComponent implements Dialog {
     private final static By SELECTOR = By.cssSelector(".oe_login_form");
 
     public OdooLogin(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver.findElementOrNull(SELECTOR), seleniumDriver);
+        super(seleniumDriver.findElementOrNull(SELECTOR));
     }
 
     public Window login(String username, String password) throws Throwable {

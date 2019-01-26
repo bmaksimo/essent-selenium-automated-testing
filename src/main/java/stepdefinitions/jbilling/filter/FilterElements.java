@@ -23,7 +23,7 @@ public class FilterElements extends DwpScenario {
 			value = parameterProvider.getValueOrParameterAsString(value);
 		}
 
-		FilterPage filterPage = new FilterPage(webDriver);
+		FilterPage filterPage = new FilterPage();
         boolean success = filterPage.filterBy(label, value);
 
         assertThat("Filter by: " + label + " with input value: " + value + " is not confirmed", success, is(true));
@@ -31,7 +31,7 @@ public class FilterElements extends DwpScenario {
 
 	@When("JBilling Click on \"([^\"]*)\" filter button$")
 	public void clickFilterButton(String label) throws Throwable {
-		FilterPage filterPage = new FilterPage(webDriver);
+		FilterPage filterPage = new FilterPage();
         boolean success = filterPage.clickFilterButton(label);
 
         assertThat("Button: " + label + " is not clicked", success, is(true));

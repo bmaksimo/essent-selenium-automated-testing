@@ -41,8 +41,8 @@ public class ViewListElements extends NavigationElements {
 
     private class ViewListNavigation {
         public void goToLink(String linkText) {
-            webDriver.waitForRequestsToFinish();
-            WebElement link = webDriver.findElement(By.linkText(linkText));
+            seleniumDriver.waitForRequestsToFinish();
+            WebElement link = seleniumDriver.findElement(By.linkText(linkText));
             link.click();
         }
     }
@@ -225,7 +225,7 @@ public class ViewListElements extends NavigationElements {
             String tableNameSelector;
             if ("Interacties".equalsIgnoreCase(tableName)) {
                 tableNameSelector = INTERACTIONS;
-                List<WebElement> columns = webDriver.getDriver().findElements(By.xpath("//list[@list-key='"+tableNameSelector+"']//div//table[@class='list__content']//thead//tr//th"));
+                List<WebElement> columns = seleniumDriver.getDriver().findElements(By.xpath("//list[@list-key='"+tableNameSelector+"']//div//table[@class='list__content']//thead//tr//th"));
                 List<String> mappedColumns = columns.stream().map(c -> c.getText().toLowerCase()).collect(Collectors.toList());
 
                 return mappedColumns.indexOf(columnName.toLowerCase());
@@ -233,7 +233,7 @@ public class ViewListElements extends NavigationElements {
 
             if ("Afbetalingsplannen".equalsIgnoreCase(tableName)) {
                 tableNameSelector = PAYMENTS;
-                List<WebElement> columns = webDriver.getDriver().findElements(By.xpath("//list[@list-key='"+tableNameSelector+"']//div//table[@class='list__content']//thead//tr//th"));
+                List<WebElement> columns = seleniumDriver.getDriver().findElements(By.xpath("//list[@list-key='"+tableNameSelector+"']//div//table[@class='list__content']//thead//tr//th"));
                 List<String> mappedColumns = columns.stream().map(c -> c.getText().toLowerCase()).collect(Collectors.toList());
 
                 return mappedColumns.indexOf(columnName.toLowerCase());
@@ -368,7 +368,7 @@ public class ViewListElements extends NavigationElements {
 
     @When("^Click on link in View List at \"([^\"]*)\" row and \"([^\"]*)\" column polling (\\d+) seconds?$")
     public void clickOnViewListAtRowAndColumn(String ordinal, String column, int seconds) throws Throwable {
-        webDriver.waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         Map<String, String> columnIndexListOptions = getColumnIndexListOptions(column, null, ordinal);
         ClickTableCellUrl clickFunction = new ClickTableCellUrl();
         given().await()
@@ -490,7 +490,7 @@ public class ViewListElements extends NavigationElements {
         String updatedPaymentMethodName = parameterProvider.getValueOrParameterAsString("parameter:paymentMethod");
         final String UPDATED_PAYMENT_METHOD = "//list-simple-two-liner-cell[contains(@line-2,'" + updatedPaymentMethodName + "')]";
 
-        WebElement element = webDriver.findElementOrNull(By.xpath(UPDATED_PAYMENT_METHOD));
+        WebElement element = seleniumDriver.findElementOrNull(By.xpath(UPDATED_PAYMENT_METHOD));
 
         assertThat(String.format("View list did not contain payment method %s", updatedPaymentMethodName),
             element, is(notNullValue()));

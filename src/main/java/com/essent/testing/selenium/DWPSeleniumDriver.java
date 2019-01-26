@@ -19,7 +19,6 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -33,7 +32,7 @@ import java.util.Objects;
 import static com.billinghouse.test_automation.util.gherkin.DateTimeFormatUtil.printPeriod;
 import static org.junit.Assert.fail;
 
-public class DWPSeleniumDriver extends SeleniumDriverImpl implements JavascriptExecutor, JavascriptTestRunner {
+public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner {
 
     private static final Logger logger = Logger.getLogger(DWPSeleniumDriver.class);
 
@@ -41,10 +40,10 @@ public class DWPSeleniumDriver extends SeleniumDriverImpl implements JavascriptE
     private static final String PATH = "/js/runner/";
     private static final String PATH_TO_INLINE_CLASSES = "/js/runner/tests/";
     private static final String TEST_RUNNER_CLASS = "TestRunnerBase.js";
-    private static final String JQUERY_IS_NOT_ACTIVE = "return window.jQuery != undefined && jQuery.active === 0";
 
     public DWPSeleniumDriver() {
-        super(seleniumDriver);
+        createWebDriver();
+        ngWebDriver = new NgWebDriver((JavascriptExecutor) driver);
     }
 
     public class ExecuteJavascriptTest {
@@ -97,14 +96,6 @@ public class DWPSeleniumDriver extends SeleniumDriverImpl implements JavascriptE
         logger.debug(" - WAIT: waiting for all angular requests to finish on page at url: " + getDriver().getCurrentUrl());
         ngWebDriver.waitForAngularRequestsToFinish();
         logger.info(" - RESULT: all angular requests are finished on page at url: " + getDriver().getCurrentUrl());
-    }
-
-    public void awaitJqueryNotActive(long milliseconds) {
-        new WebDriverWait(driver, milliseconds).until(webDriver -> {
-            final JavascriptExecutor js = (JavascriptExecutor) driver;
-            return (Boolean) js
-                .executeScript(JQUERY_IS_NOT_ACTIVE);
-        });
     }
 
     private void injectJavaScriptInline(File functionFile) {

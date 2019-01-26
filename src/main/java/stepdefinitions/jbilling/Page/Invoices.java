@@ -21,7 +21,7 @@ public class Invoices extends JBillingScenario {
 
 	@When("Invoice table is not empty$")
 	public void checkInvoiceTableNotEmpty() throws Throwable {
-		InvoicesPage invoicesPage = new InvoicesPage(webDriver);
+		InvoicesPage invoicesPage = new InvoicesPage();
 		boolean success = invoicesPage.checkInvoiceTableNotEmpty();
 
 		assertThat("Rows in invoice table are empty", success, is(true));

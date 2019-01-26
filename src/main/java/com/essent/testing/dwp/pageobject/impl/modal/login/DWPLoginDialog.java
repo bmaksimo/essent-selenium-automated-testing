@@ -14,7 +14,7 @@ public class DWPLoginDialog extends LoginComponent implements Dialog {
 
 
     public DWPLoginDialog(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver.findElementOrNull(SELECOR), seleniumDriver);
+        super(seleniumDriver.findElementOrNull(SELECOR));
     }
 
     public Window login(String username, String password) throws Throwable {

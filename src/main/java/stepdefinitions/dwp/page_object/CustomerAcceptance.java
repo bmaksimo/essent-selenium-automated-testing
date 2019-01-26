@@ -11,10 +11,6 @@ import cucumber.runtime.CucumberException;
 
 public class CustomerAcceptance extends Component {
 
-    public CustomerAcceptance(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver);
-    }
-
     public void customerStatus(String status) {
        Sleeper.sleepTightInSeconds(3);
        String actualStatus = seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"accounts-aos-quotes-ca-status-c-field\"]")).getText();
