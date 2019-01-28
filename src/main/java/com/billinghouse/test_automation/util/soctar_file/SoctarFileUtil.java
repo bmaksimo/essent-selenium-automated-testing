@@ -15,7 +15,7 @@ public class SoctarFileUtil {
 
     public static String getSoctarFileFromTemplate(String cust_Id, String ean_id, String soctarStartDatEndDate) throws IOException {
         String sourcePath = DEFAULT_SOCTAR_LOCATION + "soctar-template.csv";
-        String destinationPath = DEFAULT_SOCTAR_LOCATION + String.format("soctar-%s.csv", ean_id);
+        String destinationPath = DEFAULT_SOCTAR_LOCATION + String.format("soctar-%s-%s.csv", cust_Id, ean_id);
         try (BufferedReader br = new BufferedReader(new FileReader(sourcePath));
              PrintWriter pw = new PrintWriter(Files.newBufferedWriter(
                  Paths.get(destinationPath)))) {
