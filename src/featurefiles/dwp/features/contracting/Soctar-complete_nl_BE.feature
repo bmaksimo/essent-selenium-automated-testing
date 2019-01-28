@@ -1,12 +1,11 @@
 @DWP
-@E2E
 @SOCTAR
 Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one payment and 3 dunning levels, with SS and Market Mock"
 
     Background:
         Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
     @SOCTAR-01-03
-    Scenario: Create active contract that after dunning the contract becomes inactive
+    Scenario: Create Soctar (Social tarif) quote and contract, and check Soctar confirmation letter
         # 1 - GUI contract creation
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"

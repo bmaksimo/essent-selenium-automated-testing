@@ -21,17 +21,22 @@ public class SoctarFileUtil {
         try (BufferedReader br = new BufferedReader(new FileReader(sourcePath));
              PrintWriter pw = new PrintWriter(Files.newBufferedWriter(
                  Paths.get(destinationPath)))) {
-            Map<String, String> substitutions = new HashMap<>();
-            StrSubstitutor substitutor = new StrSubstitutor(substitutions);
-            substitutions.put("ean-id", ean_id);
-            substitutions.put("start-end-date", soctarStartDatEndDate);
-            substitutions.put("cust-id", custIdPadded);
+            StrSubstitutor substitutor = createStringSubstitutor(ean_id, soctarStartDatEndDate, custIdPadded);
             String sCurrentLine;
             while ((sCurrentLine = br.readLine()) != null) {
                 pw.println(substitutor.replace(sCurrentLine));
             }
         }
         return destinationPath;
+    }
+
+    private static StrSubstitutor createStringSubstitutor(String ean_id, String soctarStartDatEndDate, String custIdPadded) {
+        Map<String, String> substitutions = new HashMap<>();
+        StrSubstitutor substitutor = new StrSubstitutor(substitutions);
+        substitutions.put("ean-id", ean_id);
+        substitutions.put("start-end-date", soctarStartDatEndDate);
+        substitutions.put("cust-id", custIdPadded);
+        return substitutor;
     }
 
 }
