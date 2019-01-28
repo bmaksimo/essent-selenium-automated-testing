@@ -1,39 +1,35 @@
 package com.billinghouse.test_automation.util.soctar_file;
 
+import com.essent.testing.util.resource.ResourceUtil;
 import org.apache.commons.text.StrSubstitutor;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
 public class SoctarFileUtil {
 
-    public static String getSoctarFileFromTemplate(String filePath, String ean, String soctarStartDatEndDate)
-    {
-        StringBuilder contentBuilder = new StringBuilder();
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath)))
-        {
+    private static final String DEFAULT_SOCTAR_LOCATION = ResourceUtil.toPath(File.separator + "data" + File.separator + "dwp" + File.separator + "soctar" + File.separator);
 
+    public static String getSoctarFileFromTemplate(String cust_Id, String ean_id, String soctarStartDatEndDate) throws IOException {
+        String sourcePath = DEFAULT_SOCTAR_LOCATION + "soctar-template.csv";
+        String destinationPath = DEFAULT_SOCTAR_LOCATION + String.format("soctar-%s.csv", ean_id);
+        try (BufferedReader br = new BufferedReader(new FileReader(sourcePath));
+             PrintWriter pw = new PrintWriter(Files.newBufferedWriter(
+                 Paths.get(destinationPath)))) {
+            Map<String, String> substitutions = new HashMap<>();
+            StrSubstitutor substitutor = new StrSubstitutor(substitutions);
+            substitutions.put("ean-id", ean_id);
+            substitutions.put("start-end-date", soctarStartDatEndDate);
+            substitutions.put("cust-id", cust_Id);
             String sCurrentLine;
-            while ((sCurrentLine = br.readLine()) != null)
-            {
-                contentBuilder.append(sCurrentLine).append("\n");
+            while ((sCurrentLine = br.readLine()) != null) {
+                pw.println(substitutor.replace(sCurrentLine));
             }
         }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        return parametiseTemplate(contentBuilder.toString(), ean, soctarStartDatEndDate);
+        return destinationPath;
     }
 
-    private static String parametiseTemplate(String template, String ean, String soctarStartDatEndDate) {
-        Map<String, String> substitutions =  new HashMap<>();
-        substitutions.put("ean-id", ean);
-        substitutions.put("start-end-date", soctarStartDatEndDate);
-        StrSubstitutor substitutor = new StrSubstitutor(substitutions);
-        return substitutor.replace(template);
-    }
 }

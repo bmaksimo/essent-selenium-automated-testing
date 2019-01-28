@@ -1,17 +1,18 @@
 @DWP
 @E2E
+@SOCTAR
 Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one payment and 3 dunning levels, with SS and Market Mock"
 
     Background:
-        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
-    @SOCTAR
+        Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
+    @SOCTAR-01-03
     Scenario: Create active contract that after dunning the contract becomes inactive
         # 1 - GUI contract creation
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
-        When "Tariefdatum" date is "2 weeks before now"
-        And "Sales kanaal" selection is "Inbound"
+        When  "Sales kanaal" selection is "Inbound"
+        And "Tariefdatum" date is "2 weeks before now"
         And Quote details are confirmed
         Then Form header is "Personal details"
 
@@ -27,10 +28,10 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        When "Startdatum" date is "2 weeks before now"
-        And Electricity EAN code is "random"
+        When Electricity EAN code is "random"
         And Option "test" is On
         And Option "MM should respond?" is On
+        And "Startdatum" date is "2 weeks before now"
 
         And Connection details are confirmed
         Then Form header is "Billing details"
@@ -52,3 +53,18 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         Then View list header is "Actieve en toekomstige connecties"
         And "1st" List element with value at column "EAN-code" is checked
         And "1st" list element has cell value "Actief" at column "Contractnummer" polling 450 seconds
+
+        When Top arrow button is "Up"
+        And Left menu is "contracting-switching"
+        And Top menu item is "Klanten"
+        And Top action is "Filters"
+        And "Naam" input is "parameter:suitecrm-customer-name"
+
+        Given "1st" List element with value at column "Klantnummer & Naam" is checked
+
+            #Steps 2 and 3  - Soctar file sftp upload
+        Given Soctar customer Id is "parameter:Klantnummer & Naam"
+        And   Soctar EAN is "parameter:EAN-code"
+        And   Soctar start date is "now"
+        Then  Soctar file is uploaded to "/home/ESSENT/sa_sftpcrm_smx/data/soctar" remote directory
+
