@@ -8,16 +8,16 @@ Feature: NSTA-333: Sent out the confirmation letter
     Background:
         Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
 
-    Scenario: Sent out the confirmation letter
-        When Plus menu is "Contracting -> Soctar -> Sociaal tarief contractlijnen"
-        And "EAN-code" input is "541455700000047763"
-        Then "1st" List element with value at column "Status & Product" is checked
-        And Click on "BEVESTIG CONTRACTLIJNEN" link
-        Then Changes are confirmed
+#    Scenario: Sent out the confirmation letter
+#        When Plus menu is "Contracting -> Soctar -> Sociaal tarief contractlijnen"
+#        And "EAN-code" input is "541455700000047763"
+#        Then "1st" List element with value at column "Status & Product" is checked
+#        And Click on "BEVESTIG CONTRACTLIJNEN" link
+#        Then Changes are confirmed
 
     Scenario: Check batch SOCTAR confirmation letter
         When Plus menu is "Contracting -> Soctar -> Sociaal tarief contractlijnen"
-        And Click on "Soctar Confirmation Letters" link
-
-
+#        And Click on "Soctar Confirmation Letters" link
+         And Click on link in "soctar_test2.csv" View List at "1st" row and "Batchnaam" column
+         Then Soctar Details are correct
 
