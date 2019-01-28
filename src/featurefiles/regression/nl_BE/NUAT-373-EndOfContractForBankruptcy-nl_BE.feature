@@ -20,7 +20,7 @@ Feature: NUAT-373: End Of Contract For Bankruptcy - nl_BE
 
         When Find "Actief" contract
         And Dashboard menu is "Marktberichten"
-        And Click on "Start nieuw marktbericht"
+        And Click on "START NIEW MARKTBERICHT"
         And Click Select Contractline
         And Search for ean code
         Then Changes are confirmed
