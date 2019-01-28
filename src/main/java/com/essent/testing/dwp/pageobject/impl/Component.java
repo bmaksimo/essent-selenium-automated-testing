@@ -59,7 +59,7 @@ public abstract class Component {
     }
 
     public boolean executeJavascriptTest(String registeredJsClass, Object options) {
-        return this.executeJavascriptTest(registeredJsClass, options);
+        return seleniumDriver.executeJavascriptTest(registeredJsClass, options);
     }
 
     public WebElement findElementWhenVisible(By selector) {
@@ -67,7 +67,7 @@ public abstract class Component {
     }
 
     public WebElement findElementWhenClickable(By selector) {
-        return this.findElementWhenClickable(selector);
+        return seleniumDriver.findElementWhenClickable(selector);
     }
 
     protected Model.Execution createExecution() {

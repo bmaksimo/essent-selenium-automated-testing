@@ -15,7 +15,6 @@ import com.google.gson.Gson;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.lang3.StringUtils;
 import org.iban4j.CountryCode;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -113,11 +112,6 @@ public abstract class DwpScenario extends RegisteredScenario {
         if (seleniumDriver != null) {
             tidyUp();
         }
-    }
-
-    @Override
-    public void tidyUp() {
-
     }
 
     public void setUpWebDriver() throws Exception {

@@ -15,10 +15,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.test.context.ContextConfiguration;
-
 import java.time.Duration;
 
 import static org.junit.Assert.assertNotNull;
+
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 public class GenericSteps extends DwpScenario {
 
@@ -53,7 +53,6 @@ public class GenericSteps extends DwpScenario {
         }
 
     }
-
 
     @After("@DWP, @CORE, @E2E, @REGRESSION")
     public void tearDown() {

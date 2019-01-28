@@ -39,7 +39,7 @@ public abstract class JBillingScenario extends RegisteredScenario {
     }
 
     public void setUpWebDriver() throws Exception {
-//        seleniumDriver = new JBillingSeleniumDriver();
+        seleniumDriver = new JBillingSeleniumDriver();
     }
 
 }
