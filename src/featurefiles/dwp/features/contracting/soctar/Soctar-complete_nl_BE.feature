@@ -7,6 +7,7 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
     @SOCTAR-01-03
     Scenario: Create Soctar (Social tarif) quote and contract, and check Soctar confirmation letter
         # 1 - GUI contract creation
+
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
@@ -15,8 +16,8 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         And Quote details are confirmed
         Then Form header is "Personal details"
 
-        When Customer is random
-        And Customer address is
+        Given Customer is random
+        When Customer address is
         | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
         | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
         And Customer details are confirmed
@@ -27,14 +28,12 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        When Electricity EAN code is "random"
-        And Option "test" is On
+        Given Electricity EAN code is "random"
+        When Option "test" is On
         And Option "MM should respond?" is On
         And "Startdatum" date is "2 weeks before now"
-
         And Connection details are confirmed
         Then Form header is "Billing details"
-
 
         When "Betalingswijze" selection is "Overschrijving"
         And Billing details are confirmed
@@ -58,12 +57,28 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         And Top menu item is "Klanten"
         And Top action is "Filters"
         And "Naam" input is "parameter:suitecrm-customer-name"
-
-        Given "1st" List element with value at column "Klantnummer & Naam" is checked
-
-            #Steps 2 and 3  - Soctar file sftp upload
+        Then "1st" List element with value at column "Klantnummer & Naam" is checked
+        #Steps 2 and 3  - Soctar file sftp upload
         Given Soctar customer Id is "parameter:Klantnummer & Naam"
         And   Soctar EAN is "parameter:EAN-code"
         And   Soctar start date is "now"
         Then  Soctar file is uploaded to "/home/ESSENT/sa_sftpcrm_smx/data/soctar" remote directory
+        #Step 4 Check the status of "Soctar file import" job
+
+        #Output parameter: "plus-menu-item"
+        When Plus menu is "Contracting -> Soctar -> Sociale tariefbatches"
+
+        #Input parameter: "parameter:soctar-file-name"
+        #Input parameter   "plus-menu-item"
+        #Step will refresh the view, clicking on "plus-menu-item"
+        Then "1st" list element has cell value "parameter:soctar-file-name" at column "Batchnaam" within 450 seconds
+        And  "1st" list element has cell value "Import Klaar" at column "Type & Status"
+        And Click on "parameter:soctar-file-name" link
+
+
+
+
+
+
+
 
