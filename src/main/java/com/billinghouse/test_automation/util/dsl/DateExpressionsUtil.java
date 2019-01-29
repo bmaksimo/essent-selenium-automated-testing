@@ -5,7 +5,9 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -17,9 +19,12 @@ import static java.util.regex.Pattern.compile;
 public class DateExpressionsUtil {
 
     private static final String FRENCH_DATE_FOMAT = "dd/MM/yyyy";
+    private static final String FRENCH_DATE_FORMAT_HYPHENATED = "dd-MM-yyyy";
+    private static final String FRENCH_DATE_FORMAT_HYPHENATED_SOCTAR_ENDDATE = "31-12-yyyy";
     private static final String DWP_DATE_FORMAT_REGEX = "[0-9]{2}/[0-9]{2}/[0-9]{4}";
 
     private static final String SOCTAR_STARTDAT_ENDDATE = "1yyyyMMddyyyy1231";
+
 
 
     private static final String DATE_EXPR_REGEX = "((\\d+)\\s*(month|day|year|week)(s*)\\s+(from|before)\\s+)*now";
@@ -64,6 +69,19 @@ public class DateExpressionsUtil {
 
         else
             return expandFrom(input).toString(SOCTAR_STARTDAT_ENDDATE);
+    }
+
+    public static List<String> getSoctarStartAndEndDates(String input) {
+        List<String> dates = new ArrayList<>();
+        DateTimeFormatter startDateFormatter = DateTimeFormat.forPattern(FRENCH_DATE_FORMAT_HYPHENATED);
+        String startDate = startDateFormatter.parseDateTime(input).toString();
+        DateTimeFormatter endDateFormatter = DateTimeFormat.forPattern(FRENCH_DATE_FORMAT_HYPHENATED_SOCTAR_ENDDATE);
+        String endDate = endDateFormatter.parseDateTime(input).toString();
+
+        dates.add(startDate);
+        dates.add(endDate);
+
+        return dates;
     }
 
 

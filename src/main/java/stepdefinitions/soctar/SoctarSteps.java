@@ -13,7 +13,10 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.io.FilenameUtils;
 
+import java.util.List;
+
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToSoctarFileDate;
+import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.getSoctarStartAndEndDates;
 
 public class SoctarSteps extends RegisteredScenario {
 
@@ -47,6 +50,9 @@ public class SoctarSteps extends RegisteredScenario {
     @And("^Soctar start date is \"([^\"]*)\"$")
     public void setSoctarDate(final String value) throws Throwable {
         String dateValue = checkAndConvertToSoctarFileDate(parameterProvider.getValueOrParameterAsString(value));
+        List<String> startAndEndDates = getSoctarStartAndEndDates(value);
+        parameterProvider.put("start-date", startAndEndDates.get(0));
+        parameterProvider.put("end-date", startAndEndDates.get(1));
         parameterProvider.put("start-end-date", dateValue);
     }
 

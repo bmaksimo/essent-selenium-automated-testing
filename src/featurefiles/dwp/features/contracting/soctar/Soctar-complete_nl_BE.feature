@@ -73,7 +73,15 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         #Step will refresh the view, clicking on "plus-menu-item"
         Then "1st" list element has cell value "parameter:soctar-file-name" at column "Batchnaam" within 450 seconds
         And  "1st" list element has cell value "Import Klaar" at column "Type & Status"
+        When Soctar batch action "CONTRACTEN AANMAKEN OP BASIS VAN OFFERTES" is clicked
+        Then Soctar type is changed to "Create Contracts"
         And Click on "parameter:soctar-file-name" link
+
+        #Step 6. Create contract and check if batch is done
+        And Soctar status is changed to "DONE"
+        #Step 7. Check if contract has been created
+        And "1st" list element has cell value "Verwerkt" at column "Status"
+        And "1st" list element has cell value "parameter:start-date - parameter:end-date" at column "Contractnummer & start- en einddatum"
 
 
 
