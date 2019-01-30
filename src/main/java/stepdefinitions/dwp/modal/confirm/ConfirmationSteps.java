@@ -2,14 +2,12 @@ package stepdefinitions.dwp.modal.confirm;
 
 import com.essent.testing.dwp.pageobject.impl.modal.confirm.ConfirmSignatureDialogImpl;
 import com.essent.testing.dwp.pageobject.modal.confirm.ConfirmSignatureDialog;
-import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 import stepdefinitions.dwp.navigation.NavigationElements;
-import stepdefinitions.dwp.view_list.ViewListElements;
 
 import java.util.HashMap;
 import java.util.Map;

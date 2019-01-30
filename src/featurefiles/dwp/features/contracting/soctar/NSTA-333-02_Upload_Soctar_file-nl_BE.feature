@@ -9,7 +9,8 @@ Feature: Upload Soctar file to Nova sftp
         Given Soctar EAN is "541443378265311406"
         #Output parameter "cust_id"
         And   Soctar customer Id is "100005524"
-        #Output parameter "start_end_date"
+        #Output parameter "start_end_date", format: '1yyyyMMddyyyy1231'
+        #Output parameter  "start-en-einddatum", format: 'dd-MM-yyyy - dd-MM-yyyy'
         And   Soctar start date is "now"
         # Input parameter: "parameter:ean_id"
         # Input parameter:  "parameter:cust_id"
