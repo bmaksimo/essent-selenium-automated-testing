@@ -18,9 +18,8 @@ public abstract class B2CCreateContractScenario extends SeleniumScenario {
         return name;
     }
 
-    protected void isJBillingRunning() throws Exception {
-        String dwpUrl = ConfigProvider.getProperty(ConfigKey.JBILLING_BASE_URL);
-        webDriver.setBaseUrl(dwpUrl);
+    /*protected void isJBillingRunning() throws Exception {
++        webDriver.setBaseUrl(dwpUrl);
         webDriver.goToHomePage();
         String currentUrl = webDriver.getDriver().getCurrentUrl();
         if (null != currentUrl && !currentUrl.equals(dwpUrl)) {
@@ -31,5 +30,5 @@ public abstract class B2CCreateContractScenario extends SeleniumScenario {
         logger.info("Current URL: " + currentUrl);
         assertTrue(currentUrl.startsWith(webDriver.getBaseUrl()));
     }
-
+*/
 }

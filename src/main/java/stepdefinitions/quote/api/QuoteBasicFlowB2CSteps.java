@@ -31,7 +31,8 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     public void i_login_to_iWelcome_as(String arg1) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         iWelcomeLogin iWelcomeLogin_m;
-        iWelcomeLogin_m = new iWelcomeLogin(arg1, "504pu17357IWel!");
+        iWelcomeLogin_m = new iWelcomeLogin(arg1, "504pu17357");
+        //iWelcome password 504pu17357IWel!
         iWelcomeLogin_m.login2iWelcome();
 
         throw new PendingException();
