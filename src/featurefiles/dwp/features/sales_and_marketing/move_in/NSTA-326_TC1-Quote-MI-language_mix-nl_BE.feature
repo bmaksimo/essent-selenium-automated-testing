@@ -1,24 +1,26 @@
 ﻿@DWP
-Feature: NUAT-5019-1: Creating a B2C Quote TC1 with move in, Dutch language version with form headers in English language
-    Background:
+@SALES-MARKETING
+Feature: Creating a B2C Quote TC1 with "Move In" without using Market Mock.
 
+    Background:
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
-    @DEV-ONBOARDING
-    Scenario: Create a B2C Quote with customer switch https://emagine-reality.atlassian.net/browse/NUAT-5019
+    @NSTA-326
+    @MOVE-IN-NO-MM
+    Scenario: Create a B2C Account with Quote, With move in, without using Market Mock
 
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
         When "Tariefdatum" date is "now"
-        And "Sales kanaal" selection is "Inbound"
+        And B2C sales channel is "Inbound"
         And Quote details are confirmed
         Then Form header is "Personal details"
 
-        Given Customer is random
+        When Customer is random
         And Customer address is
-            | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
-            | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
+            | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
+            | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
 
@@ -29,7 +31,7 @@ Feature: NUAT-5019-1: Creating a B2C Quote TC1 with move in, Dutch language vers
 
         When "Startdatum" date is "now"
         And Electricity EAN code is selected
-        And Electricity market mock test is Open
+        #And Electricity market mock test is Open
         And Connection details are confirmed
         Then Form header is "Billing details"
 
