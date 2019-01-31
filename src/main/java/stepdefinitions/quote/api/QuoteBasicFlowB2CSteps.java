@@ -16,6 +16,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.Scenario;
 import org.apache.log4j.Logger;
+import com.essent.testing.restassured.create_contract.constants.ApiPathsContract;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -30,11 +31,13 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     @Given("^I login to iWelcome as \"([^\"]*)\"$")
     public void i_login_to_iWelcome_as(String arg1) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-        iWelcomeLogin iWelcomeLogin_m;
-        iWelcomeLogin_m = new iWelcomeLogin(arg1, "504pu17357");
-        //iWelcome password 504pu17357IWel!
-        iWelcomeLogin_m.login2iWelcome();
+    String payloadForLogin;
 
+        AbstractAPI iWelcomeLogin_m = new IWelcomeLoginImpl();
+        payloadForLogin=((IWelcomeLoginImpl) iWelcomeLogin_m).createPayload(arg1, "504pu17357");
+
+        iWelcomeLogin_m.restPOST (payloadForLogin, ApiPathsContract.API_LOGIN_CRM,200);
+        System.out.println(payloadForLogin);
         throw new PendingException();
     }
 
