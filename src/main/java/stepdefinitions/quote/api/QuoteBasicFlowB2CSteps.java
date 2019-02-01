@@ -15,6 +15,7 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.Scenario;
+import io.restassured.http.Cookies;
 import org.apache.log4j.Logger;
 import com.essent.testing.restassured.create_contract.constants.ApiPathsContract;
 
@@ -23,8 +24,10 @@ import static org.junit.Assert.assertNotNull;
 
 
 public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
-    //@Before("@API, @BR, @REGRESSION")
-    @Before("@BR, @REGRESSION")
+
+    protected Cookies cookie = null;
+
+    @Before("@API")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -36,7 +39,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
         AbstractAPI iWelcomeLogin_m = new IWelcomeLoginImpl();
         payloadForLogin=((IWelcomeLoginImpl) iWelcomeLogin_m).createPayload(arg1, "504pu17357");
 
-        iWelcomeLogin_m.restPOST (payloadForLogin, ApiPathsContract.API_LOGIN_CRM,200);
+        cookie = iWelcomeLogin_m.restPOST (payloadForLogin, ApiPathsContract.API_LOGIN_CRM,200);
         System.out.println(payloadForLogin);
         throw new PendingException();
     }

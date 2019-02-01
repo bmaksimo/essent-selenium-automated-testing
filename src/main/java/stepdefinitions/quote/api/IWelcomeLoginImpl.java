@@ -1,7 +1,6 @@
 package stepdefinitions.quote.api;
 
 import com.billinghouse.cucumber.runtime.parameter.ParameterProvider;
-import com.essent.testing.restassured.create_contract.constants.ApiPathsContract;
 import com.google.gson.Gson;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -23,12 +22,7 @@ public class IWelcomeLoginImpl extends AbstractAPI {
         //private String CRMpassword = ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_SOAPUI_B2C);
 
         protected Gson gson;
-        protected Cookies cookie = null;
 
-
-        public Cookies getCookie() {
-            return cookie;
-        }
 
         @Override
         public String createPayload(String username, String password){
@@ -40,6 +34,7 @@ public class IWelcomeLoginImpl extends AbstractAPI {
         @Override
         public Cookies restPOST(String payload, String apiPath, Integer expectedResponseCode) throws IOException {
 
+            Cookies cookie = null;
 
             cookie = (Cookies) RestAssured
                 .given()
@@ -61,9 +56,9 @@ public class IWelcomeLoginImpl extends AbstractAPI {
 
 
         private String serializePayloadForiWelcome(String username_m, String password_m) {
-            PayloadForiWelcome payloadForiWelcome_m = new PayloadForiWelcome(username_m,password_m);
+            iWelcomeLogin iWelcome_Login_m = new iWelcomeLogin(username_m,password_m);
             gson = new Gson();
-            return gson.toJson(payloadForiWelcome_m);
+            return gson.toJson(iWelcome_Login_m);
 
         }
     }
