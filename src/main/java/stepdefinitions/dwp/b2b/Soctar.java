@@ -21,7 +21,7 @@ public class Soctar extends DwpScenario{
     @Then("^Soctar Details are correct")
     public void checkSuccess() throws Throwable {
         SoctarTariffBatchDetails soc = new SoctarTariffBatchDetails(webDriver);
-        String tariffType = "Import";
+        String tariffType = "Confirmation";
         String tariffStatus = "DONE";
         assertTrue(soc.getTariffType().equalsIgnoreCase(tariffType));
         assertTrue(soc.getTariffStatus().equalsIgnoreCase(tariffStatus));

@@ -8,16 +8,50 @@ Feature: NSTA-333: Sent out the confirmation letter
     Background:
         Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
 
-    Scenario: Sent out the confirmation letter
+    Scenario: Check if Soctar confirmation has been done correctly
+
+    #Step 8 Sent out the confirmation letter
+
         When Plus menu is "Contracting -> Soctar -> Sociaal tarief contractlijnen"
-        And "EAN-code" input is "parameter:eanCode"
+        And "EAN-code" input is "parameter:ean_id"
         Then "1st" List element with value at column "Status & Product" is checked
         And Click on "BEVESTIG CONTRACTLIJNEN" link
         Then Changes are confirmed
 
-    Scenario: Check batch SOCTAR confirmation letter
-        When Plus menu is "Contracting -> Soctar -> Sociaal tarief contractlijnen"
-        And Click on "Soctar Confirmation Letters" link
-        And Click on link in "soctar_test2.csv" View List at "1st" row and "Batchnaam" column
+    #Step 9 Check batch SOCTAR confirmation letter
+
+        When Plus menu is "Contracting -> Soctar -> Sociale tariefbatches"
+        And Click on link in "Soctar Confirmation Letters" View List at "1st" row and "Batchnaam" column
         Then Soctar Details are correct
+
+    #Step 10 Check if all changes are correct on the customer
+
+        #part 1 check - customer status
+        When Top arrow button is "UP"
+        And Top action is "Filters"
+#        And "Klantnummer" input is "parameter:accountNumber"
+        And "Klantnummer" input is "1000055249"
+        And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
+        When Dashboard menu is "Contracten"
+        And "1st" list element has cell value "(Geaccepteerd)" at column "TYPE & STATUS"
+        And "2nd" list element has cell value "(Inactief)" at column "TYPE & STATUS"
+
+        #part 2 check - contract is soctar and start date matches
+        And "1st" list element has cell value "sociaal tarief (SOCTAR)" at column "EAN-codes & Producten"
+        And "1st" list element has cell value "parameter:startDate" at column "Start & Einddatum"
+
+        #part 3 check - protected record
+        And "1st" List element with value at column "Nummer & Aanmaakdatum" is checked
+        When Plus action of "1" element from "ContractlinesOnContract" and click on " View protected "
+        Then The value in the column "Type" is "Automatic"
+        And The value in the column "Start & End Date" is "parameter:startDateEndDate"
+
+        #part 4 check - letter has been sent
+        When Dashboard menu is "Service"
+        And Table "Interacties" contains value "Recal_ext_recal_credit" at column "Type & Onderwerp"
+
+
+
+
+
 
