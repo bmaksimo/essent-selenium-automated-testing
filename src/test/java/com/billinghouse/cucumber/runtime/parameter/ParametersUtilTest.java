@@ -2,6 +2,7 @@ package com.billinghouse.cucumber.runtime.parameter;
 
 import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
+import com.essent.testing.scenario.RegisteredScenario;
 import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
 
@@ -12,7 +13,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 
 @Test
-public class ParametersUtilTest {
+public class ParametersUtilTest extends RegisteredScenario {
     private final static Logger log = Logger.getLogger(ParametersUtilTest.class);
     @OutputParameter(name = "developer")
     public String customerName;
@@ -30,10 +31,10 @@ public class ParametersUtilTest {
     public void testOutputParameter() throws Throwable {
         customerName = "Sjaak van Vliet";
 
-        ParametersUtil.visitOutputParameters(this, (BiConsumer<String, Object>) (n, v) -> {
+        ParametersUtil.collectScenarioOutputParameters(this, (BiConsumer<String, Object>) (n, v) -> {
 
         });
-        ParametersUtil.assignOutToEachInputParam(
+        ParametersUtil.assignOutValuesToInputParameters(
             (Function<String, Object>)(name) -> {
                 return MANAGER;
             },

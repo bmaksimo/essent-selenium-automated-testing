@@ -2,6 +2,7 @@ package com.billinghouse.cucumber.runtime.parameter;
 
 import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
+import com.essent.testing.scenario.RegisteredScenario;
 import cucumber.runtime.CucumberException;
 import org.apache.log4j.Logger;
 
@@ -17,7 +18,8 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 /**
- * http://toolsqa.com/cucumber/cucumber-hooks/
+ * Support of input- and output- parameters (fields
+ * annotated with @OutputParameter and @InputParameter defined in subclasses of RegisteredScenario )
  */
 public class ParametersUtil {
 
@@ -37,25 +39,25 @@ public class ParametersUtil {
         }
     }
 
-    public static void visitOutputParameters(Object visitableTest, BiConsumer<String, Object> parameterVisitor) {
-        Class<?> objectClass = requireNonNull(visitableTest).getClass();
-        Set<String> uniqueNames = new HashSet<>();
-        for (Field field : objectClass.getDeclaredFields()) {
-            field.setAccessible(true);
-            if (field.isAnnotationPresent(OutputParameter.class)) {
-                OutputParameter annotation = field.getAnnotation(OutputParameter.class);
+    public static void collectScenarioOutputParameters(RegisteredScenario registeredScenario, BiConsumer<String, Object> putToParameterProvider) {
+        Class<?> objectClass = registeredScenario.getClass();
+        Set<String> parameterNames = new HashSet<>();
+        for (Field declaredField : objectClass.getDeclaredFields()) {
+            declaredField.setAccessible(true);
+            if (declaredField.isAnnotationPresent(OutputParameter.class)) {
+                OutputParameter outParamAnnotation = declaredField.getAnnotation(OutputParameter.class);
                 try {
-                    String name = extractParameterName(annotation);
-                    Object value = field.get(visitableTest);
+                    String parameterName = extractParameterName(outParamAnnotation);
+                    Object parameterValue = declaredField.get(registeredScenario);
                     logger.info("STEP:");
-                    if(uniqueNames.contains(name)) {
-                        logger.info(" - ACTION: OUT_PARAM_OVERRIDE: Overriding output Parameter" + " '" + name + "': " + (value == null ? "null" : value.toString()));
+                    if(parameterNames.contains(parameterName)) {
+                        logger.info(" - ACTION: OUT_PARAM_OVERRIDE: Overriding output Parameter" + " '" + parameterName + "': " + (parameterValue == null ? "null" : parameterValue.toString()));
 
                     } else {
-                        logger.info(" - ACTION: OUT_PARAM_NEW: Output Parameter" + " '" + name + "': " + (value == null ? "null" : value.toString()));
-                        uniqueNames.add(name);
+                        logger.info(" - ACTION: OUT_PARAM_NEW: Output Parameter" + " '" + parameterName + "': " + (parameterValue == null ? "null" : parameterValue.toString()));
+                        parameterNames.add(parameterName);
                     }
-                    parameterVisitor.accept(name, value);
+                    putToParameterProvider.accept(parameterName, parameterValue);
 
                 } catch (IllegalAccessException e) {
                     logger.error(" - ERROR:  Failure when visiting Output Parameter");
@@ -65,8 +67,8 @@ public class ParametersUtil {
         }
     }
 
-    public static <T extends Annotation> void assignOutToEachInputParam(Function<String, Object> outParamProvider, Object visitableTest) {
-        Class<?> objectClass = requireNonNull(visitableTest).getClass();
+    public static <T extends Annotation> void assignOutValuesToInputParameters(Function<String, Object> outParamProvider, RegisteredScenario registeredScenario) {
+        Class<?> objectClass = registeredScenario.getClass();
         List<Field> fields = Arrays.asList(objectClass.getDeclaredFields());
         fields.stream().filter(p -> {return p.isAnnotationPresent(InputParameter.class);}).
             forEach(field -> {
@@ -76,16 +78,11 @@ public class ParametersUtil {
                 try {
                     field.setAccessible(true);
                     logger.info(" - ACTION: IN_PARAM_ASSIGN_VALUE: Assigning " + (outputParameter == null? "null": outputParameter.toString()) + " to " + field.getDeclaringClass().getName() +"."+field.getName());
-                    field.set(visitableTest, outputParameter);
+                    field.set(registeredScenario, outputParameter);
                 } catch (IllegalAccessException e) {
                     logger.error(" - FAILURE:  Failure accessing the InputParameter '" + annotation.name() + "'");
                     throw new CucumberException("Error accessing the InputParameter '" + annotation.name() + "'");
                 }
             });
-    }
-
-    private static Object requireNonNull(Object object) {
-        if (object == null) throw new IllegalStateException("Object may not be null");
-        return object;
     }
 }
