@@ -20,33 +20,34 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-
+/**
+ * The class prov
+ */
 public class EssentPrettyFormatter extends PrettyFormatter implements ColorAware {
 
     private static final Logger logger = Logger.getLogger(EssentPrettyFormatter.class);
     private static final Map<Class, BiConsumer> annotationRules  = new HashMap<>();
-    private String    location;
+    private String activeScenarioName;
 
     static {
-        annotationRules.put(OutputParameter.class, (BiConsumer<String, Object>) (n, p) -> {
-            ((ParameterProvider) ContextService.getContext().getBean("parameterProvider")).consumingNullValues(true).put(n, p);
-        });
+        annotationRules.put(OutputParameter.class, (BiConsumer<String, Object>) EssentPrettyFormatter::accept);
+    }
+
+    private static void accept(String parameterName, Object parameterValue) {
+        ((ParameterProvider) ContextService.getContext().getBean("parameterProvider")).consumingNullValues(true).put(parameterName, parameterValue);
     }
 
     @Override
     public void result(Result result) {
         super.result(result);
         logger.info("CUCUMBER_HOOK (result)");
-        RegisteredScenario activeScenario = (RegisteredScenario) getActiveScenario(location);
+        RegisteredScenario activeScenario = getActiveScenario(activeScenarioName);
         ParameterProvider  parameterProvider = ((ParameterProvider) ContextService.getContext().getBean("parameterProvider")).consumingNullValues(true);
-        switch(result.getStatus()) {
-            case Result.PASSED:
-                collectOutputParameters(OutputParameter.class, activeScenario);
-                break;
-            default:
-                parameterProvider.put("cucumber-scenario-status", result.getStatus());
-                parameterProvider.consumingNullValues(true).put("cucumber-scenario-failure", result.getError());
-                break;
+        if (Result.PASSED.equals(result.getStatus())) {
+            collectOutputParameters(OutputParameter.class, activeScenario);
+        } else {
+            parameterProvider.put("cucumber-scenario-status", result.getStatus());
+            parameterProvider.consumingNullValues(true).put("cucumber-scenario-failure", result.getError());
         }
         logger.info(" - TEST SCENARIO PARAMETERS: " + parameterProvider.toString());
     }
@@ -60,31 +61,31 @@ public class EssentPrettyFormatter extends PrettyFormatter implements ColorAware
     public void match(Match match) {
         super.match(match);
         logger.info("CUCUMBER_HOOK (match)");
-        this.location = match.getLocation();
-        assignInputFromOuputParameters(getActiveScenario(location));
-        logger.info(" - LOCATION: " + location);
+        this.activeScenarioName = match.getLocation();
+        assignInputFromOuputParameters(getActiveScenario(activeScenarioName));
+        logger.info(" - LOCATION: " + activeScenarioName);
     }
 
-    private void assignInputFromOuputParameters(Object activeScenario) {
+    private void assignInputFromOuputParameters(RegisteredScenario activeScenario) {
         ParameterProvider  parameterProvider = ((ParameterProvider) ContextService.getContext().getBean("parameterProvider")).consumingNullValues(true);
-        ParametersUtil.assignOutToEachInputParam((Function<String, Object>) (s)->{
-            return parameterProvider.get(s);
-        }, activeScenario);
+        ParametersUtil.assignOutValuesToInputParameters((Function<String, Object>) (s)-> parameterProvider.get(s), activeScenario);
     }
 
-    private void collectOutputParameters(Class clazz, Object activeScenario) {
-        ParametersUtil.visitOutputParameters(activeScenario, annotationRules.get(clazz));
+    private void collectOutputParameters(Class clazz, RegisteredScenario activeScenario) {
+        ParametersUtil.collectScenarioOutputParameters(activeScenario, annotationRules.get(clazz));
     }
 
-    private Object getActiveScenario(String location) {
-        String name = location.substring(0, location.indexOf("."));
-        Object activeScenario = provideNotNull(ActiveScenarioProvider.get().getActiveScenario(name));
+    private RegisteredScenario getActiveScenario(String scenarioName) {
+        String name = scenarioName.substring(0, scenarioName.indexOf("."));
+        RegisteredScenario activeScenario = provideNotNull(ActiveScenarioProvider.get().getActiveScenario(name),
+                                                           String.format("Scenario %s has not been registered. Please check @Before annotation and the list of Gherkin tags (@DWP, @REGRESSION, @E2E,...).",
+                                                                          name));
         return activeScenario;
     }
 
-    private Object provideNotNull(Object parameter) {
+    private <T> T provideNotNull(T parameter, String messageWhenNull) {
         if (parameter == null) {
-            throw new CucumberException("The parameter value cannot be null");
+            throw new CucumberException(messageWhenNull);
         }
         return parameter;
     }

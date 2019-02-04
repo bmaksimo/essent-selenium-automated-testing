@@ -12,12 +12,6 @@ public abstract class JBillingScenario extends SeleniumScenario {
 
     private  final static Logger logger = Logger.getLogger(JBillingScenario.class);
 
-    private String name;
-
-    public String getName() {
-        return name;
-    }
-
     protected void isJBillingRunning() throws Exception {
         String dwpUrl = ConfigProvider.getProperty(ConfigKey.JBILLING_BASE_URL);
         webDriver.setBaseUrl(dwpUrl);

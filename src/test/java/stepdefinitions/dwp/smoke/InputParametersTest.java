@@ -45,4 +45,5 @@ public class InputParametersTest extends RegisteredScenario {
     public void contractorHasValue(String parameter, String expected) throws Throwable {
         assertThat(parameterProvider.getValueOrParameterAsString(parameter), is(expected));
     }
+
 }
