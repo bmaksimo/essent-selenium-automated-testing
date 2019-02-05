@@ -21,8 +21,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 /**
- * Cucumber hooks
- *
+ * The class prov
  */
 public class EssentPrettyFormatter extends PrettyFormatter implements ColorAware {
 
@@ -79,8 +78,8 @@ public class EssentPrettyFormatter extends PrettyFormatter implements ColorAware
     private RegisteredScenario getActiveScenario(String scenarioName) {
         String name = scenarioName.substring(0, scenarioName.indexOf("."));
         RegisteredScenario activeScenario = provideNotNull(ActiveScenarioProvider.get().getActiveScenario(name),
-                                                           String.format("Scenario %s has not been registered. Please double-check  @Before annotation and list of Gherkin tags in it.",
-                                                                          scenarioName));
+                                                           String.format("Scenario %s has not been registered. Please check @Before annotation and the list of Gherkin tags (@DWP, @REGRESSION, @E2E,...).",
+                                                                          name));
         return activeScenario;
     }
 

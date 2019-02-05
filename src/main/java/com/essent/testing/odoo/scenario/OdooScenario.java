@@ -17,12 +17,6 @@ public abstract class OdooScenario extends SeleniumScenario {
 
     private  final static Logger logger = Logger.getLogger(OdooScenario.class);
 
-    private String name;
-
-    public String getName() {
-        return name;
-    }
-
     protected void isOdooRunning() throws Exception {
         String dwpUrl = ConfigProvider.getProperty(ConfigKey.ODOO_BASE_URL);
         webDriver.setBaseUrl(dwpUrl);

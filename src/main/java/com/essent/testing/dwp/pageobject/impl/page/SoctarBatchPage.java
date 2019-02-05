@@ -22,7 +22,8 @@ public class SoctarBatchPage extends Component {
     }
 
     public boolean checkType(String type) {
-        return type.equalsIgnoreCase(seleniumDriver.findElementWhenVisible(TYPE_SELECTOR).getText());
+        String currentType = seleniumDriver.findElementWhenVisible(TYPE_SELECTOR).getText();
+        return type.equalsIgnoreCase(currentType);
     }
 
 }

@@ -1,4 +1,4 @@
-package stepdefinitions.soctar;
+package stepdefinitions.dwp.soctar;
 
 import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
 import com.billinghouse.test_automation.util.soctar_file.SoctarFileUtil;
@@ -15,6 +15,7 @@ import org.apache.commons.io.FilenameUtils;
 
 import java.util.List;
 
+import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpContractStartEndDate;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToSoctarFileDate;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.getSoctarStartAndEndDates;
 
@@ -25,7 +26,6 @@ public class SoctarSteps extends RegisteredScenario {
     public void setUp(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
-
 
     @OutputParameter(name ="soctar-file-name")
     private String soctarFileName;
@@ -50,10 +50,8 @@ public class SoctarSteps extends RegisteredScenario {
     @And("^Soctar start date is \"([^\"]*)\"$")
     public void setSoctarDate(final String value) throws Throwable {
         String dateValue = checkAndConvertToSoctarFileDate(parameterProvider.getValueOrParameterAsString(value));
-        List<String> startAndEndDates = getSoctarStartAndEndDates(value);
-        parameterProvider.put("start-date", startAndEndDates.get(0));
-        parameterProvider.put("end-date", startAndEndDates.get(1));
         parameterProvider.put("start-end-date", dateValue);
+        parameterProvider.put("start-en-einddatum", checkAndConvertToDwpContractStartEndDate(value));
     }
 
     @And("^Soctar customer Id is \"([^\"]*)\"$")

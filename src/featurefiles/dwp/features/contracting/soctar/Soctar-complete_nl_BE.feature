@@ -1,17 +1,19 @@
 @DWP
 @SOCTAR
-Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one payment and 3 dunning levels, with SS and Market Mock"
+Feature: Social tariff (SOCTAR) contract creation
 
     Background:
         Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
-    @SOCTAR-01-03
+        #Output parameter "start_end_date", format: '1yyyyMMddyyyy1231'
+        #Output parameter  "start-en-einddatum", format: 'dd-MM-yyyy - dd-MM-yyyy'
+        And Soctar start date is "now"
+    @SOCTAR-COMPLETE
     Scenario: Create Soctar (Social tarif) quote and contract, and check Soctar confirmation letter
         # 1 - GUI contract creation
-
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
-        When  "Sales kanaal" selection is "Inbound"
+        When "Sales kanaal" selection is "Inbound"
         And "Tariefdatum" date is "2 weeks before now"
         And Quote details are confirmed
         Then Form header is "Personal details"
@@ -58,12 +60,13 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         And Top action is "Filters"
         And "Naam" input is "parameter:suitecrm-customer-name"
         Then "1st" List element with value at column "Klantnummer & Naam" is checked
-        #Steps 2 and 3  - Soctar file sftp upload
+        #Steps 2 - Soctar file sftp upload
         Given Soctar customer Id is "parameter:Klantnummer & Naam"
-        And   Soctar EAN is "parameter:EAN-code"
-        And   Soctar start date is "now"
-        Then  Soctar file is uploaded to "/home/ESSENT/sa_sftpcrm_smx/data/soctar" remote directory
-        #Step 4 Check the status of "Soctar file import" job
+        And Soctar EAN is "parameter:EAN-code"
+        And Soctar start date is "now"
+        Then Soctar file is uploaded to "/home/ESSENT/sa_sftpcrm_smx/data/soctar" remote directory
+
+        #Step 3 Check the status of "Soctar file upload"
 
         #Output parameter: "plus-menu-item"
         When Plus menu is "Contracting -> Soctar -> Sociale tariefbatches"
@@ -72,18 +75,26 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         #Input parameter   "plus-menu-item"
         #Step will refresh the view, clicking on "plus-menu-item"
         Then "1st" list element has cell value "parameter:soctar-file-name" at column "Batchnaam" within 450 seconds
-        And  "1st" list element has cell value "Import Klaar" at column "Type & Status"
-        When Soctar batch action "CONTRACTEN AANMAKEN OP BASIS VAN OFFERTES" is clicked
-        Then Soctar type is changed to "Create Contracts"
-        And Click on "parameter:soctar-file-name" link
+        And "1st" list element has cell value "Import Klaar" at column "Type & Status"
 
-        #Step 6. Create contract and check if batch is done
-        And Soctar status is changed to "DONE"
+        #Step 4 Check the status of "Soctar file import"
+        Given Click on "parameter:soctar-file-name" link
+        Then Form header is "Social tariff batch details"
+        And "Type" field value is "Import"
+        And "Status" field value is "DONE"
+
+        #Step 5. Check the status of Social tariff quote
+        When "1st" list element has cell value "parameter:EAN-code" at column "EAN-code"
+        Then "1st" list element has cell value "Quote Created" at column "Status"
+        And "1st" list element has cell value "parameter:start-en-einddatum" at column "Contractnummer & start- en einddatum"
+
+        #Step6
+        When Soctar batch action "CONTRACTEN AANMAKEN OP BASIS VAN OFFERTES" is clicked
+        Then Soctar type is changed to "Create Contracts" within 30 seconds
+        And "Status" field value is "DONE"
         #Step 7. Check if contract has been created
         And "1st" list element has cell value "Verwerkt" at column "Status"
-        And "1st" list element has cell value "parameter:start-date - parameter:end-date" at column "Contractnummer & start- en einddatum"
-
-
+        And "1st" list element has cell value "parameter:start-en-einddatum" at column "Contractnummer & start- en einddatum"
 
 
 

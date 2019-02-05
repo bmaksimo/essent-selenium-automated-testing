@@ -1,7 +1,6 @@
 package stepdefinitions.dwp.view_list;
 
 import com.billinghouse.cucumber.runtime.annotations.InputParameter;
-import com.billinghouse.cucumber.runtime.scenario.ActiveScenarioProvider;
 import com.essent.automation.util.Sleeper;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -310,6 +309,7 @@ public class ViewListElements extends NavigationElements {
     public void clickOnLink(String input) throws Throwable {
         String linkText = parameterProvider.getValueOrParameterAsString(input);
         new ViewListNavigation().goToLink(linkText);
+        webDriver.waitForRequestsToFinish();
     }
 
     @When("^Click on link in View List at \"([^\"]*)\" row and \"([^\"]*)\" column$")
@@ -370,7 +370,8 @@ public class ViewListElements extends NavigationElements {
     @And("^\"([^\"]*)\" list element has cell value \"([^\"]*)\" at column \"([^\"]*)\"$")
     public void listElementWith(String ordinal, String value, String columnName) throws Throwable {
         int row = extractNumericValue(ordinal);
-        boolean success = new ViewListModel().containsDataAt(row, value, columnName);
+        String expectedValue = parameterProvider.getValueOrParameterAsString(value);
+        boolean success = new ViewListModel().containsDataAt(row, expectedValue, columnName);
         assertThat(String.format("View list did not contain cell value %s at %s row, column '%s'", value, ordinal, columnName),
             success, is(true));
     }
