@@ -4,9 +4,9 @@ package stepdefinitions.dwp.page_object;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.selenium.SeleniumDriver;
+import cucumber.runtime.CucumberException;
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import cucumber.runtime.CucumberException;
 
 
 public class CustomerAcceptance extends Component {

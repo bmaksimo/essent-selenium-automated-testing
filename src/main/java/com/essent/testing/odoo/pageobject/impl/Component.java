@@ -93,6 +93,7 @@ public abstract class Component {
         StrSubstitutor sub = new StrSubstitutor(valuesMap);
         return sub.replace(template);
     }
+
     protected String createQuery(String template, Map<String, String> valuesMapper) {
         StrSubstitutor sub = new StrSubstitutor(valuesMapper);
         return sub.replace(template);

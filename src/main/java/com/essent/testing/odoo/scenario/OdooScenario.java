@@ -17,11 +17,13 @@ import static org.junit.Assert.assertTrue;
 
 public abstract class OdooScenario extends RegisteredScenario {
 
-    private  final static Logger logger = Logger.getLogger(OdooScenario.class);
+    private final static Logger logger = Logger.getLogger(OdooScenario.class);
     private String name;
+
     public String getName() {
         return name;
     }
+
     @Resource(name="odooSeleniumDriver")
     protected OdooSeleniumDriver seleniumDriver;
 

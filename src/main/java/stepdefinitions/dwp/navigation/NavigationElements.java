@@ -6,7 +6,6 @@ import com.essent.testing.dwp.pageobject.impl.navigation.TopActionsPageImpl;
 import com.essent.testing.dwp.pageobject.navigation.TopActionsPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import org.awaitility.Duration;
-import stepdefinitions.dwp.quote.b2c.QuoteSteps;
 
 import java.util.HashMap;
 import java.util.Map;

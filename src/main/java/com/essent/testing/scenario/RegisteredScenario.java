@@ -5,6 +5,7 @@ import com.billinghouse.cucumber.runtime.scenario.ActiveScenarioProvider;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.selenium.SeleniumDriver;
 import cucumber.api.Scenario;
+import cucumber.runtime.CucumberException;
 import org.apache.log4j.Logger;
 import org.junit.AfterClass;
 import org.openqa.selenium.WebDriver;
@@ -20,14 +21,9 @@ public abstract class RegisteredScenario {
 
     private  final static Logger logger = Logger.getLogger(RegisteredScenario.class);
 
-    private String name;
 
     protected final Logger logger() {
         return logger;
-    }
-
-    public String getName() {
-        return name;
     }
 
     /**
@@ -40,9 +36,17 @@ public abstract class RegisteredScenario {
         logger().debug("STEP:");
         logger().debug(" - ACTION: REGISTER_GHERKIN_SCENARIO");
         logger().debug(" - CLASS: " + this.getClass().getSimpleName());
-        name = scenario.getName();
-        logger().debug(" - NAME: " + name);
+        logger().debug(" - NAME: " + scenario.getName());
         ActiveScenarioProvider.get().setActiveScenario(this.getClass().getSimpleName(), this);
+    }
+
+    protected RegisteredScenario getScenarioInstance(Class scenarioClass) {
+        RegisteredScenario activeScenario = ActiveScenarioProvider.get().getActiveScenario(scenarioClass.getSimpleName());
+        if(activeScenario == null) {
+            throw new CucumberException(String.format("Scenario %s has not been registered. Please check @Before annotation and the list of Gherkin tags (@DWP, @REGRESSION, @E2E,...).",
+                scenarioClass.getSimpleName()));
+        }
+        return activeScenario;
     }
 
     public void tidyUp() {
