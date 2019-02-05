@@ -50,7 +50,7 @@ public class FormElements extends DwpScenario {
 
     @And("^\"([^\"]*)\" field value is \"([^\"]*)\"$")
     public void fieldValueIs(String label, String expectedValue) throws Throwable {
-        NonEditable field = new NonEditableImpl(webDriver);
+        NonEditable field = new NonEditableImpl();
         String actualValue = field.getValue(label);
         assertThat(String.format("Actual value of '%s' was '%s', and this differs from expected '%s'", label, actualValue, expectedValue), expectedValue, equalTo(actualValue));
     }

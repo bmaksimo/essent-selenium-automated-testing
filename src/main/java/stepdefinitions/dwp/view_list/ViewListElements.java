@@ -438,17 +438,6 @@ public class ViewListElements extends NavigationElements {
             cellSelection, not(hasSize(0)));
     }
 
-    @And("^Payment method is updated$")
-    public void listSwitchedPaymentMethod() throws Throwable {
-        String updatedPaymentMethodName = parameterProvider.getValueOrParameterAsString("parameter:paymentMethod");
-        final String UPDATED_PAYMENT_METHOD = "//list-simple-two-liner-cell[contains(@line-2,'" + updatedPaymentMethodName + "')]";
-
-        WebElement element = seleniumDriver.findElementOrNull(By.xpath(UPDATED_PAYMENT_METHOD));
-
-        assertThat(String.format("View list did not contain payment method %s", updatedPaymentMethodName),
-            element, is(notNullValue()));
-    }
-
     @Then("^\"([^\"]*)\" List element with value at column \"([^\"]*)\" is checked$")
     public void storeColumnValueInSharedProperties(String ordinal, String columnName) throws Throwable {
         int row = extractNumericValue(ordinal);
