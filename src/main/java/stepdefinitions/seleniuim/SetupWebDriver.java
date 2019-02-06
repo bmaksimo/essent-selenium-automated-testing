@@ -1,23 +1,23 @@
-package stepdefinitions.seleniuim;
-
-import com.essent.testing.scenario.RegisteredScenario;
-import cucumber.api.Scenario;
-import cucumber.api.java.After;
-import cucumber.api.java.Before;
-import org.springframework.test.context.ContextConfiguration;
-
-@ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
-public class SetupWebDriver extends RegisteredScenario {
-
-    @Before("@DWP, @ODOO, @CORE, @E2E, @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
-        registerActiveScenario(scenario);
-//        setUpWebDriver();
-    }
-
-    @After("@DWP, @ODOO, @CORE, @E2E, @REGRESSION")
-    public void tearDown() {
-        tidyUp();
-    }
-
-}
+//package stepdefinitions.seleniuim;
+//
+//import com.essent.testing.scenario.RegisteredScenario;
+//import cucumber.api.Scenario;
+//import cucumber.api.java.After;
+//import cucumber.api.java.Before;
+//import org.springframework.test.context.ContextConfiguration;
+//
+//@ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
+//public class SetupWebDriver extends RegisteredScenario {
+//
+//    @Before("@DWP, @ODOO, @CORE, @E2E, @REGRESSION")
+//    public void setupTest(Scenario scenario) throws Throwable {
+//        registerActiveScenario(scenario);
+////        setUpWebDriver();
+//    }
+//
+//    @After("@DWP, @ODOO, @CORE, @E2E, @REGRESSION")
+//    public void tearDown() {
+////        tidyUp();
+//    }
+//
+//}

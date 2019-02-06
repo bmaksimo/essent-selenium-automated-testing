@@ -11,6 +11,7 @@ import org.junit.AfterClass;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class RegisteredScenario {
@@ -49,10 +50,12 @@ public abstract class RegisteredScenario {
         return activeScenario;
     }
 
-    public void tidyUp() {
-        if (webDriver != null) {
-            webDriver.tearDown();
-            webDriver = null;
+    public void tidyUp(SeleniumDriver seleniumDriver) {
+        if (seleniumDriver != null
+            && seleniumDriver.getDriver() != null
+            && ((RemoteWebDriver) seleniumDriver.getDriver()).getSessionId() != null) {
+            seleniumDriver.tearDown();
+//            webDriver = null;
         }
     }
 
@@ -68,10 +71,10 @@ public abstract class RegisteredScenario {
         elementMovedTo.click().perform();
     }
 
-    @AfterClass
-    public void tearDown()  {
-        if (webDriver != null) {
-            tidyUp();
-        }
-    }
+//    @AfterClass
+//    public void tearDown()  {
+//        if (webDriver != null) {
+//            tidyUp();
+//        }
+//    }
 }

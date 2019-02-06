@@ -43,6 +43,11 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
 
     public DWPSeleniumDriver() {
         createWebDriver();
+        setUp();
+        initNgWebDriver();
+    }
+
+    public void initNgWebDriver() {
         ngWebDriver = new NgWebDriver((JavascriptExecutor) driver);
     }
 
