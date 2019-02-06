@@ -1,7 +1,7 @@
 package com.essent.testing.dwp.pageobject.impl.elements;
 
 import com.essent.testing.dwp.pageobject.elements.NonEditable;
-import com.essent.testing.odoo.pageobject.impl.Component;
+import com.essent.testing.dwp.pageobject.impl.Component;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import java.util.HashMap;

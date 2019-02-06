@@ -95,6 +95,11 @@ public abstract class Component {
         return sub.replace(template);
     }
 
+    protected String createQuery(String template, Map<String, String> valuesMapper) {
+        StrSubstitutor sub = new StrSubstitutor(valuesMapper);
+        return sub.replace(template);
+    }
+
     protected Model.Callback scrollToView() {
         return new Model.Callback() {
             @Override
