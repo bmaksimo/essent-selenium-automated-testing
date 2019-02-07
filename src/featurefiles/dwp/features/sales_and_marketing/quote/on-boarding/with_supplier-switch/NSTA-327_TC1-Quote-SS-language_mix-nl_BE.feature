@@ -1,10 +1,13 @@
 ﻿@DWP
 @SALES-MARKETING
+@REGRESSION
+@B2C
 Feature: Creating a B2C Quote TC1 with "Move In" without using Market Mock.
 
     Background:
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
+    @NSTA-327
     @SUPPLIER-SWITCH-NO-MM
     Scenario: Create a B2C Account with Quote, With move in, without using Market Mock
 

@@ -1,5 +1,7 @@
 ﻿@DWP
 @SALES-MARKETING
+@REGRESSION
+@B2C
 Feature: Creating a B2C Quote TC1 with "Move In" without using Market Mock.
 
     Background:
