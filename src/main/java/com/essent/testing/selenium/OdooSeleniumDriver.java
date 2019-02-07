@@ -44,9 +44,7 @@ public class OdooSeleniumDriver extends SeleniumDriver {
             }
         }
         setUpDefaultFileDownloadLocation(options);
-        ChromeDriverService driverService = ChromeDriverService.createDefaultService();
-        ChromeDriver chromeDriver = new ChromeDriver(driverService, options);
-        enableFileDownloadInHeadlessMode(driverService, chromeDriver);
+        enableFileDownloadInHeadlessMode(driverService, (ChromeDriver) driver);
     }
 
     private void setUpDefaultFileDownloadLocation(ChromeOptions options) {

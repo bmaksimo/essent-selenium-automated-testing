@@ -39,7 +39,8 @@ public abstract class SeleniumDriver {
     protected String browserName;
     protected String browserVersion;
     protected ChromeOptions options;
-    
+    protected ChromeDriverService driverService;
+
     protected SeleniumDriver() {
         createWebDriver();
         setUp();
@@ -74,7 +75,7 @@ public abstract class SeleniumDriver {
             } else {
                 options.addArguments("--start-maximized");
             }
-            ChromeDriverService driverService = ChromeDriverService.createDefaultService();
+            driverService = ChromeDriverService.createDefaultService();
             chromeDriver = new ChromeDriver(driverService, options);
         } else {
             options.addArguments("--start-maximized");

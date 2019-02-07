@@ -15,7 +15,6 @@ public class OdooGenericSteps extends OdooScenario {
     @Before("@ODOO, @E2E, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
-        setUpWebDriver();
     }
 
     @Given("^I logged in to Odoo as \"([^\"]*)\"$")
