@@ -21,6 +21,8 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
 import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
 import static org.awaitility.Duration.ONE_SECOND;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class FormElements extends DwpScenario {
 
@@ -50,18 +52,15 @@ public class FormElements extends DwpScenario {
     }
 
     @And("^\"([^\"]*)\" field value is \"([^\"]*)\"$")
-    public void fieldValueIs(String label, String expectedValue) throws Throwable {
+    public void setFieldValue(String label, String expectedValue) throws Throwable {
         NonEditable field = new NonEditableImpl(webDriver);
-        FluentWait<NonEditable> waiter = new FluentWait<>(field)
-            .withTimeout(java.time.Duration.ofSeconds(50))
-            .pollingEvery(java.time.Duration.ofSeconds(5));
-        waiter.until(new Function<NonEditable, Object>() {
-            @Override
-            public Object apply(NonEditable nonEditable) {
-                return StringUtils.equals(expectedValue, field.getValue(label));
-            }
+        FluentWait<NonEditable> waiter = waiter(field, 50, 5);
+        waiter.until((NonEditable p) -> {
+            String actualValue = p.getValue(label);
+            String assertionMessage = String.format("Actual value of '%s' was '%s', and this differs from expected '%s'", label, actualValue, expectedValue);
+            waiter.withMessage(assertionMessage);
+            return StringUtils.equals(expectedValue, actualValue);
         });
-        //assertThat(String.format("Actual value of '%s' was '%s', and this differs from expected '%s'", label, actualValue, expectedValue), expectedValue, equalTo(actualValue));
     }
 
     @Override
