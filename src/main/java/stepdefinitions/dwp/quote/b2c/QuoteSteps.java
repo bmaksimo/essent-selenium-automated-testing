@@ -385,7 +385,9 @@ public class QuoteSteps extends DwpScenario {
                 selectEanCode();
                 return;
             case "random":
-                electricityConnectionDetails.setEan(PrepareDataForContract.generateEAN());
+                String generatedEan = PrepareDataForContract.generateEAN();
+                electricityConnectionDetails.setEan(generatedEan);
+                parameterProvider.put("EAN-code-generated", generatedEan);
                 break;
             default:
                 electricityConnectionDetails.setEan(ean);

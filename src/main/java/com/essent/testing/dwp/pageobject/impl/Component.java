@@ -67,6 +67,7 @@ public abstract class Component {
     }
 
     protected WebElement findElementWhenVisible(By selector) {
+        seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(selector);
     }
 
@@ -96,6 +97,11 @@ public abstract class Component {
         Map<String, String> valuesMap = new HashMap<>();
         valuesMap.put(key, value);
         StrSubstitutor sub = new StrSubstitutor(valuesMap);
+        return sub.replace(template);
+    }
+
+    protected String createQuery(String template, Map<String, String> valuesMapper) {
+        StrSubstitutor sub = new StrSubstitutor(valuesMapper);
         return sub.replace(template);
     }
 
