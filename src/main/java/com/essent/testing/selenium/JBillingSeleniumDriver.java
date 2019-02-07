@@ -12,7 +12,7 @@ import java.util.function.Function;
 public class JBillingSeleniumDriver extends SeleniumDriver {
     private static final Logger logger = Logger.getLogger(JBillingSeleniumDriver.class);
 
-    public JBillingSeleniumDriver() {
+    private JBillingSeleniumDriver() {
         super();
     }
 

@@ -2,14 +2,10 @@ package com.essent.testing.scenario;
 
 import com.billinghouse.cucumber.runtime.parameter.ParameterProvider;
 import com.billinghouse.cucumber.runtime.scenario.ActiveScenarioProvider;
-import com.essent.automation.util.Sleeper;
 import com.essent.testing.selenium.SeleniumDriver;
 import cucumber.api.Scenario;
 import cucumber.runtime.CucumberException;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +14,6 @@ public abstract class RegisteredScenario {
 
     @Autowired
     protected ParameterProvider parameterProvider;
-    static protected SeleniumDriver webDriver;
-
     private  final static Logger logger = Logger.getLogger(RegisteredScenario.class);
 
 
@@ -56,18 +50,6 @@ public abstract class RegisteredScenario {
             && ((RemoteWebDriver) seleniumDriver.getDriver()).getSessionId() != null) {
             seleniumDriver.tearDown();
         }
-    }
-
-    protected void takeScreenshot(boolean success) {
-        webDriver.takeScreenshot(success);
-    }
-
-    protected void moveToElementAndClick(WebElement element, WebDriver driver) {
-        Actions actions = new Actions(driver);
-        Actions elementMovedTo = actions.moveToElement(element);
-        elementMovedTo.perform();
-        Sleeper.sleepTightInSeconds(3);
-        elementMovedTo.click().perform();
     }
 
     protected <T> FluentWait<T> waiter(T testObject, long secondsTimeout, long secondsPollingEvery) {

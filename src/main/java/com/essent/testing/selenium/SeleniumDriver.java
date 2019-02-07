@@ -1,6 +1,7 @@
 package com.essent.testing.selenium;
 
 import com.essent.automation.core.WebDriverWait;
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import org.apache.commons.io.FileUtils;
@@ -13,6 +14,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -35,9 +37,9 @@ public abstract class SeleniumDriver {
     private static final Logger logger = Logger.getLogger(SeleniumDriver.class);
     private static final String JQUERY_IS_NOT_ACTIVE = "return window.jQuery != undefined && jQuery.active === 0";
     protected WebDriver driver;
-    protected String baseUrl;
+    private String baseUrl;
     protected String browserName;
-    protected String browserVersion;
+    private String browserVersion;
     protected ChromeOptions options;
     protected ChromeDriverService driverService;
 
@@ -218,6 +220,14 @@ public abstract class SeleniumDriver {
     public <V> void waitForExpectedCondition(final ExpectedCondition<?> expectedCondition, final long timeoutInSeconds, final long sleepInMillis) {
         final WebDriverWait driverWait = new WebDriverWait(driver, timeoutInSeconds, sleepInMillis);
         driverWait.until((Function<? super WebDriver, V>) expectedCondition);
+    }
+
+    public void moveToElementAndClick(WebElement element) {
+        Actions actions = new Actions(driver);
+        Actions elementMovedTo = actions.moveToElement(element);
+        elementMovedTo.perform();
+        Sleeper.sleepTightInSeconds(3);
+        elementMovedTo.click().perform();
     }
 
     public Set<Cookie> getCookies() {

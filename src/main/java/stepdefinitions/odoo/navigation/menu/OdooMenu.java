@@ -52,7 +52,7 @@ public class OdooMenu extends OdooScenario {
         WebElement button = seleniumDriver.findElementWhenVisible(By.xpath("//table[@class='oe_list_content'][1]//tbody//tr["+rowIndex+"]//td[@data-field='generate_coda']//button[1]"));
         if (null == button) throw new CucumberException("Button was not found");
 
-        moveToElementAndClick(button, seleniumDriver.getDriver());
+        seleniumDriver.moveToElementAndClick(button);
     }
 
     @Then("^Button \"([^\"]*)\" is clicked$")
