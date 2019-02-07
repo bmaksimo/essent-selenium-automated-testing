@@ -5,9 +5,9 @@ import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
 
 
-public class ContractPage extends BaseObject {
+public class ContractPageClass extends BaseObject {
 
-    public ContractPage(SeleniumDriver seleniumDriver) { super(seleniumDriver); }
+    public ContractPageClass(SeleniumDriver seleniumDriver) { super(seleniumDriver); }
 
 
     public void openFirstContractFromList() {
@@ -37,7 +37,8 @@ public class ContractPage extends BaseObject {
     }
 
     public void selectEAN(){
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("ean-c-aos-products-quotes-5-d-9-d-5-d-43-41-d-0-8957-6581-5-c-498-d-3-a-302-d-field")));
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"ean_c\"]"))); //div[@form-id='formly_124']
+//        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("ean-c-aos-products-quotes-5-d-9-d-5-d-43-41-d-0-8957-6581-5-c-498-d-3-a-302-d-field")));
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenClickable(By.xpath("(//*[@id='ean_c']//b)[1]")));
     }
 

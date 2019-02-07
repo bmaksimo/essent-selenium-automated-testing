@@ -187,6 +187,7 @@ public class QuoteSteps extends DwpScenario {
         return success;
     }
 
+//    Next step was not working on REG04 and UAT08, so new step was created:
     @And("^Customer address is$")
     public void initCustomerAddress(final DataTable address) throws Throwable {
         List<CustomerAddress> list = address.asList(CustomerAddress.class);
