@@ -8,6 +8,7 @@ import org.junit.AfterClass;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.FluentWait;
 
 import java.util.Map;
 
@@ -57,6 +58,12 @@ public class SeleniumScenario extends RegisteredScenario {
         elementMovedTo.perform();
         Sleeper.sleepTightInSeconds(3);
         elementMovedTo.click().perform();
+    }
+
+    protected <T> FluentWait<T> waiter(T testObject, long secondsTimeout, long secondsPollingEvery) {
+        return new FluentWait<>(testObject)
+            .withTimeout(java.time.Duration.ofSeconds(secondsTimeout))
+            .pollingEvery(java.time.Duration.ofSeconds(secondsPollingEvery));
     }
 
     @AfterClass
