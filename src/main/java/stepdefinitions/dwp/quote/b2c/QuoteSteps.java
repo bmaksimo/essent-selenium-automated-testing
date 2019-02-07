@@ -17,7 +17,6 @@ import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
-import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
@@ -38,7 +37,8 @@ import static com.essent.testing.dwp.autocrat.element.quote.TariffElements.NO_PR
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.NEXT_STEP;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
-import static org.awaitility.Duration.*;
+import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
+import static org.awaitility.Duration.ONE_HUNDRED_MILLISECONDS;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -71,19 +71,6 @@ public class QuoteSteps extends DwpScenario {
     public void deduplicationDialogueLinkIsClicked(String linkText) throws Throwable {
         SimilarAccountDialog dialog = new SimilarAccountDialogImpl(getDwpWebDriver());
         dialog.clickOnLink(linkText);
-    }
-
-
-    private class CheckFormHeader implements Predicate<String> {
-        @Override
-        public boolean test(String header) {
-            int sec = 7;
-            Map<String, Object> options = new HashMap<>();
-            options.put("schedule_seconds", sec);
-            options.put("header", header);
-            boolean success = executeJavascriptTest("TrCheckFormHeader", options);
-            return success;
-        }
     }
 
     private class VerifyTariffSheetPriceAlert implements FlowAwarePredicate<QuoteSteps> {
@@ -154,16 +141,6 @@ public class QuoteSteps extends DwpScenario {
         QuoteDetailsPage quoteDetailsPage = new QuoteDetailsPage(getDwpWebDriver());
         quoteDetailsPage.next();
     }
-
-
-    @Then("^Form header is \"([^\"]*)\"$")
-    public void checkFormHeader(String formHeader) throws Throwable {
-         given().await()
-            .pollInterval(FIVE_HUNDRED_MILLISECONDS)
-            .pollDelay(ONE_SECOND)
-            .atMost(new Duration(30, SECONDS)).until(() -> new CheckFormHeader().test(formHeader));
-    }
-
 
     @And("^Customer is random$")
     public void checkAndGetRandomUser() throws Throwable {
@@ -408,7 +385,9 @@ public class QuoteSteps extends DwpScenario {
                 selectEanCode();
                 return;
             case "random":
-                electricityConnectionDetails.setEan(PrepareDataForContract.generateEAN());
+                String generatedEan = PrepareDataForContract.generateEAN();
+                electricityConnectionDetails.setEan(generatedEan);
+                parameterProvider.put("EAN-code-generated", generatedEan);
                 break;
             default:
                 electricityConnectionDetails.setEan(ean);

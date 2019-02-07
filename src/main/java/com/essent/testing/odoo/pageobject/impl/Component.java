@@ -64,6 +64,7 @@ public abstract class Component {
 
 
     public WebElement findElementWhenVisible(By selector) {
+        seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(selector);
     }
 
@@ -91,6 +92,7 @@ public abstract class Component {
         StrSubstitutor sub = new StrSubstitutor(valuesMap);
         return sub.replace(template);
     }
+
     protected String createQuery(String template, Map<String, String> valuesMapper) {
         StrSubstitutor sub = new StrSubstitutor(valuesMapper);
         return sub.replace(template);
@@ -111,6 +113,7 @@ public abstract class Component {
     }
 
     public void awaitOdooRequestToFinish(int seconds) {
-        new WebDriverWait(seleniumDriver.getDriver(), seconds).until(webDriver -> webDriver.findElements(By.cssSelector(".oe_wait")).isEmpty());
+            new WebDriverWait(seleniumDriver.getDriver(), seconds).withoutException()
+                .until(webDriver -> webDriver.findElements(By.cssSelector(".oe_wait")).isEmpty());
     }
 }

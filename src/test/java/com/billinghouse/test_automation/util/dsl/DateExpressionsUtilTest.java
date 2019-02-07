@@ -3,12 +3,11 @@ package com.billinghouse.test_automation.util.dsl;
 import org.junit.Test;
 
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.*;
-import static java.lang.String.format;
-import static java.lang.System.out;
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 
 public class DateExpressionsUtilTest {
-
 
     @Test
     public void testDateInputExpressions() throws Exception {
@@ -24,23 +23,28 @@ public class DateExpressionsUtilTest {
             "now"
         };
         for (String dateFrom : dateF) {
-            out.println(format("--Input '%s' expanded to date-time %s", dateFrom, expandFrom(dateFrom).toString("dd/MM/yyyy")));
+           assertTrue(matchesDwpDateFormat(expandFrom(dateFrom).toString("dd/MM/yyyy")));
         }
     }
 
     @Test
-    public void testJavaRegexHell_formattedDate() throws Exception {
-        String[] dateF = {
-            "28/06/2018",
-            "28/09/2018",
-            "28/10/2018"
-        };
-        for (String date : dateF)
-            matchesDwpDateFormat(date);
+    public void testConvertDateFormat() throws Exception {
+        String expectedDwpDate = "30/09/2019";
+        String actual = toDwpDate("2019-09-30");
+        assertEquals(String.format("Actual DWP date '%s' differs from the expected '%s'", actual, expectedDwpDate), expectedDwpDate, actual);
     }
 
     @Test
-    public void testConvertDateFormat() throws Exception {
-        out.println("--To DWP date:" + toDwpDate("2019-09-30"));
+    public void testConvertToSoctarFileDate() throws Exception {
+        String expectedSoctarFileDate = "12019013020191231";
+        String actual = checkAndConvertToSoctarFileDate("30/01/2019");
+        assertEquals(String.format("Actual Soctar start and end date '%s' differs from the expected '%s'", actual, expectedSoctarFileDate), expectedSoctarFileDate, actual);
+    }
+    @Test
+    public void testConvertToStartAndEndDate() throws Exception {
+        String expectedDwpStartEndDate = "01-02-2019 - 31-12-2019";
+        String actual = checkAndConvertToDwpContractStartEndDate("01/02/2019");
+        assertEquals(String.format("Actual Dwp start and end date '%s' differs from the expected '%s'", actual, expectedDwpStartEndDate), expectedDwpStartEndDate, actual);
+
     }
 }

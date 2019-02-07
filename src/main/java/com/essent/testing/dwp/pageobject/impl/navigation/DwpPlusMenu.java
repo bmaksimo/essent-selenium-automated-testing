@@ -16,7 +16,7 @@ import java.util.List;
 
 public class DwpPlusMenu extends Component {
 
-    private static String ACCORDION_BUTTON_SELECTOR_TEMPLATE = "[label='${text}'] .accordion-button";
+    private static String ACCORDION_BUTTON_SELECTOR_TEMPLATE = "//menu-link[normalize-space(@label)='${text}']//a";
     private static String LABELED_ACCORDION_WRAPPER_SELECTOR  =  "labeled-accordion-wrapper[label='${text}'] > a";
 
     private final static String XPATH_CONTAINS_TEXT_TEMPLATE = "//span[contains(text(),'${text}')]";
@@ -68,7 +68,7 @@ public class DwpPlusMenu extends Component {
     }
 
     private WebElement findAction(String actionLabel) {
-        By accordionButtonSelector = By.cssSelector(createQuery(ACCORDION_BUTTON_SELECTOR_TEMPLATE, "text", actionLabel));
+        By accordionButtonSelector = By.xpath(createQuery(ACCORDION_BUTTON_SELECTOR_TEMPLATE, "text", actionLabel));
         WebElement accordionButton = seleniumDriver.findElementOrNull(accordionButtonSelector);
         FluentWait<WebDriver> waiter = new FluentWait<>(seleniumDriver.getDriver()).withTimeout(Duration.ofSeconds(5));
         accordionButton = waiter.until(ExpectedConditions.elementToBeClickable(accordionButton));
