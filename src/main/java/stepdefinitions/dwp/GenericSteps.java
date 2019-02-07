@@ -19,6 +19,7 @@ import org.springframework.test.context.ContextConfiguration;
 import java.time.Duration;
 
 import static org.junit.Assert.assertNotNull;
+
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 public class GenericSteps extends DwpScenario {
 
@@ -31,7 +32,7 @@ public class GenericSteps extends DwpScenario {
     private void login(String username) throws Throwable {
         isDwpRunning();
         UserRoles dwpUser = UserRoles.get(username);
-        Window application = new LoginAction(getDwpWebDriver()).doLogin(dwpUser.getUsername(), dwpUser.getPassword());
+        Window application = new LoginAction().doLogin(dwpUser.getUsername(), dwpUser.getPassword());
         assertNotNull("DWP application did not appear after a login", application);
         injectJavaScriptTestRunner();
         discardPreviousFlow();
@@ -50,19 +51,18 @@ public class GenericSteps extends DwpScenario {
     }
 
     private void discardPreviousFlow() throws Throwable {
-        WebElement cancelWebElement = webDriver.findElementOrNull(By.id("cancel-button"), Duration.ofSeconds(1), Duration.ofMillis(50));
+        WebElement cancelWebElement = seleniumDriver.findElementOrNull(By.id("cancel-button"), Duration.ofSeconds(1), Duration.ofMillis(50));
         if(cancelWebElement != null) {
-            (new WebDriverWait(webDriver.getDriver(), 2)).until(ExpectedConditions.elementToBeClickable(cancelWebElement));
+            (new WebDriverWait(seleniumDriver.getDriver(), 2)).until(ExpectedConditions.elementToBeClickable(cancelWebElement));
             Button cancelButton = new ButtonImpl(cancelWebElement);
             cancelButton.click();
         }
 
     }
 
-
     @After("@DWP, @CORE, @E2E, @REGRESSION")
     public void tearDown() {
-        tidyUp();
+        tidyUp(seleniumDriver);
     }
 
 }

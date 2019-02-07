@@ -3,7 +3,6 @@ package com.essent.testing.dwp.pageobject.impl.modal.quote;
 import com.essent.automation.core.WebDriverWait;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.modal.quote.SimilarAccountDialog;
-import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import cucumber.runtime.CucumberException;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -13,19 +12,16 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 public class SimilarAccountDialogImpl extends Component implements SimilarAccountDialog {
 
     private final static By SELECOR = By.cssSelector(".view__modal .modal__header");
-
-
     private String title;
 
-    public SimilarAccountDialogImpl(SeleniumDriverDwpImpl seleniumDriver) {
-        super(seleniumDriver);
-        waitForRequestsToFinish();
+    public SimilarAccountDialogImpl() {
+        seleniumDriver.waitForRequestsToFinish();
     }
 
-    public SimilarAccountDialogImpl(SeleniumDriverDwpImpl seleniumDriver, String title) {
-        super(seleniumDriver.findElementOrNull(SELECOR), seleniumDriver);
+    public SimilarAccountDialogImpl(String title) {
+        super(SELECOR);
         this.title = title;
-        waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
     }
 
     @Override

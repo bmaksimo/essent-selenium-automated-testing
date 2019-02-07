@@ -5,7 +5,6 @@ import com.essent.testing.dwp.pageobject.elements.Button;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.elements.ButtonImpl;
 import com.essent.testing.dwp.pageobject.modal.confirm.ConfirmSignatureDialog;
-import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -16,14 +15,13 @@ public class ConfirmSignatureDialogImpl extends Component implements ConfirmSign
     private final static By SELECOR_CONFIRM_BUTTON = By.id("confirm-button");
 
 
-    public ConfirmSignatureDialogImpl(SeleniumDriverDwpImpl seleniumDriver, String title) {
-        super(seleniumDriver.findElementOrNull(SELECOR), seleniumDriver);
+    public ConfirmSignatureDialogImpl(String title) {
+        super(SELECOR);
         this.title = title;
-        waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
     }
 
-    public ConfirmSignatureDialogImpl(SeleniumDriverDwpImpl seleniumDriver) {
-       super(seleniumDriver);
+    public ConfirmSignatureDialogImpl() {
        seleniumDriver.waitForRequestsToFinish();
     }
 
@@ -54,7 +52,7 @@ public class ConfirmSignatureDialogImpl extends Component implements ConfirmSign
             return false;
         Button confirmButton = new ButtonImpl(element);
         confirmButton.click();
-        waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         return true;
     }
 

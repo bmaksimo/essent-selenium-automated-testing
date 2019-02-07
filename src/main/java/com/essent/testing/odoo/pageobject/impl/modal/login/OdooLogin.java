@@ -4,7 +4,6 @@ package com.essent.testing.odoo.pageobject.impl.modal.login;
 import com.essent.testing.odoo.pageobject.Window;
 import com.essent.testing.odoo.pageobject.impl.main.OdooMainWindow;
 import com.essent.testing.odoo.pageobject.modal.Dialog;
-import com.essent.testing.selenium.webdriver.odoo.SeleniumDriverOdooImpl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -14,12 +13,12 @@ public class OdooLogin extends LoginComponent implements Dialog {
 
     private final static By SELECTOR = By.cssSelector(".oe_login_form");
 
-    public OdooLogin(SeleniumDriverOdooImpl seleniumDriver) {
-        super(seleniumDriver.findElementOrNull(SELECTOR), seleniumDriver);
+    public OdooLogin() {
+        super(SELECTOR);
     }
 
     public Window login(String username, String password) throws Throwable {
-        WebElement element = seleniumDriver.findElementOrNull(By.id("login"));
+        WebElement element = seleniumDriver.findElementWhenVisible(By.id("login"));
         assertNotNull(element);
         element.clear();
         element.sendKeys(username);

@@ -3,7 +3,6 @@ package com.essent.testing.dwp.pageobject.impl.quote;
 import com.essent.testing.dwp.pageobject.Form;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.quote.GuidedStep;
-import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.lang3.BooleanUtils;
 import org.awaitility.Duration;
@@ -22,10 +21,10 @@ import static org.awaitility.Duration.TWO_SECONDS;
 
 public abstract class QuoteCreationGuidedStep extends Component implements GuidedStep, Form {
 
+    private static By STANDARD_UI_VIEW = By.xpath(VIEW.getQuery());
 
-    public QuoteCreationGuidedStep(SeleniumDriverDwpImpl seleniumDriver) {
-        super(seleniumDriver.findElementOrNull(By.xpath(VIEW.getQuery())),
-            seleniumDriver);
+    public QuoteCreationGuidedStep() {
+        super(STANDARD_UI_VIEW);
     }
 
     @Override
@@ -36,7 +35,7 @@ public abstract class QuoteCreationGuidedStep extends Component implements Guide
             .pollInterval(FIVE_HUNDRED_MILLISECONDS)
             .pollDelay(TWO_SECONDS)
             .atMost(new Duration(10, SECONDS)).until(this::isNextButtonEnabled);
-        WebElement nextButton = seleniumDriver.findElementWhenClickable(By.cssSelector(NEXT_BUTTON.getQuery()));
+        WebElement nextButton = findElementWhenClickable(By.cssSelector(NEXT_BUTTON.getQuery()));
         if(logger().isDebugEnabled())
         {
             seleniumDriver.takeScreenshot("guidance-confirm-");

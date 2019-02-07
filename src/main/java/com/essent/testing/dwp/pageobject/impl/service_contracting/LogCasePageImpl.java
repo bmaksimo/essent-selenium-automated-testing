@@ -5,7 +5,6 @@ import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.Form;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.service_contracting.LogCasePage;
-import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
 import org.openqa.selenium.By;
@@ -22,20 +21,11 @@ import static org.awaitility.Duration.TWO_SECONDS;
 
 public class LogCasePageImpl extends Component implements Form, LogCasePage {
 
-
-    private static final String BUTTON_SELECTOR_TEMPLATE                  = "//div[@class='form__footer']/button[normalize-space(text()) = '${text}']";
-
+    private static final String BUTTON_SELECTOR_TEMPLATE = "//div[@class='form__footer']/button[normalize-space(text()) = '${text}']";
     private String subject;
-
     private String description;
-
     private String solution;
-
     private String priority;
-
-    public LogCasePageImpl(SeleniumDriverDwpImpl seleniumDriver) {
-        super(seleniumDriver);
-    }
 
     @Override
     public boolean fillInFormData() {

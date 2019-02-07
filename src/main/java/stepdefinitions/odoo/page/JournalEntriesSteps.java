@@ -1,6 +1,6 @@
 package stepdefinitions.odoo.page;
 
-import com.essent.testing.odoo.pageobject.impl.page.JournalEnteriesPage;
+import com.essent.testing.odoo.pageobject.impl.page.JournalEntriesPage;
 import com.essent.testing.odoo.scenario.OdooScenario;
 import cucumber.api.DataTable;
 import cucumber.api.Scenario;
@@ -29,25 +29,25 @@ public class JournalEntriesSteps extends OdooScenario {
 
     @And("^Create new Journal Entries is clicked$")
     public void createNewJournalEntriesIsClicked() throws Throwable {
-        JournalEnteriesPage je = new JournalEnteriesPage(getOdooWebDriver());
-        je.clickOnCreateJournalEntery();
+        JournalEntriesPage je = new JournalEntriesPage();
+        je.clickOnCreateJournalEntry();
     }
 
     @And("^Journal is \"([^\"]*)\"$")
     public void journalIs(String journal) throws Throwable {
-        JournalEnteriesPage je = new JournalEnteriesPage(getOdooWebDriver());
+        JournalEntriesPage je = new JournalEntriesPage();
         je.chooseDiverseDagboekKlanten(journal);
     }
 
     @And("^Date document is now$")
     public void dateDocumentIsNow() throws Throwable {
-        JournalEnteriesPage je = new JournalEnteriesPage(getOdooWebDriver());
+        JournalEntriesPage je = new JournalEntriesPage();
         je.dateDocumentIsToday();
     }
 
     @And("^New item is$")
     public void newItemIs(DataTable dbTable) throws Throwable {
-        JournalEnteriesPage je = new JournalEnteriesPage(getOdooWebDriver());
+        JournalEntriesPage je = new JournalEntriesPage();
         List<List<String>> db = dbTable.raw();
         je.clickOnAddAnItem();
         je.createNewItem(db,1,parameterProvider.getValueOrParameterAsString(db.get(1).get(1)));
@@ -58,33 +58,33 @@ public class JournalEntriesSteps extends OdooScenario {
 
     @And("^Save and Post journal entry")
     public void saveAndPost() throws Throwable {
-        JournalEnteriesPage je = new JournalEnteriesPage(getOdooWebDriver());
+        JournalEntriesPage je = new JournalEntriesPage();
         je.saveJournal();
         je.postJournal();
     }
 
     @And("^Mark first two journal items one with credit and one with debit \"([^\"]*)\"$")
     public void markFirstTwoJournalItemsOneWithCreditAndOneWithDebit(String money) throws Throwable {
-        JournalEnteriesPage je = new JournalEnteriesPage(getOdooWebDriver());
+        JournalEntriesPage je = new JournalEntriesPage();
         je.clickOnJournalItemsCheckBox(1);
         je.clickOnJournalItemsCheckBox(2);
     }
 
     @And("^More menu is \"([^\"]*)\"$")
     public void moreMenuIs(String item) throws Throwable {
-        JournalEnteriesPage je = new JournalEnteriesPage(getOdooWebDriver());
+        JournalEntriesPage je = new JournalEntriesPage();
         je.clickOnMoreMenuItem(item);
     }
 
     @And("^Confirm action$")
     public void confirm() throws Throwable {
-        JournalEnteriesPage je = new JournalEnteriesPage(getOdooWebDriver());
+        JournalEntriesPage je = new JournalEntriesPage();
         je.clickOnConfirm();
     }
 
     @Then("^Reconcile number is shown$")
     public void reconcileNumberIsShown() throws Throwable {
-        JournalEnteriesPage je = new JournalEnteriesPage(getOdooWebDriver());
+        JournalEntriesPage je = new JournalEntriesPage();
         String reconcile1 = je.reconcileText(1);
         String reconcile2 = je.reconcileText(2);
         Assert.assertEquals(reconcile1,reconcile2);

@@ -25,14 +25,14 @@ public class ChangeAccountStatusSteps extends DwpScenario {
 
     @And("^Update account status on \"([^\"]*)\"$")
     public void updateAccountStatusOn(String status) throws Throwable {
-        ChangeAccountStatusPage changeAccountStatusPage = new ChangeAccountStatusPage(getDwpWebDriver());
+        ChangeAccountStatusPage changeAccountStatusPage = new ChangeAccountStatusPage();
         changeAccountStatusPage.chooseAccountStatus(status);
     }
 
     @And("^Client signature file is uploaded$")
     public void uploadFile() throws Throwable {
         String filePath = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
-        ChangeAccountStatusPage changeAccountStatusPage = new ChangeAccountStatusPage(getDwpWebDriver());
+        ChangeAccountStatusPage changeAccountStatusPage = new ChangeAccountStatusPage();
         boolean success = changeAccountStatusPage.uploadFile(filePath);
         assertThat(String.format("Signature file %s upload failed.", filePath), success, is(true));
     }
@@ -40,14 +40,14 @@ public class ChangeAccountStatusSteps extends DwpScenario {
     @And("^Getekend document is uploaded$")
     public void uploadFileForSign() throws InterruptedException {
         String filePath = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
-        ChangeAccountStatusPage changeAccountStatusPage = new ChangeAccountStatusPage(getDwpWebDriver());
+        ChangeAccountStatusPage changeAccountStatusPage = new ChangeAccountStatusPage();
         boolean success = changeAccountStatusPage.uploadFileForSign(filePath);
         assertThat(String.format("Signature file %s upload failed.", filePath), success, is(true));
     }
 
     @Then("^Find document$")
     public void findDocument() throws Throwable {
-        ChangeAccountStatusPage changeAccountStatusPage = new ChangeAccountStatusPage(getDwpWebDriver());
+        ChangeAccountStatusPage changeAccountStatusPage = new ChangeAccountStatusPage();
         changeAccountStatusPage.findDocument();
     }
 }

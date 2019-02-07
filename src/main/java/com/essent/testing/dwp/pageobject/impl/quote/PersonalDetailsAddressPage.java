@@ -3,7 +3,6 @@ package com.essent.testing.dwp.pageobject.impl.quote;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
-import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -17,14 +16,10 @@ import static org.junit.Assert.fail;
 
 public class PersonalDetailsAddressPage extends QuoteCreationGuidedStep {
 
-    private CustomerAddress      address;
+    private CustomerAddress address;
 
     public void setCustometAddress(CustomerAddress customerAddress) {
         address = customerAddress;
-    }
-
-    public PersonalDetailsAddressPage(SeleniumDriverDwpImpl seleniumDriver) {
-        super(seleniumDriver);
     }
 
     private class HideAddressSuggestion implements Model.Callback {

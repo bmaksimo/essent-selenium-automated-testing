@@ -16,7 +16,7 @@ public class ServiceStep extends DwpScenario {
 
     @Then("^\"([^\"]*)\" is created$")
     public void isCreated(String input) throws Throwable {
-        ServicePage servicePage = new ServicePage(getDwpWebDriver());
+        ServicePage servicePage = new ServicePage();
         servicePage.validateCreatedTask(input);
     }
 

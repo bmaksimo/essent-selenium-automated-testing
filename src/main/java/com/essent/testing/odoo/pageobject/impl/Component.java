@@ -4,8 +4,9 @@ import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
 import com.essent.automation.core.WebDriverWait;
+import com.essent.testing.context.ContextService;
+import com.essent.testing.selenium.OdooSeleniumDriver;
 import com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter;
-import com.essent.testing.selenium.webdriver.odoo.SeleniumDriverOdooImpl;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.text.StrSubstitutor;
 import org.apache.log4j.Logger;
@@ -20,21 +21,19 @@ import java.util.Map;
 public abstract class Component {
 
     protected WebElement element;
-
-
-    protected SeleniumDriverOdooImpl seleniumDriver;
-
+    protected OdooSeleniumDriver seleniumDriver;
     private final Logger logger = Logger.getLogger(Component.class);
 
     protected Logger logger() {
         return logger;
     }
 
-    public Component(SeleniumDriverOdooImpl seleniumDriver) {
-        this.seleniumDriver = seleniumDriver;
+    public Component() {
+        this.seleniumDriver = (OdooSeleniumDriver) ContextService.getContext().getBean("odooSeleniumDriver");
     }
 
-    public Component(By selector, SeleniumDriverOdooImpl seleniumDriver) {
+    public Component(By selector) {
+        this();
         logger().info("STEP:");
         logger().info(" - ACTION: LOAD_PAGE_OBJECT");
         element = seleniumDriver.findElementOrNull(selector);
@@ -44,10 +43,10 @@ public abstract class Component {
             throw new CucumberException(getClass() + ": Web element was not found.");
         }
         logger.debug(String.format(" - TARGET: %s -> %s", selector, element.getAttribute("innerHTML")));
-        this.seleniumDriver = seleniumDriver;
     }
 
-    public Component(WebElement element, SeleniumDriverOdooImpl seleniumDriver) {
+    public Component(WebElement element) {
+        this();
         logger.info("STEP:");
         logger.info(" - ACTION: LOAD_PAGE_OBJECT");
 
@@ -59,12 +58,10 @@ public abstract class Component {
 
         logger.info(" - RESULT: " + element);
         this.element = element;
-        this.seleniumDriver = seleniumDriver;
     }
 
 
     public WebElement findElementWhenVisible(By selector) {
-        seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(selector);
     }
 

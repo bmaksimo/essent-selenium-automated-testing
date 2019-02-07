@@ -2,7 +2,6 @@ package com.essent.testing.odoo.pageobject.impl.elements;
 
 import com.essent.testing.odoo.pageobject.elements.ListView;
 import com.essent.testing.odoo.pageobject.impl.Component;
-import com.essent.testing.selenium.webdriver.odoo.SeleniumDriverOdooImpl;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.collections.CollectionUtils;
 import org.openqa.selenium.By;
@@ -18,10 +17,6 @@ import static stepdefinitions.odoo.navigation.menu.OdooMenuList.getKey;
 public class DefaultListView extends Component implements ListView {
 
     private static final String TABLE_CELL_SELECTOR_TEMPLATE = "//table[@class='oe_list_content'][1]//tbody//tr[${rowIndex}]//td[@data-field='${key}'][1]";
-
-    public DefaultListView(SeleniumDriverOdooImpl seleniumDriver) {
-        super(seleniumDriver);
-    }
 
     @Override
     public void checkCellAt(String columnName, String rowIndex, String value) {

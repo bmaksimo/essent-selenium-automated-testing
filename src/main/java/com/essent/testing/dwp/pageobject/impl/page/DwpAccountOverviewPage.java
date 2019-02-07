@@ -1,16 +1,11 @@
 package com.essent.testing.dwp.pageobject.impl.page;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 
 public class DwpAccountOverviewPage extends Component {
-
-    public DwpAccountOverviewPage(SeleniumDriverDwpImpl seleniumDriver) {
-        super(seleniumDriver);
-    }
 
     public WebElement overviewHeader() {
         return seleniumDriver.findElementWhenVisible(By.className("nav-header"));
@@ -103,7 +98,7 @@ public class DwpAccountOverviewPage extends Component {
     }
 
     public WebElement saveButton() {
-        return seleniumDriver.findElementWhenClickable(By.xpath("//button[contains(text(),'Opslaan')]"));
+        return findElementWhenClickable(By.xpath("//button[contains(text(),'Opslaan')]"));
     }
 
     public void clickOnSaveButton()  {

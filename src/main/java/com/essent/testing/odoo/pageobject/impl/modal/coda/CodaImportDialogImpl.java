@@ -3,7 +3,6 @@ package com.essent.testing.odoo.pageobject.impl.modal.coda;
 import com.essent.automation.autocrat.Model;
 import com.essent.testing.odoo.pageobject.impl.Component;
 import com.essent.testing.odoo.pageobject.modal.CodaImportDialog;
-import com.essent.testing.selenium.webdriver.odoo.SeleniumDriverOdooImpl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -17,19 +16,15 @@ import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.UPLOAD_
 
 public class CodaImportDialogImpl extends Component implements CodaImportDialog {
 
-    private final static By     SELECTOR                        = By.cssSelector(".modal-content");
-    private final static String FILE_SELECTOR                   = "form[action='/web/binary/upload'] > input[name='ufile']";
-
+    private final static By SELECTOR = By.cssSelector(".modal-content");
+    private final static String FILE_SELECTOR = "form[action='/web/binary/upload'] > input[name='ufile']";
     private final static String IMPORT_BUTTON_SELECTOR_TEMPLATE = "//button[span[normalize-space(text())='${text}']]";
-
-    private final static By      RESULTS_NOTE_SELECTOR           = By.cssSelector("textarea[name='note']");
-
+    private final static By RESULTS_NOTE_SELECTOR = By.cssSelector("textarea[name='note']");
     private String uploadFile;
-
     private String importButton;
 
-    public CodaImportDialogImpl(SeleniumDriverOdooImpl seleniumDriver) {
-        super(SELECTOR, seleniumDriver);
+    public CodaImportDialogImpl() {
+        super(SELECTOR);
     }
 
     @Override

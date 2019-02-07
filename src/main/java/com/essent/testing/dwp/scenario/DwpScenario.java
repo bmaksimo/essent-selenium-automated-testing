@@ -8,13 +8,16 @@ import com.essent.automation.util.Sleeper;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.datagenerator.vat.VatNumberGenerator;
+import com.essent.testing.scenario.RegisteredScenario;
+import com.essent.testing.selenium.DWPSeleniumDriver;
 import com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter;
-import com.essent.testing.selenium.scenario.AbstractSeleniumScenario;
-import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import com.google.gson.Gson;
 import cucumber.runtime.CucumberException;
+import org.apache.commons.lang3.StringUtils;
 import org.iban4j.CountryCode;
 
+import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.Map;
 
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpDate;
@@ -24,47 +27,23 @@ import static org.junit.Assert.assertTrue;
  * Created by Jim on 27-12-2017.
  *
  */
-public abstract class DwpScenario extends AbstractSeleniumScenario {
+public abstract class DwpScenario extends RegisteredScenario {
 
-    public void setUpWebDriver() throws Exception {
-        tidyUp();
-        webDriver = new SeleniumDriverDwpImpl();
-        webDriver.setUp();
-    }
-
-    protected SeleniumDriverDwpImpl getDwpWebDriver() {
-        return (SeleniumDriverDwpImpl) webDriver;
-    }
+    @Resource(name="dwpSeleniumDriver")
+    protected DWPSeleniumDriver seleniumDriver;
 
     protected void isDwpRunning() throws Exception {
         String dwpUrl = ConfigProvider.getProperty(ConfigKey.DWP_BASE_URL);
-        webDriver.setBaseUrl(dwpUrl);
-        webDriver.goToHomePage();
-        String currentUrl = webDriver.getDriver().getCurrentUrl();
+        seleniumDriver.setBaseUrl(dwpUrl);
+        seleniumDriver.goToHomePage();
+        String currentUrl = seleniumDriver.getDriver().getCurrentUrl();
         if (null != currentUrl && !currentUrl.equals(dwpUrl)) {
-            webDriver.setBaseUrl(currentUrl);
-            webDriver.goToHomePage();
+            seleniumDriver.setBaseUrl(currentUrl);
+            seleniumDriver.goToHomePage();
         }
         Sleeper.sleepTightInSeconds(3);
         logger().info("Current URL: " + currentUrl);
-        assertTrue(currentUrl.startsWith(webDriver.getBaseUrl()));
-    }
-
-    protected void injectJavaScriptTestRunner() {
-        getDwpWebDriver().injectJavaScriptTestRunner();
-    }
-
-    protected boolean executeJavascriptTest(String registeredJsClass, Object options) {
-        return getDwpWebDriver().executeJavascriptTest(registeredJsClass, options);
-    }
-
-    public boolean executeJavascriptTest(String registeredJsClass, Object options, boolean withException) {
-        return  getDwpWebDriver().executeJavascriptTest(registeredJsClass, options, withException);
-    }
-
-    protected Map executeJavascriptMethod(String registeredJsClass, Object options) {
-        Map map = getDwpWebDriver().executeJavascriptMethod(registeredJsClass, options);
-        return map;
+        assertTrue(currentUrl.startsWith(seleniumDriver.getBaseUrl()));
     }
 
     protected String generateVat(String generatorParam) {
@@ -75,27 +54,70 @@ public abstract class DwpScenario extends AbstractSeleniumScenario {
         return new VatNumberGenerator().getVatNum(CountryCode.getByCode(countryCode));
     }
 
+    private String generateCompanyName() {
+        Map<String, String> options = new HashMap<>();
+        Map reply = executeJavascriptMethod("TrGetRandomUser", options);
+        String status = ((String) reply.get("status"));
+        boolean success = StringUtils.equals("PASSED", status);
+        if (success) {
+            Map userData = (Map) reply.get("user");
+            RandomUser randomUser = randomUser(userData);
+            String first = randomUser.getName().getFirst();
+            String last = randomUser.getName().getLast();
+            return first + " & " + last + " Startup";
+        }
+        else throw new CucumberException("ramdomuser.me API failure");
+    }
+
     protected RandomUser randomUser(Map reply) {
         Gson gson = new Gson();
         String randomUserJs = gson.toJson(reply);
-        RandomUser randomUser = gson.fromJson(randomUserJs, RandomUser.class);
-        return randomUser;
+        return gson.fromJson(randomUserJs, RandomUser.class);
     }
 
     protected Execution createExecution() {
         return AutocratExecutionAdapter.newExecution();
     }
 
-    protected Step    createStep(Action action) {
+    protected Step createStep(Action action) {
         return new Step().action(action);
     }
 
     protected boolean execute(final Execution execution) {
-        webDriver.waitForRequestsToFinish();
-        return AutocratExecutionAdapter.execute(webDriver.getDriver(), execution);
+        seleniumDriver.waitForRequestsToFinish();
+        return AutocratExecutionAdapter.execute(seleniumDriver.getDriver(), execution);
     }
 
     protected String toDwpDate(String parameter) {
         return checkAndConvertToDwpDate(parameter);
+    }
+
+    protected void injectJavaScriptTestRunner() {
+        seleniumDriver.injectJavaScriptTestRunner();
+    }
+
+    protected boolean executeJavascriptTest(String registeredJsClass, Object options) {
+        return seleniumDriver.executeJavascriptTest(registeredJsClass, options);
+    }
+
+    public boolean executeJavascriptTest(String registeredJsClass, Object options, boolean withException) {
+        return seleniumDriver.executeJavascriptTest(registeredJsClass, options, withException);
+    }
+
+    protected Map executeJavascriptMethod(String registeredJsClass, Object options) {
+        return seleniumDriver.executeJavascriptMethod(registeredJsClass, options);
+    }
+
+    public void tearDown() {
+        if (seleniumDriver != null) {
+            tidyUp(seleniumDriver);
+        }
+    }
+
+    public void setUpWebDriver() throws Exception {
+        tidyUp(seleniumDriver);
+        seleniumDriver.createWebDriver();
+        seleniumDriver.setUp();
+        seleniumDriver.initNgWebDriver();
     }
 }

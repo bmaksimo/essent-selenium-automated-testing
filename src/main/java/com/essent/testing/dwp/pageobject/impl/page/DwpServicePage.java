@@ -1,16 +1,11 @@
 package com.essent.testing.dwp.pageobject.impl.page;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 
 public class DwpServicePage extends Component {
-
-    public DwpServicePage(SeleniumDriverDwpImpl seleniumDriver) {
-        super(seleniumDriver);
-    }
 
     public WebElement subjectDropdownMenu() {
         return seleniumDriver.findElementWhenVisible(By.id("cases-name-field"));

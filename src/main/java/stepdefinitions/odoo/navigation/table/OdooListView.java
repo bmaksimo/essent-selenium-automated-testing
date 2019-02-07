@@ -36,7 +36,7 @@ public class OdooListView extends OdooScenario  {
         String selector = "//div[@class='oe_searchview_input']";
 
         By xpath = By.xpath(selector);
-        List<WebElement> filterElements = webDriver.findElements(xpath,
+        List<WebElement> filterElements = seleniumDriver.findElements(xpath,
             Duration.ofSeconds(30),
             Duration.ofSeconds(5));
         if (filterElements.isEmpty()) throw new CucumberException("Button was not found");
@@ -50,7 +50,7 @@ public class OdooListView extends OdooScenario  {
     @When("^Advanced search is \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$")
     public void setAdvancedSearchFilter(String property, String operator, String inputSearchTerm) {
         AdvancedSearch advancedSearch = new AdvancedSearch(property, operator, inputSearchTerm);
-        new AdvancedSearchComponent(webDriver).runAdvancedSearch(advancedSearch);
+        new AdvancedSearchComponent().runAdvancedSearch(advancedSearch);
     }
 
     @Then("^The value in the column \"([^\"]*)\" of the \"([^\"]*)\" row is \"([^\"]*)\"$")
@@ -58,7 +58,7 @@ public class OdooListView extends OdooScenario  {
         String input = parameterProvider.getValueOrParameterAsString(value) == null ?
             value : parameterProvider.getValueOrParameterAsString(value);
         String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
-        ListView odooList = new DefaultListView(getOdooWebDriver());
+        ListView odooList = new DefaultListView();
         odooList.checkCellAt(column, rowIndex, input);
 
 
@@ -67,7 +67,7 @@ public class OdooListView extends OdooScenario  {
     @Then("^Column \"([^\"]*)\" of the \"([^\"]*)\" row is clicked$")
     public void clickCellAt(String column, String ordinal) {
         String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
-        ListView odooList = new DefaultListView(getOdooWebDriver());
+        ListView odooList = new DefaultListView();
         odooList.clickCellAt(column, rowIndex);
     }
 
@@ -75,7 +75,7 @@ public class OdooListView extends OdooScenario  {
     public void clickValueAt(String column, String value) {
         String input = parameterProvider.getValueOrParameterAsString(value) == null ?
             value : parameterProvider.getValueOrParameterAsString(value);
-        ListView odooList = new DefaultListView(getOdooWebDriver());
+        ListView odooList = new DefaultListView();
         odooList.clickValueAt(column, input);
     }
 
@@ -83,7 +83,7 @@ public class OdooListView extends OdooScenario  {
     public void checkValueAt(String column, String value) {
         String input = parameterProvider.getValueOrParameterAsString(value) == null ?
             value : parameterProvider.getValueOrParameterAsString(value);
-        ListView odooList = new DefaultListView(getOdooWebDriver());
+        ListView odooList = new DefaultListView();
         odooList.checkValueAt(column, input);
     }
 

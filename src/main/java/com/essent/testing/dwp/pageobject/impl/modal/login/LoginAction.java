@@ -2,18 +2,12 @@ package com.essent.testing.dwp.pageobject.impl.modal.login;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.Window;
-import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
+import com.essent.testing.dwp.pageobject.impl.Component;
 import org.openqa.selenium.By;
 
-public class LoginAction {
+public class LoginAction extends Component {
     private final static By IWELCOME_SELECTOR = By.id("login-base");
     private final static By DWP_SELECTOR = By.cssSelector(".modal__container.login");
-
-    private SeleniumDriverDwpImpl seleniumDriver;
-
-    public LoginAction(SeleniumDriverDwpImpl seleniumDriver) {
-        this.seleniumDriver = seleniumDriver;
-    }
 
     public Window doLogin(String username, String password) throws Throwable {
         LoginComponent loginComponent = getCurrentLoginDialog();

@@ -1,6 +1,5 @@
 package stepdefinitions.jbilling.Page;
 
-
 import com.essent.testing.jbilling.pageobject.impl.page.InvoicesPage;
 import com.essent.testing.jbilling.scenario.JBillingScenario;
 import cucumber.api.Scenario;
@@ -21,7 +20,7 @@ public class Invoices extends JBillingScenario {
 
 	@When("Invoice table is not empty$")
 	public void checkInvoiceTableNotEmpty() throws Throwable {
-		InvoicesPage invoicesPage = new InvoicesPage(getJBillingWebDriver());
+		InvoicesPage invoicesPage = new InvoicesPage();
 		boolean success = invoicesPage.checkInvoiceTableNotEmpty();
 
 		assertThat("Rows in invoice table are empty", success, is(true));

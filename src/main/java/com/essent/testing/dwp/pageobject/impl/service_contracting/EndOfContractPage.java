@@ -1,7 +1,6 @@
 package com.essent.testing.dwp.pageobject.impl.service_contracting;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.selenium.webdriver.dwp.SeleniumDriverDwpImpl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 
@@ -13,11 +12,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class EndOfContractPage extends Component {
-
-    public EndOfContractPage(SeleniumDriverDwpImpl seleniumDriver) {
-        super(seleniumDriver);
-    }
-
     public void searchInputField(String input) {
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//top-search/div[@class='top-search']/input[@type='search']")), input);
         seleniumDriver.findElementWhenVisible(By.xpath("//top-search/div[@class='top-search']/input[@type='search']")).sendKeys(Keys.ENTER);

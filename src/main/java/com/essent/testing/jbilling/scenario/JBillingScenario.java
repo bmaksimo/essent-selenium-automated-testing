@@ -3,38 +3,51 @@ package com.essent.testing.jbilling.scenario;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
-import com.essent.testing.selenium.scenario.AbstractSeleniumScenario;
-import com.essent.testing.selenium.webdriver.jbilling.SeleniumDriverJBillingImpl;
+import com.essent.testing.scenario.RegisteredScenario;
+import com.essent.testing.selenium.JBillingSeleniumDriver;
 import org.apache.log4j.Logger;
+
+import javax.annotation.Resource;
 
 import static org.junit.Assert.assertTrue;
 
-public abstract class JBillingScenario extends AbstractSeleniumScenario {
+public abstract class JBillingScenario extends RegisteredScenario {
 
     private  final static Logger logger = Logger.getLogger(JBillingScenario.class);
 
-    public void setUpWebDriver() throws Exception {
-        tidyUp();
-        webDriver = new SeleniumDriverJBillingImpl();
-        webDriver.setUp();
-    }
+    @Resource(name="jBillingSeleniumDriver")
+    protected JBillingSeleniumDriver seleniumDriver;
 
-    protected SeleniumDriverJBillingImpl getJBillingWebDriver() {
-        return (SeleniumDriverJBillingImpl) webDriver;
+    private String name;
+
+    public String getName() {
+        return name;
     }
 
     protected void isJBillingRunning() throws Exception {
         String dwpUrl = ConfigProvider.getProperty(ConfigKey.JBILLING_BASE_URL);
-        webDriver.setBaseUrl(dwpUrl);
-        webDriver.goToHomePage();
-        String currentUrl = webDriver.getDriver().getCurrentUrl();
+        seleniumDriver.setBaseUrl(dwpUrl);
+        seleniumDriver.goToHomePage();
+        String currentUrl = seleniumDriver.getDriver().getCurrentUrl();
         if (null != currentUrl && !currentUrl.equals(dwpUrl)) {
-            webDriver.setBaseUrl(currentUrl);
-            webDriver.goToHomePage();
+            seleniumDriver.setBaseUrl(currentUrl);
+            seleniumDriver.goToHomePage();
         }
         Sleeper.sleepTightInSeconds(3);
         logger.info("Current URL: " + currentUrl);
-        assertTrue(currentUrl.startsWith(webDriver.getBaseUrl()));
+        assertTrue(currentUrl.startsWith(seleniumDriver.getBaseUrl()));
+    }
+
+    public void setUpWebDriver() throws Exception {
+        tidyUp(seleniumDriver);
+        seleniumDriver.createWebDriver();
+        seleniumDriver.setUp();
+    }
+
+    public void tearDown() {
+        if (seleniumDriver != null) {
+            tidyUp(seleniumDriver);
+        }
     }
 
 }

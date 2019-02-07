@@ -15,19 +15,15 @@ public class OdooGenericSteps extends OdooScenario {
     @Before("@ODOO, @E2E, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
-    }
-
-    private void login(String username) throws Throwable {
-        isOdooRunning();
-        UserRoles odooUser = UserRoles.get(username);
-        Window application = new OdooLogin(getOdooWebDriver()).login(odooUser.getUsername(), odooUser.getPassword());
-        assertNotNull("Odoo application did not appear after a login", application);
+        setUpWebDriver();
     }
 
     @Given("^I logged in to Odoo as \"([^\"]*)\"$")
-    public void loginAs(String username) throws Throwable {
-        setUpWebDriver();
-        login(username);
+    public void login(String username) throws Throwable {
+        isOdooRunning();
+        UserRoles odooUser = UserRoles.get(username);
+        Window application = new OdooLogin().login(odooUser.getUsername(), odooUser.getPassword());
+        assertNotNull("DWP application did not appear after a login", application);
     }
 
     @Given("^I renew login to Odoo as \"([^\"]*)\"$")

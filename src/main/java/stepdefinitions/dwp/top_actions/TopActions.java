@@ -38,7 +38,7 @@ public class TopActions extends NavigationElements {
 
     @And("Changes are confirmed")
     public void confirmChange() {
-        webDriver.waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         boolean success = new ClickConfirm().test("");
         assertThat(String.format("Button %s was not available.", ""),
             success, is(true));

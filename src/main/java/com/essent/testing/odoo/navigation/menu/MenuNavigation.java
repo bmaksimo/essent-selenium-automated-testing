@@ -1,7 +1,6 @@
 package com.essent.testing.odoo.navigation.menu;
 
 import com.essent.testing.odoo.pageobject.impl.Component;
-import com.essent.testing.selenium.webdriver.odoo.SeleniumDriverOdooImpl;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.openqa.selenium.*;
@@ -23,17 +22,12 @@ public class MenuNavigation extends Component {
     private static String MAIN_NEMU_ITEM_SELECTOR_TEMPLATE = "//div[@id='oe_main_menu_placeholder']//a[normalize-space()='${text}']";
     private static String MENU_LEAF_SELECTOR_TEMPLATE      = "//a[span[normalize-space() = '${text}'] and starts-with(@class,'oe_menu_leaf')]";
     private static String MENU_TOGGLER_SELECTOR_TEMPLATE   = "//a[span[normalize-space() = '${text}'] and starts-with(@class,'oe_menu_toggler')]";
-
     private String status = "UNDEFINED";
     private String reason = "Not executed";
 
-    public MenuNavigation(SeleniumDriverOdooImpl seleniumDriver) {
-        super(seleniumDriver);
-    }
     public String getStatus() {
         return status;
     }
-
     public String getReason() {
         return reason;
     }
