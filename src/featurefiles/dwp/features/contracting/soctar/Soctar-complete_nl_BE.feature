@@ -103,7 +103,7 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         #Step 9 Check batch SOCTAR confirmation letter
         When Plus menu is "Contracting -> Soctar -> Sociale tariefbatches"
         And Click on link in "Soctar Confirmation Letters" View List at "1st" row and "Batchnaam" column
-        Then Soctar Tariff Type is "Confirmation" and Tariff Status is "DONE"
+        Then Soctar tariff type and status are "Confirmation" - "DONE"
         When Top arrow button is "UP"
 
         #Step 10 Check if all changes are correct on the customer

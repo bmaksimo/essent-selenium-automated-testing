@@ -18,7 +18,7 @@ public class Soctar extends DwpScenario{
 
     }
 
-    @Then("^Soctar Tariff Type is \"([^\"]*)\" and Tariff Status is \"([^\"]*)\"$")
+    @Then("^Soctar tariff type and status are \"([^\"]*)\" - \"([^\"]*)\"$")
     public void checkSuccess(String tariffType, String tariffStatus) throws Throwable {
         SoctarTariffBatchDetails soc = new SoctarTariffBatchDetails(webDriver);
         assertTrue(soc.getTariffType().equalsIgnoreCase(tariffType));
