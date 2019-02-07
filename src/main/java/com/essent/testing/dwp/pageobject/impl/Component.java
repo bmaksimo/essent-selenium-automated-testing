@@ -62,7 +62,8 @@ public abstract class Component {
         return seleniumDriver.executeJavascriptTest(registeredJsClass, options);
     }
 
-    public WebElement findElementWhenVisible(By selector) {
+    protected WebElement findElementWhenVisible(By selector) {
+        seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(selector);
     }
 

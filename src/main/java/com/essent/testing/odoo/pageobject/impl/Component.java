@@ -66,6 +66,7 @@ public abstract class Component {
 
 
     public WebElement findElementWhenVisible(By selector) {
+        seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(selector);
     }
 

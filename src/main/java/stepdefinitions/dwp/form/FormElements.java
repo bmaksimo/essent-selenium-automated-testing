@@ -8,10 +8,13 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
+import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
+import org.openqa.selenium.support.ui.FluentWait;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -19,7 +22,7 @@ import static org.awaitility.Awaitility.given;
 import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
 import static org.awaitility.Duration.ONE_SECOND;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.Matchers.equalTo;
 
 public class FormElements extends DwpScenario {
 
@@ -49,10 +52,15 @@ public class FormElements extends DwpScenario {
     }
 
     @And("^\"([^\"]*)\" field value is \"([^\"]*)\"$")
-    public void fieldValueIs(String label, String expectedValue) throws Throwable {
+    public void setFieldValue(String label, String expectedValue) throws Throwable {
         NonEditable field = new NonEditableImpl();
-        String actualValue = field.getValue(label);
-        assertThat(String.format("Actual value of '%s' was '%s', and this differs from expected '%s'", label, actualValue, expectedValue), expectedValue, equalTo(actualValue));
+        FluentWait<NonEditable> waiter = waiter(field, 50, 5);
+        waiter.until((NonEditable p) -> {
+            String actualValue = p.getValue(label);
+            String assertionMessage = String.format("Actual value of '%s' was '%s', and this differs from expected '%s'", label, actualValue, expectedValue);
+            waiter.withMessage(assertionMessage);
+            return StringUtils.equals(expectedValue, actualValue);
+        });
     }
 
     @Override
