@@ -44,12 +44,17 @@ public abstract class RegisteredScenario {
         return activeScenario;
     }
 
-    public void tidyUp(SeleniumDriver seleniumDriver) {
+    protected void tidyUp(SeleniumDriver seleniumDriver) {
         if (seleniumDriver != null
             && seleniumDriver.getDriver() != null
             && ((RemoteWebDriver) seleniumDriver.getDriver()).getSessionId() != null) {
             seleniumDriver.tearDown();
         }
+    }
+
+    protected void setUpWebDriver(SeleniumDriver seleniumDriver) throws Exception {
+        seleniumDriver.createWebDriver();
+        seleniumDriver.setUp();
     }
 
     protected <T> FluentWait<T> waiter(T testObject, long secondsTimeout, long secondsPollingEvery) {

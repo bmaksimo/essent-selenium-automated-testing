@@ -39,8 +39,7 @@ public abstract class JBillingScenario extends RegisteredScenario {
     }
 
     protected void setUpWebDriver() throws Exception {
-        seleniumDriver.createWebDriver();
-        seleniumDriver.setUp();
+        setUpWebDriver(seleniumDriver);
     }
 
     public void tearDown() {
