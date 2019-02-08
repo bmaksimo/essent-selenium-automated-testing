@@ -38,8 +38,7 @@ public abstract class JBillingScenario extends RegisteredScenario {
         assertTrue(currentUrl.startsWith(seleniumDriver.getBaseUrl()));
     }
 
-    public void setUpWebDriver() throws Exception {
-        tidyUp(seleniumDriver);
+    protected void setUpWebDriver() throws Exception {
         seleniumDriver.createWebDriver();
         seleniumDriver.setUp();
     }

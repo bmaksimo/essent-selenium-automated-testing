@@ -114,8 +114,7 @@ public abstract class DwpScenario extends RegisteredScenario {
         }
     }
 
-    public void setUpWebDriver() throws Exception {
-        tidyUp(seleniumDriver);
+    protected void setUpWebDriver() throws Exception {
         seleniumDriver.createWebDriver();
         seleniumDriver.setUp();
         seleniumDriver.initNgWebDriver();

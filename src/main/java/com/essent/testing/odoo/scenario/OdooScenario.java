@@ -52,7 +52,6 @@ public abstract class OdooScenario extends RegisteredScenario {
     }
 
     public void setUpWebDriver() throws Exception {
-        tidyUp(seleniumDriver);
         seleniumDriver.createWebDriver();
         seleniumDriver.setUp();
         seleniumDriver.initOdooWebDriver();

@@ -12,10 +12,6 @@ import java.util.function.Function;
 public class JBillingSeleniumDriver extends SeleniumDriver {
     private static final Logger logger = Logger.getLogger(JBillingSeleniumDriver.class);
 
-    private JBillingSeleniumDriver() {
-        super();
-    }
-
     public void waitAndClick(final WebElement element) {
         waitForElement(element);
         element.click();

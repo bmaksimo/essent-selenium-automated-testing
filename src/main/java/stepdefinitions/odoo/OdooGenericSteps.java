@@ -19,6 +19,7 @@ public class OdooGenericSteps extends OdooScenario {
 
     @Given("^I logged in to Odoo as \"([^\"]*)\"$")
     public void login(String username) throws Throwable {
+        setUpWebDriver();
         isOdooRunning();
         UserRoles odooUser = UserRoles.get(username);
         Window application = new OdooLogin().login(odooUser.getUsername(), odooUser.getPassword());
@@ -27,7 +28,7 @@ public class OdooGenericSteps extends OdooScenario {
 
     @Given("^I renew login to Odoo as \"([^\"]*)\"$")
     public void renewLoginAs(String username) throws Throwable {
-        setUpWebDriver();
+        tearDown();
         login(username);
     }
 

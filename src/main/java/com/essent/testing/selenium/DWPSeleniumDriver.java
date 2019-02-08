@@ -41,11 +41,6 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
     private static final String PATH_TO_INLINE_CLASSES = "/js/runner/tests/";
     private static final String TEST_RUNNER_CLASS = "TestRunnerBase.js";
 
-    private DWPSeleniumDriver() {
-        super();
-        initNgWebDriver();
-    }
-
     public void initNgWebDriver() {
         ngWebDriver = new NgWebDriver((JavascriptExecutor) driver);
     }

@@ -43,11 +43,6 @@ public abstract class SeleniumDriver {
     protected ChromeOptions options;
     protected ChromeDriverService driverService;
 
-    protected SeleniumDriver() {
-        createWebDriver();
-        setUp();
-    }
-
     public void setUp() {
         baseUrl = ConfigProvider.getProperty(ConfigKey.TESTING_BASE_URL);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
@@ -77,13 +72,11 @@ public abstract class SeleniumDriver {
             } else {
                 options.addArguments("--start-maximized");
             }
-            driverService = ChromeDriverService.createDefaultService();
-            chromeDriver = new ChromeDriver(driverService, options);
         } else {
             options.addArguments("--start-maximized");
-            chromeDriver = new ChromeDriver(options);
-
         }
+        driverService = ChromeDriverService.createDefaultService();
+        chromeDriver = new ChromeDriver(driverService, options);
         chromeDriver.manage().timeouts().implicitlyWait(3, TimeUnit.MINUTES).setScriptTimeout(5, TimeUnit.MINUTES);
         driver = chromeDriver;
     }

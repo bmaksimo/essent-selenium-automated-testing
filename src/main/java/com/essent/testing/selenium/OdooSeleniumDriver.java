@@ -26,12 +26,6 @@ public class OdooSeleniumDriver extends SeleniumDriver {
     private static final Logger logger = Logger.getLogger(OdooSeleniumDriver.class);
     private static final String DEFAULT_DOWNLOAD_LOCATION = ResourceUtil.toPath(File.separator + "data" + File.separator + "odoo" + File.separator);
 
-    private OdooSeleniumDriver() {
-        super();
-        initOdooWebDriver();
-    }
-
-
     public void initOdooWebDriver() {
         String userDataPath = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_USER_DATA_PATH);
         if (StringUtils.isNotEmpty(userDataPath)) {
