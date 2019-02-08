@@ -1,7 +1,6 @@
 package com.essent.testing.jbilling.pageobject.impl.page;
 
 import com.essent.testing.jbilling.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
 import org.joda.time.DateTime;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -11,9 +10,6 @@ import java.util.Date;
 
 public class BillingProcessPage extends Component {
 
-    public BillingProcessPage(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver);
-    }
     private String pattern = "MM/dd/yyyy";
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
     private String date = simpleDateFormat.format(new Date());

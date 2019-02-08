@@ -79,7 +79,7 @@ public class PaymentInfoSteps extends NavigationElements {
     public void listSwitchedPaymentMethod() throws Throwable {
         String updatedPaymentMethodName = parameterProvider.getValueOrParameterAsString("parameter:paymentMethod");
         final String UPDATED_PAYMENT_METHOD = "//list-simple-two-liner-cell[contains(@line-2,'" + updatedPaymentMethodName + "')]";
-        WebElement element = webDriver.findElementOrNull(By.xpath(UPDATED_PAYMENT_METHOD));
+        WebElement element = seleniumDriver.findElementOrNull(By.xpath(UPDATED_PAYMENT_METHOD));
         assertThat(String.format("View list did not contain payment method %s", updatedPaymentMethodName),
             element, is(notNullValue()));
     }

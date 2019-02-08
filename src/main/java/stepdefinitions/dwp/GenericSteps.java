@@ -19,8 +19,10 @@ import org.springframework.test.context.ContextConfiguration;
 import java.time.Duration;
 
 import static org.junit.Assert.assertNotNull;
+
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 public class GenericSteps extends DwpScenario {
+
 
     @Before("@DWP, @CORE, @E2E, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
@@ -29,9 +31,10 @@ public class GenericSteps extends DwpScenario {
 
     @Given("^I logged in to DWP as \"([^\"]*)\"$")
     public void loginAs(String username) throws Throwable {
+        setUpWebDriver();
         isDwpRunning();
         UserRoles dwpUser = UserRoles.get(username);
-        Window application = new LoginAction(webDriver).doLogin(dwpUser.getUsername(), dwpUser.getPassword());
+        Window application = new LoginAction().doLogin(dwpUser.getUsername(), dwpUser.getPassword());
         assertNotNull("DWP application did not appear after a login", application);
         injectJavaScriptTestRunner();
         discardPreviousFlow();
@@ -39,25 +42,23 @@ public class GenericSteps extends DwpScenario {
 
     @Given("^I renew login to DWP as \"([^\"]*)\"$")
     public void renewLoginAs(String username) throws Throwable {
-        setUpWebDriver();
+        tearDown();
         loginAs(username);
     }
 
-
     private void discardPreviousFlow() throws Throwable {
-        WebElement cancelWebElement = webDriver.findElementOrNull(By.id("cancel-button"), Duration.ofSeconds(1), Duration.ofMillis(50));
+        WebElement cancelWebElement = seleniumDriver.findElementOrNull(By.id("cancel-button"), Duration.ofSeconds(1), Duration.ofMillis(50));
         if(cancelWebElement != null) {
-            (new WebDriverWait(webDriver.getDriver(), 2)).until(ExpectedConditions.elementToBeClickable(cancelWebElement));
+            (new WebDriverWait(seleniumDriver.getDriver(), 2)).until(ExpectedConditions.elementToBeClickable(cancelWebElement));
             Button cancelButton = new ButtonImpl(cancelWebElement);
             cancelButton.click();
         }
 
     }
 
-
     @After("@DWP, @CORE, @E2E, @REGRESSION")
     public void tearDown() {
-        tidyUp();
+        tidyUp(seleniumDriver);
     }
 
 }

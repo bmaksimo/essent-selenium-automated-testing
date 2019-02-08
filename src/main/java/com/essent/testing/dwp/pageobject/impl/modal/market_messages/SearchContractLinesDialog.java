@@ -3,7 +3,6 @@ package com.essent.testing.dwp.pageobject.impl.modal.market_messages;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.modal.confirm.ConfirmDialog;
-import com.essent.testing.selenium.SeleniumDriver;
 import org.apache.commons.collections.CollectionUtils;
 import org.awaitility.Duration;
 import org.openqa.selenium.By;
@@ -16,10 +15,6 @@ import static org.awaitility.Duration.TWO_SECONDS;
 public class SearchContractLinesDialog extends Component implements ConfirmDialog  {
 
     private final static By SELECTOR = By.cssSelector(".view__modal .modal__header");
-
-    public SearchContractLinesDialog(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver);
-    }
 
     public void searchContractLine(String searchInput) {
 

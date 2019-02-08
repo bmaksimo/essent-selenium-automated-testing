@@ -1,7 +1,6 @@
 package com.essent.testing.dwp.pageobject.impl.page;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -10,10 +9,6 @@ import java.util.Date;
 
 
 public class ContractPage extends Component {
-
-    public ContractPage(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver);
-    }
 
     public WebElement startData(){
         return seleniumDriver.findElementWhenVisible(By.id("contract-start-date-field"));
@@ -28,7 +23,7 @@ public class ContractPage extends Component {
     }
 
     public void saveButtton()throws InterruptedException {
-        waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("primaryButton")));
     }
 
@@ -45,7 +40,7 @@ public class ContractPage extends Component {
     }
 
     public void clickOnPlusMeniInTable(String row, String table) {
-        waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(seleniumDriver.findElementOrNull(By.xpath("(//list[@list-key='"+table+"']//tbody[@id='rows']//list-plus-cell//a[@class='show-actions icon-plus'])["+row+"]")));
     }
     public String getActiveContractEAN(){

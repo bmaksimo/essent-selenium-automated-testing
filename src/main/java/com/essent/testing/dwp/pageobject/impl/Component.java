@@ -3,7 +3,8 @@ package com.essent.testing.dwp.pageobject.impl;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
-import com.essent.testing.selenium.SeleniumDriver;
+import com.essent.testing.context.ContextService;
+import com.essent.testing.selenium.DWPSeleniumDriver;
 import com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.text.StrSubstitutor;
@@ -20,21 +21,18 @@ import java.util.Map;
 public abstract class Component {
 
     protected WebElement element;
-
-
-    protected SeleniumDriver seleniumDriver;
-
+    protected DWPSeleniumDriver seleniumDriver;
     private final Logger logger = Logger.getLogger(Component.class);
-
     protected Logger logger() {
         return logger;
     }
 
-    public Component(SeleniumDriver seleniumDriver) {
-        this.seleniumDriver = seleniumDriver;
+    public Component() {
+        this.seleniumDriver = (DWPSeleniumDriver) ContextService.getContext().getBean("dwpSeleniumDriver");
     }
 
-    public Component(By selector, SeleniumDriver seleniumDriver) {
+    public Component(By selector) {
+        this();
         logger().info("STEP:");
         logger().info(" - ACTION: LOAD_PAGE_OBJECT");
         element = seleniumDriver.findElementOrNull(selector);
@@ -43,14 +41,13 @@ public abstract class Component {
             logger().fatal(" - REASON: " + getClass() + "{null}: Web element was not found. ");
             throw new CucumberException(getClass() + ": Web element was not found.");
         }
-        logger.info(String.format(" - TARGET: %s -> %s", selector, element.getAttribute("innerHTML")));
-        this.seleniumDriver = seleniumDriver;
+        logger.debug(String.format(" - TARGET: %s -> %s", selector, element.getAttribute("innerHTML")));
     }
 
-    public Component(WebElement element, SeleniumDriver seleniumDriver) {
+    public Component(WebElement element) {
+        this();
         logger.info("STEP:");
         logger.info(" - ACTION: LOAD_PAGE_OBJECT");
-
         if (element == null) {
             logger.error(" - RESULT: FAILED");
             logger.error(" - REASON: " + getClass() + "{null}: Web element was not found. ");
@@ -59,7 +56,6 @@ public abstract class Component {
 
         logger.info(" - RESULT: " + element);
         this.element = element;
-        this.seleniumDriver = seleniumDriver;
     }
 
     public boolean executeJavascriptTest(String registeredJsClass, Object options) {
@@ -71,7 +67,7 @@ public abstract class Component {
         return seleniumDriver.findElementWhenVisible(selector);
     }
 
-    protected WebElement findElementWhenClickable(By selector) {
+    public WebElement findElementWhenClickable(By selector) {
         return seleniumDriver.findElementWhenClickable(selector);
     }
 
@@ -128,8 +124,5 @@ public abstract class Component {
                 });
             }
         };
-    }
-    protected void waitForRequestsToFinish() {
-        seleniumDriver.waitForRequestsToFinish();
     }
 }

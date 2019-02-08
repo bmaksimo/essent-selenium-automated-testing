@@ -3,7 +3,6 @@ package com.essent.testing.dwp.pageobject.impl.service_contracting;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -11,16 +10,13 @@ import org.openqa.selenium.WebElement;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.UPLOAD_FILE;
 
 public class ChangeAccountStatusPage extends Component {
-    public ChangeAccountStatusPage(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver);
+    public ChangeAccountStatusPage() {}
+    public ChangeAccountStatusPage(By selector) {
+        super(selector);
     }
 
-    public ChangeAccountStatusPage(By selector, SeleniumDriver seleniumDriver) {
-        super(selector, seleniumDriver);
-    }
-
-    public ChangeAccountStatusPage(WebElement element, SeleniumDriver seleniumDriver) {
-        super(element, seleniumDriver);
+    public ChangeAccountStatusPage(WebElement element) {
+        super(element);
     }
 
     public void chooseAccountStatus(String status) {
@@ -47,7 +43,7 @@ public class ChangeAccountStatusPage extends Component {
     }
 
     public void findDocument() {
-        waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         Assert.assertTrue(findElementWhenVisible(By.xpath("(//span[.='customer-signature.pdf'])[1]")).isDisplayed());
     }
 }

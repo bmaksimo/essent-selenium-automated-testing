@@ -14,15 +14,12 @@ import org.openqa.selenium.support.ui.FluentWait;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
 import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
 import static org.awaitility.Duration.ONE_SECOND;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 
 public class FormElements extends DwpScenario {
 
@@ -53,7 +50,7 @@ public class FormElements extends DwpScenario {
 
     @And("^\"([^\"]*)\" field value is \"([^\"]*)\"$")
     public void setFieldValue(String label, String expectedValue) throws Throwable {
-        NonEditable field = new NonEditableImpl(webDriver);
+        NonEditable field = new NonEditableImpl();
         FluentWait<NonEditable> waiter = waiter(field, 50, 5);
         waiter.until((NonEditable p) -> {
             String actualValue = p.getValue(label);

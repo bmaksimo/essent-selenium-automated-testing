@@ -2,7 +2,6 @@ package com.essent.testing.dwp.pageobject.impl.quote;
 
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
-import com.essent.testing.selenium.SeleniumDriver;
 import org.apache.commons.lang3.StringUtils;
 import stepdefinitions.dwp.tables.SalesChannel;
 import stepdefinitions.dwp.tables.TariffTable;
@@ -15,10 +14,6 @@ public class PackageAndFuelTypeSelectionPage extends QuoteCreationGuidedStep {
 
 
     private TariffTable tariffData;
-
-    public PackageAndFuelTypeSelectionPage(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver);
-    }
 
     private boolean      regularisation;
     private SalesChannel salesChannel;
