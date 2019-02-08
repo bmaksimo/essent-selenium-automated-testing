@@ -19,9 +19,9 @@ public class MenuElements extends NavigationElements {
 
     @When("^Left menu is \"([^\"]*)\"$")
     public void clickLeftMenuItem(String tabName) throws Throwable {
-        webDriver.waitForRequestsToFinish();
-        DwpLeftMenu lm = new DwpLeftMenu(webDriver);
-        lm.clickOnLeftElemet(tabName);
+        seleniumDriver.waitForRequestsToFinish();
+        DwpLeftMenu lm = new DwpLeftMenu();
+        lm.clickOnLeftElement(tabName);
     }
 
     @When("^Left Tab is \"([^\"]*)\"$")
@@ -31,8 +31,8 @@ public class MenuElements extends NavigationElements {
 
     @When("^Top menu item is \"([^\"]*)\"$")
     public void clickTopMenuItem(String tabName) throws Throwable {
-        webDriver.waitForRequestsToFinish();
-        DwpTopMenu tm = new DwpTopMenu(webDriver);
+        seleniumDriver.waitForRequestsToFinish();
+        DwpTopMenu tm = new DwpTopMenu();
         tm.findAndClickTopMenu(tabName);
     }
 

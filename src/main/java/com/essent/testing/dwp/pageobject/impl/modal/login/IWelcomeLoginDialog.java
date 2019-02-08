@@ -14,9 +14,8 @@ import static org.junit.Assert.assertNotNull;
 public class IWelcomeLoginDialog extends LoginComponent implements Dialog {
     private final static By SELECTOR = By.id("login-base");
 
-
     public IWelcomeLoginDialog(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver.findElementOrNull(SELECTOR), seleniumDriver);
+        super(seleniumDriver.findElementOrNull(SELECTOR));
     }
 
     public Window login(String username, String password) throws Throwable {
