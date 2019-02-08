@@ -24,25 +24,24 @@ public class SoctarBatchSteps extends DwpScenario {
 
     @When("^Soctar batch action \"([^\"]*)\" is clicked$")
     public void clickOnSoctarBatchAction(String actionName) {
-        webDriver.waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(30);
-        SoctarBatchPage soctarBatchPage = new SoctarBatchPage(webDriver);
+        SoctarBatchPage soctarBatchPage = new SoctarBatchPage();
         soctarBatchPage.clickOnAction(actionName);
-//        parameterProvider.put("soctar-action", actionName);
     }
 
     @Then("^Soctar status is changed to \"([^\"]*)\"$")
     public void checkSoctarBatchStatus(String status) {
-        webDriver.waitForRequestsToFinish();
-        SoctarBatchPage soctarBatchPage = new SoctarBatchPage(webDriver);
+        seleniumDriver.waitForRequestsToFinish();
+        SoctarBatchPage soctarBatchPage = new SoctarBatchPage();
         boolean success = soctarBatchPage.checkStatus(status);
         assertThat("Soctar status is not " + status, success);
     }
 
     @Then("^Soctar type is changed to \"([^\"]*)\" within (\\d+) seconds?$")
     public void checkSoctarBatchType(String type, int seconds) {
-        webDriver.waitForRequestsToFinish();
-        SoctarBatchPage soctarBatchPage = new SoctarBatchPage(webDriver);
+        seleniumDriver.waitForRequestsToFinish();
+        SoctarBatchPage soctarBatchPage = new SoctarBatchPage();
         given()
             .await()
             .ignoreExceptions()
@@ -52,11 +51,11 @@ public class SoctarBatchSteps extends DwpScenario {
 
     private boolean loopback() {
         By classSelector = By.cssSelector(".icon-arrow-up");
-        webDriver.findElement(classSelector).click();
-        webDriver.waitForRequestsToFinish();
+        seleniumDriver.findElement(classSelector).click();
+        seleniumDriver.waitForRequestsToFinish();
         String soctarFileLink = parameterProvider.getValueOrParameterAsString("parameter:soctar-file-name");
-        webDriver.findElement(By.linkText(soctarFileLink)).click();
-        webDriver.waitForRequestsToFinish();
+        seleniumDriver.findElement(By.linkText(soctarFileLink)).click();
+        seleniumDriver.waitForRequestsToFinish();
 
         return true;
     }
