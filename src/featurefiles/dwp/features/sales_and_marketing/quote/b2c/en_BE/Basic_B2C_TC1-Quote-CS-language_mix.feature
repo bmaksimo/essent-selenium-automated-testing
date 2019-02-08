@@ -11,14 +11,14 @@ Feature: NUAT-5019-1: Creating a B2C Quote TC1 with move in, Dutch language vers
         Then Form header is "Quote details"
 
         When "Tariefdatum" date is "now"
-        And B2C sales channel is "Inbound"
+        And "Sales kanaal" selection is "Inbound"
         And Quote details are confirmed
         Then Form header is "Personal details"
 
-        When Customer is random
+        Given Customer is random
         And Customer address is
-            | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-            | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
+            | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
+            | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
 

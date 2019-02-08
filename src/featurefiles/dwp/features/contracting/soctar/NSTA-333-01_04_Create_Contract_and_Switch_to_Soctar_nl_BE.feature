@@ -2,21 +2,21 @@
 @SERVICE-CONTRACTING
 @REGRESSION
 @SOCTAR
-Feature: Social tariff (SOCTAR) contract creation
+Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one payment and 3 dunning levels, with SS and Market Mock"
 
     Background:
         Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
         #Output parameter "start_end_date", format: '1yyyyMMddyyyy1231'
         #Output parameter  "start-en-einddatum", format: 'dd-MM-yyyy - dd-MM-yyyy'
-        And Soctar start date is "now"
-    @SOCTAR-COMPLETE
-    @NSTA-333
+        And   Soctar start date is "now"
+    @SOCTAR-01-04
+    @NSTA-333-STEP-01-04
     Scenario: Create Soctar (Social tarif) quote and contract, and check Soctar confirmation letter
         # 1 - GUI contract creation
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
-        When "Sales kanaal" selection is "Inbound"
+        When  "Sales kanaal" selection is "Inbound"
         And "Tariefdatum" date is "2 weeks before now"
         And Quote details are confirmed
         Then Form header is "Personal details"
@@ -65,9 +65,9 @@ Feature: Social tariff (SOCTAR) contract creation
         Then "1st" List element with value at column "Klantnummer & Naam" is checked
         #Steps 2 - Soctar file sftp upload
         Given Soctar customer Id is "parameter:Klantnummer & Naam"
-        And Soctar EAN is "parameter:EAN-code"
-        And Soctar start date is "now"
-        Then Soctar file is uploaded to "/home/ESSENT/sa_sftpcrm_smx/data/soctar" remote directory
+        And   Soctar EAN is "parameter:EAN-code"
+        And   Soctar start date is "now"
+        Then  Soctar file is uploaded to "/home/ESSENT/sa_sftpcrm_smx/data/soctar" remote directory
 
         #Step 3 Check the status of "Soctar file upload"
 
@@ -78,7 +78,7 @@ Feature: Social tariff (SOCTAR) contract creation
         #Input parameter   "plus-menu-item"
         #Step will refresh the view, clicking on "plus-menu-item"
         Then "1st" list element has cell value "parameter:soctar-file-name" at column "Batchnaam" within 450 seconds
-        And "1st" list element has cell value "Import Klaar" at column "Type & Status"
+        And  "1st" list element has cell value "Import Klaar" at column "Type & Status"
 
         #Step 4 Check the status of "Soctar file import"
         Given Click on "parameter:soctar-file-name" link
@@ -88,58 +88,3 @@ Feature: Social tariff (SOCTAR) contract creation
         When "1st" list element has cell value "parameter:EAN-code" at column "EAN-code"
         Then  "1st" list element has cell value "Quote Created" at column "Status"
         And   "1st" list element has cell value "parameter:start-en-einddatum" at column "Contractnummer & start- en einddatum"
-
-        #Step6
-        When Soctar batch action "CONTRACTEN AANMAKEN OP BASIS VAN OFFERTES" is clicked
-        Then Soctar type is changed to "Create Contracts" within 30 seconds
-        And "Status" field value is "DONE"
-        #Step 7. Check if contract has been created
-        And "1st" list element has cell value "Verwerkt" at column "Status"
-        And "1st" list element has cell value "parameter:start-en-einddatum" at column "Contractnummer & start- en einddatum"
-
-#        #Step 8 Sent out the confirmation letter
-#        When Top arrow button is "UP"
-#        When Plus menu is "Contracting -> Soctar -> Sociaal tarief contractlijnen"
-#        And "EAN-code" input is "parameter:EAN-code"
-#        Then "1st" List element with value at column "Status & Product" is checked
-#        And Click on "BEVESTIG CONTRACTLIJNEN" link
-#        Then Changes are confirmed
-#
-#        #Step 9 Check batch SOCTAR confirmation letter
-#        When Plus menu is "Contracting -> Soctar -> Sociale tariefbatches"
-#        And Click on link in "Soctar Confirmation Letters" View List at "1st" row and "Batchnaam" column
-#        Then Soctar tariff type and status are "Confirmation" - "DONE"
-#        When Top arrow button is "UP"
-#
-#        #Step 10 Check if all changes are correct on the customer
-#        When Left menu is "contracting-switching"
-#        And Top menu item is "Klanten"
-#
-#        #part 1 check - customer status
-#        And Top action is "Filters"
-#        And "Klantnummer" input is "parameter:Klantnummer & Naam"
-#        And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
-#        When Dashboard menu is "Contracten"
-#        And Table "Contracten" contains value "Verwerkt (Geaccepteerd)" at column "Type & status"
-#        And Table "Contracten" contains value "Inactief (Geaccepteerd)" at column "Type & status"
-#
-#        #part 2 check - contract is soctar and start date matches
-#        And Table "Contracten" contains value "sociaal tarief (SOCTAR)" at column "EAN-codes & Producten"
-#        And Table "Contracten" contains value "parameter:start-en-einddatum" at column "Start & Einddatum"
-#
-#        #part 3 check - protected record
-#        And Click on link in View List at "1st" row and "Nummer & Aanmaakdatum" column polling 20 seconds
-#        When Plus action of "1" element from "ContractlinesOnContract" and click on "View protected"
-#
-#        And Table "Protected records" contains value "Automatic" at column "Type"
-#        And Table "Protected records" contains value "parameter:start-en-einddatum" at column "Start & End Date"
-#        Then Clicked on sign X
-#
-#        #part 4 check - letter has been sent
-#        When Dashboard menu is "Service"
-#        And Table "Interacties" contains value "Recal_ext_recal_credit" at column "Type & Onderwerp"
-#
-
-
-
-

@@ -5,7 +5,8 @@ import com.billinghouse.test_automation.util.soctar_file.SoctarFileUtil;
 import com.billinghouse.test_automation.util.ssh.JSchUtil;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
-import com.essent.testing.scenario.RegisteredScenario;
+import com.essent.testing.dwp.pageobject.impl.page.SoctarTariffBatchDetails;
+import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
@@ -13,13 +14,11 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.io.FilenameUtils;
 
-import java.util.List;
-
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpContractStartEndDate;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToSoctarFileDate;
-import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.getSoctarStartAndEndDates;
+import static org.junit.Assert.assertTrue;
 
-public class SoctarSteps extends RegisteredScenario {
+public class SoctarSteps extends DwpScenario {
 
 
     @Before("@DWP, @CORE, @E2E, @REGRESSION, @DB-CORE")
@@ -29,7 +28,6 @@ public class SoctarSteps extends RegisteredScenario {
 
     @OutputParameter(name ="soctar-file-name")
     private String soctarFileName;
-
     @Then("^Soctar file is uploaded to \"([^\"]*)\" remote directory$")
     public void uploadSoctarFile(String remoteDirectory) throws Throwable {
         String custId = parameterProvider.getValueOrParameterAsString("parameter:cust_id");
@@ -52,6 +50,14 @@ public class SoctarSteps extends RegisteredScenario {
         String dateValue = checkAndConvertToSoctarFileDate(parameterProvider.getValueOrParameterAsString(value));
         parameterProvider.put("start-end-date", dateValue);
         parameterProvider.put("start-en-einddatum", checkAndConvertToDwpContractStartEndDate(value));
+    }
+
+    @Then("^Soctar tariff type and status are \"([^\"]*)\" - \"([^\"]*)\"$")
+    public void checkSuccess(String tariffType, String tariffStatus) throws Throwable {
+        SoctarTariffBatchDetails soc = new SoctarTariffBatchDetails(webDriver);
+        assertTrue(soc.getTariffType().equalsIgnoreCase(tariffType));
+        assertTrue(soc.getTariffStatus().equalsIgnoreCase(tariffStatus));
+
     }
 
     @And("^Soctar customer Id is \"([^\"]*)\"$")

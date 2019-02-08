@@ -411,6 +411,7 @@ public class ViewListElements extends NavigationElements {
     @And("^\"([^\"]*)\" list element has cell value \"([^\"]*)\" at column \"([^\"]*)\" polling (\\d+) seconds?$")
     public void containsElementAt(String ordinal, String value, String columnName, int seconds) throws Throwable {
         int row = extractNumericValue(ordinal);
+        String expectedValue = parameterProvider.getValueOrParameterAsString(value);
         ViewListModel viewListModel = new ViewListModel();
         given()
             .await()
@@ -419,7 +420,7 @@ public class ViewListElements extends NavigationElements {
             .pollDelay(TWO_SECONDS)
             .atMost(new Duration(seconds, SECONDS)).until(()->
             loopBack() &&
-                viewListModel.containsDataAt(row, value, columnName));
+                viewListModel.containsDataAt(row, expectedValue, columnName));
     }
 
     private boolean loopBack()  {
