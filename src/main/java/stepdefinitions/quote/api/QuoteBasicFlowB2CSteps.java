@@ -26,7 +26,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
         // Write code here that turns the phrase above into concrete actions
 
         BaseAPI iWelcomeLogin_m = new BaseApiImpl();
-        String password = ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_SOAPUI_B2B);
+        String password = ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_SOAPUI_B2C);
         String payloadForLogin = iWelcomeLogin_m.createPayload(username, password);
 
         cookie = iWelcomeLogin_m.restPOST (payloadForLogin, ApiPathsContract.API_LOGIN_CRM,200);
