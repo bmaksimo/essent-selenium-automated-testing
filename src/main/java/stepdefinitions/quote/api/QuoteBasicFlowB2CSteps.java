@@ -1,27 +1,17 @@
 package stepdefinitions.quote.api;
 
-import com.essent.testing.jbilling.scenario.JBillingScenario;
+import com.essent.testing.config.ConfigKey;
+import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.restassured.B2CCreateContractScenario;
-import cucumber.api.Scenario;
-import cucumber.api.java.Before;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.When;
-import cucumber.api.java.en.Then;
-import cucumber.api.PendingException;
-import com.essent.roles.UserRoles;
-import com.essent.testing.jbilling.pageobject.Window;
-import cucumber.api.Scenario;
-import cucumber.api.java.After;
-import cucumber.api.java.Before;
-import cucumber.api.java.en.Given;
-import cucumber.api.Scenario;
-import io.restassured.http.Cookies;
-import org.apache.log4j.Logger;
 import com.essent.testing.restassured.create_contract.constants.ApiPathsContract;
 
-import static org.junit.Assert.assertNotNull;
-
-
+import cucumber.api.PendingException;
+import cucumber.api.Scenario;
+import cucumber.api.java.Before;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+import io.restassured.http.Cookies;
 
 public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
@@ -32,16 +22,16 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
         registerActiveScenario(scenario);
     }
     @Given("^I login to iWelcome as \"([^\"]*)\"$")
-    public void i_login_to_iWelcome_as(String arg1) throws Throwable {
+    public void i_login_to_iWelcome_as(String username) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-    String payloadForLogin;
 
-        AbstractAPI iWelcomeLogin_m = new IWelcomeLoginImpl();
-        payloadForLogin=((IWelcomeLoginImpl) iWelcomeLogin_m).createPayload(arg1, "504pu17357");
+        BaseAPI iWelcomeLogin_m = new BaseApiImpl();
+        String password = ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_SOAPUI_B2B);
+        String payloadForLogin = iWelcomeLogin_m.createPayload(username, password);
 
         cookie = iWelcomeLogin_m.restPOST (payloadForLogin, ApiPathsContract.API_LOGIN_CRM,200);
         System.out.println(payloadForLogin);
-        throw new PendingException();
+//        throw new PendingException();
     }
 
     @Given("^\"([^\"]*)\" flow is started$")
