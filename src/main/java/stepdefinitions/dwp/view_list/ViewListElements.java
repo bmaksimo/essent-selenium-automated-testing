@@ -179,11 +179,14 @@ public class ViewListElements extends NavigationElements {
             logger().info(" - RESULT: " + viewTable);
             int index = getColumnNameIndex(columnName, viewTable);
             if (index < 0) {
-                fail(String.format("View List did not contain column %s", columnName));
+                throw new CucumberException(String.format("View List did not contain column %s", columnName));
             }
             List<ArrayList> rows = getData(viewTable);
+            if (rows.size() == 0) {
+                throw new CucumberException("--  Table is empty.");
+            }
             if (row > rows.size()) {
-                fail(String.format("--Error in Test Input: Given %s row index cannot be greater that actual View List size %s", row, rows.size()));
+                throw new CucumberException(String.format("--  Row number $s was greater that actual table size, %s", row, rows.size()));
             }
             List currentRow = rows.get(row - 1);
             return (String) currentRow.get(index);
@@ -195,15 +198,20 @@ public class ViewListElements extends NavigationElements {
             logger().info(" - RESULT: " + viewTable);
             int index = getColumnNameIndexFromTable(columnName, tableName);
             if (index < 0) {
-                fail(String.format("View List did not contain column %s", columnName));
+                throw new CucumberException(String.format("View List did not contain column %s", columnName));
             }
             List<ArrayList> rows = getData(viewTable);
+            if (rows.size() == 0) {
+                throw new CucumberException(String.format("--  Table %s is empty.",
+                    tableName));
+            }
             if (row > rows.size()) {
-                fail(String.format("--Error in Test Input: Given %s row index cannot be greater that actual View List size %s", row, rows.size()));
+                throw new CucumberException(String.format("--  Row number $s was greater that actual %s table size, %s", row, tableName, rows.size()));
             }
             List currentRow = rows.get(row - 1);
             return (String) currentRow.get(index);
         }
+
         private List<ArrayList> getData(Map viewTable) {
             return (List) viewTable.get("rows");
         }
@@ -378,7 +386,8 @@ public class ViewListElements extends NavigationElements {
     @And("^Table \"([^\"]*)\" contains cell value \"([^\"]*)\" at column \"([^\"]*)\" on \"([^\"]*)\" row$")
     public void listElementWithFromTable(String tableName, String value, String columnName, String ordinal) throws Throwable {
         int row = extractNumericValue(ordinal);
-        boolean success = new ViewListModel().containsDataAtFromTable(row, value, columnName, tableName);
+        String expectedValue = parameterProvider.getValueOrParameterAsString(value);
+        boolean success = new ViewListModel().containsDataAtFromTable(row, expectedValue, columnName, tableName);
         assertThat(String.format("View list did not contain cell value %s at %s row, column '%s'", value, ordinal, columnName),
             success, is(true));
     }

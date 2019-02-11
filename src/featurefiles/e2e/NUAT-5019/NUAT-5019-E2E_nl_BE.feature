@@ -125,14 +125,13 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         Then View list header is "Actieve en toekomstige connecties"
         And "1st" List element with value at column "EAN-code" is checked
 
-        Given Click on link in "Actieve en toekomstige connecties" View List at "1st" row and "EAN-code" column
-        Then View list header is "Verbruiken"
+        Given Click on "parameter:EAN-code" link
+        Then  View list header is "Verbruiken"
         And "Verbruiken" list is empty
 
         Given Top arrow button is "Back"
         When Consumption at deliverypointid "parameter:EAN-code" is generated from now until "2019-09-30"
-        And Click on link in "Actieve en toekomstige connecties" View List at "1st" row and "EAN-code" column
-        Then View list header is "Verbruiken"
+        And Click on "parameter:EAN-code" link
         And Consumption is available at "1st" row in "Van - Aan" column
 
         # 5 - Run mediation
