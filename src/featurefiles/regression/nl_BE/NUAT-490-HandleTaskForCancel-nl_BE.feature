@@ -3,7 +3,7 @@
 @REGRESSION
 @BUSINESS-DESK
 
-Feature: NAUT-490: Handle Task For Cancel - nl_BE
+Feature: NUAT-490: Handle Task For Cancel - nl_BE
 
     Background:
         Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
@@ -14,7 +14,7 @@ Feature: NAUT-490: Handle Task For Cancel - nl_BE
         Then "Status" selection is "Open"
 
         When Save task ID of first customer in list
-        And Plus action and "Mark as done" of first customer from list
+        And Plus action and Mark As Done/Markeren Als Verwerkt of first customer from list
         And Resolution input is "Mark as done for testing"
         And Changes are confirmed
         And Task was marked as done
