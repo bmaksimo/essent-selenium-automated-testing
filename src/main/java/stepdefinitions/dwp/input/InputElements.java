@@ -37,6 +37,13 @@ public class InputElements extends DwpScenario {
         }
     }
 
+    private class ApplyModalDropdownSelection implements Predicate<Map> {
+        @Override
+        public boolean test(Map options) {
+            return executeJavascriptTest("TrModalDropdownSelection", options);
+        }
+    }
+
     private class ApplyDateInput implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
@@ -83,6 +90,17 @@ public class InputElements extends DwpScenario {
         options.put("label", label);
         options.put("value", value);
         boolean success = new ApplySelection().test(options);
+        assertThat(String.format("Selection %s is undefined.", label),
+            success, is(true));
+        Sleeper.sleepTightInSeconds(3);
+    }
+
+    @And("^\"([^\"]*)\" modal dropdown selection is \"([^\"]*)\"$")
+    public void setModalDropdownSelection(String label, String value) throws Throwable {
+        Map<String, String> options = new HashMap<>();
+        options.put("label", label);
+        options.put("value", value);
+        boolean success = new ApplyModalDropdownSelection().test(options);
         assertThat(String.format("Selection %s is undefined.", label),
             success, is(true));
         Sleeper.sleepTightInSeconds(3);

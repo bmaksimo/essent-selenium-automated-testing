@@ -79,10 +79,9 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
 
         # EAN-code must be random, as explained to me by Namita
 
-#        And EAN-code autocomplete value from the "1st" row is checked
-#        And "EAN-code" input is "parameter:EAN-code"
-#        And Electricity EAN code is "541446772521460408"
-        And Electricity EAN code is "random"
+        And EAN-code autocomplete value from the "1st" row is checked
+        And "EAN-code" input is "parameter:EAN-code"
+#        And Electricity EAN code is "Random"
 
         And Connection details are confirmed
         Then Form header is "Billing details"
@@ -157,12 +156,17 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And Top action is "Filters"
         And "Naam" input is "parameter:suitecrm-customer-name"
 
-#        Given "1st" List element with value at column "Klantnummer & Naam" is checked
-#        And Click on "parameter:Klantnummer & Naam" link
-#        And Dashboard menu is "Contracten"
-#        Then "1st" List element with value at column "Contractnummer" is checked
-#        And Click on "parameter:Contractnummer" link
-#
-#        Given "1st" List element with value at column "EAN-code & Metertype & Configuratie" is checked
-#        When Plus actions at "1st" list row having cell value "parameter:EAN-code & Metertype & Configuratie" at column "EAN-code & Metertype & Configuratie" are open
-#        And List plus action is "Annuleer"
+        Given "1st" List element with value at column "Klantnummer & Naam" is checked
+        And Click on "parameter:Klantnummer & Naam" link
+        And Dashboard menu is "Contracten"
+        Then "1st" List element with value at column "Contractnummer" is checked
+
+        And Click on "parameter:Contractnummer" link
+        And Plus actions at "1st" list row in the list "Contractlijnen" are open
+        And List plus action is " Annuleer "
+        Then Modal "Cancel contractline" is displayed
+
+        And "Reden voor annulering" modal dropdown selection is "Geannuleerd door de klant"
+        And Form is submitted
+        Then "1st" list element has cell value "Geannuleerd" at column "Status & Product"
+p
