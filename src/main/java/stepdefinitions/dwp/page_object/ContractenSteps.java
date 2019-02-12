@@ -151,4 +151,10 @@ public class ContractenSteps extends DwpScenario {
         parameterProvider.put("companyNumber", companyNumber);
 
     }
+
+    @And("^Sign$")
+    public void plaatsOndertekeningInputIsKontich() throws Throwable {
+        webDriver.waitAndSendKeys(webDriver.findElementWhenVisible(By.xpath("//*[@id=\"accounts|aos_quotes|sign_location_c\"]/div[1]/input")),"Kontich");
+    }
+
 }
