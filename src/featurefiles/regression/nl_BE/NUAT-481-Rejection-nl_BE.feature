@@ -4,7 +4,7 @@
 @BUSINESS-DESK
 
 
-Feature: NAUT-481: Rejection - nl_BE
+Feature: NUAT-481: Rejection - nl_BE
 
     Background:
         Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"

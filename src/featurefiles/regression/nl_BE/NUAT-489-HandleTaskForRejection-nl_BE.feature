@@ -3,7 +3,7 @@
 @REGRESSION
 @BUSINESS-DESK
 
-Feature: NAUT-489: Handle Task For Rejection - nl_BE
+Feature: NUAT-489: Handle Task For Rejection - nl_BE
 
     Background:
         Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"

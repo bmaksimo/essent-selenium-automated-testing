@@ -28,7 +28,7 @@ class BaseFormInput extends TestRunnerBase {
         let elements = this.evaluateXpath(xPath);
         if(elements.length >= 0) {
             let input = $(elements[0]).find("input, select");
-            if(input.index() == 0) {
+            if(input.length == 1) {
                 let success = this.applyInput(input, value);
                 if(success) {
                     result.status = "PASSED";
@@ -39,11 +39,11 @@ class BaseFormInput extends TestRunnerBase {
                 }
             } else {
                 result.status = "FAILED";
-                result.reason = 'Filter ' + label + ' input undefined.';
+                result.reason = 'Label ' + label + ' input undefined.';
             }
         } else {
                 result.status = "FAILED";
-                result.reason = 'Filter element ' + label + ' undefined.';
+                result.reason = 'label element ' + label + ' undefined.';
         }
         this.resolveCallback(result);
     }

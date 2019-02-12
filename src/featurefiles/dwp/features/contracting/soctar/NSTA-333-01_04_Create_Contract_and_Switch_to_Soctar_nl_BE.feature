@@ -1,6 +1,6 @@
 @DWP
 @SERVICE-CONTRACTING
-@REGRESSION
+@B2C
 @SOCTAR
 Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one payment and 3 dunning levels, with SS and Market Mock"
 

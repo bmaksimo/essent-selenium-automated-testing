@@ -15,6 +15,7 @@ Feature: NUAT-3884: Scenario for copy contract
             Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
 
             When Dashboard menu is "Contracten"
+
             And Find "Actief" contract
             And Plus action of "1" element from "ContractsOnAccount" and click on "Kopie contract"
             And "Testing" turn on

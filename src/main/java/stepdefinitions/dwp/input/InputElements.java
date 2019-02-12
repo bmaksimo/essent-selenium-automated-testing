@@ -8,6 +8,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.FluentWait;
 import stepdefinitions.dwp.tables.plus.SwitchState;
 
 import java.util.HashMap;
@@ -67,14 +68,16 @@ public class InputElements extends DwpScenario {
 
     @And("^\"([^\"]*)\" date is \"([^\"]*)\"$")
     public void setDateInput(String label, String value) throws Throwable {
-        Sleeper.sleepTightInSeconds(1.5);
+        Sleeper.sleepTightInSeconds(2);
         String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(value));
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
         options.put("value", inputValue);
-        boolean success = new ApplyDateInput().test(options);
-        assertThat(String.format("Filter element %s is undefined.", label),
-            success, is(true));
+        FluentWait<ApplyInput> waiter = waiter(new ApplyInput(), 10, 1);
+        waiter.until((ApplyInput callback) ->{
+            waiter.withMessage(String.format("Date input %s is undefined.", label));
+            return callback.test(options);
+        });
     }
 
     @And("^\"([^\"]*)\" selection is \"([^\"]*)\"$")
@@ -92,9 +95,11 @@ public class InputElements extends DwpScenario {
     public void switchOption(String option, SwitchState state) throws Throwable {
         Map<String, String> options = new HashMap<>();
         options.put("label", option);
-        boolean success = executeJavascriptTest("TrClickToggleInput", options);
-        assertThat(String.format("Option %s is undefined.", option),
-            success, is(true));
+        FluentWait<InputElements> waiter = waiter(this, 10, 1);
+        waiter.until((InputElements callback) ->{
+            waiter.withMessage(String.format("Option %s is undefined.", option));
+            return executeJavascriptTest("TrClickToggleInput", options);
+        });
     }
 
     @And("^Form is submitted$")
@@ -106,10 +111,11 @@ public class InputElements extends DwpScenario {
     @And("^Field \"([^\"]*)\" input is \"([^\"]*)\"$")
     public void setInputByPlaceholder(String placeholder, String value) {
         seleniumDriver.waitForRequestsToFinish();
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
         WebElement placeHolderInputElement = seleniumDriver.findElement(By.xpath("//input[@placeholder='"+placeholder+"']"));
         boolean placeHolderWasFound = placeHolderInputElement != null;
         assertThat(String.format("Placeholder element '%s' was not found.", placeholder), placeHolderWasFound, is(true));
-        placeHolderInputElement.sendKeys(value);
+        placeHolderInputElement.sendKeys(inputValue);
     }
 
     @Override
