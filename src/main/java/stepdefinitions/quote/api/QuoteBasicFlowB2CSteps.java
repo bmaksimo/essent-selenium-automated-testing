@@ -3,7 +3,7 @@ package stepdefinitions.quote.api;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.restassured.B2CCreateContractScenario;
-import com.essent.testing.restassured.create_contract.constants.ApiPathsContract;
+
 
 import cucumber.api.PendingException;
 import cucumber.api.Scenario;
@@ -22,16 +22,11 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
         registerActiveScenario(scenario);
     }
     @Given("^I login to iWelcome as \"([^\"]*)\"$")
-    public void i_login_to_iWelcome_as(String username) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-
-        BaseAPI iWelcomeLogin_m = new BaseApiImpl();
+    public void i_login_to_iWelcome_as(String username) throws Throwable {       
+      
         String password = ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_SOAPUI_B2C);
-        String payloadForLogin = iWelcomeLogin_m.createPayload(username, password);
-
-        cookie = iWelcomeLogin_m.restPOST (payloadForLogin, ApiPathsContract.API_LOGIN_CRM,200);
-        System.out.println(payloadForLogin);
-//        throw new PendingException();
+        cookie= new IWelcomeLoginAPI().getCookie(username, password); 
+  
     }
 
     @Given("^\"([^\"]*)\" flow is started$")

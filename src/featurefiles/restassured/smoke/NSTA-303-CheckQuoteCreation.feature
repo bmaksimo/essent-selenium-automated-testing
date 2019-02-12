@@ -2,7 +2,6 @@
 @QUOTE 
 @SMOKE
 @BR
-
 Feature: Check Quote creation flow 
 
 Scenario: Check basic Quote creation flow B2C

@@ -129,7 +129,11 @@ public enum ConfigKey {
     ESSENT_SMTP_USER("essent.smtp.user"),
     ESSENT_SMTP_PASSWORD("essent.smtp.password"),
     ESSENT_EMAIL_FROM("essent.email.from"),
-    ESSENT_EMAIL_TO("essent.email.to");
+    ESSENT_EMAIL_TO("essent.email.to"),
+    CRM_BASE_URI("crm.base.uri"),
+    CRM_LOGIN_URL("crm.login.url");
+    
+    
 	private String resourceKey;
     ConfigKey(String resourceKey) {
         this.resourceKey = resourceKey;
