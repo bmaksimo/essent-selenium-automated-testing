@@ -12,9 +12,8 @@ import static org.junit.Assert.assertNotNull;
 public class DWPLoginDialog extends LoginComponent implements Dialog {
     private final static By SELECOR = By.cssSelector(".modal__container.login");
 
-
     public DWPLoginDialog(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver.findElementOrNull(SELECOR), seleniumDriver);
+        super(seleniumDriver.findElementOrNull(SELECOR));
     }
 
     public Window login(String username, String password) throws Throwable {

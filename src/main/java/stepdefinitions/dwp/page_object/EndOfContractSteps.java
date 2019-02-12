@@ -6,7 +6,6 @@ import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
-import cucumber.api.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 
@@ -23,30 +22,30 @@ public class EndOfContractSteps extends DwpScenario {
 
     @And("^Open Select Contractline$")
     public void openSelectContractline() {
-        webDriver.findElementOrNull(By.id("id-field")).click();
+        seleniumDriver.findElementOrNull(By.id("id-field")).click();
     }
 
     @And("^Assert is true$")
     public void assertIsTrue() {
-        Assert.assertTrue(webDriver.findElementOrNull(By.id("search-input")).isDisplayed());
+        Assert.assertTrue(seleniumDriver.findElementOrNull(By.id("search-input")).isDisplayed());
     }
 
     @And("^Search field input is \"([^\"]*)\"$")
     public void searchFieldInputIs(String input) {
-       EndOfContractPage endOfContractPage = new EndOfContractPage(webDriver);
+       EndOfContractPage endOfContractPage = new EndOfContractPage();
        String inputValue = parameterProvider.getValueOrParameterAsString(input);
        endOfContractPage.searchInputField(inputValue);
     }
 
     @And("^Click Select Contractline$")
     public void clickSelectContractline() {
-        EndOfContractPage endOfContractPage = new EndOfContractPage(webDriver);
+        EndOfContractPage endOfContractPage = new EndOfContractPage();
         endOfContractPage.simpleExecuteJavaScript("TrSelectContractline");
     }
 
     @And("^EAN check box$")
     public void eanCheckBox() {
-        EndOfContractPage endOfContractPage = new EndOfContractPage(webDriver);
+        EndOfContractPage endOfContractPage = new EndOfContractPage();
         boolean success = endOfContractPage.checkEanCheckBox();
         assertThat(String.format("JavaScript file TrEanCheckBox is undefined."),
             success, is(true));

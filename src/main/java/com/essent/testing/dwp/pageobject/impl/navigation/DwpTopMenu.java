@@ -3,7 +3,6 @@ package com.essent.testing.dwp.pageobject.impl.navigation;
 import com.essent.testing.dwp.pageobject.elements.Button;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.elements.ButtonImpl;
-import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -11,11 +10,6 @@ import java.time.Duration;
 
 
 public class DwpTopMenu extends Component {
-
-
-    public DwpTopMenu(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver);
-    }
 
     public void findAndClickTopMenu(String label) {
         checkAndOpenTopMenu();

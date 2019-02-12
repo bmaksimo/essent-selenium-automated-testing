@@ -1,5 +1,6 @@
 package stepdefinitions.dwp.plus;
 
+import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -13,11 +14,16 @@ public class PlusActions extends NavigationElements {
         registerActiveScenario(scenario);
     }
 
+    @OutputParameter(name = "plus-menu-item")
+    private String plusMenuAction;
+
     @And("^Plus menu is \"([^\"]*)\"$")
-    public void checkPlusMenu(String path) throws Throwable {
-        webDriver.waitForRequestsToFinish();
+    public boolean checkPlusMenu(String path) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
         clickTopAction("Plus Menu");
         clickPlusAction(path);
+        plusMenuAction = path;
+        return true;
     }
 
     @And("^List plus action is \"([^\"]*)\"$")

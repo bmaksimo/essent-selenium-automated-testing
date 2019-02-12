@@ -18,16 +18,18 @@ public class OdooGenericSteps extends OdooScenario {
     }
 
     @Given("^I logged in to Odoo as \"([^\"]*)\"$")
-    public void loginAs(String username) throws Throwable {
+    public void login(String username) throws Throwable {
+        setUpWebDriver();
         isOdooRunning();
         UserRoles odooUser = UserRoles.get(username);
-        Window application = new OdooLogin(webDriver).login(odooUser.getUsername(), odooUser.getPassword());
+        Window application = new OdooLogin().login(odooUser.getUsername(), odooUser.getPassword());
         assertNotNull("DWP application did not appear after a login", application);
     }
+
     @Given("^I renew login to Odoo as \"([^\"]*)\"$")
     public void renewLoginAs(String username) throws Throwable {
-        setUpWebDriver();
-        loginAs(username);
+        tearDown();
+        login(username);
     }
 
     @After("@ODOO, @E2E, @REGRESSION")

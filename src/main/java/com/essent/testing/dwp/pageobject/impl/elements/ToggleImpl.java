@@ -1,15 +1,11 @@
 package com.essent.testing.dwp.pageobject.impl.elements;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class ToggleImpl extends Component {
 
-    public ToggleImpl(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver);
-    }
     public WebElement checkBox (String box) {
         return  seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + box + "?']//toggle-form-element/label"));
 
@@ -33,7 +29,7 @@ public class ToggleImpl extends Component {
 
     public boolean checkIfCheckboxIsCheckedWithDot(String box)  {
         WebElement cb =checkBoxWithDot(box);
-        waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         String classValue = cb.findElement(By.cssSelector("input")).getAttribute("class");
         return classValue.contains("not-empty");
     }

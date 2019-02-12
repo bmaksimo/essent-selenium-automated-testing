@@ -2,16 +2,10 @@ package com.essent.testing.dwp.pageobject.impl.page;
 
 
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class OffertePage extends Component {
-
-    public OffertePage(SeleniumDriver seleniumDriver) {
-
-        super(seleniumDriver);
-    }
 
     public String getOfferteNumber() {
         return seleniumDriver.findElementWhenVisible(By.xpath("//list-link-bold-top-two-liner-cell//a/h5")).getText();
@@ -46,7 +40,7 @@ public class OffertePage extends Component {
     }
 
     public void clickOnBevestigen(){
-        waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         try {
             seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("primaryButton")));;
         }
@@ -62,7 +56,7 @@ public class OffertePage extends Component {
     }
 
     public void setSinganureReceivedDate(String date){
-        waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='Datum handtekening ontvangen']//input[@id='signature-received-date-c-field']")),date);
         seleniumDriver.waitAndClick(kalender());
     }

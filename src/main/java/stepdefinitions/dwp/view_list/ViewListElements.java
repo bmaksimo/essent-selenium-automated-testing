@@ -1,5 +1,6 @@
 package stepdefinitions.dwp.view_list;
 
+import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.essent.automation.util.Sleeper;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -7,11 +8,13 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import cucumber.runtime.CucumberException;
 import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.navigation.NavigationElements;
+import stepdefinitions.dwp.plus.PlusActions;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
@@ -41,8 +44,8 @@ public class ViewListElements extends NavigationElements {
 
     private class ViewListNavigation {
         public void goToLink(String linkText) {
-            webDriver.waitForRequestsToFinish();
-            WebElement link = webDriver.findElement(By.linkText(linkText));
+            seleniumDriver.waitForRequestsToFinish();
+            WebElement link = seleniumDriver.findElement(By.linkText(linkText));
             link.click();
         }
     }
@@ -56,17 +59,6 @@ public class ViewListElements extends NavigationElements {
             options.put("schedule_seconds", sec);
             options.put("header", header);
             return executeJavascriptTest("TrCheckViewListHeader", options);
-        }
-    }
-
-    private class CheckSubmitCard implements Predicate<String> {
-        @Override
-        public boolean test(String item) {
-            int sec = 7;
-            Map<String, Object> options = new HashMap<>();
-            options.put("schedule_seconds", sec);
-            options.put("item", item);
-            return executeJavascriptTest("TrCheckSubmitCard", options);
         }
     }
 
@@ -233,7 +225,7 @@ public class ViewListElements extends NavigationElements {
             String tableNameSelector;
             if ("Interacties".equalsIgnoreCase(tableName)) {
                 tableNameSelector = INTERACTIONS;
-                List<WebElement> columns = webDriver.getDriver().findElements(By.xpath("//list[@list-key='"+tableNameSelector+"']//div//table[@class='list__content']//thead//tr//th"));
+                List<WebElement> columns = seleniumDriver.getDriver().findElements(By.xpath("//list[@list-key='"+tableNameSelector+"']//div//table[@class='list__content']//thead//tr//th"));
                 List<String> mappedColumns = columns.stream().map(c -> c.getText().toLowerCase()).collect(Collectors.toList());
 
                 return mappedColumns.indexOf(columnName.toLowerCase());
@@ -241,7 +233,7 @@ public class ViewListElements extends NavigationElements {
 
             if ("Afbetalingsplannen".equalsIgnoreCase(tableName)) {
                 tableNameSelector = PAYMENTS;
-                List<WebElement> columns = webDriver.getDriver().findElements(By.xpath("//list[@list-key='"+tableNameSelector+"']//div//table[@class='list__content']//thead//tr//th"));
+                List<WebElement> columns = seleniumDriver.getDriver().findElements(By.xpath("//list[@list-key='"+tableNameSelector+"']//div//table[@class='list__content']//thead//tr//th"));
                 List<String> mappedColumns = columns.stream().map(c -> c.getText().toLowerCase()).collect(Collectors.toList());
 
                 return mappedColumns.indexOf(columnName.toLowerCase());
@@ -279,47 +271,10 @@ public class ViewListElements extends NavigationElements {
         }
     }
 
-    private class CheckModalDialog implements Predicate<Map> {
-        @Override
-        public boolean test(Map options) {
-            return executeJavascriptTest("TrCheckModalDialog", options);
-        }
-    }
-
-    private class PaymentDetailsModalSaveAction implements Predicate<Map> {
-        @Override
-        public boolean test(Map options) {
-            return executeJavascriptTest("TrPaymentDetailsModalSaveAction", options);
-        }
-    }
-
     private class CheckEmptyTableAction implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
             return executeJavascriptTest("TrCheckEmptyTable", options);
-        }
-    }
-
-    private class PaymentMethodSwitch implements Predicate<Map> {
-        @Override
-        public boolean test(Map options) {
-            Map result = executeJavascriptMethod("TrSwitchPaymentMethod", options);
-            String status = ((String) result.get("status"));
-            boolean success = StringUtils.equals("PASSED", status);
-            if (success) {
-                String switchedPaymentMethod = ((String) result.get("paymentMethod")).equalsIgnoreCase("string:OV") ?
-                    "Overschrijving" : "Domiciliëring";
-                parameterProvider.put("paymentMethod", switchedPaymentMethod);
-            }
-
-            return success;
-        }
-    }
-
-    private class PaymentDetailsIBANChange implements Predicate<Map> {
-        @Override
-        public boolean test(Map options) {
-            return executeJavascriptTest("TrAddIBANToPaymentDetails", options);
         }
     }
 
@@ -376,7 +331,7 @@ public class ViewListElements extends NavigationElements {
 
     @When("^Click on link in View List at \"([^\"]*)\" row and \"([^\"]*)\" column polling (\\d+) seconds?$")
     public void clickOnViewListAtRowAndColumn(String ordinal, String column, int seconds) throws Throwable {
-        webDriver.waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         Map<String, String> columnIndexListOptions = getColumnIndexListOptions(column, null, ordinal);
         ClickTableCellUrl clickFunction = new ClickTableCellUrl();
         given().await()
@@ -449,7 +404,8 @@ public class ViewListElements extends NavigationElements {
     @And("^\"([^\"]*)\" list element has cell value \"([^\"]*)\" at column \"([^\"]*)\"$")
     public void listElementWith(String ordinal, String value, String columnName) throws Throwable {
         int row = extractNumericValue(ordinal);
-        boolean success = new ViewListModel().containsDataAt(row, value, columnName);
+        String expectedValue = parameterProvider.getValueOrParameterAsString(value);
+        boolean success = new ViewListModel().containsDataAt(row, expectedValue, columnName);
         assertThat(String.format("View list did not contain cell value %s at %s row, column '%s'", value, ordinal, columnName),
             success, is(true));
     }
@@ -462,8 +418,12 @@ public class ViewListElements extends NavigationElements {
             success, is(true));
     }
 
-    @And("^\"([^\"]*)\" list element has cell value \"([^\"]*)\" at column \"([^\"]*)\" polling (\\d+) seconds?$")
-    public void containsElementAt(String ordinal, String value, String columnName, int seconds) throws Throwable {
+    @InputParameter(name = "plus-menu-item")
+    String plusMenuItem;
+    @And("^\"([^\"]*)\" list element has cell value \"([^\"]*)\" at column \"([^\"]*)\" within (\\d+) seconds?$")
+    public void containsElementWithin(String ordinal, String value, String columnName, int seconds) throws Throwable {
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
+        PlusActions scenario = (PlusActions)getScenarioInstance(PlusActions.class);
         int row = extractNumericValue(ordinal);
         ViewListModel viewListModel = new ViewListModel();
         given()
@@ -472,8 +432,29 @@ public class ViewListElements extends NavigationElements {
             .pollInterval(new Duration(20, SECONDS))
             .pollDelay(TWO_SECONDS)
             .atMost(new Duration(seconds, SECONDS)).until(()->
+        {
+            try {
+                scenario.checkPlusMenu(plusMenuItem);
+            } catch (Throwable throwable) {
+                throw new CucumberException(throwable);
+            }
+            return viewListModel.containsDataAt(row, inputValue, columnName);
+        });
+    }
+
+    @And("^\"([^\"]*)\" list element has cell value \"([^\"]*)\" at column \"([^\"]*)\" polling (\\d+) seconds?$")
+    public void containsElementAt(String ordinal, String value, String columnName, int seconds) throws Throwable {
+        int row = extractNumericValue(ordinal);
+        String expectedValue = parameterProvider.getValueOrParameterAsString(value);
+        ViewListModel viewListModel = new ViewListModel();
+        given()
+            .await()
+            .ignoreExceptions()
+            .pollInterval(new Duration(20, SECONDS))
+            .pollDelay(TWO_SECONDS)
+            .atMost(new Duration(seconds, SECONDS)).until(()->
             loopBack() &&
-                viewListModel.containsDataAt(row, value, columnName));
+                viewListModel.containsDataAt(row, expectedValue, columnName));
     }
 
     private boolean loopBack()  {
@@ -491,17 +472,6 @@ public class ViewListElements extends NavigationElements {
         parameterProvider.put(columnName, cellSelection);
         assertThat(String.format("Data selection at column %s is empty", columnName),
             cellSelection, not(hasSize(0)));
-    }
-
-    @And("^Payment method is updated$")
-    public void listSwitchedPaymentMethod() throws Throwable {
-        String updatedPaymentMethodName = parameterProvider.getValueOrParameterAsString("parameter:paymentMethod");
-        final String UPDATED_PAYMENT_METHOD = "//list-simple-two-liner-cell[contains(@line-2,'" + updatedPaymentMethodName + "')]";
-
-        WebElement element = webDriver.findElementOrNull(By.xpath(UPDATED_PAYMENT_METHOD));
-
-        assertThat(String.format("View list did not contain payment method %s", updatedPaymentMethodName),
-            element, is(notNullValue()));
     }
 
     @Then("^\"([^\"]*)\" List element with value at column \"([^\"]*)\" is checked$")
@@ -574,13 +544,6 @@ public class ViewListElements extends NavigationElements {
             cellSelection.isEmpty(), is(false));
         assertThat(String.format("Selected rows did not contain cell value %s at column %s", value, columnName),
             cellSelection.get(0).contains(value), is(true));
-    }
-
-    @When("^Submit Card is \"([^\"]*)\"$")
-    public void checkSubmitCard(String item) throws Exception {
-        boolean success = new CheckSubmitCard().test(item);
-        assertThat(String.format("Submit Card does not contain '%s'", item),
-            success, is(true));
     }
 
     @And("^List View action is \"([^\"]*)\"$")
