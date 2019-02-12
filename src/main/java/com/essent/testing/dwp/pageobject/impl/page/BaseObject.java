@@ -34,6 +34,10 @@ public class BaseObject extends Component {
         }
     }
 
+    public void clickOnMarkAsDonePlusMenuSubAction() {
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action/a/span[@class='icon-checkmark']")));
+    }
+
     public void clickOnToggle (String label) throws InterruptedException{
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(2);
