@@ -15,11 +15,6 @@ public class AccountDetailsImpl  extends Component implements AccountDetails {
     private static final String NON_EDITABLE_VALUE_SELECTOR_TEMPLATE = "//div[@class='input label-inline' and label/text()='${label}']//div[@class='non-editable-input']";
     private static final String TOGGLE_SWITCH_SELECTOR_TEMPLATE = "//div[@class='input label-inline' and label/text()='${label}']//input";
 
-
-    public AccountDetailsImpl(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver);
-    }
-
     @Override
     public String getNonEdtableValue(String label) {
         By query = By.xpath(createQuery(NON_EDITABLE_VALUE_SELECTOR_TEMPLATE, "label", label));

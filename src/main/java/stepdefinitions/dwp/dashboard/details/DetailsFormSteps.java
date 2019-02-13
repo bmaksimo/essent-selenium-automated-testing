@@ -31,7 +31,7 @@ public class DetailsFormSteps extends DwpScenario {
 
     @Then("^\"([^\"]*)\" field value is checked$")
     public void checkFieldValue(String label) throws Throwable {
-        AccountDetails details = new AccountDetailsImpl(webDriver);
+        AccountDetails details = new AccountDetailsImpl();
         String value = details.getNonEdtableValue(label);
         assertThat(String.format("'%s' field has is empty, was expected to have value", label),StringUtils.isNotEmpty(value), is(true));
         parameterProvider.put(label, value);
@@ -39,7 +39,7 @@ public class DetailsFormSteps extends DwpScenario {
 
     @Then("^\"([^\"]*)\" switch value is checked$")
     public void checkToggleSwitchValue(String label) throws Throwable {
-        AccountDetails details = new AccountDetailsImpl(webDriver);
+        AccountDetails details = new AccountDetailsImpl();
         boolean value = details.isToggleSwitchEnabled(label);
         parameterProvider.put(label, value);
     }

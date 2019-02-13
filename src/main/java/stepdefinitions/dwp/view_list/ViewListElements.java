@@ -365,34 +365,6 @@ public class ViewListElements extends NavigationElements {
         return columnIndexListOptions;
     }
 
-    @When("^Modal \"([^\"]*)\" is displayed$")
-    public void checkModalDialogOpen(String headerText) {
-        Map<String, String> options = new HashMap<>();
-        options.put("headerText", headerText);
-        boolean success = new CheckModalDialog().test(options);
-        assertThat(String.format("Modal dialogue %s was not found", headerText), success, is(true));
-    }
-
-    @When("Payment method is switched$")
-    public void switchPaymentMethod() {
-        boolean success = new PaymentMethodSwitch().test(new HashMap<>());
-        assertThat("Payment method has not been switched", success, is(true));
-    }
-
-    @And("IBAN is \"([^\"]*)\" if not empty$")
-    public void changeIBAN(String iban) {
-        Map<String, String> options = new HashMap<>();
-        options.put("iban", iban);
-        boolean success = new PaymentDetailsIBANChange().test(options);
-        assertThat("IBAN has failed to be updated", success, is(true));
-    }
-
-    @And("Payment details are confirmed$")
-    public void clickSaveOnPaymentDetailsModal() {
-        boolean success = new PaymentDetailsModalSaveAction().test(null);
-        assertThat("Billing customer update has failed.", success, is(true));
-    }
-
     @Then("^Row actions \"([^\"]*)\" is clicked$")
     public void clickOnRowAction(String rowAction) {
         Map<String, String> options = new HashMap<>();
