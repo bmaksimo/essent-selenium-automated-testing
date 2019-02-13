@@ -3,7 +3,9 @@
 
     Feature: Guarantee invoice
         @NUAT-5021-STEP-6-7
-        Scenario: Cancel contract line of toekomstige klant
+        Scenario: Cancel contract line of toekomstige klant and check if contract is cancelled
+
+            # Step 6
 
             Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
             When Left menu is "contracting-switching"
@@ -24,3 +26,9 @@
             And "Reden voor annulering" modal dropdown selection is "Geannuleerd door de klant"
             And Form is submitted
             Then "1st" list element has cell value "Geannuleerd" at column "Status & Product"
+
+            # Step 7
+
+            And Top arrow button is "up"
+            Then "1st" list element has cell value "Geannuleerd (Waarborg)" at column "Type & status"
+
