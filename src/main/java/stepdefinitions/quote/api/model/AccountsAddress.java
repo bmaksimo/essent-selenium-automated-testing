@@ -1,4 +1,4 @@
-package stepdefinitions.quote.api;
+package stepdefinitions.quote.api.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -6,8 +6,8 @@ public class AccountsAddress {
 
         @JsonProperty("address_addition")
         private String addressAddition;
-        @JsonProperty("address_buss")
-        private String addressBuss;
+        @JsonProperty("address_bus")
+        private String addressBus;
         @JsonProperty("address_city")
         private String addressCity;
         @JsonProperty("address_country")
@@ -22,17 +22,18 @@ public class AccountsAddress {
         private String addressType;
         @JsonProperty("id")
         private String id;
+
         public String getAddressAddition() {
             return addressAddition;
         }
         public void setAddressAddition(String addressAddition) {
             this.addressAddition = addressAddition;
         }
-        public String getAddressBuss() {
-            return addressBuss;
+        public String getAddressBus() {
+            return addressBus;
         }
-        public void setAddressBuss(String addressBuss) {
-            this.addressBuss = addressBuss;
+        public void setAddressBus(String addressBus) {
+            this.addressBus = addressBus;
         }
         public String getAddressCity() {
             return addressCity;
@@ -76,7 +77,5 @@ public class AccountsAddress {
         public void setId(String id) {
             this.id = id;
         }
-
-
 
 }

@@ -1,4 +1,4 @@
-package stepdefinitions.quote.api;
+package stepdefinitions.quote.api.model;
 
 import java.util.ArrayList;
 
@@ -12,13 +12,13 @@ public class Payload {
     private String lineStatus;
     @JsonProperty("dwp|is_main")
     private boolean isMain;
-    @JsonProperty("residential | startdate")
+    @JsonProperty("residential|startdate")
     private String residentialStartDate;
     @JsonProperty("addresses_aos_products_quotes")
-    QuoteAddress quoteAddress;
+    AccountsAsQuotes quoteAddress;
     @JsonProperty("delivery_address_postalcode")
     private String postalCode;
-    @JsonProperty("addresses_aos_products_quotes | is_main")
+    @JsonProperty("addresses_aos_products_quotes|is_main")
     private boolean isMainAddress;
     @JsonProperty("tariffsheet_id")
     private String tariffsheetId;
@@ -30,55 +30,55 @@ public class Payload {
     private String frequencyAdvance;
     @JsonProperty("product_id")
     private String productId;
-    @JsonProperty("productType")
-    private String product_type_c;
+    @JsonProperty("product_type_c")
+    private String productType;
     @JsonProperty("product_name")
     private String productName;
     @JsonProperty("recordTypeOfRecordId")
     private String recordTypeOfRecordId;
     @JsonProperty("baseModule")
     private String baseModule;
-    @JsonProperty("package_product_properties")
+    @JsonProperty("dwp|package_product_properties")
     private String packageProductProperties;
-    @JsonProperty("dwp | tariffsheet_price | selling_price_high")
+    @JsonProperty("dwp|tariffsheet_price|selling_price_high")
     private String tarifsheetHighPrice;
-    @JsonProperty("dwp | tariffsheet_price | selling_price_low")
+    @JsonProperty("dwp|tariffsheet_price|selling_price_low")
     private String tarifsheetLowPrice;
-    @JsonProperty("dwp | tariffsheet_price | selling_price_th")
+    @JsonProperty("dwp|tariffsheet_price|selling_price_th")
     private String tarifsheetThPrice;
-    @JsonProperty("dwp | tariffsheet_price | selling_price_exclnight")
+    @JsonProperty("dwp|tariffsheet_price|selling_price_exclnight")
     private String tarifsheetExclNightPrice;
-    @JsonProperty("dwp | tariffsheet_price | selling_price_oneoff")
+    @JsonProperty("dwp|tariffsheet_price|selling_price_oneoff")
     private String tarifsheetOneOffPrice;
-    @JsonProperty("dwp | tariffsheet_price | selling_price_fixedfee")
+    @JsonProperty("dwp|tariffsheet_price|selling_price_fixedfee")
     private String tarifsheetFixedFeePrice;
-    @JsonProperty("dwp | alreadyContracted")
+    @JsonProperty("dwp|alreadyContracted")
     private boolean alreadyContracted;
-    @JsonProperty("dwp | alreadyContractedForDifferentClient")
+    @JsonProperty("dwp|alreadyContractedForDifferentClient")
     private boolean alreadyContractedForDifferentClient;
-    @JsonProperty("dwp | line_items | properties | duration_from")
+    @JsonProperty("dwp|line_items|properties|duration_from")
     private String durationFrom;
-    @JsonProperty("dwp | tariffsheet_price | id")
+    @JsonProperty("dwp|tariffsheet_price|id")
     private String tarifsheetPriceId;
-    @JsonProperty("dwp | tariffsheet_price | selling_price_high_incl_vat")
+    @JsonProperty("dwp|tariffsheet_price|selling_price_high_incl_vat")
     private String tarifsheetHighPriceInclVat;
-    @JsonProperty("dwp | tariffsheet_price | selling_price_low_incl_vat")
+    @JsonProperty("dwp|tariffsheet_price|selling_price_low_incl_vat")
     private String tarifsheetLowPriceInclVat;
-    @JsonProperty("dwp | tariffsheet_price | selling_price_th_incl_vat")
+    @JsonProperty("dwp|tariffsheet_price|selling_price_th_incl_vat")
     private String tarifsheetThPriceInclVat;
-    @JsonProperty("dwp | tariffsheet_price | selling_price_exclnight_incl_vat")
+    @JsonProperty("dwp|tariffsheet_price|selling_price_exclnight_incl_vat")
     private String tarifsheetExclNightPriceInclVat;
-    @JsonProperty("dwp | tariffsheet_price | selling_price_fixedfee_incl_vat")
+    @JsonProperty("dwp|tariffsheet_price|selling_price_fixedfee_incl_vat")
     private String tarifsheetFixedFeePriceInclVat;
-    @JsonProperty("dwp | tariffsheet_price | selling_price_oneoff_incl_vat")
+    @JsonProperty("dwp|tariffsheet_price|selling_price_oneoff_incl_vat")
     private String tarifsheetOneOffPriceInclVat;
-    @JsonProperty("dwp | tariffsheet_price | indexation_parameter")
+    @JsonProperty("dwp|tariffsheet_price|indexation_parameter")
     private String tarifsheetPriceIndexationParameter;
-    @JsonProperty("dwp | tariffsheet_price | sourcing_product")
+    @JsonProperty("dwp|tariffsheet_price|sourcing_product")
     private String tarifsheetPriceSourcingProduct;
-    @JsonProperty("dwp | available_product_ids")
+    @JsonProperty("dwp|available_product_ids")
     ArrayList <Object> availableProductIds = new ArrayList <Object>();
-    @JsonProperty("dwp | discount_assigned")
+    @JsonProperty("dwp|discount_assigned")
     ArrayList <Object> discountAssigned = new ArrayList <Object>();
     @JsonProperty("meter_open_c")
     private boolean meterOpen;
@@ -86,9 +86,9 @@ public class Payload {
     private boolean moveIn;
     @JsonProperty("switchtype_c")
     private String switchType;
-    @JsonProperty("dwp | mig_module_c")
+    @JsonProperty("dwp|mig_module_c")
     private String migModule;
-    @JsonProperty("dwp | mig_label_c")
+    @JsonProperty("dwp|mig_label_c")
     private String migLabel;
     @JsonProperty("mig_start_context_c")
     private String migStartContext;
@@ -104,13 +104,13 @@ public class Payload {
     private String contractLineStatus;
     @JsonProperty("up_end_date_c")
     private String upEndDate;
-    @JsonProperty("dwp | external_message_GUID_3")
+    @JsonProperty("dwp|external_message_GUID_3")
     private String externalMessageGUID_3;
-    @JsonProperty("dwp | external_message_GUID_4")
+    @JsonProperty("dwp|external_message_GUID_4")
     private String externalMessageGUID_4;
-    @JsonProperty("dwp | external_message_GUID_1")
+    @JsonProperty("dwp|external_message_GUID_1")
     private String externalMessageGUID_1;
-    @JsonProperty("dwp | external_message_GUID_2")
+    @JsonProperty("dwp|external_message_GUID_2")
     private String externalMessageGUID_2;
     @JsonProperty("ean_c")
     private String ean;
@@ -130,21 +130,21 @@ public class Payload {
     private boolean solarPanelsPowerUnknown;
     @JsonProperty("reading_date_c")
     private String readingDate;
-    @JsonProperty("indexTh")
-    private String index_th_c;
+    @JsonProperty("index_th_c")
+    private String indexTh;
     @JsonProperty("index_high_c")
     private String indexHigh;
     @JsonProperty("index_low_c")
     private String indexLow;
     @JsonProperty("index_exclnight_c")
     private String indexExclNight;
-    @JsonProperty("dwp | copy_eplus_from_parent_address")
+    @JsonProperty("dwp|copy_eplus_from_parent_address")
     private String EplusCopy;
     @JsonProperty("test")
     private boolean test;
     @JsonProperty("market_mock_c")
     private boolean marketMock;
-    @JsonProperty("dwp | market_mock_scenario_mig6")
+    @JsonProperty("dwp|market_mock_scenario_mig6")
     private String marketMockScenario;
     @JsonProperty("external_message_id")
     private String externalMessageId;
@@ -154,41 +154,41 @@ public class Payload {
     private String preswitchTemplate;
     @JsonProperty("service_c")
     private String service;
-    @JsonProperty("mig_connectionparameters | desync")
+    @JsonProperty("mig_connectionparameters|desync")
     private boolean desync;
-    @JsonProperty("mig_connectionparameters | request_unlock")
+    @JsonProperty("mig_connectionparameters|request_unlock")
     private boolean requestUnlock;
-    @JsonProperty("mig_connectionparameters | takeover")
+    @JsonProperty("mig_connectionparameters|takeover")
     private boolean takeover;
-    @JsonProperty("mig_connectionparameters | contestation")
+    @JsonProperty("mig_connectionparameters|contestation")
     private boolean contestation;
-    @JsonProperty("mig_connectionparameters | related_transaction_id")
+    @JsonProperty("mig_connectionparameters|related_transaction_id")
     private String relatedTransactionId;
-    @JsonProperty("mig_connectionparameters | smart_meter")
+    @JsonProperty("mig_connectionparameters|smart_meter")
     private String smartMeter;
-    @JsonProperty("mig_connectionparameters | supplier_time_frame")
+    @JsonProperty("mig_connectionparameters|supplier_time_frame")
     private String supplierTimeframe;
-    @JsonProperty("mig_connectionparameters | billing_frequency")
+    @JsonProperty("mig_connectionparameters|billing_frequency")
     private String billingFrequency;
-    @JsonProperty("mig_connectionparameters | information_frequency")
+    @JsonProperty("mig_connectionparameters|information_frequency")
     private String informationFrequency;
-    @JsonProperty("mig_connectionparameters | service_component_change")
+    @JsonProperty("mig_connectionparameters|service_component_change")
     private boolean serviceComponentChange;
-    @JsonProperty("dwp | mig_start_context_c | matchedCondition")
+    @JsonProperty("dwp|mig_start_context_c|matchedCondition")
     private String startContextMatchedCondition;
-    @JsonProperty("dwp | dwp | external_message_GUID_3 | matchedCondition")
+    @JsonProperty("dwp|dwp|external_message_GUID_3|matchedCondition")
     private String matchedConditionGUID_3;
-    @JsonProperty("dwp | dwp | external_message_GUID_4 | matchedCondition")
+    @JsonProperty("dwp|dwp|external_message_GUID_4|matchedCondition")
     private String matchedConditionGUID_4;
-    @JsonProperty("dwp | dwp | external_message_GUID_1 | matchedCondition")
+    @JsonProperty("dwp|dwp|external_message_GUID_1|matchedCondition")
     private String matchedConditionGUID_1;
-    @JsonProperty("dwp | dwp | external_message_GUID_2 | matchedCondition")
+    @JsonProperty("dwp|dwp|external_message_GUID_2|matchedCondition")
     private String matchedConditionGUID_2;
-    @JsonProperty("dwp | meter_type_c | matchedCondition")
+    @JsonProperty("dwp|meter_type_c|matchedCondition")
     private String meterTypeMatchedCondition;
-    @JsonProperty("dwp | meter_configuration_c | matchedCondition")
+    @JsonProperty("dwp|meter_configuration_c|matchedCondition")
     private String meterConfigurationMatchedCondition;
-    @JsonProperty("dwp | external_message_id | matchedCondition")
+    @JsonProperty("dwp|external_message_id|matchedCondition")
     private String externalMessageIdMatchedCondition;
     @JsonProperty("advance_amount_incl_vat_c")
     private String advanceAmountInclVat;
@@ -200,7 +200,7 @@ public class Payload {
     private String lowUsage;
     @JsonProperty("usage_excl_night_c")
     private String usageExclNight;
-    @JsonProperty("dwp | discount_details")
+    @JsonProperty("dwp|discount_details")
     private String discountDetails;
     public String getId() {
         return id;
@@ -226,10 +226,10 @@ public class Payload {
     public void setResidentialStartDate(String residentialStartDate) {
         this.residentialStartDate = residentialStartDate;
     }
-    public QuoteAddress getQuoteAddress() {
+    public AccountsAsQuotes getQuoteAddress() {
         return quoteAddress;
     }
-    public void setQuoteAddress(QuoteAddress quoteAddress) {
+    public void setQuoteAddress(AccountsAsQuotes quoteAddress) {
         this.quoteAddress = quoteAddress;
     }
     public String getPostalCode() {
@@ -274,11 +274,11 @@ public class Payload {
     public void setProductId(String productId) {
         this.productId = productId;
     }
-    public String getProduct_type_c() {
-        return product_type_c;
+    public String getProductType() {
+        return productType;
     }
-    public void setProduct_type_c(String product_type_c) {
-        this.product_type_c = product_type_c;
+    public void setProductType(String productType) {
+        this.productType = productType;
     }
     public String getProductName() {
         return productName;
@@ -574,11 +574,11 @@ public class Payload {
     public void setReadingDate(String readingDate) {
         this.readingDate = readingDate;
     }
-    public String getIndex_th_c() {
-        return index_th_c;
+    public String getIndexTh() {
+        return indexTh;
     }
-    public void setIndex_th_c(String index_th_c) {
-        this.index_th_c = index_th_c;
+    public void setIndexTh(String indexTh) {
+        this.indexTh = indexTh;
     }
     public String getIndexHigh() {
         return indexHigh;
@@ -790,6 +790,5 @@ public class Payload {
     public void setDiscountDetails(String discountDetails) {
         this.discountDetails = discountDetails;
     }
-
 
 }

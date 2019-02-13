@@ -1,4 +1,4 @@
-package stepdefinitions.quote.api;
+package stepdefinitions.quote.api.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -6,28 +6,19 @@ public class Action {
 
     @JsonProperty("currentStep")
     private String currentStep;
-
     @JsonProperty("event")
     private String event;
 
-
-    // Getter Methods
-
     public String getCurrentStep() {
-     return currentStep;
+        return currentStep;
     }
-
     public String getEvent() {
-     return event;
+        return event;
     }
-
-    // Setter Methods
-
     public void setCurrentStep(String currentStep) {
-     this.currentStep = currentStep;
+        this.currentStep = currentStep;
     }
-
     public void setEvent(String event) {
-     this.event = event;
+        this.event = event;
     }
 }

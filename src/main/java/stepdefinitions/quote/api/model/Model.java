@@ -1,4 +1,4 @@
-package stepdefinitions.quote.api;
+package stepdefinitions.quote.api.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +72,7 @@ public class Model {
     @JsonProperty("addresses_leads")
     private AccountsAddress address;
     @JsonProperty("accounts|aos_quotes|primary_group_id")
-    private List<User> primaryGroupIds;
+    private List<Group> primaryGroupIds = new ArrayList<>();
     @JsonProperty("dwp|informationAction")
     private String informationAction;
     @JsonProperty("accounts|aos_quotes|payment_details|com_prefs(type='MANDATE')|channel")
@@ -106,7 +106,7 @@ public class Model {
     @JsonProperty("first_name")
     private String firstName;
     @JsonProperty("accounts|aos_quotes|assigned_user_id")
-    private List<User> assignedUserId = new ArrayList<User>();
+    private List<Group> assignedUserId = new ArrayList<Group>();
     @JsonProperty("com_prefs(type='COMMERCIAL')|channel")
     private String commercialChannel;
     @JsonProperty("dwp|alreadyContracted")
@@ -161,7 +161,6 @@ public class Model {
     private String tariffsheetId;
     @JsonProperty("dwp|accounts|aos_quotes|payment_details|paymentterms|matchedCondition")
     private String paymentTermsatchedCondition;
-
     @JsonProperty("accounts|aos_quotes|aos_products_quotes")
     public Payload payload;
     @JsonProperty("dwp|is_main")
@@ -172,19 +171,12 @@ public class Model {
     public boolean receiveSms;
     @JsonProperty("dwp|available_product_ids")
     public List<String> availableProductIds = new ArrayList<>();
-    @JsonProperty("dwp|customer_wants_to_signs")
+    @JsonProperty("dwp|customer_wants_to_sign")
     public boolean customerWantsToSign;
     @JsonProperty("dwp|discount_id")
     public List<String> discountIds = new ArrayList<>();
     @JsonProperty("dwp|line_items|package_properties|vooraf")
     private String lineItemPackageProperties;
-
-
-
-
-
-
-
 
     public String getContactType() {
         return contactType;
@@ -378,10 +370,10 @@ public class Model {
     public void setAddress(AccountsAddress address) {
         this.address = address;
     }
-    public List<User> getPrimaryGroupIds() {
+    public List<Group> getPrimaryGroupIds() {
         return primaryGroupIds;
     }
-    public void setPrimaryGroupIds(List<User> primaryGroupIds) {
+    public void setPrimaryGroupIds(List<Group> primaryGroupIds) {
         this.primaryGroupIds = primaryGroupIds;
     }
     public String getInformationAction() {
@@ -480,10 +472,10 @@ public class Model {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-    public List<User> getAssignedUserId() {
+    public List<Group> getAssignedUserId() {
         return assignedUserId;
     }
-    public void setAssignedUserId(List<User> assignedUserId) {
+    public void setAssignedUserId(List<Group> assignedUserId) {
         this.assignedUserId = assignedUserId;
     }
     public String getCommercialChannel() {
@@ -696,7 +688,5 @@ public class Model {
     public void setLineItemPackageProperties(String lineItemPackageProperties) {
         this.lineItemPackageProperties = lineItemPackageProperties;
     }
-
-
 
 }
