@@ -53,7 +53,6 @@ public class JournalEntriesSteps extends OdooScenario {
         je.createNewItem(db,1,parameterProvider.getValueOrParameterAsString(db.get(1).get(1)));
         je.clickOnAddAnItem();
         je.createNewItem(db,2,parameterProvider.getValueOrParameterAsString(db.get(2).get(1)));
-//        Assert.assertEquals(je.getValueOfCredit(),db.get(2).get(4));
     }
 
     @And("^Save and Post journal entry")
