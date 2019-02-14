@@ -131,7 +131,8 @@ public enum ConfigKey {
     ESSENT_EMAIL_FROM("essent.email.from"),
     ESSENT_EMAIL_TO("essent.email.to"),
     CRM_BASE_URI("crm.base.uri"),
-    CRM_LOGIN_URL("crm.login.url");
+    CRM_LOGIN_URL("crm.login.url"),
+    CRM_B2CCQ_URL("crm.b2ccq.url");
     
     
 	private String resourceKey;

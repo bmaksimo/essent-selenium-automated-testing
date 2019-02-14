@@ -16,6 +16,7 @@ import io.restassured.http.Cookies;
 public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     protected Cookies cookie = null;
+    protected String tariffSheetID;
 
     @Before("@API")
     public void setupTest(Scenario scenario) throws Throwable {
@@ -31,8 +32,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     @Given("^\"([^\"]*)\" flow is started$")
     public void flow_is_started(String arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        tariffSheetID = new QuoteBTCAPI().getTariffSheetID(cookie);
     }
 
     @When("^Data is prepared for Create qoute request for \"([^\"]*)\"$")
