@@ -11,7 +11,7 @@
             When Left menu is "contracting-switching"
             And Top menu item is "Klanten"
             And Top action is "Filters"
-            And "Naam" input is "parameter:suitecrm-customer-name"
+            And "Naam" input is "Dani Eldering"
 
             Given "1st" List element with value at column "Klantnummer & Naam" is checked
             And Click on "parameter:Klantnummer & Naam" link

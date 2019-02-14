@@ -17,7 +17,7 @@ class TrModalDropdownSelection extends TestRunnerBase {
         let menu = $("label:contains("+label+")").parent().find('select');
 
         if(menu.find("option:contains('"+value+"')").text() == value) {
-            $(menu).val('string:'+value).trigger("change");
+            $(menu).val(menu.find("option:contains('"+value+"')").val()).trigger("change");
             result.status = 'PASSED';
             result.reason = '';
         } else {

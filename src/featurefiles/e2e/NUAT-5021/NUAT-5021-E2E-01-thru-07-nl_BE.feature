@@ -169,4 +169,8 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And "Reden voor annulering" modal dropdown selection is "Geannuleerd door de klant"
         And Form is submitted
         Then "1st" list element has cell value "Geannuleerd" at column "Status & Product"
-p
+
+        # Step 7 - Contract should be Geannuleerd (Waarborg)
+
+        And Top arrow button is "up"
+        Then "1st" list element has cell value "Geannuleerd (Waarborg)" at column "Type & status"
