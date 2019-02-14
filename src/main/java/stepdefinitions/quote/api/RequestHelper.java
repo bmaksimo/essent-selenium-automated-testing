@@ -4,6 +4,7 @@ import static io.restassured.RestAssured.expect;
 import static org.junit.Assert.*;
 
 import io.restassured.http.ContentType;
+import io.restassured.http.Cookies;
 import io.restassured.response.Response;
 
 
@@ -28,7 +29,7 @@ public class RequestHelper {
      * @param path
      * @return response
      */
-    public  Response postRequest(Integer statusCode, String body, String path) {
+    public  Response simplePostRequest(Integer statusCode, String body, String path) {
 
 	Response response = expect().given().contentType(ContentType.JSON).body(body).when().post(path);
 
@@ -43,5 +44,21 @@ public class RequestHelper {
 	assertEquals(responseStatusCode, statusCode);
 	return response;
     }
+
+    public  Response postRequest(Integer statusCode, Cookies cookie, String payload,String path) {
+
+   	Response response = expect().given().cookies(cookie).contentType(ContentType.JSON).body(payload).when().post(path);
+
+   	Integer responseStatusCode = new Integer(response.statusCode());
+   	LOGGER.info("POST " + path + " status : " + responseStatusCode + " (expected: " + statusCode + ")");
+
+   	if (!responseStatusCode.equals(statusCode)) {
+   	    LOGGER.info("JSON body which was sent in the request is: " + payload);
+   	    LOGGER.error("RESPONSE IS: " + response.body().asString());
+   	}
+
+   	assertEquals(responseStatusCode, statusCode);
+   	return response;
+       }
 
 }

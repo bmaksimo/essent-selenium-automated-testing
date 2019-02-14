@@ -31,7 +31,7 @@ public class IWelcomeLoginAPI extends AbstractAPI {
 	String payload = createPayload(username, password);
 	RequestHelper helper = new RequestHelper();
 	String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)+ConfigProvider.getProperty(ConfigKey.CRM_LOGIN_URL);
-	Response iWelcomeResponse = helper.postRequest(expectedResponseCode, payload, path);
+	Response iWelcomeResponse = helper.simplePostRequest(expectedResponseCode, payload, path);
 	
 	if (iWelcomeResponse.getStatusCode() == expectedResponseCode) {
 	    cookie = (Cookies) iWelcomeResponse.getDetailedCookies();

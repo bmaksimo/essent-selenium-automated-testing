@@ -134,7 +134,6 @@ public enum ConfigKey {
     CRM_LOGIN_URL("crm.login.url"),
     CRM_B2CCQ_URL("crm.b2ccq.url");
 
-
 	private String resourceKey;
     ConfigKey(String resourceKey) {
         this.resourceKey = resourceKey;
