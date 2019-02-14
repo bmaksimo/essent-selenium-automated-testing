@@ -53,10 +53,11 @@ public class InputElements extends DwpScenario {
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
         options.put("value", inputValue);
-        boolean success = new ApplyInput().test(options);
-        Sleeper.sleepTightInSeconds(2);
-        assertThat(String.format("Input field %s is undefined.", label),
-            success, is(true));
+        FluentWait<ApplyInput> waiter = waiter(new ApplyInput(), 10, 1);
+        waiter.until((ApplyInput callback) ->{
+            waiter.withMessage(String.format("Input field %s is undefined.", label));
+            return callback.test(options);
+        });
     }
 
     @And("^Label input for \"([^\"]*)\" is \"([^\"]*)\"$")
@@ -73,8 +74,8 @@ public class InputElements extends DwpScenario {
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
         options.put("value", inputValue);
-        FluentWait<ApplyInput> waiter = waiter(new ApplyInput(), 10, 1);
-        waiter.until((ApplyInput callback) ->{
+        FluentWait<ApplyDateInput> waiter = waiter(new ApplyDateInput(), 10, 1);
+        waiter.until((ApplyDateInput callback) ->{
             waiter.withMessage(String.format("Date input %s is undefined.", label));
             return callback.test(options);
         });
@@ -85,10 +86,11 @@ public class InputElements extends DwpScenario {
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
         options.put("value", value);
-        boolean success = new ApplySelection().test(options);
-        assertThat(String.format("Selection %s is undefined.", label),
-            success, is(true));
-        Sleeper.sleepTightInSeconds(3);
+        FluentWait<ApplySelection> waiter = waiter(new ApplySelection(), 10, 1);
+        waiter.until((ApplySelection callback) ->{
+            waiter.withMessage(String.format("Selection %s is undefined.", label));
+            return callback.test(options);
+        });
     }
 
     @And("^Option \"([^\"]*)\" is ([^\"]*)$")
