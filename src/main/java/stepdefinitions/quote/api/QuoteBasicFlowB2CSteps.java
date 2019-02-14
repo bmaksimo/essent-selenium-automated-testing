@@ -12,6 +12,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.restassured.http.Cookies;
+import io.restassured.response.Response;
 
 public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
@@ -23,11 +24,11 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
         registerActiveScenario(scenario);
     }
     @Given("^I login to iWelcome as \"([^\"]*)\"$")
-    public void i_login_to_iWelcome_as(String username) throws Throwable {       
-      
+    public void i_login_to_iWelcome_as(String username) throws Throwable {
+
         String password = ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_SOAPUI_B2C);
-        cookie= new IWelcomeLoginAPI().getCookie(username, password); 
-  
+        cookie= new IWelcomeLoginAPI().getCookie(username, password);
+
     }
 
     @Given("^\"([^\"]*)\" flow is started$")
@@ -38,7 +39,8 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     @When("^Data is prepared for Create qoute request for \"([^\"]*)\"$")
     public void data_is_prepared_for_Create_qoute_request_for(String arg1) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+//        throw new PendingException();
+        Response response = new QuoteDetailsAPI().getResponse(cookie);
     }
 
     @When("^New tc(\\d+)_quote is created$")

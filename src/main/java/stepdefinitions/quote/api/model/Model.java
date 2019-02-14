@@ -162,7 +162,7 @@ public class Model {
     @JsonProperty("dwp|accounts|aos_quotes|payment_details|paymentterms|matchedCondition")
     private String paymentTermsatchedCondition;
     @JsonProperty("accounts|aos_quotes|aos_products_quotes")
-    public Payload payload;
+    private PayloadWrapper payloadWrapper;
     @JsonProperty("dwp|is_main")
     public boolean isMain;
     @JsonProperty("accounts|bundle_on_account_c")
@@ -640,11 +640,11 @@ public class Model {
     public void setPaymentTermsatchedCondition(String paymentTermsatchedCondition) {
         this.paymentTermsatchedCondition = paymentTermsatchedCondition;
     }
-    public Payload getPayload() {
-        return payload;
+    public PayloadWrapper getPayloadWrapper() {
+        return payloadWrapper;
     }
-    public void setPayload(Payload payload) {
-        this.payload = payload;
+    public void setPayloadWrapper(PayloadWrapper payloadWrapper) {
+        this.payloadWrapper = payloadWrapper;
     }
     public boolean isMain() {
         return isMain;
