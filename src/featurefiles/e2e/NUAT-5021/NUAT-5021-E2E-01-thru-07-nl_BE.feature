@@ -61,8 +61,21 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         Then External status is "On" for SuiteCRM Customer Number "parameter:Klantnummer & Naam"
 
         #Step 2: should deduplicate customer
-        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column
-        When Plus menu is "Sales -> Creëer nieuwe offerte  (TC1)"
+        When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
+        Then Form header is "Quote details"
+
+        When "Sales kanaal" selection is "Inbound"
+        And Quote details are confirmed
+        Then Form header is "Personal details"
+
+        When Customer address is
+            | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
+            | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
+        And Customer is duplicated
+        And  Deduplication dialogue "Soortgelijke klanten" is shown
+        And  Deduplication dialogue link "Create quote for account" is clicked
+        Then Form header is "Quote details"
+
         When "Sales kanaal" selection is "Inbound"
         And Quote details are confirmed
         Then Form header is "Select package & fuel type"
@@ -76,13 +89,9 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And Field "Housenumber" input is "2"
         And Field "Postalcode" input is "2550"
         And Field "City" input is "Kontich"
-
-        # EAN-code must be random, as explained to me by Namita
-
-        And EAN-code autocomplete value from the "1st" row is checked
-        And "EAN-code" input is "parameter:EAN-code"
-#        And Electricity EAN code is "Random"
-
+        And EAN code is generated
+        And "Startdatum" date is "2 months from now"
+        And "EAN-code" input is "parameter:EAN-code-generated"
         And Connection details are confirmed
         Then Form header is "Billing details"
 
@@ -161,12 +170,12 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And Dashboard menu is "Contracten"
         Then "1st" List element with value at column "Contractnummer" is checked
 
-        And Click on "parameter:Contractnummer" link
+        When Click on "parameter:Contractnummer" link
         And Plus actions at "1st" list row in the list "Contractlijnen" are open
-        And List plus action is " Annuleer "
+        And Click on "Annuleer" link
         Then Modal "Cancel contractline" is displayed
 
-        And "Reden voor annulering" modal dropdown selection is "Geannuleerd door de klant"
+        When "Reden voor annulering" selection is "Geannuleerd door de klant"
         And Form is submitted
         Then "1st" list element has cell value "Geannuleerd" at column "Status & Product"
 
