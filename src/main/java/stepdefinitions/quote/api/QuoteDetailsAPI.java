@@ -30,10 +30,10 @@ public class QuoteDetailsAPI extends AbstractAPI {
         Payload payload = mapper.readValue(jsonPayload, Payload.class);
         String pathToQuote = ResourceUtil.toPath("/data/restassured/model_for_create_quote.json");
         String jsonQuote = new String(Files.readAllBytes(Paths.get(pathToQuote)));
-//        QuoteDetails quote = mapper.readValue(jsonQuote, QuoteDetails.class);
-//        quote.getModel().getPayloadWrapper().setPayload(payload);
-//        return mapper.writeValueAsString(quote);
-        return jsonQuote;
+        QuoteDetails quote = mapper.readValue(jsonQuote, QuoteDetails.class);
+        quote.getModel().getPayloadWrapper().setPayload(payload);
+        return mapper.writeValueAsString(quote);
+//        return jsonQuote;
     }
 
     public Response getResponse(Cookies cookie) throws JsonParseException, JsonMappingException, IOException {
