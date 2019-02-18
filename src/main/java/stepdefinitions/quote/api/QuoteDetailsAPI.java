@@ -10,6 +10,7 @@ import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.util.resource.ResourceUtil;
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -22,23 +23,10 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
     private final static Logger LOGGER = Logger.getLogger(QuoteDetailsAPI.class);
 
-    public String createPayload() throws JsonParseException, JsonMappingException, IOException {
-        String path = ResourceUtil.toPath("/data/restassured/payload_for_create_quote.json");
-        String jsonPayload = new String(Files.readAllBytes(Paths.get(path)));
-        ObjectMapper mapper = new ObjectMapper();
-
-        Payload payload = mapper.readValue(jsonPayload, Payload.class);
-        String pathToQuote = ResourceUtil.toPath("/data/restassured/model_for_create_quote.json");
-        String jsonQuote = new String(Files.readAllBytes(Paths.get(pathToQuote)));
-        QuoteDetails quote = mapper.readValue(jsonQuote, QuoteDetails.class);
-        quote.getModel().getPayloadWrapper().setPayload(payload);
-        return mapper.writeValueAsString(quote);
-    }
-
     public String getRecordId(Cookies cookie) throws JsonParseException, JsonMappingException, IOException {
         RequestHelper helper = new RequestHelper();
         String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)+ConfigProvider.getProperty(ConfigKey.CRM_B2CCQ_URL);
-        String payload = createPayload();
+        String payload = createQuotePayload();
         Response quoteResponse =  helper.postRequest(STATUS_CREATED, cookie, payload, path);
 
         String recordId = null;
@@ -64,9 +52,42 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
     }
 
-    public void listQuote(Cookies cookie, String recordId) {
-        // TODO Auto-generated method stub
+    public void listQuote(Cookies cookie, String recordId) throws JsonProcessingException {
+        RequestHelper helper = new RequestHelper();
+        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)+ConfigProvider.getProperty(ConfigKey.CRM_B2CLQ_URL);
+        String payload = createListQuotePayload(recordId);
 
+        Response listQuoteResponse = helper.postRequest(STATUS_OK, cookie, payload, path);
+
+        if (listQuoteResponse.getStatusCode() == STATUS_OK) {
+            LOGGER.info("Quote list retrieved");
+
+        } else {
+            LOGGER.error("Cannot retrieve quote list");
+        }
+    }
+
+    private String createQuotePayload() throws JsonParseException, JsonMappingException, IOException {
+        String path = ResourceUtil.toPath("/data/restassured/payload_for_create_quote.json");
+        String jsonPayload = new String(Files.readAllBytes(Paths.get(path)));
+        ObjectMapper mapper = new ObjectMapper();
+
+        Payload payload = mapper.readValue(jsonPayload, Payload.class);
+        String pathToQuote = ResourceUtil.toPath("/data/restassured/model_for_create_quote.json");
+        String jsonQuote = new String(Files.readAllBytes(Paths.get(pathToQuote)));
+        QuoteDetails quote = mapper.readValue(jsonQuote, QuoteDetails.class);
+        quote.getModel().getPayloadWrapper().setPayload(payload);
+        return mapper.writeValueAsString(quote);
+    }
+
+    private String createListQuotePayload(String recordId) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+
+        QuotesOnAccount quotes = new QuotesOnAccount();
+        quotes.setRecordId(recordId);
+        quotes.setRecordType("Accounts");
+        quotes.setPage(1);
+        return mapper.writeValueAsString(quotes);
     }
 
 

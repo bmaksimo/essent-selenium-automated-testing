@@ -4,7 +4,6 @@ import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.restassured.B2CCreateContractScenario;
 
-
 import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
@@ -12,7 +11,6 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.restassured.http.Cookies;
-import io.restassured.response.Response;
 
 public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
