@@ -33,22 +33,39 @@ public class QuoteDetailsAPI extends AbstractAPI {
         QuoteDetails quote = mapper.readValue(jsonQuote, QuoteDetails.class);
         quote.getModel().getPayloadWrapper().setPayload(payload);
         return mapper.writeValueAsString(quote);
-//        return jsonQuote;
     }
 
-    public Response getResponse(Cookies cookie) throws JsonParseException, JsonMappingException, IOException {
+    public String getRecordId(Cookies cookie) throws JsonParseException, JsonMappingException, IOException {
         RequestHelper helper = new RequestHelper();
         String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)+ConfigProvider.getProperty(ConfigKey.CRM_B2CCQ_URL);
         String payload = createPayload();
         Response quoteResponse =  helper.postRequest(STATUS_CREATED, cookie, payload, path);
 
+        String recordId = null;
+
         if (quoteResponse.getStatusCode() == STATUS_CREATED) {
             LOGGER.info("Quote created");
+            recordId  = quoteResponse.jsonPath().getString("data.arguments.params.recordId");
+            LOGGER.info("Record ID: " + recordId);
+            String accountNumber  = quoteResponse.jsonPath().getString("data.params.Account.account_number");
+            LOGGER.info("Account number: " + accountNumber);
+            String accountId  = quoteResponse.jsonPath().getString("data.relatedBeans.Account");
+            LOGGER.info("Account ID: " + accountId);
+            String quoteId  = quoteResponse.jsonPath().getString("data.params.AOS_Quotes.quote_number");
+            LOGGER.info("Quote ID: " + quoteId);
+            String quoteNumber  = quoteResponse.jsonPath().getString("data.relatedBeans.AOS_Quotes");
+            LOGGER.info("Quote number: " + quoteNumber);
+
         } else {
             LOGGER.error("Cannot create quote");
         }
 
-        return quoteResponse;
+        return recordId;
+
+    }
+
+    public void listQuote(Cookies cookie, String recordId) {
+        // TODO Auto-generated method stub
 
     }
 

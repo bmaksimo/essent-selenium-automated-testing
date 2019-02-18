@@ -18,6 +18,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     protected Cookies cookie = null;
     protected String tariffSheetID;
+    protected String recordId;
 
     @Before("@API")
     public void setupTest(Scenario scenario) throws Throwable {
@@ -33,20 +34,21 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     @Given("^\"([^\"]*)\" flow is started$")
     public void flow_is_started(String arg1) throws Throwable {
-        tariffSheetID = new QuoteBTCAPI().getTariffSheetID(cookie);
+        this.tariffSheetID = new QuoteBTCAPI().getTariffSheetID(cookie);
     }
 
     @When("^Data is prepared for Create qoute request for \"([^\"]*)\"$")
     public void data_is_prepared_for_Create_qoute_request_for(String arg1) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
 //        throw new PendingException();
-        Response response = new QuoteDetailsAPI().getResponse(cookie);
+        this.recordId = new QuoteDetailsAPI().getRecordId(cookie);
     }
 
     @When("^New tc(\\d+)_quote is created$")
     public void new_tc__quote_is_created(int arg1) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        new QuoteDetailsAPI().listQuote(cookie, recordId);
+//        throw new PendingException();
     }
 
     @Then("^Quote status is \"([^\"]*)\"$")
