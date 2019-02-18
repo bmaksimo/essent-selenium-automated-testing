@@ -3,6 +3,7 @@
  */
 package stepdefinitions.quote.api;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.essent.testing.config.ConfigKey;
@@ -30,14 +31,30 @@ public class QuoteBTCAPI extends AbstractAPI {
 	Response tsResponse = helper.postRequest(expectedResponseCode, cookie, payload, path);
 
 	if (tsResponse.getStatusCode() == expectedResponseCode) {
-	    tariffSheetID = tsResponse.jsonPath()
-		    .getString("'data.model.accounts|aos_quotes|aos_products_quotes|tariffsheet_id'");
+	    tariffSheetID = getTarrifIDFromResponce(tsResponse); 
+//	    tariffSheetID=  tsResponse.jsonPath()
+//		    .getString("'data.model.accounts|aos_quotes|aos_products_quotes|tariffsheet_id'");
 	    LOGGER.info("TariffSheetID is: " + tariffSheetID);
 	} else {
 	    LOGGER.error("Cannot retrieve tariffSheetID");
 	}
 
 	return tariffSheetID;
+    }
+
+    private String getTarrifIDFromResponce(Response tsResponse) {
+	String id = null;
+	String part = tsResponse.jsonPath().getString("data.model");
+	String[] s = part.split("\\|");
+	for (String str : s) {
+	    if (str.contains("tariffsheet_id")){
+		String result = str.split(":")[1];
+			id = StringUtils.substringBetween(result, "\"", "\"");
+	    break;
+	    }
+	}
+	
+	return id;
     }
 
 }
