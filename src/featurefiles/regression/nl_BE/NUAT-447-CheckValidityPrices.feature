@@ -27,7 +27,7 @@ Feature: NUAT-447: Check validity prices
         And "Ja, ik wil de offerte met de nieuwe tarieven goedkeuren" turn on with dot
         Then Bevestigen
 
-        When Plus action of "1" element from "TasksOnQuotes" and click on "Mark as done"
+        When Plus action of "1" element from "TasksOnQuotes" and click on Mark As Done/Markeren Als Verwerkt
         And Oplossing text is "ja"
         Then Changes are confirmed
 

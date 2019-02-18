@@ -92,12 +92,14 @@ public abstract class NavigationElements extends DwpScenario {
     private class ClickDashboardMenu implements Predicate<String> {
         @Override
         public boolean test(String menu) {
+            seleniumDriver.waitForRequestsToFinish();
             Map<String, Object> options = new HashMap<>();
             options.put("menu", menu);
-            given().await()
-                .pollInterval(FIVE_HUNDRED_MILLISECONDS)
-                .pollDelay(ONE_SECOND)
-                .atMost(new Duration(20, SECONDS)).until(() -> executeJavascriptTest("TrClickDashboardMenuButton", options));
+//            given().await()
+//                .pollInterval(FIVE_HUNDRED_MILLISECONDS)
+//                .pollDelay(ONE_SECOND)
+//                .atMost(new Duration(20, SECONDS)).until(() -> executeJavascriptTest("TrClickDashboardMenuButton", options));
+            executeJavascriptTest("TrClickDashboardMenuButton", options);
              return true;
         }
     }
