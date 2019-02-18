@@ -86,13 +86,13 @@ public class OdooCodaSteps extends OdooScenario {
         WebElement downloadLink = seleniumDriver.findElement(By.xpath("//div[@class='modal-content openerp']//a[@class='oe_form_uri']"));
         if (null == downloadLink) throw new CucumberException("CODA file download link was not found");
         downloadLink.click();
-
         String path = ResourceUtil.toPath(File.separator + "data" + File.separator + "odoo" + File.separator);
         given().await()
             .pollInterval(FIVE_HUNDRED_MILLISECONDS)
             .pollDelay(TWO_SECONDS)
             .atMost(new Duration(20, SECONDS)).until(()-> CollectionUtils.isNotEmpty(retrieveDownloadedCodaFiles(path)));
-        if (CollectionUtils.isEmpty(retrieveDownloadedCodaFiles(path))) throw new CucumberException("CODA file download link was not found");
+        if (CollectionUtils.isEmpty(retrieveDownloadedCodaFiles(path))) throw new CucumberException(
+            String.format("CODA file was not found at path %s", path));
 
         assertThat("File could not be downloaded", CollectionUtils.isNotEmpty(retrieveDownloadedCodaFiles(path)));
 
