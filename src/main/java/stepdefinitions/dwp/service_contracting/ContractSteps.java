@@ -5,6 +5,7 @@ import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
 import com.essent.testing.dwp.pageobject.impl.page.ContractPage;
 import com.essent.testing.dwp.pageobject.impl.service_contracting.ContractPageClass;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
 import cucumber.api.DataTable;
 import cucumber.api.PendingException;
 import cucumber.api.Scenario;
@@ -69,6 +70,7 @@ public class ContractSteps extends DwpScenario {
     @When("^Old contract data is copied$")
     public void oldContractDataIsCopied() throws Throwable {
         ContractPage cp = new ContractPage(webDriver);
+        parameterProvider.put("randomEAN", PrepareDataForContract.generateEAN());
         parameterProvider.put("oldContractEan",cp.getEanFromContract());
         parameterProvider.put("contractStatus", cp.getStatusFromContract());
         parameterProvider.put("startDate",cp.getActiveContractStartDate());

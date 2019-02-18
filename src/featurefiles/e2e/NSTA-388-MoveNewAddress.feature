@@ -81,12 +81,13 @@ Feature: NSTA - 388 Move new address
         And New move customer address is
             | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
 #            | Verbindingsstraat | 63     |            |     | 9220       | HAMME   |         |
-            | Heistraat  | 82     |            |     | 2440       | GEEL   |         |
+            | Heistraat  | 83     |            |     | 2440       | GEEL   |         |
 
         And "Startdatum verhuis" date is "1 day before now"
 
         And "Is de meter geopend" turn on
-        And Select EAN
+        And "EAN-code" input is "parameter:randomEAN"
+#        And Select EAN
         And "Datum meteropname" date is "1 day before now"
         And "Meterstand enkelvoudig" input is "1000"
         And Option "test" is on
@@ -99,22 +100,27 @@ Feature: NSTA - 388 Move new address
 #        And Get Contract Ean Code
 
 #        When Old contract data is copied
-#        Then Check if contract with old ean is still active
-#        Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
-#    	And Check if contract with new ean is created and became active
-#    	And Check if start date of new ean is the same date as filled in as “Move date”
-#    	And Check if the end date of new ean is the same date as the end date of the old one
-#        And Check if products of both contracts are the same
-#        And Check if discounts of both contracts are the same
-#        And Check if prices of both contracts are the same
+        Then Check if contract with old ean is still active
+        And Table "ContractsOnAccount" contains cell value "Sales Getekend (Geaccepteerd)" at column "Type & status" on "2nd" row
+#        And "<string>" in the first "<string>" row of "<string>" table is "<string>"
+#
+#
+#
+#        Then "2nd" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
+    	And Check if contract with new ean is created and became active
+    	And Check if start date of new ean is the same date as filled in as “Move date”
+    	And Check if the end date of new ean is the same date as the end date of the old one
+        And Check if products of both contracts are the same
+        And Check if discounts of both contracts are the same
+        And Check if prices of both contracts are the same
 
 ##        And Top arrow button is "back"
-#        When Dashboard menu is "Marktberichten"
-#        Then Marketbericht with EAN "parameter:contractEanCode" and module "START ACCES" is in status "GESLOTEN"
-#        And Marketbericht with EAN "parameter:contractEanCode" has ED "1 day before now"
-#
-#        When Dashboard menu is "Service"
-#        Then There is a case where onderwerp is "VERHUIS"
-#        And  Interaction is created with Type "Document" and Onderwerp "Outbound document: Old inhabitant remains customer" and verwante case is "parameter:caseNumber"
+        When Dashboard menu is "Marktberichten"
+        Then Marketbericht with EAN "parameter:contractEanCode" and module "START ACCES" is in status "GESLOTEN"
+        And Marketbericht with EAN "parameter:contractEanCode" has ED "1 day before now"
+
+        When Dashboard menu is "Service"
+        Then There is a case where onderwerp is "VERHUIS"
+        And  Interaction is created with Type "Document" and Onderwerp "Outbound document: Old inhabitant remains customer" and verwante case is "parameter:caseNumber"
 #
 #
