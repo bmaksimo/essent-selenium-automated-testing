@@ -1,8 +1,8 @@
-package stepdefinitions.quote.api.model;
+package stepdefinitions.quote.api.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Action {
+public class ActionDTO {
 
     @JsonProperty("currentStep")
     private String currentStep;

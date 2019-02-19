@@ -16,8 +16,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.restassured.http.Cookies;
 import io.restassured.response.Response;
-import stepdefinitions.quote.api.model.Payload;
-import stepdefinitions.quote.api.model.QuoteDetails;
+import stepdefinitions.quote.api.model.dto.PayloadDTO;
+import stepdefinitions.quote.api.model.dto.QuoteDetailsDTO;
 
 public class QuoteDetailsAPI extends AbstractAPI {
 
@@ -25,8 +25,9 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
     public String getRecordId(Cookies cookie) throws JsonParseException, JsonMappingException, IOException {
         RequestHelper helper = new RequestHelper();
-        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)+ConfigProvider.getProperty(ConfigKey.CRM_B2CCQ_URL);
+        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_B2CCQ_URL);
         String payload = createQuotePayload();
+
         Response quoteResponse =  helper.postRequest(STATUS_CREATED, cookie, payload, path);
 
         String recordId = null;
@@ -54,7 +55,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
     public void listQuote(Cookies cookie, String recordId) throws JsonProcessingException {
         RequestHelper helper = new RequestHelper();
-        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)+ConfigProvider.getProperty(ConfigKey.CRM_B2CLQ_URL);
+        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_B2CLQ_URL);
         String payload = createListQuotePayload(recordId);
 
         Response listQuoteResponse = helper.postRequest(STATUS_OK, cookie, payload, path);
@@ -68,15 +69,18 @@ public class QuoteDetailsAPI extends AbstractAPI {
     }
 
     private String createQuotePayload() throws JsonParseException, JsonMappingException, IOException {
-        String path = ResourceUtil.toPath("/data/restassured/payload_for_create_quote.json");
-        String jsonPayload = new String(Files.readAllBytes(Paths.get(path)));
         ObjectMapper mapper = new ObjectMapper();
 
-        Payload payload = mapper.readValue(jsonPayload, Payload.class);
         String pathToQuote = ResourceUtil.toPath("/data/restassured/model_for_create_quote.json");
         String jsonQuote = new String(Files.readAllBytes(Paths.get(pathToQuote)));
-        QuoteDetails quote = mapper.readValue(jsonQuote, QuoteDetails.class);
+        QuoteDetailsDTO quote = mapper.readValue(jsonQuote, QuoteDetailsDTO.class);
+
+        String pathToPayload = ResourceUtil.toPath("/data/restassured/payload_for_create_quote.json");
+        String jsonPayload = new String(Files.readAllBytes(Paths.get(pathToPayload)));
+        PayloadDTO payload = mapper.readValue(jsonPayload, PayloadDTO.class);
+
         quote.getModel().getPayloadWrapper().setPayload(payload);
+
         return mapper.writeValueAsString(quote);
     }
 
@@ -87,6 +91,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
         quotes.setRecordId(recordId);
         quotes.setRecordType("Accounts");
         quotes.setPage(1);
+
         return mapper.writeValueAsString(quotes);
     }
 

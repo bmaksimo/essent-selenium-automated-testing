@@ -37,7 +37,7 @@ public class ViewListElements extends NavigationElements {
     private static final String MARKET_MESSAGES_VIEW_LIST = "MarketTransactionsOnAccount";
     private static final String BILLING_CUSTOMER = "Billing customer";
     private static final String BILLING_CUSTOMER_VIEW_LIST = "BillingCustomerOnaccount";
-    private static final String PLUS_ACTION = "Plus Action";
+    private static final String PLUS_ACTION = "Plus ActionDTO";
 
     private class ViewListNavigation {
         public void goToLink(String linkText) {
@@ -407,7 +407,7 @@ public class ViewListElements extends NavigationElements {
         Map<String, String> options = new HashMap<>();
         options.put("headerText", headerText);
         boolean success = new CheckModalDialog().test(options);
-        assertThat(String.format("Action row %s was not found", headerText), success, is(true));
+        assertThat(String.format("ActionDTO row %s was not found", headerText), success, is(true));
     }
 
     @When("Payment method is switched$")
@@ -435,7 +435,7 @@ public class ViewListElements extends NavigationElements {
         Map<String, String> options = new HashMap<>();
         options.put("rowAction", rowAction);
         boolean success = new ClickTableRowAction().test(options);
-        assertThat(String.format("Action row %s was not found", rowAction), success, is(true));
+        assertThat(String.format("ActionDTO row %s was not found", rowAction), success, is(true));
     }
 
     @And("^\"([^\"]*)\" list element has cell value \"([^\"]*)\" at column \"([^\"]*)\"$")
@@ -567,7 +567,7 @@ public class ViewListElements extends NavigationElements {
     @And("^List View action is \"([^\"]*)\"$")
     public void getListAction(String name) throws Throwable {
         boolean success = new GetListAction().test(name);
-        assertThat(String.format("List Action '%s' undefined.", name),
+        assertThat(String.format("List ActionDTO '%s' undefined.", name),
             success, is(true));
     }
 

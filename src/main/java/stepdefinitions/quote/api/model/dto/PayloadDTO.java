@@ -1,10 +1,11 @@
-package stepdefinitions.quote.api.model;
+package stepdefinitions.quote.api.model.dto;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Payload {
+public class PayloadDTO {
 
     @JsonProperty("dgo_id_c")
     private String id;
@@ -15,7 +16,7 @@ public class Payload {
     @JsonProperty("residential|startdate")
     private String residentialStartDate;
     @JsonProperty("addresses_aos_products_quotes")
-    AccountsAsQuotes quoteAddress;
+    private AccountsAsQuotesDTO quoteAddress;
     @JsonProperty("delivery_address_postalcode")
     private String postalCode;
     @JsonProperty("addresses_aos_products_quotes|is_main")
@@ -77,9 +78,9 @@ public class Payload {
     @JsonProperty("dwp|tariffsheet_price|sourcing_product")
     private String tarifsheetPriceSourcingProduct;
     @JsonProperty("dwp|available_product_ids")
-    ArrayList <Object> availableProductIds = new ArrayList <Object>();
+    private List <Object> availableProductIds = new ArrayList <Object>();
     @JsonProperty("dwp|discount_assigned")
-    ArrayList <Object> discountAssigned = new ArrayList <Object>();
+    private List <Object> discountAssigned = new ArrayList <Object>();
     @JsonProperty("meter_open_c")
     private boolean meterOpen;
     @JsonProperty("move_in_c")
@@ -226,10 +227,10 @@ public class Payload {
     public void setResidentialStartDate(String residentialStartDate) {
         this.residentialStartDate = residentialStartDate;
     }
-    public AccountsAsQuotes getQuoteAddress() {
+    public AccountsAsQuotesDTO getQuoteAddress() {
         return quoteAddress;
     }
-    public void setQuoteAddress(AccountsAsQuotes quoteAddress) {
+    public void setQuoteAddress(AccountsAsQuotesDTO quoteAddress) {
         this.quoteAddress = quoteAddress;
     }
     public String getPostalCode() {
@@ -412,16 +413,16 @@ public class Payload {
     public void setTarifsheetPriceSourcingProduct(String tarifsheetPriceSourcingProduct) {
         this.tarifsheetPriceSourcingProduct = tarifsheetPriceSourcingProduct;
     }
-    public ArrayList<Object> getAvailableProductIds() {
+    public List<Object> getAvailableProductIds() {
         return availableProductIds;
     }
-    public void setAvailableProductIds(ArrayList<Object> availableProductIds) {
+    public void setAvailableProductIds(List<Object> availableProductIds) {
         this.availableProductIds = availableProductIds;
     }
-    public ArrayList<Object> getDiscountAssigned() {
+    public List<Object> getDiscountAssigned() {
         return discountAssigned;
     }
-    public void setDiscountAssigned(ArrayList<Object> discountAssigned) {
+    public void setDiscountAssigned(List<Object> discountAssigned) {
         this.discountAssigned = discountAssigned;
     }
     public boolean isMeterOpen() {

@@ -149,7 +149,7 @@ public abstract class NavigationElements extends DwpScenario {
 
     protected void clickListPlusAction(String item) {
         boolean success = new ClickListPlusAction().test(item);
-        assertThat(String.format("List Plus Action %s undefined.", item),
+        assertThat(String.format("List Plus ActionDTO %s undefined.", item),
             success, is(true));
     }
 

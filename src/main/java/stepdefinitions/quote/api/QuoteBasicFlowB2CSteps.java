@@ -14,7 +14,7 @@ import io.restassured.http.Cookies;
 
 public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
-    protected Cookies cookie = null;
+    protected Cookies cookie;
     protected String tariffSheetID;
     protected String recordId;
 
@@ -24,10 +24,8 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     }
     @Given("^I login to iWelcome as \"([^\"]*)\"$")
     public void i_login_to_iWelcome_as(String username) throws Throwable {
-
         String password = ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_SOAPUI_B2C);
-        cookie= new IWelcomeLoginAPI().getCookie(username, password);
-
+        this.cookie = new IWelcomeLoginAPI().getCookie(username, password);
     }
 
     @Given("^\"([^\"]*)\" flow is started$")
@@ -37,16 +35,13 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     @When("^Data is prepared for Create qoute request for \"([^\"]*)\"$")
     public void data_is_prepared_for_Create_qoute_request_for(String arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-//        throw new PendingException();
         this.recordId = new QuoteDetailsAPI().getRecordId(cookie);
     }
 
     @When("^New tc(\\d+)_quote is created$")
     public void new_tc__quote_is_created(int arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
+        // TODO: assign this response to a variable
         new QuoteDetailsAPI().listQuote(cookie, recordId);
-//        throw new PendingException();
     }
 
     @Then("^Quote status is \"([^\"]*)\"$")

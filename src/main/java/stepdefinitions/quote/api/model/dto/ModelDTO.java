@@ -1,11 +1,11 @@
-package stepdefinitions.quote.api.model;
+package stepdefinitions.quote.api.model.dto;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Model {
+public class ModelDTO {
 
     @JsonProperty("contact_type_c")
     private String contactType;
@@ -20,7 +20,7 @@ public class Model {
     @JsonProperty("current_user_id")
     private String currentUserId;
     @JsonProperty("accounts|aos_quotes|payment_details|addresses")
-    private AccountsAddress accountAddresses;
+    private AccountsAddressDTO accountAddresses;
     @JsonProperty("dwp|accounts|aos_quotes|payment_details|payment_methods|payment_method|matchedCondition")
     private String paymentMethodMatchedCondition;
     @JsonProperty("leads_contact_details(contact_details_phone_type='Mobile phone';contact_details_type='Phone')|id")
@@ -70,9 +70,9 @@ public class Model {
     @JsonProperty("salutation")
     private String salutation;
     @JsonProperty("addresses_leads")
-    private AccountsAddress address;
+    private AccountsAddressDTO address;
     @JsonProperty("accounts|aos_quotes|primary_group_id")
-    private List<Group> primaryGroupIds = new ArrayList<>();
+    private List<GroupDTO> primaryGroupIds = new ArrayList<>();
     @JsonProperty("dwp|informationAction")
     private String informationAction;
     @JsonProperty("accounts|aos_quotes|payment_details|com_prefs(type='MANDATE')|channel")
@@ -100,13 +100,13 @@ public class Model {
     @JsonProperty("dwp|accounts|aos_quotes|send_quote_to_c|matchedCondition")
     private String sendQuoteMatchedCondition;
     @JsonProperty("accounts|aos_quotes|aos_products_quotes|addresses_aos_products_quotes")
-    AccountsAsQuotes accountsAsQuotes;
+    AccountsAsQuotesDTO accountsAsQuotes;
     @JsonProperty("dwp|returnModule")
     private String returnModule;
     @JsonProperty("first_name")
     private String firstName;
     @JsonProperty("accounts|aos_quotes|assigned_user_id")
-    private List<Group> assignedUserId = new ArrayList<Group>();
+    private List<GroupDTO> assignedUserId = new ArrayList<GroupDTO>();
     @JsonProperty("com_prefs(type='COMMERCIAL')|channel")
     private String commercialChannel;
     @JsonProperty("dwp|alreadyContracted")
@@ -162,19 +162,19 @@ public class Model {
     @JsonProperty("dwp|accounts|aos_quotes|payment_details|paymentterms|matchedCondition")
     private String paymentTermsatchedCondition;
     @JsonProperty("accounts|aos_quotes|aos_products_quotes")
-    private PayloadWrapper payloadWrapper;
+    private PayloadWrapperDTO payloadWrapper;
     @JsonProperty("dwp|is_main")
-    public boolean isMain;
+    private boolean isMain;
     @JsonProperty("accounts|bundle_on_account_c")
-    public boolean bundleOnAccount;
+    private boolean bundleOnAccount;
     @JsonProperty("com_prefs(type='SMS')|receive_sms")
-    public boolean receiveSms;
+    private boolean receiveSms;
     @JsonProperty("dwp|available_product_ids")
-    public List<String> availableProductIds = new ArrayList<>();
+    private List<String> availableProductIds = new ArrayList<>();
     @JsonProperty("dwp|customer_wants_to_sign")
-    public boolean customerWantsToSign;
+    private boolean customerWantsToSign;
     @JsonProperty("dwp|discount_id")
-    public List<String> discountIds = new ArrayList<>();
+    private List<String> discountIds = new ArrayList<>();
     @JsonProperty("dwp|line_items|package_properties|vooraf")
     private String lineItemPackageProperties;
 
@@ -214,10 +214,10 @@ public class Model {
     public void setCurrentUserId(String currentUserId) {
         this.currentUserId = currentUserId;
     }
-    public AccountsAddress getAccountAddresses() {
+    public AccountsAddressDTO getAccountAddresses() {
         return accountAddresses;
     }
-    public void setAccountAddresses(AccountsAddress accountAddresses) {
+    public void setAccountAddresses(AccountsAddressDTO accountAddresses) {
         this.accountAddresses = accountAddresses;
     }
     public String getPaymentMethodMatchedCondition() {
@@ -364,16 +364,16 @@ public class Model {
     public void setSalutation(String salutation) {
         this.salutation = salutation;
     }
-    public AccountsAddress getAddress() {
+    public AccountsAddressDTO getAddress() {
         return address;
     }
-    public void setAddress(AccountsAddress address) {
+    public void setAddress(AccountsAddressDTO address) {
         this.address = address;
     }
-    public List<Group> getPrimaryGroupIds() {
+    public List<GroupDTO> getPrimaryGroupIds() {
         return primaryGroupIds;
     }
-    public void setPrimaryGroupIds(List<Group> primaryGroupIds) {
+    public void setPrimaryGroupIds(List<GroupDTO> primaryGroupIds) {
         this.primaryGroupIds = primaryGroupIds;
     }
     public String getInformationAction() {
@@ -454,10 +454,10 @@ public class Model {
     public void setSendQuoteMatchedCondition(String sendQuoteMatchedCondition) {
         this.sendQuoteMatchedCondition = sendQuoteMatchedCondition;
     }
-    public AccountsAsQuotes getAccountsAsQuotes() {
+    public AccountsAsQuotesDTO getAccountsAsQuotes() {
         return accountsAsQuotes;
     }
-    public void setAccountsAsQuotes(AccountsAsQuotes accountsAsQuotes) {
+    public void setAccountsAsQuotes(AccountsAsQuotesDTO accountsAsQuotes) {
         this.accountsAsQuotes = accountsAsQuotes;
     }
     public String getReturnModule() {
@@ -472,10 +472,10 @@ public class Model {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-    public List<Group> getAssignedUserId() {
+    public List<GroupDTO> getAssignedUserId() {
         return assignedUserId;
     }
-    public void setAssignedUserId(List<Group> assignedUserId) {
+    public void setAssignedUserId(List<GroupDTO> assignedUserId) {
         this.assignedUserId = assignedUserId;
     }
     public String getCommercialChannel() {
@@ -640,10 +640,10 @@ public class Model {
     public void setPaymentTermsatchedCondition(String paymentTermsatchedCondition) {
         this.paymentTermsatchedCondition = paymentTermsatchedCondition;
     }
-    public PayloadWrapper getPayloadWrapper() {
+    public PayloadWrapperDTO getPayloadWrapper() {
         return payloadWrapper;
     }
-    public void setPayloadWrapper(PayloadWrapper payloadWrapper) {
+    public void setPayloadWrapper(PayloadWrapperDTO payloadWrapper) {
         this.payloadWrapper = payloadWrapper;
     }
     public boolean isMain() {

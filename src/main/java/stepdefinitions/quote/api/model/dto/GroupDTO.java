@@ -1,8 +1,8 @@
-package stepdefinitions.quote.api.model;
+package stepdefinitions.quote.api.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Group {
+public class GroupDTO {
 
     @JsonProperty("key")
     private String key;

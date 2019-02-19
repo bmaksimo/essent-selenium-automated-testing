@@ -1,8 +1,8 @@
-package stepdefinitions.quote.api.model;
+package stepdefinitions.quote.api.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class AccountsAsQuotes {
+public class AccountsAsQuotesDTO {
 
     @JsonProperty("address_type")
     private String addressType;

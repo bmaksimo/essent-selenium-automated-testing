@@ -1,8 +1,8 @@
-package stepdefinitions.quote.api.model;
+package stepdefinitions.quote.api.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class AccountsAddress {
+public class AccountsAddressDTO {
 
         @JsonProperty("address_addition")
         private String addressAddition;
