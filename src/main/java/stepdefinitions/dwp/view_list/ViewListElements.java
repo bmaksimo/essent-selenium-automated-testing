@@ -204,7 +204,6 @@ public class ViewListElements extends NavigationElements {
             logger().info("STEP: JAVASCRIPT_FETCH_DATA");
             HashMap<Object, Object> options = new HashMap<>();
             options.put("list_header", tableName);
-            Map viewTable = executeJavascriptMethod("TrGetTableModel", options);
             DefaultTableModel viewTableModel = getViewTableModel(tableName);
             logger().info(" - RESULT: Table name: " + tableName);
             logTableModel(viewTableModel);
