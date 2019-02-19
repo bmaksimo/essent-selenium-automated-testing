@@ -72,12 +72,12 @@ public class ViewListElements extends NavigationElements {
     }
 
     private class ViewListModel {
-        DefaultTableModel getViewTableModel() {
+        private DefaultTableModel getViewTableModel() {
             DefaultTableModel tableModel = new DefaultTableModel();
             return getDefaultTableModel(tableModel, new HashMap<>());
         }
 
-        DefaultTableModel getViewTableModel(String tableName) {
+        private DefaultTableModel getViewTableModel(String tableName) {
             DefaultTableModel tableModel = new DefaultTableModel();
             HashMap<Object, Object> options = new HashMap<>();
             options.put("list_header", tableName);
