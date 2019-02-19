@@ -56,7 +56,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
     public void listQuote(Cookies cookie, String recordId) throws JsonProcessingException {
         RequestHelper helper = new RequestHelper();
-        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_B2CLQ_URL);
+        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_QUOTES_ON_ACCOUNT_URL);
         String payload = createListQuotePayload(recordId);
 
         Response listQuoteResponse = helper.postRequest(STATUS_OK, cookie, payload, path);

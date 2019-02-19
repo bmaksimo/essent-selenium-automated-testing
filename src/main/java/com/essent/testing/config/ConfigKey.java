@@ -133,7 +133,7 @@ public enum ConfigKey {
     CRM_BASE_URI("crm.base.uri"),
     CRM_LOGIN_URL("crm.login.url"),
     CRM_B2CCQ_URL("crm.b2ccq.url"),
-    CRM_B2CLQ_URL("crm.b2clq.url");
+    CRM_QUOTES_ON_ACCOUNT_URL("crm.quotesonaccount.url");
 
 	private String resourceKey;
     ConfigKey(String resourceKey) {
