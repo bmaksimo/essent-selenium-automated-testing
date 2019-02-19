@@ -100,7 +100,7 @@ public class ModelDTO {
     @JsonProperty("dwp|accounts|aos_quotes|send_quote_to_c|matchedCondition")
     private String sendQuoteMatchedCondition;
     @JsonProperty("accounts|aos_quotes|aos_products_quotes|addresses_aos_products_quotes")
-    AccountsAsQuotesDTO accountsAsQuotes;
+    private AccountsAsQuotesDTO accountsAsQuotes;
     @JsonProperty("dwp|returnModule")
     private String returnModule;
     @JsonProperty("first_name")
