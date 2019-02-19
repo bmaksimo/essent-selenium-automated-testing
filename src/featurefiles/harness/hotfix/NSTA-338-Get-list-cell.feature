@@ -1,5 +1,4 @@
 @DWP
-@REGRESSION
 Feature: View list model  function, getting cell value for given table
 
     Background:
