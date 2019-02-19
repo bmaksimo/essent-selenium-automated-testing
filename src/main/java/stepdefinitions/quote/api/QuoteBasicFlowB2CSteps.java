@@ -12,6 +12,8 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.restassured.http.Cookies;
 
+import static org.junit.Assert.assertEquals;
+
 public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     protected Cookies cookie;
@@ -35,13 +37,13 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     @When("^Data is prepared for Create qoute request for \"([^\"]*)\"$")
     public void data_is_prepared_for_Create_qoute_request_for(String arg1) throws Throwable {
-        this.recordId = new QuoteDetailsAPI().getRecordId(cookie);
+        this.recordId = new QuoteDetailsAPI().getRecordId(cookie, tariffSheetID);
     }
 
     @When("^New tc(\\d+)_quote is created$")
     public void new_tc__quote_is_created(int arg1) throws Throwable {
-        // TODO: assign this response to a variable
-        new QuoteDetailsAPI().listQuote(cookie, recordId);
+        // TODO: assert with quote ID
+        String retreivedQuote = new QuoteDetailsAPI().getQuoteId(cookie, recordId);
     }
 
     @Then("^Quote status is \"([^\"]*)\"$")

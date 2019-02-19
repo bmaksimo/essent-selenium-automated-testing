@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.restassured.http.Cookies;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import stepdefinitions.quote.api.model.QuotesOnAccount;
 import stepdefinitions.quote.api.model.dto.PayloadDTO;
@@ -24,10 +25,10 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
     private final static Logger LOGGER = Logger.getLogger(QuoteDetailsAPI.class);
 
-    public String getRecordId(Cookies cookie) throws JsonParseException, JsonMappingException, IOException {
+    public String getRecordId(Cookies cookie, String tariffSheetId) throws JsonParseException, JsonMappingException, IOException {
         RequestHelper helper = new RequestHelper();
         String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_B2CCQ_URL);
-        String payload = createQuotePayload();
+        String payload = createQuotePayload(tariffSheetId);
 
         Response quoteResponse =  helper.postRequest(STATUS_CREATED, cookie, payload, path);
 
@@ -54,22 +55,27 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
     }
 
-    public void listQuote(Cookies cookie, String recordId) throws JsonProcessingException {
+    public String getQuoteId(Cookies cookie, String recordId) throws JsonProcessingException {
         RequestHelper helper = new RequestHelper();
         String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_QUOTES_ON_ACCOUNT_URL);
         String payload = createListQuotePayload(recordId);
 
         Response listQuoteResponse = helper.postRequest(STATUS_OK, cookie, payload, path);
 
+        String quoteId = null;
+
         if (listQuoteResponse.getStatusCode() == STATUS_OK) {
             LOGGER.info("Quote list retrieved");
-
+            quoteId = listQuoteResponse.jsonPath().getString("data.rows.rowData.number");
+            LOGGER.info("Quote ID: " + quoteId);
         } else {
             LOGGER.error("Cannot retrieve quote list");
         }
+
+        return quoteId;
     }
 
-    private String createQuotePayload() throws JsonParseException, JsonMappingException, IOException {
+    private String createQuotePayload(String tariffSheetId) throws JsonParseException, JsonMappingException, IOException {
         ObjectMapper mapper = new ObjectMapper();
 
         String pathToQuote = ResourceUtil.toPath("/data/restassured/model_for_create_quote.json");
@@ -79,6 +85,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
         String pathToPayload = ResourceUtil.toPath("/data/restassured/payload_for_create_quote.json");
         String jsonPayload = new String(Files.readAllBytes(Paths.get(pathToPayload)));
         PayloadDTO payload = mapper.readValue(jsonPayload, PayloadDTO.class);
+        payload.setTariffsheetId(tariffSheetId);
 
         quote.getModel().getPayloadWrapper().setPayload(payload);
 
