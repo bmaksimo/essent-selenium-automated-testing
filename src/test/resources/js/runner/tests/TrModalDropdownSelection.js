@@ -1,7 +1,3 @@
-/**
- *  TrOpenListPlusActionsInList
- *  Clicks on Plus and opens Plus actions row at given row in a given list
- */
 class TrModalDropdownSelection extends TestRunnerBase {
 
     constructor(options, callback) {
