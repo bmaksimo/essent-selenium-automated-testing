@@ -55,8 +55,8 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     @Then("^Quoteline exists$")
     public void quoteline_exists() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        boolean eanExists = new QuoteLineAPI().checkIfEANexists(cookie, quoteDetails.getQuoteNumber());
+        assertEquals(eanExists, true);
     }
 
     @Then("^Quoteline status is \"([^\"]*)\"$")
