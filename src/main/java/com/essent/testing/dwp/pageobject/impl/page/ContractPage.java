@@ -1,7 +1,9 @@
 package com.essent.testing.dwp.pageobject.impl.page;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.selenium.SeleniumDriver;
+import org.joda.time.DateTime;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -18,13 +20,19 @@ public class ContractPage extends Component {
     public WebElement startData(){
         return seleniumDriver.findElementWhenVisible(By.id("contract-start-date-field"));
     }
-    String pattern = "dd/MM/yyyy";
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+    public String pattern = "dd/MM/yyyy";
+    public SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
-    String date = simpleDateFormat.format(new Date());
+    public String date = simpleDateFormat.format(new Date());
 
     public void startDateIsToday()throws InterruptedException {
         seleniumDriver.waitAndSendKeys(startData(),"date");
+    }
+
+    public String getOneDayBeforeToday(){
+        DateTime dateTime = new DateTime();
+        String yesterday = simpleDateFormat.format(dateTime.minusDays(1));
+        return yesterday;
     }
 
     public void saveButtton()throws InterruptedException {
@@ -232,7 +240,9 @@ public class ContractPage extends Component {
     }
 
     public void clickOnBekijkPrijzenTariefkaatFromPlus(){
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("(//*[@id='b7a431c7-a908-027c-0319-5c5043314153']/div/a)[1]")));
+        Sleeper.sleepTightInSeconds(2);
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-plus-cell[@list-key='ContractlinesOnContract']/div/a")));
+        Sleeper.sleepTightInSeconds(2);
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[@label='Bekijk prijzen tariefkaart']/a")));
     }
 
@@ -275,5 +285,14 @@ public class ContractPage extends Component {
 
     public String getInteractionVerwanteCase() {
         return seleniumDriver.findElementWhenVisible(By.xpath("//*[@id='rows']/tr[1]/td[7]/list-link-bold-top-two-liner-cell/div/a")).getText();
+    }
+
+    public void closeBekijkPrijsdetailsTK1(){
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//a[@class=\"button icon-close\"]")));
+    }
+
+    public void chooseKortigen(String discount){
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("dwp|discount_id")));
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id='dwp-discount-id-field']/option[@label='"+discount+"']")));
     }
 }

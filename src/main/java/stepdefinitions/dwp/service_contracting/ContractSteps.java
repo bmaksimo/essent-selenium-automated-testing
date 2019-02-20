@@ -1,6 +1,5 @@
 package stepdefinitions.dwp.service_contracting;
 
-import com.billinghouse.cucumber.runtime.parameter.ParameterProvider;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
 import com.essent.testing.dwp.pageobject.impl.page.ContractPage;
 import com.essent.testing.dwp.pageobject.impl.service_contracting.ContractPageClass;
@@ -15,7 +14,6 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
-import stepdefinitions.dwp.tables.CustomerAddress;
 
 import java.util.List;
 
@@ -60,13 +58,6 @@ public class ContractSteps extends DwpScenario {
         super.tearDown();
     }
 
-    @And("^Select EAN$")
-    public void selectEAN() throws Throwable {
-        ContractPageClass cp = new ContractPageClass(webDriver);
-        cp.selectEAN();
-
-    }
-
     @When("^Old contract data is copied$")
     public void oldContractDataIsCopied() throws Throwable {
         ContractPage cp = new ContractPage(webDriver);
@@ -76,13 +67,23 @@ public class ContractSteps extends DwpScenario {
         parameterProvider.put("startDate",cp.getActiveContractStartDate());
         parameterProvider.put("endDate",cp.getActiveContractEndDate());
         parameterProvider.put("contractType",cp.getContractType());
-//        cp.clickOnContractenNummer();
-//        parameterProvider.put("productName",cp.getProductName());
-//        parameterProvider.put("kortingsCode",cp.getKortingenOpContractKortingscode());
-//        parameterProvider.put("productType",cp.getKortingenOpContractProducttype());
-//        cp.clickOnBekijkPrijzenTariefkaatFromPlus();
-        //parameterProvider.put("",cp.);
-
+        cp.clickOnContractenNummer();
+        parameterProvider.put("productName",cp.getProductName());
+        parameterProvider.put("kortingsCode",cp.getKortingenOpContractKortingscode());
+        parameterProvider.put("productType",cp.getKortingenOpContractProducttype());
+        cp.clickOnBekijkPrijzenTariefkaatFromPlus();
+        parameterProvider.put("typeProduct",cp.getTypeProduct());
+        parameterProvider.put("energieprijsEnkelvoudigInclBtw",cp.getEnergieprijsEnkelvoudigInclBtw());
+        parameterProvider.put("energieprijsDagInclBtw",cp.getEnergieprijsDagInclBtw());
+        parameterProvider.put("energieprijsNachtInclBtw",cp.getEnergieprijsNachtInclBtw());
+        parameterProvider.put("energieprijsExclusiefNachtInclBtw",cp.getEnergieprijsExclusiefNachtInclBtw());
+        parameterProvider.put("vasteVergoedingInclBtw",cp.getVasteVergoedingInclBtw());
+        parameterProvider.put("energieprijsEnkelvoudigExclBtw",cp.getEnergieprijsEnkelvoudigExclBtw());
+        parameterProvider.put("energieprijsDagExclBtw",cp.getEnergieprijsDagExclBtw());
+        parameterProvider.put("energieprijsNachExclBtw",cp.getEnergieprijsNachExclBtw());
+        parameterProvider.put("energieprijsExclusiefNachtExclBtw",cp.getEnergieprijsExclusiefNachtExclBtw());
+        parameterProvider.put("vasteVergoedingExclBtw",cp.getVasteVergoedingExclBtw());
+        cp.closeBekijkPrijsdetailsTK1();
     }
 
     @Then("^Check if contract with old ean is still active$")
@@ -98,7 +99,7 @@ public class ContractSteps extends DwpScenario {
     @And("^Check if start date of new ean is the same date as filled in as “Move date”$")
     public void checkIfStartDateOfNewEanIsTheSameDateAsFilledInAsMoveDate() throws Throwable {
         ContractPage cp = new ContractPage(webDriver);
-//        Assert.assertEquals();
+        Assert.assertEquals(cp.getActiveContractStartDate(),cp.getOneDayBeforeToday());
     }
 
     @And("^Check if the end date of new ean is the same date as the end date of the old one$")
@@ -117,8 +118,8 @@ public class ContractSteps extends DwpScenario {
     @And("^Check if discounts of both contracts are the same$")
     public void checkIfDiscountsOfBothContractsAreTheSame() throws Throwable {
         ContractPage cp = new ContractPage(webDriver);
-        Assert.assertEquals(cp.getKortingenOpContractKortingscode(),parameterProvider.getValueOrParameterAsString("kortingsCode"));
-        Assert.assertEquals(cp.getProductName(),parameterProvider.getValueOrParameterAsString("productType"));
+//        Assert.assertEquals(cp.getKortingenOpContractKortingscode(),parameterProvider.getValueOrParameterAsString("kortingsCode"));
+//        Assert.assertEquals(cp.getProductName(),parameterProvider.getValueOrParameterAsString("productType"));
 
     }
 
@@ -126,12 +127,17 @@ public class ContractSteps extends DwpScenario {
     public void checkIfPricesOfBothContractsAreTheSame() throws Throwable {
         ContractPage cp = new ContractPage(webDriver);
         cp.clickOnBekijkPrijzenTariefkaatFromPlus();
-//        Assert.assertEquals();
-//        Assert.assertEquals();
-//        Assert.assertEquals();
-//        Assert.assertEquals();
-//        Assert.assertEquals();
-//        Assert.assertEquals();
+        Assert.assertEquals(cp.getTypeProduct(),parameterProvider.getValueOrParameterAsString("productType"));
+        Assert.assertEquals(cp.getEnergieprijsEnkelvoudigInclBtw(),parameterProvider.getValueOrParameterAsString("energieprijsEnkelvoudigInclBtw"));
+        Assert.assertEquals(cp.getEnergieprijsDagInclBtw(),parameterProvider.getValueOrParameterAsString("energieprijsDagInclBtw"));
+        Assert.assertEquals(cp.getEnergieprijsNachtInclBtw(),parameterProvider.getValueOrParameterAsString("energieprijsNachtInclBtw"));
+        Assert.assertEquals(cp.getEnergieprijsExclusiefNachtInclBtw(),parameterProvider.getValueOrParameterAsString("energieprijsExclusiefNachtInclBtw"));
+        Assert.assertEquals(cp.getVasteVergoedingInclBtw(),parameterProvider.getValueOrParameterAsString("vasteVergoedingInclBtw"));
+        Assert.assertEquals(cp.getEnergieprijsExclusiefNachtExclBtw(),parameterProvider.getValueOrParameterAsString("energieprijsEnkelvoudigExclBtw"));
+        Assert.assertEquals(cp.getEnergieprijsDagExclBtw(),parameterProvider.getValueOrParameterAsString("energieprijsDagExclBtw"));
+        Assert.assertEquals(cp.getEnergieprijsNachExclBtw(),parameterProvider.getValueOrParameterAsString("energieprijsNachExclBtw"));
+        Assert.assertEquals(cp.getEnergieprijsExclusiefNachtExclBtw(),parameterProvider.getValueOrParameterAsString("energieprijsExclusiefNachtExclBtw"));
+        Assert.assertEquals(cp.getVasteVergoedingExclBtw(),parameterProvider.getValueOrParameterAsString("vasteVergoedingExclBtw"));
     }
 
     @And("^New move customer address is$")
@@ -145,6 +151,7 @@ public class ContractSteps extends DwpScenario {
     public void marketberichtWithEANHasED(String arg0, String ean) throws Throwable {
         ContractPage cp = new ContractPage(webDriver);
         Assert.assertEquals(cp.getMarketberichED(ean),parameterProvider.getValueOrParameterAsString("startDateNew"));
+        String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(arg0));
     }
 
     @Then("^There is a case where onderwerp is \"([^\"]*)\"$")
@@ -164,4 +171,10 @@ public class ContractSteps extends DwpScenario {
         Assert.assertEquals(cp.getInteractionVerwanteCase(),caseNumber);
     }
 
+    @And("^Kortingen is \"([^\"]*)\"$")
+    public void kortingenIs(String kortingen) throws Throwable {
+        ContractPage cp = new ContractPage(webDriver);
+        cp.chooseKortigen(kortingen);
+
+    }
 }

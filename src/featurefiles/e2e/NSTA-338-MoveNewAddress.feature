@@ -2,13 +2,14 @@
 @DWP
 @B2C
 @REGRESSION
-@J
+
 Feature: NSTA - 388 Move new address
 
     Background:
 
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
+    @NSTA-338
     Scenario: Move new address
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
@@ -29,6 +30,7 @@ Feature: NSTA - 388 Move new address
 
         When Package is "Vast"
         And Checkbox "Gas Fix B2C (TC1)" is Unchecked
+        And Kortingen is "50_part"
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
@@ -100,27 +102,24 @@ Feature: NSTA - 388 Move new address
 #        And Get Contract Ean Code
 
 #        When Old contract data is copied
-        Then Check if contract with old ean is still active
-        And Table "ContractsOnAccount" contains cell value "Sales Getekend (Geaccepteerd)" at column "Type & status" on "2nd" row
+#        //Then Check if contract with old ean is still active
+#        And Table "ContractsOnAccount" contains cell value "Sales Getekend (Geaccepteerd)" at column "Type & status" on "2nd" row
+
 #        And "<string>" in the first "<string>" row of "<string>" table is "<string>"
 #
-#
-#
 #        Then "2nd" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
-    	And Check if contract with new ean is created and became active
-    	And Check if start date of new ean is the same date as filled in as “Move date”
-    	And Check if the end date of new ean is the same date as the end date of the old one
-        And Check if products of both contracts are the same
-        And Check if discounts of both contracts are the same
-        And Check if prices of both contracts are the same
+
+#    	//And Check if start date of new ean is the same date as filled in as “Move date”
+#    	And Check if the end date of new ean is the same date as the end date of the old one
+#        And Check if products of both contracts are the same
+#        And Check if discounts of both contracts are the same
+#        And Check if prices of both contracts are the same
 
 ##        And Top arrow button is "back"
         When Dashboard menu is "Marktberichten"
-        Then Marketbericht with EAN "parameter:contractEanCode" and module "START ACCES" is in status "GESLOTEN"
-        And Marketbericht with EAN "parameter:contractEanCode" has ED "1 day before now"
+        Then Marketbericht with EAN "parameter:randomEAN" and module "START ACCESS" is in status "Gesloten"
+        And Marketbericht with EAN "parameter:randomEAN" has ED "1 day before now"
 
         When Dashboard menu is "Service"
         Then There is a case where onderwerp is "VERHUIS"
         And  Interaction is created with Type "Document" and Onderwerp "Outbound document: Old inhabitant remains customer" and verwante case is "parameter:caseNumber"
-#
-#
