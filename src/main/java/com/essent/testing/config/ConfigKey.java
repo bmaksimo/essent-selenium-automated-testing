@@ -134,7 +134,9 @@ public enum ConfigKey {
     CRM_LOGIN_URL("crm.login.url"),
     CRM_B2CCQ_URL("crm.b2ccq.url"),
     CRM_QUOTES_ON_ACCOUNT_URL("crm.quotesonaccount.url"),
-    CRM_QUOTESTATUS_URL("crm.quotestatus.url");
+    CRM_QUOTESTATUS_URL("crm.quotestatus.url"),
+    CRM_QUOTELINES_URL("crm.quotelines.url");
+
 
 	private String resourceKey;
     ConfigKey(String resourceKey) {
