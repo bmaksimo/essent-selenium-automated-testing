@@ -11,7 +11,7 @@
             When Left menu is "contracting-switching"
             And Top menu item is "Klanten"
             And Top action is "Filters"
-            And "Naam" input is "Dani Eldering"
+            And "Naam" input is "MAURICE BERKOUWER"
 
             Given "1st" List element with value at column "Klantnummer & Naam" is checked
             And Click on "parameter:Klantnummer & Naam" link
@@ -19,7 +19,8 @@
             Then "1st" List element with value at column "Contractnummer" is checked
 
             And Click on "parameter:Contractnummer" link
-            And Plus actions at "1st" list row in the list "Contractlijnen" are open
+
+            And Plus actions at "1st" list row having cell value "Te activeren" at column "Status & Product" are open
             And List plus action is " Annuleer "
             Then Modal "Cancel contractline" is displayed
 
