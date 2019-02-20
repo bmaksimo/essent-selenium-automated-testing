@@ -16,9 +16,9 @@ public class QuoteStatusAPI extends AbstractAPI {
 
     private final static Logger LOGGER = Logger.getLogger(QuoteStatusAPI.class);
 
-    public String checkStatus(Cookies cookie, String quoteId) throws JsonProcessingException {
+    public String checkStatus(Cookies cookie, String quoteNumber) throws JsonProcessingException {
         RequestHelper helper = new RequestHelper();
-        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_QUOTE_STATUS_URL) + "/" + quoteId + "/" + "readOnly";
+        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_QUOTE_STATUS_URL) + "/" + quoteNumber + "/" + "readOnly";
         String payload = createCheckPayload();
 
         Response statusResponse =  helper.postRequest(STATUS_OK, cookie, payload, path);

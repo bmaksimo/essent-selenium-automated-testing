@@ -45,12 +45,12 @@ public class QuoteDetailsAPI extends AbstractAPI {
             String accountId  = quoteResponse.jsonPath().getString("data.relatedBeans.Account[0]");
             quoteDetails.setAccountId(accountId);
             LOGGER.info("Account ID: " + accountId);
-            String quoteId  = quoteResponse.jsonPath().getString("data.params.AOS_Quotes.quote_number");
-            quoteDetails.setQuoteId(quoteId);
-            LOGGER.info("Quote ID: " + quoteId);
-            String quoteNumber  = quoteResponse.jsonPath().getString("data.relatedBeans.AOS_Quotes[0]");
+            String quoteNumber  = quoteResponse.jsonPath().getString("data.params.AOS_Quotes.quote_number");
             quoteDetails.setQuoteNumber(quoteNumber);
-            LOGGER.info("Quote number: " + quoteNumber);
+            LOGGER.info("Quote Number: " + quoteNumber);
+            String quoteId  = quoteResponse.jsonPath().getString("data.relatedBeans.AOS_Quotes[0]");
+            quoteDetails.setQuoteId(quoteId);
+            LOGGER.info("Quote Id: " + quoteId);
 
         } else {
             LOGGER.error("Cannot create quote");
@@ -60,7 +60,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
     }
 
-    public String getQuoteId(Cookies cookie, String recordId) throws JsonProcessingException {
+    public String getQuoteNumber(Cookies cookie, String recordId) throws JsonProcessingException {
         RequestHelper helper = new RequestHelper();
         String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_QUOTES_ON_ACCOUNT_URL);
         String payload = createListQuotePayload(recordId);
