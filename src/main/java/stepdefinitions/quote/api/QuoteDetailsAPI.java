@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.restassured.http.Cookies;
 import io.restassured.response.Response;
+import stepdefinitions.quote.api.model.QuoteDetails;
 import stepdefinitions.quote.api.model.QuotesOnAccount;
 import stepdefinitions.quote.api.model.dto.PayloadDTO;
 import stepdefinitions.quote.api.model.dto.QuoteDetailsDTO;
@@ -24,33 +25,38 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
     private final static Logger LOGGER = Logger.getLogger(QuoteDetailsAPI.class);
 
-    public String getRecordId(Cookies cookie, String tariffSheetId) throws JsonParseException, JsonMappingException, IOException {
+    public QuoteDetails getQuoteDetails(Cookies cookie, String tariffSheetId) throws JsonParseException, JsonMappingException, IOException {
         RequestHelper helper = new RequestHelper();
         String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_B2CCQ_URL);
         String payload = createQuotePayload(tariffSheetId);
 
         Response quoteResponse =  helper.postRequest(STATUS_CREATED, cookie, payload, path);
 
-        String recordId = null;
+        QuoteDetails quoteDetails = new QuoteDetails();
 
         if (quoteResponse.getStatusCode() == STATUS_CREATED) {
             LOGGER.info("Quote created");
-            recordId  = quoteResponse.jsonPath().getString("data.arguments.params.recordId");
+            String recordId  = quoteResponse.jsonPath().getString("data.arguments.params.recordId");
+            quoteDetails.setRecordId(recordId);
             LOGGER.info("Record ID: " + recordId);
             String accountNumber  = quoteResponse.jsonPath().getString("data.params.Account.account_number");
+            quoteDetails.setAccountNumber(accountNumber);
             LOGGER.info("Account number: " + accountNumber);
-            String accountId  = quoteResponse.jsonPath().getString("data.relatedBeans.Account");
+            String accountId  = quoteResponse.jsonPath().getString("data.relatedBeans.Account[0]");
+            quoteDetails.setAccountId(accountId);
             LOGGER.info("Account ID: " + accountId);
             String quoteId  = quoteResponse.jsonPath().getString("data.params.AOS_Quotes.quote_number");
+            quoteDetails.setQuoteId(quoteId);
             LOGGER.info("Quote ID: " + quoteId);
-            String quoteNumber  = quoteResponse.jsonPath().getString("data.relatedBeans.AOS_Quotes");
+            String quoteNumber  = quoteResponse.jsonPath().getString("data.relatedBeans.AOS_Quotes[0]");
+            quoteDetails.setQuoteNumber(quoteNumber);
             LOGGER.info("Quote number: " + quoteNumber);
 
         } else {
             LOGGER.error("Cannot create quote");
         }
 
-        return recordId;
+        return quoteDetails;
 
     }
 
@@ -65,7 +71,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
         if (listQuoteResponse.getStatusCode() == STATUS_OK) {
             LOGGER.info("Quote list retrieved");
-            quoteId = listQuoteResponse.jsonPath().getString("data.rows.rowData.number");
+            quoteId = listQuoteResponse.jsonPath().getString("data.rows[0].rowData.number");
             LOGGER.info("Quote ID: " + quoteId);
         } else {
             LOGGER.error("Cannot retrieve quote list");

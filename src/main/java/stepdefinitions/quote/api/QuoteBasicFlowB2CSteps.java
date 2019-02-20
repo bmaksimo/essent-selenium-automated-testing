@@ -11,6 +11,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.restassured.http.Cookies;
+import stepdefinitions.quote.api.model.QuoteDetails;
 
 import static org.junit.Assert.assertEquals;
 
@@ -18,7 +19,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     protected Cookies cookie;
     protected String tariffSheetID;
-    protected String recordId;
+    protected QuoteDetails quoteDetails;
 
     @Before("@API")
     public void setupTest(Scenario scenario) throws Throwable {
@@ -37,19 +38,19 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     @When("^Data is prepared for Create qoute request for \"([^\"]*)\"$")
     public void data_is_prepared_for_Create_qoute_request_for(String arg1) throws Throwable {
-        this.recordId = new QuoteDetailsAPI().getRecordId(cookie, tariffSheetID);
+        this.quoteDetails = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID);
     }
 
     @When("^New tc(\\d+)_quote is created$")
     public void new_tc__quote_is_created(int arg1) throws Throwable {
-        // TODO: assert with quote ID
-        String retreivedQuote = new QuoteDetailsAPI().getQuoteId(cookie, recordId);
+        String retreivedQuoteId = new QuoteDetailsAPI().getQuoteId(cookie, quoteDetails.getRecordId());
+        assertEquals(retreivedQuoteId, quoteDetails.getQuoteId());
     }
 
     @Then("^Quote status is \"([^\"]*)\"$")
     public void quote_status_is(String arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        String status = new QuoteStatusAPI().checkStatus(cookie, quoteDetails.getQuoteNumber());
+        assertEquals(status, "ACCEPTED");
     }
 
     @Then("^Quoteline exists$")
