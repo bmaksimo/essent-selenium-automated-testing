@@ -67,8 +67,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     @When("^Simulation that customer signature is recieved$")
     public void simulation_that_customer_signature_is_recieved() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        new QuoteSignatureAPI().setSignatureReceived(cookie, quoteDetails);
     }
 
     @When("^File is uploaded as scanned signature$")
