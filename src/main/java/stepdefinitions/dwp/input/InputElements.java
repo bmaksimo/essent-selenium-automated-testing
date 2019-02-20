@@ -34,14 +34,16 @@ public class InputElements extends DwpScenario {
     private class ApplySelection implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
-            return executeJavascriptTest("TrFormSelection", options);
+            boolean success = executeJavascriptTest("TrFormSelection", options);
+            return success;
         }
     }
 
     private class ApplyDateInput implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
-            return executeJavascriptTest("TrDatePickerInput", options);
+            boolean success = executeJavascriptTest("TrDatePickerInput", options);
+            return success;
         }
     }
 
@@ -76,7 +78,7 @@ public class InputElements extends DwpScenario {
         options.put("value", inputValue);
         FluentWait<ApplyDateInput> waiter = waiter(new ApplyDateInput(), 10, 1);
         waiter.until((ApplyDateInput callback) ->{
-            waiter.withMessage(String.format("Date input %s is undefined.", label));
+            waiter.withMessage(String.format("Date value %s input at '%s' failed.", inputValue, label));
             return callback.test(options);
         });
     }

@@ -132,7 +132,8 @@ public class QuoteSteps extends DwpScenario {
 
         @Override
         public boolean test(Map<String, String> options) {
-            return executeJavascriptTest("TrToggleCheckBox", options);
+            boolean success = executeJavascriptTest("TrToggleCheckBox", options);
+            return success;
         }
     }
 

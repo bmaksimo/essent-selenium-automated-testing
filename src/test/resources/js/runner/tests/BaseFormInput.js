@@ -23,12 +23,12 @@ class BaseFormInput extends TestRunnerBase {
         let options = this.options;
         let label = options.label;
         let value = options.value;
-        let xPath = `//div[@class='input' | @class='input label-inline' and label/text()='${label}']`;
+        let xPath = `//div[label/text()='${label}']`;
         console.log('--XPATH: ' + xPath);
         let elements = this.evaluateXpath(xPath);
         if(elements.length >= 0) {
             let input = $(elements[0]).find("input, select");
-            if(input.length == 1) {
+            if(input.length > 0) {
                 let success = this.applyInput(input, value);
                 if(success) {
                     result.status = "PASSED";
@@ -39,7 +39,7 @@ class BaseFormInput extends TestRunnerBase {
                 }
             } else {
                 result.status = "FAILED";
-                result.reason = 'Label ' + label + ' input undefined.';
+                result.reason = 'Input or select element, labelled ' + label + ', undefined.';
             }
         } else {
                 result.status = "FAILED";
