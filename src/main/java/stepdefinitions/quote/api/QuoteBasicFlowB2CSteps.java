@@ -50,7 +50,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     @Then("^Quote status is \"([^\"]*)\"$")
     public void quote_status_is(String arg1) throws Throwable {
         String status = new QuoteStatusAPI().checkStatus(cookie, quoteDetails.getQuoteNumber());
-        assertEquals(status, "ACCEPTED");
+        assertEquals(status, arg1);
     }
 
     @Then("^Quoteline exists$")
