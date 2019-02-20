@@ -1,7 +1,7 @@
 @API 
 @QUOTE 
 @SMOKE
-@BR
+@NSTA-303
 Feature: Check Quote creation flow 
 
 Scenario: Check basic Quote creation flow B2C
