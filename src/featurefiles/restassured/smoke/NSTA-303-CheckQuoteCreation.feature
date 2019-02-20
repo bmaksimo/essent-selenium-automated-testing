@@ -9,7 +9,7 @@ Scenario: Check basic Quote creation flow B2C
 	And "Create_Quote" flow is started
 	When Data is prepared for Create qoute request for "prospect"
 	And New tc1_quote is created
-	Then Quote status is "Sent to customer"
+	Then Quote status is "Accepted"
 	And Quoteline exists
 #	And Quoteline status is "Sent to customer"
 #

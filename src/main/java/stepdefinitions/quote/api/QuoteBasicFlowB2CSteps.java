@@ -43,19 +43,19 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     @When("^New tc(\\d+)_quote is created$")
     public void new_tc__quote_is_created(int arg1) throws Throwable {
-        String retreivedQuoteId = new QuoteDetailsAPI().getQuoteId(cookie, quoteDetails.getRecordId());
-        assertEquals(retreivedQuoteId, quoteDetails.getQuoteId());
+        String retreivedQuoteNumber = new QuoteDetailsAPI().getQuoteNumber(cookie, quoteDetails.getRecordId());
+        assertEquals(retreivedQuoteNumber, quoteDetails.getQuoteNumber());
     }
 
     @Then("^Quote status is \"([^\"]*)\"$")
     public void quote_status_is(String arg1) throws Throwable {
-        String status = new QuoteStatusAPI().checkStatus(cookie, quoteDetails.getQuoteNumber());
+        String status = new QuoteStatusAPI().checkStatus(cookie, quoteDetails.getQuoteId());
         assertEquals(status, "ACCEPTED");
     }
 
     @Then("^Quoteline exists$")
     public void quoteline_exists() throws Throwable {
-        boolean eanExists = new QuoteLineAPI().checkIfEANexists(cookie, quoteDetails.getQuoteNumber());
+        boolean eanExists = new QuoteLineAPI().checkIfEANexists(cookie, quoteDetails.getQuoteId());
         assertEquals(eanExists, true);
     }
 
