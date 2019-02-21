@@ -18,8 +18,17 @@ class TrGetTableModel extends TestRunnerBase {
         result.reason = '';
         result.column_names = [];
         result.rows = [];
-        $('.list__content th').filter((i, e)=>{result.column_names.push($(e).text()); return true;});
-        let rows = $('.list__content tr:not(".row__actions, .list__column-headers")');
+        let tableName = options.list_header;
+        let rows;
+        if(tableName) {
+            let container = $("list").has(`:contains(${tableName})`);
+            container.find(".list__content th")
+                .filter((i, e)=>{result.column_names.push($(e).text()); return true;});
+            rows = container.find('.list__content tr:not(".row__actions, .list__column-headers")');
+        } else {
+            $('.list__content th').filter((i, e)=>{result.column_names.push($(e).text()); return true;});
+            rows = $('.list__content tr:not(".row__actions, .list__column-headers")');
+        }
         result.rows = $(rows).map((i, e) => {
             return  $(e).find('td').map((ii, ee) => {
                 return $(ee).text().trim();
