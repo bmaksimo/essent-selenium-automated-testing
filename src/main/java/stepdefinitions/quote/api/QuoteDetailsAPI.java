@@ -65,7 +65,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
         String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_QUOTES_ON_ACCOUNT_URL);
         String payload = createListQuotePayload(recordId);
 
-        Response listQuoteResponse = helper.postRequest(STATUS_OK, cookie, payload, path);
+        Response listQuoteResponse = helper.postRequest(STATUS_CREATED, cookie, payload, path);
 
         String quoteId = null;
 
