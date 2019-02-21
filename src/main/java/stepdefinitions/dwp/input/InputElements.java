@@ -9,6 +9,7 @@ import cucumber.api.java.en.And;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
+import stepdefinitions.dwp.quote.b2c.QuoteSteps;
 import stepdefinitions.dwp.tables.plus.SwitchState;
 
 import java.util.HashMap;
@@ -43,6 +44,15 @@ public class InputElements extends DwpScenario {
         @Override
         public boolean test(Map options) {
             boolean success = executeJavascriptTest("TrDatePickerInput", options);
+            return success;
+        }
+    }
+
+    private class ToggleCheckBox implements Predicate<Map<String, String>> {
+
+        @Override
+        public boolean test(Map<String, String> options) {
+            boolean success = executeJavascriptTest("TrToggleCheckBox", options);
             return success;
         }
     }
@@ -104,6 +114,20 @@ public class InputElements extends DwpScenario {
             waiter.withMessage(String.format("Option %s is undefined.", option));
             return executeJavascriptTest("TrClickToggleInput", options);
         });
+    }
+
+    @And("^Checkbox \"([^\"]*)\" is ([^\"]*)$")
+    public void toggleCheckbox(String label, SwitchState state) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        Map<String, String> options = new HashMap<>();
+        options.put("label", label);
+        options.put("state", state.name().toLowerCase());
+        FluentWait<ToggleCheckBox> waiter = waiter(new ToggleCheckBox(), 10, 1);
+        waiter.until()
+        boolean success = new ToggleCheckBox().test(options);
+        assertThat(String.format("Failure toggling checkbox %s to  target state %s.", label, state.name()),
+            success,
+            is(true));
     }
 
     @And("^Form is submitted$")
