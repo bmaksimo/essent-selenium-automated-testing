@@ -4,12 +4,10 @@ import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import io.restassured.http.Cookies;
 import io.restassured.response.Response;
 import org.apache.log4j.Logger;
 import stepdefinitions.quote.api.model.QuoteLines;
-import stepdefinitions.quote.api.model.StatusCheck;
 
 
 public class QuoteLineAPI extends AbstractAPI {
@@ -48,6 +46,29 @@ public class QuoteLineAPI extends AbstractAPI {
         quoteLines.setPage(1);
 
         return mapper.writeValueAsString(quoteLines);
+    }
+
+    public String getStatus(Cookies cookie, String quoteId) throws JsonProcessingException {
+	 RequestHelper helper = new RequestHelper();
+	        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_QUOTELINES_URL);
+	        String payload = createQuoteLinesPayload(quoteId);
+
+	        Response statusResponse =  helper.postRequest(STATUS_OK, cookie, payload, path);
+
+
+	        String status = null;
+
+
+	        if (statusResponse.getStatusCode() == STATUS_OK) {
+	            LOGGER.info("Quotelines retrieved");
+	            status = statusResponse.jsonPath().getString("data.rows[0].cells[1].options.line1");
+	            LOGGER.info("Quotelinestatus is : " + status);
+	        } else {
+	            LOGGER.error("Cannot retrieve quotelines");
+	        }
+
+	        return status;
+
     }
 
 }

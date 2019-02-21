@@ -44,25 +44,25 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     @When("^New tc(\\d+)_quote is created$")
     public void new_tc__quote_is_created(int arg1) throws Throwable {
         String retreivedQuoteNumber = new QuoteDetailsAPI().getQuoteNumber(cookie, quoteDetails.getRecordId());
-        assertEquals(retreivedQuoteNumber, quoteDetails.getQuoteNumber());
+        assertEquals(quoteDetails.getQuoteNumber(),retreivedQuoteNumber);
     }
 
     @Then("^Quote status is \"([^\"]*)\"$")
     public void quote_status_is(String arg1) throws Throwable {
         String status = new QuoteStatusAPI().checkStatus(cookie, quoteDetails.getQuoteId());
-        assertEquals(status, arg1);
+        assertEquals(arg1, status);
     }
 
     @Then("^Quoteline exists$")
     public void quoteline_exists() throws Throwable {
         boolean eanExists = new QuoteLineAPI().checkIfEANexists(cookie, quoteDetails.getQuoteId());
-        assertEquals(eanExists, true);
+        assertEquals(true, eanExists);
     }
 
     @Then("^Quoteline status is \"([^\"]*)\"$")
     public void quoteline_status_is(String arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+	String status = new QuoteLineAPI().getStatus(cookie, quoteDetails.getQuoteId());
+        assertEquals(arg1,status);
     }
 
     @When("^Simulation that customer signature is recieved$")

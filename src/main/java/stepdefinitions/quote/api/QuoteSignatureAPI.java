@@ -28,10 +28,10 @@ public class QuoteSignatureAPI extends AbstractAPI {
 
         Response signatureResponse =  helper.postRequest(STATUS_CREATED, cookie, payload, path);
 
-        if (signatureResponse.getStatusCode() == STATUS_OK) {
-            LOGGER.info("Quote status retrieved");
+        if (signatureResponse.getStatusCode() == STATUS_CREATED) {
+            LOGGER.info("Quote signature retrieved request is sent");
         } else {
-            LOGGER.error("Cannot retrieve quote status");
+            LOGGER.error("Quote signature retrieved request is NOT sent");
         }
     }
 
