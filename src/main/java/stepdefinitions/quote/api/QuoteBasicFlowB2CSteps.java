@@ -72,8 +72,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     @When("^File is uploaded as scanned signature$")
     public void file_is_uploaded_as_scanned_signature() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        new UploadSignatureAPI().uploadSignature(cookie, quoteDetails);
     }
 
     @Then("^Signin is confirmed$")
