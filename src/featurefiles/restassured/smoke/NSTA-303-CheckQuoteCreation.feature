@@ -11,11 +11,11 @@ Scenario: Check basic Quote creation flow B2C
 	And New tc1_quote is created
 	Then Quote status is "ACCEPTED"
 	And Quoteline exists
-#	And Quoteline status is "Sent to customer"
-
-	When Simulation that customer signature is recieved
-#	Then Quote status is "Signature received - Accepted"
 	And Quoteline status is "Sent to customer"
+
+#	When Simulation that customer signature is recieved
+#	Then Quote status is "Signature received - Accepted"
+#	And Quoteline status is "Sent to customer"
 #
 #	When File is uploaded as scanned signature
 #	Then Signin is confirmed

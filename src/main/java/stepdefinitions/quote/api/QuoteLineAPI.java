@@ -13,7 +13,7 @@ import stepdefinitions.quote.api.model.QuoteLines;
 public class QuoteLineAPI extends AbstractAPI {
 
     private final static Logger LOGGER = Logger.getLogger(QuoteStatusAPI.class);
-    private static String ean = "541445081667423408"; //this should be retrieved from property
+    private static String ean = ConfigProvider.getProperty(ConfigKey.EAN_NUMBER);
 
     public boolean checkIfEANexists(Cookies cookie, String quoteId) throws JsonProcessingException {
         RequestHelper helper = new RequestHelper();
