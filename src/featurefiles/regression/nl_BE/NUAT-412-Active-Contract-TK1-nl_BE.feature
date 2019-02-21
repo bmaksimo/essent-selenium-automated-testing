@@ -3,17 +3,17 @@
 @REGRESSION
 @CREDIT-AND-CONTROL
 @NUAT-412
-
 Feature: NUAT-412 part: Create TK1 Contract
 
     Background:
         Given  I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
+    @NUAT-412-1
     Scenario: Create active contract TK1
         When Plus menu is "Sales -> TK1 -> Nieuwe TK1 offerte (B2B) aanmaken"
         And "Ondernemingsnummer" input is "BE0659881595"
         And "Bedrijfsnaam" input is "Test Company B2B"
-        And Clicked on sign X
+        #And Clicked on sign X
         And New Quote is saved
 
         When "Tariefdatum" date is "now"
