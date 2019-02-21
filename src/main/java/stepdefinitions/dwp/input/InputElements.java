@@ -123,11 +123,10 @@ public class InputElements extends DwpScenario {
         options.put("label", label);
         options.put("state", state.name().toLowerCase());
         FluentWait<ToggleCheckBox> waiter = waiter(new ToggleCheckBox(), 10, 1);
-        waiter.until()
-        boolean success = new ToggleCheckBox().test(options);
-        assertThat(String.format("Failure toggling checkbox %s to  target state %s.", label, state.name()),
-            success,
-            is(true));
+        waiter.until((ToggleCheckBox callback) -> {
+            waiter.withMessage(String.format("Failure toggling checkbox %s to  target state %s.", label, state.name()));
+            return callback.test(options);
+        });
     }
 
     @And("^Form is submitted$")
