@@ -46,7 +46,7 @@ public class RequestHelper {
     	    LOGGER.error("RESPONSE IS: " + response.body().asString());
     	}
 
-    	assertEquals(responseStatusCode, statusCode);
+    	assertEquals(statusCode, responseStatusCode);
     	return response;
     }
 
