@@ -1,8 +1,7 @@
 @DWP
 @SERVICE-CONTRACTING
-@REGRESSION
 @SOCTAR
-Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one payment and 3 dunning levels, with SS and Market Mock"
+Feature: Create Soctar (Social Tariff) contract
 
     Background:
         Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
@@ -11,20 +10,20 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         And   Soctar start date is "now"
     @SOCTAR-COMPLETE
     @NSTA-333
-    Scenario: Create Soctar (Social tarif) quote and contract, and check Soctar confirmation letter
+    Scenario: Create Soctar (Social tariff) quote and contract, and check Soctar confirmation letter
         # 1 - GUI contract creation
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
-        When  "Sales kanaal" selection is "Inbound"
-        And "Tariefdatum" date is "2 weeks before now"
+        When "Tariefdatum" date is "2 weeks before now"
+        And "Sales kanaal" selection is "Inbound"
         And Quote details are confirmed
         Then Form header is "Personal details"
 
-        Given Customer is random
-        When Customer address is
-        | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-        | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
+        When Customer is random
+        And Customer address is
+            | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
+            | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
 
@@ -33,10 +32,9 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        Given Electricity EAN code is "random"
-        When Option "test" is On
-        And Option "MM should respond?" is On
-        And "Startdatum" date is "2 weeks before now"
+        When "Startdatum" date is "2 weeks before now"
+        And Electricity EAN code is "random"
+        And Electricity market mock test is Open
         And Connection details are confirmed
         Then Form header is "Billing details"
 
@@ -47,7 +45,7 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         When Option "Heeft de klant al getekend?" is On
         And "Kanaal ondertekening" selection is "Papier"
         And Quote is signed in "Kontich"
-        And "Datum ondertekening" date is "2 weeks before now"
+        And "Datum ondertekening" date is "now"
         And Quote is confirmed
         Then View list header is "Offertes"
         Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
