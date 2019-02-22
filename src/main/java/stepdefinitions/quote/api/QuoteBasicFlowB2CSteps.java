@@ -11,6 +11,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.restassured.http.Cookies;
+import stepdefinitions.quote.api.model.ContractDetails;
 import stepdefinitions.quote.api.model.QuoteDetails;
 
 import static org.junit.Assert.assertEquals;
@@ -20,6 +21,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     protected Cookies cookie;
     protected String tariffSheetID;
     protected QuoteDetails quoteDetails;
+    protected ContractDetails contractDetails;
 
     @Before("@API")
     public void setupTest(Scenario scenario) throws Throwable {
@@ -84,7 +86,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     @Then("^Contract is created$")
     public void contract_is_created() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        this.contractDetails = new ContractsOnAccountAPI().getContractDetails(cookie, quoteDetails.getRecordId());
     }
 
     @Then("^Contracted EAN exists on account$")
