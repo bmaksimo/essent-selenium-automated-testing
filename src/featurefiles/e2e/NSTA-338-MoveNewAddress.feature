@@ -100,20 +100,13 @@ Feature: NSTA - 388 Move new address
 
         And "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
 #        And Get Contract Ean Code
-
-#        When Old contract data is copied
-#        //Then Check if contract with old ean is still active
-#        And Table "ContractsOnAccount" contains cell value "Sales Getekend (Geaccepteerd)" at column "Type & status" on "2nd" row
-
-#        And "<string>" in the first "<string>" row of "<string>" table is "<string>"
-#
-#        Then "2nd" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
-
-#    	//And Check if start date of new ean is the same date as filled in as “Move date”
-#    	And Check if the end date of new ean is the same date as the end date of the old one
-#        And Check if products of both contracts are the same
-#        And Check if discounts of both contracts are the same
-#        And Check if prices of both contracts are the same
+        And "2nd" list element has cell value "Actief" at column "Contractnummer" polling 100 seconds
+        And Table "ContractsOnAccount" contains cell value "Sales Getekend (Geaccepteerd)" at column "Type & status" on "2nd" row
+    	And Check if start date of new ean is the same date as filled in as “Move date”-"1 day before now"
+    	And Check if the end date of new ean is the same date as the end date of the old one
+        And Check if products of both contracts are the same
+        And Check if discounts of both contracts are the same
+        And Check if prices of both contracts are the same
 
 ##        And Top arrow button is "back"
         When Dashboard menu is "Marktberichten"

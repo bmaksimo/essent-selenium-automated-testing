@@ -24,12 +24,6 @@ public class ContractPage extends Component {
         seleniumDriver.waitAndSendKeys(startData(),"date");
     }
 
-    public String getOneDayBeforeToday(){
-        DateTime dateTime = new DateTime();
-        String yesterday = simpleDateFormat.format(dateTime.minusDays(1));
-        return yesterday;
-    }
-
     public void saveButtton()throws InterruptedException {
         seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("primaryButton")));
@@ -299,5 +293,10 @@ public class ContractPage extends Component {
     public String getCompanyNumber(){
         return seleniumDriver.findElementWhenVisible(By.xpath("//*//*[@id=\"company-number-c-field\"]")).getText();
     }
+
+    public String getContractNumber(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"account_number_c\"]/div")).getText();
+    }
+
 
 }
