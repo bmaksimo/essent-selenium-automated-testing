@@ -50,7 +50,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     @Then("^Quote status is \"([^\"]*)\"$")
     public void quote_status_is(String arg1) throws Throwable {
         String status = new QuoteStatusAPI().checkStatus(cookie, quoteDetails.getQuoteId());
-        assertEquals(arg1, status);
+        assertEquals(arg1.toLowerCase(), status.toLowerCase());
     }
 
     @Then("^Quoteline exists$")
@@ -62,7 +62,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     @Then("^Quoteline status is \"([^\"]*)\"$")
     public void quoteline_status_is(String arg1) throws Throwable {
 	String status = new QuoteLineAPI().getStatus(cookie, quoteDetails.getQuoteId());
-        assertEquals(arg1,status);
+        assertEquals(arg1.toLowerCase(),status.toLowerCase());
     }
 
     @When("^Simulation that customer signature is recieved$")
@@ -70,6 +70,11 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
         new QuoteSignatureAPI().setSignatureReceived(cookie, quoteDetails);
     }
 
+    @Then("^Quote stage status is \"([^\"]*)\"$")
+    public void quote__stage_status_is(String arg1) throws Throwable {
+        String status = new QuoteStatusAPI().checkStageStatus(cookie, quoteDetails.getQuoteId());
+        assertEquals(arg1.toLowerCase(), status.toLowerCase());
+    }
     @When("^File is uploaded as scanned signature$")
     public void file_is_uploaded_as_scanned_signature() throws Throwable {
         new UploadSignatureAPI().uploadSignature(cookie, quoteDetails);
