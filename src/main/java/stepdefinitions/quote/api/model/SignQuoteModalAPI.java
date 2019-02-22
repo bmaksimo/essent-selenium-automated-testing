@@ -1,0 +1,109 @@
+package stepdefinitions.quote.api.model;
+
+import com.essent.testing.config.ConfigKey;
+import com.essent.testing.config.ConfigProvider;
+import com.essent.testing.util.resource.ResourceUtil;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.restassured.http.Cookies;
+import io.restassured.response.Response;
+import org.apache.log4j.Logger;
+import stepdefinitions.quote.api.AbstractAPI;
+import stepdefinitions.quote.api.QuoteDetailsAPI;
+import stepdefinitions.quote.api.RequestHelper;
+import stepdefinitions.quote.api.model.dto.PayloadDTO;
+import stepdefinitions.quote.api.model.dto.QuoteDetailsDTO;
+import stepdefinitions.quote.api.model.dto.SignContractDTO;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class SignQuoteModalAPI extends AbstractAPI {
+
+    private final static Logger LOGGER = Logger.getLogger(QuoteDetailsAPI.class);
+
+    public QuoteDetails getQuoteDetails(Cookies cookie, String tariffSheetId) throws JsonParseException, JsonMappingException, IOException {
+        RequestHelper helper = new RequestHelper();
+        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_B2CCQ_URL);
+        String payload = createQuotePayload(tariffSheetId);
+
+        Response quoteResponse =  helper.postRequest(STATUS_CREATED, cookie, payload, path);
+
+        QuoteDetails quoteDetails = new QuoteDetails();
+
+        if (quoteResponse.getStatusCode() == STATUS_CREATED) {
+            LOGGER.info("Quote created");
+            String recordId  = quoteResponse.jsonPath().getString("data.arguments.params.recordId");
+            quoteDetails.setRecordId(recordId);
+            LOGGER.info("Record ID: " + recordId);
+            String accountNumber  = quoteResponse.jsonPath().getString("data.params.Account.account_number");
+            quoteDetails.setAccountNumber(accountNumber);
+            LOGGER.info("Account number: " + accountNumber);
+            String accountId  = quoteResponse.jsonPath().getString("data.relatedBeans.Account[0]");
+            quoteDetails.setAccountId(accountId);
+            LOGGER.info("Account ID: " + accountId);
+            String quoteNumber  = quoteResponse.jsonPath().getString("data.params.AOS_Quotes.quote_number");
+            quoteDetails.setQuoteNumber(quoteNumber);
+            LOGGER.info("Quote Number: " + quoteNumber);
+            String quoteId  = quoteResponse.jsonPath().getString("data.relatedBeans.AOS_Quotes[0]");
+            quoteDetails.setQuoteId(quoteId);
+            LOGGER.info("Quote Id: " + quoteId);
+
+        } else {
+            LOGGER.error("Cannot create quote");
+        }
+
+        return quoteDetails;
+
+    }
+
+    public String getQuoteNumber(Cookies cookie, String recordId) throws JsonProcessingException {
+        RequestHelper helper = new RequestHelper();
+        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_QUOTES_ON_ACCOUNT_URL);
+        String payload = createListQuotePayload(recordId);
+
+        Response listQuoteResponse = helper.postRequest(STATUS_OK, cookie, payload, path);
+
+        String quoteId = null;
+
+        if (listQuoteResponse.getStatusCode() == STATUS_OK) {
+            LOGGER.info("Quote list retrieved");
+            quoteId = listQuoteResponse.jsonPath().getString("data.rows[0].rowData.number");
+            LOGGER.info("Quote ID: " + quoteId);
+        } else {
+            LOGGER.error("Cannot retrieve quote list");
+        }
+
+        return quoteId;
+    }
+
+    private String signQuoteModalPayload() throws JsonParseException, JsonMappingException, IOException {
+        ObjectMapper mapper = new ObjectMapper();
+
+        String pathToPayload = ResourceUtil.toPath("/data/restassured/payload_for_sign_quote_modal.json");
+        String jsonPayload = new String(Files.readAllBytes(Paths.get(pathToPayload)));
+        SignContractDTO mapper.readValue(jsonPayload, SignContractDTO.class);
+        //payload.setTariffsheetId(tariffSheetId);
+
+        quote.getModel().getPayloadWrapper().setPayload(payload);
+
+        return mapper.writeValueAsString(quote);
+    }
+
+    private void readValue(String jsonPayload, Class<SignContractDTO> signContractDTOClass) {
+    }
+
+    private String createListQuotePayload(String recordId) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+
+        QuotesOnAccount quotes = new QuotesOnAccount();
+        quotes.setRecordId(recordId);
+        quotes.setRecordType("Accounts");
+        quotes.setPage(1);
+
+        return mapper.writeValueAsString(quotes);
+    }
+}

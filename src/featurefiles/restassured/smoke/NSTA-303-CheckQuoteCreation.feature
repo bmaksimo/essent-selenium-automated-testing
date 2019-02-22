@@ -18,7 +18,7 @@ Scenario: Check basic Quote creation flow B2C
 #	And Quoteline status is "Sent to customer"
 #
 #	When File is uploaded as scanned signature
-#	Then Signin is confirmed
+    Then Signin is confirmed
 #	And Contract is created
 #	And Contracted EAN exists on account
 #
