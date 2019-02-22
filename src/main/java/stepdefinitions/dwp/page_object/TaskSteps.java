@@ -25,20 +25,20 @@ public class TaskSteps extends DwpScenario {
 
     @When("^Plus action and \"([^\"]*)\" of first customer from list$")
     public void plusActionAndOfFirstCustomerFromList(String action) throws Throwable {
-        BaseObject baseObject = new BaseObject(webDriver);
+        BaseObject baseObject = new BaseObject();
         Thread.sleep(30000);
         baseObject.clickOnPlus();
-        webDriver.waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         baseObject.plusSubaction(action);
     }
 
     private void inputResolution(String text) {
-        webDriver.waitAndSendKeys(webDriver.findElementWhenVisible(By.id("task-resolution-c-field")), text);
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id("task-resolution-c-field")), text);
     }
 
     @When("^Save task ID of first customer in list$")
     public void saveTaskIDOfFirstCustomerInList() throws Throwable {
-        BaseObject baseObject = new BaseObject(webDriver);
+        BaseObject baseObject = new BaseObject();
         taskId = baseObject.getTaskId();
     }
 
@@ -53,19 +53,19 @@ public class TaskSteps extends DwpScenario {
     }
 
     private void findTaskId(String taskId) {
-        webDriver.waitForRequestsToFinish();
-        webDriver.waitAndSendKeys(webDriver.findElementWhenVisible(By.id("task-number-c-default-value-field")), taskId);
+        seleniumDriver.waitForRequestsToFinish();
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id("task-number-c-default-value-field")), taskId);
     }
 
     @And("^Search for task id$")
     public void searchForTaskId() throws Throwable {
-        ContractenPage contractenPage = new ContractenPage(webDriver);
+        ContractenPage contractenPage = new ContractenPage();
         contractenPage.searchForTaskId(taskId);
     }
 
     @Then("^\"([^\"]*)\" was rejection reason$")
     public void wasRejectionReason(String input) throws Throwable {
-        ContractenPage contractenPage = new ContractenPage(webDriver);
+        ContractenPage contractenPage = new ContractenPage();
         contractenPage.findRejectionReason(input);
     }
 

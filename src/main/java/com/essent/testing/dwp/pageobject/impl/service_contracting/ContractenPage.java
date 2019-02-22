@@ -2,7 +2,6 @@ package com.essent.testing.dwp.pageobject.impl.service_contracting;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
-import com.essent.testing.selenium.SeleniumDriver;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -10,12 +9,8 @@ import org.openqa.selenium.Keys;
 public class ContractenPage extends Component {
     private static  String payDate;
 
-    public ContractenPage(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver);
-    }
-
     public String findActiveContract(String input) throws InterruptedException {
-        waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         int counter = 2;
         String eanCode;
         String action = findElementWhenVisible(By.xpath("(//h6)[" + counter + "]")).getText();
@@ -30,18 +25,18 @@ public class ContractenPage extends Component {
     }
 
     public void searchForEanCode(String eanCode) {
-        waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         findElementWhenVisible(By.id("search-input")).clear();
         findElementWhenVisible(By.id("search-input")).sendKeys(eanCode);
         findElementWhenVisible(By.xpath("//input[@value='Search']")).click();
-        waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         findElementWhenVisible(By.xpath("//div[@class='multi-select__results']//ul[2]")).click();
-        waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         findElementWhenVisible(By.xpath("//section[@class='view__modal']//a[@href='']")).click();
     }
 
     public void fieldDropDownLabel(String label, String input) {
-        waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + label + "']/div/div/ng-form/div/select-form-element/div/select/option[@label='" + input + "']")).click();
     }
 
@@ -54,19 +49,19 @@ public class ContractenPage extends Component {
     }
 
     public void confirmTaskStatus(String input) {
-        waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         Assert.assertTrue(findElementWhenVisible(By.xpath("(//h6)[.='" + input + "']")).isDisplayed());
     }
 
     public void searchForTaskId(String taskId) {
-        waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         findElementWhenVisible(By.xpath("//input[@type='search']")).clear();
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//input[@type='search']")), taskId);
         findElementWhenVisible(By.xpath("//input[@type='search']")).sendKeys(Keys.ENTER);
     }
 
     public void findRejectionReason(String input) {
-        waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         Assert.assertTrue(seleniumDriver.findElementWhenVisible(By.xpath("(//span[.='" + input + "'])[1]")).isDisplayed());
     }
 
@@ -75,10 +70,10 @@ public class ContractenPage extends Component {
     }
 
     public void sendEmailToCustomer(String test) {
-        waitForRequestsToFinish();
-        BaseObject baseObject = new BaseObject(seleniumDriver);
+        seleniumDriver.waitForRequestsToFinish();
+        BaseObject baseObject = new BaseObject();
         baseObject.clickOnPlus();
-        waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[@label='"+test+"']/a")).click();
     }
 
@@ -87,7 +82,7 @@ public class ContractenPage extends Component {
     }
 
     public void checkPayDate() {
-        waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         final String newPayDate = findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell[@icon='null']//span)[6]")).getText();
         Assert.assertFalse("Date was not changed. Old date is : " + payDate + ", and new date is same : " + newPayDate, newPayDate.equalsIgnoreCase(payDate));
     }
@@ -106,7 +101,7 @@ public class ContractenPage extends Component {
     }
 
     public void findIban(String iban) {
-        waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         Assert.assertTrue(seleniumDriver.findElementWhenVisible(By.xpath("//span[.='" + iban + "']")).isDisplayed());
     }
 

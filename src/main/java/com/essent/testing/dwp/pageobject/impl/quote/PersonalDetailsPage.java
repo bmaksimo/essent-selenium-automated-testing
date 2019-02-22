@@ -3,7 +3,6 @@ package com.essent.testing.dwp.pageobject.impl.quote;
 import com.billinghouse.random.RandomUser;
 import com.billinghouse.test_automation.util.gherkin.DateTimeFormatUtil;
 import com.essent.automation.autocrat.Model;
-import com.essent.testing.selenium.SeleniumDriver;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.html5.WebStorage;
 
@@ -19,14 +18,10 @@ import static com.essent.testing.selenium.helper.dwp.LocalStorage.fetchPreferred
 
 public class PersonalDetailsPage extends QuoteCreationGuidedStep {
 
-    private RandomUser    customer;
+    private RandomUser customer;
 
     public void setRandomUser(RandomUser randomUser) {
         this.customer = randomUser;
-    }
-
-    public PersonalDetailsPage(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver);
     }
 
     @Override
@@ -60,11 +55,11 @@ public class PersonalDetailsPage extends QuoteCreationGuidedStep {
             element(MOBILE_NR.element()).
             element(WORK_PHONE_NR.element()).
             step(createStep(ACCESS).element(COPY_ADDRESS_CONNECTION_TO_BILLING.name()).requireDisplayed(false).callback(hideIconOverlays())).
-            step(createStep(SELECT).element(SALUTATION.name()).value(salutation), INPUT.getSleepInMillis()).
-            step(createStep(TYPING).element(FIRST_NAME.name()).value(firstName), INPUT.getSleepInMillis()).
-            step(createStep(TYPING).element(LAST_NAME.name()).value(lastName), INPUT.getSleepInMillis()).
-            step(createStep(TYPING).element(EMAIL.name()).value(customer.getEmail()), INPUT.getSleepInMillis()).
-            step(createStep(TYPING).element(MOBILE_NR.name()).value(mobilePhone), INPUT.getSleepInMillis()).
+            step(createStep(SELECT).element(SALUTATION.name()).value(salutation).timeoutInSeconds(4), INPUT.getSleepInMillis()).
+            step(createStep(TYPING).element(FIRST_NAME.name()).value(firstName).timeoutInSeconds(4), INPUT.getSleepInMillis()).
+            step(createStep(TYPING).element(LAST_NAME.name()).value(lastName).timeoutInSeconds(4), INPUT.getSleepInMillis()).
+            step(createStep(TYPING).element(EMAIL.name()).value(customer.getEmail()).timeoutInSeconds(4), INPUT.getSleepInMillis()).
+            step(createStep(TYPING).element(MOBILE_NR.name()).value(mobilePhone).timeoutInSeconds(4), INPUT.getSleepInMillis()).
             step(createStep(TYPING).element(BIRTHDAY.name()).value(birthDate).timeoutInSeconds(4), INPUT.getSleepInMillis());
         return execute(initializeFields);
     }

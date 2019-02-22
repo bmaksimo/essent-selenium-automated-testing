@@ -6,7 +6,6 @@ import com.essent.testing.dwp.pageobject.impl.service_contracting.ContractPageCl
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
 import cucumber.api.DataTable;
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -27,28 +26,28 @@ public class ContractSteps extends DwpScenario {
 
     @And("^Change amount for a customer$")
     public void changeAmountForACustomer() throws Throwable {
-        ContractPageClass cp = new ContractPageClass(webDriver);
+        ContractPageClass cp = new ContractPageClass();
         cp.openFirstContractFromList();
     }
 
     @And("^Contract plus and \"([^\"]*)\"$")
     public void contractPlusAnd(String subaction) throws Throwable {
-        ContractPageClass cp = new ContractPageClass(webDriver);
+        ContractPageClass cp = new ContractPageClass();
         cp.contractPlus();
-        BaseObject baseObject = new BaseObject(webDriver);
+        BaseObject baseObject = new BaseObject();
         baseObject.plusSubaction(subaction);
     }
 
     @And("^Amount values is \"([^\"]*)\"$")
     public void amountValuesIs(String value) throws Throwable {
-        ContractPageClass cp = new ContractPageClass(webDriver);
+        ContractPageClass cp = new ContractPageClass();
         cp.changeAmount(value);
         amount = value;
     }
 
     @Then("^Amount of a customer value$")
     public void amountOfACustomerValue() throws Throwable {
-        ContractPageClass cp = new ContractPageClass(webDriver);
+        ContractPageClass cp = new ContractPageClass();
         Assert.assertTrue("Amount is not correct.", cp.getAmountOfACustomer(amount));
     }
 
@@ -60,7 +59,7 @@ public class ContractSteps extends DwpScenario {
 
     @When("^Old contract data is copied$")
     public void oldContractDataIsCopied() throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage();
         parameterProvider.put("randomEAN", PrepareDataForContract.generateEAN());
         parameterProvider.put("oldContractEan",cp.getEanFromContract());
         parameterProvider.put("contractStatus", cp.getStatusFromContract());
@@ -88,36 +87,36 @@ public class ContractSteps extends DwpScenario {
 
     @Then("^Check if contract with old ean is still active$")
     public void checkIfContractWithOldEanIsStillActive() throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage();
     }
 
     @And("^Check if contract with new ean is created and became active$")
     public void checkIfContractWithNewEanIsCreatedAndBecameActive() throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage();
     }
 
     @And("^Check if start date of new ean is the same date as filled in as “Move date”$")
     public void checkIfStartDateOfNewEanIsTheSameDateAsFilledInAsMoveDate() throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage();
         Assert.assertEquals(cp.getActiveContractStartDate(),cp.getOneDayBeforeToday());
     }
 
     @And("^Check if the end date of new ean is the same date as the end date of the old one$")
     public void checkIfTheEndDateOfNewEanIsTheSameDateAsTheEndDateOfTheOldOne() throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage();
         Assert.assertEquals(cp.getActiveContractEndDate(),parameterProvider.getValueOrParameterAsString("endDate"));
     }
 
     @And("^Check if products of both contracts are the same$")
     public void checkIfProductsOfBothContractsAreTheSame() throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage();
         cp.clickOnContractenNummer();
         Assert.assertEquals(cp.getProductName(),parameterProvider.getValueOrParameterAsString("productName"));
     }
 
     @And("^Check if discounts of both contracts are the same$")
     public void checkIfDiscountsOfBothContractsAreTheSame() throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage();
 //        Assert.assertEquals(cp.getKortingenOpContractKortingscode(),parameterProvider.getValueOrParameterAsString("kortingsCode"));
 //        Assert.assertEquals(cp.getProductName(),parameterProvider.getValueOrParameterAsString("productType"));
 
@@ -125,7 +124,7 @@ public class ContractSteps extends DwpScenario {
 
     @And("^Check if prices of both contracts are the same$")
     public void checkIfPricesOfBothContractsAreTheSame() throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage();
         cp.clickOnBekijkPrijzenTariefkaatFromPlus();
         Assert.assertEquals(cp.getTypeProduct(),parameterProvider.getValueOrParameterAsString("productType"));
         Assert.assertEquals(cp.getEnergieprijsEnkelvoudigInclBtw(),parameterProvider.getValueOrParameterAsString("energieprijsEnkelvoudigInclBtw"));
@@ -143,20 +142,19 @@ public class ContractSteps extends DwpScenario {
     @And("^New move customer address is$")
     public void nweMoveCustomerAddressIs(final DataTable dbTable) throws Throwable {
         List<List<String>> address = dbTable.raw();
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage();
         cp.setNewMoveAddress(address.get(1).get(0),address.get(1).get(1),address.get(1).get(4),address.get(1).get(5));
     }
 
     @And("^Marketbericht with EAN \"([^\"]*)\" has ED \"([^\"]*)\"$")
-    public void marketberichtWithEANHasED(String arg0, String ean) throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
-        Assert.assertEquals(cp.getMarketberichED(ean),parameterProvider.getValueOrParameterAsString("startDateNew"));
-        String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(arg0));
+    public void marketberichtWithEANHasED(String ean, String date) throws Throwable {
+        ContractPage cp = new ContractPage();
+        Assert.assertEquals(cp.getMarketberichED(ean),toDwpEDDate(parameterProvider.getValueOrParameterAsString(date)));
     }
 
     @Then("^There is a case where onderwerp is \"([^\"]*)\"$")
     public void thereIsACaseWhereOnderwerpIs(String onderwerp) throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage();
         Assert.assertEquals(cp.getCaseOnderwerp(),onderwerp);
         parameterProvider.put("caseNumber",cp.getCaseNumber());
 
@@ -164,7 +162,7 @@ public class ContractSteps extends DwpScenario {
 
     @And("^Interaction is created with Type \"([^\"]*)\" and Onderwerp \"([^\"]*)\" and verwante case is \"([^\"]*)\"$")
     public void interactionIsCreatedWithTypeAndOnderwerpAndVerwanteCaseIs(String type, String onderwerp, String number) throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage();
         String caseNumber = parameterProvider.getValueOrParameterAsString(number);
         Assert.assertEquals(cp.getInteractionType(),type);
         Assert.assertEquals(cp.getInteractionOnderwerp(),onderwerp);
@@ -173,7 +171,7 @@ public class ContractSteps extends DwpScenario {
 
     @And("^Kortingen is \"([^\"]*)\"$")
     public void kortingenIs(String kortingen) throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+        ContractPage cp = new ContractPage();
         cp.chooseKortigen(kortingen);
 
     }

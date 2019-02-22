@@ -60,9 +60,9 @@ public class InputElements extends DwpScenario {
 
     @And("^Label input for \"([^\"]*)\" is \"([^\"]*)\"$")
     public void setLabelInput(String label, String value) throws Throwable {
-        webDriver.waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         setInput(label, "string:"+value);
-        webDriver.waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
     }
 
     @And("^\"([^\"]*)\" date is \"([^\"]*)\"$")
@@ -107,8 +107,8 @@ public class InputElements extends DwpScenario {
 
     @And("^Field \"([^\"]*)\" input is \"([^\"]*)\"$")
     public void setInputByPlaceholder(String placeholder, String value) {
-        webDriver.waitForRequestsToFinish();
-        WebElement placeHolderInputElement = webDriver.findElement(By.xpath("//input[@placeholder='"+placeholder+"']"));
+        seleniumDriver.waitForRequestsToFinish();
+        WebElement placeHolderInputElement = seleniumDriver.findElement(By.xpath("//input[@placeholder='"+placeholder+"']"));
         boolean placeHolderWasFound = placeHolderInputElement != null;
         assertThat(String.format("Placeholder element '%s' was not found.", placeholder), placeHolderWasFound, is(true));
         placeHolderInputElement.sendKeys(value);

@@ -13,7 +13,7 @@ import cucumber.api.java.en.When;
 import org.junit.Assert;
 
 public class MarketBerichtenSteps extends DwpScenario {
-    BaseObject baseObject = new BaseObject(webDriver);
+    BaseObject baseObject = new BaseObject();
     private static String eanCode = null;
 
     @Before("@DWP, @REGRESSION")
@@ -23,35 +23,35 @@ public class MarketBerichtenSteps extends DwpScenario {
 
     @And("^\"([^\"]*)\" turn on$")
     public void turnOn(String label) throws Throwable {
-        webDriver.waitForRequestsToFinish();
-        BaseObject baseObject = new BaseObject(webDriver);
+        seleniumDriver.waitForRequestsToFinish();
+        BaseObject baseObject = new BaseObject();
         baseObject.clickOnToggle(label);
     }
 
     @And("^Insert EAN of customer$")
     public void insertEANOfCustomer() throws Throwable {
-        webDriver.waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         baseObject.insertEANcode(eanCode);
     }
 
     @When("^Save EAN code of customer$")
     public void saveEANCodeOfCustomer() throws Throwable {
-        MarktberichtenPage marktberichtenPage = new MarktberichtenPage(webDriver);
-        webDriver.waitForRequestsToFinish();
+        MarktberichtenPage marktberichtenPage = new MarktberichtenPage();
+        seleniumDriver.waitForRequestsToFinish();
         eanCode = marktberichtenPage.getEanCode();
         parameterProvider.put("eanCode", eanCode);
     }
 
     @Then("^Validate rejection status is \"([^\"]*)\"$")
     public void validateRejection(String rejectionStatus) throws Throwable {
-        MarktberichtenPage marktberichtenPage = new MarktberichtenPage(webDriver);
+        MarktberichtenPage marktberichtenPage = new MarktberichtenPage();
         Assert.assertTrue(marktberichtenPage.validateRejectionHeader(eanCode));
         Assert.assertTrue(marktberichtenPage.validateRejectionHeader(rejectionStatus));
     }
 
     @And("^Search for ean code from filters")
     public void searchForEanCodeFromFillter() throws Throwable {
-        MarktberichtenPage marktberichtenPage = new MarktberichtenPage(webDriver);
+        MarktberichtenPage marktberichtenPage = new MarktberichtenPage();
         marktberichtenPage.setEanCodeInFilter(eanCode);
     }
 
@@ -64,14 +64,14 @@ public class MarketBerichtenSteps extends DwpScenario {
 
     @Then("^Validate contract was \"([^\"]*)\" and \"([^\"]*)\"$")
     public void validateContractWasTakenOver(String taken, String signed) throws Throwable {
-        MarktBerichtenPage marktBerichtenPage = new MarktBerichtenPage(webDriver);
+        MarktBerichtenPage marktBerichtenPage = new MarktBerichtenPage();
         marktBerichtenPage.takenOver(taken, signed);
     }
 
     @When("^Refresh \"([^\"]*)\" till \"([^\"]*)\" is visible$")
     public void refreshTillIsVisible(String name, String status) throws Throwable {
-        webDriver.waitForRequestsToFinish();
-        MarktBerichtenPage mp = new MarktBerichtenPage(webDriver);
+        seleniumDriver.waitForRequestsToFinish();
+        MarktBerichtenPage mp = new MarktBerichtenPage();
         Thread.sleep(15000);
         while(!mp.marketberichtStatus().equalsIgnoreCase(status)){
             mp.refreshByName(name);
@@ -80,13 +80,13 @@ public class MarketBerichtenSteps extends DwpScenario {
 
     @Then("^Confirm status is \"([^\"]*)\"$")
     public void confirmStatusIs(String status) throws Throwable {
-        MarktBerichtenPage mp = new MarktBerichtenPage(webDriver);
+        MarktBerichtenPage mp = new MarktBerichtenPage();
         Assert.assertTrue(mp.marketberichtStatus().equalsIgnoreCase(status));
     }
 
     @And("^\"([^\"]*)\" is now$")
     public void isNow(String label) throws Throwable {
-        BaseObject bo = new BaseObject(webDriver);
+        BaseObject bo = new BaseObject();
         bo.dateIsNow(label);
 
     }
@@ -94,7 +94,7 @@ public class MarketBerichtenSteps extends DwpScenario {
     @Then("^Marketbericht with EAN \"([^\"]*)\" and module \"([^\"]*)\" is in status \"([^\"]*)\"$")
     public void marketbirichWithEANAndModuleIsInStatus(String enaP, String modul, String status) throws Throwable {
         String ean = parameterProvider.getValueOrParameterAsString(enaP);
-        MarktBerichtenPage mp = new MarktBerichtenPage(webDriver);
+        MarktBerichtenPage mp = new MarktBerichtenPage();
         Assert.assertEquals(ean, mp.getEanFromTheFirstTransaction());
         Assert.assertEquals(modul,mp.getModulFromTheFirstTransaction());
         Assert.assertEquals(status,mp.marketberichtStatus());
@@ -103,7 +103,7 @@ public class MarketBerichtenSteps extends DwpScenario {
 
     @Then("^Marketbericht with module \"([^\"]*)\" changed to status \"([^\"]*)\"$")
     public void marketbirichWithEANAndModuleSecondTransactionIsInStatus(String modul, String status) throws Throwable {
-        MarktBerichtenPage mp = new MarktBerichtenPage(webDriver);
+        MarktBerichtenPage mp = new MarktBerichtenPage();
         Assert.assertEquals(modul,mp.getModulFromCancelTransaction());
         Assert.assertEquals(status,mp.marketberichtCancelStatus());
 

@@ -1,16 +1,12 @@
 package com.essent.testing.dwp.pageobject.impl.page;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class MarktBerichtenPage extends Component {
 
-    public MarktBerichtenPage(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver);
-    }
     public WebElement listActionsElemet(String element) throws InterruptedException {
         return seleniumDriver.findElementWhenVisible(By.name(element));
     }
@@ -62,7 +58,7 @@ public class MarktBerichtenPage extends Component {
     }
 
     public WebElement searchButton() {
-        return seleniumDriver.findElementWhenVisible(By.xpath("//input[@value='Search']"));
+        return findElementWhenVisible(By.xpath("//input[@value='Search']"));
     }
 
     public void clickOnSearchButton() throws InterruptedException {
@@ -80,7 +76,7 @@ public class MarktBerichtenPage extends Component {
     }
 
     public WebElement submitButton() {
-        return seleniumDriver.findElementWhenClickable(By.xpath("//select-with-search-modal/section[@class='view__modal']//a[@href='']"));
+        return findElementWhenClickable(By.xpath("//select-with-search-modal/section[@class='view__modal']//a[@href='']"));
     }
 
     public void clickOnSubmitButton() throws InterruptedException {
@@ -90,6 +86,7 @@ public class MarktBerichtenPage extends Component {
     public String getModulFromTheFirstTransaction() throws InterruptedException {
         return seleniumDriver.findElementWhenVisible(By.xpath("(//h5)[2]")).getText();
     }
+
     public String getModulFromCancelTransaction() throws InterruptedException {
         return seleniumDriver.findElementWhenVisible(By.xpath("//list-link-bold-top-two-liner-cell[@line-1='INITIATE STOP ACCESS']/div/a/h5")).getText();
     }

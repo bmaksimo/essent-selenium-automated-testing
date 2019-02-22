@@ -1,20 +1,14 @@
 package com.essent.testing.dwp.pageobject.impl.page;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
-import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import com.essent.automation.util.Sleeper;
 
 public class BaseObject extends Component {
-
-
-    public BaseObject(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver);
-    }
 
     public String getTaskId() {
         final String taskId;
@@ -43,14 +37,14 @@ public class BaseObject extends Component {
     public void clickOnToggle (String label) throws InterruptedException{
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(2);
-        ToggleImpl toggle = new ToggleImpl(seleniumDriver);
+        ToggleImpl toggle = new ToggleImpl();
         if (!toggle.checkIfCheckboxIsChecked(label)) {
             seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + label + "?']//toggle-form-element/label")));
         }
     }
 
     public String documentText(){
-        return seleniumDriver.findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[1])[2]")).getText();
+        return findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[1])[2]")).getText();
     }
 
     private String pattern = "dd/MM/yyyy";

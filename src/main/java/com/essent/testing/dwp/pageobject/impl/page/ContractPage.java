@@ -2,7 +2,6 @@ package com.essent.testing.dwp.pageobject.impl.page;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
 import org.joda.time.DateTime;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -12,10 +11,6 @@ import java.util.Date;
 
 
 public class ContractPage extends Component {
-
-    public ContractPage(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver);
-    }
 
     public WebElement startData(){
         return seleniumDriver.findElementWhenVisible(By.id("contract-start-date-field"));
@@ -36,7 +31,7 @@ public class ContractPage extends Component {
     }
 
     public void saveButtton()throws InterruptedException {
-        waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("primaryButton")));
     }
 
@@ -53,7 +48,7 @@ public class ContractPage extends Component {
     }
 
     public void clickOnPlusMeniInTable(String row, String table) {
-        waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(seleniumDriver.findElementOrNull(By.xpath("(//list[@list-key='"+table+"']//tbody[@id='rows']//list-plus-cell//a[@class='show-actions icon-plus'])["+row+"]")));
     }
     public String getActiveContractEAN(){
@@ -292,7 +287,17 @@ public class ContractPage extends Component {
     }
 
     public void chooseKortigen(String discount){
+        Sleeper.sleepTightInSeconds(2);
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("dwp|discount_id")));
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id='dwp-discount-id-field']/option[@label='"+discount+"']")));
     }
+
+    public void confirmTheSign(){
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"accounts|aos_quotes|sign_location_c\"]/div[1]/input")),"Kontich");
+    }
+
+    public String getCompanyNumber(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("//*//*[@id=\"company-number-c-field\"]")).getText();
+    }
+
 }
