@@ -72,9 +72,20 @@ public class ViewListElements extends NavigationElements {
     }
 
     private class ViewListModel {
-        DefaultTableModel getViewTableModel() {
+        private DefaultTableModel getViewTableModel() {
             DefaultTableModel tableModel = new DefaultTableModel();
-            Map viewTable = executeJavascriptMethod("TrGetTableModel", new HashMap<>());
+            return getDefaultTableModel(tableModel, new HashMap<>());
+        }
+
+        private DefaultTableModel getViewTableModel(String tableName) {
+            DefaultTableModel tableModel = new DefaultTableModel();
+            HashMap<Object, Object> options = new HashMap<>();
+            options.put("list_header", tableName);
+            return getDefaultTableModel(tableModel, options);
+        }
+
+        private DefaultTableModel getDefaultTableModel(DefaultTableModel tableModel, HashMap<Object, Object> options) {
+            Map viewTable = executeJavascriptMethod("TrGetTableModel", options);
             List columnNames = (List) viewTable.get("column_names");
             List rows = getData(viewTable);
             tableModel.setColumnIdentifiers(columnNames.toArray());
@@ -91,8 +102,8 @@ public class ViewListElements extends NavigationElements {
             return success;
         }
 
-        boolean containsDataAtFromTable(int row, String value, String columnName, String tableName) {
-            String cell = getCellValueAtFromTable(row, columnName, tableName);
+        boolean containsCellValue(int rowFromOne, String value, String columnName, String tableName) {
+            String cell = getValueAt(rowFromOne, columnName, tableName);
             boolean success = cell.contains(value);
             return success;
         }
@@ -189,21 +200,32 @@ public class ViewListElements extends NavigationElements {
             return (String) currentRow.get(index);
         }
 
-        private String getCellValueAtFromTable(int row, String columnName, String tableName) {
+        private String getValueAt(int row, String columnName, String tableName) {
             logger().info("STEP: JAVASCRIPT_FETCH_DATA");
-            Map viewTable = executeJavascriptMethod("TrGetTableModel", new HashMap<>());
-            logger().info(" - RESULT: " + viewTable);
-            int index = getColumnNameIndexFromTable(columnName, tableName);
-            if (index < 0) {
-                fail(String.format("View List did not contain column %s", columnName));
-            }
-            List<ArrayList> rows = getData(viewTable);
-            if (row > rows.size()) {
-                fail(String.format("--Error in Test Input: Given %s row index cannot be greater that actual View List size %s", row, rows.size()));
-            }
-            List currentRow = rows.get(row - 1);
-            return (String) currentRow.get(index);
+            HashMap<Object, Object> options = new HashMap<>();
+            options.put("list_header", tableName);
+            DefaultTableModel viewTableModel = getViewTableModel(tableName);
+            logger().info(" - RESULT: Table name: " + tableName);
+            logTableModel(viewTableModel);
+            int column = viewTableModel.findColumn(columnName);
+            if(column < 0)
+                throw new CucumberException(String.format("View List did not contain column %s", columnName));
+            return (String) viewTableModel.getValueAt(row - 1, column);
+
         }
+        private void logTableModel(DefaultTableModel viewTableModel) {
+            int columnCount = viewTableModel.getColumnCount();
+            StringBuilder columns = new StringBuilder("[");
+            for(int i = 0; i < columnCount; i++) {
+                columns.append(String.format("'%s'", viewTableModel.getColumnName(i)));
+                if(i < columnCount - 1)
+                    columns.append(", ");
+            }
+            columns.append("]");
+            logger().info("- RESULT: Columns: " + columns.toString());
+            logger().info("- RESULT: Data vector: " + viewTableModel.getDataVector());
+        }
+
         private List<ArrayList> getData(Map viewTable) {
             return (List) viewTable.get("rows");
         }
@@ -378,7 +400,7 @@ public class ViewListElements extends NavigationElements {
     @And("^Table \"([^\"]*)\" contains cell value \"([^\"]*)\" at column \"([^\"]*)\" on \"([^\"]*)\" row$")
     public void listElementWithFromTable(String tableName, String value, String columnName, String ordinal) throws Throwable {
         int row = extractNumericValue(ordinal);
-        boolean success = new ViewListModel().containsDataAtFromTable(row, value, columnName, tableName);
+        boolean success = new ViewListModel().containsCellValue(row, value, columnName, tableName);
         assertThat(String.format("View list did not contain cell value %s at %s row, column '%s'", value, ordinal, columnName),
             success, is(true));
     }
