@@ -17,18 +17,23 @@ public class UploadSignatureAPI extends AbstractAPI {
 
     private final static Logger LOGGER = Logger.getLogger(UploadSignatureAPI.class);
 
-    public void uploadSignature(Cookies cookie, QuoteDetails quoteDetails) {
+    public String uploadSignature(Cookies cookie, QuoteDetails quoteDetails) {
         RequestHelper helper = new RequestHelper();
         String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_SIGNATURE_UPLOAD_URL);
         Map<String, String> payload = createUploadPayload(quoteDetails);
 
         Response signatureResponse =  helper.postMultipartRequest(STATUS_OK, cookie, payload, path);
+        String docId = null;
 
         if (signatureResponse.getStatusCode() == STATUS_OK) {
             LOGGER.info("Signature response retrieved");
+            docId = signatureResponse.jsonPath().get("data.id");
+            LOGGER.info("Document ID: " + docId);
         } else {
             LOGGER.error("Cannot retrieve signature response");
         }
+
+        return docId;
     }
 
     private Map<String, String> createUploadPayload(QuoteDetails quoteDetails) {

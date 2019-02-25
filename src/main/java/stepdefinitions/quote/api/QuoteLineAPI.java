@@ -28,8 +28,8 @@ public class QuoteLineAPI extends AbstractAPI {
 
         if (statusResponse.getStatusCode() == STATUS_OK) {
             LOGGER.info("Quotelines retrieved");
-            eanExists = (statusResponse.jsonPath().getString("data.rows[0].rowData.ean_c").contains(ean));
-            LOGGER.info("EAN: " + ean + " exists in Quotelines");
+            eanExists = statusResponse.jsonPath().getString("data.rows[0].rowData.ean_c").contains(ean);
+            LOGGER.info("EAN: " + ean + " exists in Quotelines: " + eanExists);
         } else {
             LOGGER.error("Cannot retrieve quotelines");
         }

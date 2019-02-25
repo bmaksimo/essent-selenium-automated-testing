@@ -20,7 +20,7 @@ Scenario: Check basic Quote creation flow B2C
 	When File is uploaded as scanned signature
 #	Then Signin is confirmed
 	And Contract is created
-#	And Contracted EAN exists on account
+	And Contracted EAN exists on account
 #
 #	When Quote details are recieved
 #	And Payment detials are recieved

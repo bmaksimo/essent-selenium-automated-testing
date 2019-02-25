@@ -139,7 +139,9 @@ public enum ConfigKey {
     CRM_SIGNATURE_RECEIVED_URL("crm.signaturereceived.url"),
     EAN_NUMBER("ean.number"),
     CRM_SIGNATURE_UPLOAD_URL("crm.signatureupload.url"),
-    CRM_CONTRACTS_ON_ACCOUNT_URL("crm.contractsonaccount.url");
+    CRM_CONTRACTS_ON_ACCOUNT_URL("crm.contractsonaccount.url"),
+    CRM_CONTRACTED_EANS_ON_ACCOUNT_URL("crm.contractedeansonaccount.url");
+
 
 	private String resourceKey;
     ConfigKey(String resourceKey) {

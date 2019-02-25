@@ -15,6 +15,7 @@ import stepdefinitions.quote.api.model.ContractDetails;
 import stepdefinitions.quote.api.model.QuoteDetails;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
@@ -22,6 +23,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     protected String tariffSheetID;
     protected QuoteDetails quoteDetails;
     protected ContractDetails contractDetails;
+    protected String docId;
 
     @Before("@API")
     public void setupTest(Scenario scenario) throws Throwable {
@@ -74,7 +76,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     @When("^File is uploaded as scanned signature$")
     public void file_is_uploaded_as_scanned_signature() throws Throwable {
-        new UploadSignatureAPI().uploadSignature(cookie, quoteDetails);
+        this.docId = new UploadSignatureAPI().uploadSignature(cookie, quoteDetails);
     }
 
     @Then("^Signin is confirmed$")
@@ -85,14 +87,12 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     @Then("^Contract is created$")
     public void contract_is_created() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
         this.contractDetails = new ContractsOnAccountAPI().getContractDetails(cookie, quoteDetails.getRecordId());
     }
 
     @Then("^Contracted EAN exists on account$")
     public void contracted_EAN_exists_on_account() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        assertTrue(new ContractsOnAccountAPI().checkIfEanExists(cookie, quoteDetails.getRecordId()));
     }
 
     @When("^Quote details are recieved$")
