@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.http.Cookies;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.apache.log4j.Logger;
 import stepdefinitions.quote.api.AbstractAPI;
@@ -20,90 +21,58 @@ import stepdefinitions.quote.api.model.dto.SignContractDTO;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SignQuoteModalAPI extends AbstractAPI {
 
     private final static Logger LOGGER = Logger.getLogger(QuoteDetailsAPI.class);
 
-    public QuoteDetails getQuoteDetails(Cookies cookie, String tariffSheetId) throws JsonParseException, JsonMappingException, IOException {
+
+    public String confirmSigning(Cookies cookie, String rowId, String docId) throws IOException {
         RequestHelper helper = new RequestHelper();
-        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_B2CCQ_URL);
-        String payload = createQuotePayload(tariffSheetId);
+        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_SIGN_QUOTE_MODAL);
+        String payload = signQuoteModalPayload(rowId, docId);
 
-        Response quoteResponse =  helper.postRequest(STATUS_CREATED, cookie, payload, path);
+        Response signQuoteResponse = helper.postRequest(STATUS_CREATED, cookie, payload, path);
+        JsonPath jpath = signQuoteResponse.jsonPath();
+        String confirmSigning = null;
 
-        QuoteDetails quoteDetails = new QuoteDetails();
-
-        if (quoteResponse.getStatusCode() == STATUS_CREATED) {
-            LOGGER.info("Quote created");
-            String recordId  = quoteResponse.jsonPath().getString("data.arguments.params.recordId");
-            quoteDetails.setRecordId(recordId);
-            LOGGER.info("Record ID: " + recordId);
-            String accountNumber  = quoteResponse.jsonPath().getString("data.params.Account.account_number");
-            quoteDetails.setAccountNumber(accountNumber);
-            LOGGER.info("Account number: " + accountNumber);
-            String accountId  = quoteResponse.jsonPath().getString("data.relatedBeans.Account[0]");
-            quoteDetails.setAccountId(accountId);
-            LOGGER.info("Account ID: " + accountId);
-            String quoteNumber  = quoteResponse.jsonPath().getString("data.params.AOS_Quotes.quote_number");
-            quoteDetails.setQuoteNumber(quoteNumber);
-            LOGGER.info("Quote Number: " + quoteNumber);
-            String quoteId  = quoteResponse.jsonPath().getString("data.relatedBeans.AOS_Quotes[0]");
-            quoteDetails.setQuoteId(quoteId);
-            LOGGER.info("Quote Id: " + quoteId);
-
-        } else {
-            LOGGER.error("Cannot create quote");
-        }
-
-        return quoteDetails;
-
-    }
-
-    public String getQuoteNumber(Cookies cookie, String recordId) throws JsonProcessingException {
-        RequestHelper helper = new RequestHelper();
-        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_QUOTES_ON_ACCOUNT_URL);
-        String payload = createListQuotePayload(recordId);
-
-        Response listQuoteResponse = helper.postRequest(STATUS_OK, cookie, payload, path);
-
-        String quoteId = null;
-
-        if (listQuoteResponse.getStatusCode() == STATUS_OK) {
-            LOGGER.info("Quote list retrieved");
-            quoteId = listQuoteResponse.jsonPath().getString("data.rows[0].rowData.number");
-            LOGGER.info("Quote ID: " + quoteId);
+        if (signQuoteResponse.getStatusCode() == STATUS_CREATED) {
+            LOGGER.info("Quote signed");
+            confirmSigning = signQuoteResponse.getBody().toString();
+            LOGGER.info("");
         } else {
             LOGGER.error("Cannot retrieve quote list");
         }
 
-        return quoteId;
+        return confirmSigning;
     }
 
-    private String signQuoteModalPayload() throws JsonParseException, JsonMappingException, IOException {
+    private String signQuoteModalPayload(String rowId, String docId) throws JsonParseException, JsonMappingException, IOException {
         ObjectMapper mapper = new ObjectMapper();
 
         String pathToPayload = ResourceUtil.toPath("/data/restassured/payload_for_sign_quote_modal.json");
         String jsonPayload = new String(Files.readAllBytes(Paths.get(pathToPayload)));
-        SignContractDTO mapper.readValue(jsonPayload, SignContractDTO.class);
-        //payload.setTariffsheetId(tariffSheetId);
+        SignContractDTO signContract = mapper.readValue(jsonPayload, SignContractDTO.class);
+        signContract.getContractModeDTO().setRecordId(rowId);
+        signContract.getContractModeDTO().setDwpId(rowId);
+        signContract.getContractModeDTO().setId(rowId);
+        signContract.getContractModeDTO().setSignDate(getTodaysDate().toString());
+        signContract.getContractModeDTO().setSignedcContractDocguid(docId);
+        List<String> signedContractDocId = new ArrayList<>();
 
-        quote.getModel().getPayloadWrapper().setPayload(payload);
+        signContract.getContractModeDTO().setSignedContractDocguidC(signedContractDocId);
 
-        return mapper.writeValueAsString(quote);
+        return mapper.writeValueAsString(signContract);
     }
 
     private void readValue(String jsonPayload, Class<SignContractDTO> signContractDTOClass) {
     }
 
-    private String createListQuotePayload(String recordId) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
 
-        QuotesOnAccount quotes = new QuotesOnAccount();
-        quotes.setRecordId(recordId);
-        quotes.setRecordType("Accounts");
-        quotes.setPage(1);
-
-        return mapper.writeValueAsString(quotes);
+    private LocalDate getTodaysDate() {
+        return LocalDate.now();
     }
 }

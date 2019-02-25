@@ -11,7 +11,7 @@ public class ContractModelDTO {
     private String signedcContractDocguid;
 
     @JsonProperty("dwp|alreadyContractedForDifferentClient")
-    private String alreadyContractedForDifferentClient;
+    private boolean alreadyContractedForDifferentClient;
 
     @JsonProperty("baseModule")
     private String baseModule;
@@ -29,7 +29,7 @@ public class ContractModelDTO {
     private String stage;
 
     @JsonProperty("do_auto_communication_c")
-    private String doAutoCommunication;
+    private boolean doAutoCommunication;
 
     @JsonProperty("signed_contract_docguid_c")
     private List<String> signedContractDocguidC = new ArrayList<>();
@@ -44,13 +44,13 @@ public class ContractModelDTO {
     private String dwpId;
 
     @JsonProperty("complete")
-    private String complete;
+    private boolean complete;
 
     @JsonProperty("dwp|recordType")
     private String recordType;
 
     @JsonProperty("dwp|alreadyContracted")
-    private String dwpAlreadyContracted;
+    private boolean dwpAlreadyContracted;
 
 
     public String getSignedcContractDocguid() {
@@ -61,11 +61,11 @@ public class ContractModelDTO {
         this.signedcContractDocguid = signedcContractDocguid;
     }
 
-    public String getAlreadyContractedForDifferentClient() {
+    public boolean getAlreadyContractedForDifferentClient() {
         return alreadyContractedForDifferentClient;
     }
 
-    public void setAlreadyContractedForDifferentClient(String alreadyContractedForDifferentClient) {
+    public void setAlreadyContractedForDifferentClient(boolean alreadyContractedForDifferentClient) {
         this.alreadyContractedForDifferentClient = alreadyContractedForDifferentClient;
     }
 
@@ -109,11 +109,11 @@ public class ContractModelDTO {
         this.stage = stage;
     }
 
-    public String getDoAutoCommunication() {
+    public boolean getDoAutoCommunication() {
         return doAutoCommunication;
     }
 
-    public void setDoAutoCommunication(String doAutoCommunication) {
+    public void setDoAutoCommunication(boolean doAutoCommunication) {
         this.doAutoCommunication = doAutoCommunication;
     }
 
@@ -149,11 +149,11 @@ public class ContractModelDTO {
         this.dwpId = dwpId;
     }
 
-    public String getComplete() {
+    public boolean getComplete() {
         return complete;
     }
 
-    public void setComplete(String complete) {
+    public void setComplete(boolean complete) {
         this.complete = complete;
     }
 
@@ -165,11 +165,11 @@ public class ContractModelDTO {
         this.recordType = recordType;
     }
 
-    public String getDwpAlreadyContracted() {
+    public boolean getDwpAlreadyContracted() {
         return dwpAlreadyContracted;
     }
 
-    public void setDwpAlreadyContracted(String dwpAlreadyContracted) {
+    public void setDwpAlreadyContracted(boolean dwpAlreadyContracted) {
         this.dwpAlreadyContracted = dwpAlreadyContracted;
     }
 }
