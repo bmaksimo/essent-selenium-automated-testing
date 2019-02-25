@@ -95,21 +95,21 @@ public class ContractSteps extends DwpScenario {
     @And("^Check if the end date of new ean is the same date as the end date of the old one$")
     public void checkIfTheEndDateOfNewEanIsTheSameDateAsTheEndDateOfTheOldOne() throws Throwable {
         ContractPage cp = new ContractPage();
-        Assert.assertEquals(cp.getActiveContractEndDate(),parameterProvider.getValueOrParameterAsString("endDate"));
+        Assert.assertEquals(cp.getActiveContractEndDate(),parameterProvider.getValueOrParameterAsString("parameter:endDate"));
     }
 
     @And("^Check if products of both contracts are the same$")
     public void checkIfProductsOfBothContractsAreTheSame() throws Throwable {
         ContractPage cp = new ContractPage();
         cp.clickOnContractenNummer();
-        Assert.assertEquals(cp.getProductName(),parameterProvider.getValueOrParameterAsString("productName"));
+        Assert.assertEquals(cp.getProductName(),parameterProvider.getValueOrParameterAsString("parameter:productName"));
     }
 
     @And("^Check if discounts of both contracts are the same$")
     public void checkIfDiscountsOfBothContractsAreTheSame() throws Throwable {
         ContractPage cp = new ContractPage();
-        Assert.assertEquals(cp.getKortingenOpContractKortingscode(),parameterProvider.getValueOrParameterAsString("kortingsCode"));
-        Assert.assertEquals(cp.getProductName(),parameterProvider.getValueOrParameterAsString("productType"));
+        Assert.assertEquals(cp.getKortingenOpContractKortingscode(),parameterProvider.getValueOrParameterAsString("parameter:kortingsCode"));
+        Assert.assertEquals(cp.getProductName(),parameterProvider.getValueOrParameterAsString("parameter:productType"));
 
     }
 
@@ -117,17 +117,17 @@ public class ContractSteps extends DwpScenario {
     public void checkIfPricesOfBothContractsAreTheSame() throws Throwable {
         ContractPage cp = new ContractPage();
         cp.clickOnBekijkPrijzenTariefkaatFromPlus();
-        Assert.assertEquals(cp.getTypeProduct(),parameterProvider.getValueOrParameterAsString("productType"));
-        Assert.assertEquals(cp.getEnergieprijsEnkelvoudigInclBtw(),parameterProvider.getValueOrParameterAsString("energieprijsEnkelvoudigInclBtw"));
-        Assert.assertEquals(cp.getEnergieprijsDagInclBtw(),parameterProvider.getValueOrParameterAsString("energieprijsDagInclBtw"));
-        Assert.assertEquals(cp.getEnergieprijsNachtInclBtw(),parameterProvider.getValueOrParameterAsString("energieprijsNachtInclBtw"));
-        Assert.assertEquals(cp.getEnergieprijsExclusiefNachtInclBtw(),parameterProvider.getValueOrParameterAsString("energieprijsExclusiefNachtInclBtw"));
-        Assert.assertEquals(cp.getVasteVergoedingInclBtw(),parameterProvider.getValueOrParameterAsString("vasteVergoedingInclBtw"));
-        Assert.assertEquals(cp.getEnergieprijsExclusiefNachtExclBtw(),parameterProvider.getValueOrParameterAsString("energieprijsEnkelvoudigExclBtw"));
-        Assert.assertEquals(cp.getEnergieprijsDagExclBtw(),parameterProvider.getValueOrParameterAsString("energieprijsDagExclBtw"));
-        Assert.assertEquals(cp.getEnergieprijsNachExclBtw(),parameterProvider.getValueOrParameterAsString("energieprijsNachExclBtw"));
-        Assert.assertEquals(cp.getEnergieprijsExclusiefNachtExclBtw(),parameterProvider.getValueOrParameterAsString("energieprijsExclusiefNachtExclBtw"));
-        Assert.assertEquals(cp.getVasteVergoedingExclBtw(),parameterProvider.getValueOrParameterAsString("vasteVergoedingExclBtw"));
+        Assert.assertEquals(cp.getTypeProduct(),parameterProvider.getValueOrParameterAsString("parameter:productType"));
+        Assert.assertEquals(cp.getEnergieprijsEnkelvoudigInclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsEnkelvoudigInclBtw"));
+        Assert.assertEquals(cp.getEnergieprijsDagInclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsDagInclBtw"));
+        Assert.assertEquals(cp.getEnergieprijsNachtInclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsNachtInclBtw"));
+        Assert.assertEquals(cp.getEnergieprijsExclusiefNachtInclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsExclusiefNachtInclBtw"));
+        Assert.assertEquals(cp.getVasteVergoedingInclBtw(),parameterProvider.getValueOrParameterAsString("parameter:vasteVergoedingInclBtw"));
+        Assert.assertEquals(cp.getEnergieprijsExclusiefNachtExclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsEnkelvoudigExclBtw"));
+        Assert.assertEquals(cp.getEnergieprijsDagExclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsDagExclBtw"));
+        Assert.assertEquals(cp.getEnergieprijsNachExclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsNachExclBtw"));
+        Assert.assertEquals(cp.getEnergieprijsExclusiefNachtExclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsExclusiefNachtExclBtw"));
+        Assert.assertEquals(cp.getVasteVergoedingExclBtw(),parameterProvider.getValueOrParameterAsString("parameter:vasteVergoedingExclBtw"));
         cp.closeBekijkPrijsdetailsTK1();
     }
 

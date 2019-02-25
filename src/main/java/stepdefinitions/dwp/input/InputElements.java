@@ -79,6 +79,7 @@ public class InputElements extends DwpScenario {
 
     @And("^\"([^\"]*)\" selection is \"([^\"]*)\"$")
     public void setSelection(String label, String value) throws Throwable {
+        Sleeper.sleepTightInSeconds(3);
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
         options.put("value", value);
@@ -95,8 +96,6 @@ public class InputElements extends DwpScenario {
         boolean success = executeJavascriptTest("TrClickToggleInput", options);
         assertThat(String.format("Option %s is undefined.", option),
             success, is(true));
-        Thread.sleep(2000);
-//        webDriver.waitAndClick(webDriver.findElementWhenVisible(By.xpath("/html/body/dwp-app/div[3]/large-guidance-mode/focus-mode-content/div/div/div[2]/div/div/div/guidance/guidance-observers-accessor/gridlr/div/div[1]/div/progress-bar/ul/li[5]/a")));
     }
 
     @And("^Form is submitted$")
