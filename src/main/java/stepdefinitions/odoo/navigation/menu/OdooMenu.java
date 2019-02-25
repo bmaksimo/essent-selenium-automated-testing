@@ -29,6 +29,7 @@ public class OdooMenu extends OdooScenario {
 
     @When("^Odoo top menu is \"([^\"]*)\"$")
     public void clickTopMenu(String menu) {
+        awaitOdooRequestToFinish(10);
         MenuNavigation menuNavigation = new MenuNavigation();
         boolean success = menuNavigation.findAndClickMainMenuItem(menu);
         if(!success) {
@@ -38,6 +39,7 @@ public class OdooMenu extends OdooScenario {
 
     @When("^Odoo left menu is \"([^\"]*)\"$")
     public void executeLeftMenuAction(String menuPath) {
+        awaitOdooRequestToFinish(20);
         MenuNavigation odooMenuNavigation = new MenuNavigation();
         odooMenuNavigation.executeAction(menuPath);
         awaitOdooRequestToFinish(5);

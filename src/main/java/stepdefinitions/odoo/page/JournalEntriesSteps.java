@@ -47,6 +47,7 @@ public class JournalEntriesSteps extends OdooScenario {
 
     @And("^New item is$")
     public void newItemIs(DataTable dbTable) throws Throwable {
+        awaitOdooRequestToFinish(10);
         JournalEntriesPage je = new JournalEntriesPage();
         List<List<String>> db = dbTable.raw();
         je.clickOnAddAnItem();
@@ -57,6 +58,7 @@ public class JournalEntriesSteps extends OdooScenario {
 
     @And("^Save and Post journal entry")
     public void saveAndPost() throws Throwable {
+        awaitOdooRequestToFinish(10);
         JournalEntriesPage je = new JournalEntriesPage();
         je.saveJournal();
         je.postJournal();
@@ -64,6 +66,7 @@ public class JournalEntriesSteps extends OdooScenario {
 
     @And("^Mark first two journal items one with credit and one with debit \"([^\"]*)\"$")
     public void markFirstTwoJournalItemsOneWithCreditAndOneWithDebit(String money) throws Throwable {
+        awaitOdooRequestToFinish(10);
         JournalEntriesPage je = new JournalEntriesPage();
         je.clickOnJournalItemsCheckBox(1);
         je.clickOnJournalItemsCheckBox(2);
@@ -71,12 +74,14 @@ public class JournalEntriesSteps extends OdooScenario {
 
     @And("^More menu is \"([^\"]*)\"$")
     public void moreMenuIs(String item) throws Throwable {
+        awaitOdooRequestToFinish(10);
         JournalEntriesPage je = new JournalEntriesPage();
         je.clickOnMoreMenuItem(item);
     }
 
     @And("^Confirm action$")
     public void confirm() throws Throwable {
+        awaitOdooRequestToFinish(10);
         JournalEntriesPage je = new JournalEntriesPage();
         je.clickOnConfirm();
     }

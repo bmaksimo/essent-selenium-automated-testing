@@ -88,11 +88,10 @@ public class MarketBerichtenSteps extends DwpScenario {
     public void isNow(String label) throws Throwable {
         BaseObject bo = new BaseObject();
         bo.dateIsNow(label);
-
     }
 
     @Then("^Marketbericht with EAN \"([^\"]*)\" and module \"([^\"]*)\" is in status \"([^\"]*)\"$")
-    public void marketbirichWithEANAndModuleIsInStatus(String enaP, String modul, String status) throws Throwable {
+    public void marketBerichtWithEANAndModuleIsInStatus(String enaP, String modul, String status) throws Throwable {
         String ean = parameterProvider.getValueOrParameterAsString(enaP);
         MarktBerichtenPage mp = new MarktBerichtenPage();
         Assert.assertEquals(ean, mp.getEanFromTheFirstTransaction());
@@ -102,7 +101,7 @@ public class MarketBerichtenSteps extends DwpScenario {
     }
 
     @Then("^Marketbericht with module \"([^\"]*)\" changed to status \"([^\"]*)\"$")
-    public void marketbirichWithEANAndModuleSecondTransactionIsInStatus(String modul, String status) throws Throwable {
+    public void marketBerichtWithEANAndModuleSecondTransactionIsInStatus(String modul, String status) throws Throwable {
         MarktBerichtenPage mp = new MarktBerichtenPage();
         Assert.assertEquals(modul,mp.getModulFromCancelTransaction());
         Assert.assertEquals(status,mp.marketberichtCancelStatus());
