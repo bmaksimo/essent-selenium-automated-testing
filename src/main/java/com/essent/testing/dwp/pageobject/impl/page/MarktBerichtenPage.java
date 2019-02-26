@@ -29,6 +29,11 @@ public class MarktBerichtenPage extends Component {
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//a[@name='"+name+"']/span[@class='icon-pijl']")));
     }
 
+    public boolean isRefreshedByName(String name)  {
+        refreshByName(name);
+        return true;
+    }
+
     public void createNewMarktBericht(String newMarktbericht){
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.name(newMarktbericht)));
     }

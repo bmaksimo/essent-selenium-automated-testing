@@ -52,9 +52,9 @@ Feature: NUAT-373: End Of Contract For Bankruptcy - nl_BE, NUAT-479: DROP For A 
         And  "Label" selection is "Non-Residential End-of-Contract"
         And "Effective Date" date is "1 month from now"
         And Option "Testing?" is On
-        #And Option "Market mock?" is On
         And Changes are confirmed
         And Modal dialog "Start new market scenario" is not shown
         Then Confirm task was "Non-Residential End-of-Contract"
         When Refresh "REFRESH MARKTBERICHTEN" till "Geaccepteerd" is visible
         Then Confirm status is "Geaccepteerd"
+#And Option "Market mock?" is On

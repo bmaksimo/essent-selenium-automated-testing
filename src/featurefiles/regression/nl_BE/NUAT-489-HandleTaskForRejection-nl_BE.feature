@@ -13,7 +13,7 @@ Feature: NUAT-489: Handle Task For Rejection - nl_BE
         And Top action is "Filters"
         And "Status" selection is "Open"
         And Save task ID of first customer in list
-        And Plus action and "Mark as done" of first customer from list
+        And Plus action and Mark As Done/Markeren Als Verwerkt of first customer from list
         And Resolution input is "Mark as rejected for testing"
         Then Changes are confirmed
 
@@ -22,4 +22,3 @@ Feature: NUAT-489: Handle Task For Rejection - nl_BE
         And Click on link in View List at "1st" row and "Klantnaam & nummer" column polling 20 seconds
         And Dashboard menu is "Service"
         Then "Marktberichten - Rejection" was rejection reason
-
