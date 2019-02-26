@@ -109,4 +109,24 @@ public class MarketBerichtenSteps extends DwpScenario {
 
     }
 
+
+    @Then("^Marketbericht with EAN-CODE \"([^\"]*)\" and MODULE \"([^\"]*)\" is in STATUS \"([^\"]*)\"$")
+    public void marketberichtWithEANCODEAndMODULEIsInSTATUS(String eanCode, String modul, String status) throws Throwable {
+        String ean = parameterProvider.getValueOrParameterAsString(eanCode);
+        MarktBerichtenPage mp = new MarktBerichtenPage();
+        if (ean == mp.getEanFromMarketbericht("1")){
+            Assert.assertEquals(modul,mp.getModulFromMarketbericht("2"));
+            Assert.assertEquals(status,mp.marketberichtStatusMarketbericht("1"));
+        }else {
+            if (ean == mp.getEanFromMarketbericht("3")) {
+                Assert.assertEquals(modul, mp.getModulFromMarketbericht("4"));
+                Assert.assertEquals(status, mp.marketberichtStatusMarketbericht("5"));
+            }else {
+                if (ean == mp.getEanFromMarketbericht("5")) {
+                    Assert.assertEquals(modul, mp.getModulFromMarketbericht("6"));
+                    Assert.assertEquals(status, mp.marketberichtStatusMarketbericht("9"));
+                }
+            }
+        }
+    }
 }

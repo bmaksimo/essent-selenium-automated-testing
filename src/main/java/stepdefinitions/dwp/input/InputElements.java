@@ -79,7 +79,7 @@ public class InputElements extends DwpScenario {
 
     @And("^\"([^\"]*)\" selection is \"([^\"]*)\"$")
     public void setSelection(String label, String value) throws Throwable {
-        Sleeper.sleepTightInSeconds(3);
+//        Sleeper.sleepTightInSeconds(0.5);
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
         options.put("value", value);

@@ -1,5 +1,6 @@
 package stepdefinitions.dwp.service_contracting;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
 import com.essent.testing.dwp.pageobject.impl.page.ContractPage;
 import com.essent.testing.dwp.pageobject.impl.service_contracting.ContractPageClass;
@@ -109,7 +110,8 @@ public class ContractSteps extends DwpScenario {
     public void checkIfDiscountsOfBothContractsAreTheSame() throws Throwable {
         ContractPage cp = new ContractPage();
         Assert.assertEquals(cp.getKortingenOpContractKortingscode(),parameterProvider.getValueOrParameterAsString("parameter:kortingsCode"));
-        Assert.assertEquals(cp.getProductName(),parameterProvider.getValueOrParameterAsString("parameter:productType"));
+        Assert.assertEquals(cp.getKortingenOpContractProducttype(),parameterProvider.getValueOrParameterAsString("parameter:productType"));
+
 
     }
 
@@ -117,7 +119,7 @@ public class ContractSteps extends DwpScenario {
     public void checkIfPricesOfBothContractsAreTheSame() throws Throwable {
         ContractPage cp = new ContractPage();
         cp.clickOnBekijkPrijzenTariefkaatFromPlus();
-        Assert.assertEquals(cp.getTypeProduct(),parameterProvider.getValueOrParameterAsString("parameter:productType"));
+        Assert.assertEquals(cp.getTypeProduct(),parameterProvider.getValueOrParameterAsString("parameter:typeProduct"));
         Assert.assertEquals(cp.getEnergieprijsEnkelvoudigInclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsEnkelvoudigInclBtw"));
         Assert.assertEquals(cp.getEnergieprijsDagInclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsDagInclBtw"));
         Assert.assertEquals(cp.getEnergieprijsNachtInclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsNachtInclBtw"));
@@ -165,6 +167,7 @@ public class ContractSteps extends DwpScenario {
     public void kortingenIs(String kortingen) throws Throwable {
         ContractPage cp = new ContractPage();
         cp.chooseKortigen(kortingen);
+        Sleeper.sleepTightInSeconds(0.5);
 
     }
 }

@@ -91,6 +91,7 @@ public class ContractPage extends Component {
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"address-street-field\"]")), address);
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"address-number-field\"]")), houseNumber);
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"address-postalcode-field\"]")), postalCode);
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"address-city-field\"]")), City);
 
     }
 
@@ -238,8 +239,6 @@ public class ContractPage extends Component {
     public String getProductName(){
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath("(//list[@list-key='ContractlinesOnContract']//td[@class='list__cell cell__text']//p/span[2])[1]")).getText();
-        //(//list[@list-key='ContractlinesOnContract']//td[@class='list__cell cell__text']//p)[1]
-        //*[@id='rows']/tr[1]/td[2]/list-simple-two-liner-cell/p/span[2]
     }
 
     public WebElement getMarketberichtEan(){

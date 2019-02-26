@@ -90,5 +90,15 @@ public class MarktBerichtenPage extends Component {
     public String getModulFromCancelTransaction() throws InterruptedException {
         return seleniumDriver.findElementWhenVisible(By.xpath("//list-link-bold-top-two-liner-cell[@line-1='INITIATE STOP ACCESS']/div/a/h5")).getText();
     }
+
+    public String getEanFromMarketbericht(String num) throws InterruptedException {
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//h5)['"+num+"']")).getText();
+    }
+    public String getModulFromMarketbericht(String num) throws InterruptedException {
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//h5)['"+num+"']")).getText();
+    }
+    public String marketberichtStatusMarketbericht(String num){
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[1])['"+num+"']")).getText();
+    }
 }
 

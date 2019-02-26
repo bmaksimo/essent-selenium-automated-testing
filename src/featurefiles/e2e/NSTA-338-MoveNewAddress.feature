@@ -40,6 +40,7 @@ Feature: NSTA - 388 Move new address
         And "Meternummer" input is "1000"
         And Option "test" is On
         And Bevestigen
+#        And Changes are confirmed
         Then Form header is "Billing details"
 
         When "Betalingswijze" selection is "Overschrijving"
@@ -76,6 +77,7 @@ Feature: NSTA - 388 Move new address
 #
 #
 ##        And "Naam" input is "parameter:suitecrm-customer-name"
+#        When Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
 
 
 
@@ -83,7 +85,7 @@ Feature: NSTA - 388 Move new address
 
 
 
-        When Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
+
         And Dashboard menu is "Contracten"
 
 
@@ -121,7 +123,7 @@ Feature: NSTA - 388 Move new address
 
 ##        And Top arrow button is "back"
         When Dashboard menu is "Marktberichten"
-        Then Marketbericht with EAN "parameter:randomEAN" and module "START ACCESS" is in status "Gesloten"
+        Then Marketbericht with EAN-CODE "parameter:randomEAN" and MODULE "START ACCESS" is in STATUS "Gesloten"
         And Marketbericht with EAN "parameter:randomEAN" has ED "1 day before now"
 
         When Dashboard menu is "Service"
