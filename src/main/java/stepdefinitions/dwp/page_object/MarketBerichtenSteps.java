@@ -110,21 +110,24 @@ public class MarketBerichtenSteps extends DwpScenario {
     }
 
 
-    @Then("^Marketbericht with EAN-CODE \"([^\"]*)\" and MODULE \"([^\"]*)\" is in STATUS \"([^\"]*)\"$")
-    public void marketberichtWithEANCODEAndMODULEIsInSTATUS(String eanCode, String modul, String status) throws Throwable {
+    @Then("^Marketbericht with EAN-CODE \"([^\"]*)\" and MODULE \"([^\"]*)\" is in STATUS \"([^\"]*)\" and has ED \"([^\"]*)\"$")
+    public void marketberichtWithEANCODEAndMODULEIsInSTATUSAndHasED(String eanCode, String modul, String status, String date) throws Throwable {
         String ean = parameterProvider.getValueOrParameterAsString(eanCode);
         MarktBerichtenPage mp = new MarktBerichtenPage();
         if (ean == mp.getEanFromMarketbericht("1")){
             Assert.assertEquals(modul,mp.getModulFromMarketbericht("2"));
             Assert.assertEquals(status,mp.marketberichtStatusMarketbericht("1"));
+            Assert.assertEquals(mp.getMarketberichtEDElement("1"),toDwpEDDate(parameterProvider.getValueOrParameterAsString(date)));
         }else {
             if (ean == mp.getEanFromMarketbericht("3")) {
                 Assert.assertEquals(modul, mp.getModulFromMarketbericht("4"));
                 Assert.assertEquals(status, mp.marketberichtStatusMarketbericht("5"));
+                Assert.assertEquals(mp.getMarketberichtEDElement("5"),toDwpEDDate(parameterProvider.getValueOrParameterAsString(date)));
             }else {
                 if (ean == mp.getEanFromMarketbericht("5")) {
                     Assert.assertEquals(modul, mp.getModulFromMarketbericht("6"));
                     Assert.assertEquals(status, mp.marketberichtStatusMarketbericht("9"));
+                    Assert.assertEquals(mp.getMarketberichtEDElement("9"),toDwpEDDate(parameterProvider.getValueOrParameterAsString(date)));
                 }
             }
         }

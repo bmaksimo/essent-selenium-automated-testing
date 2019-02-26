@@ -125,7 +125,7 @@ public class ContractSteps extends DwpScenario {
         Assert.assertEquals(cp.getEnergieprijsNachtInclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsNachtInclBtw"));
         Assert.assertEquals(cp.getEnergieprijsExclusiefNachtInclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsExclusiefNachtInclBtw"));
         Assert.assertEquals(cp.getVasteVergoedingInclBtw(),parameterProvider.getValueOrParameterAsString("parameter:vasteVergoedingInclBtw"));
-        Assert.assertEquals(cp.getEnergieprijsExclusiefNachtExclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsEnkelvoudigExclBtw"));
+        Assert.assertEquals(cp.getEnergieprijsEnkelvoudigExclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsEnkelvoudigExclBtw"));
         Assert.assertEquals(cp.getEnergieprijsDagExclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsDagExclBtw"));
         Assert.assertEquals(cp.getEnergieprijsNachExclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsNachExclBtw"));
         Assert.assertEquals(cp.getEnergieprijsExclusiefNachtExclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsExclusiefNachtExclBtw"));
@@ -138,12 +138,6 @@ public class ContractSteps extends DwpScenario {
         List<List<String>> address = dbTable.raw();
         ContractPage cp = new ContractPage();
         cp.setNewMoveAddress(address.get(1).get(0),address.get(1).get(1),address.get(1).get(4),address.get(1).get(5));
-    }
-
-    @And("^Marketbericht with EAN \"([^\"]*)\" has ED \"([^\"]*)\"$")
-    public void marketberichtWithEANHasED(String ean, String date) throws Throwable {
-        ContractPage cp = new ContractPage();
-        Assert.assertEquals(cp.getMarketberichED(ean),toDwpEDDate(parameterProvider.getValueOrParameterAsString(date)));
     }
 
     @Then("^There is a case where onderwerp is \"([^\"]*)\"$")

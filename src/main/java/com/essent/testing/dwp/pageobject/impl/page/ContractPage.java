@@ -240,26 +240,11 @@ public class ContractPage extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath("(//list[@list-key='ContractlinesOnContract']//td[@class='list__cell cell__text']//p/span[2])[1]")).getText();
     }
 
-    public WebElement getMarketberichtEan(){
-        return seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"rows\"]/tr[1]/td[1]/list-link-bold-top-two-liner-cell/div/a/h5"));
-    }
-
-    public WebElement getMarketberichtEDElement(){
-        return seleniumDriver.findElementWhenVisible(By.xpath("//*[@id='rows']/tr[1]/td[3]/list-simple-two-liner-cell/p/span[2]"));
-    }
-
-    public String getMarketberichED(String ean){
-        if (ean == getMarketberichtEan().getText()){
-            date = getMarketberichtEDElement().getText();
-        }
-        return date;
-    }
-
     public String getCaseOnderwerp(){
-        return seleniumDriver.findElementWhenVisible(By.xpath("")).getText();
+        return seleniumDriver.findElementWhenVisible(By.xpath("//list[@list-key=\"InteractionsOnAccount\"]//td[@class=\"list__cell cell__text\"][6]/list-link-bold-top-two-liner-cell/div/h6")).getText();
     }
     public String getCaseNumber(){
-        return seleniumDriver.findElementWhenVisible(By.xpath("")).getText();
+        return seleniumDriver.findElementWhenVisible(By.xpath("//list[@list-key=\"InteractionsOnAccount\"]//td[7]//div//h5[1]")).getText();
     }
 
     public String getInteractionType(){

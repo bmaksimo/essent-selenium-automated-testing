@@ -26,8 +26,6 @@ Feature: NSTA - 388 Move new address
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
 
-        Then Form header is "Select package & fuel type"
-
         When Package is "Vast"
         And Checkbox "Gas Fix B2C (TC1)" is Unchecked
         And Kortingen is "50_part"
@@ -40,7 +38,7 @@ Feature: NSTA - 388 Move new address
         And "Meternummer" input is "1000"
         And Option "test" is On
         And Bevestigen
-#        And Changes are confirmed
+        And Changes are confirmed
         Then Form header is "Billing details"
 
         When "Betalingswijze" selection is "Overschrijving"
@@ -50,11 +48,10 @@ Feature: NSTA - 388 Move new address
         When Option "Heeft de klant al getekend?" is On
         And "Kanaal ondertekening" selection is "Papier"
         And "Datum ondertekening" date is "now"
-
         And Quote is signed
         And Bevestigen
         And Sign
-        And Changes are confirmed
+        Then Changes are confirmed
 
         When Dashboard menu is "Marktberichten"
         Then View List is empty
@@ -64,67 +61,38 @@ Feature: NSTA - 388 Move new address
         And  "1st" List element with value at column "EAN-code" is checked
         And  "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
 
-
-
-
-
-
-#
-#        When Left menu is "sales-marketing"
-#        And Top menu item is "Klanten"
-#        And Filter button is clicked
-#        And "Klantnummer" input is "1000098514"
-#
-#
-##        And "Naam" input is "parameter:suitecrm-customer-name"
-#        When Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
-
-
-
-
-
-
-
-
-        And Dashboard menu is "Contracten"
-
-
-        When Old contract data is copied
+        When Dashboard menu is "Contracten"
+        And Old contract data is copied
         And Dashboard menu is "Contracten"
         And Plus action of "1" element from "ContractsOnAccount" and click on "Verhuis NA"
 
         And New move customer address is
             | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
-#            | Verbindingsstraat | 63     |            |     | 9220       | HAMME   |         |
-            | Heistraat  | 83     |            |     | 2440       | GEEL   |         |
+            | Heistraat        | 83      |            |     | 2440       | GEEL    |         |
 
         And "Startdatum verhuis" date is "1 day before now"
 
         And "Is de meter geopend" turn on
         And "EAN-code" input is "parameter:randomEAN"
-#        And Select EAN
         And "Datum meteropname" date is "1 day before now"
         And "Meterstand enkelvoudig" input is "1000"
         And Option "test" is on
 #        And Option "MM should respond" is on
         And "MM should respond" turn on
-        And Bevestigen
+        Then Bevestigen
 
 
-        And "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
-#        And Get Contract Ean Code
+        When "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
         And "2nd" list element has cell value "Actief" at column "Contractnummer" polling 100 seconds
-        And Table "Contracten" contains cell value "Sales Getekend (Geaccepteerd)" at column "Type & status" on "2nd" row
+        Then Table "Contracten" contains cell value "Sales Getekend (Geaccepteerd)" at column "Type & status" on "2nd" row
     	And Check if start date of new ean is the same date as filled in as “Move date”-"1 day before now"
     	And Check if the end date of new ean is the same date as the end date of the old one
         And Check if products of both contracts are the same
         And Check if discounts of both contracts are the same
         And Check if prices of both contracts are the same
 
-##        And Top arrow button is "back"
         When Dashboard menu is "Marktberichten"
-        Then Marketbericht with EAN-CODE "parameter:randomEAN" and MODULE "START ACCESS" is in STATUS "Gesloten"
-        And Marketbericht with EAN "parameter:randomEAN" has ED "1 day before now"
+        Then Marketbericht with EAN-CODE "parameter:randomEAN" and MODULE "START ACCESS" is in STATUS "Gesloten" and has ED "1 day before now"
 
         When Dashboard menu is "Service"
         Then There is a case where onderwerp is "VERHUIS"
