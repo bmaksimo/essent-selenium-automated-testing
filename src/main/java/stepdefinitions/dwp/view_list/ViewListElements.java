@@ -588,7 +588,6 @@ public class ViewListElements extends NavigationElements {
         Sleeper.sleepTightInSeconds(seconds);
     }
 
-
     @Override
     @After("@DWP, @CORE, @E2E, @REGRESSION")
     public void tearDown() {

@@ -69,6 +69,7 @@ public class InputElements extends DwpScenario {
     public void setDateInput(String label, String value) throws Throwable {
         Sleeper.sleepTightInSeconds(1.5);
         String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(value));
+        parameterProvider.put("inputValue", inputValue);
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
         options.put("value", inputValue);

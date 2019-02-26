@@ -27,7 +27,8 @@ public class BaseObject extends Component {
 
     public void plusSubaction(String action) {
         try {
-            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[@label='" + action + "']/a")));
+//            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//(list-row-action[@label='" + action + "']/a")));
+            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-actions//list-row-action[4]/a")));
         }
         catch(org.openqa.selenium.StaleElementReferenceException ex) {
             seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[@label='" + action + "']/a")));

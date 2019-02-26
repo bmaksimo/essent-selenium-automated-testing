@@ -151,4 +151,26 @@ public class ContractenSteps extends DwpScenario {
 
     }
 
+    @Then("^Populate Soctar with dates \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void searchForAttestDate(String startDate, String attestDate) throws Throwable {
+        ContractPage contractenPage = new ContractPage();
+        String sd = parameterProvider.getValueOrParameterAsString(startDate);
+        String ad = parameterProvider.getValueOrParameterAsString(attestDate);
+
+        String StartDateByQuarter = contractenPage.getFirstDayOfQuarter(sd, ad);
+        String EndDateByYear = contractenPage.getLastDayOfYearByContractStartDate(sd);
+        parameterProvider.put("EndDateByYear", EndDateByYear);
+        parameterProvider.put("StartDateByQuarter", StartDateByQuarter);
+    }
+
+    @Then("^Get Start Date$")
+    public void searchForStartDate() throws Throwable {
+        ContractPage contractenPage = new ContractPage();
+        String startDate = contractenPage.getStartDate();
+        parameterProvider.put("startDate", startDate);
+
+    }
+
+
+
 }
