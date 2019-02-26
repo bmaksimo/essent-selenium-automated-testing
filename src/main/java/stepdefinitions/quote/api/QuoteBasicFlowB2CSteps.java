@@ -25,6 +25,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     protected QuoteDetails quoteDetails;
     protected ContractDetails contractDetails;
     protected String docId;
+    protected String jbillingId;
 
     @Before("@API")
     public void setupTest(Scenario scenario) throws Throwable {
@@ -97,14 +98,13 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     @When("^Quote details are recieved$")
     public void quote_details_are_recieved() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+
     }
 
     @When("^Payment detials are recieved$")
     public void payment_detials_are_recieved() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        this.jbillingId = new ContractDetailsAPI().getPaymentDetails(cookie, quoteDetails.getQuoteId());
+
     }
 
     @Then("^Wait until contract instance starts$")
