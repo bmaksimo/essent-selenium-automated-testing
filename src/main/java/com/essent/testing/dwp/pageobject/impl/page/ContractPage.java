@@ -2,7 +2,6 @@ package com.essent.testing.dwp.pageobject.impl.page;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
-import org.joda.time.DateTime;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -20,16 +19,16 @@ public class ContractPage extends Component {
 
     public String date = simpleDateFormat.format(new Date());
 
-    public void startDateIsToday()throws InterruptedException {
+    public void startDateIsToday() {
         seleniumDriver.waitAndSendKeys(startData(),"date");
     }
 
-    public void saveButtton()throws InterruptedException {
+    public void saveButtton(){
         seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("primaryButton")));
     }
 
-    public String getClientNumber()throws InterruptedException {
+    public String getClientNumber() {
         return seleniumDriver.findElementWhenVisible(By.xpath("//blue-sidebar//h4")).getText();
     }
 
@@ -37,7 +36,7 @@ public class ContractPage extends Component {
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"account-id-field\"]//span[2]")));
     }
 
-    public void searchByClientNuiber(String nubmer)throws InterruptedException{
+    public void searchByClientNuiber(String nubmer){
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id("search-input")),nubmer);
     }
 
