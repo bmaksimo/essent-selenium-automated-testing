@@ -26,13 +26,13 @@ public class ContractSteps extends DwpScenario {
     }
 
     @And("^Change amount for a customer$")
-    public void changeAmountForACustomer() throws Throwable {
+    public void changeAmountForACustomer(){
         ContractPageClass cp = new ContractPageClass();
         cp.openFirstContractFromList();
     }
 
     @And("^Contract plus and \"([^\"]*)\"$")
-    public void contractPlusAnd(String subaction) throws Throwable {
+    public void contractPlusAnd(String subaction) {
         ContractPageClass cp = new ContractPageClass();
         cp.contractPlus();
         BaseObject baseObject = new BaseObject();
@@ -40,14 +40,14 @@ public class ContractSteps extends DwpScenario {
     }
 
     @And("^Amount values is \"([^\"]*)\"$")
-    public void amountValuesIs(String value) throws Throwable {
+    public void amountValuesIs(String value) {
         ContractPageClass cp = new ContractPageClass();
         cp.changeAmount(value);
         amount = value;
     }
 
     @Then("^Amount of a customer value$")
-    public void amountOfACustomerValue() throws Throwable {
+    public void amountOfACustomerValue() {
         ContractPageClass cp = new ContractPageClass();
         Assert.assertTrue("Amount is not correct.", cp.getAmountOfACustomer(amount));
     }
@@ -59,7 +59,7 @@ public class ContractSteps extends DwpScenario {
     }
 
     @When("^Old contract data is copied$")
-    public void oldContractDataIsCopied() throws Throwable {
+    public void oldContractDataIsCopied() {
         ContractPage cp = new ContractPage();
         parameterProvider.put("randomEAN", PrepareDataForContract.generateEAN());
         parameterProvider.put("oldContractEan",cp.getEanFromContract());
@@ -87,27 +87,27 @@ public class ContractSteps extends DwpScenario {
     }
 
     @And("^Check if start date of new ean is the same date as filled in as “Move date”-\"([^\"]*)\"$")
-    public void checkIfStartDateOfNewEanIsTheSameDateAsFilledInAsMoveDate(String date) throws Throwable {
+    public void checkIfStartDateOfNewEanIsTheSameDateAsFilledInAsMoveDate(String date) {
         ContractPage cp = new ContractPage();
         String moveDate=toDwpEDDate(parameterProvider.getValueOrParameterAsString(date));
         Assert.assertEquals(cp.getActiveContractStartDate(),moveDate);
     }
 
     @And("^Check if the end date of new ean is the same date as the end date of the old one$")
-    public void checkIfTheEndDateOfNewEanIsTheSameDateAsTheEndDateOfTheOldOne() throws Throwable {
+    public void checkIfTheEndDateOfNewEanIsTheSameDateAsTheEndDateOfTheOldOne() {
         ContractPage cp = new ContractPage();
         Assert.assertEquals(cp.getActiveContractEndDate(),parameterProvider.getValueOrParameterAsString("parameter:endDate"));
     }
 
     @And("^Check if products of both contracts are the same$")
-    public void checkIfProductsOfBothContractsAreTheSame() throws Throwable {
+    public void checkIfProductsOfBothContractsAreTheSame() {
         ContractPage cp = new ContractPage();
         cp.clickOnContractenNummer();
         Assert.assertEquals(cp.getProductName(),parameterProvider.getValueOrParameterAsString("parameter:productName"));
     }
 
     @And("^Check if discounts of both contracts are the same$")
-    public void checkIfDiscountsOfBothContractsAreTheSame() throws Throwable {
+    public void checkIfDiscountsOfBothContractsAreTheSame() {
         ContractPage cp = new ContractPage();
         Assert.assertEquals(cp.getKortingenOpContractKortingscode(),parameterProvider.getValueOrParameterAsString("parameter:kortingsCode"));
         Assert.assertEquals(cp.getKortingenOpContractProducttype(),parameterProvider.getValueOrParameterAsString("parameter:productType"));
@@ -116,7 +116,7 @@ public class ContractSteps extends DwpScenario {
     }
 
     @And("^Check if prices of both contracts are the same$")
-    public void checkIfPricesOfBothContractsAreTheSame() throws Throwable {
+    public void checkIfPricesOfBothContractsAreTheSame() {
         ContractPage cp = new ContractPage();
         cp.clickOnBekijkPrijzenTariefkaatFromPlus();
         Assert.assertEquals(cp.getTypeProduct(),parameterProvider.getValueOrParameterAsString("parameter:typeProduct"));
@@ -134,14 +134,14 @@ public class ContractSteps extends DwpScenario {
     }
 
     @And("^New move customer address is$")
-    public void nweMoveCustomerAddressIs(final DataTable dbTable) throws Throwable {
+    public void nweMoveCustomerAddressIs(final DataTable dbTable) {
         List<List<String>> address = dbTable.raw();
         ContractPage cp = new ContractPage();
         cp.setNewMoveAddress(address.get(1).get(0),address.get(1).get(1),address.get(1).get(4),address.get(1).get(5));
     }
 
     @Then("^There is a case where onderwerp is \"([^\"]*)\"$")
-    public void thereIsACaseWhereOnderwerpIs(String onderwerp) throws Throwable {
+    public void thereIsACaseWhereOnderwerpIs(String onderwerp) {
         ContractPage cp = new ContractPage();
         Assert.assertEquals(cp.getCaseOnderwerp(),onderwerp);
         parameterProvider.put("caseNumber",cp.getCaseNumber());
@@ -149,7 +149,7 @@ public class ContractSteps extends DwpScenario {
     }
 
     @And("^Interaction is created with Type \"([^\"]*)\" and Onderwerp \"([^\"]*)\" and verwante case is \"([^\"]*)\"$")
-    public void interactionIsCreatedWithTypeAndOnderwerpAndVerwanteCaseIs(String type, String onderwerp, String number) throws Throwable {
+    public void interactionIsCreatedWithTypeAndOnderwerpAndVerwanteCaseIs(String type, String onderwerp, String number) {
         ContractPage cp = new ContractPage();
         String caseNumber = parameterProvider.getValueOrParameterAsString(number);
         Assert.assertEquals(cp.getInteractionType(),type);
@@ -158,7 +158,7 @@ public class ContractSteps extends DwpScenario {
     }
 
     @And("^Kortingen is \"([^\"]*)\"$")
-    public void kortingenIs(String kortingen) throws Throwable {
+    public void kortingenIs(String kortingen) {
         ContractPage cp = new ContractPage();
         cp.chooseKortigen(kortingen);
         Sleeper.sleepTightInSeconds(0.5);

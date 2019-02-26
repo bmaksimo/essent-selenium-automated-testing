@@ -32,7 +32,6 @@ Feature: NSTA - 388 Move new address
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-#        When "Startdatum" date is "2 weeks before now"
         When "Startdatum" date is "5 day before now"
         And Electricity EAN code is "random"
         And "Meternummer" input is "1000"
@@ -50,7 +49,7 @@ Feature: NSTA - 388 Move new address
         And "Datum ondertekening" date is "now"
         And Quote is signed
         And Bevestigen
-        And Sign
+        And Sign place is "Kontich"
         Then Changes are confirmed
 
         When Dashboard menu is "Marktberichten"
@@ -77,7 +76,6 @@ Feature: NSTA - 388 Move new address
         And "Datum meteropname" date is "1 day before now"
         And "Meterstand enkelvoudig" input is "1000"
         And Option "test" is on
-#        And Option "MM should respond" is on
         And "MM should respond" turn on
         Then Bevestigen
 

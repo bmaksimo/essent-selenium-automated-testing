@@ -269,8 +269,8 @@ public class ContractPage extends Component {
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id='dwp-discount-id-field']/option[@label='"+discount+"']")));
     }
 
-    public void confirmTheSign(){
-        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"accounts|aos_quotes|sign_location_c\"]/div[1]/input")),"Kontich");
+    public void confirmTheSign(String place){
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"accounts|aos_quotes|sign_location_c\"]/div[1]/input")),place);
     }
 
     public String getCompanyNumber(){

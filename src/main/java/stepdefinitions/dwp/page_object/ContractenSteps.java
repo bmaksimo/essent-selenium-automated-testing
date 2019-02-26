@@ -25,13 +25,13 @@ public class ContractenSteps extends DwpScenario {
 
 
     @And("^Search for ean code$")
-    public void searchForEanCode() throws Throwable {
+    public void searchForEanCode()  {
         ContractenPage contractenPage = new ContractenPage();
         contractenPage.searchForEanCode(eanCode);
     }
 
     @When("^Input in \"([^\"]*)\" is \"([^\"]*)\"$")
-    public void inputInModuleIs(String label, String input) throws Throwable {
+    public void inputInModuleIs(String label, String input) {
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(3);
         ContractenPage contractenPage = new ContractenPage();
@@ -39,7 +39,7 @@ public class ContractenSteps extends DwpScenario {
     }
 
     @And("^Check toggle \"([^\"]*)\"$")
-    public void checkToggle(String label) throws Throwable {
+    public void checkToggle(String label) {
         ContractenPage contractenPage = new ContractenPage();
         contractenPage.turnOnTestingAndMarketMock(label);
     }
@@ -53,7 +53,7 @@ public class ContractenSteps extends DwpScenario {
     }
 
     @Then("^Confirm task was \"([^\"]*)\"$")
-    public void confirmTaskWas(String input) throws Throwable {
+    public void confirmTaskWas(String input) {
         ContractenPage contractenPage = new ContractenPage();
         contractenPage.confirmTaskStatus(input);
     }
@@ -65,56 +65,56 @@ public class ContractenSteps extends DwpScenario {
     }
 
     @And("^\"([^\"]*)\" input in omschrijving$")
-    public void inputInOmschrijving(String text) throws Throwable {
+    public void inputInOmschrijving(String text) {
         ContractenPage contractenPage = new ContractenPage();
         contractenPage.inputText(text);
     }
 
     @And("^Offertes plus options is \"([^\"]*)\"$")
-    public void sendEMailToCustomer(String test) throws Throwable {
+    public void sendEMailToCustomer(String test) {
         ContractenPage contractenPage = new ContractenPage();
         contractenPage.sendEmailToCustomer(test);
     }
 
     @And("^List option is \"([^\"]*)\"$")
-    public void openInvoiceOnly(String option) throws Throwable {
+    public void openInvoiceOnly(String option)  {
         ContractenPage contractenPage = new ContractenPage();
         contractenPage.openListOption(option);
     }
 
     @Then("^Payment delayed$")
-    public void paymentDelayed() throws Throwable {
+    public void paymentDelayed() {
         ContractenPage contractenPage = new ContractenPage();
         contractenPage.checkPayDate();
     }
 
     @And("^Find \"([^\"]*)\" facture and \"([^\"]*)\"$")
-    public void findFactureAnd(String type, String option) throws Throwable {
+    public void findFactureAnd(String type, String option) {
         ContractenPage contractenPage = new ContractenPage();
         contractenPage.findIssuedAndPayDelay(type, option);
     }
 
     @Then("^Validate bank account was changed on \"([^\"]*)\"$")
-    public void validateBankAccountWasChangedOn(String iban) throws Throwable {
+    public void validateBankAccountWasChangedOn(String iban) {
         String inputIban = parameterProvider.getValueOrParameterAsString(iban);
         ContractenPage contractenPage = new ContractenPage();
         contractenPage.findIban(inputIban);
     }
 
     @And("^Get Contract Ean Code$")
-    public void getEanCode() throws Throwable {
+    public void getEanCode() {
         String eanCode = seleniumDriver.findElementWhenVisible(By.xpath("(//h5)[1]")).getText();
         parameterProvider.put("contractEanCode", eanCode);
     }
 
     @Then("^Save changes$")
-    public void saveChanges() throws Throwable {
+    public void saveChanges() {
         ContractPage contractenPage = new ContractPage();
         contractenPage.saveButtton();
     }
 
     @Then("^Confirm contract with ean \"([^\"]*)\" was copied$")
-    public void confirmContractWithEanWasCopied(String eanCode) throws Throwable {
+    public void confirmContractWithEanWasCopied(String eanCode) {
         seleniumDriver.waitForRequestsToFinish();
         String inputEanCode = parameterProvider.getValueOrParameterAsString(eanCode);
         logger().info("input EAN CODE: " + inputEanCode);
@@ -122,7 +122,7 @@ public class ContractenSteps extends DwpScenario {
     }
 
     @Then("^Get Contract Number$")
-    public void searchForContractNumber() throws Throwable {
+    public void searchForContractNumber() {
         ContractPage contractenPage = new ContractPage();
         parameterProvider.put("contractNumber", contractenPage.getContractNumber());
 
@@ -145,17 +145,17 @@ public class ContractenSteps extends DwpScenario {
     }
 
     @Then("^Get Company Number$")
-    public void searchForCompanyNumber() throws Throwable {
+    public void searchForCompanyNumber() {
         ContractPage cp = new ContractPage();
         String companyNumber = cp.getCompanyNumber();
         parameterProvider.put("companyNumber", companyNumber);
 
     }
 
-    @And("^Sign$")
-    public void plaatsOndertekeningInputIsKontich() throws Throwable {
+    @And("^Sign place is \"([^\"]*)\"$")
+    public void signPlaceIs(String place) {
         ContractPage cp = new ContractPage();
-        cp.confirmTheSign();
+        cp.confirmTheSign(place);
       }
 
 }
