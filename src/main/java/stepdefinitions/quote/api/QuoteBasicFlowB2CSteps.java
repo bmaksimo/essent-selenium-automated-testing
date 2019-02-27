@@ -106,7 +106,9 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     @Then("^Contracted EAN exists on account$")
     public void contracted_EAN_exists_on_account() throws Throwable {
-//	assertTrue(new ContractsOnAccountAPI().checkIfEanExists(cookie, quoteDetails.getRecordId()));
+
+	// assertTrue(new ContractsOnAccountAPI().checkIfEanExists(cookie,
+	// quoteDetails.getRecordId()));
 	assertThat(new ContractsOnAccountAPI().checkIfEanExists(cookie, quoteDetails.getRecordId()), is(true));
     }
 
