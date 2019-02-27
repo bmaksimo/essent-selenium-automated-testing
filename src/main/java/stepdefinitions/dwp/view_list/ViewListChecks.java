@@ -211,6 +211,7 @@ public class ViewListChecks extends NavigationElements {
             return (String) viewTableModel.getValueAt(row - 1, column);
 
         }
+
         private void logTableModel(DefaultTableModel viewTableModel) {
             int columnCount = viewTableModel.getColumnCount();
             StringBuilder columns = new StringBuilder("[");

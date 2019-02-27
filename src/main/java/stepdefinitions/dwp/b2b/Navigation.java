@@ -13,6 +13,10 @@ import cucumber.api.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.awaitility.Awaitility.given;
+import static org.awaitility.Duration.TEN_SECONDS;
+
 
 public class Navigation extends DwpScenario {
 
@@ -69,15 +73,19 @@ public class Navigation extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
         MarktBerichtenPage mp = new MarktBerichtenPage();
         if (seleniumDriver.findElement(By.xpath("//tr[1]//list-link-bold-top-two-liner-cell/div/a/h5")).isDisplayed()) {
-            while (!seleniumDriver.findElementWhenVisible(By.xpath("//tr[1]//list-simple-two-liner-cell/p/span[1]")).getText().equalsIgnoreCase(status)) {
-                Thread.sleep(10000);
-                mp.refreshByName(name);
-            }
+            By selector = By.xpath("//tr[1]//list-simple-two-liner-cell/p/span[1]");
+            given().await()
+                .pollInterval(TEN_SECONDS)
+                .atMost(new org.awaitility.Duration(450, SECONDS))
+                .until(()-> mp.isRefreshedByName(name)
+                    && seleniumDriver.findElementWhenVisible(selector).getText().equalsIgnoreCase(status));
         } else if (seleniumDriver.findElement(By.xpath("//tr[3]//list-link-bold-top-two-liner-cell/div/a/h5")).isDisplayed()) {
-            while (!seleniumDriver.findElementWhenVisible(By.xpath("//tr[3]//list-simple-two-liner-cell/p/span[1]")).getText().equalsIgnoreCase(status)) {
-                Thread.sleep(10000);
-                mp.refreshByName(name);
-            }
+            By selector = By.xpath("//tr[3]//list-simple-two-liner-cell/p/span[1]");
+            given().await()
+                .pollInterval(TEN_SECONDS)
+                .atMost(new org.awaitility.Duration(450, SECONDS))
+                .until(()-> mp.isRefreshedByName(name)
+                    && seleniumDriver.findElementWhenVisible(selector).getText().equalsIgnoreCase(status));
         }
     }
 }
