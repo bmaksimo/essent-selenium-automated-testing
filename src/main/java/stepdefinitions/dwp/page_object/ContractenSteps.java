@@ -158,7 +158,7 @@ public class ContractenSteps extends DwpScenario {
         String ad = parameterProvider.getValueOrParameterAsString(attestDate);
 
         String StartDateByQuarter = contractenPage.getFirstDayOfQuarter(sd, ad);
-        String EndDateByYear = contractenPage.getLastDayOfYearByContractStartDate(sd);
+        String EndDateByYear = contractenPage.getLastDayOfYearByContractStartDate(sd, ad);
         parameterProvider.put("EndDateByYear", EndDateByYear);
         parameterProvider.put("StartDateByQuarter", StartDateByQuarter);
     }

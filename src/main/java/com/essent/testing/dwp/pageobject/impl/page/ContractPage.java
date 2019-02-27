@@ -148,25 +148,24 @@ public class ContractPage extends Component {
 
     public String getFirstDayOfQuarter(String startDate, String attestDate) {
         String str[] = startDate.split("-");
-        Integer month = Integer.parseInt(str[1]);
-        String year = str[2];
+        Integer monthStartDate = Integer.parseInt(str[1]);
+        String yearStartDate = str[2];
 
         String str2[] = attestDate.split("/");
-        Integer month2 = Integer.parseInt(str2[1]);
-        String year2 = str2[2];
+        String yearAttestDate = str2[2];
 
         String quarterMonth;
 
 
         if (startDate.compareTo(attestDate)>0) {
-            if (month <= 3) {
+            if (monthStartDate <= 3) {
                 quarterMonth = "03";
             }
 
-            else if (month >= 4 && month <= 6) {
+            else if (monthStartDate >= 4 && monthStartDate <= 6) {
                 quarterMonth = "06";
             }
-            else if (month >= 7 && month <= 9) {
+            else if (monthStartDate >= 7 && monthStartDate <= 9) {
                 quarterMonth = "09";
             }
             else{
@@ -175,22 +174,22 @@ public class ContractPage extends Component {
         }
         else if (startDate.compareTo(attestDate)<0)
         {
-             if (year.compareTo(year2)<0) {
+             if (yearStartDate.compareTo(yearAttestDate)<0) {
                  quarterMonth = "01";
 
              }
              else {
-                 if (month <= 3) {
+                 if (monthStartDate <= 3) {
                      quarterMonth = "03";
 
                  }
 
-                 else if (month >= 4 && month <= 6) {
+                 else if (monthStartDate >= 4 && monthStartDate <= 6) {
                  quarterMonth = "06";
 
                  }
 
-                 else if (month >= 7 && month <= 9) {
+                 else if (monthStartDate >= 7 && monthStartDate <= 9) {
                  quarterMonth = "09";
 
                  }
@@ -201,19 +200,19 @@ public class ContractPage extends Component {
                  }
 
              }
-            year = year2;
+            yearStartDate = yearAttestDate;
         }
 
         else {
-            if (month <= 3) {
+            if (monthStartDate <= 3) {
                 quarterMonth = "03";
             }
 
-            else if (month >= 4 && month <= 6) {
+            else if (monthStartDate >= 4 && monthStartDate <= 6) {
                 quarterMonth = "06";
             }
 
-            else if (month >= 7 && month <= 9) {
+            else if (monthStartDate >= 7 && monthStartDate <= 9) {
                 quarterMonth = "09";
             }
 
@@ -228,7 +227,7 @@ public class ContractPage extends Component {
             builder.append(date);
             builder.replace(0, builder.length(), "01/");
             builder.append(quarterMonth + "/");
-            builder.append(year);
+            builder.append(yearStartDate);
             String quarterDate = builder.toString();
 
             return quarterDate;
@@ -236,16 +235,23 @@ public class ContractPage extends Component {
     }
 
 
-    public String getLastDayOfYearByContractStartDate(String date) {
+    public String getLastDayOfYearByContractStartDate(String startDate, String attestDate) {
 
-        String str[] = date.split("-");
-        String month = str[1];
-        String year = str[2];
+        String str[] = startDate.split("-");
+        String str2[] = attestDate.split("/");
+
+        String yearStartDate = str[2];
+        String yearAttestDate = str2[2];
+
+        if (startDate.compareTo(attestDate)<0)
+        {
+            yearStartDate = yearAttestDate;
+        }
 
         StringBuilder builder = new StringBuilder();
-        builder.append(date);
+        builder.append(startDate);
         builder.replace(0,builder.length(),"31/12/");
-        builder.append(year.toString());
+        builder.append(yearStartDate);
         String endDate = builder.toString();
         return endDate;
     }
