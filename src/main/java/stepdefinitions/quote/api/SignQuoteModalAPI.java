@@ -1,22 +1,4 @@
-package stepdefinitions.quote.api.model;
-
-import com.essent.testing.config.ConfigKey;
-import com.essent.testing.config.ConfigProvider;
-import com.essent.testing.util.resource.ResourceUtil;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.restassured.http.Cookies;
-import io.restassured.path.json.JsonPath;
-import io.restassured.response.Response;
-import org.apache.log4j.Logger;
-import stepdefinitions.quote.api.AbstractAPI;
-import stepdefinitions.quote.api.QuoteDetailsAPI;
-import stepdefinitions.quote.api.RequestHelper;
-import stepdefinitions.quote.api.model.dto.PayloadDTO;
-import stepdefinitions.quote.api.model.dto.QuoteDetailsDTO;
-import stepdefinitions.quote.api.model.dto.SignContractDTO;
+package stepdefinitions.quote.api;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -24,6 +6,19 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.log4j.Logger;
+
+import com.essent.testing.config.ConfigKey;
+import com.essent.testing.config.ConfigProvider;
+import com.essent.testing.util.resource.ResourceUtil;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import io.restassured.http.Cookies;
+import io.restassured.response.Response;
+import stepdefinitions.quote.api.model.dto.SignContractDTO;
 
 public class SignQuoteModalAPI extends AbstractAPI {
 
@@ -36,7 +31,6 @@ public class SignQuoteModalAPI extends AbstractAPI {
         String payload = signQuoteModalPayload(rowId, docId);
 
         Response signQuoteResponse = helper.postRequest(STATUS_CREATED, cookie, payload, path);
-        JsonPath jpath = signQuoteResponse.jsonPath();
         String confirmSigning = null;
 
         if (signQuoteResponse.getStatusCode() == STATUS_CREATED) {
@@ -67,10 +61,6 @@ public class SignQuoteModalAPI extends AbstractAPI {
 
         return mapper.writeValueAsString(signContract);
     }
-
-    private void readValue(String jsonPayload, Class<SignContractDTO> signContractDTOClass) {
-    }
-
 
     private LocalDate getTodaysDate() {
         return LocalDate.now();

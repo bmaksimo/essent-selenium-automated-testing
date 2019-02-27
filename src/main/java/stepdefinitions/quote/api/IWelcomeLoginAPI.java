@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.http.Cookies;
 import io.restassured.response.Response;
+import stepdefinitions.quote.api.model.IWelcomeLogin;
 
 import org.apache.log4j.Logger;
 
@@ -20,7 +21,7 @@ public class IWelcomeLoginAPI extends AbstractAPI {
     }
 
     private String serializePayloadForiWelcome(String username_m, String password_m) throws JsonProcessingException {
-	iWelcomeLogin iWelcome_Login_m = new iWelcomeLogin(username_m, password_m);
+	IWelcomeLogin iWelcome_Login_m = new IWelcomeLogin(username_m, password_m);
 	ObjectMapper mapper = new ObjectMapper();
 	return mapper.writeValueAsString(iWelcome_Login_m);
     }
