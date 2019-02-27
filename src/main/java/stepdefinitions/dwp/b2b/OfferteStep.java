@@ -25,67 +25,67 @@ public class OfferteStep extends DwpScenario {
 
 
     @And("^Take Offertenummer from first offerte$")
-    public void takeOffertenummerFromFirstOfferte() throws Throwable {
+    public void takeOffertenummerFromFirstOfferte() {
         OffertePage op = new OffertePage();
         String offertenummer = op.getOfferteNumber();
         parameterProvider.put("offertenummer", offertenummer);
     }
 
     @And("^Reset filter$")
-    public void resetFilter() throws Throwable {
+    public void resetFilter() {
         OffertePage op = new OffertePage();
         op.resetFilter();
         seleniumDriver.waitForRequestsToFinish();
     }
 
     @And("^Label \"([^\"]*)\" is \"([^\"]*)\"$")
-    public void labelIs(String label, String value) throws Throwable {
+    public void labelIs(String label, String value) {
         String input = parameterProvider.getValueOrParameterAsString(value);
         OffertePage op = new OffertePage();
         op.clickOnLabel(label, input);
     }
 
     @And("^Filter button is clicked$")
-    public void filterButtonIsClicked() throws Throwable {
+    public void filterButtonIsClicked() {
         OffertePage of = new OffertePage();
         of.clickOnFilter();
     }
 
     @And("^Offertenummer input is \"([^\"]*)\"$")
-    public void offertenummerInputIs(String value) throws Throwable {
+    public void offertenummerInputIs(String value) {
         String input = parameterProvider.getValueOrParameterAsString(value);
         OffertePage of = new OffertePage();
         of.offerteNumberFieldSendKeys(input);
     }
 
     @And("^Oplossing text is \"([^\"]*)\"$")
-    public void oplossingTextIs(String input) throws Throwable {
+    public void oplossingTextIs(String input){
         OffertePage of = new OffertePage();
         of.markAsDoneOplossingSendKeys(input);
     }
 
     @Then("^Offerte status is \"([^\"]*)\"$")
-    public void statusIs(String status) throws Throwable {
+    public void statusIs(String status) {
         OffertePage of = new OffertePage();
         Assert.assertTrue(of.getStatus().equalsIgnoreCase(status));
     }
 
     @And("^\"([^\"]*)\" turn on with dot$")
-    public void turnOnWithDot(String label) throws Throwable {
+    public void turnOnWithDot(String label) {
         ToggleImpl tgl = new ToggleImpl();
         tgl.clickCheckboxWithDot(label);
 
     }
 
     @Then("^Bevestigen$")
-    public void bevestigen() throws Throwable {
+    public void bevestigen(){
         seleniumDriver.waitForRequestsToFinish();
         OffertePage of = new OffertePage();
         of.confirmQuote();
     }
 
     @And("^Sign quote file is uploaded$")
-    public void signQuoteFileIsUploaded() throws Throwable {
+    public void signQuoteFileIsUploaded() {
         String filePath = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
         ChangeAccountStatusPage changeAccountStatusPage = new ChangeAccountStatusPage();
         boolean success = changeAccountStatusPage.uploadFileForSign(filePath);
@@ -93,7 +93,7 @@ public class OfferteStep extends DwpScenario {
     }
 
     @And("^Client signature receive data is \"([^\"]*)\"$")
-    public void clientSignatureReceiveDataIs(String date) throws Throwable {
+    public void clientSignatureReceiveDataIs(String date) {
         OffertePage of = new OffertePage();
         of.setSinganureReceivedDate(date);
     }
