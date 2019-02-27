@@ -7,6 +7,7 @@ Feature: NUAT-424: Change Pay Method - nl_BE
     Background:
         Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
 
+    @NUAT-424
     Scenario:
         When Left menu is "sales-marketing"
         And Top menu item is "Klanten"

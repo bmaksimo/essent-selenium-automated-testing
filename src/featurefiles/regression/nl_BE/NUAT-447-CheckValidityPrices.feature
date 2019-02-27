@@ -7,6 +7,7 @@ Feature: NUAT-447: Check validity prices
     Background:
         Given   I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
 
+    @NUAT-447
     Scenario: Check validity prices
         When B2B signed quote by customer "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Left menu is "contracting-switching"

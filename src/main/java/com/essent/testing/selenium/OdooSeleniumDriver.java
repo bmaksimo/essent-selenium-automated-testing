@@ -2,6 +2,7 @@ package com.essent.testing.selenium;
 
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
+import com.essent.testing.database.OsUtils;
 import com.essent.testing.util.resource.ResourceUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,8 +25,7 @@ import java.util.Map;
 
 public class OdooSeleniumDriver extends SeleniumDriver {
     private static final Logger logger = Logger.getLogger(OdooSeleniumDriver.class);
-    private static final String DEFAULT_DOWNLOAD_LOCATION = ResourceUtil.toPath(File.separator + "data" + File.separator + "odoo" + File.separator);
-
+    private static final String DEFAULT_DOWNLOAD_LOCATION = ResourceUtil.toPath("/" + "data" + "/");
     public void initOdooWebDriver() {
         String userDataPath = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_USER_DATA_PATH);
         if (StringUtils.isNotEmpty(userDataPath)) {
@@ -44,6 +44,7 @@ public class OdooSeleniumDriver extends SeleniumDriver {
     private void setUpDefaultFileDownloadLocation(ChromeOptions options) {
         HashMap<String, Object> chromePrefs = new HashMap<>();
         chromePrefs.put("profile.default_content_settings.popups", 0);
+        String defaultLocation convertToOsSpecificPath(DEFAULT_DOWNLOAD_LOCATION);
         chromePrefs.put("download.default_directory", DEFAULT_DOWNLOAD_LOCATION);
         logger.info("-Default download directory: " + DEFAULT_DOWNLOAD_LOCATION);
         options.setExperimentalOption("prefs", chromePrefs);

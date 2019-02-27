@@ -60,7 +60,7 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
 
         Given View List element "Id Billing customer & persoon/familie sleutel" is collected as parameter at "1st" list row
         And View List element "Klantnummer & Naam" using "accountNumber" as alias is collected as parameter at "1st" list row
-        And Click on link in View List at "1st" row and "Klantnummer & Naam" column
+        And Click on "parameter:accountNumber" link
         And Dashboard menu is "Contracten"
         Then View list header is "Actieve en toekomstige connecties"
 
@@ -194,7 +194,7 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         And View List element "Id Billing customer & persoon/familie sleutel" using "billingCustomerId" as alias is collected as parameter at "1st" list row
         And View List element "Klantnummer & Naam" using "accountNumber" as alias is collected as parameter at "1st" list row
 
-        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column
+        Given Click on "parameter:accountNumber" link
         And Dunning day countdown for "parameter:accountNumber" goes down 12 days
         And Sleep for 60 seconds
         And Dunning day countdown for "parameter:accountNumber" goes down 28 days
