@@ -6,6 +6,7 @@
 Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR, run advance invoice, create payment plan
 
 
+    @NUAT-417-1
        Scenario: Create active UP contract, run advance invoice
             Given I logged in to DWP as "billing.testautomation@essent.be"
             When Left menu is "billing"
@@ -31,9 +32,7 @@ Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR,
             Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
             When Dashboard menu is "Billing"
             Then View list header is "Transacties"
-            And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
-            And "1st" List element with value at column "ID & Type" is checked
-
+            And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 60 seconds
 
         @payment-plan
        Scenario: Payment plan creation
@@ -50,7 +49,6 @@ Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR,
             And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
             And List option is "ENKEL FACTUREN"
             And View list header is "Openstaande facturen"
-            And Invoice with key "InvoicesOnAccountOpenBalance" is checked
             And List option is "AANVRAAG AFBETALINGSPLAN"
 
 
@@ -87,7 +85,8 @@ Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR,
             Then View list header is "Transacties"
             And "2nd" list element has cell value "Payment" at column "ID & Type"
 
-        #Reverse Payment Plan
+            #Reverse Payment Plan
+    @reverse-payment
         Scenario: Reverse payment plan
             Given I logged in to Odoo as "t.geets"
             When Odoo top menu is "Accounting"
@@ -98,8 +97,7 @@ Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR,
             And Journal entry is open
             And Modal buttons "Reverse" are clicked
 
-
-            #check in dwp is payment plan status reversed
+        #check in dwp is payment plan status reversed
         Scenario: Check is payment plan reversed
             Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
             When Left menu is "sales-marketing"
