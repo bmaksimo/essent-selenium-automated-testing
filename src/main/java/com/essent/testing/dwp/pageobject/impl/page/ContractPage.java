@@ -137,7 +137,7 @@ public class ContractPage extends Component {
     }
 
 
-    public String getQuarter(String startDate, String attestDate) {
+    public String getQuarterForChosenStartDate(String startDate, String attestDate) {
         String str[] = startDate.split("-");
         Integer monthStartDate = Integer.parseInt(str[1]);
         String yearStartDate = str[2];
