@@ -3,17 +3,17 @@
 @REGRESSION
 @CREDIT-AND-CONTROL
 @NUAT-412
-Feature: NUAT-412 part: Create TK1 Contract
+Feature: NUAT-412 part: Create TK1 Contract -> Create / import coda file -> Invoice run
 
     Background:
         Given  I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
-    @NUAT-412-1
-    Scenario: Create active contract TK1
+
+    Scenario: Create active contract TK1 ->
+        #1 Create active contract TK1
         When Plus menu is "Sales -> TK1 -> Nieuwe TK1 offerte (B2B) aanmaken"
         And "Ondernemingsnummer" input is "BE0659881595"
         And "Bedrijfsnaam" input is "Test Company B2B"
-        #And Clicked on sign X
         And New Quote is saved
 
         When "Tariefdatum" date is "now"
@@ -53,5 +53,27 @@ Feature: NUAT-412 part: Create TK1 Contract
         And Quote is confirmed
         Then View list header is "Offertes"
         Then "1st" list element has cell value "Sales Getekend - Waarborg" at column "Type & status"
+
+        When Dashboard menu is "Details"
+        Then Get Contract Number
+
+        When I renew login to DWP as "billing.testautomation@essent.be"
+        And Left menu is "billing"
+        And Top menu item is "Klanten"
+        And Top action is "Filters"
+        And "B2C/B2B" selection is "B2B"
+        And "Klantnummer" input is "parameter:contractNumber"
+        Then "1st" List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
+
+        When Plus menu is "Billing -> Start facturatierun"
+        And Modal dialog is "Start invoicerun"
+        And "Naam job" selection is "recurrent"
+        And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
+        And "Factuurdatum" date is "now"
+        And "Procesdatum" date is "now"
+        Then Invoice run is scheduled
+        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
+        When Dashboard menu is "Billing"
+        Then View list header is "Transacties"
 
 

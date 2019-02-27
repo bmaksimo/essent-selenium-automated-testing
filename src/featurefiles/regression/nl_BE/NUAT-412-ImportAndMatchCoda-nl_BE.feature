@@ -2,7 +2,6 @@
 @B2B
 @REGRESSION
 @CREDIT-AND-CONTROL
-@NUAT-412
 Feature: NUAT-412 part: Create / import coda file
 
     @NUAT-412-2
@@ -53,7 +52,7 @@ Feature: NUAT-412 part: Create / import coda file
 
         When Dashboard menu is "Details"
         Then Get Contract Number
-   #invoice run
+    #invoice run
     @INVOICE-RUN
     Scenario: Invoice run process
         Given I renew login to DWP as "billing.testautomation@essent.be"
