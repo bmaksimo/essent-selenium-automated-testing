@@ -35,7 +35,7 @@ public class ContractDetailsAPI extends AbstractAPI {
 
     }
 
-    public String getContractStatus(Cookies cookie, String contractRecordId) throws JsonProcessingException {
+    public Boolean getContractStatus(Cookies cookie, String contractRecordId) throws JsonProcessingException, InterruptedException {
         RequestHelper helper = new RequestHelper();
         String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_CONTRACT_DETAILS_URL) + "/" + contractRecordId + "/" + "readOnly";
         PayloadMapper mapper = new PayloadMapper();
@@ -53,7 +53,8 @@ public class ContractDetailsAPI extends AbstractAPI {
             LOGGER.error("Cannot retrieve contract status");
         }
 
-        return contractStatus;
+        return "success".equals(contractStatus);
+
     }
 
     private String getBillingIdFromResponse(Response response) {

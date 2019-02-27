@@ -4,7 +4,6 @@ import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.restassured.B2CCreateContractScenario;
 
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
@@ -16,6 +15,10 @@ import stepdefinitions.quote.api.model.QuoteDetails;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import java.util.concurrent.TimeUnit;
+
+import static org.awaitility.Awaitility.*;
 
 public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
@@ -107,14 +110,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     @Then("^Wait until contract instance starts$")
     public void wait_until_contract_instance_starts() throws Throwable {
-        String contractStatus = new ContractDetailsAPI().getContractStatus(cookie, contractDetails.getContractRecordId());
-        assertEquals(contractStatus.toLowerCase(), "success");
-    }
-
-    @Then("^Check if end time is valid$")
-    public void check_if_end_time_is_valid() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        await().pollInterval(5, TimeUnit.SECONDS).atMost(5000, TimeUnit.SECONDS).until(AsyncExecutor.isStatusSuccessfull(cookie, contractDetails));
     }
 
 }
