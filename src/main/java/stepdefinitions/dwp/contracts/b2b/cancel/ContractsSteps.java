@@ -124,7 +124,11 @@ public class ContractsSteps extends DwpScenario {
         Assert.assertTrue("Correct ean code was not found.", seleniumDriver.findElementWhenVisible(By.xpath("//h5[.='" + inputEanCode + "']")).isDisplayed());
     }
 
+    /**
+     * @deprecated - use generic '"1st" list element has cell value "value" at column "columnName"'
+     */
     @Then("^Get Contract Number$")
+    @Deprecated
     public void searchForContractNumber() throws Throwable {
         String contractNumber = seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"account_number_c\"]/div")).getText();
         parameterProvider.put("contractNumber", contractNumber);
