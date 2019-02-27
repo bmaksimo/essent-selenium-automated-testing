@@ -110,7 +110,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     @Then("^Wait until contract instance starts$")
     public void wait_until_contract_instance_starts() throws Throwable {
-        await().pollInterval(5, TimeUnit.SECONDS).atMost(5000, TimeUnit.SECONDS).until(AsyncExecutor.isStatusSuccessfull(cookie, contractDetails));
+        await().pollInterval(5, TimeUnit.SECONDS).atMost(600, TimeUnit.SECONDS).until(AsyncExecutor.isStatusSuccessfull(cookie, contractDetails));
     }
 
 }
