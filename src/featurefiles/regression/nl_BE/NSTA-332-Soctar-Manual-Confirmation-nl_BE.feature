@@ -10,7 +10,7 @@ Feature: NSTA 332 Soctar confirmation --> Manual
 
     #Step 1: Create active contract
     @ONBOARDING
-    Scenario: Create a B2C Quote, YMR metered, Is Residential checked, Vast, market mock, start date in past
+    Scenario: Soctar confirmation --> Manual
 
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
@@ -60,7 +60,7 @@ Feature: NSTA 332 Soctar confirmation --> Manual
      #Step 2: Change contract to SOCTAR
        When Dashboard menu is "Contracten"
        Then Get Start Date
-       When Plus action of "1" element from "ContractsOnAccount" and click on "TK1 Soctar Productwijziging "
+       When Plus action of "1" element from "ContractsOnAccount" and click on "TK1 Soctar Productwijziging"
        And "Datum attest" date is "3 days before now"
        Then Populate Soctar with dates "parameter:startDate" and "parameter:inputValue"
        And "Startdatum nieuwe offerte" date is "parameter:StartDateByQuarter"
