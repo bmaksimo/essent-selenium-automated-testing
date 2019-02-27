@@ -101,11 +101,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
         assertTrue(new ContractsOnAccountAPI().checkIfEanExists(cookie, quoteDetails.getRecordId()));
     }
 
-    @When("^Quote details are recieved$")
-    public void quote_details_are_recieved() throws Throwable {
-
-    }
-
+ 
     @When("^Payment detials are recieved$")
     public void payment_detials_are_recieved() throws Throwable {
         this.jbillingId = new ContractDetailsAPI().getPaymentDetails(cookie, quoteDetails.getQuoteId());
