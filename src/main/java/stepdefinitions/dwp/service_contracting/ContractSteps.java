@@ -83,7 +83,7 @@ public class ContractSteps extends DwpScenario {
         parameterProvider.put("energieprijsNachExclBtw",cp.getEnergieprijsNachExclBtw());
         parameterProvider.put("energieprijsExclusiefNachtExclBtw",cp.getEnergieprijsExclusiefNachtExclBtw());
         parameterProvider.put("vasteVergoedingExclBtw",cp.getVasteVergoedingExclBtw());
-        cp.closeBekijkPrijsdetailsTK1();
+        cp.closeBekijkPrijsDetailsTK1();
     }
 
     @And("^Check if start date of new ean is the same date as filled in as “Move date”-\"([^\"]*)\"$")
@@ -130,7 +130,7 @@ public class ContractSteps extends DwpScenario {
         Assert.assertEquals(cp.getEnergieprijsNachExclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsNachExclBtw"));
         Assert.assertEquals(cp.getEnergieprijsExclusiefNachtExclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsExclusiefNachtExclBtw"));
         Assert.assertEquals(cp.getVasteVergoedingExclBtw(),parameterProvider.getValueOrParameterAsString("parameter:vasteVergoedingExclBtw"));
-        cp.closeBekijkPrijsdetailsTK1();
+        cp.closeBekijkPrijsDetailsTK1();
     }
 
     @And("^New move customer address is$")
@@ -160,7 +160,7 @@ public class ContractSteps extends DwpScenario {
     @And("^Kortingen is \"([^\"]*)\"$")
     public void kortingenIs(String kortingen) {
         ContractPage cp = new ContractPage();
-        cp.chooseKortigen(kortingen);
+        cp.chooseDiscounts(kortingen);
         Sleeper.sleepTightInSeconds(0.5);
 
     }

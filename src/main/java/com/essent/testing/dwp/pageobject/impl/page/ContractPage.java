@@ -259,11 +259,11 @@ public class ContractPage extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath("//*[@id='rows']/tr[1]/td[7]/list-link-bold-top-two-liner-cell/div/a")).getText();
     }
 
-    public void closeBekijkPrijsdetailsTK1(){
+    public void closeBekijkPrijsDetailsTK1(){
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//a[@class=\"button icon-close\"]")));
     }
 
-    public void chooseKortigen(String discount){
+    public void chooseDiscounts(String discount){
         Sleeper.sleepTightInSeconds(2);
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("dwp|discount_id")));
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id='dwp-discount-id-field']/option[@label='"+discount+"']")));
