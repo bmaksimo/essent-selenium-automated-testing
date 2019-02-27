@@ -81,7 +81,7 @@ public class OfferteStep extends DwpScenario {
     public void bevestigen() throws Throwable {
         seleniumDriver.waitForRequestsToFinish();
         OffertePage of = new OffertePage();
-        of.clickOnBevestigen();
+        of.confirmQuote();
     }
 
     @And("^Sign quote file is uploaded$")
