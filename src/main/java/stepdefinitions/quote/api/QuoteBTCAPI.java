@@ -30,18 +30,16 @@ public class QuoteBTCAPI extends AbstractAPI {
 	Response tsResponse = helper.postRequest(expectedResponseCode, cookie, payload, path);
 
 	if (tsResponse.getStatusCode() == expectedResponseCode) {
-	    tariffSheetID = getTarrifIDFromResponce(tsResponse);
+	    tariffSheetID = getTarrifIDFromResponse(tsResponse);
 //	    tariffSheetID=  tsResponse.jsonPath()
 //		    .getString("'data.model.accounts|aos_quotes|aos_products_quotes|tariffsheet_id'");
 	    LOGGER.info("TariffSheetID is: " + tariffSheetID);
-	} else {
-	    LOGGER.error("Cannot retrieve tariffSheetID");
 	}
 
 	return tariffSheetID;
     }
 
-    private String getTarrifIDFromResponce(Response tsResponse) {
+    private String getTarrifIDFromResponse(Response tsResponse) {
 	String id = null;
 	String part = tsResponse.jsonPath().getString("data.model");
 	String[] s = part.split("\\|");

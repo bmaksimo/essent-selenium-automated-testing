@@ -36,9 +36,7 @@ public class IWelcomeLoginAPI extends AbstractAPI {
 	if (iWelcomeResponse.getStatusCode() == expectedResponseCode) {
 	    cookie = (Cookies) iWelcomeResponse.getDetailedCookies();
 	    LOGGER.info("Cookie is: " + cookie);
-	} else {
-	    LOGGER.error("Cannot retrieve cookie");
-	}
+	} 
 
 	return cookie;
 
