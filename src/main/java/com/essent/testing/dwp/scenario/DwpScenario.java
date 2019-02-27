@@ -21,7 +21,6 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpContractStartEndDate;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpDate;
 import static org.junit.Assert.assertTrue;
 
@@ -94,8 +93,8 @@ public abstract class DwpScenario extends RegisteredScenario {
         return checkAndConvertToDwpDate(parameter);
     }
 
-    protected String toDwpEDDate(String parameter) {
-        return DateExpressionsUtil.checkAndConvertToDwpContracEDDate(parameter);
+    protected String toDwpEndDate(String parameter) {
+        return DateExpressionsUtil.checkAndConvertToDwpContracEndDate(parameter);
     }
 
     protected void injectJavaScriptTestRunner() {

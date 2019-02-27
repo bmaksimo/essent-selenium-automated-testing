@@ -101,7 +101,7 @@ public class MarktBerichtenPage extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[1])['"+num+"']")).getText();
     }
 
-    public String getMarketberichtEDElement(String num){
+    public String getMarketberichtEndDateElement(String num){
         return seleniumDriver.findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[1])['"+num+"']")).getText();
     }
 }

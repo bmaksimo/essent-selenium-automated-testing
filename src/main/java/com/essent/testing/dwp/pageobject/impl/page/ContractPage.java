@@ -229,7 +229,7 @@ public class ContractPage extends Component {
     }
 
     public void clickOnBekijkPrijzenTariefkaatFromPlus(){
-        Sleeper.sleepTightInSeconds(2);
+        Sleeper.sleepTightInSeconds(3);
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-plus-cell[@list-key='ContractlinesOnContract']/div/a")));
         Sleeper.sleepTightInSeconds(2);
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[@label='Bekijk prijzen tariefkaart']/a")));

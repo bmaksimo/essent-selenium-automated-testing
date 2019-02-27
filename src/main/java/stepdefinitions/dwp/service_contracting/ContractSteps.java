@@ -89,7 +89,7 @@ public class ContractSteps extends DwpScenario {
     @And("^Check if start date of new ean is the same date as filled in as “Move date”-\"([^\"]*)\"$")
     public void checkIfStartDateOfNewEanIsTheSameDateAsFilledInAsMoveDate(String date) {
         ContractPage cp = new ContractPage();
-        String moveDate=toDwpEDDate(parameterProvider.getValueOrParameterAsString(date));
+        String moveDate= toDwpEndDate(parameterProvider.getValueOrParameterAsString(date));
         Assert.assertEquals(cp.getActiveContractStartDate(),moveDate);
     }
 

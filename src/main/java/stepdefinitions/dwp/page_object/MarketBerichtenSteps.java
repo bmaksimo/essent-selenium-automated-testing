@@ -117,17 +117,17 @@ public class MarketBerichtenSteps extends DwpScenario {
         if (ean == mp.getEanFromMarketbericht("1")){
             Assert.assertEquals(modul,mp.getModulFromMarketbericht("2"));
             Assert.assertEquals(status,mp.marketberichtStatusMarketbericht("1"));
-            Assert.assertEquals(mp.getMarketberichtEDElement("1"),toDwpEDDate(parameterProvider.getValueOrParameterAsString(date)));
+            Assert.assertEquals(mp.getMarketberichtEndDateElement("1"), toDwpEndDate(parameterProvider.getValueOrParameterAsString(date)));
         }else {
             if (ean == mp.getEanFromMarketbericht("3")) {
                 Assert.assertEquals(modul, mp.getModulFromMarketbericht("4"));
                 Assert.assertEquals(status, mp.marketberichtStatusMarketbericht("5"));
-                Assert.assertEquals(mp.getMarketberichtEDElement("5"),toDwpEDDate(parameterProvider.getValueOrParameterAsString(date)));
+                Assert.assertEquals(mp.getMarketberichtEndDateElement("5"), toDwpEndDate(parameterProvider.getValueOrParameterAsString(date)));
             }else {
                 if (ean == mp.getEanFromMarketbericht("5")) {
                     Assert.assertEquals(modul, mp.getModulFromMarketbericht("6"));
                     Assert.assertEquals(status, mp.marketberichtStatusMarketbericht("9"));
-                    Assert.assertEquals(mp.getMarketberichtEDElement("9"),toDwpEDDate(parameterProvider.getValueOrParameterAsString(date)));
+                    Assert.assertEquals(mp.getMarketberichtEndDateElement("9"), toDwpEndDate(parameterProvider.getValueOrParameterAsString(date)));
                 }
             }
         }

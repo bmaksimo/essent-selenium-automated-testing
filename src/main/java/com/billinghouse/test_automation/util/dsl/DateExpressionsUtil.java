@@ -79,7 +79,7 @@ public class DateExpressionsUtil {
             return dateBuilder.toString();
         }
     }
-    public static String checkAndConvertToDwpContracEDDate(String input) throws CucumberException {
+    public static String checkAndConvertToDwpContracEndDate(String input) throws CucumberException {
         if(matchesDwpDateFormat(input)) {
             return buildContractStartEndDate(input);
         }

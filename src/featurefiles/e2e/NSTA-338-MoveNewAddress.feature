@@ -48,9 +48,8 @@ Feature: NSTA - 388 Move new address
         And "Kanaal ondertekening" selection is "Papier"
         And "Datum ondertekening" date is "now"
         And Quote is signed
-        And Bevestigen
         And Sign place is "Kontich"
-        Then Changes are confirmed
+        Then Bevestigen
 
         When Dashboard menu is "Marktberichten"
         Then View List is empty
