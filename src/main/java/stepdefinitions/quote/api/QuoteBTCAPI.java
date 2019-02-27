@@ -29,12 +29,10 @@ public class QuoteBTCAPI extends AbstractAPI {
 	RequestHelper helper = new RequestHelper();
 	Response tsResponse = helper.postRequest(expectedResponseCode, cookie, payload, path);
 
-	if (tsResponse.getStatusCode() == expectedResponseCode) {
-	    tariffSheetID = getTarrifIDFromResponse(tsResponse);
-//	    tariffSheetID=  tsResponse.jsonPath()
-//		    .getString("'data.model.accounts|aos_quotes|aos_products_quotes|tariffsheet_id'");
-	    LOGGER.info("TariffSheetID is: " + tariffSheetID);
-	}
+	tariffSheetID = getTarrifIDFromResponse(tsResponse);
+	// tariffSheetID= tsResponse.jsonPath()
+	// .getString("'data.model.accounts|aos_quotes|aos_products_quotes|tariffsheet_id'");
+	LOGGER.info("TariffSheetID is: " + tariffSheetID);
 
 	return tariffSheetID;
     }
@@ -44,13 +42,13 @@ public class QuoteBTCAPI extends AbstractAPI {
 	String part = tsResponse.jsonPath().getString("data.model");
 	String[] s = part.split("\\|");
 	for (String str : s) {
-	    if (str.contains("tariffsheet_id")){
-	        String result = str.split(":")[1];
-            if (result.contains(",")) {
-                id = result.substring(0, result.indexOf(","));
-            } else {
-                id = result;
-            }
+	    if (str.contains("tariffsheet_id")) {
+		String result = str.split(":")[1];
+		if (result.contains(",")) {
+		    id = result.substring(0, result.indexOf(","));
+		} else {
+		    id = result;
+		}
 	    }
 	}
 

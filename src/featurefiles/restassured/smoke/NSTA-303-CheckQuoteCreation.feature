@@ -21,8 +21,7 @@ Scenario: Check basic Quote creation flow B2C
 	Then Signin is confirmed
 	And Contract is created
 	And Contracted EAN exists on account
-#
-#	When Quote details are recieved
+
 	And Payment detials are recieved
 #	Then Wait until contract instance starts
-#	And Check if end time is valid
+

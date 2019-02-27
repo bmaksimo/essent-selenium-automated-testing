@@ -14,43 +14,40 @@ public class ContractDetailsAPI extends AbstractAPI {
     private final static Logger LOGGER = Logger.getLogger(ContractDetailsAPI.class);
 
     public String getPaymentDetails(Cookies cookie, String quoteId) throws JsonProcessingException {
-        RequestHelper helper = new RequestHelper();
-        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_BILLING_DETAILS_URL) + "/" + quoteId + "/" + "readOnly";
-        PayloadMapper mapper = new PayloadMapper();
-        String payload = mapper.createPayload();
+	RequestHelper helper = new RequestHelper();
+	String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
+		+ ConfigProvider.getProperty(ConfigKey.CRM_BILLING_DETAILS_URL) + "/" + quoteId + "/" + "readOnly";
+	PayloadMapper mapper = new PayloadMapper();
+	String payload = mapper.createPayload();
 
-        Response quoteDetailsResponse =  helper.postRequest(STATUS_OK, cookie, payload, path);
+	Response quoteDetailsResponse = helper.postRequest(STATUS_OK, cookie, payload, path);
 
-        String jbillingId = null;
+	String jbillingId = null;
 
-        if (quoteDetailsResponse.getStatusCode() == STATUS_OK) {
-            LOGGER.info("Billing details retrieved");
-            jbillingId  = getBillingIdFromResponse(quoteDetailsResponse);
-            LOGGER.info("JBilling ID: " + jbillingId);
-        } else {
-            LOGGER.error("Cannot retrieve Billing details");
-        }
+	LOGGER.info("Billing details retrieved");
+	jbillingId = getBillingIdFromResponse(quoteDetailsResponse);
+	LOGGER.info("JBilling ID: " + jbillingId);
 
-        return jbillingId;
+	return jbillingId;
 
     }
 
     private String getBillingIdFromResponse(Response response) {
-        String id = null;
-        String part = response.jsonPath().getString("data.model");
-        String[] s = part.split("\\|");
-        for (String str : s) {
-            if (str.contains("billingcustomerid")){
-                String result = str.split(":")[1];
-                if (result.contains(",")) {
-                    id = result.substring(0, result.indexOf(","));
-                } else {
-                    id = result;
-                }
-            }
-        }
+	String id = null;
+	String part = response.jsonPath().getString("data.model");
+	String[] s = part.split("\\|");
+	for (String str : s) {
+	    if (str.contains("billingcustomerid")) {
+		String result = str.split(":")[1];
+		if (result.contains(",")) {
+		    id = result.substring(0, result.indexOf(","));
+		} else {
+		    id = result;
+		}
+	    }
+	}
 
-        return id;
-        }
+	return id;
+    }
 
 }

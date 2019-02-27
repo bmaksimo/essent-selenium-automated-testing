@@ -22,36 +22,31 @@ public class QuoteSignatureAPI extends AbstractAPI {
     private final static Logger LOGGER = Logger.getLogger(QuoteSignatureAPI.class);
 
     public void setSignatureReceived(Cookies cookie, QuoteDetails quoteDetails) throws IOException {
-        RequestHelper helper = new RequestHelper();
-        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_SIGNATURE_RECEIVED_URL);
-        String payload = createSignaturePayload(quoteDetails);
+	RequestHelper helper = new RequestHelper();
+	String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
+		+ ConfigProvider.getProperty(ConfigKey.CRM_SIGNATURE_RECEIVED_URL);
+	String payload = createSignaturePayload(quoteDetails);
 
-        Response signatureResponse =  helper.postRequest(STATUS_CREATED, cookie, payload, path);
-
-        if (signatureResponse.getStatusCode() == STATUS_CREATED) {
-            LOGGER.info("Quote signature retrieved request is sent");
-        } else {
-            LOGGER.error("Quote signature retrieved request is NOT sent");
-        }
+	helper.postRequest(STATUS_CREATED, cookie, payload, path);
+	LOGGER.info("Quote signature retrieved request is sent");
     }
 
     private String createSignaturePayload(QuoteDetails quoteDetails) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
+	ObjectMapper mapper = new ObjectMapper();
 
-        String pathToSignPayload = ResourceUtil.toPath("/data/restassured/payload_for_signature_received.json");
-        String jsonSignPayload = new String(Files.readAllBytes(Paths.get(pathToSignPayload)));
-        QuoteSignatureDTO signature = mapper.readValue(jsonSignPayload, QuoteSignatureDTO.class);
+	String pathToSignPayload = ResourceUtil.toPath("/data/restassured/payload_for_signature_received.json");
+	String jsonSignPayload = new String(Files.readAllBytes(Paths.get(pathToSignPayload)));
+	QuoteSignatureDTO signature = mapper.readValue(jsonSignPayload, QuoteSignatureDTO.class);
 
-        signature.getModel().setAccountsId(quoteDetails.getRecordId());
-        signature.getModel().setId(quoteDetails.getQuoteId());
+	signature.getModel().setAccountsId(quoteDetails.getRecordId());
+	signature.getModel().setId(quoteDetails.getQuoteId());
 
-        LocalDate currentDate = LocalDate.now();
-        LocalDate validUntilDate = currentDate.plusDays(15);
-        signature.getModel().setSignatureReceivedDate(currentDate.toString());
-        signature.getModel().setValidUntil(validUntilDate.toString());
+	LocalDate currentDate = LocalDate.now();
+	LocalDate validUntilDate = currentDate.plusDays(15);
+	signature.getModel().setSignatureReceivedDate(currentDate.toString());
+	signature.getModel().setValidUntil(validUntilDate.toString());
 
-        return mapper.writeValueAsString(signature);
+	return mapper.writeValueAsString(signature);
     }
-
 
 }
