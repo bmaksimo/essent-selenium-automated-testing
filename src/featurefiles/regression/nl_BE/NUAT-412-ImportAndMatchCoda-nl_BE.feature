@@ -2,7 +2,6 @@
 @B2B
 @REGRESSION
 @CREDIT-AND-CONTROL
-@NUAT-412
 Feature: NUAT-412 part: Create / import coda file
 
     @NUAT-412-2
@@ -51,9 +50,9 @@ Feature: NUAT-412 part: Create / import coda file
         Then View list header is "Offertes"
         Then "1st" list element has cell value "Sales Getekend - Waarborg" at column "Type & status"
 
-        When Dashboard menu is "Details"
+        When Dashboard menu is "Contracten"
         Then Get Contract Number
-   #invoice run
+    #invoice run
     @INVOICE-RUN
     Scenario: Invoice run process
         Given I renew login to DWP as "billing.testautomation@essent.be"

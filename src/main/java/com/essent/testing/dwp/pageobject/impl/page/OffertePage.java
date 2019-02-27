@@ -55,7 +55,6 @@ public class OffertePage extends Component {
         String query = NEXT_BUTTON.getQuery();
         logger().debug("Searching element by " + query);
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.cssSelector(NEXT_BUTTON.getQuery())));
-
     }
 
     public WebElement kalender(){
