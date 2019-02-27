@@ -38,7 +38,7 @@ public class QuoteStatusAPI extends AbstractAPI {
 	        LOGGER.error("Cannot retrieve quote stage status");
 	    }
 
-	return status;
+        return status;
     }
 
     private Response quoteStatus(Cookies cookie, String quoteNumber) throws JsonProcessingException {

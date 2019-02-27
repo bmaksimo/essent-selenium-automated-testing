@@ -35,6 +35,27 @@ public class ContractDetailsAPI extends AbstractAPI {
 
     }
 
+    public String getContractStatus(Cookies cookie, String contractRecordId) throws JsonProcessingException {
+        RequestHelper helper = new RequestHelper();
+        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_CONTRACT_DETAILS_URL) + "/" + contractRecordId + "/" + "readOnly";
+        PayloadMapper mapper = new PayloadMapper();
+        String payload = mapper.createPayload();
+
+        Response contractDetailsResponse = helper.postRequest(STATUS_OK, cookie, payload, path);
+
+        String contractStatus = null;
+
+        if (contractDetailsResponse.getStatusCode() == STATUS_OK) {
+            LOGGER.info("Contract details retreived");
+            contractStatus = contractDetailsResponse.jsonPath().getString("data.model.start_contract_status_c");
+            LOGGER.info("Contract status: " + contractStatus);
+        } else {
+            LOGGER.error("Cannot retrieve contract status");
+        }
+
+        return contractStatus;
+    }
+
     private String getBillingIdFromResponse(Response response) {
         String id = null;
         String part = response.jsonPath().getString("data.model");

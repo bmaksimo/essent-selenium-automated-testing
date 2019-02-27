@@ -1,4 +1,4 @@
-package stepdefinitions.quote.api.model;
+package stepdefinitions.quote.api;
 
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
@@ -11,9 +11,7 @@ import io.restassured.http.Cookies;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.apache.log4j.Logger;
-import stepdefinitions.quote.api.AbstractAPI;
-import stepdefinitions.quote.api.QuoteDetailsAPI;
-import stepdefinitions.quote.api.RequestHelper;
+
 import stepdefinitions.quote.api.model.dto.PayloadDTO;
 import stepdefinitions.quote.api.model.dto.QuoteDetailsDTO;
 import stepdefinitions.quote.api.model.dto.SignContractDTO;

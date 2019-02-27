@@ -13,7 +13,6 @@ import cucumber.api.java.en.When;
 import io.restassured.http.Cookies;
 import stepdefinitions.quote.api.model.ContractDetails;
 import stepdefinitions.quote.api.model.QuoteDetails;
-import stepdefinitions.quote.api.model.SignQuoteModalAPI;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -101,21 +100,15 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
         assertTrue(new ContractsOnAccountAPI().checkIfEanExists(cookie, quoteDetails.getRecordId()));
     }
 
-    @When("^Quote details are recieved$")
-    public void quote_details_are_recieved() throws Throwable {
-
-    }
-
     @When("^Payment detials are recieved$")
     public void payment_detials_are_recieved() throws Throwable {
         this.jbillingId = new ContractDetailsAPI().getPaymentDetails(cookie, quoteDetails.getQuoteId());
-
     }
 
     @Then("^Wait until contract instance starts$")
     public void wait_until_contract_instance_starts() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        String contractStatus = new ContractDetailsAPI().getContractStatus(cookie, contractDetails.getContractRecordId());
+        assertEquals(contractStatus.toLowerCase(), "success");
     }
 
     @Then("^Check if end time is valid$")
