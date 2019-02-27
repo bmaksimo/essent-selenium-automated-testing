@@ -2,7 +2,7 @@ package stepdefinitions.quote.api.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class StatusCheck {
+public class GenericPayload {
 
     @JsonProperty("model")
     private Model model;

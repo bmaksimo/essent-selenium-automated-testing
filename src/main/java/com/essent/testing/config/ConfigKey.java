@@ -141,7 +141,9 @@ public enum ConfigKey {
     CRM_SIGNATURE_UPLOAD_URL("crm.signatureupload.url"),
     CRM_CONTRACTS_ON_ACCOUNT_URL("crm.contractsonaccount.url"),
     CRM_CONTRACTED_EANS_ON_ACCOUNT_URL("crm.contractedeansonaccount.url"),
-    CRM_SIGN_QUOTE_MODAL("crm.signquotemodal.url");
+    CRM_SIGN_QUOTE_MODAL("crm.signquotemodal.url"),
+    CRM_BILLING_DETAILS_URL("crm.billingdetails.url"),
+    CRM_CONTRACT_DETAILS_URL("crm.contractdetails.url");
 
 	private String resourceKey;
     ConfigKey(String resourceKey) {
