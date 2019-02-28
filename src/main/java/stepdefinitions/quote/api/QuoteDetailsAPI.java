@@ -31,6 +31,8 @@ public class QuoteDetailsAPI extends AbstractAPI {
     private final static Logger LOGGER = Logger.getLogger(QuoteDetailsAPI.class);
 
     private static String ean = ConfigProvider.getProperty(ConfigKey.EAN_NUMBER);
+    private static String PATH_TO_QUOTE = ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_QUOTE);
+    private static String PATH_TO_PAYLOAD = ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_PAYLOAD);
 
     public String getTariffSheetID(Cookies cookie) {
     String tariffSheetID = null;
@@ -161,11 +163,11 @@ public class QuoteDetailsAPI extends AbstractAPI {
 	    throws JsonParseException, JsonMappingException, IOException {
 	ObjectMapper mapper = new ObjectMapper();
 
-	String pathToQuote = ResourceUtil.toPath("/data/restassured/model_for_create_quote.json");
+	String pathToQuote = ResourceUtil.toPath(PATH_TO_QUOTE);
 	String jsonQuote = new String(Files.readAllBytes(Paths.get(pathToQuote)));
 	QuoteDetailsDTO quote = mapper.readValue(jsonQuote, QuoteDetailsDTO.class);
 
-	String pathToPayload = ResourceUtil.toPath("/data/restassured/payload_for_create_quote.json");
+	String pathToPayload = ResourceUtil.toPath(PATH_TO_PAYLOAD);
 	String jsonPayload = new String(Files.readAllBytes(Paths.get(pathToPayload)));
 	PayloadDTO payload = mapper.readValue(jsonPayload, PayloadDTO.class);
 	payload.setTariffsheetId(tariffSheetId);

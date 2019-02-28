@@ -32,6 +32,9 @@ public class QuoteSignatureAPI extends AbstractAPI {
 
     private final static Logger LOGGER = Logger.getLogger(QuoteSignatureAPI.class);
 
+    private static String PATH_TO_QUOTE_SIGNATURE = ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_QUOTE_SIGNATURE);
+    private static String PATH_TO_SIGN_QUOTE_MODAL = ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_SIGN_QUOTE_MODAL);
+
     public void setSignatureReceived(Cookies cookie, QuoteDetails quoteDetails) throws IOException {
 	RequestHelper helper = new RequestHelper();
 	String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
@@ -80,7 +83,7 @@ public class QuoteSignatureAPI extends AbstractAPI {
     private String createSignaturePayload(QuoteDetails quoteDetails) throws IOException {
 	ObjectMapper mapper = new ObjectMapper();
 
-	String pathToSignPayload = ResourceUtil.toPath("/data/restassured/payload_for_signature_received.json");
+	String pathToSignPayload = ResourceUtil.toPath(PATH_TO_QUOTE_SIGNATURE);
 	String jsonSignPayload = new String(Files.readAllBytes(Paths.get(pathToSignPayload)));
 	QuoteSignatureDTO signature = mapper.readValue(jsonSignPayload, QuoteSignatureDTO.class);
 
@@ -123,7 +126,7 @@ public class QuoteSignatureAPI extends AbstractAPI {
     private String signQuoteModalPayload(String rowId, String docId) throws JsonParseException, JsonMappingException, IOException {
     ObjectMapper mapper = new ObjectMapper();
 
-    String pathToPayload = ResourceUtil.toPath("/data/restassured/payload_for_sign_quote_modal.json");
+    String pathToPayload = ResourceUtil.toPath(PATH_TO_SIGN_QUOTE_MODAL);
     String jsonPayload = new String(Files.readAllBytes(Paths.get(pathToPayload)));
     SignContractDTO signContract = mapper.readValue(jsonPayload, SignContractDTO.class);
     signContract.getContractModeDTO().setRecordId(rowId);

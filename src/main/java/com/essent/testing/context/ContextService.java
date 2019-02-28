@@ -26,7 +26,8 @@ public class ContextService implements ApplicationContextAware
 
   public static Properties getProperties()
 {
-  return context.getBean("qaProps", Properties.class);
+  Properties props = context.getBean("qaProps", Properties.class);
+  return props;
 }
 
   public static Environment getEnvironment() throws Exception {
