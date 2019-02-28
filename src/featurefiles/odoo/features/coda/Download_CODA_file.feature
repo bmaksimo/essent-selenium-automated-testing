@@ -8,8 +8,8 @@ Scenario: Download CODA file
     When Cleanup Odoo CODA files
     And Odoo top menu is "Accounting"
     And Odoo left menu is "Customers"
-    And Odoo filter is "1000098715"
-    And Column "Account Number" with value "1000098715" is clicked
+    And Odoo filter is "parameter:account-nr"
+    And Column "Account Number" with value "parameter:account-nr" is clicked
     And Button "Journal Items" is clicked
     And Generate CODA in the "1st" row is clicked
 
