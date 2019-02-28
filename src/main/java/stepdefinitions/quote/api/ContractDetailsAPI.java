@@ -9,6 +9,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.restassured.http.Cookies;
 import io.restassured.response.Response;
+import stepdefinitions.quote.api.helper.PayloadMapper;
+import stepdefinitions.quote.api.helper.RequestHelper;
 import stepdefinitions.quote.api.model.ContractDetails;
 import stepdefinitions.quote.api.model.ContractsOnAccount;
 

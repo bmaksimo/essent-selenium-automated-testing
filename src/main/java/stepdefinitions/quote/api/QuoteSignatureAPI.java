@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.restassured.http.Cookies;
 import io.restassured.response.Response;
+import stepdefinitions.quote.api.helper.RequestHelper;
 import stepdefinitions.quote.api.model.QuoteDetails;
 import stepdefinitions.quote.api.model.dto.QuoteSignatureDTO;
 import stepdefinitions.quote.api.model.dto.SignContractDTO;

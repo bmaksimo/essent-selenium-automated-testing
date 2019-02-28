@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.http.Cookies;
 import io.restassured.response.Response;
+import stepdefinitions.quote.api.helper.RequestHelper;
 import stepdefinitions.quote.api.model.IWelcomeLogin;
 
 import org.apache.log4j.Logger;

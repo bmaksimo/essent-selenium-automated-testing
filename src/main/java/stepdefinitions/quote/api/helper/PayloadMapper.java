@@ -1,4 +1,4 @@
-package stepdefinitions.quote.api;
+package stepdefinitions.quote.api.helper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

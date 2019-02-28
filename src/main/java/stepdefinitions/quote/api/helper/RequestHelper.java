@@ -1,4 +1,4 @@
-package stepdefinitions.quote.api;
+package stepdefinitions.quote.api.helper;
 
 import static io.restassured.RestAssured.expect;
 import static org.hamcrest.CoreMatchers.equalTo;
