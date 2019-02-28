@@ -1,6 +1,4 @@
 @DWP
-@B2B
-@REGRESSION
 @CREDIT-AND-CONTROL
 Feature: NUAT-412 part: Create TK1 Contract -> Create / import coda file -> Invoice run
 
@@ -13,6 +11,7 @@ Feature: NUAT-412 part: Create TK1 Contract -> Create / import coda file -> Invo
         When Plus menu is "Sales -> TK1 -> Nieuwe TK1 offerte (B2B) aanmaken"
         And "Ondernemingsnummer" input is "BE0659881595"
         And "Bedrijfsnaam" input is "Test Company B2B"
+        And Clicked on sign X
         And New Quote is saved
 
         When "Tariefdatum" date is "now"
