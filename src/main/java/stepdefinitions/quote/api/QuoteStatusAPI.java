@@ -14,42 +14,36 @@ public class QuoteStatusAPI extends AbstractAPI {
     private final static Logger LOGGER = Logger.getLogger(QuoteStatusAPI.class);
 
     public String checkStatus(Cookies cookie, String quoteNumber) throws JsonProcessingException {
-        String status = null;
-        Response response = quoteStatus(cookie, quoteNumber);
-        if (response.getStatusCode() == STATUS_OK) {
-            LOGGER.info("Quote status retrieved");
-            status = response.jsonPath().getString("data.model.ca_status_c");
-            LOGGER.info("Status: " + status);
-        } else {
-            LOGGER.error("Cannot retrieve quote status");
-        }
+	String status = null;
+	Response response = quoteStatus(cookie, quoteNumber);
 
-        return status;
+	LOGGER.info("Quote status retrieved");
+	status = response.jsonPath().getString("data.model.ca_status_c");
+	LOGGER.info("Status: " + status);
+
+	return status;
     }
 
     public String checkStageStatus(Cookies cookie, String quoteNumber) throws JsonProcessingException {
-        String status = null;
-        Response response = quoteStatus(cookie, quoteNumber);
-        if (response.getStatusCode() == STATUS_OK) {
-            LOGGER.info("Quote stage status retrieved");
-            status = response.jsonPath().getString("data.model.stage");
-            LOGGER.info("Stage Status: " + status);
-	    } else {
-	        LOGGER.error("Cannot retrieve quote stage status");
-	    }
+	String status = null;
+	Response response = quoteStatus(cookie, quoteNumber);
+
+	LOGGER.info("Quote stage status retrieved");
+	status = response.jsonPath().getString("data.model.stage");
+	LOGGER.info("Stage Status: " + status);
 
         return status;
     }
 
     private Response quoteStatus(Cookies cookie, String quoteNumber) throws JsonProcessingException {
-        RequestHelper helper = new RequestHelper();
-        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
-                + ConfigProvider.getProperty(ConfigKey.CRM_QUOTE_STATUS_URL) + "/" + quoteNumber + "/" + "readOnly";
-        PayloadMapper mapper = new PayloadMapper();
-        String payload = mapper.createPayload();
+	RequestHelper helper = new RequestHelper();
+	String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
+		+ ConfigProvider.getProperty(ConfigKey.CRM_QUOTE_STATUS_URL) + "/" + quoteNumber + "/" + "readOnly";
+	PayloadMapper mapper = new PayloadMapper();
+	String payload = mapper.createPayload();
 
-        Response response = helper.postRequest(STATUS_OK, cookie, payload, path);
-        return response;
+	Response response = helper.postRequest(STATUS_OK, cookie, payload, path);
+	return response;
     }
 
 }

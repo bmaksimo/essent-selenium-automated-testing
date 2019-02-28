@@ -13,8 +13,9 @@ import io.restassured.http.Cookies;
 import stepdefinitions.quote.api.model.ContractDetails;
 import stepdefinitions.quote.api.model.QuoteDetails;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
 
 import java.util.concurrent.TimeUnit;
 
@@ -31,86 +32,97 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     @Before("@API")
     public void setupTest(Scenario scenario) throws Throwable {
-        registerActiveScenario(scenario);
+	registerActiveScenario(scenario);
     }
+
     @Given("^I login to iWelcome as \"([^\"]*)\"$")
     public void i_login_to_iWelcome_as(String username) throws Throwable {
-        String password = ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_SOAPUI_B2C);
-        this.cookie = new IWelcomeLoginAPI().getCookie(username, password);
+	String password = ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_SOAPUI_B2C);
+	this.cookie = new IWelcomeLoginAPI().getCookie(username, password);
     }
 
     @Given("^\"([^\"]*)\" flow is started$")
     public void flow_is_started(String arg1) throws Throwable {
-        this.tariffSheetID = new QuoteBTCAPI().getTariffSheetID(cookie);
+	this.tariffSheetID = new QuoteBTCAPI().getTariffSheetID(cookie);
     }
 
     @When("^Data is prepared for Create qoute request for \"([^\"]*)\"$")
     public void data_is_prepared_for_Create_qoute_request_for(String arg1) throws Throwable {
-        this.quoteDetails = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID);
+	this.quoteDetails = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID);
     }
 
     @When("^New tc(\\d+)_quote is created$")
     public void new_tc__quote_is_created(int arg1) throws Throwable {
-        String retreivedQuoteNumber = new QuoteDetailsAPI().getQuoteNumber(cookie, quoteDetails.getRecordId());
-        assertEquals(quoteDetails.getQuoteNumber(),retreivedQuoteNumber);
+	String retreivedQuoteNumber = new QuoteDetailsAPI().getQuoteNumber(cookie, quoteDetails.getRecordId());
+	// assertEquals(quoteDetails.getQuoteNumber(),retreivedQuoteNumber);
+	assertThat(retreivedQuoteNumber, is(equalTo(quoteDetails.getQuoteNumber())));
     }
 
     @Then("^Quote status is \"([^\"]*)\"$")
     public void quote_status_is(String arg1) throws Throwable {
-        String status = new QuoteStatusAPI().checkStatus(cookie, quoteDetails.getQuoteId());
-        assertEquals(arg1.toLowerCase(), status.toLowerCase());
+	String status = new QuoteStatusAPI().checkStatus(cookie, quoteDetails.getQuoteId());
+	// assertEquals(arg1.toLowerCase(), status.toLowerCase());
+	assertThat(status.toLowerCase(), is(equalTo(arg1.toLowerCase())));
     }
 
     @Then("^Quoteline exists$")
     public void quoteline_exists() throws Throwable {
-        boolean eanExists = new QuoteLineAPI().checkIfEANexists(cookie, quoteDetails.getQuoteId());
-        assertEquals(true, eanExists);
+	boolean eanExists = new QuoteLineAPI().checkIfEANexists(cookie, quoteDetails.getQuoteId());
+	// assertEquals(true, eanExists);
+	assertThat(eanExists, is(true));
     }
 
     @Then("^Quoteline status is \"([^\"]*)\"$")
     public void quoteline_status_is(String arg1) throws Throwable {
 	String status = new QuoteLineAPI().getStatus(cookie, quoteDetails.getQuoteId());
-        assertEquals(arg1.toLowerCase(),status.toLowerCase());
+	// assertEquals(arg1.toLowerCase(),status.toLowerCase());
+	assertThat(status.toLowerCase(), is(equalTo(arg1.toLowerCase())));
     }
 
     @When("^Simulation that customer signature is recieved$")
     public void simulation_that_customer_signature_is_recieved() throws Throwable {
-        new QuoteSignatureAPI().setSignatureReceived(cookie, quoteDetails);
+	new QuoteSignatureAPI().setSignatureReceived(cookie, quoteDetails);
     }
 
     @Then("^Quote stage status is \"([^\"]*)\"$")
     public void quote__stage_status_is(String arg1) throws Throwable {
-        String status = new QuoteStatusAPI().checkStageStatus(cookie, quoteDetails.getQuoteId());
-        assertEquals(arg1.toLowerCase(), status.toLowerCase());
+	String status = new QuoteStatusAPI().checkStageStatus(cookie, quoteDetails.getQuoteId());
+	// assertEquals(arg1.toLowerCase(), status.toLowerCase());
+	assertThat(status.toLowerCase(), is(equalTo(arg1.toLowerCase())));
     }
+
     @When("^File is uploaded as scanned signature$")
     public void file_is_uploaded_as_scanned_signature() throws Throwable {
-        this.docId = new UploadSignatureAPI().uploadSignature(cookie, quoteDetails);
+	this.docId = new UploadSignatureAPI().uploadSignature(cookie, quoteDetails);
     }
 
     @Then("^Signin is confirmed$")
     public void signin_is_confirmed() throws Throwable {
-        new SignQuoteModalAPI().confirmSigning(cookie, quoteDetails.getQuoteId(), docId);
+	new SignQuoteModalAPI().confirmSigning(cookie, quoteDetails.getQuoteId(), docId);
     }
 
     @Then("^Contract is created$")
     public void contract_is_created() throws Throwable {
-        this.contractDetails = new ContractsOnAccountAPI().getContractDetails(cookie, quoteDetails.getRecordId());
+	this.contractDetails = new ContractsOnAccountAPI().getContractDetails(cookie, quoteDetails.getRecordId());
     }
 
     @Then("^Contracted EAN exists on account$")
     public void contracted_EAN_exists_on_account() throws Throwable {
-        assertTrue(new ContractsOnAccountAPI().checkIfEanExists(cookie, quoteDetails.getRecordId()));
+
+	// assertTrue(new ContractsOnAccountAPI().checkIfEanExists(cookie,
+	// quoteDetails.getRecordId()));
+	assertThat(new ContractsOnAccountAPI().checkIfEanExists(cookie, quoteDetails.getRecordId()), is(true));
     }
 
     @When("^Payment detials are recieved$")
     public void payment_detials_are_recieved() throws Throwable {
-        this.jbillingId = new ContractDetailsAPI().getPaymentDetails(cookie, quoteDetails.getQuoteId());
+	this.jbillingId = new ContractDetailsAPI().getPaymentDetails(cookie, quoteDetails.getQuoteId());
     }
 
     @Then("^Wait until contract instance starts$")
     public void wait_until_contract_instance_starts() throws Throwable {
-        await().pollInterval(5, TimeUnit.SECONDS).atMost(600, TimeUnit.SECONDS).until(AsyncExecutor.isStatusSuccessfull(cookie, contractDetails));
+	await().pollInterval(5, TimeUnit.SECONDS).atMost(600, TimeUnit.SECONDS)
+		.until(AsyncExecutor.isStatusSuccessfull(cookie, contractDetails));
     }
 
 }
