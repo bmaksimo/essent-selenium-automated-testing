@@ -26,7 +26,7 @@ public class ContractsSteps extends DwpScenario {
 
 
     @When("^Input in \"([^\"]*)\" is \"([^\"]*)\"$")
-    public void inputInModuleIs(String label, String input) throws Throwable {
+    public void inputInModuleIs(String label, String input) {
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(3);
         ContractenPage contractenPage = new ContractenPage();
@@ -34,7 +34,7 @@ public class ContractsSteps extends DwpScenario {
     }
 
     @And("^Check toggle \"([^\"]*)\"$")
-    public void checkToggle(String label) throws Throwable {
+    public void checkToggle(String label) {
         ContractenPage contractenPage = new ContractenPage();
         contractenPage.turnOnTestingAndMarketMock(label);
     }
@@ -68,56 +68,56 @@ public class ContractsSteps extends DwpScenario {
     }
 
     @And("^\"([^\"]*)\" input in omschrijving$")
-    public void inputInOmschrijving(String text) throws Throwable {
+    public void inputInOmschrijving(String text) {
         ContractenPage contractenPage = new ContractenPage();
         contractenPage.inputText(text);
     }
 
     @And("^Offertes plus options is \"([^\"]*)\"$")
-    public void sendEMailToCustomer(String test) throws Throwable {
+    public void sendEMailToCustomer(String test) {
         ContractenPage contractenPage = new ContractenPage();
         contractenPage.sendEmailToCustomer(test);
     }
 
     @And("^List option is \"([^\"]*)\"$")
-    public void openInvoiceOnly(String option) throws Throwable {
+    public void openInvoiceOnly(String option)  {
         ContractenPage contractenPage = new ContractenPage();
         contractenPage.openListOption(option);
     }
 
     @Then("^Payment delayed$")
-    public void paymentDelayed() throws Throwable {
+    public void paymentDelayed() {
         ContractenPage contractenPage = new ContractenPage();
         contractenPage.checkPayDate();
     }
 
     @And("^Find \"([^\"]*)\" facture and \"([^\"]*)\"$")
-    public void findFactureAnd(String type, String option) throws Throwable {
+    public void findFactureAnd(String type, String option) {
         ContractenPage contractenPage = new ContractenPage();
         contractenPage.findIssuedAndPayDelay(type, option);
     }
 
     @Then("^Validate bank account was changed on \"([^\"]*)\"$")
-    public void validateBankAccountWasChangedOn(String iban) throws Throwable {
+    public void validateBankAccountWasChangedOn(String iban) {
         String inputIban = parameterProvider.getValueOrParameterAsString(iban);
         ContractenPage contractenPage = new ContractenPage();
         contractenPage.findIban(inputIban);
     }
 
     @And("^Get Contract Ean Code$")
-    public void getEanCode() throws Throwable {
+    public void getEanCode() {
         String eanCode = seleniumDriver.findElementWhenVisible(By.xpath("(//h5)[1]")).getText();
         parameterProvider.put("contractEanCode", eanCode);
     }
 
     @Then("^Save changes$")
-    public void saveChanges() throws Throwable {
+    public void saveChanges() {
         ContractPage contractenPage = new ContractPage();
-        contractenPage.saveButtton();
+        contractenPage.saveButton();
     }
 
     @Then("^Confirm contract with ean \"([^\"]*)\" was copied$")
-    public void confirmContractWithEanWasCopied(String eanCode) throws Throwable {
+    public void confirmContractWithEanWasCopied(String eanCode) {
         seleniumDriver.waitForRequestsToFinish();
         String inputEanCode = parameterProvider.getValueOrParameterAsString(eanCode);
         logger().info("input EAN CODE: " + inputEanCode);
@@ -128,11 +128,9 @@ public class ContractsSteps extends DwpScenario {
      * @deprecated - use generic '"1st" list element has cell value "value" at column "columnName"'
      */
     @Then("^Get Contract Number$")
-    @Deprecated
-    public void searchForContractNumber() throws Throwable {
-        String contractNumber = seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"account_number_c\"]/div")).getText();
-        parameterProvider.put("contractNumber", contractNumber);
-
+    public void searchForContractNumber() {
+        ContractPage contractenPage = new ContractPage();
+        parameterProvider.put("contractNumber", contractenPage.getContractNumber());
     }
 
 
@@ -152,9 +150,36 @@ public class ContractsSteps extends DwpScenario {
     }
 
     @Then("^Get Company Number$")
-    public void searchForCompanyNumber() throws Throwable {
-        String companyNumber = seleniumDriver.findElementWhenVisible(By.xpath("//*//*[@id=\"company-number-c-field\"]")).getText();
+    public void searchForCompanyNumber() {
+        ContractPage cp = new ContractPage();
+        String companyNumber = cp.getCompanyNumber();
         parameterProvider.put("companyNumber", companyNumber);
+
+    }
+
+    @And("^Sign place is \"([^\"]*)\"$")
+    public void signPlaceIs(String place) {
+        ContractPage cp = new ContractPage();
+        cp.confirmTheSign(place);
+      }
+
+    @Then("^Populate Soctar with dates \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void searchForAttestDate(String startDate, String attestDate) throws Throwable {
+        ContractPage contractenPage = new ContractPage();
+        String sd = parameterProvider.getValueOrParameterAsString(startDate);
+        String ad = parameterProvider.getValueOrParameterAsString(attestDate);
+
+        String StartDateByQuarter = contractenPage.getQuarterForChosenStartDate(sd, ad);
+        String EndDateByYear = contractenPage.getLastDayOfYear(sd, ad);
+        parameterProvider.put("EndDateByYear", EndDateByYear);
+        parameterProvider.put("StartDateByQuarter", StartDateByQuarter);
+    }
+
+    @Then("^Get Start Date$")
+    public void searchForStartDate() throws Throwable {
+        ContractPage contractenPage = new ContractPage();
+        String startDate = contractenPage.getStartDate();
+        parameterProvider.put("startDate", startDate);
 
     }
 
