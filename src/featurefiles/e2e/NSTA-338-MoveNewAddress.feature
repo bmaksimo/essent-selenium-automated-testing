@@ -36,8 +36,7 @@ Feature: NSTA - 388 Move new address
         And Electricity EAN code is "random"
         And "Meternummer" input is "1000"
         And Option "test" is On
-        And Bevestigen
-        And Changes are confirmed
+        And Connection details are confirmed
         Then Form header is "Billing details"
 
         When "Betalingswijze" selection is "Overschrijving"
@@ -49,7 +48,7 @@ Feature: NSTA - 388 Move new address
         And "Datum ondertekening" date is "now"
         And Quote is signed
         And Sign place is "Kontich"
-        Then Bevestigen
+        When Quote is confirmed
 
         When Dashboard menu is "Marktberichten"
         Then View List is empty
