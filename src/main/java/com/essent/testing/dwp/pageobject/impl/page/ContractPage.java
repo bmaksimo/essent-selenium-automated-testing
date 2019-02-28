@@ -3,52 +3,54 @@ package com.essent.testing.dwp.pageobject.impl.page;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
+
 public class ContractPage extends Component {
 
-    public WebElement startData(){
+    public WebElement startData() {
         return seleniumDriver.findElementWhenVisible(By.id("contract-start-date-field"));
     }
+
     String pattern = "dd/MM/yyyy";
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
     String date = simpleDateFormat.format(new Date());
 
-    public void startDateIsToday()throws InterruptedException {
-        seleniumDriver.waitAndSendKeys(startData(),"date");
+    public void startDateIsToday() throws InterruptedException {
+        seleniumDriver.waitAndSendKeys(startData(), "date");
     }
 
-    public void saveButtton()throws InterruptedException {
+    public void saveButtton() throws InterruptedException {
         seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("primaryButton")));
     }
 
-    public String getClientNumber()throws InterruptedException {
+    public String getClientNumber() throws InterruptedException {
         return seleniumDriver.findElementWhenVisible(By.xpath("//blue-sidebar//h4")).getText();
     }
 
-    public void selectAccount(){
+    public void selectAccount() {
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"account-id-field\"]//span[2]")));
     }
 
-    public void searchByClientNuiber(String nubmer)throws InterruptedException{
-        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id("search-input")),nubmer);
+    public void searchByClientNuiber(String nubmer) throws InterruptedException {
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id("search-input")), nubmer);
     }
 
     public void clickOnPlusMeniInTable(String row, String table) {
         seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.waitAndClick(seleniumDriver.findElementOrNull(By.xpath("(//list[@list-key='"+table+"']//tbody[@id='rows']//list-plus-cell//a[@class='show-actions icon-plus'])["+row+"]")));
+        seleniumDriver.waitAndClick(seleniumDriver.findElementOrNull(By.xpath("(//list[@list-key='" + table + "']//tbody[@id='rows']//list-plus-cell//a[@class='show-actions icon-plus'])[" + row + "]")));
     }
-    public String getActiveContractEAN(){
+
+    public String getActiveContractEAN() {
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"rows\"]//list-link-bold-top-two-liner-cell//a/h5")).getText();
     }
 
-    public String status(){
+    public String status() {
         return seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"rows\"]/tr[1]/td[2]/list-simple-two-liner-cell/p/span[1]")).getText();
     }
 
@@ -97,7 +99,7 @@ public class ContractPage extends Component {
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"leads-contact-details-contact-details-phone-type-work-phone-contact-details-type-phone-contact-details-value-field\"]")), telephone);
     }
 
-    public void setName (String fname, String lname) throws Throwable {
+    public void setName(String fname, String lname) throws Throwable {
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"first-name-field\"]")), fname);
         Thread.sleep(2000);
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"last-name-field\"]")), lname);
@@ -120,13 +122,129 @@ public class ContractPage extends Component {
     }
 
     public void checkInvoiceOpenBalance(String key) {
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-checkbox-cell[@list-key='"+key+"']")));
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-checkbox-cell[@list-key='" + key + "']")));
     }
 
-    public String getActiveContractEndDate(){
+    public String getActiveContractEndDate() {
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"rows\"]/tr[1]/td[5]/list-simple-two-liner-cell/p/span[2]")).getText();
     }
 
+    public String getStartDate() {
+        seleniumDriver.waitForRequestsToFinish();
+        String startDate = seleniumDriver.findElementWhenVisible(By.xpath("//td[@class='list__cell cell__text'][4]//p/span[1]")).getText();
+        return startDate;
+    }
+
+
+    public String getQuarterForChosenStartDate(String startDate, String attestDate) {
+        String str[] = startDate.split("-");
+        Integer monthStartDate = Integer.parseInt(str[1]);
+        String yearStartDate = str[2];
+
+        String str2[] = attestDate.split("/");
+        String yearAttestDate = str2[2];
+
+        String quarterEndMonth;
+
+
+        if (startDate.compareTo(attestDate)>0) {
+            if (monthStartDate <= 3) {
+                quarterEndMonth = "03";
+            }
+
+            else if (monthStartDate >= 4 && monthStartDate <= 6) {
+                quarterEndMonth = "06";
+            }
+            else if (monthStartDate >= 7 && monthStartDate <= 9) {
+                quarterEndMonth = "09";
+            }
+            else{
+                quarterEndMonth = "12";
+            }
+        }
+        else if (startDate.compareTo(attestDate)<0)
+        {
+             if (yearStartDate.compareTo(yearAttestDate)<0) {
+                 quarterEndMonth = "01";
+
+             }
+             else {
+                 if (monthStartDate <= 3) {
+                     quarterEndMonth = "03";
+
+                 }
+
+                 else if (monthStartDate >= 4 && monthStartDate <= 6) {
+                     quarterEndMonth = "06";
+
+                 }
+
+                 else if (monthStartDate >= 7 && monthStartDate <= 9) {
+                     quarterEndMonth = "09";
+
+                 }
+
+                 else{
+                     quarterEndMonth = "12";
+
+                 }
+
+             }
+            yearStartDate = yearAttestDate;
+        }
+
+        else {
+            if (monthStartDate <= 3) {
+                quarterEndMonth = "03";
+            }
+
+            else if (monthStartDate >= 4 && monthStartDate <= 6) {
+                quarterEndMonth = "06";
+            }
+
+            else if (monthStartDate >= 7 && monthStartDate <= 9) {
+                quarterEndMonth = "09";
+            }
+
+            else{
+                quarterEndMonth = "12";
+            }
+
+        }
+
+            StringBuilder builder = new StringBuilder();
+
+            builder.append(date);
+            builder.replace(0, builder.length(), "01/");
+            builder.append(quarterEndMonth + "/");
+            builder.append(yearStartDate);
+            String quarterDate = builder.toString();
+
+            return quarterDate;
+
+    }
+
+
+    public String getLastDayOfYear(String startDate, String attestDate) {
+
+        String str[] = startDate.split("-");
+        String str2[] = attestDate.split("/");
+
+        String yearStartDate = str[2];
+        String yearAttestDate = str2[2];
+
+        if (startDate.compareTo(attestDate)<0)
+        {
+            yearStartDate = yearAttestDate;
+        }
+
+        StringBuilder builder = new StringBuilder();
+        builder.append(startDate);
+        builder.replace(0,builder.length(),"31/12/");
+        builder.append(yearStartDate);
+        String endDate = builder.toString();
+        return endDate;
+    }
 
 }
