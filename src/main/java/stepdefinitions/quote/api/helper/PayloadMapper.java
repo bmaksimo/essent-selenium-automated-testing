@@ -1,4 +1,4 @@
-package stepdefinitions.quote.api;
+package stepdefinitions.quote.api.helper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,6 +6,10 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import stepdefinitions.quote.api.model.GenericPayload;
 
+/**
+ * @author n.grkavac
+ *
+ */
 public class PayloadMapper {
 
     public String createPayload() throws JsonProcessingException {
