@@ -2,8 +2,10 @@
 @B2B
 @REGRESSION
 @JBILLING
+@NUAT-510
 Feature: NUAT-510 Triggering advance invoice run. Check is invoice created in DWP and jbilling
 
+    @NUAT-510-01
     Scenario: Trigger Invoice run process
 		Given I logged in to DWP as "billing.testautomation@essent.be"
         When Left menu is "billing"
@@ -33,6 +35,7 @@ Feature: NUAT-510 Triggering advance invoice run. Check is invoice created in DW
         And "1st" List element with value at column "ID & Type" is checked
 
     # JBilling
+    @NUAT-510-02
 	Scenario: Check invoices and orders in JBilling
         Given I logged in to JBilling as "billing_testautomation"
         When JBilling top menu item is "Customers"

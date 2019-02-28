@@ -1,16 +1,13 @@
 @DWP
-@B2B
 @BUSINESS-DESK
 @LONGDURATION
-@NUAT-550
-
 Feature: NUAT-550 Send manual cancel drop
 #@REGRESSION duplicate of NUAT-479
 
     Background:
         Given  I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
-
-    Scenario:
+    @NUAT-550
+    Scenario: Send manual drop
         When Left menu is "sales-marketing"
         And Top menu item is "Klanten"
         And Top action is "Filters"

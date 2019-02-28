@@ -30,8 +30,8 @@ import java.util.Map;
 import java.util.Objects;
 
 import static com.billinghouse.test_automation.util.gherkin.DateTimeFormatUtil.printPeriod;
-import static org.junit.Assert.fail;
 import static com.essent.testing.selenium.helper.fluent_wait.FluentWaitUtil.createWaiter;
+import static org.junit.Assert.fail;
 
 public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner {
 

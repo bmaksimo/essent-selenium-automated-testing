@@ -24,7 +24,7 @@ Feature: NUAT-373: End Of Contract For Bankruptcy - nl_BE, NUAT-479: DROP For A 
 
     @NUAT-373
     @END-CONTRACT-FOR-BANKRUPTCY
-    Scenario: End of contract for bankruptcy
+    Scenario: NUAT-373 End of contract for bankruptcy
         When "Module" selection is "INITIATE STOP ACCESS"
         And  "Label" selection is "Non-Residential End-of-Contract"
         And Option "Testing?" is On
@@ -36,7 +36,7 @@ Feature: NUAT-373: End Of Contract For Bankruptcy - nl_BE, NUAT-479: DROP For A 
 
     @NUAT-479
     @NON-RESIDENTIAL-DROP
-    Scenario: DROP for a Non-residential client
+    Scenario: NUAT-479 DROP for a Non-residential client
         When "Module" selection is "INITIATE STOP ACCESS"
         And  "Label" selection is "Drop/Request Budget Meter"
         And Option "Testing?" is On
@@ -47,7 +47,7 @@ Feature: NUAT-373: End Of Contract For Bankruptcy - nl_BE, NUAT-479: DROP For A 
 
     @NUAT-480
     @END-CONTRACT-DWP
-    Scenario: End of contract via DWP
+    Scenario: NUAT-480 End of contract via DWP
         When "Module" selection is "INITIATE STOP ACCESS"
         And  "Label" selection is "Non-Residential End-of-Contract"
         And "Effective Date" date is "1 month from now"

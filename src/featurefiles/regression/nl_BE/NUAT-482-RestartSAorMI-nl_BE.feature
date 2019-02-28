@@ -7,6 +7,7 @@ Feature: NUAT-482: Restart SA or MI - nl_BE
     Background:
         Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
 
+    @NUAT-482
     Scenario: Restart for SA Or MI
         When Left menu is "sales-marketing"
         And Top menu item is "Marktberichten"

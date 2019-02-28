@@ -2,8 +2,6 @@
 @B2B
 @REGRESSION
 @CREDIT-AND-CONTROL
-@NUAT-558
-
 Feature: NUAT-558: Check status of customer with Customer Acceptance Tool
 
     Background: Given B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"

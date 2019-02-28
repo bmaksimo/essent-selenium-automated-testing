@@ -2,12 +2,12 @@
 @B2B
 @REGRESSION
 @BUSINESS-DESK
-
 Feature: NUAT-490: Handle Task For Cancel - nl_BE
 
     Background:
         Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
 
+    @NUAT-490
     Scenario: Handle task for canceling
         When Left menu is "Werkbakken"
         And Top action is "Filters"

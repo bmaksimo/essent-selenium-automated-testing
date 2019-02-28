@@ -7,6 +7,7 @@ Feature: NUAT-433: Log Questions Of Customers - en_BE
     Background:
         Given  I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
 
+    @NUAT-433
     Scenario: Log questions of customers
         When Left menu is "sales-marketing"
         And  Top menu item is "Klanten"

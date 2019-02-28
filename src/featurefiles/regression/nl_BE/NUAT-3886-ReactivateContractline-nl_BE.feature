@@ -2,12 +2,13 @@
 @REGRESSION
 @B2B
 @LONGDURATION
-Feature: NUAT-3886-Reactivate contractline
+Feature: NUAT-3886 Reactivate contractline
 
     Background:
         Given  I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
 
-    Scenario:
+    @NUAT-3886
+    Scenario: Reactivate contract line
         When Left menu is "sales-marketing"
         And Top menu item is "Klanten"
         And Top action is "Filters"

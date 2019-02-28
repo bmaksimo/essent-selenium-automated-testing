@@ -11,7 +11,6 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static com.essent.testing.selenium.helper.fluent_wait.FluentWaitUtil.createPollingWaiter;
-import static com.essent.testing.selenium.helper.fluent_wait.FluentWaitUtil.createWaiter;
 
 public abstract class RegisteredScenario {
 

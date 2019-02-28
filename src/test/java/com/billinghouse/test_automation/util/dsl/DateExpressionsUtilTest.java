@@ -1,7 +1,5 @@
 package com.billinghouse.test_automation.util.dsl;
 
-import com.essent.testing.config.ConfigKey;
-import com.essent.testing.config.ConfigProvider;
 import org.junit.Test;
 
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.*;
@@ -33,7 +31,7 @@ public class DateExpressionsUtilTest {
     public void testConvertDateFormat() throws Exception {
         String expectedDwpDate = "30/09/2019";
         String actual = toDwpDate("2019-09-30");
-        assertEquals(String.format("Actual DWP date '%s' differs from the expected '%s'", actual, expectedDwpDate), expectedDwpDate, actual);
+        assertEquals(String.format("Actual DWP date \"%s\" differs from the expected \"%s\"", actual, expectedDwpDate), expectedDwpDate, actual);
     }
 
     @Test
