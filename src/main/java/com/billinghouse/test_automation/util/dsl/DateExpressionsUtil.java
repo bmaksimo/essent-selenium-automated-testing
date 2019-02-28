@@ -79,6 +79,15 @@ public class DateExpressionsUtil {
             return dateBuilder.toString();
         }
     }
+    public static String checkAndConvertToDwpContracEndDate(String input) throws CucumberException {
+        if(matchesDwpDateFormat(input)) {
+            return buildContractStartEndDate(input);
+        }
+        else {
+            StringBuilder dateBuilder = new StringBuilder(expandFrom(input).toString(DWP_SRART_END_DATE_FORMAT));
+            return dateBuilder.toString();
+        }
+    }
 
     private static String buildContractStartEndDate(String input) {
         StringBuilder dateBuilder = new StringBuilder();
