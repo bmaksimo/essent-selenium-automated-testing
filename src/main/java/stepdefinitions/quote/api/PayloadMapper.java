@@ -6,6 +6,10 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import stepdefinitions.quote.api.model.GenericPayload;
 
+/**
+ * @author n.grkavac
+ *
+ */
 public class PayloadMapper {
 
     public String createPayload() throws JsonProcessingException {

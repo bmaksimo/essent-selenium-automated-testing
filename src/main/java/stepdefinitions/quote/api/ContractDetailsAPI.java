@@ -12,6 +12,10 @@ import io.restassured.response.Response;
 import stepdefinitions.quote.api.model.ContractDetails;
 import stepdefinitions.quote.api.model.ContractsOnAccount;
 
+/**
+ * @author n.grkavac
+ *
+ */
 public class ContractDetailsAPI extends AbstractAPI {
 
     private final static Logger LOGGER = Logger.getLogger(ContractDetailsAPI.class);

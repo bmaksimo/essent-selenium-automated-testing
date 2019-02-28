@@ -21,6 +21,10 @@ import java.util.concurrent.TimeUnit;
 
 import static org.awaitility.Awaitility.*;
 
+/**
+ * @author n.grkavac
+ *
+ */
 public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     private Cookies cookie;

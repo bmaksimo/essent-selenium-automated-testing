@@ -24,6 +24,10 @@ import stepdefinitions.quote.api.model.QuoteDetails;
 import stepdefinitions.quote.api.model.dto.QuoteSignatureDTO;
 import stepdefinitions.quote.api.model.dto.SignContractDTO;
 
+/**
+ * @author n.grkavac
+ *
+ */
 public class QuoteSignatureAPI extends AbstractAPI {
 
     private final static Logger LOGGER = Logger.getLogger(QuoteSignatureAPI.class);

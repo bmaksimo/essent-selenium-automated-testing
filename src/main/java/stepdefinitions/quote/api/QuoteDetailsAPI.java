@@ -22,6 +22,10 @@ import stepdefinitions.quote.api.model.QuotesOnAccount;
 import stepdefinitions.quote.api.model.dto.PayloadDTO;
 import stepdefinitions.quote.api.model.dto.QuoteDetailsDTO;
 
+/**
+ * @author n.grkavac
+ *
+ */
 public class QuoteDetailsAPI extends AbstractAPI {
 
     private final static Logger LOGGER = Logger.getLogger(QuoteDetailsAPI.class);

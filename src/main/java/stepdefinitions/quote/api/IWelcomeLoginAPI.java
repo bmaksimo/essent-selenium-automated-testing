@@ -11,6 +11,10 @@ import stepdefinitions.quote.api.model.IWelcomeLogin;
 
 import org.apache.log4j.Logger;
 
+/**
+ * @author n.grkavac
+ *
+ */
 public class IWelcomeLoginAPI extends AbstractAPI {
 
     private final static Logger LOGGER = Logger.getLogger(IWelcomeLoginAPI.class);
