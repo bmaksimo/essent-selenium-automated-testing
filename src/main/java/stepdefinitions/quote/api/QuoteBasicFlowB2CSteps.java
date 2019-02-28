@@ -4,7 +4,6 @@ import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.restassured.B2CCreateContractScenario;
 
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
@@ -13,11 +12,14 @@ import cucumber.api.java.en.When;
 import io.restassured.http.Cookies;
 import stepdefinitions.quote.api.model.ContractDetails;
 import stepdefinitions.quote.api.model.QuoteDetails;
-import stepdefinitions.quote.api.model.SignQuoteModalAPI;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
+
+import java.util.concurrent.TimeUnit;
+
+import static org.awaitility.Awaitility.*;
 
 public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
@@ -115,13 +117,12 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     @When("^Payment detials are recieved$")
     public void payment_detials_are_recieved() throws Throwable {
 	this.jbillingId = new ContractDetailsAPI().getPaymentDetails(cookie, quoteDetails.getQuoteId());
-
     }
 
     @Then("^Wait until contract instance starts$")
     public void wait_until_contract_instance_starts() throws Throwable {
-	// Write code here that turns the phrase above into concrete actions
-	throw new PendingException();
+	await().pollInterval(5, TimeUnit.SECONDS).atMost(600, TimeUnit.SECONDS)
+		.until(AsyncExecutor.isStatusSuccessfull(cookie, contractDetails));
     }
 
 }

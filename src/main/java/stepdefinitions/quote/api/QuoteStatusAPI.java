@@ -32,7 +32,7 @@ public class QuoteStatusAPI extends AbstractAPI {
 	status = response.jsonPath().getString("data.model.stage");
 	LOGGER.info("Stage Status: " + status);
 
-	return status;
+        return status;
     }
 
     private Response quoteStatus(Cookies cookie, String quoteNumber) throws JsonProcessingException {

@@ -23,5 +23,5 @@ Scenario: Check basic Quote creation flow B2C
 	And Contracted EAN exists on account
 
 	When Payment detials are recieved
-#	Then Wait until contract instance starts
+	Then Wait until contract instance starts
 

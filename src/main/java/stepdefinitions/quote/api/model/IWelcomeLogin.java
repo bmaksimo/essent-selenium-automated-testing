@@ -1,10 +1,10 @@
-package stepdefinitions.quote.api;
+package stepdefinitions.quote.api.model;
 
-public class iWelcomeLogin {
+public class IWelcomeLogin {
     private String username;
     private String password;
 
-    public iWelcomeLogin(String userId_m, String password_m){
+    public IWelcomeLogin(String userId_m, String password_m){
          this.username = userId_m;
          this.password = password_m;
     }
