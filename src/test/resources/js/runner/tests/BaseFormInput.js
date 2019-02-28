@@ -13,7 +13,7 @@
 class BaseFormInput extends TestRunnerBase {
 
     constructor(options, callback) {
-        super(options, callback, 500);
+        super(options, callback, 2000);
     }
 
     run() {
@@ -30,13 +30,14 @@ class BaseFormInput extends TestRunnerBase {
         if(elements.length >= 0) {
             let input = $(elements[0]).find("input, select");
             if(input.length > 0) {
+                this.applyInput(input, value);
                 let success = this.applyInput(input, value);
                 if(success) {
                     result.status = "PASSED";
                     result.reason = '';
                 } else {
                     result.status = "FAILED";
-                    result.reason = 'Input value was rejected';
+                    result.reason = 'Input value  rejected or wasn\'t set';
                 }
             } else {
                 result.status = "FAILED";
@@ -51,6 +52,6 @@ class BaseFormInput extends TestRunnerBase {
 
     applyInput(input, value) {
         input.val(value).trigger("change");
-        return true;
+        return input.val() === value;
     }
 }

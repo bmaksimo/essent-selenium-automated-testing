@@ -28,7 +28,8 @@ public class InputElements extends DwpScenario {
     private class ApplyInput implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
-            return executeJavascriptTest("BaseFormInput", options);
+            boolean success = executeJavascriptTest("BaseFormInput", options);
+            return success;
         }
     }
     private class ApplySelection implements Predicate<Map> {

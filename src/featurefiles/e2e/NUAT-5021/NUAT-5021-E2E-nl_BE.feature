@@ -80,6 +80,7 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And Field "City" input is "Kontich"
 
         And EAN code is generated
+        And "EAN-code" input is "parameter:EAN-code-generated"
         And "Startdatum" date is "2 months from now"
         And "EAN-code" input is "parameter:EAN-code-generated"
         And Connection details are confirmed
