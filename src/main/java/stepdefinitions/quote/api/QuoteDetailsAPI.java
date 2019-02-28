@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
+import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
 import com.essent.testing.util.resource.ResourceUtil;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -32,7 +33,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
     private final static Logger LOGGER = Logger.getLogger(QuoteDetailsAPI.class);
 
-    private static String ean = ConfigProvider.getProperty(ConfigKey.EAN_NUMBER);
+    private static String ean = PrepareDataForContract.generateEAN();
     private static String PATH_TO_QUOTE = ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_QUOTE);
     private static String PATH_TO_PAYLOAD = ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_PAYLOAD);
 
@@ -150,7 +151,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
     String payload = createQuoteLinesPayload(quoteId);
 
     Response statusResponse = helper.postRequest(STATUS_OK, cookie, payload, path);
-
+    LOGGER.info("Used EAN: " + ean);
     boolean eanExists = false;
 
     LOGGER.info("Quotelines retrieved");
