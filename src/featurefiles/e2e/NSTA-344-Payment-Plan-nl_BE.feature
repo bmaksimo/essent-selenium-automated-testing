@@ -1,0 +1,127 @@
+@REGRESSION
+@DWP
+@B2C
+@REGRESSION
+@NSTA-344
+Feature: NSTA - 344 Payment Plan
+
+    Scenario: Payment plan for B2C
+#        Create an active contract
+        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
+        When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
+        Then Form header is "Quote details"
+
+        When "Tariefdatum" date is "2 weeks before now"
+        And "Sales kanaal" selection is "Inbound"
+        And Quote details are confirmed
+        Then Form header is "Personal details"
+
+        When Customer is random
+        And Customer address is
+            | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
+            | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
+        And Customer details are confirmed
+        Then Form header is "Select package & fuel type"
+
+        When Package is "Vast"
+        And Checkbox "Gas Fix B2C (TC1)" is Unchecked
+        And Package and Fuel Type is confirmed
+        Then Form header is "Connection details"
+
+        When "Startdatum" date is "5 day before now"
+        And Electricity EAN code is "random"
+        And "Meternummer" input is "1000"
+        And Option "test" is On
+        And Connection details are confirmed
+        Then Form header is "Billing details"
+
+        When "Betalingswijze" selection is "Overschrijving"
+        And  Billing details are confirmed
+        Then  Form header is "Quote overview"
+
+        When Option "Heeft de klant al getekend?" is On
+        And "Kanaal ondertekening" selection is "Papier"
+        And "Datum ondertekening" date is "now"
+        And Quote is signed
+        And Quote is signed in "Kontich"
+#        And Sign place is "Kontich"
+        When Quote is confirmed
+
+        When Dashboard menu is "Marktberichten"
+        Then View List is empty
+
+        When Dashboard menu is "Contracten"
+        And Get client number
+        Then View list header is "Actieve en toekomstige connecties"
+        And  "1st" List element with value at column "EAN-code" is checked
+        And  "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
+
+
+#        run invoice
+        Given I logged in to DWP as "billing.testautomation@essent.be"
+        When Left menu is "billing"
+        And Top menu item is "Klanten"
+        And Top action is "Filters"
+        And "B2C/B2B" selection is "B2B"
+        And "Type klant" selection is "Klant"
+        And "Klantnummer" input is "parameter:accountNumber"
+        Then "1st" List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
+        When Plus menu is "Billing -> Start facturatierun"
+        And Modal dialog is "Start invoicerun"
+        And "Naam job" selection is "recurrent"
+        And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
+        And "Factuurdatum" date is "now"
+        And "Procesdatum" date is "now"
+        Then Invoice run is scheduled
+
+        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
+        When Dashboard menu is "Billing"
+        Then View list header is "Transacties"
+        And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
+        And "1st" List element with value at column "ID & Type" is checked
+
+
+#      Create a payment plan for this customer
+        And List option is "ENKEL FACTUREN"
+        And View list header is "Openstaande facturen"
+        And Invoice with key "InvoicesOnAccountOpenBalance" is checked
+        And List option is "AANVRAAG AFBETALINGSPLAN"
+
+
+        And Input in "Type afbetalingsplan" is "Bedrag"
+        And Input in "Periode schijven" is "Maandelijks"
+        And "Startdatum" date is "now"
+
+
+
+
+
+#        And "Aantal schijven" input is "5"
+#        And Contract signature is confirmed
+#
+#        Given I renew login to DWP as "businessdesk.testautomation.b2b@essent.be"
+#        When Left menu is "sales-marketing"
+#        And Top menu item is "Klanten"
+#        And Top action is "Filters"
+#        And "B2C/B2B" selection is "B2B"
+#        And "Type klant" selection is "Klant"
+#        And "Klantnummer" input is "parameter:accountNumber"
+#        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
+#
+#        When Dashboard menu is "Billing"
+#        Then View list header is "Afbetalingsplannen"
+#        And Table "Afbetalingsplannen" contains value "open" at column "Status"
+#
+#        #payment plan verification
+#    Scenario: Check is payment plan created when logged as billing user
+#        Given I logged in to DWP as "billing.testautomation@essent.be"
+#        When Left menu is "billing"
+#        And Top menu item is "Klanten"
+#        And Top action is "Filters"
+#        And "B2C/B2B" selection is "B2B"
+#        And "Type klant" selection is "Klant"
+#        And "Klantnummer" input is "parameter:accountNumber"
+#        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
+#        When Dashboard menu is "Billing"
+#        Then View list header is "Transacties"
+#        And "2nd" list element has cell value "Payment" at column "ID & Type"

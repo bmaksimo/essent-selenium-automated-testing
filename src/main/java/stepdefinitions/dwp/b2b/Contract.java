@@ -40,6 +40,7 @@ public class Contract extends DwpScenario {
     public void getClientNumber() throws Throwable {
         ContractPage cp = new ContractPage();
         Klantnummer=cp.getClientNumber();
+        parameterProvider.put("accountNumber",Klantnummer);
     }
 
     @And("^Search by client number$")
