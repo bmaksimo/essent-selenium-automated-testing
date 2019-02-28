@@ -110,7 +110,7 @@ public class ContractenSteps extends DwpScenario {
     @Then("^Save changes$")
     public void saveChanges() {
         ContractPage contractenPage = new ContractPage();
-        contractenPage.saveButtton();
+        contractenPage.saveButton();
     }
 
     @Then("^Confirm contract with ean \"([^\"]*)\" was copied$")

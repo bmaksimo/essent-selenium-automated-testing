@@ -25,7 +25,7 @@ import static org.testng.AssertJUnit.assertEquals;
 public class Contract extends DwpScenario {
     private static String Klantnummer;
 
-    @Before("@REGRESSION,@B2C")
+    @Before("@REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -48,7 +48,7 @@ public class Contract extends DwpScenario {
         ContractPage cp = new ContractPage();
         ContractenPage contractenPage = new ContractenPage();
         cp.selectAccount();
-        cp.searchByClientNuiber(Klantnummer);
+        cp.searchByClientNumber(Klantnummer);
         contractenPage.searchForEanCode(Klantnummer);
     }
 
@@ -122,7 +122,7 @@ public class Contract extends DwpScenario {
     @And("^NaceCode in search is ([^\"]*)$")
     public void searchByNaceCode(String NaceCode) {
         ContractPage cp = new ContractPage();
-        cp.searchByClientNuiber(NaceCode);
+        cp.searchByClientNumber(NaceCode);
         cp.clickOnSearch();
         cp.checkNaceCode();
         cp.saveSelectedItem();

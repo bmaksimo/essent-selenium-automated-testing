@@ -26,7 +26,7 @@ public class ContractPage extends Component {
         seleniumDriver.waitAndSendKeys(startData(),"date");
     }
 
-    public void saveButtton(){
+    public void saveButton(){
         seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("primaryButton")));
     }
@@ -40,9 +40,9 @@ public class ContractPage extends Component {
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"account-id-field\"]//span[2]")));
     }
 
-    public void searchByClientNuiber(String nubmer){
-        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id("search-input")),nubmer);
-        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id("search-input")), nubmer);
+    public void searchByClientNumber(String number){
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id("search-input")),number);
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id("search-input")), number);
     }
 
     public void clickOnPlusMeniInTable(String row, String table) {

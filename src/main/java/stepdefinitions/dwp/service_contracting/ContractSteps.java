@@ -134,7 +134,7 @@ public class ContractSteps extends DwpScenario {
     }
 
     @And("^New move customer address is$")
-    public void nweMoveCustomerAddressIs(final DataTable dbTable) {
+    public void newMoveCustomerAddressIs(final DataTable dbTable) {
         List<List<String>> address = dbTable.raw();
         ContractPage cp = new ContractPage();
         cp.setNewMoveAddress(address.get(1).get(0),address.get(1).get(1),address.get(1).get(4),address.get(1).get(5));

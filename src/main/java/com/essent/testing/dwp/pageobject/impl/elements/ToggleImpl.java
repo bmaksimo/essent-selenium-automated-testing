@@ -42,22 +42,4 @@ public class ToggleImpl extends Component {
         }
     }
 
-//    public WebElement checkBoxWithout (String box) {
-//        return  seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + box + "']//toggle-form-element/label"));
-//    }
-//
-//    public boolean checkIfCheckboxIsCheckedWithout(String box)  {
-//        WebElement cb = checkBoxWithout(box);
-//        seleniumDriver.waitForRequestsToFinish();
-//        String classValue = cb.findElement(By.cssSelector("input")).getAttribute("class");
-//        return classValue.contains("not-empty");
-//    }
-//
-//    public void clickCheckboxWithout(String box)  {
-//        seleniumDriver.waitForRequestsToFinish();
-//        if (!checkIfCheckboxIsCheckedWithout(box)) {
-//            seleniumDriver.waitAndClick(checkBoxWithout(box));
-//        }
-//    }
-
 }
