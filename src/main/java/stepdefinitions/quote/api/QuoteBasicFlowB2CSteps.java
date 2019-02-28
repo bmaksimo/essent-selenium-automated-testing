@@ -23,12 +23,12 @@ import static org.awaitility.Awaitility.*;
 
 public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
-    protected Cookies cookie;
-    protected String tariffSheetID;
-    protected QuoteDetails quoteDetails;
-    protected ContractDetails contractDetails;
-    protected String docId;
-    protected String jbillingId;
+    private Cookies cookie;
+    private String tariffSheetID;
+    private QuoteDetails quoteDetails;
+    private ContractDetails contractDetails;
+    private String docId;
+    private String jbillingId;
 
     @Before("@API")
     public void setupTest(Scenario scenario) throws Throwable {
@@ -43,7 +43,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     @Given("^\"([^\"]*)\" flow is started$")
     public void flow_is_started(String arg1) throws Throwable {
-	this.tariffSheetID = new QuoteBTCAPI().getTariffSheetID(cookie);
+	this.tariffSheetID = new QuoteDetailsAPI().getTariffSheetID(cookie);
     }
 
     @When("^Data is prepared for Create qoute request for \"([^\"]*)\"$")
@@ -60,21 +60,21 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     @Then("^Quote status is \"([^\"]*)\"$")
     public void quote_status_is(String arg1) throws Throwable {
-	String status = new QuoteStatusAPI().checkStatus(cookie, quoteDetails.getQuoteId());
+	String status = new QuoteDetailsAPI().checkStatus(cookie, quoteDetails.getQuoteId());
 	// assertEquals(arg1.toLowerCase(), status.toLowerCase());
 	assertThat(status.toLowerCase(), is(equalTo(arg1.toLowerCase())));
     }
 
     @Then("^Quoteline exists$")
     public void quoteline_exists() throws Throwable {
-	boolean eanExists = new QuoteLineAPI().checkIfEANexists(cookie, quoteDetails.getQuoteId());
+	boolean eanExists = new QuoteDetailsAPI().checkIfEANexists(cookie, quoteDetails.getQuoteId());
 	// assertEquals(true, eanExists);
 	assertThat(eanExists, is(true));
     }
 
     @Then("^Quoteline status is \"([^\"]*)\"$")
     public void quoteline_status_is(String arg1) throws Throwable {
-	String status = new QuoteLineAPI().getStatus(cookie, quoteDetails.getQuoteId());
+	String status = new QuoteDetailsAPI().getStatus(cookie, quoteDetails.getQuoteId());
 	// assertEquals(arg1.toLowerCase(),status.toLowerCase());
 	assertThat(status.toLowerCase(), is(equalTo(arg1.toLowerCase())));
     }
@@ -86,31 +86,31 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     @Then("^Quote stage status is \"([^\"]*)\"$")
     public void quote__stage_status_is(String arg1) throws Throwable {
-	String status = new QuoteStatusAPI().checkStageStatus(cookie, quoteDetails.getQuoteId());
+	String status = new QuoteDetailsAPI().checkStageStatus(cookie, quoteDetails.getQuoteId());
 	// assertEquals(arg1.toLowerCase(), status.toLowerCase());
 	assertThat(status.toLowerCase(), is(equalTo(arg1.toLowerCase())));
     }
 
     @When("^File is uploaded as scanned signature$")
     public void file_is_uploaded_as_scanned_signature() throws Throwable {
-	this.docId = new UploadSignatureAPI().uploadSignature(cookie, quoteDetails);
+	this.docId = new QuoteSignatureAPI().uploadSignature(cookie, quoteDetails);
     }
 
     @Then("^Signin is confirmed$")
     public void signin_is_confirmed() throws Throwable {
-	new SignQuoteModalAPI().confirmSigning(cookie, quoteDetails.getQuoteId(), docId);
+	new QuoteSignatureAPI().confirmSigning(cookie, quoteDetails.getQuoteId(), docId);
     }
 
     @Then("^Contract is created$")
     public void contract_is_created() throws Throwable {
-	this.contractDetails = new ContractsOnAccountAPI().getContractDetails(cookie, quoteDetails.getRecordId());
+	this.contractDetails = new ContractDetailsAPI().getContractDetails(cookie, quoteDetails.getRecordId());
     }
 
     @Then("^Contracted EAN exists on account$")
     public void contracted_EAN_exists_on_account() throws Throwable {
 
 	// assertTrue(new ContractsOnAccountAPI().checkIfEanExists(cookie,
-	assertThat(new ContractsOnAccountAPI().checkIfEanExists(cookie, quoteDetails.getRecordId()), is(true));
+	assertThat(new ContractDetailsAPI().checkIfEanExists(cookie, quoteDetails.getRecordId()), is(true));
     }
 
     @When("^Payment detials are recieved$")
