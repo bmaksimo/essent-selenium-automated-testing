@@ -185,14 +185,14 @@ public class ViewListChecks extends NavigationElements {
             logger().info(" - RESULT: " + viewTable);
             int index = getColumnNameIndex(columnName, viewTable);
             if (index < 0) {
-                throw new CucumberException(String.format("View List did not contain column %s", columnName));
+                throw new CucumberException(String.format("View List did not contain column \"%s\"", columnName));
             }
             List<List> rows = getData(viewTable);
             if (rows.size() == 0) {
                 throw new CucumberException("--  Table is empty.");
             }
             if (row > rows.size()) {
-                throw new CucumberException(String.format("--  Row number $s was greater that actual table size, %s", row, rows.size()));
+                throw new CucumberException(String.format("--  Row number \"%s\" was greater than actual table size \"%s\"", row, rows.size()));
             }
             List currentRow = rows.get(row - 1);
             return (String) currentRow.get(index);
@@ -248,7 +248,7 @@ public class ViewListChecks extends NavigationElements {
                     return executeJavascriptTest("TrPlusActionInMarketMessageTable", options);
                 else if (BILLING_CUSTOMER_VIEW_LIST.equalsIgnoreCase(viewList))
                     return executeJavascriptTest("TrPlusActionInBillingCustomerTable", options);
-                else throw new IllegalArgumentException(String.format("Table '%s' has no implementation. Please use an implemented table or implement a new one.", viewList));
+                else throw new IllegalArgumentException(String.format("Table \"%s\" hasn't implementation. Please use an implemented table or implement a new one.", viewList));
             }
             return false;
         }
