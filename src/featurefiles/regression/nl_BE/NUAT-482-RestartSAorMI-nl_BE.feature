@@ -18,7 +18,6 @@ Feature: NUAT-482: Restart SA or MI - nl_BE
 
         When "Startdatum" date is "3 weeks from now"
         And "Module" selection is "START ACCESS"
-        And "Label" input is "Supplier Switch"
         And "Label" selection is "Supplier Switch"
         And "Testing" turn on
         And Save EAN code of customer
