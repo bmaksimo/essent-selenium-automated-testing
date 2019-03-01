@@ -33,11 +33,9 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
     private final static Logger LOGGER = Logger.getLogger(QuoteDetailsAPI.class);
 
-    //private static String ean = ConfigProvider.getProperty(ConfigKey.EAN_NUMBER);
 
     private static String PATH_TO_QUOTE = ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_QUOTE);
     private static String PATH_TO_PAYLOAD = ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_PAYLOAD);
-
 
     public String getTariffSheetID(Cookies cookie) {
     String tariffSheetID = null;
@@ -64,6 +62,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
 	RequestHelper helper = new RequestHelper();
 	String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
 		+ ConfigProvider.getProperty(ConfigKey.CRM_B2CCQ_URL);
+
 
     synchronized(this) {
         ean = PrepareDataForContract.generateEAN();
