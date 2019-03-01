@@ -26,6 +26,8 @@ class TrFormSelection extends BaseFormInput {
             return false;
         let selection = option.attr("value");
         input.val(selection).trigger("change");
-        return input.val() === selection;
+        console.log(input.val() + ' === ' + selection);
+        let actual =  input.val();
+        return Array.isArray(actual)? actual[0] === selection: actual === selection;
     }
 }
