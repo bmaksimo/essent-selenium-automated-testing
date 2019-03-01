@@ -35,6 +35,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     private String docId;
     private String jbillingId;
 
+
     @Before("@API")
     public void setupTest(Scenario scenario) throws Throwable {
 	registerActiveScenario(scenario);
@@ -72,7 +73,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     @Then("^Quoteline exists$")
     public void quoteline_exists() throws Throwable {
-	boolean eanExists = new QuoteDetailsAPI().checkIfEANexists(cookie, quoteDetails.getQuoteId());
+	boolean eanExists = new QuoteDetailsAPI().checkIfEANexists(cookie, quoteDetails);
 	// assertEquals(true, eanExists);
 	assertThat(eanExists, is(true));
     }
@@ -108,14 +109,14 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     @Then("^Contract is created$")
     public void contract_is_created() throws Throwable {
-	this.contractDetails = new ContractDetailsAPI().getContractDetails(cookie, quoteDetails.getRecordId());
+	this.contractDetails = new ContractDetailsAPI().getContractDetails(cookie, quoteDetails);
     }
 
     @Then("^Contracted EAN exists on account$")
     public void contracted_EAN_exists_on_account() throws Throwable {
 
 	// assertTrue(new ContractsOnAccountAPI().checkIfEanExists(cookie,
-	assertThat(new ContractDetailsAPI().checkIfEanExists(cookie, quoteDetails.getRecordId()), is(true));
+	assertThat(new ContractDetailsAPI().checkIfEanExists(cookie, quoteDetails), is(true));
     }
 
     @When("^Payment detials are recieved$")

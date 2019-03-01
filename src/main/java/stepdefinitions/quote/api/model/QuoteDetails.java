@@ -7,6 +7,7 @@ public class QuoteDetails {
     private String quoteNumber;
     private String accountNumber;
     private String accountId;
+    private String ean;
     public String getRecordId() {
         return recordId;
     }
@@ -36,6 +37,13 @@ public class QuoteDetails {
     }
     public void setAccountId(String accountId) {
         this.accountId = accountId;
+    }
+
+    public void setEan(String ean) {
+        this.ean = ean;
+    }
+    public String getEan(){
+        return ean;
     }
 
 }
