@@ -1,5 +1,7 @@
 package stepdefinitions.quote.api;
 
+import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
+import com.sun.xml.bind.v2.TODO;
 import org.apache.log4j.Logger;
 
 import com.essent.testing.config.ConfigKey;
@@ -13,6 +15,7 @@ import stepdefinitions.quote.api.helper.PayloadMapper;
 import stepdefinitions.quote.api.helper.RequestHelper;
 import stepdefinitions.quote.api.model.ContractDetails;
 import stepdefinitions.quote.api.model.ContractsOnAccount;
+import stepdefinitions.quote.api.model.QuoteDetails;
 
 /**
  * @author n.grkavac
@@ -22,13 +25,13 @@ public class ContractDetailsAPI extends AbstractAPI {
 
     private final static Logger LOGGER = Logger.getLogger(ContractDetailsAPI.class);
 
-    private static String ean = ConfigProvider.getProperty(ConfigKey.EAN_NUMBER);
+    //private static String ean = ConfigProvider.getProperty(ConfigKey.EAN_NUMBER);
 
-    public ContractDetails getContractDetails(Cookies cookie, String recordId) throws JsonProcessingException {
+    public ContractDetails getContractDetails(Cookies cookie, QuoteDetails quoteDetails) throws JsonProcessingException {
     RequestHelper helper = new RequestHelper();
     String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
         + ConfigProvider.getProperty(ConfigKey.CRM_CONTRACTS_ON_ACCOUNT_URL);
-    String payload = createContractPayload(recordId);
+    String payload = createContractPayload(quoteDetails.getRecordId());
 
     Response contractResponse = helper.postRequest(STATUS_OK, cookie, payload, path);
 
@@ -49,19 +52,20 @@ public class ContractDetailsAPI extends AbstractAPI {
 
     }
 
-    public boolean checkIfEanExists(Cookies cookie, String recordId) throws JsonProcessingException {
+    public boolean checkIfEanExists(Cookies cookie, QuoteDetails quoteDetails) throws JsonProcessingException {
+
     RequestHelper helper = new RequestHelper();
-    String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
-        + ConfigProvider.getProperty(ConfigKey.CRM_CONTRACTED_EANS_ON_ACCOUNT_URL);
-    String payload = createContractPayload(recordId);
+    String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_CONTRACTED_EANS_ON_ACCOUNT_URL);
+
+    String payload = createContractPayload(quoteDetails.getRecordId());
 
     Response statusResponse = helper.postRequest(STATUS_OK, cookie, payload, path);
 
     boolean eanExists = false;
 
     LOGGER.info("Quotelines retrieved");
-    eanExists = statusResponse.jsonPath().getString("data.rows[0].rowData.ean_c").contains(ean);
-    LOGGER.info("EAN: " + ean + " exists in Quotelines: " + eanExists);
+    eanExists = statusResponse.jsonPath().getString("data.rows[0].rowData.ean_c").contains(quoteDetails.getEan());
+    LOGGER.info("EAN: " + quoteDetails.getEan() + " exists in Quotelines: " + eanExists);
 
     return eanExists;
 
