@@ -49,7 +49,6 @@ public class InputElements extends DwpScenario {
     }
 
     private class ToggleCheckBox implements Predicate<Map<String, String>> {
-
         @Override
         public boolean test(Map<String, String> options) {
             boolean success = executeJavascriptTest("TrToggleCheckBox", options);
@@ -70,13 +69,6 @@ public class InputElements extends DwpScenario {
             waiter.withMessage(String.format("Input field %s is undefined.", label));
             return callback.test(options);
         });
-    }
-
-    @And("^Label input for \"([^\"]*)\" is \"([^\"]*)\"$")
-    public void setLabelInput(String label, String value) throws Throwable {
-        seleniumDriver.waitForRequestsToFinish();
-        setInput(label, "string:"+value);
-        seleniumDriver.waitForRequestsToFinish();
     }
 
     @And("^\"([^\"]*)\" date is \"([^\"]*)\"$")
@@ -120,7 +112,6 @@ public class InputElements extends DwpScenario {
 
     @And("^Checkbox \"([^\"]*)\" is ([^\"]*)$")
     public void toggleCheckbox(String label, SwitchState state) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
         options.put("state", state.name().toLowerCase());
