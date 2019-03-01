@@ -26,7 +26,7 @@ public class MarktBerichtenPage extends Component {
     }
 
     public void refreshByName(String name)  {
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//a[@name='"+name+"']/span[@class='icon-pijl']")));
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.linkText(name)));
     }
 
     public boolean isRefreshedByName(String name)  {

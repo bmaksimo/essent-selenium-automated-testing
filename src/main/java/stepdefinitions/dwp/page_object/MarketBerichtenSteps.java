@@ -11,6 +11,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
+import org.openqa.selenium.support.ui.FluentWait;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
@@ -74,12 +75,14 @@ public class MarketBerichtenSteps extends DwpScenario {
 
     @When("^Refresh \"([^\"]*)\" till \"([^\"]*)\" is visible$")
     public void refreshTillIsVisible(String name, String status) throws Throwable {
-        seleniumDriver.waitForRequestsToFinish();
         MarktBerichtenPage mp = new MarktBerichtenPage();
-        given().await()
-            .pollInterval(TEN_SECONDS)
-            .atMost(new org.awaitility.Duration(450, SECONDS))
-            .until(()-> mp.isRefreshedByName(name) && mp.marketberichtStatus().equalsIgnoreCase(status));
+        int atMostSeconds = 450;
+        FluentWait<MarktBerichtenPage> waiter = waiter(mp, atMostSeconds, 10);
+        waiter.withMessage(String.format("Message status did not switch to \"%s\" within \"%s\" seconds", status, atMostSeconds));
+        waiter.until((MarktBerichtenPage page) -> {
+            mp.refreshByName(name);
+            return mp.marketberichtStatus().equalsIgnoreCase(status);
+        });
     }
 
     @Then("^Confirm status is \"([^\"]*)\"$")
