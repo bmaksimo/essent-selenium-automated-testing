@@ -4,11 +4,12 @@
 @BUSINESS-DESK
 
 
-Feature: NAUT-481: Rejection - nl_BE
+Feature: NUAT-481: Rejection - nl_BE
 
     Background:
         Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
 
+    @NUAT-481
     Scenario: Rejecting contract
         When Left menu is "contracting-switching"
         And Top menu item is "Marktberichten"

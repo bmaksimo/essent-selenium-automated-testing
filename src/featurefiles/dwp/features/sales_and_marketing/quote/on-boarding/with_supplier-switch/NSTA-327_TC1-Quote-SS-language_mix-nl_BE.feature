@@ -2,14 +2,14 @@
 @SALES-MARKETING
 @REGRESSION
 @B2C
-Feature: Creating a B2C Quote TC1 with "Move In" without using Market Mock.
+Feature: NSTA-327: Creating a B2C Quote TC1 with "Supplier Switch" without using Market Mock.
 
     Background:
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
     @NSTA-327
     @SUPPLIER-SWITCH-NO-MM
-    Scenario: Create a B2C Account with Quote, With move in, without using Market Mock
+    Scenario: Create a B2C Account with Quote, With supplier switch, without using Market Mock
 
         #Step 1. Selecteer type Offerte / Select Quote type
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"

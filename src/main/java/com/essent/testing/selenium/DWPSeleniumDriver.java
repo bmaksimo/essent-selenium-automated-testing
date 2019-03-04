@@ -30,6 +30,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import static com.billinghouse.test_automation.util.gherkin.DateTimeFormatUtil.printPeriod;
+import static com.essent.testing.selenium.helper.fluent_wait.FluentWaitUtil.createWaiter;
 import static org.junit.Assert.fail;
 
 public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner {
@@ -93,7 +94,13 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
         awaitJqueryNotActive(200);
         logger.info("STEP:");
         logger.debug(" - WAIT: waiting for all angular requests to finish on page at url: " + getDriver().getCurrentUrl());
-        ngWebDriver.waitForAngularRequestsToFinish();
+        int secondsTimeout = 240;
+        FluentWait<NgWebDriver> waiter = createWaiter(ngWebDriver, secondsTimeout);
+        waiter.until((NgWebDriver ngWebDriver) -> {
+            waiter.withMessage(String.format("DWP working too slowly. Unable to complete the request within %s seconds.", secondsTimeout));
+            ngWebDriver.waitForAngularRequestsToFinish();
+            return true;
+        });
         logger.info(" - RESULT: all angular requests are finished on page at url: " + getDriver().getCurrentUrl());
     }
 

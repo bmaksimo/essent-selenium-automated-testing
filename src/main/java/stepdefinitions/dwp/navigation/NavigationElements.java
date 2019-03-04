@@ -5,17 +5,13 @@ import com.essent.testing.dwp.pageobject.impl.navigation.DwpPlusMenu;
 import com.essent.testing.dwp.pageobject.impl.navigation.TopActionsPageImpl;
 import com.essent.testing.dwp.pageobject.navigation.TopActionsPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
-import org.awaitility.Duration;
+import org.openqa.selenium.support.ui.FluentWait;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.numericValue;
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.awaitility.Awaitility.given;
-import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
-import static org.awaitility.Duration.ONE_SECOND;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -71,16 +67,6 @@ public abstract class NavigationElements extends DwpScenario {
         }
     }
 
-    private class VisitTopItem implements Predicate<String> {
-        @Override
-        public boolean test(String label) {
-            Map<String, String> options = new HashMap<>();
-            options.put("label", label);
-            boolean success = executeJavascriptTest("TrGetTopTab", options);
-            return success;
-        }
-    }
-
     public class ClickConfirm implements Predicate<String> {
         @Override
         public boolean test(String name) {
@@ -94,11 +80,7 @@ public abstract class NavigationElements extends DwpScenario {
         public boolean test(String menu) {
             Map<String, Object> options = new HashMap<>();
             options.put("menu", menu);
-            given().await()
-                .pollInterval(FIVE_HUNDRED_MILLISECONDS)
-                .pollDelay(ONE_SECOND)
-                .atMost(new Duration(20, SECONDS)).until(() -> executeJavascriptTest("TrClickDashboardMenuButton", options));
-             return true;
+             return executeJavascriptTest("TrClickDashboardMenuButton", options);
         }
     }
 
@@ -147,14 +129,14 @@ public abstract class NavigationElements extends DwpScenario {
     }
 
     protected void clickListPlusAction(String item) {
-        boolean success = new ClickListPlusAction().test(item);
-        assertThat(String.format("List Plus Action %s undefined.", item),
-            success, is(true));
+        FluentWait<ClickListPlusAction> waiter = waiter(new ClickListPlusAction(), 20, 2);
+        waiter.withMessage(String.format("List Plus Action \"%s\" is undefined.", item));
+        waiter.until((ClickListPlusAction action) -> action.test(item));
     }
 
     protected void clickDashboardMenu(String menu) {
-        boolean success = new ClickDashboardMenu().test(menu);
-        assertThat(String.format("Dashboard Menu  %s is undefined.", menu),
-            success, is(true));
+        FluentWait<ClickDashboardMenu> waiter = waiter(new ClickDashboardMenu(), 20, 2);
+        waiter.withMessage(String.format("Dashboard Menu  \"%s\" is undefined.", menu));
+        waiter.until((ClickDashboardMenu dashboardMenu)-> dashboardMenu.test(menu));
     }
 }

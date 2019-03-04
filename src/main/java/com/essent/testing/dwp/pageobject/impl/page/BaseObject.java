@@ -35,6 +35,10 @@ public class BaseObject extends Component {
         }
     }
 
+    public void clickOnMarkAsDonePlusMenuSubAction() {
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action/a/span[@class='icon-checkmark']")));
+    }
+
     public void clickOnToggle (String label) throws InterruptedException{
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(2);
@@ -57,6 +61,13 @@ public class BaseObject extends Component {
         seleniumDriver.waitForRequestsToFinish();
         Thread.sleep(2000);
         seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.xpath("//validation-wrapper[@label='"+label+"']//input")),date);
+        seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//span[@class='icon-kalender']")));
+    }
+
+    public void dateIsCustom(String label, String customDate) throws InterruptedException {
+        seleniumDriver.waitForRequestsToFinish();
+        Thread.sleep(2000);
+        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.xpath("//validation-wrapper[@label='"+label+"']//input")), customDate);
         seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//span[@class='icon-kalender']")));
     }
 

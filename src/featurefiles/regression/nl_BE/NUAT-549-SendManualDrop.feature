@@ -3,6 +3,7 @@
 @B2B
 @BUSINESS-DESK
 @LONGDURATION
+@NUAT-549
 Feature: NUAT-549 Send manual drop
 
     Background:

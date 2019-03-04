@@ -45,6 +45,7 @@ public class OdooSeleniumDriver extends SeleniumDriver {
         HashMap<String, Object> chromePrefs = new HashMap<>();
         chromePrefs.put("profile.default_content_settings.popups", 0);
         chromePrefs.put("download.default_directory", DEFAULT_DOWNLOAD_LOCATION);
+        logger.info("-Default download directory: " + DEFAULT_DOWNLOAD_LOCATION);
         options.setExperimentalOption("prefs", chromePrefs);
     }
 

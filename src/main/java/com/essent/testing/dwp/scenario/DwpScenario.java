@@ -55,7 +55,7 @@ public abstract class DwpScenario extends RegisteredScenario {
         return new VatNumberGenerator().getVatNum(CountryCode.getByCode(countryCode));
     }
 
-    private String generateCompanyName() {
+    protected String generateCompanyName() {
         Map<String, String> options = new HashMap<>();
         Map reply = executeJavascriptMethod("TrGetRandomUser", options);
         String status = ((String) reply.get("status"));

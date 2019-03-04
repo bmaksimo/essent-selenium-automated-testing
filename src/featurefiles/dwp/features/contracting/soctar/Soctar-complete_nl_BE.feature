@@ -132,8 +132,3 @@ Feature: Create Soctar (Social Tariff) contract
         #part 4 check - letter has been sent
         When Dashboard menu is "Service"
         And Table "Interacties" contains value "Recal_ext_recal_credit" at column "Type & Onderwerp"
-
-
-
-
-

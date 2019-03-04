@@ -1,4 +1,4 @@
-package stepdefinitions.dwp.page_object;
+package stepdefinitions.dwp.contracts.b2b.cancel;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.page.ContractPage;
@@ -12,10 +12,11 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import stepdefinitions.dwp.page_object.CustomerAcceptance;
 
-public class ContractenSteps extends DwpScenario {
+public class ContractsSteps extends DwpScenario {
 
-    private String eanCode = null;
+    private String eanCodeInput = null;
     private String contractEanCode;
 
     @Before("@DWP, @REGRESSION")
@@ -23,12 +24,6 @@ public class ContractenSteps extends DwpScenario {
         registerActiveScenario(scenario);
     }
 
-
-    @And("^Search for ean code$")
-    public void searchForEanCode()  {
-        ContractenPage contractenPage = new ContractenPage();
-        contractenPage.searchForEanCode(eanCode);
-    }
 
     @When("^Input in \"([^\"]*)\" is \"([^\"]*)\"$")
     public void inputInModuleIs(String label, String input) {
@@ -47,15 +42,23 @@ public class ContractenSteps extends DwpScenario {
     @When("^Find \"([^\"]*)\" contract$")
     public void findContract(String input) throws Throwable {
         ContractenPage contractenPage = new ContractenPage();
-        eanCode = contractenPage.findActiveContract(input);
-        logger().info("EAN CODE: " + eanCode);
-        parameterProvider.put("contractEanCode", eanCode);
+        eanCodeInput = contractenPage.findActiveContract(input);
+        logger().info("EAN CODE: " + eanCodeInput);
+        parameterProvider.put("contractEanCode", eanCodeInput);
+    }
+
+    @When("^Contract line EAN-code \"([^\"]*)\" is submitted$")
+    public void submitEanCode(String value) throws Throwable {
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
+        ContractenPage contractenPage = new ContractenPage();
+        contractenPage.searchForEanCode(inputValue);
     }
 
     @Then("^Confirm task was \"([^\"]*)\"$")
-    public void confirmTaskWas(String input) {
+    public void confirmTaskWas(String value) throws Throwable {
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
         ContractenPage contractenPage = new ContractenPage();
-        contractenPage.confirmTaskStatus(input);
+        contractenPage.confirmTaskStatus(inputValue);
     }
 
     @Override
@@ -121,11 +124,13 @@ public class ContractenSteps extends DwpScenario {
         Assert.assertTrue("Correct ean code was not found.", seleniumDriver.findElementWhenVisible(By.xpath("//h5[.='" + inputEanCode + "']")).isDisplayed());
     }
 
+    /**
+     * @deprecated - use generic '"1st" list element has cell value "value" at column "columnName"'
+     */
     @Then("^Get Contract Number$")
     public void searchForContractNumber() {
         ContractPage contractenPage = new ContractPage();
         parameterProvider.put("contractNumber", contractenPage.getContractNumber());
-
     }
 
 

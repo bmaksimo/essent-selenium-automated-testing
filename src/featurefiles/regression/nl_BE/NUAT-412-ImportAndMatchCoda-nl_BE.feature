@@ -1,18 +1,13 @@
 @DWP
-@B2B
-@REGRESSION
 @CREDIT-AND-CONTROL
-@NUAT-412
-
 Feature: NUAT-412 part: Create / import coda file
 
-
+    @NUAT-412-2
     Scenario: Create active contract TK1
         Given  I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
         When Plus menu is "Sales -> TK1 -> Nieuwe TK1 offerte (B2B) aanmaken"
         And "Ondernemingsnummer" input is "BE0659881595"
         And "Bedrijfsnaam" input is "Test Company B2B"
-        And Clicked on sign X
         And New Quote is saved
 
         When "Tariefdatum" date is "now"
@@ -53,11 +48,9 @@ Feature: NUAT-412 part: Create / import coda file
         Then View list header is "Offertes"
         Then "1st" list element has cell value "Sales Getekend - Waarborg" at column "Type & status"
 
-        When Dashboard menu is "Details"
+        When Dashboard menu is "Contracten"
         Then Get Contract Number
-
-
-     #invoice run
+    #invoice run
     @INVOICE-RUN
     Scenario: Invoice run process
         Given I renew login to DWP as "billing.testautomation@essent.be"

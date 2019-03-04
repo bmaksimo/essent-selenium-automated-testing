@@ -7,7 +7,6 @@ import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.dwp.pageobject.impl.page.SoctarTariffBatchDetails;
 import com.essent.testing.dwp.scenario.DwpScenario;
-import com.essent.testing.scenario.RegisteredScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;

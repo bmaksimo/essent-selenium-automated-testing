@@ -52,6 +52,16 @@ public class Contract extends DwpScenario {
         contractenPage.searchForEanCode(Klantnummer);
     }
 
+    @When("^Plus action of \"([^\"]*)\" element from \"([^\"]*)\" and click on Mark As Done/Markeren Als Verwerkt$")
+    public void plusActionOfElementFromAndClickOnMarkAsDone(String row, String table) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
+        ContractPage cp = new ContractPage();
+        BaseObject baseObject = new BaseObject();
+        Thread.sleep(5000);
+        cp.clickOnPlusMeniInTable(row,table);
+        baseObject.clickOnMarkAsDonePlusMenuSubAction();
+    }
+
     @When("^Plus action of \"([^\"]*)\" element from \"([^\"]*)\" and click on \"([^\"]*)\"$")
     public void plusActionOfElementFromAndClickOn(String row, String table, String action) throws Throwable {
         seleniumDriver.waitForRequestsToFinish();

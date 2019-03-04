@@ -42,6 +42,7 @@ public class TopActions extends NavigationElements {
         boolean success = new ClickConfirm().test("");
         assertThat(String.format("Button %s was not available.", ""),
             success, is(true));
+
     }
 
     @And("Search input is \"([^\"]*)\"$")

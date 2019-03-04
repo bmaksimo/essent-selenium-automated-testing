@@ -11,6 +11,11 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
+import org.openqa.selenium.support.ui.FluentWait;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.awaitility.Awaitility.given;
+import static org.awaitility.Duration.TEN_SECONDS;
 
 public class MarketBerichtenSteps extends DwpScenario {
     BaseObject baseObject = new BaseObject();
@@ -70,12 +75,14 @@ public class MarketBerichtenSteps extends DwpScenario {
 
     @When("^Refresh \"([^\"]*)\" till \"([^\"]*)\" is visible$")
     public void refreshTillIsVisible(String name, String status) throws Throwable {
-        seleniumDriver.waitForRequestsToFinish();
         MarktBerichtenPage mp = new MarktBerichtenPage();
-        Thread.sleep(15000);
-        while(!mp.marketberichtStatus().equalsIgnoreCase(status)){
+        int atMostSeconds = 450;
+        FluentWait<MarktBerichtenPage> waiter = waiter(mp, atMostSeconds, 10);
+        waiter.withMessage(String.format("Message status did not switch to \"%s\" within \"%s\" seconds", status, atMostSeconds));
+        waiter.until((MarktBerichtenPage page) -> {
             mp.refreshByName(name);
-        }
+            return mp.marketberichtStatus().equalsIgnoreCase(status);
+        });
     }
 
     @Then("^Confirm status is \"([^\"]*)\"$")
@@ -88,11 +95,10 @@ public class MarketBerichtenSteps extends DwpScenario {
     public void isNow(String label) throws Throwable {
         BaseObject bo = new BaseObject();
         bo.dateIsNow(label);
-
     }
 
     @Then("^Marketbericht with EAN \"([^\"]*)\" and module \"([^\"]*)\" is in status \"([^\"]*)\"$")
-    public void marketbirichWithEANAndModuleIsInStatus(String enaP, String modul, String status) throws Throwable {
+    public void marketBerichtWithEANAndModuleIsInStatus(String enaP, String modul, String status) throws Throwable {
         String ean = parameterProvider.getValueOrParameterAsString(enaP);
         MarktBerichtenPage mp = new MarktBerichtenPage();
         Assert.assertEquals(ean, mp.getEanFromTheFirstTransaction());
@@ -102,7 +108,7 @@ public class MarketBerichtenSteps extends DwpScenario {
     }
 
     @Then("^Marketbericht with module \"([^\"]*)\" changed to status \"([^\"]*)\"$")
-    public void marketbirichWithEANAndModuleSecondTransactionIsInStatus(String modul, String status) throws Throwable {
+    public void marketBerichtWithEANAndModuleSecondTransactionIsInStatus(String modul, String status) throws Throwable {
         MarktBerichtenPage mp = new MarktBerichtenPage();
         Assert.assertEquals(modul,mp.getModulFromCancelTransaction());
         Assert.assertEquals(status,mp.marketberichtCancelStatus());
