@@ -24,7 +24,7 @@
             And List plus action is " Annuleer "
             Then Modal "Cancel contractline" is displayed
 
-            And "Reden voor annulering" modal dropdown selection is "Geannuleerd door de klant"
+            And "Reden voor annulering" selection is "Geannuleerd door de klant"
             And Form is submitted
             Then "1st" list element has cell value "Geannuleerd" at column "Status & Product"
 
