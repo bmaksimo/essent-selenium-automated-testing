@@ -1,6 +1,7 @@
 package com.essent.testing.dwp.scenario;
 
 import com.billinghouse.random.RandomUser;
+import com.billinghouse.test_automation.util.dsl.DateExpressionsUtil;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model.Execution;
 import com.essent.automation.autocrat.Model.Step;
@@ -54,7 +55,7 @@ public abstract class DwpScenario extends RegisteredScenario {
         return new VatNumberGenerator().getVatNum(CountryCode.getByCode(countryCode));
     }
 
-    private String generateCompanyName() {
+    protected String generateCompanyName() {
         Map<String, String> options = new HashMap<>();
         Map reply = executeJavascriptMethod("TrGetRandomUser", options);
         String status = ((String) reply.get("status"));
@@ -90,6 +91,10 @@ public abstract class DwpScenario extends RegisteredScenario {
 
     protected String toDwpDate(String parameter) {
         return checkAndConvertToDwpDate(parameter);
+    }
+
+    protected String toDwpEndDate(String parameter) {
+        return DateExpressionsUtil.checkAndConvertToDwpContracEndDate(parameter);
     }
 
     protected void injectJavaScriptTestRunner() {

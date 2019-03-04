@@ -5,6 +5,8 @@ import com.essent.testing.dwp.pageobject.impl.Component;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.NEXT_BUTTON;
+
 public class OffertePage extends Component {
 
     public String getOfferteNumber() {
@@ -47,8 +49,12 @@ public class OffertePage extends Component {
         catch(org.openqa.selenium.StaleElementReferenceException ex) {
             seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("primaryButton")));;
         }
+    }
 
-
+    public void confirmQuote() {
+        String query = NEXT_BUTTON.getQuery();
+        logger().debug("Searching element by " + query);
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.cssSelector(NEXT_BUTTON.getQuery())));
     }
 
     public WebElement kalender(){

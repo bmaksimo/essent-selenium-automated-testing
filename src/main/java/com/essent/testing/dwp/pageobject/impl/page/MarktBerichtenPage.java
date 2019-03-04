@@ -7,11 +7,11 @@ import org.openqa.selenium.WebElement;
 
 public class MarktBerichtenPage extends Component {
 
-    public WebElement listActionsElemet(String element) throws InterruptedException {
+    public WebElement listActionsElemet(String element) {
         return seleniumDriver.findElementWhenVisible(By.name(element));
     }
 
-    public void takenOver(String taken, String signed) throws InterruptedException {
+    public void takenOver(String taken, String signed) {
         String line1 = seleniumDriver.findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell[@icon='null']//span)[1]")).getText();
         String line2 = seleniumDriver.findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell[@icon='null']//span)[2]")).getText();
         Assert.assertEquals(taken, line1);
@@ -26,18 +26,23 @@ public class MarktBerichtenPage extends Component {
     }
 
     public void refreshByName(String name)  {
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//a[@name='"+name+"']/span[@class='icon-pijl']")));
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.linkText(name)));
+    }
+
+    public boolean isRefreshedByName(String name)  {
+        refreshByName(name);
+        return true;
     }
 
     public void createNewMarktBericht(String newMarktbericht){
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.name(newMarktbericht)));
     }
 
-    public void clickOnListActionsElemet(String element) throws InterruptedException {
+    public void clickOnListActionsElemet(String element) {
         seleniumDriver.waitAndClick(listActionsElemet(element));
     }
 
-    public String getEanFromTheFirstTransaction() throws InterruptedException {
+    public String getEanFromTheFirstTransaction()  {
         return seleniumDriver.findElementWhenVisible(By.xpath("(//h5)[1]")).getText();
     }
 
@@ -45,7 +50,7 @@ public class MarktBerichtenPage extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath("//button[contains(.,'Select Contractline')]"));
     }
 
-    public void clickOnSelectNewContractlineButton() throws InterruptedException {
+    public void clickOnSelectNewContractlineButton()  {
         seleniumDriver.waitAndClick(selectNewContractlineButton());
     }
 
@@ -53,7 +58,7 @@ public class MarktBerichtenPage extends Component {
         return seleniumDriver.findElementWhenVisible(By.id("search-input"));
     }
 
-    public void enterContractNumber(String transactionEan) throws InterruptedException {
+    public void enterContractNumber(String transactionEan) {
         seleniumDriver.waitAndSendKeys(searchForContractField(), transactionEan);
     }
 
@@ -61,7 +66,7 @@ public class MarktBerichtenPage extends Component {
         return findElementWhenVisible(By.xpath("//input[@value='Search']"));
     }
 
-    public void clickOnSearchButton() throws InterruptedException {
+    public void clickOnSearchButton() {
         seleniumDriver.waitAndClick(searchButton());
 
     }
@@ -71,7 +76,7 @@ public class MarktBerichtenPage extends Component {
 
     }
 
-    public void clickOnTheFirstContract() throws InterruptedException {
+    public void clickOnTheFirstContract() {
         seleniumDriver.waitAndClick(FirstContractInTheList());
     }
 
@@ -79,16 +84,30 @@ public class MarktBerichtenPage extends Component {
         return findElementWhenClickable(By.xpath("//select-with-search-modal/section[@class='view__modal']//a[@href='']"));
     }
 
-    public void clickOnSubmitButton() throws InterruptedException {
+    public void clickOnSubmitButton() {
         seleniumDriver.waitAndClick(submitButton());
     }
 
-    public String getModulFromTheFirstTransaction() throws InterruptedException {
+    public String getModulFromTheFirstTransaction() {
         return seleniumDriver.findElementWhenVisible(By.xpath("(//h5)[2]")).getText();
     }
 
-    public String getModulFromCancelTransaction() throws InterruptedException {
+    public String getModulFromCancelTransaction()  {
         return seleniumDriver.findElementWhenVisible(By.xpath("//list-link-bold-top-two-liner-cell[@line-1='INITIATE STOP ACCESS']/div/a/h5")).getText();
+    }
+
+    public String getEanFromMarketbericht(String num)  {
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//h5)['"+num+"']")).getText();
+    }
+    public String getModulFromMarketbericht(String num) {
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//h5)['"+num+"']")).getText();
+    }
+    public String marketberichtStatusMarketbericht(String num){
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[1])['"+num+"']")).getText();
+    }
+
+    public String getMarketberichtEndDateElement(String num){
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[1])['"+num+"']")).getText();
     }
 }
 

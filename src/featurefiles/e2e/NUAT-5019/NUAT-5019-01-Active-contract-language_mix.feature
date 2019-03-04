@@ -54,10 +54,4 @@ Feature: NUAT-5019 Step 1. Creating a B2C Quote TC1 with move in, Dutch language
         When Dashboard menu is "Contracten"
         Then View list header is "Actieve en toekomstige connecties"
         And  "1st" List element with value at column "EAN-code" is checked
-        And  "1st" list element has cell value "Actief" at column "Contractnummer" polling 450 seconds
-
-        When Dashboard menu is "Details"
-        And "Klantnummer" field value is checked
-
-
-
+        And  "1st" list element has cell value "Actief" at column "Contractnummer" within 450 seconds

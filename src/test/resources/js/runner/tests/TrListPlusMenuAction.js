@@ -1,7 +1,7 @@
 class TrListPlusMenuAction extends TestRunnerBase {
 
     constructor(options, callback) {
-        super(options, callback, 5000);
+        super(options, callback, 1000);
     }
 
     run() {

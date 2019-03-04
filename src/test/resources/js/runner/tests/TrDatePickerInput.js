@@ -20,6 +20,6 @@ class TrDatePickerInput extends BaseFormInput {
 
     applyInput(input, value) {
         $(input[0]).val(value).trigger("change").trigger("keyup");
-        return true;
+        return $(input[0]).val() === value;
     }
 }

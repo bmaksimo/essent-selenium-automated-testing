@@ -32,6 +32,15 @@ public class TaskSteps extends DwpScenario {
         baseObject.plusSubaction(action);
     }
 
+    @When("^Plus action and Mark As Done/Markeren Als Verwerkt of first customer from list$")
+    public void plusActionAndOfFirstCustomerFromList() throws Throwable {
+        BaseObject baseObject = new BaseObject();
+        Thread.sleep(30000);
+        baseObject.clickOnPlus();
+        seleniumDriver.waitForRequestsToFinish();
+        baseObject.clickOnMarkAsDonePlusMenuSubAction();
+    }
+
     private void inputResolution(String text) {
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id("task-resolution-c-field")), text);
     }

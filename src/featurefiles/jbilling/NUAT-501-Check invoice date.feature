@@ -1,7 +1,7 @@
 @JBILLING
 @REGRESSION
 @B2B
-Feature: NAUT-501: Check invoice date
+Feature: NUAT-501: Check invoice date
 
     Background:
         Given I logged in to JBilling as "billing_testautomation"

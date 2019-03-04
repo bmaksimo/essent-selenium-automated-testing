@@ -2,11 +2,12 @@
 @B2B
 @REGRESSION
 @BUSINESS-DESK
-Feature: NAUT-482: Restart SA or MI - nl_BE
+Feature: NUAT-482: Restart SA or MI - nl_BE
 
     Background:
         Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
 
+    @NUAT-482
     Scenario: Restart for SA Or MI
         When Left menu is "sales-marketing"
         And Top menu item is "Marktberichten"
@@ -17,7 +18,6 @@ Feature: NAUT-482: Restart SA or MI - nl_BE
 
         When "Startdatum" date is "3 weeks from now"
         And "Module" selection is "START ACCESS"
-        And "Label" input is "Supplier Switch"
         And "Label" selection is "Supplier Switch"
         And "Testing" turn on
         And Save EAN code of customer
