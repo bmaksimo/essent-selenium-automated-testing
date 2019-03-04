@@ -11,7 +11,7 @@ Feature: NSTA - 344 Payment Plan
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
-        When "Tariefdatum" date is "2 weeks before now"
+        When "Tariefdatum" date is "now"
         And "Sales kanaal" selection is "Inbound"
         And Quote details are confirmed
         Then Form header is "Personal details"
@@ -23,7 +23,8 @@ Feature: NSTA - 344 Payment Plan
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
 
-        When Package is "Vast"
+#        *When Package is "Vast"
+        When Package is "COMFORT_TEST"
         And Checkbox "Gas Fix B2C (TC1)" is Unchecked
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
@@ -44,7 +45,7 @@ Feature: NSTA - 344 Payment Plan
         And "Datum ondertekening" date is "now"
         And Quote is signed
         And Quote is signed in "Kontich"
-#        And Sign place is "Kontich"
+#        *And Sign place is "Kontich"
         When Quote is confirmed
 
         When Dashboard menu is "Marktberichten"
@@ -59,10 +60,13 @@ Feature: NSTA - 344 Payment Plan
 
 #        run invoice
         Given I logged in to DWP as "billing.testautomation@essent.be"
+#         *And B2B Active Contract is
+#          | productType | isFakeAddress | switchType | meterType | kwMax |
+#          | UP | FAKE | SUPPLIER SWITCH | YMR | 50000 |
+
         When Left menu is "billing"
         And Top menu item is "Klanten"
         And Top action is "Filters"
-        And "B2C/B2B" selection is "B2B"
         And "Type klant" selection is "Klant"
         And "Klantnummer" input is "parameter:accountNumber"
         Then "1st" List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
@@ -74,7 +78,13 @@ Feature: NSTA - 344 Payment Plan
         And "Procesdatum" date is "now"
         Then Invoice run is scheduled
 
-        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
+        Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
+        When Left menu is "contracting-switching"
+        And Top menu item is "Klanten"
+        And Top action is "Filters"
+        And "Type klant" selection is "Klant"
+        And "Klantnummer" input is "parameter:accountNumber"
+        Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
         And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
