@@ -5,6 +5,7 @@ import com.essent.testing.dwp.pageobject.impl.navigation.DwpPlusMenu;
 import com.essent.testing.dwp.pageobject.impl.navigation.TopActionsPageImpl;
 import com.essent.testing.dwp.pageobject.navigation.TopActionsPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import org.openqa.selenium.support.ui.FluentWait;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -66,16 +67,6 @@ public abstract class NavigationElements extends DwpScenario {
         }
     }
 
-    private class VisitTopItem implements Predicate<String> {
-        @Override
-        public boolean test(String label) {
-            Map<String, String> options = new HashMap<>();
-            options.put("label", label);
-            boolean success = executeJavascriptTest("TrGetTopTab", options);
-            return success;
-        }
-    }
-
     public class ClickConfirm implements Predicate<String> {
         @Override
         public boolean test(String name) {
@@ -87,15 +78,9 @@ public abstract class NavigationElements extends DwpScenario {
     private class ClickDashboardMenu implements Predicate<String> {
         @Override
         public boolean test(String menu) {
-            seleniumDriver.waitForRequestsToFinish();
             Map<String, Object> options = new HashMap<>();
             options.put("menu", menu);
-//            given().await()
-//                .pollInterval(FIVE_HUNDRED_MILLISECONDS)
-//                .pollDelay(ONE_SECOND)
-//                .atMost(new Duration(20, SECONDS)).until(() -> executeJavascriptTest("TrClickDashboardMenuButton", options));
-            executeJavascriptTest("TrClickDashboardMenuButton", options);
-             return true;
+             return executeJavascriptTest("TrClickDashboardMenuButton", options);
         }
     }
 
@@ -144,14 +129,14 @@ public abstract class NavigationElements extends DwpScenario {
     }
 
     protected void clickListPlusAction(String item) {
-        boolean success = new ClickListPlusAction().test(item);
-        assertThat(String.format("List Plus Action %s undefined.", item),
-            success, is(true));
+        FluentWait<ClickListPlusAction> waiter = waiter(new ClickListPlusAction(), 20, 2);
+        waiter.withMessage(String.format("List Plus Action \"%s\" is undefined.", item));
+        waiter.until((ClickListPlusAction action) -> action.test(item));
     }
 
     protected void clickDashboardMenu(String menu) {
-        boolean success = new ClickDashboardMenu().test(menu);
-        assertThat(String.format("Dashboard Menu  %s is undefined.", menu),
-            success, is(true));
+        FluentWait<ClickDashboardMenu> waiter = waiter(new ClickDashboardMenu(), 20, 2);
+        waiter.withMessage(String.format("Dashboard Menu  \"%s\" is undefined.", menu));
+        waiter.until((ClickDashboardMenu dashboardMenu)-> dashboardMenu.test(menu));
     }
 }
