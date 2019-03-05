@@ -172,14 +172,14 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And Click on "parameter:Contractnummer" link
 
         And Plus actions at "1st" list row having cell value "Te activeren" at column "Status & Product" are open
-        And List plus action is " Annuleer "
+        And List plus action is "Annuleer"
         Then Modal "Cancel contractline" is displayed
 
         And "Reden voor annulering" selection is "Geannuleerd door de klant"
         And Form is submitted
         Then "1st" list element has cell value "Geannuleerd" at column "Status & Product"
 
-        # Step 7
+            # Step 7
 
         And Top arrow button is "up"
         Given "1st" List element with value at column "Klantnummer & Naam" is checked
