@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
 import org.apache.log4j.Logger;
 
 import com.essent.testing.config.ConfigKey;
@@ -32,7 +33,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
     private final static Logger LOGGER = Logger.getLogger(QuoteDetailsAPI.class);
 
-    private static String ean = ConfigProvider.getProperty(ConfigKey.EAN_NUMBER);
+
     private static String PATH_TO_QUOTE = ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_QUOTE);
     private static String PATH_TO_PAYLOAD = ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_PAYLOAD);
 
@@ -56,14 +57,23 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
     public QuoteDetails getQuoteDetails(Cookies cookie, String tariffSheetId)
 	    throws JsonParseException, JsonMappingException, IOException {
+
+        String ean = null;
 	RequestHelper helper = new RequestHelper();
 	String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
 		+ ConfigProvider.getProperty(ConfigKey.CRM_B2CCQ_URL);
-	String payload = createQuotePayload(tariffSheetId);
+
+
+    synchronized(this) {
+        ean = PrepareDataForContract.generateEAN();
+    }
+
+    QuoteDetails quoteDetails = new QuoteDetails();
+    quoteDetails.setEan(ean);
+    LOGGER.info("Generated EAN: " + ean);
+	String payload = createQuotePayload(tariffSheetId, ean);
 
 	Response quoteResponse = helper.postRequest(STATUS_CREATED, cookie, payload, path);
-
-	QuoteDetails quoteDetails = new QuoteDetails();
 
 	LOGGER.info("Quote created");
 	String recordId = quoteResponse.jsonPath().getString("data.arguments.params.recordId");
@@ -81,6 +91,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
 	String quoteId = quoteResponse.jsonPath().getString("data.relatedBeans.AOS_Quotes[0]");
 	quoteDetails.setQuoteId(quoteId);
 	LOGGER.info("Quote Id: " + quoteId);
+
 
 	return quoteDetails;
 
@@ -143,25 +154,25 @@ public class QuoteDetailsAPI extends AbstractAPI {
         return status;
     }
 
-    public boolean checkIfEANexists(Cookies cookie, String quoteId) throws JsonProcessingException {
+    public boolean checkIfEANexists(Cookies cookie, QuoteDetails quoteDetails) throws JsonProcessingException {
     RequestHelper helper = new RequestHelper();
     String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
         + ConfigProvider.getProperty(ConfigKey.CRM_QUOTELINES_URL);
-    String payload = createQuoteLinesPayload(quoteId);
+    String payload = createQuoteLinesPayload(quoteDetails.getQuoteId());
 
     Response statusResponse = helper.postRequest(STATUS_OK, cookie, payload, path);
 
     boolean eanExists = false;
 
     LOGGER.info("Quotelines retrieved");
-    eanExists = statusResponse.jsonPath().getString("data.rows[0].rowData.ean_c").contains(ean);
-    LOGGER.info("EAN: " + ean + " exists in Quotelines: " + eanExists);
+    eanExists = statusResponse.jsonPath().getString("data.rows[0].rowData.ean_c").contains(quoteDetails.getEan());
+    LOGGER.info("EAN: " + quoteDetails.getEan() + " exists in Quotelines: " + eanExists);
 
     return eanExists;
 
     }
 
-    private String createQuotePayload(String tariffSheetId)
+    private String createQuotePayload(String tariffSheetId, String ean)
 	    throws JsonParseException, JsonMappingException, IOException {
 	ObjectMapper mapper = new ObjectMapper();
 
@@ -173,6 +184,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
 	String jsonPayload = new String(Files.readAllBytes(Paths.get(pathToPayload)));
 	PayloadDTO payload = mapper.readValue(jsonPayload, PayloadDTO.class);
 	payload.setTariffsheetId(tariffSheetId);
+	payload.setEan(ean);
 
 	quote.getModel().getPayloadWrapper().setPayload(payload);
 
