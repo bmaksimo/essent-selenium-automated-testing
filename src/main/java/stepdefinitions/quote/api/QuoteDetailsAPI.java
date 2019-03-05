@@ -1,22 +1,16 @@
 package stepdefinitions.quote.api;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
-import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
-import org.apache.log4j.Logger;
-
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
+import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
 import com.essent.testing.util.resource.ResourceUtil;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import io.restassured.http.Cookies;
 import io.restassured.response.Response;
+import org.apache.log4j.Logger;
 import stepdefinitions.quote.api.helper.PayloadMapper;
 import stepdefinitions.quote.api.helper.RequestHelper;
 import stepdefinitions.quote.api.model.QuoteDetails;
@@ -24,6 +18,10 @@ import stepdefinitions.quote.api.model.QuoteLines;
 import stepdefinitions.quote.api.model.QuotesOnAccount;
 import stepdefinitions.quote.api.model.dto.PayloadDTO;
 import stepdefinitions.quote.api.model.dto.QuoteDetailsDTO;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * @author n.grkavac
@@ -37,7 +35,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
     private static String PATH_TO_QUOTE = ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_QUOTE);
     private static String PATH_TO_PAYLOAD = ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_PAYLOAD);
 
-    public String getTariffSheetID(Cookies cookie) {
+    public String getTariffSheetID(Cookies cookie) throws IOException {
     String tariffSheetID = null;
     Integer expectedResponseCode = STATUS_OK;
     String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
@@ -97,7 +95,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
     }
 
-    public String getQuoteNumber(Cookies cookie, String recordId) throws JsonProcessingException {
+    public String getQuoteNumber(Cookies cookie, String recordId) throws IOException {
 	RequestHelper helper = new RequestHelper();
 	String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
 		+ ConfigProvider.getProperty(ConfigKey.CRM_QUOTES_ON_ACCOUNT_URL);
@@ -114,7 +112,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
 	return quoteId;
     }
 
-    public String checkStatus(Cookies cookie, String quoteNumber) throws JsonProcessingException {
+    public String checkStatus(Cookies cookie, String quoteNumber) throws IOException {
     String status = null;
     Response response = quoteStatus(cookie, quoteNumber);
 
@@ -125,7 +123,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
     return status;
     }
 
-    public String getStatus(Cookies cookie, String quoteId) throws JsonProcessingException {
+    public String getStatus(Cookies cookie, String quoteId) throws IOException {
     RequestHelper helper = new RequestHelper();
     String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
         + ConfigProvider.getProperty(ConfigKey.CRM_QUOTELINES_URL);
@@ -143,7 +141,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
     }
 
-    public String checkStageStatus(Cookies cookie, String quoteNumber) throws JsonProcessingException {
+    public String checkStageStatus(Cookies cookie, String quoteNumber) throws IOException {
     String status = null;
     Response response = quoteStatus(cookie, quoteNumber);
 
@@ -154,7 +152,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
         return status;
     }
 
-    public boolean checkIfEANexists(Cookies cookie, QuoteDetails quoteDetails) throws JsonProcessingException {
+    public boolean checkIfEANexists(Cookies cookie, QuoteDetails quoteDetails) throws IOException {
     RequestHelper helper = new RequestHelper();
     String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
         + ConfigProvider.getProperty(ConfigKey.CRM_QUOTELINES_URL);
@@ -202,7 +200,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
 	return mapper.writeValueAsString(quotes);
     }
 
-    private Response quoteStatus(Cookies cookie, String quoteNumber) throws JsonProcessingException {
+    private Response quoteStatus(Cookies cookie, String quoteNumber) throws IOException {
     RequestHelper helper = new RequestHelper();
     String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
         + ConfigProvider.getProperty(ConfigKey.CRM_QUOTE_STATUS_URL) + "/" + quoteNumber + "/" + "readOnly";

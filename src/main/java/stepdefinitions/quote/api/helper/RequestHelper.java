@@ -8,6 +8,7 @@ import io.restassured.response.Response;
 import org.apache.log4j.Logger;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.UUID;
@@ -55,7 +56,7 @@ public class RequestHelper {
 	return response;
     }
 
-    public Response postRequest(Integer expectedStatusCode, Cookies cookie, String payload, String path) {
+    public Response postRequest(Integer expectedStatusCode, Cookies cookie, String payload, String path) throws IOException {
 
 	Response response = expect().given().header(trackingHeader).cookies(cookie).contentType(ContentType.JSON)
 		.body(payload).when().post(path);
