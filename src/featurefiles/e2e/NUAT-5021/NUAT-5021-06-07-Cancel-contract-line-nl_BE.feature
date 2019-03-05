@@ -11,7 +11,7 @@
             When Left menu is "contracting-switching"
             And Top menu item is "Klanten"
             And Top action is "Filters"
-            And "Naam" input is "parameter:suitecrm-customer-name"
+            And "Naam" input is "Wendie De deugd"
 
             Given "1st" List element with value at column "Klantnummer & Naam" is checked
             And Click on "parameter:Klantnummer & Naam" link
@@ -31,5 +31,7 @@
             # Step 7
 
             And Top arrow button is "up"
-            Then "1st" list element has cell value "Geannuleerd (Waarborg)" at column "Type & status"
-
+            Given "1st" List element with value at column "Klantnummer & Naam" is checked
+            And Click on "parameter:Klantnummer & Naam" link
+            And Dashboard menu is "Contracten"
+            Then Table "Contracten" contains cell value "Geannuleerd (Waarborg)" at column "Type & status" on "1st" row
