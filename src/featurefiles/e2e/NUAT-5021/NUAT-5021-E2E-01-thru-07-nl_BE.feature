@@ -156,10 +156,9 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And Dashboard menu is "Billing"
         Then "Openstaand bedrag" in the first "Paid by OV" row of "Transacties" table is "0"
 
-        #Step 6 - Cancel contract line
+        # Step 6
 
-        Given I renew login to DWP as "contracting.testautomation.b2c@essent.be"
-
+        Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
         When Left menu is "contracting-switching"
         And Top menu item is "Klanten"
         And Top action is "Filters"
@@ -170,16 +169,20 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And Dashboard menu is "Contracten"
         Then "1st" List element with value at column "Contractnummer" is checked
 
-        When Click on "parameter:Contractnummer" link
-        And Plus actions at "1st" list row in the list "Contractlijnen" are open
-        And Click on "Annuleer" link
+        And Click on "parameter:Contractnummer" link
+
+        And Plus actions at "1st" list row having cell value "Te activeren" at column "Status & Product" are open
+        And List plus action is " Annuleer "
         Then Modal "Cancel contractline" is displayed
 
-        When "Reden voor annulering" selection is "Geannuleerd door de klant"
+        And "Reden voor annulering" selection is "Geannuleerd door de klant"
         And Form is submitted
         Then "1st" list element has cell value "Geannuleerd" at column "Status & Product"
 
-        # Step 7 - Contract should be Geannuleerd (Waarborg)
+        # Step 7
 
         And Top arrow button is "up"
-        Then "1st" list element has cell value "Geannuleerd (Waarborg)" at column "Type & status"
+        Given "1st" List element with value at column "Klantnummer & Naam" is checked
+        And Click on "parameter:Klantnummer & Naam" link
+        And Dashboard menu is "Contracten"
+        Then Table "Contracten" contains cell value "Geannuleerd (Waarborg)" at column "Type & status" on "1st" row
