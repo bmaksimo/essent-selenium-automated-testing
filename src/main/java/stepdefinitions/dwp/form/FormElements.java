@@ -51,10 +51,11 @@ public class FormElements extends DwpScenario {
     @And("^\"([^\"]*)\" field value is \"([^\"]*)\"$")
     public void setFieldValue(String label, String expectedValue) throws Throwable {
         NonEditable field = new NonEditableImpl();
-        FluentWait<NonEditable> waiter = waiter(field, 50, 5);
+        FluentWait<NonEditable> waiter = waiter(field, 20, 5);
         waiter.until((NonEditable p) -> {
             String actualValue = p.getValue(label);
-            String assertionMessage = String.format("Actual value of '%s' was '%s', and this differs from expected '%s'", label, actualValue, expectedValue);
+            seleniumDriver.getDriver().getCurrentUrl();
+            String assertionMessage = String.format("Actual value of \"%s\" was \"%s\" differs from expected \"%s\"", label, actualValue, expectedValue);
             waiter.withMessage(assertionMessage);
             return StringUtils.equals(expectedValue, actualValue);
         });

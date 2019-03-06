@@ -81,7 +81,7 @@ public class InputElements extends DwpScenario {
         options.put("value", inputValue);
         FluentWait<ApplyDateInput> waiter = waiter(new ApplyDateInput(), 10, 1);
         waiter.until((ApplyDateInput callback) ->{
-            waiter.withMessage(String.format("Date value %s input at '%s' failed.", inputValue, label));
+            waiter.withMessage(String.format("Date value \"%s\" input at \"%s\" field failed.", inputValue, label));
             return callback.test(options);
         });
     }

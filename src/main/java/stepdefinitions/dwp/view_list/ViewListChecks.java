@@ -49,7 +49,7 @@ public class ViewListChecks extends NavigationElements {
     private class CheckViewListHeader implements Predicate<String> {
         @Override
         public boolean test(String header) {
-            int sec = 7;
+            int sec = 2;
             Map<String, Object> options = new HashMap<>();
             options.put("schedule_seconds", sec);
             options.put("header", header);
@@ -420,6 +420,18 @@ public class ViewListChecks extends NavigationElements {
         }
     }
 
+    @And("^\"([^\"]*)\" list element has status \"([^\"]*)\" at column \"([^\"]*)\" within (\\d+) seconds? refreshing \"([^\"]*)\"$")
+    public void refreshTillVisible(String ordinal, String status, String columnName, int seconds, String linkText) throws Throwable {
+        int row = extractNumericValue(ordinal);
+        String expectedValue = parameterProvider.getValueOrParameterAsString(status);
+        FluentWait<ViewListModel> waiter = waiter(new ViewListModel(), seconds, 5);
+        waiter.withMessage(String.format("Status did not switch to \"%s\" within \"%s\" seconds", status, seconds));
+        waiter.until((ViewListModel callback ) -> {
+            seleniumDriver.waitAndClick(seleniumDriver.findElement(By.linkText(linkText)));
+            return callback.containsDataAt(row, expectedValue, columnName);
+        });
+    }
+
     @And("^Cell values? from selected rows? and column \"([^\"]*)\" (?:are|is) checked$")
     public void checkDataSelection(String columnName) throws Throwable {
         ViewListModel viewListModel = new ViewListModel();
@@ -458,9 +470,10 @@ public class ViewListChecks extends NavigationElements {
     @And("^Plus actions at \"([^\"]*)\" list row having cell value \"([^\"]*)\" at column \"([^\"]*)\" are open$")
     public void openPlusActions(String ordinal, String value, String columnName) throws Throwable {
         int row = extractNumericValue(ordinal);
+        String expectedValue = parameterProvider.getValueOrParameterAsString(value);
         ViewListModel viewListModel = new ViewListModel();
         boolean success = viewListModel.openListPlusActions(row);
-        String message = String.format("\"%s\" row list didn't have cell value \"%s\" at column \"%s\"", ordinal, value, columnName);
+        String message = String.format("\"%s\" row list didn't have cell value \"%s\" at column \"%s\"", ordinal, expectedValue, columnName);
         assertThat(message,
             success, is(true));
         logger().info(String.format("- STEP: Plus actions at \"%s\" list row having cell value \"%s\" at column \"%s\" are opened - PASSED.", ordinal, value, columnName));
