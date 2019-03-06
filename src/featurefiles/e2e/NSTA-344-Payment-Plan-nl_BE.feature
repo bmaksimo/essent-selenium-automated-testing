@@ -98,16 +98,16 @@ Feature: NSTA - 344 Payment Plan
         And List option is "AANVRAAG AFBETALINGSPLAN"
 
 
-        And Input in "Type afbetalingsplan" is "Bedrag"
+        And Input in "Type afbetalingsplan" is "Per schijf"
         And Input in "Periode schijven" is "Maandelijks"
         And "Startdatum" date is "now"
+        And "Bedrag eerste afbetalingsschijf" input is "49"
+        And "Bedrag andere afbetalingsschijven" input is "1,1"
+        And Contract signature is confirmed
 
 
 
 
-
-#        And "Aantal schijven" input is "5"
-#        And Contract signature is confirmed
 #
 #        Given I renew login to DWP as "businessdesk.testautomation.b2b@essent.be"
 #        When Left menu is "sales-marketing"
