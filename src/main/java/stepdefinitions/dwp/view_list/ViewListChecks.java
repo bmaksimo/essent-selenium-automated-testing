@@ -2,6 +2,7 @@ package stepdefinitions.dwp.view_list;
 
 import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.essent.automation.util.Sleeper;
+import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -9,6 +10,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.runtime.CucumberException;
+import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -36,6 +38,7 @@ public class ViewListChecks extends NavigationElements {
     private static final String BILLING_CUSTOMER = "Billing customer";
     private static final String BILLING_CUSTOMER_VIEW_LIST = "BillingCustomerOnaccount";
     private static final String PLUS_ACTION = "Plus Action";
+
 
     private class ViewListNavigation {
         public void goToLink(String linkText) {
@@ -431,6 +434,24 @@ public class ViewListChecks extends NavigationElements {
             return callback.containsDataAt(row, expectedValue, columnName);
         });
     }
+
+    @When("^First list element with value \"([^\"]*)\" at column \"([^\"]*)\" has status \"([^\"]*)\" at column \"([^\"]*)\" within (\\d+) seconds refreshing \"([^\"]*)\"$")
+    public void firstListElementWithValueAtColumnHasStatusAtColumnWithinSecondsRefreshing(String value, String columnName, String status, String secondColumnName, int seconds, String linkText) throws Throwable {
+        String expectedValue = parameterProvider.getValueOrParameterAsString(value);
+        FluentWait<ViewListModel> waiter = waiter(new ViewListModel(), seconds/2, 5);
+        waiter.withMessage(String.format("Status did not switch to \"%s\" within \"%s\" seconds", status, seconds));
+        waiter.until((ViewListModel callback ) -> {
+            seleniumDriver.waitAndClick(seleniumDriver.findElement(By.linkText(linkText)));
+            return callback.fetchListRowsIndices(expectedValue, columnName).size() >= 1;
+        });
+        waiter = waiter(new ViewListModel(), seconds/2, 5);
+        waiter.until((ViewListModel callback ) -> {
+            seleniumDriver.waitAndClick(seleniumDriver.findElement(By.linkText(linkText)));
+            int row = callback.fetchListRowsIndices(value, columnName).get(0);
+            return callback.containsDataAt(row, status, secondColumnName);
+        });
+    }
+
 
     @And("^Cell values? from selected rows? and column \"([^\"]*)\" (?:are|is) checked$")
     public void checkDataSelection(String columnName) throws Throwable {

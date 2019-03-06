@@ -14,7 +14,7 @@ Feature: NUAT-3886 Reactivate contractline
         And Top action is "Filters"
         And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And "Klantnummer" input is "parameter:accountNumber"
-        Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
+        Then Click on "parameter:accountNumber" link
 
         When Dashboard menu is "Contracten"
         And Save EAN from active contract
@@ -31,12 +31,13 @@ Feature: NUAT-3886 Reactivate contractline
         Then Changes are confirmed
         And View list header is "Marktberichten" appears within 10 seconds
 
-        When "2nd" list element has status "Geaccepteerd" at column "Status & ED" within 450 seconds refreshing "REFRESH MARKTBERICHTEN"
+        #When "2nd" list element has status "Geaccepteerd" at column "Status & ED" within 450 seconds refreshing "REFRESH MARKTBERICHTEN"
+        When First list element with value "INITIATE STOP ACCESS" at column "Module & Label" has status "Geaccepteerd" at column "Status & ED" within 450 seconds refreshing "REFRESH MARKTBERICHTEN"
         And Dashboard menu is "Contracten"
         And "1st" List element with value at column "Contractnummer" is checked
         And Click on "parameter:Contractnummer" link
         And Plus actions at "1st" list row having cell value "Any" at column "Any" are open
-        And Click on "Reactiveer contractlijn" link
+        And List plus action is "Reactiveer contractlijn"
         And "Nieuwe startdatum" date is "now"
         And Label "Mig module" is "START ACCESS"
         And Changes are confirmed

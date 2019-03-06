@@ -19,10 +19,17 @@ class TrListPlusMenuAction extends TestRunnerBase {
                 return false;
             }
         });
+
         if(matches.length > 0) {
-            matches[0].find('a').trigger('click');
-            result.status = 'PASSED';
-            result.reason = '';
+            let link = matches[0].find('a');
+            let disabled = link.attr("disabled");
+            result.reason = 'Element ' + options.item + ' disabled';
+            if(!disabled) {
+                 link.trigger('click');
+                 result.status = 'PASSED';
+                 result.reason = '';
+            }
+
         } else {
             result.status = 'FAILED';
             result.reason = 'Element ' + options.item + ' not found';
