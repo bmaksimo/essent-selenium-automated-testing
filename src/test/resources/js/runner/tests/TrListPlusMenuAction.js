@@ -12,11 +12,11 @@ class TrListPlusMenuAction extends TestRunnerBase {
         let matches = [];
 
         $('list-row-actions[grid-key="action-bar"] div').children('list-row-action').each(function(index, element) {
-            if(options.item != $(this).attr('label')) {
-                return;
-            } else {
+            if(options.item === $(this).attr('label') || options.item.trim() === $(this).text().trim()) {
                 matches.push($(this));
                 return false;
+            } else {
+                return;
             }
         });
 

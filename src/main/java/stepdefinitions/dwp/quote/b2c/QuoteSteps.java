@@ -360,7 +360,8 @@ public class QuoteSteps extends DwpScenario {
 
 
     @And("^Electricity EAN code is \"([^\"]*)\"$")
-    public void electricityEANCodeIs(String ean) throws Throwable {
+    public void
+    electricityEANCodeIs(String ean) throws Throwable {
         ConnectionDetails electricityConnectionDetails = new ConnectionDetails();
         switch (ean) {
             case "selected":

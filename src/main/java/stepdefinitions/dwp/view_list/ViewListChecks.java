@@ -339,7 +339,7 @@ public class ViewListChecks extends NavigationElements {
     @When("^Click on link in View List at \"([^\"]*)\" row and \"([^\"]*)\" column polling (\\d+) seconds?$")
     public void clickOnViewListAtRowAndColumn(String ordinal, String column, int seconds) throws Throwable {
         FluentWait<ClickTableCellUrl> waiter = waiter(new ClickTableCellUrl(), seconds, 7)
-           .withMessage(String.format("Failed click on link in view list at \"%s\" row and \"%s\" column within \"%s\" seconds", ordinal, column, seconds));
+            .withMessage(String.format("Failed click on link in view list at \"%s\" row and \"%s\" column within \"%s\" seconds", ordinal, column, seconds));
         waiter.until((ClickTableCellUrl callback) -> callback.test(getColumnIndexListOptions(column, null, ordinal)));
         logger().info(String.format("- STEP: Click on link in view list at \"%s\" row and \"%s\" column within \"%s\" seconds - PASSED.", ordinal, column, seconds));
     }
@@ -393,8 +393,8 @@ public class ViewListChecks extends NavigationElements {
         FluentWait<ViewListModel> waiter = waiter(new ViewListModel(), seconds, 20);
         waiter.withMessage(String.format("\"%s\" list element did not contain expected cell value \"%s\" at column \"%s\" within \"%s\" seconds  - PASSED.", ordinal, expectedValue, columnName, seconds));
         waiter.until((ViewListModel callback) -> {
-                scenario.checkPlusMenu(plusMenuItem);
-                return callback.containsDataAt(row, expectedValue, columnName);
+            scenario.checkPlusMenu(plusMenuItem);
+            return callback.containsDataAt(row, expectedValue, columnName);
         });
         logger().info(String.format("- STEP: \"%s\" list element has cell value \"%s\" at column \"%s\" within \"%s\" seconds  - PASSED.", ordinal, expectedValue, columnName, seconds));
     }

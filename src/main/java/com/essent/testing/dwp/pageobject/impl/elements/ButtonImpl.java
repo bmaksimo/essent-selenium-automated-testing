@@ -5,13 +5,14 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.WebElement;
 
 public class ButtonImpl implements Button {
+
     public ButtonImpl(WebElement element) {
         this.element = element;
     }
 
     private static final Logger logger = Logger.getLogger(ButtonImpl.class);
 
-    private WebElement element;
+    protected WebElement element;
 
     @Override
     public void click() {
