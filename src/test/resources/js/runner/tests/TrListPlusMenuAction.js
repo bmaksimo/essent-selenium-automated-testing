@@ -24,6 +24,7 @@ class TrListPlusMenuAction extends TestRunnerBase {
             let link = matches[0].find('a');
             let disabled = link.attr("disabled");
             result.reason = 'Element ' + options.item + ' disabled';
+            result.status = 'FAILED';
             if(!disabled) {
                  link.trigger('click');
                  result.status = 'PASSED';
