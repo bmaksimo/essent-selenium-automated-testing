@@ -1,21 +1,19 @@
 package stepdefinitions.quote.api;
 
-import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
-import com.sun.xml.bind.v2.TODO;
-import org.apache.log4j.Logger;
-
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import io.restassured.http.Cookies;
 import io.restassured.response.Response;
+import org.apache.log4j.Logger;
 import stepdefinitions.quote.api.helper.PayloadMapper;
 import stepdefinitions.quote.api.helper.RequestHelper;
 import stepdefinitions.quote.api.model.ContractDetails;
 import stepdefinitions.quote.api.model.ContractsOnAccount;
 import stepdefinitions.quote.api.model.QuoteDetails;
+
+import java.io.IOException;
 
 /**
  * @author n.grkavac
@@ -27,7 +25,7 @@ public class ContractDetailsAPI extends AbstractAPI {
 
     //private static String ean = ConfigProvider.getProperty(ConfigKey.EAN_NUMBER);
 
-    public ContractDetails getContractDetails(Cookies cookie, QuoteDetails quoteDetails) throws JsonProcessingException {
+    public ContractDetails getContractDetails(Cookies cookie, QuoteDetails quoteDetails) throws IOException {
     RequestHelper helper = new RequestHelper();
     String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
         + ConfigProvider.getProperty(ConfigKey.CRM_CONTRACTS_ON_ACCOUNT_URL);
@@ -52,7 +50,7 @@ public class ContractDetailsAPI extends AbstractAPI {
 
     }
 
-    public boolean checkIfEanExists(Cookies cookie, QuoteDetails quoteDetails) throws JsonProcessingException {
+    public boolean checkIfEanExists(Cookies cookie, QuoteDetails quoteDetails) throws IOException {
 
     RequestHelper helper = new RequestHelper();
     String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_CONTRACTED_EANS_ON_ACCOUNT_URL);
@@ -71,7 +69,7 @@ public class ContractDetailsAPI extends AbstractAPI {
 
     }
 
-    public String getPaymentDetails(Cookies cookie, String quoteId) throws JsonProcessingException {
+    public String getPaymentDetails(Cookies cookie, String quoteId) throws IOException {
 	RequestHelper helper = new RequestHelper();
 	String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
 		+ ConfigProvider.getProperty(ConfigKey.CRM_BILLING_DETAILS_URL) + "/" + quoteId + "/" + "readOnly";
@@ -91,7 +89,7 @@ public class ContractDetailsAPI extends AbstractAPI {
     }
 
     public boolean getContractStatus(Cookies cookie, String contractRecordId)
-	    throws JsonProcessingException, InterruptedException {
+        throws IOException, InterruptedException {
 	RequestHelper helper = new RequestHelper();
 	String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
 		+ ConfigProvider.getProperty(ConfigKey.CRM_CONTRACT_DETAILS_URL) + "/" + contractRecordId + "/"

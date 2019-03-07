@@ -1,23 +1,23 @@
 package stepdefinitions.quote.api.helper;
 
-import static io.restassured.RestAssured.expect;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
-
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Map;
-import java.util.UUID;
-
+import com.essent.testing.util.resource.ResourceUtil;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookies;
 import io.restassured.http.Header;
 import io.restassured.response.Response;
-
 import org.apache.log4j.Logger;
 
-import com.essent.testing.util.resource.ResourceUtil;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Map;
+import java.util.UUID;
+
+import static io.restassured.RestAssured.expect;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 
 /**
  * Helper class with rest assured requests. Add new request or refactor existing
@@ -56,7 +56,7 @@ public class RequestHelper {
 	return response;
     }
 
-    public Response postRequest(Integer expectedStatusCode, Cookies cookie, String payload, String path) {
+    public Response postRequest(Integer expectedStatusCode, Cookies cookie, String payload, String path) throws IOException {
 
 	Response response = expect().given().header(trackingHeader).cookies(cookie).contentType(ContentType.JSON)
 		.body(payload).when().post(path);
@@ -69,7 +69,10 @@ public class RequestHelper {
 	}
 
 //	assertEquals(exectedStatusCode, responseStatusCode);
+
+	assertFalse(new ExceptionChecker().checkForErrorInResponse(response));
 	assertThat(responseStatusCode, is(equalTo(expectedStatusCode)));
+
 	return response;
     }
 
