@@ -119,6 +119,26 @@ public final class PrepareDataForContract {
         return randomNumberForEAN + String.valueOf(result);
     }
 
+
+    public static String generateDOBForAnAdult(){
+        //format yyyy-MM-dd       yyyydashMMdashdd
+        Random  rnd;
+        Date    dt;
+        long    ms;
+        // Get a new random instance, seeded from the clock
+        rnd = new Random();
+
+        // Get an Epoch value roughly between 1940 and 2010
+        // -946771200000L = January 1, 1940
+        // Add up to 70 years to it (using modulus on the next long)
+        ms = -946771200000L + (Math.abs(rnd.nextLong()) % (50L * 365 * 24 * 60 * 60 * 1000));
+        // Construct a date
+        dt = new Date(ms);
+        String  generatedDate = new SimpleDateFormat("yyyy-MM-dd").format(dt);
+
+        return generatedDate;
+    }
+
     private static String increaseByOneStartContractDate(String path, String startContractDate, String todayDate, String currentContractStartDateInDWP) throws ParseException {
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
         Date dateTodayDate = sdf1.parse(todayDate);

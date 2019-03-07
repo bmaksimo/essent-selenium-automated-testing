@@ -194,7 +194,7 @@
             "address_country": "BE"
         },
         "baseModule": "Leads",
-        "birthdate": "1948-12-16",
+        "birthdate": null,
         "com_prefs(type='COMMERCIAL')|channel": "NONE",
         "com_prefs(type='SMS')|receive_sms": true,
         "com_prefs(type='GENERAL')|channel": "POST",
