@@ -1,7 +1,7 @@
 package stepdefinitions.dwp.contracts.b2b.cancel;
 
 import com.essent.automation.util.Sleeper;
-import com.essent.testing.dwp.pageobject.impl.page.ContractPage;
+import com.essent.testing.dwp.pageobject.DashboardPages.ContractenPages.ContractPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;

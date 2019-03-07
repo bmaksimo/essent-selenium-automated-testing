@@ -1,7 +1,7 @@
 package stepdefinitions.dwp.page_object;
 
+import com.essent.testing.dwp.pageobject.DashboardPages.ContractenPages.ContractPage;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
-import com.essent.testing.dwp.pageobject.impl.service_contracting.ContractenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -15,12 +15,12 @@ public class TaskSteps extends DwpScenario {
     private String taskId;
 
     @Before("@DWP, @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
     }
 
     @When("^Plus action of first customer from list$")
-    public void plusActionOfFirstCustomerFromList() throws Throwable {
+    public void plusActionOfFirstCustomerFromList() {
     }
 
     @When("^Plus action and \"([^\"]*)\" of first customer from list$")
@@ -46,18 +46,18 @@ public class TaskSteps extends DwpScenario {
     }
 
     @When("^Save task ID of first customer in list$")
-    public void saveTaskIDOfFirstCustomerInList() throws Throwable {
+    public void saveTaskIDOfFirstCustomerInList() {
         BaseObject baseObject = new BaseObject();
         taskId = baseObject.getTaskId();
     }
 
     @And("^Resolution input is \"([^\"]*)\"$")
-    public void resolutionInputIs(String text) throws Throwable {
+    public void resolutionInputIs(String text) {
         inputResolution(text);
     }
 
     @Then("^Task was marked as done$")
-    public void taskWasMarkedAsDone() throws Throwable {
+    public void taskWasMarkedAsDone() {
         findTaskId(taskId);
     }
 
@@ -67,14 +67,14 @@ public class TaskSteps extends DwpScenario {
     }
 
     @And("^Search for task id$")
-    public void searchForTaskId() throws Throwable {
-        ContractenPage contractenPage = new ContractenPage();
+    public void searchForTaskId() {
+        ContractPage contractenPage = new ContractPage();
         contractenPage.searchForTaskId(taskId);
     }
 
     @Then("^\"([^\"]*)\" was rejection reason$")
-    public void wasRejectionReason(String input) throws Throwable {
-        ContractenPage contractenPage = new ContractenPage();
+    public void wasRejectionReason(String input) {
+        ContractPage contractenPage = new ContractPage();
         contractenPage.findRejectionReason(input);
     }
 

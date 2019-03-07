@@ -1,6 +1,6 @@
 package stepdefinitions.dwp.b2b;
 
-import com.essent.testing.dwp.pageobject.impl.page.MarktBerichtenPage;
+import com.essent.testing.dwp.pageobject.DashboardPages.MarktberishtenPages.MarktBerichtenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;

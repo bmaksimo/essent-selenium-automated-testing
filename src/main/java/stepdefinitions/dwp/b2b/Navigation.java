@@ -1,8 +1,9 @@
 package stepdefinitions.dwp.b2b;
 
+import com.essent.testing.dwp.pageobject.DashboardPages.ServicePage.DwpServicePage;
 import com.essent.testing.dwp.pageobject.impl.navigation.DwpTopMenu;
 import com.essent.testing.dwp.pageobject.impl.page.DwpHomePage;
-import com.essent.testing.dwp.pageobject.impl.page.MarktBerichtenPage;
+import com.essent.testing.dwp.pageobject.DashboardPages.MarktberishtenPages.MarktBerichtenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -28,9 +29,9 @@ public class Navigation extends DwpScenario {
     }
 
     @And("^\"([^\"]*)\" is clicked$")
-    public void isClicked(String srt) throws Throwable {
-        DwpHomePage hp = new DwpHomePage();
-        hp.clickOnNewCase();
+    public void isClicked(String srt) {
+        DwpServicePage sp = new DwpServicePage();
+        sp.clickOnNewCase();
     }
 
     @Override
@@ -40,7 +41,7 @@ public class Navigation extends DwpScenario {
     }
 
     @Then("^Verify status is \"([^\"]*)\" and \"([^\"]*)\"$")
-    public void verifyStatusIsAnd(String external, String status) throws Throwable {
+    public void verifyStatusIsAnd(String external, String status) {
         seleniumDriver.waitForRequestsToFinish();
         if (status.equalsIgnoreCase("Normaal") || (status.equalsIgnoreCase("Normal"))) {
             Assert.assertTrue(checkStatusIsNormal(external));
@@ -63,13 +64,13 @@ public class Navigation extends DwpScenario {
     }
 
     @And("^Go back to home screen$")
-    public void goBackToHomeScreen() throws Throwable {
+    public void goBackToHomeScreen() {
         DwpTopMenu tm = new DwpTopMenu();
         tm.goBackToHomePage();
     }
 
     @When("^Refresh \"([^\"]*)\" till \"([^\"]*)\" is visible in table$")
-    public void refreshTillIsVisible(String name, String status) throws Throwable {
+    public void refreshTillIsVisible(String name, String status) {
         seleniumDriver.waitForRequestsToFinish();
         MarktBerichtenPage mp = new MarktBerichtenPage();
         if (seleniumDriver.findElement(By.xpath("//tr[1]//list-link-bold-top-two-liner-cell/div/a/h5")).isDisplayed()) {

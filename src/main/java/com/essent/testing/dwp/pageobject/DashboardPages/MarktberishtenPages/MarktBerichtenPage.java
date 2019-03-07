@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.impl.page;
+package com.essent.testing.dwp.pageobject.DashboardPages.MarktberishtenPages;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
 import org.junit.Assert;

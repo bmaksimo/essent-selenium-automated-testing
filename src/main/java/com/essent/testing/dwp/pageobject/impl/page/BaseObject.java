@@ -1,12 +1,11 @@
 package com.essent.testing.dwp.pageobject.impl.page;
 
 import com.essent.automation.util.Sleeper;
+import com.essent.testing.dwp.pageobject.DashboardPages.ContractenPages.ContractPage;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import org.openqa.selenium.By;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class BaseObject extends Component {
 
@@ -39,7 +38,7 @@ public class BaseObject extends Component {
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action/a/span[@class='icon-checkmark']")));
     }
 
-    public void clickOnToggle (String label) throws InterruptedException{
+    public void clickOnToggle (String label){
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(2);
         ToggleImpl toggle = new ToggleImpl();
@@ -52,23 +51,19 @@ public class BaseObject extends Component {
         return findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[1])[2]")).getText();
     }
 
-    private String pattern = "dd/MM/yyyy";
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-
-    private String date = simpleDateFormat.format(new Date());
-
     public void dateIsNow(String label) throws InterruptedException {
+        ContractPage cp = new ContractPage();
         seleniumDriver.waitForRequestsToFinish();
         Thread.sleep(2000);
-        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.xpath("//validation-wrapper[@label='"+label+"']//input")),date);
+        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.xpath("//validation-wrapper[@label='"+label+"']//input")),cp.date);
         seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//span[@class='icon-kalender']")));
     }
 
-    public void dateIsCustom(String label, String customDate) throws InterruptedException {
-        seleniumDriver.waitForRequestsToFinish();
-        Thread.sleep(2000);
-        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.xpath("//validation-wrapper[@label='"+label+"']//input")), customDate);
-        seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//span[@class='icon-kalender']")));
-    }
+//    public void dateIsCustom(String label, String customDate) throws InterruptedException {
+//        seleniumDriver.waitForRequestsToFinish();
+//        Thread.sleep(2000);
+//        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.xpath("//validation-wrapper[@label='"+label+"']//input")), customDate);
+//        seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//span[@class='icon-kalender']")));
+//    }
 
 }

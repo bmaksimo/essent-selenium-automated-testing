@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.impl.page;
+package com.essent.testing.dwp.pageobject.DashboardPages.ContractenPages;
 
 
 import com.essent.testing.dwp.pageobject.impl.Component;
@@ -20,9 +20,9 @@ public class OffertePage extends Component {
     public void clickOnLabel(String label, String value) {
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + label + "']//option[@label = '" + value + "']")));
     }
-     public void clickOnType(){
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("quote-type-c-default-value-field")));
-     }
+//     public void clickOnType(){
+//        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("quote-type-c-default-value-field")));
+//     }
 
      public void clickOnFilter(){
          seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//top-actions/div/a[2]")));
@@ -41,15 +41,15 @@ public class OffertePage extends Component {
         return seleniumDriver.findElementWhenVisible(By.id("stage-field")).getText();
     }
 
-    public void clickOnBevestigen(){
-        seleniumDriver.waitForRequestsToFinish();
-        try {
-            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("primaryButton")));;
-        }
-        catch(org.openqa.selenium.StaleElementReferenceException ex) {
-            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("primaryButton")));;
-        }
-    }
+//    public void clickOnBevestigen(){
+//        seleniumDriver.waitForRequestsToFinish();
+//        try {
+//            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("primaryButton")));;
+//        }
+//        catch(org.openqa.selenium.StaleElementReferenceException ex) {
+//            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("primaryButton")));;
+//        }
+//    }
 
     public void confirmQuote() {
         String query = NEXT_BUTTON.getQuery();
