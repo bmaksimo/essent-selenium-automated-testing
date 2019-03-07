@@ -1,9 +1,9 @@
 package stepdefinitions.dwp.service_contracting;
 
 import com.essent.automation.util.Sleeper;
+import com.essent.testing.dwp.pageobject.DashboardPages.ContractenPages.ContractPricesPage;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
 import com.essent.testing.dwp.pageobject.impl.page.ContractPage;
-import com.essent.testing.dwp.pageobject.impl.service_contracting.ContractPageClass;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
 import cucumber.api.DataTable;
@@ -27,13 +27,13 @@ public class ContractSteps extends DwpScenario {
 
     @And("^Change amount for a customer$")
     public void changeAmountForACustomer(){
-        ContractPageClass cp = new ContractPageClass();
+        ContractPage cp = new ContractPage();
         cp.openFirstContractFromList();
     }
 
     @And("^Contract plus and \"([^\"]*)\"$")
     public void contractPlusAnd(String subaction) {
-        ContractPageClass cp = new ContractPageClass();
+        ContractPage cp = new ContractPage();
         cp.contractPlus();
         BaseObject baseObject = new BaseObject();
         baseObject.plusSubaction(subaction);
@@ -41,14 +41,14 @@ public class ContractSteps extends DwpScenario {
 
     @And("^Amount values is \"([^\"]*)\"$")
     public void amountValuesIs(String value) {
-        ContractPageClass cp = new ContractPageClass();
+        ContractPage cp = new ContractPage();
         cp.changeAmount(value);
         amount = value;
     }
 
     @Then("^Amount of a customer value$")
     public void amountOfACustomerValue() {
-        ContractPageClass cp = new ContractPageClass();
+        ContractPage cp = new ContractPage();
         Assert.assertTrue("Amount is not correct.", cp.getAmountOfACustomer(amount));
     }
 
@@ -61,6 +61,7 @@ public class ContractSteps extends DwpScenario {
     @When("^Old contract data is copied$")
     public void oldContractDataIsCopied() {
         ContractPage cp = new ContractPage();
+        ContractPricesPage cpp = new ContractPricesPage();
         parameterProvider.put("randomEAN", PrepareDataForContract.generateEAN());
         parameterProvider.put("oldContractEan",cp.getEanFromContract());
         parameterProvider.put("contractStatus", cp.getStatusFromContract());
@@ -71,19 +72,19 @@ public class ContractSteps extends DwpScenario {
         parameterProvider.put("productName",cp.getProductName());
         parameterProvider.put("kortingsCode",cp.getKortingenOpContractKortingscode());
         parameterProvider.put("productType",cp.getKortingenOpContractProducttype());
-        cp.clickOnBekijkPrijzenTariefkaatFromPlus();
-        parameterProvider.put("typeProduct",cp.getTypeProduct());
-        parameterProvider.put("energieprijsEnkelvoudigInclBtw",cp.getEnergieprijsEnkelvoudigInclBtw());
-        parameterProvider.put("energieprijsDagInclBtw",cp.getEnergieprijsDagInclBtw());
-        parameterProvider.put("energieprijsNachtInclBtw",cp.getEnergieprijsNachtInclBtw());
-        parameterProvider.put("energieprijsExclusiefNachtInclBtw",cp.getEnergieprijsExclusiefNachtInclBtw());
-        parameterProvider.put("vasteVergoedingInclBtw",cp.getVasteVergoedingInclBtw());
-        parameterProvider.put("energieprijsEnkelvoudigExclBtw",cp.getEnergieprijsEnkelvoudigExclBtw());
-        parameterProvider.put("energieprijsDagExclBtw",cp.getEnergieprijsDagExclBtw());
-        parameterProvider.put("energieprijsNachExclBtw",cp.getEnergieprijsNachExclBtw());
-        parameterProvider.put("energieprijsExclusiefNachtExclBtw",cp.getEnergieprijsExclusiefNachtExclBtw());
-        parameterProvider.put("vasteVergoedingExclBtw",cp.getVasteVergoedingExclBtw());
-        cp.closeBekijkPrijsDetailsTK1();
+        cpp.clickOnBekijkPrijzenTariefkaatFromPlus();
+        parameterProvider.put("typeProduct",cpp.getTypeProduct());
+        parameterProvider.put("energieprijsEnkelvoudigInclBtw",cpp.getEnergieprijsEnkelvoudigInclBtw());
+        parameterProvider.put("energieprijsDagInclBtw",cpp.getEnergieprijsDagInclBtw());
+        parameterProvider.put("energieprijsNachtInclBtw",cpp.getEnergieprijsNachtInclBtw());
+        parameterProvider.put("energieprijsExclusiefNachtInclBtw",cpp.getEnergieprijsExclusiefNachtInclBtw());
+        parameterProvider.put("vasteVergoedingInclBtw",cpp.getVasteVergoedingInclBtw());
+        parameterProvider.put("energieprijsEnkelvoudigExclBtw",cpp.getEnergieprijsEnkelvoudigExclBtw());
+        parameterProvider.put("energieprijsDagExclBtw",cpp.getEnergieprijsDagExclBtw());
+        parameterProvider.put("energieprijsNachExclBtw",cpp.getEnergieprijsNachExclBtw());
+        parameterProvider.put("energieprijsExclusiefNachtExclBtw",cpp.getEnergieprijsExclusiefNachtExclBtw());
+        parameterProvider.put("vasteVergoedingExclBtw",cpp.getVasteVergoedingExclBtw());
+        cpp.closeBekijkPrijsDetailsTK1();
     }
 
     @And("^Check if start date of new ean is the same date as filled in as “Move date”-\"([^\"]*)\"$")
@@ -117,20 +118,20 @@ public class ContractSteps extends DwpScenario {
 
     @And("^Check if prices of both contracts are the same$")
     public void checkIfPricesOfBothContractsAreTheSame() {
-        ContractPage cp = new ContractPage();
-        cp.clickOnBekijkPrijzenTariefkaatFromPlus();
-        Assert.assertEquals("Actual Type Product differs from expected",cp.getTypeProduct(),parameterProvider.getValueOrParameterAsString("parameter:typeProduct"));
-        Assert.assertEquals("Actual Energieprijs Enkelvoudig Incl Btw differs from expected",cp.getEnergieprijsEnkelvoudigInclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsEnkelvoudigInclBtw"));
-        Assert.assertEquals("Actual Energieprijs Dag Incl Btw Incl Btw differs from expected",cp.getEnergieprijsDagInclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsDagInclBtw"));
-        Assert.assertEquals("Actual Energieprijs Nacht Incl Btw differs from expected",cp.getEnergieprijsNachtInclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsNachtInclBtw"));
-        Assert.assertEquals("Actual Energieprijs Exclusief Nacht Incl Btw differs from expected",cp.getEnergieprijsExclusiefNachtInclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsExclusiefNachtInclBtw"));
-        Assert.assertEquals("Actual Vaste Vergoeding Incl Btw differs from expected",cp.getVasteVergoedingInclBtw(),parameterProvider.getValueOrParameterAsString("parameter:vasteVergoedingInclBtw"));
-        Assert.assertEquals("Actual Energieprijs Enkelvoudig Excl Btw differs from expected",cp.getEnergieprijsEnkelvoudigExclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsEnkelvoudigExclBtw"));
-        Assert.assertEquals("Actual Energieprijs Dag Excl Btw from expected",cp.getEnergieprijsDagExclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsDagExclBtw"));
-        Assert.assertEquals("Actual Energieprijs Nach Excl Btw differs from expected",cp.getEnergieprijsNachExclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsNachExclBtw"));
-        Assert.assertEquals("Actual Energieprijs Exclusief Nacht Excl Btw differs from expected",cp.getEnergieprijsExclusiefNachtExclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsExclusiefNachtExclBtw"));
-        Assert.assertEquals("Actual Vaste Vergoeding Excl Btw differs from expected",cp.getVasteVergoedingExclBtw(),parameterProvider.getValueOrParameterAsString("parameter:vasteVergoedingExclBtw"));
-        cp.closeBekijkPrijsDetailsTK1();
+        ContractPricesPage cpp = new ContractPricesPage();
+        cpp.clickOnBekijkPrijzenTariefkaatFromPlus();
+        Assert.assertEquals("Actual Type Product differs from expected",cpp.getTypeProduct(),parameterProvider.getValueOrParameterAsString("parameter:typeProduct"));
+        Assert.assertEquals("Actual Energieprijs Enkelvoudig Incl Btw differs from expected",cpp.getEnergieprijsEnkelvoudigInclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsEnkelvoudigInclBtw"));
+        Assert.assertEquals("Actual Energieprijs Dag Incl Btw Incl Btw differs from expected",cpp.getEnergieprijsDagInclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsDagInclBtw"));
+        Assert.assertEquals("Actual Energieprijs Nacht Incl Btw differs from expected",cpp.getEnergieprijsNachtInclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsNachtInclBtw"));
+        Assert.assertEquals("Actual Energieprijs Exclusief Nacht Incl Btw differs from expected",cpp.getEnergieprijsExclusiefNachtInclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsExclusiefNachtInclBtw"));
+        Assert.assertEquals("Actual Vaste Vergoeding Incl Btw differs from expected",cpp.getVasteVergoedingInclBtw(),parameterProvider.getValueOrParameterAsString("parameter:vasteVergoedingInclBtw"));
+        Assert.assertEquals("Actual Energieprijs Enkelvoudig Excl Btw differs from expected",cpp.getEnergieprijsEnkelvoudigExclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsEnkelvoudigExclBtw"));
+        Assert.assertEquals("Actual Energieprijs Dag Excl Btw from expected",cpp.getEnergieprijsDagExclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsDagExclBtw"));
+        Assert.assertEquals("Actual Energieprijs Nach Excl Btw differs from expected",cpp.getEnergieprijsNachExclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsNachExclBtw"));
+        Assert.assertEquals("Actual Energieprijs Exclusief Nacht Excl Btw differs from expected",cpp.getEnergieprijsExclusiefNachtExclBtw(),parameterProvider.getValueOrParameterAsString("parameter:energieprijsExclusiefNachtExclBtw"));
+        Assert.assertEquals("Actual Vaste Vergoeding Excl Btw differs from expected",cpp.getVasteVergoedingExclBtw(),parameterProvider.getValueOrParameterAsString("parameter:vasteVergoedingExclBtw"));
+        cpp.closeBekijkPrijsDetailsTK1();
     }
 
     @And("^New move customer address is$")

@@ -2,7 +2,6 @@ package stepdefinitions.dwp.contracts.b2b.cancel;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.page.ContractPage;
-import com.essent.testing.dwp.pageobject.impl.service_contracting.ContractenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -29,19 +28,19 @@ public class ContractsSteps extends DwpScenario {
     public void inputInModuleIs(String label, String input) {
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(3);
-        ContractenPage contractenPage = new ContractenPage();
+        ContractPage contractenPage = new ContractPage();
         contractenPage.fieldDropDownLabel(label, input);
     }
 
     @And("^Check toggle \"([^\"]*)\"$")
     public void checkToggle(String label) {
-        ContractenPage contractenPage = new ContractenPage();
+        ContractPage contractenPage = new ContractPage();
         contractenPage.turnOnTestingAndMarketMock(label);
     }
 
     @When("^Find \"([^\"]*)\" contract$")
     public void findContract(String input) throws Throwable {
-        ContractenPage contractenPage = new ContractenPage();
+        ContractPage contractenPage = new ContractPage();
         eanCodeInput = contractenPage.findActiveContract(input);
         logger().info("EAN CODE: " + eanCodeInput);
         parameterProvider.put("contractEanCode", eanCodeInput);
@@ -50,14 +49,14 @@ public class ContractsSteps extends DwpScenario {
     @When("^Contract line EAN-code \"([^\"]*)\" is submitted$")
     public void submitEanCode(String value) throws Throwable {
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
-        ContractenPage contractenPage = new ContractenPage();
+        ContractPage contractenPage = new ContractPage();
         contractenPage.searchForEanCode(inputValue);
     }
 
     @Then("^Confirm task was \"([^\"]*)\"$")
     public void confirmTaskWas(String value) throws Throwable {
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
-        ContractenPage contractenPage = new ContractenPage();
+        ContractPage contractenPage = new ContractPage();
         contractenPage.confirmTaskStatus(inputValue);
     }
 
@@ -69,38 +68,38 @@ public class ContractsSteps extends DwpScenario {
 
     @And("^\"([^\"]*)\" input in omschrijving$")
     public void inputInOmschrijving(String text) {
-        ContractenPage contractenPage = new ContractenPage();
+        ContractPage contractenPage = new ContractPage();
         contractenPage.inputText(text);
     }
 
     @And("^Offertes plus options is \"([^\"]*)\"$")
     public void sendEMailToCustomer(String test) {
-        ContractenPage contractenPage = new ContractenPage();
+        ContractPage contractenPage = new ContractPage();
         contractenPage.sendEmailToCustomer(test);
     }
 
     @And("^List option is \"([^\"]*)\"$")
     public void openInvoiceOnly(String option)  {
-        ContractenPage contractenPage = new ContractenPage();
+        ContractPage contractenPage = new ContractPage();
         contractenPage.openListOption(option);
     }
 
     @Then("^Payment delayed$")
     public void paymentDelayed() {
-        ContractenPage contractenPage = new ContractenPage();
+        ContractPage contractenPage = new ContractPage();
         contractenPage.checkPayDate();
     }
 
     @And("^Find \"([^\"]*)\" facture and \"([^\"]*)\"$")
     public void findFactureAnd(String type, String option) {
-        ContractenPage contractenPage = new ContractenPage();
+        ContractPage contractenPage = new ContractPage();
         contractenPage.findIssuedAndPayDelay(type, option);
     }
 
     @Then("^Validate bank account was changed on \"([^\"]*)\"$")
     public void validateBankAccountWasChangedOn(String iban) {
         String inputIban = parameterProvider.getValueOrParameterAsString(iban);
-        ContractenPage contractenPage = new ContractenPage();
+        ContractPage contractenPage = new ContractPage();
         contractenPage.findIban(inputIban);
     }
 

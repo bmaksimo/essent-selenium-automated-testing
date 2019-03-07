@@ -2,7 +2,9 @@ package com.essent.testing.dwp.pageobject.impl.page;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
+import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,7 +32,6 @@ public class ContractPage extends Component {
         seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("primaryButton")));
     }
-
 
     public String getClientNumber() {
         return seleniumDriver.findElementWhenVisible(By.xpath("//blue-sidebar//h4")).getText();
@@ -164,59 +165,14 @@ public class ContractPage extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath("//list[@list-key='ContractsOnAccount']//tr[1]/td[3]//span[1]")).getText();
     }
 
-    public String getTypeProduct(){
+    public void clickOnContractenNummer(){
         seleniumDriver.waitForRequestsToFinish();
-        return seleniumDriver.findElementWhenVisible(By.id("aos-products-price-type-field")).getText();
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list[@list-key='ContractsOnAccount']//tr[1]/td[4]//h5")));
     }
 
-    public String getEnergieprijsEnkelvoudigInclBtw(){
+    public String getProductName(){
         seleniumDriver.waitForRequestsToFinish();
-        return seleniumDriver.findElementWhenVisible(By.id("dwp-selling-price-th-incl-vat-fixed-field")).getText();
-    }
-
-    public String getEnergieprijsDagInclBtw(){
-        seleniumDriver.waitForRequestsToFinish();
-        return seleniumDriver.findElementWhenVisible(By.id("dwp-selling-price-high-incl-vat-fixed-field")).getText();
-    }
-
-    public String getEnergieprijsNachtInclBtw(){
-        seleniumDriver.waitForRequestsToFinish();
-        return seleniumDriver.findElementWhenVisible(By.id("dwp-selling-price-low-incl-vat-fixed-field")).getText();
-    }
-
-    public String getEnergieprijsExclusiefNachtInclBtw(){
-        seleniumDriver.waitForRequestsToFinish();
-        return seleniumDriver.findElementWhenVisible(By.id("dwp-selling-price-exclnight-incl-vat-fixed-field")).getText();
-    }
-
-    public String getVasteVergoedingInclBtw(){
-        seleniumDriver.waitForRequestsToFinish();
-        return seleniumDriver.findElementWhenVisible(By.id("dwp-selling-price-fixedfee-incl-vat-field")).getText();
-    }
-
-    public String getEnergieprijsEnkelvoudigExclBtw(){
-        seleniumDriver.waitForRequestsToFinish();
-        return seleniumDriver.findElementWhenVisible(By.id("dwp-selling-price-th-fixed-field")).getText();
-    }
-
-    public String getEnergieprijsDagExclBtw(){
-        seleniumDriver.waitForRequestsToFinish();
-        return seleniumDriver.findElementWhenVisible(By.id("dwp-selling-price-high-fixed-field")).getText();
-    }
-
-    public String getEnergieprijsNachExclBtw(){
-        seleniumDriver.waitForRequestsToFinish();
-        return seleniumDriver.findElementWhenVisible(By.id("dwp-selling-price-low-fixed-field")).getText();
-    }
-
-    public String getEnergieprijsExclusiefNachtExclBtw(){
-        seleniumDriver.waitForRequestsToFinish();
-        return seleniumDriver.findElementWhenVisible(By.id("dwp-selling-price-exclnight-fixed-field")).getText();
-    }
-
-    public String getVasteVergoedingExclBtw(){
-        seleniumDriver.waitForRequestsToFinish();
-        return seleniumDriver.findElementWhenVisible(By.id("dwp-selling-price-fixedfee-field")).getText();
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//list[@list-key='ContractlinesOnContract']//td[@class='list__cell cell__text']//p/span[2])[1]")).getText();
     }
 
     public String getKortingenOpContractKortingscode(){
@@ -227,23 +183,6 @@ public class ContractPage extends Component {
     public String getKortingenOpContractProducttype(){
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath("//list[@list-key='DiscountsOnContract']//tr[1]/td[2]//span[1]")).getText();
-    }
-
-    public void clickOnContractenNummer(){
-        seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list[@list-key='ContractsOnAccount']//tr[1]/td[4]//h5")));
-    }
-
-    public void clickOnBekijkPrijzenTariefkaatFromPlus(){
-        Sleeper.sleepTightInSeconds(3);
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-plus-cell[@list-key='ContractlinesOnContract']/div/a")));
-        Sleeper.sleepTightInSeconds(2);
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[@label='Bekijk prijzen tariefkaart']/a")));
-    }
-
-    public String getProductName(){
-        seleniumDriver.waitForRequestsToFinish();
-        return seleniumDriver.findElementWhenVisible(By.xpath("(//list[@list-key='ContractlinesOnContract']//td[@class='list__cell cell__text']//p/span[2])[1]")).getText();
     }
 
     public String getCaseOnderwerp(){
@@ -263,10 +202,6 @@ public class ContractPage extends Component {
 
     public String getInteractionVerwanteCase() {
         return seleniumDriver.findElementWhenVisible(By.xpath("//*[@id='rows']/tr[1]/td[7]/list-link-bold-top-two-liner-cell/div/a")).getText();
-    }
-
-    public void closeBekijkPrijsDetailsTK1(){
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//a[@class=\"button icon-close\"]")));
     }
 
     public void chooseDiscounts(String discount){
@@ -308,7 +243,6 @@ public class ContractPage extends Component {
             if (monthStartDate <= 3) {
                 quarterEndMonth = "03";
             }
-
             else if (monthStartDate >= 4 && monthStartDate <= 6) {
                 quarterEndMonth = "06";
             }
@@ -323,27 +257,19 @@ public class ContractPage extends Component {
         {
              if (yearStartDate.compareTo(yearAttestDate)<0) {
                  quarterEndMonth = "01";
-
              }
              else {
                  if (monthStartDate <= 3) {
                      quarterEndMonth = "03";
-
                  }
-
                  else if (monthStartDate >= 4 && monthStartDate <= 6) {
                      quarterEndMonth = "06";
-
                  }
-
                  else if (monthStartDate >= 7 && monthStartDate <= 9) {
                      quarterEndMonth = "09";
-
                  }
-
                  else{
                      quarterEndMonth = "12";
-
                  }
 
              }
@@ -354,15 +280,12 @@ public class ContractPage extends Component {
             if (monthStartDate <= 3) {
                 quarterEndMonth = "03";
             }
-
             else if (monthStartDate >= 4 && monthStartDate <= 6) {
                 quarterEndMonth = "06";
             }
-
             else if (monthStartDate >= 7 && monthStartDate <= 9) {
                 quarterEndMonth = "09";
             }
-
             else{
                 quarterEndMonth = "12";
             }
@@ -400,6 +323,130 @@ public class ContractPage extends Component {
         builder.append(yearStartDate);
         String endDate = builder.toString();
         return endDate;
+    }
+
+    public void openFirstContractFromList() {
+        seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//div[@class = 'col-1-1']/div[@class = 'row-']/list[@list-key = 'ContractedEansOnAccount']//tbody[@id = 'rows']/tr[1]/td[4]")));
+        seleniumDriver.waitForRequestsToFinish();
+    }
+
+    public void contractPlus() {
+        seleniumDriver.waitForRequestsToFinish();
+        seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//tbody[@id='rows']/tr[1]/td[12]")));
+    }
+
+    public void changeAmount(String value) {
+        findElementWhenVisible(By.id("dwp-recurring-amount-field")).clear();
+        findElementWhenVisible(By.id("dwp-recurring-amount-field")).sendKeys(value);
+        seleniumDriver.waitForRequestsToFinish();
+    }
+
+    public boolean getAmountOfACustomer(String amount) {
+        String amountValue = findElementWhenVisible(By.id("advance-amount-field")).getText();
+        String amountParameter = amount + ",00";
+        String[] value = amountValue.split(" ", 2);
+        for (String i : value) {
+        }
+
+        return amountParameter.equals(value[1]);
+    }
+
+    private static  String payDate;
+
+    public String findActiveContract(String input) throws InterruptedException {
+        seleniumDriver.waitForRequestsToFinish();
+        int counter = 2;
+        String eanCode;
+        String action = findElementWhenVisible(By.xpath("(//h6)[" + counter + "]")).getText();
+        while (!action.equalsIgnoreCase(input)) {
+            counter = counter + 2;
+            action = findElementWhenVisible(By.xpath("(//h6)[" + counter + "]")).getText();
+        }
+        counter--;
+        eanCode = findElementWhenVisible(By.xpath("(//h5)[" + counter + "]")).getText();
+
+        return eanCode;
+    }
+
+    public void searchForEanCode(String eanCode) {
+        seleniumDriver.waitForRequestsToFinish();
+        findElementWhenVisible(By.id("search-input")).clear();
+        findElementWhenVisible(By.id("search-input")).sendKeys(eanCode);
+        findElementWhenVisible(By.xpath("//input[@value='Search']")).click();
+        seleniumDriver.waitForRequestsToFinish();
+        findElementWhenVisible(By.xpath("//div[@class='multi-select__results']//ul[2]")).click();
+        seleniumDriver.waitForRequestsToFinish();
+        findElementWhenVisible(By.xpath("//section[@class='view__modal']//a[@href='']")).click();
+    }
+
+    public void fieldDropDownLabel(String label, String input) {
+        seleniumDriver.waitForRequestsToFinish();
+        seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + label + "']/div/div/ng-form/div/select-form-element/div/select/option[@label='" + input + "']")).click();
+    }
+
+    public void turnOnTestingAndMarketMock(String label) {
+        if (label.equalsIgnoreCase("Testing")) {
+            findElementWhenVisible(By.id("dwp|toggle_testing")).click();
+        } else if (label.equalsIgnoreCase("Market mock")) {
+            findElementWhenVisible(By.id("aos_products_quotes|market_mock_c")).click();
+        }
+    }
+
+    public void confirmTaskStatus(String input) {
+        seleniumDriver.waitForRequestsToFinish();
+        Assert.assertTrue(findElementWhenVisible(By.xpath("(//h6)[.='" + input + "']")).isDisplayed());
+    }
+
+    public void searchForTaskId(String taskId) {
+        seleniumDriver.waitForRequestsToFinish();
+        findElementWhenVisible(By.xpath("//input[@type='search']")).clear();
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//input[@type='search']")), taskId);
+        findElementWhenVisible(By.xpath("//input[@type='search']")).sendKeys(Keys.ENTER);
+    }
+
+    public void findRejectionReason(String input) {
+        seleniumDriver.waitForRequestsToFinish();
+        Assert.assertTrue(seleniumDriver.findElementWhenVisible(By.xpath("(//span[.='" + input + "'])[1]")).isDisplayed());
+    }
+
+    public void inputText(String text) {
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//text-angular[@id='description-field']/div[2]/div[.=' ']")), text);
+    }
+
+    public void sendEmailToCustomer(String test) {
+        seleniumDriver.waitForRequestsToFinish();
+        BaseObject baseObject = new BaseObject();
+        baseObject.clickOnPlus();
+        seleniumDriver.waitForRequestsToFinish();
+        seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[@label='"+test+"']/a")).click();
+    }
+
+    public void openListOption(String option) {
+        seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//span[.='" + option + "']")));
+    }
+
+    public void checkPayDate() {
+        seleniumDriver.waitForRequestsToFinish();
+        final String newPayDate = findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell[@icon='null']//span)[6]")).getText();
+        Assert.assertFalse("Date was not changed. Old date is : " + payDate + ", and new date is same : " + newPayDate, newPayDate.equalsIgnoreCase(payDate));
+    }
+
+    public void findIssuedAndPayDelay(String type, String option) {
+        /* I must use tr and td html elements to locate correct list element*/
+        int counter = 1;
+        String payType = findElementWhenVisible(By.xpath("//*[@id='rows']/tr[1]/td[8]//span[1]")).getText();
+        while(!payType.equalsIgnoreCase(type)){
+            counter = counter + 2;
+            payType = findElementWhenVisible(By.xpath("//*[@id='rows']/tr[" + counter + "]/td[8]//span[1]")).getText();
+        }
+        payDate = findElementWhenVisible(By.xpath("//*[@id='rows']/tr[" + counter + "]/td[7]//span[2]")).getText();
+        findElementWhenVisible(By.xpath("(//*[@id='rows']/tr[" + counter + "]/td[10]/list-plus-cell//a)[1]")).click();
+        findElementWhenVisible(By.xpath("//list-row-action[@label='" + option + "']/a")).click();
+    }
+
+    public void findIban(String iban) {
+        seleniumDriver.waitForRequestsToFinish();
+        Assert.assertTrue(seleniumDriver.findElementWhenVisible(By.xpath("//span[.='" + iban + "']")).isDisplayed());
     }
 
 }
