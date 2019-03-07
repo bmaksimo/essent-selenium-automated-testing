@@ -1,9 +1,9 @@
 @DWP
-@B2C
 @ODOO
+@B2C
 Feature: NUAT-5021 Complete scenario from de-duplication of client with guarantee to inactive client
 
-    @NUAT-5021-01-04
+    @NUAT-5021-01-07
     Scenario: From de-duplication of client to inactive client via passive renewal
 
         # Step 1: create customer with guarantee
@@ -13,7 +13,7 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         Then Form header is "Quote details"
 
         When "Tariefdatum" date is "now"
-        And "Sales kanaal" selection is "Inbound"
+        And B2C sales channel is "Inbound"
         And Quote details are confirmed
         Then Form header is "Personal details"
 
@@ -29,17 +29,27 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        When Electricity EAN code is "random"
+        When "Startdatum" date is "now"
+        And Electricity EAN code is "random"
+        And Electricity market mock test is Open
         And Connection details are confirmed
         Then Form header is "Billing details"
 
-        When "Betalingswijze" selection is "Overschrijving"
-        And  Billing details are confirmed
+        When Payment details are: method "Overschrijving", random IBAN, bic "ABNANL2A"
+        And Billing details are confirmed
         Then  Form header is "Quote overview"
 
-        When Quote is confirmed
+        When Option "Heeft de klant al getekend?" is On
+        And "Kanaal ondertekening" selection is "Papier"
+        And Quote is signed in "Kontich"
+        And "Datum ondertekening" date is "now"
+        And Quote is confirmed
         Then View list header is "Offertes"
-        And "1st" list element has cell value "Sales Verstuurd naar de klant - Geaccepteerd" at column "Type & status"
+        Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
+
+        When Dashboard menu is "Contracten"
+        Then View list header is "Actieve en toekomstige connecties"
+        And  "1st" List element with value at column "EAN-code" is checked
 
         When Top arrow button is "Up"
         And Left menu is "sales-marketing"
@@ -48,17 +58,17 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And "Naam" input is "parameter:suitecrm-customer-name"
 
         Given "1st" List element with value at column "Klantnummer & Naam" is checked
-        Then  External status is "On" for SuiteCRM Customer Number "parameter:Klantnummer & Naam"
+        Then External status is "On" for SuiteCRM Customer Number "parameter:Klantnummer & Naam"
 
         #Step 2: should deduplicate customer
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
-        When B2C sales channel is "Inbound"
+        When "Sales kanaal" selection is "Inbound"
         And Quote details are confirmed
         Then Form header is "Personal details"
 
-        Given Customer address is
+        When Customer address is
             | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
             | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
         And Customer is duplicated
@@ -85,21 +95,18 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And Connection details are confirmed
         Then Form header is "Billing details"
 
-        When "Betalingswijze" selection is "Overschrijving"
-        And  Billing details are confirmed
-        Then  Form header is "Quote overview"
+        When "Advance frequency" selection is "Maandelijks"
+        And "IBAN" input is "parameter:iban"
+        And Billing details are confirmed
+        Then Form header is "Quote overview"
 
         When Option "Heeft de klant al getekend?" is On
-        And "Kanaal ondertekening" selection is "Papier"
-        And "Plaats ondertekening" input is "Kontich"
         And "Datum ondertekening" date is "now"
+        And "Plaats ondertekening" input is "Kontich"
         And Quote for account is signed
         When Quote for account is confirmed
         Then View list header is "Offertes"
-        And "1st" list element has cell value "Sales Getekend - Waarborg" at column "Type & status"
-
-        When Dashboard menu is "Marktberichten"
-        Then View List is empty
+        Then "1st" list element has cell value "Sales Getekend - Waarborg" at column "Type & status"
 
         # Step 3 - Should create guarantee invoice
         Given I renew login to DWP as "billing.testautomation@essent.be"
@@ -107,7 +114,7 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And Top menu item is "Klanten"
         And Top action is "Filters"
         And "Naam" input is "parameter:suitecrm-customer-name"
-        And Click on "parameter:Klantnummer" link
+        And Click on link in View List at "1st" row and "Klantnummer & Naam" column
         And Dashboard menu is "Billing"
         Then "1st" list element has cell value "Invoice (GUARANTEE)" at column "ID & Type"
 
@@ -135,6 +142,8 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And Column "Reference" of the "1st" row is clicked
         Then Bank Statement "Close" button is clicked
 
+        #Step 5 - Check Openstaand bedrag = 0
+
         #Switch back to Dwp and verify Guarantee Payment
         Given I renew login to DWP as "billing.testautomation@essent.be"
         When Left menu is "contracting-switching"
@@ -146,3 +155,34 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And Click on link in View List at "1st" row and "Klantnummer & Naam" column
         And Dashboard menu is "Billing"
         Then "Openstaand bedrag" in the first "Paid by OV" row of "Transacties" table is "0"
+
+        # Step 6
+
+        Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
+        When Left menu is "contracting-switching"
+        And Top menu item is "Klanten"
+        And Top action is "Filters"
+        And "Naam" input is "parameter:suitecrm-customer-name"
+
+        Given "1st" List element with value at column "Klantnummer & Naam" is checked
+        And Click on "parameter:Klantnummer & Naam" link
+        And Dashboard menu is "Contracten"
+        Then "1st" List element with value at column "Contractnummer" is checked
+
+        And Click on "parameter:Contractnummer" link
+
+        And Plus actions at "1st" list row having cell value "Te activeren" at column "Status & Product" are open
+        And List plus action is "Annuleer"
+        Then Modal "Cancel contractline" is displayed
+
+        And "Reden voor annulering" selection is "Geannuleerd door de klant"
+        And Form is submitted
+        Then "1st" list element has cell value "Geannuleerd" at column "Status & Product"
+
+            # Step 7
+
+        And Top arrow button is "up"
+        Given "1st" List element with value at column "Klantnummer & Naam" is checked
+        And Click on "parameter:Klantnummer & Naam" link
+        And Dashboard menu is "Contracten"
+        Then Table "Contracten" contains cell value "Geannuleerd (Waarborg)" at column "Type & status" on "1st" row
