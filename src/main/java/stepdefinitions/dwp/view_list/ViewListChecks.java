@@ -2,6 +2,7 @@ package stepdefinitions.dwp.view_list;
 
 import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.essent.automation.util.Sleeper;
+import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -9,6 +10,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.runtime.CucumberException;
+import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -37,6 +39,7 @@ public class ViewListChecks extends NavigationElements {
     private static final String BILLING_CUSTOMER_VIEW_LIST = "BillingCustomerOnaccount";
     private static final String PLUS_ACTION = "Plus Action";
 
+
     private class ViewListNavigation {
         public void goToLink(String linkText) {
             seleniumDriver.waitForRequestsToFinish();
@@ -49,7 +52,7 @@ public class ViewListChecks extends NavigationElements {
     private class CheckViewListHeader implements Predicate<String> {
         @Override
         public boolean test(String header) {
-            int sec = 7;
+            int sec = 2;
             Map<String, Object> options = new HashMap<>();
             options.put("schedule_seconds", sec);
             options.put("header", header);
@@ -420,6 +423,37 @@ public class ViewListChecks extends NavigationElements {
         }
     }
 
+    @And("^\"([^\"]*)\" list element has status \"([^\"]*)\" at column \"([^\"]*)\" within (\\d+) seconds? refreshing \"([^\"]*)\"$")
+    public void refreshTillVisible(String ordinal, String status, String columnName, int seconds, String linkText) throws Throwable {
+        int row = extractNumericValue(ordinal);
+        String expectedValue = parameterProvider.getValueOrParameterAsString(status);
+        FluentWait<ViewListModel> waiter = waiter(new ViewListModel(), seconds, 5);
+        waiter.withMessage(String.format("Status did not switch to \"%s\" within \"%s\" seconds", status, seconds));
+        waiter.until((ViewListModel callback ) -> {
+            seleniumDriver.waitAndClick(seleniumDriver.findElement(By.linkText(linkText)));
+            return callback.containsDataAt(row, expectedValue, columnName);
+        });
+    }
+
+    //TODO  migrate to io.cucumber synthax:
+    //TODO When List element with values {"INITIATE STOP ACCESS", "Geaccepteerd"} at columns {"Module & Label, "Status & ED"} appears within 450 seconds refreshing "REFRESH MARKTBERICHTEN"
+    @When("^First list element with value \"([^\"]*)\" at column \"([^\"]*)\" has status \"([^\"]*)\" at column \"([^\"]*)\" within (\\d+) seconds refreshing \"([^\"]*)\"$")
+    public void hasStatusWithinTimeout(String value, String columnName, String status, String secondColumnName, int seconds, String linkText) throws Throwable {
+        String expectedValue = parameterProvider.getValueOrParameterAsString(value);
+        FluentWait<ViewListModel> waiter = waiter(new ViewListModel(), seconds/2, 5);
+        waiter.withMessage(String.format("Status did not switch to \"%s\" within \"%s\" seconds", status, seconds));
+        waiter.until((ViewListModel callback ) -> {
+            seleniumDriver.waitAndClick(seleniumDriver.findElement(By.linkText(linkText)));
+            return callback.fetchListRowsIndices(expectedValue, columnName).size() >= 1;
+        });
+        waiter = waiter(new ViewListModel(), seconds/2, 5);
+        waiter.until((ViewListModel callback ) -> {
+            seleniumDriver.waitAndClick(seleniumDriver.findElement(By.linkText(linkText)));
+            int row = callback.fetchListRowsIndices(value, columnName).get(0);
+            return callback.containsDataAt(row, status, secondColumnName);
+        });
+    }
+
     @And("^Cell values? from selected rows? and column \"([^\"]*)\" (?:are|is) checked$")
     public void checkDataSelection(String columnName) throws Throwable {
         ViewListModel viewListModel = new ViewListModel();
@@ -458,9 +492,10 @@ public class ViewListChecks extends NavigationElements {
     @And("^Plus actions at \"([^\"]*)\" list row having cell value \"([^\"]*)\" at column \"([^\"]*)\" are open$")
     public void openPlusActions(String ordinal, String value, String columnName) throws Throwable {
         int row = extractNumericValue(ordinal);
+        String expectedValue = parameterProvider.getValueOrParameterAsString(value);
         ViewListModel viewListModel = new ViewListModel();
         boolean success = viewListModel.openListPlusActions(row);
-        String message = String.format("\"%s\" row list didn't have cell value \"%s\" at column \"%s\"", ordinal, value, columnName);
+        String message = String.format("\"%s\" row list didn't have cell value \"%s\" at column \"%s\"", ordinal, expectedValue, columnName);
         assertThat(message,
             success, is(true));
         logger().info(String.format("- STEP: Plus actions at \"%s\" list row having cell value \"%s\" at column \"%s\" are opened - PASSED.", ordinal, value, columnName));

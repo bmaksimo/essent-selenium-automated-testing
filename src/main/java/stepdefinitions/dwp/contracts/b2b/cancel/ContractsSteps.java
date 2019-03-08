@@ -14,6 +14,9 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import stepdefinitions.dwp.page_object.CustomerAcceptance;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+
 public class ContractsSteps extends DwpScenario {
 
     private String eanCodeInput = null;
@@ -142,10 +145,10 @@ public class ContractsSteps extends DwpScenario {
     }
 
     @Then("^Customer Status is \"([^\"]*)\"$")
-    public void customerStatus(String status) {
-        seleniumDriver.waitForRequestsToFinish();
+    public void customerStatus(String expectedStatus) {
         CustomerAcceptance customerAcceptance = new CustomerAcceptance();
-        customerAcceptance.customerStatus(status);
+        String actualStatus = customerAcceptance.getAcceptanceStatus();
+        assertThat(String.format("Actual customer acceptance status \"%s\" differs from the expected \"%s\"", actualStatus, expectedStatus), actualStatus, equalTo(expectedStatus));
 
     }
 
