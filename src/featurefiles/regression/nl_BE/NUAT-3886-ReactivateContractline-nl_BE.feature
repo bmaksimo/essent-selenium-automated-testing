@@ -31,7 +31,6 @@ Feature: NUAT-3886 Reactivate contractline
         Then Changes are confirmed
         And View list header is "Marktberichten" appears within 10 seconds
 
-        #When "2nd" list element has status "Geaccepteerd" at column "Status & ED" within 450 seconds refreshing "REFRESH MARKTBERICHTEN"
         When First list element with value "INITIATE STOP ACCESS" at column "Module & Label" has status "Geaccepteerd" at column "Status & ED" within 450 seconds refreshing "REFRESH MARKTBERICHTEN"
         And Dashboard menu is "Contracten"
         And "1st" List element with value at column "Contractnummer" is checked

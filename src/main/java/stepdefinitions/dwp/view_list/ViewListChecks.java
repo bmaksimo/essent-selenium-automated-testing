@@ -435,8 +435,10 @@ public class ViewListChecks extends NavigationElements {
         });
     }
 
+    //TODO  migrate to io.cucumber synthax:
+    //TODO When List element with values {"INITIATE STOP ACCESS", "Geaccepteerd"} at columns {"Module & Label, "Status & ED"} appears within 450 seconds refreshing "REFRESH MARKTBERICHTEN"
     @When("^First list element with value \"([^\"]*)\" at column \"([^\"]*)\" has status \"([^\"]*)\" at column \"([^\"]*)\" within (\\d+) seconds refreshing \"([^\"]*)\"$")
-    public void firstListElementWithValueAtColumnHasStatusAtColumnWithinSecondsRefreshing(String value, String columnName, String status, String secondColumnName, int seconds, String linkText) throws Throwable {
+    public void hasStatusWithinTimeout(String value, String columnName, String status, String secondColumnName, int seconds, String linkText) throws Throwable {
         String expectedValue = parameterProvider.getValueOrParameterAsString(value);
         FluentWait<ViewListModel> waiter = waiter(new ViewListModel(), seconds/2, 5);
         waiter.withMessage(String.format("Status did not switch to \"%s\" within \"%s\" seconds", status, seconds));
@@ -451,7 +453,6 @@ public class ViewListChecks extends NavigationElements {
             return callback.containsDataAt(row, status, secondColumnName);
         });
     }
-
 
     @And("^Cell values? from selected rows? and column \"([^\"]*)\" (?:are|is) checked$")
     public void checkDataSelection(String columnName) throws Throwable {
