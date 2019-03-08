@@ -58,12 +58,4 @@ public class BaseObject extends Component {
         seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.xpath("//validation-wrapper[@label='"+label+"']//input")),cp.date);
         seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//span[@class='icon-kalender']")));
     }
-
-//    public void dateIsCustom(String label, String customDate) throws InterruptedException {
-//        seleniumDriver.waitForRequestsToFinish();
-//        Thread.sleep(2000);
-//        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.xpath("//validation-wrapper[@label='"+label+"']//input")), customDate);
-//        seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//span[@class='icon-kalender']")));
-//    }
-
 }
