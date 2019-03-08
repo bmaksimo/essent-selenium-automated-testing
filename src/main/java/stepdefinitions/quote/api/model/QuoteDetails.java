@@ -8,6 +8,7 @@ public class QuoteDetails {
     private String accountNumber;
     private String accountId;
     private String ean;
+    private String dateOfBirth; //date of birth
     public String getRecordId() {
         return recordId;
     }
@@ -45,5 +46,14 @@ public class QuoteDetails {
     public String getEan(){
         return ean;
     }
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+
 
 }
