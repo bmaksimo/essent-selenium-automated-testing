@@ -28,6 +28,8 @@ Feature: NUAT-5021 Voraaf Step 1. Sign-in on vooraf (prepaid)
         Then Form header is "Connection details"
 
         When "Startdatum" date is "2 weeks before now"
+        And Option "test" is On
+        And Option "MM should respond?" is On
 
 #    “Startdatum”: Needs to be a date in the past
 #    • “Test”: Checkbox ON
