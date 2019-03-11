@@ -22,6 +22,11 @@ import stepdefinitions.quote.api.model.dto.QuoteDetailsDTO;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+//import java.text.DateFormat;
 
 /**
  * @author n.grkavac
@@ -35,7 +40,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
     private static String PATH_TO_QUOTE = ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_QUOTE);
     private static String PATH_TO_PAYLOAD = ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_PAYLOAD);
 
-    public String getTariffSheetID(Cookies cookie) throws IOException {
+    public String getTariffSheetID(Cookies cookie, String startedFlowName) throws IOException {
     String tariffSheetID = null;
     Integer expectedResponseCode = STATUS_OK;
     String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
@@ -53,7 +58,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
     return tariffSheetID;
     }
 
-    public QuoteDetails getQuoteDetails(Cookies cookie, String tariffSheetId)
+    public QuoteDetails getQuoteDetails(Cookies cookie, String tariffSheetId, String startedFlowName)
 	    throws JsonParseException, JsonMappingException, IOException {
 
         String ean = null;
@@ -72,12 +77,18 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
     QuoteDetails quoteDetails = new QuoteDetails();
     quoteDetails.setEan(ean);
-    LOGGER.info("Generated EAN: " + ean);
 
-    quoteDetails.setDateOfBirth(dateOfBirth);
+        Map<String,String> generatedNames4account = new HashMap<String, String>();
+        generatedNames4account = createAccountName(startedFlowName);
+        quoteDetails.setFirstName(generatedNames4account.get("firstName"));
+        quoteDetails.setLastName(generatedNames4account.get("lastName"));
+        quoteDetails.setAccountName(generatedNames4account.get("accountName"));
+
+    LOGGER.info("Generated EAN: " + ean);
+        quoteDetails.setDateOfBirth(dateOfBirth);
     LOGGER.info("Generated date of birth: " + dateOfBirth);
 
-	String payload = createQuotePayload(tariffSheetId, ean, dateOfBirth);
+	String payload = createQuotePayload(tariffSheetId, ean, dateOfBirth, generatedNames4account.get("firstName"),generatedNames4account.get("lastName"));
 
 	Response quoteResponse = helper.postRequest(STATUS_CREATED, cookie, payload, path);
 
@@ -178,7 +189,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
     }
 
-    private String createQuotePayload(String tariffSheetId, String ean, String dateOfBirth)
+    private String createQuotePayload(String tariffSheetId, String ean, String dateOfBirth, String firstName, String lastName)
 	    throws JsonParseException, JsonMappingException, IOException {
 	ObjectMapper mapper = new ObjectMapper();
 
@@ -192,7 +203,10 @@ public class QuoteDetailsAPI extends AbstractAPI {
 	payload.setTariffsheetId(tariffSheetId);
 	payload.setEan(ean);
 	quote.getModel().setBirthdate(dateOfBirth);
+        quote.getModel().setFirstName(firstName);
+        quote.getModel().setLastName(lastName);
 	quote.getModel().getPayloadWrapper().setPayload(payload);
+
 
 	return mapper.writeValueAsString(quote);
     }
@@ -247,4 +261,50 @@ public class QuoteDetailsAPI extends AbstractAPI {
     return id;
     }
 
+
+    private String getCurrentDateTime() {
+        Date now = new Date();
+
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yy_HHmmSS");
+        return dateFormat.format(now);
+    }
+    private Map<String,String> createAccountName(String startedFlowName){
+
+        String firstName = "default";
+        String lastName = "default";
+        String accountName = "RA_" + startedFlowName + "_TC1_B2C_123456789012345";
+        String reversedLastName = "";
+        Map<String,String> generatedNames = new HashMap<String, String>();
+
+        accountName = accountName + getCurrentDateTime();
+
+        int nameLength = accountName.length();
+        if (nameLength > 35){
+            firstName = accountName.substring(0,35);
+            lastName = "L" + accountName.substring(35,nameLength);
+            if (lastName.length() > 35){
+                StringBuilder sb=new StringBuilder(lastName);
+                reversedLastName = String.valueOf(sb.reverse());
+                lastName = reversedLastName.substring(35,nameLength);
+                StringBuilder sb2 = new StringBuilder(lastName);
+                lastName = String.valueOf(sb2);
+            }
+        }else{
+            firstName = accountName.substring(0,nameLength-2);
+            lastName = "L" + accountName.substring(nameLength-2,nameLength);
+        }
+
+        generatedNames.put("firstName",firstName);
+        generatedNames.put("lastName", lastName);
+        generatedNames.put("accountName", accountName);
+
+
+
+        LOGGER.info("First name: " + generatedNames.get("firstName"));
+        LOGGER.info("Last name: " + generatedNames.get("lastName"));
+        LOGGER.info("Account name: " + generatedNames.get("accountName"));
+
+        return generatedNames;
+
+    }
 }
