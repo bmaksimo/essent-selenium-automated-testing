@@ -99,8 +99,8 @@ public class InputElements extends DwpScenario {
         });
     }
 
-    @And("(^Options?) \"([^\"]*)\" (is|are) ([^\"]*)$")
-    public void switchOption(String quantity, String option, String verb, SwitchState state) throws Throwable {
+    @And("^Options? \"([^\"]*)\" (is|are) ([^\"]*)$")
+    public void switchOption(String option, String verb, SwitchState state) throws Throwable {
         Map<String, String> options = new HashMap<>();
         options.put("label", option);
         options.put("verb", verb);
