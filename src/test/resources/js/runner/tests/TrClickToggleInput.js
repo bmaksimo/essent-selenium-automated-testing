@@ -17,16 +17,40 @@ class TrClickToggleInput extends TestRunnerBase {
         super(options, callback, 3000);
     }
     run(options, result) {
+    console.log(options);
         let label = options.label;
+
+
         let input = $(`label:contains(${label})`).parent().find(".input__toggle input");
+
+
         let inputSize = input.size();
+
+
         if (inputSize === 0) {
             result.status = 'FAILED';
             result.reason = 'Input element with id ' + options.id + ' not found';
         } else {
-            input[0].click();
-            result.status = 'PASSED';
-            result.reason = '';
+            if(options.verb) {
+                switch(options.verb) {
+                    case "are": {
+                        for(i=0; i< inputSize; i++) {
+                            input[i].click();
+                        }
+                        break;
+                    }
+                    case "is": {
+                        input[0].click();
+                        break;
+                    }
+                }
+
+                result.status = 'PASSED';
+                result.reason = '';
+            } else {
+                result.status = 'FAILED';
+                result.reason = 'Verb must be either "is" or "are"';
+            }
         }
         this.resolveCallback(result);
     }
