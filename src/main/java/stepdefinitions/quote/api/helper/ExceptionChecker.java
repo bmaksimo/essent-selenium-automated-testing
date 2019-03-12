@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import stepdefinitions.quote.api.model.dto.FlashMessagesDTO;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -45,9 +46,11 @@ public class ExceptionChecker {
         String warningFromFlashMessage;
 
 
-       warningFromFlashMessage = response.jsonPath().getString(pathToWarning);
+      // warningFromFlashMessage = response.jsonPath().getString(pathToWarning);
+        warningFromFlashMessage = response.jsonPath().getString(pathToWarning);
        if (warningFromFlashMessage !=null) {
-           List<FlashMessagesDTO> flashMessages = mapper.readValue(warningFromFlashMessage, List.class);
+          // List<FlashMessagesDTO> flashMessages = mapper.readValue(warningFromFlashMessage, List.class);
+           List<FlashMessagesDTO> flashMessages = Arrays.asList(mapper.readValue(warningFromFlashMessage, FlashMessagesDTO[].class));
 
            for (FlashMessagesDTO flashMessage : flashMessages) {
                if (flashMessage.getType() != null) {
