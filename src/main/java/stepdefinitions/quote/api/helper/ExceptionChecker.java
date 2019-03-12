@@ -2,13 +2,12 @@ package stepdefinitions.quote.api.helper;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.response.Response;
 import org.apache.log4j.Logger;
-import stepdefinitions.quote.api.model.dto.FlashMessagesDTO;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 
 public class ExceptionChecker {
@@ -35,35 +34,32 @@ public class ExceptionChecker {
         return errorExists;
     }
 
-    public boolean checkForErrorInFlashMessages(Response response)throws JsonParseException, JsonMappingException, IOException {
 
-        boolean errorExists = false;
-        ObjectMapper mapper = new ObjectMapper();
+        public boolean checkForErrorInFlashMessages(Response response)throws JsonParseException, JsonMappingException, IOException {
 
+            boolean errorExists = false;
 
-        String pathToWarning = "flashMessages";
-        String warningFromFlashMessage;
+            String pathToWarning = "flashMessages";
 
+            List<Map<String, String>> warningFromFlashMessage = response.jsonPath().getList(pathToWarning);
 
-       warningFromFlashMessage = response.jsonPath().getString(pathToWarning);
-       if (warningFromFlashMessage !=null) {
-           List<FlashMessagesDTO> flashMessages = mapper.readValue(warningFromFlashMessage, List.class);
+            if (warningFromFlashMessage !=null) {
 
-           for (FlashMessagesDTO flashMessage : flashMessages) {
-               if (flashMessage.getType() != null) {
-                   if (flashMessage.getType().equals("ERROR")) {
-                       errorExists = true;
-                       LOGGER.error("ERROR: " + flashMessage.getText());
-                   } else if (flashMessage.getType().equals("WARNING")) {
-                       LOGGER.warn("FLASH MESSAGE:" + flashMessage.getText());
-                   }
-               }
-           }
-       }
+                for (Map<String, String> warningMap : warningFromFlashMessage) {
+                    if (warningMap != null) {
+                        for (Map.Entry<String, String> entry : warningMap.entrySet()) {
+                            if (entry.getKey().equals("type") && entry.getValue().equals("ERROR")) {
+                                errorExists = true;
+                                LOGGER.error("ERROR: " + warningMap.get("text"));
+                            } else if (entry.getKey().equals("type") && entry.getValue().equals("WARNING")) {
+                                LOGGER.warn("FLASH MESSAGE:" + warningMap.get("text"));
+                            }
+                        }
+                    }
+                }
+            }
 
+            return errorExists;
 
-
-        return errorExists;
-
-    }
+        }
 }

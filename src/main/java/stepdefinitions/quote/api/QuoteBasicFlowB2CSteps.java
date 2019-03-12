@@ -3,7 +3,6 @@ package stepdefinitions.quote.api;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.restassured.B2CCreateContractScenario;
-
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
@@ -14,13 +13,12 @@ import stepdefinitions.quote.api.helper.AsyncExecutor;
 import stepdefinitions.quote.api.model.ContractDetails;
 import stepdefinitions.quote.api.model.QuoteDetails;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertThat;
-
 import java.util.concurrent.TimeUnit;
 
-import static org.awaitility.Awaitility.*;
+import static org.awaitility.Awaitility.await;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 /**
  * @author n.grkavac
@@ -34,6 +32,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     private ContractDetails contractDetails;
     private String docId;
     private String jbillingId;
+    private String flow;
 
 
     @Before("@API")
@@ -49,12 +48,13 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     @Given("^\"([^\"]*)\" flow is started$")
     public void flow_is_started(String arg1) throws Throwable {
-	this.tariffSheetID = new QuoteDetailsAPI().getTariffSheetID(cookie);
+	this.tariffSheetID = new QuoteDetailsAPI().getTariffSheetID(cookie, arg1);
     }
 
     @When("^Data is prepared for Create qoute request for \"([^\"]*)\"$")
     public void data_is_prepared_for_Create_qoute_request_for(String arg1) throws Throwable {
-	this.quoteDetails = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID);
+        this.flow = arg1;
+	this.quoteDetails = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow);
     }
 
     @When("^New tc(\\d+)_quote is created$")
