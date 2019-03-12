@@ -91,7 +91,7 @@ public class OdooCodaSteps extends OdooScenario {
         assertThat("File could not be downloaded", CollectionUtils.isNotEmpty(retrieveDownloadedCodaFiles(path)));
         File downloadedCodaFile = retrieveDownloadedCodaFiles(path).iterator().next();
         String downloadedCodaFilePath = path + downloadedCodaFile.getName();
-        parameterProvider.put("- STEP: codaFile" , downloadedCodaFilePath);
+        parameterProvider.put("codaFile" , downloadedCodaFilePath);
         logger().info(String.format("Generated CODA file is downloaded at \"%s\"", path));
     }
 
