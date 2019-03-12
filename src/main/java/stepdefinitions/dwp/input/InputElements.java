@@ -81,7 +81,7 @@ public class InputElements extends DwpScenario {
         options.put("value", inputValue);
         FluentWait<ApplyDateInput> waiter = waiter(new ApplyDateInput(), 10, 1);
         waiter.until((ApplyDateInput callback) ->{
-            waiter.withMessage(String.format("Date value \"%s\" input at \"%s\" field failed.", inputValue, label));
+            waiter.withMessage(String.format("Date value %s input at '%s' failed.", inputValue, label));
             return callback.test(options);
         });
     }
@@ -99,10 +99,11 @@ public class InputElements extends DwpScenario {
         });
     }
 
-    @And("^Option \"([^\"]*)\" is ([^\"]*)$")
-    public void switchOption(String option, SwitchState state) throws Throwable {
+    @And("(^Options?) \"([^\"]*)\" (is|are) ([^\"]*)$")
+    public void switchOption(String quantity, String option, String verb, SwitchState state) throws Throwable {
         Map<String, String> options = new HashMap<>();
         options.put("label", option);
+        options.put("verb", verb);
         FluentWait<InputElements> waiter = waiter(this, 10, 1);
         waiter.until((InputElements callback) ->{
             waiter.withMessage(String.format("Option %s is undefined.", option));
