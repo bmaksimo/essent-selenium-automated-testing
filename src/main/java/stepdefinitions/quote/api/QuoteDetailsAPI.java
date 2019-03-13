@@ -272,7 +272,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
         String firstName = "default";
         String lastName = "default";
-        String accountName = "RA_" + startedFlowName + "_TC1_B2C_123456789012345";
+        String accountName = "RA_" + startedFlowName + "_TC1_B2C_YMR_MoveIn";
         String reversedLastName = "";
         Map<String,String> generatedNames = new HashMap<String, String>();
 
