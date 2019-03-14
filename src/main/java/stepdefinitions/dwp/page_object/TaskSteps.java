@@ -1,7 +1,8 @@
 package stepdefinitions.dwp.page_object;
 
-import com.essent.testing.dwp.pageobject.DashboardPages.ContractenPages.ContractPage;
+import com.essent.testing.dwp.pageobject.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
+import com.essent.testing.dwp.pageobject.werkbakken.TasksPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -47,8 +48,8 @@ public class TaskSteps extends DwpScenario {
 
     @When("^Save task ID of first customer in list$")
     public void saveTaskIDOfFirstCustomerInList() {
-        BaseObject baseObject = new BaseObject();
-        taskId = baseObject.getTaskId();
+        TasksPage tp = new TasksPage();
+        taskId = tp.getTaskId();
     }
 
     @And("^Resolution input is \"([^\"]*)\"$")

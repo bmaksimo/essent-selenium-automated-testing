@@ -1,7 +1,7 @@
 package stepdefinitions.dwp.page_object;
 
 import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
-import com.essent.testing.dwp.pageobject.DashboardPages.MarktberishtenPages.MarktBerichtenPage;
+import com.essent.testing.dwp.pageobject.customer_dashboard.workflows.MarktBerichtenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -29,12 +29,6 @@ public class MarketBerichtenSteps extends DwpScenario {
         baseObject.clickOnToggle(label);
     }
 
-    @And("^Insert EAN of customer$")
-    public void insertEANOfCustomer() {
-        seleniumDriver.waitForRequestsToFinish();
-        baseObject.insertEANcode(eanCode);
-    }
-
     @When("^Save EAN code of customer$")
     public void saveEANCodeOfCustomer() {
         MarktBerichtenPage marktberichtenPage = new MarktBerichtenPage();
@@ -49,13 +43,6 @@ public class MarketBerichtenSteps extends DwpScenario {
         Assert.assertTrue(marktberichtenPage.validateRejectionHeader(eanCode));
         Assert.assertTrue(marktberichtenPage.validateRejectionHeader(rejectionStatus));
     }
-
-    @And("^Search for ean code from filters")
-    public void searchForEanCodeFromFillter() {
-        MarktBerichtenPage marktberichtenPage = new MarktBerichtenPage();
-        marktberichtenPage.setEanCodeInFilter(eanCode);
-    }
-
 
     @Override
     @After("@DWP, @REGRESSION")
@@ -116,17 +103,17 @@ public class MarketBerichtenSteps extends DwpScenario {
     public void marketberichtWithEANCODEAndMODULEIsInSTATUSAndHasED(String eanCode, String modul, String status, String date) {
         String ean = parameterProvider.getValueOrParameterAsString(eanCode);
         MarktBerichtenPage mp = new MarktBerichtenPage();
-        if (ean == mp.getEanFromMarketbericht("1")){
+        if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht("1"))){
             Assert.assertEquals(modul,mp.getModulFromMarketbericht("2"));
             Assert.assertEquals(status,mp.marketberichtStatusMarketbericht("1"));
             Assert.assertEquals(mp.getMarketberichtEndDateElement("1"), toDwpEndDate(parameterProvider.getValueOrParameterAsString(date)));
         }else {
-            if (ean == mp.getEanFromMarketbericht("3")) {
+            if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht("3"))) {
                 Assert.assertEquals(modul, mp.getModulFromMarketbericht("4"));
                 Assert.assertEquals(status, mp.marketberichtStatusMarketbericht("5"));
                 Assert.assertEquals(mp.getMarketberichtEndDateElement("5"), toDwpEndDate(parameterProvider.getValueOrParameterAsString(date)));
             }else {
-                if (ean == mp.getEanFromMarketbericht("5")) {
+                if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht("5"))) {
                     Assert.assertEquals(modul, mp.getModulFromMarketbericht("6"));
                     Assert.assertEquals(status, mp.marketberichtStatusMarketbericht("9"));
                     Assert.assertEquals(mp.getMarketberichtEndDateElement("9"), toDwpEndDate(parameterProvider.getValueOrParameterAsString(date)));

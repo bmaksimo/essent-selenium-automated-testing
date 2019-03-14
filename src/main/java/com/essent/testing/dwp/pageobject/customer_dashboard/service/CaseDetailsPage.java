@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.DashboardPages.ServicePage;
+package com.essent.testing.dwp.pageobject.customer_dashboard.service;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
 import org.openqa.selenium.By;

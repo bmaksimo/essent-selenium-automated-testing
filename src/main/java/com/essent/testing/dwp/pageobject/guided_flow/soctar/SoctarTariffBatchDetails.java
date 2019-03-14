@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.impl.page;
+package com.essent.testing.dwp.pageobject.guided_flow.soctar;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
 import org.openqa.selenium.By;

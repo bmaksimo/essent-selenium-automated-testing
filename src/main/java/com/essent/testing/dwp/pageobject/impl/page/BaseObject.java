@@ -1,23 +1,13 @@
 package com.essent.testing.dwp.pageobject.impl.page;
 
 import com.essent.automation.util.Sleeper;
-import com.essent.testing.dwp.pageobject.DashboardPages.ContractenPages.ContractPage;
+import com.essent.testing.dwp.pageobject.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import org.openqa.selenium.By;
 
 
 public class BaseObject extends Component {
-
-    public String getTaskId() {
-        final String taskId;
-        taskId = seleniumDriver.findElementWhenVisible(By.xpath("(//h6)[2]")).getText();
-        return taskId;
-    }
-
-    public void insertEANcode(String eanCode) {
-        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id("sql-i-aos-contracts-i-aos-products-quotes-i-ean-c-default-value-field")),eanCode);
-    }
 
     public void clickOnPlus() {
 
@@ -45,10 +35,6 @@ public class BaseObject extends Component {
         if (!toggle.checkIfCheckboxIsChecked(label)) {
             seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + label + "?']//toggle-form-element/label")));
         }
-    }
-
-    public String documentText(){
-        return findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[1])[2]")).getText();
     }
 
     public void dateIsNow(String label) throws InterruptedException {

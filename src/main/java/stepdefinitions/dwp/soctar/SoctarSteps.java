@@ -5,7 +5,7 @@ import com.billinghouse.test_automation.util.soctar_file.SoctarFileUtil;
 import com.billinghouse.test_automation.util.ssh.JSchUtil;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
-import com.essent.testing.dwp.pageobject.impl.page.SoctarTariffBatchDetails;
+import com.essent.testing.dwp.pageobject.guided_flow.soctar.SoctarTariffBatchDetails;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
@@ -22,7 +22,7 @@ public class SoctarSteps extends DwpScenario {
 
 
     @Before("@DWP, @CORE, @E2E, @REGRESSION, @DB-CORE")
-    public void setUp(Scenario scenario) throws Throwable {
+    public void setUp(Scenario scenario) {
         registerActiveScenario(scenario);
     }
 
@@ -40,13 +40,13 @@ public class SoctarSteps extends DwpScenario {
     }
 
     @When("^Soctar EAN is \"([^\"]*)\"$")
-    public void setValue(final String value) throws Throwable {
+    public void setValue(final String value){
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
         parameterProvider.put("ean_id", inputValue);
     }
 
     @And("^Soctar start date is \"([^\"]*)\"$")
-    public void setSoctarDate(final String value) throws Throwable {
+    public void setSoctarDate(final String value){
         String dateValue = checkAndConvertToSoctarFileDate(parameterProvider.getValueOrParameterAsString(value));
         parameterProvider.put("start-end-date", dateValue);
         parameterProvider.put("start-en-einddatum", checkAndConvertToDwpContractStartEndDate(value));
@@ -54,7 +54,7 @@ public class SoctarSteps extends DwpScenario {
     }
 
     @Then("^Soctar tariff type and status are \"([^\"]*)\" - \"([^\"]*)\"$")
-    public void checkSuccess(String tariffType, String tariffStatus) throws Throwable {
+    public void checkSuccess(String tariffType, String tariffStatus) {
         SoctarTariffBatchDetails soc = new SoctarTariffBatchDetails();
         assertTrue(soc.getTariffType().equalsIgnoreCase(tariffType));
         assertTrue(soc.getTariffStatus().equalsIgnoreCase(tariffStatus));
@@ -62,7 +62,7 @@ public class SoctarSteps extends DwpScenario {
     }
 
     @And("^Soctar customer Id is \"([^\"]*)\"$")
-    public void soctarCustomerIdIs(String value) throws Throwable {
+    public void soctarCustomerIdIs(String value) {
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
         parameterProvider.put("cust_id", inputValue);
     }

@@ -1,9 +1,9 @@
 package stepdefinitions.dwp.b2b;
 
 import com.essent.automation.util.Sleeper;
-import com.essent.testing.dwp.pageobject.DashboardPages.ContractenPages.NewQuotePage;
+import com.essent.testing.dwp.pageobject.customer_dashboard.contracts.NewQuotePage;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
-import com.essent.testing.dwp.pageobject.DashboardPages.ContractenPages.ContractPage;
+import com.essent.testing.dwp.pageobject.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.pageobject.impl.quote.QuoteDetailsPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
@@ -53,7 +53,7 @@ public class Contract extends DwpScenario {
     }
 
     @When("^Plus action of \"([^\"]*)\" element from \"([^\"]*)\" and click on Mark As Done/Markeren Als Verwerkt$")
-    public void plusActionOfElementFromAndClickOnMarkAsDone(String row, String table) throws Throwable {
+    public void plusActionOfElementFromAndClickOnMarkAsDone(String row, String table){
         seleniumDriver.waitForRequestsToFinish();
         ContractPage cp = new ContractPage();
         BaseObject baseObject = new BaseObject();
@@ -64,7 +64,7 @@ public class Contract extends DwpScenario {
     }
 
     @When("^Plus action of \"([^\"]*)\" element from \"([^\"]*)\" and click on \"([^\"]*)\"$")
-    public void plusActionOfElementFromAndClickOn(String row, String table, String action) throws Throwable {
+    public void plusActionOfElementFromAndClickOn(String row, String table, String action) {
         seleniumDriver.waitForRequestsToFinish();
         ContractPage cp = new ContractPage();
         BaseObject baseObject = new BaseObject();

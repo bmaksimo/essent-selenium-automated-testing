@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.DashboardPages.ContractenPages;
+package com.essent.testing.dwp.pageobject.customer_dashboard.contracts;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
@@ -279,9 +279,8 @@ public class ContractPage extends Component {
         String amountValue = findElementWhenVisible(By.id("advance-amount-field")).getText();
         String amountParameter = amount + ",00";
         String[] value = amountValue.split(" ", 2);
-        for (String i : value) {
-        }
-
+//        for (String i : value) {
+//        }
         return amountParameter.equals(value[1]);
     }
 

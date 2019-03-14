@@ -1,7 +1,7 @@
 package stepdefinitions.dwp.b2b;
 
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
-import com.essent.testing.dwp.pageobject.DashboardPages.ContractenPages.OffertePage;
+import com.essent.testing.dwp.pageobject.customer_dashboard.contracts.OffertePage;
 import com.essent.testing.dwp.pageobject.impl.service_contracting.ChangeAccountStatusPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.util.resource.ResourceUtil;

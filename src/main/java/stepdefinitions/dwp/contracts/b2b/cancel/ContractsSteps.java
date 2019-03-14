@@ -1,7 +1,7 @@
 package stepdefinitions.dwp.contracts.b2b.cancel;
 
 import com.essent.automation.util.Sleeper;
-import com.essent.testing.dwp.pageobject.DashboardPages.ContractenPages.ContractPage;
+import com.essent.testing.dwp.pageobject.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -16,7 +16,6 @@ import stepdefinitions.dwp.page_object.CustomerAcceptance;
 public class ContractsSteps extends DwpScenario {
 
     private String eanCodeInput = null;
-    private String contractEanCode;
 
     @Before("@DWP, @REGRESSION")
     public void setupTest(Scenario scenario) {
@@ -39,7 +38,7 @@ public class ContractsSteps extends DwpScenario {
     }
 
     @When("^Find \"([^\"]*)\" contract$")
-    public void findContract(String input) throws Throwable {
+    public void findContract(String input) {
         ContractPage contractenPage = new ContractPage();
         eanCodeInput = contractenPage.findActiveContract(input);
         logger().info("EAN CODE: " + eanCodeInput);
@@ -47,14 +46,14 @@ public class ContractsSteps extends DwpScenario {
     }
 
     @When("^Contract line EAN-code \"([^\"]*)\" is submitted$")
-    public void submitEanCode(String value) throws Throwable {
+    public void submitEanCode(String value) {
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
         ContractPage contractenPage = new ContractPage();
         contractenPage.searchForEanCode(inputValue);
     }
 
     @Then("^Confirm task was \"([^\"]*)\"$")
-    public void confirmTaskWas(String value) throws Throwable {
+    public void confirmTaskWas(String value) {
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
         ContractPage contractenPage = new ContractPage();
         contractenPage.confirmTaskStatus(inputValue);
@@ -163,7 +162,7 @@ public class ContractsSteps extends DwpScenario {
       }
 
     @Then("^Populate Soctar with dates \"([^\"]*)\" and \"([^\"]*)\"$")
-    public void searchForAttestDate(String startDate, String attestDate) throws Throwable {
+    public void searchForAttestDate(String startDate, String attestDate) {
         ContractPage contractenPage = new ContractPage();
         String sd = parameterProvider.getValueOrParameterAsString(startDate);
         String ad = parameterProvider.getValueOrParameterAsString(attestDate);
@@ -175,7 +174,7 @@ public class ContractsSteps extends DwpScenario {
     }
 
     @Then("^Get Start Date$")
-    public void searchForStartDate() throws Throwable {
+    public void searchForStartDate() {
         ContractPage contractenPage = new ContractPage();
         String startDate = contractenPage.getStartDate();
         parameterProvider.put("startDate", startDate);

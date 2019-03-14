@@ -1,5 +1,6 @@
 package stepdefinitions.dwp.page_object;
 
+import com.essent.testing.dwp.pageobject.customer_dashboard.documents.DocumentsPage;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
@@ -15,9 +16,9 @@ public class DocumentSteps extends DwpScenario {
     }
 
     @Then("^Check if document \"([^\"]*)\" is present$")
-    public void checkIfDocumentIsPresent(String txt) throws Throwable {
-        BaseObject bo = new BaseObject();
-        String documentName = bo.documentText();
+    public void checkIfDocumentIsPresent(String txt){
+        DocumentsPage dp = new DocumentsPage();
+        String documentName = dp.documentText();
         Assert.assertTrue(documentName.equalsIgnoreCase(txt));
     }
 }

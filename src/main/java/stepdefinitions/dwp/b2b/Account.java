@@ -1,6 +1,6 @@
 package stepdefinitions.dwp.b2b;
 
-import com.essent.testing.dwp.pageobject.PlusPages.SalesPages.UpdateCustomerDetailsPage;
+import com.essent.testing.dwp.pageobject.customer_dashboard.contracts.UpdateCustomerDetailsPage;
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;

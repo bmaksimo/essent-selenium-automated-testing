@@ -1,9 +1,9 @@
 package stepdefinitions.dwp.service_contracting;
 
 import com.essent.automation.util.Sleeper;
-import com.essent.testing.dwp.pageobject.DashboardPages.ContractenPages.ContractPricesPage;
+import com.essent.testing.dwp.pageobject.customer_dashboard.contracts.ContractPricesPage;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
-import com.essent.testing.dwp.pageobject.DashboardPages.ContractenPages.ContractPage;
+import com.essent.testing.dwp.pageobject.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
 import cucumber.api.DataTable;
