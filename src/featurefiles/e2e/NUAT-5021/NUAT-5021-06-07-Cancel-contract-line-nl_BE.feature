@@ -1,5 +1,4 @@
 @B2C
-@E2E
 
     Feature: Guarantee invoice
         @NUAT-5021-STEP-6-7
