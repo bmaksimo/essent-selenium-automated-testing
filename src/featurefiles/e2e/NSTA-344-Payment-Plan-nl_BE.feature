@@ -23,14 +23,14 @@ Feature: NSTA - 344 Payment Plan
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
 
-#        *When Package is "Vast"
-        When Package is "COMFORT_TEST"
+        When Package is "Vast"
         And Checkbox "Gas Fix B2C (TC1)" is Unchecked
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
         When "Startdatum" date is "5 day before now"
         And Electricity EAN code is "random"
+        And "Type aansluiting" selection is "YMR"
         And "Meternummer" input is "1000"
         And Option "test" is On
         And Connection details are confirmed
@@ -101,8 +101,8 @@ Feature: NSTA - 344 Payment Plan
         And Input in "Type afbetalingsplan" is "Per schijf"
         And Input in "Periode schijven" is "Maandelijks"
         And "Startdatum" date is "now"
-        And "Bedrag eerste afbetalingsschijf" input is "49"
-        And "Bedrag andere afbetalingsschijven" input is "1,1"
+        And "Bedrag eerste afbetalingsschijf" input is "100"
+        And "Bedrag andere afbetalingsschijven" input is "60"
         And Contract signature is confirmed
 
 
