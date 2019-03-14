@@ -75,15 +75,6 @@ public class ContractPage extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"rows\"]/tr[1]/td[5]/list-simple-two-liner-cell/p/span[1]")).getText();
     }
 
-    public void setNewMoveAddress(String address, String houseNumber, String postalCode, String City) {
-        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"address-street-field\"]")), address);
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenClickable(By.xpath("//*[@id=\"aos-products-quotes-addresses-aos-products-quotes-field-container\"]//ul/li[1]/a/b")));
-        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"address-number-field\"]")), houseNumber);
-        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"address-postalcode-field\"]")), postalCode);
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenClickable(By.xpath("//*[@id=\"aos-products-quotes-addresses-aos-products-quotes-field-container\"]//ul/li/a/b")));
-
-    }
-
     public String getEanFromContract(){
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath("(//list-link-bold-top-two-liner-cell/div/a/h5)[1]")).getText();
@@ -119,33 +110,10 @@ public class ContractPage extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath("//list[@list-key='DiscountsOnContract']//tr[1]/td[2]//span[1]")).getText();
     }
 
-    public String getCaseOnderwerp(){
-        return seleniumDriver.findElementWhenVisible(By.xpath("//list[@list-key=\"InteractionsOnAccount\"]//td[@class=\"list__cell cell__text\"][6]/list-link-bold-top-two-liner-cell/div/h6")).getText();
-    }
-    public String getCaseNumber(){
-        return seleniumDriver.findElementWhenVisible(By.xpath("//list[@list-key=\"InteractionsOnAccount\"]//td[7]//div//h5[1]")).getText();
-    }
-
-    public String getInteractionType(){
-        return seleniumDriver.findElementWhenVisible(By.xpath("//list-simple-two-liner-cell[@line-1='Document']/p/span[1]")).getText();
-    }
-
-    public String getInteractionOnderwerp() {
-        return seleniumDriver.findElementWhenVisible(By.xpath("//list-simple-two-liner-cell[@line-1='Document']/p/span[2]")).getText();
-    }
-
-    public String getInteractionVerwanteCase() {
-        return seleniumDriver.findElementWhenVisible(By.xpath("//*[@id='rows']/tr[1]/td[7]/list-link-bold-top-two-liner-cell/div/a")).getText();
-    }
-
     public void chooseDiscounts(String discount){
         Sleeper.sleepTightInSeconds(2);
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("dwp|discount_id")));
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id='dwp-discount-id-field']/option[@label='"+discount+"']")));
-    }
-
-    public void confirmTheSign(String place){
-        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"accounts|aos_quotes|sign_location_c\"]/div[1]/input")),place);
     }
 
     public String getCompanyNumber(){
@@ -158,8 +126,8 @@ public class ContractPage extends Component {
 
     public String getStartDate() {
         seleniumDriver.waitForRequestsToFinish();
-        String startDate = seleniumDriver.findElementWhenVisible(By.xpath("//td[@class='list__cell cell__text'][4]//p/span[1]")).getText();
-        return startDate;
+        return seleniumDriver.findElementWhenVisible(By.xpath("//td[@class='list__cell cell__text'][4]//p/span[1]")).getText();
+
     }
 
     public String getQuarterForChosenStartDate(String startDate, String attestDate) {
@@ -325,25 +293,11 @@ public class ContractPage extends Component {
         }
     }
 
-    public void confirmTaskStatus(String input) {
-        seleniumDriver.waitForRequestsToFinish();
-        Assert.assertTrue(findElementWhenVisible(By.xpath("(//h6)[.='" + input + "']")).isDisplayed());
-    }
-
     public void searchForTaskId(String taskId) {
         seleniumDriver.waitForRequestsToFinish();
         findElementWhenVisible(By.xpath("//input[@type='search']")).clear();
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//input[@type='search']")), taskId);
         findElementWhenVisible(By.xpath("//input[@type='search']")).sendKeys(Keys.ENTER);
-    }
-
-    public void findRejectionReason(String input) {
-        seleniumDriver.waitForRequestsToFinish();
-        Assert.assertTrue(seleniumDriver.findElementWhenVisible(By.xpath("(//span[.='" + input + "'])[1]")).isDisplayed());
-    }
-
-    public void inputText(String text) {
-        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//text-angular[@id='description-field']/div[2]/div[.=' ']")), text);
     }
 
     public void sendEmailToCustomer(String test) {
@@ -353,33 +307,4 @@ public class ContractPage extends Component {
         seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[@label='"+test+"']/a")).click();
     }
-
-    public void openListOption(String option) {
-        seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//span[.='" + option + "']")));
-    }
-
-    public void checkPayDate() {
-        seleniumDriver.waitForRequestsToFinish();
-        final String newPayDate = findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell[@icon='null']//span)[6]")).getText();
-        Assert.assertFalse("Date was not changed. Old date is : " + payDate + ", and new date is same : " + newPayDate, newPayDate.equalsIgnoreCase(payDate));
-    }
-
-    public void findIssuedAndPayDelay(String type, String option) {
-        /* I must use tr and td html elements to locate correct list element*/
-        int counter = 1;
-        String payType = findElementWhenVisible(By.xpath("//*[@id='rows']/tr[1]/td[8]//span[1]")).getText();
-        while(!payType.equalsIgnoreCase(type)){
-            counter = counter + 2;
-            payType = findElementWhenVisible(By.xpath("//*[@id='rows']/tr[" + counter + "]/td[8]//span[1]")).getText();
-        }
-        payDate = findElementWhenVisible(By.xpath("//*[@id='rows']/tr[" + counter + "]/td[7]//span[2]")).getText();
-        findElementWhenVisible(By.xpath("(//*[@id='rows']/tr[" + counter + "]/td[10]/list-plus-cell//a)[1]")).click();
-        findElementWhenVisible(By.xpath("//list-row-action[@label='" + option + "']/a")).click();
-    }
-
-    public void findIban(String iban) {
-        seleniumDriver.waitForRequestsToFinish();
-        Assert.assertTrue(seleniumDriver.findElementWhenVisible(By.xpath("//span[.='" + iban + "']")).isDisplayed());
-    }
-
 }

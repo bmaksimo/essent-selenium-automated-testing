@@ -1,7 +1,12 @@
 package stepdefinitions.dwp.contracts.b2b.cancel;
 
 import com.essent.automation.util.Sleeper;
+import com.essent.testing.dwp.pageobject.customer_dashboard.Invoice_list.InvoiceListPage;
 import com.essent.testing.dwp.pageobject.customer_dashboard.contracts.ContractPage;
+import com.essent.testing.dwp.pageobject.customer_dashboard.details.DetailsPage;
+import com.essent.testing.dwp.pageobject.customer_dashboard.sales.SalesPage;
+import com.essent.testing.dwp.pageobject.customer_dashboard.workflows.MarktBerichtenPage;
+import com.essent.testing.dwp.pageobject.guided_flow.cupq.NewQuotePage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -11,7 +16,9 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import stepdefinitions.dwp.b2b.Marketberichten;
 import stepdefinitions.dwp.page_object.CustomerAcceptance;
+import stepdefinitions.dwp.page_object.MarketBerichtenSteps;
 
 public class ContractsSteps extends DwpScenario {
 
@@ -55,8 +62,8 @@ public class ContractsSteps extends DwpScenario {
     @Then("^Confirm task was \"([^\"]*)\"$")
     public void confirmTaskWas(String value) {
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
-        ContractPage contractenPage = new ContractPage();
-        contractenPage.confirmTaskStatus(inputValue);
+        MarktBerichtenPage mp = new MarktBerichtenPage();
+        mp.confirmTaskStatus(inputValue);
     }
 
     @Override
@@ -67,8 +74,8 @@ public class ContractsSteps extends DwpScenario {
 
     @And("^\"([^\"]*)\" input in omschrijving$")
     public void inputInOmschrijving(String text) {
-        ContractPage contractenPage = new ContractPage();
-        contractenPage.inputText(text);
+        SalesPage sp = new SalesPage();
+        sp.inputText(text);
     }
 
     @And("^Offertes plus options is \"([^\"]*)\"$")
@@ -79,27 +86,27 @@ public class ContractsSteps extends DwpScenario {
 
     @And("^List option is \"([^\"]*)\"$")
     public void openInvoiceOnly(String option)  {
-        ContractPage contractenPage = new ContractPage();
-        contractenPage.openListOption(option);
+        InvoiceListPage ilp = new InvoiceListPage();
+        ilp.openListOption(option);
     }
 
     @Then("^Payment delayed$")
     public void paymentDelayed() {
-        ContractPage contractenPage = new ContractPage();
-        contractenPage.checkPayDate();
+        InvoiceListPage ilp = new InvoiceListPage();
+        ilp.checkPayDate();
     }
 
     @And("^Find \"([^\"]*)\" facture and \"([^\"]*)\"$")
     public void findFactureAnd(String type, String option) {
-        ContractPage contractenPage = new ContractPage();
-        contractenPage.findIssuedAndPayDelay(type, option);
+        InvoiceListPage ilp = new InvoiceListPage();
+        ilp.findIssuedAndPayDelay(type, option);
     }
 
     @Then("^Validate bank account was changed on \"([^\"]*)\"$")
     public void validateBankAccountWasChangedOn(String iban) {
         String inputIban = parameterProvider.getValueOrParameterAsString(iban);
-        ContractPage contractenPage = new ContractPage();
-        contractenPage.findIban(inputIban);
+        DetailsPage dp = new DetailsPage();
+        dp.findIban(inputIban);
     }
 
     @And("^Get Contract Ean Code$")
@@ -157,8 +164,8 @@ public class ContractsSteps extends DwpScenario {
 
     @And("^Sign place is \"([^\"]*)\"$")
     public void signPlaceIs(String place) {
-        ContractPage cp = new ContractPage();
-        cp.confirmTheSign(place);
+        NewQuotePage nqp = new NewQuotePage();
+        nqp.confirmTheSign(place);
       }
 
     @Then("^Populate Soctar with dates \"([^\"]*)\" and \"([^\"]*)\"$")

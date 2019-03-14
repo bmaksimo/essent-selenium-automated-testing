@@ -1,6 +1,6 @@
 package stepdefinitions.dwp.b2b;
 
-import com.essent.testing.dwp.pageobject.customer_dashboard.service.DwpServicePage;
+import com.essent.testing.dwp.pageobject.customer_dashboard.service.ServicePage;
 import com.essent.testing.dwp.pageobject.impl.navigation.DwpTopMenu;
 import com.essent.testing.dwp.pageobject.customer_dashboard.workflows.MarktBerichtenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
@@ -29,7 +29,7 @@ public class Navigation extends DwpScenario {
 
     @And("^\"([^\"]*)\" is clicked$")
     public void isClicked(String srt) {
-        DwpServicePage sp = new DwpServicePage();
+        ServicePage sp = new ServicePage();
         sp.clickOnNewCase();
     }
 

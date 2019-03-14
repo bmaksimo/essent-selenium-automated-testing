@@ -2,6 +2,8 @@ package stepdefinitions.dwp.service_contracting;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.customer_dashboard.contracts.ContractPricesPage;
+import com.essent.testing.dwp.pageobject.customer_dashboard.service.ServicePage;
+import com.essent.testing.dwp.pageobject.guided_flow.move_in.MoveInPage;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
 import com.essent.testing.dwp.pageobject.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
@@ -137,25 +139,25 @@ public class ContractSteps extends DwpScenario {
     @And("^New move customer address is$")
     public void newMoveCustomerAddressIs(final DataTable dbTable) {
         List<List<String>> address = dbTable.raw();
-        ContractPage cp = new ContractPage();
-        cp.setNewMoveAddress(address.get(1).get(0),address.get(1).get(1),address.get(1).get(4),address.get(1).get(5));
+        MoveInPage mip = new MoveInPage();
+        mip.setNewMoveAddress(address.get(1).get(0),address.get(1).get(1),address.get(1).get(4),address.get(1).get(5));
     }
 
     @Then("^There is a case where onderwerp is \"([^\"]*)\"$")
     public void thereIsACaseWhereOnderwerpIs(String onderwerp) {
-        ContractPage cp = new ContractPage();
-        Assert.assertEquals(cp.getCaseOnderwerp(),onderwerp);
-        parameterProvider.put("caseNumber",cp.getCaseNumber());
+        ServicePage sp = new ServicePage();
+        Assert.assertEquals(sp.getCaseOnderwerp(),onderwerp);
+        parameterProvider.put("caseNumber",sp.getCaseNumber());
 
     }
 
     @And("^Interaction is created with Type \"([^\"]*)\" and Onderwerp \"([^\"]*)\" and verwante case is \"([^\"]*)\"$")
     public void interactionIsCreatedWithTypeAndOnderwerpAndVerwanteCaseIs(String type, String onderwerp, String number) {
-        ContractPage cp = new ContractPage();
+        ServicePage sp = new ServicePage();
         String caseNumber = parameterProvider.getValueOrParameterAsString(number);
-        Assert.assertEquals("Actual Interaction Type differs from expected",cp.getInteractionType(),type);
-        Assert.assertEquals("Actual Interaction Onderwerp differs from expected",cp.getInteractionOnderwerp(),onderwerp);
-        Assert.assertEquals("Actual Interaction Verwante Case differs from expected",cp.getInteractionVerwanteCase(),caseNumber);
+        Assert.assertEquals("Actual Interaction Type differs from expected",sp.getInteractionType(),type);
+        Assert.assertEquals("Actual Interaction Onderwerp differs from expected",sp.getInteractionOnderwerp(),onderwerp);
+        Assert.assertEquals("Actual Interaction Verwante Case differs from expected",sp.getInteractionVerwanteCase(),caseNumber);
     }
 
     @And("^Kortingen is \"([^\"]*)\"$")

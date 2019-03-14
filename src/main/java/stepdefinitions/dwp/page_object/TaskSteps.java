@@ -1,6 +1,7 @@
 package stepdefinitions.dwp.page_object;
 
 import com.essent.testing.dwp.pageobject.customer_dashboard.contracts.ContractPage;
+import com.essent.testing.dwp.pageobject.customer_dashboard.service.ServicePage;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
 import com.essent.testing.dwp.pageobject.werkbakken.TasksPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
@@ -10,10 +11,10 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.openqa.selenium.By;
 
 public class TaskSteps extends DwpScenario {
     private String taskId;
+    private TasksPage tp;
 
     @Before("@DWP, @REGRESSION")
     public void setupTest(Scenario scenario) {
@@ -42,10 +43,6 @@ public class TaskSteps extends DwpScenario {
         baseObject.clickOnMarkAsDonePlusMenuSubAction();
     }
 
-    private void inputResolution(String text) {
-        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id("task-resolution-c-field")), text);
-    }
-
     @When("^Save task ID of first customer in list$")
     public void saveTaskIDOfFirstCustomerInList() {
         TasksPage tp = new TasksPage();
@@ -54,17 +51,14 @@ public class TaskSteps extends DwpScenario {
 
     @And("^Resolution input is \"([^\"]*)\"$")
     public void resolutionInputIs(String text) {
-        inputResolution(text);
+        TasksPage tp = new TasksPage();
+        tp.inputResolution(text);
     }
 
     @Then("^Task was marked as done$")
     public void taskWasMarkedAsDone() {
-        findTaskId(taskId);
-    }
-
-    private void findTaskId(String taskId) {
-        seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id("task-number-c-default-value-field")), taskId);
+        TasksPage tp = new TasksPage();
+        tp.findTaskId(taskId);
     }
 
     @And("^Search for task id$")
@@ -75,8 +69,8 @@ public class TaskSteps extends DwpScenario {
 
     @Then("^\"([^\"]*)\" was rejection reason$")
     public void wasRejectionReason(String input) {
-        ContractPage contractenPage = new ContractPage();
-        contractenPage.findRejectionReason(input);
+        ServicePage dsp = new ServicePage();
+        dsp.findRejectionReason(input);
     }
 
     @Override
