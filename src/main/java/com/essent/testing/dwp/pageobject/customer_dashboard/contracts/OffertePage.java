@@ -20,9 +20,6 @@ public class OffertePage extends Component {
     public void clickOnLabel(String label, String value) {
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + label + "']//option[@label = '" + value + "']")));
     }
-//     public void clickOnType(){
-//        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("quote-type-c-default-value-field")));
-//     }
 
      public void clickOnFilter(){
          seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//top-actions/div/a[2]")));

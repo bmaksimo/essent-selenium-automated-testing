@@ -14,7 +14,6 @@ import org.openqa.selenium.support.ui.FluentWait;
 
 
 public class MarketBerichtenSteps extends DwpScenario {
-    BaseObject baseObject = new BaseObject();
     private static String eanCode = null;
 
     @Before("@DWP, @REGRESSION")
@@ -23,7 +22,7 @@ public class MarketBerichtenSteps extends DwpScenario {
     }
 
     @And("^\"([^\"]*)\" turn on$")
-    public void turnOn(String label) throws Throwable {
+    public void turnOn(String label) {
         seleniumDriver.waitForRequestsToFinish();
         BaseObject baseObject = new BaseObject();
         baseObject.clickOnToggle(label);
