@@ -15,5 +15,4 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         And Soctar status is changed to "DONE"
         #Step 7. Check if contract has been created
         And "1st" list element has cell value "Verwerkt" at column "Status"
-#        And "1st" list element has cell value "parameter:soctar-contract-dates" at column "Contractnummer & start- en einddatum"
-        And "1st" list element has cell value "29-01-2019 - 31-12-2019" at column "Contractnummer & start- en einddatum"
+        And "1st" list element has cell value "parameter:soctar-contract-dates" at column "Contractnummer & start- en einddatum"
