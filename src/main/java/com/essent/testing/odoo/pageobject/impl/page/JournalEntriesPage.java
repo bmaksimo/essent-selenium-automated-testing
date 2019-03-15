@@ -15,7 +15,7 @@ public class JournalEntriesPage extends Component {
 
     private String date = simpleDateFormat.format(new Date());
 
-    public void clickOnCreateJournalEntry(){
+    public void clickOnCreateJournalEntry() {
         seleniumDriver.findElementWhenVisible(By.xpath("//button[@class='oe_button oe_list_add oe_highlight']")).click();
     }
 
@@ -38,15 +38,18 @@ public class JournalEntriesPage extends Component {
         findDataDocumentElement().sendKeys(date);
     }
 
-    public void clickOnAddAnItem(){
-        seleniumDriver.findElementWhenVisible(By.xpath("//a [contains(text(),\"Add an item\")]")).click();
+    public void clickOnAddAnItem() {
+        WebElement addItemLink = seleniumDriver.findElementWhenVisible(By.xpath("//a [contains(text(),\"Add an item\")]"));
+        seleniumDriver.moveToElementAndClick(addItemLink);
     }
 
     public void saveJournal(){
-        seleniumDriver.findElementWhenVisible(By.xpath("//button[@class='oe_button oe_form_button_save oe_highlight']")).click();
+        WebElement saveButton = seleniumDriver.findElementWhenVisible(By.xpath("//button[@class='oe_button oe_form_button_save oe_highlight']"));
+        seleniumDriver.moveToElementAndClick(saveButton);
     }
     public void postJournal(){
-        seleniumDriver.findElementWhenVisible(By.xpath("//button[@class='oe_button oe_form_button oe_highlight']")).click();
+        WebElement postButton = seleniumDriver.findElementWhenVisible(By.xpath("//button[@class='oe_button oe_form_button oe_highlight']"));
+        seleniumDriver.moveToElementAndClick(postButton);
     }
 
     public void setName(String name){
@@ -55,19 +58,21 @@ public class JournalEntriesPage extends Component {
 
     public void setPartner(String partner){
         seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='partner_id']/div/input")).sendKeys(partner);
-        seleniumDriver.findElementWhenVisible(By.xpath("//a[contains(text(),'B2B_UP')]")).click();
+        WebElement partnerLink = seleniumDriver.findElementWhenVisible(By.xpath("//a[contains(text(),'B2B_UP')]"));
+        seleniumDriver.moveToElementAndClick(partnerLink);
     }
 
     public WebElement findAccountElement(){
         return seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='account_id']/div/input"));
     }
 
-    public void setAccout(String account){
+    public void setAccount(String account){
 
         findAccountElement().click();
         findAccountElement().clear();
         findAccountElement().sendKeys(account);
-        seleniumDriver.findElementWhenVisible(By.xpath("//a[contains(text(),'580100 B2C-B2B  OVERBOEKINGEN')]")).click();
+        WebElement accountLink = seleniumDriver.findElementWhenVisible(By.xpath("//a[contains(text(),'580100 B2C-B2B  OVERBOEKINGEN')]"));
+        seleniumDriver.moveToElementAndClick(accountLink);
     }
 
 
@@ -96,15 +101,12 @@ public class JournalEntriesPage extends Component {
     }
 
     public void createNewItem(List<List<String>> table, Integer row, String partnerNumber) {
-        if (row == 2){
-            setPartner(partnerNumber);
-            setAccout(table.get(row).get(2));
-            setDebit(table.get(row).get(3));
-        }else {
+        setPartner(partnerNumber);
+        setAccount(table.get(row).get(2));
+        setDebit(table.get(row).get(3));
+
+        if (row != 2) {
             setName(table.get(row).get(0));
-            setPartner(partnerNumber);
-            setAccout(table.get(row).get(2));
-            setDebit(table.get(row).get(3));
             setCredit(table.get(row).get(4));
         }
     }

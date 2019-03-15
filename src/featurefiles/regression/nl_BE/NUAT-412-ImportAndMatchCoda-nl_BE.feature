@@ -1,17 +1,14 @@
 @DWP
-@B2B
 @REGRESSION
 @CREDIT-AND-CONTROL
-@NUAT-412
-
 Feature: NUAT-412 part: Create / import coda file
 
-
+    @NUAT-412-2
     Scenario: Create active contract TK1
         Given  I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
         When Plus menu is "Sales -> TK1 -> Nieuwe TK1 offerte (B2B) aanmaken"
-        And "Ondernemingsnummer" input is "BE0659881595"
         And "Bedrijfsnaam" input is "Test Company B2B"
+        And "Ondernemingsnummer" input is "BE0659881595"
         And Clicked on sign X
         And New Quote is saved
 
@@ -55,9 +52,7 @@ Feature: NUAT-412 part: Create / import coda file
 
         When Dashboard menu is "Details"
         Then Get Contract Number
-
-
-     #invoice run
+    #invoice run
     @INVOICE-RUN
     Scenario: Invoice run process
         Given I renew login to DWP as "billing.testautomation@essent.be"
@@ -84,7 +79,8 @@ Feature: NUAT-412 part: Create / import coda file
       #create coda file
     @CREATE-CODA
     Scenario: Create CODA file in Odoo
-        Given I logged in to Odoo as "t.geets"
+#        Given I logged in to Odoo as "t.geets"
+        Given I renew login to Odoo as "t.geets"
         Given Cleanup Odoo CODA files
         When Odoo top menu is "Accounting"
         And  Odoo left menu is "Customers"

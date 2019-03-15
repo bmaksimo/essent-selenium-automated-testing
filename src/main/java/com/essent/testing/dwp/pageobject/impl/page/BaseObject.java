@@ -27,11 +27,16 @@ public class BaseObject extends Component {
 
     public void plusSubaction(String action) {
         try {
-            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[@label='" + action + "']/a")));
+            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[normalize-space(@label)='" + action + "']/a")));
+
         }
         catch(org.openqa.selenium.StaleElementReferenceException ex) {
-            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[@label='" + action + "']/a")));
+            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[normalize-space(@label)='" + action + "']/a")));
         }
+    }
+
+    public void clickOnMarkAsDonePlusMenuSubAction() {
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action/a/span[@class='icon-checkmark']")));
     }
 
     public void clickOnToggle (String label) throws InterruptedException{
@@ -56,6 +61,13 @@ public class BaseObject extends Component {
         seleniumDriver.waitForRequestsToFinish();
         Thread.sleep(2000);
         seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.xpath("//validation-wrapper[@label='"+label+"']//input")),date);
+        seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//span[@class='icon-kalender']")));
+    }
+
+    public void dateIsCustom(String label, String customDate) throws InterruptedException {
+        seleniumDriver.waitForRequestsToFinish();
+        Thread.sleep(2000);
+        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.xpath("//validation-wrapper[@label='"+label+"']//input")), customDate);
         seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//span[@class='icon-kalender']")));
     }
 

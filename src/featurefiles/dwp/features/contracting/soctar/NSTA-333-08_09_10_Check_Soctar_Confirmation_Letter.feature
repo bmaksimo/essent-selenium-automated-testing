@@ -1,6 +1,6 @@
 @DWP
+@B2C
 @SOCTAR
-
 Feature: NSTA-333: Sent out the confirmation letter
 
     Background:

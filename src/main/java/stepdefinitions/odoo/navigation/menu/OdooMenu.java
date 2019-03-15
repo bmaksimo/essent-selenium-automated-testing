@@ -29,6 +29,7 @@ public class OdooMenu extends OdooScenario {
 
     @When("^Odoo top menu is \"([^\"]*)\"$")
     public void clickTopMenu(String menu) {
+        awaitOdooRequestToFinish(10);
         MenuNavigation menuNavigation = new MenuNavigation();
         boolean success = menuNavigation.findAndClickMainMenuItem(menu);
         if(!success) {
@@ -38,6 +39,7 @@ public class OdooMenu extends OdooScenario {
 
     @When("^Odoo left menu is \"([^\"]*)\"$")
     public void executeLeftMenuAction(String menuPath) {
+        awaitOdooRequestToFinish(20);
         MenuNavigation odooMenuNavigation = new MenuNavigation();
         odooMenuNavigation.executeAction(menuPath);
         awaitOdooRequestToFinish(5);
@@ -72,6 +74,7 @@ public class OdooMenu extends OdooScenario {
 
     @Then("^Modal button \"([^\"]*)\" is clicked$")
     public void odooClickButton(String buttonLabel) {
+        awaitOdooRequestToFinish(10);
         WebElement button = seleniumDriver.findElementWhenVisible(By.xpath("//button//span[contains(., '" + buttonLabel + "')]"));
         if (null == button) throw new CucumberException("Button " + buttonLabel + " was not found.");
 

@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 
 public class ToggleImpl extends Component {
 
+
     public WebElement checkBox (String box) {
         return  seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + box + "?']//toggle-form-element/label"));
 
@@ -35,7 +36,7 @@ public class ToggleImpl extends Component {
     }
 
     public void clickCheckboxWithDot(String box)  {
-        seleniumDriver.waitForRequestsToFinish();
+         seleniumDriver.waitForRequestsToFinish();
         if (!checkIfCheckboxIsCheckedWithDot(box)) {
             seleniumDriver.waitAndClick(checkBoxWithDot(box));
         }

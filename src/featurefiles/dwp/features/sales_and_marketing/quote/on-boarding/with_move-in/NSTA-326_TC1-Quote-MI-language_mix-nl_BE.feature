@@ -2,7 +2,7 @@
 @SALES-MARKETING
 @REGRESSION
 @B2C
-Feature: Creating a B2C Quote TC1 with "Move In" without using Market Mock.
+Feature: NSTA-326: Creating a B2C Quote TC1 with "Move In" without using Market Mock.
 
     Background:
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"

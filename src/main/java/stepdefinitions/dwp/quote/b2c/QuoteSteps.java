@@ -128,14 +128,6 @@ public class QuoteSteps extends DwpScenario {
         }
     }
 
-    private class ToggleCheckBox implements Predicate<Map<String, String>> {
-
-        @Override
-        public boolean test(Map<String, String> options) {
-            return executeJavascriptTest("TrToggleCheckBox", options);
-        }
-    }
-
     @And("^Quote details are confirmed$")
     public void confirmQuoteDetails() throws Throwable {
         QuoteDetailsPage quoteDetailsPage = new QuoteDetailsPage();
@@ -191,17 +183,7 @@ public class QuoteSteps extends DwpScenario {
             is(true));
     }
 
-    @And("^Checkbox \"([^\"]*)\" is ([^\"]*)$")
-    public void toggleCheckbox(String label, SwitchState state) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        Map<String, String> options = new HashMap<>();
-        options.put("label", label);
-        options.put("state", state.name().toLowerCase());
-        boolean success = new ToggleCheckBox().test(options);
-        assertThat(String.format("Failure toggling checkbox %s to  target state %s.", label, state.name()),
-            success,
-            is(true));
-    }
+
 
     @And("^Package and Fuel Type is confirmed$")
     public void confirmPackageAndFuelType() throws Throwable {
@@ -378,7 +360,8 @@ public class QuoteSteps extends DwpScenario {
 
 
     @And("^Electricity EAN code is \"([^\"]*)\"$")
-    public void electricityEANCodeIs(String ean) throws Throwable {
+    public void
+    electricityEANCodeIs(String ean) throws Throwable {
         ConnectionDetails electricityConnectionDetails = new ConnectionDetails();
         switch (ean) {
             case "selected":

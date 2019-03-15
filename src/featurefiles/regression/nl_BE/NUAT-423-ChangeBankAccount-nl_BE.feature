@@ -7,7 +7,8 @@ Feature: NUAT-423: Change Bank Account - nl_BE
     Background:
         Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
 
-    Scenario: I Change status CSR and Externe partij is Contentia
+    @NUAT-423
+    Scenario: Change status CSR and Externe partij is Contentia
         When Left menu is "sales-marketing"
         And Top menu item is "Klanten"
         And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"

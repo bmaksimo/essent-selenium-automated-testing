@@ -6,6 +6,7 @@ import com.essent.testing.dwp.pageobject.impl.quote.QuoteDetailsPage;
 import com.essent.testing.dwp.pageobject.impl.service_contracting.ContractenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
+import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
@@ -30,25 +31,35 @@ public class Contract extends DwpScenario {
     }
 
     @And("^Contract startdatum is today$")
-    public void contractStartdatumIsToday() throws Throwable {
+    public void contractStartdatumIsToday(){
         ContractPage cp = new ContractPage();
         cp.startDateIsToday();
     }
 
 
     @And("^Get client number$")
-    public void getClientNumber() throws Throwable {
+    public void getClientNumber() {
         ContractPage cp = new ContractPage();
         Klantnummer=cp.getClientNumber();
     }
 
     @And("^Search by client number$")
-    public void searchByClientNumber() throws Throwable {
+    public void searchByClientNumber() {
         ContractPage cp = new ContractPage();
         ContractenPage contractenPage = new ContractenPage();
         cp.selectAccount();
-        cp.searchByClientNuiber(Klantnummer);
+        cp.searchByClientNumber(Klantnummer);
         contractenPage.searchForEanCode(Klantnummer);
+    }
+
+    @When("^Plus action of \"([^\"]*)\" element from \"([^\"]*)\" and click on Mark As Done/Markeren Als Verwerkt$")
+    public void plusActionOfElementFromAndClickOnMarkAsDone(String row, String table) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
+        ContractPage cp = new ContractPage();
+        BaseObject baseObject = new BaseObject();
+        Thread.sleep(5000);
+        cp.clickOnPlusMeniInTable(row,table);
+        baseObject.clickOnMarkAsDonePlusMenuSubAction();
     }
 
     @When("^Plus action of \"([^\"]*)\" element from \"([^\"]*)\" and click on \"([^\"]*)\"$")
@@ -62,20 +73,20 @@ public class Contract extends DwpScenario {
     }
 
     @And("^Save EAN from active contract$")
-    public void saveEANFromActiveContract() throws Throwable {
+    public void saveEANFromActiveContract() {
         ContractPage cp = new ContractPage();
         parameterProvider.put("EAN-active-contract",cp.getActiveContractEAN());
     }
 
     @Then("^Contract is in \"([^\"]*)\" state$")
-    public void contractIsInState(String status) throws Throwable {
+    public void contractIsInState(String status) {
         ContractPage cp = new ContractPage();
         seleniumDriver.waitForRequestsToFinish();
         assertEquals(cp.status(),status);
     }
 
     @And("^Clicked on sign X$")
-    public void clickOnX() throws Throwable {
+    public void clickOnX() {
         ContractPage cp = new ContractPage();
         seleniumDriver.waitForRequestsToFinish();
         cp.clickOnX();
@@ -83,7 +94,7 @@ public class Contract extends DwpScenario {
 
 
     @When("^B2B sales channel is ([^\"]*)$")
-    public void initSalesChannelB2B(SalesChannel salesChannel) throws Throwable {
+    public void initSalesChannelB2B(SalesChannel salesChannel){
         QuoteDetailsPage quoteDetailsPage = new QuoteDetailsPage();
         quoteDetailsPage.setSalesChannel(salesChannel);
         boolean formInitialized = quoteDetailsPage.fillInFormData();
@@ -92,19 +103,19 @@ public class Contract extends DwpScenario {
 
 
     @When("^Rechtsvorm is bvba")
-    public void formLegal() throws Throwable {
+    public void formLegal() {
         ContractPage cp = new ContractPage();
         cp.selectItemLegalForm();
     }
 
     @And("^Geslacht is Male")
-    public void gender() throws Throwable {
+    public void gender() {
         ContractPage cp = new ContractPage();
         cp.selectGender();
     }
 
     @And("^E-mailadres is \"([^\"]*)\"$")
-    public void emailContract(String emailContract) throws Throwable {
+    public void emailContract(String emailContract) {
         ContractPage cp = new ContractPage();
         cp.getEmail(emailContract);
     }
@@ -119,9 +130,9 @@ public class Contract extends DwpScenario {
     }
 
     @And("^NaceCode in search is ([^\"]*)$")
-    public void searchByNaceCode(String NaceCode) throws Throwable {
+    public void searchByNaceCode(String NaceCode) {
         ContractPage cp = new ContractPage();
-        cp.searchByClientNuiber(NaceCode);
+        cp.searchByClientNumber(NaceCode);
         cp.clickOnSearch();
         cp.checkNaceCode();
         cp.saveSelectedItem();
@@ -129,7 +140,7 @@ public class Contract extends DwpScenario {
 
 
     @And("^Customer Details are populated with: Address is \"([^\"]*)\" and HouseNumber is \"([^\"]*)\" and PostalCode is \"([^\"]*)\" and City is \"([^\"]*)\"$")
-    public void populateAddress(String Address, String houseNumber, String postalCode, String City) throws Throwable {
+    public void populateAddress(String Address, String houseNumber, String postalCode, String City) {
         ContractPage cp = new ContractPage();
         cp.setAddress(Address, houseNumber, postalCode, City);
     }
@@ -163,16 +174,18 @@ public class Contract extends DwpScenario {
 
 
     @And("^New Quote is saved$")
-    public void newQuoteSaved() throws Throwable {
+    public void newQuoteSaved() {
         ContractPage quoteInitial = new ContractPage();
         quoteInitial.saveInitialQuote();
     }
 
     @And("^Save End Date from active contract$")
-    public void saveEndDateFromActiveContract() throws Throwable {
+    public void saveEndDateFromActiveContract() {
         ContractPage cp = new ContractPage();
         parameterProvider.put("EndDate-active-contract",cp.getActiveContractEndDate());
     }
-
-
+    @After("@REGRESSION")
+    public void tearDown() {
+        super.tearDown();
+    }
 }

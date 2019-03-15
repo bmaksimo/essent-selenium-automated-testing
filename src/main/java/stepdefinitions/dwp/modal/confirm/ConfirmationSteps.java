@@ -39,6 +39,15 @@ public class ConfirmationSteps extends NavigationElements {
             is(true));
     }
 
+    @And("^Modal dialog \"([^\"]*)\" is not shown$")
+    public void isDialogShown(String title) {
+        ConfirmSignatureDialog dialog = new ConfirmSignatureDialogImpl(title);
+        assertThat("Contract signature dialog was not shown.",
+            dialog.isShown(),
+            is(false));
+    }
+
+
     @And("^Contract signature is confirmed$")
     public void contractSignatureIsConfirmed() throws Throwable {
         ConfirmSignatureDialog dialog = new ConfirmSignatureDialogImpl();

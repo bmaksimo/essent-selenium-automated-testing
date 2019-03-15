@@ -17,8 +17,6 @@ public class VatNumberGeneratorTest {
 
     @Test
     public void testBelgianVat() throws Throwable {
-        int min = 9000000;
-        int max = 9999999;
         for(int i = 0; i < 1000; i++)
             assertVat(generator.getVatNum(CountryCode.BE));
     }
