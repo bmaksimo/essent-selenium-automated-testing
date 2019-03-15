@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.customer_dashboard.contracts;
+package com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;

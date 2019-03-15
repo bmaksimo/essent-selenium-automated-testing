@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.customer_dashboard.Invoice_list;
+package com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.Invoice_list;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
 import org.junit.Assert;

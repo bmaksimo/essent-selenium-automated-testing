@@ -1,7 +1,7 @@
 package com.essent.testing.dwp.pageobject.impl.page;
 
 import com.essent.automation.util.Sleeper;
-import com.essent.testing.dwp.pageobject.customer_dashboard.contracts.ContractPage;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import org.openqa.selenium.By;
 

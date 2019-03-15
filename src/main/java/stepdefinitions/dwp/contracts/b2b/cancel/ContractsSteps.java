@@ -1,11 +1,11 @@
 package stepdefinitions.dwp.contracts.b2b.cancel;
 
 import com.essent.automation.util.Sleeper;
-import com.essent.testing.dwp.pageobject.customer_dashboard.Invoice_list.InvoiceListPage;
-import com.essent.testing.dwp.pageobject.customer_dashboard.contracts.ContractPage;
-import com.essent.testing.dwp.pageobject.customer_dashboard.details.DetailsPage;
-import com.essent.testing.dwp.pageobject.customer_dashboard.sales.SalesPage;
-import com.essent.testing.dwp.pageobject.customer_dashboard.workflows.MarktBerichtenPage;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.Invoice_list.InvoiceListPage;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.details.DetailsPage;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.sales.SalesPage;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.workflows.MarktBerichtenPage;
 import com.essent.testing.dwp.pageobject.guided_flow.cupq.NewQuotePage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
@@ -16,9 +16,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import stepdefinitions.dwp.b2b.Marketberichten;
 import stepdefinitions.dwp.page_object.CustomerAcceptance;
-import stepdefinitions.dwp.page_object.MarketBerichtenSteps;
 
 public class ContractsSteps extends DwpScenario {
 

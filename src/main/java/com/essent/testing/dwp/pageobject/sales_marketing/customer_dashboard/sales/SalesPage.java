@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.customer_dashboard.sales;
+package com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.sales;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
 import org.openqa.selenium.By;

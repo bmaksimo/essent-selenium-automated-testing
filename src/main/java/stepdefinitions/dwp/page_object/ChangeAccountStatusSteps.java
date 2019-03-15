@@ -1,6 +1,6 @@
 package stepdefinitions.dwp.page_object;
 
-import com.essent.testing.dwp.pageobject.customer_dashboard.documents.DocumentsPage;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.documents.DocumentsPage;
 import com.essent.testing.dwp.pageobject.impl.service_contracting.ChangeAccountStatusPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.util.resource.ResourceUtil;
@@ -31,7 +31,7 @@ public class ChangeAccountStatusSteps extends DwpScenario {
     }
 
     @And("^Client signature file is uploaded$")
-    public void uploadFile() throws Throwable {
+    public void uploadFile() {
         String filePath = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
         ChangeAccountStatusPage changeAccountStatusPage = new ChangeAccountStatusPage();
         boolean success = changeAccountStatusPage.uploadFile(filePath);
