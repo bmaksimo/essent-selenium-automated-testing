@@ -81,15 +81,3 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         Then View list header is "Transacties"
         And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
 
-        # 3 - Download CODA
-        Given I renew login to Odoo as "t.geets"
-        And Cleanup Odoo CODA files
-        When Odoo top menu is "Accounting"
-        And Odoo left menu is "Customers"
-        And Odoo filter is "parameter:accountNumber"
-        When Column "Account Number" with value "parameter:accountNumber" is clicked
-        And Button "Journal Items" is clicked
-        And Generate CODA in the "1st" row is clicked
-        Then Modal title contains "Download CODA"
-        And Generated CODA file is downloaded
-
