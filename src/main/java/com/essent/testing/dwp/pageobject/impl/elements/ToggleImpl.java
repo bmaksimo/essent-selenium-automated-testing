@@ -1,5 +1,6 @@
 package com.essent.testing.dwp.pageobject.impl.elements;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -39,6 +40,15 @@ public class ToggleImpl extends Component {
          seleniumDriver.waitForRequestsToFinish();
         if (!checkIfCheckboxIsCheckedWithDot(box)) {
             seleniumDriver.waitAndClick(checkBoxWithDot(box));
+        }
+    }
+
+    public void clickOnToggle (String label){
+        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(2);
+        ToggleImpl toggle = new ToggleImpl();
+        if (!toggle.checkIfCheckboxIsChecked(label)) {
+            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + label + "?']//toggle-form-element/label")));
         }
     }
 

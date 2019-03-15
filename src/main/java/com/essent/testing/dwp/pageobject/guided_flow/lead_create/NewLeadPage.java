@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.impl.service_contracting;
+package com.essent.testing.dwp.pageobject.guided_flow.lead_create;
 
 import com.essent.testing.dwp.pageobject.Form;
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
@@ -8,14 +8,12 @@ import stepdefinitions.dwp.tables.LeadInfo;
 
 import java.util.List;
 
-public class LeadPage extends BaseObject implements Form {
+public class NewLeadPage extends BaseObject implements Form {
 
     private LeadInfo leadInfo;
     private static final String box = "Bel me niet";
 
-    public void plusAddLead() {
-        findElementWhenVisible(By.xpath("//span[@class='icon-plus']")).click();
-    }
+
 
     public void createLead(List<List<String>> table) {
         ToggleImpl tg = new ToggleImpl();
@@ -89,11 +87,6 @@ public class LeadPage extends BaseObject implements Form {
         seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("leads-contact-details-contact-details-type-email-contact-details-value-field")),
             email);
-    }
-
-    public void validateCreatingLead(String name) {
-        seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.findElementWhenVisible(By.xpath("(//h5)[.='" + name + "'][1]")).isDisplayed();
     }
 
     public void setLead(LeadInfo leadInfo) {

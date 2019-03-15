@@ -3,8 +3,9 @@ package com.essent.testing.dwp.pageobject.impl.page;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import org.openqa.selenium.By;
+
+import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.NEXT_BUTTON;
 
 
 public class BaseObject extends Component {
@@ -28,20 +29,21 @@ public class BaseObject extends Component {
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action/a/span[@class='icon-checkmark']")));
     }
 
-    public void clickOnToggle (String label){
-        seleniumDriver.waitForRequestsToFinish();
-        Sleeper.sleepTightInSeconds(2);
-        ToggleImpl toggle = new ToggleImpl();
-        if (!toggle.checkIfCheckboxIsChecked(label)) {
-            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + label + "?']//toggle-form-element/label")));
-        }
-    }
-
-    public void dateIsNow(String label) throws InterruptedException {
+    public void dateIsNow(String label){
         ContractPage cp = new ContractPage();
         seleniumDriver.waitForRequestsToFinish();
-        Thread.sleep(2000);
+        Sleeper.sleepTightInSeconds(2);
         seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.xpath("//validation-wrapper[@label='"+label+"']//input")),cp.date);
         seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//span[@class='icon-kalender']")));
+    }
+
+    public void confirmQuote() {
+        String query = NEXT_BUTTON.getQuery();
+        logger().debug("Searching element by " + query);
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.cssSelector(NEXT_BUTTON.getQuery())));
+    }
+
+    public void clickOnLabel(String label, String value) {
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + label + "']//option[@label = '" + value + "']")));
     }
 }

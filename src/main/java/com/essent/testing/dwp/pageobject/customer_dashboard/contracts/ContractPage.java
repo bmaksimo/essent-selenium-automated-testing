@@ -3,14 +3,11 @@ package com.essent.testing.dwp.pageobject.customer_dashboard.contracts;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-
 
 public class ContractPage extends Component {
 
@@ -251,8 +248,6 @@ public class ContractPage extends Component {
 //        }
         return amountParameter.equals(value[1]);
     }
-
-    private static  String payDate;
 
     public String findActiveContract(String input) {
         seleniumDriver.waitForRequestsToFinish();

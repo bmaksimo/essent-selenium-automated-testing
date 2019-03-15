@@ -1,5 +1,6 @@
 package stepdefinitions.dwp.page_object;
 
+import com.essent.testing.dwp.pageobject.customer_dashboard.documents.DocumentsPage;
 import com.essent.testing.dwp.pageobject.impl.service_contracting.ChangeAccountStatusPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.util.resource.ResourceUtil;
@@ -24,7 +25,7 @@ public class ChangeAccountStatusSteps extends DwpScenario {
     }
 
     @And("^Update account status on \"([^\"]*)\"$")
-    public void updateAccountStatusOn(String status) throws Throwable {
+    public void updateAccountStatusOn(String status) {
         ChangeAccountStatusPage changeAccountStatusPage = new ChangeAccountStatusPage();
         changeAccountStatusPage.chooseAccountStatus(status);
     }
@@ -38,7 +39,7 @@ public class ChangeAccountStatusSteps extends DwpScenario {
     }
 
     @And("^Getekend document is uploaded$")
-    public void uploadFileForSign() throws InterruptedException {
+    public void uploadFileForSign() {
         String filePath = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
         ChangeAccountStatusPage changeAccountStatusPage = new ChangeAccountStatusPage();
         boolean success = changeAccountStatusPage.uploadFileForSign(filePath);
@@ -46,8 +47,8 @@ public class ChangeAccountStatusSteps extends DwpScenario {
     }
 
     @Then("^Find document$")
-    public void findDocument() throws Throwable {
-        ChangeAccountStatusPage changeAccountStatusPage = new ChangeAccountStatusPage();
-        changeAccountStatusPage.findDocument();
+    public void findDocument(){
+        DocumentsPage dp = new DocumentsPage();
+        dp.findDocument();
     }
 }

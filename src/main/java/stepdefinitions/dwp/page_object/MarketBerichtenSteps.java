@@ -1,5 +1,6 @@
 package stepdefinitions.dwp.page_object;
 
+import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
 import com.essent.testing.dwp.pageobject.customer_dashboard.workflows.MarktBerichtenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
@@ -24,8 +25,8 @@ public class MarketBerichtenSteps extends DwpScenario {
     @And("^\"([^\"]*)\" turn on$")
     public void turnOn(String label) {
         seleniumDriver.waitForRequestsToFinish();
-        BaseObject baseObject = new BaseObject();
-        baseObject.clickOnToggle(label);
+        ToggleImpl ti = new ToggleImpl();
+        ti.clickOnToggle(label);
     }
 
     @When("^Save EAN code of customer$")
@@ -74,7 +75,7 @@ public class MarketBerichtenSteps extends DwpScenario {
     }
 
     @And("^\"([^\"]*)\" is now$")
-    public void isNow(String label) throws Throwable {
+    public void isNow(String label) {
         BaseObject bo = new BaseObject();
         bo.dateIsNow(label);
     }
