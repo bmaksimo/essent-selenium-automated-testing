@@ -50,7 +50,6 @@ public class SoctarSteps extends DwpScenario {
         String dateValue = checkAndConvertToSoctarFileDate(parameterProvider.getValueOrParameterAsString(value));
         parameterProvider.put("start-end-date", dateValue);
         parameterProvider.put("start-en-einddatum", checkAndConvertToDwpContractStartEndDate(value));
-
     }
 
     @Then("^Soctar tariff type and status are \"([^\"]*)\" - \"([^\"]*)\"$")

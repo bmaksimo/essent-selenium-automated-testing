@@ -1,13 +1,13 @@
 @DWP
 @SERVICE-CONTRACTING
 @SOCTAR
-Feature: Create Soctar (Social Tariff) contract
+Feature: Social tariff (SOCTAR) contract creation
 
     Background:
         Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
         #Output parameter "start_end_date", format: '1yyyyMMddyyyy1231'
         #Output parameter  "start-en-einddatum", format: 'dd-MM-yyyy - dd-MM-yyyy'
-        And   Soctar start date is "now"
+        And Soctar start date is "now"
     @SOCTAR-COMPLETE
     @NSTA-333
     Scenario: Create Soctar (Social tariff) quote and contract, and check Soctar confirmation letter
@@ -63,9 +63,9 @@ Feature: Create Soctar (Social Tariff) contract
         Then "1st" List element with value at column "Klantnummer & Naam" is checked
         #Steps 2 - Soctar file sftp upload
         Given Soctar customer Id is "parameter:Klantnummer & Naam"
-        And   Soctar EAN is "parameter:EAN-code"
-        And   Soctar start date is "now"
-        Then  Soctar file is uploaded to "/home/ESSENT/sa_sftpcrm_smx/data/soctar" remote directory
+        And Soctar EAN is "parameter:EAN-code"
+        And Soctar start date is "now"
+        Then Soctar file is uploaded to "/home/ESSENT/sa_sftpcrm_smx/data/soctar" remote directory
 
         #Step 3 Check the status of "Soctar file upload"
 
@@ -76,7 +76,7 @@ Feature: Create Soctar (Social Tariff) contract
         #Input parameter   "plus-menu-item"
         #Step will refresh the view, clicking on "plus-menu-item"
         Then "1st" list element has cell value "parameter:soctar-file-name" at column "Batchnaam" within 450 seconds
-        And  "1st" list element has cell value "Import Klaar" at column "Type & Status"
+        And "1st" list element has cell value "Import Klaar" at column "Type & Status"
 
         #Step 4 Check the status of "Soctar file import"
         Given Click on "parameter:soctar-file-name" link
@@ -87,9 +87,13 @@ Feature: Create Soctar (Social Tariff) contract
         Then  "1st" list element has cell value "Quote Created" at column "Status"
         And   "1st" list element has cell value "parameter:start-en-einddatum" at column "Contractnummer & start- en einddatum"
 
-        #step6
-
-        #step7
+        #Step6
+        When Soctar batch action "CONTRACTEN AANMAKEN OP BASIS VAN OFFERTES" is clicked
+        Then Soctar type is changed to "Create Contracts" within 30 seconds
+        And "Status" field value is "DONE"
+        #Step 7. Check if contract has been created
+        And "1st" list element has cell value "Verwerkt" at column "Status"
+        And "1st" list element has cell value "parameter:start-en-einddatum" at column "Contractnummer & start- en einddatum"
 
         #Step 8 Sent out the confirmation letter
         When Top arrow button is "UP"

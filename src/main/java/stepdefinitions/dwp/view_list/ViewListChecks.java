@@ -325,6 +325,7 @@ public class ViewListChecks extends NavigationElements {
     public void clickOnLink(String input) throws Throwable {
         String linkText = parameterProvider.getValueOrParameterAsString(input);
         new ViewListNavigation().goToLink(linkText);
+        seleniumDriver.waitForRequestsToFinish();
     }
 
     @When("^Click on link in View List at \"([^\"]*)\" row and \"([^\"]*)\" column$")
