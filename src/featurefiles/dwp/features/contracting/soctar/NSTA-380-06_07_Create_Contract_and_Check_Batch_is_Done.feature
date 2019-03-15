@@ -1,12 +1,11 @@
 @DWP
-@E2E
 @SOCTAR
-Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one payment and 3 dunning levels, with SS and Market Mock"
+Feature: Soctar batch contract creation
 
     Background:
         Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
     @SOCTAR-06-07
-    Scenario: Create active contract that after dunning the contract becomes inactive
+    Scenario: Add Soctar contract and check if type and status are changed
         Given Plus menu is "Contracting -> Soctar -> Sociale tariefbatches"
         And Click on link in View List at "1st" row and "Batchnaam" column
         #Step 6. Create contract and check if batch is done
