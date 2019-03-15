@@ -74,6 +74,7 @@ public class OdooMenu extends OdooScenario {
 
     @Then("^Modal button \"([^\"]*)\" is clicked$")
     public void odooClickButton(String buttonLabel) {
+        awaitOdooRequestToFinish(10);
         WebElement button = seleniumDriver.findElementWhenVisible(By.xpath("//button//span[contains(., '" + buttonLabel + "')]"));
         if (null == button) throw new CucumberException("Button " + buttonLabel + " was not found.");
 
