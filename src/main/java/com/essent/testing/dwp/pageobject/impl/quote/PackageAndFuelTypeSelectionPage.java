@@ -15,24 +15,24 @@ public class PackageAndFuelTypeSelectionPage extends QuoteCreationGuidedStep {
 
     private TariffTable tariffData;
 
-//    private boolean      regularisation;
-//    private SalesChannel salesChannel;
+    private boolean      regularisation;
+    private SalesChannel salesChannel;
 
-//    public boolean isRegularisation() {
-//        return regularisation;
-//    }
-//
-//    public void setRegularisation(boolean regularisation) {
-//        this.regularisation = regularisation;
-//    }
-//
-//    public SalesChannel getSalesChannel() {
-//        return salesChannel;
-//    }
-//
-//    public void setSalesChannel(SalesChannel salesChannel) {
-//        this.salesChannel = salesChannel;
-//    }
+    public boolean isRegularisation() {
+        return regularisation;
+    }
+
+    public void setRegularisation(boolean regularisation) {
+        this.regularisation = regularisation;
+    }
+
+    public SalesChannel getSalesChannel() {
+        return salesChannel;
+    }
+
+    public void setSalesChannel(SalesChannel salesChannel) {
+        this.salesChannel = salesChannel;
+    }
 
 
     @Override
