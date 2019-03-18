@@ -48,7 +48,7 @@ public class BaseObjectPage extends Component {
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + label + "']//option[@label = '" + value + "']")));
     }
     
-    public WebElement findElementbyX(String path){
+    public WebElement findElementbyXPath(String path){
 	WebElement element = seleniumDriver.findElementWhenVisible(By.xpath(path));
 	return element;
     }

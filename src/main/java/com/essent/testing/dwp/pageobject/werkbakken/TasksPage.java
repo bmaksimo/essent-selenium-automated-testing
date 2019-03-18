@@ -10,7 +10,7 @@ public class TasksPage extends BaseObjectPage {
            
     
     public String getTaskId() {
-	return findElementbyX(taskIDXPath).getText();
+	return findElementbyXPath(taskIDXPath).getText();
     }
    
    
