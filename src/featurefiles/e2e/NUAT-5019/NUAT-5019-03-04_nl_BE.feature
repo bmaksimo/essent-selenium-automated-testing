@@ -12,7 +12,8 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         And Cleanup Odoo CODA files
         When Odoo top menu is "Accounting"
         And Odoo left menu is "Customers"
-        And Odoo filter is "parameter:accountNumber"
+        #And Odoo filter is "parameter:accountNumber"
+        And Odoo filter is "1000099647"
         # When Column "Account Number" with value "parameter:accountNumber" is clicked
         When Column "Account Number" with value "1000099647" is clicked
         And Button "Journal Items" is clicked
