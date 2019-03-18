@@ -289,8 +289,7 @@ public class ContractPage extends Component {
 
     public String getStartDate() {
         seleniumDriver.waitForRequestsToFinish();
-        String startDate = seleniumDriver.findElementWhenVisible(By.xpath("//td[@class='list__cell cell__text'][4]//p/span[1]")).getText();
-        return startDate;
+        return seleniumDriver.findElementWhenVisible(By.xpath("//td[@class='list__cell cell__text'][4]//p/span[1]")).getText();
     }
 
     public String getQuarterForChosenStartDate(String startDate, String attestDate) {
@@ -398,8 +397,7 @@ public class ContractPage extends Component {
         builder.append(startDate);
         builder.replace(0,builder.length(),"31/12/");
         builder.append(yearStartDate);
-        String endDate = builder.toString();
-        return endDate;
+        return builder.toString();
     }
 
 }
