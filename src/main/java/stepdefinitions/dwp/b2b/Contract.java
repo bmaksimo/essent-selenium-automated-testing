@@ -82,7 +82,7 @@ public class Contract extends DwpScenario {
     public void contractIsInState(String status) {
         ContractPage cp = new ContractPage();
         seleniumDriver.waitForRequestsToFinish();
-        assertEquals(cp.status(),status);
+        assertEquals(cp.contractStatus(),status);
     }
 
     @And("^Clicked on sign X$")
@@ -126,7 +126,7 @@ public class Contract extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
         Thread.sleep(2000);
         NewQuotePage nq = new NewQuotePage();
-        nq.clickNaceCode();
+        nq.clickNaceCodeButton();
     }
 
     @And("^NaceCode in search is ([^\"]*)$")
@@ -135,7 +135,7 @@ public class Contract extends DwpScenario {
         ContractPage cp = new ContractPage();
         cp.searchByClientNumber(NaceCode);
         nq.clickOnSearch();
-        nq.checkNaceCode();
+        nq.checkNaceCodeCheckBox();
         nq.saveSelectedItem();
     }
 

@@ -69,7 +69,7 @@ public class OfferteStep extends DwpScenario {
     @Then("^Offerte status is \"([^\"]*)\"$")
     public void statusIs(String status) {
         QuotesListPage qlp = new QuotesListPage();
-        Assert.assertTrue(qlp.getStatus().equalsIgnoreCase(status));
+        Assert.assertTrue(qlp.getOfferteStatus().equalsIgnoreCase(status));
     }
 
     @And("^\"([^\"]*)\" turn on with dot$")
@@ -97,6 +97,6 @@ public class OfferteStep extends DwpScenario {
     @And("^Client signature receive data is \"([^\"]*)\"$")
     public void clientSignatureReceiveDataIs(String date) {
         QuotesListPage qlp = new QuotesListPage();
-        qlp.setSinganureReceivedDate(date);
+        qlp.setSignatureReceivedDate(date);
     }
 }

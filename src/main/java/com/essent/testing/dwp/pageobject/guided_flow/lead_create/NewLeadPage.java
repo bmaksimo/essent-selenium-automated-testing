@@ -4,6 +4,7 @@ import com.essent.testing.dwp.pageobject.Form;
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.tables.LeadInfo;
 
 import java.util.List;
@@ -12,8 +13,6 @@ public class NewLeadPage extends BaseObjectPage implements Form {
 
     private LeadInfo leadInfo;
     private static final String box = "Bel me niet";
-
-
 
     public void createLead(List<List<String>> table) {
         ToggleImpl tg = new ToggleImpl();
@@ -33,7 +32,7 @@ public class NewLeadPage extends BaseObjectPage implements Form {
 
     private void setGender(String gender) {
         seleniumDriver.waitForRequestsToFinish();
-        findElementWhenVisible(By.xpath("//select[@id='gender-c-field']/option[@label='" + gender + "']")).click();
+        seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//select[@id='gender-c-field']/option[@label='" + gender + "']")));
         seleniumDriver.waitForRequestsToFinish();
     }
 
@@ -51,13 +50,13 @@ public class NewLeadPage extends BaseObjectPage implements Form {
 
     private void setCompanyName(String companyNumber) {
         seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("company-name-c-field")), companyNumber);
-        findElementWhenVisible(By.xpath(".//*[@id='company_name_c']/div/autocomplete/ul/li[4]")).click();
+        seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath(".//*[@id='company_name_c']/div/autocomplete/ul/li[4]")));
         seleniumDriver.waitForRequestsToFinish();
     }
 
     public void saveLead() {
         seleniumDriver.waitForRequestsToFinish();
-        findElementWhenVisible(By.id("primaryButton")).click();
+        seleniumDriver.waitAndClick(findElementWhenVisible(By.id("primaryButton")));
     }
 
     private void setContactPerson(String contactPersonName, String contactPersonLastName) {
@@ -67,12 +66,15 @@ public class NewLeadPage extends BaseObjectPage implements Form {
         seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("last-name-field")), contactPersonLastName);
     }
 
+    private WebElement getTelephoneElement(){
+        return seleniumDriver.findElementWhenVisible(By.id("leads-contact-details-contact-details-phone-type-work-phone-contact-details-type-phone-contact-details-value-field"));
+    }
+
     private void setTelephone(String telephone) {
         seleniumDriver.waitForRequestsToFinish();
-        findElementWhenVisible(By.id("leads-contact-details-contact-details-phone-type-work-phone-contact-details-type-phone-contact-details-value-field")).clear();
+        getTelephoneElement().clear();
         seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("leads-contact-details-contact-details-phone-type-work-phone-contact-details-type-phone-contact-details-value-field")),
-            telephone);
+        seleniumDriver.waitAndSendKeys(getTelephoneElement(), telephone);
     }
 
     private void setMobile(String mobile) {
@@ -81,12 +83,15 @@ public class NewLeadPage extends BaseObjectPage implements Form {
             mobile);
     }
 
+    private WebElement getEmailElement(){
+        return seleniumDriver.findElementWhenVisible(By.id("leads-contact-details-contact-details-type-email-contact-details-value-field"));
+    }
+
     private void setEmail(String email) {
         seleniumDriver.waitForRequestsToFinish();
-        findElementWhenVisible(By.id("leads-contact-details-contact-details-type-email-contact-details-value-field")).clear();
+        getEmailElement().clear();
         seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("leads-contact-details-contact-details-type-email-contact-details-value-field")),
-            email);
+        seleniumDriver.waitAndSendKeys(getEmailElement(),email);
     }
 
     public void setLead(LeadInfo leadInfo) {

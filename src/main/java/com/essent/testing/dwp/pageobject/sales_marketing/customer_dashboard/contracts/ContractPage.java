@@ -39,9 +39,13 @@ public class ContractPage extends Component {
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"account-id-field\"]//span[2]")));
     }
 
+    private WebElement getSearchInputElemnt(){
+        return seleniumDriver.findElementWhenVisible(By.id("search-input"));
+    }
+
     public void searchByClientNumber(String number){
-        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id("search-input")),number);
-        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id("search-input")), number);
+        seleniumDriver.waitAndSendKeys(getSearchInputElemnt(),number);
+        seleniumDriver.waitAndSendKeys(getSearchInputElemnt(), number);
     }
 
     public void clickOnPlusMeniInTable(String row, String table) {
@@ -54,7 +58,7 @@ public class ContractPage extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"rows\"]//list-link-bold-top-two-liner-cell//a/h5")).getText();
     }
 
-    public String status() {
+    public String contractStatus() {
         return seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"rows\"]/tr[1]/td[2]/list-simple-two-liner-cell/p/span[1]")).getText();
     }
 
@@ -235,8 +239,7 @@ public class ContractPage extends Component {
     }
 
     public void changeAmount(String value) {
-        findElementWhenVisible(By.id("dwp-recurring-amount-field")).clear();
-        findElementWhenVisible(By.id("dwp-recurring-amount-field")).sendKeys(value);
+        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("dwp-recurring-amount-field")),value);
         seleniumDriver.waitForRequestsToFinish();
     }
 
@@ -244,6 +247,7 @@ public class ContractPage extends Component {
         String amountValue = findElementWhenVisible(By.id("advance-amount-field")).getText();
         String amountParameter = amount + ",00";
         String[] value = amountValue.split(" ", 2);
+//        it is not in the use at the moment, if not used in future runs it will be deleted
 //        for (String i : value) {
 //        }
         return amountParameter.equals(value[1]);
@@ -266,13 +270,13 @@ public class ContractPage extends Component {
 
     public void searchForEanCode(String eanCode) {
         seleniumDriver.waitForRequestsToFinish();
-        findElementWhenVisible(By.id("search-input")).clear();
-        findElementWhenVisible(By.id("search-input")).sendKeys(eanCode);
-        findElementWhenVisible(By.xpath("//input[@value='Search']")).click();
+        getSearchInputElemnt().clear();
+        seleniumDriver.waitAndSendKeys(getSearchInputElemnt(),eanCode);
+        seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//input[@value='Search']")));
         seleniumDriver.waitForRequestsToFinish();
-        findElementWhenVisible(By.xpath("//div[@class='multi-select__results']//ul[2]")).click();
+        seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//div[@class='multi-select__results']//ul[2]")));
         seleniumDriver.waitForRequestsToFinish();
-        findElementWhenVisible(By.xpath("//section[@class='view__modal']//a[@href='']")).click();
+        seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//section[@class='view__modal']//a[@href='']")));
     }
 
     public void fieldDropDownLabel(String label, String input) {
@@ -282,17 +286,20 @@ public class ContractPage extends Component {
 
     public void turnOnTestingAndMarketMock(String label) {
         if (label.equalsIgnoreCase("Testing")) {
-            findElementWhenVisible(By.id("dwp|toggle_testing")).click();
+            seleniumDriver.waitAndClick(findElementWhenVisible(By.id("dwp|toggle_testing")));
         } else if (label.equalsIgnoreCase("Market mock")) {
-            findElementWhenVisible(By.id("aos_products_quotes|market_mock_c")).click();
+            seleniumDriver.waitAndClick(findElementWhenVisible(By.id("aos_products_quotes|market_mock_c")));
         }
+    }
+
+    private WebElement getTopSearchInputElement(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("//input[@type='search']"));
     }
 
     public void searchForTaskId(String taskId) {
         seleniumDriver.waitForRequestsToFinish();
-        findElementWhenVisible(By.xpath("//input[@type='search']")).clear();
-        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//input[@type='search']")), taskId);
-        findElementWhenVisible(By.xpath("//input[@type='search']")).sendKeys(Keys.ENTER);
+        seleniumDriver.waitAndSendKeys(getTopSearchInputElement(), taskId);
+        getTopSearchInputElement().sendKeys(Keys.ENTER);
     }
 
     public void sendEmailToCustomer(String test) {
@@ -300,6 +307,6 @@ public class ContractPage extends Component {
         BaseObjectPage baseObject = new BaseObjectPage();
         baseObject.clickOnPlus();
         seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[@label='"+test+"']/a")).click();
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[@label='"+test+"']/a")));
     }
 }
