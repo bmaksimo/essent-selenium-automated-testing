@@ -4,7 +4,6 @@ import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.NEXT_BUTTON;
 
@@ -47,18 +46,4 @@ public class BaseObjectPage extends Component {
     public void clickOnLabel(String label, String value) {
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + label + "']//option[@label = '" + value + "']")));
     }
-    
-    public WebElement findElementbyXPath(String path){
-	WebElement element = seleniumDriver.findElementWhenVisible(By.xpath(path));
-	return element;
-    }
-    
-    public WebElement findElementbyId(String id){
-  	WebElement element = seleniumDriver.findElementWhenVisible(By.id(id));
-  	return element;
-      }
-
-    public void waitAndInput(WebElement element, String text) {
-   	seleniumDriver.waitAndSendKeys(element, text);
-       }    
 }
