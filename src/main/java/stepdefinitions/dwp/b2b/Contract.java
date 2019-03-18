@@ -154,7 +154,7 @@ public class Contract extends DwpScenario {
     }
 
     @And("^First Name is \"([^\"]*)\" and Last Name is \"([^\"]*)\"$")
-    public void populateName(String fname, String lname) throws Throwable{
+    public void populateName(String fname, String lname) {
         NewQuotePage nq = new NewQuotePage();
         nq.setName(fname, lname);
     }
