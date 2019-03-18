@@ -4,7 +4,7 @@ import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPricesPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.service.ServicePage;
 import com.essent.testing.dwp.pageobject.guided_flow.move_in.MoveInPage;
-import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
+import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
@@ -37,7 +37,7 @@ public class ContractSteps extends DwpScenario {
     public void contractPlusAnd(String subaction) {
         ContractPage cp = new ContractPage();
         cp.contractPlus();
-        BaseObject baseObject = new BaseObject();
+        BaseObjectPage baseObject = new BaseObjectPage();
         baseObject.plusSubaction(subaction);
     }
 

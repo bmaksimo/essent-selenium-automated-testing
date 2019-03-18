@@ -2,8 +2,8 @@ package stepdefinitions.dwp.b2b;
 
 import com.essent.testing.dwp.pageobject.contracting_switching.QuotesListPage;
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
-import com.essent.testing.dwp.pageobject.impl.filter.DwpFilter;
-import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
+import com.essent.testing.dwp.pageobject.impl.filter.DwpFilterPage;
+import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import com.essent.testing.dwp.pageobject.impl.service_contracting.ChangeAccountStatusPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.util.resource.ResourceUtil;
@@ -35,7 +35,7 @@ public class OfferteStep extends DwpScenario {
 
     @And("^Reset filter$")
     public void resetFilter() {
-        DwpFilter df = new DwpFilter();
+        DwpFilterPage df = new DwpFilterPage();
         df.resetFilter();
         seleniumDriver.waitForRequestsToFinish();
     }
@@ -43,13 +43,13 @@ public class OfferteStep extends DwpScenario {
     @And("^Label \"([^\"]*)\" is \"([^\"]*)\"$")
     public void labelIs(String label, String value) {
         String input = parameterProvider.getValueOrParameterAsString(value);
-        BaseObject bo = new BaseObject();
+        BaseObjectPage bo = new BaseObjectPage();
         bo.clickOnLabel(label, input);
     }
 
     @And("^Filter button is clicked$")
     public void filterButtonIsClicked() {
-        DwpFilter df = new DwpFilter();
+        DwpFilterPage df = new DwpFilterPage();
         df.clickOnFilter();
     }
 
@@ -82,7 +82,7 @@ public class OfferteStep extends DwpScenario {
     @Then("^Bevestigen$")
     public void bevestigen(){
         seleniumDriver.waitForRequestsToFinish();
-        BaseObject bo = new BaseObject();
+        BaseObjectPage bo = new BaseObjectPage();
         bo.confirmQuote();
     }
 

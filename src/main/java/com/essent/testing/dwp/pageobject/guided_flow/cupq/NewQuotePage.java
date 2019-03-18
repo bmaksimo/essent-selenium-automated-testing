@@ -3,11 +3,16 @@ package com.essent.testing.dwp.pageobject.guided_flow.cupq;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 public class NewQuotePage extends Component {
-    public void clickOnX() {
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//guidance-modal//div[@class = 'modal__header']/a")));
 
+
+    private WebElement xElement = seleniumDriver.findElementWhenVisible(By.xpath("//guidance-modal//div[@class = 'modal__header']/a"));
+
+    public void clickOnX() {
+        seleniumDriver.waitAndClick(xElement);
     }
 
     public void selectItemLegalForm() {

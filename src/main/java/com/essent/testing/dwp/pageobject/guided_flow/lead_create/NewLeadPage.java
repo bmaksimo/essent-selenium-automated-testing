@@ -2,13 +2,13 @@ package com.essent.testing.dwp.pageobject.guided_flow.lead_create;
 
 import com.essent.testing.dwp.pageobject.Form;
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
-import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
+import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import org.openqa.selenium.By;
 import stepdefinitions.dwp.tables.LeadInfo;
 
 import java.util.List;
 
-public class NewLeadPage extends BaseObject implements Form {
+public class NewLeadPage extends BaseObjectPage implements Form {
 
     private LeadInfo leadInfo;
     private static final String box = "Bel me niet";

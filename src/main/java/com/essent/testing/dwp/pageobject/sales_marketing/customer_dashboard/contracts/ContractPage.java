@@ -2,7 +2,7 @@ package com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.con
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
+import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -297,7 +297,7 @@ public class ContractPage extends Component {
 
     public void sendEmailToCustomer(String test) {
         seleniumDriver.waitForRequestsToFinish();
-        BaseObject baseObject = new BaseObject();
+        BaseObjectPage baseObject = new BaseObjectPage();
         baseObject.clickOnPlus();
         seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[@label='"+test+"']/a")).click();

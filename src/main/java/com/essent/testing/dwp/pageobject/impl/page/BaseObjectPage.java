@@ -8,7 +8,7 @@ import org.openqa.selenium.By;
 import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.NEXT_BUTTON;
 
 
-public class BaseObject extends Component {
+public class BaseObjectPage extends Component {
 
     public void clickOnPlus() {
 

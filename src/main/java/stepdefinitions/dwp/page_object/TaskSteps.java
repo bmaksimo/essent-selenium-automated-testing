@@ -2,7 +2,7 @@ package stepdefinitions.dwp.page_object;
 
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.service.ServicePage;
-import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
+import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import com.essent.testing.dwp.pageobject.werkbakken.TasksPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
@@ -27,7 +27,7 @@ public class TaskSteps extends DwpScenario {
 
     @When("^Plus action and \"([^\"]*)\" of first customer from list$")
     public void plusActionAndOfFirstCustomerFromList(String action) throws Throwable {
-        BaseObject baseObject = new BaseObject();
+        BaseObjectPage baseObject = new BaseObjectPage();
         Thread.sleep(30000);
         baseObject.clickOnPlus();
         seleniumDriver.waitForRequestsToFinish();
@@ -36,7 +36,7 @@ public class TaskSteps extends DwpScenario {
 
     @When("^Plus action and Mark As Done/Markeren Als Verwerkt of first customer from list$")
     public void plusActionAndOfFirstCustomerFromList() throws Throwable {
-        BaseObject baseObject = new BaseObject();
+        BaseObjectPage baseObject = new BaseObjectPage();
         Thread.sleep(30000);
         baseObject.clickOnPlus();
         seleniumDriver.waitForRequestsToFinish();

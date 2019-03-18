@@ -2,7 +2,7 @@ package stepdefinitions.dwp.b2b;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.guided_flow.cupq.NewQuotePage;
-import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
+import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.pageobject.impl.quote.QuoteDetailsPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
@@ -56,7 +56,7 @@ public class Contract extends DwpScenario {
     public void plusActionOfElementFromAndClickOnMarkAsDone(String row, String table){
         seleniumDriver.waitForRequestsToFinish();
         ContractPage cp = new ContractPage();
-        BaseObject baseObject = new BaseObject();
+        BaseObjectPage baseObject = new BaseObjectPage();
         Sleeper.sleepTightInSeconds(5);
         cp.clickOnPlusMeniInTable(row,table);
         baseObject.clickOnMarkAsDonePlusMenuSubAction();
@@ -66,7 +66,7 @@ public class Contract extends DwpScenario {
     public void plusActionOfElementFromAndClickOn(String row, String table, String action) {
         seleniumDriver.waitForRequestsToFinish();
         ContractPage cp = new ContractPage();
-        BaseObject baseObject = new BaseObject();
+        BaseObjectPage baseObject = new BaseObjectPage();
         Sleeper.sleepTightInSeconds(5);
         cp.clickOnPlusMeniInTable(row,table);
         baseObject.plusSubaction(action);

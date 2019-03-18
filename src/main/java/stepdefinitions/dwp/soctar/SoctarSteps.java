@@ -5,7 +5,7 @@ import com.billinghouse.test_automation.util.soctar_file.SoctarFileUtil;
 import com.billinghouse.test_automation.util.ssh.JSchUtil;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
-import com.essent.testing.dwp.pageobject.guided_flow.soctar.SoctarTariffBatchDetails;
+import com.essent.testing.dwp.pageobject.guided_flow.soctar.SoctarTariffBatchDetailsPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
@@ -55,7 +55,7 @@ public class SoctarSteps extends DwpScenario {
 
     @Then("^Soctar tariff type and status are \"([^\"]*)\" - \"([^\"]*)\"$")
     public void checkSuccess(String tariffType, String tariffStatus) {
-        SoctarTariffBatchDetails soc = new SoctarTariffBatchDetails();
+        SoctarTariffBatchDetailsPage soc = new SoctarTariffBatchDetailsPage();
         assertTrue(soc.getTariffType().equalsIgnoreCase(tariffType));
         assertTrue(soc.getTariffStatus().equalsIgnoreCase(tariffStatus));
 

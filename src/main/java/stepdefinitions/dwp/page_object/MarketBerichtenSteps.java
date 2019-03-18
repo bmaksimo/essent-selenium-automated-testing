@@ -1,7 +1,7 @@
 package stepdefinitions.dwp.page_object;
 
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
-import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
+import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.workflows.MarktBerichtenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
@@ -76,7 +76,7 @@ public class MarketBerichtenSteps extends DwpScenario {
 
     @And("^\"([^\"]*)\" is now$")
     public void isNow(String label) {
-        BaseObject bo = new BaseObject();
+        BaseObjectPage bo = new BaseObjectPage();
         bo.dateIsNow(label);
     }
 
