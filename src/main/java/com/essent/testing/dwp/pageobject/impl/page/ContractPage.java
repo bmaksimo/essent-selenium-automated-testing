@@ -295,7 +295,7 @@ public class ContractPage extends Component {
 
     public String getQuarterForChosenStartDate(String startDate, String attestDate) {
         String str[] = startDate.split("-");
-        Integer monthStartDate = Integer.parseInt(str[1]);
+        int monthStartDate = Integer.parseInt(str[1]);
         String yearStartDate = str[2];
 
         String str2[] = attestDate.split("/");
@@ -309,10 +309,10 @@ public class ContractPage extends Component {
                 quarterEndMonth = "03";
             }
 
-            else if (monthStartDate >= 4 && monthStartDate <= 6) {
+            else if (monthStartDate <= 6) {
                 quarterEndMonth = "06";
             }
-            else if (monthStartDate >= 7 && monthStartDate <= 9) {
+            else if (monthStartDate <= 9) {
                 quarterEndMonth = "09";
             }
             else{
@@ -331,12 +331,12 @@ public class ContractPage extends Component {
 
                  }
 
-                 else if (monthStartDate >= 4 && monthStartDate <= 6) {
+                 else if (monthStartDate <= 6) {
                      quarterEndMonth = "06";
 
                  }
 
-                 else if (monthStartDate >= 7 && monthStartDate <= 9) {
+                 else if (monthStartDate <= 9) {
                      quarterEndMonth = "09";
 
                  }
@@ -355,11 +355,11 @@ public class ContractPage extends Component {
                 quarterEndMonth = "03";
             }
 
-            else if (monthStartDate >= 4 && monthStartDate <= 6) {
+            else if (monthStartDate <= 6) {
                 quarterEndMonth = "06";
             }
 
-            else if (monthStartDate >= 7 && monthStartDate <= 9) {
+            else if (monthStartDate <= 9) {
                 quarterEndMonth = "09";
             }
 
@@ -373,11 +373,11 @@ public class ContractPage extends Component {
 
             builder.append(date);
             builder.replace(0, builder.length(), "01/");
-            builder.append(quarterEndMonth + "/");
-            builder.append(yearStartDate);
-            String quarterDate = builder.toString();
+            builder.append(quarterEndMonth).append("/");
 
-            return quarterDate;
+            builder.append(yearStartDate);
+
+        return builder.toString();
 
     }
 
