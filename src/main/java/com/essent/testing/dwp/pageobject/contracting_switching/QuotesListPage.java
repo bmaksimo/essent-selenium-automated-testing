@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 
 public class QuotesListPage extends Component {
 
-    public String getOfferteNumber() {
+    public String getOfferteNumberAsString() {
         return seleniumDriver.findElementWhenVisible(By.xpath("//list-link-bold-top-two-liner-cell//a/h5")).getText();
     }
 

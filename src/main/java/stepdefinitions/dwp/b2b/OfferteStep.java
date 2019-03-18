@@ -29,7 +29,7 @@ public class OfferteStep extends DwpScenario {
     @And("^Take Offertenummer from first offerte$")
     public void takeOffertenummerFromFirstOfferte() {
         QuotesListPage qlp = new QuotesListPage();
-        String offertenummer = qlp.getOfferteNumber();
+        String offertenummer = qlp.getOfferteNumberAsString();
         parameterProvider.put("offertenummer", offertenummer);
     }
 
