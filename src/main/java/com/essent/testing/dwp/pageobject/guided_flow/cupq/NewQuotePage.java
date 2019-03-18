@@ -1,5 +1,6 @@
 package com.essent.testing.dwp.pageobject.guided_flow.cupq;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import org.openqa.selenium.By;
 
@@ -49,9 +50,9 @@ public class NewQuotePage extends Component {
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"leads-contact-details-contact-details-phone-type-work-phone-contact-details-type-phone-contact-details-value-field\"]")), telephone);
     }
 
-    public void setName(String fname, String lname) throws Throwable {
+    public void setName(String fname, String lname) {
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"first-name-field\"]")), fname);
-        Thread.sleep(2000);
+        Sleeper.sleepTightInSeconds(2);
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"last-name-field\"]")), lname);
 
     }

@@ -58,7 +58,6 @@ public class Contract extends DwpScenario {
         ContractPage cp = new ContractPage();
         BaseObject baseObject = new BaseObject();
         Sleeper.sleepTightInSeconds(5);
-//        Thread.sleep(5000);
         cp.clickOnPlusMeniInTable(row,table);
         baseObject.clickOnMarkAsDonePlusMenuSubAction();
     }
@@ -69,7 +68,6 @@ public class Contract extends DwpScenario {
         ContractPage cp = new ContractPage();
         BaseObject baseObject = new BaseObject();
         Sleeper.sleepTightInSeconds(5);
-//        Thread.sleep(5000);
         cp.clickOnPlusMeniInTable(row,table);
         baseObject.plusSubaction(action);
     }
