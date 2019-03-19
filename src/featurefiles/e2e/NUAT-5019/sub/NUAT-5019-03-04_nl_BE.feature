@@ -12,10 +12,10 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         And Cleanup Odoo CODA files
         When Odoo top menu is "Accounting"
         And Odoo left menu is "Customers"
-        #And Odoo filter is "parameter:accountNumber"
-        And Odoo filter is "1000099647"
-        # When Column "Account Number" with value "parameter:accountNumber" is clicked
-        When Column "Account Number" with value "1000099647" is clicked
+        And Odoo filter is "parameter:accountNumber"
+        #And Odoo filter is "1000099647"
+        When Column "Account Number" with value "parameter:accountNumber" is clicked
+        #When Column "Account Number" with value "1000099647" is clicked
         And Button "Journal Items" is clicked
         And Generate CODA in the "1st" row is clicked
         Then Modal title contains "Download CODA"
@@ -38,8 +38,8 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         When Left menu is "contracting-switching"
         And Top menu item is "Klanten"
         And Top action is "Filters"
-        #And "Naam" input is "parameter:suitecrm-customer-name"
-        And "Naam" input is "Dieneke Tange"
+        And "Naam" input is "parameter:suitecrm-customer-name"
+        #And "Naam" input is "Dieneke Tange"
         Then View list header is "Klanten"
 
         And Click on link in View List at "1st" row and "Klantnummer & Naam" column
@@ -51,8 +51,8 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         When Left menu is "sales-marketing"
         And Top menu item is "Klanten"
         And Top action is "Filters"
-        #And "Naam" input is "parameter:suitecrm-customer-name"
-        And "Naam" input is "Dieneke Tange"
+        And "Naam" input is "parameter:suitecrm-customer-name"
+        #And "Naam" input is "Dieneke Tange"
         Then "1st" List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
 
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column
@@ -74,8 +74,8 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         When Left menu is "billing"
         And Top menu item is "Klanten"
         And Top action is "Filters"
-        #And "Naam" input is "parameter:suitecrm-customer-name"
-        And "Naam" input is "Dieneke Tange"
+        And "Naam" input is "parameter:suitecrm-customer-name"
+        #And "Naam" input is "Dieneke Tange"
         Then "1st" List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
 
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column
@@ -97,8 +97,8 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         When Left menu is "billing"
         And Top menu item is "Klanten"
         And Top action is "Filters"
-        #And "Naam" input is "parameter:suitecrm-customer-name"
-        And "Naam" input is "Dieneke Tange"
+        And "Naam" input is "parameter:suitecrm-customer-name"
+        #And "Naam" input is "Dieneke Tange"
 
         Then "1st" List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
 

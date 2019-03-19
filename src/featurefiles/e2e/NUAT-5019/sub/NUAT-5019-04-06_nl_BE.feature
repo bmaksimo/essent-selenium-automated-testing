@@ -24,8 +24,8 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         When Left menu is "contracting-switching"
         And Top menu item is "Klanten"
         And Top action is "Filters"
-        #And "Naam" input is "parameter:suitecrm-customer-name"
-        And "Naam" input is "Olcay Van den boogaart"
+        And "Naam" input is "parameter:suitecrm-customer-name"
+        #And "Naam" input is "Olcay Van den boogaart"
         Then View list header is "Klanten"
 
         And Click on link in View List at "1st" row and "Klantnummer & Naam" column
@@ -37,8 +37,8 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         When Left menu is "sales-marketing"
         And Top menu item is "Klanten"
         And Top action is "Filters"
-        #And "Naam" input is "parameter:suitecrm-customer-name"
-        And "Naam" input is "Olcay Van den boogaart"
+        And "Naam" input is "parameter:suitecrm-customer-name"
+        #And "Naam" input is "Olcay Van den boogaart"
         Then "1st" List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
 
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column
@@ -60,8 +60,8 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         When Left menu is "billing"
         And Top menu item is "Klanten"
         And Top action is "Filters"
-        #And "Naam" input is "parameter:suitecrm-customer-name"
-        And "Naam" input is "Olcay Van den boogaart"
+        And "Naam" input is "parameter:suitecrm-customer-name"
+        #And "Naam" input is "Olcay Van den boogaart"
         Then "1st" List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
 
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column
@@ -83,8 +83,8 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         When Left menu is "billing"
         And Top menu item is "Klanten"
         And Top action is "Filters"
-        #And "Naam" input is "parameter:suitecrm-customer-name"
-        And "Naam" input is "Olcay Van den boogaart"
+        And "Naam" input is "parameter:suitecrm-customer-name"
+        #And "Naam" input is "Olcay Van den boogaart"
 
         Then "1st" List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
 
