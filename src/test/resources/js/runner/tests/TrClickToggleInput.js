@@ -22,7 +22,7 @@ class TrClickToggleInput extends TestRunnerBase {
         let inputSize = input.size();
 
         if (inputSize !== 0) {
-            if(options.verb) {
+            if(options.verb !== "undefined") {
                 switch(options.verb) {
                     case "are": {
                         for(let i=0; i< inputSize; i++) {
@@ -42,9 +42,9 @@ class TrClickToggleInput extends TestRunnerBase {
                 result.status = 'FAILED';
                 result.reason = 'Verb must be either "is" or "are"';
             }
-            else {
-            result.status = 'FAILED';
-            result.reason = 'Input element with id ' + options.id + ' not found';
+        } else {
+                result.status = 'FAILED';
+                result.reason = 'Input element with id ' + options.id + ' not found';
         }
         this.resolveCallback(result);
     }
