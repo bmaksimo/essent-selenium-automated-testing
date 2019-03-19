@@ -1,6 +1,6 @@
 package stepdefinitions.dwp.b2b;
 
-import com.essent.testing.dwp.pageobject.impl.page.DwpAccountOverviewPage;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.service.CaseDetailsPage;
 import com.essent.testing.dwp.pageobject.impl.service_contracting.LogCasePageImpl;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
@@ -25,17 +25,17 @@ public class LogQuestionsOfCustomers extends DwpScenario {
     }
 
     @Then("^Case details are visible$")
-    public void checkSuccess() throws Throwable {
-        DwpAccountOverviewPage daop = new DwpAccountOverviewPage();
+    public void checkSuccess() {
+        CaseDetailsPage cdp = new CaseDetailsPage();
         String complaintText = "TextForComplaint";
         String solutionText = "TextForSolution";
-        assertTrue(daop.getComplaintText().equalsIgnoreCase(complaintText));
-        assertTrue(daop.getSolutionFieldText().equalsIgnoreCase(solutionText));
-        assertTrue(daop.checkIfPriorityIsHigh());
+        assertTrue(cdp.getComplaintText().equalsIgnoreCase(complaintText));
+        assertTrue(cdp.getSolutionFieldText().equalsIgnoreCase(solutionText));
+        assertTrue(cdp.checkIfPriorityIsHigh());
     }
 
     @And("^New case for account is created$")
-    public void createCaseForAccount() throws Throwable {
+    public void createCaseForAccount() {
         LogCasePageImpl logCasePage = new LogCasePageImpl();
         logCasePage.setSubjectSelection("Afrekeningsfactuur");
         logCasePage.setDescription("TextForComplaint");

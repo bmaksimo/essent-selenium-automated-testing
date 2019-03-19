@@ -2,7 +2,6 @@ package stepdefinitions.dwp.view_list;
 
 import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.essent.automation.util.Sleeper;
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -10,7 +9,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.runtime.CucumberException;
-import org.apache.commons.collections.ListUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -326,6 +325,7 @@ public class ViewListChecks extends NavigationElements {
     public void clickOnLink(String input) throws Throwable {
         String linkText = parameterProvider.getValueOrParameterAsString(input);
         new ViewListNavigation().goToLink(linkText);
+        seleniumDriver.waitForRequestsToFinish();
     }
 
     @When("^Click on link in View List at \"([^\"]*)\" row and \"([^\"]*)\" column$")
@@ -338,8 +338,8 @@ public class ViewListChecks extends NavigationElements {
 
     @When("^Click on link in View List at \"([^\"]*)\" row and \"([^\"]*)\" column polling (\\d+) seconds?$")
     public void clickOnViewListAtRowAndColumn(String ordinal, String column, int seconds) throws Throwable {
-        FluentWait<ClickTableCellUrl> waiter = waiter(new ClickTableCellUrl(), seconds, 7)
-            .withMessage(String.format("Failed click on link in view list at \"%s\" row and \"%s\" column within \"%s\" seconds", ordinal, column, seconds));
+        FluentWait<ClickTableCellUrl> waiter = waiter(new ClickTableCellUrl(), seconds, 5)
+           .withMessage(String.format("Failed click on link in view list at \"%s\" row and \"%s\" column within \"%s\" seconds", ordinal, column, seconds));
         waiter.until((ClickTableCellUrl callback) -> callback.test(getColumnIndexListOptions(column, null, ordinal)));
         logger().info(String.format("- STEP: Click on link in view list at \"%s\" row and \"%s\" column within \"%s\" seconds - PASSED.", ordinal, column, seconds));
     }
@@ -347,7 +347,7 @@ public class ViewListChecks extends NavigationElements {
     @When("^Click on link in \"([^\"]*)\" View List at \"([^\"]*)\" row and \"([^\"]*)\" column$")
     public void clickOnSuppliedViewListAtRowAndColumn(String viewListName, String ordinal, String column) throws Throwable {
         Map<String, String> columnIndexListOptions = getColumnIndexListOptions(column, viewListName, ordinal);
-        FluentWait<ClickTableCellUrl> waiter = waiter(new ClickTableCellUrl(), 30, 7)
+        FluentWait<ClickTableCellUrl> waiter = waiter(new ClickTableCellUrl(), 30, 5)
             .withMessage(String.format("Failed click on link in view list \"%s\" at \"%s\" row and \"%s\" column", viewListName, ordinal, column));
         waiter.until((ClickTableCellUrl callback) -> callback.test(columnIndexListOptions));
         logger().info(String.format("- STEP: Click on link in view list \"%s\" at \"%s\" row and \"%s\" column - PASSED.", viewListName, ordinal, column));
@@ -474,6 +474,17 @@ public class ViewListChecks extends NavigationElements {
         String splitValue = value.split(" ")[0];
         parameterProvider.put(columnName, splitValue);
         logger().info(String.format("- STEP: \"%s\" list element with value at column \"%s\" is checked - PASSED.", ordinal, columnName));
+
+    }
+
+    @Then("^List element with value at column \"([^\"]*)\" from table \"([^\"]*)\" is checked$")
+    public void storeColumnValueInParameterProvider(String columnName, String tableName) throws Throwable {
+        List<String> columnData = new ViewListModel().fetchColumnData(tableName, columnName);
+        boolean success = CollectionUtils.isNotEmpty(columnData);
+        assertThat(String.format("\"%s\" list element didn't contain any value at column \"%s\"", tableName, columnName),
+            success, is(true));
+        parameterProvider.put(columnName, columnData.get(0));
+        logger().info(String.format("- STEP: \"%s\" list element with value at column \"%s\" is checked - PASSED.", tableName, columnName));
 
     }
 
