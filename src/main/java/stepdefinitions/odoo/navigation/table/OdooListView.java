@@ -50,6 +50,7 @@ public class OdooListView extends OdooScenario  {
     @When("^Advanced search is \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$")
     public void setAdvancedSearchFilter(String property, String operator, String inputSearchTerm) {
         AdvancedSearch advancedSearch = new AdvancedSearch(property, operator, inputSearchTerm);
+        awaitOdooRequestToFinish(10);
         new AdvancedSearchComponent().runAdvancedSearch(advancedSearch);
     }
 
@@ -73,7 +74,7 @@ public class OdooListView extends OdooScenario  {
 
     @Then("^Column \"([^\"]*)\" with value \"([^\"]*)\" is clicked$")
     public void clickValueAt(String column, String value) {
-        awaitOdooRequestToFinish(10);
+        awaitOdooRequestToFinish(20);
         String input = parameterProvider.getValueOrParameterAsString(value) == null ?
             value : parameterProvider.getValueOrParameterAsString(value);
         ListView odooList = new DefaultListView();
