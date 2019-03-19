@@ -77,8 +77,7 @@ public class OdooMenu extends OdooScenario {
         awaitOdooRequestToFinish(10);
         WebElement button = seleniumDriver.findElementWhenVisible(By.xpath("//button//span[contains(., '" + buttonLabel + "')]"));
         if (null == button) throw new CucumberException("Button " + buttonLabel + " was not found.");
-
-        //button.click();
+        button.click();
     }
 
     @Then("^Bank Statement \"([^\"]*)\" button is clicked$")
