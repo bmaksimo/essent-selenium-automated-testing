@@ -29,7 +29,7 @@ public class OdooMenu extends OdooScenario {
 
     @When("^Odoo top menu is \"([^\"]*)\"$")
     public void clickTopMenu(String menu) {
-        awaitOdooRequestToFinish(10);
+        awaitOdooRequestToFinish(60);
         MenuNavigation menuNavigation = new MenuNavigation();
         boolean success = menuNavigation.findAndClickMainMenuItem(menu);
         if(!success) {
@@ -77,7 +77,6 @@ public class OdooMenu extends OdooScenario {
         awaitOdooRequestToFinish(10);
         WebElement button = seleniumDriver.findElementWhenVisible(By.xpath("//button//span[contains(., '" + buttonLabel + "')]"));
         if (null == button) throw new CucumberException("Button " + buttonLabel + " was not found.");
-
         button.click();
     }
 
