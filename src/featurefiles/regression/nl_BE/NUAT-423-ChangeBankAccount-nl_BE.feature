@@ -28,8 +28,7 @@ Feature: NUAT-423: Change Bank Account - nl_BE
         When Odoo top menu is "Accounting"
         And Odoo left menu is "Customers"
         And Advanced search is "Account Number", "is equal to", "parameter:accountNumber"
-#        And Advanced search is "Account Number", "is equal to", "1000099729"
         When Column "Account Number" with value "parameter:accountNumber" is clicked
         And Odoo click on tab "Accounting"
         Then Odoo validate bank account was changed on "parameter:inputValue"
-#        Then Odoo validate bank account was changed on "BE71096123456769"
+
