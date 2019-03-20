@@ -300,7 +300,7 @@ public class ViewListChecks extends NavigationElements {
         boolean success = new CheckViewListHeader().test(header);
         assertThat(String.format("View list header \"%s\" didn't appear", header),
             success, is(true));
-        parameterProvider.put("currrent-view-list", header);
+        parameterProvider.put("current-view-list", header);
         logger().info(String.format("- STEP: View list header is \"%s\" - PASSED.", header));
     }
 
