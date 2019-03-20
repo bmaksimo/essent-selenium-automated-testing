@@ -6,8 +6,12 @@ import org.openqa.selenium.WebElement;
 
 public class DwpLeftMenu extends Component {
 
-    private WebElement getLeftElement(String name)  {
-        return seleniumDriver.findElementWhenVisible(By.xpath("//main-menu-link[@name='" + name + "']//a"));
+    private static final String nameKey="name_key";
+    private static final String leftMenuXPath = "//main-menu-link[@name='${" + nameKey + "}']//a"; 
+    
+    private WebElement getLeftElement(String nameValue)  {
+	String xpath = createQuery(leftMenuXPath, nameKey, nameValue); 
+	return seleniumDriver.findElementWhenVisible(By.xpath(xpath));
     }
 
     public void clickOnLeftElement(String element) {

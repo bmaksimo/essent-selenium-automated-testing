@@ -10,18 +10,23 @@ import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.NEXT_BU
 
 public class BaseObjectPage extends Component {
 
+    private static final String actionKey="action_key";
+    private static final String plusMenuXPath = "//list-row-action[normalize-space(@label)=${"+actionKey+"}]/a";
+   
+    
     public void clickOnPlus() {
 
         seleniumDriver.waitAndClick(seleniumDriver.findElementOrNull(By.xpath("(//list-plus-cell//a)[1]")));
     }
 
-    public void plusSubaction(String action) {
-        try {
-            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[normalize-space(@label)='" + action + "']/a")));
+    public void plusSubaction(String actionValue) {
+        String xpath = createQuery(plusMenuXPath, actionKey, actionValue); 
+	try {
+            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(xpath)));
 
         }
         catch(org.openqa.selenium.StaleElementReferenceException ex) {
-            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[normalize-space(@label)='" + action + "']/a")));
+            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(xpath)));
         }
     }
 
