@@ -90,7 +90,7 @@ Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR,
     @reverse-payment
     @NUAT-417-04
     Scenario: Reverse payment plan
-        Given I logged in to Odoo as "t.geets"
+        Given I logged in to Odoo as "role_essent_ccm_user"
         When Odoo top menu is "Accounting"
         And  Odoo left menu is "Customers"
         And Odoo filter is "parameter:accountNumber"

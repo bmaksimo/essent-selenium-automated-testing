@@ -5,7 +5,7 @@
 Feature: NUAT-413: Manual reconcile en unreconcile
 
     Background:
-        Given  I logged in to Odoo as "t.geets"
+        Given  I logged in to Odoo as "role_essent_ccm_user"
         And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
 
     @NUAT-413

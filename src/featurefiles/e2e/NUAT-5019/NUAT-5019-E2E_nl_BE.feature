@@ -80,7 +80,7 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
 
         # 3 - import and match CODA
-        Given I renew login to Odoo as "t.geets"
+        Given I renew login to Odoo as "role_essent_ccm_user"
         And Cleanup Odoo CODA files
         When Odoo top menu is "Accounting"
         And Odoo left menu is "Customers"
