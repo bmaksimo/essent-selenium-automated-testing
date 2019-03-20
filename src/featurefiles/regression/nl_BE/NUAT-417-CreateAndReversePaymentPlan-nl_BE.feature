@@ -49,7 +49,7 @@ Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR,
         And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
         And List option is "ENKEL FACTUREN"
         And View list header is "Openstaande facturen"
-        And Invoice with key "InvoicesOnAccountOpenBalance" is stored
+        And Invoice checkbox with key "InvoicesOnAccountOpenBalance" is clicked
         And List option is "AANVRAAG AFBETALINGSPLAN"
         And Input in "Type afbetalingsplan" is "Bedrag"
         And Input in "Periode schijven" is "Maandelijks"
