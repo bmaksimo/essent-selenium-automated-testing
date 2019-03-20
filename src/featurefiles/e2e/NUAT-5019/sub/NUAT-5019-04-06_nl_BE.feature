@@ -1,5 +1,4 @@
 @DWP
-@E2E
 Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one payment and 3 dunning levels, with SS and Market Mock"
 
     Background:
