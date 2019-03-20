@@ -2,8 +2,7 @@ package stepdefinitions.odoo.navigation.menu;
 
 import com.essent.testing.odoo.navigation.menu.MenuNavigation;
 import com.essent.testing.odoo.pageobject.impl.elements.ButtonImpl;
-import com.essent.testing.odoo.pageobject.impl.pageObject.KlantenPage;
-import com.essent.testing.odoo.pageobject.impl.pageObject.TabImpl;
+import com.essent.testing.odoo.pageobject.impl.pageObject.CustomerPage;
 import com.essent.testing.odoo.scenario.OdooScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -138,14 +137,14 @@ public class OdooMenu extends OdooScenario {
 
     @And("^Odoo click on tab \"([^\"]*)\"$")
     public void odooClickOnTab(String tab){
-        TabImpl ti = new TabImpl();
-        ti.clickOnTabMenu(tab);
+        CustomerPage cp = new CustomerPage();
+        cp.clickOnTabMenu(tab);
     }
 
     @Then("^Odoo validate bank account was changed on \"([^\"]*)\"$")
     public void odooValidateBankAccountWasChangedOn(String ban) {
         String bankAccountNumber = parameterProvider.getValueOrParameterAsString(ban);
-        KlantenPage kp = new KlantenPage();
+        CustomerPage kp = new CustomerPage();
         Assert.assertEquals("Ckeck if band accoutn number is same as in dwp",kp.getBankAccountAsString(), bankAccountNumber);
     }
 

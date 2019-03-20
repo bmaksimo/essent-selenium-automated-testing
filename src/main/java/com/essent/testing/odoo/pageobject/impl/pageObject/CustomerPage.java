@@ -3,10 +3,14 @@ package com.essent.testing.odoo.pageobject.impl.pageObject;
 import com.essent.testing.odoo.pageobject.impl.Component;
 import org.openqa.selenium.By;
 
-public class TabImpl extends Component {
+public class CustomerPage extends Component {
 
     public void clickOnTabMenu(String tab){
         awaitOdooRequestToFinish(20);
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//li[@class='ui-state-default ui-corner-top']/a[contains(text(),'"+tab+"')] ")));
+    }
+
+    public String getBankAccountAsString(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("//td[@data-field=\"acc_number\"]")).getText();
     }
 }
