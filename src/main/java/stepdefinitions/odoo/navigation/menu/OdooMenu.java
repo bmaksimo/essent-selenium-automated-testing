@@ -2,6 +2,7 @@ package stepdefinitions.odoo.navigation.menu;
 
 import com.essent.testing.odoo.navigation.menu.MenuNavigation;
 import com.essent.testing.odoo.pageobject.impl.elements.ButtonImpl;
+import com.essent.testing.odoo.pageobject.impl.pageObject.CustomerPage;
 import com.essent.testing.odoo.scenario.OdooScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -12,6 +13,7 @@ import cucumber.api.java.en.When;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.lang.StringUtils;
 import org.awaitility.Duration;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -132,7 +134,18 @@ public class OdooMenu extends OdooScenario {
        awaitOdooRequestToFinish(8);
    }
 
+    @And("^Odoo click on tab \"([^\"]*)\"$")
+    public void odooClickOnTab(String tab){
+        CustomerPage cp = new CustomerPage();
+        cp.clickOnTabMenu(tab);
+    }
 
+    @Then("^Odoo validate bank account was changed on \"([^\"]*)\"$")
+    public void odooValidateBankAccountWasChangedOn(String ban) {
+        String bankAccountNumber = parameterProvider.getValueOrParameterAsString(ban);
+        CustomerPage kp = new CustomerPage();
+        Assert.assertEquals("Ckeck if band accoutn number is same as in dwp",kp.getBankAccountAsString(), bankAccountNumber);
+    }
 
 
 
