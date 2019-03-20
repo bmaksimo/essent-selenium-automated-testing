@@ -49,7 +49,8 @@ public class OdooListView extends OdooScenario  {
 
     @When("^Advanced search is \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$")
     public void setAdvancedSearchFilter(String property, String operator, String inputSearchTerm) {
-        AdvancedSearch advancedSearch = new AdvancedSearch(property, operator, inputSearchTerm);
+        String searchParameter = parameterProvider.getValueOrParameterAsString(inputSearchTerm);
+        AdvancedSearch advancedSearch = new AdvancedSearch(property, operator, searchParameter);
         awaitOdooRequestToFinish(10);
         new AdvancedSearchComponent().runAdvancedSearch(advancedSearch);
     }
