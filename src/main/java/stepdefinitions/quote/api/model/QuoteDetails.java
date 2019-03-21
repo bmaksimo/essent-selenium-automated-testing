@@ -12,6 +12,10 @@ public class QuoteDetails {
     private String accountName;
     private String firstName;
     private String lastName;
+    private String iBan;
+    private String companyNumber;
+
+
     public String getRecordId() {
         return recordId;
     }
@@ -66,4 +70,11 @@ public class QuoteDetails {
     public String getLastName(){return lastName;};
     public void setLastName(String lastName){this.lastName = lastName;};
 
+    public String getiBan() { return iBan; }
+
+    public void setiBan(String iBan) { this.iBan = iBan; }
+
+    public String getCompanyNumber() { return companyNumber; }
+
+    public void setCompanyNumber(String companyNumber) { this.companyNumber = companyNumber; }
 }

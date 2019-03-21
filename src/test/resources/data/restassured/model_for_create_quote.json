@@ -158,7 +158,7 @@
             "address_type": "Billing address",
             "id": null
         },
-        "accounts|aos_quotes|payment_details|bankaccounts|iban": "BE93001884852567",
+        "accounts|aos_quotes|payment_details|bankaccounts|iban": null,
         "accounts|aos_quotes|payment_details|com_prefs(type='LEGAL')|channel": "EMAIL",
         "accounts|aos_quotes|payment_details|com_prefs(type='MANDATE')|channel": "EMAIL",
         "accounts|aos_quotes|payment_details|payment_methods|payment_method": "DOM",

@@ -63,6 +63,9 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
         String ean = null;
         String dateOfBirth = null;
+        String ibanBE = null;
+        String companyNumber = null;
+
 	RequestHelper helper = new RequestHelper();
 	String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
 		+ ConfigProvider.getProperty(ConfigKey.CRM_B2CCQ_URL);
@@ -75,6 +78,14 @@ public class QuoteDetailsAPI extends AbstractAPI {
             dateOfBirth = PrepareDataForContract.generateDOBForAnAdult();
         }
 
+        synchronized(this) {
+            ibanBE = PrepareDataForContract.getValidIbanBE();
+        }
+
+        synchronized(this) {
+            companyNumber = PrepareDataForContract.generateValidBECompanyNumber();
+        }
+
     QuoteDetails quoteDetails = new QuoteDetails();
     quoteDetails.setEan(ean);
 
@@ -83,12 +94,14 @@ public class QuoteDetailsAPI extends AbstractAPI {
         quoteDetails.setFirstName(generatedNames4account.get("firstName"));
         quoteDetails.setLastName(generatedNames4account.get("lastName"));
         quoteDetails.setAccountName(generatedNames4account.get("accountName"));
+        quoteDetails.setiBan(ibanBE);
+        quoteDetails.setCompanyNumber(companyNumber);
 
     LOGGER.info("Generated EAN: " + ean);
         quoteDetails.setDateOfBirth(dateOfBirth);
     LOGGER.info("Generated date of birth: " + dateOfBirth);
 
-	String payload = createQuotePayload(tariffSheetId, ean, dateOfBirth, generatedNames4account.get("firstName"),generatedNames4account.get("lastName"));
+	String payload = createQuotePayload(tariffSheetId, ean, dateOfBirth, generatedNames4account.get("firstName"),generatedNames4account.get("lastName"), ibanBE, companyNumber);
 
 	Response quoteResponse = helper.postRequest(STATUS_CREATED, cookie, payload, path);
 
@@ -189,7 +202,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
     }
 
-    private String createQuotePayload(String tariffSheetId, String ean, String dateOfBirth, String firstName, String lastName)
+    private String createQuotePayload(String tariffSheetId, String ean, String dateOfBirth, String firstName, String lastName, String iBan, String companyNumber)
 	    throws JsonParseException, JsonMappingException, IOException {
 	ObjectMapper mapper = new ObjectMapper();
 
@@ -203,9 +216,11 @@ public class QuoteDetailsAPI extends AbstractAPI {
 	payload.setTariffsheetId(tariffSheetId);
 	payload.setEan(ean);
 	quote.getModel().setBirthdate(dateOfBirth);
-        quote.getModel().setFirstName(firstName);
-        quote.getModel().setLastName(lastName);
+	quote.getModel().setFirstName(firstName);
+	quote.getModel().setLastName(lastName);
+	quote.getModel().setIban(iBan);
 	quote.getModel().getPayloadWrapper().setPayload(payload);
+
 
 
 	return mapper.writeValueAsString(quote);
