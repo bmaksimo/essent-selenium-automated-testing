@@ -1,6 +1,5 @@
 package stepdefinitions.odoo.navigation.menu;
 
-import com.essent.automation.util.Sleeper;
 import com.essent.testing.odoo.navigation.menu.MenuNavigation;
 import com.essent.testing.odoo.pageobject.impl.elements.ButtonImpl;
 import com.essent.testing.odoo.pageobject.impl.pageObject.CustomerPage;
@@ -13,7 +12,6 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.lang.StringUtils;
-import org.apache.tools.ant.taskdefs.Sleep;
 import org.awaitility.Duration;
 import org.junit.Assert;
 import org.openqa.selenium.By;
