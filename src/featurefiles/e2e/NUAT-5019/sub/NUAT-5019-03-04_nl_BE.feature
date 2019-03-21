@@ -7,7 +7,7 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
     Scenario: Create active contract that after dunning the contract becomes inactive
 
         # 3 - Download CODA
-        Given I renew login to Odoo as "t.geets"
+        Given I renew login to Odoo as "role_essent_ccm_user"
         And Cleanup Odoo CODA files
         When Odoo top menu is "Accounting"
         And Odoo left menu is "Customers"
@@ -21,7 +21,7 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         And Generated CODA file is downloaded
 
         # 4 - import and match CODA
-        Given I renew login to Odoo as "t.geets"
+        Given I renew login to Odoo as "role_essent_ccm_user"
         When Odoo left menu is "CODA Processing->Import CODA Files"
         Then Odoo file upload dialog is "Import CODA File"
         Then CODA file is "parameter:codaFile"

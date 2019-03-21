@@ -1,7 +1,7 @@
 @ODOO
 Feature: Odoo download of CODA file
 Background:
-    Given I renew login to Odoo as "t.geets"
+    Given I renew login to Odoo as "role_essent_ccm_user"
 
 @DEV-CODA-DOWNLOAD
 Scenario: Download CODA file
