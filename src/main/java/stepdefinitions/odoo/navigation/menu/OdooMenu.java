@@ -19,6 +19,9 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.util.HashMap;
+import java.util.List;
+
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
 import static org.awaitility.Duration.TWO_SECONDS;
@@ -33,20 +36,19 @@ public class OdooMenu extends OdooScenario {
 
     @When("^Odoo top menu is \"([^\"]*)\"$")
     public void clickTopMenu(String menu) {
-        awaitOdooRequestToFinish(60);
         MenuNavigation menuNavigation = new MenuNavigation();
         boolean success = menuNavigation.findAndClickMainMenuItem(menu);
         if(!success) {
             throw new CucumberException(menuNavigation.getReason());
         }
+        awaitOdooRequestToFinish(180);
     }
 
     @When("^Odoo left menu is \"([^\"]*)\"$")
     public void executeLeftMenuAction(String menuPath) {
-        awaitOdooRequestToFinish(20);
         MenuNavigation odooMenuNavigation = new MenuNavigation();
         odooMenuNavigation.executeAction(menuPath);
-        awaitOdooRequestToFinish(5);
+        awaitOdooRequestToFinish(120);
     }
 
 
@@ -61,12 +63,27 @@ public class OdooMenu extends OdooScenario {
         seleniumDriver.moveToElementAndClick(button);
     }
 
+    @Then("^Generate CODA in the first row with \"([^\"]*)\" is clicked$")
+    public void clickDownloadCoda(String value) {
+        String locator = "//tr[td[text() = '${value}']]/td//button[@title='Download coda']";
+        HashMap<String, String> mapper = new HashMap<>();
+        mapper.put("value", value);
+        awaitOdooRequestToFinish(10);
+        List<WebElement> buttons = seleniumDriver.findElements(By.xpath(createQuery(locator, mapper)));
+        if(buttons.isEmpty()) {
+            throw new CucumberException("Coda download button was not found");
+        } else {
+            seleniumDriver.moveToElementAndClick(buttons.get(0));
+        }
+    }
+
+
     @Then("^Button \"([^\"]*)\" is clicked$")
     public void clickButton(String label) {
-        awaitOdooRequestToFinish(10);
         WebElement webElement = seleniumDriver.findElement(By.xpath("//button//div[contains(., '" + label + "')]"));
         if (null == webElement) throw new CucumberException("Button was not found");
         new ButtonImpl(webElement).click();
+        awaitOdooRequestToFinish(180);
     }
 
     @Then("^Modal title contains \"([^\"]*)\"$")

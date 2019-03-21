@@ -24,6 +24,7 @@ public class OdooGenericSteps extends OdooScenario {
         UserRoles odooUser = UserRoles.get(username);
         Window application = new OdooLogin().login(odooUser.getUsername(), odooUser.getPassword());
         assertNotNull("DWP application did not appear after a login", application);
+        awaitOdooRequestToFinish(180);
     }
 
     @Given("^I renew login to Odoo as \"([^\"]*)\"$")

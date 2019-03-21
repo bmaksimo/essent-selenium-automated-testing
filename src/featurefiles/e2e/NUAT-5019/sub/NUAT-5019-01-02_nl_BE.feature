@@ -3,7 +3,7 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
 
     Background:
         Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
-    @NUAT-5019-01-03
+    @NUAT-5019-01-02
     Scenario: Create active contract that after dunning the contract becomes inactive
         # 1 - GUI contract creation
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
@@ -31,7 +31,7 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         And EAN code is generated
         And "Startdatum" date is "now"
         And "EAN-code" input is "parameter:EAN-code-generated"
-        And Electricity market mock test is Open
+        And  Option "test" is On
         And Connection details are confirmed
         Then Form header is "Billing details"
 

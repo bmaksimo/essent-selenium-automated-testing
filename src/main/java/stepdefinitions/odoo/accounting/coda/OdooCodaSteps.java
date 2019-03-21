@@ -76,6 +76,15 @@ public class OdooCodaSteps extends OdooScenario {
         CodaImportDialog dialog = new CodaImportDialogImpl();
         String report = dialog.getImportReport();
         assertThat(report, not(isEmptyString()));
+        assertThat(report, containsString("Number of statements processed : 1"));
+    }
+
+    @And("^Odoo file import report contains success string \"([^\"]*)\"$")
+    public void isSuccessfulReport(String success) throws Throwable {
+        CodaImportDialog dialog = new CodaImportDialogImpl();
+        String report = dialog.getImportReport();
+        assertThat(report, not(isEmptyString()));
+        assertThat(report, containsString(success));
     }
 
     @And("^Generated CODA file is downloaded$")
