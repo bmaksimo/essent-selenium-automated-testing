@@ -1,5 +1,6 @@
 package stepdefinitions.odoo.navigation.menu;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.odoo.navigation.menu.MenuNavigation;
 import com.essent.testing.odoo.pageobject.impl.elements.ButtonImpl;
 import com.essent.testing.odoo.pageobject.impl.pageObject.CustomerPage;
@@ -12,6 +13,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.lang.StringUtils;
+import org.apache.tools.ant.taskdefs.Sleep;
 import org.awaitility.Duration;
 import org.junit.Assert;
 import org.openqa.selenium.By;
@@ -109,28 +111,24 @@ public class OdooMenu extends OdooScenario {
 
     @And("^Journal entry is open$")
     public void journalEntry() {
-        awaitOdooRequestToFinish(3);
-
-        WebElement journal = seleniumDriver.findElement(By.xpath("//table[@class='oe_list_content'][1]//tbody//tr[1]//td[@data-field='move_id'][1]"));
+        awaitOdooRequestToFinish(5);
+        WebElement journal = seleniumDriver.findElement(By.xpath("//table[@class='oe_list_content'][1]//tbody//tr[1]//td[@data-field='move_id'][1]//a"));
+        assertThat("Journal item was not found", null != journal);
         journal.click();
-        awaitOdooRequestToFinish(3);
-        WebElement move = seleniumDriver.findElement(By.xpath("//span[@data-fieldname='move_id']/a[@class='oe_m2o_cm_button oe_e']"));
-        move.click();
-        awaitOdooRequestToFinish(3);
-
+        awaitOdooRequestToFinish(5);
     }
 
    @And("^Modal buttons \"([^\"]*)\" are clicked$")
    public void modalButtons(String name) {
-       awaitOdooRequestToFinish(3);
-       WebElement reverse1 = seleniumDriver.findElement(By.xpath("//header//button//span[contains(., '" + name + "')]"));
-       if (null == reverse1) throw new CucumberException("Button was not found");
-       new ButtonImpl(reverse1).click();
+       awaitOdooRequestToFinish(10);
+       WebElement reverseButton = seleniumDriver.findElement(By.xpath("//header//button//span[contains(., '" + name + "')]"));
+       if (null == reverseButton) throw new CucumberException("Button was not found");
+       new ButtonImpl(reverseButton).click();
 
-       awaitOdooRequestToFinish(3);
-       WebElement reverse2 = seleniumDriver.findElement(By.xpath("//footer//button//span[contains(., '" + name + "')]"));
-       if (null == reverse2) throw new CucumberException("Button was not found");
-       new ButtonImpl(reverse2).click();
+       awaitOdooRequestToFinish(5);
+       WebElement reverseModalButton = seleniumDriver.findElement(By.xpath("//footer//button//span[contains(., '" + name + "')]"));
+       if (null == reverseModalButton) throw new CucumberException("Button was not found");
+       new ButtonImpl(reverseModalButton).click();
        awaitOdooRequestToFinish(8);
    }
 
@@ -146,8 +144,6 @@ public class OdooMenu extends OdooScenario {
         CustomerPage kp = new CustomerPage();
         Assert.assertEquals("Ckeck if band accoutn number is same as in dwp",kp.getBankAccountAsString(), bankAccountNumber);
     }
-
-
 
     @Override
     @After("@ODOO, @E2E, @REGRESSION")

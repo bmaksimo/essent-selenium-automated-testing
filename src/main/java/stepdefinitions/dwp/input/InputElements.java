@@ -93,6 +93,7 @@ public class InputElements extends DwpScenario {
         FluentWait<ApplyInput> waiter = waiter(new ApplyInput(), 10, 1);
         waiter.withMessage(String.format("Input field %s is undefined.", label));
         waiter.until((ApplyInput callback) -> callback.test(options));
+        seleniumDriver.waitForRequestsToFinish();
     }
 
     /**

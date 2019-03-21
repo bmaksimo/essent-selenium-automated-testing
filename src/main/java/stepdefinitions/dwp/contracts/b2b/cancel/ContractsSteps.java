@@ -140,8 +140,8 @@ public class ContractsSteps extends DwpScenario {
     }
 
 
-    @And("^Invoice with key \"([^\"]*)\" is checked$")
-    public void CheckInvoiceOpenBalance(String text) {
+    @And("^Invoice checkbox with key \"([^\"]*)\" is clicked")
+    public void checkInvoiceOpenBalance(String text) {
         seleniumDriver.waitForRequestsToFinish();
         ContractPage contractenPage = new ContractPage();
         contractenPage.checkInvoiceOpenBalance(text);
