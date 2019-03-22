@@ -183,6 +183,7 @@ public class Contract extends DwpScenario {
     public void saveEndDateFromActiveContract() {
         ContractPage cp = new ContractPage();
         parameterProvider.put("EndDate-active-contract",cp.getActiveContractEndDate());
+
     }
     @After("@REGRESSION")
     public void tearDown() {

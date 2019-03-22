@@ -14,6 +14,7 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import stepdefinitions.dwp.page_object.CustomerAcceptance;
 
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -183,6 +184,28 @@ public class ContractsSteps extends DwpScenario {
         ContractPage contractenPage = new ContractPage();
         String startDate = contractenPage.getStartDate();
         parameterProvider.put("startDate", startDate);
+
+    }
+
+    @Then("Start Date \"([^\"]*)\" is \"([^\"]*)\" day bigger than End Date \"([^\"]*)\"$")
+    public void compareStartAndEndDate(String startDate, long expectedRange, String endDate) {
+
+        String sd = parameterProvider.getValueOrParameterAsString(startDate);
+        String ed = parameterProvider.getValueOrParameterAsString(endDate);
+
+        parameterProvider.put("startDate", startDate);
+        parameterProvider.put("endDate", endDate);
+
+        long actualRange = ContractPage.rangeDates(sd, ed);
+        assertThat(String.format("Start date \"%s\" differs from the end date \"%s\" by 1 day ", actualRange, expectedRange), actualRange, equalTo(expectedRange));
+    }
+
+
+    @Then("Check is product change \"([^\"]*)\"$")
+    public void checkProductChangeSuccess(String expectedMessage) {
+        ContractPage cp = new ContractPage();
+        String messageActual = cp.checkSuccessMessage();
+        Assert.assertThat("Product change successfully done", messageActual, equalTo(expectedMessage));
 
     }
 

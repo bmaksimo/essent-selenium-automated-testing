@@ -4,8 +4,13 @@ import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.time.format.DateTimeFormatter;
 
 
 
@@ -132,7 +137,7 @@ public class ContractPage extends Component {
 
     public String getActiveContractEndDate() {
         seleniumDriver.waitForRequestsToFinish();
-        return seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"rows\"]/tr[1]/td[5]/list-simple-two-liner-cell/p/span[2]")).getText();
+            return seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"rows\"]/tr[1]/td[5]/list-simple-two-liner-cell/p/span[2]")).getText();
     }
 
     public String getActiveContractStartDate(){
@@ -270,7 +275,7 @@ public class ContractPage extends Component {
     }
 
     public void chooseDiscounts(String discount){
-        Sleeper.sleepTightInSeconds(2);
+        Sleeper.sleepTightInSeconds(6);
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("dwp|discount_id")));
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id='dwp-discount-id-field']/option[@label='"+discount+"']")));
     }
@@ -291,6 +296,8 @@ public class ContractPage extends Component {
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath("//td[@class='list__cell cell__text'][4]//p/span[1]")).getText();
     }
+
+
 
     public String getQuarterForChosenStartDate(String startDate, String attestDate) {
         String str[] = startDate.split("-");
@@ -400,4 +407,51 @@ public class ContractPage extends Component {
         return builder.toString();
     }
 
+    public static long rangeDates(String sd, String ed) {
+     /*
+     String str[] = startDate.split("-");
+     int monthStartDate = Integer.parseInt(str[0]);
+     int dayStartDate = Integer.parseInt(str[1]);
+
+     String str1[] = endDate.split("/");
+     int monthEndDate = Integer.parseInt(str1[0]);
+     int dayEndDate = Integer.parseInt(str1[1]);
+     */
+
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+        LocalDate sDate = LocalDate.parse(sd, format);
+        LocalDate eDate = LocalDate.parse(ed, format);
+        // Range = End date - Start date
+        long range = ChronoUnit.DAYS.between(sDate, eDate);
+        System.out.println("Number of days between the start date : " + sDate + " and end date : " + eDate
+            + " is  ==> " + range);
+
+        return range;
+    }
+
+    public String checkSuccessMessage () {
+        seleniumDriver.waitForRequestsToFinish();
+        String xpath = "//div[@class = 'non-editable-editor']";
+        String messageProductChange = seleniumDriver.findElementWhenVisible(By.xpath(xpath)).getText();
+        String[] values = {"1 succeeded", "1 queuded", "1 failed"};
+        String match = "";
+
+        for (String value : values) {
+            if (messageProductChange.contains(value)) {
+                match = value;
+                break;
+            }
+        }
+        switch (match) {
+            case "succeeded":
+                break;
+            case "queuded":
+                break;
+            case "failed":
+                break;
+
+        }
+        return match;
+    }
 }
