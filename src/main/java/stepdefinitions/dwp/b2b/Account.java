@@ -1,7 +1,7 @@
 package stepdefinitions.dwp.b2b;
 
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
-import com.essent.testing.dwp.pageobject.impl.page.DwpAccountOverviewPage;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.UpdateCustomerDetailsPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -16,23 +16,23 @@ import static org.junit.Assert.assertTrue;
 
 public class Account extends DwpScenario {
     @Before("@DWP, @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
     }
 
     @Then("^Change is immediately visible in Finance & Legal section that \"([^\"]*)\" is active$")
-    public void changeIsImmediatelyVisibleInFinanceLegalSectionThatIsActive(String box) throws Throwable {
+    public void changeIsImmediatelyVisibleInFinanceLegalSectionThatIsActive(String box) {
         ToggleImpl tg= new ToggleImpl();
         assertTrue(tg.checkIfCheckboxIsChecked(box));
     }
 
     @And("^Activate \"([^\"]*)\"$")
-    public void activate(String box) throws Throwable {
-        DwpAccountOverviewPage aop = new DwpAccountOverviewPage();
+    public void activate(String box) {
+        UpdateCustomerDetailsPage ucdp = new UpdateCustomerDetailsPage();
         ToggleImpl tg= new ToggleImpl();
         seleniumDriver.waitForRequestsToFinish();
         tg.clickCheckbox(box);
-        aop.clickOnSaveButtonForFinanceAndLegalSection();
+        ucdp.clickOnSaveButtonForFinanceAndLegalSection();
     }
 
     @After("@DWP, @REGRESSION")

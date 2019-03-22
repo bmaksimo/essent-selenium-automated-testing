@@ -80,7 +80,7 @@ Feature: Import a coda file
 
     @CODA
     Scenario: Create a new CODA file
-        Given I renew login to Odoo as "t.geets"
+        Given I renew login to Odoo as "role_essent_ccm_user"
         And Cleanup Odoo CODA files
         When Odoo top menu is "Accounting"
         And  Odoo left menu is "Customers"

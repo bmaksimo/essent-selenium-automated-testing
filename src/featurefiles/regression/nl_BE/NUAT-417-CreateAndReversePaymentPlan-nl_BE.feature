@@ -49,14 +49,13 @@ Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR,
         And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
         And List option is "ENKEL FACTUREN"
         And View list header is "Openstaande facturen"
+        And Invoice checkbox with key "InvoicesOnAccountOpenBalance" is clicked
         And List option is "AANVRAAG AFBETALINGSPLAN"
-
-
         And Input in "Type afbetalingsplan" is "Bedrag"
         And Input in "Periode schijven" is "Maandelijks"
         And "Startdatum" date is "now"
         And "Aantal schijven" input is "5"
-        And Contract signature is confirmed
+        Then Contract signature is confirmed
 
         Given I renew login to DWP as "businessdesk.testautomation.b2b@essent.be"
         When Left menu is "sales-marketing"
@@ -83,14 +82,13 @@ Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR,
         And "Klantnummer" input is "parameter:accountNumber"
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
         When Dashboard menu is "Billing"
-        Then View list header is "Transacties"
-        And "2nd" list element has cell value "Payment" at column "ID & Type"
+        Then Table "Transacties" contains value "Payment" at column "ID & Type"
 
             #Reverse Payment Plan
     @reverse-payment
     @NUAT-417-04
     Scenario: Reverse payment plan
-        Given I logged in to Odoo as "t.geets"
+        Given I logged in to Odoo as "role_essent_ccm_user"
         When Odoo top menu is "Accounting"
         And  Odoo left menu is "Customers"
         And Odoo filter is "parameter:accountNumber"

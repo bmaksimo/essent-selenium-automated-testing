@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.impl.page;
+package com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.workflows;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
 import org.junit.Assert;
@@ -68,12 +68,10 @@ public class MarktBerichtenPage extends Component {
 
     public void clickOnSearchButton() {
         seleniumDriver.waitAndClick(searchButton());
-
     }
 
     public WebElement FirstContractInTheList() {
         return seleniumDriver.findElementWhenVisible(By.xpath("(//label[@class='input__checkbox'])[2]"));
-
     }
 
     public void clickOnTheFirstContract() {
@@ -108,6 +106,19 @@ public class MarktBerichtenPage extends Component {
 
     public String getMarketberichtEndDateElement(String num){
         return seleniumDriver.findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[1])['"+num+"']")).getText();
+    }
+
+    public String getEanCode() {
+        return findElementWhenVisible(By.id("aos-products-quotes-ean-c-field")).getText();
+    }
+
+    public boolean validateRejectionHeader(String input) {
+        return findElementWhenVisible(By.xpath("(//h5)[.='" + input + "'][1]")).isDisplayed();
+    }
+
+    public void confirmTaskStatus(String input) {
+        seleniumDriver.waitForRequestsToFinish();
+        Assert.assertTrue(findElementWhenVisible(By.xpath("(//h6)[.='" + input + "']")).isDisplayed());
     }
 }
 

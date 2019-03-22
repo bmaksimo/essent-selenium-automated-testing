@@ -119,7 +119,7 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         Then "1st" list element has cell value "Invoice (GUARANTEE)" at column "ID & Type"
 
         # Step 4 - Generate Odoo CODA for account
-        Given I renew login to Odoo as "t.geets"
+        Given I renew login to Odoo as "role_essent_ccm_user"
         And Cleanup Odoo CODA files
         When Odoo top menu is "Accounting"
         And Odoo left menu is "Customers"
