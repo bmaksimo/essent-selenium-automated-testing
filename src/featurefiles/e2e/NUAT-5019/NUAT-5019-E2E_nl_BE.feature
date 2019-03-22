@@ -81,7 +81,7 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
-        And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
+        And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
 
 
         # 3 - Download CODA
@@ -159,7 +159,7 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         And Click on "parameter:accountNumber" link
         And Dashboard menu is "Billing"
         Then View list header is "Transacties"
-        And "1st" list element has cell value "Invoice (SETTLEMENT)" at column "ID & Type"
+        And "1st" list element has cell value "Invoice (SETTLEMENT)" at column "ID & Type" polling 450 seconds
 
         # 8 - Reach HB3 dunning level
         Given I renew login to DWP as "billing.testautomation@essent.be"
@@ -184,8 +184,8 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         And "1st" list element has cell value "Invoice (DUNNINGCOST)" at column "ID & Type"
         And "2nd" list element has cell value "Invoice (DUNNINGCOST)" at column "ID & Type"
         And "3rd" list element has cell value "Invoice (DUNNINGCOST)" at column "ID & Type"
-        And "4th" list element has cell value "Invoice (SETTLEMENT)" at column "ID & Type"
-        And "5th" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
+        And "4th" list element has cell value "Invoice (SETTLEMENT)" at column "ID & Type" polling 450 seconds
+        And "5th" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
         And "6th" list element has cell value "Payment" at column "ID & Type"
 
         # 9 - Soft dunning

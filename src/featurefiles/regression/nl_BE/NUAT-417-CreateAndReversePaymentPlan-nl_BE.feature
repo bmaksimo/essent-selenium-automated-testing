@@ -31,7 +31,7 @@ Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR,
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
-        And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 60 seconds
+        And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
 
     @payment-plan
     @NUAT-417-02
@@ -46,7 +46,7 @@ Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR,
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
-        And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
+        And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
         And List option is "ENKEL FACTUREN"
         And View list header is "Openstaande facturen"
         And Invoice checkbox with key "InvoicesOnAccountOpenBalance" is clicked

@@ -76,7 +76,7 @@ Feature: Import a coda file
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
-        And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
+        And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
 
     @CODA
     Scenario: Create a new CODA file
