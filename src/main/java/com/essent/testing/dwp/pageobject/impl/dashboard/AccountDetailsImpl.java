@@ -6,7 +6,6 @@ import com.essent.testing.dwp.pageobject.elements.ToggleSwitch;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.elements.NonEditableInputImpl;
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleSwitchImpl;
-import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 

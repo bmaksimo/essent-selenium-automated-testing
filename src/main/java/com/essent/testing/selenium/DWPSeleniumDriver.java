@@ -86,6 +86,7 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
                 }
                 takeScreenshot(false);
             }
+            waitForRequestsToFinish();
             return success;
         }
     }

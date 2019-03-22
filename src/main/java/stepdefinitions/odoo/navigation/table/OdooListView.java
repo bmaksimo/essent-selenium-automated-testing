@@ -30,12 +30,9 @@ public class OdooListView extends OdooScenario  {
 
     @When("^Odoo filter is \"([^\"]*)\"$")
     public void setAdvancedSearchFilter(String expression) {
-        awaitOdooRequestToFinish(20);
-
         String filter = parameterProvider.getValueOrParameterAsString(expression) == null ?
             expression : parameterProvider.getValueOrParameterAsString(expression);
         String selector = "//div[@class='oe_searchview_input']";
-
         By xpath = By.xpath(selector);
         List<WebElement> filterElements = seleniumDriver.findElements(xpath,
             Duration.ofSeconds(30),
@@ -46,6 +43,7 @@ public class OdooListView extends OdooScenario  {
         filterElement.click();
         filterElement.sendKeys(filter);
         filterElement.sendKeys(Keys.RETURN);
+        awaitOdooRequestToFinish(600);
     }
 
     @When("^Advanced search is$")
@@ -77,11 +75,11 @@ public class OdooListView extends OdooScenario  {
 
     @Then("^Column \"([^\"]*)\" with value \"([^\"]*)\" is clicked$")
     public void clickValueAt(String column, String value) {
-        awaitOdooRequestToFinish(60);
         String input = parameterProvider.getValueOrParameterAsString(value) == null ?
             value : parameterProvider.getValueOrParameterAsString(value);
         ListView odooList = new DefaultListView();
         odooList.clickValueAt(column, input);
+        awaitOdooRequestToFinish(180);
     }
 
     @Then("^The value in the column \"([^\"]*)\" is \"([^\"]*)\"$")

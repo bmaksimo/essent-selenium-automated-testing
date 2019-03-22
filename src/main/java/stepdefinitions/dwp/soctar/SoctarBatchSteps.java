@@ -12,7 +12,6 @@ import org.openqa.selenium.By;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
-import static org.awaitility.Duration.TWO_SECONDS;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class SoctarBatchSteps extends DwpScenario {

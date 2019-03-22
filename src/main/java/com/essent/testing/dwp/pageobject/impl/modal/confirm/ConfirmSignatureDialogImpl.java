@@ -54,6 +54,7 @@ public class ConfirmSignatureDialogImpl extends Component implements ConfirmSign
         Button confirmButton = new ButtonImpl(element);
         confirmButton.click();
         seleniumDriver.waitForRequestsToFinish();
+        seleniumDriver.takeScreenshot("Confirm form ");
         return true;
     }
 
