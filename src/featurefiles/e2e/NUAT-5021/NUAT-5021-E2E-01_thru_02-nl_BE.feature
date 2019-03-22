@@ -28,7 +28,8 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        When Electricity EAN code is "random"
+        And EAN code is generated
+        And "EAN-code" input is "parameter:EAN-code-generated"
         And Connection details are confirmed
         Then Form header is "Billing details"
 

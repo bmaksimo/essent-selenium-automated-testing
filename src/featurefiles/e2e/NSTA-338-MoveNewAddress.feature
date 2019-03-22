@@ -32,8 +32,9 @@ Feature: NSTA - 388 Move new address
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        When "Startdatum" date is "5 day before now"
-        And Electricity EAN code is "random"
+        When EAN code is generated
+        And "Startdatum" date is "5 day before now"
+        And "EAN-code" input is "parameter:EAN-code-generated"
         And "Meternummer" input is "1000"
         And Option "test" is On
         And Connection details are confirmed
