@@ -19,6 +19,8 @@ import org.openqa.selenium.By;
 import stepdefinitions.dwp.page_object.CustomerAcceptance;
 
 
+import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpContractStartEndDate;
+import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToSoctarFileDate;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -209,6 +211,15 @@ public class ContractsSteps extends DwpScenario {
         ContractPage cp = new ContractPage();
         String messageActual = cp.checkSuccessMessage();
         Assert.assertThat("Product change successfully done", messageActual, equalTo(expectedMessage));
+
+    }
+
+    @Then("^Product Change dates are \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void ProductChangeDates(final String productChangeStartDate, final String productChangeEndDate){
+        String pcsd  = parameterProvider.getValueOrParameterAsString(productChangeStartDate);
+        String pced = parameterProvider.getValueOrParameterAsString(productChangeEndDate);
+        parameterProvider.put("productChangeStartDate", pcsd);
+        parameterProvider.put("productChangeEndDate", pced);
 
     }
 

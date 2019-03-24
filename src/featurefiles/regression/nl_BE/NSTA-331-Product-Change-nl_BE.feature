@@ -88,25 +88,27 @@ Feature: NSTA 331- Product Change for TK1 type
         And "1st" list element has cell value "Wacht op startdatum" at column "Contractnummer" polling 60 seconds
         Then Table "Actieve en toekomstige connecties" contains value "ONLINE" at column "EAN-code"
         Then Table "Actieve en toekomstige connecties" contains value "Actief" at column "Contractnummer"
+        Then Product Change dates are "parameter:startDate" and "parameter:EndDate-active-contract"
         #check start date is same as from step 2 and end date is 1 day before start date
         Then Start Date "parameter:startDate" is "365|366" day bigger than End Date "parameter:EndDate-active-contract"
 
          #4.2 - Check Discounts
         And Click on link in View List at "1st" row and "Nummer & Aanmaakdatum" column polling 20 seconds
-        Then Table "Contractlijnen" contains value "parameter:EndDate-active-contract" at column "Start & Einddatum"
+#        Then Table "Contractlijnen" contains value "parameter:EndDate-active-contract" at column "Start & Einddatum"
 
-        #4.3 - Check Interactions
-         When Dashboard menu is "Service"
-         Then Table "Interacties" contains value "Confirmation product change" at column "Type & Onderwerp"
-         And Click on link in View List at "1st" row and "Nummer & Communicatiekanaal" column polling 20 seconds
-         Then Check is product change "1 succeeded"
+         #4.3 - Check Interactions
+        When Dashboard menu is "Service"
+        Then Table "Interacties" contains value "Confirmation product change" at column "Type & Onderwerp"
+        And Click on link in View List at "1st" row and "Nummer & Communicatiekanaal" column polling 20 seconds
+        Then Check is product change "1 succeeded"
 
          #4.4 - Check Orders
         When Dashboard menu is "Contracten"
         And Click on link in View List at "1st" row and "EAN-code" column polling 20 seconds
         Then Table "Afrekeningsfacturen" contains value "RUNNING" at column "Status & Triggered plan"
-        Then Table "Afrekeningsfacturen" contains value "parameter:startDate" at column "Start- & einddatum"
-        Then Table "Afrekeningsfacturen" contains value "parameter:startDate" at column "Einde contract & Reden"
+        Then Product Change dates are "parameter:startDate" and "parameter:EndDate-active-contract"
+#        Then Table "Afrekeningsfacturen" contains value "parameter:startDate" at column "Start- & einddatum"
+#        Then Table "Afrekeningsfacturen" contains value "parameter:startDate" at column "Einde contract & Reden"
 
 
 
