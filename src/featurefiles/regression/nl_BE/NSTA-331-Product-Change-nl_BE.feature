@@ -94,6 +94,7 @@ Feature: NSTA 331- Product Change for TK1 type
 
          #4.2 - Check Discounts
         And Click on link in View List at "1st" row and "Nummer & Aanmaakdatum" column polling 20 seconds
+        Then Product Change dates are "parameter:startDate" and "parameter:EndDate-active-contract"
 #        Then Table "Contractlijnen" contains value "parameter:EndDate-active-contract" at column "Start & Einddatum"
 
          #4.3 - Check Interactions
