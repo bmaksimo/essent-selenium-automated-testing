@@ -8,7 +8,12 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.time.format.DateTimeFormatter;
+import java.util.logging.Logger;
 
 public class ContractPage extends Component {
 
@@ -21,7 +26,7 @@ public class ContractPage extends Component {
 
 
     public String date = simpleDateFormat.format(new Date());
-
+    private static final String labelForProductChange = "//div[@class = 'non-editable-editor']";
 
     public void startDateIsToday() {
         seleniumDriver.waitAndSendKeys(startData(),"date");
@@ -31,6 +36,7 @@ public class ContractPage extends Component {
         seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("primaryButton")));
     }
+
 
     public String getClientNumber() {
         return seleniumDriver.findElementWhenVisible(By.xpath("//blue-sidebar//h4")).getText();
@@ -113,7 +119,7 @@ public class ContractPage extends Component {
     }
 
     public void chooseDiscounts(String discount){
-        Sleeper.sleepTightInSeconds(2);
+        Sleeper.sleepTightInSeconds(6);
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("dwp|discount_id")));
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id='dwp-discount-id-field']/option[@label='"+discount+"']")));
     }
@@ -134,7 +140,7 @@ public class ContractPage extends Component {
 
     public String getQuarterForChosenStartDate(String startDate, String attestDate) {
         String str[] = startDate.split("-");
-        Integer monthStartDate = Integer.parseInt(str[1]);
+        int monthStartDate = Integer.parseInt(str[1]);
         String yearStartDate = str[2];
 
         String str2[] = attestDate.split("/");
@@ -147,10 +153,11 @@ public class ContractPage extends Component {
             if (monthStartDate <= 3) {
                 quarterEndMonth = "03";
             }
-            else if (monthStartDate >= 4 && monthStartDate <= 6) {
+
+            else if (monthStartDate <= 6) {
                 quarterEndMonth = "06";
             }
-            else if (monthStartDate >= 7 && monthStartDate <= 9) {
+            else if (monthStartDate <= 9) {
                 quarterEndMonth = "09";
             }
             else{
@@ -161,19 +168,27 @@ public class ContractPage extends Component {
         {
              if (yearStartDate.compareTo(yearAttestDate)<0) {
                  quarterEndMonth = "01";
+
              }
              else {
                  if (monthStartDate <= 3) {
                      quarterEndMonth = "03";
+
                  }
-                 else if (monthStartDate >= 4 && monthStartDate <= 6) {
+
+                 else if (monthStartDate <= 6) {
                      quarterEndMonth = "06";
+
                  }
-                 else if (monthStartDate >= 7 && monthStartDate <= 9) {
+
+                 else if (monthStartDate <= 9) {
                      quarterEndMonth = "09";
+
                  }
+
                  else{
                      quarterEndMonth = "12";
+
                  }
 
              }
@@ -184,12 +199,15 @@ public class ContractPage extends Component {
             if (monthStartDate <= 3) {
                 quarterEndMonth = "03";
             }
-            else if (monthStartDate >= 4 && monthStartDate <= 6) {
+
+            else if (monthStartDate <= 6) {
                 quarterEndMonth = "06";
             }
-            else if (monthStartDate >= 7 && monthStartDate <= 9) {
+
+            else if (monthStartDate <= 9) {
                 quarterEndMonth = "09";
             }
+
             else{
                 quarterEndMonth = "12";
             }
@@ -200,11 +218,11 @@ public class ContractPage extends Component {
 
             builder.append(date);
             builder.replace(0, builder.length(), "01/");
-            builder.append(quarterEndMonth + "/");
-            builder.append(yearStartDate);
-            String quarterDate = builder.toString();
+            builder.append(quarterEndMonth).append("/");
 
-            return quarterDate;
+            builder.append(yearStartDate);
+
+        return builder.toString();
 
     }
 
@@ -225,10 +243,46 @@ public class ContractPage extends Component {
         builder.append(startDate);
         builder.replace(0,builder.length(),"31/12/");
         builder.append(yearStartDate);
-        String endDate = builder.toString();
-        return endDate;
+        return builder.toString();
     }
 
+    public static long rangeDates(String sd, String ed) {
+
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+        LocalDate sDate = LocalDate.parse(sd, format);
+        LocalDate eDate = LocalDate.parse(ed, format);
+        // Range = End date - Start date
+        long range = ChronoUnit.DAYS.between(sDate, eDate);
+        Logger.getLogger("Number of days between the start date : " + sDate + " and end date : " + eDate
+            + " is  ==> " + range);
+
+        return range;
+    }
+
+    public String checkSuccessMessage () {
+        seleniumDriver.waitForRequestsToFinish();
+        String messageProductChange = seleniumDriver.findElementWhenVisible(By.xpath(labelForProductChange)).getText();
+        String[] values = {"1 succeeded", "1 queued", "1 failed"};
+        String match = "";
+
+        for (String value : values) {
+            if (messageProductChange.contains(value)) {
+                match = value;
+                break;
+            }
+        }
+        switch (match) {
+            case "succeeded":
+                break;
+            case "queued":
+                break;
+            case "failed":
+                break;
+
+        }
+        return match;
+    }
     public void openFirstContractFromList() {
         seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//div[@class = 'col-1-1']/div[@class = 'row-']/list[@list-key = 'ContractedEansOnAccount']//tbody[@id = 'rows']/tr[1]/td[4]")));
         seleniumDriver.waitForRequestsToFinish();
