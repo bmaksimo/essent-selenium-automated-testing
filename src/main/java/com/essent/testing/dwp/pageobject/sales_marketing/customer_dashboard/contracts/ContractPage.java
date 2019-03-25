@@ -25,7 +25,7 @@ public class ContractPage extends Component {
 
 
     public String date = simpleDateFormat.format(new Date());
-    private static final String xpath = "//div[@class = 'non-editable-editor']";
+    private static final String labelForProductChange = "//div[@class = 'non-editable-editor']";
 
     public void startDateIsToday() {
         seleniumDriver.waitAndSendKeys(startData(),"date");
@@ -261,7 +261,7 @@ public class ContractPage extends Component {
 
     public String checkSuccessMessage () {
         seleniumDriver.waitForRequestsToFinish();
-        String messageProductChange = seleniumDriver.findElementWhenVisible(By.xpath(xpath)).getText();
+        String messageProductChange = seleniumDriver.findElementWhenVisible(By.xpath(labelForProductChange)).getText();
         String[] values = {"1 succeeded", "1 queuded", "1 failed"};
         String match = "";
 
