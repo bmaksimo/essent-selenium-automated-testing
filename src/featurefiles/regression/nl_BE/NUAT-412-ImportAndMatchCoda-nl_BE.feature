@@ -83,7 +83,7 @@ Feature: NUAT-412 part: Create / import coda file
         And Odoo filter is "parameter:contractNumber"
         When Column "Account Number" with value "parameter:contractNumber" is clicked
         And Button "Journal Items" is clicked
-        And Generate CODA in the "1st" row is clicked
+        And Generate CODA in the first row with "Amount receivable" is clicked
         Then Modal title contains "Download CODA"
         And Generated CODA file is downloaded
         And Modal button "Close" is clicked
