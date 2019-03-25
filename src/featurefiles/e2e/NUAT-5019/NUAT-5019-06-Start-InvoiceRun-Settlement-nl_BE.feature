@@ -26,6 +26,6 @@ Feature: NUAT-5019 Step 6. Triggering billrun, produce a settlement invoice
         And Click on "parameter:accountNumber" link
         And Dashboard menu is "Billing"
         Then View list header is "Transacties"
-        And "1st" list element has cell value "Invoice (SETTLEMENT)" at column "ID & Type"
+        And "1st" list element has cell value "Invoice (SETTLEMENT)" at column "ID & Type" polling 450 seconds
 
 

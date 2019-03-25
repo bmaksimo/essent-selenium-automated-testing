@@ -49,7 +49,7 @@ Feature: NUAT-5019 Step 8. Billing - Trigger soft dunning process
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
-        And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
+        And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
 
         # HB1
         Given Customer with CRM Id "parameter:accountNumber" is added to dunning whitelist
@@ -59,7 +59,7 @@ Feature: NUAT-5019 Step 8. Billing - Trigger soft dunning process
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
         And "1st" list element has cell value "Invoice (DUNNINGCOST)" at column "ID & Type"
-        And "2nd" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
+        And "2nd" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
         When Dashboard menu is "Service"
         Then Table "Interacties" contains cell value "Outbound document: CollectionLetter" at column "Type & Onderwerp" on "1st" row
 
@@ -84,7 +84,7 @@ Feature: NUAT-5019 Step 8. Billing - Trigger soft dunning process
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
-        And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
+        And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
 
         # HB1
         Given Customer with CRM Id "parameter:accountNumber" is added to dunning whitelist
@@ -94,7 +94,7 @@ Feature: NUAT-5019 Step 8. Billing - Trigger soft dunning process
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
         And "1st" list element has cell value "Invoice (DUNNINGCOST)" at column "ID & Type"
-        And "2nd" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
+        And "2nd" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
         When Dashboard menu is "Service"
         Then Table "Interacties" contains cell value "Outbound document: CollectionLetter" at column "Type & Onderwerp" on "1st" row
 
@@ -106,7 +106,7 @@ Feature: NUAT-5019 Step 8. Billing - Trigger soft dunning process
         Then View list header is "Transacties"
         And "1st" list element has cell value "Invoice (DUNNINGCOST)" at column "ID & Type"
         And "2nd" list element has cell value "Invoice (DUNNINGCOST)" at column "ID & Type"
-        And "3rd" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
+        And "3rd" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
         When Dashboard menu is "Service"
         Then Table "Interacties" contains cell value "Outbound document: CollectionLetter" at column "Type & Onderwerp" on "1st" row
         And Table "Interacties" contains cell value "Outbound document: CollectionLetter" at column "Type & Onderwerp" on "2nd" row
@@ -133,7 +133,7 @@ Feature: NUAT-5019 Step 8. Billing - Trigger soft dunning process
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
-        And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
+        And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
 
         # HB1
         Given Customer with CRM Id "parameter:accountNumber" is added to dunning whitelist
@@ -143,7 +143,7 @@ Feature: NUAT-5019 Step 8. Billing - Trigger soft dunning process
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
         And "1st" list element has cell value "Invoice (DUNNINGCOST)" at column "ID & Type"
-        And "2nd" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
+        And "2nd" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
         When Dashboard menu is "Service"
         Then Table "Interacties" contains cell value "Outbound document: CollectionLetter" at column "Type & Onderwerp" on "1st" row
 
@@ -155,7 +155,7 @@ Feature: NUAT-5019 Step 8. Billing - Trigger soft dunning process
         Then View list header is "Transacties"
         And "1st" list element has cell value "Invoice (DUNNINGCOST)" at column "ID & Type"
         And "2nd" list element has cell value "Invoice (DUNNINGCOST)" at column "ID & Type"
-        And "3rd" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
+        And "3rd" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
         When Dashboard menu is "Service"
         Then Table "Interacties" contains cell value "Outbound document: CollectionLetter" at column "Type & Onderwerp" on "1st" row
         And Table "Interacties" contains cell value "Outbound document: CollectionLetter" at column "Type & Onderwerp" on "2nd" row
@@ -169,7 +169,7 @@ Feature: NUAT-5019 Step 8. Billing - Trigger soft dunning process
         And "1st" list element has cell value "Invoice (DUNNINGCOST)" at column "ID & Type"
         And "2nd" list element has cell value "Invoice (DUNNINGCOST)" at column "ID & Type"
         And "3rd" list element has cell value "Invoice (DUNNINGCOST)" at column "ID & Type"
-        And "4th" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
+        And "4th" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
         When Dashboard menu is "Service"
         Then Table "Interacties" contains cell value "Outbound document: CollectionLetter" at column "Type & Onderwerp" on "1st" row
         And Table "Interacties" contains cell value "Outbound document: Dunning SMS HB3" at column "Type & Onderwerp" on "2nd" row
