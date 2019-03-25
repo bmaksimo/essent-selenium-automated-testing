@@ -2,6 +2,7 @@
 @B2B
 @REGRESSION
 @BUSINESS-DESK
+@TEST1
 Feature: NUAT-3884: Copy contract
 
     Background:
