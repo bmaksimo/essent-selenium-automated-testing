@@ -262,7 +262,7 @@ public class ContractPage extends Component {
     public String checkSuccessMessage () {
         seleniumDriver.waitForRequestsToFinish();
         String messageProductChange = seleniumDriver.findElementWhenVisible(By.xpath(labelForProductChange)).getText();
-        String[] values = {"1 succeeded", "1 queuded", "1 failed"};
+        String[] values = {"1 succeeded", "1 queued", "1 failed"};
         String match = "";
 
         for (String value : values) {
@@ -274,7 +274,7 @@ public class ContractPage extends Component {
         switch (match) {
             case "succeeded":
                 break;
-            case "queuded":
+            case "queued":
                 break;
             case "failed":
                 break;
