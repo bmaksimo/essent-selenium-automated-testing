@@ -246,15 +246,6 @@ public class ContractPage extends Component {
     }
 
     public static long rangeDates(String sd, String ed) {
-     /*
-     String str[] = startDate.split("-");
-     int monthStartDate = Integer.parseInt(str[0]);
-     int dayStartDate = Integer.parseInt(str[1]);
-
-     String str1[] = endDate.split("/");
-     int monthEndDate = Integer.parseInt(str1[0]);
-     int dayEndDate = Integer.parseInt(str1[1]);
-     */
 
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
