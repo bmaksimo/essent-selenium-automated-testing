@@ -202,7 +202,7 @@ public class ContractsSteps extends DwpScenario {
         parameterProvider.put("endDate", endDate);
 
         long actualRange = ContractPage.rangeDates(sd, ed);
-        assertThat(String.format("Start date \"%s\" differs from the end date \"%s\" by 1 day ", actualRange, expectedRange), actualRange, equalTo(expectedRange));
+        assertThat(String.format("Start date \"%s\" differs from the end date \"%s\" by 1 year ", actualRange, expectedRange), actualRange, equalTo(expectedRange));
     }
 
 
