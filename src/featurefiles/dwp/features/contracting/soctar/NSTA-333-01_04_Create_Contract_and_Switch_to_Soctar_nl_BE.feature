@@ -33,10 +33,11 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        Given Electricity EAN code is "random"
+        Given EAN code is generated
         When Option "test" is On
         And Option "MM should respond?" is On
         And "Startdatum" date is "2 weeks before now"
+        And "EAN-code" input is "parameter:EAN-code-generated"
         And Connection details are confirmed
         Then Form header is "Billing details"
 

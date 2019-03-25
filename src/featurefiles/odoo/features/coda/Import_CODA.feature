@@ -26,9 +26,10 @@ Feature: Import a coda file
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        When "Startdatum" date is "2 weeks before now"
-        And Electricity EAN code is "random"
+        When EAN code is generated
+        And "Startdatum" date is "2 weeks before now"
         And Switch type is Move in
+        And "EAN-code" input is "parameter:EAN-code-generated"
         And Electricity market mock test is Open
         And Connection details are confirmed
         Then Form header is "Billing details"
