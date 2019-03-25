@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.time.format.DateTimeFormatter;
+import java.util.logging.Logger;
 
 public class ContractPage extends Component {
 
@@ -253,7 +254,7 @@ public class ContractPage extends Component {
         LocalDate eDate = LocalDate.parse(ed, format);
         // Range = End date - Start date
         long range = ChronoUnit.DAYS.between(sDate, eDate);
-        System.out.println("Number of days between the start date : " + sDate + " and end date : " + eDate
+        Logger.getLogger("Number of days between the start date : " + sDate + " and end date : " + eDate
             + " is  ==> " + range);
 
         return range;
