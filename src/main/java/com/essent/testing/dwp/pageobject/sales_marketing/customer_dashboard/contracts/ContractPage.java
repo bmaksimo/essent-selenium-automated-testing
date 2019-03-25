@@ -25,7 +25,7 @@ public class ContractPage extends Component {
 
 
     public String date = simpleDateFormat.format(new Date());
-    String xpath = "//div[@class = 'non-editable-editor']";
+    private static String xpath = "//div[@class = 'non-editable-editor']";
 
     public void startDateIsToday() {
         seleniumDriver.waitAndSendKeys(startData(),"date");
