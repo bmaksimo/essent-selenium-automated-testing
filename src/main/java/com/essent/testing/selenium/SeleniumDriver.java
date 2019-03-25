@@ -84,8 +84,8 @@ public abstract class SeleniumDriver {
     public void tearDown() {
         if (driver == null)
             return;
-//        driver.close();
-//        driver.quit();
+        driver.close();
+        driver.quit();
     }
 
     public void takeScreenshot(boolean success) {
