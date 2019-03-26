@@ -2,6 +2,7 @@ package stepdefinitions.dwp.input;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import com.essent.testing.selenium.SeleniumDriver;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -59,6 +60,7 @@ public class InputElements extends DwpScenario {
 
     @And("^\"([^\"]*)\" input is \"([^\"]*)\"$")
     public void setInput(String label, String value) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
         parameterProvider.put("inputValue", inputValue);
         Map<String, String> options = new HashMap<>();
@@ -69,6 +71,18 @@ public class InputElements extends DwpScenario {
             waiter.withMessage(String.format("Input field %s is undefined.", label));
             return callback.test(options);
         });
+    }
+
+    @And("Gas EAN-code input is \"([^\"]*)\"$")
+    public void setInput(String value) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
+        seleniumDriver.findElement(By.xpath("//*[@id=\"ean-c-accounts-aos-quotes-aos-products-quotes-e-2-e-39-e-6-c-7-ad-8-aac-8-ce-01-58977-a-42-c-0-f-2-field\"]")).sendKeys(inputValue);
+//        FluentWait<ApplyInput> waiter = waiter(new ApplyInput(), 10, 1);
+//        waiter.until((ApplyInput callback) ->{
+//            waiter.withMessage(String.format("Input field %s is undefined.", label));
+//            return callback.test(options);
+//        });
     }
 
     @And("^\"([^\"]*)\" date is \"([^\"]*)\"$")
@@ -99,10 +113,11 @@ public class InputElements extends DwpScenario {
         });
     }
 
-    @And("^Option \"([^\"]*)\" is ([^\"]*)$")
-    public void switchOption(String option, SwitchState state) throws Throwable {
+    @And("^Options? \"([^\"]*)\" (is|are) ([^\"]*)$")
+    public void switchOption(String option, String verb, SwitchState state) throws Throwable {
         Map<String, String> options = new HashMap<>();
         options.put("label", option);
+        options.put("verb", verb);
         FluentWait<InputElements> waiter = waiter(this, 10, 1);
         waiter.until((InputElements callback) ->{
             waiter.withMessage(String.format("Option %s is undefined.", option));
@@ -136,6 +151,18 @@ public class InputElements extends DwpScenario {
         boolean placeHolderWasFound = placeHolderInputElement != null;
         assertThat(String.format("Placeholder element '%s' was not found.", placeholder), placeHolderWasFound, is(true));
         placeHolderInputElement.sendKeys(inputValue);
+    }
+
+    @And("^Value at \"([^\"]*)\" in the card \"([^\"]*)\" is \"([^\"]*)\"$")
+    public void checkValueInCard(String label, String cardName, String value) {
+        String card = seleniumDriver.findElement(By.xpath("//h2[normalize-space(text())='"+cardName+"']/parent::div/parent::div/div[@class='form__group']//label[normalize-space(text())='"+label+"']/parent::div//strong")).getText();
+        boolean result = false;
+
+        if(card.matches(value)) {
+            result = true;
+        }
+
+        assertThat(String.format("The value you entered differs from the real value"), result, is(true));
     }
 
     @Override

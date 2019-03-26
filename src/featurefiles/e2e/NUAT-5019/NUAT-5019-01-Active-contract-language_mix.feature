@@ -34,6 +34,7 @@ Feature: NUAT-5019 Step 1. Creating a B2C Quote TC1 with move in, Dutch language
         When EAN code is generated
         And "EAN-code" input is "parameter:EAN-code-generated"
         And Electricity market mock test is Open
+        And Option "MM should respond?" is On
         And "Startdatum" date is "now"
         And Connection details are confirmed
         Then Form header is "Billing details"
@@ -44,9 +45,8 @@ Feature: NUAT-5019 Step 1. Creating a B2C Quote TC1 with move in, Dutch language
 
         When Option "Heeft de klant al getekend?" is On
         And "Kanaal ondertekening" selection is "Papier"
-        And "Plaats ondertekening" input is "Kontich"
         And "Datum ondertekening" date is "now"
-        And Quote is signed
+        And Quote is signed in "Kontich"
         When Quote is confirmed
         Then View list header is "Offertes"
         Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"

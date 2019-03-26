@@ -107,7 +107,7 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And Top menu item is "Klanten"
         And Top action is "Filters"
         And "Naam" input is "parameter:suitecrm-customer-name"
-        And Click on link in View List at "1st" row and "Klantnummer & Naam" column
+        And Click on "parameter:Klantnummer" link
         And Dashboard menu is "Billing"
         Then "1st" list element has cell value "Invoice (GUARANTEE)" at column "ID & Type"
 

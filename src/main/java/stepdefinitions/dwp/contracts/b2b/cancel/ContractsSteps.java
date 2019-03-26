@@ -1,8 +1,12 @@
 package stepdefinitions.dwp.contracts.b2b.cancel;
 
 import com.essent.automation.util.Sleeper;
-import com.essent.testing.dwp.pageobject.impl.page.ContractPage;
-import com.essent.testing.dwp.pageobject.impl.service_contracting.ContractenPage;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.Invoice_list.InvoiceListPage;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.details.DetailsPage;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.sales.SalesPage;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.workflows.MarktBerichtenPage;
+import com.essent.testing.dwp.pageobject.guided_flow.cupq.NewQuotePage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -14,10 +18,12 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import stepdefinitions.dwp.page_object.CustomerAcceptance;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+
 public class ContractsSteps extends DwpScenario {
 
     private String eanCodeInput = null;
-    private String contractEanCode;
 
     @Before("@DWP, @REGRESSION")
     public void setupTest(Scenario scenario) {
@@ -29,36 +35,36 @@ public class ContractsSteps extends DwpScenario {
     public void inputInModuleIs(String label, String input) {
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(3);
-        ContractenPage contractenPage = new ContractenPage();
+        ContractPage contractenPage = new ContractPage();
         contractenPage.fieldDropDownLabel(label, input);
     }
 
     @And("^Check toggle \"([^\"]*)\"$")
     public void checkToggle(String label) {
-        ContractenPage contractenPage = new ContractenPage();
+        ContractPage contractenPage = new ContractPage();
         contractenPage.turnOnTestingAndMarketMock(label);
     }
 
     @When("^Find \"([^\"]*)\" contract$")
-    public void findContract(String input) throws Throwable {
-        ContractenPage contractenPage = new ContractenPage();
+    public void findContract(String input) {
+        ContractPage contractenPage = new ContractPage();
         eanCodeInput = contractenPage.findActiveContract(input);
         logger().info("EAN CODE: " + eanCodeInput);
         parameterProvider.put("contractEanCode", eanCodeInput);
     }
 
     @When("^Contract line EAN-code \"([^\"]*)\" is submitted$")
-    public void submitEanCode(String value) throws Throwable {
+    public void submitEanCode(String value) {
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
-        ContractenPage contractenPage = new ContractenPage();
+        ContractPage contractenPage = new ContractPage();
         contractenPage.searchForEanCode(inputValue);
     }
 
     @Then("^Confirm task was \"([^\"]*)\"$")
-    public void confirmTaskWas(String value) throws Throwable {
+    public void confirmTaskWas(String value) {
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
-        ContractenPage contractenPage = new ContractenPage();
-        contractenPage.confirmTaskStatus(inputValue);
+        MarktBerichtenPage mp = new MarktBerichtenPage();
+        mp.confirmTaskStatus(inputValue);
     }
 
     @Override
@@ -69,39 +75,39 @@ public class ContractsSteps extends DwpScenario {
 
     @And("^\"([^\"]*)\" input in omschrijving$")
     public void inputInOmschrijving(String text) {
-        ContractenPage contractenPage = new ContractenPage();
-        contractenPage.inputText(text);
+        SalesPage sp = new SalesPage();
+        sp.inputText(text);
     }
 
     @And("^Offertes plus options is \"([^\"]*)\"$")
     public void sendEMailToCustomer(String test) {
-        ContractenPage contractenPage = new ContractenPage();
+        ContractPage contractenPage = new ContractPage();
         contractenPage.sendEmailToCustomer(test);
     }
 
     @And("^List option is \"([^\"]*)\"$")
     public void openInvoiceOnly(String option)  {
-        ContractenPage contractenPage = new ContractenPage();
-        contractenPage.openListOption(option);
+        InvoiceListPage ilp = new InvoiceListPage();
+        ilp.openListOption(option);
     }
 
     @Then("^Payment delayed$")
     public void paymentDelayed() {
-        ContractenPage contractenPage = new ContractenPage();
-        contractenPage.checkPayDate();
+        InvoiceListPage ilp = new InvoiceListPage();
+        ilp.checkPayDate();
     }
 
     @And("^Find \"([^\"]*)\" facture and \"([^\"]*)\"$")
     public void findFactureAnd(String type, String option) {
-        ContractenPage contractenPage = new ContractenPage();
-        contractenPage.findIssuedAndPayDelay(type, option);
+        InvoiceListPage ilp = new InvoiceListPage();
+        ilp.findIssuedAndPayDelay(type, option);
     }
 
     @Then("^Validate bank account was changed on \"([^\"]*)\"$")
     public void validateBankAccountWasChangedOn(String iban) {
         String inputIban = parameterProvider.getValueOrParameterAsString(iban);
-        ContractenPage contractenPage = new ContractenPage();
-        contractenPage.findIban(inputIban);
+        DetailsPage dp = new DetailsPage();
+        dp.findIban(inputIban);
     }
 
     @And("^Get Contract Ean Code$")
@@ -142,10 +148,10 @@ public class ContractsSteps extends DwpScenario {
     }
 
     @Then("^Customer Status is \"([^\"]*)\"$")
-    public void customerStatus(String status) {
-        seleniumDriver.waitForRequestsToFinish();
+    public void customerStatus(String expectedStatus) {
         CustomerAcceptance customerAcceptance = new CustomerAcceptance();
-        customerAcceptance.customerStatus(status);
+        String actualStatus = customerAcceptance.getAcceptanceStatus();
+        assertThat(String.format("Actual customer acceptance status \"%s\" differs from the expected \"%s\"", actualStatus, expectedStatus), actualStatus, equalTo(expectedStatus));
 
     }
 
@@ -159,12 +165,12 @@ public class ContractsSteps extends DwpScenario {
 
     @And("^Sign place is \"([^\"]*)\"$")
     public void signPlaceIs(String place) {
-        ContractPage cp = new ContractPage();
-        cp.confirmTheSign(place);
+        NewQuotePage nqp = new NewQuotePage();
+        nqp.confirmTheSign(place);
       }
 
     @Then("^Populate Soctar with dates \"([^\"]*)\" and \"([^\"]*)\"$")
-    public void searchForAttestDate(String startDate, String attestDate) throws Throwable {
+    public void searchForAttestDate(String startDate, String attestDate) {
         ContractPage contractenPage = new ContractPage();
         String sd = parameterProvider.getValueOrParameterAsString(startDate);
         String ad = parameterProvider.getValueOrParameterAsString(attestDate);
@@ -176,7 +182,7 @@ public class ContractsSteps extends DwpScenario {
     }
 
     @Then("^Get Start Date$")
-    public void searchForStartDate() throws Throwable {
+    public void searchForStartDate() {
         ContractPage contractenPage = new ContractPage();
         String startDate = contractenPage.getStartDate();
         parameterProvider.put("startDate", startDate);
