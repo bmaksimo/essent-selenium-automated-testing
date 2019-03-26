@@ -27,6 +27,7 @@ public class ContractPage extends Component {
 
     public String date = simpleDateFormat.format(new Date());
     private static final String labelForProductChange = "//div[@class = 'non-editable-editor']";
+    private static final String accountNumber = "//div[@class='card__content__inner-wrapper']/h4";
 
     public void startDateIsToday() {
         seleniumDriver.waitAndSendKeys(startData(),"date");
@@ -126,6 +127,10 @@ public class ContractPage extends Component {
 
     public String getCompanyNumber(){
         return seleniumDriver.findElementWhenVisible(By.xpath("//*//*[@id=\"company-number-c-field\"]")).getText();
+    }
+
+    public String getAccountNumber(){
+        return seleniumDriver.findElementWhenVisible(By.xpath(accountNumber)).getText();
     }
 
     public String getContractNumber(){

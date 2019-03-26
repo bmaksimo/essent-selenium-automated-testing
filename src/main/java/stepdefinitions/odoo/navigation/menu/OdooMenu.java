@@ -156,9 +156,17 @@ public class OdooMenu extends OdooScenario {
     @Then("^Odoo validate bank account was changed on \"([^\"]*)\"$")
     public void odooValidateBankAccountWasChangedOn(String ban) {
         String bankAccountNumber = parameterProvider.getValueOrParameterAsString(ban);
-        CustomerPage kp = new CustomerPage();
-        Assert.assertEquals("Ckeck if band accoutn number is same as in dwp",kp.getBankAccountAsString(), bankAccountNumber);
+        CustomerPage cp = new CustomerPage();
+        Assert.assertEquals("Check if band account number is same as in DWP",cp.getBankAccountAsString(), bankAccountNumber);
     }
+
+    @Then("^Odoo verify payment method has changed to \"([^\"]*)\"$")
+    public void odooVerifyPaymentMethodChanged(String pm) {
+        String paymentMethod = parameterProvider.getValueOrParameterAsString(pm);
+        CustomerPage cp = new CustomerPage();
+        Assert.assertEquals("Check if payment method is same as in DWP",cp.getPaymentMethodAsString(), paymentMethod);
+    }
+
 
     @Override
     @After("@ODOO, @E2E, @REGRESSION")

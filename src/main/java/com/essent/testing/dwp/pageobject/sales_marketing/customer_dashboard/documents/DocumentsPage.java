@@ -7,7 +7,9 @@ import org.openqa.selenium.By;
 public class DocumentsPage extends Component {
 
     public String documentText(){
-        return findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[1])[2]")).getText();
+//        return findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[1])[4]")).getText();
+        return findElementWhenVisible(By.xpath("//span[contains(text(), 'customer-signature')]")).getText();
+
     }
     public void findDocument() {
         seleniumDriver.waitForRequestsToFinish();
