@@ -2,6 +2,7 @@
 @B2B
 @REGRESSION
 @PAYMENTS
+@UNSTABLE
 Feature: NUAT-413: Manual reconcile en unreconcile
 
     Background:

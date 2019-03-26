@@ -1,7 +1,8 @@
-﻿@DWP
+@DWP
 @SALES-MARKETING
 @REGRESSION
 @B2C
+@UNSTABLE
 Feature: NSTA-326: Creating a B2C Quote TC1 with "Move In" without using Market Mock.
 
     Background:

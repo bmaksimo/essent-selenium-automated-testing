@@ -2,6 +2,7 @@
 @B2B
 @REGRESSION
 @BUSINESS-DESK
+@UNSTABLE
 Feature: NUAT-446: Check The Usage Of A Customer - nl_BE
 
     Background:

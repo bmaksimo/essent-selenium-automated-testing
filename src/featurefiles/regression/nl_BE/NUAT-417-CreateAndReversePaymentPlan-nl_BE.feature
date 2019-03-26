@@ -2,6 +2,7 @@
 @B2B
 @REGRESSION
 @NUAT-417
+@UNSTABLE
 Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR, run advance invoice, create payment plan
 
 

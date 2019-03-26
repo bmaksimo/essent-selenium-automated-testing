@@ -2,6 +2,7 @@
 @B2B
 @REGRESSION
 @CREDIT-AND-CONTROL
+@UNSTABLE
 Feature: NUAT-424: Change Pay Method - nl_BE
 
     Background:

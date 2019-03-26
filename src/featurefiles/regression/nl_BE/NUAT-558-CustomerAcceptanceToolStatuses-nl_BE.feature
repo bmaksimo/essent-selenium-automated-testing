@@ -2,9 +2,12 @@
 @B2B
 @REGRESSION
 @CREDIT-AND-CONTROL
+@UNSTABLE
 Feature: NUAT-558: Check status of customer with Customer Acceptance Tool
 
-    Background: Given B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
+    Background: 
+    	Given B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
+    
     @NUAT-558
     Scenario: Check status of customer with Customer Acceptance Tool
         Given  I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"

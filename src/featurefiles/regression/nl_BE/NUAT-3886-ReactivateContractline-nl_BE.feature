@@ -2,6 +2,7 @@
 @REGRESSION
 @B2B
 @LONGDURATION
+@UNSTABLE
 Feature: NUAT-3886 Reactivate contractline
 
     Background:
