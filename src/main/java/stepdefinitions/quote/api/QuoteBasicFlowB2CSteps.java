@@ -5,6 +5,7 @@ import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.restassured.B2CCreateContractScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -13,6 +14,7 @@ import stepdefinitions.quote.api.helper.AsyncExecutor;
 import stepdefinitions.quote.api.model.ContractDetails;
 import stepdefinitions.quote.api.model.QuoteDetails;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import static org.awaitility.Awaitility.await;
@@ -130,4 +132,8 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 		.until(AsyncExecutor.isStatusSuccessfull(cookie, contractDetails));
     }
 
+    @And("^Check order in jbilling$")
+    public void checkOrderInJbilling() throws IOException {
+        assertThat( new ContractDetailsAPI().getOrderDetails(cookie, quoteDetails, contractDetails), is(true));
+    }
 }
