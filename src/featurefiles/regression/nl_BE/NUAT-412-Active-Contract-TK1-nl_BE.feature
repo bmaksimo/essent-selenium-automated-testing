@@ -1,6 +1,7 @@
 @DWP
 @REGRESSION
 @CREDIT-AND-CONTROL
+@UNSTABLE
 Feature: NUAT-412 part: Create TK1 Contract -> Create / import coda file -> Invoice run
 
     Background:

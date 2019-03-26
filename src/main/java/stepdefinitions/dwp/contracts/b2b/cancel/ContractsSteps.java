@@ -1,12 +1,12 @@
 package stepdefinitions.dwp.contracts.b2b.cancel;
 
 import com.essent.automation.util.Sleeper;
+import com.essent.testing.dwp.pageobject.guided_flow.cupq.NewQuotePage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.Invoice_list.InvoiceListPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.details.DetailsPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.sales.SalesPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.workflows.MarktBerichtenPage;
-import com.essent.testing.dwp.pageobject.guided_flow.cupq.NewQuotePage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -18,6 +18,9 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import stepdefinitions.dwp.page_object.CustomerAcceptance;
 
+
+import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpContractStartEndDate;
+import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToSoctarFileDate;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -140,8 +143,8 @@ public class ContractsSteps extends DwpScenario {
     }
 
 
-    @And("^Invoice with key \"([^\"]*)\" is checked$")
-    public void CheckInvoiceOpenBalance(String text) {
+    @And("^Invoice checkbox with key \"([^\"]*)\" is clicked")
+    public void checkInvoiceOpenBalance(String text) {
         seleniumDriver.waitForRequestsToFinish();
         ContractPage contractenPage = new ContractPage();
         contractenPage.checkInvoiceOpenBalance(text);
@@ -186,6 +189,37 @@ public class ContractsSteps extends DwpScenario {
         ContractPage contractenPage = new ContractPage();
         String startDate = contractenPage.getStartDate();
         parameterProvider.put("startDate", startDate);
+
+    }
+
+    @Then("Start Date \"([^\"]*)\" is \"([^\"]*)\" day bigger than End Date \"([^\"]*)\"$")
+    public void compareStartAndEndDate(String startDate, long expectedRange, String endDate) {
+
+        String sd = parameterProvider.getValueOrParameterAsString(startDate);
+        String ed = parameterProvider.getValueOrParameterAsString(endDate);
+
+        parameterProvider.put("startDate", startDate);
+        parameterProvider.put("endDate", endDate);
+
+        long actualRange = ContractPage.rangeDates(sd, ed);
+        assertThat(String.format("Start date \"%s\" differs from the end date \"%s\" by 1 year ", actualRange, expectedRange), actualRange, equalTo(expectedRange));
+    }
+
+
+    @Then("Check is product change \"([^\"]*)\"$")
+    public void checkProductChangeSuccess(String expectedMessage) {
+        ContractPage cp = new ContractPage();
+        String messageActual = cp.checkSuccessMessage();
+        Assert.assertThat("Product change successfully done", messageActual, equalTo(expectedMessage));
+
+    }
+
+    @Then("^Product Change dates are \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void ProductChangeDates(final String productChangeStartDate, final String productChangeEndDate){
+        String pcsd  = parameterProvider.getValueOrParameterAsString(productChangeStartDate);
+        String pced = parameterProvider.getValueOrParameterAsString(productChangeEndDate);
+        parameterProvider.put("productChangeStartDate", pcsd);
+        parameterProvider.put("productChangeEndDate", pced);
 
     }
 

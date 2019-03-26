@@ -76,6 +76,15 @@ public class OdooCodaSteps extends OdooScenario {
         CodaImportDialog dialog = new CodaImportDialogImpl();
         String report = dialog.getImportReport();
         assertThat(report, not(isEmptyString()));
+        assertThat(report, containsString("Number of statements processed : 1"));
+    }
+
+    @And("^Odoo file import report contains success string \"([^\"]*)\"$")
+    public void isSuccessfulReport(String success) throws Throwable {
+        CodaImportDialog dialog = new CodaImportDialogImpl();
+        String report = dialog.getImportReport();
+        assertThat(report, not(isEmptyString()));
+        assertThat(report, containsString(success));
     }
 
     @And("^Generated CODA file is downloaded$")
@@ -84,7 +93,6 @@ public class OdooCodaSteps extends OdooScenario {
         if (null == downloadLink) throw new CucumberException("CODA file download link was not found");
         downloadLink.click();
         String path = ResourceUtil.toPath(File.separator + "data" + File.separator + "odoo" + File.separator);
-        File downloadDir = new File(path);
         FluentWait<OdooCodaSteps> waiter = waiter(this, 20, 1);
         waiter.withMessage(String.format("CODA file was not found at path %s", path));
         waiter.until((OdooCodaSteps scenario) -> CollectionUtils.isNotEmpty(retrieveDownloadedCodaFiles(path)));
@@ -106,7 +114,6 @@ public class OdooCodaSteps extends OdooScenario {
 
     private void cleanCodaFilesFromDirectory() {
         File directory = new File(ResourceUtil.toPath(File.separator + "data" + File.separator + "odoo" + File.separator));
-
         for (File file: directory.listFiles()) {
             if(null != file && file.getName().endsWith(".COD")) {
                 file.delete();

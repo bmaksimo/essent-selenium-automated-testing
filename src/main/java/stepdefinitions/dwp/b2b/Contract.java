@@ -3,8 +3,8 @@ package stepdefinitions.dwp.b2b;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.guided_flow.cupq.NewQuotePage;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
-import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.pageobject.impl.quote.QuoteDetailsPage;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -184,6 +184,7 @@ public class Contract extends DwpScenario {
     public void saveEndDateFromActiveContract() {
         ContractPage cp = new ContractPage();
         parameterProvider.put("EndDate-active-contract",cp.getActiveContractEndDate());
+
     }
     @After("@REGRESSION")
     public void tearDown() {

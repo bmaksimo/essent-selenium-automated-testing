@@ -300,7 +300,7 @@ public class ViewListChecks extends NavigationElements {
         boolean success = new CheckViewListHeader().test(header);
         assertThat(String.format("View list header \"%s\" didn't appear", header),
             success, is(true));
-        parameterProvider.put("currrent-view-list", header);
+        parameterProvider.put("current-view-list", header);
         logger().info(String.format("- STEP: View list header is \"%s\" - PASSED.", header));
     }
 
@@ -367,7 +367,7 @@ public class ViewListChecks extends NavigationElements {
     public void listElementWith(String ordinal, String value, String columnName) throws Throwable {
         int row = extractNumericValue(ordinal);
         String expectedValue = parameterProvider.getValueOrParameterAsString(value);
-        FluentWait<ViewListModel> waiter = waiter(new ViewListModel(), 30, 5);
+        FluentWait<ViewListModel> waiter = waiter(new ViewListModel(), 120, 5);
         waiter.withMessage(String.format("\"%s\" list element value \"%s\" at column \"%s\" was not found", ordinal, expectedValue, columnName));
         waiter.until((ViewListModel callback) -> callback.containsDataAt(row, expectedValue, columnName));
         logger().info(String.format("- STEP: \"%s\" list element has cell value \"%s\" at column \"%s\"  - PASSED.", ordinal, expectedValue, columnName));

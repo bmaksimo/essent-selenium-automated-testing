@@ -22,7 +22,7 @@ public class AdvancedSearchComponent extends Component {
     }
 
     private void fillInAdvancedSearchForm(AdvancedSearch advancedSearch) {
-        awaitOdooRequestToFinish(10);
+        awaitOdooRequestToFinish(20);
         navigateToAdvancedSearchView();
 
         new Select(getPropertiesList()).selectByVisibleText(advancedSearch.getField());

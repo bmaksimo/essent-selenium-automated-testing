@@ -26,9 +26,10 @@ Feature: Import a coda file
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        When "Startdatum" date is "2 weeks before now"
-        And Electricity EAN code is "random"
+        When EAN code is generated
+        And "Startdatum" date is "2 weeks before now"
         And Switch type is Move in
+        And "EAN-code" input is "parameter:EAN-code-generated"
         And Electricity market mock test is Open
         And Connection details are confirmed
         Then Form header is "Billing details"
@@ -76,18 +77,18 @@ Feature: Import a coda file
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
-        And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
+        And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
 
     @CODA
     Scenario: Create a new CODA file
-        Given I renew login to Odoo as "t.geets"
+        Given I renew login to Odoo as "role_essent_ccm_user"
         And Cleanup Odoo CODA files
         When Odoo top menu is "Accounting"
         And  Odoo left menu is "Customers"
         And Odoo filter is "parameter:accountNumber"
         When Column "Account Number" with value "parameter:accountNumber" is clicked
         And Button "Journal Items" is clicked
-        And Generate CODA in the "1st" row is clicked
+        And Generate CODA in the first row with "Amount receivable" is clicked
         Then Modal title contains "Download CODA"
         And Generated CODA file is downloaded
         And Modal button "Close" is clicked

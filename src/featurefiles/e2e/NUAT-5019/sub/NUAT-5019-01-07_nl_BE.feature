@@ -1,13 +1,11 @@
 @DWP
-@E2E
+@ODOO
 Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one payment and 3 dunning levels, with SS and Market Mock"
-
-    Background:
-        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
-    @NUAT-5019
+    @NUAT-5019-01-07
     Scenario: Create active contract that after dunning the contract becomes inactive
-        #1 - GUI contract creation
-        Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
+
+        # 1 - GUI contract creation
+        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
@@ -18,8 +16,8 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
 
         When Customer is random
         And Customer address is
-            | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-            | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
+        | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
+        | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
 
@@ -160,72 +158,3 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         And Dashboard menu is "Billing"
         Then View list header is "Transacties"
         And "1st" list element has cell value "Invoice (SETTLEMENT)" at column "ID & Type" polling 450 seconds
-
-        # 8 - Reach HB3 dunning level
-        Given I renew login to DWP as "billing.testautomation@essent.be"
-        When Left menu is "billing"
-        And Top menu item is "Klanten"
-        And Top action is "Filters"
-        And "Naam" input is "parameter:suitecrm-customer-name"
-        Then View list header is "Klanten"
-        And View List element "Id Billing customer & persoon/familie sleutel" using "billingCustomerId" as alias is collected as parameter at "1st" list row
-        And View List element "Klantnummer & Naam" using "accountNumber" as alias is collected as parameter at "1st" list row
-
-        Given Click on "parameter:accountNumber" link
-        And Dunning day countdown for "parameter:accountNumber" goes down 12 days
-        And Sleep for 60 seconds
-        And Dunning day countdown for "parameter:accountNumber" goes down 28 days
-        And Sleep for 90 seconds
-        And Dunning day countdown for "parameter:accountNumber" goes down 28 days
-        And Sleep for 90 seconds
-
-        When Dashboard menu is "Billing"
-        Then View list header is "Transacties"
-        And "1st" list element has cell value "Invoice (DUNNINGCOST)" at column "ID & Type"
-        And "2nd" list element has cell value "Invoice (DUNNINGCOST)" at column "ID & Type"
-        And "3rd" list element has cell value "Invoice (DUNNINGCOST)" at column "ID & Type"
-        And "4th" list element has cell value "Invoice (SETTLEMENT)" at column "ID & Type" polling 450 seconds
-        And "5th" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
-        And "6th" list element has cell value "Payment" at column "ID & Type"
-
-        # 9 - Soft dunning
-        And Dashboard menu is "Service"
-
-        And Table "Taken" contains value "Soft-Dunning Call POST HB3 B2C HIGH" at column "Naam & Type & Subtype"
-        And Table "Taken" contains value "Soft-Dunning Call POST HB2 B2C HIGH" at column "Naam & Type & Subtype"
-        And Table "Taken" contains value "Soft-Dunning Call POST HB1 B2C HIGH" at column "Naam & Type & Subtype"
-
-        # 10 - Check for INITIATE STOP ACCESS market message creation
-        Given I renew login to DWP as "contracting.testautomation.b2c@essent.be"
-        When Left menu is "contracting-switching"
-        And Top menu item is "Klanten"
-        And Top action is "Filters"
-        And "Naam" input is "parameter:suitecrm-customer-name"
-        Then "1st" List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
-
-        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column
-        When Dashboard menu is "Marktberichten"
-        Then "1st" list element has cell value "INITIATE STOP ACCESS" at column "Module & Label" polling 450 seconds
-
-        # 11 - Cancel INITIATE STOP ACCESS market message and create a new INITIATE STOP ACCESS market message effective from NOW
-        When Click on link in "Marktberichten" View List at "1st" row and "Plus Action" column
-        And Row actions "Annuleer Marktbericht" is clicked
-        And Select Contractline dialog is confirmed
-
-        When Click on "Start nieuw marktbericht"
-        And Click Select Contractline
-        And Dialog search input is current "parameter:EAN-code"
-        Then Select Contractline dialog is confirmed
-        When "Module" selection is "INITIATE STOP ACCESS"
-        And "Label" selection is "Non-Residential End-of-Contract"
-        And "Effective Date" date is "now"
-        And Option "Testing?" is On
-        And Select Contractline dialog is confirmed
-        Then "1st" list element has cell value "INITIATE STOP ACCESS" at column "Module & Label" polling 450 seconds
-        Then Wait for 180 seconds
-
-        When Dashboard menu is "Contracten"
-        Then View list header is "Actieve en toekomstige connecties"
-        And "Actieve en toekomstige connecties" list is empty
-        And Table "Contracten" contains value "Inactief" at column "Type & status"
-        And Send email to SMEs

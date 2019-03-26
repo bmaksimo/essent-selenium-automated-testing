@@ -10,13 +10,13 @@ import org.openqa.selenium.WebElement;
 
 public class ConfirmSignatureDialogImpl extends Component implements ConfirmSignatureDialog {
 
-    private final static By SELECOR = By.cssSelector(".view__modal .modal__header");
+    private final static By CONFIRM_SIGNATURE_MODAL_SELECTOR = By.cssSelector(".view__modal .modal__header");
 
-    private final static By SELECOR_CONFIRM_BUTTON = By.id("confirm-button");
+    private final static By CONFIRM_BUTTON_SELECTOR = By.id("confirm-button");
 
 
     public ConfirmSignatureDialogImpl(String title) {
-        super(SELECOR);
+        super(CONFIRM_SIGNATURE_MODAL_SELECTOR);
         this.title = title;
         seleniumDriver.waitForRequestsToFinish();
     }
@@ -47,12 +47,14 @@ public class ConfirmSignatureDialogImpl extends Component implements ConfirmSign
 
     @Override
     public boolean confirm() {
-        WebElement element = seleniumDriver.findElementOrNull(SELECOR_CONFIRM_BUTTON);
+        seleniumDriver.waitForRequestsToFinish();
+        WebElement element = seleniumDriver.findElementOrNull(CONFIRM_BUTTON_SELECTOR);
         if(element == null)
             return false;
         Button confirmButton = new ButtonImpl(element);
         confirmButton.click();
         seleniumDriver.waitForRequestsToFinish();
+        seleniumDriver.takeScreenshot("Confirm form ");
         return true;
     }
 
@@ -63,6 +65,6 @@ public class ConfirmSignatureDialogImpl extends Component implements ConfirmSign
 
     @Override
     public boolean isShown() {
-        return seleniumDriver.findElementOrNull(SELECOR) != null;
+        return seleniumDriver.findElementOrNull(CONFIRM_SIGNATURE_MODAL_SELECTOR) != null;
     }
 }

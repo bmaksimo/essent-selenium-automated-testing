@@ -1,6 +1,5 @@
 package com.essent.testing.dwp.pageobject.impl.elements;
 
-import com.essent.testing.dwp.pageobject.elements.Button;
 import com.essent.testing.dwp.pageobject.elements.NonEditableInput;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebElement;
