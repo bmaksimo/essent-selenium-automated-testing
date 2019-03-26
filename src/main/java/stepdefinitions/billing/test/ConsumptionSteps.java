@@ -11,10 +11,13 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import freemarker.template.SimpleDate;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.text.StrSubstitutor;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.util.Assert;
 
 import javax.xml.bind.JAXBContext;
@@ -23,6 +26,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -71,6 +76,22 @@ public class ConsumptionSteps extends DwpScenario {
         String deliveryPointId = parameterProvider.getValueOrParameterAsString(deliveryPoint);
         parameterProvider.put("billrun-date", DateExpressionsUtil.toDwpDate(dateTo));
         String consumptionData = getConsumptionRequest(deliveryPointId, dateTo);
+        BasePayload msg = generatePayloadFromString(consumptionData);
+
+        BillingEnergyCommRest bERest = new BillingEnergyCommRest();
+        RestResponse resp = bERest.postEnergyCommMessage(msg);
+        Assert.isTrue(resp.getResult(), resp.getMsg());
+    }
+
+    @When("^Consumption at deliverypointid \"([^\"]*)\" is generated until \"([^\"]*)\"$")
+    public void generateConsumptionUntilRelativeDate(String deliveryPoint, String dateTo) throws Exception {
+        String deliveryPointId = parameterProvider.getValueOrParameterAsString(deliveryPoint);
+        String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(dateTo));
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy");
+        DateTime frenchFormatDate = formatter.parseDateTime(inputValue);
+        String formattedToDate = frenchFormatDate.toString("yyyy-MM-dd");
+        parameterProvider.put("billrun-date", inputValue);
+        String consumptionData = getConsumptionRequest(deliveryPointId, formattedToDate);
         BasePayload msg = generatePayloadFromString(consumptionData);
 
         BillingEnergyCommRest bERest = new BillingEnergyCommRest();
