@@ -3,6 +3,7 @@
 @REGRESSION
 @JBILLING
 @NUAT-510
+@UNSTABLE
 Feature: NUAT-510 Triggering advance invoice run. Check is invoice created in DWP and jbilling
 
     @NUAT-510-01

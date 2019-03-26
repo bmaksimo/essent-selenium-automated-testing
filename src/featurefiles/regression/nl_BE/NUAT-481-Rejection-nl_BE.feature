@@ -2,8 +2,7 @@
 @B2B
 @REGRESSION
 @BUSINESS-DESK
-
-
+@UNSTABLE
 Feature: NUAT-481: Rejection - nl_BE
 
     Background:

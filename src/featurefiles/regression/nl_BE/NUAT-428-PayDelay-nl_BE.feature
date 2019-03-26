@@ -3,6 +3,7 @@
 @REGRESSION
 @CREDIT-AND-CONTROL
 @NUAT-428
+@UNSTABLE
 Feature: NUAT-428: Pay Delay - nl_BE
 
     #First scenario is for preparing test data. And We split this part

@@ -1,6 +1,7 @@
 @DWP
 @REGRESSION
 @CREDIT-AND-CONTROL
+@UNSTABLE
 Feature: NUAT-412 part: Create / import coda file
 
     @NUAT-412-2

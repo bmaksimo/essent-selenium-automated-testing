@@ -2,6 +2,7 @@
 @REGRESSION
 @B2B
 @SERVICE-CONTRACTING
+@UNSTABLE
 Feature: NUAT-447: Check validity prices
 
     Background:
