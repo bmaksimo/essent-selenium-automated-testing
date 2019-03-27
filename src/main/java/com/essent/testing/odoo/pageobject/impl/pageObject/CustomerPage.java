@@ -13,7 +13,7 @@ public class CustomerPage extends Component {
     public void clickOnTabMenu(String tab){
         awaitOdooRequestToFinish(20);
         createQuery(tabMenuXpath, nameTab, tab);
-
+        seleniumDriver.findElementWhenVisible(By.xpath(tabMenuXpath));
     }
 
     public String getBankAccountAsString(){
