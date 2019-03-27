@@ -3,8 +3,8 @@ package stepdefinitions.dwp.b2b;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.guided_flow.cupq.NewQuotePage;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
-import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.pageobject.impl.quote.QuoteDetailsPage;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -82,7 +82,7 @@ public class Contract extends DwpScenario {
     public void contractIsInState(String status) {
         ContractPage cp = new ContractPage();
         seleniumDriver.waitForRequestsToFinish();
-        assertEquals(cp.status(),status);
+        assertEquals(cp.contractStatus(),status);
     }
 
     @And("^Clicked on sign X$")
@@ -126,7 +126,7 @@ public class Contract extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
         Thread.sleep(2000);
         NewQuotePage nq = new NewQuotePage();
-        nq.clickNaceCode();
+        nq.clickNaceCodeButton();
     }
 
     @And("^NaceCode in search is ([^\"]*)$")
@@ -135,7 +135,7 @@ public class Contract extends DwpScenario {
         ContractPage cp = new ContractPage();
         cp.searchByClientNumber(NaceCode);
         nq.clickOnSearch();
-        nq.checkNaceCode();
+        nq.checkNaceCodeCheckBox();
         nq.saveSelectedItem();
     }
 
@@ -184,6 +184,7 @@ public class Contract extends DwpScenario {
     public void saveEndDateFromActiveContract() {
         ContractPage cp = new ContractPage();
         parameterProvider.put("EndDate-active-contract",cp.getActiveContractEndDate());
+
     }
     @After("@REGRESSION")
     public void tearDown() {

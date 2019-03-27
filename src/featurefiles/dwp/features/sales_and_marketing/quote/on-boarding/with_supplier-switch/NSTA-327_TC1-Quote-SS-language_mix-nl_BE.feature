@@ -1,7 +1,8 @@
-﻿@DWP
+@DWP
 @SALES-MARKETING
 @REGRESSION
 @B2C
+@UNSTABLE
 Feature: NSTA-327: Creating a B2C Quote TC1 with "Supplier Switch" without using Market Mock.
 
     Background:
@@ -38,7 +39,8 @@ Feature: NSTA-327: Creating a B2C Quote TC1 with "Supplier Switch" without using
 
         #Step 4. Fill in connection information
         When "Startdatum" date is "1 month before now"
-        And Electricity EAN code is "random"
+        And EAN code is generated
+        And "EAN-code" input is "parameter:EAN-code-generated"
         #And Option "Is de meter geopend?" is Off
 
         When Connection details are confirmed

@@ -130,7 +130,7 @@ public abstract class NavigationElements extends DwpScenario {
 
     protected void clickListPlusAction(String item) {
         FluentWait<ClickListPlusAction> waiter = waiter(new ClickListPlusAction(), 20, 2);
-        waiter.withMessage(String.format("List Plus Action \"%s\" is undefined.", item));
+        waiter.withMessage(String.format("List Plus Action \"%s\" is undefined or disabled.", item));
         waiter.until((ClickListPlusAction action) -> action.test(item));
     }
 
