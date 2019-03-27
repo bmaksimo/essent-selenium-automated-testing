@@ -3,6 +3,8 @@ package com.essent.testing.dwp.pageobject.impl.quote;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
+import com.essent.testing.dwp.helper.AddressUtil;
+import com.sun.jndi.cosnaming.IiopUrl;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -42,7 +44,7 @@ public class PersonalDetailsAddressPage extends QuoteCreationGuidedStep {
     public boolean fillInCustomerAddress() {
 
         String street = address.getStreet();
-        if(street.equals("Random")) { street =  randomStreet(); }
+        if(street.equals("Random")) { street = AddressUtil.getRandomStreet(); }
         String houseNr = Integer.toString(address.getHouseNr());
         String houseNrAdd = address.getHouseNrAdd();
         String bus = address.getBus();
@@ -85,17 +87,5 @@ public class PersonalDetailsAddressPage extends QuoteCreationGuidedStep {
             .step(createStep(SLEEP).sleepInMillis(3000))
             .step(createStep(CLICK).element(COPY_ADDRESS_CONNECTION_TO_BILLING.name()).requireDisplayed(false), TOGGLE_CHECKBOX.getSleepInMillis());
         return execute(copyAddress);
-    }
-
-    protected String randomStreet() {
-        String[] streets = {
-            "Abelenlaan", "Abraham Hanslaan", "Albertlei", "Albrecht Rodenbachlaan", "Alfsberg", "Altenastraat", "Antwerpsesteenweg", "Asterlaan", "Astweg", "Azalealaan", "Baanvelden", "Babbelkroonstraat", "Bautersemstraat", "Beeklaan", "Beekse Velden", "Beemdenlaan", "Bergstraat", "Beukendreef", "Biesaard", "Binnenbeemd", "Blauwesteenstraat", "Bochtstraat", "Boniverlei", "Boomgaard", "Boskapelweg", "Bosveldlaan", "Broekbosstraat", "Brouwersstraat", "Brugmanstraat", "Cornelis Marckxlaan", "Cornelis Verhulstlaan", "De Villermontstraat", "Deken Jozef Van Herckstraat", "Dennenlaan", "Doelveld", "Doopput", "Doornstraat", "Dorre Eikstraat", "Drabstraat", "Dries", "Duffelsesteenweg", "Duffelshoek", "Duivenstraat", "Edegemsesteenweg", "Edgard Tinellaan", "Eekhoven", "Eertbrugge", "Eikenstraat", "Elisabethstraat", "Elsbos", "Elshagelaan", "Gallo-Romeinenlaan", "Ganzenbollaan", "Gemeenteplein", "Graaf de Ribeaucourtplein", "Groene Wandeling", "Groene Weg", "Groeningenlei", "Groot Veld", "Haakstuk", "Heiveldekens", "Helenaveldstraat", "Hoeve-ter-Bekelaan", "Hof van Spruytlaan", "Hofstraat", "Hoge Akker", "Holle Eikaard", "Holle Weg", "Hondstraat", "Hoogbunderlaan", "Hoogmolenlaan", "Ijzermaalberg", "Infanterielaan", "Irislaan", "Jan-Baptist Reykerslaan", "Jeroen en Peter Conventlaan", "Jordaensstraat", "Joris Olyslaegerslaan", "Josephine Charlottestraat", "Josse Clymansstraat", "Kapelstraat", "Kartuizersweg", "Kattenbroek", "Kauwlei", "Kazernelaan", "Keizershoek", "Keltenveld", "Kerkeland", "Kleine Meylstraat", "Klokkestraat", "Kongostraat", "Konijnenveld", "Koningin Astridlaan", "Koningin Fabiolalaan", "Kontichhof", "Kosterijstraat", "Kruisbeemd", "Kruisschanslei", "Kruisstraat", "Langbosweg", "Leopoldstraat", "Liersebaan", "Lijsterbolstraat", "Lints Veld", "Lintsesteenweg", "Magdalenastraat", "Mechelsesteenweg", "Metsersaard", "Meylweg", "Mina Telghuislaan", "Molenstraat", "Montfortstraat", "Moorstraat", "Mortelstuk", "Nachtegaalstraat", "Nakkersgoed", "Neerveld", "Nerenaard", "Nieuwstraat", "Noordstraat", "Oever", "Ooststatiestraat", "Oude Lei", "Pastoor De Laetstraat", "Pauwhoevestraat", "Peter Benoitlaan", "Philip Romboutslaan", "Pierstraat", "Pieter Potlaan", "Pluyseghemstraat", "Prins Boudewijnlaan", "Prins Filiplaan", "Pronkenbergstraat", "Rauwaard", "Reepkenslei", "Reetsestraat", "Reipelveld", "Rijkerooistraat", "Rompelei", "Roosken", "Rozengaard", "Rubensstraat", "Satenrozen", "Scheihagenstraat", "Schoolstraat", "Schuttershofstraat", "Schuurveld", "Singel", "Sint-Jansplein", "Sint-Martinusplein", "Sint-Martinusstraat", "Sleutelstraat", "Spoorwegstraat", "Staf Van Elzenlaan", "Stationsplein", "Steenakker", "Steentjeslaan", "Strepestraat", "Tanghoflaan", "Ter Sneeuw", "Transvaalstraat", "Tulpenlaan", "Twee Bunder", "Valveken", "Van Dyckstraat", "Varkensmarkt", "Vekenveld", "Veldkant", "Verbrande Hoevestraat", "Vijverlaan", "Vitsenveld", "Vlierenpaal", "Volderij", "Vredestraat", "Wierookstuk", "Wild Veld", "Wilgstuk", "Wipstraat", "Wisselbeemd", "Witte-Stedeweg", "Witvrouwenveldstraat", "Zilverbergstraat",
-        };
-
-        Random rnd = new Random();
-
-        int index = (int) (rnd.nextFloat() * streets.length);
-
-        return streets[index];
     }
 }
