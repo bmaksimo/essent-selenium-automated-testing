@@ -38,7 +38,6 @@ Feature: NUAT-5021 Voraaf Step 1. Sign-in on vooraf (prepaid)
         Then Form header is "Billing details"
 
         When "Betalingswijze" selection is "Overschrijving"
-        And Wait for 10 seconds
         And Value at "Bedrag Vooraf (incl. btw)" in the card "Elektriciteit Vooraf" is "800 €"
         And Value at "Bedrag Vooraf (incl. btw)" in the card "Aardgas Vooraf" is "900 €"
         And Billing details are confirmed
