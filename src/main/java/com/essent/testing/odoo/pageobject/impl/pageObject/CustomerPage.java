@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 public class CustomerPage extends Component {
 
     private static final String labelPaymentMethod = "//tr[7]/td[2]/span";
+    private static final String labelBankAccount = "//td[@data-field=\"acc_number\"]";
 
     public void clickOnTabMenu(String tab){
         awaitOdooRequestToFinish(20);
@@ -13,7 +14,7 @@ public class CustomerPage extends Component {
     }
 
     public String getBankAccountAsString(){
-        return seleniumDriver.findElementWhenVisible(By.xpath("//td[@data-field=\"acc_number\"]")).getText();
+        return seleniumDriver.findElementWhenVisible(By.xpath(labelBankAccount)).getText();
     }
 
     public String getPaymentMethodAsString(){
