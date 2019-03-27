@@ -4,13 +4,10 @@ import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
 import com.essent.testing.dwp.helper.AddressUtil;
-import com.sun.jndi.cosnaming.IiopUrl;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.tables.CustomerAddress;
-
-import java.util.Random;
 
 import static com.essent.automation.autocrat.Action.*;
 import static com.essent.testing.dwp.autocrat.element.quote.B2CQuoteElements.*;

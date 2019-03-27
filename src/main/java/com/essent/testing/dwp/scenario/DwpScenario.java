@@ -9,7 +9,6 @@ import com.essent.automation.util.Sleeper;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.datagenerator.vat.VatNumberGenerator;
-import com.essent.testing.dwp.helper.AddressUtil;
 import com.essent.testing.scenario.RegisteredScenario;
 import com.essent.testing.selenium.DWPSeleniumDriver;
 import com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter;
@@ -21,7 +20,6 @@ import org.iban4j.CountryCode;
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpDate;
 import static org.junit.Assert.assertTrue;
