@@ -2,6 +2,7 @@
 @B2B
 @REGRESSION
 @CREDIT-AND-CONTROL
+@UNSTABLE
 Feature: NUAT-557: Check guarantee status of customer with Customer Acceptance Tool
     Background:
         When B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
