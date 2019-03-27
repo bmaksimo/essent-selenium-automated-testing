@@ -7,10 +7,12 @@ public class CustomerPage extends Component {
 
     private static final String labelPaymentMethod = "//tr[7]/td[2]/span";
     private static final String labelBankAccount = "//td[@data-field=\"acc_number\"]";
+    private static final String nameTab = "name_tab";
+    private static final String tabMenuXpath = "//li[@class='ui-state-default ui-corner-top']/a[contains(text(),'"+nameTab+"')] ";
 
     public void clickOnTabMenu(String tab){
         awaitOdooRequestToFinish(20);
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//li[@class='ui-state-default ui-corner-top']/a[contains(text(),'"+tab+"')] ")));
+        createQuery(tabMenuXpath, nameTab, tab);
 
     }
 
