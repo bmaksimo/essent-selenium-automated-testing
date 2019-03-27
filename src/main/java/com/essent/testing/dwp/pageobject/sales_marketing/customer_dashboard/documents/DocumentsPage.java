@@ -6,12 +6,15 @@ import org.openqa.selenium.By;
 
 public class DocumentsPage extends Component {
 
+    private static final String labelDocument = "//span[contains(text(), 'customer-signature')]";
+    private static final String findDocument = "(//span[.='customer-signature.pdf'])[1]";
+
     public String documentText(){
-        return findElementWhenVisible(By.xpath("//span[contains(text(), 'customer-signature')]")).getText();
+        return findElementWhenVisible(By.xpath(labelDocument)).getText();
 
     }
     public void findDocument() {
         seleniumDriver.waitForRequestsToFinish();
-        Assert.assertTrue(findElementWhenVisible(By.xpath("(//span[.='customer-signature.pdf'])[1]")).isDisplayed());
+        Assert.assertTrue(findElementWhenVisible(By.xpath(findDocument)).isDisplayed());
     }
 }

@@ -11,6 +11,7 @@ public class CustomerPage extends Component {
     public void clickOnTabMenu(String tab){
         awaitOdooRequestToFinish(20);
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//li[@class='ui-state-default ui-corner-top']/a[contains(text(),'"+tab+"')] ")));
+
     }
 
     public String getBankAccountAsString(){
