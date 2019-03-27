@@ -15,6 +15,8 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.text.StrSubstitutor;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.util.Assert;
 
 import javax.xml.bind.JAXBContext;
@@ -70,12 +72,30 @@ public class ConsumptionSteps extends DwpScenario {
     public void generateConsumptionUntilDate(String deliveryPoint, String dateTo) throws Exception {
         String deliveryPointId = parameterProvider.getValueOrParameterAsString(deliveryPoint);
         parameterProvider.put("billrun-date", DateExpressionsUtil.toDwpDate(dateTo));
+
+        RestResponse resp = postConsumption(deliveryPointId, dateTo);
+        Assert.isTrue(resp.getResult(), resp.getMsg());
+    }
+
+    @When("^Consumption at deliverypointid \"([^\"]*)\" is generated until \"([^\"]*)\"$")
+    public void generateConsumptionUntilRelativeDate(String deliveryPoint, String dateTo) throws Exception {
+        String deliveryPointId = parameterProvider.getValueOrParameterAsString(deliveryPoint);
+        String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(dateTo));
+        parameterProvider.put("billrun-date", inputValue);
+
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy");
+        DateTime frenchFormatDate = formatter.parseDateTime(inputValue);
+        dateTo = frenchFormatDate.toString("yyyy-MM-dd");
+
+        RestResponse resp = postConsumption(deliveryPointId, dateTo);
+        Assert.isTrue(resp.getResult(), resp.getMsg());
+    }
+
+    private RestResponse postConsumption(String deliveryPointId, String dateTo) throws Exception {
         String consumptionData = getConsumptionRequest(deliveryPointId, dateTo);
         BasePayload msg = generatePayloadFromString(consumptionData);
 
-        BillingEnergyCommRest bERest = new BillingEnergyCommRest();
-        RestResponse resp = bERest.postEnergyCommMessage(msg);
-        Assert.isTrue(resp.getResult(), resp.getMsg());
+        return new BillingEnergyCommRest().postEnergyCommMessage(msg);
     }
 
     private String getConsumptionRequest(String deliveryPoint, String dateTo) {

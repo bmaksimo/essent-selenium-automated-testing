@@ -22,9 +22,6 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
             | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
-
-        #Reg04  workaround  - Tariefkaart selection is commented out
-        #When "Tariefkaart" selection is "TC_02_2019_B2C"
         And "Pakket" selection is "Vast"
         And Checkbox "Gas Fix B2C (TC1)" is Unchecked
         And Package and Fuel Type is confirmed
@@ -83,7 +80,6 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         Then View list header is "Transacties"
         And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
 
-
         # 3 - Download CODA
         Given I renew login to Odoo as "role_essent_ccm_user"
         When Cleanup Odoo CODA files
@@ -120,13 +116,15 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
 
         When Click on "parameter:accountNumber" link
         And Dashboard menu is "Billing"
-        Then "Openstaand bedrag" in the first "Paid by OV" row of "Transacties" table is "0"
+        Then Table "Transacties" contains value "Payment" at column "ID & Type"
+        And Table "Transacties" contains value "0" at column "Openstaand bedrag"
+        And Table "Transacties" contains value "Paid by OV" at column "Extra info"
 
         # 5 - Create consumptions
         Given Dashboard menu is "Contracten"
         And View list header is "Actieve en toekomstige connecties"
         And "1st" List element with value at column "EAN-code" is checked
-        Then Consumption at deliverypointid "parameter:EAN-code" is generated from now until "2019-09-30"
+        Then Consumption at deliverypointid "parameter:EAN-code" is generated until "1 year from now"
         #And Click on "parameter:EAN-code" link
         #And Consumption is available at "1st" row in "Van - Aan" column
 
@@ -159,7 +157,7 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         And Click on "parameter:accountNumber" link
         And Dashboard menu is "Billing"
         Then View list header is "Transacties"
-        And "1st" list element has cell value "Invoice (SETTLEMENT)" at column "ID & Type" polling 450 seconds
+        And Table "Transacties" contains value "Invoice (SETTLEMENT)" at column "ID & Type"
 
         # 8 - Reach HB3 dunning level
         Given I renew login to DWP as "billing.testautomation@essent.be"
@@ -181,12 +179,12 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
 
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
+        And Table "Transacties" contains value "Invoice (SETTLEMENT)" at column "ID & Type"
+        And Table "Transacties" contains value "Invoice (ADVANCE)" at column "ID & Type"
+        And Table "Transacties" contains value "Payment" at column "ID & Type"
         And "1st" list element has cell value "Invoice (DUNNINGCOST)" at column "ID & Type"
         And "2nd" list element has cell value "Invoice (DUNNINGCOST)" at column "ID & Type"
         And "3rd" list element has cell value "Invoice (DUNNINGCOST)" at column "ID & Type"
-        And "4th" list element has cell value "Invoice (SETTLEMENT)" at column "ID & Type" polling 450 seconds
-        And "5th" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
-        And "6th" list element has cell value "Payment" at column "ID & Type"
 
         # 9 - Soft dunning
         And Dashboard menu is "Service"
