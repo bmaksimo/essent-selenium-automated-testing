@@ -8,7 +8,7 @@ public class QuoteDetails {
     private String accountNumber;
     private String accountId;
     private String ean;
-    private String dateOfBirth; //date of birth
+    private String dateOfBirth;
     private String accountName;
     private String firstName;
     private String lastName;

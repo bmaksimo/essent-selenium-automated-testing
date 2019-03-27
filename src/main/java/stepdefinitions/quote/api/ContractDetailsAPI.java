@@ -13,8 +13,8 @@ import stepdefinitions.quote.api.helper.PayloadMapper;
 import stepdefinitions.quote.api.helper.RequestHelper;
 import stepdefinitions.quote.api.model.ContractDetails;
 import stepdefinitions.quote.api.model.ContractsOnAccount;
-import stepdefinitions.quote.api.model.GetOrderDetailsRequest;
 import stepdefinitions.quote.api.model.QuoteDetails;
+import stepdefinitions.quote.api.model.getOrderDetailsRequest;
 
 import java.io.IOException;
 
@@ -50,7 +50,7 @@ public class ContractDetailsAPI extends AbstractAPI {
     LOGGER.info("Aos Products ID: " + aosProductsId);
         String contractStartDate = contractResponse.jsonPath().getString("data.rows[0].rowData");
         contractStartDate = findContractStartDate(contractStartDate);
-    contractDetails.setContractStartDate();
+    contractDetails.setContractStartDate(contractStartDate);
     LOGGER.info("contractStartDate: " + contractStartDate);
 
     return contractDetails;
@@ -76,7 +76,7 @@ public class ContractDetailsAPI extends AbstractAPI {
 
     }
 
-    public String getPaymentDetails(Cookies cookie, String quoteId) throws IOException {
+    public String getPaymentDetails(Cookies cookie, String quoteId, ContractDetails contractDetails) throws IOException {
 	RequestHelper helper = new RequestHelper();
 	String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
 		+ ConfigProvider.getProperty(ConfigKey.CRM_BILLING_DETAILS_URL) + "/" + quoteId + "/" + "readOnly";
@@ -90,6 +90,7 @@ public class ContractDetailsAPI extends AbstractAPI {
 	LOGGER.info("Billing details retrieved");
 	jbillingId = getBillingIdFromResponse(quoteDetailsResponse);
 	LOGGER.info("JBilling ID: " + jbillingId);
+    contractDetails.setjBillingId(jbillingId);
 
 	return jbillingId;
 
@@ -131,7 +132,8 @@ public class ContractDetailsAPI extends AbstractAPI {
         String resultStatusStr;
 
         resultStatusStr = getOrderDetailsResponse.xmlPath().getString("//getOrderDetailsResponse/result");
-        if (resultStatusStr == "true" ){resultStatus = true;}
+
+        if (resultStatusStr.startsWith("true") ){resultStatus = true;}
         return resultStatus;
     }
 
@@ -139,15 +141,16 @@ public class ContractDetailsAPI extends AbstractAPI {
         XmlMapper xmlMapper = new XmlMapper();
 
         xmlMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        GetOrderDetailsRequest orderDetailsPayload = new GetOrderDetailsRequest();
+
+        getOrderDetailsRequest orderDetailsPayload = new getOrderDetailsRequest();
+
         orderDetailsPayload.setBillingId(contractDetails.getjBillingId());
         orderDetailsPayload.setEan(quoteDetails.getEan());
-        orderDetailsPayload.setAskDate("2019-02-01"); //Napraviti getter za Contract Start Date
+        orderDetailsPayload.setAskDate(contractDetails.getContractStartDate());
         orderDetailsPayload.setIncludeSettlement("true");
         orderDetailsPayload.setSettlementStatus("1");
 
-        //return xmlMapper.readValue("<SimpleBean><x>1</x><y>2</y></SimpleBean>", SimpleBean.class);
-        String xml = xmlMapper.writeValueAsString(new SimpleBean());
+        String xml = xmlMapper.writeValueAsString(orderDetailsPayload);
         return xml;
     }
 

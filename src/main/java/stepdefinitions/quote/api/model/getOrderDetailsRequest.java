@@ -1,6 +1,6 @@
 package stepdefinitions.quote.api.model;
 
-public class GetOrderDetailsRequest
+public class getOrderDetailsRequest
 {
     private String billingId;
     private String ean;

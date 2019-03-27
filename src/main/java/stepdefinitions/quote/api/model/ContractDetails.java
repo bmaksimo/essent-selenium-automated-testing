@@ -34,7 +34,7 @@ public class ContractDetails {
         this.jbillingId = jbillingId;
     }
     public String getContractStartDate(){return contractStartDate;}
-    public void setContractStartDate(){this.contractStartDate = contractStartDate;}
+    public void setContractStartDate(String contractStartDate){this.contractStartDate = contractStartDate;}
     public String getContractEndDate(){return contractEndDate;}
     public void setContractEndDate(){this.contractEndDate = contractEndDate;}
 

@@ -123,7 +123,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     @When("^Payment detials are recieved$")
     public void payment_detials_are_recieved() throws Throwable {
-	this.jbillingId = new ContractDetailsAPI().getPaymentDetails(cookie, quoteDetails.getQuoteId());
+	this.jbillingId = new ContractDetailsAPI().getPaymentDetails(cookie, quoteDetails.getQuoteId(), contractDetails);
     }
 
     @Then("^Wait until contract instance starts$")
@@ -134,6 +134,9 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     @And("^Check order in jbilling$")
     public void checkOrderInJbilling() throws IOException {
-        assertThat( new ContractDetailsAPI().getOrderDetails(cookie, quoteDetails, contractDetails), is(true));
+        //assertThat( new ContractDetailsAPI().getOrderDetails(cookie, quoteDetails, contractDetails), is(true));
+
+        await().pollInterval(5, TimeUnit.SECONDS).atMost(600, TimeUnit.SECONDS)
+            .until(AsyncExecutor.isOrderCreated(cookie, quoteDetails, contractDetails));
     }
 }
