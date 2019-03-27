@@ -101,7 +101,7 @@ public class InputElements extends DwpScenario {
     public void setInput(String value) throws Throwable {
         seleniumDriver.waitForRequestsToFinish();
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
-        WebElement gasEAN = seleniumDriver.findElement(By.xpath("//*[@id=\"ean-c-accounts-aos-quotes-aos-products-quotes-e-2-e-39-e-6-c-7-ad-8-aac-8-ce-01-58977-a-42-c-0-f-2-field\"]"));
+        WebElement gasEAN = seleniumDriver.findElement(By.xpath("//h2[contains(text(),'Aardgas')]/parent::div/parent::div/div[@class='form__group']//label[contains(text(),'EAN-code')]/parent::div//input"));
         boolean gasEANWasFound = gasEAN != null;
         gasEAN.sendKeys(inputValue);
         assertThat(String.format("Gas EAN-code element was not found."), gasEANWasFound, is(true));
