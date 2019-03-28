@@ -2,6 +2,7 @@ package stepdefinitions.dwp.contracts.b2b.cancel;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.guided_flow.cupq.NewQuotePage;
+import com.essent.testing.dwp.pageobject.impl.navigation.DwpDashboardMenuPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.Invoice_list.InvoiceListPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.details.DetailsPage;
@@ -229,6 +230,20 @@ public class ContractsSteps extends DwpScenario {
         parameterProvider.put("productChangeStartDate", pcsd);
         parameterProvider.put("productChangeEndDate", pced);
 
+    }
+
+    @And("^Wait for the first contract to be activated$")
+    public void waitForTheFirstContractToBeActivated() {
+        DwpDashboardMenuPage ddmp = new  DwpDashboardMenuPage();
+        ContractPage cp = new ContractPage();
+
+        while (!cp.getStatusFromContract().equalsIgnoreCase("Actief")) {
+            Sleeper.sleepTightInSeconds(10);
+            ddmp.clickOnDashboardElement("Sales");
+            ddmp.clickOnDashboardElement("Contracten");
+
+        }
+        Assert.assertTrue(cp.getStatusFromContract().equalsIgnoreCase("Actief"));
     }
 
 }
