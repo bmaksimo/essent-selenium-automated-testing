@@ -5,6 +5,7 @@ import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.modal.quote.SimilarAccountDialogImpl;
+import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import com.essent.testing.dwp.pageobject.impl.quote.*;
 import com.essent.testing.dwp.pageobject.impl.quote_for_account.QuoteForAccountOverviewPage;
 import com.essent.testing.dwp.pageobject.modal.quote.SimilarAccountDialog;
@@ -12,12 +13,18 @@ import com.essent.testing.dwp.pageobject.quote.GuidedStep;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
 import com.essent.testing.util.resource.ResourceUtil;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import cucumber.api.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
+import io.restassured.mapper.ObjectMapper;
+import io.restassured.mapper.ObjectMapperDeserializationContext;
+import io.restassured.mapper.ObjectMapperSerializationContext;
 import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
 import org.openqa.selenium.By;
@@ -49,6 +56,8 @@ public class QuoteSteps extends DwpScenario {
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
+
+
 
     @When("^B2C sales channel is \"([^\"]*)\"$")
     public void initSalesChannel(SalesChannel salesChannel) throws Throwable {
@@ -159,9 +168,9 @@ public class QuoteSteps extends DwpScenario {
     @And("^Customer address is$")
     public void initCustomerAddress(final DataTable address) throws Throwable {
         List<CustomerAddress> list = address.asList(CustomerAddress.class);
-        CustomerAddress cuatomerAddress = list.get(0);
-        boolean success = new InitialiseCustomerAddress().test(cuatomerAddress);
-        assertThat("Cusomer Address data wasn't initialised.", success, is(true));
+        CustomerAddress customerAddress = list.get(0);
+        boolean success = new InitialiseCustomerAddress().test(customerAddress);
+        assertThat("Customer Address data wasn't initialised.", success, is(true));
     }
 
     @And("^Customer details are confirmed$")
@@ -357,7 +366,15 @@ public class QuoteSteps extends DwpScenario {
         logger().info(" - Generated EAN code: " + eanCode);
     }
 
-
+    @And("Gas EAN-code input in the \"([^\"]*)\" card is \"([^\"]*)\"$")
+    public void setInput(String card, String value) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
+        WebElement gasEAN = seleniumDriver.findElement(By.xpath("//h2[contains(text(),'"+card+"')]/parent::div/parent::div/div[@class='form__group']//label[contains(text(),'EAN-code')]/parent::div//input"));
+        boolean gasEANWasFound = gasEAN != null;
+        gasEAN.sendKeys(inputValue);
+        assertThat("Gas EAN-code element was not found.", gasEANWasFound, is(true));
+    }
 
     @And("^Electricity EAN code is \"([^\"]*)\"$")
     public void
@@ -399,6 +416,17 @@ public class QuoteSteps extends DwpScenario {
         boolean eanWasFound = StringUtils.isNotBlank(ean);
         assertThat(String.format("EAN code '%s' was not found.", ean), eanWasFound, is(true));
         parameterProvider.put("EAN-code", ean);
+    }
+
+    @And("^Value at \"([^\"]*)\" in the card \"([^\"]*)\" is \"([^\"]*)\"$")
+    public void checkValueInCard(String label, String cardName, String value) {
+        BaseObjectPage baseObject = new BaseObjectPage();
+        WebElement cardTextXPath = baseObject.cardTextXPathValue(cardName, label);
+        String card = cardTextXPath.getText();
+
+        boolean result = card.matches(value);
+
+        assertThat("The value you entered differs from the real value", result, is(true));
     }
 
     @Override
