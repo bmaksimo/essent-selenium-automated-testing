@@ -371,4 +371,8 @@ public class ContractPage extends Component {
         seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[@label='"+test+"']/a")));
     }
+
+    public int getNumberOfElectricityContracts(){
+        return seleniumDriver.findElements(By.xpath("//list-icon-text-cell/div")).size();
+    }
 }

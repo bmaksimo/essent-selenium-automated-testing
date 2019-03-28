@@ -9,4 +9,8 @@ public class DetailsPage extends Component {
         seleniumDriver.waitForRequestsToFinish();
         Assert.assertTrue(seleniumDriver.findElementWhenVisible(By.xpath("//span[.='" + iban + "']")).isDisplayed());
     }
+
+    public int getNumberOfBillingCustomers(){
+        return seleniumDriver.findElements(By.xpath("//list[@list-key='BillingCustomerOnaccount']//tr[@class='list__row']")).size();
+    }
 }
