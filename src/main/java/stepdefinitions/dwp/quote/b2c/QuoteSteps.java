@@ -5,6 +5,7 @@ import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.modal.quote.SimilarAccountDialogImpl;
+import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import com.essent.testing.dwp.pageobject.impl.quote.*;
 import com.essent.testing.dwp.pageobject.impl.quote_for_account.QuoteForAccountOverviewPage;
 import com.essent.testing.dwp.pageobject.modal.quote.SimilarAccountDialog;
@@ -56,9 +57,7 @@ public class QuoteSteps extends DwpScenario {
         registerActiveScenario(scenario);
     }
 
-    private static String cardTextXPathValue(String cardName, String label) {
-        return "//h2[normalize-space(text())='"+cardName+"']/parent::div/parent::div/div[@class='form__group']//label[normalize-space(text())='"+label+"']/parent::div//strong";
-    }
+
 
     @When("^B2C sales channel is \"([^\"]*)\"$")
     public void initSalesChannel(SalesChannel salesChannel) throws Throwable {
@@ -421,8 +420,9 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^Value at \"([^\"]*)\" in the card \"([^\"]*)\" is \"([^\"]*)\"$")
     public void checkValueInCard(String label, String cardName, String value) {
-        String cardTextXPath = cardTextXPathValue(cardName, label);
-        String card = seleniumDriver.findElement(By.xpath(cardTextXPath)).getText();
+        BaseObjectPage baseObject = new BaseObjectPage();
+        WebElement cardTextXPath = baseObject.cardTextXPathValue(cardName, label);
+        String card = cardTextXPath.getText();
 
         boolean result = card.matches(value);
 
