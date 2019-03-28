@@ -56,6 +56,10 @@ public class QuoteSteps extends DwpScenario {
         registerActiveScenario(scenario);
     }
 
+    private static String cardTextXPathValue(String cardName, String label) {
+        return "//h2[normalize-space(text())='"+cardName+"']/parent::div/parent::div/div[@class='form__group']//label[normalize-space(text())='"+label+"']/parent::div//strong";
+    }
+
     @When("^B2C sales channel is \"([^\"]*)\"$")
     public void initSalesChannel(SalesChannel salesChannel) throws Throwable {
         QuoteDetailsPage quoteDetailsPage = new QuoteDetailsPage();
@@ -413,6 +417,16 @@ public class QuoteSteps extends DwpScenario {
         boolean eanWasFound = StringUtils.isNotBlank(ean);
         assertThat(String.format("EAN code '%s' was not found.", ean), eanWasFound, is(true));
         parameterProvider.put("EAN-code", ean);
+    }
+
+    @And("^Value at \"([^\"]*)\" in the card \"([^\"]*)\" is \"([^\"]*)\"$")
+    public void checkValueInCard(String label, String cardName, String value) {
+        String cardTextXPath = cardTextXPathValue(cardName, label);
+        String card = seleniumDriver.findElement(By.xpath(cardTextXPath)).getText();
+
+        boolean result = card.matches(value);
+
+        assertThat(String.format("The value you entered differs from the real value"), result, is(true));
     }
 
     @Override

@@ -32,10 +32,6 @@ public class InputElements extends DwpScenario {
         registerActiveScenario(scenario);
     }
 
-    private static String cardTextXPathValue(String cardName, String label) {
-        return "//h2[normalize-space(text())='"+cardName+"']/parent::div/parent::div/div[@class='form__group']//label[normalize-space(text())='"+label+"']/parent::div//strong";
-    }
-
     /**
      * Class, delegating form input to <code>BaseFormInput.js</code>
      */
@@ -195,16 +191,6 @@ public class InputElements extends DwpScenario {
         boolean placeHolderWasFound = placeHolderInputElement != null;
         assertThat(String.format("Placeholder element '%s' was not found.", placeholder), placeHolderWasFound, is(true));
         placeHolderInputElement.sendKeys(inputValue);
-    }
-
-    @And("^Value at \"([^\"]*)\" in the card \"([^\"]*)\" is \"([^\"]*)\"$")
-    public void checkValueInCard(String label, String cardName, String value) {
-        String cardTextXPath = cardTextXPathValue(cardName, label);
-        String card = seleniumDriver.findElement(By.xpath(cardTextXPath)).getText();
-
-        boolean result = card.matches(value);
-
-        assertThat(String.format("The value you entered differs from the real value"), result, is(true));
     }
 
     /**
