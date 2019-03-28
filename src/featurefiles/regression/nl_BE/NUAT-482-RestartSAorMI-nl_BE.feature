@@ -2,6 +2,7 @@
 @B2B
 @REGRESSION
 @BUSINESS-DESK
+@UNSTABLE
 Feature: NUAT-482: Restart SA or MI - nl_BE
 
     Background:

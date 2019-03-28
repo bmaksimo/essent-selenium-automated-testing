@@ -12,13 +12,18 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -77,5 +82,43 @@ public class OdooSeleniumDriver extends SeleniumDriver {
         } catch (IOException e2) {
             logger.error(" - ERROR_CONFIGURE_HEADLESS_DOWNLOAD: request" + request.toString() + "comand: " + command);
         }
+    }
+
+    public WebElement findElementWhenVisible(By selector) {
+        FluentWait<WebDriver> waiter = new FluentWait<>(driver)
+            .withTimeout(Duration.ofSeconds(100))
+            .pollingEvery(Duration.ofSeconds(5))
+            .ignoring(ElementNotVisibleException.class)
+            .ignoring(NoSuchElementException.class);
+        return waiter.until(ExpectedConditions.visibilityOfElementLocated(selector));
+    }
+
+    private void driverWaitFor(final ExpectedCondition<?> expectedCondition, final long timeoutInSeconds, final long sleepInMillis) {
+        waitForExpectedCondition(expectedCondition, timeoutInSeconds, sleepInMillis);
+    }
+
+    private void waitForElementToBeVisible(final WebElement element, final long timeoutInSeconds, final long sleepInMillis) {
+        driverWaitFor(ExpectedConditions.visibilityOf(element), timeoutInSeconds, sleepInMillis);
+    }
+
+    private void waitForElementToBeClickable(final WebElement element, final long timeoutInSeconds, final long sleepInMillis) {
+        driverWaitFor(ExpectedConditions.elementToBeClickable(element), timeoutInSeconds, sleepInMillis);
+    }
+
+    private void waitForElement(final WebElement element) {
+        waitForElementToBeVisible(element, 100, 5);
+        waitForElementToBeClickable(element, 100, 5);
+    }
+
+    public void waitAndClick(final WebElement element) {
+        waitForElement(element);
+        element.click();
+    }
+
+    public void waitAndSendKeys(final WebElement element, final String keysToSend) {
+        waitForElement(element);
+        element.clear();
+        waitForElement(element);
+        element.sendKeys(keysToSend);
     }
 }

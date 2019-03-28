@@ -2,8 +2,7 @@
 @B2C
 @REGRESSION
 @SOCTAR-CONFIRMATION
-
-
+@UNSTABLE
 Feature: NSTA 332 Soctar confirmation --> Manual
     Background:
         Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"

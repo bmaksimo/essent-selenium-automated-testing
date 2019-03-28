@@ -28,7 +28,10 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        When Electricity EAN code is "random"
+        And EAN code is generated
+        And "Startdatum" date is "now"
+        And "EAN-code" input is "parameter:EAN-code-generated"
+        And Electricity market mock test is Open
         And Connection details are confirmed
         Then Form header is "Billing details"
 
@@ -113,14 +116,14 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         Then "1st" list element has cell value "Invoice (GUARANTEE)" at column "ID & Type"
 
         # Step 4 - Generate Odoo CODA for account
-        Given I renew login to Odoo as "t.geets"
+        Given I renew login to Odoo as "role_essent_ccm_user"
         And Cleanup Odoo CODA files
         When Odoo top menu is "Accounting"
         And Odoo left menu is "Customers"
         And Odoo filter is "parameter:Klantnummer & Naam"
         When Column "Account Number" with value "parameter:Klantnummer & Naam" is clicked
         And Button "Journal Items" is clicked
-        And Generate CODA in the "1st" row is clicked
+        And Generate CODA in the first row with "Amount receivable" is clicked
         Then Modal title contains "Download CODA"
         And Generated CODA file is downloaded
         And Modal button "Close" is clicked
