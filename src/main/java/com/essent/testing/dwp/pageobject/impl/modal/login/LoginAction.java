@@ -16,7 +16,7 @@ public class LoginAction extends Component {
     }
 
     private LoginComponent getCurrentLoginDialog() {
-        Sleeper.sleepTightInSeconds(20);
+        Sleeper.sleepTightInSeconds(40);
         if (null != seleniumDriver.findElementOrNull(IWELCOME_SELECTOR)) return new IWelcomeLoginDialog(seleniumDriver);
         else if (null != seleniumDriver.findElementOrNull(DWP_SELECTOR)) return new DWPLoginDialog(seleniumDriver);
         return null;

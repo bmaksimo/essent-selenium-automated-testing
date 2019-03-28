@@ -166,6 +166,14 @@ public class ContractsSteps extends DwpScenario {
 
     }
 
+    @Then("^Get Account Number$")
+    public void searchForAccountNumber() {
+        ContractPage cp = new ContractPage();
+        String accountNumber = cp.getAccountNumber();
+        parameterProvider.put("accountNumber", accountNumber);
+
+    }
+
     @And("^Sign place is \"([^\"]*)\"$")
     public void signPlaceIs(String place) {
         NewQuotePage nqp = new NewQuotePage();
