@@ -373,7 +373,7 @@ public class QuoteSteps extends DwpScenario {
         WebElement gasEAN = seleniumDriver.findElement(By.xpath("//h2[contains(text(),'"+card+"')]/parent::div/parent::div/div[@class='form__group']//label[contains(text(),'EAN-code')]/parent::div//input"));
         boolean gasEANWasFound = gasEAN != null;
         gasEAN.sendKeys(inputValue);
-        assertThat(String.format("Gas EAN-code element was not found."), gasEANWasFound, is(true));
+        assertThat("Gas EAN-code element was not found.", gasEANWasFound, is(true));
     }
 
     @And("^Electricity EAN code is \"([^\"]*)\"$")
@@ -426,7 +426,7 @@ public class QuoteSteps extends DwpScenario {
 
         boolean result = card.matches(value);
 
-        assertThat(String.format("The value you entered differs from the real value"), result, is(true));
+        assertThat("The value you entered differs from the real value", result, is(true));
     }
 
     @Override
