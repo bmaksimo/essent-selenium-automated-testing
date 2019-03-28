@@ -293,6 +293,23 @@ public class QuoteSteps extends DwpScenario {
         assertThat("Failure when signing up the quote.", success, is(true));
     }
 
+    @And("^Quote deduplication is signed in \"([^\"]*)\"$")
+    public void submitSignedQuoteDeduplication(String location) throws Throwable {
+        String path = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
+        File document = new File(path);
+        assertThat("File at path " + document.getAbsolutePath() + " doesn't exist.", true,
+            is(document.exists()));
+        SignatureData signature = new SignatureData(
+            DwpDateFormats.DWP_TODAY,
+            location,
+            path);
+        Sleeper.sleepTightInSeconds(10);
+        QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage();
+        quoteOverviewView.setSignatureData(signature);
+        boolean success = quoteOverviewView.fillInFormDataDeduplication();
+        assertThat("Failure when signing up the quote.", success, is(true));
+    }
+
     @And("^Quote is signed$")
     public void submitQuote() throws Throwable {
         String path = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
@@ -305,6 +322,21 @@ public class QuoteSteps extends DwpScenario {
         QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage();
         quoteOverviewView.setSignatureData(signature);
         boolean success = quoteOverviewView.fillInFormData();
+        assertThat("Failure when signing up the quote.", success, is(true));
+    }
+
+    @And("^Quote is signed for deduplication$")
+    public void submitQuoteDeduplication() throws Throwable {
+        String path = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
+        File document = new File(path);
+        assertThat("File at path " + document.getAbsolutePath() + " doesn't exist.", true,
+            is(document.exists()));
+        SignatureData signature = new SignatureData(
+            DwpDateFormats.DWP_TODAY,
+            path);
+        QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage();
+        quoteOverviewView.setSignatureData(signature);
+        boolean success = quoteOverviewView.fillInFormDataDeduplication();
         assertThat("Failure when signing up the quote.", success, is(true));
     }
 
