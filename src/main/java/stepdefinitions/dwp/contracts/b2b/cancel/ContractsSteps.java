@@ -232,18 +232,6 @@ public class ContractsSteps extends DwpScenario {
 
     }
 
-    @And("^Wait for the first contract to be activated$")
-    public void waitForTheFirstContractToBeActivated() {
-        DwpDashboardMenuPage ddmp = new  DwpDashboardMenuPage();
-        ContractPage cp = new ContractPage();
 
-        while (!cp.getStatusFromContract().equalsIgnoreCase("Actief")) {
-            Sleeper.sleepTightInSeconds(10);
-            ddmp.clickOnDashboardElement("Sales");
-            ddmp.clickOnDashboardElement("Contracten");
-
-        }
-        Assert.assertTrue(cp.getStatusFromContract().equalsIgnoreCase("Actief"));
-    }
 
 }
