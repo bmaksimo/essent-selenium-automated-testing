@@ -20,9 +20,11 @@ public class BaseObjectPage extends Component {
     private static final String DATE_SELECTOR_XPATH = "//validation-wrapper[@label='${" + REPLACEMENT_KEY + "}']//input";
     private static final String ICON_CALENDAR_XPATH = "//span[@class='icon-kalender']";
 
-    private static final String REPLACMEENT_KEY1 = "replacement_key1";
+    private static final String REPLACEMENT_KEY1 = "replacement_key1";
     private static final String LABEL_CLICK_XPATH = "//validation-wrapper[@label='${" + REPLACEMENT_KEY
-	    + "}']//option[@label = ${'" + REPLACMEENT_KEY1 + "}']";
+	    + "}']//option[@label = ${'" + REPLACEMENT_KEY1 + "}']";
+
+    private static final String CARD_TEXT_XPATH = "//h2[normalize-space(text())='${"+REPLACEMENT_KEY+"}']/parent::div/parent::div/div[@class='form__group']//label[normalize-space(text())='${"+REPLACEMENT_KEY1+"}']/parent::div//strong";
 
     public void clickOnPlus() {
 
@@ -61,12 +63,19 @@ public class BaseObjectPage extends Component {
     public void clickOnLabel(String labelValue, String valueValue) {
 	Map<String, String> valuesMap = new HashMap<>();
 	valuesMap.put(REPLACEMENT_KEY, labelValue);
-	valuesMap.put(REPLACMEENT_KEY1, valueValue);
+	valuesMap.put(REPLACEMENT_KEY1, valueValue);
 	String xpathLabel = createQuery(LABEL_CLICK_XPATH, valuesMap);
 	seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(xpathLabel)));
     }
 
     public WebElement cardTextXPathValue(String cardName, String label) {
-        return seleniumDriver.findElement(By.xpath("//h2[normalize-space(text())='"+cardName+"']/parent::div/parent::div/div[@class='form__group']//label[normalize-space(text())='"+label+"']/parent::div//strong"));
+        Map<String, String> valuesMap = new HashMap<>();
+        valuesMap.put(REPLACEMENT_KEY, cardName);
+        valuesMap.put(REPLACEMENT_KEY1, label);
+        String cardTextXPath = createQuery(CARD_TEXT_XPATH, valuesMap);
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println(cardTextXPath);
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++");
+        return seleniumDriver.findElementWhenVisible(By.xpath(cardTextXPath));
     }
 }
