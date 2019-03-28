@@ -33,7 +33,7 @@ Feature: NUAT-5021 Voraaf Step 1. Sign-in on vooraf (prepaid)
         And EAN code is generated
         And "EAN-code" input is "parameter:EAN-code-generated"
         And EAN code is generated
-        And Gas EAN-code input is "parameter:EAN-code-generated"
+        And Gas EAN-code input in the "Aardgas" card is "parameter:EAN-code-generated"
         And Connection details are confirmed
         Then Form header is "Billing details"
 

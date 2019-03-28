@@ -363,7 +363,15 @@ public class QuoteSteps extends DwpScenario {
         logger().info(" - Generated EAN code: " + eanCode);
     }
 
-
+    @And("Gas EAN-code input in the \"([^\"]*)\" card is \"([^\"]*)\"$")
+    public void setInput(String card, String value) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
+        WebElement gasEAN = seleniumDriver.findElement(By.xpath("//h2[contains(text(),'"+card+"')]/parent::div/parent::div/div[@class='form__group']//label[contains(text(),'EAN-code')]/parent::div//input"));
+        boolean gasEANWasFound = gasEAN != null;
+        gasEAN.sendKeys(inputValue);
+        assertThat(String.format("Gas EAN-code element was not found."), gasEANWasFound, is(true));
+    }
 
     @And("^Electricity EAN code is \"([^\"]*)\"$")
     public void

@@ -101,17 +101,6 @@ public class InputElements extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
     }
 
-    @And("Gas EAN-code input is \"([^\"]*)\"$")
-    public void setInput(String value) throws Throwable {
-        seleniumDriver.waitForRequestsToFinish();
-        String inputValue = parameterProvider.getValueOrParameterAsString(value);
-        WebElement gasEAN = seleniumDriver.findElement(By.xpath("//h2[contains(text(),'Aardgas')]/parent::div/parent::div/div[@class='form__group']//label[contains(text(),'EAN-code')]/parent::div//input"));
-        boolean gasEANWasFound = gasEAN != null;
-        gasEAN.sendKeys(inputValue);
-        assertThat(String.format("Gas EAN-code element was not found."), gasEANWasFound, is(true));
-    }
-
-
     /**
      * Sets and asynchronously checks date input on any DWP form
      * @param label Text label
