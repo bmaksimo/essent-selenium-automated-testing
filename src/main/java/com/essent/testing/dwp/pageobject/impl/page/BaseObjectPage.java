@@ -73,9 +73,6 @@ public class BaseObjectPage extends Component {
         valuesMap.put(REPLACEMENT_KEY, cardName);
         valuesMap.put(REPLACEMENT_KEY1, label);
         String cardTextXPath = createQuery(CARD_TEXT_XPATH, valuesMap);
-        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++");
-        System.out.println(cardTextXPath);
-        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++");
         return seleniumDriver.findElementWhenVisible(By.xpath(cardTextXPath));
     }
 }
