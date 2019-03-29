@@ -21,15 +21,10 @@ public class DwpDashboardMenuPage extends Component {
     }
 
     private WebElement getDashboardElement(String name)  {
-        //String name
-//        return seleniumDriver.findElementWhenVisible(By.xpath("//div[@class='col-1-4 blue-sidebar']//div[@class='icon-nav']/a/small[contains(text(),'"+name+"')]"));
-//        return seleniumDriver.findElementWhenVisible(By.xpath("//div[@class='icon-nav']"));
-//        return seleniumDriver.findElementWhenVisible(By.xpath("//div[@class='col-1-4 blue-sidebar']//div[@class='icon-nav']/a"));
-        return seleniumDriver.findElementWhenVisible(By.xpath("//span[@class='"+menuMap.get(name)+"']"));
+         return seleniumDriver.findElementWhenVisible(By.xpath("//span[@class='"+menuMap.get(name)+"']"));
     }
 
     public void clickOnDashboardElement(String element) {
-//        seleniumDriver.waitAndClick(getDashboardElement().findElement(By.xpath("//small[contains(text(),'"+element+"')]")));
         seleniumDriver.waitAndClick(getDashboardElement(element));
     }
 }
