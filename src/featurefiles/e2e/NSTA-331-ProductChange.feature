@@ -53,7 +53,7 @@ Feature: NSTA 331- Product Change for TK1 type
         When Dashboard menu is "Contracten"
         Then View list header is "Actieve en toekomstige connecties"
         And "1st" List element with value at column "EAN-code" is checked
-#        And "1st" list element has cell value "Actief" at column "Contractnummer" polling 450 seconds
+        And "1st" list element has cell value "Actief" at column "Contractnummer" polling 450 seconds
 
         #2 - Start product change
         When Plus action of "1" element from "ContractsOnAccount" and click on "Productwijziging"
