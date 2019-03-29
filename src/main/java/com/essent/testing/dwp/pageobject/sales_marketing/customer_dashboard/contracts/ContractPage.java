@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 public class ContractPage extends Component {
 
-    private static final String numberElectricityContract = "//list-icon-text-cell/div";
+    private static final String NUMBER_ELECTRICITY_CONTRACT = "//list-icon-text-cell/div";
 
     public WebElement startData() {
         return seleniumDriver.findElementWhenVisible(By.id("contract-start-date-field"));
@@ -374,6 +374,6 @@ public class ContractPage extends Component {
     }
 
     public int getNumberOfElectricityContracts(){
-        return seleniumDriver.findElements(By.xpath(numberElectricityContract)).size();
+        return seleniumDriver.findElements(By.xpath(NUMBER_ELECTRICITY_CONTRACT)).size();
     }
 }

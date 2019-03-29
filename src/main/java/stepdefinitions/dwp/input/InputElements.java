@@ -12,8 +12,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
 import stepdefinitions.dwp.tables.IsAre;
 import stepdefinitions.dwp.tables.plus.SwitchState;
-import org.openqa.selenium.support.ui.Select;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -23,8 +21,8 @@ import static org.hamcrest.Matchers.is;
 
 public class InputElements extends DwpScenario {
 
-    private static final String tariffId = "aos-products-quotes-tariffsheet-id-field";
-    private static final String tariffFirstListItem = "//select[@id='aos-products-quotes-tariffsheet-id-field']/option[1]";
+    private static final String TARIFF_ID = "aos-products-quotes-tariffsheet-id-field";
+    private static final String TARIFF_FIRST_LIST_ITEM = "//select[@id='aos-products-quotes-tariffsheet-id-field']/option[1]";
 
     /**
      * Cucumber-JVM Before- hook
@@ -201,8 +199,8 @@ public class InputElements extends DwpScenario {
     @And("Tariefkaart has value of 1st item from list$")
     public void selectFirstItemFromList() {
         seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.waitAndClick(seleniumDriver.findElement(By.id(tariffId)));
-        seleniumDriver.waitAndClick(seleniumDriver.findElement(By.xpath(tariffFirstListItem)));
+        seleniumDriver.waitAndClick(seleniumDriver.findElement(By.id(TARIFF_ID)));
+        seleniumDriver.waitAndClick(seleniumDriver.findElement(By.xpath(TARIFF_FIRST_LIST_ITEM)));
 
     }
 
