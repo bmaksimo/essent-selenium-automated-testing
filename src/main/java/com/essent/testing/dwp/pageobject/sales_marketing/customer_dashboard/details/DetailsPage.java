@@ -13,7 +13,8 @@ public class DetailsPage extends Component {
     public void findIban(String iban) {
         seleniumDriver.waitForRequestsToFinish();
         String xpathFindIban = createQuery(IBAN, REPLACEMENT_KEY, iban);
-        Assert.assertTrue(seleniumDriver.findElementWhenVisible(By.xpath(xpathFindIban)).isDisplayed());
+        seleniumDriver.findElementWhenVisible(By.xpath(xpathFindIban)).isDisplayed();
+
     }
 
     public int getNumberOfBillingCustomers(){
