@@ -28,7 +28,7 @@ public class BaseObjectPage extends Component {
 
     public void clickOnPlus() {
 
-	seleniumDriver.waitAndClick(seleniumDriver.findElementOrNull(By.xpath(PLUS_BUTTON_XPATH)));
+	seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(PLUS_BUTTON_XPATH)));
     }
 
     public void plusSubaction(String actionValue) {
