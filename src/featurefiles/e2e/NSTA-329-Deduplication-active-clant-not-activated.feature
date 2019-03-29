@@ -102,8 +102,8 @@ Feature: NSTA-329 Deduplication activated customer
         When Option "Heeft de klant al getekend?" is On
         And "Kanaal ondertekening" selection is "Papier"
         And "Datum ondertekening" date is "now"
-        And Quote is signed for deduplication
-        And Quote deduplication is signed in "Kontich"
+        And Getekend document is uploaded
+        And "Plaats ondertekening" input is "Kontich"
         When Quote is confirmed
 
         When Dashboard menu is "Contracten"

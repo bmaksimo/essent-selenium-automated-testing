@@ -30,17 +30,4 @@ public class QuoteOverviewPage extends QuoteCreationGuidedStep {
         return execute(execution);
     }
 
-
-    public boolean fillInFormDataDeduplication() {
-        String place = signatureData.getPlace();
-        String filePath = signatureData.getFilePath();
-        Model.Execution execution = createExecution();
-        execution
-            .element(SIGN_LOCATION_DEDUPLICATION.element())
-            .element(SIGN_UPLOAD_DOC_DEDUPLICATION.element())
-            .step(createStep(Action.REQUIRE).element(SIGN_UPLOAD_DOC_DEDUPLICATION.name()))
-            .step(createStep(Action.UPLOAD).element(SIGN_UPLOAD_DOC_DEDUPLICATION.name()).value(filePath), UPLOAD_FILE.getSleepInMillis())
-            .step(createStep(Action.TYPING).element(SIGN_LOCATION_DEDUPLICATION.name()).value(place), INPUT.getSleepInMillis());
-        return execute(execution);
-    }
 }

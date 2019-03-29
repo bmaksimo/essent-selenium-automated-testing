@@ -8,9 +8,7 @@ public enum SignatureElements {
     SIGN_ALREADYSIGNED_CHECKBOX("SELECTOR", "#dwp-alreadysigned-field:not([disabled])"),
     SIGN_DATE("SELECTOR", "#accounts-aos-quotes-sign-date-c-field"),
     SIGN_LOCATION("SELECTOR", "#accounts-aos-quotes-sign-location-c-field"),
-    SIGN_LOCATION_DEDUPLICATION("SELECTOR", "sign-location-c-field"),
-    SIGN_UPLOAD_DOC("SELECTOR", "#accounts-aos-quotes-signed-contract-docguid-c-field:not([disabled])"),
-    SIGN_UPLOAD_DOC_DEDUPLICATION("SELECTOR", "signed-contract-docguid-c-field");
+    SIGN_UPLOAD_DOC("SELECTOR", "#accounts-aos-quotes-signed-contract-docguid-c-field:not([disabled])");
 
     private String searchBy;
     private String query;

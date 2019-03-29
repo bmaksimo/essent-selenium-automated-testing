@@ -11,6 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
 import stepdefinitions.dwp.tables.IsAre;
 import stepdefinitions.dwp.tables.plus.SwitchState;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -189,6 +190,15 @@ public class InputElements extends DwpScenario {
         boolean placeHolderWasFound = placeHolderInputElement != null;
         assertThat(String.format("Placeholder element '%s' was not found.", placeholder), placeHolderWasFound, is(true));
         placeHolderInputElement.sendKeys(inputValue);
+    }
+
+
+    @And("Tariefkaart is 1st item from list$")
+    public void selectFirstItemFromList() {
+        seleniumDriver.waitForRequestsToFinish();
+        seleniumDriver.waitAndClick(seleniumDriver.findElement(By.id("aos-products-quotes-tariffsheet-id-field")));
+        seleniumDriver.waitAndClick(seleniumDriver.findElement(By.xpath("//select[@id='aos-products-quotes-tariffsheet-id-field']/option[1]")));
+
     }
 
     /**
