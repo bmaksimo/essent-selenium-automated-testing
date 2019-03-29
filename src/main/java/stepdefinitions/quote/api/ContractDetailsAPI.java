@@ -4,6 +4,8 @@ import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import io.restassured.http.Cookies;
 import io.restassured.response.Response;
 import org.apache.log4j.Logger;
@@ -12,6 +14,7 @@ import stepdefinitions.quote.api.helper.RequestHelper;
 import stepdefinitions.quote.api.model.ContractDetails;
 import stepdefinitions.quote.api.model.ContractsOnAccount;
 import stepdefinitions.quote.api.model.QuoteDetails;
+import stepdefinitions.quote.api.model.getOrderDetailsRequest;
 
 import java.io.IOException;
 
@@ -45,6 +48,10 @@ public class ContractDetailsAPI extends AbstractAPI {
     String aosProductsId = contractResponse.jsonPath().getString("data.rows[0].cells[5].options.params.recordId");
     contractDetails.setAosProductsId(aosProductsId);
     LOGGER.info("Aos Products ID: " + aosProductsId);
+        String contractStartDate = contractResponse.jsonPath().getString("data.rows[0].rowData");
+        contractStartDate = findContractStartDate(contractStartDate);
+    contractDetails.setContractStartDate(contractStartDate);
+    LOGGER.info("contractStartDate: " + contractStartDate);
 
     return contractDetails;
 
@@ -69,7 +76,7 @@ public class ContractDetailsAPI extends AbstractAPI {
 
     }
 
-    public String getPaymentDetails(Cookies cookie, String quoteId) throws IOException {
+    public String getPaymentDetails(Cookies cookie, String quoteId, ContractDetails contractDetails) throws IOException {
 	RequestHelper helper = new RequestHelper();
 	String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
 		+ ConfigProvider.getProperty(ConfigKey.CRM_BILLING_DETAILS_URL) + "/" + quoteId + "/" + "readOnly";
@@ -83,6 +90,7 @@ public class ContractDetailsAPI extends AbstractAPI {
 	LOGGER.info("Billing details retrieved");
 	jbillingId = getBillingIdFromResponse(quoteDetailsResponse);
 	LOGGER.info("JBilling ID: " + jbillingId);
+    contractDetails.setjBillingId(jbillingId);
 
 	return jbillingId;
 
@@ -108,6 +116,44 @@ public class ContractDetailsAPI extends AbstractAPI {
 	return "success".equals(contractStatus);
 
     }
+
+
+    public boolean getOrderDetails(Cookies cookie, QuoteDetails quoteDetails, ContractDetails contractDetails ) throws IOException {
+        RequestHelper helper = new RequestHelper();
+        String path = ConfigProvider.getProperty(ConfigKey.BILLING_ORDER_DETAILS_URL);
+
+        String payload = createXMLPayload4OrderDetails(quoteDetails, contractDetails);
+
+        Response getOrderDetailsResponse = helper.postXMLRequest(STATUS_OK, cookie, payload, path);
+        //check for errors
+        //check for "UserNotFoundException"
+        //not contains <result>false</result>
+        boolean resultStatus = false;
+        String resultStatusStr;
+
+        resultStatusStr = getOrderDetailsResponse.xmlPath().getString("//getOrderDetailsResponse/result");
+
+        if (resultStatusStr.startsWith("true") ){resultStatus = true;}
+        return resultStatus;
+    }
+
+    public String createXMLPayload4OrderDetails(QuoteDetails quoteDetails, ContractDetails contractDetails) throws JsonProcessingException {
+        XmlMapper xmlMapper = new XmlMapper();
+
+        xmlMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+
+        getOrderDetailsRequest orderDetailsPayload = new getOrderDetailsRequest();
+
+        orderDetailsPayload.setBillingId(contractDetails.getjBillingId());
+        orderDetailsPayload.setEan(quoteDetails.getEan());
+        orderDetailsPayload.setAskDate(contractDetails.getContractStartDate());
+        orderDetailsPayload.setIncludeSettlement("true");
+        orderDetailsPayload.setSettlementStatus("1");
+
+        String xml = xmlMapper.writeValueAsString(orderDetailsPayload);
+        return xml;
+    }
+
 
     private String createContractPayload(String recordId) throws JsonProcessingException {
     ObjectMapper mapper = new ObjectMapper();
@@ -135,6 +181,23 @@ public class ContractDetailsAPI extends AbstractAPI {
 	}
 
 	return id;
+    }
+
+    private String findContractStartDate(String part) {
+        String startDate = null;
+
+        String[] s = part.split("\\|");
+        for (String str : s) {
+            if (str.contains("up_start_date_c")) {
+                String result = str.split(":")[1];
+                if (result.contains(",")) {
+                    startDate = result.substring(0, result.indexOf(","));
+                } else {
+                    startDate = result;
+                }
+            }
+        }
+        return startDate;
     }
 
 }

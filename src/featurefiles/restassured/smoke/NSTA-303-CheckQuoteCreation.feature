@@ -24,4 +24,5 @@ Scenario: Check basic Quote creation flow B2C
 
 	When Payment detials are recieved
 	Then Wait until contract instance starts
+    And Check order in jbilling
 

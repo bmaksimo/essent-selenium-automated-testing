@@ -147,7 +147,8 @@ public enum ConfigKey {
     CRM_PATH_TO_QUOTE("crm.quote.path"),
     CRM_PATH_TO_PAYLOAD("crm.quotepayload.path"),
     CRM_PATH_TO_QUOTE_SIGNATURE("crm.quotesignature.path"),
-    CRM_PATH_TO_SIGN_QUOTE_MODAL("crm.signquotemodal.path");
+    CRM_PATH_TO_SIGN_QUOTE_MODAL("crm.signquotemodal.path"),
+    BILLING_ORDER_DETAILS_URL("jbilling.order.details");
 
 	private String resourceKey;
     ConfigKey(String resourceKey) {

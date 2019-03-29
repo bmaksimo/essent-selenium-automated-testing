@@ -76,6 +76,25 @@ public class RequestHelper {
 	return response;
     }
 
+    public Response postXMLRequest(Integer expectedStatusCode, Cookies cookie, String payload, String path) throws IOException {
+
+        Response response = expect().given().header(trackingHeader).cookies(cookie).contentType(ContentType.XML)
+            .body(payload).when().post(path);
+
+        Integer responseStatusCode = getResponseStatusCode(response, path, expectedStatusCode);
+
+        if (!responseStatusCode.equals(expectedStatusCode)) {
+            LOGGER.info("XML body which was sent in the request is: " + payload);
+            LOGGER.error("RESPONSE IS: " + response.body().asString());
+        }
+        LOGGER.info("RESPONSE IS: " + response.body().asString());
+
+        //assertFalse(new ExceptionChecker().checkForErrorInResponse(response));
+        //assertThat(responseStatusCode, is(equalTo(expectedStatusCode)));
+
+        return response;
+    }
+
     public Response postMultipartRequest(Integer expectedStatusCode, Cookies cookie, Map<String, String> payload, String path) {
 	
 	String pathToFile = ResourceUtil.toPath("/data/restassured/upload/fileupload.txt");
