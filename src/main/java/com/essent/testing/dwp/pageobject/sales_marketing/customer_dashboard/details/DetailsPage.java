@@ -7,9 +7,13 @@ import org.openqa.selenium.By;
 public class DetailsPage extends Component {
 
     private static final String NUMBER_BILLING_CUSTOMER = "//list[@list-key='BillingCustomerOnaccount']//tr[@class='list__row']";
+    private static final String IBAN = "//span[.='${iban}']";
+    private static final String REPLACEMENT_KEY = "replacement_key";
+
     public void findIban(String iban) {
         seleniumDriver.waitForRequestsToFinish();
-        Assert.assertTrue(seleniumDriver.findElementWhenVisible(By.xpath("//span[.='" + iban + "']")).isDisplayed());
+        String xpathFindIban = createQuery(IBAN, REPLACEMENT_KEY, iban);
+        Assert.assertTrue(seleniumDriver.findElementWhenVisible(By.xpath(xpathFindIban)).isDisplayed());
     }
 
     public int getNumberOfBillingCustomers(){
