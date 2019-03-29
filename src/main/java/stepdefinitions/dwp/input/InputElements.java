@@ -193,7 +193,7 @@ public class InputElements extends DwpScenario {
     }
 
 
-    @And("Tariefkaart is 1st item from list$")
+    @And("Tariefkaart has value of 1st item from list$")
     public void selectFirstItemFromList() {
         seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(seleniumDriver.findElement(By.id("aos-products-quotes-tariffsheet-id-field")));
