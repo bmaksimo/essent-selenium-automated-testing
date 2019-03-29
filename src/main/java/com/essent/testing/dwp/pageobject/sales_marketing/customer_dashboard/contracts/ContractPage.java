@@ -9,13 +9,14 @@ import org.openqa.selenium.WebElement;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Logger;
 
 public class ContractPage extends Component {
+
+    private static final String numberElectricityContract = "//list-icon-text-cell/div";
 
     public WebElement startData() {
         return seleniumDriver.findElementWhenVisible(By.id("contract-start-date-field"));
@@ -373,6 +374,6 @@ public class ContractPage extends Component {
     }
 
     public int getNumberOfElectricityContracts(){
-        return seleniumDriver.findElements(By.xpath("//list-icon-text-cell/div")).size();
+        return seleniumDriver.findElements(By.xpath(numberElectricityContract)).size();
     }
 }
