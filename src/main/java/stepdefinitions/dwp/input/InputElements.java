@@ -40,7 +40,7 @@ public class InputElements extends DwpScenario {
     private class ApplyInput implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
-            boolean success = executeJavascriptTest("BaseFormInput", options);
+            boolean success = executeJavascriptTestImmediately("BaseFormInput", options, true);
             return success;
         }
     }
@@ -52,6 +52,11 @@ public class InputElements extends DwpScenario {
         @Override
         public boolean test(Map options) {
             boolean success = executeJavascriptTest("TrFormSelection", options);
+            return success;
+        }
+
+        public boolean testNow(Map options) {
+            boolean success = executeJavascriptTestImmediately("TrFormSelection", options, true);
             return success;
         }
     }
@@ -87,7 +92,8 @@ public class InputElements extends DwpScenario {
      */
     @And("^\"([^\"]*)\" input is \"([^\"]*)\"$")
     public void setInput(String label, String value) throws Throwable {
-        seleniumDriver.waitForRequestsToFinish();
+//        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(10);
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
         parameterProvider.put("inputValue", inputValue);
         Map<String, String> options = new HashMap<>();
@@ -96,7 +102,7 @@ public class InputElements extends DwpScenario {
         FluentWait<ApplyInput> waiter = waiter(new ApplyInput(), 10, 1);
         waiter.withMessage(String.format("Input field %s is undefined.", label));
         waiter.until((ApplyInput callback) -> callback.test(options));
-        seleniumDriver.waitForRequestsToFinish();
+//        seleniumDriver.waitForRequestsToFinish();
     }
 
     /**
@@ -127,13 +133,24 @@ public class InputElements extends DwpScenario {
      */
     @And("^\"([^\"]*)\" selection is \"([^\"]*)\"$")
     public void setSelection(String label, String value) throws Throwable {
-        Sleeper.sleepTightInSeconds(0.5);
+        seleniumDriver.waitForRequestsToFinish();
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
         options.put("value", value);
         FluentWait<ApplySelection> waiter = waiter(new ApplySelection(), 10, 1);
         waiter.withMessage(String.format("Selection %s is undefined.", label));
         waiter.until((ApplySelection callback) -> callback.test(options));
+    }
+
+    @And("^\"([^\"]*)\" selection is \"([^\"]*)\" waiting for (\\d+) seconds$")
+    public void setSelection(String label, String value, int waitingTime) throws Throwable {
+        Sleeper.sleepTightInSeconds(waitingTime);
+        Map<String, String> options = new HashMap<>();
+        options.put("label", label);
+        options.put("value", value);
+        FluentWait<ApplySelection> waiter = waiter(new ApplySelection(), 10, 1);
+        waiter.withMessage(String.format("Selection %s is undefined.", label));
+        waiter.until((ApplySelection callback) -> callback.testNow(options));
     }
 
     /**

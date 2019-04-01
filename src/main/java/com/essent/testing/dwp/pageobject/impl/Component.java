@@ -85,7 +85,7 @@ public abstract class Component {
     }
 
     protected boolean execute(final Model.Execution execution) {
-        seleniumDriver.waitForRequestsToFinish();
+//        seleniumDriver.waitForRequestsToFinish();
         return AutocratExecutionAdapter.execute(seleniumDriver.getDriver(), execution);
     }
 

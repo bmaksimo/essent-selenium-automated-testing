@@ -83,6 +83,7 @@ public class ViewListChecks extends NavigationElements {
 
         private DefaultTableModel getDefaultTableModel(DefaultTableModel tableModel, HashMap<Object, Object> options) {
             Map viewTable = executeJavascriptMethod("TrGetTableModel", options);
+//            Map viewTable = executeJavascriptMethod("TrGetTableModel", options);
             List columnNames = (List) viewTable.get("column_names");
             List rows = getData(viewTable);
             tableModel.setColumnIdentifiers(columnNames.toArray());
@@ -167,10 +168,18 @@ public class ViewListChecks extends NavigationElements {
         }
 
         List<String> fetchColumnData(String table, String columnName) {
+           return fetchColumnDataNow(table, columnName, false);
+        }
+
+        List<String> fetchColumnDataNow(String table, String columnName, boolean immediate) {
             Map<String, Object> options = new HashMap<>();
             options.put("include_selection", false);
             options.put("table", table);
-            Map viewTable = executeJavascriptMethod("TrFetchDataSelection", options);
+
+            Map viewTable = immediate ?
+                executeJavascriptMethodImmediately("TrFetchDataSelection", options)
+                : executeJavascriptMethod("TrFetchDataSelection", options);
+
             int index = getColumnNameIndex(columnName, viewTable);
             if (index < 0) {
                 fail(String.format("View List did not contain column %s", columnName));
@@ -243,7 +252,7 @@ public class ViewListChecks extends NavigationElements {
         public boolean test(Map options) {
             String viewList = (String) options.get("view_list_name");
             if (null == viewList)
-                return executeJavascriptTest("TrClickTableCellUrl", options);
+                return executeJavascriptTestImmediately("TrClickTableCellUrl", options, true);
             String column = (String) options.get("column");
             if (PLUS_ACTION.equalsIgnoreCase(column)) {
                 if (MARKET_MESSAGES_VIEW_LIST.equalsIgnoreCase(viewList))
@@ -342,6 +351,12 @@ public class ViewListChecks extends NavigationElements {
            .withMessage(String.format("Failed click on link in view list at \"%s\" row and \"%s\" column within \"%s\" seconds", ordinal, column, seconds));
         waiter.until((ClickTableCellUrl callback) -> callback.test(getColumnIndexListOptions(column, null, ordinal)));
         logger().info(String.format("- STEP: Click on link in view list at \"%s\" row and \"%s\" column within \"%s\" seconds - PASSED.", ordinal, column, seconds));
+    }
+
+    @When("^Click on link in View List at \"([^\"]*)\" row and \"([^\"]*)\" column waiting for (\\d+) seconds$")
+    public void clickOnViewListAtRowAndColumnFixedWait(String ordinal, String column, int seconds) throws Throwable {
+        Sleeper.sleepTightInSeconds(seconds);
+        new ClickTableCellUrl().test(getColumnIndexListOptions(column, null, ordinal));
     }
 
     @When("^Click on link in \"([^\"]*)\" View List at \"([^\"]*)\" row and \"([^\"]*)\" column$")
@@ -605,6 +620,18 @@ public class ViewListChecks extends NavigationElements {
     public void viewListContainsValueAtColumn(String table, String value, String column) throws Throwable {
         ViewListModel viewListModel = new ViewListModel();
         List<String> columnData = viewListModel.fetchColumnData(table, column);
+        List<String> found = columnData.stream().filter(element -> element.contains(value)).collect(Collectors.toList());
+        String message = String.format("Table \"%s\" didn't contain value \"%s\" at column \"%s\"", table, value, column);
+        assertThat(message,
+            found, not(empty()));
+        logger().info(String.format("- STEP: Table \"%s\" contains value \"%s\" at column \"%s\" - PASSED.", table, value, column));
+    }
+
+    @And("^Table \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\" now$")
+    public void viewListContainsValueAtColumnNow(String table, String value, String column) throws Throwable {
+        Sleeper.sleepTightInSeconds(20);
+        ViewListModel viewListModel = new ViewListModel();
+        List<String> columnData = viewListModel.fetchColumnDataNow(table, column, true);
         List<String> found = columnData.stream().filter(element -> element.contains(value)).collect(Collectors.toList());
         String message = String.format("Table \"%s\" didn't contain value \"%s\" at column \"%s\"", table, value, column);
         assertThat(message,

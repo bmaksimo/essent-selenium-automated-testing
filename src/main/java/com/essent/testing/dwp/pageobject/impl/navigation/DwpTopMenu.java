@@ -16,7 +16,8 @@ public class DwpTopMenu extends Component {
         String XPATH_SUBMENU_TEMPLATE = "//sub-menu-link[@label='${label}']//a";
         String query = createQuery(XPATH_SUBMENU_TEMPLATE, "label", label);
         WebElement element = seleniumDriver.findElementWhenVisible(By.xpath(query));
-        seleniumDriver.waitAndClick(element);
+        seleniumDriver.clickNow(element);
+//        seleniumDriver.waitAndClick(element);
     }
 
     private void checkAndOpenTopMenu() {

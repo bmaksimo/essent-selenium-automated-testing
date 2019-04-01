@@ -23,7 +23,7 @@ public class ServicePage extends Component {
 
 
     public void findRejectionReason(String input) {
-        seleniumDriver.waitForRequestsToFinish();
+//        seleniumDriver.waitForRequestsToFinish();
         Assert.assertTrue(seleniumDriver.findElementWhenVisible(By.xpath("(//span[.='" + input + "'])[1]")).isDisplayed());
     }
 

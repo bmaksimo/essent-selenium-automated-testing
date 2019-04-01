@@ -1,5 +1,6 @@
 package stepdefinitions.dwp.page_object;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.service.ServicePage;
@@ -37,10 +38,18 @@ public class TaskSteps extends DwpScenario {
     @When("^Plus action and Mark As Done/Markeren Als Verwerkt of first customer from list$")
     public void plusActionAndOfFirstCustomerFromList() throws Throwable {
         BaseObjectPage baseObject = new BaseObjectPage();
-        Thread.sleep(30000);
         baseObject.clickOnPlus();
         seleniumDriver.waitForRequestsToFinish();
         baseObject.clickOnMarkAsDonePlusMenuSubAction();
+    }
+
+    @When("^Plus action and Mark As Done/Markeren Als Verwerkt of first customer from list waiting for (\\d+) seconds$")
+    public void plusActionAndOfFirstCustomerFromList(int waitingTime) throws Throwable {
+        BaseObjectPage baseObject = new BaseObjectPage();
+        Sleeper.sleepTightInSeconds(waitingTime);
+        baseObject.clickOnPlusNow();
+        Sleeper.sleepTightInSeconds(waitingTime);
+        baseObject.clickOnMarkAsDonePlusMenuSubActionNow();
     }
 
     @When("^Save task ID of first customer in list$")
@@ -55,16 +64,23 @@ public class TaskSteps extends DwpScenario {
         tp.inputResolution(text);
     }
 
+    @And("^Resolution input is \"([^\"]*)\" waiting for (\\d+) seconds$")
+    public void resolutionInputIs(String text, int waitingTime) {
+        TasksPage tp = new TasksPage();
+        tp.inputResolution(text, waitingTime);
+    }
+
     @Then("^Task was marked as done$")
     public void taskWasMarkedAsDone() {
         TasksPage tp = new TasksPage();
-        tp.findTaskId(taskId);
+        tp.findTaskId(parameterProvider.getValueOrParameterAsString("parameter:contractNumber"));
+//        tp.findTaskId(taskId);
     }
 
     @And("^Search for task id$")
     public void searchForTaskId() {
         ContractPage contractenPage = new ContractPage();
-        contractenPage.searchForTaskId(taskId);
+        contractenPage.searchForTaskId(parameterProvider.getValueOrParameterAsString("parameter:contractNumber"));
     }
 
     @Then("^\"([^\"]*)\" was rejection reason$")
