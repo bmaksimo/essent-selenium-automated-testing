@@ -21,7 +21,7 @@ public class DwpDashboardMenuPage extends Component {
     }
 
     private static final String REPLACEMENT_KEY = "replacement_key";
-    private static final String DASHBOARD_ELEMENT_NAME = "//span[@class='${menuMap.get(" + REPLACEMENT_KEY + ")}']";
+    private static final String DASHBOARD_ELEMENT_NAME = "//span[@class = menuMap.get('${" + REPLACEMENT_KEY + "}')]";
 
     private WebElement getDashboardElement(String name)  {
         String xpathDashboardElement = createQuery(DASHBOARD_ELEMENT_NAME, REPLACEMENT_KEY, name);
