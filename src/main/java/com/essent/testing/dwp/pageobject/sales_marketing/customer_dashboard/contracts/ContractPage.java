@@ -17,8 +17,8 @@ import java.util.logging.Logger;
 public class ContractPage extends Component {
 
     private static final String NUMBER_ELECTRICITY_CONTRACT = "//list-icon-text-cell/div";
-    private static final String SEND_EMAIL = "//list-row-action[@label='${test}']/a";
     private static final String REPLACEMENT_KEY = "replacement_key";
+    private static final String SEND_EMAIL = "//list-row-action[@label='${" + REPLACEMENT_KEY + "}']/a";
     private static final String START_DATA_ID = "contract-start-date-field";
 
     public WebElement startData() {
