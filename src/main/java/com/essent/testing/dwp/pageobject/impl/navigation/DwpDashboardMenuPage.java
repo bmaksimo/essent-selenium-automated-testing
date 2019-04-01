@@ -20,12 +20,9 @@ public class DwpDashboardMenuPage extends Component {
         menuMap.put("Documenten","icon-mappen");
     }
 
-    private static final String REPLACEMENT_KEY = "replacement_key";
-    private static final String DASHBOARD_ELEMENT_NAME = "//span[@class = menuMap.get('${" + REPLACEMENT_KEY + "}')]";
-
     private WebElement getDashboardElement(String name)  {
-        String xpathDashboardElement = createQuery(DASHBOARD_ELEMENT_NAME, REPLACEMENT_KEY, name);
-        return seleniumDriver.findElementWhenVisible(By.xpath(xpathDashboardElement));
+       return seleniumDriver.findElementWhenVisible(By.xpath("//span[@class='"+menuMap.get(name)+"']"));
+
     }
 
     public void clickOnDashboardElement(String element) {
