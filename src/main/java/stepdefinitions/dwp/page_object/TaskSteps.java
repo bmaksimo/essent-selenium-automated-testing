@@ -29,7 +29,7 @@ public class TaskSteps extends DwpScenario {
     @When("^Plus action and \"([^\"]*)\" of first customer from list$")
     public void plusActionAndOfFirstCustomerFromList(String action) throws Throwable {
         BaseObjectPage baseObject = new BaseObjectPage();
-        Thread.sleep(30000);
+        Sleeper.sleepTightInSeconds(30);
         baseObject.clickOnPlus();
         seleniumDriver.waitForRequestsToFinish();
         baseObject.plusSubaction(action);
@@ -74,7 +74,6 @@ public class TaskSteps extends DwpScenario {
     public void taskWasMarkedAsDone() {
         TasksPage tp = new TasksPage();
         tp.findTaskId(parameterProvider.getValueOrParameterAsString("parameter:contractNumber"));
-//        tp.findTaskId(taskId);
     }
 
     @And("^Search for task id$")

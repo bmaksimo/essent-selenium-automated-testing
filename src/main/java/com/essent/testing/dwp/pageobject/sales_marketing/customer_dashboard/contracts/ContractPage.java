@@ -363,11 +363,9 @@ public class ContractPage extends Component {
     }
 
     public void searchForTaskId(String taskId) {
-//        seleniumDriver.waitForRequestsToFinish();
-        Sleeper.sleepTightInSeconds(10);
+        seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.sendKeysNow(getTopSearchInputElement(), taskId);
-        Sleeper.sleepTightInSeconds(10);
-//        seleniumDriver.waitAndSendKeys(getTopSearchInputElement(), taskId);
+        seleniumDriver.waitAndSendKeys(getTopSearchInputElement(), taskId);
         getTopSearchInputElement().sendKeys(Keys.ENTER);
     }
 

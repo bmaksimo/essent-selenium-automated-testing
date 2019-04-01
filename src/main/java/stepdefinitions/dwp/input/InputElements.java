@@ -92,8 +92,7 @@ public class InputElements extends DwpScenario {
      */
     @And("^\"([^\"]*)\" input is \"([^\"]*)\"$")
     public void setInput(String label, String value) throws Throwable {
-//        seleniumDriver.waitForRequestsToFinish();
-        Sleeper.sleepTightInSeconds(10);
+        seleniumDriver.waitForRequestsToFinish();
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
         parameterProvider.put("inputValue", inputValue);
         Map<String, String> options = new HashMap<>();
@@ -102,7 +101,20 @@ public class InputElements extends DwpScenario {
         FluentWait<ApplyInput> waiter = waiter(new ApplyInput(), 10, 1);
         waiter.withMessage(String.format("Input field %s is undefined.", label));
         waiter.until((ApplyInput callback) -> callback.test(options));
-//        seleniumDriver.waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
+    }
+
+    @And("^\"([^\"]*)\" input is \"([^\"]*)\" waiting for (\\d+) seconds$")
+    public void setInputWithFixedTime(String label, String value, int waitingTime) throws Throwable {
+        Sleeper.sleepTightInSeconds(waitingTime);
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
+        parameterProvider.put("inputValue", inputValue);
+        Map<String, String> options = new HashMap<>();
+        options.put("label", label);
+        options.put("value", inputValue);
+        FluentWait<ApplyInput> waiter = waiter(new ApplyInput(), 10, 1);
+        waiter.withMessage(String.format("Input field %s is undefined.", label));
+        waiter.until((ApplyInput callback) -> callback.test(options));
     }
 
     /**

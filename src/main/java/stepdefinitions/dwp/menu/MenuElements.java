@@ -46,7 +46,7 @@ public class MenuElements extends NavigationElements {
     public void clickTopMenuItemFixedWait(String tabName, int waitingTime) throws Throwable {
         Sleeper.sleepTightInSeconds(waitingTime);
         DwpTopMenu tm = new DwpTopMenu();
-        tm.findAndClickTopMenu(tabName);
+        tm.findAndClickTopMenuNow(tabName);
     }
 
     @Then("^Sleep for (\\d+) seconds$")

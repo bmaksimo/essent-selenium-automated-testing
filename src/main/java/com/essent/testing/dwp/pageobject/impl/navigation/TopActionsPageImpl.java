@@ -35,6 +35,6 @@ public class TopActionsPageImpl extends Component implements TopActionsPage {
             .flow()
             .step(createStep(CLICK).element(BUTTON_ELEMENT).requireDisplayed(false))
             .step(createStep(SLEEP).sleepInMillis(2500));
-        return execute(execution);
+        return executeNow(execution);
     }
 }
