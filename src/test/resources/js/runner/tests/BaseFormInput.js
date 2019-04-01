@@ -23,8 +23,6 @@ class BaseFormInput extends TestRunnerBase {
         const options = this.options;
         const label = options.label;
         const value = options.value;
-        console.log("params: " + label + ", " + value);
-        // let xPath = `//div[label/text()='${label}']`;
         const xPath = `//div[label[normalize-space(text())='${label}']]`;
         console.log('--XPATH: ' + xPath);
         const elements = this.evaluateXpath(xPath);

@@ -269,9 +269,7 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
         ngWebDriver.waitForAngularRequestsToFinish();
     }
     public void sendKeysNow(final WebElement element, final String keysToSend) {
-//        waitForElement(element);
         element.clear();
-//        waitForElement(element);
         element.sendKeys(keysToSend);
     }
 }

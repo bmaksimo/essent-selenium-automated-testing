@@ -83,7 +83,6 @@ public class ViewListChecks extends NavigationElements {
 
         private DefaultTableModel getDefaultTableModel(DefaultTableModel tableModel, HashMap<Object, Object> options) {
             Map viewTable = executeJavascriptMethod("TrGetTableModel", options);
-//            Map viewTable = executeJavascriptMethod("TrGetTableModel", options);
             List columnNames = (List) viewTable.get("column_names");
             List rows = getData(viewTable);
             tableModel.setColumnIdentifiers(columnNames.toArray());
@@ -644,8 +643,7 @@ public class ViewListChecks extends NavigationElements {
         List<String> columnData = viewListModel.fetchColumnDataNow(table, column, true);
         List<String> found = columnData.stream().filter(element -> element.contains(value)).collect(Collectors.toList());
         String message = String.format("Table \"%s\" didn't contain value \"%s\" at column \"%s\"", table, value, column);
-        assertThat(message,
-            found, not(empty()));
+        assertThat(message, found, not(empty()));
         logger().info(String.format("- STEP: Table \"%s\" contains value \"%s\" at column \"%s\" - PASSED.", table, value, column));
     }
 
