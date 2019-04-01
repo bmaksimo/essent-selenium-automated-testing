@@ -2,9 +2,11 @@ package stepdefinitions.dwp.service_contracting;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.guided_flow.move_in.MoveInPage;
+import com.essent.testing.dwp.pageobject.impl.navigation.DwpDashboardMenuPage;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPricesPage;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.details.DetailsPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.service.ServicePage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
@@ -165,6 +167,33 @@ public class ContractSteps extends DwpScenario {
         ContractPage cp = new ContractPage();
         cp.chooseDiscounts(kortingen);
         Sleeper.sleepTightInSeconds(0.5);
+
+    }
+
+    @And("^Wait for the first contract to be activated$")
+    public void waitForTheFirstContractToBeActivated() {
+        DwpDashboardMenuPage ddmp = new  DwpDashboardMenuPage();
+        ContractPage cp = new ContractPage();
+
+        while (!cp.getStatusFromContract().equalsIgnoreCase("Actief")) {
+            Sleeper.sleepTightInSeconds(10);
+            ddmp.clickOnDashboardElement("Sales");
+            ddmp.clickOnDashboardElement("Contracten");
+
+        }
+        Assert.assertTrue(cp.getStatusFromContract().equalsIgnoreCase("Actief"));
+    }
+
+    @And("^Two contracts are displayed$")
+    public void twoContractsAreDisplayed() {
+        ContractPage cp = new ContractPage();
+        Assert.assertEquals("The number of electricity contracts is not 2", 2, cp.getNumberOfElectricityContracts());
+    }
+
+    @And("^There is one billing customer$")
+    public void thereIsOneBillingCustomer() {
+        DetailsPage dp = new DetailsPage();
+        Assert.assertEquals("The number of billing customers is not 1", 1, dp.getNumberOfBillingCustomers());
 
     }
 }

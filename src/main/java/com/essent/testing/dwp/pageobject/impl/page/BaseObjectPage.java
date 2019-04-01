@@ -13,7 +13,7 @@ public class BaseObjectPage extends Component {
 
     private static final String PLUS_BUTTON_XPATH = "(//list-plus-cell//a)[1]";
     private static final String REPLACEMENT_KEY = "replacement_key";
-    
+
     private static final String PLUS_MENU_XPATH = "//list-row-action[@label='${" + REPLACEMENT_KEY + "}']/a";
     private static final String PLUS_MARK_DONE_XPATH = "//list-row-action/a/span[@class='icon-checkmark']";
 
