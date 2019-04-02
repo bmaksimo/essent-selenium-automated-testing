@@ -92,6 +92,10 @@ public abstract class Component {
         return AutocratExecutionAdapter.execute(seleniumDriver.getDriver(), execution);
     }
 
+    protected boolean executeNow(final Model.Execution execution) {
+        return AutocratExecutionAdapter.execute(seleniumDriver.getDriver(), execution);
+    }
+
     protected String createQuery(String template, String key, String value) {
         Map<String, String> valuesMap = new HashMap<>();
         valuesMap.put(key, value);

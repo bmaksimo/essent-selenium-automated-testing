@@ -12,12 +12,21 @@ import java.time.Duration;
 
 public class DwpTopMenu extends Component {
 
+    private static final String XPATH_SUBMENU_TEMPLATE = "//sub-menu-link[@label='${label}']//a";
+    private static final String CSS_HAMBURGER_TOP_MENU = ".top.mobile-menu [name='top-menu-toggle']";
+
     public void findAndClickTopMenu(String label) {
         checkAndOpenTopMenu();
-        String XPATH_SUBMENU_TEMPLATE = "//sub-menu-link[@label='${label}']//a";
         String query = createQuery(XPATH_SUBMENU_TEMPLATE, "label", label);
         WebElement element = seleniumDriver.findElementWhenVisible(By.xpath(query));
         seleniumDriver.waitAndClick(element);
+    }
+
+    public void findAndClickTopMenuNow(String label) {
+        checkAndOpenTopMenu();
+        String query = createQuery(XPATH_SUBMENU_TEMPLATE, "label", label);
+        WebElement element = seleniumDriver.findElementWhenVisible(By.xpath(query));
+        seleniumDriver.clickNow(element);
     }
 
     private void checkAndOpenTopMenu() {
@@ -28,6 +37,7 @@ public class DwpTopMenu extends Component {
             hamButton.click();
         } catch(TimeoutException te) {
             //no hamburger button there
+
         }
     }
 

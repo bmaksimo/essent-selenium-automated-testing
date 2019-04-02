@@ -109,8 +109,16 @@ public abstract class DwpScenario extends RegisteredScenario {
         return seleniumDriver.executeJavascriptTest(registeredJsClass, options, withException);
     }
 
+    public boolean executeJavascriptTestImmediately(String registeredJsClass, Object options, boolean withException) {
+        return seleniumDriver.executeJavascriptTestImmediately(registeredJsClass, options, withException);
+    }
+
     protected Map executeJavascriptMethod(String registeredJsClass, Object options) {
         return seleniumDriver.executeJavascriptMethod(registeredJsClass, options);
+    }
+
+    protected Map executeJavascriptMethodImmediately(String registeredJsClass, Object options) {
+        return seleniumDriver.executeJavascriptMethodWithImmediateFlag(registeredJsClass, options, true);
     }
 
     public void tearDown() {
