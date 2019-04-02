@@ -167,10 +167,18 @@ public class ViewListChecks extends NavigationElements {
         }
 
         List<String> fetchColumnData(String table, String columnName) {
+           return fetchColumnDataNow(table, columnName, false);
+        }
+
+        List<String> fetchColumnDataNow(String table, String columnName, boolean immediate) {
             Map<String, Object> options = new HashMap<>();
             options.put("include_selection", false);
             options.put("table", table);
-            Map viewTable = executeJavascriptMethod("TrFetchDataSelection", options);
+
+            Map viewTable = immediate ?
+                executeJavascriptMethodImmediately("TrFetchDataSelection", options)
+                : executeJavascriptMethod("TrFetchDataSelection", options);
+
             int index = getColumnNameIndex(columnName, viewTable);
             if (index < 0) {
                 fail(String.format("View List did not contain column %s", columnName));
@@ -244,13 +252,23 @@ public class ViewListChecks extends NavigationElements {
             String viewList = (String) options.get("view_list_name");
             if (null == viewList)
                 return executeJavascriptTest("TrClickTableCellUrl", options);
-            String column = (String) options.get("column");
+            return testKnownColumns(viewList, options, (String) options.get("column"));
+        }
+
+        public boolean testNow(Map options) {
+            String viewList = (String) options.get("view_list_name");
+            if (null == viewList)
+                return executeJavascriptTestImmediately("TrClickTableCellUrl", options, true);
+            return testKnownColumns(viewList, options, (String) options.get("column"));
+        }
+
+        private boolean testKnownColumns(String viewList, Map options, String column) {
             if (PLUS_ACTION.equalsIgnoreCase(column)) {
                 if (MARKET_MESSAGES_VIEW_LIST.equalsIgnoreCase(viewList))
                     return executeJavascriptTest("TrPlusActionInMarketMessageTable", options);
                 else if (BILLING_CUSTOMER_VIEW_LIST.equalsIgnoreCase(viewList))
                     return executeJavascriptTest("TrPlusActionInBillingCustomerTable", options);
-                else throw new IllegalArgumentException(String.format("Table \"%s\" hasn't implementation. Please use an implemented table or implement a new one.", viewList));
+                else throw new IllegalArgumentException(String.format("Table \"%s\" has no implementation. Please use an implemented table or implement a new one.", viewList));
             }
             return false;
         }
@@ -342,6 +360,12 @@ public class ViewListChecks extends NavigationElements {
            .withMessage(String.format("Failed click on link in view list at \"%s\" row and \"%s\" column within \"%s\" seconds", ordinal, column, seconds));
         waiter.until((ClickTableCellUrl callback) -> callback.test(getColumnIndexListOptions(column, null, ordinal)));
         logger().info(String.format("- STEP: Click on link in view list at \"%s\" row and \"%s\" column within \"%s\" seconds - PASSED.", ordinal, column, seconds));
+    }
+
+    @When("^Click on link in View List at \"([^\"]*)\" row and \"([^\"]*)\" column waiting for (\\d+) seconds$")
+    public void clickOnViewListAtRowAndColumnFixedWait(String ordinal, String column, int seconds) throws Throwable {
+        Sleeper.sleepTightInSeconds(seconds);
+        new ClickTableCellUrl().testNow(getColumnIndexListOptions(column, null, ordinal));
     }
 
     @When("^Click on link in \"([^\"]*)\" View List at \"([^\"]*)\" row and \"([^\"]*)\" column$")
@@ -609,6 +633,17 @@ public class ViewListChecks extends NavigationElements {
         String message = String.format("Table \"%s\" didn't contain value \"%s\" at column \"%s\"", table, value, column);
         assertThat(message,
             found, not(empty()));
+        logger().info(String.format("- STEP: Table \"%s\" contains value \"%s\" at column \"%s\" - PASSED.", table, value, column));
+    }
+
+    @And("^Table \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\" waiting for (\\d+) seconds$$")
+    public void viewListContainsValueAtColumnWithFixedTime(String table, String value, String column, int waitingTime) throws Throwable {
+        Sleeper.sleepTightInSeconds(waitingTime);
+        ViewListModel viewListModel = new ViewListModel();
+        List<String> columnData = viewListModel.fetchColumnDataNow(table, column, true);
+        List<String> found = columnData.stream().filter(element -> element.contains(value)).collect(Collectors.toList());
+        String message = String.format("Table \"%s\" didn't contain value \"%s\" at column \"%s\"", table, value, column);
+        assertThat(message, found, not(empty()));
         logger().info(String.format("- STEP: Table \"%s\" contains value \"%s\" at column \"%s\" - PASSED.", table, value, column));
     }
 

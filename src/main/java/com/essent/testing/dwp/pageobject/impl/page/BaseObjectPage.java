@@ -27,8 +27,11 @@ public class BaseObjectPage extends Component {
     private static final String CARD_TEXT_XPATH = "//h2[normalize-space(text())='${"+REPLACEMENT_KEY+"}']/parent::div/parent::div/div[@class='form__group']//label[normalize-space(text())='${"+REPLACEMENT_KEY1+"}']/parent::div//strong";
 
     public void clickOnPlus() {
+    	seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(PLUS_BUTTON_XPATH)));
+    }
 
-	seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(PLUS_BUTTON_XPATH)));
+    public void clickOnPlusNow() {
+        seleniumDriver.clickNow(seleniumDriver.findElementWhenVisible(By.xpath(PLUS_BUTTON_XPATH)));
     }
 
     public void plusSubaction(String actionValue) {
@@ -36,36 +39,40 @@ public class BaseObjectPage extends Component {
 	try {
 	    seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(xpathSubaction)));
 
-	} catch (org.openqa.selenium.StaleElementReferenceException ex) {
-	    seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(xpathSubaction)));
-	}
+        } catch (org.openqa.selenium.StaleElementReferenceException ex) {
+            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(xpathSubaction)));
+        }
     }
 
     public void clickOnMarkAsDonePlusMenuSubAction() {
-	seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(PLUS_MARK_DONE_XPATH)));
+	    seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(PLUS_MARK_DONE_XPATH)));
+    }
+
+    public void clickOnMarkAsDonePlusMenuSubActionNow() {
+        seleniumDriver.clickNow(seleniumDriver.findElementWhenVisible(By.xpath(PLUS_MARK_DONE_XPATH)));
     }
 
     public void dateIsNow(String labelValue) {
-	ContractPage cp = new ContractPage();
-	seleniumDriver.waitForRequestsToFinish();
-	Sleeper.sleepTightInSeconds(2);
-	String xpathDate = createQuery(DATE_SELECTOR_XPATH, REPLACEMENT_KEY, labelValue);
-	seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.xpath(xpathDate)), cp.date);
-	seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath(ICON_CALENDAR_XPATH)));
+        ContractPage cp = new ContractPage();
+        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(2);
+        String xpathDate = createQuery(DATE_SELECTOR_XPATH, REPLACEMENT_KEY, labelValue);
+        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.xpath(xpathDate)), cp.date);
+        seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath(ICON_CALENDAR_XPATH)));
     }
 
     public void confirmQuote() {
-	String query = NEXT_BUTTON.getQuery();
-	logger().debug("Searching element by " + query);
-	seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.cssSelector(NEXT_BUTTON.getQuery())));
+        String query = NEXT_BUTTON.getQuery();
+        logger().debug("Searching element by " + query);
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.cssSelector(NEXT_BUTTON.getQuery())));
     }
 
     public void clickOnLabel(String labelValue, String valueValue) {
-	Map<String, String> valuesMap = new HashMap<>();
-	valuesMap.put(REPLACEMENT_KEY, labelValue);
-	valuesMap.put(REPLACEMENT_KEY1, valueValue);
-	String xpathLabel = createQuery(LABEL_CLICK_XPATH, valuesMap);
-	seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(xpathLabel)));
+        Map<String, String> valuesMap = new HashMap<>();
+        valuesMap.put(REPLACEMENT_KEY, labelValue);
+        valuesMap.put(REPLACEMENT_KEY1, valueValue);
+        String xpathLabel = createQuery(LABEL_CLICK_XPATH, valuesMap);
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(xpathLabel)));
     }
 
     public WebElement cardTextXPathValue(String cardName, String label) {

@@ -22,7 +22,7 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         Then Form header is "Select package & fuel type"
 
         #Reg04  workaround  - Tariefkaart selection is commented out
-        #When "Tariefkaart" selection is "TC_02_2019_B2C"
+#        When "Tariefkaart" selection is "TC_02_2019_B2C"
         And "Pakket" selection is "Vast"
         And Checkbox "Gas Fix B2C (TC1)" is Unchecked
         And Package and Fuel Type is confirmed
