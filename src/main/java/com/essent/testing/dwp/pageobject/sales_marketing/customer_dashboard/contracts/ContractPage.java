@@ -64,7 +64,7 @@ public class ContractPage extends Component {
 
     public void clickOnPlusMeniInTable(String row, String table) {
         seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.waitAndClick(seleniumDriver.findElementOrNull(By.xpath("(//list[@list-key='" + table + "']//tbody[@id='rows']//list-plus-cell//a[@class='show-actions icon-plus'])[" + row + "]")));
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenPresent(By.xpath("(//list[@list-key='" + table + "']//tbody[@id='rows']//list-plus-cell//a[@class='show-actions icon-plus'])[" + row + "]")));
     }
 
     public String getActiveContractEAN() {

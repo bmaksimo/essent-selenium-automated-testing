@@ -138,34 +138,26 @@ public abstract class SeleniumDriver {
         return driver.findElements(selector);
     }
 
-    public WebElement findElementOrNull(By selector) {
-        return findElementOrNull(selector, Duration.ofMinutes(1), Duration.ofSeconds(10));
+    public WebElement findElementWhenPresent(By selector) {
+        return findElementWhenPresent(selector, Duration.ofMinutes(1), Duration.ofSeconds(10));
     }
 
-    public WebElement findElementOrNull(By selector, Duration timeout, Duration pollingEvery) {
+    public WebElement findElementWhenPresent(By selector, Duration timeout, Duration pollingEvery) {
         logger.debug("STEP:");
         DateTime startOfMeasurement = DateTime.now();
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)
             .withTimeout(timeout)
             .pollingEvery(pollingEvery)
-            .ignoreAll(
-                Arrays.asList(
-                    NoSuchElementException.class,
-                    StaleElementReferenceException.class)
-            );
-        List<WebElement> elements = waiter.until(driver -> {
-            logger.debug(" - WAIT: polling findElementOrNull()");
-            return driver.findElements(selector);
+            .ignoring(NoSuchElementException.class);
+        WebElement element  = waiter.until(driver -> {
+            logger.debug(" - WAIT: polling findElementWhenPresent()");
+            return ExpectedConditions.presenceOfElementLocated(selector).apply(driver);
         });
         Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
         logger.debug(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
-        if (elements.isEmpty()) {
-            logger.warn(" - RESULT: empty");
-            return null;
-        } else {
-            return elements.get(0);
-        }
+        return element;
     }
+
     public List<WebElement> findElements(By selector, Duration timeout, Duration pollingEvery) {
         logger.debug("STEP:");
         logger.debug(" - ELEMENT QUERY: " + selector.toString());
@@ -180,7 +172,7 @@ public abstract class SeleniumDriver {
                     StaleElementReferenceException.class)
             );
         List<WebElement> elements = waiter.until(driver -> {
-            logger.debug(" - WAIT: polling findElementOrNull()");
+            logger.debug(" - WAIT: polling findElementWhenPresent()");
             return driver.findElements(selector);
         });
         Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());

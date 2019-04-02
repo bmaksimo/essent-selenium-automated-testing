@@ -95,7 +95,7 @@ public class DefaultListView extends Component implements ListView {
         List<WebElement> rows = extractTable();
         WebElement currentRow;
         for (int i = 1; i <= rows.size(); i++) {
-            currentRow = seleniumDriver.findElementOrNull(By.xpath("//table[@class='oe_list_content'][1]//tbody//tr[" + i + "]//td[@data-field='"
+            currentRow = seleniumDriver.findElementWhenPresent(By.xpath("//table[@class='oe_list_content'][1]//tbody//tr[" + i + "]//td[@data-field='"
                 + getKey(columnName)
                 + "'][1]"),
                 Duration.ofSeconds(30),

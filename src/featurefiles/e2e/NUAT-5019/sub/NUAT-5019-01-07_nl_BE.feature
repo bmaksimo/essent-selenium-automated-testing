@@ -124,7 +124,7 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         Given Dashboard menu is "Contracten"
         And View list header is "Actieve en toekomstige connecties"
         And "1st" List element with value at column "EAN-code" is checked
-        Then Consumption at deliverypointid "parameter:EAN-code" is generated from now until "2019-09-30"
+        Then Consumption at deliverypointid "parameter:EAN-code" is generated until "1 year from now"
         #And Click on "parameter:EAN-code" link
         #And Consumption is available at "1st" row in "Van - Aan" column
 

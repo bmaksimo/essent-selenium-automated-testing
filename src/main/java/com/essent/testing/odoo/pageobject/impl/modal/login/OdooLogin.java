@@ -22,7 +22,7 @@ public class OdooLogin extends LoginComponent implements Dialog {
         assertNotNull(element);
         element.clear();
         element.sendKeys(username);
-        element = seleniumDriver.findElementOrNull(By.id("password"));
+        element = seleniumDriver.findElementWhenPresent(By.id("password"));
         assertNotNull(element);
         element.clear();
         element.sendKeys(password);

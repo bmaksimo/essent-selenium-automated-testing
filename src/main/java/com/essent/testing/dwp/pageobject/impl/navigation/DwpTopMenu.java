@@ -4,6 +4,7 @@ import com.essent.testing.dwp.pageobject.elements.Button;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.elements.ButtonImpl;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 
 import java.time.Duration;
@@ -21,10 +22,12 @@ public class DwpTopMenu extends Component {
 
     private void checkAndOpenTopMenu() {
         String query = ".top.mobile-menu [name='top-menu-toggle']";
-        WebElement hamburger = seleniumDriver.findElementOrNull(By.cssSelector(query), Duration.ofSeconds(30), Duration.ofMillis(100));
-        if(hamburger!=null) {
+        try{
+            WebElement hamburger = seleniumDriver.findElementWhenPresent(By.cssSelector(query), Duration.ofSeconds(30), Duration.ofMillis(100));
             Button hamButton = new ButtonImpl(hamburger);
             hamButton.click();
+        } catch(TimeoutException te) {
+            //no hamburger button there
         }
     }
 

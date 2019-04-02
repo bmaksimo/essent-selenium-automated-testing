@@ -46,7 +46,7 @@ public class SearchContractLinesDialog extends Component implements ConfirmDialo
     @Override
     public boolean confirm() {
         Sleeper.sleepTightInSeconds(5);
-        seleniumDriver.waitAndClick(seleniumDriver.findElementOrNull(By.id("confirm-button")));
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenPresent(By.id("confirm-button")));
         return true;
     }
 
@@ -57,6 +57,7 @@ public class SearchContractLinesDialog extends Component implements ConfirmDialo
 
     @Override
     public boolean isShown() {
-        return seleniumDriver.findElementOrNull(SELECTOR) != null;
+        seleniumDriver.findElementWhenPresent(SELECTOR);
+        return true;
     }
 }
