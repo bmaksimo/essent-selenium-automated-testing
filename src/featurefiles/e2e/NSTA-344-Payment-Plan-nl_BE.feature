@@ -94,7 +94,7 @@ Feature: NSTA - 344 Payment Plan
 #      Create a payment plan for this customer
         And List option is "ENKEL FACTUREN"
         And View list header is "Openstaande facturen"
-        And Invoice with key "InvoicesOnAccountOpenBalance" is checked
+        And Invoice checkbox with key "InvoicesOnAccountOpenBalance" is clicked
         And List option is "AANVRAAG AFBETALINGSPLAN"
 
 
