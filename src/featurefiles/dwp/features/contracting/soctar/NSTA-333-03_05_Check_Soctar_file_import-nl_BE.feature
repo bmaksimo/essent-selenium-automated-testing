@@ -1,4 +1,5 @@
 @DWP
+@B2C
 @SOCTAR
 Feature: Check the status of Soctar file upload and impor
     Background:

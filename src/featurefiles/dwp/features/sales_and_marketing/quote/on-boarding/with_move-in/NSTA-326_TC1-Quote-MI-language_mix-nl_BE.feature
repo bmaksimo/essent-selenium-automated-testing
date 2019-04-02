@@ -1,8 +1,9 @@
-﻿@DWP
+@DWP
 @SALES-MARKETING
 @REGRESSION
 @B2C
-Feature: Creating a B2C Quote TC1 with "Move In" without using Market Mock.
+@UNSTABLE
+Feature: NSTA-326: Creating a B2C Quote TC1 with "Move In" without using Market Mock.
 
     Background:
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
@@ -37,8 +38,9 @@ Feature: Creating a B2C Quote TC1 with "Move In" without using Market Mock.
         Then Form header is "Connection details"
 
         #Step 4. Fill in connection information
-        When "Startdatum" date is "1 month before now"
-        And Electricity EAN code is "random"
+        When EAN code is generated
+        And "Startdatum" date is "1 month before now"
+        And "EAN-code" input is "parameter:EAN-code-generated"
         And Option "Is de meter geopend?" is Off
         Then "Mig module" field value is "MOVE IN"
         And  "Label" field value is "Move In"

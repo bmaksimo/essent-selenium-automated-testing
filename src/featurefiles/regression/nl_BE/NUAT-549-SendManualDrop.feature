@@ -3,6 +3,8 @@
 @B2B
 @BUSINESS-DESK
 @LONGDURATION
+@NUAT-549
+@UNSTABLE
 Feature: NUAT-549 Send manual drop
 
     Background:

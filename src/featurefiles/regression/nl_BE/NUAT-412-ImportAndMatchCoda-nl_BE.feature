@@ -1,17 +1,15 @@
 @DWP
-@B2B
 @REGRESSION
 @CREDIT-AND-CONTROL
-@NUAT-412
-
+@UNSTABLE
 Feature: NUAT-412 part: Create / import coda file
 
-
+    @NUAT-412-2
     Scenario: Create active contract TK1
-        Given  I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
+        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
         When Plus menu is "Sales -> TK1 -> Nieuwe TK1 offerte (B2B) aanmaken"
-        And "Ondernemingsnummer" input is "BE0659881595"
         And "Bedrijfsnaam" input is "Test Company B2B"
+        And "Ondernemingsnummer" input is "BE0659881595"
         And Clicked on sign X
         And New Quote is saved
 
@@ -56,8 +54,6 @@ Feature: NUAT-412 part: Create / import coda file
         When Dashboard menu is "Details"
         Then Get Contract Number
 
-
-     #invoice run
     @INVOICE-RUN
     Scenario: Invoice run process
         Given I renew login to DWP as "billing.testautomation@essent.be"
@@ -79,27 +75,23 @@ Feature: NUAT-412 part: Create / import coda file
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
 
-
-
-      #create coda file
     @CREATE-CODA
     Scenario: Create CODA file in Odoo
-        Given I logged in to Odoo as "t.geets"
+        Given I renew login to Odoo as "role_essent_ccm_user"
         Given Cleanup Odoo CODA files
         When Odoo top menu is "Accounting"
         And  Odoo left menu is "Customers"
         And Odoo filter is "parameter:contractNumber"
         When Column "Account Number" with value "parameter:contractNumber" is clicked
         And Button "Journal Items" is clicked
-        And Generate CODA in the "1st" row is clicked
+        And Generate CODA in the first row with "Amount receivable" is clicked
         Then Modal title contains "Download CODA"
         And Generated CODA file is downloaded
         And Modal button "Close" is clicked
 
-     #import coda file
    @IMPORT-CODA
    Scenario: Import CODA file in Odoo
-       Given I renew login to Odoo as "t.geets"
+       Given I renew login to Odoo as "role_essent_ccm_user"
        When Odoo top menu is "Accounting"
        When Odoo left menu is "CODA Processing->Import CODA Files"
        Then Odoo file upload dialog is "Import CODA File"

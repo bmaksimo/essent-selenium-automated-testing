@@ -1,7 +1,9 @@
 package stepdefinitions.dwp.b2b;
 
+import com.essent.testing.dwp.pageobject.contracting_switching.QuotesListPage;
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
-import com.essent.testing.dwp.pageobject.impl.page.OffertePage;
+import com.essent.testing.dwp.pageobject.impl.filter.DwpFilterPage;
+import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import com.essent.testing.dwp.pageobject.impl.service_contracting.ChangeAccountStatusPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.util.resource.ResourceUtil;
@@ -25,67 +27,67 @@ public class OfferteStep extends DwpScenario {
 
 
     @And("^Take Offertenummer from first offerte$")
-    public void takeOffertenummerFromFirstOfferte() throws Throwable {
-        OffertePage op = new OffertePage();
-        String offertenummer = op.getOfferteNumber();
+    public void takeOffertenummerFromFirstOfferte() {
+        QuotesListPage qlp = new QuotesListPage();
+        String offertenummer = qlp.getOfferteNumberAsString();
         parameterProvider.put("offertenummer", offertenummer);
     }
 
     @And("^Reset filter$")
-    public void resetFilter() throws Throwable {
-        OffertePage op = new OffertePage();
-        op.resetFilter();
+    public void resetFilter() {
+        DwpFilterPage df = new DwpFilterPage();
+        df.resetFilter();
         seleniumDriver.waitForRequestsToFinish();
     }
 
     @And("^Label \"([^\"]*)\" is \"([^\"]*)\"$")
-    public void labelIs(String label, String value) throws Throwable {
+    public void labelIs(String label, String value) {
         String input = parameterProvider.getValueOrParameterAsString(value);
-        OffertePage op = new OffertePage();
-        op.clickOnLabel(label, input);
+        BaseObjectPage bo = new BaseObjectPage();
+        bo.clickOnLabel(label, input);
     }
 
     @And("^Filter button is clicked$")
-    public void filterButtonIsClicked() throws Throwable {
-        OffertePage of = new OffertePage();
-        of.clickOnFilter();
+    public void filterButtonIsClicked() {
+        DwpFilterPage df = new DwpFilterPage();
+        df.clickOnFilter();
     }
 
     @And("^Offertenummer input is \"([^\"]*)\"$")
-    public void offertenummerInputIs(String value) throws Throwable {
+    public void offertenummerInputIs(String value) {
         String input = parameterProvider.getValueOrParameterAsString(value);
-        OffertePage of = new OffertePage();
-        of.offerteNumberFieldSendKeys(input);
+        QuotesListPage qlp = new QuotesListPage();
+        qlp.offerteNumberFieldSendKeys(input);
     }
 
     @And("^Oplossing text is \"([^\"]*)\"$")
-    public void oplossingTextIs(String input) throws Throwable {
-        OffertePage of = new OffertePage();
-        of.markAsDoneOplossingSendKeys(input);
+    public void oplossingTextIs(String input){
+        QuotesListPage qlp = new QuotesListPage();
+        qlp.markAsDoneOplossingSendKeys(input);
     }
 
     @Then("^Offerte status is \"([^\"]*)\"$")
-    public void statusIs(String status) throws Throwable {
-        OffertePage of = new OffertePage();
-        Assert.assertTrue(of.getStatus().equalsIgnoreCase(status));
+    public void statusIs(String status) {
+        QuotesListPage qlp = new QuotesListPage();
+        Assert.assertTrue(qlp.getOfferteStatus().equalsIgnoreCase(status));
     }
 
     @And("^\"([^\"]*)\" turn on with dot$")
-    public void turnOnWithDot(String label) throws Throwable {
+    public void turnOnWithDot(String label) {
         ToggleImpl tgl = new ToggleImpl();
         tgl.clickCheckboxWithDot(label);
 
     }
 
     @Then("^Bevestigen$")
-    public void bevestigen() throws Throwable {
+    public void bevestigen(){
         seleniumDriver.waitForRequestsToFinish();
-        OffertePage of = new OffertePage();
-        of.clickOnBevestigen();
+        BaseObjectPage bo = new BaseObjectPage();
+        bo.confirmQuote();
     }
 
     @And("^Sign quote file is uploaded$")
-    public void signQuoteFileIsUploaded() throws Throwable {
+    public void signQuoteFileIsUploaded() {
         String filePath = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
         ChangeAccountStatusPage changeAccountStatusPage = new ChangeAccountStatusPage();
         boolean success = changeAccountStatusPage.uploadFileForSign(filePath);
@@ -93,8 +95,8 @@ public class OfferteStep extends DwpScenario {
     }
 
     @And("^Client signature receive data is \"([^\"]*)\"$")
-    public void clientSignatureReceiveDataIs(String date) throws Throwable {
-        OffertePage of = new OffertePage();
-        of.setSinganureReceivedDate(date);
+    public void clientSignatureReceiveDataIs(String date) {
+        QuotesListPage qlp = new QuotesListPage();
+        qlp.setSignatureReceivedDate(date);
     }
 }

@@ -1,6 +1,6 @@
 package stepdefinitions.dwp.page_object;
 
-import com.essent.testing.dwp.pageobject.impl.service_contracting.ServicePage;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.service.ServicePage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -15,7 +15,7 @@ public class ServiceStep extends DwpScenario {
     }
 
     @Then("^\"([^\"]*)\" is created$")
-    public void isCreated(String input) throws Throwable {
+    public void isCreated(String input){
         ServicePage servicePage = new ServicePage();
         servicePage.validateCreatedTask(input);
     }

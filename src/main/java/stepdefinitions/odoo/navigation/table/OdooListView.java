@@ -3,6 +3,7 @@ package stepdefinitions.odoo.navigation.table;
 import com.essent.testing.odoo.pageobject.elements.ListView;
 import com.essent.testing.odoo.pageobject.impl.elements.DefaultListView;
 import com.essent.testing.odoo.scenario.OdooScenario;
+import cucumber.api.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -29,12 +30,9 @@ public class OdooListView extends OdooScenario  {
 
     @When("^Odoo filter is \"([^\"]*)\"$")
     public void setAdvancedSearchFilter(String expression) {
-        awaitOdooRequestToFinish(20);
-
         String filter = parameterProvider.getValueOrParameterAsString(expression) == null ?
             expression : parameterProvider.getValueOrParameterAsString(expression);
         String selector = "//div[@class='oe_searchview_input']";
-
         By xpath = By.xpath(selector);
         List<WebElement> filterElements = seleniumDriver.findElements(xpath,
             Duration.ofSeconds(30),
@@ -45,11 +43,15 @@ public class OdooListView extends OdooScenario  {
         filterElement.click();
         filterElement.sendKeys(filter);
         filterElement.sendKeys(Keys.RETURN);
+        awaitOdooRequestToFinish(600);
     }
 
-    @When("^Advanced search is \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$")
-    public void setAdvancedSearchFilter(String property, String operator, String inputSearchTerm) {
-        AdvancedSearch advancedSearch = new AdvancedSearch(property, operator, inputSearchTerm);
+    @When("^Advanced search is$")
+    public void setAdvancedSearchFilter(DataTable dbTable) {
+        List<List<String>> list = dbTable.raw();
+        String searchParameter = parameterProvider.getValueOrParameterAsString(list.get(1).get(2));
+        AdvancedSearch advancedSearch = new AdvancedSearch(list.get(1).get(0), list.get(1).get(1), searchParameter);
+        awaitOdooRequestToFinish(10);
         new AdvancedSearchComponent().runAdvancedSearch(advancedSearch);
     }
 
@@ -77,6 +79,7 @@ public class OdooListView extends OdooScenario  {
             value : parameterProvider.getValueOrParameterAsString(value);
         ListView odooList = new DefaultListView();
         odooList.clickValueAt(column, input);
+        awaitOdooRequestToFinish(180);
     }
 
     @Then("^The value in the column \"([^\"]*)\" is \"([^\"]*)\"$")

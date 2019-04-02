@@ -2,12 +2,14 @@
 @B2B
 @REGRESSION
 @PAYMENTS
-    Feature: NUAT-413: Manual reconcile en unreconcile
+@UNSTABLE
+Feature: NUAT-413: Manual reconcile en unreconcile
 
     Background:
-        Given  I logged in to Odoo as "t.geets"
+        Given  I logged in to Odoo as "role_essent_ccm_user"
         And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
 
+    @NUAT-413
     Scenario: Manual reconcile and unreconcile
         When Odoo top menu is "Accounting"
         And Odoo left menu is "Journal Entries"
@@ -15,9 +17,9 @@
         And Journal is "Diverse dagboek klanten"
         And Date document is now
         And New item is
-            | name | partner | account | debit | credit |
-            | new1 | parameter:accountNumber | 580100 | 0 | 10 |
-            | new2 | parameter:accountNumber | 580100 | 10 | 0 |
+            | name | partner                 | account | debit | credit |
+            | new1 | parameter:accountNumber | 580100  | 0     | 10     |
+            | new2 | parameter:accountNumber | 580100  | 10    | 0      |
         Then Save and Post journal entry
         When  Odoo left menu is "Customers"
         And Odoo filter is "parameter:accountNumber"

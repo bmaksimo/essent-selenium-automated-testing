@@ -1,4 +1,5 @@
 @DWP
+@B2C
 @SOCTAR
 Feature: Upload Soctar file to Nova sftp
 

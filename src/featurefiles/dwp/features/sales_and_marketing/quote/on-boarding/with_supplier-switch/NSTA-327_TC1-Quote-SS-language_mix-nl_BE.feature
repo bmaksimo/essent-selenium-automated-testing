@@ -1,15 +1,16 @@
-﻿@DWP
+@DWP
 @SALES-MARKETING
 @REGRESSION
 @B2C
-Feature: Creating a B2C Quote TC1 with "Move In" without using Market Mock.
+@UNSTABLE
+Feature: NSTA-327: Creating a B2C Quote TC1 with "Supplier Switch" without using Market Mock.
 
     Background:
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
     @NSTA-327
     @SUPPLIER-SWITCH-NO-MM
-    Scenario: Create a B2C Account with Quote, With move in, without using Market Mock
+    Scenario: Create a B2C Account with Quote, With supplier switch, without using Market Mock
 
         #Step 1. Selecteer type Offerte / Select Quote type
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
@@ -38,7 +39,8 @@ Feature: Creating a B2C Quote TC1 with "Move In" without using Market Mock.
 
         #Step 4. Fill in connection information
         When "Startdatum" date is "1 month before now"
-        And Electricity EAN code is "random"
+        And EAN code is generated
+        And "EAN-code" input is "parameter:EAN-code-generated"
         #And Option "Is de meter geopend?" is Off
 
         When Connection details are confirmed

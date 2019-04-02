@@ -7,6 +7,7 @@ Feature: NUAT-553: Create Lead And Convert Lead - nl_BE
     Background:
         Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
 
+    @NUAT-553
     Scenario: Create lead and convert lead
         When Left menu is "sales-marketing"
         Then Top menu item is "Leads"

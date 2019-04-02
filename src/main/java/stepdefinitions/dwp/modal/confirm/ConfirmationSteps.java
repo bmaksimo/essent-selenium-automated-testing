@@ -1,5 +1,6 @@
 package stepdefinitions.dwp.modal.confirm;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.modal.confirm.ConfirmSignatureDialogImpl;
 import com.essent.testing.dwp.pageobject.modal.confirm.ConfirmSignatureDialog;
 import cucumber.api.Scenario;
@@ -39,8 +40,18 @@ public class ConfirmationSteps extends NavigationElements {
             is(true));
     }
 
+    @And("^Modal dialog \"([^\"]*)\" is not shown$")
+    public void isDialogShown(String title) {
+        ConfirmSignatureDialog dialog = new ConfirmSignatureDialogImpl(title);
+        assertThat("Contract signature dialog was not shown.",
+            dialog.isShown(),
+            is(false));
+    }
+
+
     @And("^Contract signature is confirmed$")
     public void contractSignatureIsConfirmed() throws Throwable {
+        Sleeper.sleepTightInSeconds(3);
         ConfirmSignatureDialog dialog = new ConfirmSignatureDialogImpl();
         boolean success = dialog.confirm();
         assertThat("Contract signature was not confirmed.",

@@ -12,7 +12,7 @@ Feature: Received consumption
         And Top menu item is "Klanten"
         And Top action is "Filters"
         And "B2C/B2B" selection is "B2C"
-        And Label input for "Type klant" is "CUSTOMER"
+        And "Type klant" selection is "Klant"
         And Click on link in View List at "1st" row and "Klantnummer & Naam" column
         And Dashboard menu is "Contracten"
         Then View list header is "Actieve en toekomstige connecties"

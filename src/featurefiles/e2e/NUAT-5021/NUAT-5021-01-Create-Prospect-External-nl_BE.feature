@@ -29,7 +29,10 @@ Feature: NUAT-5021 Step 1. Create an account for de-duplication.
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        When Electricity EAN code is "random"
+        And EAN code is generated
+        And "Startdatum" date is "now"
+        And "EAN-code" input is "parameter:EAN-code-generated"
+        And Electricity market mock test is Open
         And Connection details are confirmed
         Then Form header is "Billing details"
 
@@ -41,15 +44,11 @@ Feature: NUAT-5021 Step 1. Create an account for de-duplication.
         Then View list header is "Offertes"
         And "1st" list element has cell value "Sales Verstuurd naar de klant - Geaccepteerd" at column "Type & status"
 
+        When Dashboard menu is "Details"
+        And "Klantnummer" field value is checked
+
         When Dashboard menu is "Marktberichten"
         Then View List is empty
 
-        When Top arrow button is "Up"
-        And Left menu is "sales-marketing"
-        And Top menu item is "Klanten"
-        And Top action is "Filters"
-        And "Naam" input is "parameter:suitecrm-customer-name"
-
-        Given "1st" List element with value at column "Klantnummer & Naam" is checked
-        And External status is "On" for SuiteCRM Customer Number "parameter:Klantnummer & Naam"
+        And External status is "On" for SuiteCRM Customer Number "parameter:Klantnummer"
 
