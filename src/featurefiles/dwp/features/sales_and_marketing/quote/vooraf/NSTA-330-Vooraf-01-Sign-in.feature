@@ -1,13 +1,12 @@
 @DWP
 @B2C
-Feature: NUAT-5021 Voraaf Step 1. Sign-in on vooraf (prepaid)
+Feature: NSTA-330 Voraaf Step 1. Sign-in on vooraf (prepaid)
 
     Background:
-
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
-    @NUAT-5021-VOORAF-1
-    Scenario: Sign-in on Vooraf (prepaid)
+    @NSTA-330-VOORAF-1
+    Scenario: NSTA-330 Voraaf Step 1. Sign-in on vooraf (prepaid)
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 

@@ -1,7 +1,9 @@
 package stepdefinitions.dwp.form;
 
 import com.essent.testing.dwp.pageobject.elements.NonEditable;
+import com.essent.testing.dwp.pageobject.elements.NonEditableInput;
 import com.essent.testing.dwp.pageobject.impl.elements.NonEditableImpl;
+import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -10,6 +12,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
 
 import java.util.HashMap;
@@ -20,6 +23,8 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
 import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
 import static org.awaitility.Duration.ONE_SECOND;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 public class FormElements extends DwpScenario {
 
@@ -59,6 +64,14 @@ public class FormElements extends DwpScenario {
             waiter.withMessage(assertionMessage);
             return StringUtils.equals(expectedValue, actualValue);
         });
+    }
+
+    @And("^Value at \"([^\"]*)\" in the card \"([^\"]*)\" is \"([^\"]*)\"$")
+    public void checkValueInCard(String label, String cardName, String expectedValue) {
+        NonEditable card = new NonEditableImpl();
+        String nonEditableValue = card.getValue(cardName, label);
+        boolean result = nonEditableValue.matches(expectedValue);
+        assertThat("The expected value differs from the real value", result, is(true));
     }
 
     @Override
