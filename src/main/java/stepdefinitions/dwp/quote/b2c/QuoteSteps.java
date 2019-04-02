@@ -420,16 +420,6 @@ public class QuoteSteps extends DwpScenario {
         parameterProvider.put("EAN-code", ean);
     }
 
-    @And("^Value at \"([^\"]*)\" in the card \"([^\"]*)\" is \"([^\"]*)\"$")
-    public void checkValueInCard(String label, String cardName, String value) {
-        BaseObjectPage baseObject = new BaseObjectPage();
-        WebElement cardTextXPath = baseObject.cardTextXPathValue(cardName, label);
-        String card = cardTextXPath.getText();
-
-        boolean result = card.matches(value);
-
-        assertThat("The value you entered differs from the real value", result, is(true));
-    }
 
     @Override
     @After("@DWP, @E2E, @REGRESSION")
