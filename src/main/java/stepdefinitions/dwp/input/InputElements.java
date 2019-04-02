@@ -2,7 +2,6 @@ package stepdefinitions.dwp.input;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.scenario.DwpScenario;
-import com.essent.testing.selenium.SeleniumDriver;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -40,6 +39,11 @@ public class InputElements extends DwpScenario {
     private class ApplyInput implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
+            boolean success = executeJavascriptTest("BaseFormInput", options);
+            return success;
+        }
+
+        public boolean testNow(Map options) {
             boolean success = executeJavascriptTestImmediately("BaseFormInput", options, true);
             return success;
         }
@@ -100,7 +104,7 @@ public class InputElements extends DwpScenario {
         options.put("value", inputValue);
         FluentWait<ApplyInput> waiter = waiter(new ApplyInput(), 10, 1);
         waiter.withMessage(String.format("Input field %s is undefined.", label));
-        waiter.until((ApplyInput callback) -> callback.test(options));
+        waiter.until((ApplyInput callback) -> callback.testNow(options));
         seleniumDriver.waitForRequestsToFinish();
     }
 

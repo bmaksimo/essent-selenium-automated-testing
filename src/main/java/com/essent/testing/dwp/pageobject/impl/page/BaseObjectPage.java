@@ -31,7 +31,7 @@ public class BaseObjectPage extends Component {
     }
 
     public void clickOnPlusNow() {
-        seleniumDriver.clickNow(seleniumDriver.findElementOrNull(By.xpath(PLUS_BUTTON_XPATH)));
+        seleniumDriver.clickNow(seleniumDriver.findElementWhenVisible(By.xpath(PLUS_BUTTON_XPATH)));
     }
 
     public void plusSubaction(String actionValue) {

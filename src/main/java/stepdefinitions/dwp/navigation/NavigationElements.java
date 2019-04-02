@@ -22,14 +22,14 @@ public abstract class NavigationElements extends DwpScenario {
 
     private class ClickTopAction implements Predicate<String> {
         @Override
-        public boolean test(String name) {
+        public boolean test(String action) {
             TopActionsPage topActions = new TopActionsPageImpl();
-            return topActions.executeTopAction(name);
+            return topActions.executeTopAction(action);
         }
 
-        public boolean testWithFixedTime(String name, int waitingTime) {
+        public boolean testWithFixedTime(String action, int waitingTime) {
             TopActionsPage topActions = new TopActionsPageImpl();
-            return topActions.executeTopActionWithFixedWait(name, waitingTime);
+            return topActions.executeTopActionWithFixedWait(action, waitingTime);
         }
     }
 
