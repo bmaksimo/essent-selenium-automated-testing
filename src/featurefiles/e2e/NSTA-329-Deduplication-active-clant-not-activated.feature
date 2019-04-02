@@ -3,10 +3,11 @@
 @B2C
 Feature: NSTA-329 Deduplication activated customer
 
+    Background:
+        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
+        
     @NSTA-329
     Scenario: From de-duplication of client
-
-        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
