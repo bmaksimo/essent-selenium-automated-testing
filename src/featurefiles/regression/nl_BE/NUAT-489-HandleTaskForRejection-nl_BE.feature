@@ -29,5 +29,5 @@ Feature: NUAT-489: Handle Task For Rejection - nl_BE
         And "Klantnummer" input is "parameter:contractNumber"
         And Click on link in View List at "1st" row and "Klantnummer & Naam" column waiting for 60 seconds
         And Dashboard menu is "Service" waiting for 100 seconds
-        Then Table "Taken" contains value "Marktberichten - Rejection" at column "Naam & Type & Subtype" now
-        And Table "Taken" contains value "Afgehandeld" at column "Status" now
+        Then Table "Taken" contains value "Marktberichten - Rejection" at column "Naam & Type & Subtype" waiting for 20 seconds
+        And Table "Taken" contains value "Afgehandeld" at column "Status" waiting for 20 seconds

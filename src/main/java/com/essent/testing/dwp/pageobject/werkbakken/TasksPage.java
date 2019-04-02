@@ -28,8 +28,6 @@ public class TasksPage extends Component {
 
     public void findTaskId(String taskId) {
 	    seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.sendKeysNow(
-	    seleniumDriver.waitAndSendKeys(
-		seleniumDriver.findElementWhenVisible(By.id(TASK_ID_SEARCH_FIELD_ID)), taskId);
+	    seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id(TASK_ID_SEARCH_FIELD_ID)), taskId);
     }
 }
