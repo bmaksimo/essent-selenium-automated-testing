@@ -10,6 +10,8 @@ public class NewQuotePage extends Component {
 
     private WebElement xElement = seleniumDriver.findElementWhenVisible(By.xpath("//guidance-modal//div[@class = 'modal__header']/a"));
 
+    private static final String CONFIRM_SIGNIN_PLACE = "//*[@id=\"accounts|aos_quotes|sign_location_c\"]/div[1]/input";
+
     public void clickOnX() {
         seleniumDriver.waitAndClick(xElement);
     }
@@ -77,6 +79,8 @@ public class NewQuotePage extends Component {
     }
 
     public void confirmTheSign(String place){
-        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"accounts|aos_quotes|sign_location_c\"]/div[1]/input")),place);
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath(CONFIRM_SIGNIN_PLACE)),place);
     }
+
+
 }
