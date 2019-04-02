@@ -9,7 +9,6 @@ import org.openqa.selenium.WebElement;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.time.format.DateTimeFormatter;
@@ -17,8 +16,13 @@ import java.util.logging.Logger;
 
 public class ContractPage extends Component {
 
+    private static final String NUMBER_ELECTRICITY_CONTRACT = "//list-icon-text-cell/div";
+    private static final String REPLACEMENT_KEY = "replacement_key";
+    private static final String SEND_EMAIL = "//list-row-action[@label='${" + REPLACEMENT_KEY + "}']/a";
+    private static final String START_DATA_ID = "contract-start-date-field";
+
     public WebElement startData() {
-        return seleniumDriver.findElementWhenVisible(By.id("contract-start-date-field"));
+        return seleniumDriver.findElementWhenVisible(By.id(START_DATA_ID));
     }
 
     public String pattern = "dd/MM/yyyy";
@@ -369,6 +373,12 @@ public class ContractPage extends Component {
         BaseObjectPage baseObject = new BaseObjectPage();
         baseObject.clickOnPlus();
         seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[@label='"+test+"']/a")));
+        String xpathSubAction = createQuery(SEND_EMAIL, REPLACEMENT_KEY, test);
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(xpathSubAction)));
+
+    }
+
+    public int getNumberOfElectricityContracts(){
+        return seleniumDriver.findElements(By.xpath(NUMBER_ELECTRICITY_CONTRACT)).size();
     }
 }

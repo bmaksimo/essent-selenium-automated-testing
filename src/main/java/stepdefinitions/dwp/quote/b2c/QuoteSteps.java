@@ -302,6 +302,7 @@ public class QuoteSteps extends DwpScenario {
         assertThat("Failure when signing up the quote.", success, is(true));
     }
 
+
     @And("^Quote is signed$")
     public void submitQuote() throws Throwable {
         String path = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
@@ -316,6 +317,7 @@ public class QuoteSteps extends DwpScenario {
         boolean success = quoteOverviewView.fillInFormData();
         assertThat("Failure when signing up the quote.", success, is(true));
     }
+
 
     @And("^Quote for account is signed$")
     public void submitQuoteForAccount() throws Throwable {
