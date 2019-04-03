@@ -1,5 +1,6 @@
 package stepdefinitions.odoo.navigation.table;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.odoo.pageobject.elements.ListView;
 import com.essent.testing.odoo.pageobject.impl.elements.DefaultListView;
 import com.essent.testing.odoo.scenario.OdooScenario;
@@ -78,6 +79,7 @@ public class OdooListView extends OdooScenario  {
         String input = parameterProvider.getValueOrParameterAsString(value) == null ?
             value : parameterProvider.getValueOrParameterAsString(value);
         ListView odooList = new DefaultListView();
+        Sleeper.sleepTightInSeconds(3);
         odooList.clickValueAt(column, input);
         awaitOdooRequestToFinish(180);
     }
