@@ -5,7 +5,7 @@ Feature: NSTA-329 Deduplication activated customer
 
     Background:
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
-        
+
     @NSTA-329
     Scenario: From de-duplication of client
 
