@@ -27,6 +27,7 @@ import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
@@ -140,6 +141,10 @@ public abstract class SeleniumDriver {
 
     public WebElement findElementWhenPresent(By selector) {
         return findElementWhenPresent(selector, Duration.ofMinutes(1), Duration.ofSeconds(10));
+    }
+
+    public Optional<WebElement> findElementOptional(By selector) {
+        return Optional.ofNullable(driver.findElement(selector));
     }
 
     public WebElement findElementWhenPresent(By selector, Duration timeout, Duration pollingEvery) {
