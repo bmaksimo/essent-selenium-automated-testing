@@ -30,14 +30,12 @@ public class DwpTopMenu extends Component {
     }
 
     private void checkAndOpenTopMenu() {
-        String query = ".top.mobile-menu [name='top-menu-toggle']";
         try{
-            WebElement hamburger = seleniumDriver.findElementWhenPresent(By.cssSelector(query), Duration.ofSeconds(30), Duration.ofMillis(100));
+            WebElement hamburger = seleniumDriver.findElementWhenPresent(By.cssSelector(CSS_HAMBURGER_TOP_MENU), Duration.ofSeconds(30), Duration.ofMillis(100));
             Button hamButton = new ButtonImpl(hamburger);
             hamButton.click();
         } catch(TimeoutException te) {
             //no hamburger button there
-
         }
     }
 
