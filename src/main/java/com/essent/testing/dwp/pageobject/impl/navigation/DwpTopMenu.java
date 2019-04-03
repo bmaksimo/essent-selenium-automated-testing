@@ -14,6 +14,7 @@ public class DwpTopMenu extends Component {
 
     private static final String XPATH_SUBMENU_TEMPLATE = "//sub-menu-link[@label='${label}']//a";
     private static final String CSS_HAMBURGER_TOP_MENU = ".top.mobile-menu [name='top-menu-toggle']";
+    public static final String  XPATH_HOME_BUTTON = "//div[@class='top']/a[2]/span";
 
     public void findAndClickTopMenu(String label) {
         checkAndOpenTopMenu();
@@ -40,6 +41,6 @@ public class DwpTopMenu extends Component {
     }
 
     public void goBackToHomePage(){
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//div[@class='top']/a[2]/span")));
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(XPATH_HOME_BUTTON)));
     }
 }
