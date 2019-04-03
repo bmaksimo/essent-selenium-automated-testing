@@ -6,10 +6,15 @@ import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.cont
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.NEXT_BUTTON;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class BaseObjectPage extends Component {
+
+    private static SimpleDateFormat SIMPLE_DATEF_ORMAT = new SimpleDateFormat("dd/MM/yyyy");
 
     private static final String PLUS_BUTTON_XPATH = "(//list-plus-cell//a)[1]";
     private static final String REPLACEMENT_KEY = "replacement_key";
@@ -57,7 +62,7 @@ public class BaseObjectPage extends Component {
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(2);
         String xpathDate = createQuery(DATE_SELECTOR_XPATH, REPLACEMENT_KEY, labelValue);
-        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.xpath(xpathDate)), cp.date);
+        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.xpath(xpathDate)), SIMPLE_DATEF_ORMAT.format(new Date()));
         seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath(ICON_CALENDAR_XPATH)));
     }
 
