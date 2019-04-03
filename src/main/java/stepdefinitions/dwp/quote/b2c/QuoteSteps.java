@@ -46,6 +46,8 @@ import static org.hamcrest.Matchers.is;
 
 public class QuoteSteps extends DwpScenario {
 
+    private static final String ROW_INDEX_XPATH = "//input-form-element//autocomplete//ul//li[${rowIndex}]/a/b";
+
     @Before("@DWP, @E2E, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
@@ -405,9 +407,9 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^EAN-code autocomplete value from the \"([^\"]*)\" row is checked$")
     public void selectEanCodeFromAutoComplete(String ordinal) throws Throwable {
-        Integer rowIndex = Integer.parseInt(ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", ""));
-        WebElement eanElement = seleniumDriver.findElementWhenPresent(By.xpath("//input-form-element//autocomplete//ul//li[" + rowIndex + "]/a/b"));
-
+        int rowIndex = extractNumericValue(ordinal);
+        String locator = createQuery(ROW_INDEX_XPATH, "rowIndex", String.valueOf(rowIndex));
+        WebElement eanElement = seleniumDriver.findElementWhenPresent(By.xpath(locator));
         String ean = eanElement.getAttribute("textContent").split(" ")[0];
         boolean eanWasFound = StringUtils.isNotBlank(ean);
         assertThat(String.format("EAN code '%s' was not found.", ean), eanWasFound, is(true));

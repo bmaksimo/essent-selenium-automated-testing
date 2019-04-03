@@ -23,5 +23,7 @@ Feature: NUAT-448: Change The Advance Amount For A Customer - nl_BE
         And Amount values is "125"
         Then Changes are confirmed
 
-        When Contract plus and "Bekijk voorschotdata"
+        #When Contract plus and "Bekijk voorschotdata"
+        When Plus actions at "1st" list row having cell value "Sales Handtekening ontvangen - Geaccepteerd" at column "Type & status" are open
+        And List plus action is "Bekijk voorschotdata"
         Then Amount of a customer value

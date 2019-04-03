@@ -121,10 +121,6 @@ public abstract class NavigationElements extends DwpScenario {
         }
     }
 
-    protected int extractNumericValue(String ordinal) {
-        return numericValue(ordinal);
-    }
-
     protected void clickTopAction(String name) {
         boolean success = new ClickTopAction().test(name);
         assertThat(String.format("Top Menu item %s was not available.", name),
