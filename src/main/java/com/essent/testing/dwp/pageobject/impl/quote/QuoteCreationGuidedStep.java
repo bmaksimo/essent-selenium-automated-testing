@@ -34,7 +34,7 @@ public abstract class QuoteCreationGuidedStep extends Component implements Guide
             .ignoreExceptions()
             .pollInterval(FIVE_HUNDRED_MILLISECONDS)
             .pollDelay(TWO_SECONDS)
-            .atMost(new Duration(10, SECONDS)).until(this::isNextButtonEnabled);
+            .atMost(new Duration(60, SECONDS)).until(this::isNextButtonEnabled);
         WebElement nextButton = findElementWhenClickable(By.cssSelector(NEXT_BUTTON.getQuery()));
         if(logger().isDebugEnabled())
         {
