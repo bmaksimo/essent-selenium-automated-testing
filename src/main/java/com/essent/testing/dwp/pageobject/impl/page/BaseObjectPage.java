@@ -27,7 +27,7 @@ public class BaseObjectPage extends Component {
 
     private static final String REPLACEMENT_KEY1 = "replacement_key1";
     private static final String LABEL_CLICK_XPATH = "//validation-wrapper[@label='${" + REPLACEMENT_KEY
-	    + "}']//option[@label = ${'" + REPLACEMENT_KEY1 + "}']";
+	    + "}']//option[@label = '${" + REPLACEMENT_KEY1 + "}']";
 
     private static final String CARD_TEXT_XPATH = "//h2[normalize-space(text())='${"+REPLACEMENT_KEY+"}']/parent::div/parent::div/div[@class='form__group']//label[normalize-space(text())='${"+REPLACEMENT_KEY1+"}']/parent::div//strong";
 
