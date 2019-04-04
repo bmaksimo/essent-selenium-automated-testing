@@ -20,26 +20,28 @@ public class ContractPage extends Component {
     private static final String REPLACEMENT_KEY = "replacement_key";
     private static final String SEND_EMAIL = "//list-row-action[@label='${" + REPLACEMENT_KEY + "}']/a";
     private static final String START_DATA_ID = "contract-start-date-field";
+    private static final String XPATH_SELECT_ACCOUNT = "//*[@id=\"account-id-field\"]//span[2]";
+    //TODO rewrite to standard work with contract lines
+    private static final String FIRST_CONTRACT_LINE_XPATH_EXPRESSION = "//div[@class = 'col-1-1']/div[@class = 'row-']/list[@list-key = 'ContractedEansOnAccount']//tbody[@id = 'rows']/tr[1]/td[4]";
+    private static final String XPATH_ACTIVE_CONTRACT_EAN = "//*[@id=\"rows\"]//list-link-bold-top-two-liner-cell//a/h5";
 
-    public WebElement startData() {
+    private WebElement startData() {
         return seleniumDriver.findElementWhenVisible(By.id(START_DATA_ID));
     }
 
-    public String pattern = "dd/MM/yyyy";
-    public SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+    private static SimpleDateFormat SIMPLE_DATEF_ORMAT = new SimpleDateFormat("dd/MM/yyyy");
 
 
-    public String date = simpleDateFormat.format(new Date());
-    private static final String labelForProductChange = "//div[@class = 'non-editable-editor']";
-    private static final String accountNumber = "//div[@class='card__content__inner-wrapper']/h4";
-    private static final String contractNumber = "//*[@id=\"account_number_c\"]/div";
-    private static final String companyNumber = "//*//*[@id=\"company-number-c-field\"]";
+    private static final String LABELFORPRODUCTCHANGE = "//div[@class = 'non-editable-editor']";
+    private static final String ACCOUNT_NUMBER = "//div[@class='card__content__inner-wrapper']/h4";
+    private static final String CONTRACT_NUMBER = "//*[@id=\"account_number_c\"]/div";
+    private static final String COMPANY_NUMBER = "//*//*[@id=\"company-number-c-field\"]";
 
     public void startDateIsToday() {
-        seleniumDriver.waitAndSendKeys(startData(),"date");
+        seleniumDriver.waitAndSendKeys(startData(), "date");
     }
 
-    public void saveButton(){
+    public void saveButton() {
         seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("primaryButton")));
     }
@@ -50,26 +52,26 @@ public class ContractPage extends Component {
     }
 
     public void selectAccount() {
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"account-id-field\"]//span[2]")));
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(XPATH_SELECT_ACCOUNT)));
     }
 
-    private WebElement getSearchInputElemnt(){
+    private WebElement getSearchInputElemnt() {
         return seleniumDriver.findElementWhenVisible(By.id("search-input"));
     }
 
-    public void searchByClientNumber(String number){
-        seleniumDriver.waitAndSendKeys(getSearchInputElemnt(),number);
+    public void searchByClientNumber(String number) {
+        seleniumDriver.waitAndSendKeys(getSearchInputElemnt(), number);
         seleniumDriver.waitAndSendKeys(getSearchInputElemnt(), number);
     }
 
     public void clickOnPlusMeniInTable(String row, String table) {
         seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.waitAndClick(seleniumDriver.findElementOrNull(By.xpath("(//list[@list-key='" + table + "']//tbody[@id='rows']//list-plus-cell//a[@class='show-actions icon-plus'])[" + row + "]")));
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenPresent(By.xpath("(//list[@list-key='" + table + "']//tbody[@id='rows']//list-plus-cell//a[@class='show-actions icon-plus'])[" + row + "]")));
     }
 
     public String getActiveContractEAN() {
         seleniumDriver.waitForRequestsToFinish();
-        return seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"rows\"]//list-link-bold-top-two-liner-cell//a/h5")).getText();
+        return seleniumDriver.findElementWhenVisible(By.xpath(XPATH_ACTIVE_CONTRACT_EAN)).getText();
     }
 
     public String contractStatus() {
@@ -85,62 +87,62 @@ public class ContractPage extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"rows\"]/tr[1]/td[5]/list-simple-two-liner-cell/p/span[2]")).getText();
     }
 
-    public String getActiveContractStartDate(){
+    public String getActiveContractStartDate() {
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"rows\"]/tr[1]/td[5]/list-simple-two-liner-cell/p/span[1]")).getText();
     }
 
-    public String getEanFromContract(){
+    public String getEanFromContract() {
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath("(//list-link-bold-top-two-liner-cell/div/a/h5)[1]")).getText();
     }
 
-    public String getStatusFromContract(){
+    public String getStatusFromContract() {
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath("(//list-link-bold-top-two-liner-cell/div/h6)[2]")).getText();
     }
 
-    public String getContractType(){
+    public String getContractType() {
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath("//list[@list-key='ContractsOnAccount']//tr[1]/td[3]//span[1]")).getText();
     }
 
-    public void clickOnContractenNummer(){
+    public void clickOnContractenNummer() {
         seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list[@list-key='ContractsOnAccount']//tr[1]/td[4]//h5")));
     }
 
-    public String getProductName(){
+    public String getProductName() {
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath("(//list[@list-key='ContractlinesOnContract']//td[@class='list__cell cell__text']//p/span[2])[1]")).getText();
     }
 
-    public String getKortingenOpContractKortingscode(){
+    public String getKortingenOpContractKortingscode() {
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath("//list[@list-key='DiscountsOnContract']//tr[1]/td[1]//span[1]")).getText();
     }
 
-    public String getKortingenOpContractProducttype(){
+    public String getKortingenOpContractProducttype() {
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath("//list[@list-key='DiscountsOnContract']//tr[1]/td[2]//span[1]")).getText();
     }
 
-    public void chooseDiscounts(String discount){
+    public void chooseDiscounts(String discount) {
         Sleeper.sleepTightInSeconds(6);
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("dwp|discount_id")));
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id='dwp-discount-id-field']/option[@label='"+discount+"']")));
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id='dwp-discount-id-field']/option[@label='" + discount + "']")));
     }
 
-    public String getCompanyNumber(){
-        return seleniumDriver.findElementWhenVisible(By.xpath(companyNumber)).getText();
+    public String getCompanyNumber() {
+        return seleniumDriver.findElementWhenVisible(By.xpath(COMPANY_NUMBER)).getText();
     }
 
-    public String getAccountNumber(){
-        return seleniumDriver.findElementWhenVisible(By.xpath(accountNumber)).getText();
+    public String getAccountNumber() {
+        return seleniumDriver.findElementWhenVisible(By.xpath(ACCOUNT_NUMBER)).getText();
     }
 
-    public String getContractNumber(){
-        return seleniumDriver.findElementWhenVisible(By.xpath(contractNumber)).getText();
+    public String getContractNumber() {
+        return seleniumDriver.findElementWhenVisible(By.xpath(CONTRACT_NUMBER)).getText();
     }
 
     public String getStartDate() {
@@ -160,78 +162,57 @@ public class ContractPage extends Component {
         String quarterEndMonth;
 
 
-        if (startDate.compareTo(attestDate)>0) {
+        if (startDate.compareTo(attestDate) > 0) {
             if (monthStartDate <= 3) {
                 quarterEndMonth = "03";
-            }
-
-            else if (monthStartDate <= 6) {
+            } else if (monthStartDate <= 6) {
                 quarterEndMonth = "06";
-            }
-            else if (monthStartDate <= 9) {
+            } else if (monthStartDate <= 9) {
                 quarterEndMonth = "09";
-            }
-            else{
+            } else {
                 quarterEndMonth = "12";
             }
-        }
-        else if (startDate.compareTo(attestDate)<0)
-        {
-             if (yearStartDate.compareTo(yearAttestDate)<0) {
-                 quarterEndMonth = "01";
+        } else if (startDate.compareTo(attestDate) < 0) {
+            if (yearStartDate.compareTo(yearAttestDate) < 0) {
+                quarterEndMonth = "01";
 
-             }
-             else {
-                 if (monthStartDate <= 3) {
-                     quarterEndMonth = "03";
+            } else {
+                if (monthStartDate <= 3) {
+                    quarterEndMonth = "03";
 
-                 }
+                } else if (monthStartDate <= 6) {
+                    quarterEndMonth = "06";
 
-                 else if (monthStartDate <= 6) {
-                     quarterEndMonth = "06";
+                } else if (monthStartDate <= 9) {
+                    quarterEndMonth = "09";
 
-                 }
+                } else {
+                    quarterEndMonth = "12";
 
-                 else if (monthStartDate <= 9) {
-                     quarterEndMonth = "09";
+                }
 
-                 }
-
-                 else{
-                     quarterEndMonth = "12";
-
-                 }
-
-             }
+            }
             yearStartDate = yearAttestDate;
-        }
-
-        else {
+        } else {
             if (monthStartDate <= 3) {
                 quarterEndMonth = "03";
-            }
-
-            else if (monthStartDate <= 6) {
+            } else if (monthStartDate <= 6) {
                 quarterEndMonth = "06";
-            }
-
-            else if (monthStartDate <= 9) {
+            } else if (monthStartDate <= 9) {
                 quarterEndMonth = "09";
-            }
-
-            else{
+            } else {
                 quarterEndMonth = "12";
             }
 
         }
 
-            StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
+        String date = SIMPLE_DATEF_ORMAT.format(new Date());
+        builder.append(date);
+        builder.replace(0, builder.length(), "01/");
+        builder.append(quarterEndMonth).append("/");
 
-            builder.append(date);
-            builder.replace(0, builder.length(), "01/");
-            builder.append(quarterEndMonth).append("/");
-
-            builder.append(yearStartDate);
+        builder.append(yearStartDate);
 
         return builder.toString();
 
@@ -245,14 +226,13 @@ public class ContractPage extends Component {
         String yearStartDate = str[2];
         String yearAttestDate = str2[2];
 
-        if (startDate.compareTo(attestDate)<0)
-        {
+        if (startDate.compareTo(attestDate) < 0) {
             yearStartDate = yearAttestDate;
         }
 
         StringBuilder builder = new StringBuilder();
         builder.append(startDate);
-        builder.replace(0,builder.length(),"31/12/");
+        builder.replace(0, builder.length(), "31/12/");
         builder.append(yearStartDate);
         return builder.toString();
     }
@@ -271,9 +251,9 @@ public class ContractPage extends Component {
         return range;
     }
 
-    public String checkSuccessMessage () {
+    public String checkSuccessMessage() {
         seleniumDriver.waitForRequestsToFinish();
-        String messageProductChange = seleniumDriver.findElementWhenVisible(By.xpath(labelForProductChange)).getText();
+        String messageProductChange = seleniumDriver.findElementWhenVisible(By.xpath(LABELFORPRODUCTCHANGE)).getText();
         String[] values = {"1 succeeded", "1 queued", "1 failed"};
         String match = "";
 
@@ -294,8 +274,9 @@ public class ContractPage extends Component {
         }
         return match;
     }
+
     public void openFirstContractFromList() {
-        seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//div[@class = 'col-1-1']/div[@class = 'row-']/list[@list-key = 'ContractedEansOnAccount']//tbody[@id = 'rows']/tr[1]/td[4]")));
+        seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath(FIRST_CONTRACT_LINE_XPATH_EXPRESSION)));
         seleniumDriver.waitForRequestsToFinish();
     }
 
@@ -305,7 +286,7 @@ public class ContractPage extends Component {
     }
 
     public void changeAmount(String value) {
-        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("dwp-recurring-amount-field")),value);
+        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("dwp-recurring-amount-field")), value);
         seleniumDriver.waitForRequestsToFinish();
     }
 
@@ -337,7 +318,7 @@ public class ContractPage extends Component {
     public void searchForEanCode(String eanCode) {
         seleniumDriver.waitForRequestsToFinish();
         getSearchInputElemnt().clear();
-        seleniumDriver.waitAndSendKeys(getSearchInputElemnt(),eanCode);
+        seleniumDriver.waitAndSendKeys(getSearchInputElemnt(), eanCode);
         seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//input[@value='Search']")));
         seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//div[@class='multi-select__results']//ul[2]")));
@@ -358,7 +339,7 @@ public class ContractPage extends Component {
         }
     }
 
-    private WebElement getTopSearchInputElement(){
+    private WebElement getTopSearchInputElement() {
         return seleniumDriver.findElementWhenVisible(By.xpath("//input[@type='search']"));
     }
 
@@ -379,7 +360,7 @@ public class ContractPage extends Component {
 
     }
 
-    public int getNumberOfElectricityContracts(){
+    public int getNumberOfElectricityContracts() {
         return seleniumDriver.findElements(By.xpath(NUMBER_ELECTRICITY_CONTRACT)).size();
     }
 }

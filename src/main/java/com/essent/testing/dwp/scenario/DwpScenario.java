@@ -15,6 +15,7 @@ import com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter;
 import com.google.gson.Gson;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.StrSubstitutor;
 import org.iban4j.CountryCode;
 
 import javax.annotation.Resource;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpDate;
+import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.numericValue;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -130,5 +132,16 @@ public abstract class DwpScenario extends RegisteredScenario {
     protected void setUpWebDriver() throws Exception {
         setUpWebDriver(seleniumDriver);
         seleniumDriver.initNgWebDriver();
+    }
+
+    protected int extractNumericValue(String ordinal) {
+        return numericValue(ordinal);
+    }
+
+    protected String createQuery(String template, String key, String value) {
+        Map<String, String> valuesMap = new HashMap<>();
+        valuesMap.put(key, value);
+        StrSubstitutor sub = new StrSubstitutor(valuesMap);
+        return sub.replace(template);
     }
 }

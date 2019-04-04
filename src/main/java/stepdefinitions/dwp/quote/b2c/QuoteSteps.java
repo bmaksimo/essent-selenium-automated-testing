@@ -13,18 +13,12 @@ import com.essent.testing.dwp.pageobject.quote.GuidedStep;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
 import com.essent.testing.util.resource.ResourceUtil;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import cucumber.api.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
-import io.restassured.mapper.ObjectMapper;
-import io.restassured.mapper.ObjectMapperDeserializationContext;
-import io.restassured.mapper.ObjectMapperSerializationContext;
 import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
 import org.openqa.selenium.By;
@@ -51,6 +45,8 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 public class QuoteSteps extends DwpScenario {
+
+    private static final String ROW_INDEX_XPATH = "//input-form-element//autocomplete//ul//li[${rowIndex}]/a/b";
 
     @Before("@DWP, @E2E, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
@@ -411,9 +407,9 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^EAN-code autocomplete value from the \"([^\"]*)\" row is checked$")
     public void selectEanCodeFromAutoComplete(String ordinal) throws Throwable {
-        Integer rowIndex = Integer.parseInt(ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", ""));
-        WebElement eanElement = seleniumDriver.findElementOrNull(By.xpath("//input-form-element//autocomplete//ul//li[" + rowIndex + "]/a/b"));
-
+        int rowIndex = extractNumericValue(ordinal);
+        String locator = createQuery(ROW_INDEX_XPATH, "rowIndex", String.valueOf(rowIndex));
+        WebElement eanElement = seleniumDriver.findElementWhenPresent(By.xpath(locator));
         String ean = eanElement.getAttribute("textContent").split(" ")[0];
         boolean eanWasFound = StringUtils.isNotBlank(ean);
         assertThat(String.format("EAN code '%s' was not found.", ean), eanWasFound, is(true));
