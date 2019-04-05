@@ -12,18 +12,17 @@ import static org.junit.Assert.assertNotNull;
 public class DWPLoginDialog extends LoginComponent implements Dialog {
     private final static By SELECOR = By.cssSelector(".modal__container.login");
 
-
     public DWPLoginDialog(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver.findElementOrNull(SELECOR), seleniumDriver);
+        super(seleniumDriver.findElementWhenPresent(SELECOR));
     }
 
     public Window login(String username, String password) throws Throwable {
 
-        WebElement element = seleniumDriver.findElementOrNull(By.id("username"));
+        WebElement element = seleniumDriver.findElementWhenPresent(By.id("username"));
         assertNotNull(element);
         element.clear();
         element.sendKeys(username);
-        element = seleniumDriver.findElementOrNull(By.id("password"));
+        element = seleniumDriver.findElementWhenPresent(By.id("password"));
         assertNotNull(element);
         element.clear();
         element.sendKeys(password);

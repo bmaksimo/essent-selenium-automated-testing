@@ -1,16 +1,13 @@
 package com.essent.testing.restassured;
 
-import com.essent.automation.util.Sleeper;
-import com.essent.testing.config.ConfigKey;
-import com.essent.testing.config.ConfigProvider;
-import com.essent.testing.selenium.scenario.SeleniumScenario;
-import org.apache.log4j.Logger;
 
-import static org.junit.Assert.assertTrue;
+import com.essent.testing.scenario.RegisteredScenario;
+//import org.apache.log4j.Logger;
 
-public abstract class B2CCreateContractScenario extends SeleniumScenario {
 
-    private  final static Logger logger = Logger.getLogger(B2CCreateContractScenario.class);
+public abstract class B2CCreateContractScenario extends RegisteredScenario {
+
+//    private  final static Logger logger = Logger.getLogger(B2CCreateContractScenario.class);
 
     private String name;
 

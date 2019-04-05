@@ -19,7 +19,7 @@ class TrGetListAction extends TestRunnerBase {
         const options = this.options;
         result.status = 'UNDEFINED';
         result.reason = 'Not executed';
-        let matches = $(`.list__actions .button-group.action-buttons [name='${options.name}']`);
+        let matches = $(`.list__actions [name='${options.name}']`);
         if(matches.length > 0) {
             matches[0].click();
             result.status = 'PASSED';

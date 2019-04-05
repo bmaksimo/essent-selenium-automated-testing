@@ -5,6 +5,7 @@ import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.modal.quote.SimilarAccountDialogImpl;
+import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import com.essent.testing.dwp.pageobject.impl.quote.*;
 import com.essent.testing.dwp.pageobject.impl.quote_for_account.QuoteForAccountOverviewPage;
 import com.essent.testing.dwp.pageobject.modal.quote.SimilarAccountDialog;
@@ -17,7 +18,6 @@ import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
-import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
@@ -38,21 +38,26 @@ import static com.essent.testing.dwp.autocrat.element.quote.TariffElements.NO_PR
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.NEXT_STEP;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
-import static org.awaitility.Duration.*;
+import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
+import static org.awaitility.Duration.ONE_HUNDRED_MILLISECONDS;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 public class QuoteSteps extends DwpScenario {
 
+    private static final String ROW_INDEX_XPATH = "//input-form-element//autocomplete//ul//li[${rowIndex}]/a/b";
+
     @Before("@DWP, @E2E, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
 
+
+
     @When("^B2C sales channel is \"([^\"]*)\"$")
     public void initSalesChannel(SalesChannel salesChannel) throws Throwable {
-        QuoteDetailsPage quoteDetailsPage = new QuoteDetailsPage(webDriver);
+        QuoteDetailsPage quoteDetailsPage = new QuoteDetailsPage();
         Sleeper.sleepTightInSeconds(5);
         quoteDetailsPage.setSalesChannel(salesChannel);
         boolean formInitialized = quoteDetailsPage.fillInFormData();
@@ -61,7 +66,7 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^Deduplication dialogue \"([^\"]*)\" is shown$")
     public void deduplicationDialogueIsShown(String title) throws Throwable {
-        SimilarAccountDialog dialog = new SimilarAccountDialogImpl(webDriver, title);
+        SimilarAccountDialog dialog = new SimilarAccountDialogImpl(title);
         assertThat("Similar clients dialogue was not shown.",
             dialog.getTitle(),
             equalTo(title));
@@ -69,21 +74,8 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^Deduplication dialogue link \"([^\"]*)\" is clicked$")
     public void deduplicationDialogueLinkIsClicked(String linkText) throws Throwable {
-        SimilarAccountDialog dialog = new SimilarAccountDialogImpl(webDriver);
+        SimilarAccountDialog dialog = new SimilarAccountDialogImpl();
         dialog.clickOnLink(linkText);
-    }
-
-
-    private class CheckFormHeader implements Predicate<String> {
-        @Override
-        public boolean test(String header) {
-            int sec = 7;
-            Map<String, Object> options = new HashMap<>();
-            options.put("schedule_seconds", sec);
-            options.put("header", header);
-            boolean success = executeJavascriptTest("TrCheckFormHeader", options);
-            return success;
-        }
     }
 
     private class VerifyTariffSheetPriceAlert implements FlowAwarePredicate<QuoteSteps> {
@@ -122,7 +114,7 @@ public class QuoteSteps extends DwpScenario {
         }
 
         private boolean fillInCustomerDetails(RandomUser randomUser) {
-            PersonalDetailsPage customerDetailsView = new PersonalDetailsPage(webDriver);
+            PersonalDetailsPage customerDetailsView = new PersonalDetailsPage();
             customerDetailsView.setRandomUser(randomUser);
             return customerDetailsView.fillInFormData();
         }
@@ -135,35 +127,17 @@ public class QuoteSteps extends DwpScenario {
         }
 
         private boolean fillInCustomerAddress(CustomerAddress customerAddress) {
-            PersonalDetailsAddressPage customerAddressView = new PersonalDetailsAddressPage(webDriver);
+            PersonalDetailsAddressPage customerAddressView = new PersonalDetailsAddressPage();
             customerAddressView.setCustometAddress(customerAddress);
             return customerAddressView.fillInCustomerAddress();
         }
     }
 
-    private class ToggleCheckBox implements Predicate<Map<String, String>> {
-
-        @Override
-        public boolean test(Map<String, String> options) {
-            return executeJavascriptTest("TrToggleCheckBox", options);
-        }
-    }
-
     @And("^Quote details are confirmed$")
     public void confirmQuoteDetails() throws Throwable {
-        QuoteDetailsPage quoteDetailsPage = new QuoteDetailsPage(webDriver);
+        QuoteDetailsPage quoteDetailsPage = new QuoteDetailsPage();
         quoteDetailsPage.next();
     }
-
-
-    @Then("^Form header is \"([^\"]*)\"$")
-    public void checkFormHeader(String formHeader) throws Throwable {
-         given().await()
-            .pollInterval(FIVE_HUNDRED_MILLISECONDS)
-            .pollDelay(ONE_SECOND)
-            .atMost(new Duration(30, SECONDS)).until(() -> new CheckFormHeader().test(formHeader));
-    }
-
 
     @And("^Customer is random$")
     public void checkAndGetRandomUser() throws Throwable {
@@ -190,14 +164,14 @@ public class QuoteSteps extends DwpScenario {
     @And("^Customer address is$")
     public void initCustomerAddress(final DataTable address) throws Throwable {
         List<CustomerAddress> list = address.asList(CustomerAddress.class);
-        CustomerAddress cuatomerAddress = list.get(0);
-        boolean success = new InitialiseCustomerAddress().test(cuatomerAddress);
-        assertThat("Cusomer Address data wasn't initialised.", success, is(true));
+        CustomerAddress customerAddress = list.get(0);
+        boolean success = new InitialiseCustomerAddress().test(customerAddress);
+        assertThat("Customer Address data wasn't initialised.", success, is(true));
     }
 
     @And("^Customer details are confirmed$")
     public void confirmCustomerDetails() throws Throwable {
-        GuidedStep quoteDetailsPage = new PersonalDetailsAddressPage(webDriver);
+        GuidedStep quoteDetailsPage = new PersonalDetailsAddressPage();
         quoteDetailsPage.next();
     }
 
@@ -206,7 +180,7 @@ public class QuoteSteps extends DwpScenario {
     selectPackage(String packaqe) throws Throwable {
         TariffTable tariff = new TariffTable();
         tariff.setPackageName(packaqe);
-        PackageAndFuelTypeSelectionPage selectPackageAndFuelTypeView = new PackageAndFuelTypeSelectionPage(webDriver);
+        PackageAndFuelTypeSelectionPage selectPackageAndFuelTypeView = new PackageAndFuelTypeSelectionPage();
         selectPackageAndFuelTypeView.setTariffData(tariff);
         boolean success = selectPackageAndFuelTypeView.fillInFormData();
         assertThat(String.format("Failure when selecting the package %s.", packaqe),
@@ -214,21 +188,11 @@ public class QuoteSteps extends DwpScenario {
             is(true));
     }
 
-    @And("^Checkbox \"([^\"]*)\" is ([^\"]*)$")
-    public void toggleCheckbox(String label, SwitchState state) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        Map<String, String> options = new HashMap<>();
-        options.put("label", label);
-        options.put("state", state.name().toLowerCase());
-        boolean success = new ToggleCheckBox().test(options);
-        assertThat(String.format("Failure toggling checkbox %s to  target state %s.", label, state.name()),
-            success,
-            is(true));
-    }
+
 
     @And("^Package and Fuel Type is confirmed$")
     public void confirmPackageAndFuelType() throws Throwable {
-        PackageAndFuelTypeSelectionPage selectPackageAndFuelTypeView = new PackageAndFuelTypeSelectionPage(webDriver);
+        PackageAndFuelTypeSelectionPage selectPackageAndFuelTypeView = new PackageAndFuelTypeSelectionPage();
         selectPackageAndFuelTypeView.next();
     }
 
@@ -244,7 +208,7 @@ public class QuoteSteps extends DwpScenario {
         ConnectionDetails electricityConnectionDetails = list.get(0);
         ConnectionDetails gasConnectionDetails = list.get(1);
 
-        ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage(webDriver);
+        ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
         connectionDetailsView.setElectroConnectionDetails(electricityConnectionDetails);
         connectionDetailsView.setGasConnectionDetails(gasConnectionDetails);
         connectionDetailsView.fillInFormData();
@@ -252,7 +216,7 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^([^\"]*) meter is ([^\"]*)$")
     public void setMeterState(final ProductType productType, final SwitchState meterState) throws Throwable {
-        ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage(webDriver);
+        ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
         given().await()
             .ignoreExceptions()
             .pollInterval(FIVE_HUNDRED_MILLISECONDS)
@@ -263,7 +227,7 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^Switch type is Move in")
     public void setMoveIn() throws Throwable {
-        ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage(webDriver);
+        ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
         given().await()
             .ignoreExceptions()
             .pollInterval(FIVE_HUNDRED_MILLISECONDS)
@@ -274,7 +238,7 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^([^\"]*) market mock test is ([^\"]*)$")
     public void setMarketMockTest(final ProductType productType, final SwitchState state) throws Throwable {
-        ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage(webDriver);
+        ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
         given().await()
             .ignoreExceptions()
             .pollInterval(FIVE_HUNDRED_MILLISECONDS)
@@ -285,14 +249,14 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^Connection details are confirmed$")
     public void confirmConnection() throws Throwable {
-        ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage(webDriver);
+        ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
         connectionDetailsView.next();
     }
 
     @And("^Payment details are: method \"([^\"]*)\", IBAN \"([^\"]*)\", bic \"([^\"]*)\"$")
     public void selectPaymentMethod(String paymetnMethod, String iban, String bic) {
         BillingInformation billingInfo = new BillingInformation(paymetnMethod, iban, bic);
-        BillingDetailsPage billingDetailsView = new BillingDetailsPage(webDriver);
+        BillingDetailsPage billingDetailsView = new BillingDetailsPage();
         billingDetailsView.setBillingInformation(billingInfo);
         billingDetailsView.fillInFormData();
     }
@@ -313,7 +277,7 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^Billing details are confirmed$")
     public void confirmBillingDetaile() throws Throwable {
-        BillingDetailsPage billingDetailsPage = new BillingDetailsPage(webDriver);
+        BillingDetailsPage billingDetailsPage = new BillingDetailsPage();
         billingDetailsPage.next();
     }
 
@@ -328,11 +292,12 @@ public class QuoteSteps extends DwpScenario {
             location,
             path);
         Sleeper.sleepTightInSeconds(10);
-        QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage(webDriver);
+        QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage();
         quoteOverviewView.setSignatureData(signature);
         boolean success = quoteOverviewView.fillInFormData();
         assertThat("Failure when signing up the quote.", success, is(true));
     }
+
 
     @And("^Quote is signed$")
     public void submitQuote() throws Throwable {
@@ -343,11 +308,12 @@ public class QuoteSteps extends DwpScenario {
         SignatureData signature = new SignatureData(
             DwpDateFormats.DWP_TODAY,
             path);
-        QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage(webDriver);
+        QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage();
         quoteOverviewView.setSignatureData(signature);
         boolean success = quoteOverviewView.fillInFormData();
         assertThat("Failure when signing up the quote.", success, is(true));
     }
+
 
     @And("^Quote for account is signed$")
     public void submitQuoteForAccount() throws Throwable {
@@ -358,7 +324,7 @@ public class QuoteSteps extends DwpScenario {
         SignatureData signature = new SignatureData(
             DwpDateFormats.DWP_TODAY,
             path);
-        QuoteForAccountOverviewPage quoteOverviewView = new QuoteForAccountOverviewPage(webDriver);
+        QuoteForAccountOverviewPage quoteOverviewView = new QuoteForAccountOverviewPage();
         quoteOverviewView.setSignatureData(signature);
         boolean success = quoteOverviewView.fillInFormData();
         assertThat("Failure when signing up the quote.", success, is(true));
@@ -368,7 +334,7 @@ public class QuoteSteps extends DwpScenario {
     @And("^Quote is confirmed$")
     public void confirmQuote() throws Throwable {
         Sleeper.sleepTightInSeconds(5);
-        QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage(webDriver);
+        QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage();
         quoteOverviewView.next();
     }
     @And("^Quote for account is confirmed$")
@@ -398,22 +364,33 @@ public class QuoteSteps extends DwpScenario {
         logger().info(" - Generated EAN code: " + eanCode);
     }
 
-
+    @And("Gas EAN-code input in the \"([^\"]*)\" card is \"([^\"]*)\"$")
+    public void setInput(String card, String value) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
+        WebElement gasEAN = seleniumDriver.findElement(By.xpath("//h2[contains(text(),'"+card+"')]/parent::div/parent::div/div[@class='form__group']//label[contains(text(),'EAN-code')]/parent::div//input"));
+        boolean gasEANWasFound = gasEAN != null;
+        gasEAN.sendKeys(inputValue);
+        assertThat("Gas EAN-code element was not found.", gasEANWasFound, is(true));
+    }
 
     @And("^Electricity EAN code is \"([^\"]*)\"$")
-    public void electricityEANCodeIs(String ean) throws Throwable {
+    public void
+    electricityEANCodeIs(String ean) throws Throwable {
         ConnectionDetails electricityConnectionDetails = new ConnectionDetails();
         switch (ean) {
             case "selected":
                 selectEanCode();
                 return;
             case "random":
-                electricityConnectionDetails.setEan(PrepareDataForContract.generateEAN());
+                String generatedEan = PrepareDataForContract.generateEAN();
+                electricityConnectionDetails.setEan(generatedEan);
+                parameterProvider.put("EAN-code-generated", generatedEan);
                 break;
             default:
                 electricityConnectionDetails.setEan(ean);
         }
-        ConnectionDetailsPage page = new ConnectionDetailsPage(webDriver);
+        ConnectionDetailsPage page = new ConnectionDetailsPage();
         Sleeper.sleepTightInSeconds(5);
         page.setElectroConnectionDetails(electricityConnectionDetails);
         boolean success = page.fillInElectricityEanCode();
@@ -422,7 +399,7 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^Electricity EAN code is put as output parameter \"?([^\"]*)\"?$")
     public void putElectricityEanCode(String parameter) throws Throwable {
-        ConnectionDetailsPage page = new ConnectionDetailsPage(webDriver);
+        ConnectionDetailsPage page = new ConnectionDetailsPage();
         String eanCode = page.getEan();
         assertThat(StringUtils.isNotEmpty(eanCode), is(true));
         parameterProvider.put(parameter, eanCode);
@@ -430,13 +407,24 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^EAN-code autocomplete value from the \"([^\"]*)\" row is checked$")
     public void selectEanCodeFromAutoComplete(String ordinal) throws Throwable {
-        Integer rowIndex = Integer.parseInt(ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", ""));
-        WebElement eanElement = webDriver.findElementOrNull(By.xpath("//input-form-element//autocomplete//ul//li[" + rowIndex + "]/a/b"));
-
+        int rowIndex = extractNumericValue(ordinal);
+        String locator = createQuery(ROW_INDEX_XPATH, "rowIndex", String.valueOf(rowIndex));
+        WebElement eanElement = seleniumDriver.findElementWhenPresent(By.xpath(locator));
         String ean = eanElement.getAttribute("textContent").split(" ")[0];
         boolean eanWasFound = StringUtils.isNotBlank(ean);
         assertThat(String.format("EAN code '%s' was not found.", ean), eanWasFound, is(true));
         parameterProvider.put("EAN-code", ean);
+    }
+
+    @And("^Value at \"([^\"]*)\" in the card \"([^\"]*)\" is \"([^\"]*)\"$")
+    public void checkValueInCard(String label, String cardName, String value) {
+        BaseObjectPage baseObject = new BaseObjectPage();
+        WebElement cardTextXPath = baseObject.cardTextXPathValue(cardName, label);
+        String card = cardTextXPath.getText();
+
+        boolean result = card.matches(value);
+
+        assertThat("The value you entered differs from the real value", result, is(true));
     }
 
     @Override

@@ -5,25 +5,24 @@ import com.essent.testing.dwp.pageobject.elements.Button;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.elements.ButtonImpl;
 import com.essent.testing.dwp.pageobject.modal.confirm.ConfirmSignatureDialog;
-import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 
 public class ConfirmSignatureDialogImpl extends Component implements ConfirmSignatureDialog {
 
-    private final static By SELECOR = By.cssSelector(".view__modal .modal__header");
+    private final static By CONFIRM_SIGNATURE_MODAL_SELECTOR = By.cssSelector(".view__modal .modal__header");
 
-    private final static By SELECOR_CONFIRM_BUTTON = By.id("confirm-button");
+    private final static By CONFIRM_BUTTON_SELECTOR = By.id("confirm-button");
 
 
-    public ConfirmSignatureDialogImpl(SeleniumDriver seleniumDriver, String title) {
-        super(seleniumDriver.findElementOrNull(SELECOR), seleniumDriver);
+    public ConfirmSignatureDialogImpl(String title) {
+        super(CONFIRM_SIGNATURE_MODAL_SELECTOR);
         this.title = title;
-        waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
     }
 
-    public ConfirmSignatureDialogImpl(SeleniumDriver seleniumDriver) {
-       super(seleniumDriver);
+    public ConfirmSignatureDialogImpl() {
        seleniumDriver.waitForRequestsToFinish();
     }
 
@@ -49,12 +48,11 @@ public class ConfirmSignatureDialogImpl extends Component implements ConfirmSign
 
     @Override
     public boolean confirm() {
-        WebElement element = seleniumDriver.findElementOrNull(SELECOR_CONFIRM_BUTTON);
-        if(element == null)
-            return false;
+        seleniumDriver.waitForRequestsToFinish();
+        WebElement element = seleniumDriver.findElementWhenPresent(CONFIRM_BUTTON_SELECTOR);
         Button confirmButton = new ButtonImpl(element);
         confirmButton.click();
-        waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         return true;
     }
 
@@ -65,6 +63,7 @@ public class ConfirmSignatureDialogImpl extends Component implements ConfirmSign
 
     @Override
     public boolean isShown() {
-        return seleniumDriver.findElementOrNull(SELECOR) != null;
+        seleniumDriver.findElementWhenPresent(CONFIRM_SIGNATURE_MODAL_SELECTOR);
+        return true;
     }
 }

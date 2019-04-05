@@ -80,6 +80,8 @@ public enum ConfigKey {
     SSH_BILLING_HOSTNAME("ssh.billing.hostname"),
     SSH_BILLING_REMOTE_PORT("ssh.billing.remote.port"),
 
+    SSH_NOVA_SFTP_HOST("sftp.nova.hostname"),
+
     // related to resetting odoo database
     SSH_ODOO_HOSTNAME("ssh.odoo.hostname"),
     SSH_ODOO_PORT("ssh.odoo.port"),

@@ -13,43 +13,44 @@
 class BaseFormInput extends TestRunnerBase {
 
     constructor(options, callback) {
-        super(options, callback, 500);
+        super(options, callback, 2000);
     }
 
     run() {
         let result = this.result;
         result.status = 'UNDEFINED';
         result.reason = 'Not executed';
-        let options = this.options;
-        let label = options.label;
-        let value = options.value;
-        let xPath = `//div[@class='input' | @class='input label-inline' and label/text()='${label}']`;
+        const options = this.options;
+        const label = options.label;
+        const value = options.value;
+        const xPath = `//div[label[normalize-space(text())='${label}']]`;
         console.log('--XPATH: ' + xPath);
-        let elements = this.evaluateXpath(xPath);
+        const elements = this.evaluateXpath(xPath);
         if(elements.length >= 0) {
             let input = $(elements[0]).find("input, select");
-            if(input.index() == 0) {
-                let success = this.applyInput(input, value);
+            if(input.length > 0) {
+                this.applyInput(input, value);
+                const success = this.applyInput(input, value);
                 if(success) {
                     result.status = "PASSED";
                     result.reason = '';
                 } else {
                     result.status = "FAILED";
-                    result.reason = 'Input value was rejected';
+                    result.reason = 'Input value  rejected or wasn\'t set';
                 }
             } else {
                 result.status = "FAILED";
-                result.reason = 'Filter ' + label + ' input undefined.';
+                result.reason = 'Input or select element, labelled ' + label + ', undefined.';
             }
         } else {
                 result.status = "FAILED";
-                result.reason = 'Filter element ' + label + ' undefined.';
+                result.reason = 'label element ' + label + ' undefined.';
         }
         this.resolveCallback(result);
     }
 
     applyInput(input, value) {
         input.val(value).trigger("change");
-        return true;
+        return input.val() === value;
     }
 }

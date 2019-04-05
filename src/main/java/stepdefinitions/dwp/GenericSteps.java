@@ -12,6 +12,7 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.test.context.ContextConfiguration;
@@ -19,8 +20,10 @@ import org.springframework.test.context.ContextConfiguration;
 import java.time.Duration;
 
 import static org.junit.Assert.assertNotNull;
+
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 public class GenericSteps extends DwpScenario {
+
 
     @Before("@DWP, @CORE, @E2E, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
@@ -29,9 +32,10 @@ public class GenericSteps extends DwpScenario {
 
     @Given("^I logged in to DWP as \"([^\"]*)\"$")
     public void loginAs(String username) throws Throwable {
+        setUpWebDriver();
         isDwpRunning();
         UserRoles dwpUser = UserRoles.get(username);
-        Window application = new LoginAction(webDriver).doLogin(dwpUser.getUsername(), dwpUser.getPassword());
+        Window application = new LoginAction().doLogin(dwpUser.getUsername(), dwpUser.getPassword());
         assertNotNull("DWP application did not appear after a login", application);
         injectJavaScriptTestRunner();
         discardPreviousFlow();
@@ -39,25 +43,26 @@ public class GenericSteps extends DwpScenario {
 
     @Given("^I renew login to DWP as \"([^\"]*)\"$")
     public void renewLoginAs(String username) throws Throwable {
-        setUpWebDriver();
+        tearDown();
         loginAs(username);
     }
 
-
     private void discardPreviousFlow() throws Throwable {
-        WebElement cancelWebElement = webDriver.findElementOrNull(By.id("cancel-button"), Duration.ofSeconds(1), Duration.ofMillis(50));
-        if(cancelWebElement != null) {
-            (new WebDriverWait(webDriver.getDriver(), 2)).until(ExpectedConditions.elementToBeClickable(cancelWebElement));
+        try {
+            WebElement cancelWebElement = seleniumDriver.findElementWhenPresent(By.id("cancel-button"), Duration.ofSeconds(30), Duration.ofMillis(500));
+            (new WebDriverWait(seleniumDriver.getDriver(), 2)).until(ExpectedConditions.elementToBeClickable(cancelWebElement));
             Button cancelButton = new ButtonImpl(cancelWebElement);
             cancelButton.click();
+
+        } catch(TimeoutException te) {
+            //there is nothing to disacrd
         }
 
     }
 
-
     @After("@DWP, @CORE, @E2E, @REGRESSION")
     public void tearDown() {
-        tidyUp();
+        tidyUp(seleniumDriver);
     }
 
 }

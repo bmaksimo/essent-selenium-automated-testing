@@ -2,11 +2,13 @@
 @B2B
 @REGRESSION
 @BUSINESS-DESK
+@UNSTABLE
 Feature: NUAT-448: Change The Advance Amount For A Customer - nl_BE
 
     Background:
         Given   I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
 
+    @NUAT-448
     Scenario: Change amount for a customer
         When Left menu is "sales-marketing"
         And Top menu item is "Klanten"

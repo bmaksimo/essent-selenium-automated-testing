@@ -24,3 +24,4 @@ class TrCheckFormHeader extends TestRunnerBase {
         this.resolveCallback(result);
     }
 }
+//# TrCheckFormHeader

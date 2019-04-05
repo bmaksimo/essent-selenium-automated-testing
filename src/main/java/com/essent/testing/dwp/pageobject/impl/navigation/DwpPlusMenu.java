@@ -2,7 +2,6 @@ package com.essent.testing.dwp.pageobject.impl.navigation;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,14 +15,10 @@ import java.util.List;
 
 public class DwpPlusMenu extends Component {
 
-    private static String ACCORDION_BUTTON_SELECTOR_TEMPLATE = "[label='${text}'] .accordion-button";
+    private static String ACCORDION_BUTTON_SELECTOR_TEMPLATE = "//menu-link[normalize-space(@label)='${text}']//a";
     private static String LABELED_ACCORDION_WRAPPER_SELECTOR  =  "labeled-accordion-wrapper[label='${text}'] > a";
 
     private final static String XPATH_CONTAINS_TEXT_TEMPLATE = "//span[contains(text(),'${text}')]";
-
-    public DwpPlusMenu(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver);
-    }
 
     /**
      * @deprecated Use {@link #executeAction(String)}
@@ -68,8 +63,8 @@ public class DwpPlusMenu extends Component {
     }
 
     private WebElement findAction(String actionLabel) {
-        By accordionButtonSelector = By.cssSelector(createQuery(ACCORDION_BUTTON_SELECTOR_TEMPLATE, "text", actionLabel));
-        WebElement accordionButton = seleniumDriver.findElementOrNull(accordionButtonSelector);
+        By accordionButtonSelector = By.xpath(createQuery(ACCORDION_BUTTON_SELECTOR_TEMPLATE, "text", actionLabel));
+        WebElement accordionButton = seleniumDriver.findElementWhenPresent(accordionButtonSelector);
         FluentWait<WebDriver> waiter = new FluentWait<>(seleniumDriver.getDriver()).withTimeout(Duration.ofSeconds(5));
         accordionButton = waiter.until(ExpectedConditions.elementToBeClickable(accordionButton));
         accordionButton.click();
@@ -86,7 +81,7 @@ public class DwpPlusMenu extends Component {
         String menuItem = menu.remove(0);
         By labeledAccordionWrapperBy = By.cssSelector(createQuery(LABELED_ACCORDION_WRAPPER_SELECTOR, "text", menuItem));
         FluentWait<WebDriver> waiter = new FluentWait<>(seleniumDriver.getDriver()).withTimeout(Duration.ofSeconds(5));
-        WebElement result =  waiter.until(ExpectedConditions.presenceOfElementLocated(labeledAccordionWrapperBy));
+        WebElement result = waiter.until(ExpectedConditions.presenceOfElementLocated(labeledAccordionWrapperBy));
         result.click();
         Sleeper.sleepTight(200);
         return this.findMenu(result, menu);

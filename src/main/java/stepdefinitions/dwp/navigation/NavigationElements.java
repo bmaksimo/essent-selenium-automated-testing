@@ -1,22 +1,18 @@
 package stepdefinitions.dwp.navigation;
 
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.navigation.DwpPlusMenu;
 import com.essent.testing.dwp.pageobject.impl.navigation.TopActionsPageImpl;
 import com.essent.testing.dwp.pageobject.navigation.TopActionsPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
-import org.awaitility.Duration;
-import stepdefinitions.dwp.quote.b2c.QuoteSteps;
+import org.openqa.selenium.support.ui.FluentWait;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.numericValue;
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.awaitility.Awaitility.given;
-import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
-import static org.awaitility.Duration.ONE_SECOND;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -26,9 +22,14 @@ public abstract class NavigationElements extends DwpScenario {
 
     private class ClickTopAction implements Predicate<String> {
         @Override
-        public boolean test(String name) {
-            TopActionsPage topActions = new TopActionsPageImpl(webDriver);
-            return topActions.executeTopAction(name);
+        public boolean test(String action) {
+            TopActionsPage topActions = new TopActionsPageImpl();
+            return topActions.executeTopAction(action);
+        }
+
+        public boolean testWithFixedTime(String action, int waitingTime) {
+            TopActionsPage topActions = new TopActionsPageImpl();
+            return topActions.executeTopActionWithFixedWait(action, waitingTime);
         }
     }
 
@@ -70,14 +71,11 @@ public abstract class NavigationElements extends DwpScenario {
             boolean success = executeJavascriptTest("TrArrowAction", options);
             return success;
         }
-    }
 
-    private class VisitTopItem implements Predicate<String> {
-        @Override
-        public boolean test(String label) {
+        public boolean testNow(String arrow) {
             Map<String, String> options = new HashMap<>();
-            options.put("label", label);
-            boolean success = executeJavascriptTest("TrGetTopTab", options);
+            options.put("arrow", arrow);
+            boolean success = executeJavascriptTestImmediately("TrArrowAction", options, true);
             return success;
         }
     }
@@ -88,6 +86,10 @@ public abstract class NavigationElements extends DwpScenario {
             boolean success = executeJavascriptTest("TrSelectButton", "");
             return success;
         }
+        public boolean testNow(String name) {
+            boolean success = executeJavascriptTestImmediately("TrSelectButton", "", true);
+            return success;
+        }
     }
 
     private class ClickDashboardMenu implements Predicate<String> {
@@ -95,11 +97,12 @@ public abstract class NavigationElements extends DwpScenario {
         public boolean test(String menu) {
             Map<String, Object> options = new HashMap<>();
             options.put("menu", menu);
-            given().await()
-                .pollInterval(FIVE_HUNDRED_MILLISECONDS)
-                .pollDelay(ONE_SECOND)
-                .atMost(new Duration(20, SECONDS)).until(() -> executeJavascriptTest("TrClickDashboardMenuButton", options));
-             return true;
+             return executeJavascriptTest("TrClickDashboardMenuButton", options);
+        }
+        public boolean testNow(String menu) {
+            Map<String, Object> options = new HashMap<>();
+            options.put("menu", menu);
+             return executeJavascriptTestImmediately("TrClickDashboardMenuButton", options, true);
         }
     }
 
@@ -118,12 +121,13 @@ public abstract class NavigationElements extends DwpScenario {
         }
     }
 
-    protected int extractNumericValue(String ordinal) {
-        return numericValue(ordinal);
-    }
-
     protected void clickTopAction(String name) {
         boolean success = new ClickTopAction().test(name);
+        assertThat(String.format("Top Menu item %s was not available.", name),
+            success, is(true));
+    }
+    protected void clickTopAction(String name, int waitingTime) {
+        boolean success = new ClickTopAction().testWithFixedTime(name, waitingTime);
         assertThat(String.format("Top Menu item %s was not available.", name),
             success, is(true));
     }
@@ -134,8 +138,15 @@ public abstract class NavigationElements extends DwpScenario {
             success, is(true));
     }
 
+    protected void clickTopArrow(String arrow, int waitingTime)  {
+        Sleeper.sleepTightInSeconds(waitingTime);
+        boolean success = new ClickTopArrowButton().testNow(arrow);
+        assertThat(String.format("Top Arrow %s is undefined.", arrow),
+            success, is(true));
+    }
+
     protected void clickPlusAction(String path) {
-        DwpPlusMenu plusMenu = new DwpPlusMenu(webDriver);
+        DwpPlusMenu plusMenu = new DwpPlusMenu();
         boolean success = plusMenu.executeAction(path);
         assertThat(String.format("Plus Menu Path %s undefined.", path),
             success, is(true));
@@ -148,14 +159,19 @@ public abstract class NavigationElements extends DwpScenario {
     }
 
     protected void clickListPlusAction(String item) {
-        boolean success = new ClickListPlusAction().test(item);
-        assertThat(String.format("List Plus ActionDTO %s undefined.", item),
-            success, is(true));
+        FluentWait<ClickListPlusAction> waiter = waiter(new ClickListPlusAction(), 20, 2);
+        waiter.withMessage(String.format("List Plus Action \"%s\" is undefined or disabled.", item));
+        waiter.until((ClickListPlusAction action) -> action.test(item));
     }
 
     protected void clickDashboardMenu(String menu) {
-        boolean success = new ClickDashboardMenu().test(menu);
-        assertThat(String.format("Dashboard Menu  %s is undefined.", menu),
-            success, is(true));
+        FluentWait<ClickDashboardMenu> waiter = waiter(new ClickDashboardMenu(), 20, 2);
+        waiter.withMessage(String.format("Dashboard Menu  \"%s\" is undefined.", menu));
+        waiter.until((ClickDashboardMenu dashboardMenu)-> dashboardMenu.test(menu));
+    }
+
+    protected void clickDashboardMenu(String menu, int waitingTime) {
+        Sleeper.sleepTightInSeconds(waitingTime);
+        new ClickDashboardMenu().testNow(menu);
     }
 }

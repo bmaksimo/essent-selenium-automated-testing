@@ -1,21 +1,27 @@
 package com.essent.testing.dwp.pageobject.impl.navigation;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class DwpLeftMenu extends Component {
 
-    public DwpLeftMenu(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver);
+    private static final String NAME_KEY = "name_key";
+    private static final String LEFT_MENU_XPATH = "//main-menu-link[@name='${" + NAME_KEY + "}']//a";
+
+    private WebElement getLeftElement(String nameValue) {
+	String xpath = createQuery(LEFT_MENU_XPATH, NAME_KEY, nameValue);
+	return seleniumDriver.findElementWhenVisible(By.xpath(xpath));
     }
 
-    private  WebElement leftElement(String name)  {
-        return seleniumDriver.findElementWhenVisible(By.xpath("//main-menu-link[@name='" + name + "']//a"));
+    public void clickOnLeftElement(String element) {
+        seleniumDriver.waitAndClick(getLeftElement(element));
+        seleniumDriver.waitForRequestsToFinish();
     }
 
-    public void clickOnLeftElemet(String element) {
-        seleniumDriver.waitAndClick(leftElement(element));
+    public void clickOnLeftElement(String element, int waitingTime) {
+        Sleeper.sleepTightInSeconds(waitingTime);
+        seleniumDriver.clickNow(getLeftElement(element));
     }
 }

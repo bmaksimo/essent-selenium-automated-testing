@@ -3,12 +3,10 @@ package com.essent.testing.dwp.pageobject.impl.modal.market_messages;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.modal.confirm.ConfirmDialog;
-import com.essent.testing.selenium.SeleniumDriver;
 import org.apache.commons.collections.CollectionUtils;
 import org.awaitility.Duration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
@@ -17,10 +15,6 @@ import static org.awaitility.Duration.TWO_SECONDS;
 public class SearchContractLinesDialog extends Component implements ConfirmDialog  {
 
     private final static By SELECTOR = By.cssSelector(".view__modal .modal__header");
-
-    public SearchContractLinesDialog(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver);
-    }
 
     public void searchContractLine(String searchInput) {
 
@@ -52,7 +46,7 @@ public class SearchContractLinesDialog extends Component implements ConfirmDialo
     @Override
     public boolean confirm() {
         Sleeper.sleepTightInSeconds(5);
-        seleniumDriver.waitAndClick(seleniumDriver.findElementOrNull(By.id("confirm-button")));
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenPresent(By.id("confirm-button")));
         return true;
     }
 
@@ -63,6 +57,7 @@ public class SearchContractLinesDialog extends Component implements ConfirmDialo
 
     @Override
     public boolean isShown() {
-        return seleniumDriver.findElementOrNull(SELECTOR) != null;
+        seleniumDriver.findElementWhenPresent(SELECTOR);
+        return true;
     }
 }

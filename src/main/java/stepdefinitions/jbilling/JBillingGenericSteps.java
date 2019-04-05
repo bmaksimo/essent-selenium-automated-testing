@@ -17,13 +17,19 @@ public class JBillingGenericSteps extends JBillingScenario {
         registerActiveScenario(scenario);
     }
 
-    @Given("^I logged in to JBilling as \"([^\"]*)\"$")
-    public void loginAs(String username) throws Throwable {
+    private void login(String username) throws Throwable {
         isJBillingRunning();
         UserRoles jBillingUser = UserRoles.get(username);
-        Window application = new JBillingLogin(webDriver).login(jBillingUser.getUsername(), jBillingUser.getPassword());
+        Window application = new JBillingLogin().login(jBillingUser.getUsername(), jBillingUser.getPassword());
         assertNotNull("DWP application did not appear after a login", application);
     }
+
+    @Given("^I logged in to JBilling as \"([^\"]*)\"$")
+    public void loginAs(String username) throws Throwable {
+        setUpWebDriver();
+        login(username);
+    }
+
 
     @After("@JBILLING, @B2B, @REGRESSION")
     public void tearDown() {

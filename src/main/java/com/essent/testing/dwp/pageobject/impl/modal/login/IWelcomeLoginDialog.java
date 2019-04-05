@@ -14,9 +14,8 @@ import static org.junit.Assert.assertNotNull;
 public class IWelcomeLoginDialog extends LoginComponent implements Dialog {
     private final static By SELECTOR = By.id("login-base");
 
-
     public IWelcomeLoginDialog(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver.findElementOrNull(SELECTOR), seleniumDriver);
+        super(seleniumDriver.findElementWhenPresent(SELECTOR));
     }
 
     public Window login(String username, String password) throws Throwable {
@@ -24,15 +23,15 @@ public class IWelcomeLoginDialog extends LoginComponent implements Dialog {
         final String passwordField = "idToken2";
         final String submitButtonField = "loginButton_0";
 
-        WebElement element = seleniumDriver.findElementOrNull(By.id(usernameField));
+        WebElement element = seleniumDriver.findElementWhenPresent(By.id(usernameField));
         assertNotNull(element);
         element.clear();
         element.sendKeys(username);
-        element = seleniumDriver.findElementOrNull(By.id(passwordField));
+        element = seleniumDriver.findElementWhenPresent(By.id(passwordField));
         assertNotNull(element);
         element.clear();
         element.sendKeys(password);
-        element = seleniumDriver.findElementOrNull(By.id(submitButtonField));
+        element = seleniumDriver.findElementWhenPresent(By.id(submitButtonField));
         assertNotNull(element);
         element.click();
         seleniumDriver.waitForRequestsToFinish();

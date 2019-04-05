@@ -1,32 +1,33 @@
 package stepdefinitions.dwp.page_object;
 
 
-import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
-import org.junit.Assert;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
-import cucumber.runtime.CucumberException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.FluentWait;
+
+import static com.essent.testing.selenium.helper.fluent_wait.FluentWaitUtil.createPollingWaiter;
 
 
 public class CustomerAcceptance extends Component {
 
-    public CustomerAcceptance(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver);
+    public String getAcceptanceStatus() {
+       seleniumDriver.waitForRequestsToFinish();
+       FluentWait<WebDriver> waiter = createPollingWaiter(seleniumDriver.getDriver(), 20, 2);
+       String[] status = new String[1];
+       waiter.until((WebDriver callback) ->
+            {
+                WebElement element = callback.findElement(By.xpath("//*[@id=\"accounts-aos-quotes-ca-status-c-field\"]"));
+                if(element != null) {
+                    status[0] = element.getText();
+                    return StringUtils.isNotEmpty(status[0]);
+                }
+                return false;
+            }
+       );
+       return status[0];
     }
-
-    public void customerStatus(String status) {
-       Sleeper.sleepTightInSeconds(3);
-       String actualStatus = seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"accounts-aos-quotes-ca-status-c-field\"]")).getText();
-
-        if (actualStatus.equals("Geaccepteerd")) {
-            Assert.assertEquals(actualStatus, status);
-        }
-        else if (actualStatus.equals("Waarborg")){
-            Assert.assertEquals(actualStatus, status);
-        }
-        else {  throw new CucumberException("Status not found by input " + status); }
-    }
-
 
 }

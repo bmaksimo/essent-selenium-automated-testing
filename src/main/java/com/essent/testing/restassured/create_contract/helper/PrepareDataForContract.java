@@ -116,7 +116,7 @@ public final class PrepareDataForContract {
             sum++;
         }
 
-        return randomNumberForEAN + String.valueOf(result);
+        return randomNumberForEAN + result;
     }
 
 

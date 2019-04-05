@@ -1,6 +1,7 @@
 package stepdefinitions.dwp.page_object;
 
-import com.essent.testing.dwp.pageobject.impl.service_contracting.LeadPage;
+import com.essent.testing.dwp.pageobject.guided_flow.lead_create.NewLeadPage;
+import com.essent.testing.dwp.pageobject.sales_marketing.leads.LeadsPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.DataTable;
 import cucumber.api.Scenario;
@@ -21,22 +22,22 @@ public class LeadSteps extends DwpScenario {
 
 
     @When("^Add lead$")
-    public void addLead() throws Throwable {
-        LeadPage leadPage = new LeadPage(webDriver);
+    public void addLead(){
+        LeadsPage leadPage = new LeadsPage();
         leadPage.plusAddLead();
     }
 
     @And("^New lead is$")
-    public void insertCompanyNameForCreatingLead(DataTable dbTabel) throws Throwable {
-        LeadPage leadPage = new LeadPage(webDriver);
+    public void insertCompanyNameForCreatingLead(DataTable dbTabel){
+        NewLeadPage leadPage = new NewLeadPage();
         List<List<String>> db = dbTabel.raw();
 
         leadPage.createLead(db);
     }
 
     @Then("^\"([^\"]*)\" lead was created$")
-    public void leadWasCreated(String name) throws Throwable {
-        LeadPage leadPage = new LeadPage(webDriver);
+    public void leadWasCreated(String name){
+        LeadsPage leadPage = new LeadsPage();
         leadPage.validateCreatingLead(name);
     }
 

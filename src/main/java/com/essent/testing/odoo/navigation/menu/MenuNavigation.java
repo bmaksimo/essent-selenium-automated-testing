@@ -1,7 +1,6 @@
 package com.essent.testing.odoo.navigation.menu;
 
 import com.essent.testing.odoo.pageobject.impl.Component;
-import com.essent.testing.selenium.SeleniumDriver;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.openqa.selenium.*;
@@ -23,31 +22,27 @@ public class MenuNavigation extends Component {
     private static String MAIN_NEMU_ITEM_SELECTOR_TEMPLATE = "//div[@id='oe_main_menu_placeholder']//a[normalize-space()='${text}']";
     private static String MENU_LEAF_SELECTOR_TEMPLATE      = "//a[span[normalize-space() = '${text}'] and starts-with(@class,'oe_menu_leaf')]";
     private static String MENU_TOGGLER_SELECTOR_TEMPLATE   = "//a[span[normalize-space() = '${text}'] and starts-with(@class,'oe_menu_toggler')]";
-
     private String status = "UNDEFINED";
     private String reason = "Not executed";
 
-    public MenuNavigation(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver);
-    }
     public String getStatus() {
         return status;
     }
-
     public String getReason() {
         return reason;
     }
 
     public boolean findAndClickMainMenuItem(String item) {
         By by = By.xpath(createQuery(MAIN_NEMU_ITEM_SELECTOR_TEMPLATE, "text", item));
-        WebElement elementOrNull = seleniumDriver.findElementOrNull(by, Duration.ofSeconds(30), Duration.ofSeconds(5));
-        if(elementOrNull == null) {
+        try {
+            WebElement elementOrNull = seleniumDriver.findElementWhenPresent(by, Duration.ofSeconds(30), Duration.ofSeconds(5));
+            elementOrNull.click();
+            return true;
+        } catch (TimeoutException te) {
             status = "FAILED";
             reason = "Main menu item" + item + "is not found";
             return false;
         }
-        elementOrNull.click();
-        return true;
     }
 
     public void executeAction(String menuPath) {
@@ -108,15 +103,11 @@ public class MenuNavigation extends Component {
         FluentWait<WebElement> waiter = new FluentWait<>(element)
             .withTimeout(Duration.ofMinutes(1))
             .pollingEvery(Duration.ofSeconds(10))
-            .ignoreAll(
-                Arrays.asList(
-                    NoSuchElementException.class,
-                    StaleElementReferenceException.class)
-            );
+            .ignoring(NoSuchElementException.class);
 
-        List<WebElement> elements = waiter.until(driver -> {
-            logger().info(" - WAIT: polling findElementOrNull()");
-            return driver.findElements(selector);
+        List<WebElement> elements = waiter.until(context -> {
+            logger().info(" - WAIT: polling findElementWhenPresent()");
+            return context.findElements(selector);
         });
         Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
         logger().info(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));

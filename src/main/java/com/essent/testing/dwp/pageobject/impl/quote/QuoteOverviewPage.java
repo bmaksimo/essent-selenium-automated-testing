@@ -2,22 +2,15 @@ package com.essent.testing.dwp.pageobject.impl.quote;
 
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
-import com.essent.testing.selenium.SeleniumDriver;
 import stepdefinitions.dwp.tables.SignatureData;
 
-import static com.essent.testing.dwp.autocrat.element.quote.SignatureElements.SIGN_LOCATION;
-import static com.essent.testing.dwp.autocrat.element.quote.SignatureElements.SIGN_UPLOAD_DOC;
+import static com.essent.testing.dwp.autocrat.element.quote.SignatureElements.*;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.INPUT;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.UPLOAD_FILE;
 
 public class QuoteOverviewPage extends QuoteCreationGuidedStep {
 
     private SignatureData signatureData;
-
-    public QuoteOverviewPage(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver);
-    }
-
 
     public void setSignatureData(SignatureData signatureData) {
         this.signatureData = signatureData;
@@ -36,4 +29,5 @@ public class QuoteOverviewPage extends QuoteCreationGuidedStep {
             .step(createStep(Action.TYPING).element(SIGN_LOCATION.name()).value(place), INPUT.getSleepInMillis());
         return execute(execution);
     }
+
 }

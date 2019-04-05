@@ -1,11 +1,13 @@
 package stepdefinitions.dwp.b2b;
 
-import com.essent.testing.dwp.pageobject.impl.page.BaseObject;
-import com.essent.testing.dwp.pageobject.impl.page.ContractPage;
+import com.essent.automation.util.Sleeper;
+import com.essent.testing.dwp.pageobject.guided_flow.cupq.NewQuotePage;
+import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import com.essent.testing.dwp.pageobject.impl.quote.QuoteDetailsPage;
-import com.essent.testing.dwp.pageobject.impl.service_contracting.ContractenPage;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
+import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
@@ -30,61 +32,70 @@ public class Contract extends DwpScenario {
     }
 
     @And("^Contract startdatum is today$")
-    public void contractStartdatumIsToday() throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+    public void contractStartdatumIsToday(){
+        ContractPage cp = new ContractPage();
         cp.startDateIsToday();
     }
 
 
     @And("^Get client number$")
-    public void getClientNumber() throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+    public void getClientNumber() {
+        ContractPage cp = new ContractPage();
         Klantnummer=cp.getClientNumber();
     }
 
     @And("^Search by client number$")
-    public void searchByClientNumber() throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
-        ContractenPage contractenPage = new ContractenPage(webDriver);
+    public void searchByClientNumber() {
+        ContractPage cp = new ContractPage();
         cp.selectAccount();
-        cp.searchByClientNuiber(Klantnummer);
-        contractenPage.searchForEanCode(Klantnummer);
+        cp.searchByClientNumber(Klantnummer);
+        cp.searchForEanCode(Klantnummer);
+    }
+
+    @When("^Plus action of \"([^\"]*)\" element from \"([^\"]*)\" and click on Mark As Done/Markeren Als Verwerkt$")
+    public void plusActionOfElementFromAndClickOnMarkAsDone(String row, String table){
+        seleniumDriver.waitForRequestsToFinish();
+        ContractPage cp = new ContractPage();
+        BaseObjectPage baseObject = new BaseObjectPage();
+        Sleeper.sleepTightInSeconds(5);
+        cp.clickOnPlusMeniInTable(row,table);
+        baseObject.clickOnMarkAsDonePlusMenuSubAction();
     }
 
     @When("^Plus action of \"([^\"]*)\" element from \"([^\"]*)\" and click on \"([^\"]*)\"$")
-    public void plusActionOfElementFromAndClickOn(String row, String table, String action) throws Throwable {
-        webDriver.waitForRequestsToFinish();
-        ContractPage cp = new ContractPage(webDriver);
-        BaseObject baseObject = new BaseObject(webDriver);
-        Thread.sleep(5000);
+    public void plusActionOfElementFromAndClickOn(String row, String table, String action) {
+        seleniumDriver.waitForRequestsToFinish();
+        ContractPage cp = new ContractPage();
+        BaseObjectPage baseObject = new BaseObjectPage();
+        Sleeper.sleepTightInSeconds(5);
         cp.clickOnPlusMeniInTable(row,table);
         baseObject.plusSubaction(action);
     }
 
     @And("^Save EAN from active contract$")
-    public void saveEANFromActiveContract() throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+    public void saveEANFromActiveContract() {
+        ContractPage cp = new ContractPage();
         parameterProvider.put("EAN-active-contract",cp.getActiveContractEAN());
     }
 
     @Then("^Contract is in \"([^\"]*)\" state$")
-    public void contractIsInState(String status) throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
-        webDriver.waitForRequestsToFinish();
-        assertEquals(cp.status(),status);
+    public void contractIsInState(String status) {
+        ContractPage cp = new ContractPage();
+        seleniumDriver.waitForRequestsToFinish();
+        assertEquals(cp.contractStatus(),status);
     }
 
     @And("^Clicked on sign X$")
-    public void clickOnX() throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
-        webDriver.waitForRequestsToFinish();
-        cp.clickOnX();
+    public void clickOnX() {
+        NewQuotePage nq = new NewQuotePage();
+        seleniumDriver.waitForRequestsToFinish();
+        nq.clickOnX();
     }
 
 
     @When("^B2B sales channel is ([^\"]*)$")
-    public void initSalesChannelB2B(SalesChannel salesChannel) throws Throwable {
-        QuoteDetailsPage quoteDetailsPage = new QuoteDetailsPage(webDriver);
+    public void initSalesChannelB2B(SalesChannel salesChannel){
+        QuoteDetailsPage quoteDetailsPage = new QuoteDetailsPage();
         quoteDetailsPage.setSalesChannel(salesChannel);
         boolean formInitialized = quoteDetailsPage.fillInFormData();
         assertThat("Failure occurred when filling in input values", formInitialized, is(true));
@@ -92,87 +103,91 @@ public class Contract extends DwpScenario {
 
 
     @When("^Rechtsvorm is bvba")
-    public void formLegal() throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
-        cp.selectItemLegalForm();
+    public void formLegal() {
+        NewQuotePage nq = new NewQuotePage();
+        nq.selectItemLegalForm();
     }
 
     @And("^Geslacht is Male")
-    public void gender() throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
-        cp.selectGender();
+    public void gender() {
+        NewQuotePage nq = new NewQuotePage();
+        nq.selectGender();
     }
 
     @And("^E-mailadres is \"([^\"]*)\"$")
-    public void emailContract(String emailContract) throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
-        cp.getEmail(emailContract);
+    public void emailContract(String emailContract) {
+        NewQuotePage nq = new NewQuotePage();
+        nq.getEmail(emailContract);
     }
 
 
     @And("^Select Nace-Code")
     public void select() throws Throwable {
-        webDriver.waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         Thread.sleep(2000);
-        ContractPage cp = new ContractPage(webDriver);
-        cp.clickNaceCode();
+        NewQuotePage nq = new NewQuotePage();
+        nq.clickNaceCodeButton();
     }
 
     @And("^NaceCode in search is ([^\"]*)$")
-    public void searchByNaceCode(String NaceCode) throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
-        cp.searchByClientNuiber(NaceCode);
-        cp.clickOnSearch();
-        cp.checkNaceCode();
-        cp.saveSelectedItem();
+    public void searchByNaceCode(String NaceCode) {
+        NewQuotePage nq = new NewQuotePage();
+        ContractPage cp = new ContractPage();
+        cp.searchByClientNumber(NaceCode);
+        nq.clickOnSearch();
+        nq.checkNaceCodeCheckBox();
+        nq.saveSelectedItem();
     }
 
 
     @And("^Customer Details are populated with: Address is \"([^\"]*)\" and HouseNumber is \"([^\"]*)\" and PostalCode is \"([^\"]*)\" and City is \"([^\"]*)\"$")
-    public void populateAddress(String Address, String houseNumber, String postalCode, String City) throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
-        cp.setAddress(Address, houseNumber, postalCode, City);
+    public void populateAddress(String Address, String houseNumber, String postalCode, String City) {
+        NewQuotePage nq = new NewQuotePage();
+        nq.setAddress(Address, houseNumber, postalCode, City);
     }
 
     @And("^Telefoon is \"([^\"]*)\"$")
     public void populateTelephone(String telephone) {
-        ContractPage cp = new ContractPage(webDriver);
-        cp.setTelephone(telephone);
+        NewQuotePage nq = new NewQuotePage();
+        nq.setTelephone(telephone);
 
     }
 
     @And("^First Name is \"([^\"]*)\" and Last Name is \"([^\"]*)\"$")
-    public void populateName(String fname, String lname) throws Throwable{
-        ContractPage cp = new ContractPage(webDriver);
-        cp.setName(fname, lname);
+    public void populateName(String fname, String lname) {
+        NewQuotePage nq = new NewQuotePage();
+        nq.setName(fname, lname);
     }
 
     @And("^BEDRIJFSNAAM is \"([^\"]*)\"$")
     public void companyName(String cname) {
-        ContractPage cp = new ContractPage(webDriver);
-        cp.setCompanyName(cname);
+        NewQuotePage nq = new NewQuotePage();
+        nq.setCompanyName(cname);
     }
 
 
     @And("^Ean-Code is \"([^\"]*)\"$")
     public void eanCode(String eancode) {
-        webDriver.waitForRequestsToFinish();
-        ContractPage cp = new ContractPage(webDriver);
-        cp.setEanCode(eancode);
+        seleniumDriver.waitForRequestsToFinish();
+        NewQuotePage nq = new NewQuotePage();
+        nq.setEanCode(eancode);
     }
 
 
     @And("^New Quote is saved$")
-    public void newQuoteSaved() throws Throwable {
-        ContractPage quoteInitial = new ContractPage(webDriver);
-        quoteInitial.saveInitialQuote();
+    public void newQuoteSaved() {
+        NewQuotePage nq = new NewQuotePage();
+        nq.saveInitialQuote();
     }
 
     @And("^Save End Date from active contract$")
-    public void saveEndDateFromActiveContract() throws Throwable {
-        ContractPage cp = new ContractPage(webDriver);
+    public void saveEndDateFromActiveContract() {
+        ContractPage cp = new ContractPage();
         parameterProvider.put("EndDate-active-contract",cp.getActiveContractEndDate());
+
     }
-
-
+    @After("@REGRESSION")
+    public void tearDown() {
+        super.tearDown();
+    }
 }
