@@ -15,4 +15,11 @@ public class InvoicesPage extends Component {
 
 		return CollectionUtils.isNotEmpty(rows);
 	}
+
+    public boolean checkPaymentTableNotEmpty() {
+        seleniumDriver.waitForRequestsToFinish();
+        List<WebElement> rows = seleniumDriver.findElements(By.xpath("//list[@list-key='PaymentPlansOnAccount']//tbody[@id='rows']"));
+
+        return CollectionUtils.isNotEmpty(rows);
+    }
 }

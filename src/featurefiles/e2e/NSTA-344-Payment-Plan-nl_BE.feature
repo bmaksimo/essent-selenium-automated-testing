@@ -6,7 +6,7 @@
 Feature: NSTA - 344 Payment Plan
 
     Scenario: Payment plan for B2C
-#        Create an active contract
+        #Create an active contract
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
@@ -45,7 +45,6 @@ Feature: NSTA - 344 Payment Plan
         And "Datum ondertekening" date is "now"
         And Quote is signed
         And Quote is signed in "Kontich"
-#        *And Sign place is "Kontich"
         When Quote is confirmed
 
         When Dashboard menu is "Marktberichten"
@@ -57,13 +56,8 @@ Feature: NSTA - 344 Payment Plan
         And  "1st" List element with value at column "EAN-code" is checked
         And  "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
 
-
-#        run invoice
+        #run invoice
         Given I logged in to DWP as "billing.testautomation@essent.be"
-#         *And B2B Active Contract is
-#          | productType | isFakeAddress | switchType | meterType | kwMax |
-#          | UP | FAKE | SUPPLIER SWITCH | YMR | 50000 |
-
         When Left menu is "billing"
         And Top menu item is "Klanten"
         And Top action is "Filters"
@@ -90,48 +84,25 @@ Feature: NSTA - 344 Payment Plan
         And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
         And "1st" List element with value at column "ID & Type" is checked
 
-
-#      Create a payment plan for this customer
+        #Create a payment plan for this customer
         And List option is "ENKEL FACTUREN"
         And View list header is "Openstaande facturen"
         And Invoice checkbox with key "InvoicesOnAccountOpenBalance" is clicked
         And List option is "AANVRAAG AFBETALINGSPLAN"
 
-
         And Input in "Type afbetalingsplan" is "Per schijf"
         And Input in "Periode schijven" is "Maandelijks"
         And "Startdatum" date is "now"
-        And "Bedrag eerste afbetalingsschijf" input is "100"
-        And "Bedrag andere afbetalingsschijven" input is "60"
+        And "Bedrag eerste afbetalingsschijf" input is "50"
+        And "Bedrag andere afbetalingsschijven" input is "50"
         And Contract signature is confirmed
 
-
-
-
-#
-#        Given I renew login to DWP as "businessdesk.testautomation.b2b@essent.be"
-#        When Left menu is "sales-marketing"
-#        And Top menu item is "Klanten"
-#        And Top action is "Filters"
-#        And "B2C/B2B" selection is "B2B"
-#        And "Type klant" selection is "Klant"
-#        And "Klantnummer" input is "parameter:accountNumber"
-#        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
-#
-#        When Dashboard menu is "Billing"
-#        Then View list header is "Afbetalingsplannen"
-#        And Table "Afbetalingsplannen" contains value "open" at column "Status"
-#
-#        #payment plan verification
-#    Scenario: Check is payment plan created when logged as billing user
-#        Given I logged in to DWP as "billing.testautomation@essent.be"
-#        When Left menu is "billing"
-#        And Top menu item is "Klanten"
-#        And Top action is "Filters"
-#        And "B2C/B2B" selection is "B2B"
-#        And "Type klant" selection is "Klant"
-#        And "Klantnummer" input is "parameter:accountNumber"
-#        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
-#        When Dashboard menu is "Billing"
-#        Then View list header is "Transacties"
-#        And "2nd" list element has cell value "Payment" at column "ID & Type"
+        #payment plan checks
+        When Dashboard menu is "Billing"
+        Then View list header is "Transacties"
+        And "1st" list element has cell value "PLAN" at column "Extra info" polling 60 seconds
+        Then View list header is "Afbetalingsplannen"
+        And Table "Afbetalingsplannen" contains value "open" at column "Status"
+        And Payment table is not empty
+        And Table "Afbetalingsplannen" contains value "open" at column "Nummer & referentie"
+#        And Table "Afbetalingsplannen" contains value "parameter:inputValue" at column "Start- & aanmaakdatum"
