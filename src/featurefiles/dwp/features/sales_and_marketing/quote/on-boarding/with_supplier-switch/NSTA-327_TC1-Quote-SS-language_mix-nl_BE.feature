@@ -2,7 +2,7 @@
 @SALES-MARKETING
 @REGRESSION
 @B2C
-@UNSTABLE
+
 Feature: NSTA-327: Creating a B2C Quote TC1 with "Supplier Switch" without using Market Mock.
 
     Background:
@@ -72,7 +72,7 @@ Feature: NSTA-327: Creating a B2C Quote TC1 with "Supplier Switch" without using
         #Step 9. Check market messages
         When Dashboard menu is "Marktberichten"
         Then View list header is "Marktberichten"
-        And "1st" list element has cell value "START ACCESS Supplier Switch" at column "Module & Label" polling 450 seconds
+        And "1st" list element has cell value "START ACCESS Supplier Switch" at column "Module & Label" polling 950 seconds
         And "1st" list element has cell value "Aanvraag verstuurd" at column "Status & ED"
         And "1st" list element has cell value "parameter:Start & Einddatum" at column "Status & ED"
 
