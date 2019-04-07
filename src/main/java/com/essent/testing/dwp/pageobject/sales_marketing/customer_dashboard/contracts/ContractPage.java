@@ -3,6 +3,7 @@ package com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.con
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
+import org.apache.commons.collections.CollectionUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class ContractPage extends Component {
@@ -34,6 +36,7 @@ public class ContractPage extends Component {
     private static final String accountNumber = "//div[@class='card__content__inner-wrapper']/h4";
     private static final String contractNumber = "//*[@id=\"account_number_c\"]/div";
     private static final String companyNumber = "//*//*[@id=\"company-number-c-field\"]";
+    private static final String PAYMENT_PLAN_NUMBER = "//list[@list-key='PaymentPlansOnAccount']//tbody[@id='rows']";
 
     public void startDateIsToday() {
         seleniumDriver.waitAndSendKeys(startData(),"date");
@@ -380,5 +383,12 @@ public class ContractPage extends Component {
 
     public int getNumberOfElectricityContracts(){
         return seleniumDriver.findElements(By.xpath(NUMBER_ELECTRICITY_CONTRACT)).size();
+    }
+
+    public boolean checkPaymentTableNotEmpty() {
+        seleniumDriver.waitForRequestsToFinish();
+        List<WebElement> rows = seleniumDriver.findElements(By.xpath(PAYMENT_PLAN_NUMBER));
+
+        return CollectionUtils.isNotEmpty(rows);
     }
 }

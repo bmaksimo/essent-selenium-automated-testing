@@ -54,7 +54,7 @@ Feature: NSTA - 344 Payment Plan
         And Get client number
         Then View list header is "Actieve en toekomstige connecties"
         And  "1st" List element with value at column "EAN-code" is checked
-        And  "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
+#        And  "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
 
         #run invoice
         Given I logged in to DWP as "billing.testautomation@essent.be"
@@ -100,9 +100,12 @@ Feature: NSTA - 344 Payment Plan
         #payment plan checks
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
-        And "1st" list element has cell value "PLAN" at column "Extra info" polling 60 seconds
+#        And Table "Afbetalingsplannen" contains value "PLAN" at column "Extra info"
+        And "2nd" list element has cell value "PLAN" at column "Extra info" polling 60 seconds
         Then View list header is "Afbetalingsplannen"
         And Table "Afbetalingsplannen" contains value "open" at column "Status"
         And Payment table is not empty
         And Table "Afbetalingsplannen" contains value "open" at column "Nummer & referentie"
+        And Table "Afbetalingsplannen" contains value "50" at column "Installments"
+        And Table "Afbetalingsplannen" contains value "13" at column "Installments"
 #        And Table "Afbetalingsplannen" contains value "parameter:inputValue" at column "Start- & aanmaakdatum"

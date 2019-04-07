@@ -9,6 +9,7 @@ import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.deta
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.sales.SalesPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.workflows.MarktBerichtenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import com.essent.testing.jbilling.pageobject.impl.page.InvoicesPage;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -24,6 +25,7 @@ import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.chec
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToSoctarFileDate;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 
 public class ContractsSteps extends DwpScenario {
 
@@ -230,6 +232,14 @@ public class ContractsSteps extends DwpScenario {
         parameterProvider.put("productChangeStartDate", pcsd);
         parameterProvider.put("productChangeEndDate", pced);
 
+    }
+
+    @When("Payment table is not empty$")
+    public void checkPaymentTableNotEmpty() throws Throwable {
+        ContractPage contractenPage = new ContractPage();
+        boolean success = contractenPage.checkPaymentTableNotEmpty();
+
+        assertThat("Rows in invoice table are empty", success, is(true));
     }
 
 

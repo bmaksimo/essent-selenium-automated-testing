@@ -26,13 +26,6 @@ public class Invoices extends JBillingScenario {
 		assertThat("Rows in invoice table are empty", success, is(true));
 	}
 
-    @When("Payment table is not empty$")
-    public void checkPaymentTableNotEmpty() throws Throwable {
-        InvoicesPage invoicesPage = new InvoicesPage();
-        boolean success = invoicesPage.checkPaymentTableNotEmpty();
-
-        assertThat("Rows in invoice table are empty", success, is(true));
-    }
 
 	@Override
 	@After("@JBILLING, @B2B, @REGRESSION")
