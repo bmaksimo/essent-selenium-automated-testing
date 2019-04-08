@@ -27,7 +27,9 @@ public class ContractPage extends Component {
     private static final String FIRST_CONTRACT_LINE_XPATH_EXPRESSION = "//div[@class = 'col-1-1']/div[@class = 'row-']/list[@list-key = 'ContractedEansOnAccount']//tbody[@id = 'rows']/tr[1]/td[4]";
     private static final String XPATH_ACTIVE_CONTRACT_EAN = "//*[@id=\"rows\"]//list-link-bold-top-two-liner-cell//a/h5";
     private static final String PAYMENT_PLAN_DATE = "//list[@list-key='PaymentPlansOnAccount']//td[5]//span[1]";
+    private static final String PAYMENT_PLAN_NUMBER = "//list[@list-key='PaymentPlansOnAccount']//tbody[@id='rows']";
     private static final String VALUE_PAYMENT_PLAN_INSTALLMENTS = "//list-dropdown-cell//option['${" + REPLACEMENT_KEY + "}']";
+    private static final String PAYMENT_PLAN_NUMBER_OF_INSTALLMENTS = "//list-dropdown-cell//option[1]";
 
 
     private WebElement startData() {
@@ -41,7 +43,8 @@ public class ContractPage extends Component {
     private static final String ACCOUNT_NUMBER = "//div[@class='card__content__inner-wrapper']/h4";
     private static final String CONTRACT_NUMBER = "//*[@id=\"account_number_c\"]/div";
     private static final String COMPANY_NUMBER = "//*//*[@id=\"company-number-c-field\"]";
-    private static final String PAYMENT_PLAN_NUMBER = "//list[@list-key='PaymentPlansOnAccount']//tbody[@id='rows']";
+
+
     public void startDateIsToday() {
         seleniumDriver.waitAndSendKeys(startData(), "date");
     }
@@ -391,7 +394,7 @@ public class ContractPage extends Component {
         }
 
 
-        return seleniumDriver.findElementWhenVisible(By.xpath("//list-dropdown-cell//option[1]")).getText();
+        return seleniumDriver.findElementWhenVisible(By.xpath(PAYMENT_PLAN_NUMBER_OF_INSTALLMENTS)).getText();
 
     }
 
