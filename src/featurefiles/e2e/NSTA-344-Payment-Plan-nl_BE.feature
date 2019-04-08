@@ -1,8 +1,8 @@
 @REGRESSION
 @DWP
 @B2C
-@REGRESSION
 @NSTA-344
+
 Feature: NSTA - 344 Payment Plan
 
     Scenario: Payment plan for B2C
@@ -28,7 +28,7 @@ Feature: NSTA - 344 Payment Plan
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        When "Startdatum" date is "5 day before now"
+        When "Startdatum" date is "35 days before now"
         And Electricity EAN code is "random"
         And "Type aansluiting" selection is "YMR"
         And "Meternummer" input is "1000"
@@ -54,7 +54,7 @@ Feature: NSTA - 344 Payment Plan
         And Get client number
         Then View list header is "Actieve en toekomstige connecties"
         And  "1st" List element with value at column "EAN-code" is checked
-#        And  "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
+        And  "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
 
         #run invoice
         Given I logged in to DWP as "billing.testautomation@essent.be"
@@ -92,20 +92,20 @@ Feature: NSTA - 344 Payment Plan
 
         And Input in "Type afbetalingsplan" is "Per schijf"
         And Input in "Periode schijven" is "Maandelijks"
-        And "Startdatum" date is "now"
         And "Bedrag eerste afbetalingsschijf" input is "50"
         And "Bedrag andere afbetalingsschijven" input is "50"
+        And "Startdatum" date is "now"
         And Contract signature is confirmed
 
         #payment plan checks
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
-#        And Table "Afbetalingsplannen" contains value "PLAN" at column "Extra info"
         And "2nd" list element has cell value "PLAN" at column "Extra info" polling 60 seconds
         Then View list header is "Afbetalingsplannen"
         And Table "Afbetalingsplannen" contains value "open" at column "Status"
         And Payment table is not empty
-        And Table "Afbetalingsplannen" contains value "open" at column "Nummer & referentie"
-        And Table "Afbetalingsplannen" contains value "50" at column "Installments"
-        And Table "Afbetalingsplannen" contains value "13" at column "Installments"
-#        And Table "Afbetalingsplannen" contains value "parameter:inputValue" at column "Start- & aanmaakdatum"
+        And Table "Afbetalingsplannen" contains value "open" at column "Status"
+        Then Payment plan has "3 installments" on date "parameter:inputValue"
+        Then Payment plan has installment values of "50", "50" and "13"
+
+

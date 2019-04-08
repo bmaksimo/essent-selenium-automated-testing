@@ -26,6 +26,7 @@ import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.chec
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 public class ContractsSteps extends DwpScenario {
 
@@ -240,6 +241,35 @@ public class ContractsSteps extends DwpScenario {
         boolean success = contractenPage.checkPaymentTableNotEmpty();
 
         assertThat("Rows in invoice table are empty", success, is(true));
+    }
+
+    @Then("Payment plan has \"([^\"]*)\" on date \"([^\"]*)\"$")
+    public void PaymentPlanNumberOfInstallments(String expectedNumberOfInstallments, String paymentPlanDate){
+        ContractPage contractenPage = new ContractPage();
+        String ppd = parameterProvider.getValueOrParameterAsString(paymentPlanDate);
+        parameterProvider.put("productChangeEndDate", ppd);
+
+        String actualNumberOfInstallments = contractenPage.checkNumberOfInstallments(ppd);
+        assertThat(String.format("Number of actual installments \"%s\" differs from the expected ones \"%s\" on payment plan", actualNumberOfInstallments, expectedNumberOfInstallments), actualNumberOfInstallments, equalTo(expectedNumberOfInstallments));
+
+    }
+
+    @Then("Payment plan has installment values of \"([^\"]*)\", \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void PaymentPlanValuesOfInstallments(String firstExpectedValue, String secondExpectedValue, String thirdExpectedValue){
+        ContractPage contractenPage = new ContractPage();
+
+        String valueOfFirstActualInstallment = contractenPage.checkValueOfInstallments("2");
+        String valueOfSecondActualInstallment = contractenPage.checkValueOfInstallments("3");
+        String valueOfThirdActualInstallment = contractenPage.checkValueOfInstallments("4");
+
+        boolean correctFirstInstallment = valueOfFirstActualInstallment.contains(firstExpectedValue);
+        boolean correctSecondInstallment = valueOfSecondActualInstallment.contains(secondExpectedValue);
+        boolean correctThirdInstallment = valueOfThirdActualInstallment.contains(thirdExpectedValue);
+
+        assertTrue("First Installment has a correct value", correctFirstInstallment);
+        assertTrue("Second Installment has a correct value", correctSecondInstallment);
+        assertTrue("Third Installment has a correct value", correctThirdInstallment);
+
     }
 
 

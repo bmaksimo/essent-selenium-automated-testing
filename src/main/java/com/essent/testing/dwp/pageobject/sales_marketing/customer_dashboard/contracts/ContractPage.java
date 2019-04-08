@@ -22,6 +22,9 @@ public class ContractPage extends Component {
     private static final String REPLACEMENT_KEY = "replacement_key";
     private static final String SEND_EMAIL = "//list-row-action[@label='${" + REPLACEMENT_KEY + "}']/a";
     private static final String START_DATA_ID = "contract-start-date-field";
+    private static final String PAYMENT_PLAN_DATE = "//list[@list-key='PaymentPlansOnAccount']//td[5]//span[1]";
+    private static final String VALUE_PAYMENT_PLAN_INSTALLMENTS = "//list-dropdown-cell//option['${" + REPLACEMENT_KEY + "}']";
+
 
     public WebElement startData() {
         return seleniumDriver.findElementWhenVisible(By.id(START_DATA_ID));
@@ -391,4 +394,35 @@ public class ContractPage extends Component {
 
         return CollectionUtils.isNotEmpty(rows);
     }
+
+    public String checkNumberOfInstallments(String sd) {
+
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+        LocalDate sDate = LocalDate.parse(sd, format);
+
+        String paymentPlanDate = seleniumDriver.findElementWhenVisible(By.xpath(PAYMENT_PLAN_DATE)).getText();
+
+        LocalDate ppDate = LocalDate.parse(paymentPlanDate, format);
+
+        if (sDate.compareTo(ppDate) == 0) {
+            Logger.getLogger("Payment Plan Date is same as Invoice start date");
+        }
+
+
+        return seleniumDriver.findElementWhenVisible(By.xpath("//list-dropdown-cell//option[1]")).getText();
+
+    }
+
+    public String checkValueOfInstallments(String numInstallment) {
+
+        String valueInstallmentPaymentPlan = createQuery(VALUE_PAYMENT_PLAN_INSTALLMENTS, REPLACEMENT_KEY, numInstallment);
+       return seleniumDriver.findElementWhenVisible(By.xpath(valueInstallmentPaymentPlan)).getText();
+
+    }
+
+
+
+
+
 }
