@@ -64,7 +64,7 @@ public class DwpPlusMenu extends Component {
 
     private WebElement findAction(String actionLabel) {
         By accordionButtonSelector = By.xpath(createQuery(ACCORDION_BUTTON_SELECTOR_TEMPLATE, "text", actionLabel));
-        WebElement accordionButton = seleniumDriver.findElementOrNull(accordionButtonSelector);
+        WebElement accordionButton = seleniumDriver.findElementWhenPresent(accordionButtonSelector);
         FluentWait<WebDriver> waiter = new FluentWait<>(seleniumDriver.getDriver()).withTimeout(Duration.ofSeconds(5));
         accordionButton = waiter.until(ExpectedConditions.elementToBeClickable(accordionButton));
         accordionButton.click();

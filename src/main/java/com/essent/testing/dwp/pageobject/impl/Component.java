@@ -11,8 +11,10 @@ import org.apache.commons.text.StrSubstitutor;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 
+import java.sql.Time;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,8 +37,9 @@ public abstract class Component {
         this();
         logger().info("STEP:");
         logger().info(" - ACTION: LOAD_PAGE_OBJECT");
-        element = seleniumDriver.findElementOrNull(selector);
-        if(element == null) {
+        try {
+            element = seleniumDriver.findElementWhenPresent(selector);
+        } catch (TimeoutException te) {
             logger().fatal(" - RESULT: FAILED");
             logger().fatal(" - REASON: " + getClass() + "{null}: Web element was not found. ");
             throw new CucumberException(getClass() + ": Web element was not found.");
@@ -86,6 +89,10 @@ public abstract class Component {
 
     protected boolean execute(final Model.Execution execution) {
         seleniumDriver.waitForRequestsToFinish();
+        return AutocratExecutionAdapter.execute(seleniumDriver.getDriver(), execution);
+    }
+
+    protected boolean executeNow(final Model.Execution execution) {
         return AutocratExecutionAdapter.execute(seleniumDriver.getDriver(), execution);
     }
 

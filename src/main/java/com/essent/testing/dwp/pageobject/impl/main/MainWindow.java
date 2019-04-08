@@ -10,7 +10,7 @@ public class MainWindow extends Component implements Window {
     private static final By MAIN_WINDOW_SELECTOR = By.xpath("//div[@ui-view = 'main-content']//div[@class = 'main']");
 
     public MainWindow(SeleniumDriver seleniumDriver) {
-        super(seleniumDriver.findElementOrNull(MAIN_WINDOW_SELECTOR));
+        super(seleniumDriver.findElementWhenPresent(MAIN_WINDOW_SELECTOR));
     }
 
     @Override

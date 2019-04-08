@@ -2,6 +2,7 @@
 @B2B
 @REGRESSION
 @BUSINESS-DESK
+@UNSTABLE
 Feature: NUAT-448: Change The Advance Amount For A Customer - nl_BE
 
     Background:

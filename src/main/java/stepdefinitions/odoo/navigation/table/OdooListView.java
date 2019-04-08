@@ -1,5 +1,6 @@
 package stepdefinitions.odoo.navigation.table;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.odoo.pageobject.elements.ListView;
 import com.essent.testing.odoo.pageobject.impl.elements.DefaultListView;
 import com.essent.testing.odoo.scenario.OdooScenario;
@@ -22,6 +23,7 @@ import java.util.List;
 public class OdooListView extends OdooScenario  {
 
     private static final String TABLE_CELL_SELECTOR_TEMPLATE = "//table[@class='oe_list_content'][1]//tbody//tr[${rowIndex}]//td[@data-field='${key}'][1]";
+
 
     @Before("@ODOO, @E2E, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
@@ -75,9 +77,11 @@ public class OdooListView extends OdooScenario  {
 
     @Then("^Column \"([^\"]*)\" with value \"([^\"]*)\" is clicked$")
     public void clickValueAt(String column, String value) {
+        awaitOdooRequestToFinish(60);
         String input = parameterProvider.getValueOrParameterAsString(value) == null ?
             value : parameterProvider.getValueOrParameterAsString(value);
         ListView odooList = new DefaultListView();
+        Sleeper.sleepTightInSeconds(5);
         odooList.clickValueAt(column, input);
         awaitOdooRequestToFinish(180);
     }

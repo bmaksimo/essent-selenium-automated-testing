@@ -6,6 +6,7 @@ import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.elements.ButtonImpl;
 import com.essent.testing.dwp.pageobject.modal.confirm.ConfirmSignatureDialog;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 
 public class ConfirmSignatureDialogImpl extends Component implements ConfirmSignatureDialog {
@@ -48,13 +49,10 @@ public class ConfirmSignatureDialogImpl extends Component implements ConfirmSign
     @Override
     public boolean confirm() {
         seleniumDriver.waitForRequestsToFinish();
-        WebElement element = seleniumDriver.findElementOrNull(CONFIRM_BUTTON_SELECTOR);
-        if(element == null)
-            return false;
+        WebElement element = seleniumDriver.findElementWhenPresent(CONFIRM_BUTTON_SELECTOR);
         Button confirmButton = new ButtonImpl(element);
         confirmButton.click();
         seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.takeScreenshot("Confirm form ");
         return true;
     }
 
@@ -65,6 +63,7 @@ public class ConfirmSignatureDialogImpl extends Component implements ConfirmSign
 
     @Override
     public boolean isShown() {
-        return seleniumDriver.findElementOrNull(CONFIRM_SIGNATURE_MODAL_SELECTOR) != null;
+        seleniumDriver.findElementWhenPresent(CONFIRM_SIGNATURE_MODAL_SELECTOR);
+        return true;
     }
 }

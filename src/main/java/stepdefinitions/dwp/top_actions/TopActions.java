@@ -1,5 +1,6 @@
 package stepdefinitions.dwp.top_actions;
 
+import com.essent.automation.util.Sleeper;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -26,9 +27,19 @@ public class TopActions extends NavigationElements {
         clickTopAction(action);
     }
 
+    @When("^Top action is \"([^\"]*)\" waiting for (\\d+) seconds$")
+    public void checkTopAction(String action, int waitingTime) throws Throwable {
+        clickTopAction(action, waitingTime);
+    }
+
     @And("^Top arrow button is \"([^\"]*)\"$")
     public void clickTopArrowButton(String arrow) throws Throwable {
         super.clickTopArrow(arrow.toLowerCase());
+    }
+
+    @And("^Top arrow button is \"([^\"]*)\" waiting for (\\d+) seconds$")
+    public void clickTopArrowButton(String arrow, int waitingTime) throws Throwable {
+        super.clickTopArrow(arrow.toLowerCase(), waitingTime);
     }
 
     @When("^Cockpit item is \"([^\"]*)\"$")
@@ -36,13 +47,18 @@ public class TopActions extends NavigationElements {
         clickCockpitItem(item);
     }
 
-    @And("Changes are confirmed")
+    @And("^Changes are confirmed$")
     public void confirmChange() {
         seleniumDriver.waitForRequestsToFinish();
         boolean success = new ClickConfirm().test("");
-        assertThat(String.format("Button %s was not available.", ""),
-            success, is(true));
+        assertThat(String.format("Button %s was not available.", ""), success, is(true));
+    }
 
+    @And("^Changes are confirmed waiting for (\\d+) seconds$")
+    public void confirmChange(int waitingTime) {
+        Sleeper.sleepTightInSeconds(waitingTime);
+        boolean success = new ClickConfirm().testNow("");
+        assertThat(String.format("Button %s was not available.", ""), success, is(true));
     }
 
     @And("Search input is \"([^\"]*)\"$")
