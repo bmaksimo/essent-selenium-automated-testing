@@ -54,10 +54,10 @@ Feature: NSTA - 344 Payment Plan
         And Get client number
         Then View list header is "Actieve en toekomstige connecties"
         And  "1st" List element with value at column "EAN-code" is checked
-        And  "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
+#        And  "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
 
         #run invoice
-        Given I logged in to DWP as "billing.testautomation@essent.be"
+        Given I renew login to DWP as "billing.testautomation@essent.be"
         When Left menu is "billing"
         And Top menu item is "Klanten"
         And Top action is "Filters"
@@ -72,7 +72,7 @@ Feature: NSTA - 344 Payment Plan
         And "Procesdatum" date is "now"
         Then Invoice run is scheduled
 
-        Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
+        Given I renew login to DWP as "businessdesk.testautomation.b2b@essent.be"
         When Left menu is "contracting-switching"
         And Top menu item is "Klanten"
         And Top action is "Filters"
