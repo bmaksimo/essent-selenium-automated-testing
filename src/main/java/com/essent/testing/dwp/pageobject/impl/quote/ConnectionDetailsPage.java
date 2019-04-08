@@ -74,6 +74,7 @@ public class ConnectionDetailsPage extends QuoteCreationGuidedStep {
     }
 
     public boolean toggleMarketMockTest(ProductType productType, SwitchState state) {
+        seleniumDriver.waitForRequestsToFinish();
         String query = ELEC_MARKET_MOCK.getQuery();
         switch (productType) {
             case Gas:

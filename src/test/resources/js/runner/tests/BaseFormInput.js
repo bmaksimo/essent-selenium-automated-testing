@@ -13,7 +13,7 @@
 class BaseFormInput extends TestRunnerBase {
 
     constructor(options, callback) {
-        super(options, callback, 2000);
+        super(options, callback, 5000);
     }
 
     run() {
