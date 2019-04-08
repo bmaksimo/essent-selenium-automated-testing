@@ -32,9 +32,10 @@ Feature: NSTA 331- Product Change for TK1 type
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        When "Startdatum" date is "2 weeks before now"
-        And Electricity EAN code is "random"
+        When EAN code is generated
+        And "Startdatum" date is "2 weeks before now"
         And Electricity market mock test is Open
+        And "EAN-code" input is "parameter:EAN-code-generated"
         And Connection details are confirmed
         Then Form header is "Billing details"
 
@@ -93,7 +94,7 @@ Feature: NSTA 331- Product Change for TK1 type
          #4.3 - Check Interactions
         When Dashboard menu is "Service"
         Then Table "Interacties" contains value "Confirmation product change" at column "Type & Onderwerp"
-        And Click on link in View List at "1st" row and "Nummer & Communicatiekanaal" column polling 20 seconds
+        And Click on link in View List at "1st" row and "Nummer & Communicatiekanaal" column polling 60 seconds
         Then Check is product change "1 succeeded"
 
          #4.4 - Check Orders
