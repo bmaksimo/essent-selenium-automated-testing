@@ -5,9 +5,9 @@
 @UNSTABLE
 Feature: NUAT-558: Check status of customer with Customer Acceptance Tool
 
-    Background: 
+    Background:
     	Given B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
-    
+
     @NUAT-558
     Scenario: Check status of customer with Customer Acceptance Tool
         Given  I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
@@ -20,6 +20,11 @@ Feature: NUAT-558: Check status of customer with Customer Acceptance Tool
         And Click on link in View List at "1st" row and "Klantnummer & Naam" column
         And Dashboard menu is "Details"
         Then Get Company Number
+
+        When Left menu is "sales-marketing"
+        And Plus menu is "Sales -> UP/TK2 -> Uitzonderlijke klantacceptatie"
+        And Click on "UITZONDERLIJKE KLANTACCEPTATIE TOEVOEGEN"
+        Then Modal "Customer Acceptance Exception" is displayed
 
         When Top arrow button is "UP"
         When Plus menu is "Sales -> TK1 -> Klantacceptatie tool"
