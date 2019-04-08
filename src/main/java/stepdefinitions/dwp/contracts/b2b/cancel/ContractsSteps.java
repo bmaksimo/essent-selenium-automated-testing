@@ -247,8 +247,7 @@ public class ContractsSteps extends DwpScenario {
     public void PaymentPlanNumberOfInstallments(String expectedNumberOfInstallments, String paymentPlanDate){
         ContractPage contractenPage = new ContractPage();
         String ppd = parameterProvider.getValueOrParameterAsString(paymentPlanDate);
-        parameterProvider.put("productChangeEndDate", ppd);
-
+        
         String actualNumberOfInstallments = contractenPage.checkNumberOfInstallments(ppd);
         assertThat(String.format("Number of actual installments \"%s\" differs from the expected ones \"%s\" on payment plan", actualNumberOfInstallments, expectedNumberOfInstallments), actualNumberOfInstallments, equalTo(expectedNumberOfInstallments));
 
