@@ -162,6 +162,7 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^Customer address is$")
     public void initCustomerAddress(final DataTable address) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
         List<CustomerAddress> list = address.asList(CustomerAddress.class);
         CustomerAddress customerAddress = list.get(0);
         boolean success = new InitialiseCustomerAddress().test(customerAddress);
@@ -177,6 +178,7 @@ public class QuoteSteps extends DwpScenario {
     @And("^Package is \"([^\"]*)\"$")
     public void
     selectPackage(String packaqe) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
         TariffTable tariff = new TariffTable();
         tariff.setPackageName(packaqe);
         PackageAndFuelTypeSelectionPage selectPackageAndFuelTypeView = new PackageAndFuelTypeSelectionPage();
@@ -185,12 +187,14 @@ public class QuoteSteps extends DwpScenario {
         assertThat(String.format("Failure when selecting the package %s.", packaqe),
             success,
             is(true));
+        seleniumDriver.waitForRequestsToFinish();
     }
 
 
 
     @And("^Package and Fuel Type is confirmed$")
     public void confirmPackageAndFuelType() throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
         PackageAndFuelTypeSelectionPage selectPackageAndFuelTypeView = new PackageAndFuelTypeSelectionPage();
         selectPackageAndFuelTypeView.next();
     }
@@ -237,17 +241,20 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^([^\"]*) market mock test is ([^\"]*)$")
     public void setMarketMockTest(final ProductType productType, final SwitchState state) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
         ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
         given().await()
             .ignoreExceptions()
             .pollInterval(FIVE_HUNDRED_MILLISECONDS)
             .pollDelay(ONE_HUNDRED_MILLISECONDS)
-            .atMost(new Duration(10, SECONDS)).until(connectionDetailsView::isNextButtonEnabled);
+            .atMost(new Duration(60, SECONDS)).until(connectionDetailsView::isNextButtonEnabled);
         connectionDetailsView.toggleMarketMockTest(productType, state);
+        seleniumDriver.waitForRequestsToFinish();
     }
 
     @And("^Connection details are confirmed$")
     public void confirmConnection() throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
         ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
         connectionDetailsView.next();
     }
@@ -282,6 +289,7 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^Quote is signed in \"([^\"]*)\"$")
     public void submitSignedQuote(String location) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
         String path = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
         File document = new File(path);
         assertThat("File at path " + document.getAbsolutePath() + " doesn't exist.", true,
@@ -295,6 +303,7 @@ public class QuoteSteps extends DwpScenario {
         quoteOverviewView.setSignatureData(signature);
         boolean success = quoteOverviewView.fillInFormData();
         assertThat("Failure when signing up the quote.", success, is(true));
+        seleniumDriver.waitForRequestsToFinish();
     }
 
 
@@ -332,9 +341,11 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^Quote is confirmed$")
     public void confirmQuote() throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(5);
         QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage();
         quoteOverviewView.next();
+        seleniumDriver.waitForRequestsToFinish();
     }
     @And("^Quote for account is confirmed$")
     public void confirmQuoteForAccount() throws Throwable {

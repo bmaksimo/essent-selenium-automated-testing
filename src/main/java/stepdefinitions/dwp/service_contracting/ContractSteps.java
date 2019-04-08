@@ -164,9 +164,11 @@ public class ContractSteps extends DwpScenario {
 
     @And("^Kortingen is \"([^\"]*)\"$")
     public void kortingenIs(String kortingen) {
+        seleniumDriver.waitForRequestsToFinish();
         ContractPage cp = new ContractPage();
         cp.chooseDiscounts(kortingen);
         Sleeper.sleepTightInSeconds(0.5);
+        seleniumDriver.waitForRequestsToFinish();
 
     }
 
