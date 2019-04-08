@@ -29,12 +29,13 @@ public abstract class QuoteCreationGuidedStep extends Component implements Guide
 
     @Override
     public void next() {
+        seleniumDriver.waitForRequestsToFinish();
         logger().debug("Searching element by " + NEXT_BUTTON.getQuery());
         given().await()
             .ignoreExceptions()
             .pollInterval(FIVE_HUNDRED_MILLISECONDS)
             .pollDelay(TWO_SECONDS)
-            .atMost(new Duration(10, SECONDS)).until(this::isNextButtonEnabled);
+            .atMost(new Duration(60, SECONDS)).until(this::isNextButtonEnabled);
         WebElement nextButton = findElementWhenClickable(By.cssSelector(NEXT_BUTTON.getQuery()));
         if(logger().isDebugEnabled())
         {
@@ -43,13 +44,16 @@ public abstract class QuoteCreationGuidedStep extends Component implements Guide
         if (nextButton != null && nextButton.isEnabled()) {
             logger().debug("Found  element: " + nextButton.getTagName());
             logger().debug("CLICK ");
+            seleniumDriver.waitForRequestsToFinish();
             nextButton.click();
+            seleniumDriver.waitForRequestsToFinish();
         } else {
             if(logger().isDebugEnabled()) {
                 seleniumDriver.takeScreenshot("guidance-confirm-failure");
             }
             throw new CucumberException("Element not found by selector " + NEXT_BUTTON.getQuery());
         }
+        seleniumDriver.waitForRequestsToFinish();
     }
 
     public Boolean isNextButtonEnabled() {

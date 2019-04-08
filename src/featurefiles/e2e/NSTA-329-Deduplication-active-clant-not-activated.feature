@@ -3,10 +3,11 @@
 @B2C
 Feature: NSTA-329 Deduplication activated customer
 
+    Background:
+        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
+
     @NSTA-329
     Scenario: From de-duplication of client
-
-        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
@@ -53,7 +54,7 @@ Feature: NSTA-329 Deduplication activated customer
         When Dashboard menu is "Contracten"
         Then View list header is "Actieve en toekomstige connecties"
         And  "1st" List element with value at column "EAN-code" is checked
-        And Wait for the first contract to be activated
+        And "1st" list element has cell value "Actief" at column "Contractnummer" polling 450 seconds
 
         When Top arrow button is "Up"
         And Left menu is "sales-marketing"

@@ -24,6 +24,12 @@ public class MenuElements extends NavigationElements {
         lm.clickOnLeftElement(tabName);
     }
 
+    @When("^Left menu is \"([^\"]*)\" waiting for (\\d+) seconds$")
+    public void clickLeftMenuItemFixedWait(String tabName, int waitingTime) throws Throwable {
+        DwpLeftMenu lm = new DwpLeftMenu();
+        lm.clickOnLeftElement(tabName, waitingTime);
+    }
+
     @When("^Left Tab is \"([^\"]*)\"$")
     public void clickLeftTab(String itemName) throws Throwable {
         clickLeftMenuItem(itemName);
@@ -34,6 +40,13 @@ public class MenuElements extends NavigationElements {
         seleniumDriver.waitForRequestsToFinish();
         DwpTopMenu tm = new DwpTopMenu();
         tm.findAndClickTopMenu(tabName);
+    }
+
+    @When("^Top menu item is \"([^\"]*)\" waiting for (\\d+) seconds$")
+    public void clickTopMenuItemFixedWait(String tabName, int waitingTime) throws Throwable {
+        Sleeper.sleepTightInSeconds(waitingTime);
+        DwpTopMenu tm = new DwpTopMenu();
+        tm.findAndClickTopMenuNow(tabName);
     }
 
     @Then("^Sleep for (\\d+) seconds$")

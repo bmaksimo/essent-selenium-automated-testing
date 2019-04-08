@@ -2,7 +2,6 @@ package stepdefinitions.dwp.input;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.scenario.DwpScenario;
-import com.essent.testing.selenium.SeleniumDriver;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -43,6 +42,11 @@ public class InputElements extends DwpScenario {
             boolean success = executeJavascriptTest("BaseFormInput", options);
             return success;
         }
+
+        public boolean testNow(Map options) {
+            boolean success = executeJavascriptTestImmediately("BaseFormInput", options, true);
+            return success;
+        }
     }
 
     /**
@@ -52,6 +56,11 @@ public class InputElements extends DwpScenario {
         @Override
         public boolean test(Map options) {
             boolean success = executeJavascriptTest("TrFormSelection", options);
+            return success;
+        }
+
+        public boolean testNow(Map options) {
+            boolean success = executeJavascriptTestImmediately("TrFormSelection", options, true);
             return success;
         }
     }
@@ -99,6 +108,19 @@ public class InputElements extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
     }
 
+    @And("^\"([^\"]*)\" input is \"([^\"]*)\" waiting for (\\d+) seconds$")
+    public void setInputWithFixedTime(String label, String value, int waitingTime) throws Throwable {
+        Sleeper.sleepTightInSeconds(waitingTime);
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
+        parameterProvider.put("inputValue", inputValue);
+        Map<String, String> options = new HashMap<>();
+        options.put("label", label);
+        options.put("value", inputValue);
+        FluentWait<ApplyInput> waiter = waiter(new ApplyInput(), 10, 1);
+        waiter.withMessage(String.format("Input field %s is undefined.", label));
+        waiter.until((ApplyInput callback) -> callback.testNow(options));
+    }
+
     /**
      * Sets and asynchronously checks date input on any DWP form
      * @param label Text label
@@ -109,6 +131,7 @@ public class InputElements extends DwpScenario {
     @And("^\"([^\"]*)\" date is \"([^\"]*)\"$")
     public void setDateInput(String label, String value) throws Throwable {
         Sleeper.sleepTightInSeconds(2);
+        seleniumDriver.waitForRequestsToFinish();
         String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(value));
         parameterProvider.put("inputValue", inputValue);
         Map<String, String> options = new HashMap<>();
@@ -117,6 +140,7 @@ public class InputElements extends DwpScenario {
         FluentWait<ApplyDateInput> waiter = waiter(new ApplyDateInput(), 10, 1);
         waiter.withMessage(String.format("Date value %s input at '%s' failed.", inputValue, label));
         waiter.until((ApplyDateInput callback) -> callback.test(options));
+        seleniumDriver.waitForRequestsToFinish();
     }
 
     /**
@@ -127,13 +151,25 @@ public class InputElements extends DwpScenario {
      */
     @And("^\"([^\"]*)\" selection is \"([^\"]*)\"$")
     public void setSelection(String label, String value) throws Throwable {
-        Sleeper.sleepTightInSeconds(0.5);
+        seleniumDriver.waitForRequestsToFinish();
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
         options.put("value", value);
         FluentWait<ApplySelection> waiter = waiter(new ApplySelection(), 10, 1);
         waiter.withMessage(String.format("Selection %s is undefined.", label));
         waiter.until((ApplySelection callback) -> callback.test(options));
+        seleniumDriver.waitForRequestsToFinish();
+    }
+
+    @And("^\"([^\"]*)\" selection is \"([^\"]*)\" waiting for (\\d+) seconds$")
+    public void setSelection(String label, String value, int waitingTime) throws Throwable {
+        Sleeper.sleepTightInSeconds(waitingTime);
+        Map<String, String> options = new HashMap<>();
+        options.put("label", label);
+        options.put("value", value);
+        FluentWait<ApplySelection> waiter = waiter(new ApplySelection(), 10, 1);
+        waiter.withMessage(String.format("Selection %s is undefined.", label));
+        waiter.until((ApplySelection callback) -> callback.testNow(options));
     }
 
     /**
@@ -145,12 +181,14 @@ public class InputElements extends DwpScenario {
      */
     @And("^Options? \"([^\"]*)\" (is|are) ([^\"]*)$")
     public void switchOption(String option, IsAre verb, SwitchState state) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
         Map<String, String> options = new HashMap<>();
         options.put("label", option);
         options.put("verb", verb.getVerb());
         FluentWait<InputElements> waiter = waiter(this, 10, 1);
         waiter.withMessage(String.format("Option %s is undefined.", option));
         waiter.until((InputElements callback) -> executeJavascriptTest("TrClickToggleInput", options));
+        seleniumDriver.waitForRequestsToFinish();
     }
 
     /**
@@ -161,12 +199,14 @@ public class InputElements extends DwpScenario {
      */
     @And("^Checkbox \"([^\"]*)\" is ([^\"]*)$")
     public void toggleCheckbox(String label, SwitchState state) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
         options.put("state", state.name().toLowerCase());
         FluentWait<ToggleCheckBox> waiter = waiter(new ToggleCheckBox(), 10, 1);
         waiter.withMessage(String.format("Failure toggling checkbox %s to  target state %s.", label, state.name()));
         waiter.until((ToggleCheckBox callback) -> callback.test(options));
+        seleniumDriver.waitForRequestsToFinish();
     }
 
     /**
@@ -175,8 +215,10 @@ public class InputElements extends DwpScenario {
      */
     @And("^Form is submitted$")
     public void formIsSubmitted() throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
         Map<String, String> options = new HashMap<>();
         executeJavascriptTest("TrSubmitForm", options);
+        seleniumDriver.waitForRequestsToFinish();
     }
 
     /**
@@ -193,6 +235,7 @@ public class InputElements extends DwpScenario {
         boolean placeHolderWasFound = placeHolderInputElement != null;
         assertThat(String.format("Placeholder element '%s' was not found.", placeholder), placeHolderWasFound, is(true));
         placeHolderInputElement.sendKeys(inputValue);
+        seleniumDriver.waitForRequestsToFinish();
     }
 
 
@@ -201,6 +244,7 @@ public class InputElements extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(seleniumDriver.findElement(By.id(TARIFF_ID)));
         seleniumDriver.waitAndClick(seleniumDriver.findElement(By.xpath(TARIFF_FIRST_LIST_ITEM)));
+        seleniumDriver.waitForRequestsToFinish();
 
     }
 

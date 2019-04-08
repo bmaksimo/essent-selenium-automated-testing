@@ -13,18 +13,12 @@ import com.essent.testing.dwp.pageobject.quote.GuidedStep;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
 import com.essent.testing.util.resource.ResourceUtil;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import cucumber.api.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
-import io.restassured.mapper.ObjectMapper;
-import io.restassured.mapper.ObjectMapperDeserializationContext;
-import io.restassured.mapper.ObjectMapperSerializationContext;
 import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
 import org.openqa.selenium.By;
@@ -51,6 +45,8 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 public class QuoteSteps extends DwpScenario {
+
+    private static final String ROW_INDEX_XPATH = "//input-form-element//autocomplete//ul//li[${rowIndex}]/a/b";
 
     @Before("@DWP, @E2E, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
@@ -167,6 +163,7 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^Customer address is$")
     public void initCustomerAddress(final DataTable address) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
         List<CustomerAddress> list = address.asList(CustomerAddress.class);
         CustomerAddress customerAddress = list.get(0);
         boolean success = new InitialiseCustomerAddress().test(customerAddress);
@@ -182,6 +179,7 @@ public class QuoteSteps extends DwpScenario {
     @And("^Package is \"([^\"]*)\"$")
     public void
     selectPackage(String packaqe) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
         TariffTable tariff = new TariffTable();
         tariff.setPackageName(packaqe);
         PackageAndFuelTypeSelectionPage selectPackageAndFuelTypeView = new PackageAndFuelTypeSelectionPage();
@@ -190,12 +188,14 @@ public class QuoteSteps extends DwpScenario {
         assertThat(String.format("Failure when selecting the package %s.", packaqe),
             success,
             is(true));
+        seleniumDriver.waitForRequestsToFinish();
     }
 
 
 
     @And("^Package and Fuel Type is confirmed$")
     public void confirmPackageAndFuelType() throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
         PackageAndFuelTypeSelectionPage selectPackageAndFuelTypeView = new PackageAndFuelTypeSelectionPage();
         selectPackageAndFuelTypeView.next();
     }
@@ -242,17 +242,20 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^([^\"]*) market mock test is ([^\"]*)$")
     public void setMarketMockTest(final ProductType productType, final SwitchState state) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
         ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
         given().await()
             .ignoreExceptions()
             .pollInterval(FIVE_HUNDRED_MILLISECONDS)
             .pollDelay(ONE_HUNDRED_MILLISECONDS)
-            .atMost(new Duration(10, SECONDS)).until(connectionDetailsView::isNextButtonEnabled);
+            .atMost(new Duration(60, SECONDS)).until(connectionDetailsView::isNextButtonEnabled);
         connectionDetailsView.toggleMarketMockTest(productType, state);
+        seleniumDriver.waitForRequestsToFinish();
     }
 
     @And("^Connection details are confirmed$")
     public void confirmConnection() throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
         ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
         connectionDetailsView.next();
     }
@@ -287,6 +290,7 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^Quote is signed in \"([^\"]*)\"$")
     public void submitSignedQuote(String location) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
         String path = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
         File document = new File(path);
         assertThat("File at path " + document.getAbsolutePath() + " doesn't exist.", true,
@@ -300,6 +304,7 @@ public class QuoteSteps extends DwpScenario {
         quoteOverviewView.setSignatureData(signature);
         boolean success = quoteOverviewView.fillInFormData();
         assertThat("Failure when signing up the quote.", success, is(true));
+        seleniumDriver.waitForRequestsToFinish();
     }
 
 
@@ -337,9 +342,11 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^Quote is confirmed$")
     public void confirmQuote() throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(5);
         QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage();
         quoteOverviewView.next();
+        seleniumDriver.waitForRequestsToFinish();
     }
     @And("^Quote for account is confirmed$")
     public void confirmQuoteForAccount() throws Throwable {
@@ -411,9 +418,9 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^EAN-code autocomplete value from the \"([^\"]*)\" row is checked$")
     public void selectEanCodeFromAutoComplete(String ordinal) throws Throwable {
-        Integer rowIndex = Integer.parseInt(ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", ""));
-        WebElement eanElement = seleniumDriver.findElementOrNull(By.xpath("//input-form-element//autocomplete//ul//li[" + rowIndex + "]/a/b"));
-
+        int rowIndex = extractNumericValue(ordinal);
+        String locator = createQuery(ROW_INDEX_XPATH, "rowIndex", String.valueOf(rowIndex));
+        WebElement eanElement = seleniumDriver.findElementWhenPresent(By.xpath(locator));
         String ean = eanElement.getAttribute("textContent").split(" ")[0];
         boolean eanWasFound = StringUtils.isNotBlank(ean);
         assertThat(String.format("EAN code '%s' was not found.", ean), eanWasFound, is(true));

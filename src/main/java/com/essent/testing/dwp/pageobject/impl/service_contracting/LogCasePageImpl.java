@@ -8,6 +8,7 @@ import com.essent.testing.dwp.pageobject.service_contracting.LogCasePage;
 import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 
 import java.util.concurrent.Callable;
@@ -81,9 +82,9 @@ public class LogCasePageImpl extends Component implements Form, LogCasePage {
 
     private void findAndClickButton(String query) {
         waitUntil(FIVE_HUNDRED_MILLISECONDS, TWO_SECONDS, () -> isEnabled(query));
-        seleniumDriver.findElementOrNull(By.xpath(query));
+        seleniumDriver.findElementWhenPresent(By.xpath(query));
         waitUntil(FIVE_HUNDRED_MILLISECONDS, TWO_SECONDS, () -> isEnabled(query));
-        WebElement button = seleniumDriver.findElementOrNull(By.xpath(query));
+        WebElement button = seleniumDriver.findElementWhenPresent(By.xpath(query));
         Sleeper.sleepTightInSeconds(2);
         button.click();
     }
@@ -96,10 +97,9 @@ public class LogCasePageImpl extends Component implements Form, LogCasePage {
     }
 
     private Boolean isEnabled(String query) {
-        WebElement button = seleniumDriver.findElementOrNull(By.xpath(query));
-        if(button == null)
-            return false;
+        WebElement button = seleniumDriver.findElementWhenPresent(By.xpath(query));
         String disabled = button.getAttribute("disabled");
         return StringUtils.isEmpty(disabled) || !StringUtils.equals(disabled, "disabled");
+
     }
 }

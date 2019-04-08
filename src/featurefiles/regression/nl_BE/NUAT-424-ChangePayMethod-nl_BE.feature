@@ -2,7 +2,6 @@
 @B2B
 @REGRESSION
 @CREDIT-AND-CONTROL
-@UNSTABLE
 Feature: NUAT-424: Change Pay Method - nl_BE
 
     Background:
@@ -10,12 +9,13 @@ Feature: NUAT-424: Change Pay Method - nl_BE
 
     @NUAT-424
     Scenario:
+
         When Left menu is "sales-marketing"
         And Top menu item is "Klanten"
+        And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And Top action is "Filters"
-        And "B2C/B2B" selection is "B2B"
-        And "Type klant" selection is "Klant"
-        And Click on link in View List at "1st" row and "Klantnummer & Naam" column
+        And "Klantnummer" input is "parameter:accountNumber"
+        Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
         And Dashboard menu is "Details"
         Then View list header is "Billing customer"
 
@@ -27,7 +27,6 @@ Feature: NUAT-424: Change Pay Method - nl_BE
         And IBAN is "NL43ABNA0978459932" if not empty
         And Payment details are confirmed
         Then Payment method is updated
-        Then Get Account Number
         When Dashboard menu is "Documenten"
         Then Check if document "customer-signature.pdf" is present
 

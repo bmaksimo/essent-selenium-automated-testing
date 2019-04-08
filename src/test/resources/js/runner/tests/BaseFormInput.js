@@ -13,25 +13,24 @@
 class BaseFormInput extends TestRunnerBase {
 
     constructor(options, callback) {
-        super(options, callback, 2000);
+        super(options, callback, 5000);
     }
 
     run() {
         let result = this.result;
         result.status = 'UNDEFINED';
         result.reason = 'Not executed';
-        let options = this.options;
-        let label = options.label;
-        let value = options.value;
-        let xPath = `//div[label/text()='${label}']`;
-        xPath = `//div[label[normalize-space(text())='${label}']]`;
+        const options = this.options;
+        const label = options.label;
+        const value = options.value;
+        const xPath = `//div[label[normalize-space(text())='${label}']]`;
         console.log('--XPATH: ' + xPath);
-        let elements = this.evaluateXpath(xPath);
+        const elements = this.evaluateXpath(xPath);
         if(elements.length >= 0) {
             let input = $(elements[0]).find("input, select");
             if(input.length > 0) {
                 this.applyInput(input, value);
-                let success = this.applyInput(input, value);
+                const success = this.applyInput(input, value);
                 if(success) {
                     result.status = "PASSED";
                     result.reason = '';

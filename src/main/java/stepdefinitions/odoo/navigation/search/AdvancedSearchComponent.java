@@ -19,6 +19,8 @@ public class AdvancedSearchComponent extends Component {
     public void runAdvancedSearch(AdvancedSearch advancedSearch) {
         fillInAdvancedSearchForm(advancedSearch);
         getApplyButton().click();
+        awaitOdooRequestToFinish(60);
+
     }
 
     private void fillInAdvancedSearchForm(AdvancedSearch advancedSearch) {

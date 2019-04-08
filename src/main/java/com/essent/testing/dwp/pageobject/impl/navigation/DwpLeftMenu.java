@@ -1,5 +1,6 @@
 package com.essent.testing.dwp.pageobject.impl.navigation;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -15,6 +16,12 @@ public class DwpLeftMenu extends Component {
     }
 
     public void clickOnLeftElement(String element) {
-	seleniumDriver.waitAndClick(getLeftElement(element));
+        seleniumDriver.waitAndClick(getLeftElement(element));
+        seleniumDriver.waitForRequestsToFinish();
+    }
+
+    public void clickOnLeftElement(String element, int waitingTime) {
+        Sleeper.sleepTightInSeconds(waitingTime);
+        seleniumDriver.clickNow(getLeftElement(element));
     }
 }

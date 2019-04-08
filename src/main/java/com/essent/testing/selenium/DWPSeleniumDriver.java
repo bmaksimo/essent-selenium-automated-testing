@@ -66,10 +66,15 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
          * @return <code>true</code> when executed successfully. <code>false</code> otherwise.
          */
         public boolean executeJavascriptTest(String registeredJsClass, Object options) {
+            return executeJavascriptTestWithImmediateFlag(registeredJsClass, options, false);
+        }
+
+        private boolean executeJavascriptTestWithImmediateFlag(String registeredJsClass, Object options, boolean runImmediately) {
             logger.info("STEP:");
             logger.info(" - ACTION: EXEC_JAVASCRIPT_TEST");
             DateTime startOfMeasurement = DateTime.now();
-            waitForRequestsToFinish();
+            if (!runImmediately)
+                waitForRequestsToFinish();
             String executeTest = SeleniumJsTestExpanderService.get().expandToJavascript(registeredJsClass, options);
             logger.info(" - TEST: " + executeTest);
             Map result = (Map) ((JavascriptExecutor) seleniumDriver.getDriver()).executeAsyncScript(executeTest);
@@ -86,7 +91,8 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
                 }
                 takeScreenshot(false);
             }
-            waitForRequestsToFinish();
+            if (!runImmediately)
+                waitForRequestsToFinish();
             return success;
         }
     }
@@ -152,10 +158,15 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
     }
 
     public Map executeJavascriptMethod(String registeredJsClass, Object options) {
+        return executeJavascriptMethodWithImmediateFlag(registeredJsClass, options, false);
+    }
+
+    public Map executeJavascriptMethodWithImmediateFlag(String registeredJsClass, Object options, boolean immediate) {
         logger.info("STEP:");
         logger.info(" - ACTION: EVALUATE_JAVASCRIPT_METHOD");
         DateTime startOfMeasurement = DateTime.now();
-        waitForRequestsToFinish();
+        if (!immediate)
+            waitForRequestsToFinish();
         String jsTestCall = SeleniumJsTestExpanderService.get().expandToJavascript(registeredJsClass, options);
         logger.info(" - TEST: " + jsTestCall);
         Map result = (Map) ((JavascriptExecutor) driver).executeAsyncScript(jsTestCall);
@@ -191,6 +202,10 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
      */
     public boolean executeJavascriptTest(String registeredJsClass, Object options, boolean withException) {
         return new ExecuteJavascriptTest(this).withException(withException).executeJavascriptTest(registeredJsClass, options);
+    }
+
+    public boolean executeJavascriptTestImmediately(String registeredJsClass, Object options, boolean withException) {
+        return new ExecuteJavascriptTest(this).withException(withException).executeJavascriptTestWithImmediateFlag(registeredJsClass, options, true);
     }
 
     public NgWebDriver getAngularDriver() {
@@ -242,11 +257,19 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
         ngWebDriver.waitForAngularRequestsToFinish();
     }
 
+    public void clickNow(final WebElement element) {
+        element.click();
+    }
+
     public void waitAndSendKeys(final WebElement element, final String keysToSend) {
         waitForElement(element);
         element.clear();
         waitForElement(element);
         element.sendKeys(keysToSend);
         ngWebDriver.waitForAngularRequestsToFinish();
+    }
+    public void sendKeysNow(final WebElement element, final String keysToSend) {
+        element.clear();
+        element.sendKeys(keysToSend);
     }
 }
