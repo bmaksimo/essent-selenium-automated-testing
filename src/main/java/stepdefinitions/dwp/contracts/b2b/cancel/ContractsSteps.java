@@ -18,12 +18,14 @@ import cucumber.api.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import stepdefinitions.dwp.page_object.CustomerAcceptance;
+import stepdefinitions.dwp.tables.CustomerStatus;
 
 
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpContractStartEndDate;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToSoctarFileDate;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 
 public class ContractsSteps extends DwpScenario {
 
@@ -156,6 +158,16 @@ public class ContractsSteps extends DwpScenario {
         CustomerAcceptance customerAcceptance = new CustomerAcceptance();
         String actualStatus = customerAcceptance.getAcceptanceStatus();
         assertThat(String.format("Actual customer acceptance status \"%s\" differs from the expected \"%s\"", actualStatus, expectedStatus), actualStatus, equalTo(expectedStatus));
+
+    }
+
+    @Then("^Customer Status is an existing status$")
+    public void customerStatus() {
+        CustomerAcceptance customerAcceptance = new CustomerAcceptance();
+        String actualStatus = customerAcceptance.getAcceptanceStatus();
+        boolean success = CustomerStatus.containsStatus(actualStatus);
+        assertThat(String.format("Actual customer acceptance status \"%s\" does not exist", actualStatus),
+            success, is(true));
 
     }
 

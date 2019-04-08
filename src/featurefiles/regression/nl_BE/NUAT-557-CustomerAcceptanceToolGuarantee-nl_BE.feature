@@ -21,6 +21,4 @@ Feature: NUAT-557: Check guarantee status of customer with Customer Acceptance T
         When Top arrow button is "UP"
         And Plus menu is "Sales -> TK1 -> Klantacceptatie tool"
         And "Ondernemingsnummer" input is "parameter:companyNumber"
-        Then "Klantacceptatie" field value is "Waarborg"
-        #Then Customer Status is "Waarborg"
-
+        Then Customer Status is an existing status
