@@ -257,7 +257,6 @@ public class ContractsSteps extends DwpScenario {
     @Then("Payment plan has installment values of \"([^\"]*)\", \"([^\"]*)\" and \"([^\"]*)\"$")
     public void PaymentPlanValuesOfInstallments(String firstExpectedValue, String secondExpectedValue, String thirdExpectedValue){
         ContractPage contractenPage = new ContractPage();
-
         String valueOfFirstActualInstallment = contractenPage.checkValueOfInstallments("2");
         String valueOfSecondActualInstallment = contractenPage.checkValueOfInstallments("3");
         String valueOfThirdActualInstallment = contractenPage.checkValueOfInstallments("4");
