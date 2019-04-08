@@ -11,6 +11,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static com.billinghouse.test_automation.util.gherkin.DateTimeFormatUtil.printPeriod;
 
@@ -51,23 +52,23 @@ public class MenuNavigation extends Component {
         List<String> path = menu.subList(0, menu.size() - 1);
         String action = menu.get(menu.size() - 1);
         WebElement match = findMenu(null, path);
-        WebElement clickAction = findAction(match, action);
-        if(clickAction == null) {
+        Optional<WebElement> clickAction = findActionOptional(match, action);
+        if(!clickAction.isPresent()) {
             status = "FAILED";
             reason = "Menu path " + menuPath + " was not found";
         } else {
             status = "PASSED";
-            clickAction.click();
+            clickAction.get().click();
         }
     }
 
-    private WebElement findAction(WebElement accordion, String actionText) {
+    private Optional<WebElement> findActionOptional(WebElement accordion, String actionText) {
        if (accordion != null) {
            By menuLeaf = By.xpath(createQuery(MENU_LEAF_SELECTOR_TEMPLATE, "text", actionText));
-           return  findElementOrNull(accordion, menuLeaf);
+           return  findElementOptional(accordion, menuLeaf);
        } else {
            By mainMenu = By.xpath(createQuery(MENU_LEAF_SELECTOR_TEMPLATE, "text", actionText));
-           return findElementWhenVisible(mainMenu);
+           return Optional.of(findElementWhenVisible(mainMenu));
        }
     }
 
@@ -97,7 +98,7 @@ public class MenuNavigation extends Component {
         return null;
     }
 
-    private WebElement findElementOrNull(WebElement element, By selector) {
+    private Optional<WebElement> findElementOptional(WebElement element, By selector) {
         logger().info("STEP:");
         DateTime startOfMeasurement = DateTime.now();
         FluentWait<WebElement> waiter = new FluentWait<>(element)
@@ -105,20 +106,19 @@ public class MenuNavigation extends Component {
             .pollingEvery(Duration.ofSeconds(10))
             .ignoring(NoSuchElementException.class);
 
-        List<WebElement> elements = waiter.until(context -> {
+        WebElement elementFound = waiter.until(context -> {
             logger().info(" - WAIT: polling findElementWhenPresent()");
-            return context.findElements(selector);
+            return context.findElement(selector);
         });
         Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
         logger().info(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
-        if(elements.isEmpty()) {
+        if(element == null) {
             logger().warn(" - RESULT: empty");
-            return null;
         } else  {
-            WebElement webElement = elements.get(0);
-            logger().debug(String.format(" - RESULT: %s -> %s", selector, webElement.getAttribute("innerHTML")));
-            return webElement;
+            logger().debug(String.format(" - RESULT: %s -> %s", selector, elementFound.getAttribute("innerHTML")));
         }
+        return Optional.ofNullable(elementFound);
+
     }
 
     private void findAndClick(WebElement parent, By by) {
