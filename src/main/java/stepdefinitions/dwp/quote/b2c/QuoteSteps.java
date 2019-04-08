@@ -5,7 +5,6 @@ import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.modal.quote.SimilarAccountDialogImpl;
-import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import com.essent.testing.dwp.pageobject.impl.quote.*;
 import com.essent.testing.dwp.pageobject.impl.quote_for_account.QuoteForAccountOverviewPage;
 import com.essent.testing.dwp.pageobject.modal.quote.SimilarAccountDialog;
@@ -375,8 +374,7 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^Electricity EAN code is \"([^\"]*)\"$")
-    public void
-    electricityEANCodeIs(String ean) throws Throwable {
+    public void electricityEANCodeIs(String ean) throws Throwable {
         ConnectionDetails electricityConnectionDetails = new ConnectionDetails();
         switch (ean) {
             case "selected":

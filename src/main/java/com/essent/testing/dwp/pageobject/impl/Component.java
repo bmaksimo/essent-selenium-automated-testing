@@ -14,7 +14,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 
-import java.sql.Time;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

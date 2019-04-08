@@ -1,13 +1,14 @@
 @DWP
 @B2C
-Feature: NUAT-5021 Voraaf Step 2. Check vooraf (prepaid)
+Feature: NSTA-330 Voraaf Step 1. Sign-in on vooraf (prepaid)
 
     Background:
-
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
-    @NUAT-5021-VOORAF-2
-    Scenario: Sign-in on Vooraf (prepaid)
+    @NSTA-390
+    @VOORAF-SIGNIN
+    Scenario: NSTA-330 Voraaf Step 1. Sign-in on vooraf (prepaid)
+        #Sign in, bi-fuel contract
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
@@ -27,8 +28,8 @@ Feature: NUAT-5021 Voraaf Step 2. Check vooraf (prepaid)
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        When "Startdatum" date is "2 weeks before now"
-        And Options "test" are On
+        #When "Startdatum" date is "2 weeks before now"
+        When Options "test" are On
         And "Marktbericht" selection is "Volledig marktbericht"
         And EAN code is generated
         And "EAN-code" input is "parameter:EAN-code-generated"
@@ -51,19 +52,19 @@ Feature: NUAT-5021 Voraaf Step 2. Check vooraf (prepaid)
         Then View list header is "Offertes"
         Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
 
+        #Check "vooraf prepaid" contract lines
         When Click on link in View List at "1st" row and "Nummer & Getekend contractnummer" column
         And "Kortingen op de offerte" list is empty
         And Table "Offertelijnen" contains cell value "Getekend TK1-Aardgas Vooraf (TC_VOORAF_B2C)" at column "Status & Product" on "1st" row
         And Table "Offertelijnen" contains cell value "Getekend TK1-Elektriciteit Vooraf (TC_VOORAF_B2C)" at column "Status & Product" on "2nd" row
+
         And Dashboard menu is "Contracten"
-        And Table "Actieve en toekomstige connecties" contains cell value "WACHT OP STARTDATUM" at column "Contractnummer" on "1st" row
-        And Table "Actieve en toekomstige connecties" contains cell value "WACHT OP STARTDATUM" at column "Contractnummer" on "2nd" row
+        And "1st" list element has cell value "Wacht op startdatum" at column "Contractnummer" polling 500 seconds
+        And Table "Actieve en toekomstige connecties" contains cell value "Wacht op startdatum" at column "Contractnummer" on "2nd" row
         And Click on link in "Contracten" View List at "1st" row and "Nummer & Aanmaakdatum" column
-        And Table "Contractlijnen" contains cell value "Wacht op startdatum TK1-Aardgas Vooraf (TC_VOORAF_B2C)" at column "Status & Product" on "1st" row
-        And Table "Contractlijnen" contains cell value "Wacht op startdatum TK1-Elektriciteit Vooraf (TC_VOORAF_B2C)" at column "Status & Product" on "2nd" row
-        And Dashboard menu is "Service"
+        And Table "Contractlijnen" contains cell value "Wacht op startdatum TK1-Elektriciteit Vooraf (TC_VOORAF_B2C)" at column "Status & Product" on "1st" row
+        And Table "Contractlijnen" contains cell value "Wacht op startdatum TK1-Aardgas Vooraf (TC_VOORAF_B2C)" at column "Status & Product" on "2nd" row
 
 
-
-
+        #And Dashboard menu is "Service"
 

@@ -9,9 +9,9 @@ import org.openqa.selenium.WebElement;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
-import java.time.format.DateTimeFormatter;
 import java.util.logging.Logger;
 
 public class ContractPage extends Component {

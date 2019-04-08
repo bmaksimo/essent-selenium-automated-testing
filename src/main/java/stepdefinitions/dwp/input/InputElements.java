@@ -11,6 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
 import stepdefinitions.dwp.tables.IsAre;
 import stepdefinitions.dwp.tables.plus.SwitchState;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -108,6 +109,28 @@ public class InputElements extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
     }
 
+    /**
+     * Sets and asynchronously checks text input on any DWP form
+     * @param label Text label
+     * @param value Input value
+     * @param card Card title, for example "Gas Vooraf"
+     * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
+     */
+    @And("^\"([^\"]*)\" input on \"([^\"]*)\" card is \"([^\"]*)\"$")
+    public void setInput(String label, String card, String value) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
+        parameterProvider.put("inputValue", inputValue);
+        Map<String, String> options = new HashMap<>();
+        options.put("label", label);
+        options.put("value", inputValue);
+        options.put("card", card);
+        FluentWait<ApplyInput> waiter = waiter(new ApplyInput(), 10, 1);
+        waiter.withMessage(String.format("Input field %s is undefined.", label));
+        waiter.until((ApplyInput callback) -> callback.test(options));
+        seleniumDriver.waitForRequestsToFinish();
+    }
+
     @And("^\"([^\"]*)\" input is \"([^\"]*)\" waiting for (\\d+) seconds$")
     public void setInputWithFixedTime(String label, String value, int waitingTime) throws Throwable {
         Sleeper.sleepTightInSeconds(waitingTime);
@@ -121,13 +144,26 @@ public class InputElements extends DwpScenario {
         waiter.until((ApplyInput callback) -> callback.testNow(options));
     }
 
+    @And("^\"([^\"]*)\" input on card \"([^\"]*)\" is \"([^\"]*)\" waiting for (\\d+) seconds$")
+    public void setInputWithFixedTime(String label, String card, String value, int waitingTime) throws Throwable {
+        Sleeper.sleepTightInSeconds(waitingTime);
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
+        parameterProvider.put("inputValue", inputValue);
+        Map<String, String> options = new HashMap<>();
+        options.put("label", label);
+        options.put("value", inputValue);
+        options.put("card", card);
+        FluentWait<ApplyInput> waiter = waiter(new ApplyInput(), 10, 1);
+        waiter.withMessage(String.format("Input field %s is undefined.", label));
+        waiter.until((ApplyInput callback) -> callback.testNow(options));
+    }
+
     /**
      * Sets and asynchronously checks date input on any DWP form
      * @param label Text label
      * @param value Date input value
      * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
      */
-
     @And("^\"([^\"]*)\" date is \"([^\"]*)\"$")
     public void setDateInput(String label, String value) throws Throwable {
         Sleeper.sleepTightInSeconds(2);
@@ -140,6 +176,21 @@ public class InputElements extends DwpScenario {
         waiter.withMessage(String.format("Date value %s input at '%s' failed.", inputValue, label));
         waiter.until((ApplyDateInput callback) -> callback.test(options));
     }
+
+    @And("^\"([^\"]*)\" date on \"([^\"]*)\" card is \"([^\"]*)\"$")
+    public void setDateInput(String label, String card, String value) throws Throwable {
+        Sleeper.sleepTightInSeconds(2);
+        String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(value));
+        parameterProvider.put("inputValue", inputValue);
+        Map<String, String> options = new HashMap<>();
+        options.put("label", label);
+        options.put("value", inputValue);
+        options.put("card", card);
+        FluentWait<ApplyDateInput> waiter = waiter(new ApplyDateInput(), 10, 1);
+        waiter.withMessage(String.format("Date value %s input at '%s' failed.", inputValue, label));
+        waiter.until((ApplyDateInput callback) -> callback.test(options));
+    }
+
 
     /**
      * Sets and asynchronously checks dropdown selection on any DWP form
@@ -158,12 +209,43 @@ public class InputElements extends DwpScenario {
         waiter.until((ApplySelection callback) -> callback.test(options));
     }
 
+    /**
+     * Sets and asynchronously checks dropdown selection on any DWP form
+     * @param label Text label
+     * @param value Input value
+     * @param card Card title, for example "Gas Vooraf"
+     * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
+     */
+    @And("^\"([^\"]*)\" selection on card \"([^\"]*)\" is \"([^\"]*)\"$")
+    public void setSelection(String label, String card, String value) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
+        Map<String, String> options = new HashMap<>();
+        options.put("label", label);
+        options.put("value", value);
+        options.put("card", card);
+        FluentWait<ApplySelection> waiter = waiter(new ApplySelection(), 10, 1);
+        waiter.withMessage(String.format("Selection %s is undefined.", label));
+        waiter.until((ApplySelection callback) -> callback.test(options));
+    }
+
     @And("^\"([^\"]*)\" selection is \"([^\"]*)\" waiting for (\\d+) seconds$")
     public void setSelection(String label, String value, int waitingTime) throws Throwable {
         Sleeper.sleepTightInSeconds(waitingTime);
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
         options.put("value", value);
+        FluentWait<ApplySelection> waiter = waiter(new ApplySelection(), 10, 1);
+        waiter.withMessage(String.format("Selection %s is undefined.", label));
+        waiter.until((ApplySelection callback) -> callback.testNow(options));
+    }
+
+    @And("^\"([^\"]*)\" selection on card \"([^\"]*)\" is \"([^\"]*)\" waiting for (\\d+) seconds$")
+    public void setSelection(String label, String card, String value, int waitingTime) throws Throwable {
+        Sleeper.sleepTightInSeconds(waitingTime);
+        Map<String, String> options = new HashMap<>();
+        options.put("label", label);
+        options.put("value", value);
+        options.put("card", card);
         FluentWait<ApplySelection> waiter = waiter(new ApplySelection(), 10, 1);
         waiter.withMessage(String.format("Selection %s is undefined.", label));
         waiter.until((ApplySelection callback) -> callback.testNow(options));
@@ -227,6 +309,7 @@ public class InputElements extends DwpScenario {
         assertThat(String.format("Placeholder element '%s' was not found.", placeholder), placeHolderWasFound, is(true));
         placeHolderInputElement.sendKeys(inputValue);
     }
+
 
 
     @And("Tariefkaart has value of 1st item from list$")

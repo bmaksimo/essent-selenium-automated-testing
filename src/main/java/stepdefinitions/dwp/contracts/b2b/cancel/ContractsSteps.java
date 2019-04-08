@@ -2,7 +2,6 @@ package stepdefinitions.dwp.contracts.b2b.cancel;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.guided_flow.cupq.NewQuotePage;
-import com.essent.testing.dwp.pageobject.impl.navigation.DwpDashboardMenuPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.Invoice_list.InvoiceListPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.details.DetailsPage;
@@ -19,9 +18,6 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import stepdefinitions.dwp.page_object.CustomerAcceptance;
 
-
-import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpContractStartEndDate;
-import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToSoctarFileDate;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 

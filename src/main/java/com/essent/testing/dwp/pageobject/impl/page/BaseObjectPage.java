@@ -5,12 +5,13 @@ import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.NEXT_BUTTON;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.NEXT_BUTTON;
 
 public class BaseObjectPage extends Component {
 

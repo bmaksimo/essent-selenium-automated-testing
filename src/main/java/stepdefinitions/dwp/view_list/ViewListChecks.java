@@ -627,9 +627,10 @@ public class ViewListChecks extends NavigationElements {
 
     @And("^Table \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\"$")
     public void viewListContainsValueAtColumn(String table, String value, String column) throws Throwable {
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
         ViewListModel viewListModel = new ViewListModel();
         List<String> columnData = viewListModel.fetchColumnData(table, column);
-        List<String> found = columnData.stream().filter(element -> element.contains(value)).collect(Collectors.toList());
+        List<String> found = columnData.stream().filter(element -> element.contains(inputValue)).collect(Collectors.toList());
         String message = String.format("Table \"%s\" didn't contain value \"%s\" at column \"%s\"", table, value, column);
         assertThat(message,
             found, not(empty()));
@@ -639,9 +640,10 @@ public class ViewListChecks extends NavigationElements {
     @And("^Table \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\" waiting for (\\d+) seconds$$")
     public void viewListContainsValueAtColumnWithFixedTime(String table, String value, String column, int waitingTime) throws Throwable {
         Sleeper.sleepTightInSeconds(waitingTime);
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
         ViewListModel viewListModel = new ViewListModel();
         List<String> columnData = viewListModel.fetchColumnDataNow(table, column, true);
-        List<String> found = columnData.stream().filter(element -> element.contains(value)).collect(Collectors.toList());
+        List<String> found = columnData.stream().filter(element -> element.contains(inputValue)).collect(Collectors.toList());
         String message = String.format("Table \"%s\" didn't contain value \"%s\" at column \"%s\"", table, value, column);
         assertThat(message, found, not(empty()));
         logger().info(String.format("- STEP: Table \"%s\" contains value \"%s\" at column \"%s\" - PASSED.", table, value, column));

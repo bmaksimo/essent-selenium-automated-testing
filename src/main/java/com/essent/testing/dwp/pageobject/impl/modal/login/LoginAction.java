@@ -5,7 +5,6 @@ import com.essent.testing.dwp.pageobject.Window;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.net.UrlChecker;
 
 public class LoginAction extends Component {
     private final static By IWELCOME_SELECTOR = By.id("login-base");
