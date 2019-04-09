@@ -258,9 +258,6 @@ public class ContractsSteps extends DwpScenario {
         String valueOfFirstActualInstallment = contractPage.checkValueOfInstallments("2");
         String valueOfSecondActualInstallment = contractPage.checkValueOfInstallments("3");
         String valueOfThirdActualInstallment = contractPage.checkValueOfInstallments("4");
-        System.out.print("------------"+valueOfFirstActualInstallment);
-        System.out.print("------------"+valueOfSecondActualInstallment);
-        System.out.print("------------"+valueOfThirdActualInstallment);
 
        if (valueOfFirstActualInstallment.contains(firstExpectedValue))
         {
@@ -276,21 +273,6 @@ public class ContractsSteps extends DwpScenario {
         {
             assertThat(String.format("Actual payment value \"%s\" is not correct", thirdExpectedValue), valueOfThirdActualInstallment, is(true));
         }
-
-
-//
-//        boolean correctFirstInstallment = valueOfFirstActualInstallment.contains(firstExpectedValue);
-//        System.out.print("------------"+correctFirstInstallment);
-//        boolean correctSecondInstallment = valueOfSecondActualInstallment.contains(secondExpectedValue);
-//        boolean correctThirdInstallment = valueOfThirdActualInstallment.contains(thirdExpectedValue);
-
-//        assertThat(String.format("Actual payment value \"%s\" is not correct", firstExpectedValue), correctFirstInstallment, is(true));
-//        assertThat(String.format("Actual payment value \"%s\" is not correct", secondExpectedValue), correctSecondInstallment, is(true));
-//        assertThat(String.format("Actual payment value \"%s\" is not correct", thirdExpectedValue), correctThirdInstallment, is(true));
-
-//        assertTrue("true", correctFirstInstallment);
-//        assertTrue("true", correctSecondInstallment);
-//        assertTrue("true", correctThirdInstallment);
 
     }
 

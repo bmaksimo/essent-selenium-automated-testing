@@ -26,7 +26,6 @@ public class ContractPage extends Component {
     //TODO rewrite to standard work with contract lines
     private static final String FIRST_CONTRACT_LINE_XPATH_EXPRESSION = "//div[@class = 'col-1-1']/div[@class = 'row-']/list[@list-key = 'ContractedEansOnAccount']//tbody[@id = 'rows']/tr[1]/td[4]";
     private static final String XPATH_ACTIVE_CONTRACT_EAN = "//*[@id=\"rows\"]//list-link-bold-top-two-liner-cell//a/h5";
-    private static final String PAYMENT_PLAN_DATE = "//list[@list-key='PaymentPlansOnAccount']//td[5]//span[1]";
     private static final String PAYMENT_PLAN_NUMBER = "//list[@list-key='PaymentPlansOnAccount']//tbody[@id='rows']";
     private static final String VALUE_PAYMENT_PLAN_INSTALLMENTS = "//list-dropdown-cell//option['${" + REPLACEMENT_KEY + "}']";
     private static final String PAYMENT_PLAN_NUMBER_OF_INSTALLMENTS = "//list-dropdown-cell//option[1]";
