@@ -317,10 +317,13 @@ public class ViewListChecks extends NavigationElements {
 
     @When("^View list header is \"([^\"]*)\"$")
     public void checkViewListHeader(String header) throws Throwable {
-	boolean success = new CheckViewListHeader().test(header);
-	assertThat(String.format("View list header \"%s\" didn't appear", header), success, is(true));
-	parameterProvider.put("current-view-list", header);
-	logger().info(String.format("- STEP: View list header is \"%s\" - PASSED.", header));
+        seleniumDriver.waitForRequestsToFinish();
+        boolean success = new CheckViewListHeader().test(header);
+        assertThat(String.format("View list header \"%s\" didn't appear", header),
+            success, is(true));
+        parameterProvider.put("current-view-list", header);
+        logger().info(String.format("- STEP: View list header is \"%s\" - PASSED.", header));
+        seleniumDriver.waitForRequestsToFinish();
     }
 
     @When("^View list header is \"([^\"]*)\" appears within (\\d+) seconds?$")
@@ -358,13 +361,12 @@ public class ViewListChecks extends NavigationElements {
 
     @When("^Click on link in View List at \"([^\"]*)\" row and \"([^\"]*)\" column polling (\\d+) seconds?$")
     public void clickOnViewListAtRowAndColumn(String ordinal, String column, int seconds) throws Throwable {
-	FluentWait<ClickTableCellUrl> waiter = waiter(new ClickTableCellUrl(), seconds, 5).withMessage(
-		String.format("Failed click on link in view list at \"%s\" row and \"%s\" column within \"%s\" seconds",
-			ordinal, column, seconds));
-	waiter.until((ClickTableCellUrl callback) -> callback.test(getColumnIndexListOptions(column, null, ordinal)));
-	logger().info(String.format(
-		"- STEP: Click on link in view list at \"%s\" row and \"%s\" column within \"%s\" seconds - PASSED.",
-		ordinal, column, seconds));
+        seleniumDriver.waitForRequestsToFinish();
+        FluentWait<ClickTableCellUrl> waiter = waiter(new ClickTableCellUrl(), seconds, 5)
+           .withMessage(String.format("Failed click on link in view list at \"%s\" row and \"%s\" column within \"%s\" seconds", ordinal, column, seconds));
+        waiter.until((ClickTableCellUrl callback) -> callback.test(getColumnIndexListOptions(column, null, ordinal)));
+        logger().info(String.format("- STEP: Click on link in view list at \"%s\" row and \"%s\" column within \"%s\" seconds - PASSED.", ordinal, column, seconds));
+        seleniumDriver.waitForRequestsToFinish();
     }
 
     @When("^Click on link in View List at \"([^\"]*)\" row and \"([^\"]*)\" column waiting for (\\d+) seconds$")
@@ -676,19 +678,16 @@ public class ViewListChecks extends NavigationElements {
 		value, column));
     }
 
-    @And("^Table \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\" waiting for (\\d+) seconds$$")
-    public void viewListContainsValueAtColumnWithFixedTime(String table, String value, String column, int waitingTime)
-	    throws Throwable {
-	Sleeper.sleepTightInSeconds(waitingTime);
-	ViewListModel viewListModel = new ViewListModel();
-	List<String> columnData = viewListModel.fetchColumnDataNow(table, column, true);
-	List<String> found = columnData.stream().filter(element -> element.contains(value))
-		.collect(Collectors.toList());
-	String message = String.format("Table \"%s\" didn't contain value \"%s\" at column \"%s\"", table, value,
-		column);
-	assertThat(message, found, not(empty()));
-	logger().info(String.format("- STEP: Table \"%s\" contains value \"%s\" at column \"%s\" - PASSED.", table,
-		value, column));
+
+    @And("^Table \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\" waiting for (\\d+) seconds$")
+    public void viewListContainsValueAtColumnWithFixedTime(String table, String value, String column, int waitingTime) throws Throwable {
+        Sleeper.sleepTightInSeconds(waitingTime);
+        ViewListModel viewListModel = new ViewListModel();
+        List<String> columnData = viewListModel.fetchColumnDataNow(table, column, true);
+        List<String> found = columnData.stream().filter(element -> element.contains(value)).collect(Collectors.toList());
+        String message = String.format("Table \"%s\" didn't contain value \"%s\" at column \"%s\"", table, value, column);
+        assertThat(message, found, not(empty()));
+        logger().info(String.format("- STEP: Table \"%s\" contains value \"%s\" at column \"%s\" - PASSED.", table, value, column));
     }
 
     @And("^\"([^\"]*)\" in the first \"([^\"]*)\" row of \"([^\"]*)\" table is \"([^\"]*)\"$")
