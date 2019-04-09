@@ -26,7 +26,6 @@ import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.chec
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 public class ContractsSteps extends DwpScenario {
 
