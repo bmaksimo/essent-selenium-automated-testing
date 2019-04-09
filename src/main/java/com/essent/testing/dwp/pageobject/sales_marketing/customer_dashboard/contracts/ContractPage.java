@@ -27,9 +27,11 @@ public class ContractPage extends Component {
     private static final String FIRST_CONTRACT_LINE_XPATH_EXPRESSION = "//div[@class = 'col-1-1']/div[@class = 'row-']/list[@list-key = 'ContractedEansOnAccount']//tbody[@id = 'rows']/tr[1]/td[4]";
     private static final String XPATH_ACTIVE_CONTRACT_EAN = "//*[@id=\"rows\"]//list-link-bold-top-two-liner-cell//a/h5";
     private static final String PAYMENT_PLAN_NUMBER = "//list[@list-key='PaymentPlansOnAccount']//tbody[@id='rows']";
-    private static final String VALUE_PAYMENT_PLAN_INSTALLMENTS = "//list-dropdown-cell//option['${" + REPLACEMENT_KEY + "}']";
-    private static final String PAYMENT_PLAN_NUMBER_OF_INSTALLMENTS = "//list-dropdown-cell//option[1]";
-
+//    private static final String VALUE_PAYMENT_PLAN_INSTALLMENTS = "//list-dropdown-cell//option['${" + REPLACEMENT_KEY + "}']";
+    private static final String PAYMENT_PLAN_NUMBER_OF_INSTALLMENTS = "//list-dropdown-cell//select";
+    private static final String FIRST_PAYMENT_PLAN_INSTALLMENT = "//list-dropdown-cell//option[2]";
+    private static final String SECOND_PAYMENT_PLAN_INSTALLMENT = "//list-dropdown-cell//option[3]";
+    private static final String THIRD_PAYMENT_PLAN_INSTALLMENT = "//list-dropdown-cell//option[4]";
 
     private WebElement startData() {
         return seleniumDriver.findElementWhenVisible(By.id(START_DATA_ID));
@@ -376,22 +378,62 @@ public class ContractPage extends Component {
         seleniumDriver.waitForRequestsToFinish();
         List<WebElement> rows = seleniumDriver.findElements(By.xpath(PAYMENT_PLAN_NUMBER));
 
+        seleniumDriver.waitForRequestsToFinish();
         return CollectionUtils.isNotEmpty(rows);
-    }
-
-    public String checkNumberOfInstallments() {
-        return seleniumDriver.findElementWhenVisible(By.xpath(PAYMENT_PLAN_NUMBER_OF_INSTALLMENTS)).getText();
 
     }
 
-    public String checkValueOfInstallments(String numInstallment) {
-       String valueInstallmentPaymentPlan = createQuery(VALUE_PAYMENT_PLAN_INSTALLMENTS, REPLACEMENT_KEY, numInstallment);
-       return seleniumDriver.findElementWhenVisible(By.xpath(valueInstallmentPaymentPlan)).getText();
+    public int checkNumberOfInstallments() {
+     seleniumDriver.waitForRequestsToFinish();
+     String str =  seleniumDriver.findElementWhenVisible(By.xpath(PAYMENT_PLAN_NUMBER_OF_INSTALLMENTS)).getText();
+     final String substring = str.substring(0, str.indexOf(' '));
+
+     seleniumDriver.waitForRequestsToFinish();
+     return Integer.valueOf(substring);
 
     }
 
+    public String checkValueOfInstallments(String optionListItem1, String optionListItem2, String optionListItem3) {
+       seleniumDriver.waitForRequestsToFinish();
+
+       seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(PAYMENT_PLAN_NUMBER_OF_INSTALLMENTS)));
+
+       seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(FIRST_PAYMENT_PLAN_INSTALLMENT)));
+       String str1  = seleniumDriver.findElementWhenVisible(By.xpath(FIRST_PAYMENT_PLAN_INSTALLMENT)).getText();
+       boolean str1Item = str1.contains(optionListItem1);
+
+       if (str1Item)
+        {
+          str1 = optionListItem1;
+        }
+
+       seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(PAYMENT_PLAN_NUMBER_OF_INSTALLMENTS)));
+       seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(SECOND_PAYMENT_PLAN_INSTALLMENT)));
+       seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(SECOND_PAYMENT_PLAN_INSTALLMENT)));
+       String str2  = seleniumDriver.findElementWhenVisible(By.xpath(SECOND_PAYMENT_PLAN_INSTALLMENT)).getText();
+       boolean str2Item = str2.contains(optionListItem2);
+
+       if (str2Item)
+        {
+            str2 = optionListItem2;
+        }
+
+       seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(PAYMENT_PLAN_NUMBER_OF_INSTALLMENTS)));
+       seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(THIRD_PAYMENT_PLAN_INSTALLMENT)));
+       seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(THIRD_PAYMENT_PLAN_INSTALLMENT)));
+       String str3  = seleniumDriver.findElementWhenVisible(By.xpath(THIRD_PAYMENT_PLAN_INSTALLMENT)).getText();
+       boolean str3Item = str3.contains(optionListItem3);
+
+       if (str3Item)
+        {
+            str3 = optionListItem3;
+        }
 
 
+       seleniumDriver.waitForRequestsToFinish();
+
+        return (str1+str2+str3);
+    }
 
 
 }

@@ -10,6 +10,7 @@ import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.sale
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.workflows.MarktBerichtenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.jbilling.pageobject.impl.page.InvoicesPage;
+import cucumber.api.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -21,11 +22,14 @@ import org.openqa.selenium.By;
 import stepdefinitions.dwp.page_object.CustomerAcceptance;
 
 
+import java.util.List;
+
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpContractStartEndDate;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToSoctarFileDate;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.testng.AssertJUnit.assertEquals;
 
 public class ContractsSteps extends DwpScenario {
 
@@ -236,45 +240,34 @@ public class ContractsSteps extends DwpScenario {
 
     @When("Payment table is not empty$")
     public void checkPaymentTableNotEmpty() throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
         ContractPage contractenPage = new ContractPage();
         boolean success = contractenPage.checkPaymentTableNotEmpty();
 
         assertThat("Rows in invoice table are empty", success, is(true));
+        seleniumDriver.waitForRequestsToFinish();
     }
 
-    @Then("Payment plan has \"([^\"]*)\"$")
-    public void PaymentPlanNumberOfInstallments(String expectedNumberOfInstallments){
+    @Then("Payment plan has \"([^\"]*)\" installments$")
+    public void PaymentPlanNumberOfInstallments(int expectedNumberOfInstallments){
+        seleniumDriver.waitForRequestsToFinish();
         ContractPage contractPage = new ContractPage();
 
-        String actualNumberOfInstallments = contractPage.checkNumberOfInstallments();
+        int actualNumberOfInstallments = contractPage.checkNumberOfInstallments();
         assertThat(String.format("Number of actual installments \"%s\" differs from the expected ones \"%s\" on payment plan", actualNumberOfInstallments, expectedNumberOfInstallments), actualNumberOfInstallments, equalTo(expectedNumberOfInstallments));
-
+        seleniumDriver.waitForRequestsToFinish();
     }
 
     @Then("Payment plan has installment values of \"([^\"]*)\", \"([^\"]*)\" and \"([^\"]*)\"$")
     public void PaymentPlanValuesOfInstallments(String firstExpectedValue, String secondExpectedValue, String thirdExpectedValue){
+        seleniumDriver.waitForRequestsToFinish();
         ContractPage contractPage = new ContractPage();
-        String valueOfFirstActualInstallment = contractPage.checkValueOfInstallments("2");
-        String valueOfSecondActualInstallment = contractPage.checkValueOfInstallments("3");
-        String valueOfThirdActualInstallment = contractPage.checkValueOfInstallments("4");
-
-       if (valueOfFirstActualInstallment.contains(firstExpectedValue))
-        {
-           assertThat(String.format("Actual payment value \"%s\" is not correct", firstExpectedValue), valueOfFirstActualInstallment, is(true));
-        }
-
-       if (valueOfSecondActualInstallment.contains(secondExpectedValue))
-        {
-            assertThat(String.format("Actual payment value \"%s\" is not correct", secondExpectedValue), valueOfSecondActualInstallment, is(true));
-        }
-
-       if (valueOfThirdActualInstallment.contains(thirdExpectedValue))
-        {
-            assertThat(String.format("Actual payment value \"%s\" is not correct", thirdExpectedValue), valueOfThirdActualInstallment, is(true));
-        }
+        String expectedResult = firstExpectedValue + secondExpectedValue + thirdExpectedValue;
+        String result =  contractPage.checkValueOfInstallments(firstExpectedValue, secondExpectedValue, thirdExpectedValue);
+        assertEquals(expectedResult ,result);
+        seleniumDriver.waitForRequestsToFinish();
 
     }
-
 
 
 }

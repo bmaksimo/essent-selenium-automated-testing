@@ -86,7 +86,7 @@ Feature: NSTA - 344 Payment Plan
         And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
         And "1st" List element with value at column "ID & Type" is checked
 
-        #Create a payment plan for this customer
+        Create a payment plan for this customer
         And List option is "ENKEL FACTUREN"
         And View list header is "Openstaande facturen"
         And Invoice checkbox with key "InvoicesOnAccountOpenBalance" is clicked
@@ -105,8 +105,9 @@ Feature: NSTA - 344 Payment Plan
         Then View list header is "Afbetalingsplannen"
         And Payment table is not empty
         And Table "Afbetalingsplannen" contains value "open" at column "Status"
-        Then Payment plan has "3 installments"
+        Then Payment plan has "3" installments
         Then Payment plan has installment values of "€ 50", "€ 50" and "€ 13"
+
 
 
 
