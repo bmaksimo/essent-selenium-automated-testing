@@ -13,8 +13,8 @@ public class ApiPathsContract {
 	public static final String API_CREATE_QUOTE_B2C = CRM_ROOT_API + "/V8_Custom/Flow/B2C_CQ";
 	public static final String API_QUOTES_ON_ACCOUNT = CRM_ROOT_API + "/V8_Custom/List/QuotesOnAccount";
 	public static final String API_CONTRACT_ON_ACCOUNT = CRM_ROOT_API + "/V8_Custom/List/ContractsOnAccount";
-	public static final String API_MODAL_TO_GF_QUOTE_SEND_TO_CUSTOMER = CRM_ROOT_API + "/V8_Custom/Action/modal_to_gf_quote_send_to_customer";
-	public static final String API_MODAL_TO_GF_QUOTE_SEND_TO_CUSTOMER_AND_RELOAD_LIST = CRM_ROOT_API + "/V8_Custom/Action/modal_to_gf_quote_send_to_customer_and_reload_list";
+	public static final String API_MODAL_TO_GF_QUOTE_SEND_TO_CUSTOMER = CRM_ROOT_API + "/V8_Custom/ActionDTO/modal_to_gf_quote_send_to_customer";
+	public static final String API_MODAL_TO_GF_QUOTE_SEND_TO_CUSTOMER_AND_RELOAD_LIST = CRM_ROOT_API + "/V8_Custom/ActionDTO/modal_to_gf_quote_send_to_customer_and_reload_list";
 	public static final String API_GF_QUOTE_SEND_TO_CUSTOMER = CRM_ROOT_API + "/V8_Custom/Flow/gf_quote_send_to_customer";
 	public static final String API_GF_QUOTE_SIGNATURE_RECEIVED = CRM_ROOT_API + "/V8_Custom/Flow/gf_quote_signatureReceived";
 	public static final String API_FILE_UPLOAD = CRM_ROOT_API + "/V8_Custom/fileupload";
@@ -22,7 +22,7 @@ public class ApiPathsContract {
 	public static final String API_SIGN_QUOTE_MODAL_TC2_UP = CRM_ROOT_API + "/V8_Custom/Flow/sign_quote_modal_tc2_up";
 	public static final String API_VERIFY_CONTRACT_CREATED = CRM_ROOT_API + "/V8_Custom/List/ContractsOnAccount";
 	public static final String API_LIST_BILLING_CUSTOMER_ACCOUNT = CRM_ROOT_API + "/V8_Custom/List/BillingCustomerOnaccount";
-	public static final String API_MODAL_TO_GF_SIGN_MANDATE_PAPER = CRM_ROOT_API + "/V8_Custom/Action/Modal_to_gf_sign_mandate_paper";
+	public static final String API_MODAL_TO_GF_SIGN_MANDATE_PAPER = CRM_ROOT_API + "/V8_Custom/ActionDTO/Modal_to_gf_sign_mandate_paper";
 	public static final String API_GF_SIGN_MANDATE_PAPER = CRM_ROOT_API + "/V8_Custom/Flow/gf_sign_mandate_paper";
 
 	public static final String API_CONTRACTED_EAN = CRM_ROOT_API + "/V8_Custom/List/ContractedEansOnAccount";
