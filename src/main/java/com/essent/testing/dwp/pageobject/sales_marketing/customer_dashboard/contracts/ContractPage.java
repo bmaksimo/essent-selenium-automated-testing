@@ -385,8 +385,6 @@ public class ContractPage extends Component {
     }
 
     public String checkValueOfInstallments(String numInstallment) {
-       seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath(PAYMENT_PLAN_NUMBER_OF_INSTALLMENTS)));
-
        String valueInstallmentPaymentPlan = createQuery(VALUE_PAYMENT_PLAN_INSTALLMENTS, REPLACEMENT_KEY, numInstallment);
        return seleniumDriver.findElementWhenVisible(By.xpath(valueInstallmentPaymentPlan)).getText();
 
