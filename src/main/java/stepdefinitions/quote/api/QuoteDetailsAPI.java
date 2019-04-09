@@ -26,7 +26,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-//import java.text.DateFormat;
 
 /**
  * @author n.grkavac
@@ -51,8 +50,6 @@ public class QuoteDetailsAPI extends AbstractAPI {
     Response tsResponse = helper.postRequest(expectedResponseCode, cookie, payload, path);
 
     tariffSheetID = getTarrifIDFromResponse(tsResponse);
-    // tariffSheetID= tsResponse.jsonPath()
-    // .getString("'data.model.accounts|aos_quotes|aos_products_quotes|tariffsheet_id'");
     LOGGER.info("TariffSheetID is: " + tariffSheetID);
 
     return tariffSheetID;

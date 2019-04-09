@@ -4,9 +4,9 @@ public class IWelcomeLogin {
     private String username;
     private String password;
 
-    public IWelcomeLogin(String userId_m, String password_m){
-         this.username = userId_m;
-         this.password = password_m;
+    public IWelcomeLogin(String userIdm, String passwordm){
+         this.username = userIdm;
+         this.password = passwordm;
     }
 
     public String getUsername() {

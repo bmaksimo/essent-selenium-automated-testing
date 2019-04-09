@@ -51,7 +51,6 @@ public class RequestHelper {
 	    LOGGER.error("RESPONSE IS: " + response.body().asString());
 	}
 
-//	assertEquals(expectedStatusCode, responseStatusCode);	
 	assertThat(responseStatusCode, is(equalTo(expectedStatusCode)));	
 	return response;
     }
@@ -67,8 +66,6 @@ public class RequestHelper {
 	    LOGGER.info("JSON body which was sent in the request is: " + payload);
 	    LOGGER.error("RESPONSE IS: " + response.body().asString());
 	}
-
-//	assertEquals(exectedStatusCode, responseStatusCode);
 
 	assertFalse(new ExceptionChecker().checkForErrorInResponse(response));
 	assertThat(responseStatusCode, is(equalTo(expectedStatusCode)));
@@ -89,8 +86,7 @@ public class RequestHelper {
         }
         LOGGER.info("RESPONSE IS: " + response.body().asString());
 
-        //assertFalse(new ExceptionChecker().checkForErrorInResponse(response));
-        //assertThat(responseStatusCode, is(equalTo(expectedStatusCode)));
+        assertThat(responseStatusCode, is(equalTo(expectedStatusCode)));
 
         return response;
     }
@@ -109,7 +105,6 @@ public class RequestHelper {
 	    LOGGER.error("RESPONSE IS: " + response.body().asString());
 	}
 
-//	assertEquals(expectedStatusCode, responseStatusCode);
 	assertThat(responseStatusCode, is(equalTo(expectedStatusCode)));
 	return response;
     }

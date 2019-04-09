@@ -42,7 +42,6 @@ public final class PrepareDataForContract {
         return prefixName + new SimpleDateFormat("MMdd HHmmss").format(new Date());
     }
 
-    //This logic is took from SOAPUI tests
     public static String generateValidBECompanyNumber() {
         int lengthPart2 = 0;
         String part1 = "";
@@ -58,7 +57,6 @@ public final class PrepareDataForContract {
 
     }
 
-    //This logic is took from SOAPUI tests
     public static String getValidIbanBE() {
         String bankCode = "001";
         int maxNumber = 9999999;
@@ -87,7 +85,6 @@ public final class PrepareDataForContract {
 
     }
 
-    //This logic is took from SOAPUI tests
     public static String generateEAN() {
         String randomNumberForEAN = "54144" + (long) (Math.random() * (9999999999L - 1000000000L) + 1000000000L) + "40";
         char[] charArray = randomNumberForEAN.toCharArray();
@@ -121,21 +118,14 @@ public final class PrepareDataForContract {
 
 
     public static String generateDOBForAnAdult(){
-        //format yyyy-MM-dd       yyyydashMMdashdd
         Random  rnd;
         Date    dt;
         long    ms;
-        // Get a new random instance, seeded from the clock
-        rnd = new Random();
 
-        // Get an Epoch value roughly between 1940 and 2010
-        // -946771200000L = January 1, 1940
-        // Add up to 70 years to it (using modulus on the next long)
+        rnd = new Random();
         ms = -946771200000L + (Math.abs(rnd.nextLong()) % (50L * 365 * 24 * 60 * 60 * 1000));
-        // Construct a date
         dt = new Date(ms);
         String  generatedDate = new SimpleDateFormat("yyyy-MM-dd").format(dt);
-
         return generatedDate;
     }
 
@@ -172,43 +162,6 @@ public final class PrepareDataForContract {
         startContractDate = sdf1.format(c1.getTime());
 
         return startContractDate;
-
-    }
-
-    private static String decreaseByOneStartContractDate(String startContractDate, String todayDate, String currentContractStartDateInDWP) throws ParseException {
-        // 1 month is past
-        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar c1 = Calendar.getInstance();
-        c1.setTime(sdf1.parse(startContractDate));
-        c1.add(Calendar.MONTH, -1);
-        startContractDate = sdf1.format(c1.getTime());
-        Date dateStartContractDate = sdf1.parse(startContractDate);
-
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar c = Calendar.getInstance();
-        c.setTime(sdf.parse(currentContractStartDateInDWP));
-        c.add(Calendar.DATE, -1);
-        currentContractStartDateInDWP = sdf.format(c.getTime());  // currentContractStartDateInDWP is now the new date
-        Date dateCurrentContractStartDateInDWP = sdf.parse(currentContractStartDateInDWP);
-
-        if ((dateCurrentContractStartDateInDWP.before(dateStartContractDate) || dateCurrentContractStartDateInDWP.equals(dateStartContractDate))) {
-            return "NOT_VALID";
-        }
-
-        return currentContractStartDateInDWP;
-    }
-
-    private static String getRandomStartContractDate(String startContractDate, String todayDate, String currentContractStartDateInDWP) throws ParseException {
-
-        Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(startContractDate);
-        Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse(todayDate);
-
-        long random = ThreadLocalRandom.current().nextLong(date1.getTime(), date2.getTime());
-        Date date = new Date(random);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-        return dateFormat.format(date);
 
     }
 
