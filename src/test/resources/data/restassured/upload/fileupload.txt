@@ -1,0 +1,34 @@
+POST 
+/${#Project#suitecrmapiprefix}Api/V8_Custom/fileupload
+
+
+model[id]       ${Properties#rowId}
+model[dwp|id]   ${Properties#rowId}
+model[accounts|name]    ${Properties#accountNameStatic}
+model[dwp|recordType]   AOS_Quotes
+model[accounts|company_number_c]    ${Properties#companyNumber}
+model[stage]    SIGNED
+model[accounts|id]  ${Properties#recordId}
+model[sign_date_c]  ${Properties#date}
+model[recordTypeOfRecordId] AOS_Quotes
+model[baseModule]   AOS_Quotes
+model[assigned_user_id][0][key] 1
+model[assigned_user_id][0][label]   Administrator
+model[primary_group_id][0][key]     abeba670-1428-dbca-6a0b-57d11cbdb3bd
+model[primary_group_id][0][label]   TDS
+model[dwp|mainDocType]
+model[dwp|subDocType]
+model[accounts|record_type]
+model[aos_products_quotes|id]
+fieldGuid
+model[complete] true
+model[do_auto_communication_c]  true
+model[flag|confirmCommandKey]   reloadQuotesList 
+model[payment_details|com_prefs(type='MANDATE')|channel]
+model[payment_details|com_prefs(type='MANDATE')|id ]
+model[payment_details|id]
+model[payment_details|payment_methods(valid_to is null)|id]
+model[payment_details|payment_methods(valid_to is null)|payment_method]
+model[recordId]
+model[tasks(parent_type = 'AOS_Quotes')|id]
+model[tasks(parent_type = 'AOS_Quotes')|status]

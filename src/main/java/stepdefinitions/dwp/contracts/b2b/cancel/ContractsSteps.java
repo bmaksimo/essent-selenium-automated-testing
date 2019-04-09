@@ -9,8 +9,6 @@ import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.deta
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.sales.SalesPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.workflows.MarktBerichtenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
-import com.essent.testing.jbilling.pageobject.impl.page.InvoicesPage;
-import cucumber.api.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -20,6 +18,7 @@ import cucumber.api.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import stepdefinitions.dwp.page_object.CustomerAcceptance;
+import stepdefinitions.dwp.tables.CustomerStatus;
 
 
 import java.util.List;
@@ -162,6 +161,16 @@ public class ContractsSteps extends DwpScenario {
         CustomerAcceptance customerAcceptance = new CustomerAcceptance();
         String actualStatus = customerAcceptance.getAcceptanceStatus();
         assertThat(String.format("Actual customer acceptance status \"%s\" differs from the expected \"%s\"", actualStatus, expectedStatus), actualStatus, equalTo(expectedStatus));
+
+    }
+
+    @Then("^Customer Status is an existing status$")
+    public void customerStatus() {
+        CustomerAcceptance customerAcceptance = new CustomerAcceptance();
+        String actualStatus = customerAcceptance.getAcceptanceStatus();
+        boolean success = CustomerStatus.containsStatus(actualStatus);
+        assertThat(String.format("Actual customer acceptance status \"%s\" does not exist", actualStatus),
+            success, is(true));
 
     }
 
