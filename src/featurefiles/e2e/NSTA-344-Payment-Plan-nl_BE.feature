@@ -1,13 +1,15 @@
 @REGRESSION
 @DWP
 @B2C
-@NSTA-344
 
 Feature: NSTA - 344 Payment Plan
 
+    Background:
+        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
+
+    @NSTA-344
     Scenario: Payment plan for B2C
         #Create an active contract
-        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
@@ -54,7 +56,7 @@ Feature: NSTA - 344 Payment Plan
         And Get client number
         Then View list header is "Actieve en toekomstige connecties"
         And  "1st" List element with value at column "EAN-code" is checked
-#        And  "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
+        And  "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
 
         #run invoice
         Given I renew login to DWP as "billing.testautomation@essent.be"
@@ -100,12 +102,11 @@ Feature: NSTA - 344 Payment Plan
         #payment plan checks
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
-        And "2nd" list element has cell value "PLAN" at column "Extra info" polling 60 seconds
         Then View list header is "Afbetalingsplannen"
-        And Table "Afbetalingsplannen" contains value "open" at column "Status"
         And Payment table is not empty
         And Table "Afbetalingsplannen" contains value "open" at column "Status"
-        Then Payment plan has "3 installments" on date "parameter:inputValue"
-        Then Payment plan has installment values of "50", "50" and "13"
+        Then Payment plan has "3 installments"
+        Then Payment plan has installment values of "€ 50", "€ 50" and "€ 13"
+
 
 

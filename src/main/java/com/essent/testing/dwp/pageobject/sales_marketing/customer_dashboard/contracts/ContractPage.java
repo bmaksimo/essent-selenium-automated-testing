@@ -380,21 +380,14 @@ public class ContractPage extends Component {
         return CollectionUtils.isNotEmpty(rows);
     }
 
-    public String checkNumberOfInstallments(String sd) {
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate sDate = LocalDate.parse(sd, format);
-        String paymentPlanDate = seleniumDriver.findElementWhenVisible(By.xpath(PAYMENT_PLAN_DATE)).getText();
-        LocalDate ppDate = LocalDate.parse(paymentPlanDate, format);
-
-        if (sDate.compareTo(ppDate) == 0) {
-            Logger.getLogger("Payment Plan Date is same as Invoice start date");
-        }
-
+    public String checkNumberOfInstallments() {
         return seleniumDriver.findElementWhenVisible(By.xpath(PAYMENT_PLAN_NUMBER_OF_INSTALLMENTS)).getText();
 
     }
 
     public String checkValueOfInstallments(String numInstallment) {
+       seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath(PAYMENT_PLAN_NUMBER_OF_INSTALLMENTS)));
+
        String valueInstallmentPaymentPlan = createQuery(VALUE_PAYMENT_PLAN_INSTALLMENTS, REPLACEMENT_KEY, numInstallment);
        return seleniumDriver.findElementWhenVisible(By.xpath(valueInstallmentPaymentPlan)).getText();
 
