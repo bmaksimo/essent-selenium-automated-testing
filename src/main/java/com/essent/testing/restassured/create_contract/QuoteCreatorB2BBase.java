@@ -51,8 +51,6 @@ public class QuoteCreatorB2BBase {
 	protected String generatedIban = "";
 	protected String paymentDetailsId = "";
 
-
-	// It is set this date, because for this date we have tariff, tariff prices, ...
 	protected String pricingDate = "";
 	protected String priceValidUntilDate = "";
 	protected String signatureReceivedDate = "";

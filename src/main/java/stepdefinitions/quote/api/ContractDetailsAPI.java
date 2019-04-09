@@ -26,8 +26,6 @@ public class ContractDetailsAPI extends AbstractAPI {
 
     private final static Logger LOGGER = Logger.getLogger(ContractDetailsAPI.class);
 
-    //private static String ean = ConfigProvider.getProperty(ConfigKey.EAN_NUMBER);
-
     public ContractDetails getContractDetails(Cookies cookie, QuoteDetails quoteDetails) throws IOException {
     RequestHelper helper = new RequestHelper();
     String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
@@ -125,9 +123,6 @@ public class ContractDetailsAPI extends AbstractAPI {
         String payload = createXMLPayload4OrderDetails(quoteDetails, contractDetails);
 
         Response getOrderDetailsResponse = helper.postXMLRequest(STATUS_OK, cookie, payload, path);
-        //check for errors
-        //check for "UserNotFoundException"
-        //not contains <result>false</result>
         boolean resultStatus = false;
         String resultStatusStr;
 
