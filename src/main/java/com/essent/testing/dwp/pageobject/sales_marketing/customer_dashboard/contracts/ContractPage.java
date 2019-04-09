@@ -3,6 +3,7 @@ package com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.con
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
+import org.apache.commons.collections.CollectionUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class ContractPage extends Component {
@@ -24,6 +26,12 @@ public class ContractPage extends Component {
     //TODO rewrite to standard work with contract lines
     private static final String FIRST_CONTRACT_LINE_XPATH_EXPRESSION = "//div[@class = 'col-1-1']/div[@class = 'row-']/list[@list-key = 'ContractedEansOnAccount']//tbody[@id = 'rows']/tr[1]/td[4]";
     private static final String XPATH_ACTIVE_CONTRACT_EAN = "//*[@id=\"rows\"]//list-link-bold-top-two-liner-cell//a/h5";
+    private static final String PAYMENT_PLAN_NUMBER = "//list[@list-key='PaymentPlansOnAccount']//tbody[@id='rows']";
+//    private static final String VALUE_PAYMENT_PLAN_INSTALLMENTS = "//list-dropdown-cell//option['${" + REPLACEMENT_KEY + "}']";
+    private static final String PAYMENT_PLAN_NUMBER_OF_INSTALLMENTS = "//list-dropdown-cell//select";
+    private static final String FIRST_PAYMENT_PLAN_INSTALLMENT = "//list-dropdown-cell//option[2]";
+    private static final String SECOND_PAYMENT_PLAN_INSTALLMENT = "//list-dropdown-cell//option[3]";
+    private static final String THIRD_PAYMENT_PLAN_INSTALLMENT = "//list-dropdown-cell//option[4]";
 
     private WebElement startData() {
         return seleniumDriver.findElementWhenVisible(By.id(START_DATA_ID));
@@ -36,6 +44,7 @@ public class ContractPage extends Component {
     private static final String ACCOUNT_NUMBER = "//div[@class='card__content__inner-wrapper']/h4";
     private static final String CONTRACT_NUMBER = "//*[@id=\"account_number_c\"]/div";
     private static final String COMPANY_NUMBER = "//*//*[@id=\"company-number-c-field\"]";
+
 
     public void startDateIsToday() {
         seleniumDriver.waitAndSendKeys(startData(), "date");
@@ -362,5 +371,69 @@ public class ContractPage extends Component {
 
     public int getNumberOfElectricityContracts() {
         return seleniumDriver.findElements(By.xpath(NUMBER_ELECTRICITY_CONTRACT)).size();
+
     }
+
+    public boolean checkPaymentTableNotEmpty() {
+        seleniumDriver.waitForRequestsToFinish();
+        List<WebElement> rows = seleniumDriver.findElements(By.xpath(PAYMENT_PLAN_NUMBER));
+
+        seleniumDriver.waitForRequestsToFinish();
+        return CollectionUtils.isNotEmpty(rows);
+
+    }
+
+    public int checkNumberOfInstallments() {
+     seleniumDriver.waitForRequestsToFinish();
+     String str =  seleniumDriver.findElementWhenVisible(By.xpath(PAYMENT_PLAN_NUMBER_OF_INSTALLMENTS)).getText();
+     final String substring = str.substring(0, str.indexOf(' '));
+
+     seleniumDriver.waitForRequestsToFinish();
+     return Integer.valueOf(substring);
+
+    }
+
+    public String checkValueOfInstallments(String optionListItem1, String optionListItem2, String optionListItem3) {
+       seleniumDriver.waitForRequestsToFinish();
+
+       seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(PAYMENT_PLAN_NUMBER_OF_INSTALLMENTS)));
+
+       seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(FIRST_PAYMENT_PLAN_INSTALLMENT)));
+       String str1  = seleniumDriver.findElementWhenVisible(By.xpath(FIRST_PAYMENT_PLAN_INSTALLMENT)).getText();
+       boolean str1Item = str1.contains(optionListItem1);
+
+       if (str1Item)
+        {
+          str1 = optionListItem1;
+        }
+
+       seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(PAYMENT_PLAN_NUMBER_OF_INSTALLMENTS)));
+       seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(SECOND_PAYMENT_PLAN_INSTALLMENT)));
+       seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(SECOND_PAYMENT_PLAN_INSTALLMENT)));
+       String str2  = seleniumDriver.findElementWhenVisible(By.xpath(SECOND_PAYMENT_PLAN_INSTALLMENT)).getText();
+       boolean str2Item = str2.contains(optionListItem2);
+
+       if (str2Item)
+        {
+            str2 = optionListItem2;
+        }
+
+       seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(PAYMENT_PLAN_NUMBER_OF_INSTALLMENTS)));
+       seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(THIRD_PAYMENT_PLAN_INSTALLMENT)));
+       seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(THIRD_PAYMENT_PLAN_INSTALLMENT)));
+       String str3  = seleniumDriver.findElementWhenVisible(By.xpath(THIRD_PAYMENT_PLAN_INSTALLMENT)).getText();
+       boolean str3Item = str3.contains(optionListItem3);
+
+       if (str3Item)
+        {
+            str3 = optionListItem3;
+        }
+
+
+       seleniumDriver.waitForRequestsToFinish();
+
+        return (str1+str2+str3);
+    }
+
+
 }
