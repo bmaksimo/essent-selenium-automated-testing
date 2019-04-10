@@ -17,9 +17,13 @@ import cucumber.api.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import stepdefinitions.dwp.page_object.CustomerAcceptance;
+import stepdefinitions.dwp.tables.CustomerStatus;
+
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.testng.AssertJUnit.assertEquals;
 
 public class ContractsSteps extends DwpScenario {
 
@@ -155,6 +159,16 @@ public class ContractsSteps extends DwpScenario {
 
     }
 
+    @Then("^Customer Status is an existing status$")
+    public void customerStatus() {
+        CustomerAcceptance customerAcceptance = new CustomerAcceptance();
+        String actualStatus = customerAcceptance.getAcceptanceStatus();
+        boolean success = CustomerStatus.containsStatus(actualStatus);
+        assertThat(String.format("Actual customer acceptance status \"%s\" does not exist", actualStatus),
+            success, is(true));
+
+    }
+
     @Then("^Get Company Number$")
     public void searchForCompanyNumber() {
         ContractPage cp = new ContractPage();
@@ -228,6 +242,36 @@ public class ContractsSteps extends DwpScenario {
 
     }
 
+    @When("Payment table is not empty$")
+    public void checkPaymentTableNotEmpty() throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
+        ContractPage contractenPage = new ContractPage();
+        boolean success = contractenPage.checkPaymentTableNotEmpty();
+
+        assertThat("Rows in invoice table are empty", success, is(true));
+        seleniumDriver.waitForRequestsToFinish();
+    }
+
+    @Then("Payment plan has \"([^\"]*)\" installments$")
+    public void PaymentPlanNumberOfInstallments(int expectedNumberOfInstallments){
+        seleniumDriver.waitForRequestsToFinish();
+        ContractPage contractPage = new ContractPage();
+
+        int actualNumberOfInstallments = contractPage.checkNumberOfInstallments();
+        assertThat(String.format("Number of actual installments \"%s\" differs from the expected ones \"%s\" on payment plan", actualNumberOfInstallments, expectedNumberOfInstallments), actualNumberOfInstallments, equalTo(expectedNumberOfInstallments));
+        seleniumDriver.waitForRequestsToFinish();
+    }
+
+    @Then("Payment plan has installment values of \"([^\"]*)\", \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void PaymentPlanValuesOfInstallments(String firstExpectedValue, String secondExpectedValue, String thirdExpectedValue){
+        seleniumDriver.waitForRequestsToFinish();
+        ContractPage contractPage = new ContractPage();
+        String expectedResult = firstExpectedValue + secondExpectedValue + thirdExpectedValue;
+        String result =  contractPage.checkValueOfInstallments(firstExpectedValue, secondExpectedValue, thirdExpectedValue);
+        assertEquals(expectedResult ,result);
+        seleniumDriver.waitForRequestsToFinish();
+
+    }
 
 
 }

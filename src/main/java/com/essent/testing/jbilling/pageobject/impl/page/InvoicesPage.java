@@ -15,4 +15,5 @@ public class InvoicesPage extends Component {
 
 		return CollectionUtils.isNotEmpty(rows);
 	}
+
 }

@@ -32,31 +32,25 @@ public class ViewListTestObject extends Component implements ViewList {
         options.put("list_header", tableName);
         return getDefaultTableModel(tableModel, options);
     }
-    private String getCellValueAt(int row, String columnName) {
-        logger().info("STEP: JAVASCRIPT_FETCH_DATA");
-        Map viewTable = executeJavascriptMethod("TrGetTableModel", new HashMap<>());
-        logger().info(" - RESULT: " + viewTable);
-        int index = getColumnNameIndex(columnName, viewTable);
-        if (index < 0) {
-            throw new CucumberException(String.format("View List did not contain column \"%s\"", columnName));
+
+    private DefaultTableModel getDefaultTableModel(DefaultTableModel tableModel, HashMap<Object, Object> options) {
+        Map viewTable = executeJavascriptMethod("TrGetTableModel", options);
+        List columnNames = (List) viewTable.get("column_names");
+        List rows = getData(viewTable);
+        tableModel.setColumnIdentifiers(columnNames.toArray());
+        for (Object row1 : rows) {
+            Object[] row = ((List) row1).toArray();
+            tableModel.addRow(row);
         }
-        List<List> rows = getData(viewTable);
-        if (rows.size() == 0) {
-            throw new CucumberException("--  Table is empty.");
-        }
-        if (row > rows.size()) {
-            throw new CucumberException(String.format("--  Row number \"%s\" was greater than actual table size \"%s\"", row, rows.size()));
-        }
-        List currentRow = rows.get(row - 1);
-        return (String) currentRow.get(index);
+        return tableModel;
     }
 
     private void logTableModel(DefaultTableModel viewTableModel) {
         int columnCount = viewTableModel.getColumnCount();
         StringBuilder columns = new StringBuilder("[");
-        for(int i = 0; i < columnCount; i++) {
+        for (int i = 0; i < columnCount; i++) {
             columns.append(String.format("'%s'", viewTableModel.getColumnName(i)));
-            if(i < columnCount - 1)
+            if (i < columnCount - 1)
                 columns.append(", ");
         }
         columns.append("]");
@@ -71,36 +65,6 @@ public class ViewListTestObject extends Component implements ViewList {
     private int getColumnNameIndex(String columnName, Map viewTable) {
         List<String> columnNames = (List) viewTable.get("column_names");
         return columnNames.indexOf(columnName);
-    }
-
-    private DefaultTableModel getDefaultTableModel(DefaultTableModel tableModel, HashMap<Object, Object> options) {
-        Map viewTable = executeJavascriptMethod("TrGetTableModel", options);
-        List columnNames = (List) viewTable.get("column_names");
-        List rows = getData(viewTable);
-        tableModel.setColumnIdentifiers(columnNames.toArray());
-        for (Object row1 : rows) {
-            Object[] row = ((List) row1).toArray();
-            tableModel.addRow(row);
-        }
-        return tableModel;
-    }
-
-    public String getCurrencyValueAt(int row, String columnName, String tableName) {
-        return getValueAt(row, columnName, tableName).replaceAll("\\s+", " ");
-    }
-
-    public String getValueAt(int row, String columnName, String tableName) {
-        logger().info("STEP: JAVASCRIPT_FETCH_DATA");
-        HashMap<Object, Object> options = new HashMap<>();
-        options.put("list_header", tableName);
-        DefaultTableModel viewTableModel = getViewTableModel(tableName);
-        logger().info(" - RESULT: Table name: " + tableName);
-        logTableModel(viewTableModel);
-        int column = viewTableModel.findColumn(columnName);
-        if(column < 0)
-            throw new CucumberException(String.format("View List did not contain column %s", columnName));
-        return (String) viewTableModel.getValueAt(row - 1, column);
-
     }
 
     public boolean containsDataAt(int row, String value, String columnName) {
@@ -137,12 +101,10 @@ public class ViewListTestObject extends Component implements ViewList {
         }
         List<List> rows = getData(viewTable);
         AtomicInteger idx = new AtomicInteger(1);
-        return IntStream.range(1, rows.size() + 1)
-            .filter(i ->
-                idx.compareAndSet(i, i + 1) & ((ArrayList<String>) rows.get(i - 1)).get(index).contains(value))
-            .boxed()
-            .collect(Collectors.toList());
-
+        List<Integer> collect = IntStream.range(1, rows.size() + 1).filter(
+            i -> idx.compareAndSet(i, i + 1) & ((ArrayList<String>) rows.get(i - 1)).get(index).contains(value))
+            .boxed().collect(Collectors.toList());
+        return collect;
     }
 
     public boolean selectListRow(int row, String value, String columnName) {
@@ -185,8 +147,7 @@ public class ViewListTestObject extends Component implements ViewList {
         options.put("include_selection", false);
         options.put("table", table);
 
-        Map viewTable = immediate ?
-            executeJavascriptMethodImmediately("TrFetchDataSelection", options)
+        Map viewTable = immediate ? executeJavascriptMethodImmediately("TrFetchDataSelection", options)
             : executeJavascriptMethod("TrFetchDataSelection", options);
 
         int index = getColumnNameIndex(columnName, viewTable);
@@ -197,6 +158,44 @@ public class ViewListTestObject extends Component implements ViewList {
         List selection;
         selection = rows.stream().map((e) -> e.get(index)).collect(Collectors.toList());
         return selection;
+    }
+
+    private String getCellValueAt(int row, String columnName) {
+        logger().info("STEP: JAVASCRIPT_FETCH_DATA");
+        Map viewTable = executeJavascriptMethod("TrGetTableModel", new HashMap<>());
+        logger().info(" - RESULT: " + viewTable);
+        int index = getColumnNameIndex(columnName, viewTable);
+        if (index < 0) {
+            throw new CucumberException(String.format("View List did not contain column \"%s\"", columnName));
+        }
+        List<List> rows = getData(viewTable);
+        if (rows.size() == 0) {
+            throw new CucumberException("--  Table is empty.");
+        }
+        if (row > rows.size()) {
+            throw new CucumberException(String
+                .format("--  Row number \"%s\" was greater than actual table size \"%s\"", row, rows.size()));
+        }
+        List currentRow = rows.get(row - 1);
+        return (String) currentRow.get(index);
+    }
+
+    public String getValueAt(int row, String columnName, String tableName) {
+        logger().info("STEP: JAVASCRIPT_FETCH_DATA");
+        HashMap<Object, Object> options = new HashMap<>();
+        options.put("list_header", tableName);
+        DefaultTableModel viewTableModel = getViewTableModel(tableName);
+        logger().info(" - RESULT: Table name: " + tableName);
+        logTableModel(viewTableModel);
+        int column = viewTableModel.findColumn(columnName);
+        if (column < 0)
+            throw new CucumberException(String.format("View List did not contain column %s", columnName));
+        return (String) viewTableModel.getValueAt(row - 1, column);
+
+    }
+
+    public String getCurrencyValueAt(int row, String columnName, String tableName) {
+        return getValueAt(row, columnName, tableName).replaceAll("\\s+", " ");
     }
 
 }

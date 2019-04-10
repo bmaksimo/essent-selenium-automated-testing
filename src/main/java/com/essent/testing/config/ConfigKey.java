@@ -132,7 +132,27 @@ public enum ConfigKey {
     ESSENT_SMTP_USER("essent.smtp.user"),
     ESSENT_SMTP_PASSWORD("essent.smtp.password"),
     ESSENT_EMAIL_FROM("essent.email.from"),
-    ESSENT_EMAIL_TO("essent.email.to");
+    ESSENT_EMAIL_TO("essent.email.to"),
+    CRM_BASE_URI("crm.base.uri"),
+    CRM_LOGIN_URL("crm.login.url"),
+    CRM_B2CCQ_URL("crm.b2ccq.url"),
+    CRM_QUOTES_ON_ACCOUNT_URL("crm.quotesonaccount.url"),
+    CRM_QUOTELINES_URL("crm.quotelines.url"),
+    CRM_QUOTE_STATUS_URL("crm.quotestatus.url"),
+    CRM_SIGNATURE_RECEIVED_URL("crm.signaturereceived.url"),
+    EAN_NUMBER("ean.number"),
+    CRM_SIGNATURE_UPLOAD_URL("crm.signatureupload.url"),
+    CRM_CONTRACTS_ON_ACCOUNT_URL("crm.contractsonaccount.url"),
+    CRM_CONTRACTED_EANS_ON_ACCOUNT_URL("crm.contractedeansonaccount.url"),
+    CRM_SIGN_QUOTE_MODAL("crm.signquotemodal.url"),
+    CRM_BILLING_DETAILS_URL("crm.billingdetails.url"),
+    CRM_CONTRACT_DETAILS_URL("crm.contractdetails.url"),
+    CRM_PATH_TO_QUOTE("crm.quote.path"),
+    CRM_PATH_TO_PAYLOAD("crm.quotepayload.path"),
+    CRM_PATH_TO_QUOTE_SIGNATURE("crm.quotesignature.path"),
+    CRM_PATH_TO_SIGN_QUOTE_MODAL("crm.signquotemodal.path"),
+    BILLING_ORDER_DETAILS_URL("jbilling.order.details");
+
 	private String resourceKey;
     ConfigKey(String resourceKey) {
         this.resourceKey = resourceKey;
