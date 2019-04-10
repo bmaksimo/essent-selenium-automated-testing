@@ -19,8 +19,7 @@ Feature: NUAT-424: Change Pay Method - nl_BE
         And Dashboard menu is "Details"
         Then View list header is "Billing customer"
 
-        When Click on link in "Billing customer" View List at "1st" row and "Plus Action" column
-        And Row actions "Update" is clicked
+        When Plus action of "1" element from "BillingCustomerOnaccount" and click on "Update"
         Then Modal "Update billing customer" is displayed
 
         When Payment method is switched
