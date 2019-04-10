@@ -78,13 +78,3 @@ Feature: NUAT-5021 Voraaf Step 2. Check vooraf (prepaid)
         |parameter:bedrag-vooraf-el |
         |parameter:bedrag-vooraf-gas|
         And "1st" list element with date interval at column "Datum & Vervaldatum" from table "Transacties" is "19 days"
-        
-
-
-
-
-
-
-
-
-
