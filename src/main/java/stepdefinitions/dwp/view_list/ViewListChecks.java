@@ -564,7 +564,7 @@ public class ViewListChecks extends NavigationElements {
         assertThat(String.format("\"%s\" list element didn't contain any value at column \"%s\"", ordinal, columnName),
             success, is(true));
         String[] splitValue = value.split("\\s+");
-        parameterProvider.put(columnName, splitValue);
+        parameterProvider.put(columnName, value);
         Assert.assertThat("Comparison of two dates expression conversion failure", checkTimeBetween(splitValue[0],
             splitValue[1], interval), Matchers.equalTo(0));
     }
