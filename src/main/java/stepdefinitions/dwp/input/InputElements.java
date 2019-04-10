@@ -182,6 +182,7 @@ public class InputElements extends DwpScenario {
     @And("^\"([^\"]*)\" date on \"([^\"]*)\" card is \"([^\"]*)\"$")
     public void setDateInput(String label, String card, String value) throws Throwable {
         Sleeper.sleepTightInSeconds(2);
+        seleniumDriver.waitForRequestsToFinish();
         String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(value));
         parameterProvider.put("inputValue", inputValue);
         Map<String, String> options = new HashMap<>();
@@ -191,6 +192,7 @@ public class InputElements extends DwpScenario {
         FluentWait<ApplyDateInput> waiter = waiter(new ApplyDateInput(), 10, 1);
         waiter.withMessage(String.format("Date value %s input at '%s' failed.", inputValue, label));
         waiter.until((ApplyDateInput callback) -> callback.test(options));
+        seleniumDriver.waitForRequestsToFinish();
     }
 
 
@@ -229,6 +231,7 @@ public class InputElements extends DwpScenario {
         FluentWait<ApplySelection> waiter = waiter(new ApplySelection(), 10, 1);
         waiter.withMessage(String.format("Selection %s is undefined.", label));
         waiter.until((ApplySelection callback) -> callback.test(options));
+        seleniumDriver.waitForRequestsToFinish();
     }
 
     @And("^\"([^\"]*)\" selection is \"([^\"]*)\" waiting for (\\d+) seconds$")
@@ -288,18 +291,6 @@ public class InputElements extends DwpScenario {
         FluentWait<ToggleCheckBox> waiter = waiter(new ToggleCheckBox(), 10, 1);
         waiter.withMessage(String.format("Failure toggling checkbox %s to  target state %s.", label, state.name()));
         waiter.until((ToggleCheckBox callback) -> callback.test(options));
-        seleniumDriver.waitForRequestsToFinish();
-    }
-
-    /**
-     * Confirms the form submission.
-     * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
-     */
-    @And("^Form is submitted$")
-    public void formIsSubmitted() throws Throwable {
-        seleniumDriver.waitForRequestsToFinish();
-        Map<String, String> options = new HashMap<>();
-        executeJavascriptTest("TrSubmitForm", options);
         seleniumDriver.waitForRequestsToFinish();
     }
 
