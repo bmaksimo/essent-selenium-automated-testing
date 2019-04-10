@@ -2,6 +2,9 @@ package stepdefinitions.dwp.view_list;
 
 import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.essent.automation.util.Sleeper;
+import com.essent.testing.dwp.pageobject.ViewList;
+import com.essent.testing.dwp.pageobject.list_view.ViewListTestObject;
+import cucumber.api.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -11,6 +14,8 @@ import cucumber.api.java.en.When;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.hamcrest.Matchers;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -18,15 +23,13 @@ import stepdefinitions.dwp.navigation.NavigationElements;
 import stepdefinitions.dwp.plus.PlusActions;
 
 import javax.swing.table.DefaultTableModel;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkTimeBetween;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.fail;
@@ -68,7 +71,19 @@ public class ViewListChecks extends NavigationElements {
         }
     }
 
-    private class ViewListModel {
+    /**
+     * The class is deprecated.
+     * Please, don't amend it.
+     *
+     * Replacement code is
+     * @see ViewListTestObject
+     * Switch your logic to
+     * @see ViewListTestObject
+     * and make code amendments there.
+     * @deprecated
+     */
+    @Deprecated
+    private class ViewListModel implements ViewList {
         private DefaultTableModel getViewTableModel() {
             DefaultTableModel tableModel = new DefaultTableModel();
             return getDefaultTableModel(tableModel, new HashMap<>());
@@ -93,33 +108,33 @@ public class ViewListChecks extends NavigationElements {
             return tableModel;
         }
 
-        boolean containsDataAt(int row, String value, String columnName) {
+        public boolean containsDataAt(int row, String value, String columnName) {
             String cell = getCellValueAt(row, columnName);
             boolean success = cell.contains(value);
             return success;
         }
 
-        boolean containsCellValue(int rowFromOne, String value, String columnName, String tableName) {
+        public boolean containsCellValue(int rowFromOne, String value, String columnName, String tableName) {
             String cell = getValueAt(rowFromOne, columnName, tableName);
             boolean success = cell.contains(value);
             return success;
         }
 
-        boolean selectListRow(int row) {
+        public boolean selectListRow(int row) {
             Map<String, Object> options = new HashMap<>();
             options.put("index", row);
             boolean success = executeJavascriptTest("TrSelectListRow", options);
             return success;
         }
 
-        boolean openListPlusActions(int row) {
+        public boolean openListPlusActions(int row) {
             Map<String, Object> options = new HashMap<>();
             options.put("index", row);
             boolean success = executeJavascriptTest("TrOpenListPlusActions", options);
             return success;
         }
 
-        List<Integer> fetchListRowsIndices(String value, String columnName) {
+        public List<Integer> fetchListRowsIndices(String value, String columnName) {
             Map viewTable = executeJavascriptMethod("TrGetTableModel", new HashMap<>());
             int index = getColumnNameIndex(columnName, viewTable);
             if (index < 0) {
@@ -127,20 +142,20 @@ public class ViewListChecks extends NavigationElements {
             }
             List<List> rows = getData(viewTable);
             AtomicInteger idx = new AtomicInteger(1);
-            List<Integer> collect = IntStream.range(1, rows.size() + 1)
+            return IntStream.range(1, rows.size() + 1)
                 .filter(i ->
                     idx.compareAndSet(i, i + 1) & ((ArrayList<String>) rows.get(i - 1)).get(index).contains(value))
                 .boxed()
                 .collect(Collectors.toList());
-            return collect;
+
         }
 
-        boolean selectListRow(int row, String value, String columnName) {
+        public boolean selectListRow(int row, String value, String columnName) {
             List<Integer> indices = fetchListRowsIndices(value, columnName);
             return indices.size() > 0 && row <= indices.size();
         }
 
-        boolean selectListRows(int numRows, String value, String columnName) {
+        public boolean selectListRows(int numRows, String value, String columnName) {
             List<Integer> rows = fetchListRowsIndices(value, columnName);
             if (numRows > rows.size()) {
                 return false;
@@ -152,7 +167,7 @@ public class ViewListChecks extends NavigationElements {
             return success;
         }
 
-        List<String> fetchDataSelection(String columnName) {
+        public List<String> fetchDataSelection(String columnName) {
             Map<String, Object> options = new HashMap<>();
             options.put("include_selection", true);
             Map viewTable = executeJavascriptMethod("TrFetchDataSelection", options);
@@ -166,11 +181,11 @@ public class ViewListChecks extends NavigationElements {
             return selection;
         }
 
-        List<String> fetchColumnData(String table, String columnName) {
+        public List<String> fetchColumnData(String table, String columnName) {
            return fetchColumnDataNow(table, columnName, false);
         }
 
-        List<String> fetchColumnDataNow(String table, String columnName, boolean immediate) {
+        public List<String> fetchColumnDataNow(String table, String columnName, boolean immediate) {
             Map<String, Object> options = new HashMap<>();
             options.put("include_selection", false);
             options.put("table", table);
@@ -208,7 +223,11 @@ public class ViewListChecks extends NavigationElements {
             return (String) currentRow.get(index);
         }
 
-        private String getValueAt(int row, String columnName, String tableName) {
+        public  String getCurrencyValueAt(int row, String columnName, String tableName) {
+            throw new UnsupportedOperationException("This operation is not supported by deprecated class. Use up-to-date implementation");
+        }
+
+        public String getValueAt(int row, String columnName, String tableName) {
             logger().info("STEP: JAVASCRIPT_FETCH_DATA");
             HashMap<Object, Object> options = new HashMap<>();
             options.put("list_header", tableName);
@@ -505,6 +524,31 @@ public class ViewListChecks extends NavigationElements {
 
     }
 
+  @Then("^\"([^\"]*)\" list element with date interval at column \"([^\"]*)\" from table \"([^\"]*)\" is \"([^\"]*)\"$")
+  public void checkDateIntervalTableCell(String ordinal, String columnName, String tableName, String interval) throws Throwable {
+        int row = extractNumericValue(ordinal);
+        String value = new ViewListTestObject().getValueAt(row, columnName, tableName);
+        boolean success = StringUtils.isNotBlank(value);
+        assertThat(String.format("\"%s\" list element didn't contain any value at column \"%s\"", ordinal, columnName),
+            success, is(true));
+        String[] splitValue = value.split("\\s+");
+        parameterProvider.put(columnName, splitValue);
+        Assert.assertThat("Comparison of two dates expression conversion failure", checkTimeBetween(splitValue[0],
+            splitValue[1], interval), Matchers.equalTo(0));
+    }
+
+
+    @Then("^List element matching value \"([^\"]*)\" at column \"([^\"]*)\" from table \"([^\"]*)\" is checked$")
+    public void storeColumnValueInParameterProvider(String match, String columnName, String tableName) throws Throwable {
+        List<String> columnData = new ViewListTestObject().fetchColumnData(tableName, columnName);
+        Optional<String> first = columnData.stream().filter(element -> element.contains(match)).findFirst();
+        assertThat(String.format("\"%s\" list element didn't contain value \"%s\" at column \"%s\"", tableName, match, columnName),
+            first.isPresent(), is(true));
+        parameterProvider.put(columnName, first.get());
+        logger().info(String.format("- STEP: \"%s\" list element with value at column \"%s\" is checked - PASSED.", tableName, columnName));
+
+    }
+
     @Then("^List element with value at column \"([^\"]*)\" from table \"([^\"]*)\" is checked$")
     public void storeColumnValueInParameterProvider(String columnName, String tableName) throws Throwable {
         List<String> columnData = new ViewListModel().fetchColumnData(tableName, columnName);
@@ -515,6 +559,23 @@ public class ViewListChecks extends NavigationElements {
         logger().info(String.format("- STEP: \"%s\" list element with value at column \"%s\" is checked - PASSED.", tableName, columnName));
 
     }
+
+  @And(
+      "^\"([^\"]*)\" element of table \"([^\"]*)\" at currency column \"([^\"]*)\" is sum of$")
+  public void checkCurrencyAmountDableDataAsSum(String ordinal, String table, String columnName, final DataTable subAmounts)
+      throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
+        int row = extractNumericValue(ordinal);
+        String currencyValue =  new ViewListTestObject().getCurrencyValueAt(row, columnName, table);
+        boolean success = StringUtils.isNotBlank(currencyValue);
+        assertThat(String.format("\"%s\" list element didn't contain any value at column \"%s\"", ordinal, columnName),
+            success, is(true));
+        Integer actualAmount = amountInCurrencyAsInt(currencyValue);
+        List<String> amounts = subAmounts.asList(String.class);
+        Integer sum = sumOf(amounts);
+        assertThat("Total advance prepaid amount %s is not equal to sum of sub amounts %s", actualAmount, equalTo(sum));
+    }
+
 
     @And("^Select \"([^\"]*)\" List row having cell value \"([^\"]*)\" at column \"([^\"]*)\"$")
     public void selectListRows(String ordinal, String value, String columnName) throws Throwable {

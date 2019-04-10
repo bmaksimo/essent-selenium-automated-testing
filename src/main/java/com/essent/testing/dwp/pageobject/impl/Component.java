@@ -64,6 +64,18 @@ public abstract class Component {
         return seleniumDriver.executeJavascriptTest(registeredJsClass, options);
     }
 
+    protected Map executeJavascriptMethod(String registeredJsClass, Object options) {
+        return seleniumDriver.executeJavascriptMethod(registeredJsClass, options);
+    }
+
+    public boolean executeJavascriptTest(String registeredJsClass, Object options, boolean withException) {
+        return seleniumDriver.executeJavascriptTest(registeredJsClass, options, withException);
+    }
+
+    protected Map executeJavascriptMethodImmediately(String registeredJsClass, Object options) {
+        return seleniumDriver.executeJavascriptMethodWithImmediateFlag(registeredJsClass, options, true);
+    }
+
     protected WebElement findElementWhenVisible(By selector) {
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(selector);

@@ -280,6 +280,17 @@ public class QuoteSteps extends DwpScenario {
         parameterProvider.put("iban", iban);
     }
 
+    @And("^Prepaid advance amounts are collected as numbers$")
+    public void collectAdvanceAmountsAsNumbers(final DataTable cardsInfo) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
+        List<FieldDescriptor> cards = cardsInfo.asList(FieldDescriptor.class);
+        FieldDescriptor electricityAdvAmountField = cards.get(0);
+        FieldDescriptor gasAdvDescriptor = cards.get(1);
+        BillingDetailsPage billingDetailsPage = new BillingDetailsPage();
+        parameterProvider.put(electricityAdvAmountField.getParameterName(), billingDetailsPage.getElectricityAdvancedPaymentAmount(electricityAdvAmountField));
+        parameterProvider.put(gasAdvDescriptor.getParameterName(), billingDetailsPage.getGasAdvancedPaymentAmount(gasAdvDescriptor));
+    }
+
 
     @And("^Billing details are confirmed$")
     public void confirmBillingDetaile() throws Throwable {
@@ -372,16 +383,6 @@ public class QuoteSteps extends DwpScenario {
         String eanCode = PrepareDataForContract.generateEAN();
         parameterProvider.put("EAN-code-generated", eanCode);
         logger().info(" - Generated EAN code: " + eanCode);
-    }
-
-    @And("Gas EAN-code input in the \"([^\"]*)\" card is \"([^\"]*)\"$")
-    public void setInput(String card, String value) throws Throwable {
-        seleniumDriver.waitForRequestsToFinish();
-        String inputValue = parameterProvider.getValueOrParameterAsString(value);
-        WebElement gasEAN = seleniumDriver.findElement(By.xpath("//h2[contains(text(),'"+card+"')]/parent::div/parent::div/div[@class='form__group']//label[contains(text(),'EAN-code')]/parent::div//input"));
-        boolean gasEANWasFound = gasEAN != null;
-        gasEAN.sendKeys(inputValue);
-        assertThat("Gas EAN-code element was not found.", gasEANWasFound, is(true));
     }
 
     @And("^Electricity EAN code is \"([^\"]*)\"$")

@@ -29,6 +29,8 @@ public class NonEditableImpl extends Component implements NonEditable {
         valuesMapper.put("label", label);
         By xpathSelector = By.xpath(createQuery(XPATH_CARD_TEMPLATE + XPATH_INPUT_TEPMPLATE, valuesMapper));
         WebElement webElement = findElementWhenVisible(xpathSelector);
-        return webElement.getAttribute("innerText");
+        String innerText = webElement.getAttribute("innerText");
+        logger().info("--NonEditable, element value is: " + innerText);
+        return innerText;
     }
 }
