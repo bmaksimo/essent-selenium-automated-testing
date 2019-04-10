@@ -494,6 +494,7 @@ public class ViewListChecks extends NavigationElements {
 
     @Then("^\"([^\"]*)\" List element with value at column \"([^\"]*)\" is checked$")
     public void storeColumnValueInSharedProperties(String ordinal, String columnName) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
         int row = extractNumericValue(ordinal);
         String value = new ViewListModel().getCellValueAt(row, columnName);
         boolean success = StringUtils.isNotBlank(value);
@@ -507,6 +508,7 @@ public class ViewListChecks extends NavigationElements {
 
     @Then("^List element with value at column \"([^\"]*)\" from table \"([^\"]*)\" is checked$")
     public void storeColumnValueInParameterProvider(String columnName, String tableName) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
         List<String> columnData = new ViewListModel().fetchColumnData(tableName, columnName);
         boolean success = CollectionUtils.isNotEmpty(columnData);
         assertThat(String.format("\"%s\" list element didn't contain any value at column \"%s\"", tableName, columnName),

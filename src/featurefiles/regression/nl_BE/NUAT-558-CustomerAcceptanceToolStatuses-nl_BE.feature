@@ -10,9 +10,9 @@ Feature: NUAT-558: Check status of customer with Customer Acceptance Tool
 
     @NUAT-558
     Scenario: Check status of customer with Customer Acceptance Tool
-        Given  I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
+        Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
         When Left menu is "sales-marketing"
-        And  Top menu item is "Klanten"
+        And Top menu item is "Klanten"
         And Top action is "Filters"
         And "B2C/B2B" selection is "B2B"
         And "Type klant" selection is "Klant"
@@ -21,12 +21,15 @@ Feature: NUAT-558: Check status of customer with Customer Acceptance Tool
         And Dashboard menu is "Details"
         Then Get Company Number
 
-        When Left menu is "sales-marketing"
-        And Plus menu is "Sales -> UP/TK2 -> Uitzonderlijke klantacceptatie"
-        And Click on "UITZONDERLIJKE KLANTACCEPTATIE TOEVOEGEN"
-        Then Modal "Customer Acceptance Exception" is displayed
+        When Top arrow button is "Up"
+        And Plus menu is "Sales -> UP/TK2 -> Uitzonderingslijst klantacceptatie"
+        And Click on "UTZONDERING KLANTACCEPTATIE TOEVOEGEN"
+        Then Modal "Customer acceptance exception" is displayed
 
-        When Top arrow button is "UP"
-        When Plus menu is "Sales -> TK1 -> Klantacceptatie tool"
+        Given "Ondernemingsnummer" input is "parameter:companyNumber"
+        And "Status" selection is "Deny"
+        And "Geldig tot" date is "31 days from now" and time is "now"
+        When Changes are confirmed
+        And Plus menu is "Sales -> UP/TK2 -> Klantacceptatie tool"
         And "Ondernemingsnummer" input is "parameter:companyNumber"
-        Then Customer Status is "Geaccepteerd"
+        Then Customer Status is "Geweigerd"

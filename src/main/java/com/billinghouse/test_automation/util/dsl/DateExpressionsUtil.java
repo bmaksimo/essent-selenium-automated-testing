@@ -28,6 +28,7 @@ public class DateExpressionsUtil {
     private static final String DATE_SEPARATOR = " - ";
     private static final LocalDate LAST_DATE_OF_YEAR = LocalDate.now().dayOfYear().withMaximumValue();
     private static final String DATE_EXPR_REGEX = "((\\d+)\\s*(month|day|year|week)(s*)\\s+(from|before)\\s+)*now";
+    private static final String DWP_TIME_FORMAT = "HH:mm";
 
     public static DateTime expandFrom(String expression) throws CucumberException {
 
@@ -53,11 +54,35 @@ public class DateExpressionsUtil {
         }
     }
 
+    private static DateTime expandFromTime(String expression) throws CucumberException {
+
+        Matcher matcher = compile(DATE_EXPR_REGEX).matcher(expression);
+
+        Map<String, Function<Integer, DateTime>> operations = new HashMap<>();
+        DateTime dateTime = new DateTime();
+
+        if (matcher.find()) {
+            if(matcher.group(0).equals("now"))
+                return dateTime;
+            operations.put("hour from", dateTime::plusHours);
+            operations.put("hour before", dateTime::minusHours);
+            operations.put("second from", dateTime::plusSeconds);
+            operations.put("second before", dateTime::minusSeconds);
+            return operations.get(matcher.group(3) + " " + matcher.group(5)).apply(parseInt(matcher.group(2)));
+        } else {
+            throw new CucumberException(format("--Time input '%s' doesn't match the pattern '%s'", expression, DATE_EXPR_REGEX));
+        }
+    }
+
     public static String checkAndConvertToDwpDate(String input) throws CucumberException {
         if(matchesDwpDateFormat(input))
             return input;
         else
             return expandFrom(input).toString(FRENCH_DATE_FORMAT);
+    }
+
+    public static String convertToDwpTime(String input) throws CucumberException {
+        return expandFromTime(input).toString(DWP_TIME_FORMAT);
     }
 
     public static String checkAndConvertToSoctarFileDate(String input) throws CucumberException {

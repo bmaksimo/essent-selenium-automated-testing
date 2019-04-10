@@ -22,6 +22,7 @@ public class InputElements extends DwpScenario {
 
     private static final String TARIFF_ID = "aos-products-quotes-tariffsheet-id-field";
     private static final String TARIFF_FIRST_LIST_ITEM = "//select[@id='aos-products-quotes-tariffsheet-id-field']/option[1]";
+    private static final String CALENDAR_VALIDTO_TIME_ID = "validto-c-time-field";
 
     /**
      * Cucumber-JVM Before- hook
@@ -140,6 +141,25 @@ public class InputElements extends DwpScenario {
         FluentWait<ApplyDateInput> waiter = waiter(new ApplyDateInput(), 10, 1);
         waiter.withMessage(String.format("Date value %s input at '%s' failed.", inputValue, label));
         waiter.until((ApplyDateInput callback) -> callback.test(options));
+        seleniumDriver.waitForRequestsToFinish();
+    }
+
+    @And("^\"([^\"]*)\" date is \"([^\"]*)\" and time is \"([^\"]*)\"$")
+    public void setDateInput(String label, String date, String time) throws Throwable {
+        Sleeper.sleepTightInSeconds(2);
+        seleniumDriver.waitForRequestsToFinish();
+        String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(date));
+        parameterProvider.put("inputValue", inputValue);
+        Map<String, String> options = new HashMap<>();
+        options.put("label", label);
+        options.put("value", inputValue);
+        FluentWait<ApplyDateInput> waiter = waiter(new ApplyDateInput(), 10, 1);
+        waiter.withMessage(String.format("Date value %s input at '%s' failed.", inputValue, label));
+        waiter.until((ApplyDateInput callback) -> callback.test(options));
+        seleniumDriver.waitForRequestsToFinish();
+
+        String validTo = toDwpTime(parameterProvider.getValueOrParameterAsString(time));
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElement(By.id(CALENDAR_VALIDTO_TIME_ID)), validTo);
         seleniumDriver.waitForRequestsToFinish();
     }
 
