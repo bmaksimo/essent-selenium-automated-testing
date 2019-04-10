@@ -379,7 +379,7 @@ public class ViewListChecks extends NavigationElements {
     public void clickOnSuppliedViewListAtRowAndColumn(String viewListName, String ordinal, String column)
 	    throws Throwable {
 	Map<String, String> columnIndexListOptions = getColumnIndexListOptions(column, viewListName, ordinal);
-	FluentWait<ClickTableCellUrl> waiter = waiter(new ClickTableCellUrl(), 30, 5)
+	FluentWait<ClickTableCellUrl> waiter = waiter(new ClickTableCellUrl(), 60, 5)
 		.withMessage(String.format("Failed click on link in view list \"%s\" at \"%s\" row and \"%s\" column",
 			viewListName, ordinal, column));
 	waiter.until((ClickTableCellUrl callback) -> callback.test(columnIndexListOptions));
