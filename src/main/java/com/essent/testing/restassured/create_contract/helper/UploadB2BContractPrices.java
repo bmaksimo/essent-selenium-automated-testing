@@ -15,7 +15,6 @@ public class UploadB2BContractPrices {
 
 	private static final String ftpDomain = ConfigProvider.getProperty(ConfigKey.ENVIRONMENT) + "-sftp.nova.essent.be";
 
-	// See how below field values are implemented in jBilling gherklin tests from JBilling team (also for jenkins on REG02 environment)
 	private static final int ftpPort = 22;
 	private static final String remoteFileLocation = "/home/ESSENT/sa_sftpcrm_smx/data/generic";
 	private static final String privateKeyPassword = ConfigProvider.getProperty(ConfigKey.SSH_PASSPHRASE); // example: can be empty string also
@@ -32,7 +31,7 @@ public class UploadB2BContractPrices {
 			JSch ssh = new JSch();
 			ssh.addIdentity(locationOfPrivateKey, privateKeyPassword);
 			session = ssh.getSession(ftpUserName, ftpDomain, ftpPort);
-			session.setConfig("StrictHostKeyChecking", "no"); // auto accept secure host
+			session.setConfig("StrictHostKeyChecking", "no"); 
 			session.connect();
 
 			channel = session.openChannel("sftp");
@@ -42,7 +41,6 @@ public class UploadB2BContractPrices {
 
 			File[] files = directory.listFiles();
 
-			// for each file in the directory
 			for (int i = 0; i < files.length; i++) {
 				String localfilelocation = ContractConstants.PATH_TO_PRICES + "//" + files[i].getName();
 				sftp.put(localfilelocation, remoteFileLocation);
