@@ -21,9 +21,6 @@ import static org.hamcrest.Matchers.is;
 
 public class InputElements extends DwpScenario {
 
-    private static final String TARIFF_ID = "aos-products-quotes-tariffsheet-id-field";
-    private static final String TARIFF_FIRST_LIST_ITEM = "//select[@id='aos-products-quotes-tariffsheet-id-field']/option[1]";
-
     /**
      * Cucumber-JVM Before- hook
      * @param scenario Gherkin scenario descriptor
@@ -311,20 +308,9 @@ public class InputElements extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
     }
 
-
-
-    @And("Tariefkaart has value of 1st item from list$")
-    public void selectFirstItemFromList() {
-        seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.waitAndClick(seleniumDriver.findElement(By.id(TARIFF_ID)));
-        seleniumDriver.waitAndClick(seleniumDriver.findElement(By.xpath(TARIFF_FIRST_LIST_ITEM)));
-        seleniumDriver.waitForRequestsToFinish();
-
-    }
-
     /**
      * Cucumber-JVM  Aftrer- hook
-     * @throws Throwable
+     *
      */
 
     @Override

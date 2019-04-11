@@ -1,6 +1,7 @@
 @DWP
 @B2C
 @UNSTABLE
+@UAT08ONLY
 Feature: NUAT-5021 Voraaf Step 2. Check vooraf (prepaid). Is unstable, unless prepaid-advance elec/gas amounts are same in REG04 and UAT08
 
     Background:
