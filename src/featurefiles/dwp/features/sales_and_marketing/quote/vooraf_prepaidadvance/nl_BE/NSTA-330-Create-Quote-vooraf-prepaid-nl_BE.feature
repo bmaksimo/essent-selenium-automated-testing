@@ -40,8 +40,10 @@ Feature: NUAT-5021 Voraaf Step 2. Check vooraf (prepaid). Is unstable, unless pr
         Then Form header is "Billing details"
 
         When "Betalingswijze" selection is "Overschrijving"
-        And Value at "Bedrag Vooraf (incl. btw)" in the card "Elektriciteit Vooraf" is "5000 €"
-        And Value at "Bedrag Vooraf (incl. btw)" in the card "Aardgas Vooraf" is "1000 €"
+        # 11.04.2019 - in UAT08 please use: 5000, in REG04 please use 800
+        And Value at "Bedrag Vooraf (incl. btw)" in the card "Elektriciteit Vooraf" is "800 €"
+         # 11.04.2019 - in UAT08 please use: 1000, in REG04 please use 900
+        And Value at "Bedrag Vooraf (incl. btw)" in the card "Aardgas Vooraf" is "900 €"
         And Prepaid advance amounts are collected as numbers
             | cardName             | fieldName                 | parameterName    |
             | Elektriciteit Vooraf | Bedrag Vooraf (incl. btw) | bedrag-vooraf-el |

@@ -1,7 +1,7 @@
 package stepdefinitions.dwp.product_change;
 
 import com.essent.testing.dwp.pageobject.impl.product_change.ProductChangePageObjectImpl;
-import com.essent.testing.dwp.pageobject.product_change.ProcuctChangePageObject;
+import com.essent.testing.dwp.pageobject.product_change.ProductChangePageObject;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -17,9 +17,10 @@ public class ProductChangeSteps extends DwpScenario {
 
     @And("Tariefkaart has value of 1st item from list$")
     public void selectFirstItemFromList() throws Throwable {
-        //stabilizing agreement regarding waitForRequestToFinish() is encapsulated in PO
-        ProcuctChangePageObject po = new ProductChangePageObjectImpl();
+        seleniumDriver.waitForRequestsToFinish();
+        ProductChangePageObject po = new ProductChangePageObjectImpl();
         po.selectFirstItemFromList();
+        seleniumDriver.waitForRequestsToFinish();
     }
 
     @Override
