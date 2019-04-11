@@ -158,9 +158,13 @@ public class InputElements extends DwpScenario {
         waiter.until((ApplyDateInput callback) -> callback.test(options));
         seleniumDriver.waitForRequestsToFinish();
 
+        setTime(time);
+        seleniumDriver.waitForRequestsToFinish();
+    }
+
+    private void setTime(String time) {
         String validTo = toDwpTime(parameterProvider.getValueOrParameterAsString(time));
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElement(By.id(CALENDAR_VALIDTO_TIME_ID)), validTo);
-        seleniumDriver.waitForRequestsToFinish();
     }
 
     /**

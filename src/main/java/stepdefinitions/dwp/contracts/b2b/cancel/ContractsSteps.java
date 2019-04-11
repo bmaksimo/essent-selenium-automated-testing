@@ -158,8 +158,10 @@ public class ContractsSteps extends DwpScenario {
 
     @Then("^Customer Status is \"([^\"]*)\"$")
     public void customerStatus(String expectedStatus) {
+        seleniumDriver.waitForRequestsToFinish();
         CustomerAcceptance customerAcceptance = new CustomerAcceptance();
         String actualStatus = customerAcceptance.getAcceptanceStatus();
+        seleniumDriver.waitForRequestsToFinish();
         assertThat(String.format("Actual customer acceptance status \"%s\" differs from the expected \"%s\"", actualStatus, expectedStatus), actualStatus, equalTo(expectedStatus));
 
     }
