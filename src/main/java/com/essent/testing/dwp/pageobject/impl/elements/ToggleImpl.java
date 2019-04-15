@@ -52,4 +52,13 @@ public class ToggleImpl extends Component {
         }
     }
 
+    //TODO: extract xpath to constant
+    public void clickOnToggleNow (String label, int waitingTime){
+        Sleeper.sleepTightInSeconds(waitingTime);
+        ToggleImpl toggle = new ToggleImpl();
+        if (!toggle.checkIfCheckboxIsChecked(label)) {
+            seleniumDriver.clickNow(seleniumDriver.findElementWhenVisible(By.xpath("//validation-wrapper[@label='" + label + "?']//toggle-form-element/label")));
+        }
+    }
+
 }
