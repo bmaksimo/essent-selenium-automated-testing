@@ -9,8 +9,11 @@
  * Map<String, String> options = new HashMap<>();
  * options.put("label", "Contract number");
  * boolean result = executeJavascriptTest("TrFormInput", options);
+ * @deprecated Use of JavascriptTestRunner is deprecated.
+ * @link NonEditable.java uses similar xPath location approach
  */
 class BaseFormInput extends TestRunnerBase {
+
 
     constructor(options, callback) {
         super(options, callback, 5000);
@@ -23,9 +26,14 @@ class BaseFormInput extends TestRunnerBase {
         const options = this.options;
         const label = options.label;
         const value = options.value;
-        const xPath = `//div[label[normalize-space(text())='${label}']]`;
-        console.log('--XPATH: ' + xPath);
-        const elements = this.evaluateXpath(xPath);
+        const XPATH_INPUT = `//div[label[normalize-space(text())='${label}']]`;
+        let   xpathQuery = XPATH_INPUT;
+        const card = options.card;
+        if(card) {
+            xpathQuery = `//div[div[normalize-space(h2/text())='${card}']]`  + XPATH_INPUT;
+        }
+        console.log('--XPATH: ' + xpathQuery);
+        const elements = this.evaluateXpath(xpathQuery);
         if(elements.length >= 0) {
             let input = $(elements[0]).find("input, select");
             if(input.length > 0) {

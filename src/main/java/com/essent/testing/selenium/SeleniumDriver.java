@@ -61,7 +61,7 @@ public abstract class SeleniumDriver {
         options.addArguments("--disable-dev-shm-usage"); // overcome limited resource problems
         options.addArguments("--no-sandbox"); // Bypass OS security model
         logger.info(" - OPTIONS: " + options.toString());
-
+        setChromeDriverBinary(options);
         ChromeDriver chromeDriver;
 
         String headless = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_HEADLESS);
@@ -80,6 +80,13 @@ public abstract class SeleniumDriver {
         chromeDriver = new ChromeDriver(driverService, options);
         chromeDriver.manage().timeouts().implicitlyWait(3, TimeUnit.MINUTES).setScriptTimeout(5, TimeUnit.MINUTES);
         driver = chromeDriver;
+    }
+
+    private void setChromeDriverBinary(ChromeOptions options) {
+        String binary = ConfigProvider.getProperty(ConfigKey.GOOGLE_CHROME_BINARY);
+        if(StringUtils.isNotEmpty(binary)) {
+            options.setBinary(binary);
+        }
     }
 
     public void tearDown() {
