@@ -34,7 +34,7 @@ public class MarketBerichtenSteps extends DwpScenario {
     public void turnOn(String label, int waitingTime) {
         Sleeper.sleepTightInSeconds(waitingTime);
         ToggleImpl ti = new ToggleImpl();
-        ti.clickOnToggleNow(label, waitingTime);
+        ti.switchOnNow(label, waitingTime);
     }
 
     @When("^Save EAN code of customer$")

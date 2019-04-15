@@ -111,6 +111,9 @@ public class MarktBerichtenPage extends Component {
     public String getEanCode() {
         return findElementWhenVisible(By.id("aos-products-quotes-ean-c-field")).getText();
     }
+    public String getEanCodeNow() {
+        return seleniumDriver.findElementWhenVisible(By.id("aos-products-quotes-ean-c-field")).getText();
+    }
 
     public boolean validateRejectionHeader(String input) {
         return findElementWhenVisible(By.xpath("(//h5)[.='" + input + "'][1]")).isDisplayed();
