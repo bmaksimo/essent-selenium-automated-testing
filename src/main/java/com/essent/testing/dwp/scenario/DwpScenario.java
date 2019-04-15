@@ -20,11 +20,15 @@ import org.iban4j.CountryCode;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpDate;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.convertToDwpTime;
-import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.numericValue;
+import static com.billinghouse.test_automation.util.dsl.NumericUtil.ordinalAsInt;
+import static com.billinghouse.test_automation.util.dsl.NumericUtil.sumOfAmounts;
+import static com.billinghouse.test_automation.util.dsl.NumericUtil.amountAsInt;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -32,6 +36,10 @@ import static org.junit.Assert.assertTrue;
  *
  */
 public abstract class DwpScenario extends RegisteredScenario {
+
+    protected final static Locale FLEMISCH_LOCALE = new Locale("nl", "BE");
+    protected final static Locale WALLONIAN_LOCALE = new Locale("fr", "BE");
+
 
     @Resource(name="dwpSeleniumDriver")
     protected DWPSeleniumDriver seleniumDriver;
@@ -140,7 +148,15 @@ public abstract class DwpScenario extends RegisteredScenario {
     }
 
     protected int extractNumericValue(String ordinal) {
-        return numericValue(ordinal);
+        return ordinalAsInt(ordinal);
+    }
+
+    protected Integer amountInCurrencyAsInt(String amountInCurrency) {
+        return amountAsInt(amountInCurrency, FLEMISCH_LOCALE);
+    }
+
+    protected Integer sumOf(List<String> amounts) {
+        return sumOfAmounts(amounts);
     }
 
     protected String createQuery(String template, String key, String value) {

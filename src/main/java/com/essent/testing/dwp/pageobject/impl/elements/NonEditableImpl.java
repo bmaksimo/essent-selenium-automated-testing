@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class NonEditableImpl extends Component implements NonEditable {
 
-    private static final String XPATH_CONTAINER_TEMPLATE = "//div[div[normalize-space(h2/text())='${title}']]";
+    private static final String XPATH_CARD_TEMPLATE = "//div[div[normalize-space(h2/text())='${title}']]";
     private final static String XPATH_INPUT_TEPMPLATE = "//div[label/text()='${label}']//div[@class='non-editable-input']";
 
     @Override
@@ -27,8 +27,10 @@ public class NonEditableImpl extends Component implements NonEditable {
         Map<String, String> valuesMapper = new HashMap<>();
         valuesMapper.put("title", title);
         valuesMapper.put("label", label);
-        By xpathSelector = By.xpath(createQuery(XPATH_CONTAINER_TEMPLATE + XPATH_INPUT_TEPMPLATE, valuesMapper));
+        By xpathSelector = By.xpath(createQuery(XPATH_CARD_TEMPLATE + XPATH_INPUT_TEPMPLATE, valuesMapper));
         WebElement webElement = findElementWhenVisible(xpathSelector);
-        return webElement.getAttribute("innerText");
+        String innerText = webElement.getAttribute("innerText");
+        logger().info("--NonEditable, element value is: " + innerText);
+        return innerText;
     }
 }

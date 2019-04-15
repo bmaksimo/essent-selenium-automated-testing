@@ -2,16 +2,40 @@ package com.essent.testing.dwp.pageobject.impl.quote;
 
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
+import com.essent.testing.dwp.pageobject.elements.NonEditable;
+import com.essent.testing.dwp.pageobject.impl.elements.NonEditableImpl;
+import cucumber.runtime.CucumberException;
 import stepdefinitions.dwp.tables.BillingInformation;
+import stepdefinitions.dwp.tables.FieldDescriptor;
+
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Locale;
 
 import static com.essent.testing.dwp.autocrat.element.quote.BillingElements.*;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.INPUT;
+import static com.billinghouse.test_automation.util.dsl.NumericUtil.amountAsInt;
 public class BillingDetailsPage extends QuoteCreationGuidedStep {
 
     private BillingInformation billingInformation;
 
+    private NonEditable advancePaymentField;
+
     public void setBillingInformation(BillingInformation billingInformation) {
         this.billingInformation = billingInformation;
+    }
+
+    public BillingDetailsPage() {
+        this.advancePaymentField = new NonEditableImpl();
+    }
+
+    public Integer getElectricityAdvancedPaymentAmount(FieldDescriptor descriptor) {
+        String amount = advancePaymentField.getValue(descriptor.getCardName(), descriptor.getFieldName());
+        return amountAsInt(amount, new Locale("nl", "BE"));
+    }
+
+    public Integer getGasAdvancedPaymentAmount(FieldDescriptor descriptor) {
+        return getElectricityAdvancedPaymentAmount(descriptor);
     }
 
     @Override
@@ -29,4 +53,6 @@ public class BillingDetailsPage extends QuoteCreationGuidedStep {
             step(createStep(Action.TYPING).element(PAYMENT_BIC.name()).value(bic), INPUT.getSleepInMillis());
         return execute(execution);
     }
+
+
 }

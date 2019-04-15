@@ -8,7 +8,6 @@ import com.essent.testing.dwp.pageobject.service_contracting.LogCasePage;
 import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
 import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 
 import java.util.concurrent.Callable;

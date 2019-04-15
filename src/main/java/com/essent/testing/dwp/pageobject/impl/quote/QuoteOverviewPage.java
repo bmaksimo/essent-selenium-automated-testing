@@ -4,7 +4,8 @@ import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import stepdefinitions.dwp.tables.SignatureData;
 
-import static com.essent.testing.dwp.autocrat.element.quote.SignatureElements.*;
+import static com.essent.testing.dwp.autocrat.element.quote.SignatureElements.SIGN_LOCATION;
+import static com.essent.testing.dwp.autocrat.element.quote.SignatureElements.SIGN_UPLOAD_DOC;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.INPUT;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.UPLOAD_FILE;
 

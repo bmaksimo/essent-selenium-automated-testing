@@ -5,7 +5,6 @@ import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.modal.quote.SimilarAccountDialogImpl;
-import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import com.essent.testing.dwp.pageobject.impl.quote.*;
 import com.essent.testing.dwp.pageobject.impl.quote_for_account.QuoteForAccountOverviewPage;
 import com.essent.testing.dwp.pageobject.modal.quote.SimilarAccountDialog;
@@ -281,6 +280,17 @@ public class QuoteSteps extends DwpScenario {
         parameterProvider.put("iban", iban);
     }
 
+    @And("^Prepaid advance amounts are collected as numbers$")
+    public void collectAdvanceAmountsAsNumbers(final DataTable cardsInfo) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
+        List<FieldDescriptor> cards = cardsInfo.asList(FieldDescriptor.class);
+        FieldDescriptor electricityAdvAmountField = cards.get(0);
+        FieldDescriptor gasAdvDescriptor = cards.get(1);
+        BillingDetailsPage billingDetailsPage = new BillingDetailsPage();
+        parameterProvider.put(electricityAdvAmountField.getParameterName(), billingDetailsPage.getElectricityAdvancedPaymentAmount(electricityAdvAmountField));
+        parameterProvider.put(gasAdvDescriptor.getParameterName(), billingDetailsPage.getGasAdvancedPaymentAmount(gasAdvDescriptor));
+    }
+
 
     @And("^Billing details are confirmed$")
     public void confirmBillingDetaile() throws Throwable {
@@ -375,19 +385,8 @@ public class QuoteSteps extends DwpScenario {
         logger().info(" - Generated EAN code: " + eanCode);
     }
 
-    @And("Gas EAN-code input in the \"([^\"]*)\" card is \"([^\"]*)\"$")
-    public void setInput(String card, String value) throws Throwable {
-        seleniumDriver.waitForRequestsToFinish();
-        String inputValue = parameterProvider.getValueOrParameterAsString(value);
-        WebElement gasEAN = seleniumDriver.findElement(By.xpath("//h2[contains(text(),'"+card+"')]/parent::div/parent::div/div[@class='form__group']//label[contains(text(),'EAN-code')]/parent::div//input"));
-        boolean gasEANWasFound = gasEAN != null;
-        gasEAN.sendKeys(inputValue);
-        assertThat("Gas EAN-code element was not found.", gasEANWasFound, is(true));
-    }
-
     @And("^Electricity EAN code is \"([^\"]*)\"$")
-    public void
-    electricityEANCodeIs(String ean) throws Throwable {
+    public void electricityEANCodeIs(String ean) throws Throwable {
         ConnectionDetails electricityConnectionDetails = new ConnectionDetails();
         switch (ean) {
             case "selected":
@@ -427,16 +426,6 @@ public class QuoteSteps extends DwpScenario {
         parameterProvider.put("EAN-code", ean);
     }
 
-    @And("^Value at \"([^\"]*)\" in the card \"([^\"]*)\" is \"([^\"]*)\"$")
-    public void checkValueInCard(String label, String cardName, String value) {
-        BaseObjectPage baseObject = new BaseObjectPage();
-        WebElement cardTextXPath = baseObject.cardTextXPathValue(cardName, label);
-        String card = cardTextXPath.getText();
-
-        boolean result = card.matches(value);
-
-        assertThat("The value you entered differs from the real value", result, is(true));
-    }
 
     @Override
     @After("@DWP, @E2E, @REGRESSION")
