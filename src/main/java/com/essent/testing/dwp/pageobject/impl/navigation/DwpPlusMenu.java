@@ -19,6 +19,8 @@ public class DwpPlusMenu extends Component {
     private static String ACCORDION_BUTTON_SELECTOR_TEMPLATE_CHILD = "//menu-link[normalize-space(@label)='${" + REPLACEMENT_KEY1 + "}']//a";
     private static String ACCORDION_BUTTON_SELECTOR_TEMPLATE = "//labeled-accordion-wrapper[normalize-space(@label)='${" + REPLACEMENT_KEY2 + "}']";
     private static String LABELED_ACCORDION_WRAPPER_SELECTOR  =  "labeled-accordion-wrapper[label='${text}'] > a";
+    private static int LEAF_SIZED = 1;
+    private static int PARENT_MENU = 2;
 
     private final static String XPATH_CONTAINS_TEXT_TEMPLATE = "//span[contains(text(),'${text}')]";
 
@@ -60,7 +62,7 @@ public class DwpPlusMenu extends Component {
         List<String> menu = new ArrayList<>(Arrays.asList(menuPath.split(pathSeparator)));
         List<String> path = menu.subList(0, menu.size() - 1);
         String action = menu.get(menu.size() - 1);
-        String parentMenu = menu.size() > 1 ? menu.get(menu.size() - 2) : "";
+        String parentMenu = menu.size() > LEAF_SIZED ? menu.get(menu.size() - PARENT_MENU) : "";
         findMenu(null, path);
         WebElement clickAction = findAction(action, parentMenu);
         seleniumDriver.waitForRequestsToFinish();
