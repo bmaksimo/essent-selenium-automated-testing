@@ -63,11 +63,10 @@ public class FormElements extends DwpScenario {
         });
     }
 
-    @And("^Value at \"([^\"]*)\" in the card \"([^\"]*)\" is \"([^\"]*)\"$")
-    public void checkValueInCard(String label, String cardName, String expectedValue) {
+    @And("^Numeric value at \"([^\"]*)\" in the card \"([^\"]*)\" is \"([^\"]*)\"$")
+    public void checkValueInCard(String label, String cardName, String expectedExpression) {
         NonEditable card = new NonEditableImpl();
-        String nonEditableValue = card.getValue(cardName, label);
-        boolean result = nonEditableValue.matches(expectedValue);
+        boolean result = card.checkAmountUsingExpression(cardName, label, expectedExpression);
         assertThat("The expected value differs from the real value", result, is(true));
     }
 

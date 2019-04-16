@@ -572,7 +572,7 @@ public class ViewListChecks extends NavigationElements {
     @Then("^List element matching value \"([^\"]*)\" at column \"([^\"]*)\" from table \"([^\"]*)\" is checked$")
     public void storeColumnValueInParameterProvider(String match, String columnName, String tableName) throws Throwable {
         List<String> columnData = new ViewListTestObject().fetchColumnData(tableName, columnName);
-        Optional<String> first = columnData.stream().filter(element -> element.contains(match)).findFirst();
+        Optional<String> first = columnData.stream().filter(element -> element.contains(match)).findAny();
         assertThat(String.format("\"%s\" list element didn't contain value \"%s\" at column \"%s\"", tableName, match, columnName),
             first.isPresent(), is(true));
         parameterProvider.put(columnName, first.get());

@@ -4,17 +4,14 @@ import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.testing.dwp.pageobject.elements.NonEditable;
 import com.essent.testing.dwp.pageobject.impl.elements.NonEditableImpl;
-import cucumber.runtime.CucumberException;
 import stepdefinitions.dwp.tables.BillingInformation;
 import stepdefinitions.dwp.tables.FieldDescriptor;
 
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.Locale;
 
+import static com.billinghouse.test_automation.util.dsl.NumericUtil.amountAsInt;
 import static com.essent.testing.dwp.autocrat.element.quote.BillingElements.*;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.INPUT;
-import static com.billinghouse.test_automation.util.dsl.NumericUtil.amountAsInt;
 public class BillingDetailsPage extends QuoteCreationGuidedStep {
 
     private BillingInformation billingInformation;

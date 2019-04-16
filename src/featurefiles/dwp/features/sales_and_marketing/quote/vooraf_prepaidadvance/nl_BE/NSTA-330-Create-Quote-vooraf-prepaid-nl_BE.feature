@@ -1,7 +1,5 @@
 @DWP
 @B2C
-@UNSTABLE
-@UAT08ONLY
 Feature: NUAT-5021 Voraaf Step 2. Check vooraf (prepaid). Is unstable, unless prepaid-advance elec/gas amounts are same in REG04 and UAT08
 
     Background:
@@ -28,10 +26,9 @@ Feature: NUAT-5021 Voraaf Step 2. Check vooraf (prepaid). Is unstable, unless pr
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        When "Startdatum" date on "Aardgas Vooraf" card is "2 weeks before now"
-        And "Startdatum" date on "Elektriciteit Vooraf" card is "2 weeks before now"
+        When "Startdatum" date on "Aardgas Vooraf" card is "35 days weeks before now"
+        And "Startdatum" date on "Elektriciteit Vooraf" card is "35 days weeks before now"
         And Options "test" are On
-        And "Marktbericht" selection is "Volledig marktbericht"
         And EAN code is generated
         And "EAN-code" input on "Elektriciteit Vooraf" card is "parameter:EAN-code-generated"
         And EAN code is generated
@@ -40,10 +37,8 @@ Feature: NUAT-5021 Voraaf Step 2. Check vooraf (prepaid). Is unstable, unless pr
         Then Form header is "Billing details"
 
         When "Betalingswijze" selection is "Overschrijving"
-        # 11.04.2019 - in UAT08 please use: 5000, in REG04 please use 800
-        And Value at "Bedrag Vooraf (incl. btw)" in the card "Elektriciteit Vooraf" is "800 €"
-         # 11.04.2019 - in UAT08 please use: 1000, in REG04 please use 900
-        And Value at "Bedrag Vooraf (incl. btw)" in the card "Aardgas Vooraf" is "900 €"
+        And Numeric value at "Bedrag Vooraf (incl. btw)" in the card "Elektriciteit Vooraf" is "greater than 0"
+        And Numeric value at "Bedrag Vooraf (incl. btw)" in the card "Aardgas Vooraf" is "greater than 0"
         And Prepaid advance amounts are collected as numbers
             | cardName             | fieldName                 | parameterName    |
             | Elektriciteit Vooraf | Bedrag Vooraf (incl. btw) | bedrag-vooraf-el |
@@ -55,7 +50,7 @@ Feature: NUAT-5021 Voraaf Step 2. Check vooraf (prepaid). Is unstable, unless pr
 
         When Option "Heeft de klant al getekend?" is On
         And Quote is signed
-        And "Datum ondertekening" date is "2 weeks before now"
+        And "Datum ondertekening" date is "35 days before now"
         And Quote is signed in "Kontich"
         And Quote is confirmed
         Then View list header is "Offertes"

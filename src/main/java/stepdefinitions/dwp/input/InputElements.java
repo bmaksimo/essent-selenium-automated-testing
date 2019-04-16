@@ -232,7 +232,7 @@ public class InputElements extends DwpScenario {
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
         options.put("value", value);
-        FluentWait<ApplySelection> waiter = waiter(new ApplySelection(), 10, 1);
+        FluentWait<ApplySelection> waiter = waiter(new ApplySelection(), 20, 1);
         waiter.withMessage(String.format("Selection %s is undefined.", label));
         waiter.until((ApplySelection callback) -> callback.test(options));
         seleniumDriver.waitForRequestsToFinish();
