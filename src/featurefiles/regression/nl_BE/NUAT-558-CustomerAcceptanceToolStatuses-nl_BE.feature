@@ -2,7 +2,6 @@
 @B2B
 @REGRESSION
 @CREDIT-AND-CONTROL
-@UNSTABLE
 Feature: NUAT-558: Check status of customer with Customer Acceptance Tool
 
     Background:
