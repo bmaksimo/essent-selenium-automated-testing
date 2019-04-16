@@ -116,7 +116,7 @@ public class MarktBerichtenPage extends Component {
     }
 
     public boolean validateRejectionHeader(String input) {
-        return findElementWhenVisible(By.xpath("(//h5)[.='" + input + "'][1]")).isDisplayed();
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//h5)[.='" + input + "'][1]")).isDisplayed();
     }
 
     public void confirmTaskStatus(String input) {
