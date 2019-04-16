@@ -35,6 +35,15 @@ public class TaskSteps extends DwpScenario {
         baseObject.plusSubaction(action);
     }
 
+    @When("^Plus action and \"([^\"]*)\" of first customer from list waiting for (\\d+) seconds$")
+    public void plusActionAndOfFirstCustomerFromList(String action, int waitingTime) throws Throwable {
+        BaseObjectPage baseObject = new BaseObjectPage();
+        Sleeper.sleepTightInSeconds(waitingTime);
+        baseObject.clickOnPlusNow();
+        Sleeper.sleepTightInSeconds(waitingTime);
+        baseObject.plusSubactionNow(action);
+    }
+
     @When("^Plus action and Mark As Done/Markeren Als Verwerkt of first customer from list$")
     public void plusActionAndOfFirstCustomerFromList() throws Throwable {
         BaseObjectPage baseObject = new BaseObjectPage();

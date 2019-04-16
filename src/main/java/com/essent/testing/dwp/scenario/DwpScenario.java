@@ -24,8 +24,12 @@ import java.util.List;
 import java.util.Map;
 
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpDate;
-import static com.billinghouse.test_automation.util.dsl.NumericUtil.*;
+
 import static com.essent.testing.dwp.constant.DwpConstants.FLEMISCH_LOCALE;
+import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.convertToDwpTime;
+import static com.billinghouse.test_automation.util.dsl.NumericUtil.ordinalAsInt;
+import static com.billinghouse.test_automation.util.dsl.NumericUtil.sumOfAmounts;
+import static com.billinghouse.test_automation.util.dsl.NumericUtil.amountAsInt;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -98,6 +102,10 @@ public abstract class DwpScenario extends RegisteredScenario {
 
     protected String toDwpDate(String parameter) {
         return checkAndConvertToDwpDate(parameter);
+    }
+
+    protected String toDwpTime(String parameter) {
+        return convertToDwpTime(parameter);
     }
 
     protected String toDwpEndDate(String parameter) {

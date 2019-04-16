@@ -12,7 +12,7 @@ import java.time.Duration;
 
 public class DwpTopMenu extends Component {
 
-    private static final String XPATH_SUBMENU_TEMPLATE = "//sub-menu-link[@label='${label}']//a";
+    private static final String XPATH_SUBMENU_TEMPLATE = "//sub-menu-link[normalize-space(@label)='${label}']//a";
     private static final String CSS_HAMBURGER_TOP_MENU = ".top.mobile-menu [name='top-menu-toggle']";
     public static final String  XPATH_HOME_BUTTON = "//div[@class='top']/a[2]/span";
 
@@ -20,7 +20,7 @@ public class DwpTopMenu extends Component {
         checkAndOpenTopMenu();
         String query = createQuery(XPATH_SUBMENU_TEMPLATE, "label", label);
         WebElement element = seleniumDriver.findElementWhenVisible(By.xpath(query));
-        seleniumDriver.waitAndClick(element);
+        seleniumDriver.clickNow(element);
     }
 
     public void findAndClickTopMenuNow(String label) {

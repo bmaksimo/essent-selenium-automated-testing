@@ -1,5 +1,6 @@
 package stepdefinitions.dwp.page_object;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.service_contracting.EndOfContractPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
@@ -37,8 +38,17 @@ public class EndOfContractSteps extends DwpScenario {
        endOfContractPage.searchInputField(inputValue);
     }
 
+    @And("^Search field input is \"([^\"]*)\" waiting for (\\d+) seconds$")
+    public void searchFieldInputIs(String input, int waitingTime) {
+       EndOfContractPage endOfContractPage = new EndOfContractPage();
+       String inputValue = parameterProvider.getValueOrParameterAsString(input);
+        Sleeper.sleepTightInSeconds(waitingTime);
+       endOfContractPage.searchInputFieldNow(inputValue);
+    }
+
     @And("^Click Select Contractline$")
     public void clickSelectContractline() {
+        seleniumDriver.waitForRequestsToFinish();
         EndOfContractPage endOfContractPage = new EndOfContractPage();
         endOfContractPage.simpleExecuteJavaScript("TrSelectContractline");
     }
