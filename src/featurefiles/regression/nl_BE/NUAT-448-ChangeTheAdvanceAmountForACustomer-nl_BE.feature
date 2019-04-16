@@ -12,15 +12,18 @@ Feature: NUAT-448: Change The Advance Amount For A Customer - nl_BE
     Scenario: Change amount for a customer
         When Left menu is "sales-marketing"
         And Top menu item is "Klanten"
-        And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
+        Given B2B Active Contract is
+            | productType | isFakeAddress | switchType      | meterType | kwMax |
+            | UP          | FAKE          | SUPPLIER SWITCH | YMR       | 50000 |
         And Top action is "Filters"
-        And "Klantnummer" input is "1000025807"
+        And "Klantnummer" input is "parameter:accountNumber"
         Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 40 seconds
 
         When Dashboard menu is "Contracten"
         And Change amount for a customer
         And Contract plus and "Voorschotbedrag aanpassen"
         And Amount values is "125"
+        And "Betalingsfrequentie" selection is "Maandelijks"
         Then Changes are confirmed
 
         When Contract plus and "Bekijk voorschotdata"
