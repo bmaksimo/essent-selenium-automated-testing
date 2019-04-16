@@ -23,17 +23,10 @@ public class NumericUtil {
 
     private static final String NUMERIC_AND_ANYTHING_REGEX = "(\\d+)(.*)";
     private static final String ORDINAL_REGEX = "(?<=\\d)(rd|st|nd|th)\\b";
-    private static final String EQUALITY_REGEX = "(?<=(==|!=|>|>=|<|<=))\\s*(\\d+)";
     private static final String EQUALITY_REGEX_EXT ="(?<=(not equal|greater than|greater than or equal|less than|less than or equal))?\\s*(\\d+)";
     private static final Map<String, BiFunction<Integer, Integer, Boolean>> equalityOperators = new HashMap<>();
 
     static {
-        equalityOperators.put("==", NumericUtil::equalTo);
-        equalityOperators.put("!=", NumericUtil::notEqualTo);
-        equalityOperators.put(">", NumericUtil::greaterThan);
-        equalityOperators.put(">=", NumericUtil::greaterThanOrEqual);
-        equalityOperators.put("<", NumericUtil::lessThan);
-        equalityOperators.put("<=", NumericUtil::lessThanOrEqual);
         equalityOperators.put("not equal", NumericUtil::notEqualTo);
         equalityOperators.put("greater than", NumericUtil::greaterThan);
         equalityOperators.put("greater than or equal", NumericUtil::greaterThanOrEqual);
