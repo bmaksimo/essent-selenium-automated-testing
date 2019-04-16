@@ -31,6 +31,7 @@ public class DateExpressionsUtil {
     private static final String DATE_SEPARATOR = " - ";
     private static final LocalDate LAST_DATE_OF_YEAR = LocalDate.now().dayOfYear().withMaximumValue();
     private static final String DATE_EXPR_REGEX = "((\\d+)\\s*(month|day|year|week)(s*)\\s+(from|before)\\s+)*now";
+    private static final String TIME_EXPR_REGEX = "((\\d+)\\s*(hour|second)(s*)\\s+(from|before)\\s+)*now";
     private static final String DWP_TIME_FORMAT = "HH:mm";
     private static final String INTERVAL_EXPR_REGEX = "((\\d+)\\s*(month|day|year|week)(s*))";
     private final static  Map<String, BiFunction<ReadableInstant, ReadableInstant, BaseSingleFieldPeriod>> operations = new HashMap<>();
@@ -89,7 +90,7 @@ public class DateExpressionsUtil {
 
     private static DateTime expandFromTime(String expression) throws CucumberException {
 
-        Matcher matcher = compile(DATE_EXPR_REGEX).matcher(expression);
+        Matcher matcher = compile(TIME_EXPR_REGEX).matcher(expression);
 
         Map<String, Function<Integer, DateTime>> operations = new HashMap<>();
         DateTime dateTime = new DateTime();
@@ -103,7 +104,7 @@ public class DateExpressionsUtil {
             operations.put("second before", dateTime::minusSeconds);
             return operations.get(matcher.group(3) + " " + matcher.group(5)).apply(parseInt(matcher.group(2)));
         } else {
-            throw new CucumberException(format("--Time input '%s' doesn't match the pattern '%s'", expression, DATE_EXPR_REGEX));
+            throw new CucumberException(format("--Time input '%s' doesn't match the pattern '%s'", expression, TIME_EXPR_REGEX));
         }
     }
 

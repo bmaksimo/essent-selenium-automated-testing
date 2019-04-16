@@ -191,7 +191,7 @@ public class InputElements extends DwpScenario {
         waiter.until((ApplyDateInput callback) -> callback.test(options));
         seleniumDriver.waitForRequestsToFinish();
 
-        setValidToTime(toDwpTime(parameterProvider.getValueOrParameterAsString(time)));
+        setValidToTime(parameterProvider.getValueOrParameterAsString(time));
     }
 
     private void setValidToTime(String time) {
