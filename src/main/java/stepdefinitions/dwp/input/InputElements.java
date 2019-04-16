@@ -73,6 +73,11 @@ public class InputElements extends DwpScenario {
             boolean success = executeJavascriptTest("TrDatePickerInput", options);
             return success;
         }
+
+        public boolean testNow(Map options) {
+            boolean success = executeJavascriptTestImmediately("TrDatePickerInput", options, true);
+            return success;
+        }
     }
 
     /**

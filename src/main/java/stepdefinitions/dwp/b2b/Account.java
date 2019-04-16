@@ -23,7 +23,7 @@ public class Account extends DwpScenario {
     @Then("^Change is immediately visible in Finance & Legal section that \"([^\"]*)\" is active$")
     public void changeIsImmediatelyVisibleInFinanceLegalSectionThatIsActive(String box) {
         ToggleImpl tg= new ToggleImpl();
-        assertTrue(tg.checkIfCheckboxIsChecked(box));
+        assertTrue(tg.isOn(box));
     }
 
     @And("^Activate \"([^\"]*)\"$")
@@ -31,7 +31,7 @@ public class Account extends DwpScenario {
         UpdateCustomerDetailsPage ucdp = new UpdateCustomerDetailsPage();
         ToggleImpl tg= new ToggleImpl();
         seleniumDriver.waitForRequestsToFinish();
-        tg.clickCheckbox(box);
+        tg.switchOn(box);
         ucdp.clickOnSaveButtonForFinanceAndLegalSection();
     }
 

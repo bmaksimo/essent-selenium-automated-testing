@@ -1,5 +1,6 @@
 package stepdefinitions.dwp.page_object;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.workflows.MarktBerichtenPage;
@@ -29,11 +30,25 @@ public class MarketBerichtenSteps extends DwpScenario {
         ti.clickOnToggle(label);
     }
 
+    @And("^\"([^\"]*)\" turn on waiting for (\\d+) seconds$")
+    public void turnOn(String label, int waitingTime) {
+        Sleeper.sleepTightInSeconds(waitingTime);
+        ToggleImpl ti = new ToggleImpl();
+        ti.switchOnNow(label, waitingTime);
+    }
+
     @When("^Save EAN code of customer$")
     public void saveEANCodeOfCustomer() {
         MarktBerichtenPage marktberichtenPage = new MarktBerichtenPage();
         seleniumDriver.waitForRequestsToFinish();
         eanCode = marktberichtenPage.getEanCode();
+        parameterProvider.put("eanCode", eanCode);
+    }
+
+    @When("^Save EAN code of customer now$")
+    public void saveEANCodeOfCustomerNow() {
+        MarktBerichtenPage marktberichtenPage = new MarktBerichtenPage();
+        eanCode = marktberichtenPage.getEanCodeNow();
         parameterProvider.put("eanCode", eanCode);
     }
 

@@ -75,7 +75,7 @@ public class OfferteStep extends DwpScenario {
     @And("^\"([^\"]*)\" turn on with dot$")
     public void turnOnWithDot(String label) {
         ToggleImpl tgl = new ToggleImpl();
-        tgl.clickCheckboxWithDot(label);
+        tgl.switchOnWithDot(label);
 
     }
 
