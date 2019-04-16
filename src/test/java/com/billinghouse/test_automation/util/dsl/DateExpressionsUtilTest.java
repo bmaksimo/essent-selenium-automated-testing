@@ -1,6 +1,5 @@
 package com.billinghouse.test_automation.util.dsl;
 
-import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 

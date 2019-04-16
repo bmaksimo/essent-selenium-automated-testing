@@ -1,5 +1,19 @@
 package stepdefinitions.quote.api;
 
+import com.essent.testing.config.ConfigKey;
+import com.essent.testing.config.ConfigProvider;
+import com.essent.testing.util.resource.ResourceUtil;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.restassured.http.Cookies;
+import io.restassured.response.Response;
+import org.apache.log4j.Logger;
+import stepdefinitions.quote.api.helper.RequestHelper;
+import stepdefinitions.quote.api.model.QuoteDetails;
+import stepdefinitions.quote.api.model.dto.QuoteSignatureDTO;
+import stepdefinitions.quote.api.model.dto.SignContractDTO;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -8,22 +22,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.log4j.Logger;
-
-import com.essent.testing.config.ConfigKey;
-import com.essent.testing.config.ConfigProvider;
-import com.essent.testing.util.resource.ResourceUtil;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import io.restassured.http.Cookies;
-import io.restassured.response.Response;
-import stepdefinitions.quote.api.helper.RequestHelper;
-import stepdefinitions.quote.api.model.QuoteDetails;
-import stepdefinitions.quote.api.model.dto.QuoteSignatureDTO;
-import stepdefinitions.quote.api.model.dto.SignContractDTO;
 
 /**
  * @author n.grkavac

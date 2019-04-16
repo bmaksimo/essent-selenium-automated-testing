@@ -57,7 +57,7 @@ public class PersonalDetailsPage extends QuoteCreationGuidedStep {
             step(createStep(ACCESS).element(COPY_ADDRESS_CONNECTION_TO_BILLING.name()).requireDisplayed(false).callback(hideIconOverlays())).
             step(createStep(SELECT).element(SALUTATION.name()).value(salutation).timeoutInSeconds(4), INPUT.getSleepInMillis()).
             step(createStep(TYPING).element(FIRST_NAME.name()).value(firstName).timeoutInSeconds(4), INPUT.getSleepInMillis()).
-            step(createStep(TYPING).element(LAST_NAME.name()).value(lastName).timeoutInSeconds(4), INPUT.getSleepInMillis()).
+            step(createStep(TYPING).element(LAST_NAME.name()).value(lastName).timeoutInSeconds(15), INPUT.getSleepInMillis()).
             step(createStep(TYPING).element(EMAIL.name()).value(customer.getEmail()).timeoutInSeconds(4), INPUT.getSleepInMillis()).
             step(createStep(TYPING).element(MOBILE_NR.name()).value(mobilePhone).timeoutInSeconds(4), INPUT.getSleepInMillis()).
             step(createStep(TYPING).element(BIRTHDAY.name()).value(birthDate).timeoutInSeconds(4), INPUT.getSleepInMillis());
