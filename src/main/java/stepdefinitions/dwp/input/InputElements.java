@@ -20,8 +20,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class InputElements extends DwpScenario {
+    private static final String CALENDAR_VALIDTO_TIME_ID = "validto-c-time-field";
 
-    /**
+        /**
      * Cucumber-JVM Before- hook
      * @param scenario Gherkin scenario descriptor
      * @throws Throwable
@@ -181,21 +182,30 @@ public class InputElements extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
     }
 
-    @And("^\"([^\"]*)\" date is \"([^\"]*)\" waiting for (\\d+) seconds$")
-    public void setDateInput(String label, String value, int waitingTime) throws Throwable {
-        Sleeper.sleepTightInSeconds(waitingTime);
-        String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(value));
+    @And("^\"([^\"]*)\" date is \"([^\"]*)\" and time is \"([^\"]*)\"$")
+    public void setDateTimeInput(String label, String date, String time) throws Throwable {
+        Sleeper.sleepTightInSeconds(2);
+        seleniumDriver.waitForRequestsToFinish();
+        String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(date));
         parameterProvider.put("inputValue", inputValue);
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
         options.put("value", inputValue);
         FluentWait<ApplyDateInput> waiter = waiter(new ApplyDateInput(), 10, 1);
         waiter.withMessage(String.format("Date value %s input at '%s' failed.", inputValue, label));
-        waiter.until((ApplyDateInput callback) -> callback.testNow(options));
+        waiter.until((ApplyDateInput callback) -> callback.test(options));
+        seleniumDriver.waitForRequestsToFinish();
+
+        setValidToTime(parameterProvider.getValueOrParameterAsString(time));
+    }
+
+    private void setValidToTime(String time) {
+        String validTo = toDwpTime(parameterProvider.getValueOrParameterAsString(time));
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElement(By.id(CALENDAR_VALIDTO_TIME_ID)), validTo);
     }
 
     @And("^\"([^\"]*)\" date on \"([^\"]*)\" card is \"([^\"]*)\"$")
-    public void setDateInput(String label, String card, String value) throws Throwable {
+    public void setDateInput (String label, String card, String value) throws Throwable {
         Sleeper.sleepTightInSeconds(2);
         seleniumDriver.waitForRequestsToFinish();
         String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(value));
@@ -209,7 +219,6 @@ public class InputElements extends DwpScenario {
         waiter.until((ApplyDateInput callback) -> callback.test(options));
         seleniumDriver.waitForRequestsToFinish();
     }
-
 
     /**
      * Sets and asynchronously checks dropdown selection on any DWP form
