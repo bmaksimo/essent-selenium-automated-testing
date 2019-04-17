@@ -294,9 +294,6 @@ public class ContractPage extends Component {
         String amountValue = findElementWhenVisible(By.id("advance-amount-field")).getText();
         String amountParameter = amount + ",00";
         String[] value = amountValue.split(" ", 2);
-//        it is not in the use at the moment, if not used in future runs it will be deleted
-//        for (String i : value) {
-//        }
         return amountParameter.equals(value[1]);
     }
 
@@ -365,7 +362,7 @@ public class ContractPage extends Component {
     }
 
     public  String getStatusFromContracten(){
-        return seleniumDriver.findElementWhenVisible(By.xpath("(//list[@list-key='ContractsOnAccount']//list-link-bold-top-two-liner-cell/div/a/h5)[3]")).getText();
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//list[@list-key='ContractsOnAccount']//list-simple-two-liner-cell/p/span[2])[1]")).getText();
     }
 
     public  String getProductFromContracten(){

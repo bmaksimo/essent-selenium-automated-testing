@@ -101,7 +101,7 @@ Feature: NSTA - 337 Move old address
         And Options "Push through incomplete move?" is On
 
         Then Changes are confirmed
-#        And Bevestigen
+        And Bevestigen
 
         #
 #        When I logged in to DWP as "contracting.testautomation.b2c@essent.be"
@@ -110,7 +110,7 @@ Feature: NSTA - 337 Move old address
 #        And Top action is "Filters"
 #        And "B2C/B2B" selection is "B2C"
 #        And "Type klant" selection is "Klant"
-#        And "Klantnummer" input is "1000101172"
+#        And "Klantnummer" input is "1000101318"
 #        Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
 
 #        When Dashboard menu is "Details"
@@ -149,12 +149,10 @@ Feature: NSTA - 337 Move old address
         When Dashboard menu is "Marktberichten"
         Then Marktbericht has label "CUSTOMER SWITCH"
         And Marketbericht with EAN-CODE "parameter:EAN-code-generated" and MODULE "START ACCESS" is in STATUS "Gesloten" and has ED "now"
-#        And Marketbericht with EAN-CODE "541444171640795408" and MODULE "START ACCESS" is in STATUS "Geaccepteerd" and has ED "now"
-
-
+#        And Marketbericht with EAN-CODE "541447744780627402" and MODULE "START ACCESS" is in STATUS "Gesloten" and has ED "now"
 
         When Dashboard menu is "Contracten"
         Then Check contract
             | type |         status          | start date |              EAN             |      product      |
             | GLN  | Verwerkt (Geaccepteerd) |    now     | parameter:EAN-code-generated | parameter:product |
-#            | GLN  | Verwerkt (Geaccepteerd) |    now     | 541444171640795408 | 541444171640795408-TK1-Elektriciteit Vast (TC_FIX_B2C) |
+#            | GLN  | Verwerkt (Geaccepteerd) |    now     | 541447744780627402 | 541447744780627402-TK1-Elektriciteit Vast (TC_FIX_B2C) |
