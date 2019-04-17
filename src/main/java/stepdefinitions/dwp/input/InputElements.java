@@ -182,6 +182,19 @@ public class InputElements extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
     }
 
+    @And("^\"([^\"]*)\" date is \"([^\"]*)\" waiting for (\\d+) seconds$")
+    public void setDateInput(String label, String value, int waitingTime) throws Throwable {
+        Sleeper.sleepTightInSeconds(waitingTime);
+        String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(value));
+        parameterProvider.put("inputValue", inputValue);
+        Map<String, String> options = new HashMap<>();
+        options.put("label", label);
+        options.put("value", inputValue);
+        FluentWait<ApplyDateInput> waiter = waiter(new ApplyDateInput(), 10, 1);
+        waiter.withMessage(String.format("Date value %s input at '%s' failed.", inputValue, label));
+        waiter.until((ApplyDateInput callback) -> callback.testNow(options));
+    }
+
     @And("^\"([^\"]*)\" date is \"([^\"]*)\" and time is \"([^\"]*)\"$")
     public void setDateTimeInput(String label, String date, String time) throws Throwable {
         Sleeper.sleepTightInSeconds(2);
