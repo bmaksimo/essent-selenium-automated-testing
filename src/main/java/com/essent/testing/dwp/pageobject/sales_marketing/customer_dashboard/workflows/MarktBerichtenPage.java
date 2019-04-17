@@ -95,17 +95,17 @@ public class MarktBerichtenPage extends Component {
     }
 
     public String getEanFromMarketbericht(String num)  {
-        return seleniumDriver.findElementWhenVisible(By.xpath("(//h5)['"+num+"']")).getText();
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//h5)["+num+"]")).getText();
     }
     public String getModulFromMarketbericht(String num) {
-        return seleniumDriver.findElementWhenVisible(By.xpath("(//h5)['"+num+"']")).getText();
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//h5)["+num+"]")).getText();
     }
     public String marketberichtStatusMarketbericht(String num){
-        return seleniumDriver.findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[1])['"+num+"']")).getText();
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[1])["+num+"]")).getText();
     }
 
     public String getMarketberichtEndDateElement(String num){
-        return seleniumDriver.findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[1])['"+num+"']")).getText();
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[2])["+num+"]")).getText();
     }
 
     public String getEanCode() {
@@ -119,6 +119,10 @@ public class MarktBerichtenPage extends Component {
     public void confirmTaskStatus(String input) {
         seleniumDriver.waitForRequestsToFinish();
         Assert.assertTrue(findElementWhenVisible(By.xpath("(//h6)[.='" + input + "']")).isDisplayed());
+    }
+
+    public String getMarketberichtLabel(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//list-link-bold-top-two-liner-cell/div/h6)[2]")).getText();
     }
 }
 

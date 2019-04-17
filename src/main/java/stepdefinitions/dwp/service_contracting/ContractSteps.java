@@ -116,8 +116,6 @@ public class ContractSteps extends DwpScenario {
         ContractPage cp = new ContractPage();
         Assert.assertEquals("Actual Kortingen Op Contract Kortings code differs from expected",cp.getKortingenOpContractKortingscode(),parameterProvider.getValueOrParameterAsString("parameter:kortingsCode"));
         Assert.assertEquals("Actual Kortingen Op Contract Product type differs from expected",cp.getKortingenOpContractProducttype(),parameterProvider.getValueOrParameterAsString("parameter:productType"));
-
-
     }
 
     @And("^Check if prices of both contracts are the same$")
@@ -150,15 +148,14 @@ public class ContractSteps extends DwpScenario {
         ServicePage sp = new ServicePage();
         Assert.assertEquals(sp.getCaseOnderwerp(),onderwerp);
         parameterProvider.put("caseNumber",sp.getCaseNumber());
-
     }
 
     @And("^Interaction is created with Type \"([^\"]*)\" and Onderwerp \"([^\"]*)\" and verwante case is \"([^\"]*)\"$")
     public void interactionIsCreatedWithTypeAndOnderwerpAndVerwanteCaseIs(String type, String onderwerp, String number) {
         ServicePage sp = new ServicePage();
         String caseNumber = parameterProvider.getValueOrParameterAsString(number);
-        Assert.assertEquals("Actual Interaction Type differs from expected",sp.getInteractionType(),type);
-        Assert.assertEquals("Actual Interaction Onderwerp differs from expected",sp.getInteractionOnderwerp(),onderwerp);
+        Assert.assertEquals("Actual Interaction Type differs from expected",sp.getInteractionType(type),type);
+        Assert.assertEquals("Actual Interaction Onderwerp differs from expected",sp.getInteractionOnderwerp(type),onderwerp);
         Assert.assertEquals("Actual Interaction Verwante Case differs from expected",sp.getInteractionVerwanteCase(),caseNumber);
     }
 
@@ -196,6 +193,47 @@ public class ContractSteps extends DwpScenario {
     public void thereIsOneBillingCustomer() {
         DetailsPage dp = new DetailsPage();
         Assert.assertEquals("The number of billing customers is not 1", 1, dp.getNumberOfBillingCustomers());
+    }
 
+    @Then("^Check customer information$")
+    public void checkProcpectCustomerInformation(final DataTable dbTable) {
+        List<List<String>> info = dbTable.raw();
+        DetailsPage dp = new DetailsPage();
+        String address = dp.getStreetAndHouseNum();
+        Assert.assertEquals("Actual address and house number differs from expected",address.replaceAll("\n"," "),info.get(1).get(0));
+        if (info.get(1).get(1)!= null) {
+            Assert.assertEquals("Actual phone differs from expected", dp.getPhone(), info.get(1).get(1));
+            Assert.assertEquals("Actual email differs from expected", dp.getEmail(), info.get(1).get(2));
+        }
+    }
+
+    @Then("^Check if customer name contains \"([^\"]*)\"$")
+    public void checkIfCustomerNameContains(String name) {
+        DetailsPage dp = new DetailsPage();
+        String customerName = dp.getCustomerName();
+        Assert.assertTrue("Actual customer name does not contain GLN",customerName.contains(name));
+    }
+
+    @Then("^Check contract$")
+    public void checkContract(final DataTable dbTable) {
+        ContractPage cp = new ContractPage();
+        List<List<String>> info = dbTable.raw();
+        String type = info.get(1).get(0);
+        String status = info.get(1).get(1);
+        String date = toDwpEndDate(parameterProvider.getValueOrParameterAsString(info.get(1).get(2)));
+        String ean = parameterProvider.getValueOrParameterAsString(info.get(1).get(3));
+        String product = parameterProvider.getValueOrParameterAsString(info.get(1).get(4));
+
+        Assert.assertEquals("Actual type differs from expected",cp.getContractType() ,type);
+        Assert.assertEquals("Actual status differs from expected", cp.getStatusFromContracten() , status);
+        Assert.assertEquals("Actual start date differs from expected", cp.getStartDate() , date);
+        Assert.assertEquals("Actual EAN differs from expected",cp.getEanFromContract() , ean);
+        Assert.assertEquals("Actual product differs from expected",cp.getProductFromContracten() , product);
+    }
+
+    @And("^Copy product name$")
+    public void copyProductName() {
+        ContractPage cp = new ContractPage();
+        parameterProvider.put("product",cp.getProductFromContracten());
     }
 }

@@ -363,4 +363,12 @@ public class ContractPage extends Component {
     public int getNumberOfElectricityContracts() {
         return seleniumDriver.findElements(By.xpath(NUMBER_ELECTRICITY_CONTRACT)).size();
     }
+
+    public  String getStatusFromContracten(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//list[@list-key='ContractsOnAccount']//list-link-bold-top-two-liner-cell/div/a/h5)[3]")).getText();
+    }
+
+    public  String getProductFromContracten(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//list[@list-key='ContractsOnAccount']//list-link-bold-top-two-liner-cell/div/a/h5)[3]")).getText();
+    }
 }

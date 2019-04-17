@@ -121,4 +121,10 @@ public class MarketBerichtenSteps extends DwpScenario {
             }
         }
     }
+
+    @And("^Marktbericht has label \"([^\"]*)\"$")
+    public void marktberichtHasLabel(String label) {
+        MarktBerichtenPage mp = new MarktBerichtenPage();
+        Assert.assertEquals("Actual label differs from expected", mp.getMarketberichtLabel(), label);
+    }
 }

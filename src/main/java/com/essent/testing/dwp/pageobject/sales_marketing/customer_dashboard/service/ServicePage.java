@@ -34,16 +34,22 @@ public class ServicePage extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath("//list[@list-key=\"InteractionsOnAccount\"]//td[7]//div//h5[1]")).getText();
     }
 
-    public String getInteractionType(){
-        return seleniumDriver.findElementWhenVisible(By.xpath("//list-simple-two-liner-cell[@line-1='Document']/p/span[1]")).getText();
+    public String getInteractionType(String type){
+        return seleniumDriver.findElementWhenVisible(By.xpath("//list-simple-two-liner-cell[@line-1='"+type+"']/p/span[1]")).getText();
     }
 
-    public String getInteractionOnderwerp() {
-        return seleniumDriver.findElementWhenVisible(By.xpath("//list-simple-two-liner-cell[@line-1='Document']/p/span[2]")).getText();
+    public String getInteractionOnderwerp(String type) {
+        return seleniumDriver.findElementWhenVisible(By.xpath("//list-simple-two-liner-cell[@line-1='"+type+"']/p/span[2]")).getText();
     }
 
     public String getInteractionVerwanteCase() {
         return seleniumDriver.findElementWhenVisible(By.xpath("//*[@id='rows']/tr[1]/td[7]/list-link-bold-top-two-liner-cell/div/a")).getText();
     }
 
+    public void goToProspect(){
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.linkText("Go to prospect")));
+    }
+    public void  gotoGLNAccount (){
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.linkText("Go to GLN Account")));
+    }
 }

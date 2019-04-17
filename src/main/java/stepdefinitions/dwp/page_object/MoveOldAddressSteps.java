@@ -45,9 +45,13 @@ public class MoveOldAddressSteps extends DwpScenario {
     @And("^Change house number by \"(\\d+)\"$")
     public void changeHouseNumber(int num) {
         UpdateBillingCustomerPage ubcp = new UpdateBillingCustomerPage();
-        String oldHouseNum = ubcp.getCurrentHouseNumber();
-        int newHouseNum = Integer.parseInt(oldHouseNum);
-        ubcp.changeHouseNumber(newHouseNum+num);
+//        String oldHouseNum = ubcp.getCurrentHouseNumber();
+//        System.out.println("-----------------------"+oldHouseNum);
+//        int newHouseNum = Integer.parseInt(oldHouseNum);
+//        System.out.println("-----------------------"+newHouseNum);
+//        System.out.println("-----------------------"+newHouseNum+num);
+//        ubcp.changeHouseNumber(newHouseNum+num);
+        ubcp.changeHouseNumber(4);
     }
 
     @And("^Datum meteropname low date is \"([^\"]*)\"$")
