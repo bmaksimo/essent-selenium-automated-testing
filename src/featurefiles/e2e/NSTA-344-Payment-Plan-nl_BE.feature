@@ -1,7 +1,7 @@
 @REGRESSION
 @DWP
 @B2C
-
+@UNSTABLE
 Feature: NSTA - 344 Payment Plan
 
     Background:
