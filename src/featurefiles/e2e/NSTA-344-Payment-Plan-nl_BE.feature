@@ -44,10 +44,11 @@ Feature: NSTA - 344 Payment Plan
 
         When Option "Heeft de klant al getekend?" is On
         And "Kanaal ondertekening" selection is "Papier"
-        And "Datum ondertekening" date is "now"
-        And Quote is signed
         And Quote is signed in "Kontich"
-        When Quote is confirmed
+        And "Datum ondertekening" date is "now"
+        And Quote is confirmed
+        Then View list header is "Offertes"
+        Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
 
         When Dashboard menu is "Marktberichten"
         Then View List is empty
@@ -100,6 +101,13 @@ Feature: NSTA - 344 Payment Plan
         And Contract signature is confirmed
 
         #payment plan checks
+        Given I renew login to DWP as "contracting.testautomation.b2c@essent.be"
+        When Left menu is "contracting-switching"
+        And Top menu item is "Klanten"
+        And Top action is "Filters"
+        And "Type klant" selection is "Klant"
+        And "Klantnummer" input is "parameter:accountNumber"
+        Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
         Then View list header is "Afbetalingsplannen"
