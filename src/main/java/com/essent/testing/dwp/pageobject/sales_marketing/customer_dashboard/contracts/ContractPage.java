@@ -397,6 +397,7 @@ public class ContractPage extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath("(//list[@list-key='ContractsOnAccount']//list-link-bold-top-two-liner-cell/div/a/h5)[3]")).getText();
     }
 
+    //TODO
     public String checkValueOfInstallments(String optionListItem1, String optionListItem2, String optionListItem3) {
        seleniumDriver.waitForRequestsToFinish();
 

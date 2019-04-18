@@ -1,8 +1,7 @@
 @REGRESSION
 @DWP
 @B2C
-@REGRESSION
-@All
+@ALL
 
 Feature: NSTA - 337 Move old address
 
