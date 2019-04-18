@@ -31,6 +31,8 @@ public class ContractPage extends Component {
     private static final String FIRST_PAYMENT_PLAN_INSTALLMENT = "//list-dropdown-cell//option[2]";
     private static final String SECOND_PAYMENT_PLAN_INSTALLMENT = "//list-dropdown-cell//option[3]";
     private static final String THIRD_PAYMENT_PLAN_INSTALLMENT = "//list-dropdown-cell//option[4]";
+    private static final String CONTRACT_STATUS = "(//list[@list-key='ContractsOnAccount']//list-simple-two-liner-cell/p/span[2])[1]";
+    private static final String PRODUCT_CONTRACT = "(//list[@list-key='ContractsOnAccount']//list-link-bold-top-two-liner-cell/div/a/h5)[3]";
 
     private WebElement startData() {
         return seleniumDriver.findElementWhenVisible(By.id(START_DATA_ID));
@@ -107,7 +109,7 @@ public class ContractPage extends Component {
 
     public String getStatusFromContract() {
         seleniumDriver.waitForRequestsToFinish();
-        return seleniumDriver.findElementWhenVisible(By.xpath("(//list-link-bold-top-two-liner-cell/div/h6)[2]")).getText();
+        return seleniumDriver.findElementWhenVisible(By.xpath(CONTRACT_STATUS)).getText();
     }
 
     public String getContractType() {
@@ -390,11 +392,11 @@ public class ContractPage extends Component {
     }
 
     public  String getStatusFromContracten(){
-        return seleniumDriver.findElementWhenVisible(By.xpath("(//list[@list-key='ContractsOnAccount']//list-simple-two-liner-cell/p/span[2])[1]")).getText();
+        return seleniumDriver.findElementWhenVisible(By.xpath(CONTRACT_STATUS)).getText();
     }
 
     public  String getProductFromContracten(){
-        return seleniumDriver.findElementWhenVisible(By.xpath("(//list[@list-key='ContractsOnAccount']//list-link-bold-top-two-liner-cell/div/a/h5)[3]")).getText();
+        return seleniumDriver.findElementWhenVisible(By.xpath(PRODUCT_CONTRACT)).getText();
     }
 
     public String checkValueOfInstallments(String optionListItem1, String optionListItem2, String optionListItem3) {
