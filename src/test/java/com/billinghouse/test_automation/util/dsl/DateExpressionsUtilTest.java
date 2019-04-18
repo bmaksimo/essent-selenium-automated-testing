@@ -25,7 +25,8 @@ public class DateExpressionsUtilTest {
             "now"
         };
         for (String dateFrom : dateF) {
-           assertTrue(matchesDwpDateFormat(expandFrom(dateFrom).toString("dd/MM/yyyy")));
+            //TODO - test has to be better
+            assertTrue(matchesDwpDateFormat(expandFrom(dateFrom).toString("dd/MM/yyyy")));
         }
     }
 
@@ -50,12 +51,13 @@ public class DateExpressionsUtilTest {
         assertEquals(String.format("Actual Dwp start and end date '%s' differs from the expected '%s'", actual, expectedDwpStartEndDate), expectedDwpStartEndDate, actual);
 
     }
+
     @Test
     public void testCheckDaysBetween() throws Exception {
         String[] split = "09-04-2019 28-04-2019".split("\\s+");
         String earlierDte = split[0],
-               laterDate = split[1],
-               interval = "19 days";
+            laterDate = split[1],
+            interval = "19 days";
         assertThat("Comparison of two dates expression conversion failure", checkTimeBetween(earlierDte, laterDate, interval), Matchers.equalTo(0));
 
     }
@@ -79,6 +81,7 @@ public class DateExpressionsUtilTest {
         assertThat("Comparison of two dates expression conversion failure", checkTimeBetween(earlierDte, laterDate, interval), Matchers.equalTo(0));
 
     }
+
     @Test
     public void testCheckMonthsBetween() throws Exception {
         String[] split = "09-04-2019 28-05-2019".split("\\s+");
