@@ -48,8 +48,8 @@ public class MoveOldAddressSteps extends DwpScenario {
         ubcp.changeHouseNumber(num);
     }
 
-    @And("^Datum meteropname low date is \"([^\"]*)\"$")
-    public void datumMeteropnameDateIs(String value){
+    @And("^Low date meter reading date is \"([^\"]*)\"$")
+    public void lowDateMeterReadingDateIs(String value){
         CreateMoveOAPage cmoa = new CreateMoveOAPage();
         String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(value));
         seleniumDriver.waitForRequestsToFinish();
@@ -58,8 +58,8 @@ public class MoveOldAddressSteps extends DwpScenario {
         Sleeper.sleepTightInSeconds(1);
     }
 
-    @And("^Meterstand low input is \"([^\"]*)\"$")
-    public void meterstandLowInputIs(String value) {
+    @And("^Low meter reading input is \"([^\"]*)\"$")
+    public void lowMeterRreadingInputIs(String value) {
         CreateMoveOAPage cmoa = new CreateMoveOAPage();
         String meterReading = parameterProvider.getValueOrParameterAsString(value);
         seleniumDriver.waitForRequestsToFinish();

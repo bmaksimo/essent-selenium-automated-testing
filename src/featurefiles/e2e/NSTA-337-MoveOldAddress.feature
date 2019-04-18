@@ -96,8 +96,8 @@ Feature: NSTA - 337 Move old address
         And "Meterstand" input is "parameter:meterstand"
 
         And Get meter reading plus "1000"kwl from "2"
-        And Meterstand low input is "parameter:meterstand"
-        And Datum meteropname low date is "now"
+        And Low meter reading input is "parameter:meterstand"
+        And Low date meter reading date is "now"
 
         And Options "Push through incomplete move?" is On
 
