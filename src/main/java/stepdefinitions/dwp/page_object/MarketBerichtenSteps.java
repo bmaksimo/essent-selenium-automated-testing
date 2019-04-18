@@ -126,7 +126,7 @@ public class MarketBerichtenSteps extends DwpScenario {
         MarktBerichtenPage mp = new MarktBerichtenPage();
         if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht("1"))){
             Assert.assertEquals(modul, mp.getModulFromMarketbericht("2"));
-            Assert.assertEquals(status ,mp.marketberichtStatusMarketbericht("1"));
+            Assert.assertEquals(status, mp.marketberichtStatusMarketbericht("1"));
             Assert.assertEquals(mp.getMarketberichtEndDateElement("1"), toDwpEndDate(parameterProvider.getValueOrParameterAsString(date)));
         }else {
             if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht("3"))) {

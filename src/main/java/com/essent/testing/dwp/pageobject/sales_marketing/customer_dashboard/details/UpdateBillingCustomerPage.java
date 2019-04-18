@@ -15,6 +15,6 @@ public class UpdateBillingCustomerPage extends Component {
     }
 
     public void changeHouseNumber(int num) {
-        seleniumDriver.waitAndSendKeys(getHouseNumElement(),Integer.toString(num));
+        seleniumDriver.waitAndSendKeys(getHouseNumElement(), Integer.toString(num));
     }
 }
