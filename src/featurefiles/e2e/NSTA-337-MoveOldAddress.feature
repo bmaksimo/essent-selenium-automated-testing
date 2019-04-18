@@ -100,24 +100,10 @@ Feature: NSTA - 337 Move old address
 
         And Options "Push through incomplete move?" is On
 
-        Then Changes are confirmed
-        And Bevestigen
+        Then Bevestigen
 
-        #
-#        When I logged in to DWP as "contracting.testautomation.b2c@essent.be"
-#        And Left menu is "contracting-switching"
-#        And Top menu item is "Klanten"
-#        And Top action is "Filters"
-#        And "B2C/B2B" selection is "B2C"
-#        And "Type klant" selection is "Klant"
-#        And "Klantnummer" input is "1000101318"
-#        Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
-
-#        When Dashboard menu is "Details"
-##
-#
-        And Plus action of "1" element from "BillingCustomerOnaccount" and click on "Update"
-        And Change house number by "1"
+        When Plus action of "1" element from "BillingCustomerOnaccount" and click on "Update"
+        And Change house number to "4"
         Then Changes are confirmed
 
         When Dashboard menu is "Service"
@@ -148,11 +134,12 @@ Feature: NSTA - 337 Move old address
 
         When Dashboard menu is "Marktberichten"
         Then Marktbericht has label "CUSTOMER SWITCH"
-        And Marketbericht with EAN-CODE "parameter:EAN-code-generated" and MODULE "START ACCESS" is in STATUS "Gesloten" and has ED "now"
-#        And Marketbericht with EAN-CODE "541447744780627402" and MODULE "START ACCESS" is in STATUS "Gesloten" and has ED "now"
+        And Check marktbericht
+        |               ean            |     modul    |  status  | end date |
+        | parameter:EAN-code-generated | START ACCESS | Gesloten |    now   |
 
         When Dashboard menu is "Contracten"
         Then Check contract
             | type |         status          | start date |              EAN             |      product      |
             | GLN  | Verwerkt (Geaccepteerd) |    now     | parameter:EAN-code-generated | parameter:product |
-#            | GLN  | Verwerkt (Geaccepteerd) |    now     | 541447744780627402 | 541447744780627402-TK1-Elektriciteit Vast (TC_FIX_B2C) |
+

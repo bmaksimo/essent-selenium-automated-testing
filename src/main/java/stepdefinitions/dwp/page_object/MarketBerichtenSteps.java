@@ -4,6 +4,7 @@ import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.workflows.MarktBerichtenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import cucumber.api.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -12,6 +13,8 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.support.ui.FluentWait;
+
+import java.util.List;
 
 
 public class MarketBerichtenSteps extends DwpScenario {
@@ -98,10 +101,13 @@ public class MarketBerichtenSteps extends DwpScenario {
 
     }
 
-
-    @Then("^Marketbericht with EAN-CODE \"([^\"]*)\" and MODULE \"([^\"]*)\" is in STATUS \"([^\"]*)\" and has ED \"([^\"]*)\"$")
-    public void marketberichtWithEANCODEAndMODULEIsInSTATUSAndHasED(String eanCode, String modul, String status, String date) {
-        String ean = parameterProvider.getValueOrParameterAsString(eanCode);
+    @Then("Check marktbericht$")
+    public void checkMarktbericht(final DataTable dbTable) {
+        List<List<String>> info = dbTable.raw();
+        String ean = parameterProvider.getValueOrParameterAsString(info.get(1).get(0));
+        String modul = info.get(1).get(1);
+        String status = info.get(1).get(2);
+        String date = info.get(1).get(3);
         MarktBerichtenPage mp = new MarktBerichtenPage();
         if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht("1"))){
             Assert.assertEquals(modul,mp.getModulFromMarketbericht("2"));
