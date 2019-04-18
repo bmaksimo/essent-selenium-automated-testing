@@ -399,6 +399,7 @@ public class ContractPage extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath(PRODUCT_CONTRACT)).getText();
     }
 
+    //TODO
     public String checkValueOfInstallments(String optionListItem1, String optionListItem2, String optionListItem3) {
        seleniumDriver.waitForRequestsToFinish();
 
