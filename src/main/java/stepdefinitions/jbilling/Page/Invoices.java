@@ -26,6 +26,7 @@ public class Invoices extends JBillingScenario {
 		assertThat("Rows in invoice table are empty", success, is(true));
 	}
 
+
 	@Override
 	@After("@JBILLING, @B2B, @REGRESSION")
 	public void tearDown() {

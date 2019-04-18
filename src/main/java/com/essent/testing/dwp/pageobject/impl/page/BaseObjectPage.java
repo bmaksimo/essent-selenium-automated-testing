@@ -5,12 +5,13 @@ import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.NEXT_BUTTON;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.NEXT_BUTTON;
 
 public class BaseObjectPage extends Component {
 
@@ -46,6 +47,16 @@ public class BaseObjectPage extends Component {
 
         } catch (org.openqa.selenium.StaleElementReferenceException ex) {
             seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(xpathSubaction)));
+        }
+    }
+
+    public void plusSubactionNow(String actionValue) {
+        String xpathSubaction = createQuery(PLUS_MENU_XPATH, REPLACEMENT_KEY, actionValue);
+        try {
+            seleniumDriver.clickNow(seleniumDriver.findElementWhenVisible(By.xpath(xpathSubaction)));
+
+        } catch (org.openqa.selenium.StaleElementReferenceException ex) {
+            seleniumDriver.clickNow(seleniumDriver.findElementWhenVisible(By.xpath(xpathSubaction)));
         }
     }
 

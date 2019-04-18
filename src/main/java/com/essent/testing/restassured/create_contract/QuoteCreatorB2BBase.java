@@ -51,8 +51,6 @@ public class QuoteCreatorB2BBase {
 	protected String generatedIban = "";
 	protected String paymentDetailsId = "";
 
-
-	// It is set this date, because for this date we have tariff, tariff prices, ...
 	protected String pricingDate = "";
 	protected String priceValidUntilDate = "";
 	protected String signatureReceivedDate = "";
@@ -439,7 +437,7 @@ public class QuoteCreatorB2BBase {
 		formParams.put("model[recordTypeOfRecordId]", "Paym_Details");
 		formParams.put("model[recordId]", bilingCustomerId);
 		formParams.put("model[baseModule]", "Paym_Details");
-		formParams.put("model[dwp|recordType]", "Accounts");
+		formParams.put("model[dwp|recordType]", "AccountsAsQuotes");
 		formParams.put("model[accounts|id]", recordId);
 		formParams.put("model[dwp|id]", recordId);
 		formParams.put("model[id]", bilingCustomerId);

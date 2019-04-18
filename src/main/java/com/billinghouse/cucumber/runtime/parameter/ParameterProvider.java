@@ -28,6 +28,18 @@ public class ParameterProvider {
         return (String)getValueOrParameter(value).toString();
     }
 
+    public Integer getValueOrParameterAsInt(String value) {
+        Object expectedIntParameter  = getValueOrParameter(value);
+        if(expectedIntParameter instanceof Number) {
+            return ((Number)expectedIntParameter).intValue();
+        }
+        try {
+            return Integer.parseInt(expectedIntParameter.toString());
+        } catch (NumberFormatException nfe) {
+            throw new CucumberException("Input parameter " + expectedIntParameter + " doesn't have supported number format");
+        }
+    }
+
     public Object getValueOrParameter(String value) {
         if (value.startsWith(TEST_PARAMETER_PREFIX)) {
             String key = StringUtils.replace(value, TEST_PARAMETER_PREFIX, "", 1);

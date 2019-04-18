@@ -37,6 +37,7 @@ public class ContractSteps extends DwpScenario {
 
     @And("^Contract plus and \"([^\"]*)\"$")
     public void contractPlusAnd(String subaction) {
+        seleniumDriver.waitForRequestsToFinish();
         ContractPage cp = new ContractPage();
         cp.contractPlus();
         BaseObjectPage baseObject = new BaseObjectPage();
@@ -45,6 +46,7 @@ public class ContractSteps extends DwpScenario {
 
     @And("^Amount values is \"([^\"]*)\"$")
     public void amountValuesIs(String value) {
+        seleniumDriver.waitForRequestsToFinish();
         ContractPage cp = new ContractPage();
         cp.changeAmount(value);
         amount = value;

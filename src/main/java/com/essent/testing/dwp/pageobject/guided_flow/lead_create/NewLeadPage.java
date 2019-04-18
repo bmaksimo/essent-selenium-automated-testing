@@ -24,7 +24,7 @@ public class NewLeadPage extends BaseObjectPage implements Form {
         setMobile(table.get(1).get(4));
         setEmail(table.get(1).get(5));
         seleniumDriver.waitForRequestsToFinish();
-        tg.clickCheckbox(box);
+        tg.switchOn(box);
         seleniumDriver.waitForRequestsToFinish();
         saveLead();
         seleniumDriver.waitForRequestsToFinish();

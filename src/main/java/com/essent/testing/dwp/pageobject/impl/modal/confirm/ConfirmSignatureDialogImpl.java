@@ -6,7 +6,6 @@ import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.elements.ButtonImpl;
 import com.essent.testing.dwp.pageobject.modal.confirm.ConfirmSignatureDialog;
 import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 
 public class ConfirmSignatureDialogImpl extends Component implements ConfirmSignatureDialog {
