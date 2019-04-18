@@ -43,38 +43,39 @@ public class ViewListChecks extends NavigationElements {
     private static final String PLUS_ACTION = "Plus ActionDTO";
 
     private class ViewListNavigation {
-	public void goToLink(String linkText) {
-	    seleniumDriver.waitForRequestsToFinish();
-	    WebElement link = seleniumDriver.findElement(By.linkText(linkText));
-	    link.click();
-	}
+        public void goToLink(String linkText) {
+            seleniumDriver.waitForRequestsToFinish();
+            WebElement link = seleniumDriver.findElement(By.linkText(linkText));
+            link.click();
+        }
     }
 
     private class CheckViewListHeader implements Predicate<String> {
-	@Override
-	public boolean test(String header) {
-	    int sec = 2;
-	    Map<String, Object> options = new HashMap<>();
-	    options.put("schedule_seconds", sec);
-	    options.put("header", header);
-	    return executeJavascriptTest("TrCheckViewListHeader", options);
-	}
+        @Override
+        public boolean test(String header) {
+            int sec = 2;
+            Map<String, Object> options = new HashMap<>();
+            options.put("schedule_seconds", sec);
+            options.put("header", header);
+            return executeJavascriptTest("TrCheckViewListHeader", options);
+        }
     }
 
     private class GetListAction implements Predicate<String> {
-	@Override
-	public boolean test(String name) {
-	    Map<String, Object> options = new HashMap<>();
-	    options.put("name", name);
-	    return executeJavascriptTest("TrGetListAction", options);
-	}
+        @Override
+        public boolean test(String name) {
+            Map<String, Object> options = new HashMap<>();
+            options.put("name", name);
+            return executeJavascriptTest("TrGetListAction", options);
+        }
     }
 
     /**
      * The class is deprecated.
      * Please, don't amend it.
-     *
+     * <p>
      * Replacement code is
+     *
      * @see ViewListTestObject
      * Switch your logic to
      * @see ViewListTestObject
@@ -82,33 +83,33 @@ public class ViewListChecks extends NavigationElements {
      * @deprecated
      */
     @Deprecated
-    private class ViewListModel implements ViewList  {
+    private class ViewListModel implements ViewList {
 
-    private DefaultTableModel getViewTableModel() {
-	    DefaultTableModel tableModel = new DefaultTableModel();
-	    return getDefaultTableModel(tableModel, new HashMap<>());
-	}
+        private DefaultTableModel getViewTableModel() {
+            DefaultTableModel tableModel = new DefaultTableModel();
+            return getDefaultTableModel(tableModel, new HashMap<>());
+        }
 
-	private DefaultTableModel getViewTableModel(String tableName) {
-	    DefaultTableModel tableModel = new DefaultTableModel();
-	    HashMap<Object, Object> options = new HashMap<>();
-	    options.put("list_header", tableName);
-	    return getDefaultTableModel(tableModel, options);
-	}
+        private DefaultTableModel getViewTableModel(String tableName) {
+            DefaultTableModel tableModel = new DefaultTableModel();
+            HashMap<Object, Object> options = new HashMap<>();
+            options.put("list_header", tableName);
+            return getDefaultTableModel(tableModel, options);
+        }
 
-	private DefaultTableModel getDefaultTableModel(DefaultTableModel tableModel, HashMap<Object, Object> options) {
-	    Map viewTable = executeJavascriptMethod("TrGetTableModel", options);
-	    List columnNames = (List) viewTable.get("column_names");
-	    List rows = getData(viewTable);
-	    tableModel.setColumnIdentifiers(columnNames.toArray());
-	    for (Object row1 : rows) {
-		Object[] row = ((List) row1).toArray();
-		tableModel.addRow(row);
-	    }
-	    return tableModel;
-	}
+        private DefaultTableModel getDefaultTableModel(DefaultTableModel tableModel, HashMap<Object, Object> options) {
+            Map viewTable = executeJavascriptMethod("TrGetTableModel", options);
+            List columnNames = (List) viewTable.get("column_names");
+            List rows = getData(viewTable);
+            tableModel.setColumnIdentifiers(columnNames.toArray());
+            for (Object row1 : rows) {
+                Object[] row = ((List) row1).toArray();
+                tableModel.addRow(row);
+            }
+            return tableModel;
+        }
 
-    private void logTableModel(DefaultTableModel viewTableModel) {
+        private void logTableModel(DefaultTableModel viewTableModel) {
             int columnCount = viewTableModel.getColumnCount();
             StringBuilder columns = new StringBuilder("[");
             for (int i = 0; i < columnCount; i++) {
@@ -119,143 +120,143 @@ public class ViewListChecks extends NavigationElements {
             columns.append("]");
             logger().info("- RESULT: Columns: " + columns.toString());
             logger().info("- RESULT: Data vector: " + viewTableModel.getDataVector());
-     }
+        }
 
-    private List<List> getData(Map viewTable) {
+        private List<List> getData(Map viewTable) {
             return (List) viewTable.get("rows");
         }
 
-    private int getColumnNameIndex(String columnName, Map viewTable) {
+        private int getColumnNameIndex(String columnName, Map viewTable) {
             List<String> columnNames = (List) viewTable.get("column_names");
             return columnNames.indexOf(columnName);
-    }
+        }
 
-	public boolean containsDataAt(int row, String value, String columnName) {
-	    String cell = getCellValueAt(row, columnName);
-	    boolean success = cell.contains(value);
-	    return success;
-	}
+        public boolean containsDataAt(int row, String value, String columnName) {
+            String cell = getCellValueAt(row, columnName);
+            boolean success = cell.contains(value);
+            return success;
+        }
 
-	public boolean containsCellValue(int rowFromOne, String value, String columnName, String tableName) {
-	    String cell = getValueAt(rowFromOne, columnName, tableName);
-	    boolean success = cell.contains(value);
-	    return success;
-	}
+        public boolean containsCellValue(int rowFromOne, String value, String columnName, String tableName) {
+            String cell = getValueAt(rowFromOne, columnName, tableName);
+            boolean success = cell.contains(value);
+            return success;
+        }
 
-	public boolean selectListRow(int row) {
-	    Map<String, Object> options = new HashMap<>();
-	    options.put("index", row);
-	    boolean success = executeJavascriptTest("TrSelectListRow", options);
-	    return success;
-	}
+        public boolean selectListRow(int row) {
+            Map<String, Object> options = new HashMap<>();
+            options.put("index", row);
+            boolean success = executeJavascriptTest("TrSelectListRow", options);
+            return success;
+        }
 
-	public boolean openListPlusActions(int row) {
-	    Map<String, Object> options = new HashMap<>();
-	    options.put("index", row);
-	    boolean success = executeJavascriptTest("TrOpenListPlusActions", options);
-	    return success;
-	}
+        public boolean openListPlusActions(int row) {
+            Map<String, Object> options = new HashMap<>();
+            options.put("index", row);
+            boolean success = executeJavascriptTest("TrOpenListPlusActions", options);
+            return success;
+        }
 
-	public List<Integer> fetchListRowsIndices(String value, String columnName) {
-	    Map viewTable = executeJavascriptMethod("TrGetTableModel", new HashMap<>());
-	    int index = getColumnNameIndex(columnName, viewTable);
-	    if (index < 0) {
-		fail(String.format("View List did not contain column %s", columnName));
-	    }
-	    List<List> rows = getData(viewTable);
-	    AtomicInteger idx = new AtomicInteger(1);
-	    List<Integer> collect = IntStream.range(1, rows.size() + 1).filter(
-		    i -> idx.compareAndSet(i, i + 1) & ((ArrayList<String>) rows.get(i - 1)).get(index).contains(value))
-		    .boxed().collect(Collectors.toList());
-	    return collect;
-	}
+        public List<Integer> fetchListRowsIndices(String value, String columnName) {
+            Map viewTable = executeJavascriptMethod("TrGetTableModel", new HashMap<>());
+            int index = getColumnNameIndex(columnName, viewTable);
+            if (index < 0) {
+                fail(String.format("View List did not contain column %s", columnName));
+            }
+            List<List> rows = getData(viewTable);
+            AtomicInteger idx = new AtomicInteger(1);
+            List<Integer> collect = IntStream.range(1, rows.size() + 1).filter(
+                i -> idx.compareAndSet(i, i + 1) & ((ArrayList<String>) rows.get(i - 1)).get(index).contains(value))
+                .boxed().collect(Collectors.toList());
+            return collect;
+        }
 
-	public boolean selectListRow(int row, String value, String columnName) {
-	    List<Integer> indices = fetchListRowsIndices(value, columnName);
-	    return indices.size() > 0 && row <= indices.size();
-	}
+        public boolean selectListRow(int row, String value, String columnName) {
+            List<Integer> indices = fetchListRowsIndices(value, columnName);
+            return indices.size() > 0 && row <= indices.size();
+        }
 
-	public boolean selectListRows(int numRows, String value, String columnName) {
-	    List<Integer> rows = fetchListRowsIndices(value, columnName);
-	    if (numRows > rows.size()) {
-		return false;
-	    }
-	    List<Integer> indices = IntStream.range(1, numRows + 1).boxed().collect(Collectors.toList());
-	    Map<String, Object> options = new HashMap<>();
-	    options.put("indices", indices);
-	    boolean success = executeJavascriptTest("TrSelectListRows", options, true);
-	    return success;
-	}
+        public boolean selectListRows(int numRows, String value, String columnName) {
+            List<Integer> rows = fetchListRowsIndices(value, columnName);
+            if (numRows > rows.size()) {
+                return false;
+            }
+            List<Integer> indices = IntStream.range(1, numRows + 1).boxed().collect(Collectors.toList());
+            Map<String, Object> options = new HashMap<>();
+            options.put("indices", indices);
+            boolean success = executeJavascriptTest("TrSelectListRows", options, true);
+            return success;
+        }
 
-	public List<String> fetchDataSelection(String columnName) {
-	    Map<String, Object> options = new HashMap<>();
-	    options.put("include_selection", true);
-	    Map viewTable = executeJavascriptMethod("TrFetchDataSelection", options);
-	    int index = getColumnNameIndex(columnName, viewTable);
-	    if (index < 0) {
-		fail(String.format("View List did not contain column %s", columnName));
-	    }
-	    List<List> rows = getData(viewTable);
-	    List selection;
-	    selection = rows.stream().map((e) -> e.get(index)).collect(Collectors.toList());
-	    return selection;
-	}
+        public List<String> fetchDataSelection(String columnName) {
+            Map<String, Object> options = new HashMap<>();
+            options.put("include_selection", true);
+            Map viewTable = executeJavascriptMethod("TrFetchDataSelection", options);
+            int index = getColumnNameIndex(columnName, viewTable);
+            if (index < 0) {
+                fail(String.format("View List did not contain column %s", columnName));
+            }
+            List<List> rows = getData(viewTable);
+            List selection;
+            selection = rows.stream().map((e) -> e.get(index)).collect(Collectors.toList());
+            return selection;
+        }
 
-	public List<String> fetchColumnData(String table, String columnName) {
-	    return fetchColumnDataNow(table, columnName, false);
-	}
+        public List<String> fetchColumnData(String table, String columnName) {
+            return fetchColumnDataNow(table, columnName, false);
+        }
 
-	public List<String> fetchColumnDataNow(String table, String columnName, boolean immediate) {
-	    Map<String, Object> options = new HashMap<>();
-	    options.put("include_selection", false);
-	    options.put("table", table);
+        public List<String> fetchColumnDataNow(String table, String columnName, boolean immediate) {
+            Map<String, Object> options = new HashMap<>();
+            options.put("include_selection", false);
+            options.put("table", table);
 
-	    Map viewTable = immediate ? executeJavascriptMethodImmediately("TrFetchDataSelection", options)
-		    : executeJavascriptMethod("TrFetchDataSelection", options);
+            Map viewTable = immediate ? executeJavascriptMethodImmediately("TrFetchDataSelection", options)
+                : executeJavascriptMethod("TrFetchDataSelection", options);
 
-	    int index = getColumnNameIndex(columnName, viewTable);
-	    if (index < 0) {
-		fail(String.format("View List did not contain column %s", columnName));
-	    }
-	    List<List> rows = getData(viewTable);
-	    List selection;
-	    selection = rows.stream().map((e) -> e.get(index)).collect(Collectors.toList());
-	    return selection;
-	}
+            int index = getColumnNameIndex(columnName, viewTable);
+            if (index < 0) {
+                fail(String.format("View List did not contain column %s", columnName));
+            }
+            List<List> rows = getData(viewTable);
+            List selection;
+            selection = rows.stream().map((e) -> e.get(index)).collect(Collectors.toList());
+            return selection;
+        }
 
-	private String getCellValueAt(int row, String columnName) {
-	    logger().info("STEP: JAVASCRIPT_FETCH_DATA");
-	    Map viewTable = executeJavascriptMethod("TrGetTableModel", new HashMap<>());
-	    logger().info(" - RESULT: " + viewTable);
-	    int index = getColumnNameIndex(columnName, viewTable);
-	    if (index < 0) {
-		throw new CucumberException(String.format("View List did not contain column \"%s\"", columnName));
-	    }
-	    List<List> rows = getData(viewTable);
-	    if (rows.size() == 0) {
-		throw new CucumberException("--  Table is empty.");
-	    }
-	    if (row > rows.size()) {
-		throw new CucumberException(String
-			.format("--  Row number \"%s\" was greater than actual table size \"%s\"", row, rows.size()));
-	    }
-	    List currentRow = rows.get(row - 1);
-	    return (String) currentRow.get(index);
-	}
+        private String getCellValueAt(int row, String columnName) {
+            logger().info("STEP: JAVASCRIPT_FETCH_DATA");
+            Map viewTable = executeJavascriptMethod("TrGetTableModel", new HashMap<>());
+            logger().info(" - RESULT: " + viewTable);
+            int index = getColumnNameIndex(columnName, viewTable);
+            if (index < 0) {
+                throw new CucumberException(String.format("View List did not contain column \"%s\"", columnName));
+            }
+            List<List> rows = getData(viewTable);
+            if (rows.size() == 0) {
+                throw new CucumberException("--  Table is empty.");
+            }
+            if (row > rows.size()) {
+                throw new CucumberException(String
+                    .format("--  Row number \"%s\" was greater than actual table size \"%s\"", row, rows.size()));
+            }
+            List currentRow = rows.get(row - 1);
+            return (String) currentRow.get(index);
+        }
 
-	public String getValueAt(int row, String columnName, String tableName) {
-	    logger().info("STEP: JAVASCRIPT_FETCH_DATA");
-	    HashMap<Object, Object> options = new HashMap<>();
-	    options.put("list_header", tableName);
-	    DefaultTableModel viewTableModel = getViewTableModel(tableName);
-	    logger().info(" - RESULT: Table name: " + tableName);
-	    logTableModel(viewTableModel);
-	    int column = viewTableModel.findColumn(columnName);
-	    if (column < 0)
-		throw new CucumberException(String.format("View List did not contain column %s", columnName));
-	    return (String) viewTableModel.getValueAt(row - 1, column);
+        public String getValueAt(int row, String columnName, String tableName) {
+            logger().info("STEP: JAVASCRIPT_FETCH_DATA");
+            HashMap<Object, Object> options = new HashMap<>();
+            options.put("list_header", tableName);
+            DefaultTableModel viewTableModel = getViewTableModel(tableName);
+            logger().info(" - RESULT: Table name: " + tableName);
+            logTableModel(viewTableModel);
+            int column = viewTableModel.findColumn(columnName);
+            if (column < 0)
+                throw new CucumberException(String.format("View List did not contain column %s", columnName));
+            return (String) viewTableModel.getValueAt(row - 1, column);
 
-	}
+        }
 
         @Override
         public String getCurrencyValueAt(int row, String columnName, String tableName) {
@@ -265,55 +266,55 @@ public class ViewListChecks extends NavigationElements {
     }
 
     private class ClickTableCellUrl implements Predicate<Map> {
-	@Override
-	public boolean test(Map options) {
-	    String viewList = (String) options.get("view_list_name");
-	    if (null == viewList)
-		return executeJavascriptTest("TrClickTableCellUrl", options);
-	    return testKnownColumns(viewList, options, (String) options.get("column"));
-	}
+        @Override
+        public boolean test(Map options) {
+            String viewList = (String) options.get("view_list_name");
+            if (null == viewList)
+                return executeJavascriptTest("TrClickTableCellUrl", options);
+            return testKnownColumns(viewList, options, (String) options.get("column"));
+        }
 
-	public boolean testNow(Map options) {
-	    String viewList = (String) options.get("view_list_name");
-	    if (null == viewList)
-		return executeJavascriptTestImmediately("TrClickTableCellUrl", options, true);
-	    return testKnownColumns(viewList, options, (String) options.get("column"));
-	}
+        public boolean testNow(Map options) {
+            String viewList = (String) options.get("view_list_name");
+            if (null == viewList)
+                return executeJavascriptTestImmediately("TrClickTableCellUrl", options, true);
+            return testKnownColumns(viewList, options, (String) options.get("column"));
+        }
 
-	private boolean testKnownColumns(String viewList, Map options, String column) {
-	    if (PLUS_ACTION.equalsIgnoreCase(column)) {
-		if (MARKET_MESSAGES_VIEW_LIST.equalsIgnoreCase(viewList))
-		    return executeJavascriptTest("TrPlusActionInMarketMessageTable", options);
-		else if (BILLING_CUSTOMER_VIEW_LIST.equalsIgnoreCase(viewList))
-		    return executeJavascriptTest("TrPlusActionInBillingCustomerTable", options);
-		else
-		    throw new IllegalArgumentException(String.format(
-			    "Table \"%s\" has no implementation. Please use an implemented table or implement a new one.",
-			    viewList));
-	    }
-	    return false;
-	}
+        private boolean testKnownColumns(String viewList, Map options, String column) {
+            if (PLUS_ACTION.equalsIgnoreCase(column)) {
+                if (MARKET_MESSAGES_VIEW_LIST.equalsIgnoreCase(viewList))
+                    return executeJavascriptTest("TrPlusActionInMarketMessageTable", options);
+                else if (BILLING_CUSTOMER_VIEW_LIST.equalsIgnoreCase(viewList))
+                    return executeJavascriptTest("TrPlusActionInBillingCustomerTable", options);
+                else
+                    throw new IllegalArgumentException(String.format(
+                        "Table \"%s\" has no implementation. Please use an implemented table or implement a new one.",
+                        viewList));
+            }
+            return false;
+        }
     }
 
     private class ClickTableRowAction implements Predicate<Map> {
-	@Override
-	public boolean test(Map options) {
-	    return executeJavascriptTest("TrClickTableRowAction", options);
-	}
+        @Override
+        public boolean test(Map options) {
+            return executeJavascriptTest("TrClickTableRowAction", options);
+        }
     }
 
     private class CheckEmptyTableAction implements Predicate<Map> {
-	@Override
-	public boolean test(Map options) {
-	    return executeJavascriptTest("TrCheckEmptyTable", options);
-	}
+        @Override
+        public boolean test(Map options) {
+            return executeJavascriptTest("TrCheckEmptyTable", options);
+        }
     }
 
     private class CheckFirstRowByOption implements Predicate<Map> {
-	@Override
-	public boolean test(Map options) {
-	    return executeJavascriptTest("TrCheckFirstRowByOption", options);
-	}
+        @Override
+        public boolean test(Map options) {
+            return executeJavascriptTest("TrCheckFirstRowByOption", options);
+        }
     }
 
     private Map<String, String> getColumnIndexListOptions(String column, String viewListName, String ordinal) {
@@ -324,16 +325,16 @@ public class ViewListChecks extends NavigationElements {
 
         if (PLUS_ACTION.equalsIgnoreCase(column)) {
             if (MARKET_MESSAGES.equalsIgnoreCase(viewListName))
-            columnIndexListOptions.put("view_list_name", MARKET_MESSAGES_VIEW_LIST);
+                columnIndexListOptions.put("view_list_name", MARKET_MESSAGES_VIEW_LIST);
             else if (BILLING_CUSTOMER.equalsIgnoreCase(viewListName))
-            columnIndexListOptions.put("view_list_name", BILLING_CUSTOMER_VIEW_LIST);
+                columnIndexListOptions.put("view_list_name", BILLING_CUSTOMER_VIEW_LIST);
         }
         return columnIndexListOptions;
     }
 
     @Before("@DWP, @CORE, @E2E, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
-	    registerActiveScenario(scenario);
+        registerActiveScenario(scenario);
     }
 
     @When("^View list header is \"([^\"]*)\"$")
@@ -383,7 +384,7 @@ public class ViewListChecks extends NavigationElements {
     public void clickOnViewListAtRowAndColumn(String ordinal, String column, int seconds) throws Throwable {
         seleniumDriver.waitForRequestsToFinish();
         FluentWait<ClickTableCellUrl> waiter = waiter(new ClickTableCellUrl(), seconds, 5)
-           .withMessage(String.format("Failed click on link in view list at \"%s\" row and \"%s\" column within \"%s\" seconds", ordinal, column, seconds));
+            .withMessage(String.format("Failed click on link in view list at \"%s\" row and \"%s\" column within \"%s\" seconds", ordinal, column, seconds));
         waiter.until((ClickTableCellUrl callback) -> callback.test(getColumnIndexListOptions(column, null, ordinal)));
         logger().info(String.format("- STEP: Click on link in view list at \"%s\" row and \"%s\" column within \"%s\" seconds - PASSED.", ordinal, column, seconds));
         seleniumDriver.waitForRequestsToFinish();
@@ -397,7 +398,7 @@ public class ViewListChecks extends NavigationElements {
 
     @When("^Click on link in \"([^\"]*)\" View List at \"([^\"]*)\" row and \"([^\"]*)\" column$")
     public void clickOnSuppliedViewListAtRowAndColumn(String viewListName, String ordinal, String column)
-	    throws Throwable {
+        throws Throwable {
         Map<String, String> columnIndexListOptions = getColumnIndexListOptions(column, viewListName, ordinal);
         FluentWait<ClickTableCellUrl> waiter = waiter(new ClickTableCellUrl(), 60, 5)
             .withMessage(String.format("Failed click on link in view list \"%s\" at \"%s\" row and \"%s\" column",
@@ -433,7 +434,7 @@ public class ViewListChecks extends NavigationElements {
 
     @And("^Table \"([^\"]*)\" contains cell value \"([^\"]*)\" at column \"([^\"]*)\" on \"([^\"]*)\" row$")
     public void listElementWithFromTable(String tableName, String value, String columnName, String ordinal)
-	    throws Throwable {
+        throws Throwable {
         int row = extractNumericValue(ordinal);
         String expectedValue = parameterProvider.getValueOrParameterAsString(value);
         FluentWait<ViewListModel> waiter = waiter(new ViewListModel(), 30, 1);
@@ -484,9 +485,9 @@ public class ViewListChecks extends NavigationElements {
         logger().info(String.format(
             "\"- STEP: \"%s\" list element did not have cell value \"%s\" at column \"%s\" within \"%s\" seconds - PASSED.",
             ordinal, expectedValue, columnName, seconds));
-        }
+    }
 
-        private void loopBack(String arrow, String dashboardMenu) {
+    private void loopBack(String arrow, String dashboardMenu) {
         try {
             clickTopArrow(arrow);
             clickDashboardMenu(dashboardMenu);
@@ -497,7 +498,7 @@ public class ViewListChecks extends NavigationElements {
 
     @And("^\"([^\"]*)\" list element has status \"([^\"]*)\" at column \"([^\"]*)\" within (\\d+) seconds? refreshing \"([^\"]*)\"$")
     public void refreshTillVisible(String ordinal, String status, String columnName, int seconds, String linkText)
-	    throws Throwable {
+        throws Throwable {
         int row = extractNumericValue(ordinal);
         String expectedValue = parameterProvider.getValueOrParameterAsString(status);
         FluentWait<ViewListModel> waiter = waiter(new ViewListModel(), seconds, 5);
@@ -514,7 +515,7 @@ public class ViewListChecks extends NavigationElements {
     // refreshing "REFRESH MARKTBERICHTEN"
     @When("^First list element with value \"([^\"]*)\" at column \"([^\"]*)\" has status \"([^\"]*)\" at column \"([^\"]*)\" within (\\d+) seconds refreshing \"([^\"]*)\"$")
     public void hasStatusWithinTimeout(String value, String columnName, String status, String secondColumnName,
-	    int seconds, String linkText) throws Throwable {
+                                       int seconds, String linkText) throws Throwable {
         String expectedValue = parameterProvider.getValueOrParameterAsString(value);
         FluentWait<ViewListModel> waiter = waiter(new ViewListModel(), seconds / 2, 5);
         waiter.withMessage(String.format("Status did not switch to \"%s\" within \"%s\" seconds", status, seconds));
@@ -555,8 +556,8 @@ public class ViewListChecks extends NavigationElements {
             ordinal, columnName));
     }
 
-  @Then("^\"([^\"]*)\" list element with date interval at column \"([^\"]*)\" from table \"([^\"]*)\" is \"([^\"]*)\"$")
-  public void checkDateIntervalTableCell(String ordinal, String columnName, String tableName, String interval) throws Throwable {
+    @Then("^\"([^\"]*)\" list element with date interval at column \"([^\"]*)\" from table \"([^\"]*)\" is \"([^\"]*)\"$")
+    public void checkDateIntervalTableCell(String ordinal, String columnName, String tableName, String interval) throws Throwable {
         int row = extractNumericValue(ordinal);
         String value = new ViewListTestObject().getValueAt(row, columnName, tableName);
         boolean success = StringUtils.isNotBlank(value);
@@ -593,13 +594,13 @@ public class ViewListChecks extends NavigationElements {
             tableName, columnName));
     }
 
-  @And(
-      "^\"([^\"]*)\" element of table \"([^\"]*)\" at currency column \"([^\"]*)\" is sum of$")
-  public void checkCurrencyAmountDableDataAsSum(String ordinal, String table, String columnName, final DataTable subAmounts)
-      throws Throwable {
+    @And(
+        "^\"([^\"]*)\" element of table \"([^\"]*)\" at currency column \"([^\"]*)\" is sum of$")
+    public void checkCurrencyAmountDableDataAsSum(String ordinal, String table, String columnName, final DataTable subAmounts)
+        throws Throwable {
         seleniumDriver.waitForRequestsToFinish();
         int row = extractNumericValue(ordinal);
-        String currencyValue =  new ViewListTestObject().getCurrencyValueAt(row, columnName, table);
+        String currencyValue = new ViewListTestObject().getCurrencyValueAt(row, columnName, table);
         boolean success = StringUtils.isNotBlank(currencyValue);
         assertThat(String.format("\"%s\" list element didn't contain any value at column \"%s\"", ordinal, columnName),
             success, is(true));
@@ -663,7 +664,7 @@ public class ViewListChecks extends NavigationElements {
 
     @And("^List View action is \"([^\"]*)\"$")
     public void getListAction(String name) throws Throwable {
-	    boolean success = new GetListAction().test(name);
+        boolean success = new GetListAction().test(name);
         assertThat(String.format("List action \"%s\" is undefined.", name), success, is(true));
         logger().info(String.format("- STEP: List view action is \"%s\" - PASSED.", name));
     }
@@ -688,8 +689,8 @@ public class ViewListChecks extends NavigationElements {
         String message = String.format("Input value \"%s\" didn't contain any numeric substring", input);
         if (possibleAccountNumbers.length > 1) {
             for (int i = 0; i < possibleAccountNumbers.length - 1; i++) {
-            if (StringUtils.isNumeric(possibleAccountNumbers[i]))
-                return possibleAccountNumbers[i];
+                if (StringUtils.isNumeric(possibleAccountNumbers[i]))
+                    return possibleAccountNumbers[i];
             }
             throw new CucumberException(String.format("Input value \"%s\" didn't contain any numeric substring"));
         }
@@ -754,7 +755,7 @@ public class ViewListChecks extends NavigationElements {
 
     @And("^\"([^\"]*)\" in the first \"([^\"]*)\" row of \"([^\"]*)\" table is \"([^\"]*)\"$")
     public void firstRowByOptionContains(String columnToSearch, String optionToSearch, String list,
-	    String textToCheck) {
+                                         String textToCheck) {
         Map<String, String> options = new HashMap<>();
         options.put("column", columnToSearch);
         options.put("option", optionToSearch);
@@ -762,7 +763,7 @@ public class ViewListChecks extends NavigationElements {
         options.put("text", textToCheck);
         boolean success = new CheckFirstRowByOption().test(options);
         assertThat(String.format("The column cannot be found, no rows were found or value does not match"
-            + "the one requested. Please check all the parameters passed, remember that they are case sensitive!"),
+                + "the one requested. Please check all the parameters passed, remember that they are case sensitive!"),
             success, is(true));
         logger().info(String.format("- STEP: \"%s\" in the first \"%s\" row of \"%s\" table is \"%s\" - PASSED.",
             columnToSearch, optionToSearch, list, textToCheck));
@@ -770,12 +771,12 @@ public class ViewListChecks extends NavigationElements {
 
     @And("^Wait for (\\d+) seconds$")
     public void waitForSeconds(int seconds) {
-	    Sleeper.sleepTightInSeconds(seconds);
+        Sleeper.sleepTightInSeconds(seconds);
     }
 
     @Override
     @After("@DWP, @CORE, @E2E, @REGRESSION")
     public void tearDown() {
-	    super.tearDown();
+        super.tearDown();
     }
 }
