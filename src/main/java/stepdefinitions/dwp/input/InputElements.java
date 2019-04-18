@@ -1,6 +1,7 @@
 package stepdefinitions.dwp.input;
 
 import com.essent.automation.util.Sleeper;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -247,6 +248,18 @@ public class InputElements extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
 
     }
+
+    @And("New Amount Invoice is \"([^\"]*)\" for EAN \"([^\"]*)\"$")
+    public void setInputByEanLabel(String value, String EAN) {
+        seleniumDriver.waitForRequestsToFinish();
+        ContractPage cp = new ContractPage();
+        String ean = parameterProvider.getValueOrParameterAsString(EAN);
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
+        parameterProvider.put("inputValue", inputValue);
+        cp.getElementByEanNewInvoiceAmount(ean, value);
+        seleniumDriver.waitForRequestsToFinish();
+    }
+
 
     /**
      * Cucumber-JVM  Aftrer- hook

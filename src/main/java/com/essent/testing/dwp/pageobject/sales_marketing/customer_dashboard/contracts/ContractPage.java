@@ -32,6 +32,10 @@ public class ContractPage extends Component {
     private static final String FIRST_PAYMENT_PLAN_INSTALLMENT = "//list-dropdown-cell//option[2]";
     private static final String SECOND_PAYMENT_PLAN_INSTALLMENT = "//list-dropdown-cell//option[3]";
     private static final String THIRD_PAYMENT_PLAN_INSTALLMENT = "//list-dropdown-cell//option[4]";
+    private static final String SALDO_CREDIT_INVOICE = "total-amount-open-field";
+    private static final String OLD_INVOICE_VKM = "//list[@list-key='TransactionsOnAccount']//tr[1]//td[5]//span[1]";
+    private static final String NEW_INVOICE_CREDIT = "//list[@list-key='TransactionsOnAccount']//tr[3]//td[5]//span[1]";
+    private static final String EAN_LOCATOR_INVOICE_AMOUNT = "dwp-ean-'${" + REPLACEMENT_KEY + "}'-field";
 
     private WebElement startData() {
         return seleniumDriver.findElementWhenVisible(By.id(START_DATA_ID));
@@ -434,6 +438,33 @@ public class ContractPage extends Component {
 
         return (str1+str2+str3);
     }
+
+    public String getSaldo() {
+        seleniumDriver.waitForRequestsToFinish();
+        return seleniumDriver.findElementWhenVisible(By.id(SALDO_CREDIT_INVOICE)).getText();
+    }
+
+    public String getOldInvoiceValue() {
+       return seleniumDriver.findElementWhenVisible(By.xpath(OLD_INVOICE_VKM)).getText();
+
+    }
+
+    public String getNewInvoiceValue() {
+        String newInvoice = seleniumDriver.findElementWhenVisible(By.xpath(NEW_INVOICE_CREDIT)).getText();
+        StringBuilder stb = new StringBuilder(newInvoice);
+        stb.deleteCharAt(0);
+        return stb.toString();
+
+    }
+
+    public void getElementByEanNewInvoiceAmount(String ean, String value) {
+//        String Action = createQuery(EAN_LOCATOR_INVOICE_AMOUNT, REPLACEMENT_KEY, ean);
+//        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id(Action)), value);
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id("dwp-ean-" + ean + "-field")), value);
+//        return Action;
+
+    }
+
 
 
 }

@@ -2,6 +2,7 @@ package stepdefinitions.dwp.view_list;
 
 import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.essent.automation.util.Sleeper;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -705,6 +706,25 @@ public class ViewListChecks extends NavigationElements {
 	logger().info(String.format("- STEP: \"%s\" in the first \"%s\" row of \"%s\" table is \"%s\" - PASSED.",
 		columnToSearch, optionToSearch, list, textToCheck));
     }
+
+    @Then("^Saldo is \"([^\"]*)\"$")
+    public void checkValue (String expectedSaldo) {
+        ContractPage cp = new ContractPage();
+//        parameterProvider.getValueOrParameterAsString(expectedSaldo);
+        String actualSaldo = cp.getSaldo();
+        assertThat(String.format("Actual credit invoice \"%s\" differs from the expected one \"%s\" on saldo", actualSaldo, expectedSaldo), expectedSaldo, containsString(actualSaldo));
+        logger().info(String.format("- STEP: Saldo \"%s\" is correct - PASSED.", expectedSaldo));
+    }
+
+    @Then("Old invoice has same value as new credit invoice$")
+    public void compareOldToNewInvoice () {
+     ContractPage cp = new ContractPage();
+     String oldInvoiceValue = cp.getOldInvoiceValue();
+     String newInvoiceValue = cp.getNewInvoiceValue();
+     assertThat(String.format("New credit invoice \"%s\" differs from the old one \"%s\" ", newInvoiceValue, oldInvoiceValue), oldInvoiceValue, equalTo(newInvoiceValue));
+
+    }
+
 
     @And("^Wait for (\\d+) seconds$")
     public void waitForSeconds(int seconds) {

@@ -33,7 +33,7 @@ Feature: Credit Invoice NSTA-345
         Then Form header is "Connection details"
 
         And EAN code is generated
-        And "Startdatum" date is "now"
+        And "Startdatum" date is "35 days before now"
         And "EAN-code" input is "parameter:EAN-code-generated"
         And  Option "test" is On
         And Connection details are confirmed
@@ -60,6 +60,56 @@ Feature: Credit Invoice NSTA-345
         When Dashboard menu is "Service"
         Then View list header is "Interacties"
         Then Click on link in View List at "1st" row and "Nummer & Communicatiekanaal" column polling 20 seconds
+
+        #2 - invoice run advance
+        Given I renew login to DWP as "billing.testautomation@essent.be"
+        When Left menu is "billing"
+        And Top menu item is "Klanten"
+        And Top action is "Filters"
+        And "Naam" input is "parameter:suitecrm-customer-name"
+        Given View List element "Id Billing customer & persoon/familie sleutel" is collected as parameter at "1st" list row
+        And View List element "Klantnummer & Naam" using "accountNumber" as alias is collected as parameter at "1st" list row
+
+        And Plus menu is "Billing -> Start facturatierun"
+        When Modal dialog is "Start invoicerun"
+        And "Naam job" selection is "recurrent"
+        And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
+        And "Factuurdatum" date is "now"
+        And "Procesdatum" date is "1 month from now"
+        Then Invoice run is scheduled
+        Then Invoice run is scheduled
+
+        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
+        When Dashboard menu is "Billing"
+        Then View list header is "Transacties"
+        Then Table "Transacties" contains value "Invoice (ADVANCE)" at column "ID & Type" waiting for 60 seconds
+
+        #Recalculate invoice
+        When Plus action of "1" element from "TransactionsOnAccount" and click on "Herbereken tussentijdse factuur"
+        And New Amount Invoice is "300" for EAN "parameter:EAN-code-generated"
+        Then Invoice run is scheduled
+
+        #Asserts
+         #1 - Check if Old invoice is credited (check if CNM is created for same amount as old VKM)
+        Then Old invoice has same value as new credit invoice
+         #2 - Check if there is a new invoice created for the amount you selected (check if a new VKM is made for amount selected - 300€)
+        Then Table "Transacties" contains value "parameter:inputValue" at column "Bedrag" waiting for 40 seconds
+         #3 - Check if interactions are created(check if for each VKM and each CNM there is a an interaction created)
+        When Dashboard menu is "Service"
+        Then View list header is "Interacties"
+        Then Table "Interacties" contains value "VKM" at column "Type & Onderwerp" waiting for 40 seconds
+        Then Table "Interacties" contains value "CNM" at column "Type & Onderwerp" waiting for 40 seconds
+         #4 - Check if CNM has been sent to customer
+        And Click on link in View List at "2nd" row and "Nummer & Communicatiekanaal" column waiting for 40 seconds
+        Then Check is product change "1 succeeded"
+
+         #5 - Cjeck Saldo of mew invoice credit
+        When Dashboard menu is "Billing"
+        Then View list header is "Transacties"
+        Then Saldo is "€ 300,00"
+
+
+
 
 
 
