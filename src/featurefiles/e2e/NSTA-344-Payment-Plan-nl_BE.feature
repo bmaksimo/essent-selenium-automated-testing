@@ -1,4 +1,4 @@
-git @REGRESSION
+@REGRESSION
 @DWP
 @B2C
 Feature: NSTA - 344 Payment Plan

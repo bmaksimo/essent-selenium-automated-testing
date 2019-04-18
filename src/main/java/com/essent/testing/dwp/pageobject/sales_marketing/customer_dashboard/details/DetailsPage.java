@@ -19,13 +19,9 @@ public class DetailsPage extends Component {
         return seleniumDriver.findElements(By.xpath(NUMBER_BILLING_CUSTOMER)).size();
     }
 
-    public String getStreetAndHouseNum(){
+    public String getAddress(){
         return seleniumDriver.findElementWhenVisible(By.xpath("//div[@class='card__content__inner-wrapper']/p[1]")).getText();
     }
-
-//    public String getPostalCodeAndCity(){
-//        return seleniumDriver.findElementWhenVisible(By.xpath("//div[@class='card__content__inner-wrapper']/p[1]/text()[2]")).getText();
-//    }
 
     public String getPhone(){
         return seleniumDriver.findElementWhenVisible(By.xpath("//div[@class='card__content__inner-wrapper']/p[2]/span[2]")).getText();

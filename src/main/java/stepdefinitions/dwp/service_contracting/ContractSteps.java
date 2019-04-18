@@ -201,8 +201,8 @@ public class ContractSteps extends DwpScenario {
     public void checkProcpectCustomerInformation(final DataTable dbTable) {
         List<List<String>> info = dbTable.raw();
         DetailsPage dp = new DetailsPage();
-        String address = dp.getStreetAndHouseNum();
-        Assert.assertEquals("Actual address and house number differs from expected",address.replaceAll("\n"," "),info.get(1).get(0));
+        String address = dp.getAddress();
+        Assert.assertEquals("Actual address differs from expected",address.replaceAll("\n"," "),info.get(1).get(0));
         if (info.get(1).get(1)!= null) {
             Assert.assertEquals("Actual phone differs from expected", dp.getPhone(), info.get(1).get(1));
             Assert.assertEquals("Actual email differs from expected", dp.getEmail(), info.get(1).get(2));
