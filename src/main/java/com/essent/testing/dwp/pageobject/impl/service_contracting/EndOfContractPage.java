@@ -17,6 +17,11 @@ public class EndOfContractPage extends Component {
         seleniumDriver.findElementWhenVisible(By.xpath("//top-search/div[@class='top-search']/input[@type='search']")).sendKeys(Keys.ENTER);
     }
 
+    public void searchInputFieldNow(String input) {
+        seleniumDriver.sendKeysNow(seleniumDriver.findElementWhenVisible(By.xpath("//top-search/div[@class='top-search']/input[@type='search']")), input);
+        seleniumDriver.findElementWhenVisible(By.xpath("//top-search/div[@class='top-search']/input[@type='search']")).sendKeys(Keys.ENTER);
+    }
+
     public void simpleExecuteJavaScript(String nameOfJavaScript) {
         boolean success = new ExecuteJavaScript().test(nameOfJavaScript);
         assertThat(String.format("JavaScript file %s is undefined.", nameOfJavaScript),

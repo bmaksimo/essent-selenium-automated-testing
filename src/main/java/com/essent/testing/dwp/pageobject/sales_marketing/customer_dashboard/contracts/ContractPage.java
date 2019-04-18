@@ -10,9 +10,9 @@ import org.openqa.selenium.WebElement;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -27,7 +27,6 @@ public class ContractPage extends Component {
     private static final String FIRST_CONTRACT_LINE_XPATH_EXPRESSION = "//div[@class = 'col-1-1']/div[@class = 'row-']/list[@list-key = 'ContractedEansOnAccount']//tbody[@id = 'rows']/tr[1]/td[4]";
     private static final String XPATH_ACTIVE_CONTRACT_EAN = "//*[@id=\"rows\"]//list-link-bold-top-two-liner-cell//a/h5";
     private static final String PAYMENT_PLAN_NUMBER = "//list[@list-key='PaymentPlansOnAccount']//tbody[@id='rows']";
-//    private static final String VALUE_PAYMENT_PLAN_INSTALLMENTS = "//list-dropdown-cell//option['${" + REPLACEMENT_KEY + "}']";
     private static final String PAYMENT_PLAN_NUMBER_OF_INSTALLMENTS = "//list-dropdown-cell//select";
     private static final String FIRST_PAYMENT_PLAN_INSTALLMENT = "//list-dropdown-cell//option[2]";
     private static final String SECOND_PAYMENT_PLAN_INSTALLMENT = "//list-dropdown-cell//option[3]";

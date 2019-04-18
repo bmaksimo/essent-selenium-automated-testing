@@ -20,6 +20,8 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
 import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
 import static org.awaitility.Duration.ONE_SECOND;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 public class FormElements extends DwpScenario {
 
@@ -59,6 +61,25 @@ public class FormElements extends DwpScenario {
             waiter.withMessage(assertionMessage);
             return StringUtils.equals(expectedValue, actualValue);
         });
+    }
+
+    @And("^Numeric value at \"([^\"]*)\" in the card \"([^\"]*)\" is \"([^\"]*)\"$")
+    public void checkValueInCard(String label, String cardName, String expectedExpression) {
+        NonEditable card = new NonEditableImpl();
+        boolean result = card.checkAmountUsingExpression(cardName, label, expectedExpression);
+        assertThat("The expected value differs from the real value", result, is(true));
+    }
+
+    /**
+     * Confirms the form submission.
+     * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
+     */
+    @And("^Form is submitted$")
+    public void formIsSubmitted() throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
+        Map<String, String> options = new HashMap<>();
+        executeJavascriptTest("TrSubmitForm", options);
+        seleniumDriver.waitForRequestsToFinish();
     }
 
     @Override

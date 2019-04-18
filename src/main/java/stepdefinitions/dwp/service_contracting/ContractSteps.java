@@ -10,6 +10,7 @@ import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.deta
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.service.ServicePage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
+import com.essent.testing.selenium.SeleniumDriver;
 import cucumber.api.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -37,6 +38,7 @@ public class ContractSteps extends DwpScenario {
 
     @And("^Contract plus and \"([^\"]*)\"$")
     public void contractPlusAnd(String subaction) {
+        seleniumDriver.waitForRequestsToFinish();
         ContractPage cp = new ContractPage();
         cp.contractPlus();
         BaseObjectPage baseObject = new BaseObjectPage();
@@ -45,6 +47,7 @@ public class ContractSteps extends DwpScenario {
 
     @And("^Amount values is \"([^\"]*)\"$")
     public void amountValuesIs(String value) {
+        seleniumDriver.waitForRequestsToFinish();
         ContractPage cp = new ContractPage();
         cp.changeAmount(value);
         amount = value;

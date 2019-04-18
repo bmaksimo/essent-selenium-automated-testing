@@ -2,12 +2,12 @@
 Feature: SOAP2REST:Create B2B quote
 
     Background:
-        Given  I logged in to DWP as businessdesk.testautomation.b2b@essent.be
+        Given  I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
 
     Scenario: DROP for a Non-residential client
 
         When B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
-        And Top action is Filters
+        And Top action is "Filters"
         And "B2C/B2B" selection is "B2B"
         And "Type klant" selection is "Klant"
         And "Klantnummer" input is "parameter:accountNumber"

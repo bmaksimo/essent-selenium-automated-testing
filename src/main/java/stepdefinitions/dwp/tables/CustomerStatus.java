@@ -1,7 +1,5 @@
 package stepdefinitions.dwp.tables;
 
-import org.springframework.util.ObjectUtils;
-
 import java.util.Arrays;
 
 public enum CustomerStatus {
