@@ -2,7 +2,7 @@
 @DWP
 @B2C
 @REGRESSION
-@UNSTABLE
+
 Feature: NSTA - 338 Move new address
 
     Background:
@@ -48,7 +48,7 @@ Feature: NSTA - 338 Move new address
         And "Kanaal ondertekening" selection is "Papier"
         And "Datum ondertekening" date is "now"
         And Quote is signed
-        And Sign place is "Kontich"
+        And Quote is signed in "Kontich"
         When Quote is confirmed
 
         When Dashboard menu is "Marktberichten"
