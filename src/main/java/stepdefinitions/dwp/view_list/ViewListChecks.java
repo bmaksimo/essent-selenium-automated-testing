@@ -233,9 +233,7 @@ public class ViewListChecks extends NavigationElements {
 		throw new CucumberException(String.format("View List did not contain column \"%s\"", columnName));
 	    }
 	    List<List> rows = getData(viewTable);
-	    if (rows.size() == 0) {
-		throw new CucumberException("--  Table is empty.");
-	    }
+
 	    if (row > rows.size()) {
 		throw new CucumberException(String
 			.format("--  Row number \"%s\" was greater than actual table size \"%s\"", row, rows.size()));

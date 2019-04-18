@@ -350,14 +350,6 @@ public class InputElements extends DwpScenario {
     }
 
 
-    @And("Tariefkaart has value of 1st item from list$")
-    public void selectFirstItemFromList() {
-        seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.waitAndClick(seleniumDriver.findElement(By.id(TARIFF_ID)));
-        seleniumDriver.waitAndClick(seleniumDriver.findElement(By.xpath(TARIFF_FIRST_LIST_ITEM)));
-        seleniumDriver.waitForRequestsToFinish();
-
-    }
 
     @And("New Amount Invoice is \"([^\"]*)\" for EAN \"([^\"]*)\"$")
     public void setInputByEanLabel(String value, String EAN) {
