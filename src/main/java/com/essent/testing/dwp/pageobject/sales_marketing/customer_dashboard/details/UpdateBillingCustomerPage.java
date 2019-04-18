@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 
 public class UpdateBillingCustomerPage extends Component {
 
-    public WebElement getHouseNumElement(){
+    public WebElement getHouseNumElement() {
         return seleniumDriver.findElementWhenVisible(By.id("address-number-field"));
     }
 
@@ -14,7 +14,7 @@ public class UpdateBillingCustomerPage extends Component {
         return getHouseNumElement().getText();
     }
 
-    public void changeHouseNumber(int num){
+    public void changeHouseNumber(int num) {
         seleniumDriver.waitAndSendKeys(getHouseNumElement(),Integer.toString(num));
     }
 }
