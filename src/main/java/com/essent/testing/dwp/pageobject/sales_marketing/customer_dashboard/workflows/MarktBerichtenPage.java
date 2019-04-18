@@ -120,9 +120,9 @@ public class MarktBerichtenPage extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath("(//h5)[.='" + input + "'][1]")).isDisplayed();
     }
 
-    public void confirmTaskStatus(String input) {
+    public WebElement getTaskStatus(String input) {
         seleniumDriver.waitForRequestsToFinish();
-        Assert.assertTrue(findElementWhenVisible(By.xpath("(//h6)[.='" + input + "']")).isDisplayed());
+        return findElementWhenVisible(By.xpath("(//h6)[.='" + input + "']"));
     }
 
     public String getMarketberichtLabel(){

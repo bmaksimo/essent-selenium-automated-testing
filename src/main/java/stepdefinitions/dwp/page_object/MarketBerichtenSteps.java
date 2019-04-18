@@ -103,16 +103,16 @@ public class MarketBerichtenSteps extends DwpScenario {
         String ean = parameterProvider.getValueOrParameterAsString(enaP);
         MarktBerichtenPage mp = new MarktBerichtenPage();
         Assert.assertEquals(ean, mp.getEanFromTheFirstTransaction());
-        Assert.assertEquals(modul,mp.getModulFromTheFirstTransaction());
-        Assert.assertEquals(status,mp.marketberichtStatus());
+        Assert.assertEquals(modul, mp.getModulFromTheFirstTransaction());
+        Assert.assertEquals(status, mp.marketberichtStatus());
 
     }
 
     @Then("^Marketbericht with module \"([^\"]*)\" changed to status \"([^\"]*)\"$")
     public void marketBerichtWithEANAndModuleSecondTransactionIsInStatus(String modul, String status) {
         MarktBerichtenPage mp = new MarktBerichtenPage();
-        Assert.assertEquals(modul,mp.getModulFromCancelTransaction());
-        Assert.assertEquals(status,mp.marketberichtCancelStatus());
+        Assert.assertEquals(modul, mp.getModulFromCancelTransaction());
+        Assert.assertEquals(status, mp.marketberichtCancelStatus());
 
     }
 
@@ -125,8 +125,8 @@ public class MarketBerichtenSteps extends DwpScenario {
         String date = info.get(1).get(3);
         MarktBerichtenPage mp = new MarktBerichtenPage();
         if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht("1"))){
-            Assert.assertEquals(modul,mp.getModulFromMarketbericht("2"));
-            Assert.assertEquals(status,mp.marketberichtStatusMarketbericht("1"));
+            Assert.assertEquals(modul, mp.getModulFromMarketbericht("2"));
+            Assert.assertEquals(status ,mp.marketberichtStatusMarketbericht("1"));
             Assert.assertEquals(mp.getMarketberichtEndDateElement("1"), toDwpEndDate(parameterProvider.getValueOrParameterAsString(date)));
         }else {
             if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht("3"))) {

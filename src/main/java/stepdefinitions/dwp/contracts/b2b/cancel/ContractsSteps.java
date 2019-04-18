@@ -67,7 +67,7 @@ public class ContractsSteps extends DwpScenario {
     public void confirmTaskWas(String value) {
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
         MarktBerichtenPage mp = new MarktBerichtenPage();
-        mp.confirmTaskStatus(inputValue);
+        Assert.assertTrue(mp.getTaskStatus(inputValue).isDisplayed());
     }
 
     @Override
