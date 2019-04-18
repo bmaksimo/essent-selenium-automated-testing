@@ -6,9 +6,7 @@
 Feature: NSTA - 338 Move new address
 
     Background:
-
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
-
     @NSTA-338
     Scenario: Move new address
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
@@ -26,7 +24,7 @@ Feature: NSTA - 338 Move new address
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
 
-        When Package is "Vast"
+        When "Pakket" selection is "Vast"
         And Checkbox "Gas Fix B2C (TC1)" is Unchecked
         And Kortingen is "50_part"
         And Package and Fuel Type is confirmed
@@ -46,10 +44,9 @@ Feature: NSTA - 338 Move new address
 
         When Option "Heeft de klant al getekend?" is On
         And "Kanaal ondertekening" selection is "Papier"
+        And Quote is signed in "Kontich"
         And "Datum ondertekening" date is "now"
-        And Quote is signed
-        And Sign place is "Kontich"
-        When Quote is confirmed
+        And Quote is confirmed
 
         When Dashboard menu is "Marktberichten"
         Then View List is empty
@@ -78,8 +75,9 @@ Feature: NSTA - 338 Move new address
         And "MM should respond" turn on
         Then Bevestigen
 
-
-        When "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
+        When Dashboard menu is "Billing"
+        And Dashboard menu is "Contracten"
+        And "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
         And "2nd" list element has cell value "Actief" at column "Contractnummer" polling 100 seconds
         Then Table "Contracten" contains cell value "Sales Getekend (Geaccepteerd)" at column "Type & status" on "2nd" row
     	And Check if start date of new ean is the same date as filled in as “Move date”-"1 day before now"

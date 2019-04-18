@@ -8,6 +8,8 @@ import org.openqa.selenium.WebElement;
 
 public class ServicePage extends Component {
 
+        private static String CASE_TOPIC = "//list[@list-key='CasesOnAccount']//td[@class='list__cell cell__text'][3]/list-simple-two-liner-cell/p";
+
     public void validateCreatedTask(String input) {
         seleniumDriver.waitForRequestsToFinish();
         Assert.assertTrue(findElementWhenVisible(By.xpath("(//span[.='" + input + "'])[1]")).isDisplayed());
@@ -28,7 +30,7 @@ public class ServicePage extends Component {
     }
 
     public String getCaseOnderwerp(){
-        return seleniumDriver.findElementWhenVisible(By.xpath("//list[@list-key=\"InteractionsOnAccount\"]//td[@class=\"list__cell cell__text\"][6]/list-link-bold-top-two-liner-cell/div/h6")).getText();
+        return seleniumDriver.findElementWhenVisible(By.xpath(CASE_TOPIC)).getText();
     }
     public String getCaseNumber(){
         return seleniumDriver.findElementWhenVisible(By.xpath("//list[@list-key=\"InteractionsOnAccount\"]//td[7]//div//h5[1]")).getText();

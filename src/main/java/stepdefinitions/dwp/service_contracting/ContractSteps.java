@@ -10,7 +10,6 @@ import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.deta
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.service.ServicePage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
-import com.essent.testing.selenium.SeleniumDriver;
 import cucumber.api.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -151,7 +150,7 @@ public class ContractSteps extends DwpScenario {
     @Then("^There is a case where onderwerp is \"([^\"]*)\"$")
     public void thereIsACaseWhereOnderwerpIs(String onderwerp) {
         ServicePage sp = new ServicePage();
-        Assert.assertEquals(sp.getCaseOnderwerp(),onderwerp);
+        Assert.assertEquals(onderwerp, sp.getCaseOnderwerp());
         parameterProvider.put("caseNumber",sp.getCaseNumber());
 
     }
@@ -160,9 +159,9 @@ public class ContractSteps extends DwpScenario {
     public void interactionIsCreatedWithTypeAndOnderwerpAndVerwanteCaseIs(String type, String onderwerp, String number) {
         ServicePage sp = new ServicePage();
         String caseNumber = parameterProvider.getValueOrParameterAsString(number);
-        Assert.assertEquals("Actual Interaction Type differs from expected",sp.getInteractionType(),type);
-        Assert.assertEquals("Actual Interaction Onderwerp differs from expected",sp.getInteractionOnderwerp(),onderwerp);
-        Assert.assertEquals("Actual Interaction Verwante Case differs from expected",sp.getInteractionVerwanteCase(),caseNumber);
+        Assert.assertEquals("Actual Interaction Type differs from expected", type, sp.getInteractionType());
+        Assert.assertEquals("Actual Interaction Onderwerp differs from expected", onderwerp, sp.getInteractionOnderwerp());
+        Assert.assertEquals("Actual Interaction Verwante Case differs from expected", caseNumber, sp.getInteractionVerwanteCase());
     }
 
     @And("^Kortingen is \"([^\"]*)\"$")
