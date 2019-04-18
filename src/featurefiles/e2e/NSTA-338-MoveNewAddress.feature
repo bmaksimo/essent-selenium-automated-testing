@@ -2,6 +2,7 @@
 @DWP
 @B2C
 @REGRESSION
+@UNSTABLE
 
 Feature: NSTA - 338 Move new address
 
