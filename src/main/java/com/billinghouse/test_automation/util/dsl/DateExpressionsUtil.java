@@ -30,7 +30,7 @@ public class DateExpressionsUtil {
     private static final String DWP_SRART_END_DATE_FORMAT = "dd-MM-yyyy";
     private static final String DATE_SEPARATOR = " - ";
     private static final LocalDate LAST_DATE_OF_YEAR = LocalDate.now().dayOfYear().withMaximumValue();
-    private static final String DATE_EXPR_REGEX = "((\\d+)\\s*(month|day|year|week)(s*)\\s+(from|before)\\s+)*now";
+    private static final String DATE_EXPR_REGEX = "((\\d+)\\s*(month|day|year|week){1}(s*)\\s+(from|before)\\s+)*now";
     private static final String TIME_EXPR_REGEX = "((\\d+)\\s*(hour|second)(s*)\\s+(from|before)\\s+)*now";
     private static final String DWP_TIME_FORMAT = "HH:mm";
     private static final String INTERVAL_EXPR_REGEX = "((\\d+)\\s*(month|day|year|week)(s*))";
@@ -50,6 +50,9 @@ public class DateExpressionsUtil {
     }
 
     public static int checkTimeBetween(String earlierDate, String laterDate, String interval) {
+        if(!interval.matches(INTERVAL_EXPR_REGEX)) {
+            throw new CucumberException("Unable to parse intarval expression " + interval);
+        }
         Matcher matcher = compile(INTERVAL_EXPR_REGEX).matcher(interval);
 
         DateTime ed = FRENCH_DATE_FORMATTER_HYPHENATED.parseDateTime(earlierDate);
@@ -65,6 +68,9 @@ public class DateExpressionsUtil {
     }
 
     public static DateTime expandFrom(String expression) throws CucumberException {
+        if(!expression.matches(DATE_EXPR_REGEX)) {
+            throw new CucumberException(format("--Date-time input '%s' doesn't match the pattern '%s'", expression, DATE_EXPR_REGEX));
+        }
 
         Matcher matcher = compile(DATE_EXPR_REGEX).matcher(expression);
 
@@ -89,7 +95,9 @@ public class DateExpressionsUtil {
     }
 
     private static DateTime expandFromTime(String expression) throws CucumberException {
-
+        if(!expression.matches(TIME_EXPR_REGEX)) {
+            throw new CucumberException(format("--Time input '%s' doesn't match the pattern '%s'", expression, TIME_EXPR_REGEX));
+        }
         Matcher matcher = compile(TIME_EXPR_REGEX).matcher(expression);
 
         Map<String, Function<Integer, DateTime>> operations = new HashMap<>();
