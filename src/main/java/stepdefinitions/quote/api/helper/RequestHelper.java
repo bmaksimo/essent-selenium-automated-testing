@@ -31,7 +31,7 @@ public class RequestHelper {
     private final static Logger LOGGER = Logger.getLogger(RequestHelper.class);
     private Header trackingHeader = new Header("X-LOG-ID", UUID.randomUUID().toString());
 
-    /**
+    /*
      * POST request with JSON set in header, without Cookie
      *
      * @param statusCode

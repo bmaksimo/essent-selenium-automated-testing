@@ -1,6 +1,6 @@
+@ALL
 @DWP
-@B2C
-Feature: NSTA-330 Voraaf Step 1. Sign-in on vooraf (prepaid)
+Feature: NSTA-390. Sign-in a new customer with TC1 quote with electricity and gas prepaid products.
 
     Background:
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
@@ -8,7 +8,6 @@ Feature: NSTA-330 Voraaf Step 1. Sign-in on vooraf (prepaid)
     @NSTA-390
     @VOORAF-SIGNIN
     Scenario: NSTA-330 Voraaf Step 1. Sign-in on vooraf (prepaid)
-        #Sign in, bi-fuel contract
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
@@ -28,19 +27,18 @@ Feature: NSTA-330 Voraaf Step 1. Sign-in on vooraf (prepaid)
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        #When "Startdatum" date is "2 weeks before now"
         When Options "test" are On
         And "Marktbericht" selection is "Volledig marktbericht"
         And EAN code is generated
-        And "EAN-code" input is "parameter:EAN-code-generated"
+        And "EAN-code" input on "Elektriciteit Vooraf" card is "parameter:EAN-code-generated"
         And EAN code is generated
-        And Gas EAN-code input in the "Aardgas" card is "parameter:EAN-code-generated"
+        And "EAN-code" input on "Aardgas Vooraf" card is "parameter:EAN-code-generated"
         And Connection details are confirmed
         Then Form header is "Billing details"
 
         When "Betalingswijze" selection is "Overschrijving"
-        And Value at "Bedrag Vooraf (incl. btw)" in the card "Elektriciteit Vooraf" is "800 €"
-        And Value at "Bedrag Vooraf (incl. btw)" in the card "Aardgas Vooraf" is "900 €"
+        And Numeric value at "Bedrag Vooraf (incl. btw)" in the card "Elektriciteit Vooraf" is "greater than 0"
+        And Numeric value at "Bedrag Vooraf (incl. btw)" in the card "Aardgas Vooraf" is "greater than 0"
         And Billing details are confirmed
         Then Form header is "Quote overview"
 
@@ -52,7 +50,7 @@ Feature: NSTA-330 Voraaf Step 1. Sign-in on vooraf (prepaid)
         Then View list header is "Offertes"
         Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
 
-        #Check "vooraf prepaid" contract lines
+
         When Click on link in View List at "1st" row and "Nummer & Getekend contractnummer" column
         And "Kortingen op de offerte" list is empty
         And Table "Offertelijnen" contains cell value "Getekend TK1-Aardgas Vooraf (TC_VOORAF_B2C)" at column "Status & Product" on "1st" row

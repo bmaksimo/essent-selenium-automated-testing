@@ -1,11 +1,11 @@
+@ALL
 @DWP
-@B2C
-Feature: NUAT-5021 Voraaf Step 2. Check vooraf (prepaid)
+Feature: NSTA-391
+    Check prepaid advance invoice total amount as sum of electricity and gas advance amounts.
+    Check invoice due date, should be 19 days after transaction date.
 
     Background:
-
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
-
     @NSTA-391
     @VOORAF-CHECKS
     Scenario: Sign-in on Vooraf (prepaid)
@@ -15,7 +15,7 @@ Feature: NUAT-5021 Voraaf Step 2. Check vooraf (prepaid)
         Then View list header is "Klanten" appears within 25 seconds
 
         When Top action is "Filters"
-        And  "Klantnummer" input is "1000120974"
+        And  "Klantnummer" input is "{changeme}"
         Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
 
         When Dashboard menu is "Service"
@@ -26,8 +26,4 @@ Feature: NUAT-5021 Voraaf Step 2. Check vooraf (prepaid)
         And  "1st" element of table "Transacties" at currency column "Bedrag" is sum of
             |parameter:bedrag-vooraf-el |
             |parameter:bedrag-vooraf-gas|
-
-
-
-
-
+        And "1st" list element with date interval at column "Datum & Vervaldatum" from table "Transacties" is "19 days"

@@ -7,6 +7,15 @@ import org.openqa.selenium.WebElement;
 
 public class MarktBerichtenPage extends Component {
 
+    private static final String REPLACEMENT_KEY = "replacement_key";
+    private static final String EAN_FROM_MARKET = "(//h5)[${" + REPLACEMENT_KEY + "}]";
+    private static final String STATUS_FROM_MARKET_MSG = "(//list-simple-two-liner-cell//span[1])[${" + REPLACEMENT_KEY + "}]";
+    private static final String END_DATE_ELEMENT = "(//list-simple-two-liner-cell//span[2])[${" + REPLACEMENT_KEY + "}]";
+    private static final String EAN_CODE = "aos-products-quotes-ean-c-field";
+    private static final String TASK_STATUS = "(//h6)[.='${" + REPLACEMENT_KEY + "}']";
+    private static final String MARKET_LABEL = "(//list-link-bold-top-two-liner-cell/div/h6)[2]";
+
+
     public WebElement listActionsElemet(String element) {
         return seleniumDriver.findElementWhenVisible(By.name(element));
     }
@@ -94,34 +103,49 @@ public class MarktBerichtenPage extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath("//list-link-bold-top-two-liner-cell[@line-1='INITIATE STOP ACCESS']/div/a/h5")).getText();
     }
 
+    public WebElement getMarktBerichtH5Element(String num) {
+        String eanMarket = createQuery(EAN_FROM_MARKET, REPLACEMENT_KEY, num);
+        return seleniumDriver.findElementWhenVisible(By.xpath(eanMarket));
+    }
+
     public String getEanFromMarketbericht(String num)  {
-        return seleniumDriver.findElementWhenVisible(By.xpath("(//h5)['"+num+"']")).getText();
+        return getMarktBerichtH5Element(num).getText();
     }
+
     public String getModulFromMarketbericht(String num) {
-        return seleniumDriver.findElementWhenVisible(By.xpath("(//h5)['"+num+"']")).getText();
+        return getMarktBerichtH5Element(num).getText();
     }
+
     public String marketberichtStatusMarketbericht(String num){
-        return seleniumDriver.findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[1])['"+num+"']")).getText();
+        String eanMarketStatus = createQuery(STATUS_FROM_MARKET_MSG, REPLACEMENT_KEY, num);
+        return seleniumDriver.findElementWhenVisible(By.xpath(eanMarketStatus)).getText();
     }
 
     public String getMarketberichtEndDateElement(String num){
-        return seleniumDriver.findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[1])['"+num+"']")).getText();
+        String endDateElement = createQuery(END_DATE_ELEMENT, REPLACEMENT_KEY, num);
+        return seleniumDriver.findElementWhenVisible(By.xpath(endDateElement)).getText();
     }
 
     public String getEanCode() {
-        return findElementWhenVisible(By.id("aos-products-quotes-ean-c-field")).getText();
+        return findElementWhenVisible(By.id(EAN_CODE)).getText();
     }
+
     public String getEanCodeNow() {
-        return seleniumDriver.findElementWhenVisible(By.id("aos-products-quotes-ean-c-field")).getText();
+        return seleniumDriver.findElementWhenVisible(By.id(EAN_CODE)).getText();
     }
 
     public boolean validateRejectionHeader(String input) {
         return seleniumDriver.findElementWhenVisible(By.xpath("(//h5)[.='" + input + "'][1]")).isDisplayed();
     }
 
-    public void confirmTaskStatus(String input) {
+    public WebElement getTaskStatus(String input) {
         seleniumDriver.waitForRequestsToFinish();
-        Assert.assertTrue(findElementWhenVisible(By.xpath("(//h6)[.='" + input + "']")).isDisplayed());
+        String taskStatus = createQuery(TASK_STATUS, REPLACEMENT_KEY, input);
+        return seleniumDriver.findElementWhenVisible(By.xpath(taskStatus));
+    }
+
+    public String getMarketberichtLabel(){
+        return seleniumDriver.findElementWhenVisible(By.xpath(MARKET_LABEL)).getText();
     }
 }
 
