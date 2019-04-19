@@ -198,7 +198,7 @@ public class ContractSteps extends DwpScenario {
     }
 
     @Then("^Check customer information$")
-    public void checkProcpectCustomerInformation(final DataTable dbTable) {
+    public void checkProspectCustomerInformation(final DataTable dbTable) {
         List<List<String>> info = dbTable.raw();
         DetailsPage dp = new DetailsPage();
         String address = dp.getAddress();
