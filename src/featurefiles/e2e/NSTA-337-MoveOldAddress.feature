@@ -61,8 +61,8 @@ Feature: NSTA - 337 Move old address
         And Copy product name
         Then  "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
 
-        When I renew login to DWP as "contracting.testautomation.b2c@essent.be"
-        And Left menu is "contracting-switching"
+        Given I renew login to DWP as "contracting.testautomation.b2c@essent.be"
+        When Left menu is "contracting-switching"
         And Top menu item is "Klanten"
         And Top action is "Filters"
         And "B2C/B2B" selection is "B2C"
