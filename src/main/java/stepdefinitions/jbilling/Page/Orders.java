@@ -19,7 +19,7 @@ public class Orders extends JBillingScenario {
 		registerActiveScenario(scenario);
 	}
 
-	@When("Order table is not empty$")
+	@When("^Order table is not empty$")
 	public void checkOrderTableNotEmpty() throws Throwable {
 		OrdersPage ordersPage = new OrdersPage();
 		boolean success = ordersPage.checkOrderTableNotEmpty();
@@ -27,7 +27,7 @@ public class Orders extends JBillingScenario {
 		assertThat("Rows in order table are empty", success, is(true));
 	}
 
-    @When("JBilling Value next to label \"([^\"]*)\" is \"([^\"]*)\" in Inner Table$")
+    @When("^JBilling Value next to label \"([^\"]*)\" is \"([^\"]*)\" in Inner Table$")
 	public void checkValueNextToLabel(String label, String expectedValue) throws Throwable {
 		OrdersPage orderPage = new OrdersPage();
 		String actualResult = orderPage.checkValueNextToLabel(label);

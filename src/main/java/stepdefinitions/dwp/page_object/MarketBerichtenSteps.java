@@ -116,7 +116,7 @@ public class MarketBerichtenSteps extends DwpScenario {
 
     }
 
-    @Then("Check marktbericht$")
+    @Then("^Check marktbericht$")
     public void checkMarktbericht(final DataTable dbTable) {
         List<List<String>> info = dbTable.raw();
         String ean = parameterProvider.getValueOrParameterAsString(info.get(1).get(0));
