@@ -3,6 +3,8 @@
 @B2C
 @REGRESSION
 @UNSTABLE
+@ALL
+
 Feature: NSTA - 338 Move new address
 
     Background:
@@ -84,7 +86,9 @@ Feature: NSTA - 338 Move new address
         And Check if prices of both contracts are the same
 
         When Dashboard menu is "Marktberichten"
-        Then Marketbericht with EAN-CODE "parameter:randomEAN" and MODULE "START ACCESS" is in STATUS "Gesloten" and has ED "1 day before now"
+        Then Check marktbericht
+            |               ean            |     modul    |  status  |      end date    |
+            | parameter:EAN-code-generated | START ACCESS | Gesloten | 1 day before now |
 
         When Dashboard menu is "Service"
         Then There is a case where onderwerp is "Verhuis"

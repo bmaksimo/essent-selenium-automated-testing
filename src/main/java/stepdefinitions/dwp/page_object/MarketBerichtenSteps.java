@@ -5,6 +5,7 @@ import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.workflows.MarktBerichtenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import cucumber.api.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -13,6 +14,8 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.support.ui.FluentWait;
+
+import java.util.List;
 
 
 public class MarketBerichtenSteps extends DwpScenario {
@@ -100,27 +103,30 @@ public class MarketBerichtenSteps extends DwpScenario {
         String ean = parameterProvider.getValueOrParameterAsString(enaP);
         MarktBerichtenPage mp = new MarktBerichtenPage();
         Assert.assertEquals(ean, mp.getEanFromTheFirstTransaction());
-        Assert.assertEquals(modul,mp.getModulFromTheFirstTransaction());
-        Assert.assertEquals(status,mp.marketberichtStatus());
+        Assert.assertEquals(modul, mp.getModulFromTheFirstTransaction());
+        Assert.assertEquals(status, mp.marketberichtStatus());
 
     }
 
     @Then("^Marketbericht with module \"([^\"]*)\" changed to status \"([^\"]*)\"$")
     public void marketBerichtWithEANAndModuleSecondTransactionIsInStatus(String modul, String status) {
         MarktBerichtenPage mp = new MarktBerichtenPage();
-        Assert.assertEquals(modul,mp.getModulFromCancelTransaction());
-        Assert.assertEquals(status,mp.marketberichtCancelStatus());
+        Assert.assertEquals(modul, mp.getModulFromCancelTransaction());
+        Assert.assertEquals(status, mp.marketberichtCancelStatus());
 
     }
 
-
-    @Then("^Marketbericht with EAN-CODE \"([^\"]*)\" and MODULE \"([^\"]*)\" is in STATUS \"([^\"]*)\" and has ED \"([^\"]*)\"$")
-    public void marketberichtWithEANCODEAndMODULEIsInSTATUSAndHasED(String eanCode, String modul, String status, String date) {
-        String ean = parameterProvider.getValueOrParameterAsString(eanCode);
+    @Then("Check marktbericht$")
+    public void checkMarktbericht(final DataTable dbTable) {
+        List<List<String>> info = dbTable.raw();
+        String ean = parameterProvider.getValueOrParameterAsString(info.get(1).get(0));
+        String modul = info.get(1).get(1);
+        String status = info.get(1).get(2);
+        String date = info.get(1).get(3);
         MarktBerichtenPage mp = new MarktBerichtenPage();
         if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht("1"))){
-            Assert.assertEquals(modul,mp.getModulFromMarketbericht("2"));
-            Assert.assertEquals(status,mp.marketberichtStatusMarketbericht("1"));
+            Assert.assertEquals(modul, mp.getModulFromMarketbericht("2"));
+            Assert.assertEquals(status, mp.marketberichtStatusMarketbericht("1"));
             Assert.assertEquals(mp.getMarketberichtEndDateElement("1"), toDwpEndDate(parameterProvider.getValueOrParameterAsString(date)));
         } else {
             if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht("3"))) {
@@ -135,5 +141,11 @@ public class MarketBerichtenSteps extends DwpScenario {
                 }
             }
         }
+    }
+
+    @And("^Marktbericht has label \"([^\"]*)\"$")
+    public void marktberichtHasLabel(String label) {
+        MarktBerichtenPage mp = new MarktBerichtenPage();
+        Assert.assertEquals("Actual label differs from expected", mp.getMarketberichtLabel(), label);
     }
 }
