@@ -48,9 +48,6 @@ Feature: NSTA - 338 Move new address
         And "Datum ondertekening" date is "now"
         And Quote is confirmed
 
-        When Dashboard menu is "Marktberichten"
-        Then View List is empty
-
         When Dashboard menu is "Contracten"
         Then View list header is "Actieve en toekomstige connecties"
         And  "1st" List element with value at column "EAN-code" is checked
@@ -90,5 +87,5 @@ Feature: NSTA - 338 Move new address
         Then Marketbericht with EAN-CODE "parameter:randomEAN" and MODULE "START ACCESS" is in STATUS "Gesloten" and has ED "1 day before now"
 
         When Dashboard menu is "Service"
-        Then There is a case where onderwerp is "VERHUIS"
+        Then There is a case where onderwerp is "Verhuis"
         And  Interaction is created with Type "Document" and Onderwerp "Outbound document: Old inhabitant remains customer" and verwante case is "parameter:caseNumber"
