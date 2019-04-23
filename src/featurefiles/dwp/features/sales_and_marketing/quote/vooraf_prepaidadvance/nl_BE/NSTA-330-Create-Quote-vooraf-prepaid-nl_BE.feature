@@ -1,6 +1,7 @@
 @ALL
 @DWP
 @B2C
+@REGRESSION
 Feature: NSTA-330. Check the generation of prepaid advance invoice.
          Sign-in a new customer with TC1 quote with electricity and gas prepaid products.
          Check prepaid advance invoice total amount as sum of electricity and gas advance amounts.
