@@ -103,13 +103,13 @@ public class Contract extends DwpScenario {
     }
 
 
-    @When("^Rechtsvorm is bvba")
+    @When("^Rechtsvorm is bvba$")
     public void formLegal() {
         NewQuotePage nq = new NewQuotePage();
         nq.selectItemLegalForm();
     }
 
-    @And("^Geslacht is Male")
+    @And("^Gender is male$")
     public void gender() {
         NewQuotePage nq = new NewQuotePage();
         nq.selectGender();
@@ -122,7 +122,7 @@ public class Contract extends DwpScenario {
     }
 
 
-    @And("^Select Nace-Code")
+    @And("^Select Nace-Code$")
     public void select() throws Throwable {
         seleniumDriver.waitForRequestsToFinish();
         Thread.sleep(2000);

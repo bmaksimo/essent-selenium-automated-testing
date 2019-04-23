@@ -55,19 +55,19 @@ public class PaymentInfoSteps extends NavigationElements {
         registerActiveScenario(scenario);
     }
 
-    @And("Payment details are confirmed$")
+    @And("^Payment details are confirmed$")
     public void clickSaveOnPaymentDetailsModal() {
         boolean success = new PaymentDetailsModalSaveAction().test(null);
         assertThat("Billing customer update has failed.", success, is(true));
     }
 
-    @When("Payment method is switched$")
+    @When("^Payment method is switched$")
     public void switchPaymentMethod() {
         boolean success = new PaymentMethodSwitch().test(new HashMap<>());
         assertThat("Payment method has not been switched", success, is(true));
     }
 
-    @And("IBAN is \"([^\"]*)\" if not empty$")
+    @And("^IBAN is \"([^\"]*)\" if not empty$")
     public void changeIBAN(String iban) {
         Map<String, String> options = new HashMap<>();
         options.put("iban", iban);

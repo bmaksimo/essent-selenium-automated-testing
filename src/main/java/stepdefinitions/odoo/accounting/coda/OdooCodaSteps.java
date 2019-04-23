@@ -36,7 +36,7 @@ public class OdooCodaSteps extends OdooScenario {
         assertThat(dialog.getTitle(), equalToIgnoringCase(title));
     }
 
-    @When("^CODA file is selected")
+    @When("^CODA file is selected$")
     public void inputUploadValue() {
         String path = ResourceUtil.toPath(File.separator + "data" + File.separator + "odoo" + File.separator);
         Collection<File> codaFiles = FileUtils.listFiles(new File(path), TrueFileFilter.INSTANCE, null);

@@ -21,7 +21,7 @@ Feature: NUAT-412 part: Create / import coda file
         And First Name is "Test" and Last Name is "Test B2B"
         And BEDRIJFSNAAM is "Test Company B2B"
         And Telefoon is "+3232331231"
-        And Geslacht is Male
+        And Gender is male
         And E-mailadres is "test@test.com"
         And Select Nace-Code
         And NaceCode in search is 01120 - Teelt van rijst
