@@ -15,7 +15,7 @@ public class ProductChangeSteps extends DwpScenario {
         registerActiveScenario(scenario);
     }
 
-    @And("Tariefkaart has value of 1st item from list$")
+    @And("^Tariff card has value of 1st item from list$")
     public void selectFirstItemFromList() throws Throwable {
         seleniumDriver.waitForRequestsToFinish();
         ProductChangePageObject po = new ProductChangePageObjectImpl();
