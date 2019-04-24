@@ -1,7 +1,7 @@
 @DWP
 @B2C
-@CREDIT-AND-CONTROL
 @REGRESSION
+@ALL
 
 Feature: Credit Invoice NSTA-345
 
@@ -32,13 +32,13 @@ Feature: Credit Invoice NSTA-345
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        And EAN code is generated
         And "Startdatum" date is "35 days before now"
-        And "EAN-code" input is "parameter:EAN-code-generated"
+        And Electricity EAN code is "random"
+        And "Type aansluiting" selection is "YMR"
+        And "Meternummer" input is "1000"
         And  Option "test" is On
         And Connection details are confirmed
         Then Form header is "Billing details"
-
 
         When "Betalingswijze" selection is "Overschrijving"
         And Billing details are confirmed
@@ -77,36 +77,59 @@ Feature: Credit Invoice NSTA-345
         And "Factuurdatum" date is "now"
         And "Procesdatum" date is "1 month from now"
         Then Invoice run is scheduled
-        Then Invoice run is scheduled
 
+        Given I renew login to DWP as "businessdesk.testautomation.b2b@essent.be"
+        When Left menu is "contracting-switching"
+        And Top menu item is "Klanten"
+        And Top action is "Filters"
+        And "Type klant" selection is "Klant"
+        And "Klantnummer" input is "parameter:accountNumber"
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
-        Then Table "Transacties" contains value "Invoice (ADVANCE)" at column "ID & Type" waiting for 60 seconds
+        Then Table "Transacties" contains value "Invoice (ADVANCE)" at column "ID & Type"
+
+        Given I renew login to DWP as "billing.testautomation@essent.be"
+        When Left menu is "billing"
+        And Top menu item is "Klanten"
+        And Top action is "Filters"
+        And "Klantnummer" input is "parameter:accountNumber"
+        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
+        When Dashboard menu is "Billing"
+        Then View list header is "Transacties"
 
         #Recalculate invoice
         When Plus action of "1" element from "TransactionsOnAccount" and click on "Herbereken tussentijdse factuur"
         And New Amount Invoice is "300" for EAN "parameter:EAN-code-generated"
         Then Invoice run is scheduled
+        Given I renew login to DWP as "billing.testautomation@essent.be"
+        When Left menu is "billing"
+        And Top menu item is "Klanten"
+        And Top action is "Filters"
+        And "Klantnummer" input is "parameter:accountNumber"
+        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
+        When Dashboard menu is "Billing"
+        Then View list header is "Transacties"
 
         #Asserts
          #1 - Check if Old invoice is credited (check if CNM is created for same amount as old VKM)
-        Then Old invoice has same value as new credit invoice
-         #2 - Check if there is a new invoice created for the amount you selected (check if a new VKM is made for amount selected - 300€)
-        Then Table "Transacties" contains value "parameter:inputValue" at column "Bedrag" waiting for 40 seconds
-         #3 - Check if interactions are created(check if for each VKM and each CNM there is a an interaction created)
+        Then Table "Transacties" contains value "226  €" at column "Bedrag"
+        Then Table "Transacties" contains value "-226  €" at column "Bedrag"
+         #2 - Check if there is a new invoice created for the amount you selected
+        Then Table "Transacties" contains value "Invoice (CREDITNOTE)" at column "ID & Type"
+        Then Table "Transacties" contains value "600" at column "Bedrag"
+         #3 - Check if interactions are created for VKM and CNM
         When Dashboard menu is "Service"
         Then View list header is "Interacties"
-        Then Table "Interacties" contains value "VKM" at column "Type & Onderwerp" waiting for 40 seconds
-        Then Table "Interacties" contains value "CNM" at column "Type & Onderwerp" waiting for 40 seconds
+        Then Table "Interacties" contains value "VKM" at column "Type & Onderwerp"
+        Then Table "Interacties" contains value "CNM" at column "Type & Onderwerp"
          #4 - Check if CNM has been sent to customer
         And Click on link in View List at "2nd" row and "Nummer & Communicatiekanaal" column waiting for 40 seconds
         Then Check is product change "1 succeeded"
-
-         #5 - Cjeck Saldo of mew invoice credit
+         #5 - Check Saldo of new invoice credit
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
-        Then Saldo is "€ 300,00"
+        Then Saldo is "€ 600,00"
 
 
 

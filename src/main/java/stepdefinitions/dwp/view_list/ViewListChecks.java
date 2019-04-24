@@ -770,19 +770,9 @@ public class ViewListChecks extends NavigationElements {
     @Then("^Saldo is \"([^\"]*)\"$")
     public void checkValue (String expectedSaldo) {
         ContractPage cp = new ContractPage();
-//        parameterProvider.getValueOrParameterAsString(expectedSaldo);
         String actualSaldo = cp.getSaldo();
         assertThat(String.format("Actual credit invoice \"%s\" differs from the expected one \"%s\" on saldo", actualSaldo, expectedSaldo), expectedSaldo, containsString(actualSaldo));
         logger().info(String.format("- STEP: Saldo \"%s\" is correct - PASSED.", expectedSaldo));
-    }
-
-    @Then("Old invoice has same value as new credit invoice$")
-    public void compareOldToNewInvoice () {
-     ContractPage cp = new ContractPage();
-     String oldInvoiceValue = cp.getOldInvoiceValue();
-     String newInvoiceValue = cp.getNewInvoiceValue();
-     assertThat(String.format("New credit invoice \"%s\" differs from the old one \"%s\" ", newInvoiceValue, oldInvoiceValue), oldInvoiceValue, equalTo(newInvoiceValue));
-
     }
 
 
