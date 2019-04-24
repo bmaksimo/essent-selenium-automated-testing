@@ -2,7 +2,6 @@
 @DWP
 @B2C
 @REGRESSION
-@UNSTABLE
 @ALL
 
 Feature: NSTA - 338 Move new address
@@ -71,7 +70,6 @@ Feature: NSTA - 338 Move new address
         And "Datum meteropname" date is "1 day before now"
         And "Meterstand enkelvoudig" input is "1000"
         And Option "test" is on
-#        And Option "MM should respond" is on
         And "MM should respond" turn on
         Then Bevestigen
 
