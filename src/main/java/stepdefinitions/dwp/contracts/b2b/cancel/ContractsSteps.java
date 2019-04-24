@@ -67,7 +67,7 @@ public class ContractsSteps extends DwpScenario {
     public void confirmTaskWas(String value) {
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
         MarktBerichtenPage mp = new MarktBerichtenPage();
-        mp.confirmTaskStatus(inputValue);
+        Assert.assertTrue(mp.getTaskStatus(inputValue).isDisplayed());
     }
 
     @Override
@@ -143,7 +143,7 @@ public class ContractsSteps extends DwpScenario {
     }
 
 
-    @And("^Invoice checkbox with key \"([^\"]*)\" is clicked")
+    @And("^Invoice checkbox with key \"([^\"]*)\" is clicked$")
     public void checkInvoiceOpenBalance(String text) {
         seleniumDriver.waitForRequestsToFinish();
         ContractPage contractenPage = new ContractPage();
@@ -212,7 +212,7 @@ public class ContractsSteps extends DwpScenario {
 
     }
 
-    @Then("Start Date \"([^\"]*)\" is \"([^\"]*)\" day bigger than End Date \"([^\"]*)\"$")
+    @Then("^Start Date \"([^\"]*)\" is \"([^\"]*)\" day bigger than End Date \"([^\"]*)\"$")
     public void compareStartAndEndDate(String startDate, long expectedRange, String endDate) {
 
         String sd = parameterProvider.getValueOrParameterAsString(startDate);
@@ -226,7 +226,7 @@ public class ContractsSteps extends DwpScenario {
     }
 
 
-    @Then("Check is product change \"([^\"]*)\"$")
+    @Then("^Check is product change \"([^\"]*)\"$")
     public void checkProductChangeSuccess(String expectedMessage) {
         ContractPage cp = new ContractPage();
         String messageActual = cp.checkSuccessMessage();
@@ -243,7 +243,7 @@ public class ContractsSteps extends DwpScenario {
 
     }
 
-    @When("Payment table is not empty$")
+    @When("^Payment table is not empty$")
     public void checkPaymentTableNotEmpty() throws Throwable {
         seleniumDriver.waitForRequestsToFinish();
         ContractPage contractenPage = new ContractPage();
@@ -253,7 +253,7 @@ public class ContractsSteps extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
     }
 
-    @Then("Payment plan has \"([^\"]*)\" installments$")
+    @Then("^Payment plan has \"([^\"]*)\" installments$")
     public void PaymentPlanNumberOfInstallments(int expectedNumberOfInstallments){
         seleniumDriver.waitForRequestsToFinish();
         ContractPage contractPage = new ContractPage();
@@ -263,7 +263,7 @@ public class ContractsSteps extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
     }
 
-    @Then("Payment plan has installment values of \"([^\"]*)\", \"([^\"]*)\" and \"([^\"]*)\"$")
+    @Then("^Payment plan has installment values of \"([^\"]*)\", \"([^\"]*)\" and \"([^\"]*)\"$")
     public void PaymentPlanValuesOfInstallments(String firstExpectedValue, String secondExpectedValue, String thirdExpectedValue){
         seleniumDriver.waitForRequestsToFinish();
         ContractPage contractPage = new ContractPage();
@@ -273,6 +273,4 @@ public class ContractsSteps extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
 
     }
-
-
 }

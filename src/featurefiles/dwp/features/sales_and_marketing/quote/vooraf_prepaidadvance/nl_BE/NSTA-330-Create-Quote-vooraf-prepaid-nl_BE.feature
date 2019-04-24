@@ -1,12 +1,17 @@
+@ALL
 @DWP
 @B2C
-Feature: NUAT-5021 Voraaf Step 2. Check vooraf (prepaid). Is unstable, unless prepaid-advance elec/gas amounts are same in REG04 and UAT08
-
+@REGRESSION
+Feature: NSTA-330. Check the generation of prepaid advance invoice.
+         Sign-in a new customer with TC1 quote with electricity and gas prepaid products.
+         Check prepaid advance invoice total amount as sum of electricity and gas advance amounts.
+         Check invoice due date, should be 19 days after transaction date.
     Background:
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
     @NSTA-330
     Scenario: Sign-in on Vooraf (prepaid)
+        #1. Sign-in a new customer with TC1 quote with electricity and gas prepaid products.
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
@@ -26,8 +31,8 @@ Feature: NUAT-5021 Voraaf Step 2. Check vooraf (prepaid). Is unstable, unless pr
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        When "Startdatum" date on "Aardgas Vooraf" card is "35 days weeks before now"
-        And "Startdatum" date on "Elektriciteit Vooraf" card is "35 days weeks before now"
+        When "Startdatum" date on "Aardgas Vooraf" card is "35 days before now"
+        And "Startdatum" date on "Elektriciteit Vooraf" card is "35 days before now"
         And Options "test" are On
         And EAN code is generated
         And "EAN-code" input on "Elektriciteit Vooraf" card is "parameter:EAN-code-generated"
@@ -68,6 +73,7 @@ Feature: NUAT-5021 Voraaf Step 2. Check vooraf (prepaid). Is unstable, unless pr
         Then Table "Contractlijnen" contains value "Actief TK1-Aardgas Vooraf (TC_VOORAF_B2C)" at column "Status & Product"
         And Table "Contractlijnen" contains value "Actief TK1-Elektriciteit Vooraf (TC_VOORAF_B2C)" at column "Status & Product"
 
+        #2.1 Check prepaid advance invoice total amount as sum of electricity and gas advance amounts.
         When Dashboard menu is "Service"
         Then List element matching value "Outbound document: prepaidadvance" at column "Type & Onderwerp" from table "Interacties" is checked
 
@@ -76,4 +82,5 @@ Feature: NUAT-5021 Voraaf Step 2. Check vooraf (prepaid). Is unstable, unless pr
         And  "1st" element of table "Transacties" at currency column "Bedrag" is sum of
         |parameter:bedrag-vooraf-el |
         |parameter:bedrag-vooraf-gas|
+        #2.2 Check invoice due date, should be 19 days after transaction date.
         And "1st" list element with date interval at column "Datum & Vervaldatum" from table "Transacties" is "19 days"

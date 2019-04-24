@@ -38,6 +38,8 @@ public class ContractPage extends Component {
     private static final String SECOND_INVOICE = "//tbody/tr[3]/td[5]//span[1]";
     private static final String THIRD_INVOICE = "//tbody/tr[5]/td[5]//span[1]";
     private static final String EAN_LOCATOR_INVOICE_AMOUNT = "dwp-ean-'${" + REPLACEMENT_KEY + "}'-field";
+    private static final String CONTRACT_STATUS = "(//list[@list-key='ContractsOnAccount']//list-simple-two-liner-cell/p/span[2])[1]";
+    private static final String PRODUCT_CONTRACT = "(//list[@list-key='ContractsOnAccount']//list-link-bold-top-two-liner-cell/div/a/h5)[3]";
 
     private WebElement startData() {
         return seleniumDriver.findElementWhenVisible(By.id(START_DATA_ID));
@@ -114,7 +116,7 @@ public class ContractPage extends Component {
 
     public String getStatusFromContract() {
         seleniumDriver.waitForRequestsToFinish();
-        return seleniumDriver.findElementWhenVisible(By.xpath("(//list-link-bold-top-two-liner-cell/div/h6)[2]")).getText();
+        return seleniumDriver.findElementWhenVisible(By.xpath(CONTRACT_STATUS)).getText();
     }
 
     public String getContractType() {
@@ -309,9 +311,6 @@ public class ContractPage extends Component {
         String amountValue = findElementWhenVisible(By.id("advance-amount-field")).getText();
         String amountParameter = amount + ",00";
         String[] value = amountValue.split(" ", 2);
-//        it is not in the use at the moment, if not used in future runs it will be deleted
-//        for (String i : value) {
-//        }
         return amountParameter.equals(value[1]);
     }
 
@@ -399,6 +398,15 @@ public class ContractPage extends Component {
 
     }
 
+    public  String getStatusFromContracten(){
+        return seleniumDriver.findElementWhenVisible(By.xpath(CONTRACT_STATUS)).getText();
+    }
+
+    public  String getProductFromContracten(){
+        return seleniumDriver.findElementWhenVisible(By.xpath(PRODUCT_CONTRACT)).getText();
+    }
+
+    //TODO
     public String checkValueOfInstallments(String optionListItem1, String optionListItem2, String optionListItem3) {
        seleniumDriver.waitForRequestsToFinish();
 

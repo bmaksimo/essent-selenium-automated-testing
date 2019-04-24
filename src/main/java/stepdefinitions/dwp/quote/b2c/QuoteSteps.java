@@ -228,7 +228,7 @@ public class QuoteSteps extends DwpScenario {
         connectionDetailsView.toggleMeter(productType, meterState);
     }
 
-    @And("^Switch type is Move in")
+    @And("^Switch type is Move in$")
     public void setMoveIn() throws Throwable {
         ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
         given().await()

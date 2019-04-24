@@ -17,7 +17,7 @@ public class TableElements extends JBillingScenario {
 		registerActiveScenario(scenario);
 	}
 
-	@When("JBilling Click on row in Table by entering first cell value \"([^\"]*)\"$")
+	@When("^JBilling Click on row in Table by entering first cell value \"([^\"]*)\"$")
 	public void clickFirstCellInTable(String expectedResult) throws Throwable {
         if(expectedResult.startsWith("parameter:")) {
             expectedResult = parameterProvider.getValueOrParameterAsString(expectedResult);
@@ -29,7 +29,7 @@ public class TableElements extends JBillingScenario {
 		assertThat("First cell in table is not clicked", success, is(true));
 	}
 
-	@When("JBilling Click on row \"([^\"]*)\" in Table$")
+	@When("^JBilling Click on row \"([^\"]*)\" in Table$")
 	public void clickOnRowInTable(String rowNumber) throws Throwable {
 		TablePage tablePage = new TablePage();
 		boolean success = tablePage.clickOnRowInTable(rowNumber);
@@ -37,7 +37,7 @@ public class TableElements extends JBillingScenario {
 		assertThat("Row: " + rowNumber + " in the table is not clicked", success, is(true));
 	}
 
-	@When("JBilling Click on text link \"([^\"]*)\"$")
+	@When("^JBilling Click on text link \"([^\"]*)\"$")
 	public void clickTextLink(String label) throws Throwable {
 		TablePage tablePage = new TablePage();
 		boolean success = tablePage.clickTextLink(label);
@@ -45,7 +45,7 @@ public class TableElements extends JBillingScenario {
 		assertThat("Text link: " + label + " is not clicked", success, is(true));
 	}
 
-	@When("JBilling First cell value in first row is \"([^\"]*)\"$")
+	@When("^JBilling First cell value in first row is \"([^\"]*)\"$")
 	public void checkFirstCellValueInFirstRow(String expectedResult) throws Throwable {
         if(expectedResult.startsWith("parameter:")) {
             expectedResult = parameterProvider.getValueOrParameterAsString(expectedResult);
@@ -58,7 +58,7 @@ public class TableElements extends JBillingScenario {
 
 	}
 
-	@When("JBilling Value next to label \"([^\"]*)\" is \"([^\"]*)\"$")
+	@When("^JBilling Value next to label \"([^\"]*)\" is \"([^\"]*)\"$")
 	public void checkValueNextToLabel(String label, String expectedResult) throws Throwable {
 		if(expectedResult.startsWith("parameter:")) {
 			expectedResult = parameterProvider.getValueOrParameterAsString(expectedResult);
@@ -69,7 +69,7 @@ public class TableElements extends JBillingScenario {
 		assertThat("Value " + expectedResult + " is not shown next to label " + label, actualResult.equalsIgnoreCase(expectedResult), is(true));
 	}
 
-	@When("Inner tables are not empty$")
+	@When("^Inner tables are not empty$")
 	public void checkInnerOrderTablesNotEmpty() throws Throwable {
 		TablePage tablePage = new TablePage();
 		boolean isNotEmpty = tablePage.checkInnerTablesNotEmpty();

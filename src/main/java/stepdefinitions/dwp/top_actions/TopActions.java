@@ -61,7 +61,7 @@ public class TopActions extends NavigationElements {
         assertThat(String.format("Button %s was not available.", ""), success, is(true));
     }
 
-    @And("Search input is \"([^\"]*)\"$")
+    @And("^Search input is \"([^\"]*)\"$")
     public void input(String inputName) throws Throwable {
         String name = parameterProvider.getValueOrParameterAsString(inputName);
         Map<String, String> customerName = new HashMap<>();

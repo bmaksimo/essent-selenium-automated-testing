@@ -17,7 +17,7 @@ public class FilterElements extends JBillingScenario {
 		registerActiveScenario(scenario);
 	}
 
-	@When("JBilling \"([^\"]*)\" input is \"([^\"]*)\"$")
+	@When("^JBilling \"([^\"]*)\" input is \"([^\"]*)\"$")
 	public void setInput(String label, String value) throws Throwable {
 		if(value.startsWith("parameter:")) {
 			value = parameterProvider.getValueOrParameterAsString(value);
@@ -29,7 +29,7 @@ public class FilterElements extends JBillingScenario {
         assertThat("Filter by: " + label + " with input value: " + value + " is not confirmed", success, is(true));
     }
 
-	@When("JBilling Click on \"([^\"]*)\" filter button$")
+	@When("^JBilling Click on \"([^\"]*)\" filter button$")
 	public void clickFilterButton(String label) throws Throwable {
 		FilterPage filterPage = new FilterPage();
         boolean success = filterPage.clickFilterButton(label);
