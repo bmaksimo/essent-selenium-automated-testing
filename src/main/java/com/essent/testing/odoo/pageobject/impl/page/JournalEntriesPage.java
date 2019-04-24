@@ -1,5 +1,6 @@
 package com.essent.testing.odoo.pageobject.impl.page;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.odoo.pageobject.impl.Component;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -47,17 +48,18 @@ public class JournalEntriesPage extends Component {
         WebElement saveButton = seleniumDriver.findElementWhenVisible(By.xpath("//button[@class='oe_button oe_form_button_save oe_highlight']"));
         seleniumDriver.moveToElementAndClick(saveButton);
     }
-    public void postJournal(){
-        WebElement postButton = seleniumDriver.findElementWhenVisible(By.xpath("//button[@class='oe_button oe_form_button oe_highlight']"));
-        seleniumDriver.moveToElementAndClick(postButton);
-    }
 
     public void setName(String name){
-        seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='name']/input")).sendKeys(name);
+         seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='name']/input")).sendKeys(name);
+    }
+
+    public WebElement findPartnerElement(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='partner_id']/div/input"));
     }
 
     public void setPartner(String partner){
-        seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='partner_id']/div/input")).sendKeys(partner);
+        findPartnerElement().sendKeys(partner);
+        Sleeper.sleepTightInSeconds(7);
         WebElement partnerLink = seleniumDriver.findElementWhenVisible(By.xpath("//a[contains(text(),'B2B_UP')]"));
         seleniumDriver.moveToElementAndClick(partnerLink);
     }
@@ -86,9 +88,6 @@ public class JournalEntriesPage extends Component {
         findDebitElement().sendKeys(debit);
     }
 
-    public String getValueOfCredit(){
-        return seleniumDriver.findElementWhenVisible(By.xpath("(//td[@data-field='credit'])[2]")).getText();
-    }
 
     public WebElement findCreditElement(){
         return seleniumDriver.findElementWhenVisible(By.xpath("//span[@data-fieldname='credit']/input"));
@@ -96,17 +95,15 @@ public class JournalEntriesPage extends Component {
 
     public void setCredit(String credit){
         findCreditElement().click();
-        findCreditElement().clear();
+        Sleeper.sleepTightInSeconds(1);
         findCreditElement().sendKeys(credit);
     }
 
     public void createNewItem(List<List<String>> table, Integer row, String partnerNumber) {
+        setName(table.get(row).get(0));
         setPartner(partnerNumber);
-        setAccount(table.get(row).get(2));
-        setDebit(table.get(row).get(3));
-
-        if (row != 2) {
-            setName(table.get(row).get(0));
+        Sleeper.sleepTightInSeconds(2);
+        if (row == 1) {
             setCredit(table.get(row).get(4));
         }
     }
@@ -119,12 +116,6 @@ public class JournalEntriesPage extends Component {
         journalItemsCheckBox(row).click();
     }
 
-    public String getJournalItemsCredit(Integer row){
-        return journalItemsCheckBox(row).findElement(By.xpath("//td[@data-field='credit']")).getText();
-    }
-    public String getJournalItemsDebit(Integer row){
-        return journalItemsCheckBox(row).findElement(By.xpath("//td[@data-field='debit']")).getText();
-    }
 
     public WebElement findMoreElement(){
         return seleniumDriver.findElementWhenVisible(By.xpath("(//button[@class='oe_dropdown_toggle oe_dropdown_arrow'])[8]"));
