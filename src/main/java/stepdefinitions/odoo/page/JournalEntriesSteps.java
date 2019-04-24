@@ -56,7 +56,7 @@ public class JournalEntriesSteps extends OdooScenario {
         je.createNewItem(db,2,parameterProvider.getValueOrParameterAsString(db.get(2).get(1)));
     }
 
-    @And("^Save and Post journal entry")
+    @And("^Save and Post journal entry$")
     public void saveAndPost() throws Throwable {
         awaitOdooRequestToFinish(10);
         JournalEntriesPage je = new JournalEntriesPage();

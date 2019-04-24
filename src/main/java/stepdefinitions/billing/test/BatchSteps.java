@@ -98,14 +98,14 @@ public class BatchSteps extends RegisteredScenario {
         startBillRun(jobName, null, processDate, null, invoiceDate, true, true);
     }
 
-    @And("^Execute billing run without waiting \"([^\"]*)\" for process date \"([^\"]*)\"")
+    @And("^Execute billing run without waiting \"([^\"]*)\" for process date \"([^\"]*)\"$")
     public void execute_billing_run_no_wait_for_process_date(String jobName,
     		@Transform(DateMapper.class) Date processDate) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         startBillRun(jobName, null, processDate, null, new SimpleDateFormat("yyyy-MM-dd").format(new Date()), false, true);
     }
 
-    @And("^Try billing run without waiting \"([^\"]*)\" for process date \"([^\"]*)\"")
+    @And("^Try billing run without waiting \"([^\"]*)\" for process date \"([^\"]*)\"$")
     public void try_billing_run_no_wait_for_process_date(String jobName,
             @Transform(DateMapper.class) Date processDate) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
@@ -119,7 +119,7 @@ public class BatchSteps extends RegisteredScenario {
         startBillRun(jobName, billingCustomerId, processDate, null, invoiceDate, true, true);
     }
 
-    @And("^Terminate all running jobs")
+    @And("^Terminate all running jobs$")
     public void terminate_all_running_jobs() throws Throwable {
     	BillingBatch billingBatch=new BillingBatch();
 		RSShowRunningJobsResponse showJobsResponse = billingBatch.showRunningJobs();
@@ -132,7 +132,7 @@ public class BatchSteps extends RegisteredScenario {
 
     }
 
-    @And("^Terminate job \"([^\"]*)\"")
+    @And("^Terminate job \"([^\"]*)\"$")
     public void terminate_job(String jobId) throws Throwable {
     	BillingBatch billingBatch=new BillingBatch();
 		RSStopRunningJobRequest request = new RSStopRunningJobRequest();
@@ -142,7 +142,7 @@ public class BatchSteps extends RegisteredScenario {
     }
 
 
-    @And("^Wait for slave threads to start")
+    @And("^Wait for slave threads to start$")
     public void wait_for_slave_threads_to_start() throws Throwable {
 
         int running = getNrThreadsExecutingJob();
@@ -171,7 +171,7 @@ public class BatchSteps extends RegisteredScenario {
 		Assert.assertEquals(jobType, restResponse.getJobs().get(0).getJobName());
     }
 
-    @Then("^I expect no running jobs")
+    @Then("^I expect no running jobs$")
     public void i_expect_no_running_jobs() throws Throwable {
 		RSShowRunningJobsResponse restResponse = new BillingBatch().showRunningJobs();
 		String jobs = "";
@@ -181,12 +181,12 @@ public class BatchSteps extends RegisteredScenario {
 		Assert.assertEquals("jobsStillRunning: " + jobs, 0, restResponse.getJobs().size());
     }
 
-    @Then("^I expect more than zero running threads")
+    @Then("^I expect more than zero running threads$")
     public void i_expect_more_than_zero_running_threads() throws Throwable {
         Assert.assertTrue("No threads processing a job", getNrThreadsExecutingJob() > 0);
     }
 
-    @Then("^I expect no running threads")
+    @Then("^I expect no running threads$")
     public void i_expect_no_running_threads() throws Throwable{
         // number of active threads can also be -1, if it is a standalone instance
         Assert.assertTrue("There were unexpected running threads", getNrThreadsExecutingJob() <= 0);

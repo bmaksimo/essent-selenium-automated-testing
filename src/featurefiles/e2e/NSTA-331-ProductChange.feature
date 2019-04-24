@@ -58,7 +58,7 @@ Feature: NSTA 331- Product Change for TK1 type
 
         #2 - Start product change
         When Plus action of "1" element from "ContractsOnAccount" and click on "Productwijziging"
-        And Tariefkaart has value of 1st item from list
+        And Tariff card has value of 1st item from list
         When "Pakket" selection is "Online"
         When Option "test" is On
         When Option "MM should respond?" is On
