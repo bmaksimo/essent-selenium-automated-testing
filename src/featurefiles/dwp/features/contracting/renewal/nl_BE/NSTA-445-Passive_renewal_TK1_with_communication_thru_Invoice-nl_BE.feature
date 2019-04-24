@@ -26,10 +26,10 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
+        When Option "test" is On
         And EAN code is generated
         And "Startdatum" date is "35 days before now"
         And "EAN-code" input is "parameter:EAN-code-generated"
-        And  Option "test" is On
         And Connection details are confirmed
         Then Form header is "Billing details"
 
@@ -50,3 +50,5 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         Then View list header is "Actieve en toekomstige connecties"
         And "1st" List element with value at column "EAN-code" is checked
         And "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
+
+

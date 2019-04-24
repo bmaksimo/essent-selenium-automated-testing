@@ -56,7 +56,6 @@ public class FormElements extends DwpScenario {
         FluentWait<NonEditable> waiter = waiter(field, 20, 5);
         waiter.until((NonEditable p) -> {
             String actualValue = p.getValue(label);
-            seleniumDriver.getDriver().getCurrentUrl();
             String assertionMessage = String.format("Actual value of \"%s\" was \"%s\" differs from expected \"%s\"", label, actualValue, expectedValue);
             waiter.withMessage(assertionMessage);
             return StringUtils.equals(expectedValue, actualValue);
