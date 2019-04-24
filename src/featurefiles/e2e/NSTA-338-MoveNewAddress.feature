@@ -71,6 +71,7 @@ Feature: NSTA - 338 Move new address
         And "Datum meteropname" date is "1 day before now"
         And "Meterstand enkelvoudig" input is "1000"
         And Option "test" is on
+#        And Option "MM should respond" is on
         And "MM should respond" turn on
         Then Bevestigen
 
@@ -87,9 +88,10 @@ Feature: NSTA - 338 Move new address
 
         When Dashboard menu is "Marktberichten"
         Then Check marktbericht
-            |               ean            |     modul    |  status  |      end date    |
-            | parameter:EAN-code-generated | START ACCESS | Gesloten | 1 day before now |
+            |               ean            |     modul    |  status  |      end date     |
+            | parameter:EAN-code-generated | START ACCESS | Gesloten | 5 days before now |
 
         When Dashboard menu is "Service"
         Then There is a case where onderwerp is "Verhuis"
-        And  Interaction is created with Type "Document" and Onderwerp "Outbound document: Old inhabitant remains customer" and verwante case is "parameter:caseNumber"
+        And Table "Interacties" contains value "Outbound document: Old inhabitant remains customer" at column "Type & Onderwerp"
+        And Table "Interacties" contains value "parameter:caseNumber" at column "Verwante case"

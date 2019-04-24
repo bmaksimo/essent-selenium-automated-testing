@@ -13,6 +13,7 @@ public class ServicePage extends Component {
     private static final String INTERACTION_TYPE = "//list-simple-two-liner-cell[@line-1='${" + REPLACEMENT_KEY + "}']/p/span[1]";
     private static final String INTERACTION_ONDERWERP = "//list-simple-two-liner-cell[@line-1='${" + REPLACEMENT_KEY + "}']/p/span[2]";
     private static final String CASE_NUMBER = "//list[@list-key=\"InteractionsOnAccount\"]//td[7]//div//h5[1]";
+    private static final String INTERACTION_VERWANTE_CASE = "//*[@id='rows']/tr[1]/td[7]/list-link-bold-top-two-liner-cell/div/a";
 
     public void validateCreatedTask(String input) {
         seleniumDriver.waitForRequestsToFinish();
@@ -53,7 +54,7 @@ public class ServicePage extends Component {
     }
 
     public String getInteractionVerwanteCase() {
-        return seleniumDriver.findElementWhenVisible(By.xpath("//*[@id='rows']/tr[1]/td[7]/list-link-bold-top-two-liner-cell/div/a")).getText();
+        return seleniumDriver.findElementWhenVisible(By.xpath(INTERACTION_VERWANTE_CASE)).getText();
 
     }
 
