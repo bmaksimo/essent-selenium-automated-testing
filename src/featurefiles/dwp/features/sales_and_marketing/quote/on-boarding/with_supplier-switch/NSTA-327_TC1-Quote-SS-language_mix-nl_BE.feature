@@ -2,7 +2,7 @@
 @SALES-MARKETING
 @REGRESSION
 @B2C
-@UNSTABLE
+@ALL
 Feature: NSTA-327: Creating a B2C Quote TC1 with "Supplier Switch" without using Market Mock.
 
     Background:

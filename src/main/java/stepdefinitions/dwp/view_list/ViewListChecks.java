@@ -767,6 +767,29 @@ public class ViewListChecks extends NavigationElements {
             columnToSearch, optionToSearch, list, textToCheck));
     }
 
+    @Then("Values are met for old invoice, new invoice and credit invoice$")
+    public void checkValuesOfInvoices () {
+        ContractPage cp = new ContractPage();
+        String expectedValuesOfAdvancedInvoices1 = "113 € -113 € 300 €";
+        String expectedValuesOfAdvancedInvoices2 = "226 € -226 € 600 €";
+        String expectedValuesOfAdvancedInvoices3 = "339 € -339 € 900 €";
+
+        String actualValuesOfInvoices = cp.getActualValuesOfInvoicesAsString();
+
+        if (expectedValuesOfAdvancedInvoices1.equals(actualValuesOfInvoices))
+            logger().info(String.format("- STEP: Values of invoices \"%s\" are correct - PASSED.", expectedValuesOfAdvancedInvoices1));
+
+        else if (expectedValuesOfAdvancedInvoices2.equals(actualValuesOfInvoices))
+            logger().info(String.format("- STEP: Values of invoices \"%s\" are correct - PASSED.", expectedValuesOfAdvancedInvoices2));
+
+        else if (expectedValuesOfAdvancedInvoices3.equals(actualValuesOfInvoices))
+            logger().info(String.format("- STEP: Values of invoices \"%s\" are correct - PASSED.", expectedValuesOfAdvancedInvoices3));
+
+        else throw new CucumberException("Actual invoices values " + actualValuesOfInvoices + " don't match expected ones");
+
+    }
+
+
     @Then("^Saldo is \"([^\"]*)\"$")
     public void checkValue (String expectedSaldo) {
         ContractPage cp = new ContractPage();

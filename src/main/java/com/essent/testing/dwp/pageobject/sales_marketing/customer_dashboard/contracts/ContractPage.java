@@ -16,6 +16,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
+import static org.apache.camel.component.file.GenericFileExist.Append;
+
 public class ContractPage extends Component {
 
     private static final String NUMBER_ELECTRICITY_CONTRACT = "//list-icon-text-cell/div";
@@ -32,6 +34,9 @@ public class ContractPage extends Component {
     private static final String SECOND_PAYMENT_PLAN_INSTALLMENT = "//list-dropdown-cell//option[3]";
     private static final String THIRD_PAYMENT_PLAN_INSTALLMENT = "//list-dropdown-cell//option[4]";
     private static final String SALDO_CREDIT_INVOICE = "total-amount-open-field";
+    private static final String FIRST_INVOICE = "//tbody/tr[1]/td[5]//span[1]";
+    private static final String SECOND_INVOICE = "//tbody/tr[3]/td[5]//span[1]";
+    private static final String THIRD_INVOICE = "//tbody/tr[5]/td[5]//span[1]";
     private static final String EAN_LOCATOR_INVOICE_AMOUNT = "dwp-ean-'${" + REPLACEMENT_KEY + "}'-field";
 
     private WebElement startData() {
@@ -434,6 +439,18 @@ public class ContractPage extends Component {
        seleniumDriver.waitForRequestsToFinish();
 
         return (str1+str2+str3);
+    }
+
+    public String getActualValuesOfInvoicesAsString() {
+        seleniumDriver.waitForRequestsToFinish();
+        String firstInvoice  =  seleniumDriver.findElementWhenVisible(By.xpath(FIRST_INVOICE)).getText();
+        String secondInvoice = seleniumDriver.findElementWhenVisible(By.xpath(SECOND_INVOICE)).getText();
+        String thirdInvoice  = seleniumDriver.findElementWhenVisible(By.xpath(THIRD_INVOICE)).getText();
+
+        StringBuilder sb;
+        sb = new StringBuilder();
+
+        return sb.append(firstInvoice).append(' ').append(secondInvoice).append(' ').append(thirdInvoice).toString();
     }
 
     public String getSaldo() {
