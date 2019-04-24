@@ -40,6 +40,7 @@ public class ContractPage extends Component {
     private static final String EAN_LOCATOR_INVOICE_AMOUNT = "dwp-ean-'${" + REPLACEMENT_KEY + "}'-field";
     private static final String CONTRACT_STATUS = "(//list[@list-key='ContractsOnAccount']//list-simple-two-liner-cell/p/span[2])[1]";
     private static final String PRODUCT_CONTRACT = "(//list[@list-key='ContractsOnAccount']//list-link-bold-top-two-liner-cell/div/a/h5)[3]";
+    private static final String EAN_NEW_INVOICE_AMOUNT = "dwp-ean- + ${" + REPLACEMENT_KEY + "} + -field";
 
     private WebElement startData() {
         return seleniumDriver.findElementWhenVisible(By.id(START_DATA_ID));
@@ -468,13 +469,10 @@ public class ContractPage extends Component {
 
 
     public void getElementByEanNewInvoiceAmount(String ean, String value) {
-//        String Action = createQuery(EAN_LOCATOR_INVOICE_AMOUNT, REPLACEMENT_KEY, ean);
-//        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id(Action)), value);
-        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id("dwp-ean-" + ean + "-field")), value);
-//        return Action;
+        String xpathAction = createQuery(EAN_NEW_INVOICE_AMOUNT, REPLACEMENT_KEY, ean);
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id(xpathAction)), value);
 
     }
-
 
 
 }
