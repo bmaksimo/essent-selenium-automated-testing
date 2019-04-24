@@ -104,7 +104,7 @@ public class JournalEntriesPage extends Component {
         setPartner(partnerNumber);
         Sleeper.sleepTightInSeconds(2);
         if (row == 1) {
-            setCredit(table.get(row).get(4));
+            setCredit(table.get(row).get(3));
         }
     }
 
