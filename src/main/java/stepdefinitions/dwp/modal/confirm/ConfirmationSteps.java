@@ -2,11 +2,13 @@ package stepdefinitions.dwp.modal.confirm;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.modal.confirm.ConfirmSignatureDialogImpl;
+import com.essent.testing.dwp.pageobject.modal.confirm.ConfirmDialog;
 import com.essent.testing.dwp.pageobject.modal.confirm.ConfirmSignatureDialog;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
+import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import stepdefinitions.dwp.navigation.NavigationElements;
 
@@ -22,7 +24,7 @@ public class ConfirmationSteps extends NavigationElements {
     private class CheckModalDialog implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
-            return executeJavascriptTest("TrCheckModalDialog", options);
+           return executeJavascriptTest("TrCheckModalDialog", options);
         }
     }
 
@@ -48,15 +50,24 @@ public class ConfirmationSteps extends NavigationElements {
             is(false));
     }
 
+    @Then("^Modal dialogue is confirmed$")
+    public void confirm() throws Throwable {
+        confirmModalDialogue();
+    }
 
-    @And("^Contract signature is confirmed$")
+    @Then("^Contract signature is confirmed$")
     public void contractSignatureIsConfirmed() throws Throwable {
+        confirmModalDialogue();
+    }
+
+    private void confirmModalDialogue() {
         Sleeper.sleepTightInSeconds(3);
         ConfirmSignatureDialog dialog = new ConfirmSignatureDialogImpl();
-        boolean success = dialog.confirm();
-        assertThat("Contract signature was not confirmed.",
-            success,
-            is(true));
+        dialog.confirm();
+        boolean shown = dialog.isShown();
+        assertThat("Modal dialogue was not confirmed.",
+            shown,
+            is(false));
     }
 
     @When("^Modal \"([^\"]*)\" is displayed$")

@@ -26,4 +26,5 @@ public interface ViewList {
     String getValueAt(int row, String columnName, String tableName);
 
     String getCurrencyValueAt(int row, String columnName, String tableName);
+
 }

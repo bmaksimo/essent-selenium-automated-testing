@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.function.Function;
 
 import static com.billinghouse.test_automation.util.gherkin.DateTimeFormatUtil.printPeriod;
@@ -151,7 +152,16 @@ public abstract class SeleniumDriver {
     }
 
     public Optional<WebElement> findElementOptional(By selector) {
-        return Optional.ofNullable(driver.findElement(selector));
+        FluentWait<WebDriver> waiter = new FluentWait<>(driver)
+            .withTimeout(Duration.ofSeconds(3))
+            .pollingEvery(Duration.ofSeconds(1))
+            .ignoring(NoSuchElementException.class)
+            .ignoring(TimeoutException.class);
+        WebElement element  = waiter.until(driver -> {
+            logger.debug(" - WAIT: polling findElementWhenPresent()");
+            return driver.findElement(selector);
+        });
+        return Optional.ofNullable(element);
     }
 
     public WebElement findElementWhenPresent(By selector, Duration timeout, Duration pollingEvery) {
@@ -169,6 +179,7 @@ public abstract class SeleniumDriver {
         logger.debug(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
         return element;
     }
+
 
     public List<WebElement> findElements(By selector, Duration timeout, Duration pollingEvery) {
         logger.debug("STEP:");

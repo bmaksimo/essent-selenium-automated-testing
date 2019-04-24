@@ -62,7 +62,7 @@ public class ConfirmSignatureDialogImpl extends Component implements ConfirmSign
 
     @Override
     public boolean isShown() {
-        seleniumDriver.findElementWhenPresent(CONFIRM_SIGNATURE_MODAL_SELECTOR);
-        return true;
+        seleniumDriver.waitForRequestsToFinish();
+        return seleniumDriver.findElementOptional(CONFIRM_SIGNATURE_MODAL_SELECTOR).isPresent();
     }
 }

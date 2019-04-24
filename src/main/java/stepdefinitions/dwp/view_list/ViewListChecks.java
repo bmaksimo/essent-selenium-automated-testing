@@ -5,6 +5,7 @@ import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.ViewList;
 import com.essent.testing.dwp.pageobject.list_view.ViewListTestObject;
 import cucumber.api.DataTable;
+import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -30,6 +31,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkTimeBetween;
+import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.getFormattedEnd;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.fail;
@@ -41,6 +43,7 @@ public class ViewListChecks extends NavigationElements {
     private static final String BILLING_CUSTOMER = "Billing customer";
     private static final String BILLING_CUSTOMER_VIEW_LIST = "BillingCustomerOnaccount";
     private static final String PLUS_ACTION = "Plus ActionDTO";
+
 
     private class ViewListNavigation {
         public void goToLink(String linkText) {
@@ -567,6 +570,17 @@ public class ViewListChecks extends NavigationElements {
         parameterProvider.put(columnName, value);
         Assert.assertThat("Comparison of two dates expression conversion failure", checkTimeBetween(splitValue[0],
             splitValue[1], interval), Matchers.equalTo(0));
+    }
+
+    @When("^End of interval from \"([^\"]*)\" row of table \"([^\"]*)\" at column \"([^\"]*)\" is checked$")
+    public void endOfIntervalFromRowOfTableAtColumnIsChecked(String ordinal, String tableName, String column) throws Throwable {
+        int row = extractNumericValue(ordinal);
+        String intervalOfContract = new ViewListTestObject().getValueAt(row, column, tableName);
+        boolean success = StringUtils.isNotBlank(intervalOfContract);
+        assertThat(String.format("\"%s\" list element didn't contain any value at column \"%s\"", ordinal, column),
+            success, is(true));
+        parameterProvider.put(column+" - start", getFormattedEnd(intervalOfContract, -1));
+        parameterProvider.put(column+" - end", getFormattedEnd(intervalOfContract, +1));
     }
 
 

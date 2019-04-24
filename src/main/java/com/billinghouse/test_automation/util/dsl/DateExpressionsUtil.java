@@ -6,6 +6,7 @@ import org.joda.time.base.BaseSingleFieldPeriod;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,8 +27,9 @@ public class DateExpressionsUtil {
     private static final String FRENCH_DATE_FORMAT_HYPHENATED_SOCTAR_ENDDATE = "31-12-yyyy";
     private static final String FRENCH_DATE_FORMAT = "dd/MM/yyyy";
     private static final String DWP_DATE_FORMAT_REGEX = "[0-9]{2}/[0-9]{2}/[0-9]{4}";
+    private static final String DWP_START_END_DATE_FORMAT_REGEX = "[0-9]{2}-[0-9]{2}-[0-9]{4}\\s+[0-9]{2}-[0-9]{2}-[0-9]{4}";
     private static final String SOCTAR_STARTDAT_ENDDATE = "1yyyyMMddyyyy1231";
-    private static final String DWP_SRART_END_DATE_FORMAT = "dd-MM-yyyy";
+    private static final String DWP_START_END_DATE_FORMAT = "dd-MM-yyyy";
     private static final String DATE_SEPARATOR = " - ";
     private static final LocalDate LAST_DATE_OF_YEAR = LocalDate.now().dayOfYear().withMaximumValue();
     private static final String DATE_EXPR_REGEX = "((\\d+)\\s*(month|day|year|week){1}(s*)\\s+(from|before)\\s+)*now";
@@ -153,9 +155,9 @@ public class DateExpressionsUtil {
         }
         else {
 
-            String dateBuilder = expandFrom(input).toString(DWP_SRART_END_DATE_FORMAT);
+            String dateBuilder = expandFrom(input).toString(DWP_START_END_DATE_FORMAT);
             dateBuilder = dateBuilder.concat(DATE_SEPARATOR);
-            dateBuilder = dateBuilder.concat(LAST_DATE_OF_YEAR.toString(DWP_SRART_END_DATE_FORMAT));
+            dateBuilder = dateBuilder.concat(LAST_DATE_OF_YEAR.toString(DWP_START_END_DATE_FORMAT));
             return dateBuilder;
         }
     }
@@ -164,16 +166,16 @@ public class DateExpressionsUtil {
             return buildContractStartEndDate(input);
         }
         else {
-            return expandFrom(input).toString(DWP_SRART_END_DATE_FORMAT);
+            return expandFrom(input).toString(DWP_START_END_DATE_FORMAT);
         }
     }
 
     private static String buildContractStartEndDate(String input) {
         StringBuilder dateBuilder = new StringBuilder();
         DateTimeFormatter fmt = DateTimeFormat.forPattern(FRENCH_DATE_FORMAT);
-        dateBuilder.append(fmt.parseDateTime(input).toString(DWP_SRART_END_DATE_FORMAT));
+        dateBuilder.append(fmt.parseDateTime(input).toString(DWP_START_END_DATE_FORMAT));
         dateBuilder.append(DATE_SEPARATOR);
-        dateBuilder.append(LAST_DATE_OF_YEAR.toString(DWP_SRART_END_DATE_FORMAT));
+        dateBuilder.append(LAST_DATE_OF_YEAR.toString(DWP_START_END_DATE_FORMAT));
         return dateBuilder.toString();
     }
 
@@ -185,6 +187,32 @@ public class DateExpressionsUtil {
     public static String toDwpDate(String consumptionsFormatDate) {
         DateTime dateTime = DateTime.parse(consumptionsFormatDate);
         return dateTime.toString(FRENCH_DATE_FORMAT);
+    }
+
+    /**
+     *
+     * @param interval DWP interval, formatted "dd-MM-yyyy dd-MM-yyyy"
+     */
+    public static String getFormattedEnd(String interval, int daysEarlierOrLater) {
+        if (!interval.matches(DWP_START_END_DATE_FORMAT_REGEX))
+            throw new CucumberException(interval + "is not DWP start-end interval");
+        String[] split = interval.split("\\s+");
+        String end = split[1];
+        DateTimeFormatter fmt = DateTimeFormat.forPattern(DWP_START_END_DATE_FORMAT);
+        return fmt.parseDateTime(end).plusDays(daysEarlierOrLater).toString(FRENCH_DATE_FORMAT);
+    }
+
+    /**
+     *
+     * @param interval DWP interval, formatted "dd-MM-yyyy dd-MM-yyyy"
+     */
+    public static String getFormattedEnd(String interval) {
+        if (!interval.matches(DWP_START_END_DATE_FORMAT_REGEX))
+            throw new CucumberException(interval + "is not DWP start-end interval");
+        String[] split = interval.split("\\s+");
+        String end = split[1];
+        DateTimeFormatter fmt = DateTimeFormat.forPattern(DWP_START_END_DATE_FORMAT);
+        return fmt.parseDateTime(end).toString(FRENCH_DATE_FORMAT);
     }
 
 }

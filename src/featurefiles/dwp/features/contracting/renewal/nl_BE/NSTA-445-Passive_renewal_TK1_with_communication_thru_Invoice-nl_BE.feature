@@ -1,5 +1,8 @@
+@ALL
 @DWP
 @B2C
+@REGRESSION
+@UNSTABLE
 Feature: NSTA-445 Passive renewal of contract TK1 - with communication through Invoice
 
     Background:
@@ -48,7 +51,21 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
 
         When Dashboard menu is "Contracten"
         Then View list header is "Actieve en toekomstige connecties"
-        And "1st" List element with value at column "EAN-code" is checked
         And "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
+
+        #"Start & Einddatum" is parsed, start is put to parameterProvider as "Start & Einddatum - start", end - as "Start & Einddatum - end"
+        When End of interval from "1st" row of table "Contracten" at column "Start & Einddatum" is checked
+        And Top arrow button is "Up"
+        And Plus menu is "Contracting -> TK1 Hernieuwingen -> Hernieuwingsbatches"
+        Then View list header is "TK1 - Hernieuwingsbatches" appears within 20 seconds
+        
+        When Click on "START NIEUWE HERNIEUWINGSBATCH" link
+        Then Modal dialog is "Start passive renewal batch"
+        When "Batchnaam" input is "parameter:suitecrm-customer-name"
+        And  "Renewal date from" date is "parameter:Start & Einddatum - start"
+        And "Renewal date to" date is "parameter:Start & Einddatum - end"
+        And "EAN-code" input is "parameter:EAN-code-generated"
+        Then Modal dialogue is confirmed
+
 
 

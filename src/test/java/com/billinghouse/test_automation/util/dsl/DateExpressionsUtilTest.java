@@ -1,12 +1,12 @@
 package com.billinghouse.test_automation.util.dsl;
 
 import org.hamcrest.Matchers;
+import org.joda.time.Interval;
 import org.junit.Test;
 
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.*;
 import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 
 public class DateExpressionsUtilTest {
@@ -90,5 +90,16 @@ public class DateExpressionsUtilTest {
             interval = "1 month";
         assertThat("Comparison of two dates expression conversion failure", checkTimeBetween(earlierDte, laterDate, interval), Matchers.equalTo(0));
 
+    }
+    @Test
+    public void testDwpInterval() throws Exception {
+        String interval = "20-03-2019 31-03-2020";
+        String newStartExpected = "30/03/2020";
+        String newEndExpected = "01/04/2020";
+        String newStart = getFormattedEnd(interval, -1);
+        assertEquals(newStartExpected, newStart);
+
+        String newEnd = getFormattedEnd(interval, +1);
+        assertEquals(newEndExpected, newEnd);
     }
 }
