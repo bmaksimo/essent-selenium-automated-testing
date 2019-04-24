@@ -14,9 +14,11 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 public abstract class Component {
@@ -83,6 +85,14 @@ public abstract class Component {
 
     public WebElement findElementWhenClickable(By selector) {
         return seleniumDriver.findElementWhenClickable(selector);
+    }
+
+    public Optional<WebElement> findElementOptional(By selector) {
+        return seleniumDriver.findElementOptional(selector);
+    }
+
+    public WebElement findElementWhenPresent(By selector, Duration timeout, Duration pollingEvery) {
+        return seleniumDriver.findElementWhenPresent(selector, timeout, pollingEvery);
     }
 
     protected Model.Execution createExecution() {

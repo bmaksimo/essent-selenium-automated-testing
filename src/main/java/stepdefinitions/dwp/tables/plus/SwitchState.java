@@ -1,5 +1,7 @@
 package stepdefinitions.dwp.tables.plus;
 
+import org.apache.commons.lang3.BooleanUtils;
+
 public enum SwitchState {
     Open(1),
     Closed(0),
@@ -21,6 +23,10 @@ public enum SwitchState {
 
     public boolean isOn() {
         return state > 0;
+    }
+    public boolean hasState(String state) {
+        boolean fromString = BooleanUtils.toBoolean(state);
+        return BooleanUtils.toInteger(fromString) == this.state;
     }
     public boolean isUndefined() {
         return state < 0;

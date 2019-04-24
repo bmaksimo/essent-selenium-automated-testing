@@ -27,7 +27,7 @@ public class ToggleImpl extends Component {
         }
     }
 
-    //TODO: check if switchOn and clickOnToggle can be merged
+    //TODO: check if switchOnElectricityMarketMock and clickOnToggle can be merged
     public void clickOnToggle(String toggleInputName){
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(2);

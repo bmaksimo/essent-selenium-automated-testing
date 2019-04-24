@@ -4,8 +4,8 @@ public interface NonEditable {
 
     String getValue(String label);
 
-    String getValue(String title, String label);
+    String getValue(String card, String label);
 
-    boolean checkAmountUsingExpression(String title, String label, String expression);
+    boolean checkAmountUsingExpression(String card, String label, String expression);
 
 }

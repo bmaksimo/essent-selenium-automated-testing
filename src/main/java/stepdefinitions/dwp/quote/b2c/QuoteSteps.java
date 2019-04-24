@@ -37,6 +37,7 @@ import static com.essent.testing.dwp.autocrat.element.quote.TariffElements.NO_PR
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.NEXT_STEP;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
+import static org.awaitility.Awaitility.setDefaultPollDelay;
 import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
 import static org.awaitility.Duration.ONE_HUNDRED_MILLISECONDS;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -75,6 +76,13 @@ public class QuoteSteps extends DwpScenario {
     public void deduplicationDialogueLinkIsClicked(String linkText) throws Throwable {
         SimilarAccountDialog dialog = new SimilarAccountDialogImpl();
         dialog.clickOnLink(linkText);
+    }
+
+    @When("^Electricity market mock mode is switched ([^\"]*) on \"([^\"]*)\" card$")
+    public void marketMockModeIsSwitchedOnOnCard(SwitchState switchState, String card) throws Throwable {
+        ConnectionDetailsPage connectionDetailsPage = new ConnectionDetailsPage();
+        connectionDetailsPage.switchOnElectricityMarketMock(card);
+        connectionDetailsPage.isElectricityMarketMockOn(card);
     }
 
     private class VerifyTariffSheetPriceAlert implements FlowAwarePredicate<QuoteSteps> {
@@ -212,7 +220,7 @@ public class QuoteSteps extends DwpScenario {
         ConnectionDetails gasConnectionDetails = list.get(1);
 
         ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
-        connectionDetailsView.setElectroConnectionDetails(electricityConnectionDetails);
+        connectionDetailsView.setElectricityConnectionDetails(electricityConnectionDetails);
         connectionDetailsView.setGasConnectionDetails(gasConnectionDetails);
         connectionDetailsView.fillInFormData();
     }
@@ -402,7 +410,7 @@ public class QuoteSteps extends DwpScenario {
         }
         ConnectionDetailsPage page = new ConnectionDetailsPage();
         Sleeper.sleepTightInSeconds(5);
-        page.setElectroConnectionDetails(electricityConnectionDetails);
+        page.setElectricityConnectionDetails(electricityConnectionDetails);
         boolean success = page.fillInElectricityEanCode();
         assertThat("Electricity EAN code filling in failure", success, is(true));
     }
