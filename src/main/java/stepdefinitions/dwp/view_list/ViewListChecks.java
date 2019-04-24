@@ -489,7 +489,9 @@ public class ViewListChecks extends NavigationElements {
 
     private void loopBack(String arrow, String dashboardMenu) {
         try {
+            seleniumDriver.waitForRequestsToFinish();
             clickTopArrow(arrow);
+            seleniumDriver.waitForRequestsToFinish();
             clickDashboardMenu(dashboardMenu);
         } catch (Throwable t) {
             throw new CucumberException(t);
@@ -730,8 +732,9 @@ public class ViewListChecks extends NavigationElements {
     @And("^Table \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\"$")
     public void viewListContainsValueAtColumn(String table, String value, String column) throws Throwable {
         ViewListModel viewListModel = new ViewListModel();
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
         List<String> columnData = viewListModel.fetchColumnData(table, column);
-        List<String> found = columnData.stream().filter(element -> element.contains(value))
+        List<String> found = columnData.stream().filter(element -> element.contains(inputValue))
             .collect(Collectors.toList());
         String message = String.format("Table \"%s\" didn't contain value \"%s\" at column \"%s\"", table, value,
             column);
