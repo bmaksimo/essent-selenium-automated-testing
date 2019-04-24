@@ -1,5 +1,7 @@
 package com.essent.testing.dwp.pageobject.elements;
 
+import stepdefinitions.dwp.tables.plus.SwitchState;
+
 public interface ToggleSwitch extends Button {
     /**
      * @deprecated use {@link #isOn(String)} or {@link #isOn(String, String)}
@@ -9,6 +11,8 @@ public interface ToggleSwitch extends Button {
     boolean isOn(String label);
     boolean isOn(String card, String label);
     void switchOn(String label);
+    void toggle(SwitchState switchState, String label);
+    void toggle(SwitchState switchState, String card, String label);
     void switchOn(String card, String label);
     void switchOff(String label);
     void switchOff(String card, String label);

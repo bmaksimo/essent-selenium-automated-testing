@@ -24,6 +24,10 @@ public enum SwitchState {
     public boolean isOn() {
         return state > 0;
     }
+
+    public boolean isOff() {
+        return state == 0;
+    }
     public boolean hasState(String state) {
         boolean fromString = BooleanUtils.toBoolean(state);
         return BooleanUtils.toInteger(fromString) == this.state;

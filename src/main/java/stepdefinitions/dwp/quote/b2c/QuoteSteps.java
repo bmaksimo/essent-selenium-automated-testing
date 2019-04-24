@@ -78,13 +78,6 @@ public class QuoteSteps extends DwpScenario {
         dialog.clickOnLink(linkText);
     }
 
-    @When("^Electricity market mock mode is switched ([^\"]*) on \"([^\"]*)\" card$")
-    public void marketMockModeIsSwitchedOnOnCard(SwitchState switchState, String card) throws Throwable {
-        ConnectionDetailsPage connectionDetailsPage = new ConnectionDetailsPage();
-        connectionDetailsPage.switchOnElectricityMarketMock(card);
-        connectionDetailsPage.isElectricityMarketMockOn(card);
-    }
-
     private class VerifyTariffSheetPriceAlert implements FlowAwarePredicate<QuoteSteps> {
 
         @Override

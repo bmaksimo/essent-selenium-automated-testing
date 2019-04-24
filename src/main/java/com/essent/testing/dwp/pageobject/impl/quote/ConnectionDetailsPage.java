@@ -115,7 +115,7 @@ public class ConnectionDetailsPage extends QuoteCreationGuidedStep {
      * because the 'test' toggle switch is not included in productional versions,
      * and it is unlikely that Dutch and French UAT versions of switch have different labels in UAT
      */
-    public void switchOnElectricityMarketMock() {
+    public void switchOnElectricityMarketMock(SwitchState switchState) {
         electricityMarketMockTestSwitch.switchOn(MM_MODE_LABEL);
     }
 
@@ -131,7 +131,7 @@ public class ConnectionDetailsPage extends QuoteCreationGuidedStep {
      * because the 'test' toggle switch is not included in productional versions,
      * and it is unlikely that Dutch and French UAT versions of switch have different labels in UAT
      */
-    public void switchOGasMarketMock() {
+    public void switchOnGasMarketMock() {
         gasMarketMockTestSwitch.switchOn(MM_MODE_LABEL);
     }
 
@@ -142,4 +142,13 @@ public class ConnectionDetailsPage extends QuoteCreationGuidedStep {
     public void isGasMarketMockOn(String card) {
         gasMarketMockTestSwitch.checkVisibility(card, MM_MODE_ON_LABEL);
     }
+
+    public void toggleElectricityMarketMockTest(SwitchState switchState, String card) {
+        electricityMarketMockTestSwitch.toggle(switchState, card, MM_MODE_LABEL);
+    }
+
+    public void toggleGasMarketMockTest(SwitchState switchState, String card) {
+        gasMarketMockTestSwitch.toggle(switchState, card, MM_MODE_LABEL);
+    }
+
 }

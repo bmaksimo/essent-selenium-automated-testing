@@ -73,6 +73,29 @@ public class ToggleSwitchImpl extends ButtonImpl implements ToggleSwitch {
     }
 
     @Override
+    public void toggle(SwitchState switchState, String label) {
+        if(switchState.isOn()) {
+            switchOn(label);
+        } else if(switchState.isOff()) {
+            switchOff(label);
+        } else {
+            logger().warn("Element was not toggled to " + switchState + " state.");
+        }
+    }
+
+    @Override
+    public void toggle(SwitchState switchState, String card, String label) {
+        if(switchState.isOn()) {
+            switchOn(card, label);
+        } else if(switchState.isOff()) {
+            switchOff(card, label);
+        } else {
+            logger().warn("Element was not toggled to " + switchState + " state.");
+        }
+
+    }
+
+    @Override
     public void switchOn(String card, String label) {
         if(!isOn(card, label)) {
             element.get().click();
