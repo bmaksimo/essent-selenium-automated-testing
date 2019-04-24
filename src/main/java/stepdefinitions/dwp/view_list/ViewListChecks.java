@@ -489,7 +489,9 @@ public class ViewListChecks extends NavigationElements {
 
     private void loopBack(String arrow, String dashboardMenu) {
         try {
+            seleniumDriver.waitForRequestsToFinish();
             clickTopArrow(arrow);
+            seleniumDriver.waitForRequestsToFinish();
             clickDashboardMenu(dashboardMenu);
         } catch (Throwable t) {
             throw new CucumberException(t);
