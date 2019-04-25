@@ -775,40 +775,43 @@ public class ViewListChecks extends NavigationElements {
     public void checkInvoicesAmounts(final DataTable dbTable) {
         List<List<String>> info = dbTable.raw();
 
+        //first list of possible invoice amounts
         String amountInvoice1_1 = info.get(1).get(0);
         String amountInvoice1_2 = info.get(2).get(0);
         String amountInvoice1_3 = info.get(3).get(0);
         String amountInvoice1_4 = info.get(4).get(0);
 
+        //second list of possible invoice amounts
         String amountInvoice2_1 = info.get(1).get(1);
         String amountInvoice2_2 = info.get(2).get(1);
         String amountInvoice2_3 = info.get(3).get(1);
         String amountInvoice2_4 = info.get(4).get(1);
 
+        //third list of possible invoice amounts
         String amountInvoice3_1 = info.get(1).get(2);
         String amountInvoice3_2 = info.get(2).get(2);
         String amountInvoice3_3 = info.get(3).get(2);
         String amountInvoice3_4 = info.get(4).get(2);
 
-
         ContractPage cp = new ContractPage();
         String actualValuesOfInvoices = cp.getActualValuesOfInvoicesAsString();
-        if (amountInvoice1_1.equals(actualValuesOfInvoices) || amountInvoice1_2.equals(actualValuesOfInvoices)
-            || amountInvoice1_3.equals(actualValuesOfInvoices) || amountInvoice1_4.equals(actualValuesOfInvoices))
+        boolean firstCombination = cp.checkIsInvoicesAmountsAsStringCorrect(amountInvoice1_1, amountInvoice1_2, amountInvoice1_3, amountInvoice1_4, actualValuesOfInvoices);
+        boolean secondCombination = cp.checkIsInvoicesAmountsAsStringCorrect(amountInvoice2_1, amountInvoice2_2, amountInvoice2_3, amountInvoice2_4, actualValuesOfInvoices);
+        boolean thirdCombination = cp.checkIsInvoicesAmountsAsStringCorrect(amountInvoice3_1, amountInvoice3_2, amountInvoice3_3, amountInvoice3_4, actualValuesOfInvoices);
+
+        if (firstCombination)
         {
             logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");
 
         }
 
-        else if (amountInvoice2_1.equals(actualValuesOfInvoices) || amountInvoice2_2.equals(actualValuesOfInvoices)
-            || amountInvoice2_3.equals(actualValuesOfInvoices) || amountInvoice2_4.equals(actualValuesOfInvoices))
+        else if (secondCombination)
         {
             logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");
 
         }
 
-        else if (amountInvoice3_1.equals(actualValuesOfInvoices) || amountInvoice3_2.equals(actualValuesOfInvoices)
-            || amountInvoice3_3.equals(actualValuesOfInvoices) || amountInvoice3_4.equals(actualValuesOfInvoices))
+        else if (thirdCombination)
         {
             logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");
 

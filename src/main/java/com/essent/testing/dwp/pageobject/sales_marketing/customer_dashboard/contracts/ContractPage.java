@@ -462,6 +462,18 @@ public class ContractPage extends Component {
         return sb.append(firstInvoice).append(' ').append(secondInvoice).append(' ').append(thirdInvoice).toString();
     }
 
+    public boolean checkIsInvoicesAmountsAsStringCorrect(String amountInvoicesCombination1, String amountInvoicesCombination2, String amountInvoicesCombination3, String amountInvoicesCombination4, String actualValuesOfInvoices)
+    {
+        boolean matchingValuesOfInvoices = false;
+        if (amountInvoicesCombination1.equals(actualValuesOfInvoices) || amountInvoicesCombination2.equals(actualValuesOfInvoices)
+            || amountInvoicesCombination3.equals(actualValuesOfInvoices) || amountInvoicesCombination4.equals(actualValuesOfInvoices))
+        {
+            matchingValuesOfInvoices = true;
+        }
+
+        return matchingValuesOfInvoices;
+    }
+
     public String getBalance() {
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.id(SALDO_CREDIT_INVOICE)).getText();
