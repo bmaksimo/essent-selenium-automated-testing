@@ -775,32 +775,79 @@ public class ViewListChecks extends NavigationElements {
     public void checkInvoicesAmounts(final DataTable dbTable) {
         List<List<String>> info = dbTable.raw();
 
-        String amountInvoice1 = info.get(1).get(0);
-        String amountInvoice2 = info.get(1).get(1);
-        String amountInvoice3 = info.get(1).get(2);
+        String amountInvoice1_1 = info.get(1).get(0);
+        String amountInvoice1_2 = info.get(2).get(0);
+        String amountInvoice1_3 = info.get(3).get(0);
+        String amountInvoice1_4 = info.get(4).get(0);
+
+        String amountInvoice2_1 = info.get(1).get(1);
+        String amountInvoice2_2 = info.get(2).get(1);
+        String amountInvoice2_3 = info.get(3).get(1);
+        String amountInvoice2_4 = info.get(4).get(1);
+
+        String amountInvoice3_1 = info.get(1).get(2);
+        String amountInvoice3_2 = info.get(2).get(2);
+        String amountInvoice3_3 = info.get(3).get(2);
+        String amountInvoice3_4 = info.get(4).get(2);
+
+
         ContractPage cp = new ContractPage();
         String actualValuesOfInvoices = cp.getActualValuesOfInvoicesAsString();
-        if (amountInvoice1.equals(actualValuesOfInvoices)){
-            logger().info(String.format("- STEP: Values of invoices \"%s\" are correct - PASSED.", amountInvoice1));
+        if (amountInvoice1_1.equals(actualValuesOfInvoices) || amountInvoice1_2.equals(actualValuesOfInvoices)
+            || amountInvoice1_3.equals(actualValuesOfInvoices) || amountInvoice1_4.equals(actualValuesOfInvoices))
+        {
+            logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");
 
         }
-        else if (amountInvoice2.equals(actualValuesOfInvoices))
-            logger().info(String.format("- STEP: Values of invoices \"%s\" are correct - PASSED.", amountInvoice2));
 
-        else if (amountInvoice3.equals(actualValuesOfInvoices))
-            logger().info(String.format("- STEP: Values of invoices \"%s\" are correct - PASSED.", amountInvoice3));
+        else if (amountInvoice2_1.equals(actualValuesOfInvoices) || amountInvoice2_2.equals(actualValuesOfInvoices)
+            || amountInvoice2_3.equals(actualValuesOfInvoices) || amountInvoice2_4.equals(actualValuesOfInvoices))
+        {
+            logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");
 
+        }
+
+        else if (amountInvoice3_1.equals(actualValuesOfInvoices) || amountInvoice3_2.equals(actualValuesOfInvoices)
+            || amountInvoice3_3.equals(actualValuesOfInvoices) || amountInvoice3_4.equals(actualValuesOfInvoices))
+        {
+            logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");
+
+        }
         else throw new CucumberException("Actual invoices values " + actualValuesOfInvoices + " don't match expected ones");
 
     }
 
 
-    @Then("^Balance is among values \"([^\"]*)\"$")
-    public void checkValue (String expectedSaldo) {
+    @Then("^Balance is among values$")
+    public void checkValue (final DataTable dbTable) {
+        List<List<String>> info = dbTable.raw();
+
+        String balance1 = info.get(1).get(0);
+        String balance2 = info.get(1).get(1);
+        String balance3 = info.get(1).get(2);
+
         ContractPage cp = new ContractPage();
-        String actualSaldo = cp.getBalance();
-        assertThat(String.format("Actual credit invoice \"%s\" differs from the expected one \"%s\" on saldo", actualSaldo, expectedSaldo), expectedSaldo, containsString(actualSaldo));
-        logger().info(String.format("- STEP: Saldo \"%s\" is correct - PASSED.", expectedSaldo));
+        String actualBalance = cp.getBalance();
+
+        if (balance1.equals(actualBalance))
+        {
+            logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");
+
+        }
+
+        else if (balance2.equals(actualBalance))
+        {
+            logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");
+
+        }
+
+        else if (balance3.equals(actualBalance))
+        {
+            logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");
+
+        }
+        else throw new CucumberException("Actual invoices values " + actualBalance + " don't match expected ones");
+
     }
 
 

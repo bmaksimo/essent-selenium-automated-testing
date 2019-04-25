@@ -118,6 +118,10 @@ Feature: NSTA-345 - Credit Invoice
         Then Invoice Amounts are among
             |    amountInvoice1     |    amountInvoice2     |    amountInvoice3    |
             |  113 € -113 € 300 €   |  226 € -226 € 600 €   |  339 € -339 € 900 €  |
+            |  -113 € 113 € 300 €   |  -226 € 226 € 600 €   |  -339 € 339 € 900 €  |
+            |  300 € 113 € -113 €   |  600 € 226 € -226 €   |  900 € 339 € -339 €  |
+            |  300 € -113 € 113 €   |  600 € -226 € 226 €   |  900 € -339 € 339 €  |
+
 
          #3 - Check if interactions are created for VKM and CNM
         When Dashboard menu is "Service"
@@ -130,7 +134,10 @@ Feature: NSTA-345 - Credit Invoice
          #5 - Check Saldo of new invoice credit
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
-        Then Balance is among values "€ 300,00|€ 600,00|€ 900,00"
+        Then Balance is among values
+            |  balance1 |  balance2  |  balance3  |
+            |  € 300,00 |  € 600,00  |  € 900,00  |
+
 
 
 
