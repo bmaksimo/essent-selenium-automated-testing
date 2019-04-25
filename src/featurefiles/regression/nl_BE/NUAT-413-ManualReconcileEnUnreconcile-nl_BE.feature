@@ -2,7 +2,7 @@
 @B2B
 @REGRESSION
 @PAYMENTS
-@UNSTABLE
+@ALL
 Feature: NUAT-413: Manual reconcile en unreconcile
 
     Background:
@@ -19,7 +19,7 @@ Feature: NUAT-413: Manual reconcile en unreconcile
         And New item is
             | name | partner                 | debit | credit |
             | new1 | parameter:accountNumber | 0     | 10     |
-            | new1 | parameter:accountNumber | 10    | 0      |
+            | new2 | parameter:accountNumber | 10    | 0      |
         Then Save journal entry
         When Odoo left menu is "Customers"
         And Odoo filter is "parameter:accountNumber"
