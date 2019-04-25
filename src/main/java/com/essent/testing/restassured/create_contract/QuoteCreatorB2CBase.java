@@ -431,7 +431,7 @@ public class QuoteCreatorB2CBase {
 		formParams.put("model[recordTypeOfRecordId]", "Paym_Details");
 		formParams.put("model[recordId]", bilingCustomerId);
 		formParams.put("model[baseModule]", "Paym_Details");
-		formParams.put("model[dwp|recordType]", "Accounts");
+		formParams.put("model[dwp|recordType]", "AccountsAsQuotes");
 		formParams.put("model[accounts|id]", recordId);
 		formParams.put("model[dwp|id]", recordId);
 		formParams.put("model[id]", bilingCustomerId);

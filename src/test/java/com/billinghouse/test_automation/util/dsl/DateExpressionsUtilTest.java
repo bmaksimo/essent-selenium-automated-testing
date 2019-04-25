@@ -1,10 +1,12 @@
 package com.billinghouse.test_automation.util.dsl;
 
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.*;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 
 public class DateExpressionsUtilTest {
@@ -23,7 +25,8 @@ public class DateExpressionsUtilTest {
             "now"
         };
         for (String dateFrom : dateF) {
-           assertTrue(matchesDwpDateFormat(expandFrom(dateFrom).toString("dd/MM/yyyy")));
+            //TODO - test has to be better
+            assertTrue(matchesDwpDateFormat(expandFrom(dateFrom).toString("dd/MM/yyyy")));
         }
     }
 
@@ -40,11 +43,52 @@ public class DateExpressionsUtilTest {
         String actual = checkAndConvertToSoctarFileDate("30/01/2019");
         assertEquals(String.format("Actual Soctar start and end date '%s' differs from the expected '%s'", actual, expectedSoctarFileDate), expectedSoctarFileDate, actual);
     }
+
     @Test
     public void testConvertToStartAndEndDate() throws Exception {
         String expectedDwpStartEndDate = "01-02-2019 - 31-12-2019";
         String actual = checkAndConvertToDwpContractStartEndDate("01/02/2019");
         assertEquals(String.format("Actual Dwp start and end date '%s' differs from the expected '%s'", actual, expectedDwpStartEndDate), expectedDwpStartEndDate, actual);
+
+    }
+
+    @Test
+    public void testCheckDaysBetween() throws Exception {
+        String[] split = "09-04-2019 28-04-2019".split("\\s+");
+        String earlierDte = split[0],
+            laterDate = split[1],
+            interval = "19 days";
+        assertThat("Comparison of two dates expression conversion failure", checkTimeBetween(earlierDte, laterDate, interval), Matchers.equalTo(0));
+
+    }
+
+    @Test
+    public void testChecYearsBetween() throws Exception {
+        String[] split = "09-04-2019 28-04-2020".split("\\s+");
+        String earlierDte = split[0],
+            laterDate = split[1],
+            interval = "1 year";
+        assertThat("Comparison of two dates expression conversion failure", checkTimeBetween(earlierDte, laterDate, interval), Matchers.equalTo(0));
+
+    }
+
+    @Test
+    public void testCheckWeeksBetween() throws Exception {
+        String[] split = "09-04-2019 28-04-2019".split("\\s+");
+        String earlierDte = split[0],
+            laterDate = split[1],
+            interval = "2 weeks";
+        assertThat("Comparison of two dates expression conversion failure", checkTimeBetween(earlierDte, laterDate, interval), Matchers.equalTo(0));
+
+    }
+
+    @Test
+    public void testCheckMonthsBetween() throws Exception {
+        String[] split = "09-04-2019 28-05-2019".split("\\s+");
+        String earlierDte = split[0],
+            laterDate = split[1],
+            interval = "1 month";
+        assertThat("Comparison of two dates expression conversion failure", checkTimeBetween(earlierDte, laterDate, interval), Matchers.equalTo(0));
 
     }
 }

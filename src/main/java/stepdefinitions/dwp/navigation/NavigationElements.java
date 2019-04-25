@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
-import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.numericValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -119,10 +118,6 @@ public abstract class NavigationElements extends DwpScenario {
         public boolean test(String name) {
             return executeJavascriptTest("TrSearchCustomer", name);
         }
-    }
-
-    protected int extractNumericValue(String ordinal) {
-        return numericValue(ordinal);
     }
 
     protected void clickTopAction(String name) {

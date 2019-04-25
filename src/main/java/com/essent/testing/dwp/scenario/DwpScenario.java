@@ -15,13 +15,21 @@ import com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter;
 import com.google.gson.Gson;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.StrSubstitutor;
 import org.iban4j.CountryCode;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpDate;
+
+import static com.essent.testing.dwp.constant.DwpConstants.FLEMISCH_LOCALE;
+import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.convertToDwpTime;
+import static com.billinghouse.test_automation.util.dsl.NumericUtil.ordinalAsInt;
+import static com.billinghouse.test_automation.util.dsl.NumericUtil.sumOfAmounts;
+import static com.billinghouse.test_automation.util.dsl.NumericUtil.amountAsInt;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -29,6 +37,9 @@ import static org.junit.Assert.assertTrue;
  *
  */
 public abstract class DwpScenario extends RegisteredScenario {
+
+
+
 
     @Resource(name="dwpSeleniumDriver")
     protected DWPSeleniumDriver seleniumDriver;
@@ -93,6 +104,10 @@ public abstract class DwpScenario extends RegisteredScenario {
         return checkAndConvertToDwpDate(parameter);
     }
 
+    protected String toDwpTime(String parameter) {
+        return convertToDwpTime(parameter);
+    }
+
     protected String toDwpEndDate(String parameter) {
         return DateExpressionsUtil.checkAndConvertToDwpContracEndDate(parameter);
     }
@@ -130,5 +145,24 @@ public abstract class DwpScenario extends RegisteredScenario {
     protected void setUpWebDriver() throws Exception {
         setUpWebDriver(seleniumDriver);
         seleniumDriver.initNgWebDriver();
+    }
+
+    protected int extractNumericValue(String ordinal) {
+        return ordinalAsInt(ordinal);
+    }
+
+    protected Integer amountInCurrencyAsInt(String amountInCurrency) {
+        return amountAsInt(amountInCurrency, FLEMISCH_LOCALE);
+    }
+
+    protected Integer sumOf(List<String> amounts) {
+        return sumOfAmounts(amounts);
+    }
+
+    protected String createQuery(String template, String key, String value) {
+        Map<String, String> valuesMap = new HashMap<>();
+        valuesMap.put(key, value);
+        StrSubstitutor sub = new StrSubstitutor(valuesMap);
+        return sub.replace(template);
     }
 }

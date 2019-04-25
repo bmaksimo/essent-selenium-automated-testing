@@ -40,7 +40,7 @@
     <deliverypoint>${deliveryPoint}</deliverypoint>
     <values>
       <number>1</number>
-      <value>4321.0</value>
+      <value>43210.0</value>
       <quality>DEFAULT</quality>
     </values>
   </register>
@@ -51,7 +51,7 @@
     <deliverypoint>${deliveryPoint}</deliverypoint>
     <values>
       <number>1</number>
-      <value>8341.0</value>
+      <value>83410.0</value>
       <quality>DEFAULT</quality>
     </values>
   </register>

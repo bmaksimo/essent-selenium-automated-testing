@@ -59,7 +59,7 @@ public class JournalEntriesSteps extends OdooScenario {
     }
 
     @And("^Save journal entry")
-    public void saveAndPost() {
+    public void saveJornalEntery() {
         awaitOdooRequestToFinish(10);
         JournalEntriesPage je = new JournalEntriesPage();
         je.saveJournal();

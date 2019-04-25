@@ -5,11 +5,17 @@ import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.NEXT_BUTTON;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.NEXT_BUTTON;
+
 public class BaseObjectPage extends Component {
+
+    private static SimpleDateFormat SIMPLE_DATEF_ORMAT = new SimpleDateFormat("dd/MM/yyyy");
 
     private static final String PLUS_BUTTON_XPATH = "(//list-plus-cell//a)[1]";
     private static final String REPLACEMENT_KEY = "replacement_key";
@@ -22,7 +28,7 @@ public class BaseObjectPage extends Component {
 
     private static final String REPLACEMENT_KEY1 = "replacement_key1";
     private static final String LABEL_CLICK_XPATH = "//validation-wrapper[@label='${" + REPLACEMENT_KEY
-	    + "}']//option[@label = ${'" + REPLACEMENT_KEY1 + "}']";
+	    + "}']//option[@label = '${" + REPLACEMENT_KEY1 + "}']";
 
     private static final String CARD_TEXT_XPATH = "//h2[normalize-space(text())='${"+REPLACEMENT_KEY+"}']/parent::div/parent::div/div[@class='form__group']//label[normalize-space(text())='${"+REPLACEMENT_KEY1+"}']/parent::div//strong";
 
@@ -44,6 +50,16 @@ public class BaseObjectPage extends Component {
         }
     }
 
+    public void plusSubactionNow(String actionValue) {
+        String xpathSubaction = createQuery(PLUS_MENU_XPATH, REPLACEMENT_KEY, actionValue);
+        try {
+            seleniumDriver.clickNow(seleniumDriver.findElementWhenVisible(By.xpath(xpathSubaction)));
+
+        } catch (org.openqa.selenium.StaleElementReferenceException ex) {
+            seleniumDriver.clickNow(seleniumDriver.findElementWhenVisible(By.xpath(xpathSubaction)));
+        }
+    }
+
     public void clickOnMarkAsDonePlusMenuSubAction() {
 	    seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(PLUS_MARK_DONE_XPATH)));
     }
@@ -57,7 +73,7 @@ public class BaseObjectPage extends Component {
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(2);
         String xpathDate = createQuery(DATE_SELECTOR_XPATH, REPLACEMENT_KEY, labelValue);
-        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.xpath(xpathDate)), cp.date);
+        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.xpath(xpathDate)), SIMPLE_DATEF_ORMAT.format(new Date()));
         seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath(ICON_CALENDAR_XPATH)));
     }
 

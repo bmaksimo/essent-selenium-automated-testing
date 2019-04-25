@@ -2,7 +2,6 @@ package stepdefinitions.dwp.contracts.b2b.cancel;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.guided_flow.cupq.NewQuotePage;
-import com.essent.testing.dwp.pageobject.impl.navigation.DwpDashboardMenuPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.Invoice_list.InvoiceListPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.details.DetailsPage;
@@ -18,12 +17,12 @@ import cucumber.api.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import stepdefinitions.dwp.page_object.CustomerAcceptance;
+import stepdefinitions.dwp.tables.CustomerStatus;
 
-
-import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpContractStartEndDate;
-import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToSoctarFileDate;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.testng.AssertJUnit.assertEquals;
 
 public class ContractsSteps extends DwpScenario {
 
@@ -68,7 +67,7 @@ public class ContractsSteps extends DwpScenario {
     public void confirmTaskWas(String value) {
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
         MarktBerichtenPage mp = new MarktBerichtenPage();
-        mp.confirmTaskStatus(inputValue);
+        Assert.assertTrue(mp.getTaskStatus(inputValue).isDisplayed());
     }
 
     @Override
@@ -144,7 +143,7 @@ public class ContractsSteps extends DwpScenario {
     }
 
 
-    @And("^Invoice checkbox with key \"([^\"]*)\" is clicked")
+    @And("^Invoice checkbox with key \"([^\"]*)\" is clicked$")
     public void checkInvoiceOpenBalance(String text) {
         seleniumDriver.waitForRequestsToFinish();
         ContractPage contractenPage = new ContractPage();
@@ -153,9 +152,21 @@ public class ContractsSteps extends DwpScenario {
 
     @Then("^Customer Status is \"([^\"]*)\"$")
     public void customerStatus(String expectedStatus) {
+        seleniumDriver.waitForRequestsToFinish();
         CustomerAcceptance customerAcceptance = new CustomerAcceptance();
         String actualStatus = customerAcceptance.getAcceptanceStatus();
+        seleniumDriver.waitForRequestsToFinish();
         assertThat(String.format("Actual customer acceptance status \"%s\" differs from the expected \"%s\"", actualStatus, expectedStatus), actualStatus, equalTo(expectedStatus));
+
+    }
+
+    @Then("^Customer Status is an existing status$")
+    public void customerStatus() {
+        CustomerAcceptance customerAcceptance = new CustomerAcceptance();
+        String actualStatus = customerAcceptance.getAcceptanceStatus();
+        boolean success = CustomerStatus.containsStatus(actualStatus);
+        assertThat(String.format("Actual customer acceptance status \"%s\" does not exist", actualStatus),
+            success, is(true));
 
     }
 
@@ -201,7 +212,7 @@ public class ContractsSteps extends DwpScenario {
 
     }
 
-    @Then("Start Date \"([^\"]*)\" is \"([^\"]*)\" day bigger than End Date \"([^\"]*)\"$")
+    @Then("^Start Date \"([^\"]*)\" is \"([^\"]*)\" day bigger than End Date \"([^\"]*)\"$")
     public void compareStartAndEndDate(String startDate, long expectedRange, String endDate) {
 
         String sd = parameterProvider.getValueOrParameterAsString(startDate);
@@ -215,7 +226,7 @@ public class ContractsSteps extends DwpScenario {
     }
 
 
-    @Then("Check is product change \"([^\"]*)\"$")
+    @Then("^Check is product change \"([^\"]*)\"$")
     public void checkProductChangeSuccess(String expectedMessage) {
         ContractPage cp = new ContractPage();
         String messageActual = cp.checkSuccessMessage();
@@ -232,6 +243,34 @@ public class ContractsSteps extends DwpScenario {
 
     }
 
+    @When("^Payment table is not empty$")
+    public void checkPaymentTableNotEmpty() throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
+        ContractPage contractenPage = new ContractPage();
+        boolean success = contractenPage.checkPaymentTableNotEmpty();
 
+        assertThat("Rows in invoice table are empty", success, is(true));
+        seleniumDriver.waitForRequestsToFinish();
+    }
 
+    @Then("^Payment plan has \"([^\"]*)\" installments$")
+    public void PaymentPlanNumberOfInstallments(int expectedNumberOfInstallments){
+        seleniumDriver.waitForRequestsToFinish();
+        ContractPage contractPage = new ContractPage();
+
+        int actualNumberOfInstallments = contractPage.checkNumberOfInstallments();
+        assertThat(String.format("Number of actual installments \"%s\" differs from the expected ones \"%s\" on payment plan", actualNumberOfInstallments, expectedNumberOfInstallments), actualNumberOfInstallments, equalTo(expectedNumberOfInstallments));
+        seleniumDriver.waitForRequestsToFinish();
+    }
+
+    @Then("^Payment plan has installment values of \"([^\"]*)\", \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void PaymentPlanValuesOfInstallments(String firstExpectedValue, String secondExpectedValue, String thirdExpectedValue){
+        seleniumDriver.waitForRequestsToFinish();
+        ContractPage contractPage = new ContractPage();
+        String expectedResult = firstExpectedValue + secondExpectedValue + thirdExpectedValue;
+        String result =  contractPage.checkValueOfInstallments(firstExpectedValue, secondExpectedValue, thirdExpectedValue);
+        assertEquals(expectedResult ,result);
+        seleniumDriver.waitForRequestsToFinish();
+
+    }
 }

@@ -6,4 +6,6 @@ public interface NonEditable {
 
     String getValue(String title, String label);
 
+    boolean checkAmountUsingExpression(String title, String label, String expression);
+
 }

@@ -55,19 +55,19 @@ public class PaymentInfoSteps extends NavigationElements {
         registerActiveScenario(scenario);
     }
 
-    @And("Payment details are confirmed$")
+    @And("^Payment details are confirmed$")
     public void clickSaveOnPaymentDetailsModal() {
         boolean success = new PaymentDetailsModalSaveAction().test(null);
         assertThat("Billing customer update has failed.", success, is(true));
     }
 
-    @When("Payment method is switched$")
+    @When("^Payment method is switched$")
     public void switchPaymentMethod() {
         boolean success = new PaymentMethodSwitch().test(new HashMap<>());
         assertThat("Payment method has not been switched", success, is(true));
     }
 
-    @And("IBAN is \"([^\"]*)\" if not empty$")
+    @And("^IBAN is \"([^\"]*)\" if not empty$")
     public void changeIBAN(String iban) {
         Map<String, String> options = new HashMap<>();
         options.put("iban", iban);
@@ -79,7 +79,7 @@ public class PaymentInfoSteps extends NavigationElements {
     public void listSwitchedPaymentMethod() throws Throwable {
         String updatedPaymentMethodName = parameterProvider.getValueOrParameterAsString("parameter:paymentMethod");
         final String UPDATED_PAYMENT_METHOD = "//list-simple-two-liner-cell[contains(@line-2,'" + updatedPaymentMethodName + "')]";
-        WebElement element = seleniumDriver.findElementOrNull(By.xpath(UPDATED_PAYMENT_METHOD));
+        WebElement element = seleniumDriver.findElementWhenPresent(By.xpath(UPDATED_PAYMENT_METHOD));
         assertThat(String.format("View list did not contain payment method %s", updatedPaymentMethodName),
             element, is(notNullValue()));
     }

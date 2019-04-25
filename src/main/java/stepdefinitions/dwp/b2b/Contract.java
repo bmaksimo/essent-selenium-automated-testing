@@ -42,6 +42,7 @@ public class Contract extends DwpScenario {
     public void getClientNumber() {
         ContractPage cp = new ContractPage();
         Klantnummer=cp.getClientNumber();
+        parameterProvider.put("accountNumber",Klantnummer);
     }
 
     @And("^Search by client number$")
@@ -102,13 +103,13 @@ public class Contract extends DwpScenario {
     }
 
 
-    @When("^Rechtsvorm is bvba")
+    @When("^Rechtsvorm is bvba$")
     public void formLegal() {
         NewQuotePage nq = new NewQuotePage();
         nq.selectItemLegalForm();
     }
 
-    @And("^Geslacht is Male")
+    @And("^Gender is male$")
     public void gender() {
         NewQuotePage nq = new NewQuotePage();
         nq.selectGender();
@@ -121,7 +122,7 @@ public class Contract extends DwpScenario {
     }
 
 
-    @And("^Select Nace-Code")
+    @And("^Select Nace-Code$")
     public void select() throws Throwable {
         seleniumDriver.waitForRequestsToFinish();
         Thread.sleep(2000);

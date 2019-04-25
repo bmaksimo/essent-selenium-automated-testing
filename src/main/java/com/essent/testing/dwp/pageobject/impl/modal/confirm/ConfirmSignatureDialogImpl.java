@@ -48,13 +48,10 @@ public class ConfirmSignatureDialogImpl extends Component implements ConfirmSign
     @Override
     public boolean confirm() {
         seleniumDriver.waitForRequestsToFinish();
-        WebElement element = seleniumDriver.findElementOrNull(CONFIRM_BUTTON_SELECTOR);
-        if(element == null)
-            return false;
+        WebElement element = seleniumDriver.findElementWhenPresent(CONFIRM_BUTTON_SELECTOR);
         Button confirmButton = new ButtonImpl(element);
         confirmButton.click();
         seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.takeScreenshot("Confirm form ");
         return true;
     }
 
@@ -65,6 +62,7 @@ public class ConfirmSignatureDialogImpl extends Component implements ConfirmSign
 
     @Override
     public boolean isShown() {
-        return seleniumDriver.findElementOrNull(CONFIRM_SIGNATURE_MODAL_SELECTOR) != null;
+        seleniumDriver.findElementWhenPresent(CONFIRM_SIGNATURE_MODAL_SELECTOR);
+        return true;
     }
 }

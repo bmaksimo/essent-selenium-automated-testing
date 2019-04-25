@@ -35,23 +35,21 @@ public class MoveOldAddressSteps extends DwpScenario {
     }
 
     @And("^Get meter reading plus \"(\\d+)\"kwl from \"(\\d+)\"$")
-    public void getMeterReadingPlusKwl(int num, int rate){
+    public void getMeterReadingPlusKwl(int num, String rate){
         CreateMoveOAPage cmoa = new CreateMoveOAPage();
         String oldMeterReading = cmoa.getPreviousMeterReading(rate);
         int newMeterReading = Integer.parseInt(oldMeterReading)+num;
         parameterProvider.put("meterstand",newMeterReading);
     }
 
-    @And("^Change house number by \"(\\d+)\"$")
+    @And("^Change house number to \"(\\d+)\"$")
     public void changeHouseNumber(int num) {
         UpdateBillingCustomerPage ubcp = new UpdateBillingCustomerPage();
-        String oldHouseNum = ubcp.getCurrentHouseNumber();
-        int newHouseNum = Integer.parseInt(oldHouseNum);
-        ubcp.changeHouseNumber(newHouseNum+num);
+        ubcp.changeHouseNumber(num);
     }
 
-    @And("^Datum meteropname low date is \"([^\"]*)\"$")
-    public void datumMeteropnameDateIs(String value){
+    @And("^Low date meter reading date is \"([^\"]*)\"$")
+    public void lowDateMeterReadingDateIs(String value){
         CreateMoveOAPage cmoa = new CreateMoveOAPage();
         String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(value));
         seleniumDriver.waitForRequestsToFinish();
@@ -60,8 +58,8 @@ public class MoveOldAddressSteps extends DwpScenario {
         Sleeper.sleepTightInSeconds(1);
     }
 
-    @And("^Meterstand low input is \"([^\"]*)\"$")
-    public void meterstandLowInputIs(String value) {
+    @And("^Low meter reading input is \"([^\"]*)\"$")
+    public void lowMeterRreadingInputIs(String value) {
         CreateMoveOAPage cmoa = new CreateMoveOAPage();
         String meterReading = parameterProvider.getValueOrParameterAsString(value);
         seleniumDriver.waitForRequestsToFinish();

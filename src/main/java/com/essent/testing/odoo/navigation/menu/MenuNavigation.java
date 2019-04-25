@@ -11,6 +11,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static com.billinghouse.test_automation.util.gherkin.DateTimeFormatUtil.printPeriod;
 
@@ -34,14 +35,15 @@ public class MenuNavigation extends Component {
 
     public boolean findAndClickMainMenuItem(String item) {
         By by = By.xpath(createQuery(MAIN_NEMU_ITEM_SELECTOR_TEMPLATE, "text", item));
-        WebElement elementOrNull = seleniumDriver.findElementOrNull(by, Duration.ofSeconds(30), Duration.ofSeconds(5));
-        if(elementOrNull == null) {
+        try {
+            WebElement elementOrNull = seleniumDriver.findElementWhenPresent(by, Duration.ofSeconds(30), Duration.ofSeconds(5));
+            elementOrNull.click();
+            return true;
+        } catch (TimeoutException te) {
             status = "FAILED";
             reason = "Main menu item" + item + "is not found";
             return false;
         }
-        elementOrNull.click();
-        return true;
     }
 
     public void executeAction(String menuPath) {
@@ -50,23 +52,23 @@ public class MenuNavigation extends Component {
         List<String> path = menu.subList(0, menu.size() - 1);
         String action = menu.get(menu.size() - 1);
         WebElement match = findMenu(null, path);
-        WebElement clickAction = findAction(match, action);
-        if(clickAction == null) {
+        Optional<WebElement> clickAction = findActionOptional(match, action);
+        if(!clickAction.isPresent()) {
             status = "FAILED";
             reason = "Menu path " + menuPath + " was not found";
         } else {
             status = "PASSED";
-            clickAction.click();
+            clickAction.get().click();
         }
     }
 
-    private WebElement findAction(WebElement accordion, String actionText) {
+    private Optional<WebElement> findActionOptional(WebElement accordion, String actionText) {
        if (accordion != null) {
            By menuLeaf = By.xpath(createQuery(MENU_LEAF_SELECTOR_TEMPLATE, "text", actionText));
-           return  findElementOrNull(accordion, menuLeaf);
+           return  findElementOptional(accordion, menuLeaf);
        } else {
            By mainMenu = By.xpath(createQuery(MENU_LEAF_SELECTOR_TEMPLATE, "text", actionText));
-           return findElementWhenVisible(mainMenu);
+           return Optional.of(findElementWhenVisible(mainMenu));
        }
     }
 
@@ -96,32 +98,27 @@ public class MenuNavigation extends Component {
         return null;
     }
 
-    private WebElement findElementOrNull(WebElement element, By selector) {
+    private Optional<WebElement> findElementOptional(WebElement element, By selector) {
         logger().info("STEP:");
         DateTime startOfMeasurement = DateTime.now();
         FluentWait<WebElement> waiter = new FluentWait<>(element)
             .withTimeout(Duration.ofMinutes(1))
             .pollingEvery(Duration.ofSeconds(10))
-            .ignoreAll(
-                Arrays.asList(
-                    NoSuchElementException.class,
-                    StaleElementReferenceException.class)
-            );
+            .ignoring(NoSuchElementException.class);
 
-        List<WebElement> elements = waiter.until(driver -> {
-            logger().info(" - WAIT: polling findElementOrNull()");
-            return driver.findElements(selector);
+        WebElement elementFound = waiter.until(context -> {
+            logger().info(" - WAIT: polling findElementWhenPresent()");
+            return context.findElement(selector);
         });
         Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
         logger().info(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
-        if(elements.isEmpty()) {
+        if(element == null) {
             logger().warn(" - RESULT: empty");
-            return null;
         } else  {
-            WebElement webElement = elements.get(0);
-            logger().debug(String.format(" - RESULT: %s -> %s", selector, webElement.getAttribute("innerHTML")));
-            return webElement;
+            logger().debug(String.format(" - RESULT: %s -> %s", selector, elementFound.getAttribute("innerHTML")));
         }
+        return Optional.ofNullable(elementFound);
+
     }
 
     private void findAndClick(WebElement parent, By by) {

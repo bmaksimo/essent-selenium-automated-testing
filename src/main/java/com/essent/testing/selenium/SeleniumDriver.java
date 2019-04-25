@@ -27,6 +27,7 @@ import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
@@ -60,7 +61,7 @@ public abstract class SeleniumDriver {
         options.addArguments("--disable-dev-shm-usage"); // overcome limited resource problems
         options.addArguments("--no-sandbox"); // Bypass OS security model
         logger.info(" - OPTIONS: " + options.toString());
-
+        setChromeDriverBinary(options);
         ChromeDriver chromeDriver;
 
         String headless = ConfigProvider.getProperty(ConfigKey.WEBDRIVER_CHROME_HEADLESS);
@@ -79,6 +80,13 @@ public abstract class SeleniumDriver {
         chromeDriver = new ChromeDriver(driverService, options);
         chromeDriver.manage().timeouts().implicitlyWait(3, TimeUnit.MINUTES).setScriptTimeout(5, TimeUnit.MINUTES);
         driver = chromeDriver;
+    }
+
+    private void setChromeDriverBinary(ChromeOptions options) {
+        String binary = ConfigProvider.getProperty(ConfigKey.GOOGLE_CHROME_BINARY);
+        if(StringUtils.isNotEmpty(binary)) {
+            options.setBinary(binary);
+        }
     }
 
     public void tearDown() {
@@ -138,34 +146,30 @@ public abstract class SeleniumDriver {
         return driver.findElements(selector);
     }
 
-    public WebElement findElementOrNull(By selector) {
-        return findElementOrNull(selector, Duration.ofMinutes(1), Duration.ofSeconds(10));
+    public WebElement findElementWhenPresent(By selector) {
+        return findElementWhenPresent(selector, Duration.ofMinutes(1), Duration.ofSeconds(10));
     }
 
-    public WebElement findElementOrNull(By selector, Duration timeout, Duration pollingEvery) {
+    public Optional<WebElement> findElementOptional(By selector) {
+        return Optional.ofNullable(driver.findElement(selector));
+    }
+
+    public WebElement findElementWhenPresent(By selector, Duration timeout, Duration pollingEvery) {
         logger.debug("STEP:");
         DateTime startOfMeasurement = DateTime.now();
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)
             .withTimeout(timeout)
             .pollingEvery(pollingEvery)
-            .ignoreAll(
-                Arrays.asList(
-                    NoSuchElementException.class,
-                    StaleElementReferenceException.class)
-            );
-        List<WebElement> elements = waiter.until(driver -> {
-            logger.debug(" - WAIT: polling findElementOrNull()");
-            return driver.findElements(selector);
+            .ignoring(NoSuchElementException.class);
+        WebElement element  = waiter.until(driver -> {
+            logger.debug(" - WAIT: polling findElementWhenPresent()");
+            return ExpectedConditions.presenceOfElementLocated(selector).apply(driver);
         });
         Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
         logger.debug(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
-        if (elements.isEmpty()) {
-            logger.warn(" - RESULT: empty");
-            return null;
-        } else {
-            return elements.get(0);
-        }
+        return element;
     }
+
     public List<WebElement> findElements(By selector, Duration timeout, Duration pollingEvery) {
         logger.debug("STEP:");
         logger.debug(" - ELEMENT QUERY: " + selector.toString());
@@ -180,7 +184,7 @@ public abstract class SeleniumDriver {
                     StaleElementReferenceException.class)
             );
         List<WebElement> elements = waiter.until(driver -> {
-            logger.debug(" - WAIT: polling findElementOrNull()");
+            logger.debug(" - WAIT: polling findElementWhenPresent()");
             return driver.findElements(selector);
         });
         Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
