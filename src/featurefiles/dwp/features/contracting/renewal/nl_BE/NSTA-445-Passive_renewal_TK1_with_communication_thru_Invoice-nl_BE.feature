@@ -13,7 +13,7 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
-        When "Tariefdatum" date is "35 days before now"
+        When "Tariefdatum" date is "1 year before now"
         And "Sales kanaal" selection is "Inbound"
         And Quote details are confirmed
         Then Form header is "Personal details"
@@ -31,7 +31,7 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
 
         When Electricity market mock mode is switched On on "Elektriciteit Vast" card
         And  EAN code is generated
-        And "Startdatum" date is "35 days before now"
+        And "Startdatum" date is "1 year before now"
         And "EAN-code" input is "parameter:EAN-code-generated"
         And Connection details are confirmed
         Then Form header is "Billing details"
@@ -44,7 +44,7 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         When Option "Heeft de klant al getekend?" is On
         And "Kanaal ondertekening" selection is "Papier"
         And Quote is signed in "Kontich"
-        And "Datum ondertekening" date is "35 days before now"
+        And "Datum ondertekening" date is "1 year before now"
         And Quote is confirmed
         Then View list header is "Offertes"
         Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"

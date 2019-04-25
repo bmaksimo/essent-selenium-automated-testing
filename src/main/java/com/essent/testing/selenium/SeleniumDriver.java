@@ -155,13 +155,15 @@ public abstract class SeleniumDriver {
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)
             .withTimeout(Duration.ofSeconds(3))
             .pollingEvery(Duration.ofSeconds(1))
-            .ignoring(NoSuchElementException.class)
-            .ignoring(TimeoutException.class);
-        WebElement element  = waiter.until(driver -> {
+            .ignoring(NoSuchElementException.class);
+        List<WebElement> element  = waiter.until(driver -> {
             logger.debug(" - WAIT: polling findElementWhenPresent()");
-            return driver.findElement(selector);
+            return driver.findElements(selector);
         });
-        return Optional.ofNullable(element);
+        if(element.isEmpty()) {
+            return Optional.ofNullable(null);
+        }
+        return Optional.ofNullable(element.get(0));
     }
 
     public WebElement findElementWhenPresent(By selector, Duration timeout, Duration pollingEvery) {
