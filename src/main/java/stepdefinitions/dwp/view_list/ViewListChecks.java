@@ -770,33 +770,35 @@ public class ViewListChecks extends NavigationElements {
             columnToSearch, optionToSearch, list, textToCheck));
     }
 
-    @Then("Values are met for old invoice, new invoice and credit invoice$")
-    public void checkValuesOfInvoices () {
+
+    @Then("^Invoice Amounts are among$")
+    public void checkInvoicesAmounts(final DataTable dbTable) {
+        List<List<String>> info = dbTable.raw();
+
+        String amountInvoice1 = info.get(1).get(0);
+        String amountInvoice2 = info.get(1).get(1);
+        String amountInvoice3 = info.get(1).get(2);
         ContractPage cp = new ContractPage();
-        String expectedValuesOfAdvancedInvoices1 = "113 € -113 € 300 €";
-        String expectedValuesOfAdvancedInvoices2 = "226 € -226 € 600 €";
-        String expectedValuesOfAdvancedInvoices3 = "339 € -339 € 900 €";
-
         String actualValuesOfInvoices = cp.getActualValuesOfInvoicesAsString();
+        if (amountInvoice1.equals(actualValuesOfInvoices)){
+            logger().info(String.format("- STEP: Values of invoices \"%s\" are correct - PASSED.", amountInvoice1));
 
-        if (expectedValuesOfAdvancedInvoices1.equals(actualValuesOfInvoices))
-            logger().info(String.format("- STEP: Values of invoices \"%s\" are correct - PASSED.", expectedValuesOfAdvancedInvoices1));
+        }
+        else if (amountInvoice2.equals(actualValuesOfInvoices))
+            logger().info(String.format("- STEP: Values of invoices \"%s\" are correct - PASSED.", amountInvoice2));
 
-        else if (expectedValuesOfAdvancedInvoices2.equals(actualValuesOfInvoices))
-            logger().info(String.format("- STEP: Values of invoices \"%s\" are correct - PASSED.", expectedValuesOfAdvancedInvoices2));
-
-        else if (expectedValuesOfAdvancedInvoices3.equals(actualValuesOfInvoices))
-            logger().info(String.format("- STEP: Values of invoices \"%s\" are correct - PASSED.", expectedValuesOfAdvancedInvoices3));
+        else if (amountInvoice3.equals(actualValuesOfInvoices))
+            logger().info(String.format("- STEP: Values of invoices \"%s\" are correct - PASSED.", amountInvoice3));
 
         else throw new CucumberException("Actual invoices values " + actualValuesOfInvoices + " don't match expected ones");
 
     }
 
 
-    @Then("^Saldo is \"([^\"]*)\"$")
+    @Then("^Balance is \"([^\"]*)\"$")
     public void checkValue (String expectedSaldo) {
         ContractPage cp = new ContractPage();
-        String actualSaldo = cp.getSaldo();
+        String actualSaldo = cp.getBalance();
         assertThat(String.format("Actual credit invoice \"%s\" differs from the expected one \"%s\" on saldo", actualSaldo, expectedSaldo), expectedSaldo, containsString(actualSaldo));
         logger().info(String.format("- STEP: Saldo \"%s\" is correct - PASSED.", expectedSaldo));
     }

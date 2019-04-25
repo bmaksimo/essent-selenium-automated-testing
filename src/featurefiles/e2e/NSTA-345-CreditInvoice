@@ -93,7 +93,7 @@ Feature: Credit Invoice NSTA-345
         When Left menu is "billing"
         And Top menu item is "Klanten"
         And Top action is "Filters"
-        And "Klantnummer" input is "parameter:accountNumber"
+        And "Klantnummer" input is "1000102450"
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
@@ -102,6 +102,7 @@ Feature: Credit Invoice NSTA-345
         When Plus action of "1" element from "TransactionsOnAccount" and click on "Herbereken tussentijdse factuur"
         And New Amount Invoice is "300" for EAN "parameter:EAN-code-generated"
         Then Invoice run is scheduled
+
         Given I renew login to DWP as "billing.testautomation@essent.be"
         When Left menu is "billing"
         And Top menu item is "Klanten"
@@ -114,7 +115,10 @@ Feature: Credit Invoice NSTA-345
         #Asserts
          #1 - Check if Old invoice is credited (check if CNM is created for same amount as old VKM)
          #2 - Check if there is a new invoice created for the amount you selected
-        Then Values are met for old invoice, new invoice and credit invoice
+        Then Invoice Amounts are among
+            |    amountInvoice1     |    amountInvoice2     |    amountInvoice3    |
+            |  113 € -113 € 300 €   |  226 € -226 € 600 €   |  339 € -339 € 900 €  |
+
          #3 - Check if interactions are created for VKM and CNM
         When Dashboard menu is "Service"
         Then View list header is "Interacties"
@@ -126,7 +130,8 @@ Feature: Credit Invoice NSTA-345
          #5 - Check Saldo of new invoice credit
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
-        Then Saldo is "€ 300,00|€ 600,00|€ 900,00"
+        Then Balance is "€ 300,00|€ 600,00|€ 900,00"
+
 
 
 
