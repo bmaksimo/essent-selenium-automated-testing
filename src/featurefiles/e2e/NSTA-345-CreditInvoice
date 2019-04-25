@@ -3,7 +3,7 @@
 @REGRESSION
 @ALL
 
-Feature: Credit Invoice NSTA-345
+Feature: NSTA-345 - Credit Invoice
 
     Background:
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
