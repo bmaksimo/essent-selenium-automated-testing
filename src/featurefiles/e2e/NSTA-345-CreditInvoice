@@ -130,7 +130,7 @@ Feature: Credit Invoice NSTA-345
          #5 - Check Saldo of new invoice credit
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
-        Then Balance is "€ 300,00|€ 600,00|€ 900,00"
+        Then Balance is among values "€ 300,00|€ 600,00|€ 900,00"
 
 
 

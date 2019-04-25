@@ -795,7 +795,7 @@ public class ViewListChecks extends NavigationElements {
     }
 
 
-    @Then("^Balance is \"([^\"]*)\"$")
+    @Then("^Balance is among values \"([^\"]*)\"$")
     public void checkValue (String expectedSaldo) {
         ContractPage cp = new ContractPage();
         String actualSaldo = cp.getBalance();
