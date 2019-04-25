@@ -2,6 +2,7 @@ package stepdefinitions.dwp.view_list;
 
 import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.essent.automation.util.Sleeper;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.pageobject.ViewList;
 import com.essent.testing.dwp.pageobject.list_view.ViewListTestObject;
 import cucumber.api.DataTable;
@@ -771,6 +772,40 @@ public class ViewListChecks extends NavigationElements {
         logger().info(String.format("- STEP: \"%s\" in the first \"%s\" row of \"%s\" table is \"%s\" - PASSED.",
             columnToSearch, optionToSearch, list, textToCheck));
     }
+
+
+    @Then("^Invoice Amounts are among$")
+    public void checkInvoicesAmounts(final DataTable dbTable) {
+        List<List<String>> info = dbTable.raw();
+
+        String amountInvoice1 = info.get(1).get(0);
+        String amountInvoice2 = info.get(1).get(1);
+        String amountInvoice3 = info.get(1).get(2);
+        ContractPage cp = new ContractPage();
+        String actualValuesOfInvoices = cp.getActualValuesOfInvoicesAsString();
+        if (amountInvoice1.equals(actualValuesOfInvoices)){
+            logger().info(String.format("- STEP: Values of invoices \"%s\" are correct - PASSED.", amountInvoice1));
+
+        }
+        else if (amountInvoice2.equals(actualValuesOfInvoices))
+            logger().info(String.format("- STEP: Values of invoices \"%s\" are correct - PASSED.", amountInvoice2));
+
+        else if (amountInvoice3.equals(actualValuesOfInvoices))
+            logger().info(String.format("- STEP: Values of invoices \"%s\" are correct - PASSED.", amountInvoice3));
+
+        else throw new CucumberException("Actual invoices values " + actualValuesOfInvoices + " don't match expected ones");
+
+    }
+
+
+    @Then("^Balance is among values \"([^\"]*)\"$")
+    public void checkValue (String expectedSaldo) {
+        ContractPage cp = new ContractPage();
+        String actualSaldo = cp.getBalance();
+        assertThat(String.format("Actual credit invoice \"%s\" differs from the expected one \"%s\" on saldo", actualSaldo, expectedSaldo), expectedSaldo, containsString(actualSaldo));
+        logger().info(String.format("- STEP: Saldo \"%s\" is correct - PASSED.", expectedSaldo));
+    }
+
 
     @And("^Wait for (\\d+) seconds$")
     public void waitForSeconds(int seconds) {

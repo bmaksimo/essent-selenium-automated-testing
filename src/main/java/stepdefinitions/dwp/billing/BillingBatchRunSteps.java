@@ -25,6 +25,7 @@ public class BillingBatchRunSteps extends DwpScenario {
         assertThat("Invoice run dialog was not confirmed.",
             success,
             is(true));
+        seleniumDriver.waitForRequestsToFinish();
     }
 
 
