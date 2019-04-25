@@ -93,7 +93,7 @@ Feature: Credit Invoice NSTA-345
         When Left menu is "billing"
         And Top menu item is "Klanten"
         And Top action is "Filters"
-        And "Klantnummer" input is "1000102450"
+        And "Klantnummer" input is "parameter:accountNumber"
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
