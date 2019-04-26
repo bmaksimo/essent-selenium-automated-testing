@@ -480,6 +480,29 @@ public class ContractPage extends Component {
     }
 
 
+    public boolean compareActualAndExpectedBalances(String balance1, String balance2, String balance3, String actualBalance) {
+        if (balance1.equals(actualBalance))
+        {
+            logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");
+            return true;
+        }
+
+        else if (balance2.equals(actualBalance))
+        {
+            logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");
+            return true;
+        }
+
+        else if (balance3.equals(actualBalance))
+        {
+            logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");
+            return true;
+        }
+
+        else return false;
+    }
+
+
     public void getElementByEanNewInvoiceAmount(String ean, String value) {
         String xpathAction = createQuery(EAN_NEW_INVOICE_AMOUNT, REPLACEMENT_KEY, ean);
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id(xpathAction)), value);
