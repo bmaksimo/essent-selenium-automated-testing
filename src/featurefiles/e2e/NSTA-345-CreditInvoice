@@ -1,13 +1,11 @@
+@REGRESSION
 @DWP
 @B2C
-@REGRESSION
 @ALL
-
-Feature: NSTA-345 - Credit Invoice
+Feature: NSTA-345 Credit Invoice
 
     Background:
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
-
 
     @NSTA-345
     Scenario: Credit Invoice
@@ -115,7 +113,7 @@ Feature: NSTA-345 - Credit Invoice
         #Asserts
          #1 - Check if Old invoice is credited (check if CNM is created for same amount as old VKM)
          #2 - Check if there is a new invoice created for the amount you selected
-        Then Invoice Amounts are among
+        Then Invoice Amounts are among values
             |    amountInvoice1     |    amountInvoice2     |    amountInvoice3    |
             |  113 € -113 € 300 €   |  226 € -226 € 600 €   |  339 € -339 € 900 €  |
             |  -113 € 113 € 300 €   |  -226 € 226 € 600 €   |  -339 € 339 € 900 €  |
@@ -135,9 +133,10 @@ Feature: NSTA-345 - Credit Invoice
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
         Then Balance is among values
-            |  balance1 |  balance2  |  balance3  |
-            |  € 300,00 |  € 600,00  |  € 900,00  |
-
+            |  balance  |
+            |  € 300,00 |
+            |  € 600,00 |
+            |  € 900,00 |
 
 
 

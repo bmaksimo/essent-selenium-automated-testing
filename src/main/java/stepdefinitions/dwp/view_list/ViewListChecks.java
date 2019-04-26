@@ -771,7 +771,7 @@ public class ViewListChecks extends NavigationElements {
     }
 
 
-    @Then("^Invoice Amounts are among$")
+    @Then("^Invoice Amounts are among values$")
     public void checkInvoicesAmounts(final DataTable dbTable) {
         List<List<String>> info = dbTable.raw();
 
@@ -826,8 +826,8 @@ public class ViewListChecks extends NavigationElements {
         List<List<String>> info = dbTable.raw();
 
         String balance1 = info.get(1).get(0);
-        String balance2 = info.get(1).get(1);
-        String balance3 = info.get(1).get(2);
+        String balance2 = info.get(2).get(0);
+        String balance3 = info.get(3).get(0);
 
         ContractPage cp = new ContractPage();
         String actualBalance = cp.getBalance();
@@ -849,7 +849,7 @@ public class ViewListChecks extends NavigationElements {
             logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");
 
         }
-        else throw new CucumberException("Actual invoices values " + actualBalance + " don't match expected ones");
+        else throw new CucumberException("Actual balance " + actualBalance + " don't match expected ones");
 
     }
 
