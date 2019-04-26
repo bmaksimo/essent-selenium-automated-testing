@@ -271,7 +271,7 @@ public class ContractPage extends Component {
 
     public String checkSuccessMessage() {
         seleniumDriver.waitForRequestsToFinish();
-        String messageProductChange = seleniumDriver.findElementWhenVisible(By.xpath(LABELFORPRODUCTCHANGE)).getText();
+        String messageProductChange = seleniumDriver.findElementWhenPresent(By.xpath(LABELFORPRODUCTCHANGE)).getText();
         String[] values = {"1 succeeded", "1 queued", "1 failed"};
         String match = "";
 
