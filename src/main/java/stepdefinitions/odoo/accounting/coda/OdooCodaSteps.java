@@ -1,5 +1,6 @@
 package stepdefinitions.odoo.accounting.coda;
 
+import com.billinghouse.exception.ExtendedCucumberException;
 import com.essent.testing.odoo.pageobject.impl.modal.coda.CodaImportDialogImpl;
 import com.essent.testing.odoo.pageobject.modal.CodaImportDialog;
 import com.essent.testing.odoo.scenario.OdooScenario;
@@ -9,7 +10,6 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
-import cucumber.runtime.CucumberException;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
@@ -21,8 +21,10 @@ import org.openqa.selenium.support.ui.FluentWait;
 import java.io.File;
 import java.util.Collection;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import static com.billinghouse.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+
+;
 
 public class OdooCodaSteps extends OdooScenario {
     @Before("@ODOO, @E2E, @REGRESSION")
@@ -90,7 +92,7 @@ public class OdooCodaSteps extends OdooScenario {
     @And("^Generated CODA file is downloaded$")
     public void odooDownloadGeneratedCodaFile() throws Throwable {
         WebElement downloadLink = seleniumDriver.findElement(By.xpath("//div[@class='modal-content openerp']//a[@class='oe_form_uri']"));
-        if (null == downloadLink) throw new CucumberException("CODA file download link was not found");
+        if (null == downloadLink) throw new ExtendedCucumberException("CODA file download link was not found");
         downloadLink.click();
         String path = ResourceUtil.toPath(File.separator + "data" + File.separator + "odoo" + File.separator);
         FluentWait<OdooCodaSteps> waiter = waiter(this, 20, 1);

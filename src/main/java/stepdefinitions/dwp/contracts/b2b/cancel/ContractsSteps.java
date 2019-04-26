@@ -19,10 +19,12 @@ import org.openqa.selenium.By;
 import stepdefinitions.dwp.page_object.CustomerAcceptance;
 import stepdefinitions.dwp.tables.CustomerStatus;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import static com.billinghouse.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.testng.AssertJUnit.assertEquals;
+
+;
 
 public class ContractsSteps extends DwpScenario {
 

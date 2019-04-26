@@ -1,11 +1,11 @@
 package com.essent.testing.database;
 
+import com.billinghouse.exception.ExtendedCucumberException;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
-import cucumber.runtime.CucumberException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import stepdefinitions.dwp.tables.plus.SwitchState;
@@ -49,7 +49,7 @@ class SSHTunnel {
 
     int getLocalPort() {
         if(localPort == null) {
-            throw new CucumberException("local port has not been initialized.");
+            throw new ExtendedCucumberException("local port has not been initialized.");
         }
         return localPort;
     }
@@ -147,7 +147,7 @@ class SSHTunnel {
         try {
             this.makeTunnel(ConfigKey.SSH_BILLING_HOSTNAME, ConfigKey.SSH_BILLING_REMOTE_PORT, ConfigKey.BILLING_DB_HOST);
         } catch (JSchException e) {
-            throw new CucumberException("Opening jBilling DB tunnel failed.", e);
+            throw new ExtendedCucumberException("Opening jBilling DB tunnel failed.", e);
         }
     }
 
@@ -157,7 +157,7 @@ class SSHTunnel {
                 ConfigKey.SSH_SUITE_REMOTE_PORT,
                 ConfigKey.SUITE_DB_HOST);
         } catch (JSchException e) {
-            throw new CucumberException("Opening SuiteCRM DB tunnel failed.", e);
+            throw new ExtendedCucumberException("Opening SuiteCRM DB tunnel failed.", e);
         }
     }
 

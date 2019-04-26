@@ -9,4 +9,6 @@ public interface ConfirmSignatureDialog extends ConfirmDialog {
 
     void setSignatureDate(String signatureDate);
 
+    boolean isInActionList(String textToLookup);
+
 }

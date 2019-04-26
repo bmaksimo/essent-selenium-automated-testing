@@ -1,6 +1,7 @@
 package stepdefinitions.dwp.plus;
 
 import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
+import com.billinghouse.exception.ExtendedCucumberException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -25,7 +26,7 @@ public class PlusActions extends NavigationElements {
             clickPlusAction(path);
             plusMenuAction = path;
         } catch (Throwable t) {
-          throw  new CucumberException(t);
+          throw  new ExtendedCucumberException(t);
         }
     }
 

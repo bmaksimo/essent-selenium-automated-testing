@@ -1,9 +1,9 @@
 package com.essent.testing.dwp.pageobject.impl.quote;
 
+import com.billinghouse.exception.ExtendedCucumberException;
 import com.essent.testing.dwp.pageobject.Form;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.quote.GuidedStep;
-import cucumber.runtime.CucumberException;
 import org.apache.commons.lang3.BooleanUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -45,7 +45,7 @@ public abstract class QuoteCreationGuidedStep extends Component implements Guide
             nextButton.click();
         } else {
             seleniumDriver.takeScreenshot("guidance-confirm-");
-            throw new CucumberException("Guided step was not confirmed " + NEXT_BUTTON.getQuery());
+            throw new ExtendedCucumberException("Guided step was not confirmed " + NEXT_BUTTON.getQuery());
         }
         seleniumDriver.waitForRequestsToFinish();
     }

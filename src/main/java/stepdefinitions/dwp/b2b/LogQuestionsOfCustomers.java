@@ -10,9 +10,11 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import org.springframework.test.context.ContextConfiguration;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import static com.billinghouse.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertTrue;
+
+;
 
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 public class LogQuestionsOfCustomers extends DwpScenario {

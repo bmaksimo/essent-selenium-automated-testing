@@ -25,12 +25,10 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 import java.util.function.Function;
 
 import static com.billinghouse.test_automation.util.gherkin.DateTimeFormatUtil.printPeriod;
@@ -186,16 +184,12 @@ public abstract class SeleniumDriver {
     public List<WebElement> findElements(By selector, Duration timeout, Duration pollingEvery) {
         logger.debug("STEP:");
         logger.debug(" - ELEMENT QUERY: " + selector.toString());
-
         DateTime startOfMeasurement = DateTime.now();
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)
             .withTimeout(timeout)
             .pollingEvery(pollingEvery)
-            .ignoreAll(
-                Arrays.asList(
-                    NoSuchElementException.class,
-                    StaleElementReferenceException.class)
-            );
+            .ignoring(
+                    NoSuchElementException.class);
         List<WebElement> elements = waiter.until(driver -> {
             logger.debug(" - WAIT: polling findElementWhenPresent()");
             return driver.findElements(selector);

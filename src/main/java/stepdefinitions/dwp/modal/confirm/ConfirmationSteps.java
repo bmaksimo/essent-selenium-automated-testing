@@ -2,7 +2,6 @@ package stepdefinitions.dwp.modal.confirm;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.modal.confirm.ConfirmSignatureDialogImpl;
-import com.essent.testing.dwp.pageobject.modal.confirm.ConfirmDialog;
 import com.essent.testing.dwp.pageobject.modal.confirm.ConfirmSignatureDialog;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -16,10 +15,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import static com.billinghouse.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
+;
+
 public class ConfirmationSteps extends NavigationElements {
+
 
     private class CheckModalDialog implements Predicate<Map> {
         @Override
@@ -76,6 +78,16 @@ public class ConfirmationSteps extends NavigationElements {
         options.put("headerText", headerText);
         boolean success = new CheckModalDialog().test(options);
         assertThat(String.format("Action row %s was not found", headerText), success, is(true));
+    }
+
+    @When("^Modal dialog contains \"([^\"]*)\" in action list$")
+    public void modalDialogContainsInActionList(String match) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
+        String textToLookup = parameterProvider.getValueOrParameterAsString(match);
+        ConfirmSignatureDialog dialog = new ConfirmSignatureDialogImpl();
+        assertThat(String.format("Dialogue doesn't contain given text \"%s\"", textToLookup), dialog.isInActionList(textToLookup), is(true));
+
+
     }
 
     @Override

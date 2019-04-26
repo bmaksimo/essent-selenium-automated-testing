@@ -10,9 +10,11 @@ import stepdefinitions.dwp.navigation.NavigationElements;
 
 import java.util.function.Predicate;
 
+import static com.billinghouse.MatcherAssert.assertThat;
 import static com.essent.automation.autocrat.Action.CLICK;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+
+;
 
 public class FilterElements extends NavigationElements {
 

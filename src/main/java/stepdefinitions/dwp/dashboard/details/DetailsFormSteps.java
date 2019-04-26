@@ -9,8 +9,10 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Then;
 import org.apache.commons.lang3.StringUtils;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import static com.billinghouse.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+
+;
 
 public class DetailsFormSteps extends DwpScenario {
 

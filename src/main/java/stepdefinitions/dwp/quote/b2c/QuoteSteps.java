@@ -33,16 +33,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
+import static com.billinghouse.MatcherAssert.assertThat;
 import static com.essent.testing.dwp.autocrat.element.quote.TariffElements.NO_PRICESHEET_ALERT;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.NEXT_STEP;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
-import static org.awaitility.Awaitility.setDefaultPollDelay;
 import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
 import static org.awaitility.Duration.ONE_HUNDRED_MILLISECONDS;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+
+;
 
 public class QuoteSteps extends DwpScenario {
 

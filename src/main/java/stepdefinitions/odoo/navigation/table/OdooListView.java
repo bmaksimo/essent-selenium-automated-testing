@@ -1,5 +1,6 @@
 package stepdefinitions.odoo.navigation.table;
 
+import com.billinghouse.exception.ExtendedCucumberException;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.odoo.pageobject.elements.ListView;
 import com.essent.testing.odoo.pageobject.impl.elements.DefaultListView;
@@ -10,7 +11,6 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import cucumber.runtime.CucumberException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -39,7 +39,7 @@ public class OdooListView extends OdooScenario  {
         List<WebElement> filterElements = seleniumDriver.findElements(xpath,
             Duration.ofSeconds(30),
             Duration.ofSeconds(5));
-        if (filterElements.isEmpty()) throw new CucumberException("Button was not found");
+        if (filterElements.isEmpty()) throw new ExtendedCucumberException("Button was not found");
 
         WebElement filterElement = filterElements.get(1);
         filterElement.click();

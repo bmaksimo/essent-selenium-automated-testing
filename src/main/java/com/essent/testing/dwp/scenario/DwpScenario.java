@@ -1,5 +1,6 @@
 package com.essent.testing.dwp.scenario;
 
+import com.billinghouse.exception.ExtendedCucumberException;
 import com.billinghouse.random.RandomUser;
 import com.billinghouse.test_automation.util.dsl.DateExpressionsUtil;
 import com.essent.automation.autocrat.Action;
@@ -13,7 +14,6 @@ import com.essent.testing.scenario.RegisteredScenario;
 import com.essent.testing.selenium.DWPSeleniumDriver;
 import com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter;
 import com.google.gson.Gson;
-import cucumber.runtime.CucumberException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.StrSubstitutor;
 import org.iban4j.CountryCode;
@@ -24,12 +24,9 @@ import java.util.List;
 import java.util.Map;
 
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpDate;
-
-import static com.essent.testing.dwp.constant.DwpConstants.FLEMISCH_LOCALE;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.convertToDwpTime;
-import static com.billinghouse.test_automation.util.dsl.NumericUtil.ordinalAsInt;
-import static com.billinghouse.test_automation.util.dsl.NumericUtil.sumOfAmounts;
-import static com.billinghouse.test_automation.util.dsl.NumericUtil.amountAsInt;
+import static com.billinghouse.test_automation.util.dsl.NumericUtil.*;
+import static com.essent.testing.dwp.constant.DwpConstants.FLEMISCH_LOCALE;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -61,7 +58,7 @@ public abstract class DwpScenario extends RegisteredScenario {
     protected String generateVat(String generatorParam) {
         String countryCode = generatorParam.replace("generator:vat:", "");
         if(countryCode.length() > 3 || CountryCode.getByCode(countryCode) == null) {
-            throw new CucumberException("Wrong country code: " + countryCode);
+            throw new ExtendedCucumberException("Wrong country code: " + countryCode);
         }
         return new VatNumberGenerator().getVatNum(CountryCode.getByCode(countryCode));
     }
@@ -78,7 +75,7 @@ public abstract class DwpScenario extends RegisteredScenario {
             String last = randomUser.getName().getLast();
             return first + " & " + last + " Startup";
         }
-        else throw new CucumberException("ramdomuser.me API failure");
+        else throw new ExtendedCucumberException("ramdomuser.me API failure");
     }
 
     protected RandomUser randomUser(Map reply) {

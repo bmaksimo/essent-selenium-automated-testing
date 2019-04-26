@@ -1,12 +1,12 @@
 package com.essent.testing.dwp.pageobject.impl;
 
+import com.billinghouse.exception.ExtendedCucumberException;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
 import com.essent.testing.context.ContextService;
 import com.essent.testing.selenium.DWPSeleniumDriver;
 import com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter;
-import cucumber.runtime.CucumberException;
 import org.apache.commons.text.StrSubstitutor;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -43,7 +43,7 @@ public abstract class Component {
         } catch (TimeoutException te) {
             logger().fatal(" - RESULT: FAILED");
             logger().fatal(" - REASON: " + getClass() + "{null}: Web element was not found. ");
-            throw new CucumberException(getClass() + ": Web element was not found.");
+            throw new ExtendedCucumberException(getClass() + ": Web element was not found.");
         }
         logger.debug(String.format(" - TARGET: %s -> %s", selector, element.getAttribute("innerHTML")));
     }
@@ -55,7 +55,7 @@ public abstract class Component {
         if (element == null) {
             logger.error(" - RESULT: FAILED");
             logger.error(" - REASON: " + getClass() + "{null}: Web element was not found. ");
-            throw new CucumberException(getClass() + ": Web element was not found.");
+            throw new ExtendedCucumberException(getClass() + ": Web element was not found.");
         }
 
         logger.info(" - RESULT: " + element);
@@ -90,6 +90,11 @@ public abstract class Component {
     public Optional<WebElement> findElementOptional(By selector) {
         return seleniumDriver.findElementOptional(selector);
     }
+
+    public Optional<WebElement> findElementsWhenVisible(By selector) {
+        return seleniumDriver.findElementOptional(selector);
+    }
+
 
     public WebElement findElementWhenPresent(By selector, Duration timeout, Duration pollingEvery) {
         return seleniumDriver.findElementWhenPresent(selector, timeout, pollingEvery);

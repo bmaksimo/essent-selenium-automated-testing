@@ -10,8 +10,10 @@ import cucumber.api.java.en.And;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import static com.billinghouse.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+
+;
 
 
 public class EndOfContractSteps extends DwpScenario {

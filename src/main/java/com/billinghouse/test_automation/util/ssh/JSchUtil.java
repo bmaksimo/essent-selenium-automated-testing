@@ -1,9 +1,9 @@
 package com.billinghouse.test_automation.util.ssh;
 
+import com.billinghouse.exception.ExtendedCucumberException;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.jcraft.jsch.*;
-import cucumber.runtime.CucumberException;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
@@ -47,7 +47,7 @@ public class JSchUtil {
         } catch (JSchException e) {
             this.session.disconnect();
             this.session = null;
-            throw new CucumberException(e);
+            throw new ExtendedCucumberException(e);
         }
     }
 
@@ -71,14 +71,14 @@ public class JSchUtil {
             logger.error(" - SFTP_UPLOAD: sftp transfer aborted;");
             chanSftp.disconnect();
             this.session.disconnect();
-            throw new CucumberException(e);
+            throw new ExtendedCucumberException(e);
         }
     }
 
     private InputStream createInputStream(String localFilePath) throws FileNotFoundException {
         this.localFile = new File(localFilePath);
         if (!localFile.exists() || localFile.isDirectory()) {
-            throw new CucumberException("Cannot sftp transfer file at path " + localFilePath + ", eiither it doesn't exist or it is directory");
+            throw new ExtendedCucumberException("Cannot sftp transfer file at path " + localFilePath + ", eiither it doesn't exist or it is directory");
         }
         return new FileInputStream(localFile);
     }

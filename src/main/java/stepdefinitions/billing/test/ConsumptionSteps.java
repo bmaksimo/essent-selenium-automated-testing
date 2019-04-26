@@ -30,8 +30,10 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.function.Predicate;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import static com.billinghouse.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+
+;
 
 public class ConsumptionSteps extends DwpScenario {
 

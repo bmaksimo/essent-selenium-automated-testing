@@ -1,8 +1,8 @@
 package com.essent.testing.odoo.pageobject.impl.elements;
 
+import com.billinghouse.exception.ExtendedCucumberException;
 import com.essent.testing.odoo.pageobject.elements.ListView;
 import com.essent.testing.odoo.pageobject.impl.Component;
-import cucumber.runtime.CucumberException;
 import org.apache.commons.collections.CollectionUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -30,12 +30,12 @@ public class DefaultListView extends Component implements ListView {
         WebElement elementWhenVisible = seleniumDriver.findElementWhenVisible(xpathCheck);
         if (null == elementWhenVisible) {
             logger().error(" - TABLE_NOT_VISIBLE");
-            throw new CucumberException("Table is not visible");
+            throw new ExtendedCucumberException("Table is not visible");
         }
         String cellText = elementWhenVisible.getText();
         if (!value.equals(cellText)) {
             logger().error(" - DIFFERENT_VALUE: expected" + value + " actual: " + cellText);
-            throw new CucumberException(String.format("The value %s at column %s row %s does not match the expected one (%s)", cellText, columnName, rowIndex, value));
+            throw new ExtendedCucumberException(String.format("The value %s at column %s row %s does not match the expected one (%s)", cellText, columnName, rowIndex, value));
         }
     }
 
@@ -52,7 +52,7 @@ public class DefaultListView extends Component implements ListView {
         awaitOdooRequestToFinish(5);
         if (CollectionUtils.isEmpty(rows)) {
             logger().error(" - CELL_NOT_FOUND: column name" + columnName + " rowIndex: " + rowIndex);
-            throw new CucumberException(String.format("Cell at column %s, row %s was not found", columnName, rowIndex));
+            throw new ExtendedCucumberException(String.format("Cell at column %s, row %s was not found", columnName, rowIndex));
         } else {
             WebElement webElement = rows.get(rows.size() - 1);
             logger().info(" - CELL_TEXT: " + webElement.getText());
@@ -81,7 +81,7 @@ public class DefaultListView extends Component implements ListView {
             }
         }
         logger().error(" - CELL_NOT_FOUND: column name" + columnName + " cell text: " + value);
-        throw new CucumberException(String.format("Cell at column %s having value %s was not found", columnName, value));
+        throw new ExtendedCucumberException(String.format("Cell at column %s having value %s was not found", columnName, value));
     }
 
     private boolean currentRowEquals(WebElement currentRow, String value) {
@@ -106,7 +106,7 @@ public class DefaultListView extends Component implements ListView {
             }
         }
         logger().error(" - CELL_NOT_FOUND: column name" + columnName + " cell text: " + value);
-        throw new CucumberException(String.format("Cell at column %s having value %s was not found", columnName, value));
+        throw new ExtendedCucumberException(String.format("Cell at column %s having value %s was not found", columnName, value));
     }
 
     private List<WebElement> extractTable() {
@@ -114,7 +114,7 @@ public class DefaultListView extends Component implements ListView {
             Duration.ofSeconds(30),
             Duration.ofSeconds(5));
         if(rows.isEmpty()) {
-            throw new CucumberException("Table is empty");
+            throw new ExtendedCucumberException("Table is empty");
         }
         return rows;
     }

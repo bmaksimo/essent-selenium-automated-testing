@@ -1,8 +1,8 @@
 package com.essent.testing.dwp.pageobject.list_view;
 
+import com.billinghouse.exception.ExtendedCucumberException;
 import com.essent.testing.dwp.pageobject.ViewList;
 import com.essent.testing.dwp.pageobject.impl.Component;
-import cucumber.runtime.CucumberException;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
@@ -166,14 +166,14 @@ public class ViewListTestObject extends Component implements ViewList {
         logger().info(" - RESULT: " + viewTable);
         int index = getColumnNameIndex(columnName, viewTable);
         if (index < 0) {
-            throw new CucumberException(String.format("View List did not contain column \"%s\"", columnName));
+            throw new ExtendedCucumberException(String.format("View List did not contain column \"%s\"", columnName));
         }
         List<List> rows = getData(viewTable);
         if (rows.size() == 0) {
-            throw new CucumberException("--  Table is empty.");
+            throw new ExtendedCucumberException("--  Table is empty.");
         }
         if (row > rows.size()) {
-            throw new CucumberException(String
+            throw new ExtendedCucumberException(String
                 .format("--  Row number \"%s\" was greater than actual table size \"%s\"", row, rows.size()));
         }
         List currentRow = rows.get(row - 1);
@@ -189,7 +189,7 @@ public class ViewListTestObject extends Component implements ViewList {
         logTableModel(viewTableModel);
         int column = viewTableModel.findColumn(columnName);
         if (column < 0)
-            throw new CucumberException(String.format("View List did not contain column %s", columnName));
+            throw new ExtendedCucumberException(String.format("View List did not contain column %s", columnName));
         return (String) viewTableModel.getValueAt(row - 1, column);
 
     }

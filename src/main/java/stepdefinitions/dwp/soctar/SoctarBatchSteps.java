@@ -10,9 +10,11 @@ import cucumber.api.java.en.When;
 import org.awaitility.Duration;
 import org.openqa.selenium.By;
 
+import static com.billinghouse.MatcherAssert.assertThat;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
-import static org.hamcrest.MatcherAssert.assertThat;
+
+;
 
 public class SoctarBatchSteps extends DwpScenario {
 

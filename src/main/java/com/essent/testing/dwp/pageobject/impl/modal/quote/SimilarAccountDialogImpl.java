@@ -1,9 +1,9 @@
 package com.essent.testing.dwp.pageobject.impl.modal.quote;
 
+import com.billinghouse.exception.ExtendedCucumberException;
 import com.essent.automation.core.WebDriverWait;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.modal.quote.SimilarAccountDialog;
-import cucumber.runtime.CucumberException;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -46,7 +46,7 @@ public class SimilarAccountDialogImpl extends Component implements SimilarAccoun
             link.click();
         } else {
             seleniumDriver.takeScreenshot(linkText + "-");
-            throw new CucumberException("Element not found by link text " + linkText);
+            throw new ExtendedCucumberException("Element not found by link text " + linkText);
         }
         logger().debug("ACTION REQIURED: CONFIRM_ALERT");
         (new WebDriverWait(seleniumDriver.getDriver(), 2)).until(ExpectedConditions.alertIsPresent());

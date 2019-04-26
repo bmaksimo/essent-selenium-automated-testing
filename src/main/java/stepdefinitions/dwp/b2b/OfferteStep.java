@@ -14,8 +14,10 @@ import cucumber.api.java.en.Then;
 import org.junit.Assert;
 import org.springframework.test.context.ContextConfiguration;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import static com.billinghouse.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+
+;
 
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 

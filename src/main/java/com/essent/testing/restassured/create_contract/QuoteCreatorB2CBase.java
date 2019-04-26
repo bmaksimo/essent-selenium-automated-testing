@@ -1,6 +1,7 @@
 package com.essent.testing.restassured.create_contract;
 
 import com.billinghouse.cucumber.runtime.parameter.ParameterProvider;
+import com.billinghouse.exception.ExtendedCucumberException;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.context.ContextService;
@@ -11,7 +12,6 @@ import com.essent.testing.restassured.create_contract.constants.SwitchTypes;
 import com.essent.testing.restassured.create_contract.helper.ContractUtil;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
 import com.google.gson.Gson;
-import cucumber.runtime.CucumberException;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookies;
@@ -106,7 +106,7 @@ public class QuoteCreatorB2CBase {
             this.upStartDate = PrepareDataForContract.setStartContractDate(path, contractStartDate, contractEndDate, currentContractStartDateInDWP);
             if (this.upStartDate.equals("NOT_VALID")) {
                 logger.info("ALL START CONTRACT DATES ARE USED FOR ADDRESS STREET: " + addressStreet + " EAN: " + ean_c + "; PLEASE USE ANOTHER ADDRESS AND EAN");
-                throw new CucumberException("ALL START CONTRACT DATES ARE USED FOR ADDRESS STREET: " + addressStreet + " EAN: " + ean_c + "; PLEASE USE ANOTHER ADDRESS AND EAN");
+                throw new ExtendedCucumberException("ALL START CONTRACT DATES ARE USED FOR ADDRESS STREET: " + addressStreet + " EAN: " + ean_c + "; PLEASE USE ANOTHER ADDRESS AND EAN");
             }
         }
 	}

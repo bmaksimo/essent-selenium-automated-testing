@@ -1,5 +1,6 @@
 package com.essent.testing.odoo.pageobject.impl;
 
+import com.billinghouse.exception.ExtendedCucumberException;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
@@ -7,7 +8,6 @@ import com.essent.automation.core.WebDriverWait;
 import com.essent.testing.context.ContextService;
 import com.essent.testing.selenium.OdooSeleniumDriver;
 import com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter;
-import cucumber.runtime.CucumberException;
 import org.apache.commons.text.StrSubstitutor;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -42,7 +42,7 @@ public abstract class Component {
         } catch (TimeoutException te) {
             logger().fatal(" - RESULT: FAILED");
             logger().fatal(" - REASON: " + getClass() + "{null}: Web element was not found. ");
-            throw new CucumberException(getClass() + ": Web element was not found.");
+            throw new ExtendedCucumberException(getClass() + ": Web element was not found.");
         }
         logger.debug(String.format(" - TARGET: %s -> %s", selector, element.getAttribute("innerHTML")));
     }
@@ -55,7 +55,7 @@ public abstract class Component {
         if (element == null) {
             logger.error(" - RESULT: FAILED");
             logger.error(" - REASON: " + getClass() + "{null}: Web element was not found. ");
-            throw new CucumberException(getClass() + ": Web element was not found.");
+            throw new ExtendedCucumberException(getClass() + ": Web element was not found.");
         }
 
         logger.info(" - RESULT: " + element);

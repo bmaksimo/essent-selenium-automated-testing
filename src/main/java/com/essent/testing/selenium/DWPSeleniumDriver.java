@@ -1,11 +1,11 @@
 package com.essent.testing.selenium;
 
+import com.billinghouse.exception.ExtendedCucumberException;
 import com.billinghouse.test_automation.javascript.testrunner.JavascriptTestRunner;
 import com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry;
 import com.billinghouse.test_automation.javascript.testrunner.impl.SeleniumJsTestExpanderService;
 import com.essent.testing.util.resource.ResourceUtil;
 import com.paulhammant.ngwebdriver.NgWebDriver;
-import cucumber.runtime.CucumberException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
@@ -131,7 +131,7 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
             logger.debug(" - SCRIPT: " + function);
 
         } catch (IOException e) {
-            throw new CucumberException(e);
+            throw new ExtendedCucumberException(e);
         }
     }
     public void injectJavaScriptTestRunner() {

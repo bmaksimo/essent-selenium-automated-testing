@@ -1,6 +1,6 @@
 package com.billinghouse.cucumber.runtime.parameter;
 
-import cucumber.runtime.CucumberException;
+import com.billinghouse.exception.ExtendedCucumberException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -36,7 +36,7 @@ public class ParameterProvider {
         try {
             return Integer.parseInt(expectedIntParameter.toString());
         } catch (NumberFormatException nfe) {
-            throw new CucumberException("Input parameter " + expectedIntParameter + " doesn't have supported number format");
+            throw new ExtendedCucumberException("Input parameter " + expectedIntParameter + " doesn't have supported number format");
         }
     }
 
@@ -44,7 +44,7 @@ public class ParameterProvider {
         if (value.startsWith(TEST_PARAMETER_PREFIX)) {
             String key = StringUtils.replace(value, TEST_PARAMETER_PREFIX, "", 1);
             if(!parameters.containsKey(key)) {
-                throw new CucumberException(String.format("Input parameter %s is undefined", value));
+                throw new ExtendedCucumberException(String.format("Input parameter %s is undefined", value));
             }
             return parameters.get(key);
         }

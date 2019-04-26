@@ -1,5 +1,6 @@
 package stepdefinitions.odoo.navigation.menu;
 
+import com.billinghouse.exception.ExtendedCucumberException;
 import com.essent.testing.odoo.navigation.menu.MenuNavigation;
 import com.essent.testing.odoo.pageobject.impl.elements.ButtonImpl;
 import com.essent.testing.odoo.pageobject.impl.pageObject.CustomerPage;
@@ -10,7 +11,6 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import cucumber.runtime.CucumberException;
 import org.apache.commons.lang.StringUtils;
 import org.awaitility.Duration;
 import org.junit.Assert;
@@ -20,10 +20,12 @@ import org.openqa.selenium.WebElement;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.billinghouse.MatcherAssert.assertThat;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
 import static org.awaitility.Duration.TWO_SECONDS;
-import static org.hamcrest.MatcherAssert.assertThat;
+
+;
 
 public class OdooMenu extends OdooScenario {
 
@@ -37,7 +39,7 @@ public class OdooMenu extends OdooScenario {
         MenuNavigation menuNavigation = new MenuNavigation();
         boolean success = menuNavigation.findAndClickMainMenuItem(menu);
         if(!success) {
-            throw new CucumberException(menuNavigation.getReason());
+            throw new ExtendedCucumberException(menuNavigation.getReason());
         }
         awaitOdooRequestToFinish(180);
     }
@@ -56,7 +58,7 @@ public class OdooMenu extends OdooScenario {
         String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
         awaitOdooRequestToFinish(10);
         WebElement button = seleniumDriver.findElementWhenVisible(By.xpath("//table[@class='oe_list_content'][1]//tbody//tr["+rowIndex+"]//td[@data-field='generate_coda']//button[1]"));
-        if (null == button) throw new CucumberException("Button was not found");
+        if (null == button) throw new ExtendedCucumberException("Button was not found");
 
         seleniumDriver.moveToElementAndClick(button);
     }
@@ -69,7 +71,7 @@ public class OdooMenu extends OdooScenario {
         awaitOdooRequestToFinish(10);
         List<WebElement> buttons = seleniumDriver.findElements(By.xpath(createQuery(locator, mapper)));
         if(buttons.isEmpty()) {
-            throw new CucumberException("Coda download button was not found");
+            throw new ExtendedCucumberException("Coda download button was not found");
         } else {
             seleniumDriver.moveToElementAndClick(buttons.get(0));
         }
@@ -79,7 +81,7 @@ public class OdooMenu extends OdooScenario {
     @Then("^Button \"([^\"]*)\" is clicked$")
     public void clickButton(String label) {
         WebElement webElement = seleniumDriver.findElement(By.xpath("//button//div[contains(., '" + label + "')]"));
-        if (null == webElement) throw new CucumberException("Button was not found");
+        if (null == webElement) throw new ExtendedCucumberException("Button was not found");
         new ButtonImpl(webElement).click();
         awaitOdooRequestToFinish(180);
     }
@@ -87,7 +89,7 @@ public class OdooMenu extends OdooScenario {
     @Then("^Modal title contains \"([^\"]*)\"$")
     public void odooContainsModalTitle(String modalTitle) {
         WebElement title = seleniumDriver.findElementWhenVisible(By.xpath("//h3[@class='modal-title']"));
-        if (null == title || StringUtils.isBlank(title.getText())) throw new CucumberException("Title was not found");
+        if (null == title || StringUtils.isBlank(title.getText())) throw new ExtendedCucumberException("Title was not found");
         assertThat("Current title does not contain " + modalTitle, title.getText().contains(modalTitle));
     }
 
@@ -95,7 +97,7 @@ public class OdooMenu extends OdooScenario {
     public void odooClickButton(String buttonLabel) {
         awaitOdooRequestToFinish(10);
         WebElement button = seleniumDriver.findElementWhenVisible(By.xpath("//button//span[contains(., '" + buttonLabel + "')]"));
-        if (null == button) throw new CucumberException("Button " + buttonLabel + " was not found.");
+        if (null == button) throw new ExtendedCucumberException("Button " + buttonLabel + " was not found.");
         button.click();
     }
 
@@ -137,12 +139,12 @@ public class OdooMenu extends OdooScenario {
    public void modalButtons(String name) {
        awaitOdooRequestToFinish(10);
        WebElement reverseButton = seleniumDriver.findElement(By.xpath("//header//button//span[contains(., '" + name + "')]"));
-       if (null == reverseButton) throw new CucumberException("Button was not found");
+       if (null == reverseButton) throw new ExtendedCucumberException("Button was not found");
        new ButtonImpl(reverseButton).click();
 
        awaitOdooRequestToFinish(5);
        WebElement reverseModalButton = seleniumDriver.findElement(By.xpath("//footer//button//span[contains(., '" + name + "')]"));
-       if (null == reverseModalButton) throw new CucumberException("Button was not found");
+       if (null == reverseModalButton) throw new ExtendedCucumberException("Button was not found");
        new ButtonImpl(reverseModalButton).click();
        awaitOdooRequestToFinish(8);
    }
