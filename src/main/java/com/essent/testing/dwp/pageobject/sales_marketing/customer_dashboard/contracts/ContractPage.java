@@ -49,7 +49,7 @@ public class ContractPage extends Component {
     private static SimpleDateFormat SIMPLE_DATEF_ORMAT = new SimpleDateFormat("dd/MM/yyyy");
 
 
-    private static final String LABELFORPRODUCTCHANGE = "//div[@class = 'non-editable-editor']";
+    private static final String LABELFORPRODUCTCHANGE = "//wysiwyg-editor-form-element[@id='description']/div[@class = 'non-editable-editor']";
     private static final String ACCOUNT_NUMBER = "//div[@class='card__content__inner-wrapper']/h4";
     private static final String CONTRACT_NUMBER = "//*[@id=\"account_number_c\"]/div";
     private static final String COMPANY_NUMBER = "//*//*[@id=\"company-number-c-field\"]";
@@ -271,7 +271,7 @@ public class ContractPage extends Component {
 
     public String checkSuccessMessage() {
         seleniumDriver.waitForRequestsToFinish();
-        String messageProductChange = seleniumDriver.findElementWhenVisible(By.xpath(LABELFORPRODUCTCHANGE)).getText();
+        String messageProductChange = seleniumDriver.findElementWhenPresent(By.xpath(LABELFORPRODUCTCHANGE)).getText();
         String[] values = {"1 succeeded", "1 queued", "1 failed"};
         String match = "";
 
@@ -460,6 +460,18 @@ public class ContractPage extends Component {
         sb = new StringBuilder();
 
         return sb.append(firstInvoice).append(' ').append(secondInvoice).append(' ').append(thirdInvoice).toString();
+    }
+
+    public boolean checkIsInvoicesAmountsAsStringCorrect(String amountInvoicesCombination1, String amountInvoicesCombination2, String amountInvoicesCombination3, String amountInvoicesCombination4, String actualValuesOfInvoices)
+    {
+        boolean matchingValuesOfInvoices = false;
+        if (amountInvoicesCombination1.equals(actualValuesOfInvoices) || amountInvoicesCombination2.equals(actualValuesOfInvoices)
+            || amountInvoicesCombination3.equals(actualValuesOfInvoices) || amountInvoicesCombination4.equals(actualValuesOfInvoices))
+        {
+            matchingValuesOfInvoices = true;
+        }
+
+        return matchingValuesOfInvoices;
     }
 
     public String getBalance() {

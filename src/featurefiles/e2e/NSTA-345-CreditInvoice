@@ -1,13 +1,11 @@
+@REGRESSION
 @DWP
 @B2C
-@REGRESSION
 @ALL
-
-Feature: NSTA-345 - Credit Invoice
+Feature: NSTA-345 Credit Invoice
 
     Background:
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
-
 
     @NSTA-345
     Scenario: Credit Invoice
@@ -72,10 +70,10 @@ Feature: NSTA-345 - Credit Invoice
 
         And Plus menu is "Billing -> Start facturatierun"
         When Modal dialog is "Start invoicerun"
-        And "Naam job" selection is "recurrent"
-        And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
         And "Factuurdatum" date is "now"
         And "Procesdatum" date is "1 month from now"
+        And "Naam job" selection is "recurrent"
+        And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
         Then Invoice run is scheduled
 
         Given I renew login to DWP as "businessdesk.testautomation.b2b@essent.be"
@@ -115,9 +113,13 @@ Feature: NSTA-345 - Credit Invoice
         #Asserts
          #1 - Check if Old invoice is credited (check if CNM is created for same amount as old VKM)
          #2 - Check if there is a new invoice created for the amount you selected
-        Then Invoice Amounts are among
+        Then Invoice Amounts are among values
             |    amountInvoice1     |    amountInvoice2     |    amountInvoice3    |
             |  113 € -113 € 300 €   |  226 € -226 € 600 €   |  339 € -339 € 900 €  |
+            |  -113 € 113 € 300 €   |  -226 € 226 € 600 €   |  -339 € 339 € 900 €  |
+            |  300 € 113 € -113 €   |  600 € 226 € -226 €   |  900 € 339 € -339 €  |
+            |  300 € -113 € 113 €   |  600 € -226 € 226 €   |  900 € -339 € 339 €  |
+
 
          #3 - Check if interactions are created for VKM and CNM
         When Dashboard menu is "Service"
@@ -130,7 +132,11 @@ Feature: NSTA-345 - Credit Invoice
          #5 - Check Saldo of new invoice credit
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
-        Then Balance is among values "€ 300,00|€ 600,00|€ 900,00"
+        Then Balance is among values
+            |  balance  |
+            |  € 300,00 |
+            |  € 600,00 |
+            |  € 900,00 |
 
 
 

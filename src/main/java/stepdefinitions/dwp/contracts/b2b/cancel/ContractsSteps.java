@@ -228,6 +228,7 @@ public class ContractsSteps extends DwpScenario {
 
     @Then("^Check is product change \"([^\"]*)\"$")
     public void checkProductChangeSuccess(String expectedMessage) {
+        seleniumDriver.waitForRequestsToFinish();
         ContractPage cp = new ContractPage();
         String messageActual = cp.checkSuccessMessage();
         Assert.assertThat("Product change successfully done", messageActual, equalTo(expectedMessage));
