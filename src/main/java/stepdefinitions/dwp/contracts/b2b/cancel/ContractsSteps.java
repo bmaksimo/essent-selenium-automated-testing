@@ -131,8 +131,7 @@ public class ContractsSteps extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
         String inputEanCode = parameterProvider.getValueOrParameterAsString(eanCode);
         logger().info("input EAN CODE: " + inputEanCode);
-        String copiedEanCode = seleniumDriver.findElementWhenVisible(By.xpath("//h5[.='" + inputEanCode + "']")).getText();
-        Assert.assertNotNull("Correct ean code was not found.", copiedEanCode);
+        Assert.assertTrue("Correct ean code was not found.", seleniumDriver.findElementWhenVisible(By.xpath("//h5[.='" + inputEanCode + "']")).isDisplayed());
     }
 
     /**
