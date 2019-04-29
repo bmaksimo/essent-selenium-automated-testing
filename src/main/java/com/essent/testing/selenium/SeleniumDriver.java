@@ -159,7 +159,7 @@ public abstract class SeleniumDriver {
             return driver.findElements(selector);
         });
         if(element.isEmpty()) {
-            return Optional.ofNullable(null);
+            return Optional.empty();
         }
         return Optional.ofNullable(element.get(0));
     }

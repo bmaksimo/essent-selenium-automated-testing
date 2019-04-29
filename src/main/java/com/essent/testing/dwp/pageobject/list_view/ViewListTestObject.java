@@ -3,7 +3,10 @@ package com.essent.testing.dwp.pageobject.list_view;
 import com.billinghouse.exception.ExtendedCucumberException;
 import com.essent.testing.dwp.pageobject.ViewList;
 import com.essent.testing.dwp.pageobject.impl.Component;
+import cucumber.runtime.CucumberException;
 import org.apache.commons.collections.CollectionUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.*;
@@ -21,6 +24,8 @@ import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegis
  * You must return Optional or empty list but not null
  */
 public class ViewListTestObject extends Component implements ViewList {
+
+    private static final String TRANSACTIONS_TABLE_HEADERS = "//list[@list-key='TransactionsOnAccount']//th[@class='list__cell']";
 
 
     public DefaultTableModel getViewTableModel() {
@@ -163,11 +168,11 @@ public class ViewListTestObject extends Component implements ViewList {
         logger().info(" - RESULT: " + viewTable);
         int index = getColumnNameIndex(columnName, viewTable);
         if (index < 0) {
-            return Optional.ofNullable(null);
+            return Optional.empty();
         }
         List<List> rows = getData(viewTable);
         if (rows.isEmpty()) {
-            return Optional.ofNullable(null);
+            return Optional.empty();
         }
         if (row > rows.size()) {
             throw new ExtendedCucumberException(String
@@ -189,7 +194,7 @@ public class ViewListTestObject extends Component implements ViewList {
         logTableModel(viewTableModel);
         int column = viewTableModel.findColumn(columnName);
         if (column < 0)
-            return Optional.ofNullable(null);
+            return Optional.empty();
         return Optional.of((String) viewTableModel.getValueAt(row - 1, column));
 
     }
@@ -197,6 +202,16 @@ public class ViewListTestObject extends Component implements ViewList {
     public Optional<String> getCurrencyValueAt(int row, String columnName, String tableName) {
         Optional<String> result = getValueAt(row, columnName, tableName);
         return result.map(value -> value.replaceAll("\\s+", " "));
+    }
+
+    @Override
+    public Optional<Integer> getTransactionsColumnIndex(String columnName) {
+        List<WebElement> headers = seleniumDriver.findElements(By.xpath(TRANSACTIONS_TABLE_HEADERS));
+
+        for (int i = 0; i < headers.size() - 1; i++) {
+            if (columnName.equalsIgnoreCase(headers.get(i).getText())) return Optional.of(i);
+        }
+        return Optional.empty();
     }
 
 }
