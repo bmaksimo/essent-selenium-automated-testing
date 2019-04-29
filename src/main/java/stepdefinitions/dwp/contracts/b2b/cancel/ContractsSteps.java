@@ -121,6 +121,7 @@ public class ContractsSteps extends DwpScenario {
 
     @Then("^Save changes$")
     public void saveChanges() {
+        seleniumDriver.waitForRequestsToFinish();
         ContractPage contractenPage = new ContractPage();
         contractenPage.saveButton();
     }
@@ -130,7 +131,8 @@ public class ContractsSteps extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
         String inputEanCode = parameterProvider.getValueOrParameterAsString(eanCode);
         logger().info("input EAN CODE: " + inputEanCode);
-        Assert.assertTrue("Correct ean code was not found.", seleniumDriver.findElementWhenVisible(By.xpath("//h5[.='" + inputEanCode + "']")).isDisplayed());
+        String copiedEanCode = seleniumDriver.findElementWhenVisible(By.xpath("//h5[.='" + inputEanCode + "']")).getText();
+        Assert.assertNotNull("Correct ean code was not found.", copiedEanCode);
     }
 
     /**
