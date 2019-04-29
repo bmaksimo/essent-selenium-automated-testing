@@ -19,9 +19,13 @@ public class NewLeadPage extends BaseObjectPage implements Form {
         setCompanyName(table.get(1).get(0));
         seleniumDriver.waitForRequestsToFinish();
         setContactPerson(table.get(1).get(1), table.get(1).get(2));
+        seleniumDriver.waitForRequestsToFinish();
         setGender(table.get(1).get(6));
+        seleniumDriver.waitForRequestsToFinish();
         setTelephone(table.get(1).get(3));
+        seleniumDriver.waitForRequestsToFinish();
         setMobile(table.get(1).get(4));
+        seleniumDriver.waitForRequestsToFinish();
         setEmail(table.get(1).get(5));
         seleniumDriver.waitForRequestsToFinish();
         tg.switchOn(box);
