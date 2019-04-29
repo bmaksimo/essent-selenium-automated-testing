@@ -42,6 +42,9 @@ public class ViewListChecks extends NavigationElements {
     private static final String BILLING_CUSTOMER = "Billing customer";
     private static final String BILLING_CUSTOMER_VIEW_LIST = "BillingCustomerOnaccount";
     private static final String PLUS_ACTION = "Plus ActionDTO";
+    private static final String REPLACEMENT_KEY1 = "REPLACEMENT_KEY1";
+    private static final String TRANSACTIONS_BLOCKED_CHECKMARK = "//list[@list-key='TransactionsOnAccount']//td[@class='list__cell cell__text'][${"+REPLACEMENT_KEY1+"}]//div[@class='customer__status icon-checkmark']";
+    private static final String TRANSACTIONS_TABLE_HEADERS = "//list[@list-key='TransactionsOnAccount']//th[@class='list__cell']";
 
     private class ViewListNavigation {
         public void goToLink(String linkText) {
@@ -257,6 +260,16 @@ public class ViewListChecks extends NavigationElements {
                 throw new CucumberException(String.format("View List did not contain column %s", columnName));
             return (String) viewTableModel.getValueAt(row - 1, column);
 
+        }
+
+        int getTransactionsColumnIndex(String columnName) {
+            List<WebElement> headers = seleniumDriver.findElements(By.xpath(TRANSACTIONS_TABLE_HEADERS));
+
+            for (int i = 0; i < headers.size() - 1; i++) {
+                if (columnName.equalsIgnoreCase(headers.get(i).getText())) return i;
+            }
+
+            throw new CucumberException("Transaction table header not found: " + columnName);
         }
 
         @Override
@@ -744,6 +757,32 @@ public class ViewListChecks extends NavigationElements {
             value, column));
     }
 
+    @And("^Table \"([^\"]*)\" contains check mark at column \"([^\"]*)\"$")
+    public void viewListContainsCheckmarkAtColumn(String table, String column) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
+        int transactionsColumnIndex = new ViewListModel().getTransactionsColumnIndex(column);
+        By checkmarkSelector = By.xpath(createQuery(TRANSACTIONS_BLOCKED_CHECKMARK, REPLACEMENT_KEY1, ""+transactionsColumnIndex));
+        WebElement checkmark = seleniumDriver.findElementWhenPresent(checkmarkSelector);
+
+        String message = String.format("Table \"%s\" didn't contain check mark at column \"%s\"", table, column);
+        assertThat(message, null != checkmark);
+        logger().info(String.format("- STEP: Table \"%s\" contains check mark at column \"%s\" - PASSED.", table, column));
+    }
+
+    @And("^Table \"([^\"]*)\" does not contain value \"([^\"]*)\" at column \"([^\"]*)\"$")
+    public void viewListDoesNotContainsValueAtColumn(String table, String value, String column) throws Throwable {
+        ViewListModel viewListModel = new ViewListModel();
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
+        List<String> columnData = viewListModel.fetchColumnData(table, column);
+        List<String> found = columnData.stream().filter(element -> element.contains(inputValue))
+            .collect(Collectors.toList());
+        String message = String.format("Table \"%s\" should not contain value \"%s\" at column \"%s\"", table, value,
+            column);
+        assertThat(message, found, empty());
+        logger().info(String.format("- STEP: Table \"%s\" does not contain value \"%s\" at column \"%s\" - PASSED.", table,
+            value, column));
+    }
+
 
     @And("^Table \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\" waiting for (\\d+) seconds$")
     public void viewListContainsValueAtColumnWithFixedTime(String table, String value, String column, int waitingTime) throws Throwable {
@@ -855,7 +894,6 @@ public class ViewListChecks extends NavigationElements {
         else throw new CucumberException("Actual balance " + actualBalance + " don't match expected ones");
 
     }
-
 
     @And("^Wait for (\\d+) seconds$")
     public void waitForSeconds(int seconds) {
