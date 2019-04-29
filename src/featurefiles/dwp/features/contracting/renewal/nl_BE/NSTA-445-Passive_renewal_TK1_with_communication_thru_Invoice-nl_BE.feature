@@ -82,7 +82,7 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         And  Modal dialog is "Start passive renewal batch"
         And  Modal dialog contains "parameter:suitecrm-customer-name" in action list
         And  Modal dialogue is confirmed
-        Then
+        Then "Status batch" field value is "VALIDATED"
 
 
 
