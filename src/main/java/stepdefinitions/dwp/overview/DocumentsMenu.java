@@ -12,16 +12,17 @@ import java.util.function.Predicate;
 
 import static com.billinghouse.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-
-;
+import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 
 public class DocumentsMenu extends NavigationElements {
+
+
     private class ClickDocumentsMenu implements Predicate<String> {
         @Override
         public boolean test(String documentType) {
             Map<String, Object> options = new HashMap<>();
             options.put("documentType", documentType);
-            return executeJavascriptTest("TrCheckDocumentType", options);
+            return executeJavascriptTest(JS_TR_CHECK_DOCUMENT_TYPE, options);
         }
     }
 

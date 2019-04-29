@@ -22,10 +22,9 @@ import static org.awaitility.Awaitility.given;
 import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
 import static org.awaitility.Duration.ONE_SECOND;
 import static org.hamcrest.Matchers.is;
-
-;
-
+import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 public class FormElements extends DwpScenario {
+
 
     @Before("@DWP, @CORE, @E2E, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
@@ -39,7 +38,7 @@ public class FormElements extends DwpScenario {
             Map<String, Object> options = new HashMap<>();
             options.put("schedule_seconds", sec);
             options.put("header", header);
-            boolean success = executeJavascriptTest("TrCheckFormHeader", options);
+            boolean success = executeJavascriptTest(JS_TR_CHECK_FORM_HEADER, options);
             return success;
         }
     }
@@ -79,7 +78,7 @@ public class FormElements extends DwpScenario {
     public void formIsSubmitted() throws Throwable {
         seleniumDriver.waitForRequestsToFinish();
         Map<String, String> options = new HashMap<>();
-        executeJavascriptTest("TrSubmitForm", options);
+        executeJavascriptTest(JS_TR_SUBMIT_FORM, options);
         seleniumDriver.waitForRequestsToFinish();
     }
 

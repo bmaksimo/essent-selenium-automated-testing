@@ -2,7 +2,7 @@
 @B2B
 @REGRESSION
 @PAYMENTS
-@UNSTABLE
+@ALL
 Feature: NUAT-413: Manual reconcile en unreconcile
 
     Background:
@@ -17,19 +17,19 @@ Feature: NUAT-413: Manual reconcile en unreconcile
         And Journal is "Diverse dagboek klanten"
         And Date document is now
         And New item is
-            | name | partner                 | account | debit | credit |
-            | new1 | parameter:accountNumber | 580100  | 0     | 10     |
-            | new2 | parameter:accountNumber | 580100  | 10    | 0      |
-        Then Save and Post journal entry
-        When  Odoo left menu is "Customers"
+            | name | partner                 | debit | credit |
+            | new1 | parameter:accountNumber | 0     | 10     |
+            | new2 | parameter:accountNumber | 10    | 0      |
+        Then Save journal entry
+        When Odoo left menu is "Customers"
         And Odoo filter is "parameter:accountNumber"
         And Column "Account Number" with value "parameter:accountNumber" is clicked
         Then Button "Journal Items" is clicked
-        When Mark first two journal items one with credit and one with debit "10"
+        When Mark first two journal items one with credit and one with debit "100"
         And More menu is "Reconcile Entries"
         And Confirm action
         Then Reconcile number is shown
-        When Mark first two journal items one with credit and one with debit "10"
+        When Mark first two journal items one with credit and one with debit "100"
         And More menu is "Unreconcile Entries"
         And Confirm action
         Then Reconcile number is removed

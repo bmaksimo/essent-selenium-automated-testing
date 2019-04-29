@@ -1,6 +1,7 @@
 package com.essent.testing.dwp.pageobject.impl.modal.confirm;
 
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.elements.Button;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.elements.ButtonImpl;
@@ -59,6 +60,7 @@ public class ConfirmSignatureDialogImpl extends Component implements ConfirmSign
     @Override
     public boolean confirm() {
         seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(2);
         WebElement element = seleniumDriver.findElementWhenPresent(CONFIRM_BUTTON_SELECTOR);
         Button confirmButton = new ButtonImpl(element);
         confirmButton.click();

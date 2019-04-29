@@ -148,7 +148,7 @@ public class ContractSteps extends DwpScenario {
     @Then("^There is a case where onderwerp is \"([^\"]*)\"$")
     public void thereIsACaseWhereOnderwerpIs(String onderwerp) {
         ServicePage sp = new ServicePage();
-        Assert.assertEquals(sp.getCaseOnderwerp(),onderwerp);
+        Assert.assertEquals(onderwerp, sp.getCaseOnderwerp());
         parameterProvider.put("caseNumber",sp.getCaseNumber());
     }
 
@@ -156,9 +156,9 @@ public class ContractSteps extends DwpScenario {
     public void interactionIsCreatedWithTypeAndOnderwerpAndVerwanteCaseIs(String type, String onderwerp, String number) {
         ServicePage sp = new ServicePage();
         String caseNumber = parameterProvider.getValueOrParameterAsString(number);
-        Assert.assertEquals("Actual Interaction Type differs from expected",sp.getInteractionType(type),type);
-        Assert.assertEquals("Actual Interaction Onderwerp differs from expected",sp.getInteractionOnderwerp(type),onderwerp);
-        Assert.assertEquals("Actual Interaction Verwante Case differs from expected",sp.getInteractionVerwanteCase(),caseNumber);
+        Assert.assertEquals("Actual Interaction Type differs from expected", type, sp.getInteractionType(type));
+        Assert.assertEquals("Actual Interaction Onderwerp differs from expected", onderwerp, sp.getInteractionOnderwerp(type));
+        Assert.assertEquals("Actual Interaction Verwante Case differs from expected", caseNumber, sp.getInteractionVerwanteCase());
     }
 
     @And("^Kortingen is \"([^\"]*)\"$")

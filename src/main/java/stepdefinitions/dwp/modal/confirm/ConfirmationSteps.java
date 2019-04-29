@@ -17,8 +17,7 @@ import java.util.function.Predicate;
 
 import static com.billinghouse.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-
-;
+import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 
 public class ConfirmationSteps extends NavigationElements {
 
@@ -26,7 +25,7 @@ public class ConfirmationSteps extends NavigationElements {
     private class CheckModalDialog implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
-           return executeJavascriptTest("TrCheckModalDialog", options);
+           return executeJavascriptTest(JS_TR_CHECK_MODAL_DIALOG, options);
         }
     }
 

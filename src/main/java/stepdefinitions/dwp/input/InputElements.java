@@ -1,6 +1,7 @@
 package stepdefinitions.dwp.input;
 
 import com.essent.automation.util.Sleeper;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -18,13 +19,12 @@ import java.util.function.Predicate;
 
 import static com.billinghouse.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-
-;
+import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 
 public class InputElements extends DwpScenario {
     private static final String CALENDAR_VALIDTO_TIME_ID = "validto-c-time-field";
 
-        /**
+    /**
      * Cucumber-JVM Before- hook
      * @param scenario Gherkin scenario descriptor
      * @throws Throwable
@@ -40,12 +40,12 @@ public class InputElements extends DwpScenario {
     private class ApplyInput implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
-            boolean success = executeJavascriptTest("BaseFormInput", options);
+            boolean success = executeJavascriptTest(JS_BASE_FORM_INPUT, options);
             return success;
         }
 
         public boolean testNow(Map options) {
-            boolean success = executeJavascriptTestImmediately("BaseFormInput", options, true);
+            boolean success = executeJavascriptTestImmediately(JS_BASE_FORM_INPUT, options, true);
             return success;
         }
     }
@@ -56,12 +56,12 @@ public class InputElements extends DwpScenario {
     private class ApplySelection implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
-            boolean success = executeJavascriptTest("TrFormSelection", options);
+            boolean success = executeJavascriptTest(JS_TR_FORM_SELECTION, options);
             return success;
         }
 
         public boolean testNow(Map options) {
-            boolean success = executeJavascriptTestImmediately("TrFormSelection", options, true);
+            boolean success = executeJavascriptTestImmediately(JS_TR_FORM_SELECTION, options, true);
             return success;
         }
     }
@@ -72,12 +72,12 @@ public class InputElements extends DwpScenario {
     private class ApplyDateInput implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
-            boolean success = executeJavascriptTest("TrDatePickerInput", options);
+            boolean success = executeJavascriptTest(JS_TR_DATE_PICKER_INPUT, options);
             return success;
         }
 
         public boolean testNow(Map options) {
-            boolean success = executeJavascriptTestImmediately("TrDatePickerInput", options, true);
+            boolean success = executeJavascriptTestImmediately(JS_TR_DATE_PICKER_INPUT, options, true);
             return success;
         }
     }
@@ -88,7 +88,7 @@ public class InputElements extends DwpScenario {
     private class ToggleCheckBox implements Predicate<Map<String, String>> {
         @Override
         public boolean test(Map<String, String> options) {
-            boolean success = executeJavascriptTest("TrToggleCheckBox", options);
+            boolean success = executeJavascriptTest(JS_TR_TOGGLE_CHECK_BOX, options);
             return success;
         }
     }
@@ -182,6 +182,7 @@ public class InputElements extends DwpScenario {
         waiter.withMessage(String.format("Date value %s input at '%s' failed.", inputValue, label));
         waiter.until((ApplyDateInput callback) -> callback.test(options));
         seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(3);
     }
 
     @And("^\"([^\"]*)\" date is \"([^\"]*)\" waiting for (\\d+) seconds$")
@@ -311,7 +312,7 @@ public class InputElements extends DwpScenario {
         options.put("verb", verb.getVerb());
         FluentWait<InputElements> waiter = waiter(this, 10, 1);
         waiter.withMessage(String.format("Option %s is undefined.", option));
-        waiter.until((InputElements callback) -> executeJavascriptTest("TrClickToggleInput", options));
+        waiter.until((InputElements callback) -> executeJavascriptTest(JS_TR_CLICK_TOGGLE_INPUT, options));
         seleniumDriver.waitForRequestsToFinish();
     }
 
@@ -349,6 +350,20 @@ public class InputElements extends DwpScenario {
         placeHolderInputElement.sendKeys(inputValue);
         seleniumDriver.waitForRequestsToFinish();
     }
+
+
+
+    @And("New Amount Invoice is \"([^\"]*)\" for EAN \"([^\"]*)\"$")
+    public void setInputByEanLabel(String value, String EAN) {
+        seleniumDriver.waitForRequestsToFinish();
+        ContractPage cp = new ContractPage();
+        String ean = parameterProvider.getValueOrParameterAsString(EAN);
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
+        parameterProvider.put("inputValue", inputValue);
+        cp.getElementByEanNewInvoiceAmount(ean, value);
+        seleniumDriver.waitForRequestsToFinish();
+    }
+
 
     /**
      * Cucumber-JVM  Aftrer- hook

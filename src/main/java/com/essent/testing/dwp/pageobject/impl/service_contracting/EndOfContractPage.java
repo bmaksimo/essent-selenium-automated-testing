@@ -10,10 +10,10 @@ import java.util.function.Predicate;
 
 import static com.billinghouse.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-
-;
+import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 
 public class EndOfContractPage extends Component {
+
     public void searchInputField(String input) {
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//top-search/div[@class='top-search']/input[@type='search']")), input);
         seleniumDriver.findElementWhenVisible(By.xpath("//top-search/div[@class='top-search']/input[@type='search']")).sendKeys(Keys.ENTER);
@@ -45,7 +45,7 @@ public class EndOfContractPage extends Component {
 
         @Override
         public boolean test(String s) {
-            boolean success = executeJavascriptTest("TrEanCheckBox", "");
+            boolean success = executeJavascriptTest(JS_TR_EAN_CHECK_BOX, "");
             return success;
         }
     }

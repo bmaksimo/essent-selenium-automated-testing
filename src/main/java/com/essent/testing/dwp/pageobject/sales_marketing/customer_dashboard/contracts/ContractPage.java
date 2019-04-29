@@ -16,6 +16,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
+import static org.apache.camel.component.file.GenericFileExist.Append;
+
 public class ContractPage extends Component {
 
     private static final String NUMBER_ELECTRICITY_CONTRACT = "//list-icon-text-cell/div";
@@ -31,8 +33,14 @@ public class ContractPage extends Component {
     private static final String FIRST_PAYMENT_PLAN_INSTALLMENT = "//list-dropdown-cell//option[2]";
     private static final String SECOND_PAYMENT_PLAN_INSTALLMENT = "//list-dropdown-cell//option[3]";
     private static final String THIRD_PAYMENT_PLAN_INSTALLMENT = "//list-dropdown-cell//option[4]";
+    private static final String SALDO_CREDIT_INVOICE = "total-amount-open-field";
+    private static final String FIRST_INVOICE = "//tbody/tr[1]/td[5]//span[1]";
+    private static final String SECOND_INVOICE = "//tbody/tr[3]/td[5]//span[1]";
+    private static final String THIRD_INVOICE = "//tbody/tr[5]/td[5]//span[1]";
+    private static final String EAN_LOCATOR_INVOICE_AMOUNT = "dwp-ean-'${" + REPLACEMENT_KEY + "}'-field";
     private static final String CONTRACT_STATUS = "(//list[@list-key='ContractsOnAccount']//list-simple-two-liner-cell/p/span[2])[1]";
     private static final String PRODUCT_CONTRACT = "(//list[@list-key='ContractsOnAccount']//list-link-bold-top-two-liner-cell/div/a/h5)[3]";
+    private static final String EAN_NEW_INVOICE_AMOUNT = "dwp-ean-${" + REPLACEMENT_KEY + "}-field";
 
     private WebElement startData() {
         return seleniumDriver.findElementWhenVisible(By.id(START_DATA_ID));
@@ -41,7 +49,7 @@ public class ContractPage extends Component {
     private static SimpleDateFormat SIMPLE_DATEF_ORMAT = new SimpleDateFormat("dd/MM/yyyy");
 
 
-    private static final String LABELFORPRODUCTCHANGE = "//div[@class = 'non-editable-editor']";
+    private static final String LABELFORPRODUCTCHANGE = "//wysiwyg-editor-form-element[@id='description']/div[@class = 'non-editable-editor']";
     private static final String ACCOUNT_NUMBER = "//div[@class='card__content__inner-wrapper']/h4";
     private static final String CONTRACT_NUMBER = "//*[@id=\"account_number_c\"]/div";
     private static final String COMPANY_NUMBER = "//*//*[@id=\"company-number-c-field\"]";
@@ -263,7 +271,7 @@ public class ContractPage extends Component {
 
     public String checkSuccessMessage() {
         seleniumDriver.waitForRequestsToFinish();
-        String messageProductChange = seleniumDriver.findElementWhenVisible(By.xpath(LABELFORPRODUCTCHANGE)).getText();
+        String messageProductChange = seleniumDriver.findElementWhenPresent(By.xpath(LABELFORPRODUCTCHANGE)).getText();
         String[] values = {"1 succeeded", "1 queued", "1 failed"};
         String match = "";
 
@@ -441,4 +449,42 @@ public class ContractPage extends Component {
 
         return (str1+str2+str3);
     }
+
+    public String getActualValuesOfInvoicesAsString() {
+        seleniumDriver.waitForRequestsToFinish();
+        String firstInvoice  =  seleniumDriver.findElementWhenVisible(By.xpath(FIRST_INVOICE)).getText();
+        String secondInvoice = seleniumDriver.findElementWhenVisible(By.xpath(SECOND_INVOICE)).getText();
+        String thirdInvoice  = seleniumDriver.findElementWhenVisible(By.xpath(THIRD_INVOICE)).getText();
+
+        StringBuilder sb;
+        sb = new StringBuilder();
+
+        return sb.append(firstInvoice).append(' ').append(secondInvoice).append(' ').append(thirdInvoice).toString();
+    }
+
+    public boolean checkIsInvoicesAmountsAsStringCorrect(String amountInvoicesCombination1, String amountInvoicesCombination2, String amountInvoicesCombination3, String amountInvoicesCombination4, String actualValuesOfInvoices)
+    {
+        boolean matchingValuesOfInvoices = false;
+        if (amountInvoicesCombination1.equals(actualValuesOfInvoices) || amountInvoicesCombination2.equals(actualValuesOfInvoices)
+            || amountInvoicesCombination3.equals(actualValuesOfInvoices) || amountInvoicesCombination4.equals(actualValuesOfInvoices))
+        {
+            matchingValuesOfInvoices = true;
+        }
+
+        return matchingValuesOfInvoices;
+    }
+
+    public String getBalance() {
+        seleniumDriver.waitForRequestsToFinish();
+        return seleniumDriver.findElementWhenVisible(By.id(SALDO_CREDIT_INVOICE)).getText();
+    }
+
+
+    public void getElementByEanNewInvoiceAmount(String ean, String value) {
+        String xpathAction = createQuery(EAN_NEW_INVOICE_AMOUNT, REPLACEMENT_KEY, ean);
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id(xpathAction)), value);
+
+    }
+
+
 }

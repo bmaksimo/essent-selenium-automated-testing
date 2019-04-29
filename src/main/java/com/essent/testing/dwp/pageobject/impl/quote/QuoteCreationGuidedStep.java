@@ -14,6 +14,7 @@ import java.util.Optional;
 
 import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.NEXT_BUTTON;
 import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.VIEW;
+import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 
 public abstract class QuoteCreationGuidedStep extends Component implements GuidedStep, Form {
 
@@ -52,7 +53,7 @@ public abstract class QuoteCreationGuidedStep extends Component implements Guide
 
     public Boolean isNextButtonEnabled() {
         Map options = new HashMap<>();
-        Map result = seleniumDriver.executeJavascriptMethod("TrIsNextButtonEnabled", options);
+        Map result = seleniumDriver.executeJavascriptMethod(JS_TR_IS_NEXT_BUTTON_ENABLED, options);
         return BooleanUtils.toBoolean((String) result.get("enabled"));
     }
 }

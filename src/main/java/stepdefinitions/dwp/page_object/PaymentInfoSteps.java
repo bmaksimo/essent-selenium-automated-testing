@@ -17,22 +17,21 @@ import java.util.function.Predicate;
 import static com.billinghouse.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-
-;
-
+import  static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 public class PaymentInfoSteps extends NavigationElements {
+
 
     private class PaymentDetailsModalSaveAction implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
-            return executeJavascriptTest("TrPaymentDetailsModalSaveAction", options);
+            return executeJavascriptTest(JS_TR_PAYMENT_DETAILS_MODAL_SAVE_ACTION, options);
         }
     }
 
     private class PaymentMethodSwitch implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
-            Map result = executeJavascriptMethod("TrSwitchPaymentMethod", options);
+            Map result = executeJavascriptMethod(JS_TR_SWITCH_PAYMENT_METHOD, options);
             String status = ((String) result.get("status"));
             boolean success = StringUtils.equals("PASSED", status);
             if (success) {
@@ -48,7 +47,7 @@ public class PaymentInfoSteps extends NavigationElements {
     private class PaymentDetailsIBANChange implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
-            return executeJavascriptTest("TrAddIBANToPaymentDetails", options);
+            return executeJavascriptTest(JS_TR_ADD_IBAN_TO_PAYMENT_DETAILS, options);
         }
     }
 

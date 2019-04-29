@@ -12,8 +12,7 @@ import java.util.function.Predicate;
 
 import static com.billinghouse.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-
-;
+import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 
 public class MultipleInputElements extends DwpScenario {
 
@@ -25,14 +24,14 @@ public class MultipleInputElements extends DwpScenario {
     private class MultipleInputDialog implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
-            return executeJavascriptTest("TrOpenMultipleInputDialog", options);
+            return executeJavascriptTest(JS_TR_OPEN_MULTIPLE_INPUT_DIALOG, options);
         }
     }
 
     private class ApplyMultipleInput implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
-            return executeJavascriptTest("TrApplyMultipleFilterInput", options);
+            return executeJavascriptTest(JS_TR_APPLY_MULTIPLE_FILTER_INPUT, options);
         }
     }
 

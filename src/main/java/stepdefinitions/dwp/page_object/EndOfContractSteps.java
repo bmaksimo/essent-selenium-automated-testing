@@ -12,11 +12,11 @@ import org.openqa.selenium.By;
 
 import static com.billinghouse.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-
-;
+import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 
 
 public class EndOfContractSteps extends DwpScenario {
+
 
     @Before("@DWP, @E2E, @REGRESSION")
     public void setupTest(Scenario scenario) {
@@ -52,7 +52,7 @@ public class EndOfContractSteps extends DwpScenario {
     public void clickSelectContractline() {
         seleniumDriver.waitForRequestsToFinish();
         EndOfContractPage endOfContractPage = new EndOfContractPage();
-        endOfContractPage.simpleExecuteJavaScript("TrSelectContractline");
+        endOfContractPage.simpleExecuteJavaScript(JS_TR_SELECT_CONTRACTLINE);
     }
 
     @And("^EAN check box$")

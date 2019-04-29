@@ -14,7 +14,7 @@ Feature: NUAT-490: Handle Task For Cancel - nl_BE
         And Top action is "Filters" waiting for 30 seconds
         And "Status" selection is "Open" waiting for 30 seconds
         And "Module" selection is "START ACCESS" waiting for 30 seconds
-        And Click on link in View List at "1st" row and "Klant & EAN-code" column waiting for 60 seconds
+        And Click on link in View List at "1st" row and "Klant & EAN-code" column waiting for 90 seconds
         When Dashboard menu is "Details" waiting for 60 seconds
         And Get Contract Number
         And Top arrow button is "Back" waiting for 5 seconds

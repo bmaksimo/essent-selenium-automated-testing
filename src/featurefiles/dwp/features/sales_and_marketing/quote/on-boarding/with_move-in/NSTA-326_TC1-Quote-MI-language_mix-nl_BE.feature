@@ -2,7 +2,7 @@
 @SALES-MARKETING
 @REGRESSION
 @B2C
-@UNSTABLE
+@ALL
 Feature: NSTA-326: Creating a B2C Quote TC1 with "Move In" without using Market Mock.
 
     Background:
@@ -71,11 +71,18 @@ Feature: NSTA-326: Creating a B2C Quote TC1 with "Move In" without using Market 
         And "1st" list element has cell value "parameter:EAN-code-generated" at column "EAN-code"
         And "1st" List element with value at column "Start & Einddatum" is checked
 
+        Given I renew login to DWP as "salesmarketing.testautomation.b2c@essent.be"
+        When Left menu is "sales-marketing"
+        And Top menu item is "Klanten"
+        And Top action is "Filters"
+        And "Naam" input is "parameter:suitecrm-customer-name"
+        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
+
         #Step 9. Check market messages
         When Dashboard menu is "Marktberichten"
         Then View list header is "Marktberichten"
-        And "1st" list element has cell value "MOVE IN Move In" at column "Module & Label" polling 450 seconds
-        And "1st" list element has cell value "Aanvraag verstuurd" at column "Status & ED"
+        And "1st" list element has cell value "MOVE IN Move In" at column "Module & Label" polling 120 seconds
+        And "1st" list element has cell value "Gesloten" at column "Status & ED"
         And "1st" list element has cell value "parameter:Start & Einddatum" at column "Status & ED"
 
 

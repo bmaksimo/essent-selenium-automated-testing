@@ -3,8 +3,8 @@ package stepdefinitions.dwp.view_list;
 import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.billinghouse.exception.ExtendedCucumberException;
 import com.essent.automation.util.Sleeper;
-import com.essent.testing.dwp.pageobject.ViewList;
 import com.essent.testing.dwp.pageobject.list_view.ViewListTestObject;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import cucumber.api.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -12,7 +12,6 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -23,17 +22,18 @@ import stepdefinitions.dwp.navigation.NavigationElements;
 import stepdefinitions.dwp.plus.PlusActions;
 
 import javax.swing.table.DefaultTableModel;
-import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static com.billinghouse.MatcherAssert.assertThat;
+import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkTimeBetween;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.getFormattedEnd;
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.fail;
 
 public class ViewListChecks extends NavigationElements {
 
@@ -58,7 +58,7 @@ public class ViewListChecks extends NavigationElements {
       Map<String, Object> options = new HashMap<>();
       options.put("schedule_seconds", sec);
       options.put("header", header);
-      return executeJavascriptTest("TrCheckViewListHeader", options);
+      return executeJavascriptTest(JS_TR_CHECK_VIEW_LIST_HEADER, options);
     }
   }
 
@@ -67,234 +67,31 @@ public class ViewListChecks extends NavigationElements {
     public boolean test(String name) {
       Map<String, Object> options = new HashMap<>();
       options.put("name", name);
-      return executeJavascriptTest("TrGetListAction", options);
+      return executeJavascriptTest(JS_TR_GET_LIST_ACTION, options);
     }
   }
 
-  /**
-   * The class is deprecated. Please, don't amend it.
-   *
-   * <p>Replacement code is
-   *
-   * @see ViewListTestObject Switch your logic to
-   * @see ViewListTestObject and make code amendments there.
-   * @deprecated
-   */
-  @Deprecated
-  private class ViewListModel implements ViewList {
-
-    private DefaultTableModel getViewTableModel() {
-      DefaultTableModel tableModel = new DefaultTableModel();
-      return getDefaultTableModel(tableModel, new HashMap<>());
-    }
-
-    private DefaultTableModel getViewTableModel(String tableName) {
-      DefaultTableModel tableModel = new DefaultTableModel();
-      HashMap<Object, Object> options = new HashMap<>();
-      options.put("list_header", tableName);
-      return getDefaultTableModel(tableModel, options);
-    }
-
-    private DefaultTableModel getDefaultTableModel(
-        DefaultTableModel tableModel, HashMap<Object, Object> options) {
-      Map viewTable = executeJavascriptMethod("TrGetTableModel", options);
-      List columnNames = (List) viewTable.get("column_names");
-      List rows = getData(viewTable);
-      tableModel.setColumnIdentifiers(columnNames.toArray());
-      for (Object row1 : rows) {
-        Object[] row = ((List) row1).toArray();
-        tableModel.addRow(row);
-      }
-      return tableModel;
-    }
-
-    private void logTableModel(DefaultTableModel viewTableModel) {
-      int columnCount = viewTableModel.getColumnCount();
-      StringBuilder columns = new StringBuilder("[");
-      for (int i = 0; i < columnCount; i++) {
-        columns.append(String.format("'%s'", viewTableModel.getColumnName(i)));
-        if (i < columnCount - 1) columns.append(", ");
-      }
-      columns.append("]");
-      logger().info("- RESULT: Columns: " + columns.toString());
-      logger().info("- RESULT: Data vector: " + viewTableModel.getDataVector());
-    }
-
-    private List<List> getData(Map viewTable) {
-      return (List) viewTable.get("rows");
-    }
-
-    private int getColumnNameIndex(String columnName, Map viewTable) {
-      List<String> columnNames = (List) viewTable.get("column_names");
-      return columnNames.indexOf(columnName);
-    }
-
-    public boolean containsDataAt(int row, String value, String columnName) {
-      String cell = getCellValueAt(row, columnName);
-      boolean success = cell.contains(value);
-      return success;
-    }
-
-    public boolean containsCellValue(
-        int rowFromOne, String value, String columnName, String tableName) {
-      String cell = getValueAt(rowFromOne, columnName, tableName);
-      boolean success = cell.contains(value);
-      return success;
-    }
-
-    public boolean selectListRow(int row) {
-      Map<String, Object> options = new HashMap<>();
-      options.put("index", row);
-      boolean success = executeJavascriptTest("TrSelectListRow", options);
-      return success;
-    }
-
-    public boolean openListPlusActions(int row) {
-      Map<String, Object> options = new HashMap<>();
-      options.put("index", row);
-      boolean success = executeJavascriptTest("TrOpenListPlusActions", options);
-      return success;
-    }
-
-    public List<Integer> fetchListRowsIndices(String value, String columnName) {
-      Map viewTable = executeJavascriptMethod("TrGetTableModel", new HashMap<>());
-      int index = getColumnNameIndex(columnName, viewTable);
-      if (index < 0) {
-        fail(String.format("View List did not contain column %s", columnName));
-      }
-      List<List> rows = getData(viewTable);
-      AtomicInteger idx = new AtomicInteger(1);
-      List<Integer> collect =
-          IntStream.range(1, rows.size() + 1)
-              .filter(
-                  i ->
-                      idx.compareAndSet(i, i + 1)
-                          & ((ArrayList<String>) rows.get(i - 1)).get(index).contains(value))
-              .boxed()
-              .collect(Collectors.toList());
-      return collect;
-    }
-
-    public boolean selectListRow(int row, String value, String columnName) {
-      List<Integer> indices = fetchListRowsIndices(value, columnName);
-      return indices.size() > 0 && row <= indices.size();
-    }
-
-    public boolean selectListRows(int numRows, String value, String columnName) {
-      List<Integer> rows = fetchListRowsIndices(value, columnName);
-      if (numRows > rows.size()) {
-        return false;
-      }
-      List<Integer> indices = IntStream.range(1, numRows + 1).boxed().collect(Collectors.toList());
-      Map<String, Object> options = new HashMap<>();
-      options.put("indices", indices);
-      boolean success = executeJavascriptTest("TrSelectListRows", options, true);
-      return success;
-    }
-
-    public List<String> fetchDataSelection(String columnName) {
-      Map<String, Object> options = new HashMap<>();
-      options.put("include_selection", true);
-      Map viewTable = executeJavascriptMethod("TrFetchDataSelection", options);
-      int index = getColumnNameIndex(columnName, viewTable);
-      if (index < 0) {
-        fail(String.format("View List did not contain column %s", columnName));
-      }
-      List<List> rows = getData(viewTable);
-      List selection;
-      selection = rows.stream().map((e) -> e.get(index)).collect(Collectors.toList());
-      return selection;
-    }
-
-    public List<String> fetchColumnData(String table, String columnName) {
-      return fetchColumnDataNow(table, columnName, false);
-    }
-
-    public List<String> fetchColumnDataNow(String table, String columnName, boolean immediate) {
-      Map<String, Object> options = new HashMap<>();
-      options.put("include_selection", false);
-      options.put("table", table);
-
-      Map viewTable =
-          immediate
-              ? executeJavascriptMethodImmediately("TrFetchDataSelection", options)
-              : executeJavascriptMethod("TrFetchDataSelection", options);
-
-      int index = getColumnNameIndex(columnName, viewTable);
-      if (index < 0) {
-        fail(String.format("View List did not contain column %s", columnName));
-      }
-      List<List> rows = getData(viewTable);
-      List selection;
-      selection = rows.stream().map((e) -> e.get(index)).collect(Collectors.toList());
-      return selection;
-    }
-
-    private String getCellValueAt(int row, String columnName) {
-      logger().info("STEP: JAVASCRIPT_FETCH_DATA");
-      Map viewTable = executeJavascriptMethod("TrGetTableModel", new HashMap<>());
-      logger().info(" - RESULT: " + viewTable);
-      int index = getColumnNameIndex(columnName, viewTable);
-      if (index < 0) {
-        throw new ExtendedCucumberException(
-            String.format("View List did not contain column \"%s\"", columnName));
-      }
-      List<List> rows = getData(viewTable);
-      if (rows.size() == 0) {
-        throw new ExtendedCucumberException("--  Table is empty.");
-      }
-      if (row > rows.size()) {
-        throw new ExtendedCucumberException(
-            String.format(
-                "--  Row number \"%s\" was greater than actual table size \"%s\"",
-                row, rows.size()));
-      }
-      List currentRow = rows.get(row - 1);
-      return (String) currentRow.get(index);
-    }
-
-    public String getValueAt(int row, String columnName, String tableName) {
-      logger().info("STEP: JAVASCRIPT_FETCH_DATA");
-      HashMap<Object, Object> options = new HashMap<>();
-      options.put("list_header", tableName);
-      DefaultTableModel viewTableModel = getViewTableModel(tableName);
-      logger().info(" - RESULT: Table name: " + tableName);
-      logTableModel(viewTableModel);
-      int column = viewTableModel.findColumn(columnName);
-      if (column < 0)
-        throw new ExtendedCucumberException(
-            String.format("View List did not contain column %s", columnName));
-      return (String) viewTableModel.getValueAt(row - 1, column);
-    }
-
-    @Override
-    public String getCurrencyValueAt(int row, String columnName, String tableName) {
-      throw new UnsupportedOperationException(
-          "As deprecated, the operation is not supported anymore. Use provided replacement.");
-    }
-  }
-
-  private class ClickTableCellUrl implements Predicate<Map> {
+    private class ClickTableCellUrl implements Predicate<Map> {
     @Override
     public boolean test(Map options) {
       String viewList = (String) options.get("view_list_name");
-      if (null == viewList) return executeJavascriptTest("TrClickTableCellUrl", options);
+      if (null == viewList) return executeJavascriptTest(JS_TR_CLICK_TABLE_CELL_URL, options);
       return testKnownColumns(viewList, options, (String) options.get("column"));
     }
 
     public boolean testNow(Map options) {
       String viewList = (String) options.get("view_list_name");
       if (null == viewList)
-        return executeJavascriptTestImmediately("TrClickTableCellUrl", options, true);
+        return executeJavascriptTestImmediately(JS_TR_CLICK_TABLE_CELL_URL, options, true);
       return testKnownColumns(viewList, options, (String) options.get("column"));
     }
 
     private boolean testKnownColumns(String viewList, Map options, String column) {
       if (PLUS_ACTION.equalsIgnoreCase(column)) {
         if (MARKET_MESSAGES_VIEW_LIST.equalsIgnoreCase(viewList))
-          return executeJavascriptTest("TrPlusActionInMarketMessageTable", options);
+          return executeJavascriptTest(JS_TR_PLUS_ACTION_IN_MARKET_MESSAGE_TABLE, options);
         else if (BILLING_CUSTOMER_VIEW_LIST.equalsIgnoreCase(viewList))
-          return executeJavascriptTest("TrPlusActionInBillingCustomerTable", options);
+          return executeJavascriptTest(JS_TR_PLUS_ACTION_IN_BILLING_CUSTOMER_TABLE, options);
         else
           throw new IllegalArgumentException(
               String.format(
@@ -308,21 +105,21 @@ public class ViewListChecks extends NavigationElements {
   private class ClickTableRowAction implements Predicate<Map> {
     @Override
     public boolean test(Map options) {
-      return executeJavascriptTest("TrClickTableRowAction", options);
+      return executeJavascriptTest(JS_TR_CLICK_TABLE_ROW_ACTION, options);
     }
   }
 
   private class CheckEmptyTableAction implements Predicate<Map> {
     @Override
     public boolean test(Map options) {
-      return executeJavascriptTest("TrCheckEmptyTable", options);
+      return executeJavascriptTest(JS_TR_CHECK_EMPTY_TABLE, options);
     }
   }
 
   private class CheckFirstRowByOption implements Predicate<Map> {
     @Override
     public boolean test(Map options) {
-      return executeJavascriptTest("TrCheckFirstRowByOption", options);
+      return executeJavascriptTest(JS_TR_CHECK_FIRST_ROW_BY_OPTION, options);
     }
   }
 
@@ -374,10 +171,64 @@ public class ViewListChecks extends NavigationElements {
 
   @When("^View List is empty$")
   public void checkTableModel() throws Throwable {
-    javax.swing.table.TableModel viewTableModel = new ViewListModel().getViewTableModel();
+    DefaultTableModel viewTableModel = new ViewListTestObject().getViewTableModel();
     boolean success = viewTableModel.getRowCount() == 0;
     assertThat("View Table list is not empty", success, is(true));
     logger().info("- STEP: View list header is empty - PASSED.");
+  }
+
+  @And("^Table \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\"$")
+  public void viewListContainsValueAtColumn(String table, String value, String column)
+      throws Throwable {
+    ViewListTestObject viewListModel = new ViewListTestObject();
+    List<String> columnData = viewListModel.fetchColumnData(table, column);
+    List<String> found =
+        columnData.stream().filter(element -> element.contains(value)).collect(Collectors.toList());
+    String message =
+        String.format(
+            "Table \"%s\" didn't contain value \"%s\" at column \"%s\"", table, value, column);
+    assertThat(message, found, not(empty()));
+    logger()
+        .info(
+            String.format(
+                "- STEP: Table \"%s\" contains value \"%s\" at column \"%s\" - PASSED.",
+                table, value, column));
+  }
+
+  @Then("^Table \"([^\"]*)\" has matching value \"([^\"]*)\" at column \"([^\"]*)\"$")
+  public void isMatchingValueAtColumn(String tableName, String match, String columnName)
+      throws Throwable {
+    List<String> columnData = new ViewListTestObject().fetchColumnData(tableName, columnName);
+    String inputValue = parameterProvider.getValueOrParameterAsString(match);
+    Optional<String> first =
+        columnData.stream().filter(element -> element.contains(inputValue)).findAny();
+    assertThat(
+        String.format(
+            "Table \"%s\" didn't contain value matching \"%s\" at column \"%s\"",
+            tableName, match, columnName),
+        first.isPresent(),
+        is(true));
+  }
+
+  @And(
+      "^Table \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\" waiting for (\\d+) seconds$")
+  public void viewListContainsValueAtColumnWithFixedTime(
+      String table, String value, String column, int waitingTime) throws Throwable {
+    Sleeper.sleepTightInSeconds(waitingTime);
+    String inputValue = parameterProvider.getValueOrParameterAsString(value);
+    ViewListTestObject viewListModel = new ViewListTestObject();
+    List<String> columnData = viewListModel.fetchColumnDataNow(table, column, true);
+    Optional<String> containing =
+        columnData.stream().filter(element -> element.contains(inputValue)).findAny();
+    String message =
+        String.format(
+            "Table \"%s\" didn't contain value \"%s\" at column \"%s\"", table, value, column);
+    assertThat(message, containing.isPresent(), is(true));
+    logger()
+        .info(
+            String.format(
+                "- STEP: Table \"%s\" contains value \"%s\" at column \"%s\" - PASSED.",
+                table, value, column));
   }
 
   @When("^Click on \"([^\"]*)\" link$")
@@ -468,13 +319,13 @@ public class ViewListChecks extends NavigationElements {
   public void listElementWith(String ordinal, String value, String columnName) throws Throwable {
     int row = extractNumericValue(ordinal);
     String expectedValue = parameterProvider.getValueOrParameterAsString(value);
-    FluentWait<ViewListModel> waiter = waiter(new ViewListModel(), 120, 5);
+    FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), 120, 5);
     waiter.withMessage(
         String.format(
             "\"%s\" list element value \"%s\" at column \"%s\" was not found",
             ordinal, expectedValue, columnName));
     waiter.until(
-        (ViewListModel callback) -> callback.containsDataAt(row, expectedValue, columnName));
+        (ViewListTestObject callback) -> callback.containsDataAt(row, expectedValue, columnName));
     logger()
         .info(
             String.format(
@@ -488,13 +339,13 @@ public class ViewListChecks extends NavigationElements {
       String tableName, String value, String columnName, String ordinal) throws Throwable {
     int row = extractNumericValue(ordinal);
     String expectedValue = parameterProvider.getValueOrParameterAsString(value);
-    FluentWait<ViewListModel> waiter = waiter(new ViewListModel(), 30, 1);
+    FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), 30, 1);
     waiter.withMessage(
         String.format(
             "Table \"%s\" did not contain expected cell value \"%s\" at column \"%s\" on \"%s\" row",
             tableName, expectedValue, columnName, ordinal));
     waiter.until(
-        (ViewListModel callback) ->
+        (ViewListTestObject callback) ->
             callback.containsCellValue(row, expectedValue, columnName, tableName));
     logger()
         .info(
@@ -513,13 +364,13 @@ public class ViewListChecks extends NavigationElements {
     String expectedValue = parameterProvider.getValueOrParameterAsString(value);
     PlusActions scenario = (PlusActions) getScenarioInstance(PlusActions.class);
     int row = extractNumericValue(ordinal);
-    FluentWait<ViewListModel> waiter = waiter(new ViewListModel(), seconds, 20);
+    FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), seconds, 20);
     waiter.withMessage(
         String.format(
             "\"%s\" list element did not contain expected cell value \"%s\" at column \"%s\" within \"%s\" seconds  - PASSED.",
             ordinal, expectedValue, columnName, seconds));
     waiter.until(
-        (ViewListModel callback) -> {
+        (ViewListTestObject callback) -> {
           scenario.checkPlusMenu(plusMenuItem);
           return callback.containsDataAt(row, expectedValue, columnName);
         });
@@ -539,16 +390,17 @@ public class ViewListChecks extends NavigationElements {
     String arrow = parameterProvider.getValueOrParameterAsString("parameter:navigation");
     String dashboardMenu =
         parameterProvider.getValueOrParameterAsString("parameter:dashboard-menu");
-    FluentWait<ViewListModel> waiter = waiter(new ViewListModel(), seconds, 20);
+    FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), seconds, 20);
     waiter.withMessage(
         String.format(
             "\"%s\" list element did not have cell value \"%s\" at column \"%s\" within \"%s\" seconds.",
             ordinal, expectedValue, columnName, seconds));
     waiter.until(
-        (ViewListModel callback) -> {
+        (ViewListTestObject callback) -> {
           loopBack(arrow, dashboardMenu);
           return callback.containsDataAt(row, expectedValue, columnName);
         });
+
     logger()
         .info(
             String.format(
@@ -558,7 +410,9 @@ public class ViewListChecks extends NavigationElements {
 
   private void loopBack(String arrow, String dashboardMenu) {
     try {
+      seleniumDriver.waitForRequestsToFinish();
       clickTopArrow(arrow);
+      seleniumDriver.waitForRequestsToFinish();
       clickDashboardMenu(dashboardMenu);
     } catch (Throwable t) {
       throw new ExtendedCucumberException(t);
@@ -572,11 +426,11 @@ public class ViewListChecks extends NavigationElements {
       throws Throwable {
     int row = extractNumericValue(ordinal);
     String expectedValue = parameterProvider.getValueOrParameterAsString(status);
-    FluentWait<ViewListModel> waiter = waiter(new ViewListModel(), seconds, 5);
+    FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), seconds, 5);
     waiter.withMessage(
         String.format("Status did not switch to \"%s\" within \"%s\" seconds", status, seconds));
     waiter.until(
-        (ViewListModel callback) -> {
+        (ViewListTestObject callback) -> {
           seleniumDriver.waitAndClick(seleniumDriver.findElement(By.linkText(linkText)));
           return callback.containsDataAt(row, expectedValue, columnName);
         });
@@ -597,17 +451,17 @@ public class ViewListChecks extends NavigationElements {
       String linkText)
       throws Throwable {
     String expectedValue = parameterProvider.getValueOrParameterAsString(value);
-    FluentWait<ViewListModel> waiter = waiter(new ViewListModel(), seconds / 2, 5);
+    FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), seconds / 2, 5);
     waiter.withMessage(
         String.format("Status did not switch to \"%s\" within \"%s\" seconds", status, seconds));
     waiter.until(
-        (ViewListModel callback) -> {
+        (ViewListTestObject callback) -> {
           seleniumDriver.waitAndClick(seleniumDriver.findElement(By.linkText(linkText)));
           return callback.fetchListRowsIndices(expectedValue, columnName).size() >= 1;
         });
-    waiter = waiter(new ViewListModel(), seconds / 2, 5);
+    waiter = waiter(new ViewListTestObject(), seconds / 2, 5);
     waiter.until(
-        (ViewListModel callback) -> {
+        (ViewListTestObject callback) -> {
           seleniumDriver.waitAndClick(seleniumDriver.findElement(By.linkText(linkText)));
           int row = callback.fetchListRowsIndices(value, columnName).get(0);
           return callback.containsDataAt(row, status, secondColumnName);
@@ -616,7 +470,7 @@ public class ViewListChecks extends NavigationElements {
 
   @And("^Cell values? from selected rows? and column \"([^\"]*)\" (?:are|is) checked$")
   public void checkDataSelection(String columnName) throws Throwable {
-    ViewListModel viewListModel = new ViewListModel();
+    ViewListTestObject viewListModel = new ViewListTestObject();
     List<String> cellSelection = viewListModel.fetchDataSelection(columnName);
     assertThat(
         String.format("Data selection at column \"%s\" is empty", columnName),
@@ -635,14 +489,14 @@ public class ViewListChecks extends NavigationElements {
       throws Throwable {
     seleniumDriver.waitForRequestsToFinish();
     int row = extractNumericValue(ordinal);
-    String value = new ViewListModel().getCellValueAt(row, columnName);
-    boolean success = StringUtils.isNotBlank(value);
+      Optional<String> result = new ViewListTestObject().getValueAt(row, columnName);
+      boolean success = result.isPresent() && StringUtils.isNotBlank(result.get());
     assertThat(
         String.format(
             "\"%s\" list element didn't contain any value at column \"%s\"", ordinal, columnName),
         success,
         is(true));
-    String splitValue = value.split(" ")[0];
+    String splitValue = result.get().split(" ")[0];
     parameterProvider.put(columnName, splitValue);
     logger()
         .info(
@@ -656,15 +510,15 @@ public class ViewListChecks extends NavigationElements {
   public void checkDateIntervalTableCell(
       String ordinal, String columnName, String tableName, String interval) throws Throwable {
     int row = extractNumericValue(ordinal);
-    String value = new ViewListTestObject().getValueAt(row, columnName, tableName);
-    boolean success = StringUtils.isNotBlank(value);
+      Optional<String> result = new ViewListTestObject().getValueAt(row, columnName, tableName);
+      boolean success = result.isPresent() && StringUtils.isNotBlank(result.get());
     assertThat(
         String.format(
             "\"%s\" list element didn't contain any value at column \"%s\"", ordinal, columnName),
         success,
         is(true));
-    String[] splitValue = value.split("\\s+");
-    parameterProvider.put(columnName, value);
+    String[] splitValue = result.get().split("\\s+");
+    parameterProvider.put(columnName, result.get());
     Assert.assertThat(
         "Comparison of two dates expression conversion failure",
         checkTimeBetween(splitValue[0], splitValue[1], interval),
@@ -676,15 +530,15 @@ public class ViewListChecks extends NavigationElements {
   public void endOfIntervalFromRowOfTableAtColumnIsChecked(
       String ordinal, String tableName, String column) throws Throwable {
     int row = extractNumericValue(ordinal);
-    String intervalOfContract = new ViewListTestObject().getValueAt(row, column, tableName);
-    boolean success = StringUtils.isNotBlank(intervalOfContract);
+    Optional<String> intervalOfContract = new ViewListTestObject().getValueAt(row, column, tableName);
+    boolean success = intervalOfContract.isPresent() && StringUtils.isNotBlank(intervalOfContract.get());
     assertThat(
         String.format(
             "\"%s\" list element didn't contain any value at column \"%s\"", ordinal, column),
         success,
         is(true));
-    parameterProvider.put(column + " - start", getFormattedEnd(intervalOfContract, -1));
-    parameterProvider.put(column + " - end", getFormattedEnd(intervalOfContract, +1));
+    parameterProvider.put(column + " - start", getFormattedEnd(intervalOfContract.get(), -1));
+    parameterProvider.put(column + " - end", getFormattedEnd(intervalOfContract.get(), +1));
   }
 
   @Then(
@@ -707,32 +561,20 @@ public class ViewListChecks extends NavigationElements {
                 "- STEP: \"%s\" list element with value at column \"%s\" is checked - PASSED.",
                 tableName, columnName));
   }
-    @Then(
-        "^Cell value at \"([^\"]*)\" row at column \"([^\"]*)\" from table \"([^\"]*)\" is checked$")
-    public void lookupCellValue(String ordinal, String columnName, String tableName)
-        throws Throwable {
-        int row = extractNumericValue(ordinal);
-        String cellValue = new ViewListTestObject().getValueAt(row, columnName, tableName);
-        parameterProvider.put(columnName, cellValue);
-        logger()
-            .info(
-                String.format(
-                    "- STEP: \"%s\" list element with value at column \"%s\" is checked - PASSED.",
-                    tableName, columnName));
-    }
 
-  @Then("^List element with value at column \"([^\"]*)\" from table \"([^\"]*)\" is checked$")
-  public void storeColumnValueInParameterProvider(String columnName, String tableName)
+  @Then(
+      "^Cell value at \"([^\"]*)\" row at column \"([^\"]*)\" from table \"([^\"]*)\" is checked$")
+  public void lookupCellValue(String ordinal, String columnName, String tableName)
       throws Throwable {
-    seleniumDriver.waitForRequestsToFinish();
-    List<String> columnData = new ViewListModel().fetchColumnData(tableName, columnName);
-    boolean success = CollectionUtils.isNotEmpty(columnData);
+    int row = extractNumericValue(ordinal);
+    Optional<String> cellValue = new ViewListTestObject().getValueAt(row, columnName, tableName);
     assertThat(
         String.format(
-            "\"%s\" list element didn't contain any value at column \"%s\"", tableName, columnName),
-        success,
+            "Table \"%s\" is empty or it did not contain any value at \"%s\" row and column \"%s\"",
+            tableName, ordinal, columnName),
+        cellValue.isPresent() && StringUtils.isNotEmpty(cellValue.get()),
         is(true));
-    parameterProvider.put(columnName, columnData.get(0));
+    parameterProvider.put(columnName, cellValue.get());
     logger()
         .info(
             String.format(
@@ -740,31 +582,10 @@ public class ViewListChecks extends NavigationElements {
                 tableName, columnName));
   }
 
-  @And("^\"([^\"]*)\" element of table \"([^\"]*)\" at currency column \"([^\"]*)\" is sum of$")
-  public void checkCurrencyAmountDableDataAsSum(
-      String ordinal, String table, String columnName, final DataTable subAmounts)
-      throws Throwable {
-    seleniumDriver.waitForRequestsToFinish();
-    int row = extractNumericValue(ordinal);
-    String currencyValue = new ViewListTestObject().getCurrencyValueAt(row, columnName, table);
-    boolean success = StringUtils.isNotBlank(currencyValue);
-    assertThat(
-        String.format(
-            "\"%s\" list element didn't contain any value at column \"%s\"", ordinal, columnName),
-        success,
-        is(true));
-    Integer actualAmount = amountInCurrencyAsInt(currencyValue);
-    List<String> amounts = subAmounts.asList(String.class);
-    Integer sum = sumOf(amounts);
-    assertThat(
-        "Total advance prepaid amount %s is not equal to sum of sub amounts %s",
-        actualAmount, equalTo(sum));
-  }
-
   @And("^Select \"([^\"]*)\" List row having cell value \"([^\"]*)\" at column \"([^\"]*)\"$")
   public void selectListRows(String ordinal, String value, String columnName) throws Throwable {
     int row = extractNumericValue(ordinal);
-    ViewListModel viewListModel = new ViewListModel();
+    ViewListTestObject viewListModel = new ViewListTestObject();
     boolean success = viewListModel.selectListRow(row, value, columnName);
     String message =
         String.format(
@@ -783,7 +604,7 @@ public class ViewListChecks extends NavigationElements {
   public void openPlusActions(String ordinal, String value, String columnName) throws Throwable {
     int row = extractNumericValue(ordinal);
     String expectedValue = parameterProvider.getValueOrParameterAsString(value);
-    ViewListModel viewListModel = new ViewListModel();
+    ViewListTestObject viewListModel = new ViewListTestObject();
     boolean success = viewListModel.openListPlusActions(row);
     String message =
         String.format(
@@ -801,7 +622,7 @@ public class ViewListChecks extends NavigationElements {
       "^\"([^\"]*)\" List rows? having cell value \"([^\"]*)\" at column \"([^\"]*)\" (?:is|are) selected$")
   public void selectListRowHavingCellValueAtColumn(int row, String value, String columnName)
       throws Throwable {
-    ViewListModel viewListModel = new ViewListModel();
+    ViewListTestObject viewListModel = new ViewListTestObject();
     boolean success = viewListModel.selectListRows(row, value, columnName);
     String message =
         String.format(
@@ -817,13 +638,14 @@ public class ViewListChecks extends NavigationElements {
 
   @Then("^Selected List rows have cell value \"([^\"]*)\" at column \"([^\"]*)\"$")
   public void checkSelectionData(String value, String columnName) throws Throwable {
-    ViewListModel viewListModel = new ViewListModel();
-    FluentWait<ViewListModel> waiter =
-        waiter(new ViewListModel(), 10, 2).withMessage("Selected table is empty");
-    waiter.until((ViewListModel callback) -> !callback.fetchDataSelection(columnName).isEmpty());
+    ViewListTestObject viewListModel = new ViewListTestObject();
+    FluentWait<ViewListTestObject> waiter =
+        waiter(new ViewListTestObject(), 10, 2).withMessage("Selected table is empty");
+    waiter.until(
+        (ViewListTestObject callback) -> !callback.fetchDataSelection(columnName).isEmpty());
     List<String> cellSelection = viewListModel.fetchDataSelection(columnName);
     String message =
-        String.format("Value \"%s\" wasn't found in any row of \"%s\" column", columnName);
+        String.format("Value \"%s\" wasn't found in any row of \"%s\" column", value, columnName);
     assertThat(message, cellSelection.get(0).contains(value), is(true));
     logger()
         .info(
@@ -868,7 +690,7 @@ public class ViewListChecks extends NavigationElements {
         if (StringUtils.isNumeric(possibleAccountNumbers[i])) return possibleAccountNumbers[i];
       }
       throw new ExtendedCucumberException(
-          String.format("Input value \"%s\" didn't contain any numeric substring"));
+          String.format("Input value \"%s\" didn't contain any numeric substring", input));
     }
     if (StringUtils.isNumeric(input)) return input;
     else throw new ExtendedCucumberException(message);
@@ -876,13 +698,13 @@ public class ViewListChecks extends NavigationElements {
 
   private String getViewListElementAtRow(String viewListElement, String ordinal) {
     int row = extractNumericValue(ordinal);
-    ViewListModel viewListModel = new ViewListModel();
-    String parameter = viewListModel.getCellValueAt(row, viewListElement);
+    ViewListTestObject viewListModel = new ViewListTestObject();
+    Optional<String> cellValueAt = viewListModel.getValueAt(row, viewListElement);
     assertThat(
         String.format("View List element '%s' was not found.", viewListElement),
-        StringUtils.isNotBlank(parameter),
+        cellValueAt.isPresent() && StringUtils.isNotBlank(cellValueAt.get()),
         is(true));
-    return parameter;
+    return cellValueAt.get();
   }
 
   @And("^\"([^\"]*)\" list is not empty$")
@@ -890,7 +712,7 @@ public class ViewListChecks extends NavigationElements {
     Map<String, String> options = new HashMap<>();
     options.put("tableTitle", tableTitle);
     boolean success = new CheckEmptyTableAction().test(options);
-    assertThat(String.format(tableTitle + " doesn't exist"), success, is(true));
+    assertThat(String.format("Table \"%s\" was not shown", tableTitle), success, is(true));
     logger().info(String.format("- STEP: \"%s\" list is not empty - PASSED.", tableTitle));
   }
 
@@ -899,64 +721,8 @@ public class ViewListChecks extends NavigationElements {
     Map<String, String> options = new HashMap<>();
     options.put("table", tableTitle);
     boolean hasData = new CheckEmptyTableAction().test(options);
-    assertThat(String.format(tableTitle + " is not empty"), hasData, is(false));
+    assertThat(String.format("Table \"%s\" was not empty", tableTitle), hasData, is(false));
     logger().info(String.format("- STEP \"%s\" list is empty - PASSED.", tableTitle));
-  }
-
-  @And("^Table \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\"$")
-  public void viewListContainsValueAtColumn(String table, String value, String column)
-      throws Throwable {
-    ViewListModel viewListModel = new ViewListModel();
-    List<String> columnData = viewListModel.fetchColumnData(table, column);
-    List<String> found =
-        columnData.stream().filter(element -> element.contains(value)).collect(Collectors.toList());
-    String message =
-        String.format(
-            "Table \"%s\" didn't contain value \"%s\" at column \"%s\"", table, value, column);
-    assertThat(message, found, not(empty()));
-    logger()
-        .info(
-            String.format(
-                "- STEP: Table \"%s\" contains value \"%s\" at column \"%s\" - PASSED.",
-                table, value, column));
-  }
-
-  @Then("^Table \"([^\"]*)\" has matching value \"([^\"]*)\" at column \"([^\"]*)\"$")
-  public void isMatchingValueAtColumn(String tableName, String match, String columnName)
-      throws Throwable {
-    List<String> columnData = new ViewListTestObject().fetchColumnData(tableName, columnName);
-    String inputValue = parameterProvider.getValueOrParameterAsString(match);
-    Optional<String> first =
-        columnData.stream().filter(element -> element.contains(inputValue)).findAny();
-    assertThat(
-        String.format(
-            "Table \"%s\" didn't contain value matching \"%s\" at column \"%s\"",
-            tableName, match, columnName),
-        first.isPresent(),
-        is(true));
-  }
-
-  @And(
-      "^Table \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\" waiting for (\\d+) seconds$")
-  public void viewListContainsValueAtColumnWithFixedTime(
-      String table, String value, String column, int waitingTime) throws Throwable {
-    Sleeper.sleepTightInSeconds(waitingTime);
-    String inputValue = parameterProvider.getValueOrParameterAsString(value);
-    ViewListModel viewListModel = new ViewListModel();
-    List<String> columnData = viewListModel.fetchColumnDataNow(table, column, true);
-    List<String> found =
-        columnData.stream()
-            .filter(element -> element.contains(inputValue))
-            .collect(Collectors.toList());
-    String message =
-        String.format(
-            "Table \"%s\" didn't contain value \"%s\" at column \"%s\"", table, value, column);
-    assertThat(message, found, not(empty()));
-    logger()
-        .info(
-            String.format(
-                "- STEP: Table \"%s\" contains value \"%s\" at column \"%s\" - PASSED.",
-                table, value, column));
   }
 
   @And("^\"([^\"]*)\" in the first \"([^\"]*)\" row of \"([^\"]*)\" table is \"([^\"]*)\"$")
@@ -969,9 +735,8 @@ public class ViewListChecks extends NavigationElements {
     options.put("text", textToCheck);
     boolean success = new CheckFirstRowByOption().test(options);
     assertThat(
-        String.format(
-            "The column cannot be found, no rows were found or value does not match"
-                + "the one requested. Please check all the parameters passed, remember that they are case sensitive!"),
+        "The column cannot be found, no rows were found or value does not match"
+                + "the one requested. Please check all the parameters passed, remember that they are case sensitive!",
         success,
         is(true));
     logger()
@@ -979,6 +744,91 @@ public class ViewListChecks extends NavigationElements {
             String.format(
                 "- STEP: \"%s\" in the first \"%s\" row of \"%s\" table is \"%s\" - PASSED.",
                 columnToSearch, optionToSearch, list, textToCheck));
+  }
+
+  @Then("^Invoice Amounts are among values$")
+  public void checkInvoicesAmounts(final DataTable dbTable) {
+    List<List<String>> info = dbTable.raw();
+
+    // first list of possible invoice amounts
+    String amountInvoice1_1 = info.get(1).get(0);
+    String amountInvoice1_2 = info.get(2).get(0);
+    String amountInvoice1_3 = info.get(3).get(0);
+    String amountInvoice1_4 = info.get(4).get(0);
+
+    // second list of possible invoice amounts
+    String amountInvoice2_1 = info.get(1).get(1);
+    String amountInvoice2_2 = info.get(2).get(1);
+    String amountInvoice2_3 = info.get(3).get(1);
+    String amountInvoice2_4 = info.get(4).get(1);
+
+    // third list of possible invoice amounts
+    String amountInvoice3_1 = info.get(1).get(2);
+    String amountInvoice3_2 = info.get(2).get(2);
+    String amountInvoice3_3 = info.get(3).get(2);
+    String amountInvoice3_4 = info.get(4).get(2);
+
+    ContractPage cp = new ContractPage();
+    String actualValuesOfInvoices = cp.getActualValuesOfInvoicesAsString();
+    boolean firstCombination =
+        cp.checkIsInvoicesAmountsAsStringCorrect(
+            amountInvoice1_1,
+            amountInvoice1_2,
+            amountInvoice1_3,
+            amountInvoice1_4,
+            actualValuesOfInvoices);
+    boolean secondCombination =
+        cp.checkIsInvoicesAmountsAsStringCorrect(
+            amountInvoice2_1,
+            amountInvoice2_2,
+            amountInvoice2_3,
+            amountInvoice2_4,
+            actualValuesOfInvoices);
+    boolean thirdCombination =
+        cp.checkIsInvoicesAmountsAsStringCorrect(
+            amountInvoice3_1,
+            amountInvoice3_2,
+            amountInvoice3_3,
+            amountInvoice3_4,
+            actualValuesOfInvoices);
+
+    if (firstCombination) {
+      logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");
+
+    } else if (secondCombination) {
+      logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");
+
+    } else if (thirdCombination) {
+      logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");
+
+    } else
+      throw new ExtendedCucumberException(
+          "Actual invoices values " + actualValuesOfInvoices + " don't match expected ones");
+  }
+
+  @Then("^Balance is among values$")
+  public void checkValue(final DataTable dbTable) {
+    List<List<String>> info = dbTable.raw();
+
+    String balance1 = info.get(1).get(0);
+    String balance2 = info.get(2).get(0);
+    String balance3 = info.get(3).get(0);
+
+    ContractPage cp = new ContractPage();
+    String actualBalance = cp.getBalance();
+
+    if (balance1.equals(actualBalance)) {
+      logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");
+
+    } else if (balance2.equals(actualBalance)) {
+      logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");
+
+    } else if (balance3.equals(actualBalance)) {
+      logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");
+
+    } else
+      throw new ExtendedCucumberException(
+          "Actual balance " + actualBalance + " don't match expected ones");
   }
 
   @And("^Wait for (\\d+) seconds$")

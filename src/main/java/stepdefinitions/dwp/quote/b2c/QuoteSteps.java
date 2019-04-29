@@ -42,8 +42,7 @@ import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
 import static org.awaitility.Duration.ONE_HUNDRED_MILLISECONDS;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-
-;
+import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 
 public class QuoteSteps extends DwpScenario {
 
@@ -100,7 +99,7 @@ public class QuoteSteps extends DwpScenario {
         @Override
         public boolean test(CustomerDetails customer) {
             Map<String, String> options = new HashMap<>();
-            Map reply = executeJavascriptMethod("TrGetRandomUser", options);
+            Map reply = executeJavascriptMethod(JS_TR_GET_RANDOM_USER, options);
             String status = ((String) reply.get("status"));
             boolean success = StringUtils.equals("PASSED", status);
             if (success) {
@@ -369,14 +368,14 @@ public class QuoteSteps extends DwpScenario {
     public void navigateToListCellLink(String ordinal, String column) throws Throwable {
         Map<String, String> options = new HashMap<>();
         options.put("column", column);
-        boolean success = executeJavascriptTest("TrGetColumnIndexList", options);
+        boolean success = executeJavascriptTest(JS_TR_GET_COLUMN_INDEX_LIST, options);
         assertThat(success, is(true));
     }
 
     @And("^Electricity EAN code is selected$")
     public void selectEanCode() throws Throwable {
         Map<String, String> options = new HashMap<>();
-        boolean success = executeJavascriptTest("TrSelectEanCode", options);
+        boolean success = executeJavascriptTest(JS_TR_SELECT_EAN_CODE, options);
         assertThat(success, is(true));
     }
 

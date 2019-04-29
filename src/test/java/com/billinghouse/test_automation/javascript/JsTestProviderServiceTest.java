@@ -8,14 +8,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertNotNull;
+import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 
 public class JsTestProviderServiceTest {
     @Test
     public void getJsTestCall() throws Exception {
-        String trJsClass = "TrGetRandomUser";
         Map<String, Object> options = new HashMap<>();
-        JsTestRegistry.get().register(trJsClass);
-        assertNotNull(SeleniumJsTestExpanderService.get().expandToJavascript(trJsClass, options));
+        JsTestRegistry.get().register(JS_TR_GET_RANDOM_USER);
+        assertNotNull(SeleniumJsTestExpanderService.get().expandToJavascript(JS_TR_GET_RANDOM_USER, options));
 
     }
 }

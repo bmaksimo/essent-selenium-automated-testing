@@ -28,15 +28,13 @@ import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.conv
 import static com.billinghouse.test_automation.util.dsl.NumericUtil.*;
 import static com.essent.testing.dwp.constant.DwpConstants.FLEMISCH_LOCALE;
 import static org.junit.Assert.assertTrue;
+import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 
 /**
  * Created by Jim on 27-12-2017.
  *
  */
 public abstract class DwpScenario extends RegisteredScenario {
-
-
-
 
     @Resource(name="dwpSeleniumDriver")
     protected DWPSeleniumDriver seleniumDriver;
@@ -65,7 +63,7 @@ public abstract class DwpScenario extends RegisteredScenario {
 
     protected String generateCompanyName() {
         Map<String, String> options = new HashMap<>();
-        Map reply = executeJavascriptMethod("TrGetRandomUser", options);
+        Map reply = executeJavascriptMethod(JS_TR_GET_RANDOM_USER, options);
         String status = ((String) reply.get("status"));
         boolean success = StringUtils.equals("PASSED", status);
         if (success) {

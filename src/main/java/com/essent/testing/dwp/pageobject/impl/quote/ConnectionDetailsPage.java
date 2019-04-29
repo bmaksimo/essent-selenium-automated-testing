@@ -16,6 +16,7 @@ import java.util.Map;
 import static com.essent.testing.dwp.autocrat.element.quote.B2CQuoteElements.ELECTRICITY_EAN_CODE;
 import static com.essent.testing.dwp.autocrat.element.quote.ConnectionElements.*;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.INPUT;
+import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 
 public class ConnectionDetailsPage extends QuoteCreationGuidedStep {
 
@@ -41,11 +42,11 @@ public class ConnectionDetailsPage extends QuoteCreationGuidedStep {
         Map<String, String> options = new HashMap<>();
         options.put("selector", ELEC_EAN.element().query);
         options.put("value", electricityConnectionDetails.getEan());
-        seleniumDriver.executeJavascriptTest("TrApplyFormInput", options, true);
+        seleniumDriver.executeJavascriptTest(JS_TR_APPLY_FORM_INPUT, options, true);
 
         options.put("selector", GAS_EAN.element().query);
         options.put("value", gasConnectionDetails.getEan());
-        seleniumDriver.executeJavascriptTest("TrApplyFormInput", options, true);
+        seleniumDriver.executeJavascriptTest(JS_TR_APPLY_FORM_INPUT, options, true);
 
         Model.Execution execution = createExecution();
         execution.
@@ -84,7 +85,7 @@ public class ConnectionDetailsPage extends QuoteCreationGuidedStep {
         }
         Map<String, String> options = new HashMap<>();
         options.put("id", query);
-        boolean result = executeJavascriptTest("TrToggleInputState", options);
+        boolean result = executeJavascriptTest(JS_TR_TOGGLE_INPUT_STATE, options);
         return result;
     }
 
@@ -100,7 +101,7 @@ public class ConnectionDetailsPage extends QuoteCreationGuidedStep {
         }
         Map<String, String> options = new HashMap<>();
         options.put("id", query);
-        boolean result = executeJavascriptTest("TrToggleInputState", options);
+        boolean result = executeJavascriptTest(JS_TR_TOGGLE_INPUT_STATE, options);
         return result;
     }
 

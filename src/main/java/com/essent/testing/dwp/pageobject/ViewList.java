@@ -1,8 +1,13 @@
 package com.essent.testing.dwp.pageobject;
 
+import javax.swing.table.DefaultTableModel;
 import java.util.List;
+import java.util.Optional;
 
 public interface ViewList {
+
+    DefaultTableModel getViewTableModel();
+
     boolean containsDataAt(int row, String value, String columnName);
 
     boolean containsCellValue(int rowFromOne, String value, String columnName, String tableName);
@@ -23,8 +28,8 @@ public interface ViewList {
 
     List<String> fetchColumnDataNow(String table, String columnName, boolean immediate);
 
-    String getValueAt(int row, String columnName, String tableName);
-
-    String getCurrencyValueAt(int row, String columnName, String tableName);
+    Optional<String> getValueAt(int row, String columnName, String tableName);
+    Optional<String> getValueAt(int row, String columnName);
+    Optional<String> getCurrencyValueAt(int row, String columnName, String tableName);
 
 }
