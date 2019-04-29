@@ -17,15 +17,10 @@ public class NewLeadPage extends BaseObjectPage implements Form {
     public void createLead(List<List<String>> table) {
         ToggleImpl tg = new ToggleImpl();
         setCompanyName(table.get(1).get(0));
-        seleniumDriver.waitForRequestsToFinish();
         setContactPerson(table.get(1).get(1), table.get(1).get(2));
-        seleniumDriver.waitForRequestsToFinish();
         setGender(table.get(1).get(6));
-        seleniumDriver.waitForRequestsToFinish();
         setTelephone(table.get(1).get(3));
-        seleniumDriver.waitForRequestsToFinish();
         setMobile(table.get(1).get(4));
-        seleniumDriver.waitForRequestsToFinish();
         setEmail(table.get(1).get(5));
         seleniumDriver.waitForRequestsToFinish();
         tg.switchOn(box);
@@ -70,7 +65,8 @@ public class NewLeadPage extends BaseObjectPage implements Form {
         seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("last-name-field")), contactPersonLastName);
     }
 
-    private WebElement getTelephoneElement(){
+    private WebElement getTelephoneElement() {
+        seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.id("leads-contact-details-contact-details-phone-type-work-phone-contact-details-type-phone-contact-details-value-field"));
     }
 
