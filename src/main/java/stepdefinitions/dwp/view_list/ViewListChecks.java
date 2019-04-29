@@ -874,25 +874,8 @@ public class ViewListChecks extends NavigationElements {
         ContractPage cp = new ContractPage();
         String actualBalance = cp.getBalance();
 
-        if (balance1.equals(actualBalance))
-        {
-            logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");
-
-        }
-
-        else if (balance2.equals(actualBalance))
-        {
-            logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");
-
-        }
-
-        else if (balance3.equals(actualBalance))
-        {
-            logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");
-
-        }
-        else throw new CucumberException("Actual balance " + actualBalance + " don't match expected ones");
-
+        boolean isCorrectBalance = cp.compareActualAndExpectedBalances(balance1, balance2, balance3, actualBalance);
+        assertThat("Balance is not correct", isCorrectBalance, is(true));
     }
 
     @And("^Wait for (\\d+) seconds$")
