@@ -754,6 +754,7 @@ public class ViewListChecks extends NavigationElements {
         logger().info(String.format("- STEP: Table \"%s\" does not contain value \"%s\" at column \"%s\" - PASSED.", table,
             value, column));
     }
+
   @And("^\"([^\"]*)\" in the first \"([^\"]*)\" row of \"([^\"]*)\" table is \"([^\"]*)\"$")
   public void firstRowByOptionContains(
       String columnToSearch, String optionToSearch, String list, String textToCheck) {
@@ -870,4 +871,5 @@ public class ViewListChecks extends NavigationElements {
   public void tearDown() {
     super.tearDown();
   }
+
 }
