@@ -16,8 +16,8 @@ Feature: Import a coda file
 
         When Customer is random
         And Customer address is
-            | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-            | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
+            | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
+            | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
 

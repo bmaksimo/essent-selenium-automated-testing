@@ -17,75 +17,97 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
 import static org.awaitility.Duration.TEN_SECONDS;
 
-
 public class Navigation extends DwpScenario {
 
+  @Before("@DWP, @REGRESSION")
+  public void setupTest(Scenario scenario) throws Throwable {
+    registerActiveScenario(scenario);
+  }
 
-    @Before("@DWP, @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
-        registerActiveScenario(scenario);
+  @And("^\"([^\"]*)\" is clicked$")
+  public void isClicked(String srt) {
+    ServicePage sp = new ServicePage();
+    sp.clickOnNewCase();
+  }
 
+  @Override
+  @After("@DWP, @REGRESSION")
+  public void tearDown() {
+    super.tearDown();
+  }
+
+  @Then("^Verify status is \"([^\"]*)\" and \"([^\"]*)\"$")
+  public void verifyStatusIsAnd(String external, String status) {
+    seleniumDriver.waitForRequestsToFinish();
+    if (status.equalsIgnoreCase("Normaal") || (status.equalsIgnoreCase("Normal"))) {
+      Assert.assertTrue(checkStatusIsNormal(external));
+    } else {
+      Assert.assertTrue(checkStatusValidation(external, status));
     }
+  }
 
-    @And("^\"([^\"]*)\" is clicked$")
-    public void isClicked(String srt) {
-        ServicePage sp = new ServicePage();
-        sp.clickOnNewCase();
-    }
+  private boolean checkStatusIsNormal(String external) {
+    seleniumDriver.waitForRequestsToFinish();
+    String externalFromPage =
+        seleniumDriver
+            .findElementWhenVisible(By.xpath("//gridlr[@class='']//blue-sidebar/div/div[2]"))
+            .getText();
+    return externalFromPage.equalsIgnoreCase(external);
+  }
 
-    @Override
-    @After("@DWP, @REGRESSION")
-    public void tearDown() {
-        super.tearDown();
-    }
+  private boolean checkStatusValidation(String external, String status) {
+    seleniumDriver.waitForRequestsToFinish();
+    String externalFromPage =
+        seleniumDriver
+            .findElementWhenVisible(By.xpath("//gridlr[@class='']//blue-sidebar/div/div[2]"))
+            .getText();
+    String statusFromPage =
+        seleniumDriver
+            .findElementWhenVisible(By.xpath("//gridlr[@class='']//blue-sidebar/div/div[3]"))
+            .getText();
+    return externalFromPage.equalsIgnoreCase(external) && statusFromPage.equalsIgnoreCase(status);
+  }
 
-    @Then("^Verify status is \"([^\"]*)\" and \"([^\"]*)\"$")
-    public void verifyStatusIsAnd(String external, String status) {
-        seleniumDriver.waitForRequestsToFinish();
-        if (status.equalsIgnoreCase("Normaal") || (status.equalsIgnoreCase("Normal"))) {
-            Assert.assertTrue(checkStatusIsNormal(external));
-        } else {
-            Assert.assertTrue(checkStatusValidation(external, status));
-        }
-    }
+  @And("^Go back to home screen$")
+  public void goBackToHomeScreen() {
+    DwpTopMenu tm = new DwpTopMenu();
+    tm.goBackToHomePage();
+  }
 
-    private boolean checkStatusIsNormal(String external) {
-        seleniumDriver.waitForRequestsToFinish();
-        String externalFromPage = seleniumDriver.findElementWhenVisible(By.xpath("//gridlr[@class='']//blue-sidebar/div/div[2]")).getText();
-        return externalFromPage.equalsIgnoreCase(external);
+  @When("^Refresh \"([^\"]*)\" till \"([^\"]*)\" is visible in table$")
+  public void refreshTillIsVisible(String name, String status) {
+    seleniumDriver.waitForRequestsToFinish();
+    MarktBerichtenPage mp = new MarktBerichtenPage();
+    if (seleniumDriver
+        .findElement(By.xpath("//tr[1]//list-link-bold-top-two-liner-cell/div/a/h5"))
+        .isDisplayed()) {
+      By selector = By.xpath("//tr[1]//list-simple-two-liner-cell/p/span[1]");
+      given()
+          .await()
+          .pollInterval(TEN_SECONDS)
+          .atMost(new org.awaitility.Duration(450, SECONDS))
+          .until(
+              () ->
+                  mp.isRefreshedByName(name)
+                      && seleniumDriver
+                          .findElementWhenVisible(selector)
+                          .getText()
+                          .equalsIgnoreCase(status));
+    } else if (seleniumDriver
+        .findElement(By.xpath("//tr[3]//list-link-bold-top-two-liner-cell/div/a/h5"))
+        .isDisplayed()) {
+      By selector = By.xpath("//tr[3]//list-simple-two-liner-cell/p/span[1]");
+      given()
+          .await()
+          .pollInterval(TEN_SECONDS)
+          .atMost(new org.awaitility.Duration(450, SECONDS))
+          .until(
+              () ->
+                  mp.isRefreshedByName(name)
+                      && seleniumDriver
+                          .findElementWhenVisible(selector)
+                          .getText()
+                          .equalsIgnoreCase(status));
     }
-
-    private boolean checkStatusValidation(String external, String status) {
-        seleniumDriver.waitForRequestsToFinish();
-        String externalFromPage = seleniumDriver.findElementWhenVisible(By.xpath("//gridlr[@class='']//blue-sidebar/div/div[2]")).getText();
-        String statusFromPage = seleniumDriver.findElementWhenVisible(By.xpath("//gridlr[@class='']//blue-sidebar/div/div[3]")).getText();
-        return externalFromPage.equalsIgnoreCase(external) && statusFromPage.equalsIgnoreCase(status);
-    }
-
-    @And("^Go back to home screen$")
-    public void goBackToHomeScreen() {
-        DwpTopMenu tm = new DwpTopMenu();
-        tm.goBackToHomePage();
-    }
-
-    @When("^Refresh \"([^\"]*)\" till \"([^\"]*)\" is visible in table$")
-    public void refreshTillIsVisible(String name, String status) {
-        seleniumDriver.waitForRequestsToFinish();
-        MarktBerichtenPage mp = new MarktBerichtenPage();
-        if (seleniumDriver.findElement(By.xpath("//tr[1]//list-link-bold-top-two-liner-cell/div/a/h5")).isDisplayed()) {
-            By selector = By.xpath("//tr[1]//list-simple-two-liner-cell/p/span[1]");
-            given().await()
-                .pollInterval(TEN_SECONDS)
-                .atMost(new org.awaitility.Duration(450, SECONDS))
-                .until(()-> mp.isRefreshedByName(name)
-                    && seleniumDriver.findElementWhenVisible(selector).getText().equalsIgnoreCase(status));
-        } else if (seleniumDriver.findElement(By.xpath("//tr[3]//list-link-bold-top-two-liner-cell/div/a/h5")).isDisplayed()) {
-            By selector = By.xpath("//tr[3]//list-simple-two-liner-cell/p/span[1]");
-            given().await()
-                .pollInterval(TEN_SECONDS)
-                .atMost(new org.awaitility.Duration(450, SECONDS))
-                .until(()-> mp.isRefreshedByName(name)
-                    && seleniumDriver.findElementWhenVisible(selector).getText().equalsIgnoreCase(status));
-        }
-    }
+  }
 }

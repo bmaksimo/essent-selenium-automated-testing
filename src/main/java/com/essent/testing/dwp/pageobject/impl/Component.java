@@ -20,142 +20,145 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-
 public abstract class Component {
 
-    protected WebElement element;
-    protected DWPSeleniumDriver seleniumDriver;
-    private final Logger logger = Logger.getLogger(Component.class);
-    protected Logger logger() {
-        return logger;
+  protected WebElement element;
+  protected DWPSeleniumDriver seleniumDriver;
+  private final Logger logger = Logger.getLogger(Component.class);
+
+  protected Logger logger() {
+    return logger;
+  }
+
+  public Component() {
+    this.seleniumDriver =
+        (DWPSeleniumDriver) ContextService.getContext().getBean("dwpSeleniumDriver");
+  }
+
+  public Component(By selector) {
+    this();
+    logger().info("STEP:");
+    logger().info(" - ACTION: LOAD_PAGE_OBJECT");
+    try {
+      element = seleniumDriver.findElementWhenPresent(selector);
+    } catch (TimeoutException te) {
+      logger().fatal(" - RESULT: FAILED");
+      logger().fatal(" - REASON: " + getClass() + "{null}: Web element was not found. ");
+      throw new ExtendedCucumberException(getClass() + ": Web element was not found.");
+    }
+    logger.debug(String.format(" - TARGET: %s -> %s", selector, element.getAttribute("innerHTML")));
+  }
+
+  public Component(WebElement element) {
+    this();
+    logger.info("STEP:");
+    logger.info(" - ACTION: LOAD_PAGE_OBJECT");
+    if (element == null) {
+      logger.error(" - RESULT: FAILED");
+      logger.error(" - REASON: " + getClass() + "{null}: Web element was not found. ");
+      throw new ExtendedCucumberException(getClass() + ": Web element was not found.");
     }
 
-    public Component() {
-        this.seleniumDriver = (DWPSeleniumDriver) ContextService.getContext().getBean("dwpSeleniumDriver");
-    }
+    logger.info(" - RESULT: " + element);
+    this.element = element;
+  }
 
-    public Component(By selector) {
-        this();
-        logger().info("STEP:");
-        logger().info(" - ACTION: LOAD_PAGE_OBJECT");
-        try {
-            element = seleniumDriver.findElementWhenPresent(selector);
-        } catch (TimeoutException te) {
-            logger().fatal(" - RESULT: FAILED");
-            logger().fatal(" - REASON: " + getClass() + "{null}: Web element was not found. ");
-            throw new ExtendedCucumberException(getClass() + ": Web element was not found.");
-        }
-        logger.debug(String.format(" - TARGET: %s -> %s", selector, element.getAttribute("innerHTML")));
-    }
+  public boolean executeJavascriptTest(String registeredJsClass, Object options) {
+    return seleniumDriver.executeJavascriptTest(registeredJsClass, options);
+  }
 
-    public Component(WebElement element) {
-        this();
-        logger.info("STEP:");
-        logger.info(" - ACTION: LOAD_PAGE_OBJECT");
-        if (element == null) {
-            logger.error(" - RESULT: FAILED");
-            logger.error(" - REASON: " + getClass() + "{null}: Web element was not found. ");
-            throw new ExtendedCucumberException(getClass() + ": Web element was not found.");
-        }
+  protected Map executeJavascriptMethod(String registeredJsClass, Object options) {
+    return seleniumDriver.executeJavascriptMethod(registeredJsClass, options);
+  }
 
-        logger.info(" - RESULT: " + element);
-        this.element = element;
-    }
+  public boolean executeJavascriptTest(
+      String registeredJsClass, Object options, boolean withException) {
+    return seleniumDriver.executeJavascriptTest(registeredJsClass, options, withException);
+  }
 
-    public boolean executeJavascriptTest(String registeredJsClass, Object options) {
-        return seleniumDriver.executeJavascriptTest(registeredJsClass, options);
-    }
+  protected Map executeJavascriptMethodImmediately(String registeredJsClass, Object options) {
+    return seleniumDriver.executeJavascriptMethodWithImmediateFlag(
+        registeredJsClass, options, true);
+  }
 
-    protected Map executeJavascriptMethod(String registeredJsClass, Object options) {
-        return seleniumDriver.executeJavascriptMethod(registeredJsClass, options);
-    }
+  protected WebElement findElementWhenVisible(By selector) {
+    seleniumDriver.waitForRequestsToFinish();
+    return seleniumDriver.findElementWhenVisible(selector);
+  }
 
-    public boolean executeJavascriptTest(String registeredJsClass, Object options, boolean withException) {
-        return seleniumDriver.executeJavascriptTest(registeredJsClass, options, withException);
-    }
+  public WebElement findElementWhenClickable(By selector) {
+    return seleniumDriver.findElementWhenClickable(selector);
+  }
 
-    protected Map executeJavascriptMethodImmediately(String registeredJsClass, Object options) {
-        return seleniumDriver.executeJavascriptMethodWithImmediateFlag(registeredJsClass, options, true);
-    }
+  public Optional<WebElement> findElementOptional(By selector) {
+    return seleniumDriver.findElementOptional(selector);
+  }
 
-    protected WebElement findElementWhenVisible(By selector) {
-        seleniumDriver.waitForRequestsToFinish();
-        return seleniumDriver.findElementWhenVisible(selector);
-    }
+  public Optional<WebElement> findElementsWhenVisible(By selector) {
+    return seleniumDriver.findElementOptional(selector);
+  }
 
-    public WebElement findElementWhenClickable(By selector) {
-        return seleniumDriver.findElementWhenClickable(selector);
-    }
+  public WebElement findElementWhenPresent(By selector, Duration timeout, Duration pollingEvery) {
+    return seleniumDriver.findElementWhenPresent(selector, timeout, pollingEvery);
+  }
 
-    public Optional<WebElement> findElementOptional(By selector) {
-        return seleniumDriver.findElementOptional(selector);
-    }
+  protected Model.Execution createExecution() {
+    return AutocratExecutionAdapter.newExecution();
+  }
 
-    public Optional<WebElement> findElementsWhenVisible(By selector) {
-        return seleniumDriver.findElementOptional(selector);
-    }
+  protected Model.Step createStep(Action action) {
+    return new Model.Step().action(action);
+  }
 
+  protected Model.Element createElement(String searchType, String query) {
+    return new Model.Element().search(searchType).query(query);
+  }
 
-    public WebElement findElementWhenPresent(By selector, Duration timeout, Duration pollingEvery) {
-        return seleniumDriver.findElementWhenPresent(selector, timeout, pollingEvery);
-    }
+  protected boolean execute(final Model.Execution execution) {
+    seleniumDriver.waitForRequestsToFinish();
+    return AutocratExecutionAdapter.execute(seleniumDriver.getDriver(), execution);
+  }
 
-    protected Model.Execution createExecution() {
-        return AutocratExecutionAdapter.newExecution();
-    }
+  protected boolean executeNow(final Model.Execution execution) {
+    return AutocratExecutionAdapter.execute(seleniumDriver.getDriver(), execution);
+  }
 
-    protected Model.Step createStep(Action action) {
-        return new Model.Step().action(action);
-    }
-    protected Model.Element createElement(String searchType, String query) {
-        return new Model.Element()
-            .search(searchType)
-            .query(query);
-    }
+  protected String createQuery(String template, String key, String value) {
+    Map<String, String> valuesMap = new HashMap<>();
+    valuesMap.put(key, value);
+    StrSubstitutor sub = new StrSubstitutor(valuesMap);
+    return sub.replace(template);
+  }
 
-    protected boolean execute(final Model.Execution execution) {
-        seleniumDriver.waitForRequestsToFinish();
-        return AutocratExecutionAdapter.execute(seleniumDriver.getDriver(), execution);
-    }
+  protected String createQuery(String template, Map<String, String> valuesMapper) {
+    StrSubstitutor sub = new StrSubstitutor(valuesMapper);
+    return sub.replace(template);
+  }
 
-    protected boolean executeNow(final Model.Execution execution) {
-        return AutocratExecutionAdapter.execute(seleniumDriver.getDriver(), execution);
-    }
+  protected Model.Callback scrollToView() {
+    return new Model.Callback() {
+      @Override
+      public void onAccess(Autocrat.ExecutionContext context, Model.Step step, WebElement element) {
+        JavascriptExecutor jsExec = (JavascriptExecutor) context.driver;
+        jsExec.executeScript("arguments[0].scrollIntoView()", element);
+      }
+    };
+  }
 
-    protected String createQuery(String template, String key, String value) {
-        Map<String, String> valuesMap = new HashMap<>();
-        valuesMap.put(key, value);
-        StrSubstitutor sub = new StrSubstitutor(valuesMap);
-        return sub.replace(template);
-    }
-
-    protected String createQuery(String template, Map<String, String> valuesMapper) {
-        StrSubstitutor sub = new StrSubstitutor(valuesMapper);
-        return sub.replace(template);
-    }
-
-    protected Model.Callback scrollToView() {
-        return new Model.Callback() {
-            @Override
-            public void onAccess(Autocrat.ExecutionContext context, Model.Step step, WebElement element) {
-                JavascriptExecutor jsExec = (JavascriptExecutor) context.driver;
-                jsExec.executeScript("arguments[0].scrollIntoView()", element);
-            }
-        };
-    }
-
-    protected Model.Callback hideIconOverlays() {
-        return new Model.Callback() {
-            @Override
-            public void onAccess(Autocrat.ExecutionContext context, Model.Step step, WebElement element) {
-                JavascriptExecutor jsExec = (JavascriptExecutor) context.driver;
-                List<WebElement> elements = element.findElements(By.xpath("../span[contains(@class, 'icon')]"));
-                elements.forEach(siblingIcon -> {
-                    String setProperty = "style = 'display:none'";
-                    logger().info("Executing javascript " + setProperty + " on target element");
-                    jsExec.executeScript("arguments[0]." + setProperty, siblingIcon);
-                });
-            }
-        };
-    }
+  protected Model.Callback hideIconOverlays() {
+    return new Model.Callback() {
+      @Override
+      public void onAccess(Autocrat.ExecutionContext context, Model.Step step, WebElement element) {
+        JavascriptExecutor jsExec = (JavascriptExecutor) context.driver;
+        List<WebElement> elements =
+            element.findElements(By.xpath("../span[contains(@class, 'icon')]"));
+        elements.forEach(
+            siblingIcon -> {
+              String setProperty = "style = 'display:none'";
+              logger().info("Executing javascript " + setProperty + " on target element");
+              jsExec.executeScript("arguments[0]." + setProperty, siblingIcon);
+            });
+      }
+    };
+  }
 }

@@ -5,21 +5,20 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class CaseDetailsPage extends Component {
-    public String getComplaintText() {
-        return seleniumDriver.findElementWhenVisible(By.id("description")).getText();
-    }
+  public String getComplaintText() {
+    return seleniumDriver.findElementWhenVisible(By.id("description")).getText();
+  }
 
-    private WebElement priorityField() {
+  private WebElement priorityField() {
 
-        return seleniumDriver.findElementWhenVisible(By.id("priority-field"));
-    }
+    return seleniumDriver.findElementWhenVisible(By.id("priority-field"));
+  }
 
-    public boolean checkIfPriorityIsHigh() {
-        return priorityField().getText().equalsIgnoreCase("Hoog");
-    }
+  public boolean checkIfPriorityIsHigh() {
+    return priorityField().getText().equalsIgnoreCase("Hoog");
+  }
 
-    public String getSolutionFieldText() {
-        return seleniumDriver.findElementWhenVisible(By.id("resolution-field")).getText();
-
-    }
+  public String getSolutionFieldText() {
+    return seleniumDriver.findElementWhenVisible(By.id("resolution-field")).getText();
+  }
 }

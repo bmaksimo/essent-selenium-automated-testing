@@ -18,39 +18,45 @@ import static org.hamcrest.Matchers.is;
 
 public class FilterElements extends NavigationElements {
 
-    private static final String FILTER_BUTTON_ELEMENT = "FILTER_BUTTON_ELEMENT";
-    private static final String FILTER_BUTTON_ELEMENT_QUERY = ".icon-filters";
+  private static final String FILTER_BUTTON_ELEMENT = "FILTER_BUTTON_ELEMENT";
+  private static final String FILTER_BUTTON_ELEMENT_QUERY = ".icon-filters";
 
-    @Before("@DWP, @CORE, @E2E, @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
-        registerActiveScenario(scenario);
-    }
+  @Before("@DWP, @CORE, @E2E, @REGRESSION")
+  public void setupTest(Scenario scenario) throws Throwable {
+    registerActiveScenario(scenario);
+  }
 
-    private class TogggleFilterMode implements Predicate<FilterElements> {
-
-        @Override
-        public boolean test(FilterElements param) {
-            Model.Execution execution = createExecution().element(FILTER_BUTTON_ELEMENT, new Model.Element().search("SELECTOR").query(FILTER_BUTTON_ELEMENT_QUERY));
-            execution
-                .flow()
-                .step((new Model.Step().action(CLICK).element(FILTER_BUTTON_ELEMENT)))
-                .step(new Model.Step().action(Action.SLEEP).sleepInMillis(2500));
-            return execute(execution);
-        }
-    }
-
-    @When("^I click on the filter button$")
-    public void i_click_on_filter_button() throws Throwable {
-        TogggleFilterMode togggleFilterMode = new TogggleFilterMode();
-        togggleFilterMode.test(this);
-        boolean success = togggleFilterMode.test(this);
-        assertThat("DWP Main Filter mode off was expected to be checked successfully, actualy there were verification errors.", success, is(true));
-
-    }
+  private class TogggleFilterMode implements Predicate<FilterElements> {
 
     @Override
-    @After("@DWP, @CORE, @E2E, @REGRESSION")
-    public void tearDown() {
-        super.tearDown();
+    public boolean test(FilterElements param) {
+      Model.Execution execution =
+          createExecution()
+              .element(
+                  FILTER_BUTTON_ELEMENT,
+                  new Model.Element().search("SELECTOR").query(FILTER_BUTTON_ELEMENT_QUERY));
+      execution
+          .flow()
+          .step((new Model.Step().action(CLICK).element(FILTER_BUTTON_ELEMENT)))
+          .step(new Model.Step().action(Action.SLEEP).sleepInMillis(2500));
+      return execute(execution);
     }
+  }
+
+  @When("^I click on the filter button$")
+  public void i_click_on_filter_button() throws Throwable {
+    TogggleFilterMode togggleFilterMode = new TogggleFilterMode();
+    togggleFilterMode.test(this);
+    boolean success = togggleFilterMode.test(this);
+    assertThat(
+        "DWP Main Filter mode off was expected to be checked successfully, actualy there were verification errors.",
+        success,
+        is(true));
+  }
+
+  @Override
+  @After("@DWP, @CORE, @E2E, @REGRESSION")
+  public void tearDown() {
+    super.tearDown();
+  }
 }

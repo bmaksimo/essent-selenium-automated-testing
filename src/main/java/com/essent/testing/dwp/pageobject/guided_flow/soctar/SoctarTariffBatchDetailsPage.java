@@ -5,10 +5,11 @@ import org.openqa.selenium.By;
 
 public class SoctarTariffBatchDetailsPage extends Component {
 
-    public String getTariffType() {
-        return seleniumDriver.findElementWhenVisible(By.id("type-field")).getText();
-    }
-    public String getTariffStatus() {
-        return seleniumDriver.findElementWhenVisible(By.id("status-field")).getText();
-    }
+  public String getTariffType() {
+    return seleniumDriver.findElementWhenVisible(By.id("type-field")).getText();
+  }
+
+  public String getTariffStatus() {
+    return seleniumDriver.findElementWhenVisible(By.id("status-field")).getText();
+  }
 }

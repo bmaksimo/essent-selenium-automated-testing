@@ -1,4 +1,3 @@
-
 package com.billinghouse.random;
 
 import com.google.gson.annotations.Expose;
@@ -9,62 +8,64 @@ import javax.annotation.Generated;
 @SuppressWarnings("unused")
 public class Name {
 
-    @Expose
+  @Expose private String first;
+  @Expose private String last;
+  @Expose private String title;
+
+  public String getFirst() {
+    return first;
+  }
+
+  public String getLast() {
+    return last;
+  }
+
+  public String getTitle() {
+    return title;
+  }
+
+  public static class Builder {
+
     private String first;
-    @Expose
     private String last;
-    @Expose
     private String title;
 
-    public String getFirst() {
-        return first;
+    public Name.Builder withFirst(String first) {
+      this.first = first;
+      return this;
     }
 
-    public String getLast() {
-        return last;
+    public Name.Builder withLast(String last) {
+      this.last = last;
+      return this;
     }
 
-    public String getTitle() {
-        return title;
+    public Name.Builder withTitle(String title) {
+      this.title = title;
+      return this;
     }
 
-    public static class Builder {
-
-        private String first;
-        private String last;
-        private String title;
-
-        public Name.Builder withFirst(String first) {
-            this.first = first;
-            return this;
-        }
-
-        public Name.Builder withLast(String last) {
-            this.last = last;
-            return this;
-        }
-
-        public Name.Builder withTitle(String title) {
-            this.title = title;
-            return this;
-        }
-
-        public Name build() {
-            Name name = new Name();
-            name.first = first;
-            name.last = last;
-            name.title = title;
-            return name;
-        }
-
+    public Name build() {
+      Name name = new Name();
+      name.first = first;
+      name.last = last;
+      name.title = title;
+      return name;
     }
+  }
 
-    @Override
-    public String toString() {
-        return "Name{" +
-            "first='" + first + '\'' +
-            ", last='" + last + '\'' +
-            ", title='" + title + '\'' +
-            '}';
-    }
+  @Override
+  public String toString() {
+    return "Name{"
+        + "first='"
+        + first
+        + '\''
+        + ", last='"
+        + last
+        + '\''
+        + ", title='"
+        + title
+        + '\''
+        + '}';
+  }
 }

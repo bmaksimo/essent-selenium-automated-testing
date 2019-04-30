@@ -9,22 +9,24 @@ import org.junit.Assert;
 import java.util.Date;
 
 /**
- * Utility class for converting dates specified in feature files into Date objects as
- * parameters for the implementation functions.
+ * Utility class for converting dates specified in feature files into Date objects as parameters for
+ * the implementation functions.
  */
-public class DateMapper extends Transformer<Date>{
+public class DateMapper extends Transformer<Date> {
 
-	    @Override
-	    public Date transform(String date) {
+  @Override
+  public Date transform(String date) {
 
-	        try {
-				DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
-				return LocalDate.parse(date, formatter).toDate();
-			} catch (Exception e) {
-				Assert.fail("Wrong date specified in feature file, date '" + date + "' does not match the 'yyyy-MM-dd' pattern: " + e.getMessage());
-				return null; // keep compiler happy, never reached.
-			} 
-	        
-	   }
-
-	}
+    try {
+      DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+      return LocalDate.parse(date, formatter).toDate();
+    } catch (Exception e) {
+      Assert.fail(
+          "Wrong date specified in feature file, date '"
+              + date
+              + "' does not match the 'yyyy-MM-dd' pattern: "
+              + e.getMessage());
+      return null; // keep compiler happy, never reached.
+    }
+  }
+}

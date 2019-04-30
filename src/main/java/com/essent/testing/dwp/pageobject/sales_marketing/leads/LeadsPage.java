@@ -5,12 +5,12 @@ import org.openqa.selenium.By;
 
 public class LeadsPage extends Component {
 
-    public void plusAddLead() {
-        findElementWhenVisible(By.xpath("//span[@class='icon-plus']")).click();
-    }
+  public void plusAddLead() {
+    findElementWhenVisible(By.xpath("//span[@class='icon-plus']")).click();
+  }
 
-    public void validateCreatingLead(String name) {
-        seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.findElementWhenVisible(By.xpath("(//h5)[.='" + name + "'][1]")).isDisplayed();
-    }
+  public void validateCreatingLead(String name) {
+    seleniumDriver.waitForRequestsToFinish();
+    seleniumDriver.findElementWhenVisible(By.xpath("(//h5)[.='" + name + "'][1]")).isDisplayed();
+  }
 }

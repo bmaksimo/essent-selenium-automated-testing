@@ -1,61 +1,62 @@
 <html>
-	<head>
-		<title>Automated Test Results</title>
-		<link rel="stylesheet" type="text/css" href="dashboard.css"/>
-		<link rel="icon" type="image/png" href="favicon.png"/>
-		<script src="jquery-3.1.1.min.js"></script>
-		<script src="jsonpath-0.8.0.js"></script>
-		<script src="moment-with-locales.js"></script>
-		<script src="dashboard.js"></script>
-		<script type="text/javascript">
+<head>
+    <title>Automated Test Results</title>
+    <link rel="stylesheet" type="text/css" href="dashboard.css"/>
+    <link rel="icon" type="image/png" href="favicon.png"/>
+    <script src="jquery-3.1.1.min.js"></script>
+    <script src="jsonpath-0.8.0.js"></script>
+    <script src="moment-with-locales.js"></script>
+    <script src="dashboard.js"></script>
+    <script type="text/javascript">
 			window.onload = process;
 			refreshAt(10,00,0);
-		</script>
-	</head>
-	<body>
-		<div class="centered-top">
-			<div>Automated Test Results</div>
-			<div class="centered-top-subtext">env&nbsp; : Regression</div>
-			<div class="centered-top-subtext">date : <span id="cucumber_last_modified"></span></div>
-		</div>
-		<div class="centered">
-            <div id="core" class="area" >
-                <div class="area_name">Core</div>
-            </div>
-            <div id="regression" class="area" >
-				<div class="area_name">Regression</div>
-			</div>
-            <div id="billing" class="area" >
-                <div class="area_name">Billing</div>
-            </div>
-            <div id="business_desk" class="area" >
-                <div class="area_name">Business Desk</div>
-            </div>
-            <div id="credit_and_collection" class="area" >
-                <div class="area_name">Credit and Collection</div>
-            </div>
-            <div id="credit_and_control" class="area" >
-                <div class="area_name">Credit and Control</div>
-            </div>
-            <div id="service_contracting" class="area">
-                <div class="area_name">Service / Contracting </div>
-            </div>
-			<div id="contracting_switching" class="area">
-				<div class="area_name">Contracting and Switching</div>
-			</div>
-            <div id="my_essent" class="area">
-                <div class="area_name">My Essent</div>
-            </div>
 
-			<div id="unassigned" class="area">
-				<div class="area_name">Unassigned</div>
-			</div>
-			<div class="total">
-				<span class="nrall"></span> scenarios
-			</div>
-		</div>
-		<div class="bottom-right">
-            <a href="../Gherkin_20tests_20detailed_20reports">Detailed reports</a>
-        </div>
-	</body>
+    </script>
+</head>
+<body>
+<div class="centered-top">
+    <div>Automated Test Results</div>
+    <div class="centered-top-subtext">env&nbsp; : Regression</div>
+    <div class="centered-top-subtext">date : <span id="cucumber_last_modified"></span></div>
+</div>
+<div class="centered">
+    <div id="core" class="area">
+        <div class="area_name">Core</div>
+    </div>
+    <div id="regression" class="area">
+        <div class="area_name">Regression</div>
+    </div>
+    <div id="billing" class="area">
+        <div class="area_name">Billing</div>
+    </div>
+    <div id="business_desk" class="area">
+        <div class="area_name">Business Desk</div>
+    </div>
+    <div id="credit_and_collection" class="area">
+        <div class="area_name">Credit and Collection</div>
+    </div>
+    <div id="credit_and_control" class="area">
+        <div class="area_name">Credit and Control</div>
+    </div>
+    <div id="service_contracting" class="area">
+        <div class="area_name">Service / Contracting</div>
+    </div>
+    <div id="contracting_switching" class="area">
+        <div class="area_name">Contracting and Switching</div>
+    </div>
+    <div id="my_essent" class="area">
+        <div class="area_name">My Essent</div>
+    </div>
+
+    <div id="unassigned" class="area">
+        <div class="area_name">Unassigned</div>
+    </div>
+    <div class="total">
+        <span class="nrall"></span> scenarios
+    </div>
+</div>
+<div class="bottom-right">
+    <a href="../Gherkin_20tests_20detailed_20reports">Detailed reports</a>
+</div>
+</body>
 </html>	

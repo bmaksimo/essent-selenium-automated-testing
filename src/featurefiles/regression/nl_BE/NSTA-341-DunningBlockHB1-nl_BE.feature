@@ -6,6 +6,7 @@ Feature: NSTA-341: Block dunning for invoice
 
     Background:
         Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
+
     @NSTA-341
     Scenario: Create active contract that after dunning the contract becomes inactive
         #1 - GUI contract creation
@@ -19,8 +20,8 @@ Feature: NSTA-341: Block dunning for invoice
 
         When Customer is random
         And Customer address is
-            | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-            | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
+            | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
+            | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
         And "Pakket" selection is "Vast"

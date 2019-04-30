@@ -15,26 +15,23 @@ import static org.hamcrest.Matchers.is;
 
 public class BillingBatchRunSteps extends DwpScenario {
 
-    @Before("@DWP, @E2E")
-    public void setupTest(Scenario scenario) throws Throwable {
-        registerActiveScenario(scenario);
-    }
+  @Before("@DWP, @E2E")
+  public void setupTest(Scenario scenario) throws Throwable {
+    registerActiveScenario(scenario);
+  }
 
-    @And("^Invoice run is scheduled$")
-    public void invoiceRunIsScheduled() throws Throwable {
-        seleniumDriver.waitForRequestsToFinish();
-        ConfirmSignatureDialog dialog = new ConfirmSignatureDialogImpl();
-        boolean success = dialog.confirm();
-        assertThat("Invoice run dialog was not confirmed.",
-            success,
-            is(true));
-        seleniumDriver.waitForRequestsToFinish();
-    }
+  @And("^Invoice run is scheduled$")
+  public void invoiceRunIsScheduled() throws Throwable {
+    seleniumDriver.waitForRequestsToFinish();
+    ConfirmSignatureDialog dialog = new ConfirmSignatureDialogImpl();
+    boolean success = dialog.confirm();
+    assertThat("Invoice run dialog was not confirmed.", success, is(true));
+    seleniumDriver.waitForRequestsToFinish();
+  }
 
-
-    @Override
-    @After("@DWP, @E2E")
-    public void tearDown() {
-        super.tearDown();
-    }
+  @Override
+  @After("@DWP, @E2E")
+  public void tearDown() {
+    super.tearDown();
+  }
 }

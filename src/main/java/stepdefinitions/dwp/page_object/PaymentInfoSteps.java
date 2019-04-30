@@ -15,79 +15,85 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 import static com.billinghouse.MatcherAssert.assertThat;
+import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import  static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
+
 public class PaymentInfoSteps extends NavigationElements {
 
-
-    private class PaymentDetailsModalSaveAction implements Predicate<Map> {
-        @Override
-        public boolean test(Map options) {
-            return executeJavascriptTest(JS_TR_PAYMENT_DETAILS_MODAL_SAVE_ACTION, options);
-        }
-    }
-
-    private class PaymentMethodSwitch implements Predicate<Map> {
-        @Override
-        public boolean test(Map options) {
-            Map result = executeJavascriptMethod(JS_TR_SWITCH_PAYMENT_METHOD, options);
-            String status = ((String) result.get("status"));
-            boolean success = StringUtils.equals("PASSED", status);
-            if (success) {
-                String switchedPaymentMethod = ((String) result.get("paymentMethod")).equalsIgnoreCase("string:OV") ?
-                    "Overschrijving" : "Domiciliëring";
-                parameterProvider.put("paymentMethod", switchedPaymentMethod);
-            }
-
-            return success;
-        }
-    }
-
-    private class PaymentDetailsIBANChange implements Predicate<Map> {
-        @Override
-        public boolean test(Map options) {
-            return executeJavascriptTest(JS_TR_ADD_IBAN_TO_PAYMENT_DETAILS, options);
-        }
-    }
-
-    @Before("@DWP, @CORE, @E2E, @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
-        registerActiveScenario(scenario);
-    }
-
-    @And("^Payment details are confirmed$")
-    public void clickSaveOnPaymentDetailsModal() {
-        boolean success = new PaymentDetailsModalSaveAction().test(null);
-        assertThat("Billing customer update has failed.", success, is(true));
-    }
-
-    @When("^Payment method is switched$")
-    public void switchPaymentMethod() {
-        boolean success = new PaymentMethodSwitch().test(new HashMap<>());
-        assertThat("Payment method has not been switched", success, is(true));
-    }
-
-    @And("^IBAN is \"([^\"]*)\" if not empty$")
-    public void changeIBAN(String iban) {
-        Map<String, String> options = new HashMap<>();
-        options.put("iban", iban);
-        boolean success = new PaymentDetailsIBANChange().test(options);
-        assertThat("IBAN has failed to be updated", success, is(true));
-    }
-
-    @And("^Payment method is updated$")
-    public void listSwitchedPaymentMethod() throws Throwable {
-        String updatedPaymentMethodName = parameterProvider.getValueOrParameterAsString("parameter:paymentMethod");
-        final String UPDATED_PAYMENT_METHOD = "//list-simple-two-liner-cell[contains(@line-2,'" + updatedPaymentMethodName + "')]";
-        WebElement element = seleniumDriver.findElementWhenPresent(By.xpath(UPDATED_PAYMENT_METHOD));
-        assertThat(String.format("View list did not contain payment method %s", updatedPaymentMethodName),
-            element, is(notNullValue()));
-    }
-
+  private class PaymentDetailsModalSaveAction implements Predicate<Map> {
     @Override
-    @After("@DWP, @CORE, @E2E, @REGRESSION")
-    public void tearDown() {
-        super.tearDown();
+    public boolean test(Map options) {
+      return executeJavascriptTest(JS_TR_PAYMENT_DETAILS_MODAL_SAVE_ACTION, options);
     }
+  }
+
+  private class PaymentMethodSwitch implements Predicate<Map> {
+    @Override
+    public boolean test(Map options) {
+      Map result = executeJavascriptMethod(JS_TR_SWITCH_PAYMENT_METHOD, options);
+      String status = ((String) result.get("status"));
+      boolean success = StringUtils.equals("PASSED", status);
+      if (success) {
+        String switchedPaymentMethod =
+            ((String) result.get("paymentMethod")).equalsIgnoreCase("string:OV")
+                ? "Overschrijving"
+                : "Domiciliëring";
+        parameterProvider.put("paymentMethod", switchedPaymentMethod);
+      }
+
+      return success;
+    }
+  }
+
+  private class PaymentDetailsIBANChange implements Predicate<Map> {
+    @Override
+    public boolean test(Map options) {
+      return executeJavascriptTest(JS_TR_ADD_IBAN_TO_PAYMENT_DETAILS, options);
+    }
+  }
+
+  @Before("@DWP, @CORE, @E2E, @REGRESSION")
+  public void setupTest(Scenario scenario) throws Throwable {
+    registerActiveScenario(scenario);
+  }
+
+  @And("^Payment details are confirmed$")
+  public void clickSaveOnPaymentDetailsModal() {
+    boolean success = new PaymentDetailsModalSaveAction().test(null);
+    assertThat("Billing customer update has failed.", success, is(true));
+  }
+
+  @When("^Payment method is switched$")
+  public void switchPaymentMethod() {
+    boolean success = new PaymentMethodSwitch().test(new HashMap<>());
+    assertThat("Payment method has not been switched", success, is(true));
+  }
+
+  @And("^IBAN is \"([^\"]*)\" if not empty$")
+  public void changeIBAN(String iban) {
+    Map<String, String> options = new HashMap<>();
+    options.put("iban", iban);
+    boolean success = new PaymentDetailsIBANChange().test(options);
+    assertThat("IBAN has failed to be updated", success, is(true));
+  }
+
+  @And("^Payment method is updated$")
+  public void listSwitchedPaymentMethod() throws Throwable {
+    String updatedPaymentMethodName =
+        parameterProvider.getValueOrParameterAsString("parameter:paymentMethod");
+    final String UPDATED_PAYMENT_METHOD =
+        "//list-simple-two-liner-cell[contains(@line-2,'" + updatedPaymentMethodName + "')]";
+    WebElement element = seleniumDriver.findElementWhenPresent(By.xpath(UPDATED_PAYMENT_METHOD));
+    assertThat(
+        String.format("View list did not contain payment method %s", updatedPaymentMethodName),
+        element,
+        is(notNullValue()));
+  }
+
+  @Override
+  @After("@DWP, @CORE, @E2E, @REGRESSION")
+  public void tearDown() {
+    super.tearDown();
+  }
 }

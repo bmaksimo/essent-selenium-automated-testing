@@ -10,17 +10,16 @@ import static com.essent.testing.database.DBUtility.switchSuiteCrmStatusExternal
 
 public class DatabaseSteps extends RegisteredScenario {
 
+  @Before("@DWP, @CORE, @E2E, @REGRESSION, @DB-CORE")
+  public void setUp(Scenario scenario) throws Throwable {
+    registerActiveScenario(scenario);
+  }
 
-    @Before("@DWP, @CORE, @E2E, @REGRESSION, @DB-CORE")
-    public void setUp(Scenario scenario) throws Throwable {
-        registerActiveScenario(scenario);
-    }
-
-    @Then("^External status is \"([^\"]*)\" for SuiteCRM Customer Number \"([^\"]*)\"$")
-    public void externalStatusIsForSuiteCRMCustomerNumber(SwitchState state, String suiteCrmCustomer) throws Throwable {
-        String inputValue = parameterProvider.getValueOrParameterAsString(suiteCrmCustomer);
-        Integer value = Integer.parseInt(inputValue);
-        switchSuiteCrmStatusExternal(state, value);
-    }
-
+  @Then("^External status is \"([^\"]*)\" for SuiteCRM Customer Number \"([^\"]*)\"$")
+  public void externalStatusIsForSuiteCRMCustomerNumber(SwitchState state, String suiteCrmCustomer)
+      throws Throwable {
+    String inputValue = parameterProvider.getValueOrParameterAsString(suiteCrmCustomer);
+    Integer value = Integer.parseInt(inputValue);
+    switchSuiteCrmStatusExternal(state, value);
+  }
 }

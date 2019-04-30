@@ -1,14 +1,13 @@
 package com.essent.testing.dwp.pageobject.modal.confirm;
 
 public interface ConfirmSignatureDialog extends ConfirmDialog {
-    String getTitle();
+  String getTitle();
 
-    void setTitle(String title);
+  void setTitle(String title);
 
-    String getSignatureDate();
+  String getSignatureDate();
 
-    void setSignatureDate(String signatureDate);
+  void setSignatureDate(String signatureDate);
 
-    boolean isInActionList(String textToLookup);
-
+  boolean isInActionList(String textToLookup);
 }

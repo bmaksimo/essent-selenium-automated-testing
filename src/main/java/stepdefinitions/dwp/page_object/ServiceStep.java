@@ -11,39 +11,44 @@ import org.junit.Assert;
 
 public class ServiceStep extends DwpScenario {
 
-    @Before("@DWP, @REGRESSION")
-    public void setupTest(Scenario scenario) {
-        registerActiveScenario(scenario);
-    }
+  @Before("@DWP, @REGRESSION")
+  public void setupTest(Scenario scenario) {
+    registerActiveScenario(scenario);
+  }
 
-    @Then("^\"([^\"]*)\" is created$")
-    public void isCreated(String input){
-        ServicePage servicePage = new ServicePage();
-        servicePage.validateCreatedTask(input);
-    }
+  @Then("^\"([^\"]*)\" is created$")
+  public void isCreated(String input) {
+    ServicePage servicePage = new ServicePage();
+    servicePage.validateCreatedTask(input);
+  }
 
-    @Override
-    @After("@DWP, @REGRESSION")
-    public void tearDown() {
-        super.tearDown();
-    }
+  @Override
+  @After("@DWP, @REGRESSION")
+  public void tearDown() {
+    super.tearDown();
+  }
 
-    @And("^Interaction is created with Type \"([^\"]*)\" and Onderwerp \"([^\"]*)\"$")
-    public void interactionIsCreatedWithTypeAndOnderwerpAndVerwanteCaseIs(String type, String onderwerp) {
-        ServicePage sp = new ServicePage();
-        Assert.assertEquals("Actual Interaction Type differs from expected",sp.getInteractionType(type),type);
-        Assert.assertEquals("Actual Interaction Onderwerp differs from expected",sp.getInteractionOnderwerp(type),onderwerp);
-    }
+  @And("^Interaction is created with Type \"([^\"]*)\" and Onderwerp \"([^\"]*)\"$")
+  public void interactionIsCreatedWithTypeAndOnderwerpAndVerwanteCaseIs(
+      String type, String onderwerp) {
+    ServicePage sp = new ServicePage();
+    Assert.assertEquals(
+        "Actual Interaction Type differs from expected", sp.getInteractionType(type), type);
+    Assert.assertEquals(
+        "Actual Interaction Onderwerp differs from expected",
+        sp.getInteractionOnderwerp(type),
+        onderwerp);
+  }
 
-    @And("^Go to prospect$")
-    public void goToProspect() {
-        ServicePage servicePage = new ServicePage();
-        servicePage.goToProspect();
-    }
+  @And("^Go to prospect$")
+  public void goToProspect() {
+    ServicePage servicePage = new ServicePage();
+    servicePage.goToProspect();
+  }
 
-    @And("^Go to GLN account$")
-    public void goToGLNAccount() {
-        ServicePage servicePage = new ServicePage();
-        servicePage.gotoGLNAccount();
-    }
+  @And("^Go to GLN account$")
+  public void goToGLNAccount() {
+    ServicePage servicePage = new ServicePage();
+    servicePage.gotoGLNAccount();
+  }
 }

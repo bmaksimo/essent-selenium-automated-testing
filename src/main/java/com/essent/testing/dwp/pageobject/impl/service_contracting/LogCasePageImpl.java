@@ -21,84 +21,85 @@ import static org.awaitility.Duration.TWO_SECONDS;
 
 public class LogCasePageImpl extends Component implements Form, LogCasePage {
 
-    private static final String BUTTON_SELECTOR_TEMPLATE = "//div[@class='form__footer']/button[normalize-space(text()) = '${text}']";
-    private String subject;
-    private String description;
-    private String solution;
-    private String priority;
+  private static final String BUTTON_SELECTOR_TEMPLATE =
+      "//div[@class='form__footer']/button[normalize-space(text()) = '${text}']";
+  private String subject;
+  private String description;
+  private String solution;
+  private String priority;
 
-    @Override
-    public boolean fillInFormData() {
+  @Override
+  public boolean fillInFormData() {
 
-        String specificationsSubjectElement = "element.specifications.subject";
-        String specificationsPriorityElement = "element.specifications.priority";
+    String specificationsSubjectElement = "element.specifications.subject";
+    String specificationsPriorityElement = "element.specifications.priority";
 
-        String questionQuestionElement =  "element.question.question";
-        String solutionSolutionElement =  "element.solution.solution";
+    String questionQuestionElement = "element.question.question";
+    String solutionSolutionElement = "element.solution.solution";
 
-        Model.Execution execution = newExecution();
-        execution
-            .element(specificationsSubjectElement, createElement("SELECTOR", "#cases-name-field"))
-            .element(specificationsPriorityElement, createElement("SELECTOR", "#cases-priority-field"))
-            .element(questionQuestionElement, createElement("SELECTOR", "#cases-description-field"))
-            .element(solutionSolutionElement, createElement("SELECTOR", "#cases-resolution-field"))
+    Model.Execution execution = newExecution();
+    execution
+        .element(specificationsSubjectElement, createElement("SELECTOR", "#cases-name-field"))
+        .element(specificationsPriorityElement, createElement("SELECTOR", "#cases-priority-field"))
+        .element(questionQuestionElement, createElement("SELECTOR", "#cases-description-field"))
+        .element(solutionSolutionElement, createElement("SELECTOR", "#cases-resolution-field"))
+        .flow()
+        .step(createStep(SELECT).element(specificationsSubjectElement).value(subject))
+        .step(createStep(SELECT).element(specificationsPriorityElement).value(priority))
+        .step(createStep(CLICK).element(questionQuestionElement))
+        .step(createStep(TYPING).element(questionQuestionElement).value(description))
+        .step(createStep(ACCESS).element(solutionSolutionElement).callback(scrollToView()))
+        .step(createStep(TYPING).element(solutionSolutionElement).value(solution));
+    return execute(execution);
+  }
 
-            .flow()
-            .step(createStep(SELECT).element(specificationsSubjectElement).value(subject))
-            .step(createStep(SELECT).element(specificationsPriorityElement).value(priority))
-            .step(createStep(CLICK).element(questionQuestionElement))
-            .step(createStep(TYPING).element(questionQuestionElement).value(description))
-            .step(createStep(ACCESS).element(solutionSolutionElement).callback(scrollToView()))
-            .step(createStep(TYPING).element(solutionSolutionElement).value(solution));
-        return execute(execution);
-    }
+  @Override
+  public void setSubjectSelection(String subject) {
+    this.subject = subject;
+  }
 
-    @Override
-    public void setSubjectSelection(String subject) {
-        this.subject = subject;
-    }
+  @Override
+  public void setDescription(String description) {
+    this.description = description;
+  }
 
-    @Override
-    public void setDescription(String description) {
-        this.description = description;
-    }
+  @Override
+  public void setSolution(String solution) {
+    this.solution = solution;
+  }
 
-    @Override
-    public void setSolution(String solution) {
-        this.solution = solution;
-    }
+  @Override
+  public void setPriority(String priority) {
+    this.priority = priority;
+  }
 
-    @Override
-    public void setPriority(String priority) {
-        this.priority = priority;
-    }
+  @Override
+  public void save(String buttonText) {
+    String query = createQuery(BUTTON_SELECTOR_TEMPLATE, "text", buttonText);
+    findAndClickButton(query);
+  }
 
-    @Override
-    public void save(String buttonText) {
-        String query = createQuery(BUTTON_SELECTOR_TEMPLATE, "text", buttonText);
-        findAndClickButton(query);
-    }
+  private void findAndClickButton(String query) {
+    waitUntil(FIVE_HUNDRED_MILLISECONDS, TWO_SECONDS, () -> isEnabled(query));
+    seleniumDriver.findElementWhenPresent(By.xpath(query));
+    waitUntil(FIVE_HUNDRED_MILLISECONDS, TWO_SECONDS, () -> isEnabled(query));
+    WebElement button = seleniumDriver.findElementWhenPresent(By.xpath(query));
+    Sleeper.sleepTightInSeconds(2);
+    button.click();
+  }
 
-    private void findAndClickButton(String query) {
-        waitUntil(FIVE_HUNDRED_MILLISECONDS, TWO_SECONDS, () -> isEnabled(query));
-        seleniumDriver.findElementWhenPresent(By.xpath(query));
-        waitUntil(FIVE_HUNDRED_MILLISECONDS, TWO_SECONDS, () -> isEnabled(query));
-        WebElement button = seleniumDriver.findElementWhenPresent(By.xpath(query));
-        Sleeper.sleepTightInSeconds(2);
-        button.click();
-    }
+  private void waitUntil(Duration pollInterval, Duration pollDelay, Callable<Boolean> findElement) {
+    given()
+        .await()
+        .pollInterval(pollInterval)
+        .pollDelay(pollDelay)
+        .atMost(new Duration(30, SECONDS))
+        .until(findElement);
+  }
 
-    private void waitUntil(Duration pollInterval, Duration pollDelay, Callable<Boolean> findElement) {
-        given().await()
-            .pollInterval(pollInterval)
-            .pollDelay(pollDelay)
-            .atMost(new Duration(30, SECONDS)).until(findElement);
-    }
-
-    private Boolean isEnabled(String query) {
-        WebElement button = seleniumDriver.findElementWhenPresent(By.xpath(query));
-        String disabled = button.getAttribute("disabled");
-        return StringUtils.isEmpty(disabled) || !StringUtils.equals(disabled, "disabled");
-
-    }
+  private Boolean isEnabled(String query) {
+    WebElement button = seleniumDriver.findElementWhenPresent(By.xpath(query));
+    String disabled = button.getAttribute("disabled");
+    return StringUtils.isEmpty(disabled) || !StringUtils.equals(disabled, "disabled");
+  }
 }

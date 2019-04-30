@@ -10,19 +10,19 @@ import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.chec
 
 public class ParametersSupport extends RegisteredScenario {
 
-    @Before("@DWP, @CORE, @E2E, @REGRESSION")
-    public void setUp(Scenario scenario) {
-        registerActiveScenario(scenario);
-    }
+  @Before("@DWP, @CORE, @E2E, @REGRESSION")
+  public void setUp(Scenario scenario) {
+    registerActiveScenario(scenario);
+  }
 
-    @Given("^Parameter \"([^\"]*)\" is \"([^\"]*)\"$")
-    public void putParameter(String key, String value) throws Throwable {
-        String inputValue = value;
-        try {
-            inputValue = checkAndConvertToDwpDate(value);
-        } catch (CucumberException e) {
-            //Consume the exception
-        }
-        parameterProvider.put(key, inputValue);
+  @Given("^Parameter \"([^\"]*)\" is \"([^\"]*)\"$")
+  public void putParameter(String key, String value) throws Throwable {
+    String inputValue = value;
+    try {
+      inputValue = checkAndConvertToDwpDate(value);
+    } catch (CucumberException e) {
+      // Consume the exception
     }
+    parameterProvider.put(key, inputValue);
+  }
 }

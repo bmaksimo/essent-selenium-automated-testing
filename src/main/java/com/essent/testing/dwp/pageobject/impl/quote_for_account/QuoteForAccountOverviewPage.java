@@ -10,20 +10,25 @@ import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.UPLOAD_
 
 public class QuoteForAccountOverviewPage extends QuoteCreationGuidedStep {
 
-    private SignatureData signatureData;
+  private SignatureData signatureData;
 
-    public void setSignatureData(SignatureData signatureData) {
-        this.signatureData = signatureData;
-    }
+  public void setSignatureData(SignatureData signatureData) {
+    this.signatureData = signatureData;
+  }
 
-    @Override
-    public boolean fillInFormData() {
-        String filePath = signatureData.getFilePath();
-        Model.Execution execution = createExecution();
-        execution
-            .element(SIGN_UPLOAD_DOC.element())
-            .step(createStep(Action.REQUIRE).element(SIGN_UPLOAD_DOC.name()).requireDisplayed(false))
-            .step(createStep(Action.UPLOAD).element(SIGN_UPLOAD_DOC.name()).value(filePath).requireDisplayed(false), UPLOAD_FILE.getSleepInMillis());
-        return execute(execution);
-    }
+  @Override
+  public boolean fillInFormData() {
+    String filePath = signatureData.getFilePath();
+    Model.Execution execution = createExecution();
+    execution
+        .element(SIGN_UPLOAD_DOC.element())
+        .step(createStep(Action.REQUIRE).element(SIGN_UPLOAD_DOC.name()).requireDisplayed(false))
+        .step(
+            createStep(Action.UPLOAD)
+                .element(SIGN_UPLOAD_DOC.name())
+                .value(filePath)
+                .requireDisplayed(false),
+            UPLOAD_FILE.getSleepInMillis());
+    return execute(execution);
+  }
 }

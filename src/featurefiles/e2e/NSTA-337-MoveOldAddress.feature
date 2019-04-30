@@ -114,8 +114,8 @@ Feature: NSTA - 337 Move old address
         And Click on link in View List at "1st" row and "Nummer & Aanmaakdatum" column polling 20 seconds
         And  Go to prospect
         Then Check customer information
-            |              address            |      phone       |         email         |
-            | Mechelsesteenweg 2 2550 Kontich | +32 483 08 06 44 | petar.perovic@test.com|
+            | address                         | phone            | email                  |
+            | Mechelsesteenweg 2 2550 Kontich | +32 483 08 06 44 | petar.perovic@test.com |
 
         When Dashboard menu is "Service"
         Then Interaction is created with Type "Document" and Onderwerp "Outbound document: Move - New Inhabitants"
@@ -129,17 +129,17 @@ Feature: NSTA - 337 Move old address
         And Go to GLN account
         Then Check if customer name contains "GLN"
         And Check customer information
-            |              address            | phone | email |
+            | address                         | phone | email |
             | Mechelsesteenweg 2 2550 Kontich |       |       |
 
         When Dashboard menu is "Marktberichten"
         Then Marktbericht has label "CUSTOMER SWITCH"
         And Check marktbericht
-        |               ean            |     modul    |  status  | end date |
-        | parameter:EAN-code-generated | START ACCESS | Gesloten |    now   |
+            | ean                          | modul        | status   | end date |
+            | parameter:EAN-code-generated | START ACCESS | Gesloten | now      |
 
         When Dashboard menu is "Contracten"
         Then Check contract
-            | type |         status          | start date |              EAN             |      product      |
-            | GLN  | Verwerkt (Geaccepteerd) |    now     | parameter:EAN-code-generated | parameter:product |
+            | type | status                  | start date | EAN                          | product           |
+            | GLN  | Verwerkt (Geaccepteerd) | now        | parameter:EAN-code-generated | parameter:product |
 

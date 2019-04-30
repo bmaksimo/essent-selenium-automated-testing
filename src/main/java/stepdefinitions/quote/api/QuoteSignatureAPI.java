@@ -23,31 +23,32 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author n.grkavac
- *
- */
+/** @author n.grkavac */
 public class QuoteSignatureAPI extends AbstractAPI {
 
-    private final static Logger LOGGER = Logger.getLogger(QuoteSignatureAPI.class);
+  private static final Logger LOGGER = Logger.getLogger(QuoteSignatureAPI.class);
 
-    private static String PATH_TO_QUOTE_SIGNATURE = ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_QUOTE_SIGNATURE);
-    private static String PATH_TO_SIGN_QUOTE_MODAL = ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_SIGN_QUOTE_MODAL);
+  private static String PATH_TO_QUOTE_SIGNATURE =
+      ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_QUOTE_SIGNATURE);
+  private static String PATH_TO_SIGN_QUOTE_MODAL =
+      ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_SIGN_QUOTE_MODAL);
 
-    public void setSignatureReceived(Cookies cookie, QuoteDetails quoteDetails) throws IOException {
-	RequestHelper helper = new RequestHelper();
-	String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
-		+ ConfigProvider.getProperty(ConfigKey.CRM_SIGNATURE_RECEIVED_URL);
-	String payload = createSignaturePayload(quoteDetails);
-
-	helper.postRequest(STATUS_CREATED, cookie, payload, path);
-	LOGGER.info("Quote signature retrieved request is sent");
-    }
-
-    public String uploadSignature(Cookies cookie, QuoteDetails quoteDetails) {
+  public void setSignatureReceived(Cookies cookie, QuoteDetails quoteDetails) throws IOException {
     RequestHelper helper = new RequestHelper();
-    String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
-        + ConfigProvider.getProperty(ConfigKey.CRM_SIGNATURE_UPLOAD_URL);
+    String path =
+        ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
+            + ConfigProvider.getProperty(ConfigKey.CRM_SIGNATURE_RECEIVED_URL);
+    String payload = createSignaturePayload(quoteDetails);
+
+    helper.postRequest(STATUS_CREATED, cookie, payload, path);
+    LOGGER.info("Quote signature retrieved request is sent");
+  }
+
+  public String uploadSignature(Cookies cookie, QuoteDetails quoteDetails) {
+    RequestHelper helper = new RequestHelper();
+    String path =
+        ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
+            + ConfigProvider.getProperty(ConfigKey.CRM_SIGNATURE_UPLOAD_URL);
     Map<String, String> payload = createUploadPayload(quoteDetails);
 
     Response signatureResponse = helper.postMultipartRequest(STATUS_OK, cookie, payload, path);
@@ -58,51 +59,55 @@ public class QuoteSignatureAPI extends AbstractAPI {
     LOGGER.info("Document ID: " + docId);
 
     return docId;
-    }
+  }
 
-    public String confirmSigning(Cookies cookie, String rowId, String docId) throws IOException {
+  public String confirmSigning(Cookies cookie, String rowId, String docId) throws IOException {
     RequestHelper helper = new RequestHelper();
-    String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_SIGN_QUOTE_MODAL);
+    String path =
+        ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
+            + ConfigProvider.getProperty(ConfigKey.CRM_SIGN_QUOTE_MODAL);
     String payload = signQuoteModalPayload(rowId, docId);
 
     Response signQuoteResponse = helper.postRequest(STATUS_CREATED, cookie, payload, path);
     String confirmSigning = null;
 
     if (signQuoteResponse.getStatusCode() == STATUS_CREATED) {
-        LOGGER.info("Quote signed");
-        confirmSigning = signQuoteResponse.getBody().toString();
-        LOGGER.info("");
+      LOGGER.info("Quote signed");
+      confirmSigning = signQuoteResponse.getBody().toString();
+      LOGGER.info("");
     } else {
-        LOGGER.error("Cannot retrieve quote list");
+      LOGGER.error("Cannot retrieve quote list");
     }
 
     return confirmSigning;
-    }
+  }
 
-    private String createSignaturePayload(QuoteDetails quoteDetails) throws IOException {
-	ObjectMapper mapper = new ObjectMapper();
+  private String createSignaturePayload(QuoteDetails quoteDetails) throws IOException {
+    ObjectMapper mapper = new ObjectMapper();
 
-	String pathToSignPayload = ResourceUtil.toPath(PATH_TO_QUOTE_SIGNATURE);
-	String jsonSignPayload = new String(Files.readAllBytes(Paths.get(pathToSignPayload)));
-	QuoteSignatureDTO signature = mapper.readValue(jsonSignPayload, QuoteSignatureDTO.class);
+    String pathToSignPayload = ResourceUtil.toPath(PATH_TO_QUOTE_SIGNATURE);
+    String jsonSignPayload = new String(Files.readAllBytes(Paths.get(pathToSignPayload)));
+    QuoteSignatureDTO signature = mapper.readValue(jsonSignPayload, QuoteSignatureDTO.class);
 
-	signature.getModel().setAccountsId(quoteDetails.getRecordId());
-	signature.getModel().setId(quoteDetails.getQuoteId());
+    signature.getModel().setAccountsId(quoteDetails.getRecordId());
+    signature.getModel().setId(quoteDetails.getQuoteId());
 
-	LocalDate currentDate = LocalDate.now();
-	LocalDate validUntilDate = currentDate.plusDays(15);
-	signature.getModel().setSignatureReceivedDate(currentDate.toString());
-	signature.getModel().setValidUntil(validUntilDate.toString());
+    LocalDate currentDate = LocalDate.now();
+    LocalDate validUntilDate = currentDate.plusDays(15);
+    signature.getModel().setSignatureReceivedDate(currentDate.toString());
+    signature.getModel().setValidUntil(validUntilDate.toString());
 
-	return mapper.writeValueAsString(signature);
-    }
+    return mapper.writeValueAsString(signature);
+  }
 
-    private Map<String, String> createUploadPayload(QuoteDetails quoteDetails) {
+  private Map<String, String> createUploadPayload(QuoteDetails quoteDetails) {
     Map<String, String> uploadMap = new HashMap<>();
     uploadMap.put("model[id]", quoteDetails.getQuoteId());
     uploadMap.put("model[dwp|id]", quoteDetails.getQuoteId());
     // hardcoded firstName + lastName from model
-    uploadMap.put("model[accounts|name]", "vvz Electricity_Fix_TC1_YMR_CUPQ_B2 LC_Power2B_MoveIn 0204 110343");
+    uploadMap.put(
+        "model[accounts|name]",
+        "vvz Electricity_Fix_TC1_YMR_CUPQ_B2 LC_Power2B_MoveIn 0204 110343");
     uploadMap.put("model[dwp|recordType]", "AOS_Quotes");
     uploadMap.put("model[accounts|company_number_c]", "BE0177446949");
     uploadMap.put("model[stage]", "SIGNED");
@@ -120,9 +125,10 @@ public class QuoteSignatureAPI extends AbstractAPI {
     uploadMap.put("fieldGuid", "4d16155e-cbf1-e650-35b2-57a30ce14302");
 
     return uploadMap;
-    }
+  }
 
-    private String signQuoteModalPayload(String rowId, String docId) throws JsonParseException, JsonMappingException, IOException {
+  private String signQuoteModalPayload(String rowId, String docId)
+      throws JsonParseException, JsonMappingException, IOException {
     ObjectMapper mapper = new ObjectMapper();
 
     String pathToPayload = ResourceUtil.toPath(PATH_TO_SIGN_QUOTE_MODAL);
@@ -138,14 +144,13 @@ public class QuoteSignatureAPI extends AbstractAPI {
     signContract.getContractModeDTO().setSignedContractDocguidC(signedContractDocId);
 
     return mapper.writeValueAsString(signContract);
-    }
+  }
 
-    private LocalDate getTodaysDate() {
+  private LocalDate getTodaysDate() {
     return LocalDate.now();
-    }
+  }
 
-    private LocalDate getYesterdaysDate() {
+  private LocalDate getYesterdaysDate() {
     return LocalDate.now().minusDays(1);
-    }
-
+  }
 }

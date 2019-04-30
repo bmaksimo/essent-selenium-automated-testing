@@ -8,28 +8,28 @@ import stepdefinitions.dwp.navigation.NavigationElements;
 
 public class DashboardMenu extends NavigationElements {
 
-    @Before("@DWP, @CORE, @E2E, @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
-        registerActiveScenario(scenario);
-    }
+  @Before("@DWP, @CORE, @E2E, @REGRESSION")
+  public void setupTest(Scenario scenario) throws Throwable {
+    registerActiveScenario(scenario);
+  }
 
-    @When("^Dashboard menu is \"([^\"]*)\"$")
-    public void checkDashboardMenuItem(String menuItem) throws Throwable {
-        clickDashboardMenu(menuItem);
-        parameterProvider.put("navigation", "back");
-        parameterProvider.put("dashboard-menu", menuItem);
-    }
+  @When("^Dashboard menu is \"([^\"]*)\"$")
+  public void checkDashboardMenuItem(String menuItem) throws Throwable {
+    clickDashboardMenu(menuItem);
+    parameterProvider.put("navigation", "back");
+    parameterProvider.put("dashboard-menu", menuItem);
+  }
 
-    @When("^Dashboard menu is \"([^\"]*)\" waiting for (\\d+) seconds$")
-    public void checkDashboardMenuItem(String menuItem, int waitingTime) throws Throwable {
-        clickDashboardMenu(menuItem, waitingTime);
-        parameterProvider.put("navigation", "back");
-        parameterProvider.put("dashboard-menu", menuItem);
-    }
+  @When("^Dashboard menu is \"([^\"]*)\" waiting for (\\d+) seconds$")
+  public void checkDashboardMenuItem(String menuItem, int waitingTime) throws Throwable {
+    clickDashboardMenu(menuItem, waitingTime);
+    parameterProvider.put("navigation", "back");
+    parameterProvider.put("dashboard-menu", menuItem);
+  }
 
-    @Override
-    @After("@DWP, @CORE, @E2E, @REGRESSION")
-    public void tearDown() {
-        super.tearDown();
-    }
+  @Override
+  @After("@DWP, @CORE, @E2E, @REGRESSION")
+  public void tearDown() {
+    super.tearDown();
+  }
 }

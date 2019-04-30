@@ -18,46 +18,48 @@ import static org.awaitility.Awaitility.given;
 
 public class SoctarBatchSteps extends DwpScenario {
 
-    @Before("@DWP, @SOCTAR, @E2E")
-    public void setupTest(Scenario scenario) throws Throwable {
-        registerActiveScenario(scenario);
-    }
+  @Before("@DWP, @SOCTAR, @E2E")
+  public void setupTest(Scenario scenario) throws Throwable {
+    registerActiveScenario(scenario);
+  }
 
-    @When("^Soctar batch action \"([^\"]*)\" is clicked$")
-    public void clickOnSoctarBatchAction(String actionName) {
-        seleniumDriver.waitForRequestsToFinish();
-        Sleeper.sleepTightInSeconds(30);
-        SoctarBatchPage soctarBatchPage = new SoctarBatchPage();
-        soctarBatchPage.clickOnAction(actionName);
-    }
+  @When("^Soctar batch action \"([^\"]*)\" is clicked$")
+  public void clickOnSoctarBatchAction(String actionName) {
+    seleniumDriver.waitForRequestsToFinish();
+    Sleeper.sleepTightInSeconds(30);
+    SoctarBatchPage soctarBatchPage = new SoctarBatchPage();
+    soctarBatchPage.clickOnAction(actionName);
+  }
 
-    @Then("^Soctar status is changed to \"([^\"]*)\"$")
-    public void checkSoctarBatchStatus(String status) {
-        seleniumDriver.waitForRequestsToFinish();
-        SoctarBatchPage soctarBatchPage = new SoctarBatchPage();
-        boolean success = soctarBatchPage.checkStatus(status);
-        assertThat("Soctar status is not " + status, success);
-    }
+  @Then("^Soctar status is changed to \"([^\"]*)\"$")
+  public void checkSoctarBatchStatus(String status) {
+    seleniumDriver.waitForRequestsToFinish();
+    SoctarBatchPage soctarBatchPage = new SoctarBatchPage();
+    boolean success = soctarBatchPage.checkStatus(status);
+    assertThat("Soctar status is not " + status, success);
+  }
 
-    @Then("^Soctar type is changed to \"([^\"]*)\" within (\\d+) seconds?$")
-    public void checkSoctarBatchType(String type, int seconds) {
-        seleniumDriver.waitForRequestsToFinish();
-        SoctarBatchPage soctarBatchPage = new SoctarBatchPage();
-        given()
-            .await()
-            .ignoreExceptions()
-            .pollInterval(new Duration(2, SECONDS))
-            .atMost(new Duration(seconds, SECONDS)).until(()-> loopback() && soctarBatchPage.checkType(type));
-    }
+  @Then("^Soctar type is changed to \"([^\"]*)\" within (\\d+) seconds?$")
+  public void checkSoctarBatchType(String type, int seconds) {
+    seleniumDriver.waitForRequestsToFinish();
+    SoctarBatchPage soctarBatchPage = new SoctarBatchPage();
+    given()
+        .await()
+        .ignoreExceptions()
+        .pollInterval(new Duration(2, SECONDS))
+        .atMost(new Duration(seconds, SECONDS))
+        .until(() -> loopback() && soctarBatchPage.checkType(type));
+  }
 
-    private boolean loopback() {
-        By classSelector = By.cssSelector(".icon-arrow-up");
-        seleniumDriver.findElement(classSelector).click();
-        seleniumDriver.waitForRequestsToFinish();
-        String soctarFileLink = parameterProvider.getValueOrParameterAsString("parameter:soctar-file-name");
-        seleniumDriver.findElement(By.linkText(soctarFileLink)).click();
-        seleniumDriver.waitForRequestsToFinish();
+  private boolean loopback() {
+    By classSelector = By.cssSelector(".icon-arrow-up");
+    seleniumDriver.findElement(classSelector).click();
+    seleniumDriver.waitForRequestsToFinish();
+    String soctarFileLink =
+        parameterProvider.getValueOrParameterAsString("parameter:soctar-file-name");
+    seleniumDriver.findElement(By.linkText(soctarFileLink)).click();
+    seleniumDriver.waitForRequestsToFinish();
 
-        return true;
-    }
+    return true;
+  }
 }

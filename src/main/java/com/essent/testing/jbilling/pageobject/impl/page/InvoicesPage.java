@@ -9,11 +9,10 @@ import java.util.List;
 
 public class InvoicesPage extends Component {
 
-	public boolean checkInvoiceTableNotEmpty() {
-        seleniumDriver.waitForRequestsToFinish();
-		List<WebElement> rows = seleniumDriver.findElements(By.xpath("//table[@id='invoices']/tbody"));
+  public boolean checkInvoiceTableNotEmpty() {
+    seleniumDriver.waitForRequestsToFinish();
+    List<WebElement> rows = seleniumDriver.findElements(By.xpath("//table[@id='invoices']/tbody"));
 
-		return CollectionUtils.isNotEmpty(rows);
-	}
-
+    return CollectionUtils.isNotEmpty(rows);
+  }
 }

@@ -21,8 +21,8 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
 
         When Customer is random
         And Customer address is
-            | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
-            | Random           | 1       |            |     | 2550       | Kontich |         |
+            | street | houseNr | houseNrAdd | bus | postalCode | city    | country |
+            | Random | 1       |            |     | 2550       | Kontich |         |
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
         And "Pakket" selection is "Vast"
@@ -61,7 +61,7 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         And Top arrow button is "Up"
         And Plus menu is "Contracting -> TK1 Hernieuwingen -> Hernieuwingsbatches"
         Then View list header is "TK1 - Hernieuwingsbatches" appears within 20 seconds
-        
+
         When Click on "START NIEUWE HERNIEUWINGSBATCH" link
         Then Modal dialog is "Start passive renewal batch"
         When "Batchnaam" input is "parameter:suitecrm-customer-name"

@@ -10,23 +10,22 @@ import cucumber.api.java.en.And;
 
 public class ProductChangeSteps extends DwpScenario {
 
-    @Before("@DWP, @E2E, @REGRESSION, @B2C")
-    public void setupTest(Scenario scenario) throws Throwable {
-        registerActiveScenario(scenario);
-    }
+  @Before("@DWP, @E2E, @REGRESSION, @B2C")
+  public void setupTest(Scenario scenario) throws Throwable {
+    registerActiveScenario(scenario);
+  }
 
-    @And("^Tariff card has value of 1st item from list$")
-    public void selectFirstItemFromList() throws Throwable {
-        seleniumDriver.waitForRequestsToFinish();
-        ProductChangePageObject po = new ProductChangePageObjectImpl();
-        po.selectFirstItemFromList();
-        seleniumDriver.waitForRequestsToFinish();
-    }
+  @And("^Tariff card has value of 1st item from list$")
+  public void selectFirstItemFromList() throws Throwable {
+    seleniumDriver.waitForRequestsToFinish();
+    ProductChangePageObject po = new ProductChangePageObjectImpl();
+    po.selectFirstItemFromList();
+    seleniumDriver.waitForRequestsToFinish();
+  }
 
-    @Override
-    @After("@DWP, @E2E, @REGRESSION, @B2C")
-    public void tearDown() {
-        super.tearDown();
-    }
-
+  @Override
+  @After("@DWP, @E2E, @REGRESSION, @B2C")
+  public void tearDown() {
+    super.tearDown();
+  }
 }

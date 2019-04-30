@@ -6,25 +6,30 @@ import org.openqa.selenium.WebElement;
 
 public class FilterPage extends Component {
 
-	private final static String XPATH_CONTAINS_TEXT_TEMPLATE          = "//div[span[contains(translate(., 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'),'${text}')]]//input";
+  private static final String XPATH_CONTAINS_TEXT_TEMPLATE =
+      "//div[span[contains(translate(., 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'),'${text}')]]//input";
 
-    public boolean filterBy(String label, String value){
-    	String query = createQuery(XPATH_CONTAINS_TEXT_TEMPLATE, "text", label);
-    	WebElement we = seleniumDriver.findElementWhenVisible(By.xpath(query));
-        if(we != null){
-            seleniumDriver.waitAndSendKeys(we, value);
-            return true;
-        }
-        return false;
+  public boolean filterBy(String label, String value) {
+    String query = createQuery(XPATH_CONTAINS_TEXT_TEMPLATE, "text", label);
+    WebElement we = seleniumDriver.findElementWhenVisible(By.xpath(query));
+    if (we != null) {
+      seleniumDriver.waitAndSendKeys(we, value);
+      return true;
     }
+    return false;
+  }
 
-	public boolean clickFilterButton(String label) {
-        WebElement we = seleniumDriver.findElementWhenVisible(By.xpath("//a[span[contains(translate(., 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'),'"+label+"')]]"));
-        if(we != null){
-            seleniumDriver.waitAndClick(we);
-            return true;
-        }
-        return false;
-	}
-
+  public boolean clickFilterButton(String label) {
+    WebElement we =
+        seleniumDriver.findElementWhenVisible(
+            By.xpath(
+                "//a[span[contains(translate(., 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'),'"
+                    + label
+                    + "')]]"));
+    if (we != null) {
+      seleniumDriver.waitAndClick(we);
+      return true;
+    }
+    return false;
+  }
 }

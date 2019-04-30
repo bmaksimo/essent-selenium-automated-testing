@@ -13,31 +13,29 @@ import org.springframework.test.context.ContextConfiguration;
 import static org.junit.Assert.assertTrue;
 
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
-
 public class Account extends DwpScenario {
-    @Before("@DWP, @REGRESSION")
-    public void setupTest(Scenario scenario) {
-        registerActiveScenario(scenario);
-    }
+  @Before("@DWP, @REGRESSION")
+  public void setupTest(Scenario scenario) {
+    registerActiveScenario(scenario);
+  }
 
-    @Then("^Change is immediately visible in Finance & Legal section that \"([^\"]*)\" is active$")
-    public void changeIsImmediatelyVisibleInFinanceLegalSectionThatIsActive(String box) {
-        ToggleImpl tg= new ToggleImpl();
-        assertTrue(tg.isOn(box));
-    }
+  @Then("^Change is immediately visible in Finance & Legal section that \"([^\"]*)\" is active$")
+  public void changeIsImmediatelyVisibleInFinanceLegalSectionThatIsActive(String box) {
+    ToggleImpl tg = new ToggleImpl();
+    assertTrue(tg.isOn(box));
+  }
 
-    @And("^Activate \"([^\"]*)\"$")
-    public void activate(String box) {
-        UpdateCustomerDetailsPage ucdp = new UpdateCustomerDetailsPage();
-        ToggleImpl tg= new ToggleImpl();
-        seleniumDriver.waitForRequestsToFinish();
-        tg.switchOn(box);
-        ucdp.clickOnSaveButtonForFinanceAndLegalSection();
-    }
+  @And("^Activate \"([^\"]*)\"$")
+  public void activate(String box) {
+    UpdateCustomerDetailsPage ucdp = new UpdateCustomerDetailsPage();
+    ToggleImpl tg = new ToggleImpl();
+    seleniumDriver.waitForRequestsToFinish();
+    tg.switchOn(box);
+    ucdp.clickOnSaveButtonForFinanceAndLegalSection();
+  }
 
-    @After("@DWP, @REGRESSION")
-    public void tearDown() {
-        super.tearDown();
-    }
-
+  @After("@DWP, @REGRESSION")
+  public void tearDown() {
+    super.tearDown();
+  }
 }

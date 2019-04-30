@@ -4,20 +4,20 @@ import com.essent.testing.dwp.pageobject.impl.Component;
 import org.openqa.selenium.By;
 
 public class SoctarBatchPage extends Component {
-    private static final By STATUS_SELECTOR = By.id("status-field");
-    private static final By TYPE_SELECTOR = By.id("type-field");
+  private static final By STATUS_SELECTOR = By.id("status-field");
+  private static final By TYPE_SELECTOR = By.id("type-field");
 
-    public void clickOnAction(String actionName) {
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.name(actionName)));
-    }
+  public void clickOnAction(String actionName) {
+    seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.name(actionName)));
+  }
 
-    public boolean checkStatus(String status) {
-        return status.equalsIgnoreCase(seleniumDriver.findElementWhenVisible(STATUS_SELECTOR).getText());
-    }
+  public boolean checkStatus(String status) {
+    return status.equalsIgnoreCase(
+        seleniumDriver.findElementWhenVisible(STATUS_SELECTOR).getText());
+  }
 
-    public boolean checkType(String type) {
-        String currentType = seleniumDriver.findElementWhenVisible(TYPE_SELECTOR).getText();
-        return type.equalsIgnoreCase(currentType);
-    }
-
+  public boolean checkType(String type) {
+    String currentType = seleniumDriver.findElementWhenVisible(TYPE_SELECTOR).getText();
+    return type.equalsIgnoreCase(currentType);
+  }
 }

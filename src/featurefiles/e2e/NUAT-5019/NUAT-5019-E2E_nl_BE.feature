@@ -4,6 +4,7 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
 
     Background:
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
+
     @NUAT-5019
     Scenario: Create active contract that after dunning the contract becomes inactive
         #1 - GUI contract creation
@@ -18,8 +19,8 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
 
         When Customer is random
         And Customer address is
-            | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-            | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
+            | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
+            | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
         And "Pakket" selection is "Vast"

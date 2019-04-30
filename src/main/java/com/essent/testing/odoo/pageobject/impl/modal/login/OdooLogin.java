@@ -1,6 +1,5 @@
 package com.essent.testing.odoo.pageobject.impl.modal.login;
 
-
 import com.essent.testing.odoo.pageobject.Window;
 import com.essent.testing.odoo.pageobject.impl.main.OdooMainWindow;
 import com.essent.testing.odoo.pageobject.modal.Dialog;
@@ -11,22 +10,22 @@ import static org.junit.Assert.assertNotNull;
 
 public class OdooLogin extends LoginComponent implements Dialog {
 
-    private final static By SELECTOR = By.cssSelector(".oe_login_form");
+  private static final By SELECTOR = By.cssSelector(".oe_login_form");
 
-    public OdooLogin() {
-        super(SELECTOR);
-    }
+  public OdooLogin() {
+    super(SELECTOR);
+  }
 
-    public Window login(String username, String password) throws Throwable {
-        WebElement element = seleniumDriver.findElementWhenVisible(By.id("login"));
-        assertNotNull(element);
-        element.clear();
-        element.sendKeys(username);
-        element = seleniumDriver.findElementWhenPresent(By.id("password"));
-        assertNotNull(element);
-        element.clear();
-        element.sendKeys(password);
-        element.submit();
-        return new OdooMainWindow(seleniumDriver);
-    }
+  public Window login(String username, String password) throws Throwable {
+    WebElement element = seleniumDriver.findElementWhenVisible(By.id("login"));
+    assertNotNull(element);
+    element.clear();
+    element.sendKeys(username);
+    element = seleniumDriver.findElementWhenPresent(By.id("password"));
+    assertNotNull(element);
+    element.clear();
+    element.sendKeys(password);
+    element.submit();
+    return new OdooMainWindow(seleniumDriver);
+  }
 }

@@ -14,43 +14,45 @@ import static com.billinghouse.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 ;
+
 public class ChangeAccountStatusSteps extends DwpScenario {
-    @Before("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @BILLING, @B2B_REGRESSION, @REGRESSION, @E2E, @B2C")
-    public void setupTest(Scenario scenario) throws Throwable {
-        registerActiveScenario(scenario);
-    }
+  @Before(
+      "@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @BILLING, @B2B_REGRESSION, @REGRESSION, @E2E, @B2C")
+  public void setupTest(Scenario scenario) throws Throwable {
+    registerActiveScenario(scenario);
+  }
 
-    @Override
-    @After("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION, @REGRESSION, @B2C")
-    public void tearDown() {
-        super.tearDown();
-    }
+  @Override
+  @After("@SMOKE, @QUOTE, @QUOTE_CS, @QUOTE_MI, @QUOTE_SS, @B2B_REGRESSION, @REGRESSION, @B2C")
+  public void tearDown() {
+    super.tearDown();
+  }
 
-    @And("^Update account status on \"([^\"]*)\"$")
-    public void updateAccountStatusOn(String status) {
-        ChangeAccountStatusPage changeAccountStatusPage = new ChangeAccountStatusPage();
-        changeAccountStatusPage.chooseAccountStatus(status);
-    }
+  @And("^Update account status on \"([^\"]*)\"$")
+  public void updateAccountStatusOn(String status) {
+    ChangeAccountStatusPage changeAccountStatusPage = new ChangeAccountStatusPage();
+    changeAccountStatusPage.chooseAccountStatus(status);
+  }
 
-    @And("^Client signature file is uploaded$")
-    public void uploadFile() {
-        String filePath = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
-        ChangeAccountStatusPage changeAccountStatusPage = new ChangeAccountStatusPage();
-        boolean success = changeAccountStatusPage.uploadFile(filePath);
-        assertThat(String.format("Signature file %s upload failed.", filePath), success, is(true));
-    }
+  @And("^Client signature file is uploaded$")
+  public void uploadFile() {
+    String filePath = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
+    ChangeAccountStatusPage changeAccountStatusPage = new ChangeAccountStatusPage();
+    boolean success = changeAccountStatusPage.uploadFile(filePath);
+    assertThat(String.format("Signature file %s upload failed.", filePath), success, is(true));
+  }
 
-    @And("^Getekend document is uploaded$")
-    public void uploadFileForSign() {
-        String filePath = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
-        ChangeAccountStatusPage changeAccountStatusPage = new ChangeAccountStatusPage();
-        boolean success = changeAccountStatusPage.uploadFileForSign(filePath);
-        assertThat(String.format("Signature file %s upload failed.", filePath), success, is(true));
-    }
+  @And("^Getekend document is uploaded$")
+  public void uploadFileForSign() {
+    String filePath = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
+    ChangeAccountStatusPage changeAccountStatusPage = new ChangeAccountStatusPage();
+    boolean success = changeAccountStatusPage.uploadFileForSign(filePath);
+    assertThat(String.format("Signature file %s upload failed.", filePath), success, is(true));
+  }
 
-    @Then("^Find document$")
-    public void findDocument(){
-        DocumentsPage dp = new DocumentsPage();
-        dp.findDocument();
-    }
+  @Then("^Find document$")
+  public void findDocument() {
+    DocumentsPage dp = new DocumentsPage();
+    dp.findDocument();
+  }
 }

@@ -12,44 +12,52 @@ import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.TOGGLE_
 
 public class PackageAndFuelTypeSelectionPage extends QuoteCreationGuidedStep {
 
+  private TariffTable tariffData;
 
-    private TariffTable tariffData;
+  private boolean regularisation;
+  private SalesChannel salesChannel;
 
-    private boolean      regularisation;
-    private SalesChannel salesChannel;
+  public boolean isRegularisation() {
+    return regularisation;
+  }
 
-    public boolean isRegularisation() {
-        return regularisation;
-    }
+  public void setRegularisation(boolean regularisation) {
+    this.regularisation = regularisation;
+  }
 
-    public void setRegularisation(boolean regularisation) {
-        this.regularisation = regularisation;
-    }
+  public SalesChannel getSalesChannel() {
+    return salesChannel;
+  }
 
-    public SalesChannel getSalesChannel() {
-        return salesChannel;
-    }
+  public void setSalesChannel(SalesChannel salesChannel) {
+    this.salesChannel = salesChannel;
+  }
 
-    public void setSalesChannel(SalesChannel salesChannel) {
-        this.salesChannel = salesChannel;
-    }
+  @Override
+  public boolean fillInFormData() {
+    String essentTariff = tariffData.getTariffSheet();
+    Model.Execution execution = createExecution();
+    execution.element(PACKAGE.element());
+    if (StringUtils.isNotEmpty(essentTariff))
+      execution
+          .element(TARIFFSHEET.element())
+          .step(
+              createStep(Action.SELECT)
+                  .requireDisplayed(true)
+                  .element(TARIFFSHEET.name())
+                  .value(essentTariff),
+              TOGGLE_CHECKBOX.getSleepInMillis());
 
+    execution.step(
+        createStep(Action.SELECT)
+            .requireDisplayed(true)
+            .element(PACKAGE.name())
+            .value(tariffData.getPackageName()),
+        TOGGLE_CHECKBOX.getSleepInMillis());
+    return execute(execution);
+  }
 
-    @Override
-    public boolean fillInFormData() {
-        String essentTariff = tariffData.getTariffSheet();
-        Model.Execution execution = createExecution();
-        execution.
-            element(PACKAGE.element());
-        if(StringUtils.isNotEmpty(essentTariff))
-            execution.element(TARIFFSHEET.element()).
-            step(createStep(Action.SELECT).requireDisplayed(true).element(TARIFFSHEET.name()).value(essentTariff), TOGGLE_CHECKBOX.getSleepInMillis());
-
-        execution.step(createStep(Action.SELECT).requireDisplayed(true).element(PACKAGE.name()).value(tariffData.getPackageName()),TOGGLE_CHECKBOX.getSleepInMillis());
-        return execute(execution);
-    }
-
-    public void setTariffData(TariffTable tariff) {
-        this.tariffData = tariff;
-    }
+  public void setTariffData(TariffTable tariff) {
+    this.tariffData = tariff;
+  }
 }

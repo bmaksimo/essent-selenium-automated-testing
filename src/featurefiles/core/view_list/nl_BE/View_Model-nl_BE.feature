@@ -3,8 +3,10 @@
 @CORE-VIEW_LIST_MODEL
 @OUTPUT_PARAMETERS
 Feature: View list model functions, extracting data from web page and passing parameters to the other scenarios
+
     Background:
         Given   I logged in to DWP as "contracting.testautomation.b2c@essent.be"
+
     Scenario: Navigate, then store values selected in list view
         When Left menu is "contracting-switching"
         And Top menu item is "Marktberichten"

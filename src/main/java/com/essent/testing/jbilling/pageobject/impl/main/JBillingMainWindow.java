@@ -6,9 +6,9 @@ import org.openqa.selenium.By;
 
 public class JBillingMainWindow extends Component implements Window {
 
-    private static final By MAIN_WINDOW_SELECTOR = By.id("main");
+  private static final By MAIN_WINDOW_SELECTOR = By.id("main");
 
-    public JBillingMainWindow() {
-        super(MAIN_WINDOW_SELECTOR);
-    }
+  public JBillingMainWindow() {
+    super(MAIN_WINDOW_SELECTOR);
+  }
 }

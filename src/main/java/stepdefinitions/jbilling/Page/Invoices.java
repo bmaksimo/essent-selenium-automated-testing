@@ -14,24 +14,22 @@ import static org.hamcrest.Matchers.is;
 
 public class Invoices extends JBillingScenario {
 
+  @Before("@JBILLING, @B2B, @REGRESSION")
+  public void setupTest(Scenario scenario) throws Throwable {
+    registerActiveScenario(scenario);
+  }
 
-	@Before("@JBILLING, @B2B, @REGRESSION")
-	public void setupTest(Scenario scenario) throws Throwable {
-		registerActiveScenario(scenario);
-	}
+  @When("^Invoice table is not empty$")
+  public void checkInvoiceTableNotEmpty() throws Throwable {
+    InvoicesPage invoicesPage = new InvoicesPage();
+    boolean success = invoicesPage.checkInvoiceTableNotEmpty();
 
-	@When("^Invoice table is not empty$")
-	public void checkInvoiceTableNotEmpty() throws Throwable {
-		InvoicesPage invoicesPage = new InvoicesPage();
-		boolean success = invoicesPage.checkInvoiceTableNotEmpty();
+    assertThat("Rows in invoice table are empty", success, is(true));
+  }
 
-		assertThat("Rows in invoice table are empty", success, is(true));
-	}
-
-
-	@Override
-	@After("@JBILLING, @B2B, @REGRESSION")
-	public void tearDown() {
-		super.tearDown();
-	}
+  @Override
+  @After("@JBILLING, @B2B, @REGRESSION")
+  public void tearDown() {
+    super.tearDown();
+  }
 }

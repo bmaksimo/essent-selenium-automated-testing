@@ -14,35 +14,37 @@ import static org.hamcrest.Matchers.is;
 
 public class FilterElements extends JBillingScenario {
 
-	@Before("@JBILLING, @B2B, @REGRESSION")
-	public void setupTest(Scenario scenario) throws Throwable {
-		registerActiveScenario(scenario);
-	}
+  @Before("@JBILLING, @B2B, @REGRESSION")
+  public void setupTest(Scenario scenario) throws Throwable {
+    registerActiveScenario(scenario);
+  }
 
-	@When("^JBilling \"([^\"]*)\" input is \"([^\"]*)\"$")
-	public void setInput(String label, String value) throws Throwable {
-		if(value.startsWith("parameter:")) {
-			value = parameterProvider.getValueOrParameterAsString(value);
-		}
-
-		FilterPage filterPage = new FilterPage();
-        boolean success = filterPage.filterBy(label, value);
-
-        assertThat("Filter by: " + label + " with input value: " + value + " is not confirmed", success, is(true));
+  @When("^JBilling \"([^\"]*)\" input is \"([^\"]*)\"$")
+  public void setInput(String label, String value) throws Throwable {
+    if (value.startsWith("parameter:")) {
+      value = parameterProvider.getValueOrParameterAsString(value);
     }
 
-	@When("^JBilling Click on \"([^\"]*)\" filter button$")
-	public void clickFilterButton(String label) throws Throwable {
-		FilterPage filterPage = new FilterPage();
-        boolean success = filterPage.clickFilterButton(label);
+    FilterPage filterPage = new FilterPage();
+    boolean success = filterPage.filterBy(label, value);
 
-        assertThat("Button: " + label + " is not clicked", success, is(true));
-	}
+    assertThat(
+        "Filter by: " + label + " with input value: " + value + " is not confirmed",
+        success,
+        is(true));
+  }
 
-	@Override
-	@After("@JBILLING, @B2B, @REGRESSION")
-	public void tearDown() {
-		super.tearDown();
-	}
+  @When("^JBilling Click on \"([^\"]*)\" filter button$")
+  public void clickFilterButton(String label) throws Throwable {
+    FilterPage filterPage = new FilterPage();
+    boolean success = filterPage.clickFilterButton(label);
 
+    assertThat("Button: " + label + " is not clicked", success, is(true));
+  }
+
+  @Override
+  @After("@JBILLING, @B2B, @REGRESSION")
+  public void tearDown() {
+    super.tearDown();
+  }
 }

@@ -26,8 +26,8 @@ Feature: NSTA-326: Creating a B2C Quote TC1 with "Move In" without using Market 
         #Is: using random EAN + Mechelsesteenweg 2, 2550 Kontich
         When Customer is random
         And Customer address is
-            | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-            | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
+            | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
+            | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
 

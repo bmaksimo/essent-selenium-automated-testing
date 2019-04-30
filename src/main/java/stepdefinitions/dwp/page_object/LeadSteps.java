@@ -15,35 +15,34 @@ import java.util.List;
 
 public class LeadSteps extends DwpScenario {
 
-    @Before("@DWP, @REGRESSION")
-    public void setupTest(Scenario scenario) {
-        registerActiveScenario(scenario);
-    }
+  @Before("@DWP, @REGRESSION")
+  public void setupTest(Scenario scenario) {
+    registerActiveScenario(scenario);
+  }
 
+  @When("^Add lead$")
+  public void addLead() {
+    LeadsPage leadPage = new LeadsPage();
+    leadPage.plusAddLead();
+  }
 
-    @When("^Add lead$")
-    public void addLead(){
-        LeadsPage leadPage = new LeadsPage();
-        leadPage.plusAddLead();
-    }
+  @And("^New lead is$")
+  public void insertCompanyNameForCreatingLead(DataTable dbTabel) {
+    NewLeadPage leadPage = new NewLeadPage();
+    List<List<String>> db = dbTabel.raw();
 
-    @And("^New lead is$")
-    public void insertCompanyNameForCreatingLead(DataTable dbTabel){
-        NewLeadPage leadPage = new NewLeadPage();
-        List<List<String>> db = dbTabel.raw();
+    leadPage.createLead(db);
+  }
 
-        leadPage.createLead(db);
-    }
+  @Then("^\"([^\"]*)\" lead was created$")
+  public void leadWasCreated(String name) {
+    LeadsPage leadPage = new LeadsPage();
+    leadPage.validateCreatingLead(name);
+  }
 
-    @Then("^\"([^\"]*)\" lead was created$")
-    public void leadWasCreated(String name){
-        LeadsPage leadPage = new LeadsPage();
-        leadPage.validateCreatingLead(name);
-    }
-
-    @Override
-    @After("@DWP, @REGRESSION")
-    public void tearDown() {
-        super.tearDown();
-    }
+  @Override
+  @After("@DWP, @REGRESSION")
+  public void tearDown() {
+    super.tearDown();
+  }
 }

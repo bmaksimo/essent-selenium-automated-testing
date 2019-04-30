@@ -18,8 +18,8 @@ Feature: NSTA-390. Sign-in a new customer with TC1 quote with electricity and ga
 
         When Customer is random
         And Customer address is
-            | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
-            | Random           | 1       |            |     | 2550       | Kontich |         |
+            | street | houseNr | houseNrAdd | bus | postalCode | city    | country |
+            | Random | 1       |            |     | 2550       | Kontich |         |
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
 

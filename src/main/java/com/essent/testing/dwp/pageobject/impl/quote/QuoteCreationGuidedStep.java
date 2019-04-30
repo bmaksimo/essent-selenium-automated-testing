@@ -12,48 +12,46 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.JS_TR_IS_NEXT_BUTTON_ENABLED;
 import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.NEXT_BUTTON;
 import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.VIEW;
-import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 
 public abstract class QuoteCreationGuidedStep extends Component implements GuidedStep, Form {
 
-    private static By STANDARD_UI_VIEW = By.xpath(VIEW.getQuery());
+  private static By STANDARD_UI_VIEW = By.xpath(VIEW.getQuery());
 
+  public QuoteCreationGuidedStep() {
+    super(STANDARD_UI_VIEW);
+  }
 
-    public QuoteCreationGuidedStep() {
-        super(STANDARD_UI_VIEW);
+  @Override
+  public void next() {
+    seleniumDriver.waitForRequestsToFinish();
+    logger().debug("Guiided step to be confirmed");
+    /**
+     * given().await() .ignoreExceptions() .pollInterval(FIVE_HUNDRED_MILLISECONDS)
+     * .pollDelay(TWO_SECONDS) .atMost(new Duration(60, SECONDS)).until(this::isNextButtonEnabled);
+     */
+    Optional<WebElement> nextButtonOptional =
+        Optional.of(findElementWhenClickable(By.cssSelector(NEXT_BUTTON.getQuery())));
+    seleniumDriver.takeScreenshot("guidance-confirm-");
+    if (nextButtonOptional.get().isEnabled()) {
+      WebElement nextButton = nextButtonOptional.get();
+      logger().debug("Found  element: " + nextButton.getTagName());
+      logger().debug("CLICK ");
+      seleniumDriver.waitForRequestsToFinish();
+      nextButton.click();
+    } else {
+      seleniumDriver.takeScreenshot("guidance-confirm-");
+      throw new ExtendedCucumberException(
+          "Guided step was not confirmed " + NEXT_BUTTON.getQuery());
     }
+    seleniumDriver.waitForRequestsToFinish();
+  }
 
-    @Override
-    public void next() {
-        seleniumDriver.waitForRequestsToFinish();
-        logger().debug("Guiided step to be confirmed");
-        /**
-         given().await()
-         .ignoreExceptions()
-         .pollInterval(FIVE_HUNDRED_MILLISECONDS)
-         .pollDelay(TWO_SECONDS)
-         .atMost(new Duration(60, SECONDS)).until(this::isNextButtonEnabled);
-         **/
-        Optional<WebElement> nextButtonOptional = Optional.of(findElementWhenClickable(By.cssSelector(NEXT_BUTTON.getQuery())));
-         seleniumDriver.takeScreenshot("guidance-confirm-");
-         if (nextButtonOptional.get().isEnabled()) {
-            WebElement nextButton = nextButtonOptional.get();
-            logger().debug("Found  element: " + nextButton.getTagName());
-            logger().debug("CLICK ");
-            seleniumDriver.waitForRequestsToFinish();
-            nextButton.click();
-        } else {
-            seleniumDriver.takeScreenshot("guidance-confirm-");
-            throw new ExtendedCucumberException("Guided step was not confirmed " + NEXT_BUTTON.getQuery());
-        }
-        seleniumDriver.waitForRequestsToFinish();
-    }
-
-    public Boolean isNextButtonEnabled() {
-        Map options = new HashMap<>();
-        Map result = seleniumDriver.executeJavascriptMethod(JS_TR_IS_NEXT_BUTTON_ENABLED, options);
-        return BooleanUtils.toBoolean((String) result.get("enabled"));
-    }
+  public Boolean isNextButtonEnabled() {
+    Map options = new HashMap<>();
+    Map result = seleniumDriver.executeJavascriptMethod(JS_TR_IS_NEXT_BUTTON_ENABLED, options);
+    return BooleanUtils.toBoolean((String) result.get("enabled"));
+  }
 }

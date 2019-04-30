@@ -1,22 +1,22 @@
-{  
- "model":{
-      "pricing_date_c":"2017-09-06 11:10:01",
-      "dwp|create_task":false,
-      "stage":"SIGNATURE RECEIVED",
-      "id":null,
-      "accounts|id":null,
-      "valid_until_c":null,
-      "signature_received_date_c":null,
-      "recordTypeOfRecordId":"AOS_Quotes",
-      "baseModule":"AOS_Quotes",
-      "assigned_user_id":[
-         {
-            "key":"1",
-            "label":"Administrator"
-         }
-      ]
-   },
-   "action":{
-      "event":"CONFIRM"
-   }
+{
+  "model": {
+    "pricing_date_c": "2017-09-06 11:10:01",
+    "dwp|create_task": false,
+    "stage": "SIGNATURE RECEIVED",
+    "id": null,
+    "accounts|id": null,
+    "valid_until_c": null,
+    "signature_received_date_c": null,
+    "recordTypeOfRecordId": "AOS_Quotes",
+    "baseModule": "AOS_Quotes",
+    "assigned_user_id": [
+      {
+        "key": "1",
+        "label": "Administrator"
+      }
+    ]
+  },
+  "action": {
+    "event": "CONFIRM"
+  }
 } 

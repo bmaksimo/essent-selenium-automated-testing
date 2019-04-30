@@ -17,35 +17,39 @@ import static org.hamcrest.Matchers.notNullValue;
 
 ;
 
-
 public class InputParametersTest extends RegisteredScenario {
 
-    @Before
-    public void setUp(Scenario scenario) {
-        registerActiveScenario(scenario);
-    }
+  @Before
+  public void setUp(Scenario scenario) {
+    registerActiveScenario(scenario);
+  }
 
-    @InputParameter(name = "contractor")
-    private String employee;
+  @InputParameter(name = "contractor")
+  private String employee;
 
-    @InputParameter(name = "startOfTenure")
-    private DateTime startOfTenure;
+  @InputParameter(name = "startOfTenure")
+  private DateTime startOfTenure;
 
-    @Then("^Period of tenure is printed.?$")
-    public void printContractorTenureDate() throws Throwable {
-        assertThat("'employee' was null", employee, is(notNullValue()));
-        assertThat("'startOfTenure' was null", startOfTenure, is(notNullValue()));
-        assertThat("'startOfTenure' was null", parameterProvider.getValueOrParameterAsString("parameter:startOfTenure"), is(notNullValue()));
-        DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("DD-MM-YYYY");
-        logger().info("STEP:");
-        logger().info(" - ACTION: GET_INPUT_PARAM");
-        Period diff = new Period(startOfTenure, DateTime.now());
-        logger().info(String.format(" - RESULT: %s's period of tenure is %s years", employee, diff.getYears()));
-    }
+  @Then("^Period of tenure is printed.?$")
+  public void printContractorTenureDate() throws Throwable {
+    assertThat("'employee' was null", employee, is(notNullValue()));
+    assertThat("'startOfTenure' was null", startOfTenure, is(notNullValue()));
+    assertThat(
+        "'startOfTenure' was null",
+        parameterProvider.getValueOrParameterAsString("parameter:startOfTenure"),
+        is(notNullValue()));
+    DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("DD-MM-YYYY");
+    logger().info("STEP:");
+    logger().info(" - ACTION: GET_INPUT_PARAM");
+    Period diff = new Period(startOfTenure, DateTime.now());
+    logger()
+        .info(
+            String.format(
+                " - RESULT: %s's period of tenure is %s years", employee, diff.getYears()));
+  }
 
-    @And("^Contractor \"([^\"]*)\" has value \"([^\"]*)\"$")
-    public void contractorHasValue(String parameter, String expected) throws Throwable {
-        assertThat(parameterProvider.getValueOrParameterAsString(parameter), is(expected));
-    }
-
+  @And("^Contractor \"([^\"]*)\" has value \"([^\"]*)\"$")
+  public void contractorHasValue(String parameter, String expected) throws Throwable {
+    assertThat(parameterProvider.getValueOrParameterAsString(parameter), is(expected));
+  }
 }

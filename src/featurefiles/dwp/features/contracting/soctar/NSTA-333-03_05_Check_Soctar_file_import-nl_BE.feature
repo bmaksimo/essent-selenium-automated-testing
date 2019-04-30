@@ -2,11 +2,13 @@
 @B2C
 @SOCTAR
 Feature: Check the status of Soctar file upload and impor
+
     Background:
         Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
         #Output parameter "start_end_date", format: '1yyyyMMddyyyy1231'
         #Output parameter  "start-en-einddatum", format: 'dd-MM-yyyy - dd-MM-yyyy'
         And   Soctar start date is "now"
+
     @SOCTAR-03-05
     @NSTA-333-STEP-3-5
     Scenario: Upload Soctar file to Nova sftp
