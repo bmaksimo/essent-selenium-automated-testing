@@ -58,6 +58,7 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         #Actions
         #"Start & Einddatum" is parsed, start is put to parameterProvider as "Start & Einddatum - start", end - as "Start & Einddatum - end"
         When End of interval from "1st" row of table "Contracten" at column "Start & Einddatum" is checked
+        And  Cell value at "1st" row at column "Getekend contractvoorstel & Billing klant" from table "Contracten" is checked
         And Top arrow button is "Up"
         And Plus menu is "Contracting -> TK1 Hernieuwingen -> Hernieuwingsbatches"
         Then View list header is "TK1 - Hernieuwingsbatches" appears within 20 seconds
@@ -77,15 +78,15 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         #3. Validate renewal batch
         # Actions
         When Click on "parameter:suitecrm-customer-name" link
-        And  Cell value at "1st" row at column "Contractnummer" from table "Geselecteerde contractlijn voor hernieuwingsbatch" is checked
+        And  All cell values at "1st" row from table "Geselecteerde contractlijn voor hernieuwingsbatch" are checked
         And  Click on "VALIDEER PASSIEVE HERNIEUWINGSBATCH" link
         And  Modal dialog is "Start passive renewal batch"
         And  Modal dialog contains "parameter:suitecrm-customer-name" in action list
         And  Modal dialogue is confirmed
+        #3.1. Validate renewal batch - checks
         Then "Status batch" field value is "VALIDATED"
+        And Table "Geselecteerde contractlijn voor hernieuwingsbatch" has matching value "Gevalideerd" at column "Status hernieuwing"
 
-
-
-
-
-
+        When Click on "parameter:Contractnummer" link
+        And  Dashboard menu is "Sales"
+        And Table "Offertes" has matching value "Passieve hernieuwing Geprijsd - Geaccepteerd" at column "Type & status"

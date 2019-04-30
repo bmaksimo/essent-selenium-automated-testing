@@ -571,6 +571,20 @@ public class ViewListChecks extends NavigationElements {
                 tableName, columnName));
   }
 
+  @And("^All cell values at \"([^\"]*)\" row from table \"([^\"]*)\" are checked$")
+  public void cellValuesAtRowFromTableAreChecked(String ordinal, String tableName)
+      throws Throwable {
+    ViewListTestObject viewListTestObject = new ViewListTestObject(tableName);
+    int row = extractNumericValue(ordinal);
+    for (int column = 1; column <= viewListTestObject.getColumnCount().get(); column++) {
+      Optional<String> columnName = viewListTestObject.getColumnName(column);
+      Optional<Object> value = viewListTestObject.getValueAt(row, column);
+      if (columnName.isPresent() && value.isPresent()) {
+        parameterProvider.put(columnName.get(), value.get());
+      }
+    }
+  }
+
   @Then(
       "^Cell value at \"([^\"]*)\" row at column \"([^\"]*)\" from table \"([^\"]*)\" is checked$")
   public void lookupCellValue(String ordinal, String columnName, String tableName)

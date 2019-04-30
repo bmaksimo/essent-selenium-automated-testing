@@ -35,4 +35,10 @@ public interface ViewList {
   Optional<String> getCurrencyValueAt(int row, String columnName, String tableName);
 
   Optional<Integer> getTransactionsColumnIndex(String columnName);
+
+  Optional<Integer> getColumnCount();
+
+  Optional<String> getColumnName(int column);
+
+  Optional<Object> getValueAt(int row, int column);
 }

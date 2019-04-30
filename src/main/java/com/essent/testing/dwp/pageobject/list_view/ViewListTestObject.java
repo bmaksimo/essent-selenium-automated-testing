@@ -25,6 +25,40 @@ public class ViewListTestObject extends Component implements ViewList {
   private static final String TRANSACTIONS_TABLE_HEADERS =
       "//list[@list-key='TransactionsOnAccount']//th[@class='list__cell']";
 
+  private Optional<DefaultTableModel> tableModel;
+
+  public ViewListTestObject() {
+    this.tableModel = Optional.of(getViewTableModel());
+  }
+
+  public ViewListTestObject(String table) {
+    this.tableModel = Optional.of(getViewTableModel(table));
+  }
+
+  public Optional<Integer> getColumnCount() {
+    if (tableModel.isPresent()) {
+      return Optional.of(tableModel.get().getColumnCount());
+    } else {
+      return Optional.of(0);
+    }
+  }
+
+  public Optional<String> getColumnName(int column) {
+    if (tableModel.isPresent()) {
+      return Optional.of(tableModel.get().getColumnName(column - 1));
+    } else {
+      return Optional.empty();
+    }
+  }
+
+  public Optional<Object> getValueAt(int row, int column) {
+    if (tableModel.isPresent()) {
+      return Optional.of(tableModel.get().getValueAt(row - 1, column - 1));
+    } else {
+      return Optional.empty();
+    }
+  }
+
   public DefaultTableModel getViewTableModel() {
     DefaultTableModel tableModel = new DefaultTableModel();
     return getDefaultTableModel(tableModel, new HashMap<>());
