@@ -1,0 +1,50 @@
+* text=auto
+
+# Text
+*.bash          text eol=lf
+*.bat           text eol=crlf
+*.cmd           text eol=crlf
+*.css           text diff=css
+*.feature       text
+*.gdoc          text
+*.gradle        text
+*.groovy        text
+*.gsp           text
+*.htm           text diff=html
+*.html          text diff=html
+*.java          text diff=java
+*.js            text
+*.json          text
+*.jsp           text
+*.md            text
+*.properties    text
+*.sass          text
+*.scala         text
+*.sh            text eol=lf
+*.sql           text
+*.svg           text
+*.ts            text
+*.txt           text
+*.wsdl          text
+*.xml           text
+*.xsd           text
+*.yaml          text
+*.yml           text
+
+# Not text
+*.class         binary
+*.ear           binary
+*.eot           binary
+*.gif           binary
+*.gz            binary
+*.gzip          binary
+*.ico           binary
+*.jar           binary
+*.jpeg          binary
+*.jpg           binary
+*.kar           binary
+*.png           binary
+*.tar           binary
+*.ttf           binary
+*.war           binary
+*.woff          binary
