@@ -1,6 +1,8 @@
 package stepdefinitions.dwp.form;
 
+import com.essent.testing.dwp.pageobject.elements.ComboBox;
 import com.essent.testing.dwp.pageobject.elements.NonEditable;
+import com.essent.testing.dwp.pageobject.impl.elements.ComboBoxImpl;
 import com.essent.testing.dwp.pageobject.impl.elements.NonEditableImpl;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
@@ -14,6 +16,7 @@ import org.openqa.selenium.support.ui.FluentWait;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import static com.billinghouse.MatcherAssert.assertThat;
@@ -23,6 +26,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
 import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
 import static org.awaitility.Duration.ONE_SECOND;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 
 public class FormElements extends DwpScenario {
@@ -89,6 +93,20 @@ public class FormElements extends DwpScenario {
     Map<String, String> options = new HashMap<>();
     executeJavascriptTest(JS_TR_SUBMIT_FORM, options);
     seleniumDriver.waitForRequestsToFinish();
+  }
+
+  @And("^Option value of \"([^\"]*)\" selection in the card \"([^\"]*)\" is matching \"([^\"]*)\"$")
+  public void checkSelectionOption(String label, String cardName, String expected)
+      throws Throwable {
+      String expectedValue = parameterProvider.getValueOrParameterAsString(expected);
+      String message = String.format("Dropdown box labelled \"%s\" in the card \"%s\"", label, cardName);
+      Optional<String> option = new ComboBoxImpl().getOption(cardName, label);
+      assertThat(message + " was empty", option.isPresent(), is(true));
+      String actual = option.get();
+      assertThat(message + String.format(" expected \"%s\" but actually was \"%s\"", expectedValue, actual),
+          actual,
+          containsString(expectedValue));
+
   }
 
   @Override

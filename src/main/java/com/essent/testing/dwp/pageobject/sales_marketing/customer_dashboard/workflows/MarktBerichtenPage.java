@@ -71,7 +71,7 @@ public class MarktBerichtenPage extends Component {
 
   public WebElement selectNewContractlineButton() {
     return seleniumDriver.findElementWhenVisible(
-        By.xpath("//button[contains(.,'Select Contractline')]"));
+        By.xpath("//button[contains(.,'ComboBox Contractline')]"));
   }
 
   public void clickOnSelectNewContractlineButton() {

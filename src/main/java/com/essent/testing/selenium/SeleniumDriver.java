@@ -177,7 +177,7 @@ public abstract class SeleniumDriver {
     if (element.isEmpty()) {
       return Optional.empty();
     }
-    return Optional.ofNullable(element.get(0));
+    return Optional.of(element.get(0));
   }
 
   public WebElement findElementWhenPresent(By selector, Duration timeout, Duration pollingEvery) {

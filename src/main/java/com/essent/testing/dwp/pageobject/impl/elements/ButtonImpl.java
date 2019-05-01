@@ -9,10 +9,7 @@ import java.util.Optional;
 
 public class ButtonImpl extends Component implements Button {
 
-  protected static final String XPATH_CARD_TEMPLATE =
-      "//div[div[normalize-space(h2/text())='${title}']]";
-
-  public ButtonImpl() {
+    public ButtonImpl() {
     this(null);
   }
 

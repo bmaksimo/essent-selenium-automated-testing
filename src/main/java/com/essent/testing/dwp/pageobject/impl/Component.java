@@ -22,6 +22,8 @@ import java.util.Optional;
 
 public abstract class Component {
 
+  protected static final String XPATH_CARD_TEMPLATE =
+      "//div[div[normalize-space(h2/text())='${title}']]";
   protected WebElement element;
   protected DWPSeleniumDriver seleniumDriver;
   private final Logger logger = Logger.getLogger(Component.class);

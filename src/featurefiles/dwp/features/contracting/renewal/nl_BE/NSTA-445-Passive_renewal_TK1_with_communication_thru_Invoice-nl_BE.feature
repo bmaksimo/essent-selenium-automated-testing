@@ -93,3 +93,5 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         When Click on "parameter:Contractnummer" link
         And  Dashboard menu is "Sales"
         And Table "Offertes" has matching value "Passieve hernieuwing Geprijsd - Geaccepteerd" at column "Type & status"
+        And Table "Offertes" has matching value "parameter:Contract Start & Einddatum" at column "Start & Einddatum"
+
