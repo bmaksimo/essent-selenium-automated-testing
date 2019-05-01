@@ -53,13 +53,19 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         When Dashboard menu is "Contracten"
         Then View list header is "Actieve en toekomstige connecties"
         And "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
+        
+
 
         #2. Trigger renewal batch
         #Actions
         #"Start & Einddatum" is parsed, start is put to parameterProvider as "Start & Einddatum - start", end - as "Start & Einddatum - end"
         When End of interval from "1st" row of table "Contracten" at column "Start & Einddatum" is checked
-        And  Cell value at "1st" row at column "Getekend contractvoorstel & Billing klant" from table "Contracten" is checked
-        And Top arrow button is "Up"
+        #1.1. Collect jBilling customer Id
+        And  Dashboard menu is "Details"
+        Then View list header is "Details" appears within 10 seconds
+        And  Cell value at "1st" row at column "Id Billing customer" from table "Billing customer" is checked
+
+        When Top arrow button is "Up"
         And Plus menu is "Contracting -> TK1 Hernieuwingen -> Hernieuwingsbatches"
         Then View list header is "TK1 - Hernieuwingsbatches" appears within 20 seconds
 
@@ -94,4 +100,5 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         And  Dashboard menu is "Sales"
         And Table "Offertes" has matching value "Passieve hernieuwing Geprijsd - Geaccepteerd" at column "Type & status"
         And Table "Offertes" has matching value "parameter:Contract Start & Einddatum" at column "Start & Einddatum"
+        And Table "Offertes" has matching value "parameter:Id Billing customer" at column "Billing klant & Tariefdatum"
 
