@@ -1,8 +1,11 @@
 package stepdefinitions.dwp.input;
 
 import com.essent.automation.util.Sleeper;
+import com.essent.testing.dwp.pageobject.elements.SelectWithSearch;
+import com.essent.testing.dwp.pageobject.impl.elements.SelectWithSearchImpl;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -368,6 +371,13 @@ public class InputElements extends DwpScenario {
     seleniumDriver.waitForRequestsToFinish();
   }
 
+  @And("^\"([^\"]*)\" select with search is clicked$")
+  public void selectWithSearchIsClicked(String label) throws Throwable {
+      SelectWithSearch button = new SelectWithSearchImpl();
+      button.click(label);
+      seleniumDriver.takeScreenshot("Search Dialogue");
+  }
+
   @And("New Amount Invoice is \"([^\"]*)\" for EAN \"([^\"]*)\"$")
   public void setInputByEanLabel(String value, String EAN) {
     seleniumDriver.waitForRequestsToFinish();
@@ -379,7 +389,7 @@ public class InputElements extends DwpScenario {
     seleniumDriver.waitForRequestsToFinish();
   }
 
-  /** Cucumber-JVM Aftrer- hook */
+  /** Cucumber-JVM After- hook */
   @Override
   @After("@DWP, @CORE, @E2E, @REGRESSION")
   public void tearDown() {
