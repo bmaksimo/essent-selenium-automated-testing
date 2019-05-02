@@ -121,6 +121,7 @@ public class ContractsSteps extends DwpScenario {
 
     @Then("^Save changes$")
     public void saveChanges() {
+        seleniumDriver.waitForRequestsToFinish();
         ContractPage contractenPage = new ContractPage();
         contractenPage.saveButton();
     }
