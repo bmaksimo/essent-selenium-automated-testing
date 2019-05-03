@@ -26,8 +26,10 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.time.Duration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 
 import static com.billinghouse.test_automation.util.gherkin.DateTimeFormatUtil.printPeriod;
 import static com.essent.testing.selenium.helper.fluent_wait.FluentWaitUtil.createWaiter;
@@ -303,5 +305,12 @@ public class DWPSeleniumDriver extends SeleniumDriver
   public void sendKeysNow(final WebElement element, final String keysToSend) {
     element.clear();
     element.sendKeys(keysToSend);
+  }
+
+  @Override
+  public List<WebElement> findElements(By selector, Duration timeout, Duration pollingEvery) {
+      List<WebElement> result = super.findElements(selector, timeout, pollingEvery);
+      waitForRequestsToFinish();
+      return result;
   }
 }

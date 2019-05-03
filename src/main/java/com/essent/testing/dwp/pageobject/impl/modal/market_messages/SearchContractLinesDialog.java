@@ -2,7 +2,7 @@ package com.essent.testing.dwp.pageobject.impl.modal.market_messages;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.dwp.pageobject.modal.confirm.ConfirmDialog;
+import com.essent.testing.dwp.pageobject.modal.ConfirmDialog;
 import org.apache.commons.collections.CollectionUtils;
 import org.awaitility.Duration;
 import org.openqa.selenium.By;
@@ -25,7 +25,7 @@ public class SearchContractLinesDialog extends Component implements ConfirmDialo
     Sleeper.sleepTightInSeconds(1);
 
     WebElement searchButton =
-        seleniumDriver.findElementWhenVisible(By.xpath("//input[@type='submit']"));
+        seleniumDriver.findElementWhenVisible(By.xpath("//input[@type='submitSearchResult']"));
     searchButton.click();
     Sleeper.sleepTightInSeconds(1);
     searchButton.click();

@@ -33,7 +33,7 @@ public class InputElements extends DwpScenario {
    * @param scenario Gherkin scenario descriptor
    * @throws Throwable
    */
-  @Before("@DWP, @CORE, @E2E, @REGRESSION")
+  @Before("@DWP, @B2C, @CORE, @E2E, @REGRESSION")
   public void setupTest(Scenario scenario) throws Throwable {
     registerActiveScenario(scenario);
   }
@@ -391,7 +391,7 @@ public class InputElements extends DwpScenario {
 
   /** Cucumber-JVM After- hook */
   @Override
-  @After("@DWP, @CORE, @E2E, @REGRESSION")
+  @After("@DWP, @CORE, @B2C, @E2E, @REGRESSION")
   public void tearDown() {
     super.tearDown();
   }

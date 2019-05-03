@@ -83,7 +83,7 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         # Actions
         When Click on "parameter:suitecrm-customer-name" link
         And  All cell values at "1st" row from table "Geselecteerde contractlijn voor hernieuwingsbatch" are checked
-        And  Package name is extracted from "parameter:Nieuw pakket/product"
+        And  PackageName is extracted as "1st" word from "parameter:Nieuw pakket/product"
         And  Click on "VALIDEER PASSIEVE HERNIEUWINGSBATCH" link
         And  Modal dialog is "Start passive renewal batch"
         And  Modal dialog contains "parameter:suitecrm-customer-name" in action list
@@ -102,19 +102,17 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         And Table "Offertes" has matching value "parameter:Id Billing customer" at column "Billing klant & Tariefdatum"
 
         #4 Validate the definition of renewal product
-        #When Top arrow button is "Up"
-        #And Plus menu is "Contracting -> TK1 Hernieuwingen -> Bepaal het hernieuwingsproduct"
-        #Then View list header is "Bepaal het hernieuwingsproduct" appears within 20 seconds
-
-        #When Top action is "Filters"
-        #And  "Van pakket" select with search is clicked
         When Top arrow button is "Up"
-        And Plus menu is "Contracting -> TK1 Hernieuwingen -> Hernieuwingsbatches"
-        Then View list header is "TK1 - Hernieuwingsbatches" appears within 20 seconds
-        When Click on "parameter:suitecrm-customer-name" link
-        And  Click on "VERSTUUR PASSIEVE HERNIEUWINGSBRIEVEN" link
-        And Modal dialog is "Send passive renewal letter"
-        And Modal dialogue is confirmed
-        Then "Status batch" field value is "LETTERS_SENT"
-        And Table "Geselecteerde contractlijn voor hernieuwingsbatch" has matching value "verstuurd" at column "Status hernieuwing"
-        And Table "Geselecteerde contractlijn voor hernieuwingsbatch" has matching value "Passief hernieuwd" at column "Offerte & status hernieuwing"
+        And Plus menu is "Contracting -> TK1 Hernieuwingen -> Bepaal het hernieuwingsproduct"
+        Then View list header is "Bepaal het hernieuwingsproduct" appears within 20 seconds
+
+        When Top action is "Filters"
+        And  "Van pakket" select with search is clicked
+        And  Modal dialog is "Select"
+        And  Search option is "parameter:PackageName"
+        And  Search button with label "Verzenden" is clicked
+        And  First search result matching "parameter:PackageName" is checked
+        And  Submit search results button "Verzenden" is clicked
+        And  Modal dialog "Select" is not shown
+
+

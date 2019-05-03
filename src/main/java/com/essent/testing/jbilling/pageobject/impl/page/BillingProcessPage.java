@@ -21,7 +21,7 @@ public class BillingProcessPage extends Component {
   public void editButton() {
     seleniumDriver.waitAndClick(
         seleniumDriver.findElementWhenVisible(
-            By.xpath("//a[@class='submit edit']/span[contains(text(),'Edit')]")));
+            By.xpath("//a[@class='submitSearchResult edit']/span[contains(text(),'Edit')]")));
   }
 
   public WebElement invoiceDate() {
@@ -46,12 +46,12 @@ public class BillingProcessPage extends Component {
 
   public void saveProccessBilling() {
     seleniumDriver.waitAndClick(
-        seleniumDriver.findElementWhenVisible(By.xpath("//a[@class='submit save']")));
+        seleniumDriver.findElementWhenVisible(By.xpath("//a[@class='submitSearchResult save']")));
   }
 
   public void cancelProccessBilling() {
     seleniumDriver.waitAndClick(
-        seleniumDriver.findElementWhenVisible(By.xpath("//a[@class='submit cancel']")));
+        seleniumDriver.findElementWhenVisible(By.xpath("//a[@class='submitSearchResult cancel']")));
   }
 
   public String errorMsg() {

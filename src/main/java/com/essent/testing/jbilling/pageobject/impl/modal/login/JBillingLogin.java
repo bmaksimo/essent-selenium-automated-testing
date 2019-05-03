@@ -21,7 +21,7 @@ public class JBillingLogin extends LoginComponent implements Dialog {
     WebElement pass = seleniumDriver.findElementWhenVisible(By.id("j_password"));
     seleniumDriver.waitAndSendKeys(pass, password);
 
-    WebElement login = seleniumDriver.findElementWhenVisible(By.xpath("//a[@class='submit save']"));
+    WebElement login = seleniumDriver.findElementWhenVisible(By.xpath("//a[@class='submitSearchResult save']"));
 
     seleniumDriver.waitAndClick(login);
 

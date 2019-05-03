@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.modal.confirm;
+package com.essent.testing.dwp.pageobject.modal;
 
 import com.essent.testing.dwp.pageobject.modal.Dialog;
 

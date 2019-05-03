@@ -29,6 +29,7 @@ public class ButtonImpl extends Component implements Button {
     logger.info("STEP:");
     logger.info(" - BUTTON TEXT: " + element.get().getText());
     element.get().click();
+    seleniumDriver.waitForRequestsToFinish();
     logger.info(" - ACTION: CLICK");
   }
 }

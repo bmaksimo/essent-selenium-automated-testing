@@ -142,10 +142,6 @@ public abstract class DwpScenario extends RegisteredScenario {
     seleniumDriver.initNgWebDriver();
   }
 
-  protected int extractNumericValue(String ordinal) {
-    return ordinalAsInt(ordinal);
-  }
-
   protected Integer amountInCurrencyAsInt(String amountInCurrency) {
     return amountAsInt(amountInCurrency, FLEMISCH_LOCALE);
   }

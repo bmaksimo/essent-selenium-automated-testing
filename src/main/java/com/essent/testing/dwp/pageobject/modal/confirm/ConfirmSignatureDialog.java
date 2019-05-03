@@ -1,5 +1,7 @@
 package com.essent.testing.dwp.pageobject.modal.confirm;
 
+import com.essent.testing.dwp.pageobject.modal.ConfirmDialog;
+
 public interface ConfirmSignatureDialog extends ConfirmDialog {
   String getTitle();
 

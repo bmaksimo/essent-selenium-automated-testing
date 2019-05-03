@@ -219,6 +219,7 @@ public abstract class SeleniumDriver {
     if (elements.isEmpty()) {
       logger.warn(" - RESULT: empty");
     }
+
     return elements;
   }
 
