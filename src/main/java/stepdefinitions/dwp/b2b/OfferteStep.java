@@ -35,6 +35,7 @@ public class OfferteStep extends DwpScenario {
 
     @And("^Reset filter$")
     public void resetFilter() {
+        seleniumDriver.waitForRequestsToFinish();
         DwpFilterPage df = new DwpFilterPage();
         df.resetFilter();
         seleniumDriver.waitForRequestsToFinish();
@@ -55,6 +56,7 @@ public class OfferteStep extends DwpScenario {
 
     @And("^Offertenummer input is \"([^\"]*)\"$")
     public void offertenummerInputIs(String value) {
+        seleniumDriver.waitForRequestsToFinish();
         String input = parameterProvider.getValueOrParameterAsString(value);
         QuotesListPage qlp = new QuotesListPage();
         qlp.offerteNumberFieldSendKeys(input);
@@ -62,6 +64,7 @@ public class OfferteStep extends DwpScenario {
 
     @And("^Oplossing text is \"([^\"]*)\"$")
     public void oplossingTextIs(String input){
+        seleniumDriver.waitForRequestsToFinish();
         QuotesListPage qlp = new QuotesListPage();
         qlp.markAsDoneOplossingSendKeys(input);
     }
@@ -74,6 +77,7 @@ public class OfferteStep extends DwpScenario {
 
     @And("^\"([^\"]*)\" turn on with dot$")
     public void turnOnWithDot(String label) {
+        seleniumDriver.waitForRequestsToFinish();
         ToggleImpl tgl = new ToggleImpl();
         tgl.switchOnWithDot(label);
 
