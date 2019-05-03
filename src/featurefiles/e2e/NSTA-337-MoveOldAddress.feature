@@ -107,7 +107,7 @@ Feature: NSTA - 337 Move old address
         Then Changes are confirmed
 
         When Dashboard menu is "Service"
-        Then There is a case where onderwerp is "VERHUIS"
+        Then There is a case where onderwerp is "Verhuis"
         And Interaction is created with Type "Interaction" and Onderwerp "Move OA"
 
         When View list header is "Cases" appears within 20 seconds

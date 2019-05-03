@@ -28,266 +28,253 @@ import static org.testng.AssertJUnit.assertEquals;
 
 public class ContractsSteps extends DwpScenario {
 
-  private String eanCodeInput = null;
 
-  @Before("@DWP, @REGRESSION")
-  public void setupTest(Scenario scenario) {
-    registerActiveScenario(scenario);
-  }
+    private String eanCodeInput = null;
 
-  @When("^Input in \"([^\"]*)\" is \"([^\"]*)\"$")
-  public void inputInModuleIs(String label, String input) {
-    seleniumDriver.waitForRequestsToFinish();
-    Sleeper.sleepTightInSeconds(3);
-    ContractPage contractenPage = new ContractPage();
-    contractenPage.fieldDropDownLabel(label, input);
-  }
+    @Before("@DWP, @REGRESSION")
+    public void setupTest(Scenario scenario) {
+        registerActiveScenario(scenario);
+    }
 
-  @And("^Check toggle \"([^\"]*)\"$")
-  public void checkToggle(String label) {
-    ContractPage contractenPage = new ContractPage();
-    contractenPage.turnOnTestingAndMarketMock(label);
-  }
 
-  @When("^Find \"([^\"]*)\" contract$")
-  public void findContract(String input) {
-    ContractPage contractenPage = new ContractPage();
-    eanCodeInput = contractenPage.findActiveContract(input);
-    logger().info("EAN CODE: " + eanCodeInput);
-    parameterProvider.put("contractEanCode", eanCodeInput);
-  }
+    @When("^Input in \"([^\"]*)\" is \"([^\"]*)\"$")
+    public void inputInModuleIs(String label, String input) {
+        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(3);
+        ContractPage contractenPage = new ContractPage();
+        contractenPage.fieldDropDownLabel(label, input);
+    }
 
-  @When("^Contract line EAN-code \"([^\"]*)\" is submitted$")
-  public void submitEanCode(String value) {
-    String inputValue = parameterProvider.getValueOrParameterAsString(value);
-    ContractPage contractenPage = new ContractPage();
-    contractenPage.searchForEanCode(inputValue);
-  }
+    @And("^Check toggle \"([^\"]*)\"$")
+    public void checkToggle(String label) {
+        ContractPage contractenPage = new ContractPage();
+        contractenPage.turnOnTestingAndMarketMock(label);
+    }
 
-  @Then("^Confirm task was \"([^\"]*)\"$")
-  public void confirmTaskWas(String value) {
-    String inputValue = parameterProvider.getValueOrParameterAsString(value);
-    MarktBerichtenPage mp = new MarktBerichtenPage();
-    Assert.assertTrue(mp.getTaskStatus(inputValue).isDisplayed());
-  }
+    @When("^Find \"([^\"]*)\" contract$")
+    public void findContract(String input) {
+        ContractPage contractenPage = new ContractPage();
+        eanCodeInput = contractenPage.findActiveContract(input);
+        logger().info("EAN CODE: " + eanCodeInput);
+        parameterProvider.put("contractEanCode", eanCodeInput);
+    }
 
-  @Override
-  @After("@DWP, @REGRESSION")
-  public void tearDown() {
-    super.tearDown();
-  }
+    @When("^Contract line EAN-code \"([^\"]*)\" is submitted$")
+    public void submitEanCode(String value) {
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
+        ContractPage contractenPage = new ContractPage();
+        contractenPage.searchForEanCode(inputValue);
+    }
 
-  @And("^\"([^\"]*)\" input in omschrijving$")
-  public void inputInOmschrijving(String text) {
-    SalesPage sp = new SalesPage();
-    sp.inputText(text);
-  }
+    @Then("^Confirm task was \"([^\"]*)\"$")
+    public void confirmTaskWas(String value) {
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
+        MarktBerichtenPage mp = new MarktBerichtenPage();
+        Assert.assertTrue(mp.getTaskStatus(inputValue).isDisplayed());
+    }
 
-  @And("^Offertes plus options is \"([^\"]*)\"$")
-  public void sendEMailToCustomer(String test) {
-    ContractPage contractenPage = new ContractPage();
-    contractenPage.sendEmailToCustomer(test);
-  }
+    @Override
+    @After("@DWP, @REGRESSION")
+    public void tearDown() {
+        super.tearDown();
+    }
 
-  @And("^List option is \"([^\"]*)\"$")
-  public void openInvoiceOnly(String option) {
-    InvoiceListPage ilp = new InvoiceListPage();
-    ilp.openListOption(option);
-  }
+    @And("^\"([^\"]*)\" input in omschrijving$")
+    public void inputInOmschrijving(String text) {
+        SalesPage sp = new SalesPage();
+        sp.inputText(text);
+    }
 
-  @Then("^Payment delayed$")
-  public void paymentDelayed() {
-    InvoiceListPage ilp = new InvoiceListPage();
-    ilp.checkPayDate();
-  }
+    @And("^Offertes plus options is \"([^\"]*)\"$")
+    public void sendEMailToCustomer(String test) {
+        ContractPage contractenPage = new ContractPage();
+        contractenPage.sendEmailToCustomer(test);
+    }
 
-  @And("^Find \"([^\"]*)\" facture and \"([^\"]*)\"$")
-  public void findFactureAnd(String type, String option) {
-    InvoiceListPage ilp = new InvoiceListPage();
-    ilp.findIssuedAndPayDelay(type, option);
-  }
+    @And("^List option is \"([^\"]*)\"$")
+    public void openInvoiceOnly(String option)  {
+        InvoiceListPage ilp = new InvoiceListPage();
+        ilp.openListOption(option);
+    }
 
-  @Then("^Validate bank account was changed on \"([^\"]*)\"$")
-  public void validateBankAccountWasChangedOn(String iban) {
-    String inputIban = parameterProvider.getValueOrParameterAsString(iban);
-    DetailsPage dp = new DetailsPage();
-    dp.findIban(inputIban);
-  }
+    @Then("^Payment delayed$")
+    public void paymentDelayed() {
+        InvoiceListPage ilp = new InvoiceListPage();
+        ilp.checkPayDate();
+    }
 
-  @And("^Get Contract Ean Code$")
-  public void getEanCode() {
-    String eanCode = seleniumDriver.findElementWhenVisible(By.xpath("(//h5)[1]")).getText();
-    parameterProvider.put("contractEanCode", eanCode);
-  }
+    @And("^Find \"([^\"]*)\" facture and \"([^\"]*)\"$")
+    public void findFactureAnd(String type, String option) {
+        InvoiceListPage ilp = new InvoiceListPage();
+        ilp.findIssuedAndPayDelay(type, option);
+    }
 
-  @Then("^Save changes$")
-  public void saveChanges() {
-    ContractPage contractenPage = new ContractPage();
-    contractenPage.saveButton();
-  }
+    @Then("^Validate bank account was changed on \"([^\"]*)\"$")
+    public void validateBankAccountWasChangedOn(String iban) {
+        String inputIban = parameterProvider.getValueOrParameterAsString(iban);
+        DetailsPage dp = new DetailsPage();
+        dp.findIban(inputIban);
+    }
 
-  @Then("^Confirm contract with ean \"([^\"]*)\" was copied$")
-  public void confirmContractWithEanWasCopied(String eanCode) {
-    seleniumDriver.waitForRequestsToFinish();
-    String inputEanCode = parameterProvider.getValueOrParameterAsString(eanCode);
-    logger().info("input EAN CODE: " + inputEanCode);
-    Assert.assertTrue(
-        "Correct ean code was not found.",
-        seleniumDriver
-            .findElementWhenVisible(By.xpath("//h5[.='" + inputEanCode + "']"))
-            .isDisplayed());
-  }
+    @And("^Get Contract Ean Code$")
+    public void getEanCode() {
+        String eanCode = seleniumDriver.findElementWhenVisible(By.xpath("(//h5)[1]")).getText();
+        parameterProvider.put("contractEanCode", eanCode);
+    }
 
-  /**
-   * @deprecated - use generic '"1st" list element has cell value "value" at column "columnName"'
-   */
-  @Then("^Get Contract Number$")
-  public void searchForContractNumber() {
-    ContractPage contractenPage = new ContractPage();
-    parameterProvider.put("contractNumber", contractenPage.getContractNumber());
-  }
+    @Then("^Save changes$")
+    public void saveChanges() {
+        seleniumDriver.waitForRequestsToFinish();
+        ContractPage contractenPage = new ContractPage();
+        contractenPage.saveButton();
+    }
 
-  @And("^Invoice checkbox with key \"([^\"]*)\" is clicked$")
-  public void checkInvoiceOpenBalance(String text) {
-    seleniumDriver.waitForRequestsToFinish();
-    ContractPage contractenPage = new ContractPage();
-    contractenPage.checkInvoiceOpenBalance(text);
-  }
+    @Then("^Confirm contract with ean \"([^\"]*)\" was copied$")
+    public void confirmContractWithEanWasCopied(String eanCode) {
+        seleniumDriver.waitForRequestsToFinish();
+        String inputEanCode = parameterProvider.getValueOrParameterAsString(eanCode);
+        logger().info("input EAN CODE: " + inputEanCode);
+        Assert.assertTrue("Correct ean code was not found.", seleniumDriver.findElementWhenVisible(By.xpath("//h5[.='" + inputEanCode + "']")).isDisplayed());
+    }
 
-  @Then("^Customer Status is \"([^\"]*)\"$")
-  public void customerStatus(String expectedStatus) {
-    seleniumDriver.waitForRequestsToFinish();
-    CustomerAcceptance customerAcceptance = new CustomerAcceptance();
-    String actualStatus = customerAcceptance.getAcceptanceStatus();
-    seleniumDriver.waitForRequestsToFinish();
-    assertThat(
-        String.format(
-            "Actual customer acceptance status \"%s\" differs from the expected \"%s\"",
-            actualStatus, expectedStatus),
-        actualStatus,
-        equalTo(expectedStatus));
-  }
+    /**
+     * @deprecated - use generic '"1st" list element has cell value "value" at column "columnName"'
+     */
+    @Then("^Get Contract Number$")
+    public void searchForContractNumber() {
+        ContractPage contractenPage = new ContractPage();
+        parameterProvider.put("contractNumber", contractenPage.getContractNumber());
+    }
 
-  @Then("^Customer Status is an existing status$")
-  public void customerStatus() {
-    CustomerAcceptance customerAcceptance = new CustomerAcceptance();
-    String actualStatus = customerAcceptance.getAcceptanceStatus();
-    boolean success = CustomerStatus.containsStatus(actualStatus);
-    assertThat(
-        String.format("Actual customer acceptance status \"%s\" does not exist", actualStatus),
-        success,
-        is(true));
-  }
 
-  @Then("^Get Company Number$")
-  public void searchForCompanyNumber() {
-    ContractPage cp = new ContractPage();
-    String companyNumber = cp.getCompanyNumber();
-    parameterProvider.put("companyNumber", companyNumber);
-  }
+    @And("^Invoice checkbox with key \"([^\"]*)\" is clicked$")
+    public void checkInvoiceOpenBalance(String text) {
+        seleniumDriver.waitForRequestsToFinish();
+        ContractPage contractenPage = new ContractPage();
+        contractenPage.checkInvoiceOpenBalance(text);
+    }
 
-  @Then("^Get Account Number$")
-  public void searchForAccountNumber() {
-    ContractPage cp = new ContractPage();
-    String accountNumber = cp.getAccountNumber();
-    parameterProvider.put("accountNumber", accountNumber);
-  }
+    @Then("^Customer Status is \"([^\"]*)\"$")
+    public void customerStatus(String expectedStatus) {
+        seleniumDriver.waitForRequestsToFinish();
+        CustomerAcceptance customerAcceptance = new CustomerAcceptance();
+        String actualStatus = customerAcceptance.getAcceptanceStatus();
+        seleniumDriver.waitForRequestsToFinish();
+        assertThat(String.format("Actual customer acceptance status \"%s\" differs from the expected \"%s\"", actualStatus, expectedStatus), actualStatus, equalTo(expectedStatus));
 
-  @And("^Sign place is \"([^\"]*)\"$")
-  public void signPlaceIs(String place) {
-    NewQuotePage nqp = new NewQuotePage();
-    nqp.confirmTheSign(place);
-  }
+    }
 
-  @Then("^Populate Soctar with dates \"([^\"]*)\" and \"([^\"]*)\"$")
-  public void searchForAttestDate(String startDate, String attestDate) {
-    ContractPage contractenPage = new ContractPage();
-    String sd = parameterProvider.getValueOrParameterAsString(startDate);
-    String ad = parameterProvider.getValueOrParameterAsString(attestDate);
+    @Then("^Customer Status is an existing status$")
+    public void customerStatus() {
+        CustomerAcceptance customerAcceptance = new CustomerAcceptance();
+        String actualStatus = customerAcceptance.getAcceptanceStatus();
+        boolean success = CustomerStatus.containsStatus(actualStatus);
+        assertThat(String.format("Actual customer acceptance status \"%s\" does not exist", actualStatus),
+            success, is(true));
 
-    String StartDateByQuarter = contractenPage.getQuarterForChosenStartDate(sd, ad);
-    String EndDateByYear = contractenPage.getLastDayOfYear(sd, ad);
-    parameterProvider.put("EndDateByYear", EndDateByYear);
-    parameterProvider.put("StartDateByQuarter", StartDateByQuarter);
-  }
+    }
 
-  @Then("^Get Start Date$")
-  public void searchForStartDate() {
-    ContractPage contractenPage = new ContractPage();
-    String startDate = contractenPage.getStartDate();
-    parameterProvider.put("startDate", startDate);
-  }
+    @Then("^Get Company Number$")
+    public void searchForCompanyNumber() {
+        ContractPage cp = new ContractPage();
+        String companyNumber = cp.getCompanyNumber();
+        parameterProvider.put("companyNumber", companyNumber);
 
-  @Then("^Start Date \"([^\"]*)\" is \"([^\"]*)\" day bigger than End Date \"([^\"]*)\"$")
-  public void compareStartAndEndDate(String startDate, long expectedRange, String endDate) {
+    }
 
-    String sd = parameterProvider.getValueOrParameterAsString(startDate);
-    String ed = parameterProvider.getValueOrParameterAsString(endDate);
+    @Then("^Get Account Number$")
+    public void searchForAccountNumber() {
+        ContractPage cp = new ContractPage();
+        String accountNumber = cp.getAccountNumber();
+        parameterProvider.put("accountNumber", accountNumber);
 
-    parameterProvider.put("startDate", startDate);
-    parameterProvider.put("endDate", endDate);
+    }
 
-    long actualRange = ContractPage.rangeDates(sd, ed);
-    assertThat(
-        String.format(
-            "Start date \"%s\" differs from the end date \"%s\" by 1 year ",
-            actualRange, expectedRange),
-        actualRange,
-        equalTo(expectedRange));
-  }
+    @And("^Sign place is \"([^\"]*)\"$")
+    public void signPlaceIs(String place) {
+        NewQuotePage nqp = new NewQuotePage();
+        nqp.confirmTheSign(place);
+      }
 
-  @Then("^Check is product change \"([^\"]*)\"$")
-  public void checkProductChangeSuccess(String expectedMessage) {
-    seleniumDriver.waitForRequestsToFinish();
-    ContractPage cp = new ContractPage();
-    String messageActual = cp.checkSuccessMessage();
-    Assert.assertThat("Product change successfully done", messageActual, equalTo(expectedMessage));
-  }
+    @Then("^Populate Soctar with dates \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void searchForAttestDate(String startDate, String attestDate) {
+        ContractPage contractenPage = new ContractPage();
+        String sd = parameterProvider.getValueOrParameterAsString(startDate);
+        String ad = parameterProvider.getValueOrParameterAsString(attestDate);
 
-  @Then("^Product Change dates are \"([^\"]*)\" and \"([^\"]*)\"$")
-  public void ProductChangeDates(
-      final String productChangeStartDate, final String productChangeEndDate) {
-    String pcsd = parameterProvider.getValueOrParameterAsString(productChangeStartDate);
-    String pced = parameterProvider.getValueOrParameterAsString(productChangeEndDate);
-    parameterProvider.put("productChangeStartDate", pcsd);
-    parameterProvider.put("productChangeEndDate", pced);
-  }
+        String StartDateByQuarter = contractenPage.getQuarterForChosenStartDate(sd, ad);
+        String EndDateByYear = contractenPage.getLastDayOfYear(sd, ad);
+        parameterProvider.put("EndDateByYear", EndDateByYear);
+        parameterProvider.put("StartDateByQuarter", StartDateByQuarter);
+    }
 
-  @When("^Payment table is not empty$")
-  public void checkPaymentTableNotEmpty() throws Throwable {
-    seleniumDriver.waitForRequestsToFinish();
-    ContractPage contractenPage = new ContractPage();
-    boolean success = contractenPage.checkPaymentTableNotEmpty();
+    @Then("^Get Start Date$")
+    public void searchForStartDate() {
+        ContractPage contractenPage = new ContractPage();
+        String startDate = contractenPage.getStartDate();
+        parameterProvider.put("startDate", startDate);
 
-    assertThat("Rows in invoice table are empty", success, is(true));
-    seleniumDriver.waitForRequestsToFinish();
-  }
+    }
 
-  @Then("^Payment plan has \"([^\"]*)\" installments$")
-  public void PaymentPlanNumberOfInstallments(int expectedNumberOfInstallments) {
-    seleniumDriver.waitForRequestsToFinish();
-    ContractPage contractPage = new ContractPage();
+    @Then("^Start Date \"([^\"]*)\" is \"([^\"]*)\" day bigger than End Date \"([^\"]*)\"$")
+    public void compareStartAndEndDate(String startDate, long expectedRange, String endDate) {
 
-    int actualNumberOfInstallments = contractPage.checkNumberOfInstallments();
-    assertThat(
-        String.format(
-            "Number of actual installments \"%s\" differs from the expected ones \"%s\" on payment plan",
-            actualNumberOfInstallments, expectedNumberOfInstallments),
-        actualNumberOfInstallments,
-        equalTo(expectedNumberOfInstallments));
-    seleniumDriver.waitForRequestsToFinish();
-  }
+        String sd = parameterProvider.getValueOrParameterAsString(startDate);
+        String ed = parameterProvider.getValueOrParameterAsString(endDate);
 
-  @Then("^Payment plan has installment values of \"([^\"]*)\", \"([^\"]*)\" and \"([^\"]*)\"$")
-  public void PaymentPlanValuesOfInstallments(
-      String firstExpectedValue, String secondExpectedValue, String thirdExpectedValue) {
-    seleniumDriver.waitForRequestsToFinish();
-    ContractPage contractPage = new ContractPage();
-    String expectedResult = firstExpectedValue + secondExpectedValue + thirdExpectedValue;
-    String result =
-        contractPage.checkValueOfInstallments(
-            firstExpectedValue, secondExpectedValue, thirdExpectedValue);
-    assertEquals(expectedResult, result);
-    seleniumDriver.waitForRequestsToFinish();
-  }
+        parameterProvider.put("startDate", startDate);
+        parameterProvider.put("endDate", endDate);
+
+        long actualRange = ContractPage.rangeDates(sd, ed);
+        assertThat(String.format("Start date \"%s\" differs from the end date \"%s\" by 1 year ", actualRange, expectedRange), actualRange, equalTo(expectedRange));
+    }
+
+
+    @Then("^Check is product change \"([^\"]*)\"$")
+    public void checkProductChangeSuccess(String expectedMessage) {
+        seleniumDriver.waitForRequestsToFinish();
+        ContractPage cp = new ContractPage();
+        String messageActual = cp.checkSuccessMessage();
+        Assert.assertThat("Product change successfully done", messageActual, equalTo(expectedMessage));
+
+    }
+
+    @Then("^Product Change dates are \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void ProductChangeDates(final String productChangeStartDate, final String productChangeEndDate){
+        String pcsd  = parameterProvider.getValueOrParameterAsString(productChangeStartDate);
+        String pced = parameterProvider.getValueOrParameterAsString(productChangeEndDate);
+        parameterProvider.put("productChangeStartDate", pcsd);
+        parameterProvider.put("productChangeEndDate", pced);
+
+    }
+
+    @When("^Payment table is not empty$")
+    public void checkPaymentTableNotEmpty() throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
+        ContractPage contractenPage = new ContractPage();
+        boolean success = contractenPage.checkPaymentTableNotEmpty();
+
+        assertThat("Rows in invoice table are empty", success, is(true));
+        seleniumDriver.waitForRequestsToFinish();
+    }
+
+    @Then("^Payment plan has \"([^\"]*)\" installments$")
+    public void PaymentPlanNumberOfInstallments(int expectedNumberOfInstallments){
+        seleniumDriver.waitForRequestsToFinish();
+        ContractPage contractPage = new ContractPage();
+
+        int actualNumberOfInstallments = contractPage.checkNumberOfInstallments();
+        assertThat(String.format("Number of actual installments \"%s\" differs from the expected ones \"%s\" on payment plan", actualNumberOfInstallments, expectedNumberOfInstallments), actualNumberOfInstallments, equalTo(expectedNumberOfInstallments));
+        seleniumDriver.waitForRequestsToFinish();
+    }
+
+    @Then("^Payment plan has installment values of \"([^\"]*)\", \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void PaymentPlanValuesOfInstallments(String firstExpectedValue, String secondExpectedValue, String thirdExpectedValue){
+        seleniumDriver.waitForRequestsToFinish();
+        ContractPage contractPage = new ContractPage();
+        String expectedResult = firstExpectedValue + secondExpectedValue + thirdExpectedValue;
+        String result =  contractPage.checkValueOfInstallments(firstExpectedValue, secondExpectedValue, thirdExpectedValue);
+        assertEquals(expectedResult ,result);
+        seleniumDriver.waitForRequestsToFinish();
+    }
 }

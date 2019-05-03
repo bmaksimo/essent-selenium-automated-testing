@@ -22,22 +22,28 @@ public class LeadSteps extends DwpScenario {
 
   @When("^Add lead$")
   public void addLead() {
+    seleniumDriver.waitForRequestsToFinish();
     LeadsPage leadPage = new LeadsPage();
     leadPage.plusAddLead();
+    seleniumDriver.waitForRequestsToFinish();
   }
 
   @And("^New lead is$")
   public void insertCompanyNameForCreatingLead(DataTable dbTabel) {
+    seleniumDriver.waitForRequestsToFinish();
     NewLeadPage leadPage = new NewLeadPage();
     List<List<String>> db = dbTabel.raw();
 
     leadPage.createLead(db);
+    seleniumDriver.waitForRequestsToFinish();
   }
 
   @Then("^\"([^\"]*)\" lead was created$")
   public void leadWasCreated(String name) {
+    seleniumDriver.waitForRequestsToFinish();
     LeadsPage leadPage = new LeadsPage();
     leadPage.validateCreatingLead(name);
+    seleniumDriver.waitForRequestsToFinish();
   }
 
   @Override
