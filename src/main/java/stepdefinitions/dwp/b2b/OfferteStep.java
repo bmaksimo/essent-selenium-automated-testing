@@ -28,79 +28,61 @@ public class OfferteStep extends DwpScenario {
 
     @And("^Take Offertenummer from first offerte$")
     public void takeOffertenummerFromFirstOfferte() {
-        QuotesListPage qlp = new QuotesListPage();
-        String offertenummer = qlp.getOfferteNumberAsString();
-        parameterProvider.put("offertenummer", offertenummer);
+        String offerteNummer = new QuotesListPage().getOfferteNumberAsString();
+        parameterProvider.put("offertenummer", offerteNummer);
     }
 
     @And("^Reset filter$")
     public void resetFilter() {
-        seleniumDriver.waitForRequestsToFinish();
-        DwpFilterPage df = new DwpFilterPage();
-        df.resetFilter();
-        seleniumDriver.waitForRequestsToFinish();
+        new DwpFilterPage().resetFilter();
     }
 
     @And("^Label \"([^\"]*)\" is \"([^\"]*)\"$")
     public void labelIs(String label, String value) {
         String input = parameterProvider.getValueOrParameterAsString(value);
-        BaseObjectPage bo = new BaseObjectPage();
-        bo.clickOnLabel(label, input);
+        new BaseObjectPage().clickOnLabel(label, input);
     }
 
     @And("^Filter button is clicked$")
     public void filterButtonIsClicked() {
-        DwpFilterPage df = new DwpFilterPage();
-        df.clickOnFilter();
+        new DwpFilterPage().clickOnFilter();
     }
 
     @And("^Offertenummer input is \"([^\"]*)\"$")
     public void offertenummerInputIs(String value) {
-        seleniumDriver.waitForRequestsToFinish();
         String input = parameterProvider.getValueOrParameterAsString(value);
-        QuotesListPage qlp = new QuotesListPage();
-        qlp.offerteNumberFieldSendKeys(input);
+        new QuotesListPage().offerteNumberFieldSendKeys(input);
     }
 
     @And("^Oplossing text is \"([^\"]*)\"$")
     public void oplossingTextIs(String input){
-        seleniumDriver.waitForRequestsToFinish();
-        QuotesListPage qlp = new QuotesListPage();
-        qlp.markAsDoneOplossingSendKeys(input);
+        new QuotesListPage().markAsDoneOplossingSendKeys(input);
     }
 
     @Then("^Offerte status is \"([^\"]*)\"$")
     public void statusIs(String status) {
-        QuotesListPage qlp = new QuotesListPage();
-        Assert.assertTrue(qlp.getOfferteStatus().equalsIgnoreCase(status));
+        Assert.assertTrue(status.equalsIgnoreCase(new QuotesListPage().getOfferteStatus()));
     }
 
     @And("^\"([^\"]*)\" turn on with dot$")
     public void turnOnWithDot(String label) {
-        seleniumDriver.waitForRequestsToFinish();
-        ToggleImpl tgl = new ToggleImpl();
-        tgl.switchOnWithDot(label);
-
+        new ToggleImpl().switchOnWithDot(label);
     }
 
     @Then("^Bevestigen$")
     public void bevestigen(){
-        seleniumDriver.waitForRequestsToFinish();
-        BaseObjectPage bo = new BaseObjectPage();
-        bo.confirmQuote();
+        new BaseObjectPage().confirmQuote();
     }
 
     @And("^Sign quote file is uploaded$")
     public void signQuoteFileIsUploaded() {
         String filePath = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
-        ChangeAccountStatusPage changeAccountStatusPage = new ChangeAccountStatusPage();
-        boolean success = changeAccountStatusPage.uploadFileForSign(filePath);
+        boolean success = new ChangeAccountStatusPage().uploadFileForSign(filePath);
         assertThat(String.format("Signature file %s upload failed.", filePath), success, is(true));
     }
 
     @And("^Client signature receive data is \"([^\"]*)\"$")
     public void clientSignatureReceiveDataIs(String date) {
-        QuotesListPage qlp = new QuotesListPage();
-        qlp.setSignatureReceivedDate(date);
+        new QuotesListPage().setSignatureReceivedDate(date);
     }
 }

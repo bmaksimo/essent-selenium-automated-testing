@@ -78,6 +78,7 @@ public class BaseObjectPage extends Component {
     }
 
     public void confirmQuote() {
+        seleniumDriver.waitForRequestsToFinish();
         String query = NEXT_BUTTON.getQuery();
         logger().debug("Searching element by " + query);
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.cssSelector(NEXT_BUTTON.getQuery())));
