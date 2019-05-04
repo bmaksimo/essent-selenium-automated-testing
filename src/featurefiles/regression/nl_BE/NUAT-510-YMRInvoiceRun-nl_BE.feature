@@ -15,10 +15,8 @@ Feature: NUAT-510 Triggering advance invoice run. Check is invoice created in DW
             | productType    | isFakeAddress | switchType       | meterType       | kwMax |
             | UP             | FAKE          |  SUPPLIER SWITCH | YMR             | 50000 |
         And Top action is "Filters"
-        And "B2C/B2B" selection is "B2B"
-        And "Type klant" selection is "Klant"
         And "Klantnummer" input is "parameter:accountNumber"
-        Then "1st" List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
+        Then List element with value at column "Id Billing customer & persoon/familie sleutel" from table "Klanten" is checked
 
         When Plus menu is "Billing -> Start facturatierun"
         And Modal dialog is "Start invoicerun"
