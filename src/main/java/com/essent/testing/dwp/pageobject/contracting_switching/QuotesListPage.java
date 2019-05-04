@@ -7,23 +7,26 @@ import org.openqa.selenium.WebElement;
 public class QuotesListPage extends Component {
 
     public String getOfferteNumberAsString() {
+        seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath("//list-link-bold-top-two-liner-cell//a/h5")).getText();
     }
 
-    public void offerteNumberFieldSendKeys(String input){
+    public void offerteNumberFieldSendKeys(String input) {
+        seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id("number-default-value-field")),input);
     }
 
-    public void markAsDoneOplossingSendKeys(String input){
+    public void markAsDoneOplossingSendKeys(String input) {
+        seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id("task-resolution-c-field")),input);
     }
 
-    public String getOfferteStatus(){
+    public String getOfferteStatus() {
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.id("stage-field")).getText();
     }
 
-    public WebElement calendar(){
+    public WebElement calendar() {
         return seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"signature_received_date_c\"]//div[@class='input__with-button']/span"));
     }
 
