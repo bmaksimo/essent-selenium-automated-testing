@@ -2,7 +2,6 @@
 @REGRESSION
 @B2B
 @SERVICE-CONTRACTING
-@UNSTABLE
 Feature: NUAT-447: Check validity prices
 
     Background:
@@ -23,7 +22,7 @@ Feature: NUAT-447: Check validity prices
         Then Changes are confirmed
 
         When Reset filter
-        And Offertenummer input is "parameter:offertenummer"
+        And "Offertenummer" input is "parameter:offertenummer"
         And Click on link in View List at "1st" row and "Nummer & Getekend contractnummer" column polling 20 seconds
         And Plus menu is "Offertes -> Check geldigheid tarieven"
         And "Ja, ik wil de offerte met de nieuwe tarieven goedkeuren" turn on with dot
