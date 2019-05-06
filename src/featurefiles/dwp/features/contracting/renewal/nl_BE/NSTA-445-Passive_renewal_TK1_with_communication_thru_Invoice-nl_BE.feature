@@ -110,7 +110,7 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         And  "Van pakket" select with search is clicked
         And  Modal dialog is "Select"
         And  Search option is "parameter:PackageName"
-        And  Search button with label "Verzenden" is clicked
+        And  Search button with label "Search" is clicked
         And  First search result matching "parameter:PackageName" is checked
         And  Submit search results button "Verzenden" is clicked
         And  Modal dialog "Select" is not shown

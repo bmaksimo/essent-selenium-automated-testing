@@ -15,12 +15,15 @@ import java.util.Optional;
 
 public class SearchAndMultipeChoiceModalDialogImpl extends Component implements SearchAndMultipeChoiceModalDialog {
 
+    private static final String CSS_MODAL_SEARCH_RESULT_LOCATOR_TEMPLATE = "label:has(>input[type='checkbox'])";
     private static final By CSS_MODAL_TITLE_LOCATOR =
         By.cssSelector(".view__modal .modal__header");
     private static final By CSS_MODAL_SEARCH_FIELD_LOCATOR = By.cssSelector(".input-holder #search-input");
-    private static final By CSS_MODAL_SEARCH_RESULT_LOCATOR = By.cssSelector(".multi-select__results input[type='checkbox']");
+    private static final By CSS_MODAL_SEARCH_RESULT_LABEL_LOCATOR = By.cssSelector(CSS_MODAL_SEARCH_RESULT_LOCATOR_TEMPLATE);
+
     private static final String LINK_TEXT_MODAL_SUBMIT_TEMPLATE = "${label}";
     private static final String CSS_MODAL_SEARCH_BUTTON_TEMPLATE = "input[value='${label}']";
+
 
     @Override
     public String getTitle() {
@@ -46,11 +49,11 @@ public class SearchAndMultipeChoiceModalDialogImpl extends Component implements 
 
     @Override
     public boolean checkSearchResult(String match) {
-        List<WebElement> elements = seleniumDriver.findElements(CSS_MODAL_SEARCH_RESULT_LOCATOR,
+        List<WebElement> elements = seleniumDriver.findElements(CSS_MODAL_SEARCH_RESULT_LABEL_LOCATOR,
             Duration.ofSeconds(10),
             Duration.ofMillis(500));
         Optional<WebElement> first = elements.stream().filter(e -> e.getText().contains(match)).findFirst();
-        first.ifPresent(e -> e.click());
+        first.ifPresent(e -> new ButtonImpl(e.findElement(By.cssSelector(" > input"))).click());
         return first.isPresent();
     }
 

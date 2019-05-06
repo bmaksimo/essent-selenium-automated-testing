@@ -30,7 +30,6 @@ public class SearchAndMultipeChoice extends DwpScenario {
         String inputValue = parameterProvider.getValueOrParameterAsString(searchOption);
         SearchAndMultipeChoiceModalDialog searchDialog = new SearchAndMultipeChoiceModalDialogImpl();
         searchDialog.setSearchOption(inputValue);
-        searchDialog.search(inputValue);
     }
 
     @And("^Search button with label \"([^\"]*)\" is clicked$")
@@ -41,8 +40,9 @@ public class SearchAndMultipeChoice extends DwpScenario {
 
     @And("^First search result matching \"([^\"]*)\" is checked$")
     public void checkFirstSearchResult(String match) throws Throwable {
+        String input = parameterProvider.getValueOrParameterAsString(match);
         SearchAndMultipeChoiceModalDialog searchDialog = new SearchAndMultipeChoiceModalDialogImpl();
-        assertThat(searchDialog.checkSearchResult(match), is(true));
+        assertThat(searchDialog.checkSearchResult(input), is(true));
     }
 
   @And("^Submit search results button \"([^\"]*)\" is clicked$")

@@ -313,4 +313,10 @@ public class DWPSeleniumDriver extends SeleniumDriver
       waitForRequestsToFinish();
       return result;
   }
+
+    @Override
+    public WebElement findElementWhenPresent(By selector) {
+      waitForRequestsToFinish();
+      return super.findElementWhenPresent(selector);
+    }
 }
