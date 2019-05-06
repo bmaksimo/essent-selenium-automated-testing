@@ -2,17 +2,18 @@ package com.essent.testing.dwp.pageobject.guided_flow.cupq;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
+import com.essent.testing.dwp.pageobject.impl.quote.QuoteCreationGuidedStep;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public class NewQuotePage extends Component {
+public class NewQuotePage extends QuoteCreationGuidedStep {
 
-
-    private WebElement xElement = seleniumDriver.findElementWhenVisible(By.xpath("//guidance-modal//div[@class = 'modal__header']/a"));
-
+    private static final String X_ELEMENT_SELECTOR = "//guidance-modal//div[@class = 'modal__header']/a";
     private static final String CONFIRM_SIGNIN_PLACE = "//*[@id=\"accounts|aos_quotes|sign_location_c\"]/div[1]/input";
 
     public void clickOnX() {
+        seleniumDriver.waitForRequestsToFinish();
+        WebElement xElement = seleniumDriver.findElementWhenVisible(By.xpath(X_ELEMENT_SELECTOR));
         seleniumDriver.waitAndClick(xElement);
     }
 
@@ -74,13 +75,16 @@ public class NewQuotePage extends Component {
     }
 
     public void saveInitialQuote() {
+        seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"primaryButton\"]/span[2]")));
-
     }
 
     public void confirmTheSign(String place){
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath(CONFIRM_SIGNIN_PLACE)),place);
     }
 
-
+    @Override
+    public boolean fillInFormData() {
+        return false;
+    }
 }
