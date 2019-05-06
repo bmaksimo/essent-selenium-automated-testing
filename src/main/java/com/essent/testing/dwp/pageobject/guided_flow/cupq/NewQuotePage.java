@@ -1,7 +1,6 @@
 package com.essent.testing.dwp.pageobject.guided_flow.cupq;
 
 import com.essent.automation.util.Sleeper;
-import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.quote.QuoteCreationGuidedStep;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -72,11 +71,6 @@ public class NewQuotePage extends QuoteCreationGuidedStep {
     public void setEanCode(String eanCode) {
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"ean-c-accounts-aos-quotes-aos-products-quotes-7-cc-91145-f-43-f-4800-d-705-58-ffa-7899-fbd-field\"]")), eanCode);
 
-    }
-
-    public void saveInitialQuote() {
-        seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"primaryButton\"]/span[2]")));
     }
 
     public void confirmTheSign(String place){
