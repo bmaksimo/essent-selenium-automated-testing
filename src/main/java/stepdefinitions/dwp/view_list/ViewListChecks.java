@@ -600,18 +600,22 @@ public class ViewListChecks extends NavigationElements {
     @Then("^List element with value at column \"([^\"]*)\" from table \"([^\"]*)\" is checked$")
     public void storeColumnValueInParameterProvider(String columnName, String tableName) throws Throwable {
         seleniumDriver.waitForRequestsToFinish();
+        FluentWait<ViewListModel> waiter = waiter(new ViewListModel(), 60, 1);
+        waiter.withMessage(
+            String.format("List element didn't contain any value at column \"%s\"", columnName));
+        boolean success = waiter.until((ViewListModel callback) ->
+                CollectionUtils.isNotEmpty(callback.fetchColumnData(tableName, columnName)));
+
         List<String> columnData = new ViewListModel().fetchColumnData(tableName, columnName);
-        boolean success = CollectionUtils.isNotEmpty(columnData);
-        assertThat(
-            String.format("\"%s\" list element didn't contain any value at column \"%s\"", tableName, columnName),
+        assertThat(String.format("\"%s\" list element didn't contain any value at column \"%s\"", tableName, columnName),
             success, is(true));
+
         parameterProvider.put(columnName, columnData.get(0));
         logger().info(String.format("- STEP: \"%s\" list element with value at column \"%s\" is checked - PASSED.",
             tableName, columnName));
     }
 
-    @And(
-        "^\"([^\"]*)\" element of table \"([^\"]*)\" at currency column \"([^\"]*)\" is sum of$")
+    @And("^\"([^\"]*)\" element of table \"([^\"]*)\" at currency column \"([^\"]*)\" is sum of$")
     public void checkCurrencyAmountDableDataAsSum(String ordinal, String table, String columnName, final DataTable subAmounts)
         throws Throwable {
         seleniumDriver.waitForRequestsToFinish();
