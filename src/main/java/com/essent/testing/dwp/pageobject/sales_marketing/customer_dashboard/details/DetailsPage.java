@@ -7,7 +7,6 @@ public class DetailsPage extends Component {
 
     private static final String NUMBER_BILLING_CUSTOMER = "//list[@list-key='BillingCustomerOnaccount']//tr[@class='list__row']";
     private static final String IBAN = "//span[.='${iban}']";
-    private static final String REPLACEMENT_KEY = "replacement_key";
     private static final String ADDRESS = "//div[@class='card__content__inner-wrapper']/p[1]";
     private static final String PHONE = "//div[@class='card__content__inner-wrapper']/p[2]/span[2]";
     private static final String EMAIL = "//div[@class='card__content__inner-wrapper']/p[2]/span[3]";
@@ -15,7 +14,7 @@ public class DetailsPage extends Component {
 
     public void findIban(String iban) {
         seleniumDriver.waitForRequestsToFinish();
-        String xpathFindIban = createQuery(IBAN, REPLACEMENT_KEY, iban);
+        String xpathFindIban = createQuery(IBAN, "iban", iban);
         seleniumDriver.findElementWhenVisible(By.xpath(xpathFindIban)).isDisplayed();
     }
 

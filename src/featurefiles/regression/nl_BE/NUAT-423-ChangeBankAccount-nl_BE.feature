@@ -2,7 +2,7 @@
 @B2B
 @REGRESSION
 @BUSINESS-DESK
-@UNSTABLE
+@ALL
 Feature: NUAT-423: Change Bank Account - nl_BE
 
     Background:
@@ -23,7 +23,7 @@ Feature: NUAT-423: Change Bank Account - nl_BE
         And "IBAN" input is "BE71096123456769"
         And Changes are confirmed
         Then Validate bank account was changed on "parameter:inputValue"
-        
+
         Given I logged in to Odoo as "role_essent_ccm_user"
         When Odoo top menu is "Accounting"
         And Odoo left menu is "Customers"
