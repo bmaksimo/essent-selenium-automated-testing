@@ -68,10 +68,10 @@ Feature: NSTA - 344 Payment Plan
         Then "1st" List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
         When Plus menu is "Billing -> Start facturatierun"
         And Modal dialog is "Start invoicerun"
-        And "Naam job" selection is "recurrent"
-        And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
         And "Factuurdatum" date is "now"
         And "Procesdatum" date is "now"
+        And "Naam job" selection is "recurrent"
+        And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
         Then Invoice run is scheduled
 
         Given I renew login to DWP as "businessdesk.testautomation.b2b@essent.be"
@@ -111,9 +111,13 @@ Feature: NSTA - 344 Payment Plan
         Then View list header is "Transacties"
         Then View list header is "Afbetalingsplannen"
         And Payment table is not empty
+        Then Click on link in View List at "1st" row and "Nummer & referentie" column polling 60 seconds
+        Then Save Installments Sum
+        Then Check Number of Installments for given number "2"
         And Table "Afbetalingsplannen" contains value "open" at column "Status"
         Then Payment plan has "3" installments
         Then Payment plan has installment values of "€ 50", "€ 50" and "€ 13"
+
 
 
 

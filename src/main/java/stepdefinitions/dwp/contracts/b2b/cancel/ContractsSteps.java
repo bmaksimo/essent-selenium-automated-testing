@@ -23,6 +23,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.testng.AssertJUnit.assertEquals;
+import static org.testng.AssertJUnit.assertTrue;
 
 public class ContractsSteps extends DwpScenario {
 
@@ -261,7 +262,8 @@ public class ContractsSteps extends DwpScenario {
         ContractPage contractPage = new ContractPage();
 
         int actualNumberOfInstallments = contractPage.checkNumberOfInstallments();
-        assertThat(String.format("Number of actual installments \"%s\" differs from the expected ones \"%s\" on payment plan", actualNumberOfInstallments, expectedNumberOfInstallments), actualNumberOfInstallments, equalTo(expectedNumberOfInstallments));
+//        assertThat(String.format("Number of actual installments \"%s\" differs from the expected ones \"%s\" on payment plan", actualNumberOfInstallments, expectedNumberOfInstallments), actualNumberOfInstallments, equalTo(expectedNumberOfInstallments));
+        assertTrue("insufficient Number of installments with amount of 50.",expectedNumberOfInstallments>=actualNumberOfInstallments);
         seleniumDriver.waitForRequestsToFinish();
     }
 
@@ -274,5 +276,22 @@ public class ContractsSteps extends DwpScenario {
         assertEquals(expectedResult ,result);
         seleniumDriver.waitForRequestsToFinish();
 
+    }
+
+    @Then("^Save Installments Sum$")
+    public void InstallmentSum() {
+        seleniumDriver.waitForRequestsToFinish();
+        ContractPage cp = new ContractPage();
+        cp.getInstallmentSum();
+        parameterProvider.put("installmentSum", cp.getInstallmentSum());
+        seleniumDriver.waitForRequestsToFinish();
+    }
+
+    @Then("^Check Number of Installments for given number \"([^\"]*)\"$")
+    public void CheckInstallmentsNumber(String num) {
+        seleniumDriver.waitForRequestsToFinish();
+        ContractPage cp = new ContractPage();
+        cp.installmentsNumber(num);
+        seleniumDriver.waitForRequestsToFinish();
     }
 }
