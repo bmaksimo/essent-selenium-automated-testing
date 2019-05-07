@@ -21,165 +21,172 @@ import static org.testng.AssertJUnit.assertEquals;
 
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 public class Contract extends DwpScenario {
-  private static String Klantnummer;
 
-  @Before("@REGRESSION")
-  public void setupTest(Scenario scenario) throws Throwable {
-    registerActiveScenario(scenario);
-  }
+    private static String Klantnummer;
 
-  @And("^Contract startdatum is today$")
-  public void contractStartdatumIsToday() {
-    ContractPage cp = new ContractPage();
-    cp.startDateIsToday();
-  }
+    @Before("@REGRESSION")
+    public void setupTest(Scenario scenario) throws Throwable {
+        registerActiveScenario(scenario);
+    }
 
-  @And("^Get client number$")
-  public void getClientNumber() {
-    ContractPage cp = new ContractPage();
-    Klantnummer = cp.getClientNumber();
-    parameterProvider.put("accountNumber", Klantnummer);
-  }
+    @And("^Contract startdatum is today$")
+    public void contractStartdatumIsToday(){
+        ContractPage cp = new ContractPage();
+        cp.startDateIsToday();
+    }
 
-  @And("^Search by client number$")
-  public void searchByClientNumber() {
-    ContractPage cp = new ContractPage();
-    cp.selectAccount();
-    cp.searchByClientNumber(Klantnummer);
-    cp.searchForEanCode(Klantnummer);
-  }
 
-  @When(
-      "^Plus action of \"([^\"]*)\" element from \"([^\"]*)\" and click on Mark As Done/Markeren Als Verwerkt$")
-  public void plusActionOfElementFromAndClickOnMarkAsDone(String row, String table) {
-    seleniumDriver.waitForRequestsToFinish();
-    ContractPage cp = new ContractPage();
-    BaseObjectPage baseObject = new BaseObjectPage();
-    Sleeper.sleepTightInSeconds(5);
-    cp.clickOnPlusMeniInTable(row, table);
-    baseObject.clickOnMarkAsDonePlusMenuSubAction();
-  }
+    @And("^Get client number$")
+    public void getClientNumber() {
+        ContractPage cp = new ContractPage();
+        Klantnummer=cp.getClientNumber();
+        parameterProvider.put("accountNumber",Klantnummer);
+    }
 
-  @When("^Plus action of \"([^\"]*)\" element from \"([^\"]*)\" and click on \"([^\"]*)\"$")
-  public void plusActionOfElementFromAndClickOn(String row, String table, String action) {
-    seleniumDriver.waitForRequestsToFinish();
-    ContractPage cp = new ContractPage();
-    BaseObjectPage baseObject = new BaseObjectPage();
-    Sleeper.sleepTightInSeconds(5);
-    cp.clickOnPlusMeniInTable(row, table);
-    baseObject.plusSubaction(action);
-  }
+    @And("^Search by client number$")
+    public void searchByClientNumber() {
+        ContractPage cp = new ContractPage();
+        cp.selectAccount();
+        cp.searchByClientNumber(Klantnummer);
+        cp.searchForEanCode(Klantnummer);
+    }
 
-  @And("^Save EAN from active contract$")
-  public void saveEANFromActiveContract() {
-    ContractPage cp = new ContractPage();
-    parameterProvider.put("EAN-active-contract", cp.getActiveContractEAN());
-  }
+    @When("^Plus action of \"([^\"]*)\" element from \"([^\"]*)\" and click on Mark As Done/Markeren Als Verwerkt$")
+    public void plusActionOfElementFromAndClickOnMarkAsDone(String row, String table){
+        seleniumDriver.waitForRequestsToFinish();
+        ContractPage cp = new ContractPage();
+        BaseObjectPage baseObject = new BaseObjectPage();
+        Sleeper.sleepTightInSeconds(5);
+        cp.clickOnPlusMeniInTable(row,table);
+        baseObject.clickOnMarkAsDonePlusMenuSubAction();
+    }
 
-  @Then("^Contract is in \"([^\"]*)\" state$")
-  public void contractIsInState(String status) {
-    ContractPage cp = new ContractPage();
-    seleniumDriver.waitForRequestsToFinish();
-    assertEquals(cp.contractStatus(), status);
-  }
+    @When("^Plus action of \"([^\"]*)\" element from \"([^\"]*)\" and click on \"([^\"]*)\"$")
+    public void plusActionOfElementFromAndClickOn(String row, String table, String action) {
+        seleniumDriver.waitForRequestsToFinish();
+        ContractPage cp = new ContractPage();
+        BaseObjectPage baseObject = new BaseObjectPage();
+        Sleeper.sleepTightInSeconds(5);
+        cp.clickOnPlusMeniInTable(row,table);
+        baseObject.plusSubaction(action);
+    }
 
-  @And("^Clicked on sign X$")
-  public void clickOnX() {
-    NewQuotePage nq = new NewQuotePage();
-    seleniumDriver.waitForRequestsToFinish();
-    nq.clickOnX();
-  }
+    @And("^Save EAN from active contract$")
+    public void saveEANFromActiveContract() {
+        ContractPage cp = new ContractPage();
+        parameterProvider.put("EAN-active-contract",cp.getActiveContractEAN());
+    }
 
-  @When("^B2B sales channel is ([^\"]*)$")
-  public void initSalesChannelB2B(SalesChannel salesChannel) {
-    QuoteDetailsPage quoteDetailsPage = new QuoteDetailsPage();
-    quoteDetailsPage.setSalesChannel(salesChannel);
-    boolean formInitialized = quoteDetailsPage.fillInFormData();
-    assertThat("Failure occurred when filling in input values", formInitialized, is(true));
-  }
+    @Then("^Contract is in \"([^\"]*)\" state$")
+    public void contractIsInState(String status) {
+        ContractPage cp = new ContractPage();
+        seleniumDriver.waitForRequestsToFinish();
+        assertEquals(cp.contractStatus(),status);
+    }
 
-  @When("^Rechtsvorm is bvba$")
-  public void formLegal() {
-    NewQuotePage nq = new NewQuotePage();
-    nq.selectItemLegalForm();
-  }
+    @And("^Clicked on sign X$")
+    public void clickOnX() {
+        NewQuotePage nq = new NewQuotePage();
+        nq.clickOnX();
+    }
 
-  @And("^Gender is male$")
-  public void gender() {
-    NewQuotePage nq = new NewQuotePage();
-    nq.selectGender();
-  }
 
-  @And("^E-mailadres is \"([^\"]*)\"$")
-  public void emailContract(String emailContract) {
-    NewQuotePage nq = new NewQuotePage();
-    nq.getEmail(emailContract);
-  }
+    @When("^B2B sales channel is ([^\"]*)$")
+    public void initSalesChannelB2B(SalesChannel salesChannel){
+        QuoteDetailsPage quoteDetailsPage = new QuoteDetailsPage();
+        quoteDetailsPage.setSalesChannel(salesChannel);
+        boolean formInitialized = quoteDetailsPage.fillInFormData();
+        assertThat("Failure occurred when filling in input values", formInitialized, is(true));
+    }
 
-  @And("^Select Nace-Code$")
-  public void select() throws Throwable {
-    seleniumDriver.waitForRequestsToFinish();
-    Thread.sleep(2000);
-    NewQuotePage nq = new NewQuotePage();
-    nq.clickNaceCodeButton();
-  }
 
-  @And("^NaceCode in search is ([^\"]*)$")
-  public void searchByNaceCode(String NaceCode) {
-    NewQuotePage nq = new NewQuotePage();
-    ContractPage cp = new ContractPage();
-    cp.searchByClientNumber(NaceCode);
-    nq.clickOnSearch();
-    nq.checkNaceCodeCheckBox();
-    nq.saveSelectedItem();
-  }
+    @When("^Rechtsvorm is bvba$")
+    public void formLegal() {
+        NewQuotePage nq = new NewQuotePage();
+        nq.selectItemLegalForm();
+    }
 
-  @And(
-      "^Customer Details are populated with: Address is \"([^\"]*)\" and HouseNumber is \"([^\"]*)\" and PostalCode is \"([^\"]*)\" and City is \"([^\"]*)\"$")
-  public void populateAddress(String Address, String houseNumber, String postalCode, String City) {
-    NewQuotePage nq = new NewQuotePage();
-    nq.setAddress(Address, houseNumber, postalCode, City);
-  }
+    @And("^Gender is male$")
+    public void gender() {
+        NewQuotePage nq = new NewQuotePage();
+        nq.selectGender();
+    }
 
-  @And("^Telefoon is \"([^\"]*)\"$")
-  public void populateTelephone(String telephone) {
-    NewQuotePage nq = new NewQuotePage();
-    nq.setTelephone(telephone);
-  }
+    @And("^E-mailadres is \"([^\"]*)\"$")
+    public void emailContract(String emailContract) {
+        NewQuotePage nq = new NewQuotePage();
+        nq.getEmail(emailContract);
+    }
 
-  @And("^First Name is \"([^\"]*)\" and Last Name is \"([^\"]*)\"$")
-  public void populateName(String fname, String lname) {
-    NewQuotePage nq = new NewQuotePage();
-    nq.setName(fname, lname);
-  }
 
-  @And("^BEDRIJFSNAAM is \"([^\"]*)\"$")
-  public void companyName(String cname) {
-    NewQuotePage nq = new NewQuotePage();
-    nq.setCompanyName(cname);
-  }
+    @And("^Select Nace-Code$")
+    public void select() throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
+        Thread.sleep(2000);
+        NewQuotePage nq = new NewQuotePage();
+        nq.clickNaceCodeButton();
+    }
 
-  @And("^Ean-Code is \"([^\"]*)\"$")
-  public void eanCode(String eancode) {
-    seleniumDriver.waitForRequestsToFinish();
-    NewQuotePage nq = new NewQuotePage();
-    nq.setEanCode(eancode);
-  }
+    @And("^NaceCode in search is ([^\"]*)$")
+    public void searchByNaceCode(String NaceCode) {
+        NewQuotePage nq = new NewQuotePage();
+        ContractPage cp = new ContractPage();
+        cp.searchByClientNumber(NaceCode);
+        nq.clickOnSearch();
+        nq.checkNaceCodeCheckBox();
+        nq.saveSelectedItem();
+    }
 
-  @And("^New Quote is saved$")
-  public void newQuoteSaved() {
-    NewQuotePage nq = new NewQuotePage();
-    nq.saveInitialQuote();
-  }
 
-  @And("^Save End Date from active contract$")
-  public void saveEndDateFromActiveContract() {
-    ContractPage cp = new ContractPage();
-    parameterProvider.put("EndDate-active-contract", cp.getActiveContractEndDate());
-  }
+    @And("^Customer Details are populated with: Address is \"([^\"]*)\" and HouseNumber is \"([^\"]*)\" and PostalCode is \"([^\"]*)\" and City is \"([^\"]*)\"$")
+    public void populateAddress(String Address, String houseNumber, String postalCode, String City) {
+        NewQuotePage nq = new NewQuotePage();
+        nq.setAddress(Address, houseNumber, postalCode, City);
+    }
 
-  @After("@REGRESSION")
-  public void tearDown() {
-    super.tearDown();
-  }
+    @And("^Telefoon is \"([^\"]*)\"$")
+    public void populateTelephone(String telephone) {
+        NewQuotePage nq = new NewQuotePage();
+        nq.setTelephone(telephone);
+
+    }
+
+    @And("^First Name is \"([^\"]*)\" and Last Name is \"([^\"]*)\"$")
+    public void populateName(String fname, String lname) {
+        NewQuotePage nq = new NewQuotePage();
+        nq.setName(fname, lname);
+    }
+
+    @And("^BEDRIJFSNAAM is \"([^\"]*)\"$")
+    public void companyName(String cname) {
+        NewQuotePage nq = new NewQuotePage();
+        nq.setCompanyName(cname);
+    }
+
+
+    @And("^Ean-Code is \"([^\"]*)\"$")
+    public void eanCode(String eancode) {
+        seleniumDriver.waitForRequestsToFinish();
+        NewQuotePage nq = new NewQuotePage();
+        nq.setEanCode(eancode);
+    }
+
+
+    @And("^New Quote is saved$")
+    public void newQuoteSaved() {
+        NewQuotePage nq = new NewQuotePage();
+        nq.next();
+    }
+
+    @And("^Save End Date from active contract$")
+    public void saveEndDateFromActiveContract() {
+        ContractPage cp = new ContractPage();
+        parameterProvider.put("EndDate-active-contract",cp.getActiveContractEndDate());
+
+    }
+    @After("@REGRESSION")
+    public void tearDown() {
+        super.tearDown();
+    }
+
 }

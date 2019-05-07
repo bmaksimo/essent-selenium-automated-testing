@@ -2,6 +2,7 @@
 @B2B
 @REGRESSION
 @BUSINESS-DESK
+@UAT08ONLY
 Feature: NUAT-490: Handle Task For Cancel - nl_BE
 
     Background:

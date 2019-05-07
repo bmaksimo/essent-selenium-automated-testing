@@ -2,7 +2,7 @@
 @B2C
 @REGRESSION
 @SOCTAR-CONFIRMATION
-@UNSTABLE
+@ALL
 Feature: NSTA 332 Soctar confirmation --> Manual
 
     Background:
@@ -68,13 +68,17 @@ Feature: NSTA 332 Soctar confirmation --> Manual
         Then Changes are confirmed
         Then Bevestigen
 
-
      #Step 3: Check SOCTAR product change
-        When Dashboard menu is "Contracten"
-        And "Actieve en toekomstige connecties" list is not empty
-        And Table "Contracten" contains value "Getekend (Geaccepteerd)" at column "Type & status"
-        And Table "Contracten" contains value "Verwerkt (Geaccepteerd)" at column "Type & status"
-        And Table "Actieve en toekomstige connecties" contains value "Actief" at column "Contractnummer"
-        And Table "Actieve en toekomstige connecties" contains value "sociaal tarief (SOCTAR)" at column "EAN-code"
+       Given I renew login to DWP as "contracting.testautomation.b2c@essent.be"
+       When Left menu is "sales-marketing"
+       And Top menu item is "Klanten"
+       And Top action is "Filters"
+       And "Naam" input is "parameter:suitecrm-customer-name"
+       Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
 
+       When Dashboard menu is "Contracten"
+       And Table "Contracten" contains value "Getekend (Geaccepteerd)" at column "Type & status"
+       And Table "Contracten" contains value "Verwerkt (Geaccepteerd)" at column "Type & status"
+       And Table "Actieve en toekomstige connecties" contains value "Actief" at column "Contractnummer"
+       And Table "Actieve en toekomstige connecties" contains value "sociaal tarief (SOCTAR)" at column "EAN-code"
 

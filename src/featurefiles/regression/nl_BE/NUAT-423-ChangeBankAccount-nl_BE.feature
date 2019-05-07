@@ -2,7 +2,7 @@
 @B2B
 @REGRESSION
 @BUSINESS-DESK
-@UNSTABLE
+@ALL
 Feature: NUAT-423: Change Bank Account - nl_BE
 
     Background:

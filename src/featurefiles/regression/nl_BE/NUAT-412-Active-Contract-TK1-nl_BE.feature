@@ -1,7 +1,7 @@
 @DWP
 @REGRESSION
 @CREDIT-AND-CONTROL
-@UNSTABLE
+@ALL
 Feature: NUAT-412 part: Create TK1 Contract -> Create / import coda file -> Invoice run
 
     Background:
@@ -11,9 +11,9 @@ Feature: NUAT-412 part: Create TK1 Contract -> Create / import coda file -> Invo
     Scenario: Create active contract TK1 ->
         #1 Create active contract TK1
         When Plus menu is "Sales -> TK1 -> Nieuwe TK1 offerte (B2B) aanmaken"
-        And "Bedrijfsnaam" input is "Test Company B2B"
         And "Ondernemingsnummer" input is "BE0659881595"
         And Clicked on sign X
+        Then Customer Status is "Geaccepteerd"
         And New Quote is saved
 
         When "Tariefdatum" date is "now"

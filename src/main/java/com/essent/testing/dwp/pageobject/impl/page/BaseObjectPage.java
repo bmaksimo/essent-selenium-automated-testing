@@ -59,13 +59,16 @@ public class BaseObjectPage extends Component {
 
     } catch (org.openqa.selenium.StaleElementReferenceException ex) {
       seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(xpathSubaction)));
+
     }
   }
+
 
   public void plusSubactionNow(String actionValue) {
     String xpathSubaction = createQuery(PLUS_MENU_XPATH, REPLACEMENT_KEY, actionValue);
     try {
       seleniumDriver.clickNow(seleniumDriver.findElementWhenVisible(By.xpath(xpathSubaction)));
+
 
     } catch (org.openqa.selenium.StaleElementReferenceException ex) {
       seleniumDriver.clickNow(seleniumDriver.findElementWhenVisible(By.xpath(xpathSubaction)));
@@ -92,6 +95,7 @@ public class BaseObjectPage extends Component {
   }
 
   public void confirmQuote() {
+        seleniumDriver.waitForRequestsToFinish();
     String query = NEXT_BUTTON.getQuery();
     logger().debug("Searching element by " + query);
     seleniumDriver.waitAndClick(
