@@ -76,7 +76,7 @@ public class DateExpressionsUtilTest {
   }
 
   @Test
-  public void testChecYearsBetween() throws Exception {
+  public void testCheckYearsBetween() throws Exception {
     String[] split = "09-04-2019 28-04-2020".split("\\s+");
     String earlierDte = split[0], laterDate = split[1], interval = "1 year";
     assertThat(

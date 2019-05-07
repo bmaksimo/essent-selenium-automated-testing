@@ -42,8 +42,9 @@ public class ConfirmationSteps extends NavigationElements {
 
   @And("^Modal dialog \"([^\"]*)\" is not shown$")
   public void isDialogShown(String title) {
-    ConfirmSignatureDialog dialog = new ConfirmSignatureDialogImpl(title);
+    ConfirmSignatureDialog dialog = new ConfirmSignatureDialogImpl();
     assertThat("Contract signature dialog was not shown.", dialog.isShown(), is(false));
+    seleniumDriver.takeScreenshot("table result");
   }
 
   @Then("^Modal dialogue is confirmed$")

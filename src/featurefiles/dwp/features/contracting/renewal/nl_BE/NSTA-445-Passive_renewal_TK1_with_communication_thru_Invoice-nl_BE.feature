@@ -107,12 +107,11 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         Then View list header is "Bepaal het hernieuwingsproduct" appears within 20 seconds
 
         When Top action is "Filters"
-        And  "Van pakket" select with search is clicked
+        And  Selection with search is "Van pakket"
         And  Modal dialog is "Select"
         And  Search option is "parameter:PackageName"
         And  Search button with label "Search" is clicked
         And  First search result matching "parameter:PackageName" is checked
         And  Submit search results button "Verzenden" is clicked
         And  Modal dialog "Select" is not shown
-
-
+        And  All date values at column "Geldig tot" from table "Geselecteerde contractlijn voor hernieuwingsbatch" are within the period "parameter:Start & einddatum hernieuwing"
