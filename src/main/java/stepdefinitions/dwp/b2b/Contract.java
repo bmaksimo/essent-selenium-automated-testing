@@ -89,7 +89,6 @@ public class Contract extends DwpScenario {
     @And("^Clicked on sign X$")
     public void clickOnX() {
         NewQuotePage nq = new NewQuotePage();
-        seleniumDriver.waitForRequestsToFinish();
         nq.clickOnX();
     }
 
@@ -178,7 +177,7 @@ public class Contract extends DwpScenario {
     @And("^New Quote is saved$")
     public void newQuoteSaved() {
         NewQuotePage nq = new NewQuotePage();
-        nq.saveInitialQuote();
+        nq.next();
     }
 
     @And("^Save End Date from active contract$")
