@@ -38,6 +38,11 @@ public class BillingSteps extends DwpScenario {
     public void transactiesIsCreatedWithTYPE(String type){
         BillingPage bp = new BillingPage();
         Assert.assertEquals("Type does not mach", bp.selectProductCode(),type);
+    }
 
+    @And("^Send$")
+    public void send() {
+        BillingPage bp = new BillingPage();
+        bp.clickOnSendButton();
     }
 }

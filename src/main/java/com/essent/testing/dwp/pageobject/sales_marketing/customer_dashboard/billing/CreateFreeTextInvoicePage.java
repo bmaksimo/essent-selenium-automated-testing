@@ -7,13 +7,7 @@ public class CreateFreeTextInvoicePage extends Component {
 
     private static final String SELECT_PRODUCT_CODE_BUTTON= "//button[@class='button-placeholder']";
     private static final String REPLACEMENT_KEY = "replacement_key";
-//    private static final String PRODUCT_CODE ="//div/label[contains(.,'${" + REPLACEMENT_KEY + "}')]/input";
-    private static final String PRODUCT_CODE ="//div/label[text()[contains(.,'${" + REPLACEMENT_KEY + "}')]]//input[@type='checkbox']";
-
-//    "//label[text()[contains(.,'Value_Samsung')]]//input[@type='checkbox']"
-    //div[@class="input"]//label[contains(text(),'Value_Samsung')]
-    //div/label[contains(text(),'Value_Samsung')]
-    //div/label[text()='Value_Samsung']
+    private static final String PRODUCT_CODE ="//div/label[text()[contains(.,'${" + REPLACEMENT_KEY + "}')]]/span";
 
 
     public void clickOnSelectProductCodeButton() {
