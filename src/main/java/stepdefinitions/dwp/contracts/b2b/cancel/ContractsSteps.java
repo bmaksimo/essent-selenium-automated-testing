@@ -23,6 +23,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.testng.AssertJUnit.assertEquals;
+import static org.testng.AssertJUnit.assertTrue;
 
 public class ContractsSteps extends DwpScenario {
 
@@ -255,24 +256,38 @@ public class ContractsSteps extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
     }
 
-    @Then("^Payment plan has \"([^\"]*)\" installments$")
-    public void PaymentPlanNumberOfInstallments(int expectedNumberOfInstallments){
+    @And("^Save Installments Sum$")
+    public void InstallmentSum() {
         seleniumDriver.waitForRequestsToFinish();
-        ContractPage contractPage = new ContractPage();
-
-        int actualNumberOfInstallments = contractPage.checkNumberOfInstallments();
-        assertThat(String.format("Number of actual installments \"%s\" differs from the expected ones \"%s\" on payment plan", actualNumberOfInstallments, expectedNumberOfInstallments), actualNumberOfInstallments, equalTo(expectedNumberOfInstallments));
+        ContractPage cp = new ContractPage();
+        cp.getInstallmentSum();
+        parameterProvider.put("installmentsAmount", cp.getInstallmentSum());
         seleniumDriver.waitForRequestsToFinish();
     }
 
-    @Then("^Payment plan has installment values of \"([^\"]*)\", \"([^\"]*)\" and \"([^\"]*)\"$")
-    public void PaymentPlanValuesOfInstallments(String firstExpectedValue, String secondExpectedValue, String thirdExpectedValue){
-        seleniumDriver.waitForRequestsToFinish();
-        ContractPage contractPage = new ContractPage();
-        String expectedResult = firstExpectedValue + secondExpectedValue + thirdExpectedValue;
-        String result =  contractPage.checkValueOfInstallments(firstExpectedValue, secondExpectedValue, thirdExpectedValue);
-        assertEquals(expectedResult ,result);
-        seleniumDriver.waitForRequestsToFinish();
-
+    @And("^Save Invoice Sum$")
+    public void InvoiceSum() {
+        ContractPage cp = new ContractPage();
+        cp.getInvoiceSum();
+        parameterProvider.put("invoiceAmount", cp.getInvoiceSum());
     }
+
+
+    @Then("^Check is Number of Installments at least \"([^\"]*)\" for given amount \"([^\"]*)\"$")
+    public void CheckInstallmentsNumber(int expectedNumberOfInstallments, String amount) {
+        ContractPage cp = new ContractPage();
+        int actualNumberOfInstallments = cp.installmentsNumber(amount);
+        assertTrue("Insufficient Number of installments with amount of 50€.",expectedNumberOfInstallments>=actualNumberOfInstallments);
+    }
+
+    @Then("^Installments Amount of \"([^\"]*)\" is by \"([^\"]*)\" bigger than Invoice Amount of \"([^\"]*)\"$")
+    public void CheckIsInstallmentAmountBiggerThanInvoiceAmount(String installmentsAmount, int expectedDifference, String invoiceAmount) {
+        ContractPage cp = new ContractPage();
+        String installAmount  = parameterProvider.getValueOrParameterAsString(installmentsAmount);
+        String invAmount  = parameterProvider.getValueOrParameterAsString(invoiceAmount);
+        int actualDifference = cp.findDifferenceInAmounts(installAmount, invAmount);
+        assertEquals(expectedDifference, actualDifference);
+    }
+
+
 }
