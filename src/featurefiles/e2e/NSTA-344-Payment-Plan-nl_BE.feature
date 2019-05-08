@@ -1,7 +1,8 @@
 @REGRESSION
 @DWP
 @B2C
-Feature: NSTA - 344 Payment Plan
+@ALL
+Feature: NSTA-344: Payment Plan
 
     Background:
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
@@ -84,6 +85,10 @@ Feature: NSTA - 344 Payment Plan
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
         And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
+        Then Click on link in View List at "1st" row and "ID & Type" column polling 60 seconds
+        And Save Invoice Sum
+        When Dashboard menu is "Billing"
+        Then View list header is "Transacties"
         And "1st" List element with value at column "ID & Type" is checked
 
         #Create a payment plan for this customer
@@ -111,12 +116,11 @@ Feature: NSTA - 344 Payment Plan
         Then View list header is "Transacties"
         Then View list header is "Afbetalingsplannen"
         And Payment table is not empty
-        Then Click on link in View List at "1st" row and "Nummer & referentie" column polling 60 seconds
-        Then Save Installments Sum
-        Then Check Number of Installments for given number "2"
         And Table "Afbetalingsplannen" contains value "open" at column "Status"
-        Then Payment plan has "3" installments
-        Then Payment plan has installment values of "€ 50", "€ 50" and "€ 13"
+        Then Click on link in View List at "1st" row and "Nummer & referentie" column polling 60 seconds
+        And Save Installments Sum
+        Then Check is Number of Installments at least "2" for given amount "€ 50"
+        Then Installments Amount of "parameter:installmentsAmount" is by "10" bigger than Invoice Amount of "parameter:invoiceAmount"
 
 
 
