@@ -267,26 +267,21 @@ public class ContractsSteps extends DwpScenario {
 
     @And("^Save Invoice Sum$")
     public void InvoiceSum() {
-        seleniumDriver.waitForRequestsToFinish();
         ContractPage cp = new ContractPage();
         cp.getInvoiceSum();
         parameterProvider.put("invoiceAmount", cp.getInvoiceSum());
-        seleniumDriver.waitForRequestsToFinish();
     }
 
 
     @Then("^Check is Number of Installments at least \"([^\"]*)\" for given amount \"([^\"]*)\"$")
     public void CheckInstallmentsNumber(int expectedNumberOfInstallments, String amount) {
-        seleniumDriver.waitForRequestsToFinish();
         ContractPage cp = new ContractPage();
         int actualNumberOfInstallments = cp.installmentsNumber(amount);
         assertTrue("Insufficient Number of installments with amount of 50€.",expectedNumberOfInstallments>=actualNumberOfInstallments);
-        seleniumDriver.waitForRequestsToFinish();
     }
 
     @Then("^Installments Amount of \"([^\"]*)\" is by \"([^\"]*)\" bigger than Invoice Amount of \"([^\"]*)\"$")
     public void CheckIsInstallmentAmountBiggerThanInvoiceAmount(String installmentsAmount, int expectedDifference, String invoiceAmount) {
-        seleniumDriver.waitForRequestsToFinish();
         ContractPage cp = new ContractPage();
         String installAmount  = parameterProvider.getValueOrParameterAsString(installmentsAmount);
         String invAmount  = parameterProvider.getValueOrParameterAsString(invoiceAmount);

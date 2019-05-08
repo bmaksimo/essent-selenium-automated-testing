@@ -459,10 +459,12 @@ public class ContractPage extends Component {
        return seleniumDriver.findElementWhenPresent(By.id(INSTALLMENTS_SUM)).getText();
     }
     public String getInvoiceSum() {
+        seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenPresent(By.id(INVOICE_SUM)).getText();
     }
 
     public int installmentsNumber(String amount) {
+       seleniumDriver.waitForRequestsToFinish();
        List<WebElement> installments = seleniumDriver.findElements(By.xpath(INSTALLMENTS_NUMBER));
        int numInstallThanHaveGivenAmount= 0;
        for (int i = 1; i <= installments.size()-1; i++) {
@@ -473,10 +475,10 @@ public class ContractPage extends Component {
     }
 
     public int findDifferenceInAmounts(String installAmount, String invoiceAmount) {
+        seleniumDriver.waitForRequestsToFinish();
         String invAmount = invoiceAmount.replaceAll(" .+$", "");
         int result1 = Integer.parseInt(installAmount);
         int result2 = Integer.parseInt(invAmount);
-
         return result1 - result2;
     }
 
