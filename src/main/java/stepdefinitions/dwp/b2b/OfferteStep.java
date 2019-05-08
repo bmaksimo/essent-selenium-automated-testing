@@ -22,70 +22,68 @@ import static org.hamcrest.Matchers.is;
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 public class OfferteStep extends DwpScenario {
 
-    @Before("@DWP, @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
-        registerActiveScenario(scenario);
-    }
+  @Before("@DWP, @REGRESSION")
+  public void setupTest(Scenario scenario) throws Throwable {
+    registerActiveScenario(scenario);
+  }
 
+  @And("^Take Offertenummer from first offerte$")
+  public void takeOffertenummerFromFirstOfferte() {
+    String offerteNummer = new QuotesListPage().getOfferteNumberAsString();
+    parameterProvider.put("offertenummer", offerteNummer);
+  }
 
-    @And("^Take Offertenummer from first offerte$")
-    public void takeOffertenummerFromFirstOfferte() {
-        String offerteNummer = new QuotesListPage().getOfferteNumberAsString();
-        parameterProvider.put("offertenummer", offerteNummer);
-    }
+  @And("^Reset filter$")
+  public void resetFilter() {
+    new DwpFilterPage().resetFilter();
+  }
 
-    @And("^Reset filter$")
-    public void resetFilter() {
-        new DwpFilterPage().resetFilter();
-    }
+  @And("^Label \"([^\"]*)\" is \"([^\"]*)\"$")
+  public void labelIs(String label, String value) {
+    String input = parameterProvider.getValueOrParameterAsString(value);
+    new BaseObjectPage().clickOnLabel(label, input);
+  }
 
-    @And("^Label \"([^\"]*)\" is \"([^\"]*)\"$")
-    public void labelIs(String label, String value) {
-        String input = parameterProvider.getValueOrParameterAsString(value);
-        new BaseObjectPage().clickOnLabel(label, input);
-    }
+  @And("^Filter button is clicked$")
+  public void filterButtonIsClicked() {
+    new DwpFilterPage().clickOnFilter();
+  }
 
-    @And("^Filter button is clicked$")
-    public void filterButtonIsClicked() {
-        new DwpFilterPage().clickOnFilter();
-    }
+  @And("^Offertenummer input is \"([^\"]*)\"$")
+  public void offertenummerInputIs(String value) {
+    String input = parameterProvider.getValueOrParameterAsString(value);
+    new QuotesListPage().offerteNumberFieldSendKeys(input);
+  }
 
-    @And("^Offertenummer input is \"([^\"]*)\"$")
-    public void offertenummerInputIs(String value) {
-        String input = parameterProvider.getValueOrParameterAsString(value);
-        new QuotesListPage().offerteNumberFieldSendKeys(input);
-    }
+  @And("^Oplossing text is \"([^\"]*)\"$")
+  public void oplossingTextIs(String input) {
+    new QuotesListPage().markAsDoneOplossingSendKeys(input);
+  }
 
-    @And("^Oplossing text is \"([^\"]*)\"$")
-    public void oplossingTextIs(String input){
-        new QuotesListPage().markAsDoneOplossingSendKeys(input);
-    }
+  @Then("^Offerte status is \"([^\"]*)\"$")
+  public void statusIs(String status) {
+    Assert.assertTrue(status.equalsIgnoreCase(new QuotesListPage().getOfferteStatus()));
+  }
 
-    @Then("^Offerte status is \"([^\"]*)\"$")
-    public void statusIs(String status) {
-        Assert.assertTrue(status.equalsIgnoreCase(new QuotesListPage().getOfferteStatus()));
-    }
+  @And("^\"([^\"]*)\" turn on with dot$")
+  public void turnOnWithDot(String label) {
+    new ToggleImpl().switchOnWithDot(label);
+  }
 
-    @And("^\"([^\"]*)\" turn on with dot$")
-    public void turnOnWithDot(String label) {
-        new ToggleImpl().switchOnWithDot(label);
-    }
+  @Then("^Bevestigen$")
+  public void bevestigen() {
+    new BaseObjectPage().confirmQuote();
+  }
 
-    @Then("^Bevestigen$")
-    public void bevestigen(){
-        new BaseObjectPage().confirmQuote();
-    }
+  @And("^Sign quote file is uploaded$")
+  public void signQuoteFileIsUploaded() {
+    String filePath = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
+    boolean success = new ChangeAccountStatusPage().uploadFileForSign(filePath);
+    assertThat(String.format("Signature file %s upload failed.", filePath), success, is(true));
+  }
 
-    @And("^Sign quote file is uploaded$")
-    public void signQuoteFileIsUploaded() {
-        String filePath = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
-        boolean success = new ChangeAccountStatusPage().uploadFileForSign(filePath);
-        assertThat(String.format("Signature file %s upload failed.", filePath), success, is(true));
-    }
-
-    @And("^Client signature receive data is \"([^\"]*)\"$")
-    public void clientSignatureReceiveDataIs(String date) {
-        new QuotesListPage().setSignatureReceivedDate(date);
-    }
-
+  @And("^Client signature receive data is \"([^\"]*)\"$")
+  public void clientSignatureReceiveDataIs(String date) {
+    new QuotesListPage().setSignatureReceivedDate(date);
+  }
 }

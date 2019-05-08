@@ -4,5 +4,5 @@ import java.util.Optional;
 
 public interface ComboBox {
 
-    Optional<String> getOption(String title, String label);
+  Optional<String> getOption(String title, String label);
 }

@@ -7,7 +7,6 @@ import org.apache.log4j.Logger;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
 
 public class ParameterProvider {
 
@@ -30,12 +29,12 @@ public class ParameterProvider {
   }
 
   public Optional<String> getParameterAsString(String parameter) {
-      if (parameter.startsWith(TEST_PARAMETER_PREFIX)) {
-          String key = StringUtils.replace(parameter, TEST_PARAMETER_PREFIX, "", 1);
-          return Optional.ofNullable((String)parameters.get(key));
-      } else {
-          return Optional.empty();
-      }
+    if (parameter.startsWith(TEST_PARAMETER_PREFIX)) {
+      String key = StringUtils.replace(parameter, TEST_PARAMETER_PREFIX, "", 1);
+      return Optional.ofNullable((String) parameters.get(key));
+    } else {
+      return Optional.empty();
+    }
   }
 
   public Integer getValueOrParameterAsInt(String value) {

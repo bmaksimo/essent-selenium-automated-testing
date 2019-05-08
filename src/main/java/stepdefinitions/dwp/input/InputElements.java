@@ -5,7 +5,6 @@ import com.essent.testing.dwp.pageobject.elements.SelectWithSearch;
 import com.essent.testing.dwp.pageobject.impl.elements.SelectWithSearchImpl;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -373,9 +372,9 @@ public class InputElements extends DwpScenario {
 
   @And("^Selection with search is \"([^\"]*)\"$")
   public void selectWithSearchIsClicked(String label) throws Throwable {
-      SelectWithSearch button = new SelectWithSearchImpl();
-      button.click(label);
-      seleniumDriver.takeScreenshot("Search Dialogue");
+    SelectWithSearch button = new SelectWithSearchImpl();
+    button.click(label);
+    seleniumDriver.takeScreenshot("Search Dialogue");
   }
 
   @And("New Amount Invoice is \"([^\"]*)\" for EAN \"([^\"]*)\"$")

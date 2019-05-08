@@ -31,10 +31,6 @@ public class ContractPage extends Component {
       "//*[@id=\"rows\"]//list-link-bold-top-two-liner-cell//a/h5";
   private static final String PAYMENT_PLAN_NUMBER =
       "//list[@list-key='PaymentPlansOnAccount']//tbody[@id='rows']";
-  private static final String PAYMENT_PLAN_NUMBER_OF_INSTALLMENTS = "//list-dropdown-cell//select";
-  private static final String FIRST_PAYMENT_PLAN_INSTALLMENT = "//list-dropdown-cell//option[2]";
-  private static final String SECOND_PAYMENT_PLAN_INSTALLMENT = "//list-dropdown-cell//option[3]";
-  private static final String THIRD_PAYMENT_PLAN_INSTALLMENT = "//list-dropdown-cell//option[4]";
   private static final String SALDO_CREDIT_INVOICE = "total-amount-open-field";
   private static final String FIRST_INVOICE = "//tbody/tr[1]/td[5]//span[1]";
   private static final String SECOND_INVOICE = "//tbody/tr[3]/td[5]//span[1]";
@@ -46,6 +42,10 @@ public class ContractPage extends Component {
   private static final String PRODUCT_CONTRACT =
       "(//list[@list-key='ContractsOnAccount']//list-link-bold-top-two-liner-cell/div/a/h5)[3]";
   private static final String EAN_NEW_INVOICE_AMOUNT = "dwp-ean-${" + REPLACEMENT_KEY + "}-field";
+  private static final String INVOICE_SUM = "total-amount-field";
+  private static final String INSTALLMENTS_SUM = "balance-field";
+  private static final String INSTALLMENTS_NUMBER =
+      "//list[@list-key='InstallmentsOnPaymentPlan']//h5";
 
   private WebElement startData() {
     return seleniumDriver.findElementWhenVisible(By.id(START_DATA_ID));
@@ -442,75 +442,12 @@ public class ContractPage extends Component {
     return CollectionUtils.isNotEmpty(rows);
   }
 
-  public int checkNumberOfInstallments() {
-    seleniumDriver.waitForRequestsToFinish();
-    String str =
-        seleniumDriver
-            .findElementWhenVisible(By.xpath(PAYMENT_PLAN_NUMBER_OF_INSTALLMENTS))
-            .getText();
-    final String substring = str.substring(0, str.indexOf(' '));
-
-    seleniumDriver.waitForRequestsToFinish();
-    return Integer.valueOf(substring);
-  }
-
   public String getStatusFromContracten() {
     return seleniumDriver.findElementWhenVisible(By.xpath(CONTRACT_STATUS)).getText();
   }
 
   public String getProductFromContracten() {
     return seleniumDriver.findElementWhenVisible(By.xpath(PRODUCT_CONTRACT)).getText();
-  }
-
-  // TODO
-  public String checkValueOfInstallments(
-      String optionListItem1, String optionListItem2, String optionListItem3) {
-    seleniumDriver.waitForRequestsToFinish();
-
-    seleniumDriver.waitAndClick(
-        seleniumDriver.findElementWhenVisible(By.xpath(PAYMENT_PLAN_NUMBER_OF_INSTALLMENTS)));
-
-    seleniumDriver.waitAndClick(
-        seleniumDriver.findElementWhenVisible(By.xpath(FIRST_PAYMENT_PLAN_INSTALLMENT)));
-    String str1 =
-        seleniumDriver.findElementWhenVisible(By.xpath(FIRST_PAYMENT_PLAN_INSTALLMENT)).getText();
-    boolean str1Item = str1.contains(optionListItem1);
-
-    if (str1Item) {
-      str1 = optionListItem1;
-    }
-
-    seleniumDriver.waitAndClick(
-        seleniumDriver.findElementWhenVisible(By.xpath(PAYMENT_PLAN_NUMBER_OF_INSTALLMENTS)));
-    seleniumDriver.waitAndClick(
-        seleniumDriver.findElementWhenVisible(By.xpath(SECOND_PAYMENT_PLAN_INSTALLMENT)));
-    seleniumDriver.waitAndClick(
-        seleniumDriver.findElementWhenVisible(By.xpath(SECOND_PAYMENT_PLAN_INSTALLMENT)));
-    String str2 =
-        seleniumDriver.findElementWhenVisible(By.xpath(SECOND_PAYMENT_PLAN_INSTALLMENT)).getText();
-    boolean str2Item = str2.contains(optionListItem2);
-
-    if (str2Item) {
-      str2 = optionListItem2;
-    }
-
-    seleniumDriver.waitAndClick(
-        seleniumDriver.findElementWhenVisible(By.xpath(PAYMENT_PLAN_NUMBER_OF_INSTALLMENTS)));
-    seleniumDriver.waitAndClick(
-        seleniumDriver.findElementWhenVisible(By.xpath(THIRD_PAYMENT_PLAN_INSTALLMENT)));
-    seleniumDriver.waitAndClick(
-        seleniumDriver.findElementWhenVisible(By.xpath(THIRD_PAYMENT_PLAN_INSTALLMENT)));
-    String str3 =
-        seleniumDriver.findElementWhenVisible(By.xpath(THIRD_PAYMENT_PLAN_INSTALLMENT)).getText();
-    boolean str3Item = str3.contains(optionListItem3);
-
-    if (str3Item) {
-      str3 = optionListItem3;
-    }
-
-    seleniumDriver.waitForRequestsToFinish();
-
-    return (str1 + str2 + str3);
   }
 
   public String getActualValuesOfInvoicesAsString() {
@@ -571,5 +508,33 @@ public class ContractPage extends Component {
     String xpathAction = createQuery(EAN_NEW_INVOICE_AMOUNT, REPLACEMENT_KEY, ean);
     seleniumDriver.waitAndSendKeys(
         seleniumDriver.findElementWhenVisible(By.id(xpathAction)), value);
+  }
+
+  public String getInstallmentSum() {
+    return seleniumDriver.findElementWhenPresent(By.id(INSTALLMENTS_SUM)).getText();
+  }
+
+  public String getInvoiceSum() {
+    seleniumDriver.waitForRequestsToFinish();
+    return seleniumDriver.findElementWhenPresent(By.id(INVOICE_SUM)).getText();
+  }
+
+  public int installmentsNumber(String amount) {
+    seleniumDriver.waitForRequestsToFinish();
+    List<WebElement> installments = seleniumDriver.findElements(By.xpath(INSTALLMENTS_NUMBER));
+    int numInstallThanHaveGivenAmount = 0;
+    for (int i = 1; i <= installments.size() - 1; i++) {
+      if (amount.equalsIgnoreCase(installments.get(i).getText()))
+        numInstallThanHaveGivenAmount += 1;
+    }
+    return numInstallThanHaveGivenAmount;
+  }
+
+  public int findDifferenceInAmounts(String installAmount, String invoiceAmount) {
+    seleniumDriver.waitForRequestsToFinish();
+    String invAmount = invoiceAmount.replaceAll(" .+$", "");
+    int result1 = Integer.parseInt(installAmount);
+    int result2 = Integer.parseInt(invAmount);
+    return result1 - result2;
   }
 }

@@ -33,7 +33,8 @@ public class ParametersSupport extends RegisteredScenario {
   }
 
   @And("^([^\"]*) is extracted as \"([^\"]*)\" word from \"([^\"]*)\"$")
-  public void extractPackageName(DwpEntity dwpEntity, String ordinal, String packageAndProduct) throws Throwable {
+  public void extractPackageName(DwpEntity dwpEntity, String ordinal, String packageAndProduct)
+      throws Throwable {
     int index = asArrayIndex(ordinal);
     Optional<String> value = parameterProvider.getParameterAsString(packageAndProduct);
     assertThat(

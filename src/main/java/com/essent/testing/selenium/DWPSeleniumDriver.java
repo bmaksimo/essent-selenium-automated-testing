@@ -29,7 +29,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.Function;
 
 import static com.billinghouse.test_automation.util.gherkin.DateTimeFormatUtil.printPeriod;
 import static com.essent.testing.selenium.helper.fluent_wait.FluentWaitUtil.createWaiter;
@@ -309,14 +308,14 @@ public class DWPSeleniumDriver extends SeleniumDriver
 
   @Override
   public List<WebElement> findElements(By selector, Duration timeout, Duration pollingEvery) {
-      List<WebElement> result = super.findElements(selector, timeout, pollingEvery);
-      waitForRequestsToFinish();
-      return result;
+    List<WebElement> result = super.findElements(selector, timeout, pollingEvery);
+    waitForRequestsToFinish();
+    return result;
   }
 
-    @Override
-    public WebElement findElementWhenPresent(By selector) {
-      waitForRequestsToFinish();
-      return super.findElementWhenPresent(selector);
-    }
+  @Override
+  public WebElement findElementWhenPresent(By selector) {
+    waitForRequestsToFinish();
+    return super.findElementWhenPresent(selector);
+  }
 }

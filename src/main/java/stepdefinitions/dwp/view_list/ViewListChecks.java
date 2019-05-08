@@ -783,7 +783,6 @@ public class ViewListChecks extends NavigationElements {
     List<String> found =
         columnData.stream()
             .filter(element -> element.contains(inputValue))
-
             .collect(Collectors.toList());
     String message =
         String.format(

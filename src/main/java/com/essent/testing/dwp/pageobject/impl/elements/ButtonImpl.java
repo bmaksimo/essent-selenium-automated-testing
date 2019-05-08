@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public class ButtonImpl extends Component implements Button {
 
-    public ButtonImpl() {
+  public ButtonImpl() {
     this(null);
   }
 

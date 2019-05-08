@@ -1,11 +1,10 @@
 @DWP
-@UNSTABLE
 Feature: NSTA-445 Passive renewal of contract TK1 - with communication through letter
 
     Background:
         Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
 
-    @NSTA-445-With_letter
+    @NSTA-445-3
     Scenario: Sign in to default electricity product
         When Plus menu is "Contracting -> TK1 Hernieuwingen -> Hernieuwingsbatches"
         Then View list header is "TK1 - Hernieuwingsbatches" appears within 20 seconds

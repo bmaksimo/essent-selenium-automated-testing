@@ -26,7 +26,8 @@ import java.util.Map;
 import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.JS_TR_GET_RANDOM_USER;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpDate;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.convertToDwpTime;
-import static com.billinghouse.test_automation.util.dsl.NumericUtil.*;
+import static com.billinghouse.test_automation.util.dsl.NumericUtil.amountAsInt;
+import static com.billinghouse.test_automation.util.dsl.NumericUtil.sumOfAmounts;
 import static com.essent.testing.dwp.constant.DwpConstants.FLEMISCH_LOCALE;
 import static org.junit.Assert.assertTrue;
 
