@@ -32,4 +32,14 @@ public class IntervalUtil {
         DateTime dateTime = INTERVAL_DATE_FORMATTER.parseDateTime(dateToContain);
         return productTnterval(period).contains(dateTime);
     }
+
+    public static boolean containsDate(String period, String dateToContain, DwpDateTimeFormat format) {
+        if(StringUtils.isEmpty(dateToContain)) {
+            return true;
+        }
+        DateTimeFormatter formatter = DateTimeFormat.forPattern(format.getFormat());
+        DateTime dateTime = formatter.parseDateTime(dateToContain);
+        return productTnterval(period).contains(dateTime);
+    }
+
 }

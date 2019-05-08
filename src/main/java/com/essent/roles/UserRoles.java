@@ -66,7 +66,7 @@ public enum UserRoles {
   public static UserRoles get(final String userName) {
     if (!lookup.containsKey(userName)) {
       throw new IllegalArgumentException(
-          String.format("DWP RandomUser name  '%s' undefined", userName));
+          String.format("DWP User name  '%s' undefined", userName));
     }
     return lookup.get(userName);
   }

@@ -2,7 +2,6 @@
 @DWP
 @B2C
 @REGRESSION
-@UNSTABLE
 Feature: NSTA-445 Passive renewal of contract TK1 - with communication through Invoice
 
     Background:
@@ -37,7 +36,6 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         And Connection details are confirmed
         Then Form header is "Billing details"
 
-
         When "Betalingswijze" selection is "Overschrijving"
         And Billing details are confirmed
         Then Form header is "Quote overview"
@@ -53,8 +51,6 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         When Dashboard menu is "Contracten"
         Then View list header is "Actieve en toekomstige connecties"
         And "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
-        
-
 
         #2. Trigger renewal batch
         #Actions
@@ -78,7 +74,6 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         And Table "TK1 - Hernieuwingsbatches" has matching value "parameter:suitecrm-customer-name" at column "Batchnaam"
 
         #Checks
-
         #3. Validate renewal batch
         # Actions
         When Click on "parameter:suitecrm-customer-name" link
@@ -101,9 +96,9 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         And Table "Offertes" has matching value "parameter:Contract Start & Einddatum" at column "Start & Einddatum"
         And Table "Offertes" has matching value "parameter:Id Billing customer" at column "Billing klant & Tariefdatum"
 
-        #4 Validate the definition of renewal product
+        #4 Validate the definition of renewal product (date valid within the period: "Start & einddatum hernieuwing")
         When Top arrow button is "Up"
-        And Plus menu is "Contracting -> TK1 Hernieuwingen -> Bepaal het hernieuwingsproduct"
+        And  Plus menu is "Contracting -> TK1 Hernieuwingen -> Bepaal het hernieuwingsproduct"
         Then View list header is "Bepaal het hernieuwingsproduct" appears within 20 seconds
 
         When Top action is "Filters"
@@ -114,4 +109,29 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         And  First search result matching "parameter:PackageName" is checked
         And  Submit search results button "Verzenden" is clicked
         And  Modal dialog "Select" is not shown
-        And  All date values at column "Geldig tot" from table "Geselecteerde contractlijn voor hernieuwingsbatch" are within the period "parameter:Start & einddatum hernieuwing"
+        And  All date values at column "Geldig tot" from table "Bepaal het hernieuwingsproduct" are within the period "parameter:Start & einddatum hernieuwing"
+
+        #5 Communicate the renewal to the customer through the invoice
+        Given I renew login to DWP as "billing.testautomation@essent.be"
+
+        When Plus menu is "Billing -> Start facturatierun"
+        When Modal dialog is "Start invoicerun"
+        And "Naam job" selection is "recurrent"
+        And "ID Billing customer" input is "parameter:Id Billing customer"
+        And "Factuurdatum" date is "now"
+        And "Procesdatum" date is "now"
+        Then Invoice run is scheduled
+
+        When Left menu is "billing"
+        And Top menu item is "Klanten"
+        And Top action is "Filters"
+        And "Naam" input is "parameter:suitecrm-customer-name"
+        And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
+        When Dashboard menu is "Billing"
+        Then View list header is "Transacties"
+        And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
+
+        #6 Check communication
+        When Dashboard menu is "Service"
+        Then Table "Interacties" has matching value "Outbound document: Passive renewal communication" at column "Type & Onderwerp"
+        And  Table "Interacties" has matching value "Outbound document: advance" at column "Type & Onderwerp"
