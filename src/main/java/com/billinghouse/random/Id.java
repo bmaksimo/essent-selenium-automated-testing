@@ -1,3 +1,4 @@
+
 package com.billinghouse.random;
 
 import com.google.gson.annotations.Expose;
