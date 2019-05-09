@@ -1,10 +1,10 @@
-package com.essent.testing.dwp.helper;
+package com.essent.testing.datagenerator.address;
 
 import java.util.Random;
 
-public class AddressUtil {
+public class StreetGenerator {
 
-  private static String[] streets = {
+  private static final String[] STREETS_IN_KONTICH = {
     "Abelenlaan",
     "Abraham Hanslaan",
     "Albertlei",
@@ -189,12 +189,12 @@ public class AddressUtil {
     "Zilverbergstraat",
   };
 
-    public static String getRandomStreet() {
+    public static String getRandomStreetInKontich() {
 
         Random rnd = new Random();
 
-        int index = (int) (rnd.nextFloat() * streets.length);
+        int index = (int) (rnd.nextFloat() * STREETS_IN_KONTICH.length);
 
-        return streets[index];
+        return STREETS_IN_KONTICH[index];
     }
 }
