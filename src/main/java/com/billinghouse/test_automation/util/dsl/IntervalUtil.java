@@ -16,7 +16,7 @@ public class IntervalUtil {
 
   public static Interval productTnterval(String periodOfRenewal) {
     if (!periodOfRenewal.matches(DateTimeRegex.DWP_START_END_DATE_FORMAT_REGEX.getExpression()))
-      throw new CucumberException(periodOfRenewal + "is not DWP start-end interval");
+      throw new CucumberException(periodOfRenewal + " is not DWP start-end interval");
     String[] startAndEnd = periodOfRenewal.split("\\s+");
     String start = startAndEnd[0];
     String end = startAndEnd[1];
