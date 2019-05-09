@@ -5,6 +5,7 @@
 @LONGDURATION
 @NUAT-549
 @UAT08ONLY
+@ALL
 
 Feature: NUAT-549 Send manual drop
 
