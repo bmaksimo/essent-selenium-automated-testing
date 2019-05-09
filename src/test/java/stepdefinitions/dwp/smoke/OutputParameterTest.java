@@ -11,51 +11,55 @@ import org.junit.Assert;
 
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.expandFrom;
 
+
 public class OutputParameterTest extends RegisteredScenario {
 
-  @Before
-  public void setUp(Scenario scenario) {
-    registerActiveScenario(scenario);
-  }
+    @Before
+    public void setUp(Scenario scenario) {
+        registerActiveScenario(scenario);
+    }
 
-  @OutputParameter(name = "contractor")
-  private String contractor;
+    @OutputParameter(name="contractor")
+    private String contractor;
 
-  @OutputParameter(name = "startOfTenure")
-  private DateTime startOfTenure;
+    @OutputParameter(name="startOfTenure")
+    private DateTime startOfTenure;
 
-  @When("^Contractor is ([^\"]*)$")
-  public void setContractor(String contractor) throws Throwable {
-    logger().info("STEP:");
-    logger().info(" - ACTION: SET_OUTPUT_PARAM");
-    logger().info(" - NAME: contractor");
-    logger().info(" - VALUE: " + contractor);
-    this.contractor = contractor;
-  }
 
-  @When("^Contractor \"?([^\"]*)\"? is put as \"?([^\"]*)\"?$")
-  public void putContractor(String contractor, String parameterName) throws Throwable {
-    setContractor(contractor);
-    parameterProvider.put(parameterName, contractor);
-  }
+    @When("^Contractor is ([^\"]*)$")
+    public void setContractor(String contractor) throws Throwable {
+        logger().info("STEP:");
+        logger().info(" - ACTION: SET_OUTPUT_PARAM");
+        logger().info(" - NAME: contractor");
+        logger().info(" - VALUE: " + contractor);
+        this.contractor = contractor;
+    }
 
-  @And("^Start of tenure is \"?([^\"]*)\"?$")
-  public void startOfTenureIs(String startOfTenure) throws Throwable {
-    logger().info("STEP:");
-    logger().info(" - ACTION: SET_OUTPUT_PARAM");
-    logger().info(" - NAME: startOfTenure");
-    this.startOfTenure = expandFrom(startOfTenure);
-    logger().info(" - VALUE: " + this.startOfTenure.toString());
-  }
+    @When("^Contractor \"?([^\"]*)\"? is put as \"?([^\"]*)\"?$")
+    public void putContractor(String contractor, String parameterName) throws Throwable {
+        setContractor(contractor);
+        parameterProvider.put(parameterName, contractor);
+    }
 
-  @And("^Start of tenure \"?([^\"]*)\"? is put as \"?([^\"]*)\"?$")
-  public void putStartOfTenure(String value, String parameterName) throws Throwable {
-    startOfTenureIs(value);
-    parameterProvider.put(parameterName, startOfTenure);
-  }
+    @And("^Start of tenure is \"?([^\"]*)\"?$")
+    public void startOfTenureIs(String startOfTenure) throws Throwable {
+        logger().info("STEP:");
+        logger().info(" - ACTION: SET_OUTPUT_PARAM");
+        logger().info(" - NAME: startOfTenure");
+        this.startOfTenure = expandFrom(startOfTenure);
+        logger().info(" - VALUE: " + this.startOfTenure.toString());
+    }
 
-  @And("^Fail$")
-  public void fail() throws Throwable {
-    Assert.fail("Checkpoint failure.");
-  }
+
+    @And("^Start of tenure \"?([^\"]*)\"? is put as \"?([^\"]*)\"?$")
+    public void putStartOfTenure(String value, String parameterName) throws Throwable {
+        startOfTenureIs(value);
+        parameterProvider.put(parameterName, startOfTenure);
+    }
+
+
+    @And("^Fail$")
+    public void fail() throws Throwable {
+        Assert.fail("Checkpoint failure.");
+    }
 }

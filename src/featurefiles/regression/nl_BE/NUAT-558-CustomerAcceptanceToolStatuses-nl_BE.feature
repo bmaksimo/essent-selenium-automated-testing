@@ -5,7 +5,7 @@
 Feature: NUAT-558: Check status of customer with Customer Acceptance Tool
 
     Background:
-        Given B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
+    	Given B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
 
     @NUAT-558
     Scenario: Check status of customer with Customer Acceptance Tool

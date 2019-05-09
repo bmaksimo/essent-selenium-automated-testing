@@ -30,6 +30,8 @@ public interface ViewList {
 
   Optional<String> getValueAt(int row, String columnName, String tableName);
 
+  Optional<String> getCellValueAt(int row, String columnName);
+
   Optional<String> getValueAt(int row, String columnName);
 
   Optional<String> getCurrencyValueAt(int row, String columnName, String tableName);

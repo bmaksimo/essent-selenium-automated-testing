@@ -38,9 +38,7 @@ public class DateExpressionsUtil {
     operations.put("month", Months::monthsBetween);
     operations.put("year", Years::yearsBetween);
   }
-
   private static final Map<String, DurationFieldType> duration = new HashMap<>();
-
   static {
     duration.put("day", DurationFieldType.days());
     duration.put("week", DurationFieldType.weeks());
@@ -82,7 +80,8 @@ public class DateExpressionsUtil {
     DateTime dateTime = new DateTime();
 
     if (matcher.find()) {
-      if (matcher.group(0).equals("now")) return dateTime;
+            if(matcher.group(0).equals("now"))
+                return dateTime;
       operations.put("month from", dateTime::plusMonths);
       operations.put("month before", dateTime::minusMonths);
       operations.put("day from", dateTime::plusDays);

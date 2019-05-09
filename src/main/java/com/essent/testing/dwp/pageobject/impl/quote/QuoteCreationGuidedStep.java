@@ -4,6 +4,7 @@ import com.billinghouse.exception.ExtendedCucumberException;
 import com.essent.testing.dwp.pageobject.Form;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.quote.GuidedStep;
+import cucumber.runtime.CucumberException;
 import org.apache.commons.lang3.BooleanUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -27,11 +28,8 @@ public abstract class QuoteCreationGuidedStep extends Component implements Guide
   @Override
   public void next() {
     seleniumDriver.waitForRequestsToFinish();
-    logger().debug("Guiided step to be confirmed");
-    /**
-     * given().await() .ignoreExceptions() .pollInterval(FIVE_HUNDRED_MILLISECONDS)
-     * .pollDelay(TWO_SECONDS) .atMost(new Duration(60, SECONDS)).until(this::isNextButtonEnabled);
-     */
+    logger().debug("Guided step to be confirmed");
+
     Optional<WebElement> nextButtonOptional =
         Optional.of(findElementWhenClickable(By.cssSelector(NEXT_BUTTON.getQuery())));
     seleniumDriver.takeScreenshot("guidance-confirm-");
@@ -42,9 +40,10 @@ public abstract class QuoteCreationGuidedStep extends Component implements Guide
       seleniumDriver.waitForRequestsToFinish();
       nextButton.click();
     } else {
-      seleniumDriver.takeScreenshot("guidance-confirm-");
-      throw new ExtendedCucumberException(
-          "Guided step was not confirmed " + NEXT_BUTTON.getQuery());
+            if(logger().isDebugEnabled()) {
+                seleniumDriver.takeScreenshot("guidance-confirm-failure");
+            }
+            throw new CucumberException("Element not found by selector " + NEXT_BUTTON.getQuery());
     }
     seleniumDriver.waitForRequestsToFinish();
   }

@@ -21,6 +21,9 @@ import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.INPUT;
 
 public class ConnectionDetailsPage extends QuoteCreationGuidedStep {
 
+
+  //These two locators are for web elements, not used in production.
+  //These elements are provided in test environments, in English only
   private static final String MM_MODE_LABEL = "test";
   private static final String MM_MODE_ON_LABEL = "MM should respond?";
 

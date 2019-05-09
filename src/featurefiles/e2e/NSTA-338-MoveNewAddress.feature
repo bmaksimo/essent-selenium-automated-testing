@@ -8,7 +8,6 @@ Feature: NSTA - 338 Move new address
 
     Background:
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
-
     @NSTA-338
     Scenario: Move new address
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
@@ -61,8 +60,8 @@ Feature: NSTA - 338 Move new address
         And Plus action of "1" element from "ContractsOnAccount" and click on "Verhuis NA"
 
         And New move customer address is
-            | street    | houseNr | houseNrAdd | bus | postalCode | city | country |
-            | Heistraat | 83      |            |     | 2440       | GEEL |         |
+            | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
+            | Heistraat        | 83      |            |     | 2440       | GEEL    |         |
 
         And "Startdatum verhuis" date is "1 day before now"
 
@@ -79,15 +78,15 @@ Feature: NSTA - 338 Move new address
         And "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
         And "2nd" list element has cell value "Actief" at column "Contractnummer" polling 100 seconds
         Then Table "Contracten" contains cell value "Sales Getekend (Geaccepteerd)" at column "Type & status" on "2nd" row
-        And Check if start date of new ean is the same date as filled in as “Move date”-"1 day before now"
-        And Check if the end date of new ean is the same date as the end date of the old one
+    	And Check if start date of new ean is the same date as filled in as “Move date”-"1 day before now"
+    	And Check if the end date of new ean is the same date as the end date of the old one
         And Check if products of both contracts are the same
         And Check if discounts of both contracts are the same
         And Check if prices of both contracts are the same
 
         When Dashboard menu is "Marktberichten"
         Then Check marktbericht
-            | ean                          | modul        | status   | end date          |
+            |               ean            |     modul    |  status  |      end date     |
             | parameter:EAN-code-generated | START ACCESS | Gesloten | 5 days before now |
 
         When Dashboard menu is "Service"

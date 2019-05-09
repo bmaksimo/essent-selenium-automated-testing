@@ -20,8 +20,8 @@ Feature: NSTA-345 Credit Invoice
 
         When Customer is random
         And Customer address is
-            | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
-            | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
+            | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
+            | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
 
@@ -114,11 +114,11 @@ Feature: NSTA-345 Credit Invoice
          #1 - Check if Old invoice is credited (check if CNM is created for same amount as old VKM)
          #2 - Check if there is a new invoice created for the amount you selected
         Then Invoice Amounts are among values
-            | amountInvoice1     | amountInvoice2     | amountInvoice3     |
-            | 113 € -113 € 300 € | 226 € -226 € 600 € | 339 € -339 € 900 € |
-            | -113 € 113 € 300 € | -226 € 226 € 600 € | -339 € 339 € 900 € |
-            | 300 € 113 € -113 € | 600 € 226 € -226 € | 900 € 339 € -339 € |
-            | 300 € -113 € 113 € | 600 € -226 € 226 € | 900 € -339 € 339 € |
+            |    amountInvoice1     |    amountInvoice2     |    amountInvoice3    |
+            |  113 € -113 € 300 €   |  226 € -226 € 600 €   |  339 € -339 € 900 €  |
+            |  -113 € 113 € 300 €   |  -226 € 226 € 600 €   |  -339 € 339 € 900 €  |
+            |  300 € 113 € -113 €   |  600 € 226 € -226 €   |  900 € 339 € -339 €  |
+            |  300 € -113 € 113 €   |  600 € -226 € 226 €   |  900 € -339 € 339 €  |
 
 
          #3 - Check if interactions are created for VKM and CNM
@@ -133,10 +133,10 @@ Feature: NSTA-345 Credit Invoice
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
         Then Balance is among values
-            | balance  |
-            | € 300,00 |
-            | € 600,00 |
-            | € 900,00 |
+            |  balance  |
+            |  € 300,00 |
+            |  € 600,00 |
+            |  € 900,00 |
 
 
 

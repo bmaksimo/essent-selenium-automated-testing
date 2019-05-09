@@ -13,38 +13,39 @@ import static org.junit.Assert.assertTrue;
 
 public abstract class JBillingScenario extends RegisteredScenario {
 
-  private static final Logger logger = Logger.getLogger(JBillingScenario.class);
+    private  final static Logger logger = Logger.getLogger(JBillingScenario.class);
 
-  @Resource(name = "jBillingSeleniumDriver")
-  protected JBillingSeleniumDriver seleniumDriver;
+    @Resource(name="jBillingSeleniumDriver")
+    protected JBillingSeleniumDriver seleniumDriver;
 
-  private String name;
+    private String name;
 
-  public String getName() {
-    return name;
-  }
-
-  protected void isJBillingRunning() throws Exception {
-    String dwpUrl = ConfigProvider.getProperty(ConfigKey.JBILLING_BASE_URL);
-    seleniumDriver.setBaseUrl(dwpUrl);
-    seleniumDriver.goToHomePage();
-    String currentUrl = seleniumDriver.getDriver().getCurrentUrl();
-    if (null != currentUrl && !currentUrl.equals(dwpUrl)) {
-      seleniumDriver.setBaseUrl(currentUrl);
-      seleniumDriver.goToHomePage();
+    public String getName() {
+        return name;
     }
-    Sleeper.sleepTightInSeconds(3);
-    logger.info("Current URL: " + currentUrl);
-    assertTrue(currentUrl.startsWith(seleniumDriver.getBaseUrl()));
-  }
 
-  protected void setUpWebDriver() throws Exception {
-    setUpWebDriver(seleniumDriver);
-  }
-
-  public void tearDown() {
-    if (seleniumDriver != null) {
-      tidyUp(seleniumDriver);
+    protected void isJBillingRunning() throws Exception {
+        String dwpUrl = ConfigProvider.getProperty(ConfigKey.JBILLING_BASE_URL);
+        seleniumDriver.setBaseUrl(dwpUrl);
+        seleniumDriver.goToHomePage();
+        String currentUrl = seleniumDriver.getDriver().getCurrentUrl();
+        if (null != currentUrl && !currentUrl.equals(dwpUrl)) {
+            seleniumDriver.setBaseUrl(currentUrl);
+            seleniumDriver.goToHomePage();
+        }
+        Sleeper.sleepTightInSeconds(3);
+        logger.info("Current URL: " + currentUrl);
+        assertTrue(currentUrl.startsWith(seleniumDriver.getBaseUrl()));
     }
-  }
+
+    protected void setUpWebDriver() throws Exception {
+        setUpWebDriver(seleniumDriver);
+    }
+
+    public void tearDown() {
+        if (seleniumDriver != null) {
+            tidyUp(seleniumDriver);
+        }
+    }
+
 }

@@ -10,24 +10,24 @@ import org.openqa.selenium.WebElement;
 import static org.junit.Assert.assertNotNull;
 
 public class DWPLoginDialog extends LoginComponent implements Dialog {
-  private static final By SELECOR = By.cssSelector(".modal__container.login");
+    private final static By SELECOR = By.cssSelector(".modal__container.login");
 
-  public DWPLoginDialog(SeleniumDriver seleniumDriver) {
-    super(seleniumDriver.findElementWhenPresent(SELECOR));
-  }
+    public DWPLoginDialog(SeleniumDriver seleniumDriver) {
+        super(seleniumDriver.findElementWhenPresent(SELECOR));
+    }
 
-  public Window login(String username, String password) throws Throwable {
+    public Window login(String username, String password) throws Throwable {
 
-    WebElement element = seleniumDriver.findElementWhenPresent(By.id("username"));
-    assertNotNull(element);
-    element.clear();
-    element.sendKeys(username);
-    element = seleniumDriver.findElementWhenPresent(By.id("password"));
-    assertNotNull(element);
-    element.clear();
-    element.sendKeys(password);
-    element.submit();
-    seleniumDriver.waitForRequestsToFinish();
-    return new MainWindow(seleniumDriver);
-  }
+        WebElement element = seleniumDriver.findElementWhenPresent(By.id("username"));
+        assertNotNull(element);
+        element.clear();
+        element.sendKeys(username);
+        element = seleniumDriver.findElementWhenPresent(By.id("password"));
+        assertNotNull(element);
+        element.clear();
+        element.sendKeys(password);
+        element.submit();
+        seleniumDriver.waitForRequestsToFinish();
+        return new MainWindow(seleniumDriver);
+    }
 }

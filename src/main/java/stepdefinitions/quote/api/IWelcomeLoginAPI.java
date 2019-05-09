@@ -10,36 +10,39 @@ import org.apache.log4j.Logger;
 import stepdefinitions.quote.api.helper.RequestHelper;
 import stepdefinitions.quote.api.model.IWelcomeLogin;
 
-/** @author n.grkavac */
+/**
+ * @author n.grkavac
+ *
+ */
 public class IWelcomeLoginAPI extends AbstractAPI {
 
-  private static final Logger LOGGER = Logger.getLogger(IWelcomeLoginAPI.class);
+    private final static Logger LOGGER = Logger.getLogger(IWelcomeLoginAPI.class);
 
-  public String createPayload(String username, String password) throws JsonProcessingException {
-    String payload_m = serializePayloadForiWelcome(username, password);
-    return payload_m;
-  }
+    public String createPayload(String username, String password) throws JsonProcessingException {
+	String payload_m = serializePayloadForiWelcome(username, password);
+	return payload_m;
+    }
 
-  private String serializePayloadForiWelcome(String username_m, String password_m)
-      throws JsonProcessingException {
-    IWelcomeLogin iWelcome_Login_m = new IWelcomeLogin(username_m, password_m);
-    ObjectMapper mapper = new ObjectMapper();
-    return mapper.writeValueAsString(iWelcome_Login_m);
-  }
+    private String serializePayloadForiWelcome(String username_m, String password_m) throws JsonProcessingException {
+	IWelcomeLogin iWelcome_Login_m = new IWelcomeLogin(username_m, password_m);
+	ObjectMapper mapper = new ObjectMapper();
+	return mapper.writeValueAsString(iWelcome_Login_m);
+    }
 
-  public Cookies getCookie(String username, String password) throws JsonProcessingException {
-    Cookies cookie = null;
-    Integer expectedResponseCode = STATUS_OK;
-    String payload = createPayload(username, password);
-    RequestHelper helper = new RequestHelper();
-    String path =
-        ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
-            + ConfigProvider.getProperty(ConfigKey.CRM_LOGIN_URL);
-    Response iWelcomeResponse = helper.simplePostRequest(expectedResponseCode, payload, path);
+    public Cookies getCookie(String username, String password) throws JsonProcessingException {
+	Cookies cookie = null;
+	Integer expectedResponseCode = STATUS_OK;
+	String payload = createPayload(username, password);
+	RequestHelper helper = new RequestHelper();
+	String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
+		+ ConfigProvider.getProperty(ConfigKey.CRM_LOGIN_URL);
+	Response iWelcomeResponse = helper.simplePostRequest(expectedResponseCode, payload, path);
 
-    cookie = (Cookies) iWelcomeResponse.getDetailedCookies();
-    LOGGER.info("Cookie is: " + cookie);
+	cookie = (Cookies) iWelcomeResponse.getDetailedCookies();
+	LOGGER.info("Cookie is: " + cookie);
 
-    return cookie;
-  }
+	return cookie;
+
+    }
+
 }

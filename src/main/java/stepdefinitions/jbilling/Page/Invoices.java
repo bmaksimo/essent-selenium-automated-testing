@@ -7,29 +7,29 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.When;
 
-import static com.billinghouse.MatcherAssert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-
-;
 
 public class Invoices extends JBillingScenario {
 
-  @Before("@JBILLING, @B2B, @REGRESSION")
-  public void setupTest(Scenario scenario) throws Throwable {
-    registerActiveScenario(scenario);
-  }
 
-  @When("^Invoice table is not empty$")
-  public void checkInvoiceTableNotEmpty() throws Throwable {
-    InvoicesPage invoicesPage = new InvoicesPage();
-    boolean success = invoicesPage.checkInvoiceTableNotEmpty();
+	@Before("@JBILLING, @B2B, @REGRESSION")
+	public void setupTest(Scenario scenario) throws Throwable {
+		registerActiveScenario(scenario);
+	}
 
-    assertThat("Rows in invoice table are empty", success, is(true));
-  }
+	@When("^Invoice table is not empty$")
+	public void checkInvoiceTableNotEmpty() throws Throwable {
+		InvoicesPage invoicesPage = new InvoicesPage();
+		boolean success = invoicesPage.checkInvoiceTableNotEmpty();
 
-  @Override
-  @After("@JBILLING, @B2B, @REGRESSION")
-  public void tearDown() {
-    super.tearDown();
-  }
+		assertThat("Rows in invoice table are empty", success, is(true));
+	}
+
+
+	@Override
+	@After("@JBILLING, @B2B, @REGRESSION")
+	public void tearDown() {
+		super.tearDown();
+	}
 }

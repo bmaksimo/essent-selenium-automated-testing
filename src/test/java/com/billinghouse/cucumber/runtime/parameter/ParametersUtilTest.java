@@ -11,7 +11,6 @@ import java.util.function.Function;
 
 import static com.billinghouse.MatcherAssert.assertThat;
 
-;
 
 @Test
 public class ParametersUtilTest extends RegisteredScenario {

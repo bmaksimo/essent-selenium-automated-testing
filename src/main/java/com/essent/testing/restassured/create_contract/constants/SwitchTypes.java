@@ -1,27 +1,28 @@
 package com.essent.testing.restassured.create_contract.constants;
 
 public enum SwitchTypes {
-  SUPPLIER_SWITCH("SUPPLIER SWITCH"),
-  CUSTOMER_SWITCH("CUSTOMER SWITCH"),
-  COMBINED_CUSTOMER_SWITCH("COMBINED CUSTOMER SWITCH"),
-  MOVE_IN("MOVE IN");
 
-  private String switchTypes;
+    SUPPLIER_SWITCH("SUPPLIER SWITCH"),
+    CUSTOMER_SWITCH("CUSTOMER SWITCH"),
+    COMBINED_CUSTOMER_SWITCH("COMBINED CUSTOMER SWITCH"),
+    MOVE_IN("MOVE IN");
 
-  SwitchTypes(String switchTypes) {
-    this.switchTypes = switchTypes;
-  }
+    private String switchTypes;
 
-  public String getSwitchTypes() {
-    return switchTypes;
-  }
-
-  public static SwitchTypes fromString(String text) {
-    for (SwitchTypes switchTypes : SwitchTypes.values()) {
-      if (switchTypes.getSwitchTypes().equalsIgnoreCase(text)) {
-        return switchTypes;
-      }
+    SwitchTypes(String switchTypes) {
+        this.switchTypes = switchTypes;
     }
-    return null;
-  }
+
+    public String getSwitchTypes() {
+        return switchTypes;
+    }
+
+    public static SwitchTypes fromString(String text) {
+        for (SwitchTypes switchTypes : SwitchTypes.values()) {
+            if (switchTypes.getSwitchTypes().equalsIgnoreCase(text)) {
+                return switchTypes;
+            }
+        }
+        return null;
+    }
 }

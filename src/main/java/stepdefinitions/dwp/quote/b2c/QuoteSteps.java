@@ -33,7 +33,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
-import static com.billinghouse.MatcherAssert.assertThat;
 import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 import static com.essent.testing.dwp.autocrat.element.quote.TariffElements.NO_PRICESHEET_ALERT;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.NEXT_STEP;
@@ -41,59 +40,60 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
 import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
 import static org.awaitility.Duration.ONE_HUNDRED_MILLISECONDS;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 public class QuoteSteps extends DwpScenario {
 
-  private static final String ROW_INDEX_XPATH =
-      "//input-form-element//autocomplete//ul//li[${rowIndex}]/a/b";
+    private static final String ROW_INDEX_XPATH = "//input-form-element//autocomplete//ul//li[${rowIndex}]/a/b";
 
-  @Before("@DWP, @B2C, @E2E, @REGRESSION")
-  public void setupTest(Scenario scenario) throws Throwable {
-    registerActiveScenario(scenario);
-  }
-
-  @When("^B2C sales channel is \"([^\"]*)\"$")
-  public void initSalesChannel(SalesChannel salesChannel) throws Throwable {
-    QuoteDetailsPage quoteDetailsPage = new QuoteDetailsPage();
-    Sleeper.sleepTightInSeconds(5);
-    quoteDetailsPage.setSalesChannel(salesChannel);
-    boolean formInitialized = quoteDetailsPage.fillInFormData();
-    assertThat("Failure occurred when filling in input values", formInitialized, is(true));
-  }
-
-  @And("^Deduplication dialogue \"([^\"]*)\" is shown$")
-  public void deduplicationDialogueIsShown(String title) throws Throwable {
-    SimilarAccountDialog dialog = new SimilarAccountDialogImpl(title);
-    assertThat("Similar clients dialogue was not shown.", dialog.getTitle(), equalTo(title));
-  }
-
-  @And("^Deduplication dialogue link \"([^\"]*)\" is clicked$")
-  public void deduplicationDialogueLinkIsClicked(String linkText) throws Throwable {
-    SimilarAccountDialog dialog = new SimilarAccountDialogImpl();
-    dialog.clickOnLink(linkText);
-  }
-
-  private class VerifyTariffSheetPriceAlert implements FlowAwarePredicate<QuoteSteps> {
-
-    @Override
-    public boolean test(QuoteSteps scenarios) {
-      return execute(build(scenarios));
+    @Before("@DWP, @E2E, @REGRESSION")
+    public void setupTest(Scenario scenario) throws Throwable {
+        registerActiveScenario(scenario);
     }
 
-    @Override
-    public Model.Execution build(QuoteSteps input) {
-      Model.Execution selectAlert = createExecution();
-      selectAlert
-          .element(NO_PRICESHEET_ALERT.element())
-          .step(
-              createStep(Action.REQUIRE_ABSENT)
-                  .timeoutInSeconds(NEXT_STEP.getWaitInSeconds())
-                  .element(NO_PRICESHEET_ALERT.name()));
-      return selectAlert;
+
+
+    @When("^B2C sales channel is \"([^\"]*)\"$")
+    public void initSalesChannel(SalesChannel salesChannel) throws Throwable {
+        QuoteDetailsPage quoteDetailsPage = new QuoteDetailsPage();
+        Sleeper.sleepTightInSeconds(5);
+        quoteDetailsPage.setSalesChannel(salesChannel);
+        boolean formInitialized = quoteDetailsPage.fillInFormData();
+        assertThat("Failure occurred when filling in input values", formInitialized, is(true));
     }
-  }
+
+    @And("^Deduplication dialogue \"([^\"]*)\" is shown$")
+    public void deduplicationDialogueIsShown(String title) throws Throwable {
+        SimilarAccountDialog dialog = new SimilarAccountDialogImpl(title);
+        assertThat("Similar clients dialogue was not shown.",
+            dialog.getTitle(),
+            equalTo(title));
+    }
+
+    @And("^Deduplication dialogue link \"([^\"]*)\" is clicked$")
+    public void deduplicationDialogueLinkIsClicked(String linkText) throws Throwable {
+        SimilarAccountDialog dialog = new SimilarAccountDialogImpl();
+        dialog.clickOnLink(linkText);
+    }
+
+    private class VerifyTariffSheetPriceAlert implements FlowAwarePredicate<QuoteSteps> {
+
+        @Override
+        public boolean test(QuoteSteps scenarios) {
+            return execute(build(scenarios));
+        }
+
+        @Override
+        public Model.Execution build(QuoteSteps input) {
+            Model.Execution selectAlert = createExecution();
+            selectAlert.element(NO_PRICESHEET_ALERT.element()).
+                step(createStep(Action.REQUIRE_ABSENT).timeoutInSeconds(NEXT_STEP.getWaitInSeconds()).
+                    element(NO_PRICESHEET_ALERT.name()));
+            return selectAlert;
+        }
+    }
 
   private class RandomUserActions implements Predicate<CustomerDetails> {
     @Override
@@ -113,330 +113,318 @@ public class QuoteSteps extends DwpScenario {
       return success;
     }
 
-    private boolean fillInCustomerDetails(RandomUser randomUser) {
-      PersonalDetailsPage customerDetailsView = new PersonalDetailsPage();
-      customerDetailsView.setRandomUser(randomUser);
-      return customerDetailsView.fillInFormData();
+        private boolean fillInCustomerDetails(RandomUser randomUser) {
+            PersonalDetailsPage customerDetailsView = new PersonalDetailsPage();
+            customerDetailsView.setRandomUser(randomUser);
+            return customerDetailsView.fillInFormData();
+        }
     }
-  }
 
-  private class InitialiseCustomerAddress implements Predicate<CustomerAddress> {
+    private class InitialiseCustomerAddress implements Predicate<CustomerAddress> {
+        @Override
+        public boolean test(CustomerAddress customerAddress) {
+            return fillInCustomerAddress(customerAddress);
+        }
+
+        private boolean fillInCustomerAddress(CustomerAddress customerAddress) {
+            PersonalDetailsAddressPage customerAddressView = new PersonalDetailsAddressPage();
+            customerAddressView.setCustometAddress(customerAddress);
+            return customerAddressView.fillInCustomerAddress();
+        }
+    }
+
+    @And("^Quote details are confirmed$")
+    public void confirmQuoteDetails() throws Throwable {
+        QuoteDetailsPage quoteDetailsPage = new QuoteDetailsPage();
+        quoteDetailsPage.next();
+    }
+
+    @And("^Customer is random$")
+    public void checkAndGetRandomUser() throws Throwable {
+        boolean success = generateRandomUser();
+        assertThat("Random customer data was not fetched.", success,
+            is(true));
+    }
+
+    @And("^Customer is duplicated$")
+    public void duplicateRandomUser() throws Throwable {
+        RandomUser randomUser = (RandomUser) parameterProvider.getValueOrParameter("parameter:suitecrm-customer");
+        boolean success = new RandomUserActions().fillInCustomerDetails(randomUser);
+        assertThat("Random customer data was not fetched.", success,
+            is(true));
+    }
+
+    private boolean generateRandomUser() {
+        CustomerDetails customer = new CustomerDetails();
+        boolean success = new RandomUserActions().test(customer);
+        parameterProvider.put("suitecrm-customer-name", customer.getFirstName() + " " + customer.getLastName());
+        return success;
+    }
+
+    @And("^Customer address is$")
+    public void initCustomerAddress(final DataTable address) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
+        List<CustomerAddress> list = address.asList(CustomerAddress.class);
+        CustomerAddress customerAddress = list.get(0);
+        boolean success = new InitialiseCustomerAddress().test(customerAddress);
+        assertThat("Customer Address data wasn't initialised.", success, is(true));
+    }
+
+    @And("^Customer details are confirmed$")
+    public void confirmCustomerDetails() throws Throwable {
+        GuidedStep quoteDetailsPage = new PersonalDetailsAddressPage();
+        quoteDetailsPage.next();
+    }
+
+    @And("^Package is \"([^\"]*)\"$")
+    public void
+    selectPackage(String packaqe) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
+        TariffTable tariff = new TariffTable();
+        tariff.setPackageName(packaqe);
+        PackageAndFuelTypeSelectionPage selectPackageAndFuelTypeView = new PackageAndFuelTypeSelectionPage();
+        selectPackageAndFuelTypeView.setTariffData(tariff);
+        boolean success = selectPackageAndFuelTypeView.fillInFormData();
+        assertThat(String.format("Failure when selecting the package %s.", packaqe),
+            success,
+            is(true));
+        seleniumDriver.waitForRequestsToFinish();
+    }
+
+
+
+    @And("^Package and Fuel Type is confirmed$")
+    public void confirmPackageAndFuelType() throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
+        PackageAndFuelTypeSelectionPage selectPackageAndFuelTypeView = new PackageAndFuelTypeSelectionPage();
+        selectPackageAndFuelTypeView.next();
+    }
+
+    @And("^Price sheet alert doesn't pop up$")
+    public void verifySelectTariffSheetAndPackage() throws Throwable {
+        assertThat("Failure. Tariff sheet alerts were generated although they were not expected.", true,
+            is(new VerifyTariffSheetPriceAlert().test(this)));
+    }
+
+    @And("^Electricity and gas meter numbers and their EANs are:$")
+    public void selectMeterIdAndEan(final DataTable connectionTable) throws Throwable {
+        List<ConnectionDetails> list = connectionTable.asList(ConnectionDetails.class);
+        ConnectionDetails electricityConnectionDetails = list.get(0);
+        ConnectionDetails gasConnectionDetails = list.get(1);
+
+        ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
+        connectionDetailsView.setElectricityConnectionDetails(electricityConnectionDetails);
+        connectionDetailsView.setGasConnectionDetails(gasConnectionDetails);
+        connectionDetailsView.fillInFormData();
+    }
+
+    @And("^([^\"]*) meter is ([^\"]*)$")
+    public void setMeterState(final ProductType productType, final SwitchState meterState) throws Throwable {
+        ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
+        given().await()
+            .ignoreExceptions()
+            .pollInterval(FIVE_HUNDRED_MILLISECONDS)
+            .pollDelay(ONE_HUNDRED_MILLISECONDS)
+            .atMost(new Duration(10, SECONDS)).until(connectionDetailsView::isNextButtonEnabled);
+        connectionDetailsView.toggleMeter(productType, meterState);
+    }
+
+    @And("^Switch type is Move in$")
+    public void setMoveIn() throws Throwable {
+        ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
+        given().await()
+            .ignoreExceptions()
+            .pollInterval(FIVE_HUNDRED_MILLISECONDS)
+            .pollDelay(ONE_HUNDRED_MILLISECONDS)
+            .atMost(new Duration(10, SECONDS)).until(connectionDetailsView::isNextButtonEnabled);
+        connectionDetailsView.toggleMeter(ProductType.Electricity, SwitchState.Closed);
+    }
+
+    @And("^([^\"]*) market mock test is ([^\"]*)$")
+    public void setMarketMockTest(final ProductType productType, final SwitchState state) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
+        ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
+        given().await()
+            .ignoreExceptions()
+            .pollInterval(FIVE_HUNDRED_MILLISECONDS)
+            .pollDelay(ONE_HUNDRED_MILLISECONDS)
+            .atMost(new Duration(60, SECONDS)).until(connectionDetailsView::isNextButtonEnabled);
+        connectionDetailsView.toggleMarketMockTest(productType, state);
+        seleniumDriver.waitForRequestsToFinish();
+    }
+
+    @And("^Connection details are confirmed$")
+    public void confirmConnection() throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
+        ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
+        connectionDetailsView.next();
+    }
+
+    @And("^Payment details are: method \"([^\"]*)\", IBAN \"([^\"]*)\", bic \"([^\"]*)\"$")
+    public void selectPaymentMethod(String paymetnMethod, String iban, String bic) {
+        BillingInformation billingInfo = new BillingInformation(paymetnMethod, iban, bic);
+        BillingDetailsPage billingDetailsView = new BillingDetailsPage();
+        billingDetailsView.setBillingInformation(billingInfo);
+        billingDetailsView.fillInFormData();
+    }
+
+    @And("^Payment details are: method \"([^\"]*)\", random IBAN, bic \"([^\"]*)\"$")
+    public void selectPaymentMethod(String paymentMethod, String bic) {
+        String iban = PrepareDataForContract.getValidIbanBE();
+        selectPaymentMethod(paymentMethod, iban, bic);
+        parameterProvider.put("iban", iban);
+    }
+
+    @And("^IBAN is generated$")
+    public void generateIban() {
+        String iban = PrepareDataForContract.getValidIbanBE();
+        parameterProvider.put("iban", iban);
+    }
+
+    @And("^Prepaid advance amounts are collected as numbers$")
+    public void collectAdvanceAmountsAsNumbers(final DataTable cardsInfo) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
+        List<FieldDescriptor> cards = cardsInfo.asList(FieldDescriptor.class);
+        FieldDescriptor electricityAdvAmountField = cards.get(0);
+        FieldDescriptor gasAdvDescriptor = cards.get(1);
+        BillingDetailsPage billingDetailsPage = new BillingDetailsPage();
+        parameterProvider.put(electricityAdvAmountField.getParameterName(), billingDetailsPage.getElectricityAdvancedPaymentAmount(electricityAdvAmountField));
+        parameterProvider.put(gasAdvDescriptor.getParameterName(), billingDetailsPage.getGasAdvancedPaymentAmount(gasAdvDescriptor));
+    }
+
+
+    @And("^Billing details are confirmed$")
+    public void confirmBillingDetaile() throws Throwable {
+        BillingDetailsPage billingDetailsPage = new BillingDetailsPage();
+        billingDetailsPage.next();
+    }
+
+    @And("^Quote is signed in \"([^\"]*)\"$")
+    public void submitSignedQuote(String location) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
+        String path = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
+        File document = new File(path);
+        assertThat("File at path " + document.getAbsolutePath() + " doesn't exist.", true,
+            is(document.exists()));
+        SignatureData signature = new SignatureData(
+            DwpDateFormats.DWP_TODAY,
+            location,
+            path);
+        Sleeper.sleepTightInSeconds(10);
+        QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage();
+        quoteOverviewView.setSignatureData(signature);
+        boolean success = quoteOverviewView.fillInFormData();
+        assertThat("Failure when signing up the quote.", success, is(true));
+        seleniumDriver.waitForRequestsToFinish();
+    }
+
+
+    @And("^Quote is signed$")
+    public void submitQuote() throws Throwable {
+        String path = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
+        File document = new File(path);
+        assertThat("File at path " + document.getAbsolutePath() + " doesn't exist.", true,
+            is(document.exists()));
+        SignatureData signature = new SignatureData(
+            DwpDateFormats.DWP_TODAY,
+            path);
+        QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage();
+        quoteOverviewView.setSignatureData(signature);
+        boolean success = quoteOverviewView.fillInFormData();
+        assertThat("Failure when signing up the quote.", success, is(true));
+    }
+
+
+    @And("^Quote for account is signed$")
+    public void submitQuoteForAccount() throws Throwable {
+        String path = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
+        File document = new File(path);
+        assertThat("File at path " + document.getAbsolutePath() + " doesn't exist.", true,
+            is(document.exists()));
+        SignatureData signature = new SignatureData(
+            DwpDateFormats.DWP_TODAY,
+            path);
+        QuoteForAccountOverviewPage quoteOverviewView = new QuoteForAccountOverviewPage();
+        quoteOverviewView.setSignatureData(signature);
+        boolean success = quoteOverviewView.fillInFormData();
+        assertThat("Failure when signing up the quote.", success, is(true));
+    }
+
+
+    @And("^Quote is confirmed$")
+    public void confirmQuote() throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(5);
+        QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage();
+        quoteOverviewView.next();
+        seleniumDriver.waitForRequestsToFinish();
+    }
+    @And("^Quote for account is confirmed$")
+    public void confirmQuoteForAccount() throws Throwable {
+       confirmQuote();
+    }
+
+
+
+    @And("^Electricity EAN code is selected$")
+    public void selectEanCode() throws Throwable {
+        Map<String, String> options = new HashMap<>();
+        boolean success = executeJavascriptTest("TrSelectEanCode", options);
+        assertThat(success, is(true));
+    }
+
+    @And("^EAN code is generated$")
+    public void generateEan() throws Throwable {
+        String eanCode = PrepareDataForContract.generateEAN();
+        parameterProvider.put("EAN-code-generated", eanCode);
+        logger().info(" - Generated EAN code: " + eanCode);
+    }
+
+    @And("^Electricity EAN code is \"([^\"]*)\"$")
+    public void electricityEANCodeIs(String ean) throws Throwable {
+        ConnectionDetails electricityConnectionDetails = new ConnectionDetails();
+        switch (ean) {
+            case "selected":
+                selectEanCode();
+                return;
+            case "random":
+                String generatedEan = PrepareDataForContract.generateEAN();
+                electricityConnectionDetails.setEan(generatedEan);
+                parameterProvider.put("EAN-code-generated", generatedEan);
+                break;
+            default:
+                electricityConnectionDetails.setEan(ean);
+        }
+        ConnectionDetailsPage page = new ConnectionDetailsPage();
+        Sleeper.sleepTightInSeconds(5);
+        page.setElectricityConnectionDetails(electricityConnectionDetails);
+        boolean success = page.fillInElectricityEanCode();
+        assertThat("Electricity EAN code filling in failure", success, is(true));
+    }
+
+    @And("^Electricity EAN code is put as output parameter \"?([^\"]*)\"?$")
+    public void putElectricityEanCode(String parameter) throws Throwable {
+        ConnectionDetailsPage page = new ConnectionDetailsPage();
+        String eanCode = page.getEan();
+        assertThat(StringUtils.isNotEmpty(eanCode), is(true));
+        parameterProvider.put(parameter, eanCode);
+    }
+
+    @And("^EAN-code autocomplete value from the \"([^\"]*)\" row is checked$")
+    public void selectEanCodeFromAutoComplete(String ordinal) throws Throwable {
+        int rowIndex = extractNumericValue(ordinal);
+        String locator = createQuery(ROW_INDEX_XPATH, "rowIndex", String.valueOf(rowIndex));
+        WebElement eanElement = seleniumDriver.findElementWhenPresent(By.xpath(locator));
+        String ean = eanElement.getAttribute("textContent").split(" ")[0];
+        boolean eanWasFound = StringUtils.isNotBlank(ean);
+        assertThat(String.format("EAN code '%s' was not found.", ean), eanWasFound, is(true));
+        parameterProvider.put("EAN-code", ean);
+    }
+
+
     @Override
-    public boolean test(CustomerAddress customerAddress) {
-      return fillInCustomerAddress(customerAddress);
+    @After("@DWP, @E2E, @REGRESSION")
+    public void tearDown() {
+        super.tearDown();
     }
-
-    private boolean fillInCustomerAddress(CustomerAddress customerAddress) {
-      PersonalDetailsAddressPage customerAddressView = new PersonalDetailsAddressPage();
-      customerAddressView.setCustometAddress(customerAddress);
-      return customerAddressView.fillInCustomerAddress();
-    }
-  }
-
-  @And("^Quote details are confirmed$")
-  public void confirmQuoteDetails() throws Throwable {
-    QuoteDetailsPage quoteDetailsPage = new QuoteDetailsPage();
-    quoteDetailsPage.next();
-  }
-
-  @And("^Customer is random$")
-  public void checkAndGetRandomUser() throws Throwable {
-    boolean success = generateRandomUser();
-    assertThat("Random customer data was not fetched.", success, is(true));
-  }
-
-  @And("^Customer is duplicated$")
-  public void duplicateRandomUser() throws Throwable {
-    RandomUser randomUser =
-        (RandomUser) parameterProvider.getValueOrParameter("parameter:suitecrm-customer");
-    boolean success = new RandomUserActions().fillInCustomerDetails(randomUser);
-    assertThat("Random customer data was not fetched.", success, is(true));
-  }
-
-  private boolean generateRandomUser() {
-    CustomerDetails customer = new CustomerDetails();
-    boolean success = new RandomUserActions().test(customer);
-    parameterProvider.put(
-        "suitecrm-customer-name", customer.getFirstName() + " " + customer.getLastName());
-    return success;
-  }
-
-  @And("^Customer address is$")
-  public void initCustomerAddress(final DataTable address) throws Throwable {
-    seleniumDriver.waitForRequestsToFinish();
-    List<CustomerAddress> list = address.asList(CustomerAddress.class);
-    CustomerAddress customerAddress = list.get(0);
-    boolean success = new InitialiseCustomerAddress().test(customerAddress);
-    assertThat("Customer Address data wasn't initialised.", success, is(true));
-  }
-
-  @And("^Customer details are confirmed$")
-  public void confirmCustomerDetails() throws Throwable {
-    GuidedStep quoteDetailsPage = new PersonalDetailsAddressPage();
-    quoteDetailsPage.next();
-  }
-
-  @And("^Package is \"([^\"]*)\"$")
-  public void selectPackage(String packaqe) throws Throwable {
-    seleniumDriver.waitForRequestsToFinish();
-    TariffTable tariff = new TariffTable();
-    tariff.setPackageName(packaqe);
-    PackageAndFuelTypeSelectionPage selectPackageAndFuelTypeView =
-        new PackageAndFuelTypeSelectionPage();
-    selectPackageAndFuelTypeView.setTariffData(tariff);
-    boolean success = selectPackageAndFuelTypeView.fillInFormData();
-    assertThat(String.format("Failure when selecting the package %s.", packaqe), success, is(true));
-    seleniumDriver.waitForRequestsToFinish();
-  }
-
-  @And("^Package and Fuel Type is confirmed$")
-  public void confirmPackageAndFuelType() throws Throwable {
-    seleniumDriver.waitForRequestsToFinish();
-    PackageAndFuelTypeSelectionPage selectPackageAndFuelTypeView =
-        new PackageAndFuelTypeSelectionPage();
-    selectPackageAndFuelTypeView.next();
-  }
-
-  @And("^Price sheet alert doesn't pop up$")
-  public void verifySelectTariffSheetAndPackage() throws Throwable {
-    assertThat(
-        "Failure. Tariff sheet alerts were generated although they were not expected.",
-        true,
-        is(new VerifyTariffSheetPriceAlert().test(this)));
-  }
-
-  @And("^Electricity and gas meter numbers and their EANs are:$")
-  public void selectMeterIdAndEan(final DataTable connectionTable) throws Throwable {
-    List<ConnectionDetails> list = connectionTable.asList(ConnectionDetails.class);
-    ConnectionDetails electricityConnectionDetails = list.get(0);
-    ConnectionDetails gasConnectionDetails = list.get(1);
-
-    ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
-    connectionDetailsView.setElectricityConnectionDetails(electricityConnectionDetails);
-    connectionDetailsView.setGasConnectionDetails(gasConnectionDetails);
-    connectionDetailsView.fillInFormData();
-  }
-
-  @And("^([^\"]*) meter is ([^\"]*)$")
-  public void setMeterState(final ProductType productType, final SwitchState meterState)
-      throws Throwable {
-    ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
-    given()
-        .await()
-        .ignoreExceptions()
-        .pollInterval(FIVE_HUNDRED_MILLISECONDS)
-        .pollDelay(ONE_HUNDRED_MILLISECONDS)
-        .atMost(new Duration(10, SECONDS))
-        .until(connectionDetailsView::isNextButtonEnabled);
-    connectionDetailsView.toggleMeter(productType, meterState);
-  }
-
-  @And("^Switch type is Move in$")
-  public void setMoveIn() throws Throwable {
-    ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
-    given()
-        .await()
-        .ignoreExceptions()
-        .pollInterval(FIVE_HUNDRED_MILLISECONDS)
-        .pollDelay(ONE_HUNDRED_MILLISECONDS)
-        .atMost(new Duration(10, SECONDS))
-        .until(connectionDetailsView::isNextButtonEnabled);
-    connectionDetailsView.toggleMeter(ProductType.Electricity, SwitchState.Closed);
-  }
-
-  @And("^([^\"]*) market mock test is ([^\"]*)$")
-  public void setMarketMockTest(final ProductType productType, final SwitchState state)
-      throws Throwable {
-    seleniumDriver.waitForRequestsToFinish();
-    ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
-    given()
-        .await()
-        .ignoreExceptions()
-        .pollInterval(FIVE_HUNDRED_MILLISECONDS)
-        .pollDelay(ONE_HUNDRED_MILLISECONDS)
-        .atMost(new Duration(60, SECONDS))
-        .until(connectionDetailsView::isNextButtonEnabled);
-    connectionDetailsView.toggleMarketMockTest(productType, state);
-    seleniumDriver.waitForRequestsToFinish();
-  }
-
-  @And("^Connection details are confirmed$")
-  public void confirmConnection() throws Throwable {
-    seleniumDriver.waitForRequestsToFinish();
-    ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
-    connectionDetailsView.next();
-  }
-
-  @And("^Payment details are: method \"([^\"]*)\", IBAN \"([^\"]*)\", bic \"([^\"]*)\"$")
-  public void selectPaymentMethod(String paymetnMethod, String iban, String bic) {
-    BillingInformation billingInfo = new BillingInformation(paymetnMethod, iban, bic);
-    BillingDetailsPage billingDetailsView = new BillingDetailsPage();
-    billingDetailsView.setBillingInformation(billingInfo);
-    billingDetailsView.fillInFormData();
-  }
-
-  @And("^Payment details are: method \"([^\"]*)\", random IBAN, bic \"([^\"]*)\"$")
-  public void selectPaymentMethod(String paymentMethod, String bic) {
-    String iban = PrepareDataForContract.getValidIbanBE();
-    selectPaymentMethod(paymentMethod, iban, bic);
-    parameterProvider.put("iban", iban);
-  }
-
-  @And("^IBAN is generated$")
-  public void generateIban() {
-    String iban = PrepareDataForContract.getValidIbanBE();
-    parameterProvider.put("iban", iban);
-  }
-
-  @And("^Prepaid advance amounts are collected as numbers$")
-  public void collectAdvanceAmountsAsNumbers(final DataTable cardsInfo) throws Throwable {
-    seleniumDriver.waitForRequestsToFinish();
-    List<FieldDescriptor> cards = cardsInfo.asList(FieldDescriptor.class);
-    FieldDescriptor electricityAdvAmountField = cards.get(0);
-    FieldDescriptor gasAdvDescriptor = cards.get(1);
-    BillingDetailsPage billingDetailsPage = new BillingDetailsPage();
-    parameterProvider.put(
-        electricityAdvAmountField.getParameterName(),
-        billingDetailsPage.getElectricityAdvancedPaymentAmount(electricityAdvAmountField));
-    parameterProvider.put(
-        gasAdvDescriptor.getParameterName(),
-        billingDetailsPage.getGasAdvancedPaymentAmount(gasAdvDescriptor));
-  }
-
-  @And("^Billing details are confirmed$")
-  public void confirmBillingDetaile() throws Throwable {
-    BillingDetailsPage billingDetailsPage = new BillingDetailsPage();
-    billingDetailsPage.next();
-  }
-
-  @And("^Quote is signed in \"([^\"]*)\"$")
-  public void submitSignedQuote(String location) throws Throwable {
-    seleniumDriver.waitForRequestsToFinish();
-    String path = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
-    File document = new File(path);
-    assertThat(
-        "File at path " + document.getAbsolutePath() + " doesn't exist.",
-        true,
-        is(document.exists()));
-    SignatureData signature = new SignatureData(DwpDateFormats.DWP_TODAY, location, path);
-    Sleeper.sleepTightInSeconds(10);
-    QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage();
-    quoteOverviewView.setSignatureData(signature);
-    boolean success = quoteOverviewView.fillInFormData();
-    assertThat("Failure when signing up the quote.", success, is(true));
-    seleniumDriver.waitForRequestsToFinish();
-  }
-
-  @And("^Quote is signed$")
-  public void submitQuote() throws Throwable {
-    String path = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
-    File document = new File(path);
-    assertThat(
-        "File at path " + document.getAbsolutePath() + " doesn't exist.",
-        true,
-        is(document.exists()));
-    SignatureData signature = new SignatureData(DwpDateFormats.DWP_TODAY, path);
-    QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage();
-    quoteOverviewView.setSignatureData(signature);
-    boolean success = quoteOverviewView.fillInFormData();
-    assertThat("Failure when signing up the quote.", success, is(true));
-  }
-
-  @And("^Quote for account is signed$")
-  public void submitQuoteForAccount() throws Throwable {
-    String path = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
-    File document = new File(path);
-    assertThat(
-        "File at path " + document.getAbsolutePath() + " doesn't exist.",
-        true,
-        is(document.exists()));
-    SignatureData signature = new SignatureData(DwpDateFormats.DWP_TODAY, path);
-    QuoteForAccountOverviewPage quoteOverviewView = new QuoteForAccountOverviewPage();
-    quoteOverviewView.setSignatureData(signature);
-    boolean success = quoteOverviewView.fillInFormData();
-    assertThat("Failure when signing up the quote.", success, is(true));
-  }
-
-  @And("^Quote is confirmed$")
-  public void confirmQuote() throws Throwable {
-    seleniumDriver.waitForRequestsToFinish();
-    Sleeper.sleepTightInSeconds(5);
-    QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage();
-    quoteOverviewView.next();
-    seleniumDriver.waitForRequestsToFinish();
-  }
-
-  @And("^Quote for account is confirmed$")
-  public void confirmQuoteForAccount() throws Throwable {
-    confirmQuote();
-  }
-
-  @When("^I select the \"([^\"]*)\" element and click the link in the \"([^\"]*)\" column$")
-  public void navigateToListCellLink(String ordinal, String column) throws Throwable {
-    Map<String, String> options = new HashMap<>();
-    options.put("column", column);
-    boolean success = executeJavascriptTest(JS_TR_GET_COLUMN_INDEX_LIST, options);
-    assertThat(success, is(true));
-  }
-
-  @And("^Electricity EAN code is selected$")
-  public void selectEanCode() throws Throwable {
-    Map<String, String> options = new HashMap<>();
-    boolean success = executeJavascriptTest(JS_TR_SELECT_EAN_CODE, options);
-    assertThat(success, is(true));
-  }
-
-  @And("^EAN code is generated$")
-  public void generateEan() throws Throwable {
-    String eanCode = PrepareDataForContract.generateEAN();
-    parameterProvider.put("EAN-code-generated", eanCode);
-    logger().info(" - Generated EAN code: " + eanCode);
-  }
-
-  @And("^Electricity EAN code is \"([^\"]*)\"$")
-  public void electricityEANCodeIs(String ean) throws Throwable {
-    ConnectionDetails electricityConnectionDetails = new ConnectionDetails();
-    switch (ean) {
-      case "selected":
-        selectEanCode();
-        return;
-      case "random":
-        String generatedEan = PrepareDataForContract.generateEAN();
-        electricityConnectionDetails.setEan(generatedEan);
-        parameterProvider.put("EAN-code-generated", generatedEan);
-        break;
-      default:
-        electricityConnectionDetails.setEan(ean);
-    }
-    ConnectionDetailsPage page = new ConnectionDetailsPage();
-    Sleeper.sleepTightInSeconds(5);
-    page.setElectricityConnectionDetails(electricityConnectionDetails);
-    boolean success = page.fillInElectricityEanCode();
-    assertThat("Electricity EAN code filling in failure", success, is(true));
-  }
-
-  @And("^Electricity EAN code is put as output parameter \"?([^\"]*)\"?$")
-  public void putElectricityEanCode(String parameter) throws Throwable {
-    ConnectionDetailsPage page = new ConnectionDetailsPage();
-    String eanCode = page.getEan();
-    assertThat(StringUtils.isNotEmpty(eanCode), is(true));
-    parameterProvider.put(parameter, eanCode);
-  }
-
-  @And("^EAN-code autocomplete value from the \"([^\"]*)\" row is checked$")
-  public void selectEanCodeFromAutoComplete(String ordinal) throws Throwable {
-    int rowIndex = extractNumericValue(ordinal);
-    String locator = createQuery(ROW_INDEX_XPATH, "rowIndex", String.valueOf(rowIndex));
-    WebElement eanElement = seleniumDriver.findElementWhenPresent(By.xpath(locator));
-    String ean = eanElement.getAttribute("textContent").split(" ")[0];
-    boolean eanWasFound = StringUtils.isNotBlank(ean);
-    assertThat(String.format("EAN code '%s' was not found.", ean), eanWasFound, is(true));
-    parameterProvider.put("EAN-code", ean);
-  }
-
-  @Override
-  @After("@DWP, @B2C, @E2E, @REGRESSION")
-  public void tearDown() {
-    super.tearDown();
-  }
 }

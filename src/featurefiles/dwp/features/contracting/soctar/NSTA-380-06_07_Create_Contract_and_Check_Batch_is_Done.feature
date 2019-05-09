@@ -4,7 +4,6 @@ Feature: Soctar batch contract creation
 
     Background:
         Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
-
     @SOCTAR-06-07
     Scenario: Add Soctar contract and check if type and status are changed
         Given Plus menu is "Contracting -> Soctar -> Sociale tariefbatches"

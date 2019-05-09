@@ -16,65 +16,43 @@ import java.util.Properties;
 
 public class ContractUtil {
 
-  private static long WAIT_CONTRACT_ACTIVE = 220000;
-  private static long STEP_UNTIL_CONTRACT_ACTIVE = 30000;
+	private static long WAIT_CONTRACT_ACTIVE = 220000;
+	private static long STEP_UNTIL_CONTRACT_ACTIVE = 30000;
 
-  public static String waitUntilStringFoundInResponse(
-      Cookies cookie,
-      String apiPath,
-      String payload,
-      ContractStatus findMe,
-      String jsonPathFromResponse,
-      int TIMEOUT)
-      throws Exception {
-    String contractStatus = "";
-    int i = 0;
+	public static String waitUntilStringFoundInResponse(Cookies cookie, String apiPath, String payload, ContractStatus findMe, String jsonPathFromResponse, int TIMEOUT) throws Exception {
+	    String contractStatus = "";
+	    int i = 0;
 
-    while (i < TIMEOUT) {
-      Response response =
-          RestAssured.given()
-              .cookies(cookie)
-              .contentType(ContentType.JSON)
-              .accept(ContentType.JSON)
-              .when()
-              .body(payload)
-              .post(apiPath)
-              .then()
-              .statusCode(200)
-              .extract()
-              .response();
+	    while (i < TIMEOUT) {
+	    	Response response = RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
+	    			.when().body(payload).post(apiPath).then().statusCode(200).extract().response();
 
-      contractStatus = new JsonPath(response.getBody().asString()).get(jsonPathFromResponse);
+            contractStatus = new JsonPath(response.getBody().asString()).get(jsonPathFromResponse);
 
-      if (StringUtils.isNotBlank(contractStatus)
-          && contractStatus.contains(findMe.getContractStatus())) {
-        break;
-      } else {
-        if (i == 0) {
-          Thread.sleep(WAIT_CONTRACT_ACTIVE);
-        } else {
-          Thread.sleep(STEP_UNTIL_CONTRACT_ACTIVE);
-        }
-        ++i;
-        if (i == TIMEOUT) {
-          return contractStatus;
-        }
-      }
-    }
+            if (StringUtils.isNotBlank(contractStatus) && contractStatus.contains(findMe.getContractStatus())) {
+                break;
+            } else {
+                if(i == 0) { Thread.sleep(WAIT_CONTRACT_ACTIVE); }
+                else { Thread.sleep(STEP_UNTIL_CONTRACT_ACTIVE); }
+                ++i;
+                if (i == TIMEOUT) { return contractStatus; }
+            }
+	    }
 
-    return contractStatus;
-  }
+	    return contractStatus;
+	}
 
-  public static Properties loadProperties(String path) throws FileNotFoundException, IOException {
+	public static Properties loadProperties(String path) throws FileNotFoundException, IOException{
 
-    Properties properties = new Properties();
+		Properties properties = new Properties();
 
-    File file = new File(path);
-    FileInputStream fileInput = new FileInputStream(file);
+		File file = new File(path);
+		FileInputStream fileInput = new FileInputStream(file);
 
-    properties.load(fileInput);
-    fileInput.close();
+		properties.load(fileInput);
+		fileInput.close();
 
-    return properties;
-  }
+		return properties;
+	}
+
 }

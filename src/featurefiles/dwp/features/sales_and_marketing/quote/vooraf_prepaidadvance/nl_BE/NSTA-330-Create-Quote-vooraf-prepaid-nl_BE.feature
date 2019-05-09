@@ -3,10 +3,9 @@
 @B2C
 @REGRESSION
 Feature: NSTA-330. Check the generation of prepaid advance invoice.
-    Sign-in a new customer with TC1 quote with electricity and gas prepaid products.
-    Check prepaid advance invoice total amount as sum of electricity and gas advance amounts.
-    Check invoice due date, should be 19 days after transaction date.
-
+         Sign-in a new customer with TC1 quote with electricity and gas prepaid products.
+         Check prepaid advance invoice total amount as sum of electricity and gas advance amounts.
+         Check invoice due date, should be 19 days after transaction date.
     Background:
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
@@ -23,8 +22,8 @@ Feature: NSTA-330. Check the generation of prepaid advance invoice.
 
         When Customer is random
         And Customer address is
-            | street | houseNr | houseNrAdd | bus | postalCode | city    | country |
-            | Random | 1       |            |     | 2550       | Kontich |         |
+            | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
+            | Random           | 1       |            |     | 2550       | Kontich |         |
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
 
@@ -46,9 +45,9 @@ Feature: NSTA-330. Check the generation of prepaid advance invoice.
         And Numeric value at "Bedrag Vooraf (incl. btw)" in the card "Elektriciteit Vooraf" is "greater than 0"
         And Numeric value at "Bedrag Vooraf (incl. btw)" in the card "Aardgas Vooraf" is "greater than 0"
         And Prepaid advance amounts are collected as numbers
-            | cardName             | fieldName                 | parameterName     |
-            | Elektriciteit Vooraf | Bedrag Vooraf (incl. btw) | bedrag-vooraf-el  |
-            | Aardgas Vooraf       | Bedrag Vooraf (incl. btw) | bedrag-vooraf-gas |
+            | cardName             | fieldName                 | parameterName    |
+            | Elektriciteit Vooraf | Bedrag Vooraf (incl. btw) | bedrag-vooraf-el |
+            | Aardgas Vooraf       | Bedrag Vooraf (incl. btw) | bedrag-vooraf-gas|
 
 
         And Billing details are confirmed
@@ -81,7 +80,7 @@ Feature: NSTA-330. Check the generation of prepaid advance invoice.
         When Dashboard menu is "Billing"
         Then Table "Transacties" contains value "Invoice (PREPAIDADVANCE)" at column "ID & Type"
         And  "1st" element of table "Transacties" at currency column "Bedrag" is sum of
-            | parameter:bedrag-vooraf-el  |
-            | parameter:bedrag-vooraf-gas |
+        |parameter:bedrag-vooraf-el |
+        |parameter:bedrag-vooraf-gas|
         #2.2 Check invoice due date, should be 19 days after transaction date.
         And "1st" list element with date interval at column "Datum & Vervaldatum" from table "Transacties" is "19 days"

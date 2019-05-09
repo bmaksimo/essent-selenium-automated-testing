@@ -12,29 +12,29 @@ import cucumber.api.java.en.Given;
 import static org.junit.Assert.assertNotNull;
 
 public class OdooGenericSteps extends OdooScenario {
-  @Before("@ODOO, @E2E, @REGRESSION")
-  public void setupTest(Scenario scenario) throws Throwable {
-    registerActiveScenario(scenario);
-  }
+    @Before("@ODOO, @E2E, @REGRESSION")
+    public void setupTest(Scenario scenario) throws Throwable {
+        registerActiveScenario(scenario);
+    }
 
-  @Given("^I logged in to Odoo as \"([^\"]*)\"$")
-  public void login(String username) throws Throwable {
-    setUpWebDriver();
-    isOdooRunning();
-    UserRoles odooUser = UserRoles.get(username);
-    Window application = new OdooLogin().login(odooUser.getUsername(), odooUser.getPassword());
-    assertNotNull("DWP application did not appear after a login", application);
-    awaitOdooRequestToFinish(180);
-  }
+    @Given("^I logged in to Odoo as \"([^\"]*)\"$")
+    public void login(String username) throws Throwable {
+        setUpWebDriver();
+        isOdooRunning();
+        UserRoles odooUser = UserRoles.get(username);
+        Window application = new OdooLogin().login(odooUser.getUsername(), odooUser.getPassword());
+        assertNotNull("DWP application did not appear after a login", application);
+        awaitOdooRequestToFinish(180);
+    }
 
-  @Given("^I renew login to Odoo as \"([^\"]*)\"$")
-  public void renewLoginAs(String username) throws Throwable {
-    tearDown();
-    login(username);
-  }
+    @Given("^I renew login to Odoo as \"([^\"]*)\"$")
+    public void renewLoginAs(String username) throws Throwable {
+        tearDown();
+        login(username);
+    }
 
-  @After("@ODOO, @E2E, @REGRESSION")
-  public void tearDown() {
-    super.tearDown();
-  }
+    @After("@ODOO, @E2E, @REGRESSION")
+    public void tearDown() {
+        super.tearDown();
+    }
 }

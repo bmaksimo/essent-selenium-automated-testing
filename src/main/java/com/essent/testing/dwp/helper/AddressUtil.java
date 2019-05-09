@@ -189,12 +189,12 @@ public class AddressUtil {
     "Zilverbergstraat",
   };
 
-  public static String getRandomStreet() {
+    public static String getRandomStreet() {
 
-    Random rnd = new Random();
+        Random rnd = new Random();
 
-    int index = (int) (rnd.nextFloat() * streets.length);
+        int index = (int) (rnd.nextFloat() * streets.length);
 
-    return streets[index];
-  }
+        return streets[index];
+    }
 }

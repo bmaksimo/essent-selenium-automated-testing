@@ -5,6 +5,7 @@ Feature: Essent Web Automation testing with Cucumber-JVM  and Selenium. Framewor
         Given Contractor "Sjaak van Vliet" is put as "contractor-name"
 
 
+
     @GLOBAL-TEST-PARAMETERS
     Scenario: Populate test output parameter for the other (external) scenarios.
     https://emagine-reality.atlassian.net/browse/NSTA-220

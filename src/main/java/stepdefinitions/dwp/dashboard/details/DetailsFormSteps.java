@@ -9,39 +9,35 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Then;
 import org.apache.commons.lang3.StringUtils;
 
-import static com.billinghouse.MatcherAssert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-
-;
 
 public class DetailsFormSteps extends DwpScenario {
 
-  @Before("@DWP, @CORE, @E2E, @REGRESSION")
-  public void setupTest(Scenario scenario) throws Throwable {
-    registerActiveScenario(scenario);
-  }
+    @Before("@DWP, @CORE, @E2E, @REGRESSION")
+    public void setupTest(Scenario scenario) throws Throwable {
+        registerActiveScenario(scenario);
+    }
 
-  @Then("^\"([^\"]*)\" field value is checked$")
-  public void checkFieldValue(String label) throws Throwable {
-    AccountDetails details = new AccountDetailsImpl();
-    String value = details.getNonEdtableValue(label);
-    assertThat(
-        String.format("'%s' field has is empty, was expected to have value", label),
-        StringUtils.isNotEmpty(value),
-        is(true));
-    parameterProvider.put(label, value);
-  }
+    @Then("^\"([^\"]*)\" field value is checked$")
+    public void checkFieldValue(String label) throws Throwable {
+        AccountDetails details = new AccountDetailsImpl();
+        String value = details.getNonEdtableValue(label);
+        assertThat(String.format("'%s' field was empty, was expected to have value", label),StringUtils.isNotEmpty(value), is(true));
+        parameterProvider.put(label, value);
+    }
 
-  @Then("^\"([^\"]*)\" switch value is checked$")
-  public void checkToggleSwitchValue(String label) throws Throwable {
-    AccountDetails details = new AccountDetailsImpl();
-    boolean value = details.isToggleSwitchEnabled(label);
-    parameterProvider.put(label, value);
-  }
+    @Then("^\"([^\"]*)\" switch value is checked$")
+    public void checkToggleSwitchValue(String label) throws Throwable {
+        AccountDetails details = new AccountDetailsImpl();
+        boolean value = details.isToggleSwitchEnabled(label);
+        parameterProvider.put(label, value);
+    }
 
-  @Override
-  @After("@DWP, @CORE, @E2E, @REGRESSION")
-  public void tearDown() {
-    super.tearDown();
-  }
+
+    @Override
+    @After("@DWP, @CORE, @E2E, @REGRESSION")
+    public void tearDown() {
+        super.tearDown();
+    }
 }

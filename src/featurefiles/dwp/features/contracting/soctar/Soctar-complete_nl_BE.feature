@@ -8,7 +8,6 @@ Feature: Social tariff (SOCTAR) contract creation
         #Output parameter "start_end_date", format: '1yyyyMMddyyyy1231'
         #Output parameter  "start-en-einddatum", format: 'dd-MM-yyyy - dd-MM-yyyy'
         And Soctar start date is "now"
-
     @SOCTAR-COMPLETE
     @NSTA-333
     Scenario: Create Soctar (Social tariff) quote and contract, and check Soctar confirmation letter
@@ -23,8 +22,8 @@ Feature: Social tariff (SOCTAR) contract creation
 
         When Customer is random
         And Customer address is
-            | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
-            | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
+            | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
+            | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
 

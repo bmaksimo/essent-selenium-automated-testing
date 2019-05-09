@@ -6,7 +6,6 @@ Feature: NUAT-550 Send manual cancel drop
 
     Background:
         Given  I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
-
     @NUAT-550
     Scenario: Send manual drop
         When Left menu is "sales-marketing"

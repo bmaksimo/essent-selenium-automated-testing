@@ -10,12 +10,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
-import static com.billinghouse.MatcherAssert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.JS_TR_CHECK_DOCUMENT_TYPE;
 import static org.hamcrest.Matchers.is;
 
 public class DocumentsMenu extends NavigationElements {
-
   private class ClickDocumentsMenu implements Predicate<String> {
     @Override
     public boolean test(String documentType) {
@@ -25,23 +24,21 @@ public class DocumentsMenu extends NavigationElements {
     }
   }
 
-  @Before("@DWP, @CORE, @E2E, @REGRESSION")
-  public void setupTest(Scenario scenario) {
-    registerActiveScenario(scenario);
-  }
+    @Before("@DWP, @CORE, @E2E, @REGRESSION")
+    public void setupTest(Scenario scenario) {
+        registerActiveScenario(scenario);
+    }
 
-  @Then("^Document with document type \"([^\"]*)\" is available$")
-  public void checkDashboardMenuItem(String documentType) {
-    boolean success = new DocumentsMenu.ClickDocumentsMenu().test(documentType);
-    assertThat(
-        String.format("Document with document type  %s was not found.", documentType),
-        success,
-        is(true));
-  }
+    @Then("^Document with document type \"([^\"]*)\" is available$")
+    public void checkDashboardMenuItem(String documentType) {
+        boolean success = new DocumentsMenu.ClickDocumentsMenu().test(documentType);
+        assertThat(String.format("Document with document type  %s was not found.", documentType),
+            success, is(true));
+    }
 
-  @Override
-  @After("@DWP, @CORE, @E2E, @REGRESSION")
-  public void tearDown() {
-    super.tearDown();
-  }
+    @Override
+    @After("@DWP, @CORE, @E2E, @REGRESSION")
+    public void tearDown() {
+        super.tearDown();
+    }
 }

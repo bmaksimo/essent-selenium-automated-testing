@@ -9,27 +9,27 @@ import cucumber.api.java.en.When;
 
 public class MarketMessagesSteps extends DwpScenario {
 
-  @Before("@DWP, @REGRESSION, @E2E")
-  public void setupTest(Scenario scenario) throws Throwable {
-    registerActiveScenario(scenario);
-  }
+    @Before("@DWP, @REGRESSION, @E2E")
+    public void setupTest(Scenario scenario) throws Throwable {
+        registerActiveScenario(scenario);
+    }
 
-  @When("^Dialog search input is current \"([^\"]*)\"$")
-  public void runDialogSearch(String searchInput) {
-    String currentSearchInputValue = parameterProvider.getValueOrParameterAsString(searchInput);
-    SearchContractLinesDialog dialog = new SearchContractLinesDialog();
-    dialog.searchContractLine(currentSearchInputValue);
-  }
+    @When("^Dialog search input is current \"([^\"]*)\"$")
+    public void runDialogSearch(String searchInput) {
+        String currentSearchInputValue = parameterProvider.getValueOrParameterAsString(searchInput);
+        SearchContractLinesDialog dialog = new SearchContractLinesDialog();
+        dialog.searchContractLine(currentSearchInputValue);
+    }
 
-  @When("^Select Contractline dialog is confirmed$")
-  public void clickConfirmButton() {
-    SearchContractLinesDialog dialog = new SearchContractLinesDialog();
-    dialog.confirm();
-  }
+    @When("^Select Contractline dialog is confirmed$")
+    public void clickConfirmButton() {
+        SearchContractLinesDialog dialog = new SearchContractLinesDialog();
+        dialog.confirm();
+    }
 
-  @Override
-  @After("@DWP, @REGRESSION, @E2E")
-  public void tearDown() {
-    super.tearDown();
-  }
+    @Override
+    @After("@DWP, @REGRESSION, @E2E")
+    public void tearDown() {
+        super.tearDown();
+    }
 }

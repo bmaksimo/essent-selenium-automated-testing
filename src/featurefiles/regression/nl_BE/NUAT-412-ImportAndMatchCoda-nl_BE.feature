@@ -89,15 +89,15 @@ Feature: NUAT-412 part: Create / import coda file
         And Generated CODA file is downloaded
         And Modal button "Close" is clicked
 
-    @IMPORT-CODA
-    Scenario: Import CODA file in Odoo
-        Given I renew login to Odoo as "role_essent_ccm_user"
-        When Odoo top menu is "Accounting"
-        When Odoo left menu is "CODA Processing->Import CODA Files"
-        Then Odoo file upload dialog is "Import CODA File"
-        Then CODA file is "parameter:codaFile"
-        And  Odoo file upload confirm button is "Import"
-        And  Odoo file import report
-        And Modal button "View Bank Statement" is clicked
-        When Column "Reference" of the "1st" row is clicked
-        And Modal button "Close" is clicked
+   @IMPORT-CODA
+   Scenario: Import CODA file in Odoo
+       Given I renew login to Odoo as "role_essent_ccm_user"
+       When Odoo top menu is "Accounting"
+       When Odoo left menu is "CODA Processing->Import CODA Files"
+       Then Odoo file upload dialog is "Import CODA File"
+       Then CODA file is "parameter:codaFile"
+       And  Odoo file upload confirm button is "Import"
+       And  Odoo file import report
+       And Modal button "View Bank Statement" is clicked
+       When Column "Reference" of the "1st" row is clicked
+       And Modal button "Close" is clicked

@@ -22,31 +22,29 @@ public class SoctarFileUtil {
               + "soctar"
               + File.separator);
 
-  public static String getSoctarFileFromTemplate(
-      String cust_Id, String ean_id, String soctarStartDatEndDate) throws IOException {
-    String sourcePath = DEFAULT_SOCTAR_LOCATION + "soctar-template.csv";
-    String destinationPath =
-        DEFAULT_SOCTAR_LOCATION + String.format("soctar-%s-%s.csv", cust_Id, ean_id);
-    String custIdPadded = StringUtils.rightPad(cust_Id, 10, ' ');
-    try (BufferedReader br = new BufferedReader(new FileReader(sourcePath));
-        PrintWriter pw = new PrintWriter(Files.newBufferedWriter(Paths.get(destinationPath)))) {
-      StrSubstitutor substitutor =
-          createStringSubstitutor(ean_id, soctarStartDatEndDate, custIdPadded);
-      String sCurrentLine;
-      while ((sCurrentLine = br.readLine()) != null) {
-        pw.println(substitutor.replace(sCurrentLine));
-      }
+    public static String getSoctarFileFromTemplate(String cust_Id, String ean_id, String soctarStartDatEndDate) throws IOException {
+        String sourcePath = DEFAULT_SOCTAR_LOCATION + "soctar-template.csv";
+        String destinationPath = DEFAULT_SOCTAR_LOCATION + String.format("soctar-%s-%s.csv", cust_Id, ean_id);
+        String custIdPadded = StringUtils.rightPad(cust_Id, 10, ' ');
+        try (BufferedReader br = new BufferedReader(new FileReader(sourcePath));
+             PrintWriter pw = new PrintWriter(Files.newBufferedWriter(
+                 Paths.get(destinationPath)))) {
+            StrSubstitutor substitutor = createStringSubstitutor(ean_id, soctarStartDatEndDate, custIdPadded);
+            String sCurrentLine;
+            while ((sCurrentLine = br.readLine()) != null) {
+                pw.println(substitutor.replace(sCurrentLine));
+            }
+        }
+        return destinationPath;
     }
-    return destinationPath;
-  }
 
-  private static StrSubstitutor createStringSubstitutor(
-      String ean_id, String soctarStartDatEndDate, String custIdPadded) {
-    Map<String, String> substitutions = new HashMap<>();
-    StrSubstitutor substitutor = new StrSubstitutor(substitutions);
-    substitutions.put("ean-id", ean_id);
-    substitutions.put("start-end-date", soctarStartDatEndDate);
-    substitutions.put("cust-id", custIdPadded);
-    return substitutor;
-  }
+    private static StrSubstitutor createStringSubstitutor(String ean_id, String soctarStartDatEndDate, String custIdPadded) {
+        Map<String, String> substitutions = new HashMap<>();
+        StrSubstitutor substitutor = new StrSubstitutor(substitutions);
+        substitutions.put("ean-id", ean_id);
+        substitutions.put("start-end-date", soctarStartDatEndDate);
+        substitutions.put("cust-id", custIdPadded);
+        return substitutor;
+    }
+
 }

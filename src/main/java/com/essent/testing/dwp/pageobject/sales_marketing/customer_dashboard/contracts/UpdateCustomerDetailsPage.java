@@ -6,12 +6,15 @@ import org.openqa.selenium.WebElement;
 
 public class UpdateCustomerDetailsPage extends Component {
 
-  private WebElement saveButtonForFinanceAndLegalSection() {
-    return seleniumDriver.findElementWhenVisible(
-        By.xpath("//*[contains(text(),' Finance & legal ')]/preceding-sibling::*[1]"));
-  }
+    private WebElement saveButtonForFinanceAndLegalSection()  {
+        //TODO Remove locale-specific hardocode.
+        // The project must support official Belgian languages.
+        // Locale-specufuc elements of wab element locators must be parameterized.
+        // This is basic rule.
+        return seleniumDriver.findElementWhenVisible(By.xpath("//*[contains(text(),' Finance & legal ')]/preceding-sibling::*[1]"));
+    }
 
-  public void clickOnSaveButtonForFinanceAndLegalSection() {
-    seleniumDriver.waitAndClick(saveButtonForFinanceAndLegalSection());
-  }
+    public void clickOnSaveButtonForFinanceAndLegalSection()  {
+        seleniumDriver.waitAndClick(saveButtonForFinanceAndLegalSection());
+    }
 }

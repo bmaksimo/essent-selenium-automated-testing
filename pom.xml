@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.essent.testing</groupId>
   <artifactId>essent-selenium-automated-testing</artifactId>
@@ -489,7 +489,7 @@
       <groupId>com.essent</groupId>
       <artifactId>haulogy-jaxb</artifactId>
     </dependency>
-    <!-- XMLRPC -->
+  <!-- XMLRPC -->
     <dependency>
       <groupId>org.apache.xmlrpc</groupId>
       <artifactId>xmlrpc-client</artifactId>
@@ -530,11 +530,11 @@
       <groupId>com.essent.be.nova</groupId>
       <artifactId>nova-autocrat</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.iban4j</groupId>
-      <artifactId>iban4j</artifactId>
-      <version>3.2.0</version>
-    </dependency>
+	<dependency>
+	    <groupId>org.iban4j</groupId>
+	    <artifactId>iban4j</artifactId>
+	    <version>3.2.0</version>
+	</dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context-support</artifactId>
@@ -694,10 +694,10 @@
                   <target>
                     <junitreport todir="${project.build.directory}/failsafe-reports">
                       <fileset dir="${project.build.directory}/failsafe-reports">
-                        <include name="*.xml"/>
+                        <include name="*.xml" />
                       </fileset>
                       <report format="frames"
-                              todir="${project.build.directory}/failsafe-reports"/>
+                              todir="${project.build.directory}/failsafe-reports" />
                     </junitreport>
                   </target>
                 </configuration>

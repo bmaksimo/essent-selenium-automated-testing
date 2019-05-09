@@ -5,7 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import stepdefinitions.quote.api.model.GenericPayload;
 
-/** @author n.grkavac */
+/**
+ * @author n.grkavac
+ *
+ */
 public class PayloadMapper {
 
   public String createPayload() throws JsonProcessingException {
@@ -17,4 +20,5 @@ public class PayloadMapper {
     check.setModel(new GenericPayload.Model());
     return mapper.writeValueAsString(check);
   }
+
 }

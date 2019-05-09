@@ -52,19 +52,18 @@ public class JsTestRegistry {
   public static final String JS_TR_SWITCH_PAYMENT_METHOD = "TrSwitchPaymentMethod";
   public static final String JS_TR_ADD_IBAN_TO_PAYMENT_DETAILS = "TrAddIBANToPaymentDetails";
   private static final JsTestRegistry instance = new JsTestRegistry();
-  private static final Set<String> javaScriptClasses = new HashSet<>();
+    public static final JsTestRegistry get() { return instance; }
+    private static final Set<String> javaScriptClasses = new HashSet<>();
 
-  private JsTestRegistry() {}
+    private JsTestRegistry() {
 
-  public static JsTestRegistry get() {
-    return instance;
-  }
+    }
 
-  public boolean register(String jsClass) {
-    return javaScriptClasses.add(jsClass);
-  }
+    public boolean register(String jsClass) {
+        return javaScriptClasses.add(jsClass);
+    }
 
-  public boolean contains(String jsClass) {
-    return javaScriptClasses.contains(jsClass);
-  }
+    public boolean contains(String jsClass) {
+        return javaScriptClasses.contains(jsClass);
+    }
 }

@@ -1,5 +1,6 @@
 package com.essent.testing.context;
 
+import cucumber.runtime.CucumberException;
 import org.apache.commons.lang3.StringUtils;
 
 public enum Environment {
@@ -30,14 +31,14 @@ public enum Environment {
   UAT03,
   DEV10;
 
-  public static Environment fromValue(String environmentString) throws Exception {
-    for (Environment environment : values()) {
-      if (environment.name().equalsIgnoreCase(environmentString)) {
-        return environment;
-      }
-    }
+    public static Environment fromValue(String environmentString) throws Exception {
+        for (Environment environment : values()) {
+            if (environment.name().equalsIgnoreCase(environmentString)) {
+                return environment;
+            }
+        }
 
-    throw new Exception(
+    throw new IllegalArgumentException(
         "Environment is not valid: "
             + environmentString
             + ". Possible environment  are: "

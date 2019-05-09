@@ -9,7 +9,6 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         #Output parameter "start_end_date", format: '1yyyyMMddyyyy1231'
         #Output parameter  "start-en-einddatum", format: 'dd-MM-yyyy - dd-MM-yyyy'
         And   Soctar start date is "now"
-
     @SOCTAR-01-04
     @NSTA-333-STEP-01-04
     Scenario: Create Soctar (Social tarif) quote and contract, and check Soctar confirmation letter
@@ -24,8 +23,8 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
 
         Given Customer is random
         When Customer address is
-            | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
-            | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
+        | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
+        | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
 

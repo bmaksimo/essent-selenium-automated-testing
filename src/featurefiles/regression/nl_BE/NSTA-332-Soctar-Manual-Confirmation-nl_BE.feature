@@ -4,7 +4,6 @@
 @SOCTAR-CONFIRMATION
 @ALL
 Feature: NSTA 332 Soctar confirmation --> Manual
-
     Background:
         Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
 
@@ -22,8 +21,8 @@ Feature: NSTA 332 Soctar confirmation --> Manual
 
         When Customer is random
         And Customer address is
-            | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
-            | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
+            | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
+            | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
 
@@ -58,27 +57,29 @@ Feature: NSTA 332 Soctar confirmation --> Manual
         And  "1st" list element has cell value "Actief" at column "Contractnummer" polling 450 seconds
 
      #Step 2: Change contract to SOCTAR
-        When Dashboard menu is "Contracten"
-        Then Get Start Date
-        When Plus action of "1" element from "ContractsOnAccount" and click on "TK1 Soctar Productwijziging"
-        And "Datum attest" date is "3 days before now"
-        Then Populate Soctar with dates "parameter:startDate" and "parameter:inputValue"
-        And "Startdatum nieuwe offerte" date is "parameter:StartDateByQuarter"
-        And "Einddatum nieuw contractvoorstel" date is "parameter:EndDateByYear"
-        Then Changes are confirmed
-        Then Bevestigen
+       When Dashboard menu is "Contracten"
+       Then Get Start Date
+       When Plus action of "1" element from "ContractsOnAccount" and click on "TK1 Soctar Productwijziging"
+       And "Datum attest" date is "3 days before now"
+       Then Populate Soctar with dates "parameter:startDate" and "parameter:inputValue"
+       And "Startdatum nieuwe offerte" date is "parameter:StartDateByQuarter"
+       And "Einddatum nieuw contractvoorstel" date is "parameter:EndDateByYear"
+       Then Changes are confirmed
+       Then Bevestigen
 
      #Step 3: Check SOCTAR product change
-        Given I renew login to DWP as "contracting.testautomation.b2c@essent.be"
-        When Left menu is "sales-marketing"
-        And Top menu item is "Klanten"
-        And Top action is "Filters"
-        And "Naam" input is "parameter:suitecrm-customer-name"
-        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
 
-        When Dashboard menu is "Contracten"
-        And Table "Contracten" contains value "Getekend (Geaccepteerd)" at column "Type & status"
-        And Table "Contracten" contains value "Verwerkt (Geaccepteerd)" at column "Type & status"
-        And Table "Actieve en toekomstige connecties" contains value "Actief" at column "Contractnummer"
-        And Table "Actieve en toekomstige connecties" contains value "sociaal tarief (SOCTAR)" at column "EAN-code"
+       Given I renew login to DWP as "contracting.testautomation.b2c@essent.be"
+       When Left menu is "sales-marketing"
+       And Top menu item is "Klanten"
+       And Top action is "Filters"
+       And "Naam" input is "parameter:suitecrm-customer-name"
+       Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
+
+       When Dashboard menu is "Contracten"
+       And Table "Contracten" contains value "Getekend (Geaccepteerd)" at column "Type & status"
+       And Table "Contracten" contains value "Verwerkt (Geaccepteerd)" at column "Type & status"
+       And Table "Actieve en toekomstige connecties" contains value "Actief" at column "Contractnummer"
+       And Table "Actieve en toekomstige connecties" contains value "sociaal tarief (SOCTAR)" at column "EAN-code"
+
 

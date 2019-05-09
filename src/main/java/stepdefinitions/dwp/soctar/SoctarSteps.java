@@ -20,49 +20,49 @@ import static org.junit.Assert.assertTrue;
 
 public class SoctarSteps extends DwpScenario {
 
-  @Before("@DWP, @CORE, @E2E, @REGRESSION, @DB-CORE")
-  public void setUp(Scenario scenario) {
-    registerActiveScenario(scenario);
-  }
 
-  @OutputParameter(name = "soctar-file-name")
-  private String soctarFileName;
+    @Before("@DWP, @CORE, @E2E, @REGRESSION, @DB-CORE")
+    public void setUp(Scenario scenario) {
+        registerActiveScenario(scenario);
+    }
 
-  @Then("^Soctar file is uploaded to \"([^\"]*)\" remote directory$")
-  public void uploadSoctarFile(String remoteDirectory) throws Throwable {
-    String custId = parameterProvider.getValueOrParameterAsString("parameter:cust_id");
-    String eanId = parameterProvider.getValueOrParameterAsString("parameter:ean_id");
-    String soctarDate = parameterProvider.getValueOrParameterAsString("parameter:start-end-date");
-    String soctarFilePath = SoctarFileUtil.getSoctarFileFromTemplate(custId, eanId, soctarDate);
-    soctarFileName = FilenameUtils.getName(soctarFilePath);
-    final String sftpHost = ConfigProvider.getProperty(ConfigKey.SSH_NOVA_SFTP_HOST);
-    JSchUtil.get().sftpPut(sftpHost, remoteDirectory, soctarFilePath);
-  }
+    @OutputParameter(name ="soctar-file-name")
+    private String soctarFileName;
+    @Then("^Soctar file is uploaded to \"([^\"]*)\" remote directory$")
+    public void uploadSoctarFile(String remoteDirectory) throws Throwable {
+        String custId = parameterProvider.getValueOrParameterAsString("parameter:cust_id");
+        String eanId =  parameterProvider.getValueOrParameterAsString("parameter:ean_id");
+        String soctarDate = parameterProvider.getValueOrParameterAsString("parameter:start-end-date");
+        String soctarFilePath = SoctarFileUtil.getSoctarFileFromTemplate(custId, eanId, soctarDate);
+        soctarFileName = FilenameUtils.getName(soctarFilePath);
+        final String sftpHost = ConfigProvider.getProperty(ConfigKey.SSH_NOVA_SFTP_HOST);
+        JSchUtil.get().sftpPut(sftpHost, remoteDirectory, soctarFilePath);
+    }
 
-  @When("^Soctar EAN is \"([^\"]*)\"$")
-  public void setValue(final String value) {
-    String inputValue = parameterProvider.getValueOrParameterAsString(value);
-    parameterProvider.put("ean_id", inputValue);
-  }
+    @When("^Soctar EAN is \"([^\"]*)\"$")
+    public void setValue(final String value){
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
+        parameterProvider.put("ean_id", inputValue);
+    }
 
-  @And("^Soctar start date is \"([^\"]*)\"$")
-  public void setSoctarDate(final String value) {
-    String dateValue =
-        checkAndConvertToSoctarFileDate(parameterProvider.getValueOrParameterAsString(value));
-    parameterProvider.put("start-end-date", dateValue);
-    parameterProvider.put("start-en-einddatum", checkAndConvertToDwpContractStartEndDate(value));
-  }
+    @And("^Soctar start date is \"([^\"]*)\"$")
+    public void setSoctarDate(final String value){
+        String dateValue = checkAndConvertToSoctarFileDate(parameterProvider.getValueOrParameterAsString(value));
+        parameterProvider.put("start-end-date", dateValue);
+        parameterProvider.put("start-en-einddatum", checkAndConvertToDwpContractStartEndDate(value));
+    }
 
-  @Then("^Soctar tariff type and status are \"([^\"]*)\" - \"([^\"]*)\"$")
-  public void checkSuccess(String tariffType, String tariffStatus) {
-    SoctarTariffBatchDetailsPage soc = new SoctarTariffBatchDetailsPage();
-    assertTrue(soc.getTariffType().equalsIgnoreCase(tariffType));
-    assertTrue(soc.getTariffStatus().equalsIgnoreCase(tariffStatus));
-  }
+    @Then("^Soctar tariff type and status are \"([^\"]*)\" - \"([^\"]*)\"$")
+    public void checkSuccess(String tariffType, String tariffStatus) {
+        SoctarTariffBatchDetailsPage soc = new SoctarTariffBatchDetailsPage();
+        assertTrue(soc.getTariffType().equalsIgnoreCase(tariffType));
+        assertTrue(soc.getTariffStatus().equalsIgnoreCase(tariffStatus));
 
-  @And("^Soctar customer Id is \"([^\"]*)\"$")
-  public void soctarCustomerIdIs(String value) {
-    String inputValue = parameterProvider.getValueOrParameterAsString(value);
-    parameterProvider.put("cust_id", inputValue);
-  }
+    }
+
+    @And("^Soctar customer Id is \"([^\"]*)\"$")
+    public void soctarCustomerIdIs(String value) {
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
+        parameterProvider.put("cust_id", inputValue);
+    }
 }

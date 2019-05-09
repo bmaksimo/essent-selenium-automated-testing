@@ -12,29 +12,29 @@ import java.util.concurrent.TimeoutException;
 
 public class AutocratExecutionAdapter {
 
-  private static final Logger logger = Logger.getLogger(AutocratExecutionAdapter.class);
+    private  final static Logger logger = Logger.getLogger(AutocratExecutionAdapter.class);
 
-  public static Execution newExecution() {
-    return new Execution();
-  }
-
-  public static ExecutionContext context(WebDriver webDriver, Execution execution) {
-    return new ExecutionContext(webDriver, execution);
-  }
-
-  public static boolean execute(WebDriver driver, Execution execution) {
-    ExecutionContext executionContext = new ExecutionContext(driver, execution);
-    boolean success = executeFlow(executionContext, execution.flow());
-    return success;
-  }
-
-  private static boolean executeFlow(ExecutionContext context, Flow flow) {
-    flow.validate();
-    try {
-      return Autocrat.executeFlow(context, flow);
-    } catch (IOException | InterruptedException | TimeoutException e) {
-      logger.error("Flow execution failed.");
-      return false;
+    public static Execution newExecution() {
+        return new Execution();
     }
-  }
+
+    public static ExecutionContext context(WebDriver webDriver, Execution execution) {
+        return new ExecutionContext(webDriver, execution);
+    }
+
+    public static boolean execute(WebDriver driver, Execution execution) {
+        ExecutionContext executionContext = new ExecutionContext(driver, execution);
+        boolean success = executeFlow(executionContext, execution.flow());
+        return success;
+    }
+
+    private static boolean executeFlow(ExecutionContext context, Flow flow) {
+        flow.validate();
+        try {
+            return Autocrat.executeFlow(context, flow);
+        } catch (IOException | InterruptedException | TimeoutException e) {
+            logger.error("Flow execution failed.");
+            return false;
+        }
+    }
 }

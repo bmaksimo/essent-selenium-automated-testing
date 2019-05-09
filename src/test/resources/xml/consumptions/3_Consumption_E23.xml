@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Consumption xmlns="EnergyComm-out-bo">
+<?xml version="1.0" encoding="UTF-8"?><Consumption xmlns="EnergyComm-out-bo">
   <messageid>10050061</messageid>
   <sender>5414488001001</sender>
   <recipient>5425012001015</recipient>

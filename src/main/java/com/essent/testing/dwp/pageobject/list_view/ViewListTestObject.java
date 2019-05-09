@@ -201,7 +201,7 @@ public class ViewListTestObject extends Component implements ViewList {
     return selection;
   }
 
-  private Optional<String> getCellValueAt(int row, String columnName) {
+  public Optional<String> getCellValueAt(int row, String columnName) {
     logger().info("STEP: JAVASCRIPT_FETCH_DATA");
     Map viewTable = executeJavascriptMethod(JS_TR_GET_TABLE_MODEL, new HashMap<>());
     logger().info(" - RESULT: " + viewTable);

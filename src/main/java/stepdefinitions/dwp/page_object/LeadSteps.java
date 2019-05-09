@@ -15,40 +15,41 @@ import java.util.List;
 
 public class LeadSteps extends DwpScenario {
 
-  @Before("@DWP, @REGRESSION")
-  public void setupTest(Scenario scenario) {
-    registerActiveScenario(scenario);
-  }
+    @Before("@DWP, @REGRESSION")
+    public void setupTest(Scenario scenario) {
+        registerActiveScenario(scenario);
+    }
 
-  @When("^Add lead$")
-  public void addLead() {
-    seleniumDriver.waitForRequestsToFinish();
-    LeadsPage leadPage = new LeadsPage();
-    leadPage.plusAddLead();
-    seleniumDriver.waitForRequestsToFinish();
-  }
 
-  @And("^New lead is$")
-  public void insertCompanyNameForCreatingLead(DataTable dbTabel) {
-    seleniumDriver.waitForRequestsToFinish();
-    NewLeadPage leadPage = new NewLeadPage();
-    List<List<String>> db = dbTabel.raw();
+    @When("^Add lead$")
+    public void addLead() {
+        seleniumDriver.waitForRequestsToFinish();
+        LeadsPage leadPage = new LeadsPage();
+        leadPage.plusAddLead();
+        seleniumDriver.waitForRequestsToFinish();
+    }
 
-    leadPage.createLead(db);
-    seleniumDriver.waitForRequestsToFinish();
-  }
+    @And("^New lead is$")
+    public void insertCompanyNameForCreatingLead(DataTable dbTabel) {
+        seleniumDriver.waitForRequestsToFinish();
+        NewLeadPage leadPage = new NewLeadPage();
+        List<List<String>> db = dbTabel.raw();
 
-  @Then("^\"([^\"]*)\" lead was created$")
-  public void leadWasCreated(String name) {
-    seleniumDriver.waitForRequestsToFinish();
-    LeadsPage leadPage = new LeadsPage();
-    leadPage.validateCreatingLead(name);
-    seleniumDriver.waitForRequestsToFinish();
-  }
+        leadPage.createLead(db);
+        seleniumDriver.waitForRequestsToFinish();
+    }
 
-  @Override
-  @After("@DWP, @REGRESSION")
-  public void tearDown() {
-    super.tearDown();
-  }
+    @Then("^\"([^\"]*)\" lead was created$")
+    public void leadWasCreated(String name) {
+        seleniumDriver.waitForRequestsToFinish();
+        LeadsPage leadPage = new LeadsPage();
+        leadPage.validateCreatingLead(name);
+        seleniumDriver.waitForRequestsToFinish();
+    }
+
+    @Override
+    @After("@DWP, @REGRESSION")
+    public void tearDown() {
+        super.tearDown();
+    }
 }

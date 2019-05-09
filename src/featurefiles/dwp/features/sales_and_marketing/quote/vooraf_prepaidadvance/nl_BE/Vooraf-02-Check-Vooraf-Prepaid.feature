@@ -6,7 +6,6 @@ Feature: NSTA-391
 
     Background:
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
-
     @NSTA-391
     @VOORAF-CHECKS
     Scenario: Sign-in on Vooraf (prepaid)
@@ -25,6 +24,6 @@ Feature: NSTA-391
         When Dashboard menu is "Billing"
         Then Table "Transacties" contains value "Invoice (PREPAIDADVANCE)" at column "ID & Type"
         And  "1st" element of table "Transacties" at currency column "Bedrag" is sum of
-            | parameter:bedrag-vooraf-el  |
-            | parameter:bedrag-vooraf-gas |
+            |parameter:bedrag-vooraf-el |
+            |parameter:bedrag-vooraf-gas|
         And "1st" list element with date interval at column "Datum & Vervaldatum" from table "Transacties" is "19 days"

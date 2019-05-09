@@ -17,49 +17,48 @@ import static org.junit.Assert.assertTrue;
 
 public abstract class OdooScenario extends RegisteredScenario {
 
-  private static final Logger logger = Logger.getLogger(OdooScenario.class);
-  private String name;
+    private final static Logger logger = Logger.getLogger(OdooScenario.class);
+    private String name;
 
-  public String getName() {
-    return name;
-  }
-
-  @Resource(name = "odooSeleniumDriver")
-  protected OdooSeleniumDriver seleniumDriver;
-
-  protected void isOdooRunning() throws Exception {
-
-    String dwpUrl = ConfigProvider.getProperty(ConfigKey.ODOO_BASE_URL);
-    seleniumDriver.setBaseUrl(dwpUrl);
-    seleniumDriver.goToHomePage();
-    String currentUrl = seleniumDriver.getDriver().getCurrentUrl();
-    if (null != currentUrl && !currentUrl.equals(dwpUrl)) {
-      seleniumDriver.setBaseUrl(currentUrl);
-      seleniumDriver.goToHomePage();
+    public String getName() {
+        return name;
     }
-    Sleeper.sleepTightInSeconds(3);
-    logger.info("Current URL: " + currentUrl);
-    assertTrue(currentUrl.startsWith(seleniumDriver.getBaseUrl()));
-  }
 
-  protected void awaitOdooRequestToFinish(int seconds) {
-    new WebDriverWait(seleniumDriver.getDriver(), seconds)
-        .until(webDriver -> webDriver.findElements(By.cssSelector(".oe_wait")).isEmpty());
-  }
+    @Resource(name="odooSeleniumDriver")
+    protected OdooSeleniumDriver seleniumDriver;
 
-  protected String createQuery(String template, Map valuesMap) {
-    StrSubstitutor sub = new StrSubstitutor(valuesMap);
-    return sub.replace(template);
-  }
+    protected void isOdooRunning() throws Exception {
 
-  protected void setUpWebDriver() throws Exception {
-    setUpWebDriver(seleniumDriver);
-    seleniumDriver.initOdooWebDriver();
-  }
-
-  protected void tearDown() {
-    if (seleniumDriver != null) {
-      tidyUp(seleniumDriver);
+        String dwpUrl = ConfigProvider.getProperty(ConfigKey.ODOO_BASE_URL);
+        seleniumDriver.setBaseUrl(dwpUrl);
+        seleniumDriver.goToHomePage();
+        String currentUrl = seleniumDriver.getDriver().getCurrentUrl();
+        if (null != currentUrl && !currentUrl.equals(dwpUrl)) {
+            seleniumDriver.setBaseUrl(currentUrl);
+            seleniumDriver.goToHomePage();
+        }
+        Sleeper.sleepTightInSeconds(3);
+        logger.info("Current URL: " + currentUrl);
+        assertTrue(currentUrl.startsWith(seleniumDriver.getBaseUrl()));
     }
-  }
+
+    protected void awaitOdooRequestToFinish(int seconds) {
+        new WebDriverWait(seleniumDriver.getDriver(), seconds).until(webDriver -> webDriver.findElements(By.cssSelector(".oe_wait")).isEmpty());
+    }
+
+    protected String createQuery(String template, Map valuesMap) {
+        StrSubstitutor sub = new StrSubstitutor(valuesMap);
+        return sub.replace(template);
+    }
+
+    protected void setUpWebDriver() throws Exception {
+        setUpWebDriver(seleniumDriver);
+        seleniumDriver.initOdooWebDriver();
+    }
+
+    protected void tearDown() {
+        if (seleniumDriver != null) {
+            tidyUp(seleniumDriver);
+        }
+    }
 }

@@ -11,38 +11,38 @@ import cucumber.api.java.en.Then;
 import org.junit.Assert;
 
 public class BillingSteps extends DwpScenario {
-  @Before("@DWP, @E2E, @REGRESSION")
-  public void setupTest(Scenario scenario) {
-    registerActiveScenario(scenario);
-  }
+    @Before("@DWP, @E2E, @REGRESSION")
+    public void setupTest(Scenario scenario) {
+        registerActiveScenario(scenario);
+    }
 
-  @Override
-  @After("@DWP, @E2E, @REGRESSION")
-  public void tearDown() {
-    super.tearDown();
-  }
+    @Override
+    @After("@DWP, @E2E, @REGRESSION")
+    public void tearDown() {
+        super.tearDown();
+    }
 
-  @And("^Click select product code$")
-  public void clickSelectProductCode() {
-    CreateFreeTextInvoicePage cftip = new CreateFreeTextInvoicePage();
-    cftip.clickOnSelectProductCodeButton();
-  }
+    @And("^Click select product code$")
+    public void clickSelectProductCode() {
+        CreateFreeTextInvoicePage cftip = new CreateFreeTextInvoicePage();
+        cftip.clickOnSelectProductCodeButton();
+    }
 
-  @And("^Select \"([^\"]*)\" product code$")
-  public void selectProductCode(String productCode) {
-    CreateFreeTextInvoicePage cftip = new CreateFreeTextInvoicePage();
-    cftip.selectProductCode(productCode);
-  }
+    @And("^Select \"([^\"]*)\" product code$")
+    public void selectProductCode(String productCode) {
+        CreateFreeTextInvoicePage cftip = new CreateFreeTextInvoicePage();
+        cftip.selectProductCode(productCode);
+    }
 
-  @Then("^Transaction is created with TYPE \"([^\"]*)\"$")
-  public void transactiesIsCreatedWithTYPE(String type) {
-    BillingPage bp = new BillingPage();
-    Assert.assertEquals("Type does not mach", bp.selectProductCode(), type);
-  }
+    @Then("^Transaction is created with TYPE \"([^\"]*)\"$")
+    public void transactiesIsCreatedWithTYPE(String type){
+        BillingPage bp = new BillingPage();
+        Assert.assertEquals("Type does not mach", bp.selectProductCode(),type);
+    }
 
-  @And("^Send$")
-  public void send() {
-    BillingPage bp = new BillingPage();
-    bp.clickOnSendButton();
-  }
+    @And("^Send$")
+    public void send() {
+        BillingPage bp = new BillingPage();
+        bp.clickOnSendButton();
+    }
 }

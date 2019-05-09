@@ -8,11 +8,8 @@ import org.junit.Test;
 import java.io.FileReader;
 import java.io.Reader;
 
-import static com.billinghouse.MatcherAssert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
-
-;
-
 public class UserTest {
 
   @Test

@@ -9,10 +9,10 @@
   <bean id="contextService" class="com.essent.testing.context.ContextService"/>
   <context:component-scan base-package="com.essent.testing;com.essent.automation;com.billinghouse.cucumber.runtime"/>
   <aop:aspectj-autoproxy/>
-  <bean id="dwpSeleniumDriver" class="com.essent.testing.selenium.DWPSeleniumDriver"/>
-  <bean id="odooSeleniumDriver" class="com.essent.testing.selenium.OdooSeleniumDriver"/>
-  <bean id="jBillingSeleniumDriver" class="com.essent.testing.selenium.JBillingSeleniumDriver"/>
-  <bean id="parameterProvider" class="com.billinghouse.cucumber.runtime.parameter.ParameterProvider"/>
+  <bean id="dwpSeleniumDriver" class="com.essent.testing.selenium.DWPSeleniumDriver" />
+  <bean id="odooSeleniumDriver" class="com.essent.testing.selenium.OdooSeleniumDriver" />
+  <bean id="jBillingSeleniumDriver" class="com.essent.testing.selenium.JBillingSeleniumDriver" />
+  <bean id="parameterProvider" class="com.billinghouse.cucumber.runtime.parameter.ParameterProvider" />
 
   <bean id="qaProps" class="com.essent.testing.context.beans.SystemPropsIncludingPropertiesFactoryBean">
     <property name="locations">

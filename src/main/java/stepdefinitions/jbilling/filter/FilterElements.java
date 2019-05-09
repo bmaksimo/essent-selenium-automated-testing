@@ -7,44 +7,40 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.When;
 
-import static com.billinghouse.MatcherAssert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-
-;
 
 public class FilterElements extends JBillingScenario {
 
-  @Before("@JBILLING, @B2B, @REGRESSION")
-  public void setupTest(Scenario scenario) throws Throwable {
-    registerActiveScenario(scenario);
-  }
+	@Before("@JBILLING, @B2B, @REGRESSION")
+	public void setupTest(Scenario scenario) throws Throwable {
+		registerActiveScenario(scenario);
+	}
 
-  @When("^JBilling \"([^\"]*)\" input is \"([^\"]*)\"$")
-  public void setInput(String label, String value) throws Throwable {
-    if (value.startsWith("parameter:")) {
-      value = parameterProvider.getValueOrParameterAsString(value);
+	@When("^JBilling \"([^\"]*)\" input is \"([^\"]*)\"$")
+	public void setInput(String label, String value) throws Throwable {
+		if(value.startsWith("parameter:")) {
+			value = parameterProvider.getValueOrParameterAsString(value);
+		}
+
+		FilterPage filterPage = new FilterPage();
+        boolean success = filterPage.filterBy(label, value);
+
+        assertThat("Filter by: " + label + " with input value: " + value + " is not confirmed", success, is(true));
     }
 
-    FilterPage filterPage = new FilterPage();
-    boolean success = filterPage.filterBy(label, value);
+	@When("^JBilling Click on \"([^\"]*)\" filter button$")
+	public void clickFilterButton(String label) throws Throwable {
+		FilterPage filterPage = new FilterPage();
+        boolean success = filterPage.clickFilterButton(label);
 
-    assertThat(
-        "Filter by: " + label + " with input value: " + value + " is not confirmed",
-        success,
-        is(true));
-  }
+        assertThat("Button: " + label + " is not clicked", success, is(true));
+	}
 
-  @When("^JBilling Click on \"([^\"]*)\" filter button$")
-  public void clickFilterButton(String label) throws Throwable {
-    FilterPage filterPage = new FilterPage();
-    boolean success = filterPage.clickFilterButton(label);
+	@Override
+	@After("@JBILLING, @B2B, @REGRESSION")
+	public void tearDown() {
+		super.tearDown();
+	}
 
-    assertThat("Button: " + label + " is not clicked", success, is(true));
-  }
-
-  @Override
-  @After("@JBILLING, @B2B, @REGRESSION")
-  public void tearDown() {
-    super.tearDown();
-  }
 }

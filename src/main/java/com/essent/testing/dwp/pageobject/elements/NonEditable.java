@@ -2,9 +2,10 @@ package com.essent.testing.dwp.pageobject.elements;
 
 public interface NonEditable {
 
-  String getValue(String label);
+    String getValue(String label);
 
-  String getValue(String card, String label);
+    String getValue(String title, String label);
 
-  boolean checkAmountUsingExpression(String card, String label, String expression);
+    boolean checkAmountUsingExpression(String title, String label, String expression);
+
 }

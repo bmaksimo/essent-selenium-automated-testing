@@ -8,37 +8,41 @@ import javax.annotation.Generated;
 @SuppressWarnings("unused")
 public class Coordinates {
 
-  @Expose private String latitude;
-  @Expose private String longitude;
-
-  public String getLatitude() {
-    return latitude;
-  }
-
-  public String getLongitude() {
-    return longitude;
-  }
-
-  public static class Builder {
-
+    @Expose
     private String latitude;
+    @Expose
     private String longitude;
 
-    public Coordinates.Builder withLatitude(String latitude) {
-      this.latitude = latitude;
-      return this;
+    public String getLatitude() {
+        return latitude;
     }
 
-    public Coordinates.Builder withLongitude(String longitude) {
-      this.longitude = longitude;
-      return this;
+    public String getLongitude() {
+        return longitude;
     }
 
-    public Coordinates build() {
-      Coordinates coordinates = new Coordinates();
-      coordinates.latitude = latitude;
-      coordinates.longitude = longitude;
-      return coordinates;
+    public static class Builder {
+
+        private String latitude;
+        private String longitude;
+
+        public Coordinates.Builder withLatitude(String latitude) {
+            this.latitude = latitude;
+            return this;
+        }
+
+        public Coordinates.Builder withLongitude(String longitude) {
+            this.longitude = longitude;
+            return this;
+        }
+
+        public Coordinates build() {
+            Coordinates coordinates = new Coordinates();
+            coordinates.latitude = latitude;
+            coordinates.longitude = longitude;
+            return coordinates;
+        }
+
     }
-  }
+
 }

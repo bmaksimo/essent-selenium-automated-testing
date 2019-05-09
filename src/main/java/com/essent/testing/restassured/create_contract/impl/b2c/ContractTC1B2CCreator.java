@@ -12,28 +12,21 @@ import org.junit.Assert;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+
 public class ContractTC1B2CCreator extends QuoteCreatorB2CBase implements QuoteCreator {
 
   private static final Logger logger = Logger.getLogger(ContractTC1B2CCreator.class);
 
-  public ContractTC1B2CCreator(String isFakeAddress, String switchType)
-      throws FileNotFoundException, IOException {
+	public ContractTC1B2CCreator(String isFakeAddress, String switchType) throws FileNotFoundException, IOException {
     super();
-    getQuoteProperties(
-        ContractConstants.PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_TC1, isFakeAddress, switchType);
+		getQuoteProperties(ContractConstants.PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_TC1, isFakeAddress, switchType);
   }
 
   @Override
-  public void setPreconditions(String accountName, String contractStartDate, String contractEndDate)
-      throws Exception {
+	public void setPreconditions(String accountName, String contractStartDate, String contractEndDate) throws Exception{
     logger.info("Set preconditions before starting: " + this.getClass().getSimpleName());
-    super.setPreconditions(
-        ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2B,
-        accountName,
-        contractStartDate,
-        contractEndDate);
-    logger.info(
-        "Set preconditions after starting: " + this.getClass().getSimpleName() + " - PASSED");
+		super.setPreconditions(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2B, accountName, contractStartDate, contractEndDate);
+		logger.info("Set preconditions after starting: " + this.getClass().getSimpleName() + " - PASSED");
   }
 
   @Override
@@ -43,46 +36,22 @@ public class ContractTC1B2CCreator extends QuoteCreatorB2CBase implements QuoteC
     logger.info("login: " + this.getClass().getSimpleName() + " - PASSED");
   }
 
+
   @Override
   public String createContract() throws Exception {
     logger.info("createContract: " + this.getClass().getSimpleName());
 
     login();
-    setPreconditions(
-        ContractConstants.ACCOUNT_NAME_PREFIX_TC1_B2C,
-        upStartDate,
-        PrepareDataForContract.getTodayDate());
-    createQuote(
-        ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C,
-        ContractConstants.PATH_TO_JSON_FILES_CREATE_QUOTE_B2C_TC1,
-        ApiPathsContract.API_CREATE_QUOTE_B2C);
-    verifyQuoteStatus(
-        ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C,
-        ContractConstants.SENT_TO_CUSTOMER_EN.toUpperCase(),
-        ContractConstants.ACCEPTED_EN.toUpperCase());
+        setPreconditions(ContractConstants.ACCOUNT_NAME_PREFIX_TC1_B2C, upStartDate, PrepareDataForContract.getTodayDate());
+        createQuote(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C, ContractConstants.PATH_TO_JSON_FILES_CREATE_QUOTE_B2C_TC1, ApiPathsContract.API_CREATE_QUOTE_B2C);
+        verifyQuoteStatus(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C, ContractConstants.SENT_TO_CUSTOMER_EN.toUpperCase(), ContractConstants.ACCEPTED_EN.toUpperCase());
     sendToCustomer(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C);
-    verifyQuoteStatus(
-        ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C,
-        ContractConstants.SENT_TO_CUSTOMER_EN.toUpperCase(),
-        ContractConstants.ACCEPTED_EN.toUpperCase());
-    signatureReceived(
-        ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C,
-        pricingDate,
-        priceValidUntilDate,
-        signatureReceivedDate);
-    verifyQuoteStatus(
-        ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C,
-        ContractConstants.SIGNATURE_RECEIVED_EN.toUpperCase(),
-        ContractConstants.ACCEPTED_EN.toUpperCase());
-    confirmSigning(
-        ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C,
-        ContractConstants.PATH_TO_JSON_FILES_SIGN_QUOTE_MODAL_TC1,
-        ApiPathsContract.API_SIGN_QUOTE_MODAL_TC1);
+        verifyQuoteStatus(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C, ContractConstants.SENT_TO_CUSTOMER_EN.toUpperCase(), ContractConstants.ACCEPTED_EN.toUpperCase());
+        signatureReceived(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C, pricingDate, priceValidUntilDate, signatureReceivedDate);
+        verifyQuoteStatus(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C, ContractConstants.SIGNATURE_RECEIVED_EN.toUpperCase(), ContractConstants.ACCEPTED_EN.toUpperCase());
+        confirmSigning(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C, ContractConstants.PATH_TO_JSON_FILES_SIGN_QUOTE_MODAL_TC1, ApiPathsContract.API_SIGN_QUOTE_MODAL_TC1);
     signMandatePaper(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C);
-    verifyContractCreated(
-        ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C,
-        ContractConstants.SIGNED_EN.toUpperCase(),
-        ContractConstants.ACCEPTED_EN.toUpperCase());
+        verifyContractCreated(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C, ContractConstants.SIGNED_EN.toUpperCase(), ContractConstants.ACCEPTED_EN.toUpperCase());
 
     logger.info("createContract: " + this.getClass().getSimpleName() + " - PASSED");
 
@@ -119,17 +88,14 @@ public class ContractTC1B2CCreator extends QuoteCreatorB2CBase implements QuoteC
   }
 
   @Override
-  public void signatureReceived(
-      String path, String pricingDate, String priceValidUntilDate, String signatureReceivedDate)
-      throws IOException {
+	public void signatureReceived(String path, String pricingDate, String priceValidUntilDate, String signatureReceivedDate) throws IOException {
     logger.info("signatureReceived: " + this.getClass().getSimpleName());
     super.signatureReceived(path, pricingDate, priceValidUntilDate, signatureReceivedDate);
     logger.info("signatureReceived: " + this.getClass().getSimpleName() + " - PASSED");
   }
 
   @Override
-  public void confirmSigning(String path, String pathJsonFileSignQuote, String apiPathSignQuote)
-      throws IOException {
+	public void confirmSigning(String path, String pathJsonFileSignQuote, String apiPathSignQuote) throws IOException {
     logger.info("confirmSigning: " + this.getClass().getSimpleName());
     super.confirmSigning(path, pathJsonFileSignQuote, apiPathSignQuote);
     logger.info("confirmSigning: " + this.getClass().getSimpleName() + " - PASSED");
@@ -144,12 +110,12 @@ public class ContractTC1B2CCreator extends QuoteCreatorB2CBase implements QuoteC
   }
 
   @Override
-  public void verifyContractCreated(String path, String quoteStage, String quoteStatus)
-      throws IOException {
+	public void verifyContractCreated(String path, String quoteStage, String quoteStatus) throws IOException {
     logger.info("verifyContractCreated: " + this.getClass().getSimpleName());
     super.verifyContractCreated(path, quoteStage, quoteStatus);
     logger.info("verifyContractCreated: " + this.getClass().getSimpleName() + " - PASSED");
   }
+
 
   @Override
   public String createContractAndCheckContractStatus() throws Exception {
@@ -157,46 +123,20 @@ public class ContractTC1B2CCreator extends QuoteCreatorB2CBase implements QuoteC
     long startTime = System.currentTimeMillis();
 
     login();
-    setPreconditions(
-        ContractConstants.ACCOUNT_NAME_PREFIX_TC1_B2C,
-        upStartDate,
-        PrepareDataForContract.getTodayDate());
-    createQuote(
-        ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C,
-        ContractConstants.PATH_TO_JSON_FILES_CREATE_QUOTE_B2C_TC1,
-        ApiPathsContract.API_CREATE_QUOTE_B2C);
-    verifyQuoteStatus(
-        ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C,
-        ContractConstants.SENT_TO_CUSTOMER_EN.toUpperCase(),
-        ContractConstants.ACCEPTED_EN.toUpperCase());
+        setPreconditions(ContractConstants.ACCOUNT_NAME_PREFIX_TC1_B2C, upStartDate, PrepareDataForContract.getTodayDate());
+        createQuote(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C, ContractConstants.PATH_TO_JSON_FILES_CREATE_QUOTE_B2C_TC1, ApiPathsContract.API_CREATE_QUOTE_B2C);
+        verifyQuoteStatus(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C, ContractConstants.SENT_TO_CUSTOMER_EN.toUpperCase(), ContractConstants.ACCEPTED_EN.toUpperCase());
     sendToCustomer(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C);
-    verifyQuoteStatus(
-        ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C,
-        ContractConstants.SENT_TO_CUSTOMER_EN.toUpperCase(),
-        ContractConstants.ACCEPTED_EN.toUpperCase());
-    signatureReceived(
-        ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C,
-        pricingDate,
-        priceValidUntilDate,
-        signatureReceivedDate);
-    verifyQuoteStatus(
-        ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C,
-        ContractConstants.SIGNATURE_RECEIVED_EN.toUpperCase(),
-        ContractConstants.ACCEPTED_EN.toUpperCase());
-    confirmSigning(
-        ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C,
-        ContractConstants.PATH_TO_JSON_FILES_SIGN_QUOTE_MODAL_TC1,
-        ApiPathsContract.API_SIGN_QUOTE_MODAL_TC1);
+        verifyQuoteStatus(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C, ContractConstants.SENT_TO_CUSTOMER_EN.toUpperCase(), ContractConstants.ACCEPTED_EN.toUpperCase());
+        signatureReceived(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C, pricingDate, priceValidUntilDate, signatureReceivedDate);
+        verifyQuoteStatus(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C, ContractConstants.SIGNATURE_RECEIVED_EN.toUpperCase(), ContractConstants.ACCEPTED_EN.toUpperCase());
+        confirmSigning(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C, ContractConstants.PATH_TO_JSON_FILES_SIGN_QUOTE_MODAL_TC1, ApiPathsContract.API_SIGN_QUOTE_MODAL_TC1);
     signMandatePaper(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C);
-    verifyContractCreated(
-        ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C,
-        ContractConstants.SIGNED_EN.toUpperCase(),
-        ContractConstants.ACCEPTED_EN.toUpperCase());
+        verifyContractCreated(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C, ContractConstants.SIGNED_EN.toUpperCase(), ContractConstants.ACCEPTED_EN.toUpperCase());
 
     ContractStatus contractStatus = null;
 
-    // Checking is contract ACTIVE, because once contract is created a lot of stuff is triggered in
-    // jbilling, bpm and odoo and after that contract become ACTIVE
+		// Checking is contract ACTIVE, because once contract is created a lot of stuff is triggered in jbilling, bpm and odoo and after that contract become ACTIVE
     contractStatus = checkContractIsActive(ContractConstants.PATH_TO_JSON_FILES_QUOTE_TC1_B2C);
 
     if (contractStatus != ContractStatus.ACTIVE) {
@@ -205,13 +145,9 @@ public class ContractTC1B2CCreator extends QuoteCreatorB2CBase implements QuoteC
     }
 
     long estimatedTime = System.currentTimeMillis() - startTime;
-    logger.info(
-        "createContractAndCheckContractStatus: "
-            + this.getClass().getSimpleName()
-            + " - PASSED - Elapsed time: "
-            + estimatedTime
-            + "ms");
+		logger.info("createContractAndCheckContractStatus: " + this.getClass().getSimpleName() + " - PASSED - Elapsed time: " + estimatedTime + "ms");
 
     return getAccountNumber(recordId, cookie);
   }
+
 }

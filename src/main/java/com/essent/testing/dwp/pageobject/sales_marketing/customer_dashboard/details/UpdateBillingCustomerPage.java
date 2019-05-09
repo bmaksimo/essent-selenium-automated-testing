@@ -6,17 +6,17 @@ import org.openqa.selenium.WebElement;
 
 public class UpdateBillingCustomerPage extends Component {
 
-  private static final String HOUSE_NUM_ELEMENT = "address-number-field";
+    private static final String HOUSE_NUM_ELEMENT = "address-number-field";
 
-  public WebElement getHouseNumElement() {
-    return seleniumDriver.findElementWhenVisible(By.id(HOUSE_NUM_ELEMENT));
-  }
+    public WebElement getHouseNumElement() {
+        return seleniumDriver.findElementWhenVisible(By.id(HOUSE_NUM_ELEMENT));
+    }
 
-  public String getCurrentHouseNumber() {
-    return getHouseNumElement().getText();
-  }
+    public String getCurrentHouseNumber(){
+        return getHouseNumElement().getText();
+    }
 
-  public void changeHouseNumber(int num) {
-    seleniumDriver.waitAndSendKeys(getHouseNumElement(), Integer.toString(num));
-  }
+    public void changeHouseNumber(int num) {
+        seleniumDriver.waitAndSendKeys(getHouseNumElement(), Integer.toString(num));
+    }
 }
