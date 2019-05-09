@@ -1,6 +1,8 @@
 @DWP
 @SERVICE-CONTRACTING
 @SOCTAR
+@REGRESSION
+@ALL
 Feature: Social tariff (SOCTAR) contract creation
 
     Background:
