@@ -10,10 +10,10 @@ public class ContractPricesPage extends Component {
         Sleeper.sleepTightInSeconds(3);
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-plus-cell[@list-key='ContractlinesOnContract']/div/a")));
     Sleeper.sleepTightInSeconds(2);
-      //TODO Remove locale-specific hardocode.
-      // The project must support official Belgian languages.
-      // Locale-specufuc elements of wab element locators must be parameterized.
-      // This is basic rule.
+        //TODO Remove locale-specific hard code.
+        // The project must support official Belgian languages.
+        // Locale-specific elements of web element locators must be parameterized.
+        // This is basic rule!
       seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[@label='Bekijk prijzen tariefkaart']/a")));
   }
 

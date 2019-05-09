@@ -20,9 +20,8 @@ public class ConfirmSignatureDialogImpl extends Component implements ConfirmSign
   private static final By ACTION_LIST_LOCATOR = By.xpath("//*[@class='action-list']");
 
   public ConfirmSignatureDialogImpl(String title) {
-    super(CONFIRM_SIGNATURE_MODAL_SELECTOR);
+    super();
     this.title = title;
-    seleniumDriver.waitForRequestsToFinish();
   }
 
   public ConfirmSignatureDialogImpl() {

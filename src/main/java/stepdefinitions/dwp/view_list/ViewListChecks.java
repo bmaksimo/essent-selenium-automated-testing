@@ -37,10 +37,10 @@ import static org.hamcrest.Matchers.*;
 
 public class ViewListChecks extends NavigationElements {
 
-    //TODO Remove locale-specific hardcode.
+    //TODO Remove locale-specific hard code.
     // The project must support official Belgian languages.
     // Locale-specific elements of web element locators must be parameterized.
-    // This is basic rule.
+    // This is basic rule!
     private static final String MARKET_MESSAGES = "Marktberichten";
     private static final String MARKET_MESSAGES_VIEW_LIST = "MarketTransactionsOnAccount";
     private static final String BILLING_CUSTOMER = "Billing customer";
@@ -701,7 +701,7 @@ public class ViewListChecks extends NavigationElements {
     }
 
     //TODO Create a special test harness class for invoice checks,
-    //and move the methods, related to invoice checks, there
+    //and move the methods, related to invoice checks, there.
     @Then("^Invoice Amounts are among values$")
     public void checkInvoicesAmounts(final DataTable dbTable) {
         List<List<String>> info = dbTable.raw();
@@ -761,7 +761,7 @@ public class ViewListChecks extends NavigationElements {
     }
 
     //TODO Create a special test harness class for wait methods,
-    //and move the methods, related to invoice checks, there.
+    //and move the methods, related to test execution timing, there.
     @And("^Wait for (\\d+) seconds$")
     public void waitForSeconds(int seconds) {
         Sleeper.sleepTightInSeconds(seconds);

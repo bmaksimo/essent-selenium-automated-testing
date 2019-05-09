@@ -21,7 +21,7 @@ public class InvoiceListPage extends Component {
 
   public void findIssuedAndPayDelay(String type, String option) {
     /* I must use tr and td html elements to locate correct list element*/
-    //TODO - remove "magic indices". td[8] td[10] it smells like test design failure
+    //TODO - remove "magic indices". td[8] td[10]
     int counter = 1;
         String payType = findElementWhenVisible(By.xpath("//*[@id='rows']/tr[1]/td[8]//span[1]")).getText();
         while(!payType.equalsIgnoreCase(type)){

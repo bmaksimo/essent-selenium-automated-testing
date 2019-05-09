@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 //TODO
 //This enum should be removed.
-//It distracts the developers from basic rule: DWP should support at least 2 languages.
+//It distracts the developers from basic rule: DWP supports at least 2 languages.
 //Any workaround, circumventing this basic rule, is prohibited
 public enum CustomerStatus {
   ACCEPTED("Geaccepteerd"),

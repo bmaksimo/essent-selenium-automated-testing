@@ -15,10 +15,10 @@ public class CaseDetailsPage extends Component {
     }
 
     public boolean checkIfPriorityIsHigh() {
-        //TODO Remove locale-specific hardcode.
+        //TODO Remove locale-specific hard code.
         // The project must support official Belgian languages.
         // Locale-specific elements of web element locators must be parameterized.
-        // This is basic rule.
+        // This is basic rule!
         return priorityField().getText().equalsIgnoreCase("Hoog");
     }
 

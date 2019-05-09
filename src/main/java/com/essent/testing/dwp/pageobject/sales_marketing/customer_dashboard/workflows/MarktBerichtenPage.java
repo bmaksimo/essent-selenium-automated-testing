@@ -56,10 +56,10 @@ public class MarktBerichtenPage extends Component {
     }
 
     public WebElement selectNewContractlineButton() {
-        //TODO Remove locale-specific hardcode.
+        //TODO Remove locale-specific hard code.
         // The project must support official Belgian languages.
         // Locale-specific elements of web element locators must be parameterized.
-        // This is basic rule.
+        // This is basic rule!
         return seleniumDriver.findElementWhenVisible(By.xpath("//button[contains(.,'Select Contractline')]"));
     }
 
@@ -104,10 +104,10 @@ public class MarktBerichtenPage extends Component {
     }
 
     public String getModulFromCancelTransaction()  {
-        //TODO Remove locale-specific hardcode.
+        //TODO Remove locale-specific hard code.
         // The project must support official Belgian languages.
         // Locale-specific elements of web element locators must be parameterized.
-        // This is basic rule.
+        // This is basic rule!
         return seleniumDriver.findElementWhenVisible(By.xpath("//list-link-bold-top-two-liner-cell[@line-1='INITIATE STOP ACCESS']/div/a/h5")).getText();
     }
 

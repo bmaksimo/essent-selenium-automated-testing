@@ -12,10 +12,10 @@ import java.util.List;
 public class NewLeadPage extends BaseObjectPage implements Form {
 
   private LeadInfo leadInfo;
-  //TODO Remove locale-specific hardocode.
+  //TODO Remove locale-specific hardcode.
   // The project must support official Belgian languages.
-  // Locale-specufuc elements of wab element locators must be parameterized.
-  // This is basic rule.
+  // Locale-specific elements of web element locators must be parameterized.
+  // This is basic rule!
   private static final String box = "Bel me niet";
 
     public void createLead(List<List<String>> table) {
