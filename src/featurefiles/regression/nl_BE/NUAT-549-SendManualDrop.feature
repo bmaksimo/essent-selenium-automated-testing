@@ -4,7 +4,9 @@
 @BUSINESS-DESK
 @LONGDURATION
 @NUAT-549
-@UNSTABLE
+@UAT08ONLY
+@ALL
+
 Feature: NUAT-549 Send manual drop
 
     Background:
