@@ -3,6 +3,7 @@
 @REGRESSION
 @CREDIT-AND-CONTROL
 @NUAT-373-479-480
+@ALL
 @UAT08ONLY
 Feature: NUAT-373: End Of Contract For Bankruptcy - nl_BE, NUAT-479: DROP For A Non Residential Client, NUAT-480: End Of Contract Via DWP - nl_BE
 
