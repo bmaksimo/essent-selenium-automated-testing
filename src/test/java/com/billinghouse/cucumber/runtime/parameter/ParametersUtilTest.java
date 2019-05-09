@@ -14,33 +14,33 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 @Test
 public class ParametersUtilTest extends RegisteredScenario {
-  private static final Logger log = Logger.getLogger(ParametersUtilTest.class);
+    private final static Logger log = Logger.getLogger(ParametersUtilTest.class);
+    @OutputParameter(name = "developer")
+    public String customerName;
 
-  @OutputParameter(name = "developer")
-  public String customerName;
+    @OutputParameter(name = "cto")
+    public static final String MANAGER = "Jim van Dam";
 
-  @OutputParameter(name = "cto")
-  public static final String MANAGER = "Jim van Dam";
+    @InputParameter(name = "cto")
+    public String developer;
 
-  @InputParameter(name = "cto")
-  public String developer;
+    @InputParameter(name = "cto")
+    public String cto;
 
-  @InputParameter(name = "cto")
-  public String cto;
+    @Test
+    public void testOutputParameter() throws Throwable {
+        customerName = "Sjaak van Vliet";
 
-  @Test
-  public void testOutputParameter() throws Throwable {
-    customerName = "Sjaak van Vliet";
+        ParametersUtil.collectScenarioOutputParameters(this, (BiConsumer<String, Object>) (n, v) -> {
 
-    ParametersUtil.collectScenarioOutputParameters(this, (BiConsumer<String, Object>) (n, v) -> {});
-
-    ParametersUtil.assignOutValuesToInputParameters(
-        (Function<String, Object>)
-            (name) -> {
-              return MANAGER;
+        });
+        ParametersUtil.assignOutValuesToInputParameters(
+            (Function<String, Object>)(name) -> {
+                return MANAGER;
             },
-        this);
-    assertThat("Input Parameter is assigned a value", developer.equals(MANAGER));
-    assertThat("Input Parameter is assigned a value", cto.equals(MANAGER));
-  }
+            this);
+        assertThat("Input Parameter is assigned a value", developer.equals(MANAGER));
+        assertThat("Input Parameter is assigned a value", cto.equals(MANAGER));
+    }
+
 }

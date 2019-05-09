@@ -11,14 +11,14 @@ import stepdefinitions.quote.api.model.GenericPayload;
  */
 public class PayloadMapper {
 
-  public String createPayload() throws JsonProcessingException {
-    ObjectMapper mapper = new ObjectMapper();
-    // this is needed because we need to pass an empty model
-    mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+    public String createPayload() throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        // this is needed because we need to pass an empty model
+        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 
-    GenericPayload check = new GenericPayload();
-    check.setModel(new GenericPayload.Model());
-    return mapper.writeValueAsString(check);
-  }
+        GenericPayload check = new GenericPayload();
+        check.setModel(new GenericPayload.Model());
+        return mapper.writeValueAsString(check);
+    }
 
 }

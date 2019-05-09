@@ -122,6 +122,6 @@ public class RequestHelper {
 	    Long actualResponseTime = response.time();
 	    LOGGER.info("Measured response time, " + Description + "is : "
 	        + new SimpleDateFormat("ss.SSS").format(actualResponseTime) + " sec");
-  }
+	  }
 
 }
