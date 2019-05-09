@@ -13,7 +13,8 @@ import org.hamcrest.Matchers;
 
 import java.util.List;
 
-import static com.billinghouse.MatcherAssert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 
 public class ContractRenewalSteps extends DwpScenario {
 

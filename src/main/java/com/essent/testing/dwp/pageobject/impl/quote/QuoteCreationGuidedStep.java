@@ -1,6 +1,5 @@
 package com.essent.testing.dwp.pageobject.impl.quote;
 
-import com.billinghouse.exception.ExtendedCucumberException;
 import com.essent.testing.dwp.pageobject.Form;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.quote.GuidedStep;

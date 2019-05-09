@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import static com.billinghouse.MatcherAssert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 @Test

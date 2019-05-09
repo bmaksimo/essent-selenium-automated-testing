@@ -1,6 +1,5 @@
 package com.essent.testing.dwp.pageobject.list_view;
 
-import com.billinghouse.exception.ExtendedCucumberException;
 import com.essent.testing.dwp.pageobject.ViewList;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import org.apache.commons.collections.CollectionUtils;
@@ -214,9 +213,9 @@ public class ViewListTestObject extends Component implements ViewList {
       return Optional.empty();
     }
     if (row > rows.size()) {
-      throw new ExtendedCucumberException(
-          String.format(
+      logger().error(String.format(
               "--  Row number \"%s\" was greater than actual table size \"%s\"", row, rows.size()));
+      return Optional.empty();
     }
     List currentRow = rows.get(row - 1);
     return Optional.of((String) currentRow.get(index));
