@@ -107,6 +107,11 @@ Feature: NSTA-345 Credit Invoice
         And Top action is "Filters"
         And "Klantnummer" input is "parameter:accountNumber"
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
+        When Dashboard menu is "Service"
+        Then View list header is "Interacties"
+          #3 - Check if interactions are created for VKM and CNM
+        Then Table "Interacties" contains value "VKM" at column "Type & Onderwerp" waiting for 30 seconds
+        Then Table "Interacties" contains value "CNM" at column "Type & Onderwerp" waiting for 30 seconds
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
 
@@ -120,12 +125,6 @@ Feature: NSTA-345 Credit Invoice
             |  300 € 113 € -113 €   |  600 € 226 € -226 €   |  900 € 339 € -339 €  |
             |  300 € -113 € 113 €   |  600 € -226 € 226 €   |  900 € -339 € 339 €  |
 
-
-         #3 - Check if interactions are created for VKM and CNM
-        When Dashboard menu is "Service"
-        Then View list header is "Interacties"
-        Then Table "Interacties" contains value "VKM" at column "Type & Onderwerp"
-        Then Table "Interacties" contains value "CNM" at column "Type & Onderwerp"
          #4 - Check if CNM has been sent to customer
         And Click on link in View List at "2nd" row and "Nummer & Communicatiekanaal" column waiting for 40 seconds
         Then Check is product change "1 succeeded"
