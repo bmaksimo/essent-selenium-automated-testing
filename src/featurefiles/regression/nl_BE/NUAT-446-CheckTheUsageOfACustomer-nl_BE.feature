@@ -1,7 +1,6 @@
 @DWP
 @REGRESSION
 @BUSINESS-DESK
-@UNSTABLE
 @ALL
 
 Feature: NUAT-446: Check The Usage Of A Customer - nl_BE
