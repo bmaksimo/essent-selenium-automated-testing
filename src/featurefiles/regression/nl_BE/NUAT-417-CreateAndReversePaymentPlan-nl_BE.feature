@@ -6,7 +6,7 @@
 Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR, run advance invoice, create payment plan
 
 
-    @NUAT-417-01
+    @NUAT-417
     Scenario: Create active UP contract, run advance invoice
         Given I logged in to DWP as "billing.testautomation@essent.be"
         When Left menu is "billing"
@@ -20,7 +20,7 @@ Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR,
         And "Klantnummer" input is "parameter:accountNumber"
         Then "1st" List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
 
-            #run invoice
+        #run invoice
         When Plus menu is "Billing -> Start facturatierun"
         And "Factuurdatum" date is "now"
         And "Procesdatum" date is "now"
@@ -34,10 +34,8 @@ Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR,
         Then View list header is "Transacties"
         And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
 
-    @payment-plan
-    @NUAT-417-02
-    Scenario: Payment plan creation
-        Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
+        #Payment plan creation
+        Given I renew login to DWP as "businessdesk.testautomation.b2b@essent.be"
         When Left menu is "sales-marketing"
         And Top menu item is "Klanten"
         And Top action is "Filters"
@@ -71,10 +69,8 @@ Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR,
         Then View list header is "Afbetalingsplannen"
         And Table "Afbetalingsplannen" contains value "open" at column "Status"
 
-        #payment plan verification
-    @NUAT-417-03
-    Scenario: Check is payment plan created when logged as billing user
-        Given I logged in to DWP as "billing.testautomation@essent.be"
+        #Check is payment plan created when logged as billing user
+        Given I renew login to DWP as "billing.testautomation@essent.be"
         When Left menu is "billing"
         And Top menu item is "Klanten"
         And Top action is "Filters"
@@ -85,10 +81,7 @@ Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR,
         When Dashboard menu is "Billing"
         Then Table "Transacties" contains value "Payment" at column "ID & Type"
 
-            #Reverse Payment Plan
-    @reverse-payment
-    @NUAT-417-04
-    Scenario: Reverse payment plan
+        #Reverse payment plan
         Given I logged in to Odoo as "role_essent_ccm_user"
         When Odoo top menu is "Accounting"
         And  Odoo left menu is "Customers"
@@ -98,10 +91,8 @@ Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR,
         And Journal entry is open
         And Modal buttons "Reverse" are clicked
 
-        #check in dwp is payment plan status reversed
-    @NUAT-417-05
-    Scenario: Check is payment plan reversed
-        Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
+        #Check in DWP is payment plan reversed
+        Given I renew login to DWP as "businessdesk.testautomation.b2b@essent.be"
         When Left menu is "sales-marketing"
         And Top menu item is "Klanten"
         And Top action is "Filters"
