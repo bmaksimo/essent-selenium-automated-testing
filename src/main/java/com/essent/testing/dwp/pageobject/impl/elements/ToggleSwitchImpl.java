@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.CARD_TEMPLATE;
+
 public class ToggleSwitchImpl extends ButtonImpl implements ToggleSwitch {
 
   private static final String XPATH_TOGGLE_SWITCH_TEPMPLATE =
@@ -46,7 +48,7 @@ public class ToggleSwitchImpl extends ButtonImpl implements ToggleSwitch {
     valuesMapper.put("title", card);
     valuesMapper.put("label", label);
     By xpathSelector =
-        By.xpath(createQuery(XPATH_CARD_TEMPLATE + XPATH_TOGGLE_SWITCH_TEPMPLATE, valuesMapper));
+        By.xpath(createQuery(CARD_TEMPLATE.getQuery() + XPATH_TOGGLE_SWITCH_TEPMPLATE, valuesMapper));
     WebElement webElement =
         findElementWhenPresent(xpathSelector, Duration.ofSeconds(20), Duration.ofMillis(1));
     this.element = Optional.ofNullable(webElement);
@@ -122,7 +124,7 @@ public class ToggleSwitchImpl extends ButtonImpl implements ToggleSwitch {
     valuesMapper.put("title", card);
     valuesMapper.put("label", label);
     By xpathSelector =
-        By.xpath(createQuery(XPATH_CARD_TEMPLATE + XPATH_TOGGLE_SWITCH_TEPMPLATE, valuesMapper));
+        By.xpath(createQuery(CARD_TEMPLATE.getQuery() + XPATH_TOGGLE_SWITCH_TEPMPLATE, valuesMapper));
     findElementWhenPresent(xpathSelector, Duration.ofSeconds(20), Duration.ofSeconds(1));
     return true;
   }

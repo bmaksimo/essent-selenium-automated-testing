@@ -11,6 +11,7 @@ import java.util.Map;
 import static com.billinghouse.test_automation.util.dsl.NumericUtil.amountAsInt;
 import static com.billinghouse.test_automation.util.dsl.NumericUtil.checkAmount;
 import static com.essent.testing.dwp.constant.DwpConstants.FLEMISCH_LOCALE;
+import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.CARD_TEMPLATE;
 
 public class NonEditableImpl extends Component implements NonEditable {
 
@@ -32,7 +33,7 @@ public class NonEditableImpl extends Component implements NonEditable {
     valuesMapper.put("title", title);
     valuesMapper.put("label", label);
     By xpathSelector =
-        By.xpath(createQuery(XPATH_CARD_TEMPLATE + XPATH_INPUT_TEPMPLATE, valuesMapper));
+        By.xpath(createQuery(CARD_TEMPLATE.getQuery() + XPATH_INPUT_TEPMPLATE, valuesMapper));
     WebElement webElement = findElementWhenVisible(xpathSelector);
     String innerText = webElement.getAttribute("innerText");
     logger().info("--NonEditable, element value is: " + innerText);
