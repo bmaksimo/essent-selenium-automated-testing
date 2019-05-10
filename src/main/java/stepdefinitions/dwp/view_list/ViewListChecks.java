@@ -12,6 +12,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.runtime.CucumberException;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -684,6 +685,24 @@ public class ViewListChecks extends NavigationElements {
             success, is(true));
         logger().info(String.format("- STEP: \"%s\" in the first \"%s\" row of \"%s\" table is \"%s\" - PASSED.",
             columnToSearch, optionToSearch, list, textToCheck));
+    }
+
+    @Then("^List element with value at column \"([^\"]*)\" from table \"([^\"]*)\" is checked$")
+    public void storeColumnValueInParameterProvider(String columnName, String tableName) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
+        FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), 60, 1);
+        waiter.withMessage(
+            String.format("List element didn't contain any value at column \"%s\"", columnName));
+        boolean success = waiter.until((ViewListTestObject callback) ->
+            CollectionUtils.isNotEmpty(callback.fetchColumnData(tableName, columnName)));
+
+        List<String> columnData = new ViewListTestObject().fetchColumnData(tableName, columnName);
+        assertThat(String.format("\"%s\" list element didn't contain any value at column \"%s\"", tableName, columnName),
+            success, is(true));
+
+        parameterProvider.put(columnName, columnData.get(0));
+        logger().info(String.format("- STEP: \"%s\" list element with value at column \"%s\" is checked - PASSED.",
+            tableName, columnName));
     }
 
     @And("^\"([^\"]*)\" element of table \"([^\"]*)\" at currency column \"([^\"]*)\" is sum of$")
