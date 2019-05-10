@@ -22,11 +22,11 @@ Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR,
 
             #run invoice
         When Plus menu is "Billing -> Start facturatierun"
+        And "Factuurdatum" date is "now"
+        And "Procesdatum" date is "now"
         And Modal dialog is "Start invoicerun"
         And "Naam job" selection is "recurrent"
         And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
-        And "Factuurdatum" date is "now"
-        And "Procesdatum" date is "now"
         Then Invoice run is scheduled
 
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
