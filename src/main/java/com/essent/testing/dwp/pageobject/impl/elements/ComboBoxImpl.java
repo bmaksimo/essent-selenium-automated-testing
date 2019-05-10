@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.CARD_TEMPLATE;
+
 public class ComboBoxImpl extends Component implements ComboBox {
 
   private static final String XPATH_SELECT_TEMPLATE =
@@ -20,7 +22,7 @@ public class ComboBoxImpl extends Component implements ComboBox {
     valuesMapper.put("title", title);
     valuesMapper.put("label", label);
     By xpathSelector =
-        By.xpath(createQuery(XPATH_CARD_TEMPLATE + XPATH_SELECT_TEMPLATE, valuesMapper));
+        By.xpath(createQuery(CARD_TEMPLATE.getQuery() + XPATH_SELECT_TEMPLATE, valuesMapper));
     Optional<WebElement> elementOptional = seleniumDriver.findElementOptional(xpathSelector);
     return elementOptional.map(WebElement::getText);
   }
