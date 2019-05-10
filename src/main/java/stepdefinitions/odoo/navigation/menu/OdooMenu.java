@@ -137,12 +137,12 @@ public class OdooMenu extends OdooScenario {
 
    @And("^Modal buttons \"([^\"]*)\" are clicked$")
    public void modalButtons(String name) {
-       awaitOdooRequestToFinish(10);
+       awaitOdooRequestToFinish(25);
        WebElement reverseButton = seleniumDriver.findElement(By.xpath("//header//button//span[contains(., '" + name + "')]"));
        if (null == reverseButton) throw new CucumberException("Button was not found");
        new ButtonImpl(reverseButton).click();
 
-       awaitOdooRequestToFinish(5);
+       awaitOdooRequestToFinish(25);
        WebElement reverseModalButton = seleniumDriver.findElement(By.xpath("//footer//button//span[contains(., '" + name + "')]"));
        if (null == reverseModalButton) throw new CucumberException("Button was not found");
        new ButtonImpl(reverseModalButton).click();
