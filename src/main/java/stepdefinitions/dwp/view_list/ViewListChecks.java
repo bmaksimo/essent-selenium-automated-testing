@@ -50,7 +50,7 @@ public class ViewListChecks extends NavigationElements {
     private static final String TRANSACTIONS_BLOCKED_CHECKMARK = "//list[@list-key='TransactionsOnAccount']//td[@class='list__cell cell__text'][${" + REPLACEMENT_KEY1 + "}]//div[@class='customer__status icon-checkmark']";
 
     private class ViewListNavigation {
-        public void goToLink(String linkText) {
+        void goToLink(String linkText) {
             seleniumDriver.waitForRequestsToFinish();
             WebElement link = seleniumDriver.findElement(By.linkText(linkText));
             link.click();
@@ -85,7 +85,7 @@ public class ViewListChecks extends NavigationElements {
             return testKnownColumns(viewList, options, (String) options.get("column"));
         }
 
-        public boolean testNow(Map options) {
+        boolean testNow(Map options) {
             String viewList = (String) options.get("view_list_name");
             if (null == viewList)
                 return executeJavascriptTestImmediately(JS_TR_CLICK_TABLE_CELL_URL, options, true);
@@ -385,7 +385,7 @@ public class ViewListChecks extends NavigationElements {
         waiter.withMessage(String.format("Status did not switch to \"%s\" within \"%s\" seconds", status, seconds));
         waiter.until((ViewListTestObject callback) -> {
             seleniumDriver.waitAndClick(seleniumDriver.findElement(By.linkText(linkText)));
-            return callback.fetchListRowsIndices(expectedValue, columnName).size() >= 1;
+            return ! callback.fetchListRowsIndices(expectedValue, columnName).isEmpty();
         });
         waiter = waiter(new ViewListTestObject(), seconds / 2, 5);
         waiter.until((ViewListTestObject callback) -> {
@@ -482,7 +482,8 @@ public class ViewListChecks extends NavigationElements {
         throws Throwable {
         ViewListTestObject viewListTestObject = new ViewListTestObject(tableName);
         int row = extractNumericValue(ordinal);
-        for (int column = 1; column <= viewListTestObject.getColumnCount().get(); column++) {
+        for (int column = 1; viewListTestObject.getColumnCount().isPresent() &&
+            column <= viewListTestObject.getColumnCount().get(); column++) {
             Optional<String> columnName = viewListTestObject.getColumnName(column);
             Optional<Object> value = viewListTestObject.getValueAt(row, column);
             if (columnName.isPresent() && value.isPresent()) {
@@ -694,9 +695,9 @@ public class ViewListChecks extends NavigationElements {
         Optional<String> currencyValue = new ViewListTestObject().getCurrencyValueAt(row, columnName, table);
         assertThat(String.format("\"%s\" list element didn't contain any value at column \"%s\"", ordinal, columnName),
             currencyValue.isPresent(), is(true));
-        Integer actualAmount = amountInCurrencyAsInt(currencyValue.get());
+        int actualAmount = amountInCurrencyAsInt(currencyValue.get());
         List<String> amounts = subAmounts.asList(String.class);
-        Integer sum = sumOf(amounts);
+        int sum = sumOf(amounts);
         assertThat("Total advance prepaid amount %s is not equal to sum of sub amounts %s", actualAmount, equalTo(sum));
     }
 

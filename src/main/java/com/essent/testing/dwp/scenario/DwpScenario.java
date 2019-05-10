@@ -146,11 +146,11 @@ public abstract class DwpScenario extends RegisteredScenario {
         seleniumDriver.initNgWebDriver();
     }
 
-  protected Integer amountInCurrencyAsInt(String amountInCurrency) {
+  protected int amountInCurrencyAsInt(String amountInCurrency) {
     return amountAsInt(amountInCurrency, FLEMISCH_LOCALE);
   }
 
-    protected Integer sumOf(List<String> amounts) {
+    protected int sumOf(List<String> amounts) {
         return sumOfAmounts(amounts);
     }
 
