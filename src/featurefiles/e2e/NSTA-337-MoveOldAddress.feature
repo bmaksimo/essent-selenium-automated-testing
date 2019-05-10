@@ -51,9 +51,6 @@ Feature: NSTA - 337 Move old address
         And Quote is signed in "Kontich"
         When Quote is confirmed
 
-        When Dashboard menu is "Marktberichten"
-        Then View List is empty
-
         When Dashboard menu is "Contracten"
         Then View list header is "Actieve en toekomstige connecties"
         And  "1st" List element with value at column "EAN-code" is checked
