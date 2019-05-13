@@ -98,7 +98,7 @@ public class ContractsSteps extends DwpScenario {
     @Then("^Payment delayed$")
     public void paymentDelayed() {
         InvoiceListPage ilp = new InvoiceListPage();
-        ilp.checkPayDate();
+        ilp.checkPayDate(parameterProvider.getValueOrParameterAsString("parameter:Datum & Vervaldatum"));
     }
 
     @And("^Find \"([^\"]*)\" facture and \"([^\"]*)\"$")

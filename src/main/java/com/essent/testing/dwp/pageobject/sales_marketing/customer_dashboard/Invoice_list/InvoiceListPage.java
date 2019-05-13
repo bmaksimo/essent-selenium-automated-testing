@@ -10,17 +10,18 @@ public class InvoiceListPage extends Component {
 
 
     public void openListOption(String option) {
+        seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//span[.='" + option + "']")));
     }
 
-    public void checkPayDate() {
+    public void checkPayDate(String payDate) {
         seleniumDriver.waitForRequestsToFinish();
         final String newPayDate = findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell[@icon='null']//span)[6]")).getText();
         Assert.assertFalse("Date was not changed. Old date is : " + payDate + ", and new date is same : " + newPayDate, newPayDate.equalsIgnoreCase(payDate));
     }
 
     public void findIssuedAndPayDelay(String type, String option) {
-        /* I must use tr and td html elements to locate correct list element*/
+        seleniumDriver.waitForRequestsToFinish();
         int counter = 1;
         String payType = findElementWhenVisible(By.xpath("//*[@id='rows']/tr[1]/td[8]//span[1]")).getText();
         while(!payType.equalsIgnoreCase(type)){
