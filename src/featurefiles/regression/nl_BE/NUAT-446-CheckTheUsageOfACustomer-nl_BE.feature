@@ -71,6 +71,5 @@ Feature: NUAT-446: Check The Usage Of A Customer - nl_BE
 
         When Plus menu is "Billing -> Verbruiken voor klant"
         And View list header is "Verbruiken"
-#        And View List is not empty
-        Then "Verbruiken" list "is not" empty
+        And "Verbruiken" list is_not empty
 

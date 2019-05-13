@@ -22,6 +22,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
 import stepdefinitions.dwp.navigation.NavigationElements;
 import stepdefinitions.dwp.plus.PlusActions;
+import stepdefinitions.dwp.tables.IsIsNot;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.*;
@@ -737,33 +738,26 @@ public class ViewListChecks extends NavigationElements {
         return parameter;
     }
 
-    //TODO see if we can change this step with ("^\"([^\"]*)\" list \"([^\"]*)\" empty$")
-    @And("^\"([^\"]*)\" list is not empty$")
-    public void viewIsNotEmpty(String tableTitle) throws Throwable {
-        Map<String, String> options = new HashMap<>();
-        options.put("tableTitle", tableTitle);
-        boolean success = new CheckEmptyTableAction().test(options);
-        assertThat(String.format(tableTitle + " doesn't exist"), success, is(true));
-        logger().info(String.format("- STEP: \"%s\" list is not empty - PASSED.", tableTitle));
-    }
+//    //TODO see if we can change this step with ("^\"([^\"]*)\" list \"([^\"]*)\" empty$")
+//    @And("^\"([^\"]*)\" list is not empty$")
+//    public void viewIsNotEmpty(String tableTitle) throws Throwable {
+//        Map<String, String> options = new HashMap<>();
+//        options.put("tableTitle", tableTitle);
+//        boolean success = new CheckEmptyTableAction().test(options);
+//        assertThat(String.format(tableTitle + " doesn't exist"), success, is(true));
+//        logger().info(String.format("- STEP: \"%s\" list is not empty - PASSED.", tableTitle));
+//    }
 
 
-    @Then("^\"([^\"]*)\" list \"([^\"]*)\" empty$")
-    public void viewIsNotEmpty(String tableTitle, String argument) {
+    @Then("^\"([^\"]*)\" list (is|is_not) empty$")
+    public void viewIsNotEmpty(String tableTitle, IsIsNot verb) {
         DefaultTableModel viewTableModel = new ViewListModel().getViewTableModel(tableTitle);
         boolean success = false;
-         if (argument.equalsIgnoreCase("is")){
+         if (verb.getVerb().equalsIgnoreCase("is")){
              success = viewTableModel.getRowCount() == 0;
-         }else if (argument.equalsIgnoreCase("is not")){
+         }else if (verb.getVerb().equalsIgnoreCase("is not")){
              success = viewTableModel.getRowCount() != 0;
          }
-//        switch(argument) {
-//            case "is":
-//                success = viewTableModel.getRowCount() == 0;
-//            case "is not":
-//                success = viewTableModel.getRowCount() != 0;
-//            default:
-//        }
         assertThat(String.format(tableTitle + " doesn't exist"), success, is(true));
         logger().info(String.format("- STEP: \"%s\" list is not empty - PASSED.", tableTitle));
     }
