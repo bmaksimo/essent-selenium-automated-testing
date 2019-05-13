@@ -379,14 +379,6 @@ public class ViewListChecks extends NavigationElements {
         logger().info("- STEP: View list header is empty - PASSED.");
     }
 
-    @When("^View List is not empty$")
-    public void checkTableModelNotEmpty() {
-        javax.swing.table.TableModel viewTableModel = new ViewListModel().getViewTableModel();
-        boolean success = viewTableModel.getRowCount() > 0;
-        assertThat("View Table list is empty", success, is(true));
-        logger().info("- STEP: View list header is not empty - PASSED.");
-    }
-
     @When("^Click on \"([^\"]*)\" link$")
     public void clickOnLink(String input) throws Throwable {
         String linkText = parameterProvider.getValueOrParameterAsString(input);
