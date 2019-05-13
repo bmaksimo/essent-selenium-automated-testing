@@ -29,7 +29,7 @@ Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR,
         And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
         Then Invoice run is scheduled
 
-        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
+        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
         And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
@@ -42,7 +42,7 @@ Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR,
         And "B2C/B2B" selection is "B2B"
         And "Type klant" selection is "Klant"
         And "Klantnummer" input is "parameter:accountNumber"
-        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
+        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
         And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
@@ -63,7 +63,7 @@ Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR,
         And "B2C/B2B" selection is "B2B"
         And "Type klant" selection is "Klant"
         And "Klantnummer" input is "parameter:accountNumber"
-        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
+        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
 
         When Dashboard menu is "Billing"
         Then View list header is "Afbetalingsplannen"
@@ -77,7 +77,7 @@ Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR,
         And "B2C/B2B" selection is "B2B"
         And "Type klant" selection is "Klant"
         And "Klantnummer" input is "parameter:accountNumber"
-        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
+        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
         When Dashboard menu is "Billing"
         Then Table "Transacties" contains value "Payment" at column "ID & Type"
 
@@ -99,7 +99,7 @@ Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR,
         And "B2C/B2B" selection is "B2B"
         And "Type klant" selection is "Klant"
         And "Klantnummer" input is "parameter:accountNumber"
-        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
+        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
         When Dashboard menu is "Billing"
         Then View list header is "Afbetalingsplannen"
         And Table "Afbetalingsplannen" contains value "reversed" at column "Status"

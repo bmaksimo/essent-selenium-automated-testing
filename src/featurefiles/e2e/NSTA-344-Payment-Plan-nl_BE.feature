@@ -66,13 +66,11 @@ Feature: NSTA-344: Payment Plan
         And Top action is "Filters"
         And "Type klant" selection is "Klant"
         And "Klantnummer" input is "parameter:accountNumber"
-#        Then "1st" List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
         When Plus menu is "Billing -> Start facturatierun"
         And Modal dialog is "Start invoicerun"
         And "Factuurdatum" date is "now"
         And "Procesdatum" date is "now"
         And "Naam job" selection is "recurrent"
-#        And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
         And "ID Billing customer" input is "parameter:billingNumber"
         Then Invoice run is scheduled
 
