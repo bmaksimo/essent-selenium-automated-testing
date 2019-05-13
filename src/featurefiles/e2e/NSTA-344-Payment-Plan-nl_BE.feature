@@ -50,8 +50,6 @@ Feature: NSTA-344: Payment Plan
         Then View list header is "Offertes"
         Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
 
-        When Dashboard menu is "Marktberichten"
-
         When Dashboard menu is "Contracten"
         And Get client number
         Then View list header is "Actieve en toekomstige connecties"
