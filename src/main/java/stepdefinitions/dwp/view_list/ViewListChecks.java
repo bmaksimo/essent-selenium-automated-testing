@@ -738,15 +738,15 @@ public class ViewListChecks extends NavigationElements {
         return parameter;
     }
 
-//    //TODO see if we can change this step with ("^\"([^\"]*)\" list \"([^\"]*)\" empty$")
-//    @And("^\"([^\"]*)\" list is not empty$")
-//    public void viewIsNotEmpty(String tableTitle) throws Throwable {
-//        Map<String, String> options = new HashMap<>();
-//        options.put("tableTitle", tableTitle);
-//        boolean success = new CheckEmptyTableAction().test(options);
-//        assertThat(String.format(tableTitle + " doesn't exist"), success, is(true));
-//        logger().info(String.format("- STEP: \"%s\" list is not empty - PASSED.", tableTitle));
-//    }
+    //TODO see if we can change this step with ("^\"([^\"]*)\" list (is|is_not) empty$")
+    @And("^\"([^\"]*)\" list is not empty$")
+    public void viewIsNotEmpty(String tableTitle) throws Throwable {
+        Map<String, String> options = new HashMap<>();
+        options.put("tableTitle", tableTitle);
+        boolean success = new CheckEmptyTableAction().test(options);
+        assertThat(String.format(tableTitle + " doesn't exist"), success, is(true));
+        logger().info(String.format("- STEP: \"%s\" list is not empty - PASSED.", tableTitle));
+    }
 
 
     @Then("^\"([^\"]*)\" list (is|is_not) empty$")
