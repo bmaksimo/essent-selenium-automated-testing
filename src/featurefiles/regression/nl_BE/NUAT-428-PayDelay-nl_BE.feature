@@ -30,7 +30,6 @@ Feature: NUAT-428: Pay Delay - nl_BE
     @NUAT-428-02
     Scenario: Pay delay
         Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
-#        When Search field input is "1000103658"
         When Search field input is "parameter:accountNumber"
         Then Click on link in View List at "1st" row and "Klantnaam & nummer" column polling 20 seconds
 
