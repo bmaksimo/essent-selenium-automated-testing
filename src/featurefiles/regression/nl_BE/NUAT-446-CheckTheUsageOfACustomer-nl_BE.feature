@@ -1,4 +1,5 @@
 @DWP
+@B2C
 @REGRESSION
 @BUSINESS-DESK
 @ALL
@@ -66,8 +67,11 @@ Feature: NUAT-446: Check The Usage Of A Customer - nl_BE
         And Top menu item is "Klanten"
         And Top action is "Filters"
         And "Klantnummer" input is "parameter:accountNumber"
+#        And "Klantnummer" input is "1000103689"
         Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
 
         When Plus menu is "Billing -> Verbruiken voor klant"
         And View list header is "Verbruiken"
-        And View List is not empty
+#        And View List is not empty
+        Then "Verbruiken" list "is not" empty
+

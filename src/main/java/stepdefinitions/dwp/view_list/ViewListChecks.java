@@ -737,11 +737,32 @@ public class ViewListChecks extends NavigationElements {
         return parameter;
     }
 
-    @And("^\"([^\"]*)\" list is not empty$")
-    public void viewIsNotEmpty(String tableTitle) throws Throwable {
-        Map<String, String> options = new HashMap<>();
-        options.put("tableTitle", tableTitle);
-        boolean success = new CheckEmptyTableAction().test(options);
+//    @And("^\"([^\"]*)\" list is not empty$")
+//    public void viewIsNotEmpty(String tableTitle) throws Throwable {
+//        Map<String, String> options = new HashMap<>();
+//        options.put("tableTitle", tableTitle);
+//        boolean success = new CheckEmptyTableAction().test(options);
+//        assertThat(String.format(tableTitle + " doesn't exist"), success, is(true));
+//        logger().info(String.format("- STEP: \"%s\" list is not empty - PASSED.", tableTitle));
+//    }
+
+
+    @Then("^\"([^\"]*)\" list \"([^\"]*)\" empty$")
+    public void viewIsNotEmpty(String tableTitle, String argument) {
+        DefaultTableModel viewTableModel = new ViewListModel().getViewTableModel(tableTitle);
+        boolean success = false;
+         if (argument.equalsIgnoreCase("is")){
+             success = viewTableModel.getRowCount() == 0;
+         }else if (argument.equalsIgnoreCase("is not")){
+             success = viewTableModel.getRowCount() != 0;
+         }
+//        switch(argument) {
+//            case "is":
+//                success = viewTableModel.getRowCount() == 0;
+//            case "is not":
+//                success = viewTableModel.getRowCount() != 0;
+//            default:
+//        }
         assertThat(String.format(tableTitle + " doesn't exist"), success, is(true));
         logger().info(String.format("- STEP: \"%s\" list is not empty - PASSED.", tableTitle));
     }
