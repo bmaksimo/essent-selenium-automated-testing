@@ -1,7 +1,7 @@
 @REGRESSION
 @DWP
 @B2C
-@UAT08ONLY
+@ALL
 Feature: NSTA-344: Payment Plan
 
     Background:
@@ -51,7 +51,6 @@ Feature: NSTA-344: Payment Plan
         Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
 
         When Dashboard menu is "Marktberichten"
-        Then View List is empty
 
         When Dashboard menu is "Contracten"
         And Get client number
