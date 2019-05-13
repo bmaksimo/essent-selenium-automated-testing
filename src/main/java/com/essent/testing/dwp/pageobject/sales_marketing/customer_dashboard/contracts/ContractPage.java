@@ -40,6 +40,7 @@ public class ContractPage extends Component {
     private static final String INVOICE_SUM = "total-amount-field";
     private static final String INSTALLMENTS_SUM = "balance-field";
     private static final String INSTALLMENTS_NUMBER = "//list[@list-key='InstallmentsOnPaymentPlan']//h5";
+    private static final String BILLING_NUMBER = "//list[@list-key='BillingCustomerOnaccount']//td[1]//span[1]";
 
     private WebElement startData() {
         return seleniumDriver.findElementWhenVisible(By.id(START_DATA_ID));
@@ -66,6 +67,10 @@ public class ContractPage extends Component {
 
     public String getClientNumber() {
         return seleniumDriver.findElementWhenVisible(By.xpath("//blue-sidebar//h4")).getText();
+    }
+
+    public String getBillingNumber() {
+        return seleniumDriver.findElementWhenVisible(By.xpath(BILLING_NUMBER)).getText();
     }
 
     public void selectAccount() {
