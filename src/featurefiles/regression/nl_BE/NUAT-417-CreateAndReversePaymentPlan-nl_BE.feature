@@ -1,10 +1,9 @@
 @DWP
 @B2B
 @REGRESSION
-@NUAT-417
-@UNSTABLE
-Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR, run advance invoice, create payment plan
+@ALL
 
+Feature: NUAT-417: Payment Plan creation/reversal
 
     @NUAT-417
     Scenario: Create active UP contract, run advance invoice
@@ -18,6 +17,7 @@ Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR,
         And "B2C/B2B" selection is "B2B"
         And "Type klant" selection is "Klant"
         And "Klantnummer" input is "parameter:accountNumber"
+        And Sleep for 30 seconds
         Then "1st" List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
 
         #run invoice
@@ -92,9 +92,11 @@ Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR,
         And  Odoo left menu is "Customers"
         And Odoo filter is "parameter:accountNumber"
         When Column "Account Number" with value "parameter:accountNumber" is clicked
+
         And Button "Journal Items" is clicked
         And Journal entry is open
-        And Modal buttons "Reverse" are clicked
+        And Sleep for 30 seconds
+        And Modal button "Reverse" clicked
 
         #Check in DWP is payment plan reversed
         Given I renew login to DWP as "businessdesk.testautomation.b2b@essent.be"

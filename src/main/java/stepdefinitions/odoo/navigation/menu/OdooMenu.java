@@ -133,20 +133,17 @@ public class OdooMenu extends OdooScenario {
         assertThat("Journal item was not found", null != journal);
         journal.click();
         awaitOdooRequestToFinish(5);
+        seleniumDriver.findElement(By.xpath("//tbody/tr[9]//span/a")).click();
     }
 
-   @And("^Modal buttons \"([^\"]*)\" are clicked$")
+   @And("^Modal button \"([^\"]*)\" clicked$")
    public void modalButtons(String name) {
-       awaitOdooRequestToFinish(25);
-       WebElement reverseButton = seleniumDriver.findElement(By.xpath("//header//button//span[contains(., '" + name + "')]"));
-       if (null == reverseButton) throw new CucumberException("Button was not found");
-       new ButtonImpl(reverseButton).click();
+       awaitOdooRequestToFinish(20);
+       seleniumDriver.findElementWhenPresent(By.xpath("//div[@class='oe_view_manager oe_view_manager_current'][4]//div[@class='oe_form_nosheet']//button[4]//span")).click();
 
-       awaitOdooRequestToFinish(25);
-       WebElement reverseModalButton = seleniumDriver.findElement(By.xpath("//footer//button//span[contains(., '" + name + "')]"));
-       if (null == reverseModalButton) throw new CucumberException("Button was not found");
-       new ButtonImpl(reverseModalButton).click();
-       awaitOdooRequestToFinish(8);
+       awaitOdooRequestToFinish(20);
+       seleniumDriver.findElementWhenPresent(By.xpath("//div[@class='modal-footer']//button[1]//span")).click();
+       awaitOdooRequestToFinish(20);
    }
 
     @And("^Odoo click on tab \"([^\"]*)\"$")
