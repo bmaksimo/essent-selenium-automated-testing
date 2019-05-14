@@ -12,8 +12,8 @@ public class CustomerPage extends Component {
     private static final String tabMenuXpath = "//li[@class='ui-state-default ui-corner-top']/a[contains(text(),'${"+nameTab+"}')] ";
     private static final String REVERSE_BUTTON_1 = "//div[@class='oe_view_manager oe_view_manager_current'][4]//div[@class='oe_form_nosheet']//button[4]//span";
     private static final String REVERSE_BUTTON_2 ="//div[@class='modal-footer']//button[1]//span";
-    private static final String JOURNAL_ENTRY = "//tbody/tr[9]//span/a";
-
+    private static final String JOURNAL_ENTRY_ROW = "//tbody/tr[9]//span/a";
+    private static final String JOURNAL_ENTRY_BUTTON = "//table[@class='oe_list_content'][1]//tbody//tr[1]//td[@data-field='move_id'][1]//a";
     public void clickOnTabMenu(String tab){
        awaitOdooRequestToFinish(20);
        String xpath = createQuery(tabMenuXpath, nameTab, tab);
@@ -40,9 +40,9 @@ public class CustomerPage extends Component {
 
     public void openJournalEntry() {
         awaitOdooRequestToFinish(10);
-        WebElement journal = seleniumDriver.findElement(By.xpath("//table[@class='oe_list_content'][1]//tbody//tr[1]//td[@data-field='move_id'][1]//a"));
+        WebElement journal = seleniumDriver.findElement(By.xpath(JOURNAL_ENTRY_ROW));
         journal.click();
         awaitOdooRequestToFinish(10);
-        seleniumDriver.findElement(By.xpath(JOURNAL_ENTRY)).click();
+        seleniumDriver.findElement(By.xpath(JOURNAL_ENTRY_BUTTON)).click();
     }
 }
