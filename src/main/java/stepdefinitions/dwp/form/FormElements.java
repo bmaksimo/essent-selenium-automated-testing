@@ -10,6 +10,8 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.openqa.selenium.support.ui.FluentWait;
 
 import java.util.HashMap;
@@ -21,6 +23,7 @@ import static org.awaitility.Awaitility.given;
 import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
 import static org.awaitility.Duration.ONE_SECOND;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 public class FormElements extends DwpScenario {
@@ -64,10 +67,19 @@ public class FormElements extends DwpScenario {
     }
 
     @And("^Numeric value at \"([^\"]*)\" in the card \"([^\"]*)\" is \"([^\"]*)\"$")
-    public void checkValueInCard(String label, String cardName, String expectedExpression) {
+    public void checkNumericValueInCard(String label, String cardName, String expectedExpression) {
         NonEditable card = new NonEditableImpl();
         boolean result = card.checkAmountUsingExpression(cardName, label, expectedExpression);
         assertThat("The expected value differs from the real value", result, is(true));
+    }
+
+    @And("^Value at \"([^\"]*)\" in the card \"([^\"]*)\" is \"([^\"]*)\"$")
+    public void checkValueInCard(String label, String cardName, String expectedParameter) {
+        String expectedValue = parameterProvider.getValueOrParameterAsString(expectedParameter);
+        NonEditable card = new NonEditableImpl();
+        FluentWait<NonEditable> waiter = waiter(card, 20, 1);
+        waiter.until(field -> StringUtils.equalsIgnoreCase(field.getValue(cardName, label), expectedValue));
+
     }
 
     /**

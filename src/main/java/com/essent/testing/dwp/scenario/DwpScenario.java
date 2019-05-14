@@ -76,7 +76,10 @@ public abstract class DwpScenario extends RegisteredScenario {
             RandomUser randomUser = randomUser(userData);
             String first = randomUser.getName().getFirst();
             String last = randomUser.getName().getLast();
-            return first + " & " + last + " Startup";
+            parameterProvider.put("suitecrm-company-account", randomUser);
+            parameterProvider.put("contact-person-first-name", first);
+            parameterProvider.put("contact-person-last-name", last);
+            return first + " " + last;
         }
         else throw new CucumberException("ramdomuser.me API failure");
     }
