@@ -206,12 +206,10 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         Then "1st" list element has cell value "INITIATE STOP ACCESS" at column "Module & Label" polling 450 seconds
 
         # 11 - Cancel INITIATE STOP ACCESS market message and create a new INITIATE STOP ACCESS market message effective from NOW
-#        When Click on link in "Marktberichten" View List at "1st" row and "Plus Action" column
-#        And Row actions "Annuleer Marktbericht" is clicked
         When Plus action of "1" element from "MarketTransactionsOnAccount" and click on "Annuleer Marktbericht"
         And Select Contractline dialog is confirmed
 
-        When Click on "Start nieuw marktbericht"
+        When Click on "START NIEUW MARKTBERICHT"
         And Click Select Contractline
         And Dialog search input is current "parameter:EAN-code"
         Then Select Contractline dialog is confirmed
