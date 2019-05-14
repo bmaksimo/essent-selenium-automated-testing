@@ -26,8 +26,12 @@ import static org.awaitility.Awaitility.given;
 import static org.awaitility.Duration.TWO_SECONDS;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+
 public class OdooMenu extends OdooScenario {
 
+    public static final String REVERSE_BUTTON_1 = "//div[@class='oe_view_manager oe_view_manager_current'][4]//div[@class='oe_form_nosheet']//button[4]//span";
+    public static final String REVERSE_BUTTON_2 ="//div[@class='modal-footer']//button[1]//span";
+    public static final String JOURNAL_ENTRY = "//tbody/tr[9]//span/a";
     @Before("@ODOO, @E2E, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
@@ -133,16 +137,16 @@ public class OdooMenu extends OdooScenario {
         assertThat("Journal item was not found", null != journal);
         journal.click();
         awaitOdooRequestToFinish(5);
-        seleniumDriver.findElement(By.xpath("//tbody/tr[9]//span/a")).click();
+        seleniumDriver.findElement(By.xpath(JOURNAL_ENTRY)).click();
     }
 
    @And("^Modal button \"([^\"]*)\" clicked$")
    public void modalButtons(String name) {
        awaitOdooRequestToFinish(20);
-       seleniumDriver.findElementWhenPresent(By.xpath("//div[@class='oe_view_manager oe_view_manager_current'][4]//div[@class='oe_form_nosheet']//button[4]//span")).click();
+       seleniumDriver.findElementWhenPresent(By.xpath(REVERSE_BUTTON_1)).click();
 
        awaitOdooRequestToFinish(20);
-       seleniumDriver.findElementWhenPresent(By.xpath("//div[@class='modal-footer']//button[1]//span")).click();
+       seleniumDriver.findElementWhenPresent(By.xpath(REVERSE_BUTTON_2)).click();
        awaitOdooRequestToFinish(20);
    }
 
