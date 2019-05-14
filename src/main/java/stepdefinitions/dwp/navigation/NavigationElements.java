@@ -164,9 +164,10 @@ public abstract class NavigationElements extends DwpScenario {
     }
 
     protected void clickDashboardMenu(String menu) {
+        seleniumDriver.waitForRequestsToFinish();
         FluentWait<ClickDashboardMenu> waiter = waiter(new ClickDashboardMenu(), 60, 2);
         waiter.withMessage(String.format("Dashboard Menu  \"%s\" is undefined.", menu));
-        waiter.until((ClickDashboardMenu dashboardMenu)-> dashboardMenu.test(menu));
+        waiter.until((ClickDashboardMenu dashboardMenu) -> dashboardMenu.test(menu));
     }
 
     protected void clickDashboardMenu(String menu, int waitingTime) {
