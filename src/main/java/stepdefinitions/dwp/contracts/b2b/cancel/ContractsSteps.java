@@ -101,12 +101,6 @@ public class ContractsSteps extends DwpScenario {
         ilp.checkPayDate(parameterProvider.getValueOrParameterAsString("parameter:Datum & Vervaldatum"));
     }
 
-    @And("^Find \"([^\"]*)\" facture and \"([^\"]*)\"$")
-    public void findFactureAnd(String type, String option) {
-        InvoiceListPage ilp = new InvoiceListPage();
-        ilp.findIssuedAndPayDelay(type, option);
-    }
-
     @Then("^Validate bank account was changed on \"([^\"]*)\"$")
     public void validateBankAccountWasChangedOn(String iban) {
         String inputIban = parameterProvider.getValueOrParameterAsString(iban);
