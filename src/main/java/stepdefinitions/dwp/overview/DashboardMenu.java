@@ -15,7 +15,6 @@ public class DashboardMenu extends NavigationElements {
 
     @When("^Dashboard menu is \"([^\"]*)\"$")
     public void checkDashboardMenuItem(String menuItem) throws Throwable {
-        seleniumDriver.waitForRequestsToFinish();
         clickDashboardMenu(menuItem);
         parameterProvider.put("navigation", "back");
         parameterProvider.put("dashboard-menu", menuItem);
