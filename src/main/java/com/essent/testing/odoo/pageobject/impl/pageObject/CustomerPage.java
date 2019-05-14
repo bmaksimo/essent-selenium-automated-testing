@@ -4,8 +4,6 @@ import com.essent.testing.odoo.pageobject.impl.Component;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-
 public class CustomerPage extends Component {
 
     private static final String labelPaymentMethod = "//tr[7]/td[2]/span";
