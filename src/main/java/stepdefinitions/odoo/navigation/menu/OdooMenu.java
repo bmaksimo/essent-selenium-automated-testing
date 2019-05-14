@@ -29,9 +29,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class OdooMenu extends OdooScenario {
 
-    public static final String REVERSE_BUTTON_1 = "//div[@class='oe_view_manager oe_view_manager_current'][4]//div[@class='oe_form_nosheet']//button[4]//span";
-    public static final String REVERSE_BUTTON_2 ="//div[@class='modal-footer']//button[1]//span";
-    public static final String JOURNAL_ENTRY = "//tbody/tr[9]//span/a";
     @Before("@ODOO, @E2E, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
@@ -130,24 +127,18 @@ public class OdooMenu extends OdooScenario {
         awaitOdooRequestToFinish(10);
     }
 
+
+
     @And("^Journal entry is open$")
     public void journalEntry() {
-        awaitOdooRequestToFinish(5);
-        WebElement journal = seleniumDriver.findElement(By.xpath("//table[@class='oe_list_content'][1]//tbody//tr[1]//td[@data-field='move_id'][1]//a"));
-        assertThat("Journal item was not found", null != journal);
-        journal.click();
-        awaitOdooRequestToFinish(5);
-        seleniumDriver.findElement(By.xpath(JOURNAL_ENTRY)).click();
+        CustomerPage cp = new CustomerPage();
+        cp.openJournalEntry();
     }
 
    @And("^Modal button \"([^\"]*)\" clicked$")
    public void modalButtons(String name) {
-       awaitOdooRequestToFinish(20);
-       seleniumDriver.findElementWhenPresent(By.xpath(REVERSE_BUTTON_1)).click();
-
-       awaitOdooRequestToFinish(20);
-       seleniumDriver.findElementWhenPresent(By.xpath(REVERSE_BUTTON_2)).click();
-       awaitOdooRequestToFinish(20);
+       CustomerPage cp = new CustomerPage();
+       cp.reversePaymentPlan();
    }
 
     @And("^Odoo click on tab \"([^\"]*)\"$")
