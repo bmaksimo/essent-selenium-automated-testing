@@ -67,17 +67,18 @@ Feature: NSTA-329 Deduplication activated customer
         And Quote details are confirmed
         Then Form header is "Personal details"
 
-        Given Customer address is
+        Given Customer is duplicated
+        And Customer address is
             | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
             | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
-        And Customer is duplicated
-        And  Deduplication dialogue "Soortgelijke klanten" is shown
-        And  Deduplication dialogue link "Create quote for account" is clicked
-        Then Form header is "Quote details"
-
-        When "Sales kanaal" selection is "Inbound"
-        And Quote details are confirmed
-        Then Form header is "Select package & fuel type"
+        Then Save changes
+#        And  Deduplication dialogue "Soortgelijke klanten" is shown
+#        And  Deduplication dialogue link "Create quote for account" is clicked
+#        Then Form header is "Quote details"
+#
+#        When "Sales kanaal" selection is "Inbound"
+#        And Quote details are confirmed
+#        Then Form header is "Select package & fuel type"
 
         When "Pakket" selection is "Vast"
         And Checkbox "Gas Fix B2C (TC1)" is Unchecked
@@ -88,12 +89,18 @@ Feature: NSTA-329 Deduplication activated customer
         And Field "Housenumber" input is "2"
         And Field "Postalcode" input is "2550"
         And Field "City" input is "Kontich"
+        And  Deduplication dialogue "Soortgelijke klanten" is shown
+        And  Deduplication dialogue link "Create quote for account" is clicked
 
         And EAN code is generated
         And "EAN-code" input is "parameter:EAN-code-generated"
         And "Startdatum" date is "2 months from now"
-        And "EAN-code" input is "parameter:EAN-code-generated"
+
         And Connection details are confirmed
+
+#        When "Sales kanaal" selection is "Inbound"
+#        And Quote details are confirmed
+
         Then Form header is "Billing details"
 
         When "Betalingswijze" selection is "Overschrijving"
