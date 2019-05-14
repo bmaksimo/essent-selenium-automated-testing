@@ -29,6 +29,11 @@ Feature: NUAT-417: Create a Payment Plan for active contract with meterType YMR,
         And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
         Then Invoice run is scheduled
 
+        Given I renew login to DWP as "billing.testautomation@essent.be"
+        When Left menu is "billing"
+        And Top menu item is "Klanten"
+        And Top action is "Filters"
+        And "Klantnummer" input is "parameter:accountNumber"
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
