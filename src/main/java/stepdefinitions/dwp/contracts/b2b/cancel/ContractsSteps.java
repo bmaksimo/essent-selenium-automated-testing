@@ -98,13 +98,7 @@ public class ContractsSteps extends DwpScenario {
     @Then("^Payment delayed$")
     public void paymentDelayed() {
         InvoiceListPage ilp = new InvoiceListPage();
-        ilp.checkPayDate();
-    }
-
-    @And("^Find \"([^\"]*)\" facture and \"([^\"]*)\"$")
-    public void findFactureAnd(String type, String option) {
-        InvoiceListPage ilp = new InvoiceListPage();
-        ilp.findIssuedAndPayDelay(type, option);
+        ilp.checkPayDate(parameterProvider.getValueOrParameterAsString("parameter:Datum & Vervaldatum"));
     }
 
     @Then("^Validate bank account was changed on \"([^\"]*)\"$")
