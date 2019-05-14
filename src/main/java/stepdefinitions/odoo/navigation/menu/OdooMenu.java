@@ -127,8 +127,6 @@ public class OdooMenu extends OdooScenario {
         awaitOdooRequestToFinish(10);
     }
 
-
-
     @And("^Journal entry is open$")
     public void journalEntry() {
         CustomerPage cp = new CustomerPage();
