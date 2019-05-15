@@ -10,8 +10,8 @@ Feature: NSTA - 337 Move old address
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
     @NSTA-337
-    Scenario: Move new address
-        When Plus menu is "Sales -> TK1 -> CreÃ«er nieuwe offerte B2C"
+    Scenario: Move old address
+        When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
         When "Tariefdatum" date is "1 month before now"
