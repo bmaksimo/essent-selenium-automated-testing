@@ -119,6 +119,7 @@ Feature: NSTA-345 Credit Invoice
         When Dashboard menu is "Service"
         Then View list header is "Interacties"
         And Click on link in View List at "2nd" row and "Nummer & Communicatiekanaal" column waiting for 40 seconds
+        And Sleep for 30 seconds
         Then Check is product change "1 succeeded"
          #5 - Check Saldo of new invoice credit
         When Dashboard menu is "Billing"
