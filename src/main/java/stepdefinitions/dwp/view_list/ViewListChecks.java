@@ -826,24 +826,30 @@ public class ViewListChecks extends NavigationElements {
         String amountInvoice1_2 = info.get(2).get(0);
         String amountInvoice1_3 = info.get(3).get(0);
         String amountInvoice1_4 = info.get(4).get(0);
+        String amountInvoice1_5 = info.get(5).get(0);
+        String amountInvoice1_6 = info.get(6).get(0);
 
         //second list of possible invoice amounts
         String amountInvoice2_1 = info.get(1).get(1);
         String amountInvoice2_2 = info.get(2).get(1);
         String amountInvoice2_3 = info.get(3).get(1);
         String amountInvoice2_4 = info.get(4).get(1);
+        String amountInvoice2_5 = info.get(5).get(1);
+        String amountInvoice2_6 = info.get(6).get(1);
 
         //third list of possible invoice amounts
         String amountInvoice3_1 = info.get(1).get(2);
         String amountInvoice3_2 = info.get(2).get(2);
         String amountInvoice3_3 = info.get(3).get(2);
         String amountInvoice3_4 = info.get(4).get(2);
+        String amountInvoice3_5 = info.get(5).get(2);
+        String amountInvoice3_6 = info.get(6).get(2);
 
         ContractPage cp = new ContractPage();
         String actualValuesOfInvoices = cp.getActualValuesOfInvoicesAsString();
-        boolean firstCombination = cp.checkIsInvoicesAmountsAsStringCorrect(amountInvoice1_1, amountInvoice1_2, amountInvoice1_3, amountInvoice1_4, actualValuesOfInvoices);
-        boolean secondCombination = cp.checkIsInvoicesAmountsAsStringCorrect(amountInvoice2_1, amountInvoice2_2, amountInvoice2_3, amountInvoice2_4, actualValuesOfInvoices);
-        boolean thirdCombination = cp.checkIsInvoicesAmountsAsStringCorrect(amountInvoice3_1, amountInvoice3_2, amountInvoice3_3, amountInvoice3_4, actualValuesOfInvoices);
+        boolean firstCombination = cp.checkIsInvoicesAmountsAsStringCorrect(amountInvoice1_1, amountInvoice1_2, amountInvoice1_3, amountInvoice1_4, amountInvoice1_5, amountInvoice1_6, actualValuesOfInvoices);
+        boolean secondCombination = cp.checkIsInvoicesAmountsAsStringCorrect(amountInvoice2_1, amountInvoice2_2, amountInvoice2_3, amountInvoice2_4, amountInvoice2_5, amountInvoice2_6, actualValuesOfInvoices);
+        boolean thirdCombination = cp.checkIsInvoicesAmountsAsStringCorrect(amountInvoice3_1, amountInvoice3_2, amountInvoice3_3, amountInvoice3_4, amountInvoice3_5, amountInvoice3_6, actualValuesOfInvoices);
 
         if (firstCombination)
         {

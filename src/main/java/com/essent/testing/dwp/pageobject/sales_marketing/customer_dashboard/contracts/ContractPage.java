@@ -413,15 +413,15 @@ public class ContractPage extends Component {
         return sb.append(firstInvoice).append(' ').append(secondInvoice).append(' ').append(thirdInvoice).toString();
     }
 
-    public boolean checkIsInvoicesAmountsAsStringCorrect(String amountInvoicesCombination1, String amountInvoicesCombination2, String amountInvoicesCombination3, String amountInvoicesCombination4, String actualValuesOfInvoices)
+    public boolean checkIsInvoicesAmountsAsStringCorrect(String amountInvoicesCombination1, String amountInvoicesCombination2, String amountInvoicesCombination3, String amountInvoicesCombination4,  String amountInvoicesCombination5,  String amountInvoicesCombination6, String actualValuesOfInvoices)
     {
         boolean matchingValuesOfInvoices = false;
         if (amountInvoicesCombination1.equals(actualValuesOfInvoices) || amountInvoicesCombination2.equals(actualValuesOfInvoices)
-            || amountInvoicesCombination3.equals(actualValuesOfInvoices) || amountInvoicesCombination4.equals(actualValuesOfInvoices))
+            || amountInvoicesCombination3.equals(actualValuesOfInvoices) || amountInvoicesCombination4.equals(actualValuesOfInvoices)
+            || amountInvoicesCombination5.equals(actualValuesOfInvoices) || amountInvoicesCombination6.equals(actualValuesOfInvoices))
         {
             matchingValuesOfInvoices = true;
         }
-
         return matchingValuesOfInvoices;
     }
 
