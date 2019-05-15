@@ -83,10 +83,10 @@ Feature: NUAT-412 part: Create / import coda file
         Given Top arrow button is "Up"
         And Plus menu is "Billing -> Start facturatierun"
         When Modal dialog is "Start invoicerun"
-        And "Naam job" selection is "recurrent"
-        And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
         And "Factuurdatum" date is "now"
         And "Procesdatum" date is "1 month from now"
+        And "Naam job" selection is "recurrent"
+        And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
         Then Invoice run is scheduled
 
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds

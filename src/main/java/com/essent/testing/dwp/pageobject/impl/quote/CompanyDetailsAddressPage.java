@@ -22,16 +22,6 @@ public class CompanyDetailsAddressPage extends QuoteCreationGuidedStep {
         address = customerAddress;
     }
 
-    private class HideAddressSuggestion implements Model.Callback {
-        @Override
-        public void onAccess(Autocrat.ExecutionContext context, Model.Step step, WebElement value) {
-            JavascriptExecutor jsExec = (JavascriptExecutor) context.driver;
-            String setProperty = "style = 'display:none'";
-            logger().info("Executing javascript " + setProperty + " on target element");
-            jsExec.executeScript("arguments[0]." + setProperty, value);
-        }
-    }
-
     @Override
     public boolean fillInFormData() {
         return setAddress();
