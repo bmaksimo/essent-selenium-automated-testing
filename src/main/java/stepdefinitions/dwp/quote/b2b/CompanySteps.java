@@ -3,13 +3,13 @@ package stepdefinitions.dwp.quote.b2b;
 import com.billinghouse.random.RandomUser;
 import com.essent.testing.dwp.pageobject.impl.quote.CompanyDetailsAddressPage;
 import com.essent.testing.dwp.pageobject.impl.quote.ContactDetailsPage;
-import com.essent.testing.dwp.pageobject.impl.quote.PerformCustomerAcceptanceChecksPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
+import stepdefinitions.dwp.page_object.CustomerAcceptance;
 import stepdefinitions.dwp.tables.CustomerAddress;
 
 import java.util.List;
@@ -40,7 +40,7 @@ public class CompanySteps extends DwpScenario {
 
     @And("^Customer acceptance checks page is confirmed$")
     public void confirmCustomerAcceptanceChecksPage() {
-        PerformCustomerAcceptanceChecksPage pageObject = new PerformCustomerAcceptanceChecksPage();
+        CustomerAcceptance pageObject = new CustomerAcceptance();
         pageObject.next();
     }
 
