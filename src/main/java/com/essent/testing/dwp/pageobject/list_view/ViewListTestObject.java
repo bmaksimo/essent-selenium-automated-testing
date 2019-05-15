@@ -64,7 +64,7 @@ public class ViewListTestObject extends Component implements ViewList {
     return getDefaultTableModel(tableModel, new HashMap<>());
   }
 
-  private DefaultTableModel getViewTableModel(String tableName) {
+  public DefaultTableModel getViewTableModel(String tableName) {
     DefaultTableModel tableModel = new DefaultTableModel();
     HashMap<Object, Object> options = new HashMap<>();
     options.put("list_header", tableName);

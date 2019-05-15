@@ -26,6 +26,7 @@ import static org.awaitility.Awaitility.given;
 import static org.awaitility.Duration.TWO_SECONDS;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+
 public class OdooMenu extends OdooScenario {
 
     @Before("@ODOO, @E2E, @REGRESSION")
@@ -128,25 +129,14 @@ public class OdooMenu extends OdooScenario {
 
     @And("^Journal entry is open$")
     public void journalEntry() {
-        awaitOdooRequestToFinish(5);
-        WebElement journal = seleniumDriver.findElement(By.xpath("//table[@class='oe_list_content'][1]//tbody//tr[1]//td[@data-field='move_id'][1]//a"));
-        assertThat("Journal item was not found", null != journal);
-        journal.click();
-        awaitOdooRequestToFinish(5);
+        CustomerPage cp = new CustomerPage();
+        cp.openJournalEntry();
     }
 
-   @And("^Modal buttons \"([^\"]*)\" are clicked$")
+   @And("^Modal button \"([^\"]*)\" clicked$")
    public void modalButtons(String name) {
-       awaitOdooRequestToFinish(10);
-       WebElement reverseButton = seleniumDriver.findElement(By.xpath("//header//button//span[contains(., '" + name + "')]"));
-       if (null == reverseButton) throw new CucumberException("Button was not found");
-       new ButtonImpl(reverseButton).click();
-
-       awaitOdooRequestToFinish(5);
-       WebElement reverseModalButton = seleniumDriver.findElement(By.xpath("//footer//button//span[contains(., '" + name + "')]"));
-       if (null == reverseModalButton) throw new CucumberException("Button was not found");
-       new ButtonImpl(reverseModalButton).click();
-       awaitOdooRequestToFinish(8);
+       CustomerPage cp = new CustomerPage();
+       cp.reversePaymentPlan();
    }
 
     @And("^Odoo click on tab \"([^\"]*)\"$")
