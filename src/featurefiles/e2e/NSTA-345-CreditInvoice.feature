@@ -103,6 +103,7 @@ Feature: NSTA-345 Credit Invoice
         Then Table "Interacties" contains value "CNM" at column "Type & Onderwerp" waiting for 30 seconds
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
+        Then Sleep for 30 seconds
 
         #Asserts
          #1 - Check if Old invoice is credited (check if CNM is created for same amount as old VKM)
@@ -122,6 +123,7 @@ Feature: NSTA-345 Credit Invoice
          #5 - Check Saldo of new invoice credit
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
+        And Sleep for 30 seconds
         Then Balance is among values
             |  balance  |
             |  € 300,00 |

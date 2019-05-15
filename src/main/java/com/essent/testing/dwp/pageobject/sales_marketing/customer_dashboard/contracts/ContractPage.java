@@ -432,6 +432,7 @@ public class ContractPage extends Component {
 
 
     public boolean compareActualAndExpectedBalances(String balance1, String balance2, String balance3, String actualBalance) {
+        seleniumDriver.waitForRequestsToFinish();
         if (balance1.equals(actualBalance))
         {
             logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");
