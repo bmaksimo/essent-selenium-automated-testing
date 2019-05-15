@@ -94,6 +94,7 @@ Feature: NUAT-417: Payment Plan creation/reversal
         When Column "Account Number" with value "parameter:accountNumber" is clicked
 
         And Button "Journal Items" is clicked
+        And Sleep for 30 seconds
         And Journal entry is open
         And Sleep for 30 seconds
         And Modal button "Reverse" clicked
