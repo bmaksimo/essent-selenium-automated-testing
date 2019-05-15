@@ -39,10 +39,10 @@ public class CustomerPage extends Component {
     }
 
     public void openJournalEntry() {
-        awaitOdooRequestToFinish(10);
+        awaitOdooRequestToFinish(45);
         WebElement journal = seleniumDriver.findElement(By.xpath(JOURNAL_ENTRY_ROW));
         journal.click();
-        awaitOdooRequestToFinish(10);
+        awaitOdooRequestToFinish(45);
         seleniumDriver.findElement(By.xpath(JOURNAL_ENTRY_BUTTON)).click();
     }
 }

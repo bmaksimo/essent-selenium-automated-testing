@@ -115,6 +115,8 @@ Feature: NSTA-345 Credit Invoice
             |  300 € -113 € 113 €   |  600 € -226 € 226 €   |  900 € -339 € 339 €  |
 
          #4 - Check if CNM has been sent to customer
+        When Dashboard menu is "Service"
+        Then View list header is "Interacties"
         And Click on link in View List at "2nd" row and "Nummer & Communicatiekanaal" column waiting for 40 seconds
         Then Check is product change "1 succeeded"
          #5 - Check Saldo of new invoice credit
