@@ -76,17 +76,6 @@ Feature: NSTA-345 Credit Invoice
         And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
         Then Invoice run is scheduled
 
-        Given I renew login to DWP as "businessdesk.testautomation.b2b@essent.be"
-        When Left menu is "contracting-switching"
-        And Top menu item is "Klanten"
-        And Top action is "Filters"
-        And "Type klant" selection is "Klant"
-        And "Klantnummer" input is "parameter:accountNumber"
-        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
-        When Dashboard menu is "Billing"
-        Then View list header is "Transacties"
-        Then Table "Transacties" contains value "Invoice (ADVANCE)" at column "ID & Type"
-
         Given I renew login to DWP as "billing.testautomation@essent.be"
         When Left menu is "billing"
         And Top menu item is "Klanten"
@@ -107,6 +96,11 @@ Feature: NSTA-345 Credit Invoice
         And Top action is "Filters"
         And "Klantnummer" input is "parameter:accountNumber"
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
+        When Dashboard menu is "Service"
+        Then View list header is "Interacties"
+          #3 - Check if interactions are created for VKM and CNM
+        Then Table "Interacties" contains value "VKM" at column "Type & Onderwerp" waiting for 30 seconds
+        Then Table "Interacties" contains value "CNM" at column "Type & Onderwerp" waiting for 30 seconds
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
 
@@ -120,12 +114,6 @@ Feature: NSTA-345 Credit Invoice
             |  300 € 113 € -113 €   |  600 € 226 € -226 €   |  900 € 339 € -339 €  |
             |  300 € -113 € 113 €   |  600 € -226 € 226 €   |  900 € -339 € 339 €  |
 
-
-         #3 - Check if interactions are created for VKM and CNM
-        When Dashboard menu is "Service"
-        Then View list header is "Interacties"
-        Then Table "Interacties" contains value "VKM" at column "Type & Onderwerp"
-        Then Table "Interacties" contains value "CNM" at column "Type & Onderwerp"
          #4 - Check if CNM has been sent to customer
         And Click on link in View List at "2nd" row and "Nummer & Communicatiekanaal" column waiting for 40 seconds
         Then Check is product change "1 succeeded"

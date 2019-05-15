@@ -20,8 +20,10 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
+import stepdefinitions.dwp.b2b.Marketberichten;
 import stepdefinitions.dwp.navigation.NavigationElements;
 import stepdefinitions.dwp.plus.PlusActions;
+import stepdefinitions.dwp.tables.IsIsNot;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.*;
@@ -220,7 +222,8 @@ public class ViewListChecks extends NavigationElements {
 
             int index = getColumnNameIndex(columnName, viewTable);
             if (index < 0) {
-                fail(String.format("View List did not contain column %s", columnName));
+                logger().debug(String.format("View List is empty or does not contain column %s", columnName));
+                return new ArrayList<>();
             }
             List<List> rows = getData(viewTable);
             List selection;
@@ -238,7 +241,8 @@ public class ViewListChecks extends NavigationElements {
             }
             List<List> rows = getData(viewTable);
             if (rows.size() == 0) {
-                throw new CucumberException("--  Table is empty.");
+                logger().debug("-- Table is empty.");
+                return "";
             }
             if (row > rows.size()) {
                 throw new CucumberException(String
@@ -600,13 +604,11 @@ public class ViewListChecks extends NavigationElements {
     @Then("^List element with value at column \"([^\"]*)\" from table \"([^\"]*)\" is checked$")
     public void storeColumnValueInParameterProvider(String columnName, String tableName) throws Throwable {
         seleniumDriver.waitForRequestsToFinish();
-        FluentWait<ViewListModel> waiter = waiter(new ViewListModel(), 60, 1);
+        FluentWait<ViewListModel> waiter = waiter(new ViewListModel(), 300, 10);
         waiter.withMessage(
             String.format("List element didn't contain any value at column \"%s\"", columnName));
-        boolean success = waiter.until((ViewListModel callback) ->
-                CollectionUtils.isNotEmpty(callback.fetchColumnData(tableName, columnName)));
-
-        List<String> columnData = new ViewListModel().fetchColumnData(tableName, columnName);
+        List<String> columnData = waiter.until((ViewListModel callback) -> callback.fetchColumnData(tableName, columnName));
+        boolean success = CollectionUtils.isNotEmpty(columnData);
         assertThat(String.format("\"%s\" list element didn't contain any value at column \"%s\"", tableName, columnName),
             success, is(true));
 
@@ -729,11 +731,15 @@ public class ViewListChecks extends NavigationElements {
         return parameter;
     }
 
-    @And("^\"([^\"]*)\" list is not empty$")
-    public void viewIsNotEmpty(String tableTitle) throws Throwable {
-        Map<String, String> options = new HashMap<>();
-        options.put("tableTitle", tableTitle);
-        boolean success = new CheckEmptyTableAction().test(options);
+    @Then("^\"([^\"]*)\" list (is|is_not) empty$")
+    public void viewIsNotEmpty(String tableTitle, IsIsNot verb) {
+        DefaultTableModel viewTableModel = new ViewListModel().getViewTableModel(tableTitle);
+        boolean success = false;
+         if (verb.getVerb().equalsIgnoreCase("is")){
+             success = viewTableModel.getRowCount() == 0;
+         }else if (verb.getVerb().equalsIgnoreCase("is not")){
+             success = viewTableModel.getRowCount() != 0;
+         }
         assertThat(String.format(tableTitle + " doesn't exist"), success, is(true));
         logger().info(String.format("- STEP: \"%s\" list is not empty - PASSED.", tableTitle));
     }
@@ -745,6 +751,24 @@ public class ViewListChecks extends NavigationElements {
         boolean hasData = new CheckEmptyTableAction().test(options);
         assertThat(String.format(tableTitle + " is not empty"), hasData, is(false));
         logger().info(String.format("- STEP \"%s\" list is empty - PASSED.", tableTitle));
+    }
+
+    @And("^Table \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\" within (\\d+) seconds? after clicking on \"([^\"]*)\"$")
+    public void viewListContainsValueAtColumn(String table, String value, String column, int seconds, String buttonName) throws Throwable {
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
+        String dashboardMenu = parameterProvider.getValueOrParameterAsString("parameter:dashboard-menu");
+
+        FluentWait<ViewListModel> waiter = waiter(new ViewListModel(), seconds, 30);
+        waiter.withMessage(String.format("List element didn't contain any value at column \"%s\"", column));
+        waiter.until((ViewListModel callback) -> {
+            clickDashboardMenu(dashboardMenu);
+            new Marketberichten().clickOn(buttonName);
+            return !callback.fetchColumnData(table, column)
+                .stream().filter(element -> element.contains(inputValue)).collect(Collectors.toList()).isEmpty();
+        });
+
+        logger().info(String.format("- STEP: Table \"%s\" does not contain value \"%s\" at column \"%s\".", table,
+            value, column));
     }
 
     @And("^Table \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\"$")

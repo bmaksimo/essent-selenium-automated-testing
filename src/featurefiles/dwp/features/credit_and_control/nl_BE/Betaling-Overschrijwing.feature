@@ -14,6 +14,6 @@ Feature: Check if payment is reconciled
 
         And Click on link in View List at "1st" row and "Klantnummer & Naam" column
         And Dashboard menu is "Billing"
-        Then "Transacties" list is not empty
+        Then "Transacties" list is_not empty
 
         Then "Openstaand bedrag" in the first "Paid by OV" row of "Transacties" table is "0"
