@@ -27,7 +27,7 @@ public class SeleniumPage
     this.driver = driver;
   }
 
-  protected void waitForReady()  {
+  protected void waitForReady() {
     waitForReady(200);
   }
 
@@ -47,38 +47,38 @@ public class SeleniumPage
     }
     new WebDriverWait(driver, 180).until(new ExpectedCondition<Boolean>()
     {
-      @Override
+              @Override
       public Boolean apply(WebDriver driver)
       {
-        final JavascriptExecutor js = (JavascriptExecutor) driver;
+                final JavascriptExecutor js = (JavascriptExecutor) driver;
         return (Boolean) js
                 .executeScript("return window.jQuery != undefined && jQuery.active === 0");
-      }
-    });
+              }
+            });
   }
 
 
-  protected void dealWithElement(String id, String value){
+  protected void dealWithElement(String id, String value) {
 
-    WebElement element = waitAndPollUntilElementIsFound(id,30,5);
-    if (value.compareToIgnoreCase("click") == 0){
+    WebElement element = waitAndPollUntilElementIsFound(id, 30, 5);
+    if (value.compareToIgnoreCase("click") == 0) {
       try {
         element.click();
       }catch(WebDriverException e){element.sendKeys(Keys.ENTER);}
-    }else{
-      //Checking if text field
+    } else {
+      // Checking if text field
       try {
         element.sendKeys(value);
-      }catch(WebDriverException e) {
-        try{
-          //Checking if drop down
+      } catch (WebDriverException e) {
+        try {
+          // Checking if drop down
           new Select(element).selectByVisibleText(value);
-        }catch(UnexpectedTagNameException ue){
-          //dropdown element select is one level below
+        } catch (UnexpectedTagNameException ue) {
+          // dropdown element select is one level below
           WebElement selectElement = element.findElement(By.xpath(".//select"));
           try {
             new Select(selectElement).selectByVisibleText(value);
-          }catch(WebDriverException nse){
+          } catch (WebDriverException nse) {
             new Select(selectElement).selectByValue(value);
           }
         }
@@ -90,17 +90,17 @@ public class SeleniumPage
     waitForReady();
     WebElement element = createStubbornWait(totalTimeoutInSeconds,pollTimeoutInSeconds).until(driver1 -> {
       List <WebElement> elements = driver1.findElements(By.xpath("//*[contains(@id, '" + id + "')]"));
-      return elements.get(elements.size()-1);
-    });
+                  return elements.get(elements.size() - 1);
+                });
     return element;
   }
 
-  private Wait<WebDriver> createStubbornWait(int totalTimeoutInSeconds, int pollTimeoutInSeconds){
+  private Wait<WebDriver> createStubbornWait(int totalTimeoutInSeconds, int pollTimeoutInSeconds) {
     return new FluentWait<>(driver)
-            .withTimeout(Duration.ofSeconds(totalTimeoutInSeconds))
-            .pollingEvery(Duration.ofSeconds(pollTimeoutInSeconds))
-            .ignoring(org.openqa.selenium.NoSuchElementException.class)
-            .ignoring(StaleElementReferenceException.class);
+        .withTimeout(Duration.ofSeconds(totalTimeoutInSeconds))
+        .pollingEvery(Duration.ofSeconds(pollTimeoutInSeconds))
+        .ignoring(org.openqa.selenium.NoSuchElementException.class)
+        .ignoring(StaleElementReferenceException.class);
   }
 
 }

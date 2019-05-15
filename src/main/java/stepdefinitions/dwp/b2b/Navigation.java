@@ -27,6 +27,8 @@ public class Navigation extends DwpScenario {
 
     }
 
+    //TODO
+    //This method should be moved from "Navigation" to ServiceSteps
     @And("^\"([^\"]*)\" is clicked$")
     public void isClicked(String srt) {
         ServicePage sp = new ServicePage();
@@ -39,6 +41,10 @@ public class Navigation extends DwpScenario {
         super.tearDown();
     }
 
+    //TODO
+    //This method should be moved from "Navigation"
+    //It is distracting to maintain the methods placed to logical structure
+    //without any relation to this structure.
     @Then("^Verify status is \"([^\"]*)\" and \"([^\"]*)\"$")
     public void verifyStatusIsAnd(String external, String status) {
         seleniumDriver.waitForRequestsToFinish();

@@ -14,7 +14,7 @@ public class NonEditableInputImpl implements NonEditableInput {
 
     protected WebElement element;
 
-    
+
     @Override
     public String getValue() {
         logger.info("STEP:");

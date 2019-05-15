@@ -12,7 +12,15 @@ import java.util.Map;
 
 public class SoctarFileUtil {
 
-    private static final String DEFAULT_SOCTAR_LOCATION = ResourceUtil.toPath(File.separator + "data" + File.separator + "dwp" + File.separator + "soctar" + File.separator);
+  private static final String DEFAULT_SOCTAR_LOCATION =
+      ResourceUtil.toPath(
+          File.separator
+              + "data"
+              + File.separator
+              + "dwp"
+              + File.separator
+              + "soctar"
+              + File.separator);
 
     public static String getSoctarFileFromTemplate(String cust_Id, String ean_id, String soctarStartDatEndDate) throws IOException {
         String sourcePath = DEFAULT_SOCTAR_LOCATION + "soctar-template.csv";

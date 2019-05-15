@@ -29,5 +29,5 @@ public class SignContractDTO {
         {
             this.contractModeDTO = contractModeDTO;
         }
-        
+
 }

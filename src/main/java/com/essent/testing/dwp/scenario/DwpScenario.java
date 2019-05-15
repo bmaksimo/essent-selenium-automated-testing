@@ -23,13 +23,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.JS_TR_GET_RANDOM_USER;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpDate;
-
-import static com.essent.testing.dwp.constant.DwpConstants.FLEMISCH_LOCALE;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.convertToDwpTime;
-import static com.billinghouse.test_automation.util.dsl.NumericUtil.ordinalAsInt;
-import static com.billinghouse.test_automation.util.dsl.NumericUtil.sumOfAmounts;
 import static com.billinghouse.test_automation.util.dsl.NumericUtil.amountAsInt;
+import static com.billinghouse.test_automation.util.dsl.NumericUtil.sumOfAmounts;
+import static com.essent.testing.dwp.constant.DwpConstants.FLEMISCH_LOCALE;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -66,17 +65,17 @@ public abstract class DwpScenario extends RegisteredScenario {
         return new VatNumberGenerator().getVatNum(CountryCode.getByCode(countryCode));
     }
 
-    protected String generateCompanyName() {
-        Map<String, String> options = new HashMap<>();
-        Map reply = executeJavascriptMethod("TrGetRandomUser", options);
-        String status = ((String) reply.get("status"));
-        boolean success = StringUtils.equals("PASSED", status);
-        if (success) {
-            Map userData = (Map) reply.get("user");
-            RandomUser randomUser = randomUser(userData);
-            String first = randomUser.getName().getFirst();
-            String last = randomUser.getName().getLast();
-            return first + " & " + last + " Startup";
+  protected String generateCompanyName() {
+    Map<String, String> options = new HashMap<>();
+    Map reply = executeJavascriptMethod(JS_TR_GET_RANDOM_USER, options);
+    String status = ((String) reply.get("status"));
+    boolean success = StringUtils.equals("PASSED", status);
+    if (success) {
+      Map userData = (Map) reply.get("user");
+      RandomUser randomUser = randomUser(userData);
+      String first = randomUser.getName().getFirst();
+      String last = randomUser.getName().getLast();
+      return first + " & " + last + " Startup";
         }
         else throw new CucumberException("ramdomuser.me API failure");
     }
@@ -147,13 +146,9 @@ public abstract class DwpScenario extends RegisteredScenario {
         seleniumDriver.initNgWebDriver();
     }
 
-    protected int extractNumericValue(String ordinal) {
-        return ordinalAsInt(ordinal);
-    }
-
-    protected Integer amountInCurrencyAsInt(String amountInCurrency) {
-        return amountAsInt(amountInCurrency, FLEMISCH_LOCALE);
-    }
+  protected Integer amountInCurrencyAsInt(String amountInCurrency) {
+    return amountAsInt(amountInCurrency, FLEMISCH_LOCALE);
+  }
 
     protected Integer sumOf(List<String> amounts) {
         return sumOfAmounts(amounts);

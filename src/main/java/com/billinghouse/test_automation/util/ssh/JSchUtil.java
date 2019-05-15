@@ -97,12 +97,14 @@ public class JSchUtil {
                 return false;
             }
 
-            @Override
-            public void end() {
-                logger.info(String.format(" - SFTP_UPLOAD: Complete. Local file has been uploaded to uploaded to %s ", dest));
-                FileUtils.deleteQuietly(localFile);
-            }
-        };
-    }
+      @Override
+      public void end() {
+        logger.info(
+            String.format(
+                " - SFTP_UPLOAD: Complete. Local file has been uploaded to uploaded to %s ", dest));
+        FileUtils.deleteQuietly(localFile);
+      }
+    };
+  }
 
 }

@@ -32,6 +32,7 @@ import java.util.function.Predicate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 
 public class ConsumptionSteps extends DwpScenario {
 
@@ -179,7 +180,7 @@ public class ConsumptionSteps extends DwpScenario {
     private class TableCellValueChecker implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
-            return executeJavascriptTest("TrCheckTableCellValue", options);
+            return executeJavascriptTest(JS_TR_CHECK_TABLE_CELL_VALUE, options);
         }
     }
 
