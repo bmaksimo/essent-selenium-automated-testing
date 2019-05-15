@@ -24,7 +24,7 @@ public class BillingBatch extends BillingRootClient {
 	protected final static String stopRunningJobUrl = "/stopRunningJob";
 	protected final static String getThreadsExecutingJob = "/getThreadsExecutingJob";
 
-	
+
 	public BillingBatch() {
 		super(restUrl, LOG);
 	}
@@ -54,7 +54,7 @@ public class BillingBatch extends BillingRootClient {
 	public RestResponse stopRunningJob(RSStopRunningJobRequest request) {
 		return call(stopRunningJobUrl, request, RestResponse.class);
 	}
-	
+
 	public RestResponse triggerDunning(RSTriggerDunningRequest request) {
 		return call(triggerDunningUrl, request, RestResponse.class);
 	}
@@ -62,9 +62,9 @@ public class BillingBatch extends BillingRootClient {
 	public RestResponse triggerBilling(RSTriggerBillRunRequest request) {
 		return call(triggerBillingUrl, request, RestResponse.class);
 	}
-	
+
 	public RSGetThreadsExecutingJobResponse getThreadsExecutingJob() {
 	    return call(getThreadsExecutingJob, RSGetThreadsExecutingJobResponse.class);
 	}
-	
+
 }

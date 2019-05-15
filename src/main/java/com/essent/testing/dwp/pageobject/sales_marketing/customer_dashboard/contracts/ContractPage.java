@@ -16,8 +16,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
-import static org.apache.camel.component.file.GenericFileExist.Append;
-
 public class ContractPage extends Component {
 
     private static final String NUMBER_ELECTRICITY_CONTRACT = "//list-icon-text-cell/div";
@@ -432,6 +430,7 @@ public class ContractPage extends Component {
 
 
     public boolean compareActualAndExpectedBalances(String balance1, String balance2, String balance3, String actualBalance) {
+        seleniumDriver.waitForRequestsToFinish();
         if (balance1.equals(actualBalance))
         {
             logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");

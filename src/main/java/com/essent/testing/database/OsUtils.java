@@ -16,11 +16,11 @@ public class OsUtils {
 	    	  isWindows = false;
 	      }
 	}
-	
+
 	public static boolean isWindows() {
 		return isWindows;
 	}
-	
+
 	public static String getFileLocation(URL url) {
 		return strategy.getFileLocation(url);
 	}
@@ -44,7 +44,7 @@ public class OsUtils {
 	public static ProcessBuilder getCreateDbCmd(String host, int port, String userId, String db) {
 		return strategy.getCreateDbCmd(host, port, userId, db);
 	}
-	
+
 	public static ProcessBuilder getQuery(String host, int port, String userId, String db, String query) {
 		return strategy.getQuery(host, port, userId, db, query);
 	}

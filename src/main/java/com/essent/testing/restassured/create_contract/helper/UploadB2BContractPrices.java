@@ -31,7 +31,7 @@ public class UploadB2BContractPrices {
 			JSch ssh = new JSch();
 			ssh.addIdentity(locationOfPrivateKey, privateKeyPassword);
 			session = ssh.getSession(ftpUserName, ftpDomain, ftpPort);
-			session.setConfig("StrictHostKeyChecking", "no"); 
+			session.setConfig("StrictHostKeyChecking", "no");
 			session.connect();
 
 			channel = session.openChannel("sftp");

@@ -1,6 +1,7 @@
 package stepdefinitions.dwp.form;
 
 import com.essent.testing.dwp.pageobject.elements.NonEditable;
+import com.essent.testing.dwp.pageobject.impl.elements.ComboBoxImpl;
 import com.essent.testing.dwp.pageobject.impl.elements.NonEditableImpl;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
@@ -10,20 +11,20 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.openqa.selenium.support.ui.FluentWait;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Predicate;
 
+import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.JS_TR_SUBMIT_FORM;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
 import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
 import static org.awaitility.Duration.ONE_SECOND;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 
 public class FormElements extends DwpScenario {
@@ -59,7 +60,6 @@ public class FormElements extends DwpScenario {
         FluentWait<NonEditable> waiter = waiter(field, 20, 5);
         waiter.until((NonEditable p) -> {
             String actualValue = p.getValue(label);
-            seleniumDriver.getDriver().getCurrentUrl();
             String assertionMessage = String.format("Actual value of \"%s\" was \"%s\" differs from expected \"%s\"", label, actualValue, expectedValue);
             waiter.withMessage(assertionMessage);
             return StringUtils.equals(expectedValue, actualValue);
@@ -82,22 +82,37 @@ public class FormElements extends DwpScenario {
 
     }
 
-    /**
-     * Confirms the form submission.
-     * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
-     */
-    @And("^Form is submitted$")
-    public void formIsSubmitted() throws Throwable {
-        seleniumDriver.waitForRequestsToFinish();
-        Map<String, String> options = new HashMap<>();
-        executeJavascriptTest("TrSubmitForm", options);
-        seleniumDriver.waitForRequestsToFinish();
-    }
+  /**
+   * Confirms the form submission.
+   * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
+   */
+  @And("^Form is submitted$")
+  public void formIsSubmitted() throws Throwable {
+    seleniumDriver.waitForRequestsToFinish();
+    Map<String, String> options = new HashMap<>();
+    executeJavascriptTest(JS_TR_SUBMIT_FORM, options);
+    seleniumDriver.waitForRequestsToFinish();
+  }
 
-    @Override
-    @After("@DWP, @CORE, @E2E, @REGRESSION")
-    public void tearDown() {
-        super.tearDown();
-    }
+  @And("^Option value of \"([^\"]*)\" selection in the card \"([^\"]*)\" is matching \"([^\"]*)\"$")
+  public void checkSelectionOption(String label, String cardName, String expected)
+      throws Throwable {
+    String expectedValue = parameterProvider.getValueOrParameterAsString(expected);
+    String message =
+        String.format("Dropdown box labelled \"%s\" in the card \"%s\"", label, cardName);
+    Optional<String> option = new ComboBoxImpl().getOption(cardName, label);
+    assertThat(message + " was empty", option.isPresent(), is(true));
+    String actual = option.get();
+    assertThat(
+        message + String.format(" expected \"%s\" but actually was \"%s\"", expectedValue, actual),
+        actual,
+        containsString(expectedValue));
+  }
+
+  @Override
+  @After("@DWP, @CORE, @E2E, @REGRESSION")
+  public void tearDown() {
+    super.tearDown();
+  }
 
 }

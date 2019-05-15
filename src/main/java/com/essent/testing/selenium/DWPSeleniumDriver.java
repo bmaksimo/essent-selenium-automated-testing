@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.time.Duration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -261,15 +262,28 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
         element.click();
     }
 
-    public void waitAndSendKeys(final WebElement element, final String keysToSend) {
-        waitForElement(element);
-        element.clear();
-        waitForElement(element);
-        element.sendKeys(keysToSend);
-        ngWebDriver.waitForAngularRequestsToFinish();
-    }
-    public void sendKeysNow(final WebElement element, final String keysToSend) {
-        element.clear();
-        element.sendKeys(keysToSend);
-    }
+  public void waitAndSendKeys(final WebElement element, final String keysToSend) {
+    waitForElement(element);
+    element.clear();
+    waitForElement(element);
+    element.sendKeys(keysToSend);
+    ngWebDriver.waitForAngularRequestsToFinish();
+  }
+  public void sendKeysNow(final WebElement element, final String keysToSend) {
+    element.clear();
+    element.sendKeys(keysToSend);
+  }
+
+  @Override
+  public List<WebElement> findElements(By selector, Duration timeout, Duration pollingEvery) {
+    List<WebElement> result = super.findElements(selector, timeout, pollingEvery);
+    waitForRequestsToFinish();
+    return result;
+  }
+
+  @Override
+  public WebElement findElementWhenPresent(By selector) {
+    waitForRequestsToFinish();
+    return super.findElementWhenPresent(selector);
+  }
 }

@@ -29,22 +29,25 @@ public class NumericUtilTest {
 
   @Test
   public void checkAmountEqualityExpressions() throws Exception {
-      String[][] testData = new  String[][]{
+    String[][] testData =
+        new String[][] {
           {"80", "80"},
           {"80", "not equal 100"},
           {"80", "less than 81"},
           {"80", "less then or equal 80"},
           {"80", "greater than 79"},
           {"80", "greater than or equal 80"}
-      };
+        };
 
-      for(int i = 0; i < testData.length; i++) {
-          int actual = Integer.parseInt(testData[i][0]);
-          String expressionExpected = testData[i][1];
-          assertThat("Actual value '" + actual + String.format("' did not meet the expected '%s'", expressionExpected),
-              checkAmount(actual,
-                  expressionExpected), is(true));
-      }
+    for (int i = 0; i < testData.length; i++) {
+      int actual = Integer.parseInt(testData[i][0]);
+      String expressionExpected = testData[i][1];
+      assertThat(
+          "Actual value '"
+              + actual
+              + String.format("' did not meet the expected '%s'", expressionExpected),
+          checkAmount(actual, expressionExpected),
+          is(true));
+    }
   }
-
 }

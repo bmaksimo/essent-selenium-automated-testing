@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 
@@ -28,14 +29,23 @@ public class ParameterProvider {
         return (String)getValueOrParameter(value).toString();
     }
 
-    public Integer getValueOrParameterAsInt(String value) {
-        Object expectedIntParameter  = getValueOrParameter(value);
-        if(expectedIntParameter instanceof Number) {
-            return ((Number)expectedIntParameter).intValue();
-        }
-        try {
-            return Integer.parseInt(expectedIntParameter.toString());
-        } catch (NumberFormatException nfe) {
+  public Optional<String> getParameterAsString(String parameter) {
+    if (parameter.startsWith(TEST_PARAMETER_PREFIX)) {
+      String key = StringUtils.replace(parameter, TEST_PARAMETER_PREFIX, "", 1);
+      return Optional.ofNullable((String) parameters.get(key));
+    } else {
+      return Optional.empty();
+    }
+  }
+
+  public Integer getValueOrParameterAsInt(String value) {
+    Object expectedIntParameter = getValueOrParameter(value);
+    if (expectedIntParameter instanceof Number) {
+      return ((Number) expectedIntParameter).intValue();
+    }
+    try {
+      return Integer.parseInt(expectedIntParameter.toString());
+    } catch (NumberFormatException nfe) {
             throw new CucumberException("Input parameter " + expectedIntParameter + " doesn't have supported number format");
         }
     }

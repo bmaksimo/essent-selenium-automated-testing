@@ -10,6 +10,7 @@ import cucumber.api.java.en.When;
 import org.awaitility.Duration;
 import org.openqa.selenium.By;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
 import static org.hamcrest.MatcherAssert.assertThat;
