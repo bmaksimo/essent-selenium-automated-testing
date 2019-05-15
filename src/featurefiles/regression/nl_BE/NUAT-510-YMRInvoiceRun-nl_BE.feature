@@ -18,12 +18,12 @@ Feature: NUAT-510 Triggering advance invoice run. Check is invoice created in DW
         Then List element with value at column "Id Billing customer & persoon/familie sleutel" from table "Klanten" is checked
 
         When Plus menu is "Billing -> Start facturatierun"
+        And "Factuurdatum" date is "now"
+        And "Procesdatum" date is "now"
         And Modal dialog is "Start invoicerun"
         And "Naam job" selection is "recurrent"
         And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
-        And "Factuurdatum" date is "now"
-        And "Procesdatum" date is "now"
-
+        
         Then Invoice run is scheduled
 
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds

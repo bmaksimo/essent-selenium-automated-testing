@@ -65,17 +65,20 @@ public abstract class DwpScenario extends RegisteredScenario {
         return new VatNumberGenerator().getVatNum(CountryCode.getByCode(countryCode));
     }
 
-  protected String generateCompanyName() {
-    Map<String, String> options = new HashMap<>();
-    Map reply = executeJavascriptMethod(JS_TR_GET_RANDOM_USER, options);
-    String status = ((String) reply.get("status"));
-    boolean success = StringUtils.equals("PASSED", status);
-    if (success) {
-      Map userData = (Map) reply.get("user");
-      RandomUser randomUser = randomUser(userData);
-      String first = randomUser.getName().getFirst();
-      String last = randomUser.getName().getLast();
-      return first + " & " + last + " Startup";
+    protected String generateCompanyName() {
+        Map<String, String> options = new HashMap<>();
+        Map reply = executeJavascriptMethod("TrGetRandomUser", options);
+        String status = ((String) reply.get("status"));
+        boolean success = StringUtils.equals("PASSED", status);
+        if (success) {
+            Map userData = (Map) reply.get("user");
+            RandomUser randomUser = randomUser(userData);
+            String first = randomUser.getName().getFirst();
+            String last = randomUser.getName().getLast();
+            parameterProvider.put("suitecrm-company-account", randomUser);
+            parameterProvider.put("contact-person-first-name", first);
+            parameterProvider.put("contact-person-last-name", last);
+            return first + " " + last;
         }
         else throw new CucumberException("ramdomuser.me API failure");
     }

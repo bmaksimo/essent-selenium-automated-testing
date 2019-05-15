@@ -8,6 +8,8 @@ public interface ViewList {
 
   DefaultTableModel getViewTableModel();
 
+  DefaultTableModel getViewTableModel(String tableName);
+
   boolean containsDataAt(int row, String value, String columnName);
 
   boolean containsCellValue(int rowFromOne, String value, String columnName, String tableName);

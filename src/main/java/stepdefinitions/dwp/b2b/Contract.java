@@ -45,6 +45,13 @@ public class Contract extends DwpScenario {
         parameterProvider.put("accountNumber",Klantnummer);
     }
 
+    @And("^Get billing number$")
+    public void getBillingNumber() {
+        ContractPage cp = new ContractPage();
+        String billingNumber=cp.getBillingNumber();
+        parameterProvider.put("billingNumber",billingNumber);
+    }
+
     @And("^Search by client number$")
     public void searchByClientNumber() {
         ContractPage cp = new ContractPage();

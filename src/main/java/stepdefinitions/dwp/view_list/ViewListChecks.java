@@ -19,8 +19,10 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
+import stepdefinitions.dwp.b2b.Marketberichten;
 import stepdefinitions.dwp.navigation.NavigationElements;
 import stepdefinitions.dwp.plus.PlusActions;
+import stepdefinitions.dwp.tables.IsIsNot;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.HashMap;
@@ -77,6 +79,7 @@ public class ViewListChecks extends NavigationElements {
             return executeJavascriptTest(JS_TR_GET_LIST_ACTION, options);
         }
     }
+
 
     private class ClickTableCellUrl implements Predicate<Map> {
         @Override
@@ -174,24 +177,6 @@ public class ViewListChecks extends NavigationElements {
         boolean success = viewTableModel.getRowCount() == 0;
         assertThat("View Table list is not empty", success, is(true));
         logger().info("- STEP: View list header is empty - PASSED.");
-    }
-
-    @And("^Table \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\"$")
-    public void viewListContainsValueAtColumn(String table, String value, String column)
-        throws Throwable {
-        ViewListTestObject viewListModel = new ViewListTestObject();
-        List<String> columnData = viewListModel.fetchColumnData(table, column);
-        List<String> found =
-            columnData.stream().filter(element -> element.contains(value)).collect(Collectors.toList());
-        String message =
-            String.format(
-                "Table \"%s\" didn't contain value \"%s\" at column \"%s\"", table, value, column);
-        assertThat(message, found, not(empty()));
-        logger()
-            .info(
-                String.format(
-                    "- STEP: Table \"%s\" contains value \"%s\" at column \"%s\" - PASSED.",
-                    table, value, column));
     }
 
     @Then("^Table \"([^\"]*)\" has matching value \"([^\"]*)\" at column \"([^\"]*)\"$")
@@ -491,6 +476,23 @@ public class ViewListChecks extends NavigationElements {
                 parameterProvider.put(columnName.get(), value.get());
             }
         }
+     }
+
+    @Then("^List element with value at column \"([^\"]*)\" from table \"([^\"]*)\" is checked$")
+    public void storeColumnValueInParameterProvider(String columnName, String tableName) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
+        FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), 300, 10);
+        waiter.withMessage(
+            String.format("List element didn't contain any value at column \"%s\"", columnName));
+        List<String> columnData = waiter.until((ViewListTestObject callback) -> callback.fetchColumnData(tableName, columnName));
+        boolean success = CollectionUtils.isNotEmpty(columnData);
+        assertThat(String.format("\"%s\" list element didn't contain any value at column \"%s\"", tableName, columnName),
+            success, is(true));
+
+        parameterProvider.put(columnName, columnData.get(0));
+        logger().info(String.format("- STEP: \"%s\" list element with value at column \"%s\" is checked - PASSED.",
+            tableName, columnName));
+
     }
 
     @Then(
@@ -611,11 +613,15 @@ public class ViewListChecks extends NavigationElements {
         return optionalValue.get();
     }
 
-    @And("^\"([^\"]*)\" list is not empty$")
-    public void viewIsNotEmpty(String tableTitle) throws Throwable {
-        Map<String, String> options = new HashMap<>();
-        options.put("tableTitle", tableTitle);
-        boolean success = new CheckEmptyTableAction().test(options);
+    @Then("^\"([^\"]*)\" list (is|is_not) empty$")
+    public void viewIsNotEmpty(String tableTitle, IsIsNot verb) {
+        DefaultTableModel viewTableModel = new ViewListTestObject().getViewTableModel(tableTitle);
+        boolean success = false;
+         if (verb.getVerb().equalsIgnoreCase("is")){
+             success = viewTableModel.getRowCount() == 0;
+         }else if (verb.getVerb().equalsIgnoreCase("is not")){
+             success = viewTableModel.getRowCount() != 0;
+         }
         assertThat(String.format(tableTitle + " doesn't exist"), success, is(true));
         logger().info(String.format("- STEP: \"%s\" list is not empty - PASSED.", tableTitle));
     }
@@ -627,6 +633,38 @@ public class ViewListChecks extends NavigationElements {
         boolean hasData = new CheckEmptyTableAction().test(options);
         assertThat(String.format(tableTitle + " is not empty"), hasData, is(false));
         logger().info(String.format("- STEP \"%s\" list is empty - PASSED.", tableTitle));
+    }
+
+    @And("^Table \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\" within (\\d+) seconds? after clicking on \"([^\"]*)\"$")
+    public void viewListContainsValueAtColumn(String table, String value, String column, int seconds, String buttonName) throws Throwable {
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
+        String dashboardMenu = parameterProvider.getValueOrParameterAsString("parameter:dashboard-menu");
+
+        FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), seconds, 30);
+        waiter.withMessage(String.format("List element didn't contain any value at column \"%s\"", column));
+        waiter.until((ViewListTestObject callback) -> {
+            clickDashboardMenu(dashboardMenu);
+            new Marketberichten().clickOn(buttonName);
+            return !callback.fetchColumnData(table, column)
+                .stream().filter(element -> element.contains(inputValue)).collect(Collectors.toList()).isEmpty();
+        });
+
+        logger().info(String.format("- STEP: Table \"%s\" does not contain value \"%s\" at column \"%s\".", table,
+            value, column));
+    }
+
+    @And("^Table \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\"$")
+    public void viewListContainsValueAtColumn(String table, String value, String column) throws Throwable {
+        ViewListTestObject viewListModel = new ViewListTestObject();
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
+        List<String> columnData = viewListModel.fetchColumnData(table, column);
+        List<String> found = columnData.stream().filter(element -> element.contains(inputValue))
+            .collect(Collectors.toList());
+        String message = String.format("Table \"%s\" didn't contain value \"%s\" at column \"%s\"", table, value,
+            column);
+        assertThat(message, found, not(empty()));
+        logger().info(String.format("- STEP: Table \"%s\" contains value \"%s\" at column \"%s\" - PASSED.", table,
+            value, column));
     }
 
     @And("^Table \"([^\"]*)\" contains check mark at column \"([^\"]*)\"$")
@@ -731,24 +769,30 @@ public class ViewListChecks extends NavigationElements {
         String amountInvoice1_2 = info.get(2).get(0);
         String amountInvoice1_3 = info.get(3).get(0);
         String amountInvoice1_4 = info.get(4).get(0);
+        String amountInvoice1_5 = info.get(5).get(0);
+        String amountInvoice1_6 = info.get(6).get(0);
 
         //second list of possible invoice amounts
         String amountInvoice2_1 = info.get(1).get(1);
         String amountInvoice2_2 = info.get(2).get(1);
         String amountInvoice2_3 = info.get(3).get(1);
         String amountInvoice2_4 = info.get(4).get(1);
+        String amountInvoice2_5 = info.get(5).get(1);
+        String amountInvoice2_6 = info.get(6).get(1);
 
         //third list of possible invoice amounts
         String amountInvoice3_1 = info.get(1).get(2);
         String amountInvoice3_2 = info.get(2).get(2);
         String amountInvoice3_3 = info.get(3).get(2);
         String amountInvoice3_4 = info.get(4).get(2);
+        String amountInvoice3_5 = info.get(5).get(2);
+        String amountInvoice3_6 = info.get(6).get(2);
 
         ContractPage cp = new ContractPage();
         String actualValuesOfInvoices = cp.getActualValuesOfInvoicesAsString();
-        boolean firstCombination = cp.checkIsInvoicesAmountsAsStringCorrect(amountInvoice1_1, amountInvoice1_2, amountInvoice1_3, amountInvoice1_4, actualValuesOfInvoices);
-        boolean secondCombination = cp.checkIsInvoicesAmountsAsStringCorrect(amountInvoice2_1, amountInvoice2_2, amountInvoice2_3, amountInvoice2_4, actualValuesOfInvoices);
-        boolean thirdCombination = cp.checkIsInvoicesAmountsAsStringCorrect(amountInvoice3_1, amountInvoice3_2, amountInvoice3_3, amountInvoice3_4, actualValuesOfInvoices);
+        boolean firstCombination = cp.checkIsInvoicesAmountsAsStringCorrect(amountInvoice1_1, amountInvoice1_2, amountInvoice1_3, amountInvoice1_4, amountInvoice1_5, amountInvoice1_6, actualValuesOfInvoices);
+        boolean secondCombination = cp.checkIsInvoicesAmountsAsStringCorrect(amountInvoice2_1, amountInvoice2_2, amountInvoice2_3, amountInvoice2_4, amountInvoice2_5, amountInvoice2_6, actualValuesOfInvoices);
+        boolean thirdCombination = cp.checkIsInvoicesAmountsAsStringCorrect(amountInvoice3_1, amountInvoice3_2, amountInvoice3_3, amountInvoice3_4, amountInvoice3_5, amountInvoice3_6, actualValuesOfInvoices);
 
         if (firstCombination) {
             logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");
