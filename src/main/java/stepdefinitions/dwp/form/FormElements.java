@@ -67,15 +67,24 @@ public class FormElements extends DwpScenario {
     }
 
     @And("^Numeric value at \"([^\"]*)\" in the card \"([^\"]*)\" is \"([^\"]*)\"$")
-    public void checkValueInCard(String label, String cardName, String expectedExpression) {
+    public void checkNumericValueInCard(String label, String cardName, String expectedExpression) {
         NonEditable card = new NonEditableImpl();
         boolean result = card.checkAmountUsingExpression(cardName, label, expectedExpression);
         assertThat("The expected value differs from the real value", result, is(true));
     }
 
+    @And("^Value at \"([^\"]*)\" in the card \"([^\"]*)\" is \"([^\"]*)\"$")
+    public void checkValueInCard(String label, String cardName, String expectedParameter) {
+        String expectedValue = parameterProvider.getValueOrParameterAsString(expectedParameter);
+        NonEditable card = new NonEditableImpl();
+        FluentWait<NonEditable> waiter = waiter(card, 20, 1);
+        waiter.until(field -> StringUtils.equalsIgnoreCase(field.getValue(cardName, label), expectedValue));
+
+    }
+
   /**
    * Confirms the form submission.
-     * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
+   * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
    */
   @And("^Form is submitted$")
   public void formIsSubmitted() throws Throwable {

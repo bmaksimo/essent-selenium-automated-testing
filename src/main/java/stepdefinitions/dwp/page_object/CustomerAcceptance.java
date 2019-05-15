@@ -1,7 +1,7 @@
 package stepdefinitions.dwp.page_object;
 
 
-import com.essent.testing.dwp.pageobject.impl.Component;
+import com.essent.testing.dwp.pageobject.impl.quote.QuoteCreationGuidedStep;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.FluentWait;
 import static com.essent.testing.selenium.helper.fluent_wait.FluentWaitUtil.createPollingWaiter;
 
 
-public class CustomerAcceptance extends Component {
+public class CustomerAcceptance extends QuoteCreationGuidedStep {
 
     public String getAcceptanceStatus() {
        seleniumDriver.waitForRequestsToFinish();
@@ -30,4 +30,9 @@ public class CustomerAcceptance extends Component {
        return status[0];
     }
 
+    @Override
+    public boolean fillInFormData() {
+        seleniumDriver.takeScreenshot("customerAcceptanceChecks");
+        return true;
+    }
 }
