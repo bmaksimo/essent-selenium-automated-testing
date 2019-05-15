@@ -6,6 +6,7 @@ Feature: NUAT-412 part: Create / import coda file
 
     @NUAT-412-2-STABILIZE
     Scenario: Create active contract TK1
+        #1 Create TC1 contract (small company)git
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
         When Plus menu is "Sales -> TK1 -> Nieuwe TK1 offerte (B2B) aanmaken"
         And Company VAT number is random
