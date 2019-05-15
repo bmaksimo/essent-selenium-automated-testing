@@ -43,7 +43,6 @@ Feature: NUAT-412 part: Create / import coda file
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        #When "Startdatum" date on "Elektriciteit Vast" card is "35 days before now"
         When Option "test" is On
         And EAN code is generated
         And "Startdatum" date on "Elektriciteit Vast" card is "now"
@@ -112,6 +111,11 @@ Feature: NUAT-412 part: Create / import coda file
         When Odoo top menu is "Accounting"
         And Odoo left menu is "CODA Processing->Import CODA Files"
         Then Odoo file upload dialog is "Import CODA File"
-        Then CODA file is "parameter:codaFile"
+
+        When CODA file is "parameter:codaFile"
         And Odoo file upload confirm button is "Import"
-        And Odoo file import report contains success string "Number of statements processed : 1"
+        Then  Odoo file import report contains success string "Number of statements processed : 1"
+
+        When Modal button "View Bank Statement" is clicked
+        And Column "Reference" of the "1st" row is clicked
+        Then Modal button "Close" is clicked
