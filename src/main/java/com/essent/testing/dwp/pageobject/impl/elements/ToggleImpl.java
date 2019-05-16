@@ -6,8 +6,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class ToggleImpl extends Component {
-    private static String TOGGLEINPUT_SELECTOR = "//validation-wrapper[@label='${text}?']//toggle-form-element/label";
-    private static String TOGGLEINPUT_WITH_DOT_SELECTOR = "//validation-wrapper[@label='${text}.']//toggle-form-element/label";
+  private static String TOGGLEINPUT_SELECTOR =
+      "//validation-wrapper[@label='${text}?']//toggle-form-element/label";
+  private static String TOGGLEINPUT_WITH_DOT_SELECTOR =
+      "//validation-wrapper[@label='${text}.']//toggle-form-element/label";
 
     private WebElement getToggleInput(String toggleInputName) {
         By toggleInputCriteria = By.xpath(createQuery(TOGGLEINPUT_SELECTOR, "text", toggleInputName));

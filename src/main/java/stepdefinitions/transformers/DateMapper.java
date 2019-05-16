@@ -23,8 +23,8 @@ public class DateMapper extends Transformer<Date>{
 			} catch (Exception e) {
 				Assert.fail("Wrong date specified in feature file, date '" + date + "' does not match the 'yyyy-MM-dd' pattern: " + e.getMessage());
 				return null; // keep compiler happy, never reached.
-			} 
-	        
+			}
+
 	   }
 
 	}

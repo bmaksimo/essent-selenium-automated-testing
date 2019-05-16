@@ -15,40 +15,41 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
 public class PaymentInfoSteps extends NavigationElements {
 
-    private class PaymentDetailsModalSaveAction implements Predicate<Map> {
-        @Override
-        public boolean test(Map options) {
-            return executeJavascriptTest("TrPaymentDetailsModalSaveAction", options);
-        }
+  private class PaymentDetailsModalSaveAction implements Predicate<Map> {
+    @Override
+    public boolean test(Map options) {
+      return executeJavascriptTest(JS_TR_PAYMENT_DETAILS_MODAL_SAVE_ACTION, options);
     }
+  }
 
-    private class PaymentMethodSwitch implements Predicate<Map> {
-        @Override
-        public boolean test(Map options) {
-            Map result = executeJavascriptMethod("TrSwitchPaymentMethod", options);
-            String status = ((String) result.get("status"));
-            boolean success = StringUtils.equals("PASSED", status);
-            if (success) {
+  private class PaymentMethodSwitch implements Predicate<Map> {
+    @Override
+    public boolean test(Map options) {
+      Map result = executeJavascriptMethod(JS_TR_SWITCH_PAYMENT_METHOD, options);
+      String status = ((String) result.get("status"));
+      boolean success = StringUtils.equals("PASSED", status);
+      if (success) {
                 String switchedPaymentMethod = ((String) result.get("paymentMethod")).equalsIgnoreCase("string:OV") ?
                     "Overschrijving" : "Domiciliëring";
-                parameterProvider.put("paymentMethod", switchedPaymentMethod);
-            }
+        parameterProvider.put("paymentMethod", switchedPaymentMethod);
+      }
 
-            return success;
-        }
+      return success;
     }
+  }
 
-    private class PaymentDetailsIBANChange implements Predicate<Map> {
-        @Override
-        public boolean test(Map options) {
-            return executeJavascriptTest("TrAddIBANToPaymentDetails", options);
-        }
+  private class PaymentDetailsIBANChange implements Predicate<Map> {
+    @Override
+    public boolean test(Map options) {
+      return executeJavascriptTest(JS_TR_ADD_IBAN_TO_PAYMENT_DETAILS, options);
     }
+  }
 
     @Before("@DWP, @CORE, @E2E, @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {

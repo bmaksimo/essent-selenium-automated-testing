@@ -98,13 +98,7 @@ public class ContractsSteps extends DwpScenario {
     @Then("^Payment delayed$")
     public void paymentDelayed() {
         InvoiceListPage ilp = new InvoiceListPage();
-        ilp.checkPayDate();
-    }
-
-    @And("^Find \"([^\"]*)\" facture and \"([^\"]*)\"$")
-    public void findFactureAnd(String type, String option) {
-        InvoiceListPage ilp = new InvoiceListPage();
-        ilp.findIssuedAndPayDelay(type, option);
+        ilp.checkPayDate(parameterProvider.getValueOrParameterAsString("parameter:Datum & Vervaldatum"));
     }
 
     @Then("^Validate bank account was changed on \"([^\"]*)\"$")
@@ -200,11 +194,11 @@ public class ContractsSteps extends DwpScenario {
         String sd = parameterProvider.getValueOrParameterAsString(startDate);
         String ad = parameterProvider.getValueOrParameterAsString(attestDate);
 
-        String StartDateByQuarter = contractenPage.getQuarterForChosenStartDate(sd, ad);
-        String EndDateByYear = contractenPage.getLastDayOfYear(sd, ad);
-        parameterProvider.put("EndDateByYear", EndDateByYear);
-        parameterProvider.put("StartDateByQuarter", StartDateByQuarter);
-    }
+    String startDateByQuarter = contractenPage.getQuarterForChosenStartDate(sd, ad);
+    String endDateByYear = contractenPage.getLastDayOfYear(sd, ad);
+    parameterProvider.put("EndDateByYear", endDateByYear);
+    parameterProvider.put("StartDateByQuarter", startDateByQuarter);
+  }
 
     @Then("^Get Start Date$")
     public void searchForStartDate() {
@@ -237,12 +231,13 @@ public class ContractsSteps extends DwpScenario {
 
     }
 
-    @Then("^Product Change dates are \"([^\"]*)\" and \"([^\"]*)\"$")
-    public void ProductChangeDates(final String productChangeStartDate, final String productChangeEndDate){
-        String pcsd  = parameterProvider.getValueOrParameterAsString(productChangeStartDate);
-        String pced = parameterProvider.getValueOrParameterAsString(productChangeEndDate);
-        parameterProvider.put("productChangeStartDate", pcsd);
-        parameterProvider.put("productChangeEndDate", pced);
+  @Then("^Product Change dates are \"([^\"]*)\" and \"([^\"]*)\"$")
+  public void productChangeDates(
+      final String productChangeStartDate, final String productChangeEndDate) {
+    String pcsd = parameterProvider.getValueOrParameterAsString(productChangeStartDate);
+    String pced = parameterProvider.getValueOrParameterAsString(productChangeEndDate);
+    parameterProvider.put("productChangeStartDate", pcsd);
+    parameterProvider.put("productChangeEndDate", pced);
 
     }
 
@@ -256,38 +251,40 @@ public class ContractsSteps extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
     }
 
-    @And("^Save Installments Sum$")
-    public void InstallmentSum() {
-        seleniumDriver.waitForRequestsToFinish();
-        ContractPage cp = new ContractPage();
-        cp.getInstallmentSum();
-        parameterProvider.put("installmentsAmount", cp.getInstallmentSum());
-        seleniumDriver.waitForRequestsToFinish();
-    }
+  @And("^Save Installments Sum$")
+  public void installmentSum() {
+    seleniumDriver.waitForRequestsToFinish();
+    ContractPage cp = new ContractPage();
+    cp.getInstallmentSum();
+    parameterProvider.put("installmentsAmount", cp.getInstallmentSum());
+    seleniumDriver.waitForRequestsToFinish();
+  }
 
-    @And("^Save Invoice Sum$")
-    public void InvoiceSum() {
-        ContractPage cp = new ContractPage();
-        cp.getInvoiceSum();
-        parameterProvider.put("invoiceAmount", cp.getInvoiceSum());
-    }
+  @And("^Save Invoice Sum$")
+  public void invoiceSum() {
+    ContractPage cp = new ContractPage();
+    cp.getInvoiceSum();
+    parameterProvider.put("invoiceAmount", cp.getInvoiceSum());
+  }
 
 
-    @Then("^Check is Number of Installments at least \"([^\"]*)\" for given amount \"([^\"]*)\"$")
-    public void CheckInstallmentsNumber(int expectedNumberOfInstallments, String amount) {
-        ContractPage cp = new ContractPage();
-        int actualNumberOfInstallments = cp.installmentsNumber(amount);
+  @Then("^Check is Number of Installments at least \"([^\"]*)\" for given amount \"([^\"]*)\"$")
+  public void checkInstallmentsNumber(int expectedNumberOfInstallments, String amount) {
+    ContractPage cp = new ContractPage();
+    int actualNumberOfInstallments = cp.installmentsNumber(amount);
         assertTrue("Insufficient Number of installments with amount of 50€.",expectedNumberOfInstallments>=actualNumberOfInstallments);
     }
 
-    @Then("^Installments Amount of \"([^\"]*)\" is by \"([^\"]*)\" bigger than Invoice Amount of \"([^\"]*)\"$")
-    public void CheckIsInstallmentAmountBiggerThanInvoiceAmount(String installmentsAmount, int expectedDifference, String invoiceAmount) {
-        ContractPage cp = new ContractPage();
-        String installAmount  = parameterProvider.getValueOrParameterAsString(installmentsAmount);
-        String invAmount  = parameterProvider.getValueOrParameterAsString(invoiceAmount);
-        int actualDifference = cp.findDifferenceInAmounts(installAmount, invAmount);
-        assertEquals(expectedDifference, actualDifference);
-    }
+  @Then(
+      "^Installments Amount of \"([^\"]*)\" is by \"([^\"]*)\" bigger than Invoice Amount of \"([^\"]*)\"$")
+  public void checkIsInstallmentAmountBiggerThanInvoiceAmount(
+      String installmentsAmount, int expectedDifference, String invoiceAmount) {
+    ContractPage cp = new ContractPage();
+    String installAmount = parameterProvider.getValueOrParameterAsString(installmentsAmount);
+    String invAmount = parameterProvider.getValueOrParameterAsString(invoiceAmount);
+    int actualDifference = cp.findDifferenceInAmounts(installAmount, invAmount);
+    assertEquals(expectedDifference, actualDifference);
+  }
 
 
 }

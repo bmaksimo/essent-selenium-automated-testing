@@ -11,17 +11,18 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.JS_TR_CHECK_DOCUMENT_TYPE;
 import static org.hamcrest.Matchers.is;
 
 public class DocumentsMenu extends NavigationElements {
-    private class ClickDocumentsMenu implements Predicate<String> {
-        @Override
-        public boolean test(String documentType) {
-            Map<String, Object> options = new HashMap<>();
-            options.put("documentType", documentType);
-            return executeJavascriptTest("TrCheckDocumentType", options);
-        }
+  private class ClickDocumentsMenu implements Predicate<String> {
+    @Override
+    public boolean test(String documentType) {
+      Map<String, Object> options = new HashMap<>();
+      options.put("documentType", documentType);
+      return executeJavascriptTest(JS_TR_CHECK_DOCUMENT_TYPE, options);
     }
+  }
 
     @Before("@DWP, @CORE, @E2E, @REGRESSION")
     public void setupTest(Scenario scenario) {

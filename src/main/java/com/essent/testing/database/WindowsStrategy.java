@@ -53,6 +53,6 @@ public class WindowsStrategy implements OsStrategy {
 		process.command("cmd.exe", "/c", "psql.exe", "-w", "-h" + host, "-p" + port, "-U" + userId, "-d" + db, "-c", query);
 		return process;
 	}
-	
+
 
 }

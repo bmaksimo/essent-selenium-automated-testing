@@ -9,9 +9,13 @@ public class ContractPricesPage extends Component {
     public void clickOnBekijkPrijzenTariefkaatFromPlus(){
         Sleeper.sleepTightInSeconds(3);
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-plus-cell[@list-key='ContractlinesOnContract']/div/a")));
-        Sleeper.sleepTightInSeconds(2);
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[@label='Bekijk prijzen tariefkaart']/a")));
-    }
+    Sleeper.sleepTightInSeconds(2);
+        //TODO Remove locale-specific hard code.
+        // The project must support official Belgian languages.
+        // Locale-specific elements of web element locators must be parameterized.
+        // This is basic rule!
+      seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-row-action[@label='Bekijk prijzen tariefkaart']/a")));
+  }
 
     public String getTypeProduct(){
         seleniumDriver.waitForRequestsToFinish();
