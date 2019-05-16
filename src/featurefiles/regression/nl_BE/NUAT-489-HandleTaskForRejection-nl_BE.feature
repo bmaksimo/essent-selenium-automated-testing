@@ -13,6 +13,7 @@ Feature: NUAT-489: Handle Task For Rejection - nl_BE
         And Top menu item is "Rejections" waiting for 10 seconds
         And Top action is "Filters" waiting for 30 seconds
         And "Status" selection is "Open" waiting for 30 seconds
+        And "Label" selection is "Move In" waiting for 60 seconds
         And Click on link in View List at "1st" row and "Klant & EAN-code" column waiting for 60 seconds
         When Dashboard menu is "Details" waiting for 60 seconds
         And Get Contract Number
@@ -28,5 +29,5 @@ Feature: NUAT-489: Handle Task For Rejection - nl_BE
         And "Klantnummer" input is "parameter:contractNumber"
         And Click on link in View List at "1st" row and "Klantnummer & Naam" column waiting for 60 seconds
         And Dashboard menu is "Service" waiting for 100 seconds
-        Then Table "Taken" contains value "Marktberichten - Rejection" at column "Naam & Type & Subtype" waiting for 20 seconds
+        Then Table "Taken" contains value "market_messaging - rejection" at column "Naam & Type & Subtype" waiting for 20 seconds
         And Table "Taken" contains value "Afgehandeld" at column "Status" waiting for 20 seconds
