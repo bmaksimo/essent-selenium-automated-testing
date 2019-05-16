@@ -37,7 +37,7 @@ public class FormElements extends DwpScenario {
     private class CheckFormHeader implements Predicate<String> {
         @Override
         public boolean test(String header) {
-            int sec = 7;
+            int sec = 37;
             Map<String, Object> options = new HashMap<>();
             options.put("schedule_seconds", sec);
             options.put("header", header);

@@ -51,7 +51,7 @@ Feature: NSTA-326: Creating a B2C Quote TC1 with "Move In" without using Market 
         #Step 5. Fill in billing information
         When "Betalingswijze" selection is "Overschrijving"
         And  Billing details are confirmed
-#        Then  Form header is "Quote overview"
+        Then  Form header is "Quote overview"
 
         #Step 6. Overview and signature details
         When Option "Heeft de klant al getekend?" is On
