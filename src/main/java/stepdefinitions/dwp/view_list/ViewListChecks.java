@@ -371,7 +371,7 @@ public class ViewListChecks extends NavigationElements {
         waiter.withMessage(String.format("Status did not switch to \"%s\" within \"%s\" seconds", status, seconds));
         waiter.until((ViewListTestObject callback) -> {
             seleniumDriver.waitAndClick(seleniumDriver.findElement(By.linkText(linkText)));
-            return ! callback.fetchListRowsIndices(expectedValue, columnName).isEmpty();
+            return CollectionUtils.isNotEmpty(callback.fetchListRowsIndices(expectedValue, columnName));
         });
         waiter = waiter(new ViewListTestObject(), seconds / 2, 5);
         waiter.until((ViewListTestObject callback) -> {
@@ -558,7 +558,7 @@ public class ViewListChecks extends NavigationElements {
     public void checkSelectionData(String value, String columnName) throws Throwable {
         ViewListTestObject viewListModel = new ViewListTestObject();
         FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), 10, 2).withMessage("Selected table is empty");
-        waiter.until((ViewListTestObject callback) -> !callback.fetchDataSelection(columnName).isEmpty());
+        waiter.until((ViewListTestObject callback) -> CollectionUtils.isNotEmpty(callback.fetchDataSelection(columnName)));
         List<String> cellSelection = viewListModel.fetchDataSelection(columnName);
         String message = String.format("Value \"%s\" wasn't found in any row of \"%s\" column", columnName);
         assertThat(message, cellSelection.get(0).contains(value), is(true));
