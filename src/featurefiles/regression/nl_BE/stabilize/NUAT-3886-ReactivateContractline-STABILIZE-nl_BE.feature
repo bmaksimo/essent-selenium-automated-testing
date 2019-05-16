@@ -9,7 +9,7 @@ Feature: NUAT-3886 Sent out non-residential End of contract (EOC)
     Background:
         Given  I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
 
-    @NUAT-3886
+    @NUAT-3886-STABILIZE
     Scenario: Reactivate contract line
         When Left menu is "sales-marketing"
         And Top menu item is "Klanten"
