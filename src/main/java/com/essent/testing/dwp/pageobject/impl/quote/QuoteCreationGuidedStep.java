@@ -29,9 +29,7 @@ public abstract class QuoteCreationGuidedStep extends Component implements Guide
     seleniumDriver.waitForRequestsToFinish();
     logger().debug("Guided step to be confirmed");
 
-    Optional<WebElement> nextButtonOptional =
-        Optional.of(findElementWhenClickable(By.cssSelector(NEXT_BUTTON.getQuery())));
-//    seleniumDriver.takeScreenshot("guidance-confirm-");
+    Optional<WebElement> nextButtonOptional = Optional.of(findElementWhenClickable(By.cssSelector(NEXT_BUTTON.getQuery())));
     if (nextButtonOptional.isPresent()) {
       WebElement nextButton = nextButtonOptional.get();
       logger().debug("Found  element: " + nextButton.getTagName());
@@ -39,10 +37,10 @@ public abstract class QuoteCreationGuidedStep extends Component implements Guide
       seleniumDriver.waitForRequestsToFinish();
       nextButton.click();
     } else {
-            if(logger().isDebugEnabled()) {
-                seleniumDriver.takeScreenshot("guidance-confirm-failure");
-            }
-            throw new CucumberException("Element not found by selector " + NEXT_BUTTON.getQuery());
+        if(logger().isDebugEnabled()) {
+            seleniumDriver.takeScreenshot("guidance-confirm-failure");
+        }
+        throw new CucumberException("Element not found by selector " + NEXT_BUTTON.getQuery());
     }
     seleniumDriver.waitForRequestsToFinish();
   }
