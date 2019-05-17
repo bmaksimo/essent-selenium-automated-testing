@@ -48,9 +48,6 @@ Feature: NSTA-329 Deduplication activated customer
         And Quote is signed in "Kontich"
         When Quote is confirmed
 
-        When Dashboard menu is "Marktberichten"
-        Then View List is empty
-
         When Dashboard menu is "Contracten"
         Then View list header is "Actieve en toekomstige connecties"
         And  "1st" List element with value at column "EAN-code" is checked
@@ -68,6 +65,7 @@ Feature: NSTA-329 Deduplication activated customer
         Then Form header is "Personal details"
 
         Given Customer is duplicated
+#        And "Geboortedatum" date is "30 years before now"
         And Customer address is
             | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
             | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
@@ -85,12 +83,27 @@ Feature: NSTA-329 Deduplication activated customer
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
+#        When Field "Street" input is "Mechelsesteenweg"
+        And Field "Housenumber" input is "2"
+#        And Field "Postalcode" input is "2550"
+#        And Field "City" input is "Kontich"
+        And  Deduplication dialogue "Soortgelijke klanten" is shown
+        And  Deduplication dialogue link "Create quote for account" is clicked
+#        And Dismiss a system pop up
+
+
+        When "Sales kanaal" selection is "Inbound"
+        And Quote details are confirmed
+
+        When "Pakket" selection is "Vast"
+        And Checkbox "Gas Fix B2C (TC1)" is Unchecked
+        And Package and Fuel Type is confirmed
+
+
         When Field "Street" input is "Mechelsesteenweg"
         And Field "Housenumber" input is "2"
         And Field "Postalcode" input is "2550"
         And Field "City" input is "Kontich"
-        And  Deduplication dialogue "Soortgelijke klanten" is shown
-        And  Deduplication dialogue link "Create quote for account" is clicked
 
         And EAN code is generated
         And "EAN-code" input is "parameter:EAN-code-generated"

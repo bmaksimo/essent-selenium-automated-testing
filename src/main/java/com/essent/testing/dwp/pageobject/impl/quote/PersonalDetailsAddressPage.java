@@ -72,6 +72,7 @@ public class PersonalDetailsAddressPage extends QuoteCreationGuidedStep {
             initializeAddress.step(createStep(TYPING).element(DELIVERY_ADDR_BUS.name()).value(bus), INPUT.getSleepInMillis());
         }
         initializeAddress.step(createStep(TYPING).element(DELIVERY_ADDR_ZIPCODE.name()).value(postcode), INPUT.getSleepInMillis()).
+//            step(createStep(CLICK).element(KLIK.name()).requireDisplayed(false), INPUT.getSleepInMillis()).
             step(createStep(TYPING).element(DELIVERY_ADDR_CITY.name()).value(city), INPUT.getSleepInMillis());
         if (StringUtils.isNotEmpty(country)) {
             initializeAddress.step(createStep(Action.SELECT).element(DELIVERY_ADDR_COUNTRY.name()).value(country));
