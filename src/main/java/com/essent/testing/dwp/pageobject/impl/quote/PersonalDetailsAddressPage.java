@@ -3,7 +3,7 @@ package com.essent.testing.dwp.pageobject.impl.quote;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
-import com.essent.testing.dwp.helper.AddressUtil;
+import com.essent.testing.datagenerator.address.StreetGenerator;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -41,7 +41,7 @@ public class PersonalDetailsAddressPage extends QuoteCreationGuidedStep {
     public boolean fillInCustomerAddress() {
 
         String street = address.getStreet();
-        if(street.equals("Random")) { street = AddressUtil.getRandomStreet(); }
+        if(street.equals("Random")) { street = StreetGenerator.getRandomStreetInKontich(); }
         String houseNr = Integer.toString(address.getHouseNr());
         String houseNrAdd = address.getHouseNrAdd();
         String bus = address.getBus();

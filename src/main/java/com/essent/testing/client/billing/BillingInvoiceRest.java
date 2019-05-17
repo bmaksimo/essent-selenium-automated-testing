@@ -93,14 +93,14 @@ public class BillingInvoiceRest extends BillingRootClient {
     public BillingInvoiceExternalReferences getInvoiceExternalReference(String invoiceNumber) {
         // We cannot use callWIthParameters as this is not a key-value pair.
         String url = getInvoiceExternalReferenceUrl+"/"+invoiceNumber;
-        return call(url, BillingInvoiceExternalReferences.class );   
+        return call(url, BillingInvoiceExternalReferences.class );
 	}
-    
+
     public RSGetNonCommodityInvoiceResponse getNonCommodityInvoices(RSGetNonCommodityInvoiceRequest request) {
         return call(getNonCommodityInvoices, request, RSGetNonCommodityInvoiceResponse.class);
     }
-    
-   
+
+
     public InvoiceOfTypeExistsResponse invoiceOfTypeExists(InvoiceOfTypeExistsRequest request) {
         return call(invoiceOfTypeExists, request, InvoiceOfTypeExistsResponse.class);
     }

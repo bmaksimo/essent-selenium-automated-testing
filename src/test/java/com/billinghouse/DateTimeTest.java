@@ -8,13 +8,12 @@ import static com.billinghouse.test_automation.util.gherkin.DateTimeFormatUtil.p
 
 public class DateTimeTest {
 
-    @Test
-    public void testInterval() throws Exception {
-        DateTime timerStart = DateTime.now();
-        DateTime endOfMeasurement = DateTime.now().plusSeconds(155);
-        Period period = new Period(timerStart, endOfMeasurement);
+  @Test
+  public void testInterval() throws Exception {
+    DateTime timerStart = DateTime.now();
+    DateTime endOfMeasurement = DateTime.now().plusSeconds(155);
+    Period period = new Period(timerStart, endOfMeasurement);
 
-        System.out.println(String.format(" - Measured duration %s", printPeriod(period)));
-    }
-
+    System.out.println(String.format(" - Measured duration %s", printPeriod(period)));
+  }
 }

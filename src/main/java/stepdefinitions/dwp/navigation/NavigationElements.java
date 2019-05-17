@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 import static org.hamcrest.Matchers.is;
 
 
@@ -32,93 +33,85 @@ public abstract class NavigationElements extends DwpScenario {
         }
     }
 
-    private class ClickPlusAction implements Predicate<String> {
-        @Override
-        public boolean test(String path) {
-            Map<String, String> options = new HashMap<>();
-            options.put("path", path);
-            boolean success = executeJavascriptTest("TrPlusMenuSelectAction", options);
-            return success;
-        }
+
+
+  private class ClickCockpitItem implements Predicate<String> {
+    @Override
+    public boolean test(String item) {
+      Map<String, String> options = new HashMap<>();
+      options.put("item", item);
+      boolean success = executeJavascriptTest(JS_TR_GET_COCKPIT_ITEM, options);
+      return success;
+    }
+  }
+
+  private class ClickListPlusAction implements Predicate<String> {
+    @Override
+    public boolean test(String item) {
+      Map<String, String> options = new HashMap<>();
+      options.put("item", item);
+      boolean success = executeJavascriptTest(JS_TR_LIST_PLUS_MENU_ACTION, options);
+      return success;
+    }
+  }
+
+  private class ClickTopArrowButton implements Predicate<String> {
+    @Override
+    public boolean test(String arrow) {
+      Map<String, String> options = new HashMap<>();
+      options.put("arrow", arrow);
+      boolean success = executeJavascriptTest(JS_TR_ARROW_ACTION, options);
+      return success;
     }
 
-    private class ClickCockpitItem implements Predicate<String> {
-        @Override
-        public boolean test(String item) {
-            Map<String, String> options = new HashMap<>();
-            options.put("item", item);
-            boolean success = executeJavascriptTest("TrGetCockpitItem", options);
-            return success;
-        }
+    public boolean testNow(String arrow) {
+      Map<String, String> options = new HashMap<>();
+      options.put("arrow", arrow);
+      boolean success = executeJavascriptTestImmediately(JS_TR_ARROW_ACTION, options, true);
+      return success;
     }
+  }
 
-    private class ClickListPlusAction implements Predicate<String> {
-        @Override
-        public boolean test(String item) {
-            Map<String, String> options = new HashMap<>();
-            options.put("item", item);
-            boolean success = executeJavascriptTest("TrListPlusMenuAction", options);
-            return success;
-        }
+  public class ClickConfirm implements Predicate<String> {
+    @Override
+    public boolean test(String name) {
+      boolean success = executeJavascriptTest(JS_TR_SELECT_BUTTON, "");
+      return success;
     }
-
-    private class ClickTopArrowButton implements Predicate<String> {
-        @Override
-        public boolean test(String arrow) {
-            Map<String, String> options = new HashMap<>();
-            options.put("arrow", arrow);
-            boolean success = executeJavascriptTest("TrArrowAction", options);
-            return success;
-        }
-
-        public boolean testNow(String arrow) {
-            Map<String, String> options = new HashMap<>();
-            options.put("arrow", arrow);
-            boolean success = executeJavascriptTestImmediately("TrArrowAction", options, true);
-            return success;
-        }
+    public boolean testNow(String name) {
+      boolean success = executeJavascriptTestImmediately(JS_TR_SELECT_BUTTON, "", true);
+      return success;
     }
+  }
 
-    public class ClickConfirm implements Predicate<String> {
-        @Override
-        public boolean test(String name) {
-            boolean success = executeJavascriptTest("TrSelectButton", "");
-            return success;
-        }
-        public boolean testNow(String name) {
-            boolean success = executeJavascriptTestImmediately("TrSelectButton", "", true);
-            return success;
-        }
+  private class ClickDashboardMenu implements Predicate<String> {
+    @Override
+    public boolean test(String menu) {
+      Map<String, Object> options = new HashMap<>();
+      options.put("menu", menu);
+      return executeJavascriptTest(JS_TR_CLICK_DASHBOARD_MENU_BUTTON, options);
     }
-
-    private class ClickDashboardMenu implements Predicate<String> {
-        @Override
-        public boolean test(String menu) {
-            Map<String, Object> options = new HashMap<>();
-            options.put("menu", menu);
-             return executeJavascriptTest("TrClickDashboardMenuButton", options);
-        }
-        public boolean testNow(String menu) {
-            Map<String, Object> options = new HashMap<>();
-            options.put("menu", menu);
-             return executeJavascriptTestImmediately("TrClickDashboardMenuButton", options, true);
-        }
+    public boolean testNow(String menu) {
+      Map<String, Object> options = new HashMap<>();
+      options.put("menu", menu);
+      return executeJavascriptTestImmediately(JS_TR_CLICK_DASHBOARD_MENU_BUTTON, options, true);
     }
+  }
 
 
-    public class ValidateCustomer implements Predicate<Map> {
-        @Override
-        public boolean test(Map name) {
-            return executeJavascriptTest("TrFindCustomer", name);
-        }
+  public class ValidateCustomer implements Predicate<Map> {
+    @Override
+    public boolean test(Map name) {
+      return executeJavascriptTest(JS_TR_FIND_CUSTOMER, name);
     }
+  }
 
-    public class SearchCustomer implements Predicate<String> {
-        @Override
-        public boolean test(String name) {
-            return executeJavascriptTest("TrSearchCustomer", name);
-        }
+  public class SearchCustomer implements Predicate<String> {
+    @Override
+    public boolean test(String name) {
+      return executeJavascriptTest(JS_TR_SEARCH_CUSTOMER, name);
     }
+  }
 
     protected void clickTopAction(String name) {
         boolean success = new ClickTopAction().test(name);

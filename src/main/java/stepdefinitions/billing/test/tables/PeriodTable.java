@@ -5,7 +5,7 @@ import org.joda.time.DateTime;
 import java.util.Date;
 
 /*
- * |startdate|enddate| 
+ * |startdate|enddate|
  */
 public class PeriodTable {
 

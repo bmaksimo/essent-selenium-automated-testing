@@ -1,7 +1,7 @@
 @REGRESSION
 @DWP
 @B2C
-@UAT08ONLY
+@ALL
 Feature: NSTA-344: Payment Plan
 
     Background:
@@ -50,14 +50,14 @@ Feature: NSTA-344: Payment Plan
         Then View list header is "Offertes"
         Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
 
-        When Dashboard menu is "Marktberichten"
-        Then View List is empty
-
         When Dashboard menu is "Contracten"
         And Get client number
         Then View list header is "Actieve en toekomstige connecties"
         And  "1st" List element with value at column "EAN-code" is checked
         And  "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
+        When Dashboard menu is "Details"
+        Then View list header is "Billing customer"
+        And Get billing number
 
         #run invoice
         Given I renew login to DWP as "billing.testautomation@essent.be"
@@ -66,13 +66,12 @@ Feature: NSTA-344: Payment Plan
         And Top action is "Filters"
         And "Type klant" selection is "Klant"
         And "Klantnummer" input is "parameter:accountNumber"
-        Then "1st" List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
         When Plus menu is "Billing -> Start facturatierun"
         And Modal dialog is "Start invoicerun"
         And "Factuurdatum" date is "now"
         And "Procesdatum" date is "now"
         And "Naam job" selection is "recurrent"
-        And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
+        And "ID Billing customer" input is "parameter:billingNumber"
         Then Invoice run is scheduled
 
         Given I renew login to DWP as "businessdesk.testautomation.b2b@essent.be"
@@ -81,7 +80,7 @@ Feature: NSTA-344: Payment Plan
         And Top action is "Filters"
         And "Type klant" selection is "Klant"
         And "Klantnummer" input is "parameter:accountNumber"
-        Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
+        Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
         And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
@@ -111,7 +110,7 @@ Feature: NSTA-344: Payment Plan
         And Top action is "Filters"
         And "Type klant" selection is "Klant"
         And "Klantnummer" input is "parameter:accountNumber"
-        Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
+        Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
         Then View list header is "Afbetalingsplannen"

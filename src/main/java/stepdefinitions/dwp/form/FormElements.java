@@ -1,6 +1,7 @@
 package stepdefinitions.dwp.form;
 
 import com.essent.testing.dwp.pageobject.elements.NonEditable;
+import com.essent.testing.dwp.pageobject.impl.elements.ComboBoxImpl;
 import com.essent.testing.dwp.pageobject.impl.elements.NonEditableImpl;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
@@ -14,13 +15,16 @@ import org.openqa.selenium.support.ui.FluentWait;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Predicate;
 
+import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.JS_TR_SUBMIT_FORM;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
 import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
 import static org.awaitility.Duration.ONE_SECOND;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 
 public class FormElements extends DwpScenario {
@@ -56,7 +60,6 @@ public class FormElements extends DwpScenario {
         FluentWait<NonEditable> waiter = waiter(field, 20, 5);
         waiter.until((NonEditable p) -> {
             String actualValue = p.getValue(label);
-            seleniumDriver.getDriver().getCurrentUrl();
             String assertionMessage = String.format("Actual value of \"%s\" was \"%s\" differs from expected \"%s\"", label, actualValue, expectedValue);
             waiter.withMessage(assertionMessage);
             return StringUtils.equals(expectedValue, actualValue);
@@ -64,28 +67,52 @@ public class FormElements extends DwpScenario {
     }
 
     @And("^Numeric value at \"([^\"]*)\" in the card \"([^\"]*)\" is \"([^\"]*)\"$")
-    public void checkValueInCard(String label, String cardName, String expectedExpression) {
+    public void checkNumericValueInCard(String label, String cardName, String expectedExpression) {
         NonEditable card = new NonEditableImpl();
         boolean result = card.checkAmountUsingExpression(cardName, label, expectedExpression);
         assertThat("The expected value differs from the real value", result, is(true));
     }
 
-    /**
-     * Confirms the form submission.
-     * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
-     */
-    @And("^Form is submitted$")
-    public void formIsSubmitted() throws Throwable {
-        seleniumDriver.waitForRequestsToFinish();
-        Map<String, String> options = new HashMap<>();
-        executeJavascriptTest("TrSubmitForm", options);
-        seleniumDriver.waitForRequestsToFinish();
+    @And("^Value at \"([^\"]*)\" in the card \"([^\"]*)\" is \"([^\"]*)\"$")
+    public void checkValueInCard(String label, String cardName, String expectedParameter) {
+        String expectedValue = parameterProvider.getValueOrParameterAsString(expectedParameter);
+        NonEditable card = new NonEditableImpl();
+        FluentWait<NonEditable> waiter = waiter(card, 20, 1);
+        waiter.until(field -> StringUtils.equalsIgnoreCase(field.getValue(cardName, label), expectedValue));
+
     }
 
-    @Override
-    @After("@DWP, @CORE, @E2E, @REGRESSION")
-    public void tearDown() {
-        super.tearDown();
-    }
+  /**
+   * Confirms the form submission.
+   * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
+   */
+  @And("^Form is submitted$")
+  public void formIsSubmitted() throws Throwable {
+    seleniumDriver.waitForRequestsToFinish();
+    Map<String, String> options = new HashMap<>();
+    executeJavascriptTest(JS_TR_SUBMIT_FORM, options);
+    seleniumDriver.waitForRequestsToFinish();
+  }
+
+  @And("^Option value of \"([^\"]*)\" selection in the card \"([^\"]*)\" is matching \"([^\"]*)\"$")
+  public void checkSelectionOption(String label, String cardName, String expected)
+      throws Throwable {
+    String expectedValue = parameterProvider.getValueOrParameterAsString(expected);
+    String message =
+        String.format("Dropdown box labelled \"%s\" in the card \"%s\"", label, cardName);
+    Optional<String> option = new ComboBoxImpl().getOption(cardName, label);
+    assertThat(message + " was empty", option.isPresent(), is(true));
+    String actual = option.get();
+    assertThat(
+        message + String.format(" expected \"%s\" but actually was \"%s\"", expectedValue, actual),
+        actual,
+        containsString(expectedValue));
+  }
+
+  @Override
+  @After("@DWP, @CORE, @E2E, @REGRESSION")
+  public void tearDown() {
+    super.tearDown();
+  }
 
 }

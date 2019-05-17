@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.JS_TR_APPLY_MULTIPLE_FILTER_INPUT;
+import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.JS_TR_OPEN_MULTIPLE_INPUT_DIALOG;
 import static org.hamcrest.Matchers.is;
 
 public class MultipleInputElements extends DwpScenario {
@@ -20,19 +22,19 @@ public class MultipleInputElements extends DwpScenario {
         registerActiveScenario(scenario);
     }
 
-    private class MultipleInputDialog implements Predicate<Map> {
-        @Override
-        public boolean test(Map options) {
-            return executeJavascriptTest("TrOpenMultipleInputDialog", options);
-        }
+  private class MultipleInputDialog implements Predicate<Map> {
+    @Override
+    public boolean test(Map options) {
+      return executeJavascriptTest(JS_TR_OPEN_MULTIPLE_INPUT_DIALOG, options);
     }
+  }
 
-    private class ApplyMultipleInput implements Predicate<Map> {
-        @Override
-        public boolean test(Map options) {
-            return executeJavascriptTest("TrApplyMultipleFilterInput", options);
-        }
+  private class ApplyMultipleInput implements Predicate<Map> {
+    @Override
+    public boolean test(Map options) {
+      return executeJavascriptTest(JS_TR_APPLY_MULTIPLE_FILTER_INPUT, options);
     }
+  }
 
     @When("^Multiple product input selected is \"([^\"]*)\"$")
     public void setMultipleInput(String product) {

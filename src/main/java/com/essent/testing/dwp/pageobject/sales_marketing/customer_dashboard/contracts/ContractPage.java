@@ -16,8 +16,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
-import static org.apache.camel.component.file.GenericFileExist.Append;
-
 public class ContractPage extends Component {
 
     private static final String NUMBER_ELECTRICITY_CONTRACT = "//list-icon-text-cell/div";
@@ -40,6 +38,7 @@ public class ContractPage extends Component {
     private static final String INVOICE_SUM = "total-amount-field";
     private static final String INSTALLMENTS_SUM = "balance-field";
     private static final String INSTALLMENTS_NUMBER = "//list[@list-key='InstallmentsOnPaymentPlan']//h5";
+    private static final String BILLING_NUMBER = "//list[@list-key='BillingCustomerOnaccount']//td[1]//span[1]";
 
     private WebElement startData() {
         return seleniumDriver.findElementWhenVisible(By.id(START_DATA_ID));
@@ -66,6 +65,10 @@ public class ContractPage extends Component {
 
     public String getClientNumber() {
         return seleniumDriver.findElementWhenVisible(By.xpath("//blue-sidebar//h4")).getText();
+    }
+
+    public String getBillingNumber() {
+        return seleniumDriver.findElementWhenVisible(By.xpath(BILLING_NUMBER)).getText();
     }
 
     public void selectAccount() {
@@ -408,15 +411,15 @@ public class ContractPage extends Component {
         return sb.append(firstInvoice).append(' ').append(secondInvoice).append(' ').append(thirdInvoice).toString();
     }
 
-    public boolean checkIsInvoicesAmountsAsStringCorrect(String amountInvoicesCombination1, String amountInvoicesCombination2, String amountInvoicesCombination3, String amountInvoicesCombination4, String actualValuesOfInvoices)
+    public boolean checkIsInvoicesAmountsAsStringCorrect(String amountInvoicesCombination1, String amountInvoicesCombination2, String amountInvoicesCombination3, String amountInvoicesCombination4,  String amountInvoicesCombination5,  String amountInvoicesCombination6, String actualValuesOfInvoices)
     {
         boolean matchingValuesOfInvoices = false;
         if (amountInvoicesCombination1.equals(actualValuesOfInvoices) || amountInvoicesCombination2.equals(actualValuesOfInvoices)
-            || amountInvoicesCombination3.equals(actualValuesOfInvoices) || amountInvoicesCombination4.equals(actualValuesOfInvoices))
+            || amountInvoicesCombination3.equals(actualValuesOfInvoices) || amountInvoicesCombination4.equals(actualValuesOfInvoices)
+            || amountInvoicesCombination5.equals(actualValuesOfInvoices) || amountInvoicesCombination6.equals(actualValuesOfInvoices))
         {
             matchingValuesOfInvoices = true;
         }
-
         return matchingValuesOfInvoices;
     }
 
@@ -427,6 +430,7 @@ public class ContractPage extends Component {
 
 
     public boolean compareActualAndExpectedBalances(String balance1, String balance2, String balance3, String actualBalance) {
+        seleniumDriver.waitForRequestsToFinish();
         if (balance1.equals(actualBalance))
         {
             logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");

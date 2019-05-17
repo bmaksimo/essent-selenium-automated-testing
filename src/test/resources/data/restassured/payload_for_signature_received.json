@@ -1,4 +1,4 @@
-{  
+{
  "model":{
       "pricing_date_c":"2017-09-06 11:10:01",
       "dwp|create_task":false,
@@ -19,4 +19,4 @@
    "action":{
       "event":"CONFIRM"
    }
-} 
+}
