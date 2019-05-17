@@ -1,3 +1,4 @@
+@ALL
 @DWP
 @E2E
 @REGRESSION
