@@ -31,8 +31,8 @@ public abstract class QuoteCreationGuidedStep extends Component implements Guide
 
     Optional<WebElement> nextButtonOptional =
         Optional.of(findElementWhenClickable(By.cssSelector(NEXT_BUTTON.getQuery())));
-    seleniumDriver.takeScreenshot("guidance-confirm-");
-    if (nextButtonOptional.get().isEnabled()) {
+//    seleniumDriver.takeScreenshot("guidance-confirm-");
+    if (nextButtonOptional.isPresent()) {
       WebElement nextButton = nextButtonOptional.get();
       logger().debug("Found  element: " + nextButton.getTagName());
       logger().debug("CLICK ");
