@@ -62,7 +62,7 @@ Feature: NSTA-330. Check the generation of prepaid advance invoice.
         And "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
 
         When Click on link in View List at "1st" row and "Nummer & Getekend contractnummer" column
-        And "Kortingen op de offerte" list is empty
+        And "Kortingen op de offerte" list check is empty
         And Table "Offertelijnen" contains cell value "Getekend TK1-Aardgas Vooraf (TC_VOORAF_B2C)" at column "Status & Product" on "1st" row
         And Table "Offertelijnen" contains cell value "Getekend TK1-Elektriciteit Vooraf (TC_VOORAF_B2C)" at column "Status & Product" on "2nd" row
 

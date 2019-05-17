@@ -625,7 +625,7 @@ public class ViewListChecks extends NavigationElements {
         logger().info(String.format("- STEP: \"%s\" list is not empty - PASSED.", tableTitle));
     }
 
-    @And("^\"([^\"]*)\" list is empty$")
+    @And("^\"([^\"]*)\" list check is empty$")
     public void isViewEmpty(String tableTitle) throws Throwable {
         Map<String, String> options = new HashMap<>();
         options.put("table", tableTitle);
