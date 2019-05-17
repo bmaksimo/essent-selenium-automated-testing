@@ -743,15 +743,7 @@ public class ViewListChecks extends NavigationElements {
         assertThat(String.format(tableTitle + " doesn't exist"), success, is(true));
         logger().info(String.format("- STEP: \"%s\" list is not empty - PASSED.", tableTitle));
     }
-
-//    @And("^\"([^\"]*)\" list is empty$")
-//    public void isViewEmpty(String tableTitle) throws Throwable {
-//        Map<String, String> options = new HashMap<>();
-//        options.put("table", tableTitle);
-//        boolean hasData = new CheckEmptyTableAction().test(options);
-//        assertThat(String.format(tableTitle + " is not empty"), hasData, is(false));
-//        logger().info(String.format("- STEP \"%s\" list is empty - PASSED.", tableTitle));
-//    }
+    
 
     @And("^Table \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\" within (\\d+) seconds? after clicking on \"([^\"]*)\"$")
     public void viewListContainsValueAtColumn(String table, String value, String column, int seconds, String buttonName) throws Throwable {
