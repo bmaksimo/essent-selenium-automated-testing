@@ -26,6 +26,7 @@ Feature: NUAT-3884: Copy contract
         And "Module" selection is "START ACCESS"
         And "Label" selection is "Supplier Switch after Mystery Switch"
         And Save changes
+        And Sleep for 30 seconds
         Then View list header is "Contractlijnen"
         And Table "Contractlijnen" contains value "parameter:contractEanCode" at column "EAN-code & Metertype & Configuratie"
 
