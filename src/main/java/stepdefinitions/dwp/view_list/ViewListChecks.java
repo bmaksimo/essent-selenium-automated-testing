@@ -626,7 +626,6 @@ public class ViewListChecks extends NavigationElements {
         logger().info(String.format("- STEP: \"%s\" list is not empty - PASSED.", tableTitle));
     }
 
-
     @And("^Table \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\" within (\\d+) seconds? after clicking on \"([^\"]*)\"$")
     public void viewListContainsValueAtColumn(String table, String value, String column, int seconds, String buttonName) throws Throwable {
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
