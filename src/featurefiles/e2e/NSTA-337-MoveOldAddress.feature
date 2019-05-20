@@ -2,7 +2,6 @@
 @DWP
 @B2C
 @ALL
-
 Feature: NSTA - 337 Move old address
 
     Background:
@@ -131,9 +130,6 @@ Feature: NSTA - 337 Move old address
 
         When Dashboard menu is "Marktberichten"
         Then Marktbericht has label "CUSTOMER SWITCH"
-        And Check marktbericht
-        |               ean            |     modul    |  status  | end date |
-        | parameter:EAN-code-generated | START ACCESS | Gesloten |    now   |
 
         When Dashboard menu is "Contracten"
         Then Check contract
