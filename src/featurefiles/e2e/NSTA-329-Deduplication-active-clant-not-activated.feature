@@ -1,6 +1,7 @@
 @REGRESSION
 @DWP
 @B2C
+@UNSTABLE
 Feature: NSTA-329 Deduplication activated customer
 
     Background:
