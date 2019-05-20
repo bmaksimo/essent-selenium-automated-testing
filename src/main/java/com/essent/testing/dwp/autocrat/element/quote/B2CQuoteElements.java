@@ -18,7 +18,6 @@ public enum B2CQuoteElements {
     DELIVERY_ADDR_HOUSE_ADD("XPATH", "(//input[@id='address-addition-field'])[1]"),
     DELIVERY_ADDR_BUS("XPATH", "(//input[@id='address-city-field'])[1]"),
     DELIVERY_ADDR_ZIPCODE("XPATH", "(//input[@id='address-postalcode-field'])[1]"),
-//    KLIK("XPATH", "//*[@id='accounts-aos-quotes-aos-products-quotes-addresses-aos-products-quotes-field-container']/fieldset/autocomplete/ul/li/a/b"),
     DELIVERY_ADDR_CITY("XPATH", "(//input[@id='address-city-field'])[1]"),
     DELIVERY_ADDR_COUNTRY("XPATH", "(//select[@id='address_country'])[1]"),
     ELECTRICITY_EAN_CODE("SELECTOR", "#ean-c-accounts-aos-quotes-aos-products-quotes-c-0-f-94-c-2-f-72-e-0-51-b-9-ce-93-58930799-ecf-1-field");
