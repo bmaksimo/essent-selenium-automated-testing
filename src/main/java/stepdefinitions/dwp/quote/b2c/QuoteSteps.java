@@ -77,7 +77,6 @@ public class QuoteSteps extends DwpScenario {
     public void deduplicationDialogueLinkIsClicked(String linkText) throws Throwable {
         SimilarAccountDialog dialog = new SimilarAccountDialogImpl();
         dialog.clickOnLink(linkText);
-
     }
 
     private class VerifyTariffSheetPriceAlert implements FlowAwarePredicate<QuoteSteps> {
