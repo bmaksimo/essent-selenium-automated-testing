@@ -22,15 +22,6 @@ public class NewLeadPage extends BaseObjectPage implements Form {
         ToggleImpl tg = new ToggleImpl();
         setCompanyName(table.get(1).get(0));
         setContactPerson(table.get(1).get(1), table.get(1).get(2));
-        setGender(table.get(1).get(6));
-        setTelephone(table.get(1).get(3));
-        setMobile(table.get(1).get(4));
-        setEmail(table.get(1).get(5));
-        seleniumDriver.waitForRequestsToFinish();
-        tg.switchOn(box);
-        seleniumDriver.waitForRequestsToFinish();
-        saveLead();
-        seleniumDriver.waitForRequestsToFinish();
     }
 
     private void setGender(String gender) {

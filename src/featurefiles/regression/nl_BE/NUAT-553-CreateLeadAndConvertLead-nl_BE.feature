@@ -14,7 +14,17 @@ Feature: NUAT-553: Create Lead And Convert Lead - nl_BE
 
         When Add lead
         And New lead is
-            | companyName    | firstName | secondName | telephone       | mobile           | email        | gender |
-            | ESSENT BELGIUM | Levi      | Nine       | +32 78 15 79 79 | +32 498 12 34 56 | test@test.be | Onbekend |
+            | companyName    | firstName | secondName |
+            | ESSENT BELGIUM | Levi      | Nine       |
+        And "Geslacht" selection is "Onbekend"
+        And "Telefoon" input is "+32 78 15 79 79"
+        And "Mobiel" input is "+32 498 12 34 56"
+        And "E-mailadres" input is "test@test.be"
+        Then Save changes
+
         And Plus action and "Converteer lead" of first customer from list
         Then Changes are confirmed
+
+        When Dashboard menu is "Details"
+        And Klanttype is "Prospect"
+        Then There is one billing customer
