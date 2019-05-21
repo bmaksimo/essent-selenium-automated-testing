@@ -31,7 +31,7 @@ public class InputElements extends DwpScenario {
      * @param scenario Gherkin scenario descriptor
      * @throws Throwable
      */
-    @Before("@DWP, @CORE, @E2E, @REGRESSION")
+    @Before("@DWP, @CORE, @E2E, @REGRESSION, @API")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }

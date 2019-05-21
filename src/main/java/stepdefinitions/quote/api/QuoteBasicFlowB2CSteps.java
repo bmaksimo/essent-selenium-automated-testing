@@ -13,7 +13,6 @@ import io.restassured.http.Cookies;
 import stepdefinitions.quote.api.helper.AsyncExecutor;
 import stepdefinitions.quote.api.model.ContractDetails;
 import stepdefinitions.quote.api.model.QuoteDetails;
-
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -62,6 +61,8 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     @When("^New tc(\\d+)_quote is created$")
     public void new_tc__quote_is_created(int arg1) throws Throwable {
 	String retreivedQuoteNumber = new QuoteDetailsAPI().getQuoteNumber(cookie, quoteDetails.getRecordId());
+	String retrievedAccountNumber = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow).getAccountNumber();
+	parameterProvider.put("accountNumber", retrievedAccountNumber);
 	// assertEquals(quoteDetails.getQuoteNumber(),retreivedQuoteNumber);
 	assertThat(retreivedQuoteNumber, is(equalTo(quoteDetails.getQuoteNumber())));
     }
@@ -139,4 +140,6 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
         await().pollInterval(5, TimeUnit.SECONDS).atMost(600, TimeUnit.SECONDS)
             .until(AsyncExecutor.isOrderCreated(cookie, quoteDetails, contractDetails));
     }
+
+
 }
