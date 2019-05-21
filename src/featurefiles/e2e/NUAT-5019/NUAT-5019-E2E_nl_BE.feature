@@ -1,13 +1,15 @@
+@ALL
 @DWP
 @E2E
-Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one payment and 3 dunning levels, with SS and Market Mock"
+@REGRESSION
+@UAT08ONLY
+Feature: NUAT-5019: Complete E2E scenario "Active customer to drop, through one payment and 3 dunning levels, with SS and Market Mock"
 
     Background:
-        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
+        Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
     @NUAT-5019
     Scenario: Create active contract that after dunning the contract becomes inactive
         #1 - GUI contract creation
-        Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
@@ -28,12 +30,11 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         Then Form header is "Connection details"
 
         And EAN code is generated
-        And "Startdatum" date is "now"
+        And "Startdatum" date is "35 days before now"
         And "EAN-code" input is "parameter:EAN-code-generated"
         And  Option "test" is On
         And Connection details are confirmed
         Then Form header is "Billing details"
-
 
         When "Betalingswijze" selection is "Overschrijving"
         And Billing details are confirmed
@@ -101,12 +102,6 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         And Odoo file upload confirm button is "Import"
         And Odoo file import report contains success string "Number of statements processed : 1"
 
-        #And Modal button "View Bank Statement" is clicked
-        #And Wait for 30 seconds
-        #When Column "Reference" of the "1st" row is clicked
-        #And Bank Statement "Close" button is clicked
-
-
         Given I renew login to DWP as "billing.testautomation@essent.be"
         When Left menu is "contracting-switching"
         And Top menu item is "Klanten"
@@ -124,9 +119,7 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         Given Dashboard menu is "Contracten"
         And View list header is "Actieve en toekomstige connecties"
         And "1st" List element with value at column "EAN-code" is checked
-        Then Consumption at deliverypointid "parameter:EAN-code" is generated until "1 year from now"
-        #And Click on "parameter:EAN-code" link
-        #And Consumption is available at "1st" row in "Van - Aan" column
+        Then Consumption at deliverypointid "parameter:EAN-code" is generated from "35 days before now" until "12" months after
 
         # 6 - Run mediation
         When Top arrow button is "Up"
@@ -137,10 +130,10 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
 
         Given "Naam job" selection is "Voorschot"
         And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
-        And "Datum afrekeningsfactuur" date is "parameter:billrun-date"
+        And "Datum afrekeningsfactuur" date is "11 months from now"
         Then Form is submitted
 
-        # 7 - Create settlment invoice
+        # 7 - Create settlement invoice
         When Left menu is "billing"
         And Top menu item is "Klanten"
         And Plus menu is "Billing -> Start facturatierun"
@@ -149,7 +142,7 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         When "Naam job" selection is "Eenmalig"
         And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
         And "Factuurdatum" date is "now"
-        And "Procesdatum" date is "parameter:billrun-date"
+        And "Procesdatum" date is "11 months from now"
         Then Invoice run is scheduled
 
         Given Top action is "Filters"
@@ -206,24 +199,22 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
         Then "1st" list element has cell value "INITIATE STOP ACCESS" at column "Module & Label" polling 450 seconds
 
         # 11 - Cancel INITIATE STOP ACCESS market message and create a new INITIATE STOP ACCESS market message effective from NOW
-        When Click on link in "Marktberichten" View List at "1st" row and "Plus Action" column
-        And Row actions "Annuleer Marktbericht" is clicked
+        When Plus action of "1" element from "MarketTransactionsOnAccount" and click on "Annuleer Marktbericht"
         And Select Contractline dialog is confirmed
 
-        When Click on "Start nieuw marktbericht"
+        When Click on "START NIEUW MARKTBERICHT"
         And Click Select Contractline
         And Dialog search input is current "parameter:EAN-code"
         Then Select Contractline dialog is confirmed
         When "Module" selection is "INITIATE STOP ACCESS"
         And "Label" selection is "Non-Residential End-of-Contract"
-        And "Effective Date" date is "now"
+        And "Effective Date" date is "1 day before now"
         And Option "Testing?" is On
         And Select Contractline dialog is confirmed
         Then "1st" list element has cell value "INITIATE STOP ACCESS" at column "Module & Label" polling 450 seconds
-        Then Wait for 180 seconds
+        And Refresh "REFRESH MARKTBERICHTEN" till "Geaccepteerd" is visible in table
 
         When Dashboard menu is "Contracten"
         Then View list header is "Actieve en toekomstige connecties"
         And "Actieve en toekomstige connecties" list is empty
         And Table "Contracten" contains value "Inactief" at column "Type & status"
-        And Send email to SMEs

@@ -26,7 +26,7 @@ import static org.testng.AssertJUnit.assertEquals;
 public class Contract extends DwpScenario {
     private static String Klantnummer;
 
-    @Before("@REGRESSION")
+    @Before("@REGRESSION, @E2E")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -43,6 +43,13 @@ public class Contract extends DwpScenario {
         ContractPage cp = new ContractPage();
         Klantnummer=cp.getClientNumber();
         parameterProvider.put("accountNumber",Klantnummer);
+    }
+
+    @And("^Get billing number$")
+    public void getBillingNumber() {
+        ContractPage cp = new ContractPage();
+        String billingNumber=cp.getBillingNumber();
+        parameterProvider.put("billingNumber",billingNumber);
     }
 
     @And("^Search by client number$")

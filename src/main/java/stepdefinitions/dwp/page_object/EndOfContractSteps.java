@@ -11,6 +11,7 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.JS_TR_SELECT_CONTRACTLINE;
 import static org.hamcrest.Matchers.is;
 
 
@@ -46,19 +47,18 @@ public class EndOfContractSteps extends DwpScenario {
        endOfContractPage.searchInputFieldNow(inputValue);
     }
 
-    @And("^Click Select Contractline$")
-    public void clickSelectContractline() {
-        seleniumDriver.waitForRequestsToFinish();
-        EndOfContractPage endOfContractPage = new EndOfContractPage();
-        endOfContractPage.simpleExecuteJavaScript("TrSelectContractline");
-    }
+  @And("^Click Select Contractline$")
+  public void clickSelectContractline() {
+    seleniumDriver.waitForRequestsToFinish();
+    EndOfContractPage endOfContractPage = new EndOfContractPage();
+    endOfContractPage.simpleExecuteJavaScript(JS_TR_SELECT_CONTRACTLINE);
+  }
 
     @And("^EAN check box$")
     public void eanCheckBox() {
         EndOfContractPage endOfContractPage = new EndOfContractPage();
         boolean success = endOfContractPage.checkEanCheckBox();
-        assertThat(String.format("JavaScript file TrEanCheckBox is undefined."),
-            success, is(true));
+        assertThat(success, is(true));
     }
 
     @Override

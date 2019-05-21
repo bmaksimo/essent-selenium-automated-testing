@@ -12,6 +12,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.text.StrSubstitutor;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
@@ -32,6 +33,7 @@ import java.util.function.Predicate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 
 public class ConsumptionSteps extends DwpScenario {
 
@@ -48,7 +50,7 @@ public class ConsumptionSteps extends DwpScenario {
     @When("^Consumption at current deliverypointid with \"([^\"]*)\" hourly-tariff is generated from now until \"([^\"]*)\" months after$")
     public void generateConsumption(String hourlyTariff, String months) throws Exception {
         String deliveryPointId = parameterProvider.getValueOrParameterAsString("parameter:EAN-code");
-        String consumptionData = getConsumptionRequest(deliveryPointId, hourlyTariff, months);
+        String consumptionData = getConsumptionRequest(deliveryPointId, hourlyTariff, null, months);
 
         BasePayload msg = generatePayloadFromString(consumptionData);
 
@@ -60,7 +62,18 @@ public class ConsumptionSteps extends DwpScenario {
     @When("^Consumption at deliverypointid \"([^\"]*)\" with \"([^\"]*)\" hourly-tariff is generated from now until \"([^\"]*)\" months after$")
     public void generateConsumptionatDeliveryPoint(String deliveryPoint, String hourlyTariff, String months) throws Exception {
         String deliveryPointId = parameterProvider.getValueOrParameterAsString(deliveryPoint);
-        String consumptionData = getConsumptionRequest(deliveryPointId, hourlyTariff, months);
+        String consumptionData = getConsumptionRequest(deliveryPointId, hourlyTariff, null, months);
+        BasePayload msg = generatePayloadFromString(consumptionData);
+
+        BillingEnergyCommRest bERest = new BillingEnergyCommRest();
+        RestResponse resp = bERest.postEnergyCommMessage(msg);
+        Assert.isTrue(resp.getResult(), resp.getMsg());
+    }
+
+    @When("^Consumption at deliverypointid \"([^\"]*)\" with \"([^\"]*)\" hourly-tariff is generated from \"([^\"]*)\" until \"([^\"]*)\" months after$")
+    public void generateConsumptionatDeliveryPoint(String deliveryPoint, String hourlyTariff, String dateFrom, String months) throws Exception {
+        String deliveryPointId = parameterProvider.getValueOrParameterAsString(deliveryPoint);
+        String consumptionData = getConsumptionRequest(deliveryPointId, hourlyTariff, dateFrom, months);
         BasePayload msg = generatePayloadFromString(consumptionData);
 
         BillingEnergyCommRest bERest = new BillingEnergyCommRest();
@@ -73,7 +86,7 @@ public class ConsumptionSteps extends DwpScenario {
         String deliveryPointId = parameterProvider.getValueOrParameterAsString(deliveryPoint);
         parameterProvider.put("billrun-date", DateExpressionsUtil.toDwpDate(dateTo));
 
-        RestResponse resp = postConsumption(deliveryPointId, dateTo);
+        RestResponse resp = postConsumption(deliveryPointId, null, dateTo);
         Assert.isTrue(resp.getResult(), resp.getMsg());
     }
 
@@ -87,20 +100,33 @@ public class ConsumptionSteps extends DwpScenario {
         DateTime frenchFormatDate = formatter.parseDateTime(inputValue);
         dateTo = frenchFormatDate.toString("yyyy-MM-dd");
 
-        RestResponse resp = postConsumption(deliveryPointId, dateTo);
+        RestResponse resp = postConsumption(deliveryPointId, null, dateTo);
         Assert.isTrue(resp.getResult(), resp.getMsg());
     }
 
-    private RestResponse postConsumption(String deliveryPointId, String dateTo) throws Exception {
-        String consumptionData = getConsumptionRequest(deliveryPointId, dateTo);
+    @When("^Consumption at deliverypointid \"([^\"]*)\" is generated from \"([^\"]*)\" until \"([^\"]*)\" months after$")
+    public void generateConsumptionUntilRelativeDate(String deliveryPoint, String dateFrom, String months) throws Exception {
+        String deliveryPointId = parameterProvider.getValueOrParameterAsString(deliveryPoint);
+        String fromDate = toDwpDate(parameterProvider.getValueOrParameterAsString(dateFrom));
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy");
+        DateTime frenchFormatDateFrom = formatter.parseDateTime(fromDate);
+        fromDate = frenchFormatDateFrom.toString("yyyy-MM-dd");
+        String toDate = DateTime.parse(fromDate).plusMonths(Integer.parseInt(months)).toString("yyyy-MM-dd");
+
+        RestResponse resp = postConsumption(deliveryPointId, fromDate, toDate);
+        Assert.isTrue(resp.getResult(), resp.getMsg());
+    }
+
+    private RestResponse postConsumption(String deliveryPointId, String dateFrom, String dateTo) throws Exception {
+        String consumptionData = getConsumptionRequest(deliveryPointId, dateFrom, dateTo);
         BasePayload msg = generatePayloadFromString(consumptionData);
 
         return new BillingEnergyCommRest().postEnergyCommMessage(msg);
     }
 
-    private String getConsumptionRequest(String deliveryPoint, String dateTo) {
+    private String getConsumptionRequest(String deliveryPoint, String dateFrom, String dateTo) {
         UUID uuid = UUID.randomUUID();
-        String fromDate = DateTime.now().toString("yyyy-MM-dd");
+        String fromDate = StringUtils.isBlank(dateFrom) ? DateTime.now().toString("yyyy-MM-dd") : dateFrom;
 
         parameterProvider.put("fromDate", fromDate);
         parameterProvider.put("toDate", dateTo);
@@ -114,12 +140,12 @@ public class ConsumptionSteps extends DwpScenario {
         return getConsumptionRequestFromTemplate(consumptionData);
     }
 
-    private String getConsumptionRequest(String deliveryPoint, String hourlyTariff, String months) {
+    private String getConsumptionRequest(String deliveryPoint, String hourlyTariff, String fromDate, String months) {
         UUID uuid = UUID.randomUUID();
-        String fromDate = DateTime.now().toString("yyyy-MM-dd");
-        String toDate = DateTime.now().plusMonths(Integer.parseInt(months)).toString("yyyy-MM-dd");
+        String dateFrom = StringUtils.isBlank(fromDate) ? DateTime.now().toString("yyyy-MM-dd") : fromDate;
+        String toDate = DateTime.parse(dateFrom).plusMonths(Integer.parseInt(months)).toString("yyyy-MM-dd");
 
-        parameterProvider.put("fromDate", fromDate);
+        parameterProvider.put("fromDate", dateFrom);
         parameterProvider.put("toDate", toDate);
 
         Map<String, String> consumptionData = new HashMap<>();
@@ -131,8 +157,6 @@ public class ConsumptionSteps extends DwpScenario {
 
         return getConsumptionRequestFromTemplate(consumptionData);
     }
-
-
 
     private String getConsumptionRequestFromTemplate(Map<String, String> data) {
         String consumptionTemplatePath = ResourceUtil.toPath(PATH + CONSUMPTION_FILE);
@@ -149,6 +173,7 @@ public class ConsumptionSteps extends DwpScenario {
 
         return null;
     }
+
     @Then("^Consumption is available at \"([^\"]*)\" row in \"([^\"]*)\" column$")
     public void checkCreatedConsumption(String ordinal, String column) throws Throwable {
         String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
@@ -179,7 +204,7 @@ public class ConsumptionSteps extends DwpScenario {
     private class TableCellValueChecker implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
-            return executeJavascriptTest("TrCheckTableCellValue", options);
+            return executeJavascriptTest(JS_TR_CHECK_TABLE_CELL_VALUE, options);
         }
     }
 

@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
+import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 import static com.essent.testing.dwp.autocrat.element.quote.TariffElements.NO_PRICESHEET_ALERT;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.NEXT_STEP;
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -96,23 +97,23 @@ public class QuoteSteps extends DwpScenario {
         }
     }
 
-    private class RandomUserActions implements Predicate<CustomerDetails> {
-        @Override
-        public boolean test(CustomerDetails customer) {
-            Map<String, String> options = new HashMap<>();
-            Map reply = executeJavascriptMethod("TrGetRandomUser", options);
-            String status = ((String) reply.get("status"));
-            boolean success = StringUtils.equals("PASSED", status);
-            if (success) {
-                Map userData = (Map) reply.get("user");
-                RandomUser randomUser = randomUser(userData);
-                customer.setLastName(randomUser.getName().getLast());
-                customer.setFirstName(randomUser.getName().getFirst());
-                success = fillInCustomerDetails(randomUser);
-                parameterProvider.put("suitecrm-customer", randomUser);
-            }
-            return success;
-        }
+  private class RandomUserActions implements Predicate<CustomerDetails> {
+    @Override
+    public boolean test(CustomerDetails customer) {
+      Map<String, String> options = new HashMap<>();
+      Map reply = executeJavascriptMethod(JS_TR_GET_RANDOM_USER, options);
+      String status = ((String) reply.get("status"));
+      boolean success = StringUtils.equals("PASSED", status);
+      if (success) {
+        Map userData = (Map) reply.get("user");
+        RandomUser randomUser = randomUser(userData);
+        customer.setLastName(randomUser.getName().getLast());
+        customer.setFirstName(randomUser.getName().getFirst());
+        success = fillInCustomerDetails(randomUser);
+        parameterProvider.put("suitecrm-customer", randomUser);
+      }
+      return success;
+    }
 
         private boolean fillInCustomerDetails(RandomUser randomUser) {
             PersonalDetailsPage customerDetailsView = new PersonalDetailsPage();
@@ -214,7 +215,7 @@ public class QuoteSteps extends DwpScenario {
         ConnectionDetails gasConnectionDetails = list.get(1);
 
         ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
-        connectionDetailsView.setElectroConnectionDetails(electricityConnectionDetails);
+        connectionDetailsView.setElectricityConnectionDetails(electricityConnectionDetails);
         connectionDetailsView.setGasConnectionDetails(gasConnectionDetails);
         connectionDetailsView.fillInFormData();
     }
@@ -365,13 +366,7 @@ public class QuoteSteps extends DwpScenario {
        confirmQuote();
     }
 
-    @When("^I select the \"([^\"]*)\" element and click the link in the \"([^\"]*)\" column$")
-    public void navigateToListCellLink(String ordinal, String column) throws Throwable {
-        Map<String, String> options = new HashMap<>();
-        options.put("column", column);
-        boolean success = executeJavascriptTest("TrGetColumnIndexList", options);
-        assertThat(success, is(true));
-    }
+
 
     @And("^Electricity EAN code is selected$")
     public void selectEanCode() throws Throwable {
@@ -404,7 +399,7 @@ public class QuoteSteps extends DwpScenario {
         }
         ConnectionDetailsPage page = new ConnectionDetailsPage();
         Sleeper.sleepTightInSeconds(5);
-        page.setElectroConnectionDetails(electricityConnectionDetails);
+        page.setElectricityConnectionDetails(electricityConnectionDetails);
         boolean success = page.fillInElectricityEanCode();
         assertThat("Electricity EAN code filling in failure", success, is(true));
     }

@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -150,9 +149,23 @@ public abstract class SeleniumDriver {
         return findElementWhenPresent(selector, Duration.ofMinutes(1), Duration.ofSeconds(10));
     }
 
-    public Optional<WebElement> findElementOptional(By selector) {
-        return Optional.ofNullable(driver.findElement(selector));
+  public Optional<WebElement> findElementOptional(By selector) {
+    FluentWait<WebDriver> waiter =
+        new FluentWait<>(driver)
+            .withTimeout(Duration.ofSeconds(3))
+            .pollingEvery(Duration.ofSeconds(1))
+            .ignoring(NoSuchElementException.class);
+    List<WebElement> element =
+        waiter.until(
+            driver -> {
+              logger.debug(" - WAIT: polling findElementWhenPresent()");
+              return driver.findElements(selector);
+            });
+    if (element.isEmpty()) {
+      return Optional.empty();
     }
+    return Optional.of(element.get(0));
+  }
 
     public WebElement findElementWhenPresent(By selector, Duration timeout, Duration pollingEvery) {
         logger.debug("STEP:");
@@ -178,22 +191,20 @@ public abstract class SeleniumDriver {
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)
             .withTimeout(timeout)
             .pollingEvery(pollingEvery)
-            .ignoreAll(
-                Arrays.asList(
-                    NoSuchElementException.class,
-                    StaleElementReferenceException.class)
-            );
-        List<WebElement> elements = waiter.until(driver -> {
-            logger.debug(" - WAIT: polling findElementWhenPresent()");
-            return driver.findElements(selector);
-        });
-        Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
-        logger.debug(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
-        if (elements.isEmpty()) {
-            logger.warn(" - RESULT: empty");
-        }
-        return elements;
+            .ignoring(NoSuchElementException.class);
+    List<WebElement> elements =
+        waiter.until(
+            driver -> {
+              logger.debug(" - WAIT: polling findElementWhenPresent()");
+              return driver.findElements(selector);
+            });
+    Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
+    logger.debug(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
+    if (elements.isEmpty()) {
+      logger.warn(" - RESULT: empty");
     }
+    return elements;
+  }
 
     public WebElement findElement(By selector) {
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)

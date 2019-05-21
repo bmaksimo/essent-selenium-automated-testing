@@ -23,7 +23,7 @@ public class DetailsFormSteps extends DwpScenario {
     public void checkFieldValue(String label) throws Throwable {
         AccountDetails details = new AccountDetailsImpl();
         String value = details.getNonEdtableValue(label);
-        assertThat(String.format("'%s' field has is empty, was expected to have value", label),StringUtils.isNotEmpty(value), is(true));
+        assertThat(String.format("'%s' field was empty, was expected to have value", label),StringUtils.isNotEmpty(value), is(true));
         parameterProvider.put(label, value);
     }
 

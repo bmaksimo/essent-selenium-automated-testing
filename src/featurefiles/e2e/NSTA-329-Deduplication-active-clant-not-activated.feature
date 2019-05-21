@@ -2,6 +2,7 @@
 @DWP
 @B2C
 @ALL
+
 Feature: NSTA-329 Deduplication activated customer
 
     Background:

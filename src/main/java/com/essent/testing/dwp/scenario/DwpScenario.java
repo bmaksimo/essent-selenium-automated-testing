@@ -23,13 +23,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.JS_TR_GET_RANDOM_USER;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpDate;
-
-import static com.essent.testing.dwp.constant.DwpConstants.FLEMISCH_LOCALE;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.convertToDwpTime;
-import static com.billinghouse.test_automation.util.dsl.NumericUtil.ordinalAsInt;
-import static com.billinghouse.test_automation.util.dsl.NumericUtil.sumOfAmounts;
 import static com.billinghouse.test_automation.util.dsl.NumericUtil.amountAsInt;
+import static com.billinghouse.test_automation.util.dsl.NumericUtil.sumOfAmounts;
+import static com.essent.testing.dwp.constant.DwpConstants.FLEMISCH_LOCALE;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -76,7 +75,10 @@ public abstract class DwpScenario extends RegisteredScenario {
             RandomUser randomUser = randomUser(userData);
             String first = randomUser.getName().getFirst();
             String last = randomUser.getName().getLast();
-            return first + " & " + last + " Startup";
+            parameterProvider.put("suitecrm-company-account", randomUser);
+            parameterProvider.put("contact-person-first-name", first);
+            parameterProvider.put("contact-person-last-name", last);
+            return first + " " + last;
         }
         else throw new CucumberException("ramdomuser.me API failure");
     }
@@ -147,15 +149,11 @@ public abstract class DwpScenario extends RegisteredScenario {
         seleniumDriver.initNgWebDriver();
     }
 
-    protected int extractNumericValue(String ordinal) {
-        return ordinalAsInt(ordinal);
-    }
+  protected int amountInCurrencyAsInt(String amountInCurrency) {
+    return amountAsInt(amountInCurrency, FLEMISCH_LOCALE);
+  }
 
-    protected Integer amountInCurrencyAsInt(String amountInCurrency) {
-        return amountAsInt(amountInCurrency, FLEMISCH_LOCALE);
-    }
-
-    protected Integer sumOf(List<String> amounts) {
+    protected int sumOf(List<String> amounts) {
         return sumOfAmounts(amounts);
     }
 

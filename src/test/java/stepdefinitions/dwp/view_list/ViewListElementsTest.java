@@ -36,6 +36,6 @@ public class ViewListElementsTest {
                 team.get(i - 1).contains(mate))
             .boxed()
             .collect(Collectors.toList());
-        return indices;
-    }
+    return indices;
+  }
 }

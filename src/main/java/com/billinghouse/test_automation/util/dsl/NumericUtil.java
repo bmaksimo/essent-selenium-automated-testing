@@ -49,14 +49,14 @@ public class NumericUtil {
         return Integer.parseInt(ordinal.replaceAll(ORDINAL_REGEX, ""));
     }
 
-    public static Integer sumOfAmounts(List<String> amounts) {
+    public static int sumOfAmounts(List<String> amounts) {
         final ParameterProvider parameterProvider = ((ParameterProvider) ContextService.getContext().getBean("parameterProvider")).consumingNullValues(true);
         return amounts.stream()
             .mapToInt(element -> (int) parameterProvider.getValueOrParameter(element))
             .sum();
     }
 
-    public static Integer amountAsInt(String amountInCurrency, Locale locale) {
+    public static int amountAsInt(String amountInCurrency, Locale locale) {
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
         try {
             return numberFormat.parse(amountInCurrency.replaceAll("\\s+", " ")).intValue();

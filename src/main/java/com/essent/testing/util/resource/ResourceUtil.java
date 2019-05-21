@@ -6,7 +6,7 @@ import java.net.URL;
 
 public class ResourceUtil {
 	private static final String resourceFolder;
-	
+
 	static {
 		// First find a defined resource on the resource path, this is usually
 		// somewhere in the /target/test-classes/ directory.
@@ -23,13 +23,13 @@ public class ResourceUtil {
 			// No can do, tests will fail.
 			resourceFolder = "Resource folder not found";
 		}
-		
+
 	}
 
 	/**
-	 * Get the full path for the given resource. 
+	 * Get the full path for the given resource.
 	 * The resource is expected to be in the src/test/resource folder
-	 * 
+	 *
 	 * @param resource name of the resource.
 	 * @return the full path to the original resource on the filesystem.
 	 */

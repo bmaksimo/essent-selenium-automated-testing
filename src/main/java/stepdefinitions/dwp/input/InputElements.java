@@ -1,6 +1,8 @@
 package stepdefinitions.dwp.input;
 
 import com.essent.automation.util.Sleeper;
+import com.essent.testing.dwp.pageobject.elements.SelectWithSearch;
+import com.essent.testing.dwp.pageobject.impl.elements.SelectWithSearchImpl;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
@@ -18,6 +20,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 import static org.hamcrest.Matchers.is;
 
 public class InputElements extends DwpScenario {
@@ -36,82 +39,80 @@ public class InputElements extends DwpScenario {
     /**
      * Class, delegating form input to <code>BaseFormInput.js</code>
      */
-    private class ApplyInput implements Predicate<Map> {
-        @Override
-        public boolean test(Map options) {
-            boolean success = executeJavascriptTest("BaseFormInput", options);
-            return success;
-        }
-
-        public boolean testNow(Map options) {
-            boolean success = executeJavascriptTestImmediately("BaseFormInput", options, true);
-            return success;
-        }
+  private class ApplyInput implements Predicate<Map> {
+    @Override
+    public boolean test(Map options) {
+      boolean success = executeJavascriptTest(JS_BASE_FORM_INPUT, options);
+      return success;
     }
+
+    public boolean testNow(Map options) {
+      boolean success = executeJavascriptTestImmediately(JS_BASE_FORM_INPUT, options, true);
+      return success;
+    }
+  }
 
     /**
      * Class, delegating value selection to <code>TrFormSelection.js</code>
      */
-    private class ApplySelection implements Predicate<Map> {
-        @Override
-        public boolean test(Map options) {
-            boolean success = executeJavascriptTest("TrFormSelection", options);
-            return success;
-        }
-
-        public boolean testNow(Map options) {
-            boolean success = executeJavascriptTestImmediately("TrFormSelection", options, true);
-            return success;
-        }
+  private class ApplySelection implements Predicate<Map> {
+    @Override
+    public boolean test(Map options) {
+      boolean success = executeJavascriptTest(JS_TR_FORM_SELECTION, options);
+      return success;
     }
 
-    /**
-     * Class, delegating Date picker selection to <code>TrDatePickerInput.js</code>
-     */
-    private class ApplyDateInput implements Predicate<Map> {
-        @Override
-        public boolean test(Map options) {
-            boolean success = executeJavascriptTest("TrDatePickerInput", options);
-            return success;
-        }
-
-        public boolean testNow(Map options) {
-            boolean success = executeJavascriptTestImmediately("TrDatePickerInput", options, true);
-            return success;
-        }
+    public boolean testNow(Map options) {
+      boolean success = executeJavascriptTestImmediately(JS_TR_FORM_SELECTION, options, true);
+      return success;
     }
+  }
+
+  /** Class, delegating Date picker selection to <code>TrDatePickerInput.js</code> */
+  private class ApplyDateInput implements Predicate<Map> {
+    @Override
+    public boolean test(Map options) {
+      boolean success = executeJavascriptTest(JS_TR_DATE_PICKER_INPUT, options);
+      return success;
+    }
+
+    public boolean testNow(Map options) {
+      boolean success = executeJavascriptTestImmediately(JS_TR_DATE_PICKER_INPUT, options, true);
+      return success;
+    }
+  }
 
     /**
      * Class, delegating checkbox state toggling to <code>TrToggleCheckBox.js</code>
      */
-    private class ToggleCheckBox implements Predicate<Map<String, String>> {
-        @Override
-        public boolean test(Map<String, String> options) {
-            boolean success = executeJavascriptTest("TrToggleCheckBox", options);
-            return success;
-        }
+  private class ToggleCheckBox implements Predicate<Map<String, String>> {
+    @Override
+    public boolean test(Map<String, String> options) {
+      boolean success = executeJavascriptTest(JS_TR_TOGGLE_CHECK_BOX, options);
+      return success;
     }
+  }
 
 
-    /**
-     * Sets and asynchronously checks text input on any DWP form
-     * @param label Text label
-     * @param value Input value
+  /**
+   * Sets and asynchronously checks text input on any DWP form
+   * @param label Text label
+   * @param value Input value
      * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
-     */
-    @And("^\"([^\"]*)\" input is \"([^\"]*)\"$")
-    public void setInput(String label, String value) throws Throwable {
-        seleniumDriver.waitForRequestsToFinish();
-        String inputValue = parameterProvider.getValueOrParameterAsString(value);
-        parameterProvider.put("inputValue", inputValue);
-        Map<String, String> options = new HashMap<>();
-        options.put("label", label);
-        options.put("value", inputValue);
-        FluentWait<ApplyInput> waiter = waiter(new ApplyInput(), 10, 1);
-        waiter.withMessage(String.format("Input field %s is undefined.", label));
-        waiter.until((ApplyInput callback) -> callback.test(options));
-        seleniumDriver.waitForRequestsToFinish();
-    }
+   */
+  @And("^\"([^\"]*)\" input is \"([^\"]*)\"$")
+  public void setInput(String label, String value) throws Throwable {
+    seleniumDriver.waitForRequestsToFinish();
+    String inputValue = parameterProvider.getValueOrParameterAsString(value);
+    parameterProvider.put("inputValue", inputValue);
+    Map<String, String> options = new HashMap<>();
+    options.put("label", label);
+    options.put("value", inputValue);
+    FluentWait<ApplyInput> waiter = waiter(new ApplyInput(), 10, 1);
+    waiter.withMessage(String.format("Input field %s is undefined.", label));
+    waiter.until((ApplyInput callback) -> callback.test(options));
+    seleniumDriver.waitForRequestsToFinish();
+  }
 
     /**
      * Sets and asynchronously checks text input on any DWP form
@@ -302,18 +303,19 @@ public class InputElements extends DwpScenario {
      * @param verb One of verbs: {@link IsAre}
      * @param state Enumerated value: {@link SwitchState}
      * @throws Throwable  Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
-     */
-    @And("^Options? \"([^\"]*)\" (is|are) ([^\"]*)$")
-    public void switchOption(String option, IsAre verb, SwitchState state) throws Throwable {
-        seleniumDriver.waitForRequestsToFinish();
-        Map<String, String> options = new HashMap<>();
-        options.put("label", option);
-        options.put("verb", verb.getVerb());
-        FluentWait<InputElements> waiter = waiter(this, 10, 1);
-        waiter.withMessage(String.format("Option %s is undefined.", option));
-        waiter.until((InputElements callback) -> executeJavascriptTest("TrClickToggleInput", options));
-        seleniumDriver.waitForRequestsToFinish();
-    }
+   */
+  @And("^Options? \"([^\"]*)\" (is|are) ([^\"]*)$")
+  public void switchOption(String option, IsAre verb, SwitchState state) throws Throwable {
+    seleniumDriver.waitForRequestsToFinish();
+    Map<String, String> options = new HashMap<>();
+    options.put("label", option);
+    options.put("verb", verb.getVerb());
+    FluentWait<InputElements> waiter = waiter(this, 10, 1);
+    waiter.withMessage(String.format("Option %s is undefined.", option));
+    waiter.until(
+        (InputElements callback) -> executeJavascriptTest(JS_TR_CLICK_TOGGLE_INPUT, options));
+    seleniumDriver.waitForRequestsToFinish();
+  }
 
     /**
      * Sets and asynchronously checks a checkbox on any DWP form
@@ -351,7 +353,11 @@ public class InputElements extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
     }
 
-
+  @And("^Selection with search is \"([^\"]*)\"$")
+  public void selectWithSearchIsClicked(String label) throws Throwable {
+    SelectWithSearch button = new SelectWithSearchImpl();
+    button.click(label);
+  }
 
     @And("New Amount Invoice is \"([^\"]*)\" for EAN \"([^\"]*)\"$")
     public void setInputByEanLabel(String value, String EAN) {
@@ -363,12 +369,6 @@ public class InputElements extends DwpScenario {
         cp.getElementByEanNewInvoiceAmount(ean, value);
         seleniumDriver.waitForRequestsToFinish();
     }
-
-
-    /**
-     * Cucumber-JVM  Aftrer- hook
-     *
-     */
 
     @Override
     @After("@DWP, @CORE, @E2E, @REGRESSION")

@@ -45,13 +45,13 @@ public class RequestHelper {
 		.post(path);
 
 	Integer responseStatusCode = getResponseStatusCode(response, path, expectedStatusCode);
-	
+
 	if (!responseStatusCode.equals(expectedStatusCode)) {
 	    LOGGER.info("JSON body which was sent in the request is: " + body);
 	    LOGGER.error("RESPONSE IS: " + response.body().asString());
 	}
 
-	assertThat(responseStatusCode, is(equalTo(expectedStatusCode)));	
+	assertThat(responseStatusCode, is(equalTo(expectedStatusCode)));
 	return response;
     }
 
@@ -92,7 +92,7 @@ public class RequestHelper {
     }
 
     public Response postMultipartRequest(Integer expectedStatusCode, Cookies cookie, Map<String, String> payload, String path) {
-	
+
 	String pathToFile = ResourceUtil.toPath("/data/restassured/upload/fileupload.txt");
 	File file = new File(pathToFile);
 	Response response = expect().given().header(trackingHeader).cookies(cookie).multiPart("file", file)
@@ -110,14 +110,14 @@ public class RequestHelper {
     }
 
     private Integer getResponseStatusCode(Response response, String path, Integer exectedStatusCode) {
-	
+
 	Integer responseStatusCode = new Integer(response.statusCode());
 	LOGGER.info("POST " + path + " status : " + responseStatusCode + " (expected: " + exectedStatusCode + ")");
 	LOGGER.info("X-LOG-ID tracking header: " + trackingHeader.getValue());
 	logResponseTimeDuration(response, "for "+ path +" ");
 	return responseStatusCode;
     }
-    
+
     private void logResponseTimeDuration(Response response, String Description) {
 	    Long actualResponseTime = response.time();
 	    LOGGER.info("Measured response time, " + Description + "is : "

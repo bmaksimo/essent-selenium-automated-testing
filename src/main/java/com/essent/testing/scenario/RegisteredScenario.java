@@ -10,6 +10,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static com.billinghouse.test_automation.util.dsl.NumericUtil.ordinalAsInt;
 import static com.essent.testing.selenium.helper.fluent_wait.FluentWaitUtil.createPollingWaiter;
 
 public abstract class RegisteredScenario {
@@ -59,7 +60,15 @@ public abstract class RegisteredScenario {
         seleniumDriver.setUp();
     }
 
-    protected <T> FluentWait<T> waiter(T testObject, long secondsTimeout, long secondsPollingEvery) {
-        return createPollingWaiter(testObject, secondsTimeout, secondsPollingEvery);
-    }
+  protected <T> FluentWait<T> waiter(T testObject, long secondsTimeout, long secondsPollingEvery) {
+    return createPollingWaiter(testObject, secondsTimeout, secondsPollingEvery);
+  }
+
+  protected int extractNumericValue(String ordinal) {
+    return ordinalAsInt(ordinal);
+  }
+
+  protected int asArrayIndex(String ordinal) {
+    return extractNumericValue(ordinal) - 1;
+  }
 }
