@@ -37,6 +37,7 @@ Feature: NSTA-329 Deduplication activated customer
         And "Meternummer" input is "1000"
         And Option "test" is On
         And Connection details are confirmed
+        And Save changes
         Then Form header is "Billing details"
 
         When "Betalingswijze" selection is "Overschrijving"
