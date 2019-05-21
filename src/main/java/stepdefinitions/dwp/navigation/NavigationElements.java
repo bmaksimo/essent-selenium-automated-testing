@@ -59,7 +59,7 @@ public abstract class NavigationElements extends DwpScenario {
     @Override
     public boolean test(String arrow) {
       Map<String, String> options = new HashMap<>();
-      options.put("arrow", arrow);
+      options.put("arrow", arrow.toLowerCase());
       boolean success = executeJavascriptTest(JS_TR_ARROW_ACTION, options);
       return success;
     }

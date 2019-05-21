@@ -87,7 +87,7 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
 
 
         #3.1. Validate renewal batch - checks
-        Then "Status batch" field value is "VALIDATED"
+        Then "Status batch" field value is switched to "VALIDATED" within 30 seconds
         And Table "Geselecteerde contractlijn voor hernieuwingsbatch" has matching value "Gevalideerd" at column "Status hernieuwing"
 
         When Click on "parameter:Contractnummer" link
@@ -119,7 +119,7 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
         And  Click on "VERSTUUR PASSIEVE HERNIEUWINGSBRIEVEN" link
         And Modal dialog is "Send passive renewal letter"
         And Modal dialogue is confirmed
-        Then "Status batch" field value is "LETTERS_SENT"
+        Then "Status batch" field value is switched to "LETTERS_SENT" within 120 seconds
         And Table "Geselecteerde contractlijn voor hernieuwingsbatch" has matching value "verstuurd" at column "Status hernieuwing"
         And Table "Geselecteerde contractlijn voor hernieuwingsbatch" has matching value "Passief hernieuwd" at column "Offerte & status hernieuwing"
 
