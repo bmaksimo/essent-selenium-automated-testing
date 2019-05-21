@@ -77,16 +77,7 @@ public class QuoteSteps extends DwpScenario {
     public void deduplicationDialogueLinkIsClicked(String linkText) throws Throwable {
         SimilarAccountDialog dialog = new SimilarAccountDialogImpl();
         dialog.clickOnLink(linkText);
-//        seleniumDriver.getDriver().switchTo().alert().accept();
-    }
 
-    @And("^Dismiss a system pop up$")
-    public void dismissASystemPopUp() {
-        WebDriverWait wait = new WebDriverWait(seleniumDriver.getDriver(), 30);
-        wait.until(ExpectedConditions.alertIsPresent());
-        Sleeper.sleepTightInSeconds(5);
-//        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//button[contains(text(),'Cancel')]")));
-        seleniumDriver.getDriver().switchTo().alert().dismiss();
     }
 
     private class VerifyTariffSheetPriceAlert implements FlowAwarePredicate<QuoteSteps> {

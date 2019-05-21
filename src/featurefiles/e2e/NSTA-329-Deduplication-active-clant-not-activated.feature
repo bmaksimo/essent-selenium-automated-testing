@@ -51,10 +51,10 @@ Feature: NSTA-329 Deduplication activated customer
         When Dashboard menu is "Contracten"
         Then View list header is "Actieve en toekomstige connecties"
         And  "1st" List element with value at column "EAN-code" is checked
-        And "1st" list element has cell value "Actief" at column "Contractnummer" polling 450 seconds
+        Then "1st" list element has cell value "Actief" at column "Contractnummer" polling 450 seconds
 
         When Top arrow button is "Up"
-        And Left menu is "sales-marketing"
+        Then Left menu is "sales-marketing"
 
         #Step 2: should deduplicate customer
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
@@ -64,41 +64,27 @@ Feature: NSTA-329 Deduplication activated customer
         And Quote details are confirmed
         Then Form header is "Personal details"
 
-        Given Customer is duplicated
-#        And "Geboortedatum" date is "30 years before now"
+        When Customer is duplicated
         And Customer address is
             | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
             | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
         Then Save changes
-#        And  Deduplication dialogue "Soortgelijke klanten" is shown
-#        And  Deduplication dialogue link "Create quote for account" is clicked
-#        Then Form header is "Quote details"
-#
-#        When "Sales kanaal" selection is "Inbound"
-#        And Quote details are confirmed
-#        Then Form header is "Select package & fuel type"
 
         When "Pakket" selection is "Vast"
         And Checkbox "Gas Fix B2C (TC1)" is Unchecked
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-#        When Field "Street" input is "Mechelsesteenweg"
-        And Field "Housenumber" input is "2"
-#        And Field "Postalcode" input is "2550"
-#        And Field "City" input is "Kontich"
-        And  Deduplication dialogue "Soortgelijke klanten" is shown
-        And  Deduplication dialogue link "Create quote for account" is clicked
-#        And Dismiss a system pop up
-
+        When Field "Housenumber" input is "22"
+        And Deduplication dialogue "Soortgelijke klanten" is shown
+        Then Deduplication dialogue link "Create quote for account" is clicked
 
         When "Sales kanaal" selection is "Inbound"
-        And Quote details are confirmed
+        Then Quote details are confirmed
 
         When "Pakket" selection is "Vast"
         And Checkbox "Gas Fix B2C (TC1)" is Unchecked
-        And Package and Fuel Type is confirmed
-
+        Then Package and Fuel Type is confirmed
 
         When Field "Street" input is "Mechelsesteenweg"
         And Field "Housenumber" input is "2"
@@ -108,12 +94,7 @@ Feature: NSTA-329 Deduplication activated customer
         And EAN code is generated
         And "EAN-code" input is "parameter:EAN-code-generated"
         And "Startdatum" date is "2 months from now"
-
         And Connection details are confirmed
-
-#        When "Sales kanaal" selection is "Inbound"
-#        And Quote details are confirmed
-
         Then Form header is "Billing details"
 
         When "Betalingswijze" selection is "Overschrijving"
@@ -129,6 +110,7 @@ Feature: NSTA-329 Deduplication activated customer
 
         When Dashboard menu is "Contracten"
         And View list header is "Actieve en toekomstige connecties"
-        And Two contracts are displayed
+        Then Two contracts are displayed
+
         When Dashboard menu is "Details"
-        And There is one billing customer
+        Then There is one billing customer
