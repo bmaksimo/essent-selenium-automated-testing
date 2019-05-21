@@ -2,7 +2,6 @@
 @DWP
 @B2C
 @ALL
-@UNSTABLE
 Feature: NSTA - 337 Move old address
 
     Background:
