@@ -121,7 +121,7 @@ public class MarketBerichtenSteps extends DwpScenario {
         List<List<String>> info = dbTable.raw();
         String ean = parameterProvider.getValueOrParameterAsString(info.get(1).get(0));
         String modul = info.get(1).get(1);
-        String date = info.get(1).get(3);
+        String date = info.get(1).get(2);
         MarktBerichtenPage mp = new MarktBerichtenPage();
         if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht("1"))){
             Assert.assertEquals(modul, mp.getModulFromMarketbericht("2"));
