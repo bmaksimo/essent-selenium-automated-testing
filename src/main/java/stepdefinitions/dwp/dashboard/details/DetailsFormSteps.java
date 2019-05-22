@@ -44,8 +44,8 @@ public class DetailsFormSteps extends DwpScenario {
         super.tearDown();
     }
 
-    @And("^Klanttype is \"([^\"]*)\"$")
-    public void klanttypeIs(String type){
+    @And("^Customer type is \"([^\"]*)\"$")
+    public void customerTypeIs(String type){
         DetailsPage dp = new DetailsPage();        ;
         Assert.assertEquals("Customer type does not match expected value",dp.getCustomerType(), type);
     }

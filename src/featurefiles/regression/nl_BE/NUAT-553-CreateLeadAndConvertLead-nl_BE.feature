@@ -28,5 +28,5 @@ Feature: NUAT-553: Create Lead And Convert Lead - nl_BE
         Then Changes are confirmed
 
         When Dashboard menu is "Details"
-        And Klanttype is "Prospect"
+        And Customer type is "Prospect"
         Then There is one billing customer
