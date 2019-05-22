@@ -87,8 +87,8 @@ Feature: NSTA - 338 Move new address
 
         When Dashboard menu is "Marktberichten"
         Then Check marktbericht
-            |               ean            |     modul    |       end date      |
-            | parameter:EAN-code-generated | START ACCESS |   5 days before now |
+            |               ean            |     modul    |       end date     |
+            | parameter:EAN-code-generated | START ACCESS |  5 days before now |
 
         When Dashboard menu is "Service"
         Then There is a case where onderwerp is "Verhuis"
