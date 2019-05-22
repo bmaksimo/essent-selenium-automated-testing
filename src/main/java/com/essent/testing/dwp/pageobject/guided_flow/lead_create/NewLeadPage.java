@@ -11,6 +11,11 @@ import java.util.List;
 
 public class NewLeadPage extends BaseObjectPage {
 
+    private final static String COMPANYNAME="company-name-c-field";
+    private final static String COMPANYNAMEBUTTON=".//*[@id='company_name_c']/div/autocomplete/ul/li[4]";
+    private final static String FIRSTNAME="first-name-field";
+    private final static String LASTNAME="last-name-field";
+
   //TODO Remove locale-specific hardcode.
   // The project must support official Belgian languages.
   // Locale-specific elements of web element locators must be parameterized.
@@ -24,17 +29,17 @@ public class NewLeadPage extends BaseObjectPage {
     }
 
     private void fillInCompanyName(String companyNumber) {
-        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("company-name-c-field")), companyNumber);
-        seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath(".//*[@id='company_name_c']/div/autocomplete/ul/li[4]")));
+        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id(COMPANYNAME)), companyNumber);
+        seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath(COMPANYNAMEBUTTON)));
         seleniumDriver.waitForRequestsToFinish();
     }
 
 
     private void fillInContactPerson(String contactPersonName, String contactPersonLastName) {
         seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("first-name-field")), contactPersonName);
+        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id(FIRSTNAME)), contactPersonName);
         seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id("last-name-field")), contactPersonLastName);
+        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id(LASTNAME)), contactPersonLastName);
     }
 
 }
