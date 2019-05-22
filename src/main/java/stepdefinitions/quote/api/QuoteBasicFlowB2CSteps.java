@@ -52,8 +52,8 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 	this.tariffSheetID = new QuoteDetailsAPI().getTariffSheetID(cookie, arg1);
     }
 
-    @When("^Data is prepared for Create qoute request for \"([^\"]*)\"$")
-    public void data_is_prepared_for_Create_qoute_request_for(String arg1) throws Throwable {
+    @When("^Data is prepared for Create quote request for \"([^\"]*)\"$")
+    public void data_is_prepared_for_Create_quote_request_for(String arg1) throws Throwable {
         this.flow = arg1;
 	this.quoteDetails = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow);
 
@@ -91,8 +91,8 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 	assertThat(status.toLowerCase(), is(equalTo(arg1.toLowerCase())));
     }
 
-    @When("^Simulation that customer signature is recieved$")
-    public void simulation_that_customer_signature_is_recieved() throws Throwable {
+    @When("^Simulation that customer signature is received$")
+    public void simulation_that_customer_signature_is_received() throws Throwable {
 	new QuoteSignatureAPI().setSignatureReceived(cookie, quoteDetails);
     }
 
@@ -125,8 +125,8 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 	assertThat(new ContractDetailsAPI().checkIfEanExists(cookie, quoteDetails), is(true));
     }
 
-    @When("^Payment detials are recieved$")
-    public void payment_detials_are_recieved() throws Throwable {
+    @When("^Payment details are received$")
+    public void payment_details_are_received() throws Throwable {
 	this.jbillingId = new ContractDetailsAPI().getPaymentDetails(cookie, quoteDetails.getQuoteId(), contractDetails);
     }
 
