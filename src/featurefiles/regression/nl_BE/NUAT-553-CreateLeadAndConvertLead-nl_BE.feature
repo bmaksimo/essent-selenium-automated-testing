@@ -2,6 +2,7 @@
 @B2B
 @REGRESSION
 @BUSINESS-DESK
+@ALL
 Feature: NUAT-553: Create Lead And Convert Lead - nl_BE
 
     Background:
