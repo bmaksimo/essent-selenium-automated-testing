@@ -12,13 +12,13 @@ Feature: NSTA-345:Credit Invoice
     Scenario: Credit Invoice
         #Create an active contract via API
         And "Create_Quote" flow is started
-        When Data is prepared for Create qoute request for "prospect"
+        When Data is prepared for Create quote request for "prospect"
         And New tc1_quote is created
         Then Quote status is "ACCEPTED"
         And Quoteline exists
         And Quoteline status is "Sent to customer"
 
-        When Simulation that customer signature is recieved
+        When Simulation that customer signature is received
         Then Quote stage status is "SIGNATURE RECEIVED"
         And Quoteline status is "Signature received"
 
@@ -27,7 +27,7 @@ Feature: NSTA-345:Credit Invoice
         And Contract is created
         And Contracted EAN exists on account
 
-        When Payment detials are recieved
+        When Payment details are received
         Then Wait until contract instance starts
         And Check order in jbilling
 
