@@ -746,11 +746,11 @@ public class ViewListChecks extends NavigationElements {
         assertThat(message, actualValuesOfInvoices, containsString("1500 €"));
     }
 
-    @Then("^Balance is \"([^\"]*)\"$")
+    @Then("^Balance is correct$")
     public void checkValue(String expectedBalance) {
         ContractPage cp = new ContractPage();
 
-        assertThat("Balance is not correct", cp.getBalance(), equalTo(expectedBalance));
+        assertThat("Balance is not correct", cp.getBalance(), equalTo("€ 1500,00"));
     }
 
     //TODO Create a special test harness class for wait methods,

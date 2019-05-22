@@ -95,9 +95,16 @@ Feature: NSTA-345:Credit Invoice
         Then Check is product change "1 succeeded"
 
          #5 - Check Balance of new invoice credit
+        Given I renew login to DWP as "billing.testautomation@essent.be"
+        When Left menu is "billing"
+        And Top menu item is "Klanten"
+        And Top action is "Filters"
+        And "Klantnummer" input is "parameter:accountNumber"
+        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
-        Then Balance is "€ 1500,00"
+        Then Sleep for 20 seconds
+        Then Balance is correct
 
 
 
