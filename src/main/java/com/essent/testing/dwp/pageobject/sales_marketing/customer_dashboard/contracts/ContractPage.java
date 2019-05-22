@@ -411,47 +411,10 @@ public class ContractPage extends Component {
         return sb.append(firstInvoice).append(' ').append(secondInvoice).append(' ').append(thirdInvoice).toString();
     }
 
-    public boolean checkIsInvoicesAmountsAsStringCorrect(String amountInvoicesCombination1, String amountInvoicesCombination2, String amountInvoicesCombination3, String amountInvoicesCombination4,  String amountInvoicesCombination5,  String amountInvoicesCombination6, String actualValuesOfInvoices)
-    {
-        boolean matchingValuesOfInvoices = false;
-        if (amountInvoicesCombination1.equals(actualValuesOfInvoices) || amountInvoicesCombination2.equals(actualValuesOfInvoices)
-            || amountInvoicesCombination3.equals(actualValuesOfInvoices) || amountInvoicesCombination4.equals(actualValuesOfInvoices)
-            || amountInvoicesCombination5.equals(actualValuesOfInvoices) || amountInvoicesCombination6.equals(actualValuesOfInvoices))
-        {
-            matchingValuesOfInvoices = true;
-        }
-        return matchingValuesOfInvoices;
-    }
-
     public String getBalance() {
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.id(SALDO_CREDIT_INVOICE)).getText();
     }
-
-
-    public boolean compareActualAndExpectedBalances(String balance1, String balance2, String balance3, String actualBalance) {
-        seleniumDriver.waitForRequestsToFinish();
-        if (balance1.equals(actualBalance))
-        {
-            logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");
-            return true;
-        }
-
-        else if (balance2.equals(actualBalance))
-        {
-            logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");
-            return true;
-        }
-
-        else if (balance3.equals(actualBalance))
-        {
-            logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");
-            return true;
-        }
-
-        else return false;
-    }
-
 
     public void getElementByEanNewInvoiceAmount(String ean, String value) {
         String xpathAction = createQuery(EAN_NEW_INVOICE_AMOUNT, REPLACEMENT_KEY, ean);

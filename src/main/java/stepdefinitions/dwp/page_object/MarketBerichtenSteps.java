@@ -121,22 +121,18 @@ public class MarketBerichtenSteps extends DwpScenario {
         List<List<String>> info = dbTable.raw();
         String ean = parameterProvider.getValueOrParameterAsString(info.get(1).get(0));
         String modul = info.get(1).get(1);
-        String status = info.get(1).get(2);
-        String date = info.get(1).get(3);
+        String date = info.get(1).get(2);
         MarktBerichtenPage mp = new MarktBerichtenPage();
         if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht("1"))){
             Assert.assertEquals(modul, mp.getModulFromMarketbericht("2"));
-            Assert.assertEquals(status, mp.marketberichtStatusMarketbericht("1"));
             Assert.assertEquals(mp.getMarketberichtEndDateElement("1"), toDwpEndDate(parameterProvider.getValueOrParameterAsString(date)));
         } else {
             if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht("3"))) {
                 Assert.assertEquals(modul, mp.getModulFromMarketbericht("4"));
-                Assert.assertEquals(status, mp.marketberichtStatusMarketbericht("5"));
                 Assert.assertEquals(mp.getMarketberichtEndDateElement("5"), toDwpEndDate(parameterProvider.getValueOrParameterAsString(date)));
             } else {
                 if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht("5"))) {
                     Assert.assertEquals(modul, mp.getModulFromMarketbericht("6"));
-                    Assert.assertEquals(status, mp.marketberichtStatusMarketbericht("9"));
                     Assert.assertEquals(mp.getMarketberichtEndDateElement("9"), toDwpEndDate(parameterProvider.getValueOrParameterAsString(date)));
                 }
             }

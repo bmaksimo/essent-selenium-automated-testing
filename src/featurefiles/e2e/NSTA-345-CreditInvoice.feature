@@ -1,72 +1,49 @@
 @REGRESSION
 @DWP
 @B2C
+@API
 @ALL
-Feature: NSTA-345 Credit Invoice
+Feature: NSTA-345:Credit Invoice
 
     Background:
-        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
+        Given I login to iWelcome as "soapui_b2c"
 
     @NSTA-345
     Scenario: Credit Invoice
+        #Create an active contract via API
+        And "Create_Quote" flow is started
+        When Data is prepared for Create quote request for "prospect"
+        And New tc1_quote is created
+        Then Quote status is "ACCEPTED"
+        And Quoteline exists
+        And Quoteline status is "Sent to customer"
 
-        When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
-        Then Form header is "Quote details"
+        When Simulation that customer signature is received
+        Then Quote stage status is "SIGNATURE RECEIVED"
+        And Quoteline status is "Signature received"
 
-        When "Tariefdatum" date is "now"
-        And "Sales kanaal" selection is "Inbound"
-        And Quote details are confirmed
-        Then Form header is "Personal details"
+        When File is uploaded as scanned signature
+        Then Signin is confirmed
+        And Contract is created
+        And Contracted EAN exists on account
 
-        When Customer is random
-        And Customer address is
-            | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-            | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
-        And Customer details are confirmed
-        Then Form header is "Select package & fuel type"
-
-        And "Pakket" selection is "Vast"
-        And Checkbox "Gas Fix B2C (TC1)" is Unchecked
-        And Package and Fuel Type is confirmed
-        Then Form header is "Connection details"
-
-        And "Startdatum" date is "35 days before now"
-        And Electricity EAN code is "random"
-        And "Type aansluiting" selection is "YMR"
-        And "Meternummer" input is "1000"
-        And  Option "test" is On
-        And Connection details are confirmed
-        Then Form header is "Billing details"
-
-        When "Betalingswijze" selection is "Overschrijving"
-        And Billing details are confirmed
-        Then Form header is "Quote overview"
-
-        When Option "Heeft de klant al getekend?" is On
-        And "Kanaal ondertekening" selection is "Papier"
-        And Quote is signed in "Kontich"
-        And "Datum ondertekening" date is "now"
-        And Quote is confirmed
-        Then View list header is "Offertes"
-        Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
-
-        When Dashboard menu is "Contracten"
-        Then View list header is "Actieve en toekomstige connecties"
-        And "1st" List element with value at column "EAN-code" is checked
-        And "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
-
-        When Dashboard menu is "Service"
-        Then View list header is "Interacties"
-        Then Click on link in View List at "1st" row and "Nummer & Communicatiekanaal" column polling 20 seconds
+        When Payment details are received
+        Then Wait until contract instance starts
+        And Check order in jbilling
 
         #2 - invoice run advance
         Given I renew login to DWP as "billing.testautomation@essent.be"
         When Left menu is "billing"
         And Top menu item is "Klanten"
         And Top action is "Filters"
-        And "Naam" input is "parameter:suitecrm-customer-name"
+        And "Klantnummer" input is "parameter:accountNumber"
         Given View List element "Id Billing customer & persoon/familie sleutel" is collected as parameter at "1st" list row
-        And View List element "Klantnummer & Naam" using "accountNumber" as alias is collected as parameter at "1st" list row
+        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
+        When Dashboard menu is "Contracten"
+        Then View list header is "Actieve en toekomstige connecties"
+        And "1st" List element with value at column "EAN-code" is checked
+        And "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
+        And Top arrow button is "UP"
 
         And Plus menu is "Billing -> Start facturatierun"
         When Modal dialog is "Start invoicerun"
@@ -87,7 +64,7 @@ Feature: NSTA-345 Credit Invoice
 
         #Recalculate invoice
         When Plus action of "1" element from "TransactionsOnAccount" and click on "Herbereken tussentijdse factuur"
-        And New Amount Invoice is "300" for EAN "parameter:EAN-code-generated"
+        And New Amount Invoice is "300" for EAN "parameter:EAN-code"
         Then Invoice run is scheduled
 
         Given I renew login to DWP as "billing.testautomation@essent.be"
@@ -98,40 +75,35 @@ Feature: NSTA-345 Credit Invoice
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
         When Dashboard menu is "Service"
         Then View list header is "Interacties"
+
           #3 - Check if interactions are created for VKM and CNM
-        Then Table "Interacties" contains value "VKM" at column "Type & Onderwerp" waiting for 30 seconds
-        Then Table "Interacties" contains value "CNM" at column "Type & Onderwerp" waiting for 30 seconds
+        Then Table "Interacties" contains value "VKM" at column "Type & Onderwerp"
+        Then Table "Interacties" contains value "CNM" at column "Type & Onderwerp"
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
-        Then Sleep for 30 seconds
 
         #Asserts
          #1 - Check if Old invoice is credited (check if CNM is created for same amount as old VKM)
          #2 - Check if there is a new invoice created for the amount you selected
-        Then Invoice Amounts are among values
-            |    amountInvoice1     |    amountInvoice2     |    amountInvoice3    |
-            |  113 € -113 € 300 €   |  226 € -226 € 600 €   |  339 € -339 € 900 €  |
-            |  -113 € 113 € 300 €   |  -226 € 226 € 600 €   |  -339 € 339 € 900 €  |
-            |  113 € 300 € -113 €   |  226 € 600 € -226 €   |  339 € 900 € -339 €  |
-            |  -113 € 300 € 113 €   |  -226 € 600 € 226 €   |  -339 € 900 € 339 €  |
-            |  300 € 113 € -113 €   |  600 € 226 € -226 €   |  900 € 339 € -339 €  |
-            |  300 € -113 € 113 €   |  600 € -226 € 226 €   |  900 € -339 € 339 €  |
+        Then Invoice Amounts have values "600 €", "-600 €" and "1500 €"
 
          #4 - Check if CNM has been sent to customer
         When Dashboard menu is "Service"
         Then View list header is "Interacties"
         And Click on link in View List at "2nd" row and "Nummer & Communicatiekanaal" column waiting for 40 seconds
-        And Sleep for 30 seconds
+        Then Sleep for 20 seconds
         Then Check is product change "1 succeeded"
-         #5 - Check Saldo of new invoice credit
+
+         #5 - Check Balance of new invoice credit
+        Given I renew login to DWP as "billing.testautomation@essent.be"
+        When Left menu is "billing"
+        And Top menu item is "Klanten"
+        And Top action is "Filters"
+        And "Klantnummer" input is "parameter:accountNumber"
+        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
-        And Sleep for 30 seconds
-        Then Balance is among values
-            |  balance  |
-            |  € 300,00 |
-            |  € 600,00 |
-            |  € 900,00 |
+        Then Balance is "€ 1500,00"
 
 
 

@@ -31,7 +31,7 @@ public class InputElements extends DwpScenario {
      * @param scenario Gherkin scenario descriptor
      * @throws Throwable
      */
-    @Before("@DWP, @CORE, @E2E, @REGRESSION")
+    @Before("@DWP, @CORE, @E2E, @REGRESSION, @API")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -348,6 +348,7 @@ public class InputElements extends DwpScenario {
         WebElement placeHolderInputElement = seleniumDriver.findElement(By.xpath("//input[@placeholder='"+placeholder+"']"));
         boolean placeHolderWasFound = placeHolderInputElement != null;
         assertThat(String.format("Placeholder element '%s' was not found.", placeholder), placeHolderWasFound, is(true));
+        placeHolderInputElement.clear();
         placeHolderInputElement.sendKeys(inputValue);
         seleniumDriver.waitForRequestsToFinish();
     }
