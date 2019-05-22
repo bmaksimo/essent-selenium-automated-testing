@@ -143,24 +143,6 @@ public class QuoteDetailsAPI extends AbstractAPI {
 	return quoteId;
     }
 
-    public String getAccountNumber(Cookies cookie, String recordId) throws IOException {
-        RequestHelper helper = new RequestHelper();
-        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
-            + ConfigProvider.getProperty(ConfigKey.CRM_QUOTES_ON_ACCOUNT_URL);
-        String payload = createListQuotePayload(recordId);
-
-        Response listQuoteResponse = helper.postRequest(STATUS_OK, cookie, payload, path);
-
-        String accountNumber = null;
-
-        LOGGER.info("Quote list retrieved");
-        accountNumber = listQuoteResponse.jsonPath().getString("data.params.Account.account_number");
-        LOGGER.info("Account Number: " + accountNumber);
-
-        return accountNumber;
-    }
-
-
     public String checkStatus(Cookies cookie, String quoteNumber) throws IOException {
     String status = null;
     Response response = quoteStatus(cookie, quoteNumber);
