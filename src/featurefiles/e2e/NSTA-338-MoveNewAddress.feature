@@ -37,6 +37,7 @@ Feature: NSTA - 338 Move new address
         And "Meternummer" input is "1000"
         And Option "test" is On
         And Connection details are confirmed
+        And Save changes
         Then Form header is "Billing details"
 
         When "Betalingswijze" selection is "Overschrijving"
@@ -86,8 +87,8 @@ Feature: NSTA - 338 Move new address
 
         When Dashboard menu is "Marktberichten"
         Then Check marktbericht
-            |               ean            |     modul    |  status  |      end date     |
-            | parameter:EAN-code-generated | START ACCESS | Gesloten | 5 days before now |
+            |               ean            |     modul    |       end date      |
+            | parameter:EAN-code-generated | START ACCESS |   5 days before now |
 
         When Dashboard menu is "Service"
         Then There is a case where onderwerp is "Verhuis"
