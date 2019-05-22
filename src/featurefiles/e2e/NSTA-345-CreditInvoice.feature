@@ -103,7 +103,6 @@ Feature: NSTA-345:Credit Invoice
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
-        Then Sleep for 20 seconds
         Then Balance is correct
 
 
