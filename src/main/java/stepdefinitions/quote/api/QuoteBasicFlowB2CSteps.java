@@ -56,13 +56,16 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     public void data_is_prepared_for_Create_qoute_request_for(String arg1) throws Throwable {
         this.flow = arg1;
 	this.quoteDetails = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow);
+
     }
 
     @When("^New tc(\\d+)_quote is created$")
     public void new_tc__quote_is_created(int arg1) throws Throwable {
 	String retreivedQuoteNumber = new QuoteDetailsAPI().getQuoteNumber(cookie, quoteDetails.getRecordId());
-	String retrievedAccountNumber = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow).getAccountNumber();
-	parameterProvider.put("accountNumber", retrievedAccountNumber);
+    String retrievedAccountNumber = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow).getAccountNumber();
+    int result = Integer.parseInt(retrievedAccountNumber);
+    result -=1;
+        parameterProvider.put("accountNumber", result);
 	// assertEquals(quoteDetails.getQuoteNumber(),retreivedQuoteNumber);
 	assertThat(retreivedQuoteNumber, is(equalTo(quoteDetails.getQuoteNumber())));
     }

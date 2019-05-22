@@ -26,3 +26,13 @@ Scenario: Check basic Quote creation flow B2C
 	Then Wait until contract instance starts
     And Check order in jbilling
 
+    Given I renew login to DWP as "salesmarketing.testautomation.b2c@essent.be"
+    When Left menu is "sales-marketing"
+    And Top menu item is "Klanten"
+    And Top action is "Filters"
+    And "Klantnummer" input is "parameter:accountNumber"
+    And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
+    When Dashboard menu is "Contracten"
+    Then View list header is "Actieve en toekomstige connecties"
+    And "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
+

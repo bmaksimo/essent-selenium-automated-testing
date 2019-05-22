@@ -29,7 +29,7 @@ public class ContractsSteps extends DwpScenario {
 
     private String eanCodeInput = null;
 
-    @Before("@DWP, @REGRESSION")
+    @Before("@DWP, @REGRESSION, @API")
     public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
     }

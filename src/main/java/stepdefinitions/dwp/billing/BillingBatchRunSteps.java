@@ -13,7 +13,7 @@ import static org.hamcrest.Matchers.is;
 
 public class BillingBatchRunSteps extends DwpScenario {
 
-    @Before("@DWP, @E2E")
+    @Before("@DWP, @E2E, @API")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
