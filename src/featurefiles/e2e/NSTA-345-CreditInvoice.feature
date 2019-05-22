@@ -85,28 +85,19 @@ Feature: NSTA-345:Credit Invoice
         #Asserts
          #1 - Check if Old invoice is credited (check if CNM is created for same amount as old VKM)
          #2 - Check if there is a new invoice created for the amount you selected
-        Then Invoice Amounts are among values
-            |     amountInvoice     |
-            |  600 € -600 € 1500 €  |
-            |  -600 € 600 € 1500 €  |
-            |  1500 € 600 € -600 €  |
+        Then Invoice Amounts have correct values
 
          #4 - Check if CNM has been sent to customer
         When Dashboard menu is "Service"
         Then View list header is "Interacties"
         And Click on link in View List at "2nd" row and "Nummer & Communicatiekanaal" column waiting for 40 seconds
-        And Sleep for 30 seconds
+        Then Sleep for 20 seconds
         Then Check is product change "1 succeeded"
 
          #5 - Check Balance of new invoice credit
         When Dashboard menu is "Billing"
         Then View list header is "Transacties"
-        And Sleep for 30 seconds
-        Then Balance is among values
-            |  balance   |
-            |  € 1500,00 |
-            |  € 900,00  |
-            |  € 600,00  |
+        Then Balance is "€ 1500,00"
 
 
 

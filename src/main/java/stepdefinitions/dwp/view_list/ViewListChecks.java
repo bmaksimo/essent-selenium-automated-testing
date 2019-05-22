@@ -23,6 +23,7 @@ import stepdefinitions.dwp.b2b.Marketberichten;
 import stepdefinitions.dwp.navigation.NavigationElements;
 import stepdefinitions.dwp.plus.PlusActions;
 import stepdefinitions.dwp.tables.IsIsNot;
+import static org.hamcrest.CoreMatchers.containsString;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.HashMap;
@@ -35,6 +36,7 @@ import java.util.stream.Collectors;
 import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkTimeBetween;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.getFormattedEnd;
+import static java.util.function.Predicate.isEqual;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -733,35 +735,22 @@ public class ViewListChecks extends NavigationElements {
 
     //TODO Create a special test harness class for invoice checks,
     //and move the methods, related to invoice checks, there.
-    @Then("^Invoice Amounts are among values$")
-    public void checkInvoicesAmounts(final DataTable dbTable) {
-        List<List<String>> info = dbTable.raw();
-
-        String amountInvoice1 = info.get(1).get(0);
-        String amountInvoice2 = info.get(2).get(0);
-        String amountInvoice3 = info.get(3).get(0);
-
+    @Then("^Invoice Amounts have correct values$")
+    public void checkInvoiceAmount() {
         ContractPage cp = new ContractPage();
-        String actualBalance = cp.getBalance();
+        String actualValuesOfInvoices = cp.getActualValuesOfInvoicesAsString();
+        final String message = "Invoice Amount is not correct";
 
-        boolean isCorrectBalance = cp.compareActualAndExpectedBalances(amountInvoice1, amountInvoice2, amountInvoice3, actualBalance);
-        assertThat("Balance is not correct", isCorrectBalance, is(true));
+        assertThat(message, actualValuesOfInvoices, containsString("600 €"));
+        assertThat(message, actualValuesOfInvoices, containsString("-600 €"));
+        assertThat(message, actualValuesOfInvoices, containsString("1500 €"));
     }
 
-
-    @Then("^Balance is among values$")
-    public void checkValue(final DataTable dbTable) {
-        List<List<String>> info = dbTable.raw();
-
-        String balance1 = info.get(1).get(0);
-        String balance2 = info.get(2).get(0);
-        String balance3 = info.get(3).get(0);
-
+    @Then("^Balance is \"([^\"]*)\"$")
+    public void checkValue(String expectedBalance) {
         ContractPage cp = new ContractPage();
-        String actualBalance = cp.getBalance();
 
-        boolean isCorrectBalance = cp.compareActualAndExpectedBalances(balance1, balance2, balance3, actualBalance);
-        assertThat("Balance is not correct", isCorrectBalance, is(true));
+        assertThat("Balance is not correct", cp.getBalance(), equalTo(expectedBalance));
     }
 
     //TODO Create a special test harness class for wait methods,
