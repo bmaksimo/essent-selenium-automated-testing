@@ -26,7 +26,7 @@ public class DetailsFormSteps extends DwpScenario {
     public void checkFieldValue(String label) {
         AccountDetails details = new AccountDetailsImpl();
         String value = details.getNonEdtableValue(label);
-        assertThat(String.format("'%s' field was empty, was expected to have value", label),StringUtils.isNotEmpty(value), is(true));
+        assertThat(String.format("'%s' field was empty, was expected to have value", label), StringUtils.isNotEmpty(value), is(true));
         parameterProvider.put(label, value);
     }
 
@@ -47,6 +47,6 @@ public class DetailsFormSteps extends DwpScenario {
     @And("^Customer type is \"([^\"]*)\"$")
     public void customerTypeIs(String type){
         DetailsPage dp = new DetailsPage();        ;
-        Assert.assertEquals("Customer type does not match expected value",type, dp.getCustomerType());
+        Assert.assertEquals("Customer type does not match expected value", type, dp.getCustomerType());
     }
 }
