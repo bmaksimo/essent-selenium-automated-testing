@@ -26,7 +26,7 @@ import static org.testng.AssertJUnit.assertEquals;
 public class Contract extends DwpScenario {
     private static String Klantnummer;
 
-    @Before("@REGRESSION, @E2E")
+    @Before("@REGRESSION, @E2E, @API")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }

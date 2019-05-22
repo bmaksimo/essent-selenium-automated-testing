@@ -8,7 +8,7 @@ import stepdefinitions.dwp.navigation.NavigationElements;
 
 public class DashboardMenu extends NavigationElements {
 
-    @Before("@DWP, @CORE, @E2E, @REGRESSION")
+    @Before("@DWP, @CORE, @E2E, @REGRESSION, @API")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }

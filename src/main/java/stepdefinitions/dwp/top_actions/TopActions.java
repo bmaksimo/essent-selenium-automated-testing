@@ -17,7 +17,7 @@ import static org.hamcrest.Matchers.is;
 
 public class TopActions extends NavigationElements {
 
-    @Before("@DWP, @CORE, @E2E, @REGRESSION")
+    @Before("@DWP, @CORE, @E2E, @REGRESSION, @API")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }

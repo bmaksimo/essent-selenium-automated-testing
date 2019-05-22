@@ -23,6 +23,7 @@ import stepdefinitions.dwp.b2b.Marketberichten;
 import stepdefinitions.dwp.navigation.NavigationElements;
 import stepdefinitions.dwp.plus.PlusActions;
 import stepdefinitions.dwp.tables.IsIsNot;
+import static org.hamcrest.CoreMatchers.containsString;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.HashMap;
@@ -35,6 +36,7 @@ import java.util.stream.Collectors;
 import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkTimeBetween;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.getFormattedEnd;
+import static java.util.function.Predicate.isEqual;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -147,7 +149,7 @@ public class ViewListChecks extends NavigationElements {
         return columnIndexListOptions;
     }
 
-    @Before("@DWP, @CORE, @E2E, @REGRESSION")
+    @Before("@DWP, @CORE, @E2E, @REGRESSION, @API")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -733,68 +735,22 @@ public class ViewListChecks extends NavigationElements {
 
     //TODO Create a special test harness class for invoice checks,
     //and move the methods, related to invoice checks, there.
-    @Then("^Invoice Amounts are among values$")
-    public void checkInvoicesAmounts(final DataTable dbTable) {
-        List<List<String>> info = dbTable.raw();
-
-        //first list of possible invoice amounts
-        String amountInvoice1_1 = info.get(1).get(0);
-        String amountInvoice1_2 = info.get(2).get(0);
-        String amountInvoice1_3 = info.get(3).get(0);
-        String amountInvoice1_4 = info.get(4).get(0);
-        String amountInvoice1_5 = info.get(5).get(0);
-        String amountInvoice1_6 = info.get(6).get(0);
-
-        //second list of possible invoice amounts
-        String amountInvoice2_1 = info.get(1).get(1);
-        String amountInvoice2_2 = info.get(2).get(1);
-        String amountInvoice2_3 = info.get(3).get(1);
-        String amountInvoice2_4 = info.get(4).get(1);
-        String amountInvoice2_5 = info.get(5).get(1);
-        String amountInvoice2_6 = info.get(6).get(1);
-
-        //third list of possible invoice amounts
-        String amountInvoice3_1 = info.get(1).get(2);
-        String amountInvoice3_2 = info.get(2).get(2);
-        String amountInvoice3_3 = info.get(3).get(2);
-        String amountInvoice3_4 = info.get(4).get(2);
-        String amountInvoice3_5 = info.get(5).get(2);
-        String amountInvoice3_6 = info.get(6).get(2);
-
+    @Then("^Invoice Amounts have values \"([^\"]*)\", \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void checkInvoiceAmount(String invoiceAmount1, String invoiceAmount2, String invoiceAmount3) {
         ContractPage cp = new ContractPage();
         String actualValuesOfInvoices = cp.getActualValuesOfInvoicesAsString();
-        boolean firstCombination = cp.checkIsInvoicesAmountsAsStringCorrect(amountInvoice1_1, amountInvoice1_2, amountInvoice1_3, amountInvoice1_4, amountInvoice1_5, amountInvoice1_6, actualValuesOfInvoices);
-        boolean secondCombination = cp.checkIsInvoicesAmountsAsStringCorrect(amountInvoice2_1, amountInvoice2_2, amountInvoice2_3, amountInvoice2_4, amountInvoice2_5, amountInvoice2_6, actualValuesOfInvoices);
-        boolean thirdCombination = cp.checkIsInvoicesAmountsAsStringCorrect(amountInvoice3_1, amountInvoice3_2, amountInvoice3_3, amountInvoice3_4, amountInvoice3_5, amountInvoice3_6, actualValuesOfInvoices);
+        final String message = "Invoice Amount is not correct";
 
-        if (firstCombination) {
-            logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");
-
-        } else if (secondCombination) {
-            logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");
-
-        } else if (thirdCombination) {
-            logger().info("- STEP: Values of invoices \"%s\" are correct - PASSED.");
-
-        } else
-            throw new CucumberException("Actual invoices values " + actualValuesOfInvoices + " don't match expected ones");
-
+        assertThat(message, actualValuesOfInvoices, containsString(invoiceAmount1));
+        assertThat(message, actualValuesOfInvoices, containsString(invoiceAmount2));
+        assertThat(message, actualValuesOfInvoices, containsString(invoiceAmount3));
     }
 
-
-    @Then("^Balance is among values$")
-    public void checkValue(final DataTable dbTable) {
-        List<List<String>> info = dbTable.raw();
-
-        String balance1 = info.get(1).get(0);
-        String balance2 = info.get(2).get(0);
-        String balance3 = info.get(3).get(0);
-
+    @Then("^Balance is \"([^\"]*)\"$")
+    public void checkValue(String expectedBalance) {
         ContractPage cp = new ContractPage();
-        String actualBalance = cp.getBalance();
 
-        boolean isCorrectBalance = cp.compareActualAndExpectedBalances(balance1, balance2, balance3, actualBalance);
-        assertThat("Balance is not correct", isCorrectBalance, is(true));
+        assertThat("Balance is not correct", cp.getBalance(), equalTo(expectedBalance));
     }
 
     //TODO Create a special test harness class for wait methods,

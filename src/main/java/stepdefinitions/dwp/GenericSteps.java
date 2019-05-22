@@ -25,7 +25,7 @@ import static org.junit.Assert.assertNotNull;
 public class GenericSteps extends DwpScenario {
 
 
-    @Before("@DWP, @CORE, @E2E, @REGRESSION")
+    @Before("@DWP, @CORE, @E2E, @REGRESSION, @API")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
