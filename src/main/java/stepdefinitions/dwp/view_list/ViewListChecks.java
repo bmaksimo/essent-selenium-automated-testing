@@ -735,22 +735,22 @@ public class ViewListChecks extends NavigationElements {
 
     //TODO Create a special test harness class for invoice checks,
     //and move the methods, related to invoice checks, there.
-    @Then("^Invoice Amounts have correct values$")
-    public void checkInvoiceAmount() {
+    @Then("^Invoice Amounts have values \"([^\"]*)\", \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void checkInvoiceAmount(String invoiceAmount1, String invoiceAmount2, String invoiceAmount3) {
         ContractPage cp = new ContractPage();
         String actualValuesOfInvoices = cp.getActualValuesOfInvoicesAsString();
         final String message = "Invoice Amount is not correct";
 
-        assertThat(message, actualValuesOfInvoices, containsString("600 €"));
-        assertThat(message, actualValuesOfInvoices, containsString("-600 €"));
-        assertThat(message, actualValuesOfInvoices, containsString("1500 €"));
+        assertThat(message, actualValuesOfInvoices, containsString(invoiceAmount1));
+        assertThat(message, actualValuesOfInvoices, containsString(invoiceAmount2));
+        assertThat(message, actualValuesOfInvoices, containsString(invoiceAmount3));
     }
 
-    @Then("^Balance is correct$")
+    @Then("^Balance is \"([^\"]*)\"$")
     public void checkValue(String expectedBalance) {
         ContractPage cp = new ContractPage();
 
-        assertThat("Balance is not correct", cp.getBalance(), equalTo("€ 1500,00"));
+        assertThat("Balance is not correct", cp.getBalance(), equalTo(expectedBalance));
     }
 
     //TODO Create a special test harness class for wait methods,
