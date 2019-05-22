@@ -34,7 +34,6 @@ public class LeadSteps extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
         NewLeadPage leadPage = new NewLeadPage();
         List<List<String>> db = dbTabel.raw();
-
         leadPage.createLead(db);
         seleniumDriver.waitForRequestsToFinish();
     }

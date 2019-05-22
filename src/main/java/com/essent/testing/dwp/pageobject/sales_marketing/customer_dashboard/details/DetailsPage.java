@@ -11,6 +11,7 @@ public class DetailsPage extends Component {
     private static final String PHONE = "//div[@class='card__content__inner-wrapper']/p[2]/span[2]";
     private static final String EMAIL = "//div[@class='card__content__inner-wrapper']/p[2]/span[3]";
     private static final String CUSTOMER_NAME = "//div[@class='card__header']/h1";
+    private static final String TYPE = "account-type-field";
 
     public void findIban(String iban) {
         seleniumDriver.waitForRequestsToFinish();
@@ -36,5 +37,9 @@ public class DetailsPage extends Component {
 
     public String getCustomerName(){
         return seleniumDriver.findElementWhenVisible(By.xpath(CUSTOMER_NAME)).getText();
+    }
+
+    public String getCustomerType(){
+        return seleniumDriver.findElementWhenVisible(By.id(TYPE)).getText();
     }
 }
