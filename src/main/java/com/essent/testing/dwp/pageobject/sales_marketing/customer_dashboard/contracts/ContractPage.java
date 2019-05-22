@@ -39,6 +39,7 @@ public class ContractPage extends Component {
     private static final String INSTALLMENTS_SUM = "balance-field";
     private static final String INSTALLMENTS_NUMBER = "//list[@list-key='InstallmentsOnPaymentPlan']//h5";
     private static final String BILLING_NUMBER = "//list[@list-key='BillingCustomerOnaccount']//td[1]//span[1]";
+    private static final String INVOICE_OPEN_BALANCE = "//list-checkbox-cell[@list-key='" + REPLACEMENT_KEY + "']";
 
     private WebElement startData() {
         return seleniumDriver.findElementWhenVisible(By.id(START_DATA_ID));
@@ -99,7 +100,9 @@ public class ContractPage extends Component {
     }
 
     public void checkInvoiceOpenBalance(String key) {
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-checkbox-cell[@list-key='" + key + "']")));
+        seleniumDriver.waitForRequestsToFinish();
+        String xpathAction = createQuery(INVOICE_OPEN_BALANCE, REPLACEMENT_KEY, key);
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(xpathAction)));
     }
 
     public String getActiveContractEndDate() {
