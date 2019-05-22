@@ -3,7 +3,7 @@
 @SOCTAR
 @REGRESSION
 @ALL
-Feature: Social tariff (SOCTAR) contract creation
+Feature: NSTA-333: Social tariff (SOCTAR) contract creation
 
     Background:
         Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
