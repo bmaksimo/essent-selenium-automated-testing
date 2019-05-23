@@ -7,7 +7,7 @@ Feature: NUAT-412 part: Create B2B TK1 Contract
     Background:
         Given  I logged in to DWP as "contracting.testautomation.b2c@essent.be"
 
-    @NUAT-412
+    @NUAT-412-1
     Scenario: Create active contract TK1 ->
         When Plus menu is "Sales -> TK1 -> Nieuwe TK1 offerte (B2B) aanmaken"
         And Company VAT number is random
@@ -49,6 +49,7 @@ Feature: NUAT-412 part: Create B2B TK1 Contract
         And "Startdatum" date on "Elektriciteit Vast" card is "now"
         And "EAN-code" input on "Elektriciteit Vast" card is "parameter:EAN-code-generated"
         And Connection details are confirmed
+        And Save changes
         Then Form header is "Billing details"
 
         When "Betalingswijze" selection is "Overschrijving"
