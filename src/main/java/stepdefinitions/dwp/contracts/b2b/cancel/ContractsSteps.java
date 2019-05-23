@@ -227,6 +227,7 @@ public class ContractsSteps extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
         ContractPage cp = new ContractPage();
         String messageActual = cp.checkSuccessMessage();
+        seleniumDriver.waitForElementTextContainsString(cp.locateMessageElement(),expectedMessage, 90, 10);
         Assert.assertThat("Product change wasn't successfully done", messageActual, equalTo(expectedMessage));
 
     }

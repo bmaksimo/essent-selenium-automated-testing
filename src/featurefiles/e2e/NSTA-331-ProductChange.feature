@@ -37,6 +37,7 @@ Feature: NSTA 331- Product Change for TK1 type
         And Electricity market mock test is Open
         And "EAN-code" input is "parameter:EAN-code-generated"
         And Connection details are confirmed
+        And Save changes
         Then Form header is "Billing details"
 
         When "Betalingswijze" selection is "Overschrijving"
