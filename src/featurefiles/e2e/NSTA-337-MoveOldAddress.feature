@@ -137,6 +137,6 @@ Feature: NSTA - 337 Move old address
 
         When Dashboard menu is "Contracten"
         Then Check contract
-            | type | start date |              EAN             |      product      |
-            | GLN  |    now     | parameter:EAN-code-generated | parameter:product |
+            | type |         status          | start date |              EAN             |      product      |
+            | GLN  |  Verwerkt (Geaccepteerd)|  now       | parameter:EAN-code-generated | parameter:product |
 
