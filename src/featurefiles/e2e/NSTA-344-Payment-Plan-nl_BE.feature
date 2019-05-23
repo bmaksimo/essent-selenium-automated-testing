@@ -2,7 +2,7 @@
 @DWP
 @B2C
 @ALL
-Feature: NSTA-344: Payment Plan
+Feature: NSTA-344:Payment Plan
 
     Background:
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
@@ -92,6 +92,15 @@ Feature: NSTA-344: Payment Plan
         And "1st" List element with value at column "ID & Type" is checked
 
         #Create a payment plan for this customer
+        Given I renew login to DWP as "businessdesk.testautomation.b2b@essent.be"
+        When Left menu is "contracting-switching"
+        And Top menu item is "Klanten"
+        And Top action is "Filters"
+        And "Type klant" selection is "Klant"
+        And "Klantnummer" input is "parameter:accountNumber"
+        Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
+        When Dashboard menu is "Billing"
+        Then View list header is "Transacties"
         And List option is "ENKEL FACTUREN"
         And View list header is "Openstaande facturen"
         And Invoice checkbox with key "InvoicesOnAccountOpenBalance" is clicked
