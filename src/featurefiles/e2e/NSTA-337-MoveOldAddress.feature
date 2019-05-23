@@ -37,6 +37,7 @@ Feature: NSTA - 337 Move old address
         And "Meternummer" input is "1000"
         And Option "test" is On
         And Connection details are confirmed
+        And Save changes
         Then Form header is "Billing details"
 
         When "Betalingswijze" selection is "Overschrijving"
@@ -137,5 +138,5 @@ Feature: NSTA - 337 Move old address
         When Dashboard menu is "Contracten"
         Then Check contract
             | type |         status          | start date |              EAN             |      product      |
-            | GLN  | Verwerkt (Geaccepteerd) |    now     | parameter:EAN-code-generated | parameter:product |
+            | GLN  |  Verwerkt (Geaccepteerd)|  now       | parameter:EAN-code-generated | parameter:product |
 
