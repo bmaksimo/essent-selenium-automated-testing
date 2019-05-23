@@ -39,6 +39,7 @@ Feature: NSTA-330. Check the generation of prepaid advance invoice.
         And EAN code is generated
         And "EAN-code" input on "Aardgas Vooraf" card is "parameter:EAN-code-generated"
         And Connection details are confirmed
+        And Save changes
         Then Form header is "Billing details"
 
         When "Betalingswijze" selection is "Overschrijving"
