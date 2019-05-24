@@ -13,7 +13,6 @@ import io.restassured.http.Cookies;
 import stepdefinitions.quote.api.helper.AsyncExecutor;
 import stepdefinitions.quote.api.model.ContractDetails;
 import stepdefinitions.quote.api.model.QuoteDetails;
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import static org.awaitility.Awaitility.await;
@@ -104,7 +103,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     }
 
     @When("^File is uploaded as scanned signature$")
-    public void file_is_uploaded_as_scanned_signature() throws Throwable {
+    public void file_is_uploaded_as_scanned_signature() {
 	this.docId = new QuoteSignatureAPI().uploadSignature(cookie, quoteDetails);
     }
 
@@ -116,6 +115,12 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     @Then("^Contract is created$")
     public void contract_is_created() throws Throwable {
 	this.contractDetails = new ContractDetailsAPI().getContractDetails(cookie, quoteDetails);
+	String contractDate = new ContractDetailsAPI().getContractDetails(cookie, quoteDetails).getContractStartDate();
+        StringBuilder builder = new StringBuilder();
+        String[] str = contractDate.split("-");
+        String yearContractDate = str[0], monthContractDate = str[1], dayContractDate = str[2];
+        builder.append(dayContractDate).append("-").append(monthContractDate).append("-").append(yearContractDate);
+        parameterProvider.put("contractDate", builder);
     }
 
     @Then("^Contracted EAN exists on account$")
@@ -131,13 +136,13 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     }
 
     @Then("^Wait until contract instance starts$")
-    public void wait_until_contract_instance_starts() throws Throwable {
+    public void wait_until_contract_instance_starts() {
 	await().pollInterval(5, TimeUnit.SECONDS).atMost(600, TimeUnit.SECONDS)
 		.until(AsyncExecutor.isStatusSuccessfull(cookie, contractDetails));
     }
 
     @And("^Check order in jbilling$")
-    public void checkOrderInJbilling() throws IOException {
+    public void checkOrderInJbilling() {
         //assertThat( new ContractDetailsAPI().getOrderDetails(cookie, quoteDetails, contractDetails), is(true));
 
         await().pollInterval(5, TimeUnit.SECONDS).atMost(600, TimeUnit.SECONDS)
