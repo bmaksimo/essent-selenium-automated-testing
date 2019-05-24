@@ -131,7 +131,7 @@
             "address_country": "BE",
             "road65_street_id": "36206"
         },
-        "dwp|is_main": false,
+        "dwp|is_main": true,
         "accounts|aos_quotes|aos_products_quotes|advance_base_c": "EAV",
         "accounts|aos_quotes|aos_products_quotes|advance_frequency_c": "1",
         "accounts|aos_quotes|aos_products_quotes|delivery_address_postalcode": "3012",
