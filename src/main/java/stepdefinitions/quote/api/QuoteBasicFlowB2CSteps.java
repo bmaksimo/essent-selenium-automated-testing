@@ -13,7 +13,6 @@ import io.restassured.http.Cookies;
 import stepdefinitions.quote.api.helper.AsyncExecutor;
 import stepdefinitions.quote.api.model.ContractDetails;
 import stepdefinitions.quote.api.model.QuoteDetails;
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import static org.awaitility.Awaitility.await;
@@ -42,104 +41,101 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     }
 
     @Given("^I login to iWelcome as \"([^\"]*)\"$")
-    public void i_login_to_iWelcome_as(String username) throws Throwable {
+    public void iLoginToIWelcomeAs(String username) throws Throwable {
 	String password = ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_SOAPUI_B2C);
 	this.cookie = new IWelcomeLoginAPI().getCookie(username, password);
     }
 
     @Given("^\"([^\"]*)\" flow is started$")
-    public void flow_is_started(String arg1) throws Throwable {
+    public void flowIsStarted(String arg1) throws Throwable {
 	this.tariffSheetID = new QuoteDetailsAPI().getTariffSheetID(cookie, arg1);
     }
 
     @When("^Data is prepared for Create quote request for \"([^\"]*)\"$")
-    public void data_is_prepared_for_Create_quote_request_for(String arg1) throws Throwable {
+    public void dataIsPreparedForCreateQuoteRequestFor(String arg1) throws Throwable {
         this.flow = arg1;
 	this.quoteDetails = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow);
 
     }
 
     @When("^New tc(\\d+)_quote is created$")
-    public void new_tc__quote_is_created(int arg1) throws Throwable {
+    public void newTcQuoteIsCreated(int arg1) throws Throwable {
 	String retreivedQuoteNumber = new QuoteDetailsAPI().getQuoteNumber(cookie, quoteDetails.getRecordId());
     String retrievedAccountNumber = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow).getAccountNumber();
     int result = Integer.parseInt(retrievedAccountNumber);
     result -=1;
         parameterProvider.put("accountNumber", result);
-	// assertEquals(quoteDetails.getQuoteNumber(),retreivedQuoteNumber);
 	assertThat(retreivedQuoteNumber, is(equalTo(quoteDetails.getQuoteNumber())));
     }
 
     @Then("^Quote status is \"([^\"]*)\"$")
-    public void quote_status_is(String arg1) throws Throwable {
+    public void quoteStatusIs(String arg1) throws Throwable {
 	String status = new QuoteDetailsAPI().checkStatus(cookie, quoteDetails.getQuoteId());
-	// assertEquals(arg1.toLowerCase(), status.toLowerCase());
 	assertThat(status.toLowerCase(), is(equalTo(arg1.toLowerCase())));
     }
 
     @Then("^Quoteline exists$")
-    public void quoteline_exists() throws Throwable {
+    public void quotelineExists() throws Throwable {
 	boolean eanExists = new QuoteDetailsAPI().checkIfEANexists(cookie, quoteDetails);
-	// assertEquals(true, eanExists);
 	assertThat(eanExists, is(true));
     }
 
     @Then("^Quoteline status is \"([^\"]*)\"$")
-    public void quoteline_status_is(String arg1) throws Throwable {
+    public void quotelineStatusIs(String arg1) throws Throwable {
 	String status = new QuoteDetailsAPI().getStatus(cookie, quoteDetails.getQuoteId());
-	// assertEquals(arg1.toLowerCase(),status.toLowerCase());
 	assertThat(status.toLowerCase(), is(equalTo(arg1.toLowerCase())));
     }
 
     @When("^Simulation that customer signature is received$")
-    public void simulation_that_customer_signature_is_received() throws Throwable {
+    public void simulationThatCustomerSignatureIsReceived() throws Throwable {
 	new QuoteSignatureAPI().setSignatureReceived(cookie, quoteDetails);
     }
 
     @Then("^Quote stage status is \"([^\"]*)\"$")
-    public void quote__stage_status_is(String arg1) throws Throwable {
+    public void quoteStageStatusIs(String arg1) throws Throwable {
 	String status = new QuoteDetailsAPI().checkStageStatus(cookie, quoteDetails.getQuoteId());
-	// assertEquals(arg1.toLowerCase(), status.toLowerCase());
 	assertThat(status.toLowerCase(), is(equalTo(arg1.toLowerCase())));
     }
 
     @When("^File is uploaded as scanned signature$")
-    public void file_is_uploaded_as_scanned_signature() throws Throwable {
+    public void fileIsUploadedAsScannedSignature() {
 	this.docId = new QuoteSignatureAPI().uploadSignature(cookie, quoteDetails);
     }
 
     @Then("^Signin is confirmed$")
-    public void signin_is_confirmed() throws Throwable {
+    public void signinIsConfirmed() throws Throwable {
 	new QuoteSignatureAPI().confirmSigning(cookie, quoteDetails.getQuoteId(), docId);
     }
 
     @Then("^Contract is created$")
-    public void contract_is_created() throws Throwable {
+    public void contractIsCreated() throws Throwable {
 	this.contractDetails = new ContractDetailsAPI().getContractDetails(cookie, quoteDetails);
+	    String contractDate = new ContractDetailsAPI().getContractDetails(cookie, quoteDetails).getContractStartDate();
+        StringBuilder builder = new StringBuilder();
+        String[] str = contractDate.split("-");
+        String yearContractDate = str[0], monthContractDate = str[1], dayContractDate = str[2];
+        builder.append(dayContractDate).append("-").append(monthContractDate).append("-").append(yearContractDate);
+        parameterProvider.put("contractDate", builder);
     }
 
     @Then("^Contracted EAN exists on account$")
     public void contracted_EAN_exists_on_account() throws Throwable {
-
-	// assertTrue(new ContractsOnAccountAPI().checkIfEanExists(cookie,
 	assertThat(new ContractDetailsAPI().checkIfEanExists(cookie, quoteDetails), is(true));
     }
 
     @When("^Payment details are received$")
-    public void payment_details_are_received() throws Throwable {
+    public void paymentDetailsAreReceived() throws Throwable {
 	this.jbillingId = new ContractDetailsAPI().getPaymentDetails(cookie, quoteDetails.getQuoteId(), contractDetails);
     }
 
     @Then("^Wait until contract instance starts$")
-    public void wait_until_contract_instance_starts() throws Throwable {
+    public void waitUntilContractInstanceStarts() {
 	await().pollInterval(5, TimeUnit.SECONDS).atMost(600, TimeUnit.SECONDS)
 		.until(AsyncExecutor.isStatusSuccessfull(cookie, contractDetails));
     }
 
     @And("^Check order in jbilling$")
-    public void checkOrderInJbilling() throws IOException {
-        //assertThat( new ContractDetailsAPI().getOrderDetails(cookie, quoteDetails, contractDetails), is(true));
-
+    public void checkOrderInJbilling() {
         await().pollInterval(5, TimeUnit.SECONDS).atMost(600, TimeUnit.SECONDS)
             .until(AsyncExecutor.isOrderCreated(cookie, quoteDetails, contractDetails));
     }
