@@ -110,7 +110,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     @Then("^Contract is created$")
     public void contractIsCreated() throws Throwable {
 	this.contractDetails = new ContractDetailsAPI().getContractDetails(cookie, quoteDetails);
-	String contractDate = new ContractDetailsAPI().getContractDetails(cookie, quoteDetails).getContractStartDate();
+	    String contractDate = new ContractDetailsAPI().getContractDetails(cookie, quoteDetails).getContractStartDate();
         StringBuilder builder = new StringBuilder();
         String[] str = contractDate.split("-");
         String yearContractDate = str[0], monthContractDate = str[1], dayContractDate = str[2];
