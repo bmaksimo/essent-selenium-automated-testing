@@ -4,8 +4,8 @@
 @CREDIT-AND-CONTROL
 Feature: NUAT-412 part: Create / import coda file
     Background:
-        # 1 - Create active B2B TC1 contract
-        Given B2B Active Contract is "TC1" product type and use "FAKE" address and switch type is "MOVE IN"
+        # 1 - Create active B2B UP contract
+        Given B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
     @NUAT-412
     Scenario: Create active contract TK1
         Given I logged in to DWP as "billing.testautomation@essent.be"
