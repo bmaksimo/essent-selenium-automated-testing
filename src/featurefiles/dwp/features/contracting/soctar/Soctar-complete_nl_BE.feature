@@ -2,82 +2,46 @@
 @SERVICE-CONTRACTING
 @SOCTAR
 @REGRESSION
+@API
 @ALL
 Feature: NSTA-333: Social tariff (SOCTAR) contract creation
 
     Background:
-        Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
-        #Output parameter "start_end_date", format: '1yyyyMMddyyyy1231'
-        #Output parameter  "start-en-einddatum", format: 'dd-MM-yyyy - dd-MM-yyyy'
-        And Soctar start date is "now"
+        # 1 - API contract creation
+        Given I login to iWelcome as "soapui_b2c"
+        And "Create_Quote" flow is started
+        When Data is prepared for Create quote request for "prospect"
+        And New tc1_quote is created
+        Then Quote status is "ACCEPTED"
+        And Quoteline exists
+        And Quoteline status is "Sent to customer"
+
+        When Simulation that customer signature is received
+        Then Quote stage status is "SIGNATURE RECEIVED"
+        And Quoteline status is "Signature received"
+
+        When File is uploaded as scanned signature
+        Then Signin is confirmed
+        And Contract is created
+        And Contracted EAN exists on account
+
+        When Payment details are received
+        Then Wait until contract instance starts
+        And Check order in jbilling
     @SOCTAR-COMPLETE
     @NSTA-333
     Scenario: Create Soctar (Social tariff) quote and contract, and check Soctar confirmation letter
-        # 1 - GUI contract creation
-        When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
-        Then Form header is "Quote details"
+        Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
+        And Soctar start date is "now"
 
-        When "Tariefdatum" date is "2 weeks before now"
-        And "Sales kanaal" selection is "Inbound"
-        And Quote details are confirmed
-        Then Form header is "Personal details"
-
-        When Customer is random
-        And Customer address is
-            | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-            | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
-        And Customer details are confirmed
-        Then Form header is "Select package & fuel type"
-
-        When Package is "Vast"
-        And Checkbox "Gas Fix B2C (TC1)" is Unchecked
-        And Package and Fuel Type is confirmed
-        Then Form header is "Connection details"
-
-        When "Startdatum" date is "2 weeks before now"
-        And EAN code is generated
-        And "EAN-code" input is "parameter:EAN-code-generated"
-        And Electricity market mock test is Open
-        And Connection details are confirmed
-        Then Form header is "Billing details"
-
-        When "Betalingswijze" selection is "Overschrijving"
-        And Billing details are confirmed
-        Then Form header is "Quote overview"
-
-        When Option "Heeft de klant al getekend?" is On
-        And "Kanaal ondertekening" selection is "Papier"
-        And Quote is signed in "Kontich"
-        And "Datum ondertekening" date is "now"
-        And Quote is confirmed
-        Then View list header is "Offertes"
-        Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
-
-        When Dashboard menu is "Contracten"
-        Then View list header is "Actieve en toekomstige connecties"
-        And "1st" List element with value at column "EAN-code" is checked
-        And "1st" list element has cell value "Actief" at column "Contractnummer" polling 450 seconds
-
-        When Top arrow button is "Up"
-        And Left menu is "contracting-switching"
-        And Top menu item is "Klanten"
-        And Top action is "Filters"
-        And "Naam" input is "parameter:suitecrm-customer-name"
-        Then "1st" List element with value at column "Klantnummer & Naam" is checked
         #Steps 2 - Soctar file sftp upload
-        Given Soctar customer Id is "parameter:Klantnummer & Naam"
+        Given Soctar customer Id is "parameter:accountNumber"
         And Soctar EAN is "parameter:EAN-code"
         And Soctar start date is "now"
         Then Soctar file is uploaded to "/home/ESSENT/sa_sftpcrm_smx/data/soctar" remote directory
 
         #Step 3 Check the status of "Soctar file upload"
-
-        #Output parameter: "plus-menu-item"
         When Plus menu is "Contracting -> Soctar -> Sociale tariefbatches"
-
-        #Input parameter: "parameter:soctar-file-name"
-        #Input parameter   "plus-menu-item"
-        #Step will refresh the view, clicking on "plus-menu-item"
         Then "1st" list element has cell value "parameter:soctar-file-name" at column "Batchnaam" within 450 seconds
         And "1st" list element has cell value "Import Klaar" at column "Type & Status"
 
@@ -100,7 +64,8 @@ Feature: NSTA-333: Social tariff (SOCTAR) contract creation
 
         #Step 8 Sent out the confirmation letter
         When Top arrow button is "UP"
-        When Plus menu is "Contracting -> Soctar -> Sociaal tarief contractlijnen"
+        And Left menu is "contracting-switching"
+        And Plus menu is "Contracting -> Soctar -> Sociaal tarief contractlijnen"
         And "EAN-code" input is "parameter:EAN-code"
         Then "1st" List element with value at column "Status & Product" is checked
         And Click on "BEVESTIG CONTRACTLIJNEN" link
