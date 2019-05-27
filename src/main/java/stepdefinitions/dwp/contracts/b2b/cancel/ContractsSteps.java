@@ -25,7 +25,7 @@ import static org.hamcrest.Matchers.is;
 import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertTrue;
 
-public class ContractsSteps extends DwpScenario {
+public class ContractsSteps extends DwpScenario{
 
     private String eanCodeInput = null;
 
@@ -226,10 +226,16 @@ public class ContractsSteps extends DwpScenario {
     public void checkProductChangeSuccess(String expectedMessage) {
         seleniumDriver.waitForRequestsToFinish();
         ContractPage cp = new ContractPage();
-        String messageActual = cp.checkSuccessMessage();
-        seleniumDriver.waitForElementTextContainsString(cp.locateMessageElement(),expectedMessage, 90, 10);
-        Assert.assertThat("Product change wasn't successfully done", messageActual, equalTo(expectedMessage));
-
+            int refreshCount = 10;
+            for (int i = 0; i < refreshCount; i++) {
+            if (cp.locateMessageElement().getText().contains(expectedMessage)) {
+                    break;
+                } else {
+                    seleniumDriver.getDriver().navigate().back();
+                    seleniumDriver.getDriver().navigate().forward();
+                }
+            }
+        Assert.assertTrue("Product change wasn't successfully done", cp.locateMessageElement().getText().contains(expectedMessage));
     }
 
   @Then("^Product Change dates are \"([^\"]*)\" and \"([^\"]*)\"$")

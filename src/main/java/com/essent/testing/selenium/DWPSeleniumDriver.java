@@ -246,11 +246,6 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
         driverWaitFor(ExpectedConditions.stalenessOf(element), timeoutInSeconds, sleepInMillis);
     }
 
-    public void waitForElementTextContainsString(WebElement element, String expectedString, final long timeoutInSeconds, final long sleepInMillis) {
-        ExpectedCondition<Boolean> elementAttributeEqualsString = arg0 -> element.getText().contains(expectedString);
-        driverWaitFor(elementAttributeEqualsString, timeoutInSeconds, sleepInMillis);
-    }
-
     private void waitForElement(final WebElement element) {
         ngWebDriver.waitForAngularRequestsToFinish();
         waitForElementToBeVisible(element, 30, 5);

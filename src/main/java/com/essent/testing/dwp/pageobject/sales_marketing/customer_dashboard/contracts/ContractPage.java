@@ -272,7 +272,7 @@ public class ContractPage extends Component {
     }
 
     public WebElement locateMessageElement(){
-        return seleniumDriver.findElementWhenPresent(By.xpath(LABELFORPRODUCTCHANGE));
+        return seleniumDriver.findElementWhenVisible(By.xpath(LABELFORPRODUCTCHANGE));
     }
 
     public String checkSuccessMessage() {
