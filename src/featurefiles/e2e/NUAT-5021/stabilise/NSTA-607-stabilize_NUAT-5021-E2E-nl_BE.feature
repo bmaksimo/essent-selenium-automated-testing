@@ -121,7 +121,7 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And Odoo top menu is "Accounting"
         And Odoo left menu is "Customers"
         And Odoo filter is "parameter:accountNumber"
-        When Column "Account Number" with value "parameter:accountNumber" is clicked
+        When Column "Account Number" with value "parameter:Klantnummer & Naam" is clicked
         And Button "Journal Items" is clicked
         And Generate CODA in the first row with "Amount receivable" is clicked
         Then Modal title contains "Download CODA"
