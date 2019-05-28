@@ -115,26 +115,29 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And Dashboard menu is "Billing"
         Then "1st" list element has cell value "Invoice (GUARANTEE)" at column "ID & Type"
 
-        # 3 - Download CODA
+        # Step 4 - Generate Odoo CODA for account
         Given I renew login to Odoo as "role_essent_ccm_user"
-        When Cleanup Odoo CODA files
-        And Odoo top menu is "Accounting"
+        And Cleanup Odoo CODA files
+        When Odoo top menu is "Accounting"
         And Odoo left menu is "Customers"
-        And Odoo filter is "parameter:accountNumber"
-        When Column "Account Number" with value "parameter:accountNumber" is clicked
+        And Odoo filter is "parameter:Klantnummer & Naam"
+        When Column "Account Number" with value "parameter:Klantnummer & Naam" is clicked
         And Button "Journal Items" is clicked
         And Generate CODA in the first row with "Amount receivable" is clicked
         Then Modal title contains "Download CODA"
         And Generated CODA file is downloaded
+        And Modal button "Close" is clicked
 
-        # 4 - import and match CODA
-        Given I renew login to Odoo as "role_essent_ccm_user"
-        When Odoo top menu is "Accounting"
-        And Odoo left menu is "CODA Processing->Import CODA Files"
+        #Pay guarantee amount
+        When Odoo left menu is "CODA Processing->Import CODA Files"
         Then Odoo file upload dialog is "Import CODA File"
-        Then CODA file is "parameter:codaFile"
+        When CODA file is "parameter:codaFile"
         And Odoo file upload confirm button is "Import"
-        And Odoo file import report contains success string "Number of statements processed : 1"
+        Then Odoo file import report
+        When Modal button "View Bank Statement" is clicked
+        And Wait for 30 seconds
+        And Column "Reference" of the "1st" row is clicked
+        Then Bank Statement "Close" button is clicked
 
         #Switch back to Dwp and verify Guarantee Payment
         Given I renew login to DWP as "billing.testautomation@essent.be"
