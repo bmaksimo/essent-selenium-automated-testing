@@ -1,8 +1,10 @@
+@ALL
 @E2E
 @DWP
+@REGRESSION
 Feature: NUAT-5021 Complete scenario from de-duplication of client with guarantee to inactive client
 
-    @NUAT-5021
+    @NUAT-5021-STABILISE
     Scenario: From de-duplication of client to inactive client via passive renewal
 
         # Step 1: create customer with guarantee
@@ -64,8 +66,6 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
             | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
             | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
         And Customer is duplicated
-        And  Deduplication dialogue "Soortgelijke klanten" is shown
-        And  Deduplication dialogue link "Create quote for account" is clicked
         Then Form header is "Quote details"
 
         When "Sales kanaal" selection is "Inbound"
