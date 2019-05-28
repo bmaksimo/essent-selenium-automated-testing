@@ -342,6 +342,7 @@ public class ViewListChecks extends NavigationElements {
             ordinal, expectedValue, columnName, seconds));
     }
 
+
     private void loopBack(String arrow, String dashboardMenu) {
         try {
             seleniumDriver.waitForRequestsToFinish();
@@ -724,10 +725,11 @@ public class ViewListChecks extends NavigationElements {
     }
 
     @And("^\"([^\"]*)\" in the first \"([^\"]*)\" row of \"([^\"]*)\" table is \"([^\"]*)\"$")
-    public void firstRowByOptionContains(String columnToSearch, String optionToSearch, String table,
-                                         String expression) {
+    public void checkCurrencyAmount(String columnToSearch, String optionToSearch, String table,
+                                    String expression) {
         seleniumDriver.waitForRequestsToFinish();
         Optional<String> currencyValue = new ViewListTestObject().getCurrencyValueAt(1, columnToSearch, table);
+
         assertThat(String.format("\"%s\" list element didn't contain any value at column \"%s\"", 1, columnToSearch),
             currencyValue.isPresent(), is(true));
         int actualAmount = amountInCurrencyAsInt(currencyValue.get());
