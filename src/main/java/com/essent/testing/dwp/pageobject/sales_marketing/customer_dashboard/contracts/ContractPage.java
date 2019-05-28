@@ -271,9 +271,13 @@ public class ContractPage extends Component {
         return range;
     }
 
+    public WebElement locateMessageElement(){
+        return seleniumDriver.findElementWhenVisible(By.xpath(LABELFORPRODUCTCHANGE));
+    }
+
     public String checkSuccessMessage() {
         seleniumDriver.waitForRequestsToFinish();
-        String messageProductChange = seleniumDriver.findElementWhenPresent(By.xpath(LABELFORPRODUCTCHANGE)).getText();
+        String messageProductChange = locateMessageElement().getText();
         String[] values = {"1 succeeded", "1 queued", "1 failed"};
         String match = "";
 
