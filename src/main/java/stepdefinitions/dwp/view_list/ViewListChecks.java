@@ -23,6 +23,8 @@ import stepdefinitions.dwp.b2b.Marketberichten;
 import stepdefinitions.dwp.navigation.NavigationElements;
 import stepdefinitions.dwp.plus.PlusActions;
 import stepdefinitions.dwp.tables.IsIsNot;
+
+import static com.billinghouse.test_automation.util.dsl.NumericUtil.checkAmount;
 import static org.hamcrest.CoreMatchers.containsString;
 
 import javax.swing.table.DefaultTableModel;
@@ -703,21 +705,9 @@ public class ViewListChecks extends NavigationElements {
                     table, value, column));
     }
 
-    @And("^\"([^\"]*)\" in the first \"([^\"]*)\" row of \"([^\"]*)\" table is \"([^\"]*)\"$")
-    public void firstRowByOptionContains(String columnToSearch, String optionToSearch, String list,
-                                         String textToCheck) {
-        Map<String, String> options = new HashMap<>();
-        options.put("column", columnToSearch);
-        options.put("option", optionToSearch);
-        options.put("list", list);
-        options.put("text", textToCheck);
-        boolean success = new CheckFirstRowByOption().test(options);
-        assertThat(String.format("The column cannot be found, no rows were found or value does not match"
-                + "the one requested. Please check all the parameters passed, remember that they are case sensitive!"),
-            success, is(true));
-        logger().info(String.format("- STEP: \"%s\" in the first \"%s\" row of \"%s\" table is \"%s\" - PASSED.",
-            columnToSearch, optionToSearch, list, textToCheck));
-    }
+
+    //TODO Create a special test harness class for invoice checks,
+    //and move the methods, related to invoice checks, there.
 
     @And("^\"([^\"]*)\" element of table \"([^\"]*)\" at currency column \"([^\"]*)\" is sum of$")
     public void checkCurrencyAmountDableDataAsSum(String ordinal, String table, String columnName, final DataTable subAmounts)
@@ -733,8 +723,19 @@ public class ViewListChecks extends NavigationElements {
         assertThat("Total advance prepaid amount %s is not equal to sum of sub amounts %s", actualAmount, equalTo(sum));
     }
 
-    //TODO Create a special test harness class for invoice checks,
-    //and move the methods, related to invoice checks, there.
+    @And("^\"([^\"]*)\" in the first \"([^\"]*)\" row of \"([^\"]*)\" table is \"([^\"]*)\"$")
+    public void firstRowByOptionContains(String columnToSearch, String optionToSearch, String table,
+                                         String expression) {
+        seleniumDriver.waitForRequestsToFinish();
+        Optional<String> currencyValue = new ViewListTestObject().getCurrencyValueAt(1, columnToSearch, table);
+        assertThat(String.format("\"%s\" list element didn't contain any value at column \"%s\"", 1, columnToSearch),
+            currencyValue.isPresent(), is(true));
+        int actualAmount = amountInCurrencyAsInt(currencyValue.get());
+        boolean success = checkAmount(actualAmount, expression);
+        assertThat("The expected value differs from the real value", success, is(true));
+
+    }
+
     @Then("^Invoice Amounts have values \"([^\"]*)\", \"([^\"]*)\" and \"([^\"]*)\"$")
     public void checkInvoiceAmount(String invoiceAmount1, String invoiceAmount2, String invoiceAmount3) {
         ContractPage cp = new ContractPage();

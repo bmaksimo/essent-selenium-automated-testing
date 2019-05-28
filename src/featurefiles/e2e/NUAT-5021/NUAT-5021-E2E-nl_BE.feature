@@ -149,7 +149,7 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
 
         And Click on link in View List at "1st" row and "Klantnummer & Naam" column
         And Dashboard menu is "Billing"
-        Then "Openstaand bedrag" in the first "Paid by OV" row of "Transacties" table is "0"
+        Then "Openstaand bedrag" in the first "Paid by OV" row of "Transacties" table is "equal to 0"
 
         #Step 5 - Should create Supplier Switch market message
         When Dashboard menu is "Marktberichten"
