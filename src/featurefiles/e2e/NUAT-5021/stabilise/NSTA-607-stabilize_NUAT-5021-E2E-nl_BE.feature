@@ -120,7 +120,7 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         When Cleanup Odoo CODA files
         And Odoo top menu is "Accounting"
         And Odoo left menu is "Customers"
-        And Odoo filter is "parameter:accountNumber"
+        And Odoo filter is "parameter:Klantnummer & Naam"
         When Column "Account Number" with value "parameter:Klantnummer & Naam" is clicked
         And Button "Journal Items" is clicked
         And Generate CODA in the first row with "Amount receivable" is clicked
