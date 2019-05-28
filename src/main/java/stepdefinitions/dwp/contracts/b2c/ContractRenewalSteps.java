@@ -2,21 +2,28 @@ package stepdefinitions.dwp.contracts.b2c;
 
 import com.billinghouse.test_automation.util.dsl.DwpDateTimeFormat;
 import com.billinghouse.test_automation.util.dsl.IntervalUtil;
+import com.essent.testing.dwp.constant.ParameterKeys;
 import com.essent.testing.dwp.pageobject.ViewList;
+import com.essent.testing.dwp.pageobject.elements.NonEditable;
+import com.essent.testing.dwp.pageobject.impl.elements.NonEditableImpl;
 import com.essent.testing.dwp.pageobject.list_view.ViewListTestObject;
-import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
+import cucumber.runtime.CucumberException;
+import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.Matchers;
+import org.openqa.selenium.support.ui.FluentWait;
+import stepdefinitions.dwp.navigation.NavigationElements;
+import stepdefinitions.dwp.tables.DwpArrows;
+import stepdefinitions.dwp.view_list.ViewListChecks;
 
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-
-public class ContractRenewalSteps extends DwpScenario {
+public class ContractRenewalSteps extends NavigationElements {
 
   @Before("@DWP, @B2C, @E2E, @REGRESSION")
   public void setupTest(Scenario scenario) throws Throwable {
@@ -46,6 +53,33 @@ public class ContractRenewalSteps extends DwpScenario {
             column, table, periodOfRenewal),
         dateValues,
         Matchers.hasSize(count));
+  }
+
+  @And("^\"([^\"]*)\" field value is switched to \"([^\"]*)\" within (\\d+) seconds?$")
+  public void checkFieldValue(String label, String expectedValue, int seconds) throws Throwable {
+    NonEditable field = new NonEditableImpl();
+    FluentWait<NonEditable> waiter = waiter(field, seconds, 5);
+    waiter.until(
+        (NonEditable p) -> {
+          updateDetailsPage();
+          String actualValue = p.getValue(label);
+          String assertionMessage =
+              String.format(
+                  "Actual value of \"%s\" was \"%s\" differs from expected \"%s\"",
+                  label, actualValue, expectedValue);
+          waiter.withMessage(assertionMessage);
+          return StringUtils.equals(expectedValue, actualValue);
+        });
+  }
+
+  private void updateDetailsPage() {
+    clickTopArrow(DwpArrows.Up.getArrow());
+    try {
+      ViewListChecks viewListChecks = (ViewListChecks) getScenarioInstance(ViewListChecks.class);
+      viewListChecks.clickOnLink(ParameterKeys.SuiteCrmCustomer.getKey());
+    } catch (Throwable throwable) {
+      throw new CucumberException(throwable);
+    }
   }
 
   @Override

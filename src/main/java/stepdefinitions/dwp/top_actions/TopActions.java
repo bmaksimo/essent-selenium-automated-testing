@@ -34,7 +34,7 @@ public class TopActions extends NavigationElements {
 
     @And("^Top arrow button is \"([^\"]*)\"$")
     public void clickTopArrowButton(String arrow) throws Throwable {
-        super.clickTopArrow(arrow.toLowerCase());
+        super.clickTopArrow(arrow);
     }
 
     @And("^Top arrow button is \"([^\"]*)\" waiting for (\\d+) seconds$")

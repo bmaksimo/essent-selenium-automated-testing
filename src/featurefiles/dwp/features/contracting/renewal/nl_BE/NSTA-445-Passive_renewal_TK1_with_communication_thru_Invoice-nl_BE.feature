@@ -80,14 +80,14 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         And  All cell values at "1st" row from table "Geselecteerde contractlijn voor hernieuwingsbatch" are checked
         And  PackageName is extracted as "1st" word from "parameter:Nieuw pakket/product"
         And  Click on "VALIDEER PASSIEVE HERNIEUWINGSBATCH" link
-        And  Modal dialog is "Start passive renewal batch"
+        And  Modal dialog is "Valideer contractlijnen hernieuwing"
         And  Modal dialog contains "parameter:suitecrm-customer-name" in action list
         And  Modal dialogue is confirmed
         And  All cell values at "1st" row from table "Geselecteerde contractlijn voor hernieuwingsbatch" are checked
 
 
         #3.1. Validate renewal batch - checks
-        Then "Status batch" field value is "VALIDATED"
+        Then "Status batch" field value is switched to "VALIDATED" within 120 seconds
         And Table "Geselecteerde contractlijn voor hernieuwingsbatch" has matching value "Gevalideerd" at column "Status hernieuwing"
 
         When Click on "parameter:Contractnummer" link
