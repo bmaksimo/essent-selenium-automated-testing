@@ -42,7 +42,8 @@ Feature: NSTA-333: Social tariff (SOCTAR) contract creation
 
         #Step 3 Check the status of "Soctar file upload"
         When Plus menu is "Contracting -> Soctar -> Sociale tariefbatches"
-        Then "1st" list element has cell value "parameter:soctar-file-name" at column "Batchnaam" within 450 seconds
+#        Then "1st" list element has cell value "parameter:soctar-file-name" at column "Batchnaam" within 450 seconds
+        And Table "Sociaal Tarief batches" contains value "parameter:soctar-file-name" at column "Batchnaam" within 60 seconds
         And "1st" list element has cell value "Import Klaar" at column "Type & Status"
 
         #Step 4 Check the status of "Soctar file import"
@@ -57,14 +58,16 @@ Feature: NSTA-333: Social tariff (SOCTAR) contract creation
         #Step6
         When Soctar batch action "CONTRACTEN AANMAKEN OP BASIS VAN OFFERTES" is clicked
         Then Soctar type is changed to "Create Contracts" within 30 seconds
-        And "Status" field value is "DONE"
+        Then Soctar status is changed to "DONE" within 300 seconds
+#        And "Status" field value is "DONE"
+
         #Step 7. Check if contract has been created
         And "1st" list element has cell value "Verwerkt" at column "Status"
         And "1st" list element has cell value "parameter:start-en-einddatum" at column "Contractnummer & start- en einddatum"
 
         #Step 8 Sent out the confirmation letter
         When Top arrow button is "UP"
-        And Left menu is "contracting-switching"
+#        And Left menu is "contracting-switching"
         And Plus menu is "Contracting -> Soctar -> Sociaal tarief contractlijnen"
         And "EAN-code" input is "parameter:EAN-code"
         Then "1st" List element with value at column "Status & Product" is checked
