@@ -7,7 +7,7 @@ Feature: Check Quote creation flow
 Scenario: Check basic Quote creation flow B2C
 	Given I login to iWelcome as "soapui_b2c"
 	And "Create_Quote" flow is started
-	When Data is prepared for Create quote request for "prospect"
+	When Data is prepared for Create quote request for "prospect" and meter open is "Off"
 	And New tc1_quote is created
 	Then Quote status is "ACCEPTED"
 	And Quoteline exists
