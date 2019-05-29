@@ -84,9 +84,8 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
 
         And EAN code is generated
         And "EAN-code" input is "parameter:EAN-code-generated"
-        And "Startdatum" date is "35 days before now"
+        And "Startdatum" date is "now"
         And "EAN-code" input is "parameter:EAN-code-generated"
-        And  Option "test" is On
         And Connection details are confirmed
         Then Form header is "Billing details"
 
