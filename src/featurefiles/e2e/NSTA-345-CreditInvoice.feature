@@ -12,7 +12,7 @@ Feature: NSTA-345:Credit Invoice
     Scenario: Credit Invoice
         #Create an active contract via API
         And "Create_Quote" flow is started
-        When Data is prepared for Create quote request for "prospect"
+        When Data is prepared for Create quote request for "prospect" and meter open is "Off"
         And New tc1_quote is created
         Then Quote status is "ACCEPTED"
         And Quoteline exists
@@ -85,13 +85,12 @@ Feature: NSTA-345:Credit Invoice
         #Asserts
          #1 - Check if Old invoice is credited (check if CNM is created for same amount as old VKM)
          #2 - Check if there is a new invoice created for the amount you selected
-        Then Invoice Amounts have values "600 €", "-600 €" and "1500 €"
+        Then Invoice Amounts have values "560 €", "-560 €" and "1500 €"
 
          #4 - Check if CNM has been sent to customer
         When Dashboard menu is "Service"
         Then View list header is "Interacties"
         And Click on link in View List at "2nd" row and "Nummer & Communicatiekanaal" column waiting for 40 seconds
-        Then Sleep for 20 seconds
         Then Check is product change "1 succeeded"
 
          #5 - Check Balance of new invoice credit

@@ -40,6 +40,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
     private static String PATH_TO_QUOTE = ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_QUOTE);
     private static String PATH_TO_PAYLOAD = ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_PAYLOAD);
+    private static String PATH_TO_PAYLOAD_SUPPLIER_SWITCH = ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_PAYLOAD_SUPPLIER_SWITCH);
 
     public String getTariffSheetID(Cookies cookie, String startedFlowName) throws IOException {
     String tariffSheetID = null;
@@ -57,7 +58,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
     return tariffSheetID;
     }
 
-    public QuoteDetails getQuoteDetails(Cookies cookie, String tariffSheetId, String startedFlowName)
+    public QuoteDetails getQuoteDetails(Cookies cookie, String tariffSheetId, String startedFlowName, String meterOpen)
 	    throws JsonParseException, JsonMappingException, IOException {
 
         String ean = null;
@@ -100,7 +101,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
         quoteDetails.setDateOfBirth(dateOfBirth);
     LOGGER.info("Generated date of birth: " + dateOfBirth);
 
-	String payload = createQuotePayload(tariffSheetId, ean, dateOfBirth, generatedNames4account.get("firstName"),generatedNames4account.get("lastName"), ibanBE, companyNumber);
+	String payload = createQuotePayload(tariffSheetId, ean, dateOfBirth, generatedNames4account.get("firstName"),generatedNames4account.get("lastName"), ibanBE, companyNumber, meterOpen);
 
 	Response quoteResponse = helper.postRequest(STATUS_CREATED, cookie, payload, path);
 
@@ -201,7 +202,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
     }
 
-    private String createQuotePayload(String tariffSheetId, String ean, String dateOfBirth, String firstName, String lastName, String iBan, String companyNumber)
+    private String createQuotePayload(String tariffSheetId, String ean, String dateOfBirth, String firstName, String lastName, String iBan, String companyNumber, String meterOpen)
 	    throws JsonParseException, JsonMappingException, IOException {
 	ObjectMapper mapper = new ObjectMapper();
 
@@ -210,6 +211,11 @@ public class QuoteDetailsAPI extends AbstractAPI {
 	QuoteDetailsDTO quote = mapper.readValue(jsonQuote, QuoteDetailsDTO.class);
 
 	String pathToPayload = ResourceUtil.toPath(PATH_TO_PAYLOAD);
+
+	if (meterOpen.equals("On")) {
+            pathToPayload = ResourceUtil.toPath(PATH_TO_PAYLOAD_SUPPLIER_SWITCH);
+        }
+
 	String jsonPayload = new String(Files.readAllBytes(Paths.get(pathToPayload)));
 	PayloadDTO payload = mapper.readValue(jsonPayload, PayloadDTO.class);
 	payload.setTariffsheetId(tariffSheetId);

@@ -51,20 +51,20 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 	    this.tariffSheetID = new QuoteDetailsAPI().getTariffSheetID(cookie, arg1);
     }
 
-    @When("^Data is prepared for Create quote request for \"([^\"]*)\"$")
-    public void dataIsPreparedForCreateQuoteRequestFor(String arg1) throws Throwable {
+    @When("^Data is prepared for Create quote request for \"([^\"]*)\" and meter open is \"([^\"]*)\"$")
+    public void dataIsPreparedForCreateQuoteRequestFor(String arg1, String meterOpen) throws Throwable {
         this.flow = arg1;
-	    this.quoteDetails = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow);
+	    this.quoteDetails = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow, meterOpen);
+        String retrievedAccountNumber = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow, meterOpen).getAccountNumber();
+        int result = Integer.parseInt(retrievedAccountNumber);
+        result -=1;
+        parameterProvider.put("accountNumber", result);
 	    parameterProvider.put("EAN-code", quoteDetails.getEan());
     }
 
     @When("^New tc(\\d+)_quote is created$")
     public void newTcQuoteIsCreated(int arg1) throws Throwable {
         String retreivedQuoteNumber = new QuoteDetailsAPI().getQuoteNumber(cookie, quoteDetails.getRecordId());
-        String retrievedAccountNumber = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow).getAccountNumber();
-        int result = Integer.parseInt(retrievedAccountNumber);
-        result -=1;
-        parameterProvider.put("accountNumber", result);
         assertThat(retreivedQuoteNumber, is(equalTo(quoteDetails.getQuoteNumber())));
     }
 
