@@ -65,7 +65,7 @@ public class OdooCodaSteps extends OdooScenario {
     }
 
     @And("^Odoo file upload confirm button is \"([^\"]*)\"$")
-    public void conformCodaImport(String button) {
+    public void confirmCodaImport(String button) {
         CodaImportDialog dialog = new CodaImportDialogImpl();
         dialog.setImportButton(button);
         dialog.confirm();

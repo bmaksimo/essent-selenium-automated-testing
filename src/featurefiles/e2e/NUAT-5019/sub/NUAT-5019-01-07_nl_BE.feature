@@ -118,7 +118,7 @@ Feature: NUAT-5019 Complete E2E scenario "Active customer to drop, through one p
 
         When Click on "parameter:accountNumber" link
         And Dashboard menu is "Billing"
-        Then "Openstaand bedrag" in the first "Paid by OV" row of "Transacties" table is "0"
+        Then "Openstaand bedrag" in the first "Paid by OV" row of "Transacties" table is "equal to 0"
 
         # 5 - Create consumptions
         Given Dashboard menu is "Contracten"

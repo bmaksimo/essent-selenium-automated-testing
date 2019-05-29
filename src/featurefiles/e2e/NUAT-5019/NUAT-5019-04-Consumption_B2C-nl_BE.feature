@@ -20,7 +20,7 @@ Feature: NUAT-5019 Step 4. Import received consumption data
 
         When Click on "parameter:accountNumber" link
         And Dashboard menu is "Billing"
-        Then "Openstaand bedrag" in the first "Paid by OV" row of "Transacties" table is "0"
+        Then "Openstaand bedrag" in the first "Paid by OV" row of "Transacties" table is "equal to 0"
 
         Given Dashboard menu is "Contracten"
         And View list header is "Actieve en toekomstige connecties"

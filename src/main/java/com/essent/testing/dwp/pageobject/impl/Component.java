@@ -9,10 +9,7 @@ import com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.text.StrSubstitutor;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -114,6 +111,14 @@ public abstract class Component {
     protected boolean execute(final Model.Execution execution) {
         seleniumDriver.waitForRequestsToFinish();
         boolean result =  AutocratExecutionAdapter.execute(seleniumDriver.getDriver(), execution);
+        try {
+            Alert alert = seleniumDriver.getDriver().switchTo().alert();
+            logger.warn("-WARN: unexpected alert: " + alert.getText());
+            logger.info("-ACTION: ACCEPT_ALERT");
+            alert.accept();
+        } catch(NoAlertPresentException nape) {
+
+        }
         seleniumDriver.waitForRequestsToFinish();
         return result;
     }
