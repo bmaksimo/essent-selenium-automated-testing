@@ -1,5 +1,7 @@
+@ALL
 @E2E
 @DWP
+@REGRESSION
 Feature: NUAT-5021 Complete scenario from de-duplication of client with guarantee to inactive client
 
     @NUAT-5021
@@ -64,8 +66,6 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
             | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
             | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
         And Customer is duplicated
-        And  Deduplication dialogue "Soortgelijke klanten" is shown
-        And  Deduplication dialogue link "Create quote for account" is clicked
         Then Form header is "Quote details"
 
         When "Sales kanaal" selection is "Inbound"
@@ -84,7 +84,7 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
 
         And EAN code is generated
         And "EAN-code" input is "parameter:EAN-code-generated"
-        And "Startdatum" date is "2 months from now"
+        And "Startdatum" date is "now"
         And "EAN-code" input is "parameter:EAN-code-generated"
         And Connection details are confirmed
         Then Form header is "Billing details"
@@ -113,12 +113,12 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And "Naam" input is "parameter:suitecrm-customer-name"
         And Click on link in View List at "1st" row and "Klantnummer & Naam" column
         And Dashboard menu is "Billing"
-        Then "1st" list element has cell value "Invoice (GUARANTEE)" at column "ID & Type"
+        Then "1st" list element has cell value "Invoice (GUARANTEE)" at column "ID & Type" polling 500 seconds
 
-        # Step 4 - Generate Odoo CODA for account
+        # 3 - Download CODA
         Given I renew login to Odoo as "role_essent_ccm_user"
-        And Cleanup Odoo CODA files
-        When Odoo top menu is "Accounting"
+        When Cleanup Odoo CODA files
+        And Odoo top menu is "Accounting"
         And Odoo left menu is "Customers"
         And Odoo filter is "parameter:Klantnummer & Naam"
         When Column "Account Number" with value "parameter:Klantnummer & Naam" is clicked
@@ -126,18 +126,15 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And Generate CODA in the first row with "Amount receivable" is clicked
         Then Modal title contains "Download CODA"
         And Generated CODA file is downloaded
-        And Modal button "Close" is clicked
 
-        #Pay guarantee amount
-        When Odoo left menu is "CODA Processing->Import CODA Files"
+        # 4 - import and match CODA
+        Given I renew login to Odoo as "role_essent_ccm_user"
+        When Odoo top menu is "Accounting"
+        And Odoo left menu is "CODA Processing->Import CODA Files"
         Then Odoo file upload dialog is "Import CODA File"
-        When CODA file is "parameter:codaFile"
+        Then CODA file is "parameter:codaFile"
         And Odoo file upload confirm button is "Import"
-        Then Odoo file import report
-        When Modal button "View Bank Statement" is clicked
-        And Wait for 30 seconds
-        And Column "Reference" of the "1st" row is clicked
-        Then Bank Statement "Close" button is clicked
+        And Odoo file import report contains success string "Number of statements processed : 1"
 
         #Switch back to Dwp and verify Guarantee Payment
         Given I renew login to DWP as "billing.testautomation@essent.be"
