@@ -14,7 +14,7 @@ Feature: NSTA-326:Creating a B2C Quote TC1 with "Move In" without using Market M
     Scenario: Create a B2C Account with Quote, With move in, without using Market Mock
 
         And "Create_Quote" flow is started
-        When Data is prepared for Create quote request for "prospect"
+        When Data is prepared for Create quote request for "prospect" and meter open is "Off"
         And New tc1_quote is created
         Then Quote status is "ACCEPTED"
         And Quoteline exists
@@ -43,9 +43,9 @@ Feature: NSTA-326:Creating a B2C Quote TC1 with "Move In" without using Market M
         #Step 9. Check market messages
         When Dashboard menu is "Marktberichten"
         Then View list header is "Marktberichten"
-        And "1st" list element has cell value "MOVE IN Move In" at column "Module & Label" polling 120 seconds
-        And "1st" list element has cell value "parameter:contractDate" at column "Status & ED"
-        And "1st" list element has cell value "Gesloten" at column "Status & ED"
+        Then Table "Marktberichten" contains value "MOVE IN Move In" at column "Module & Label"
+        Then Table "Marktberichten" contains value "parameter:contractDate" at column "Status & ED"
+        Then Table "Marktberichten" contains value "Gesloten" at column "Status & ED"
 
 
 
