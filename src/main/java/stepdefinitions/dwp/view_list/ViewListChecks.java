@@ -753,7 +753,7 @@ public class ViewListChecks extends NavigationElements {
     public void checkValue(String expectedBalance) {
         ContractPage cp = new ContractPage();
 
-        int refreshCount = 10;
+        int refreshCount = 15;
         for (int i = 0; i < refreshCount; i++) {
             if (cp.getBalance().contains(expectedBalance)) {
                 break;
