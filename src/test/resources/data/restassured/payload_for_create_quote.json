@@ -78,7 +78,7 @@
   "index_low_c": null,
   "index_exclnight_c": null,
   "dwp|copy_eplus_from_parent_address": null,
-  "test": false,
+  "test": true,
   "market_mock_c": true,
   "dwp|market_mock_scenario_mig6": null,
   "external_message_id": "DEFAULT",
