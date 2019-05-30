@@ -1,6 +1,7 @@
 package stepdefinitions.dwp.soctar;
 
 import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
+import com.billinghouse.test_automation.util.dsl.DateExpressionsUtil;
 import com.billinghouse.test_automation.util.soctar_file.SoctarFileUtil;
 import com.billinghouse.test_automation.util.ssh.JSchUtil;
 import com.essent.testing.config.ConfigKey;
@@ -49,7 +50,12 @@ public class SoctarSteps extends DwpScenario {
     public void setSoctarDate(final String value){
         String dateValue = checkAndConvertToSoctarFileDate(parameterProvider.getValueOrParameterAsString(value));
         parameterProvider.put("start-end-date", dateValue);
-        parameterProvider.put("start-en-einddatum", checkAndConvertToDwpContractStartEndDate(value));
+        String startEndDates = checkAndConvertToDwpContractStartEndDate(value);
+        parameterProvider.put("start-en-einddatum", startEndDates);
+        String dates[] = startEndDates.split(DateExpressionsUtil.DATE_SEPARATOR);
+        parameterProvider.put("start-date", dates[0]);
+        parameterProvider.put("end-date", dates[1]);
+
     }
 
     @Then("^Soctar tariff type and status are \"([^\"]*)\" - \"([^\"]*)\"$")

@@ -25,7 +25,7 @@ public class DateExpressionsUtil {
       org.joda.time.format.DateTimeFormat.forPattern(
           DwpDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat());
 
-  private static final String DATE_SEPARATOR = " - ";
+  public static final String DATE_SEPARATOR = " - ";
   private static final LocalDate LAST_DATE_OF_YEAR = LocalDate.now().dayOfYear().withMaximumValue();
 
   private static final Map<
