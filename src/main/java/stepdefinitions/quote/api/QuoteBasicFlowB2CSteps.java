@@ -60,6 +60,8 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
         result -=1;
         parameterProvider.put("accountNumber", result);
 	    parameterProvider.put("EAN-code", quoteDetails.getEan());
+	    parameterProvider.put("suitecrm-customer-name", quoteDetails.getAccountName());
+
     }
 
     @When("^New tc(\\d+)_quote is created$")

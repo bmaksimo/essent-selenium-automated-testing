@@ -3,6 +3,7 @@
 @SOCTAR
 @REGRESSION
 @API
+@NOREG04
 @ALL
 Feature: NSTA-333: Social tariff (SOCTAR) contract creation
 

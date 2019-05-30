@@ -772,7 +772,16 @@ public class ViewListChecks extends NavigationElements {
     public void checkValue(String expectedBalance) {
         ContractPage cp = new ContractPage();
 
-        assertThat("Balance is not correct", cp.getBalance(), equalTo(expectedBalance));
+        int refreshCount = 15;
+        for (int i = 0; i < refreshCount; i++) {
+            if (cp.getBalance().contains(expectedBalance)) {
+                break;
+            } else {
+                seleniumDriver.getDriver().navigate().back();
+                seleniumDriver.getDriver().navigate().forward();
+            }
+        }
+        Assert.assertTrue("Balance is not correct", cp.getBalance().contains(expectedBalance));
     }
 
     //TODO Create a special test harness class for wait methods,
