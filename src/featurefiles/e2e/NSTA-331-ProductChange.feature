@@ -81,7 +81,7 @@ Feature: NSTA 331- Product Change for TK1 type
         When Dashboard menu is "Contracten"
         Then Get Start Date
         Then Save End Date from active contract
-        And "1st" list element has cell value "Wacht op startdatum" at column "Contractnummer" polling 60 seconds
+        And "1st" list element has cell value "Wacht op startdatum" at column "Contractnummer" polling 120 seconds
         Then Table "Actieve en toekomstige connecties" contains value "ONLINE" at column "EAN-code"
         Then Table "Actieve en toekomstige connecties" contains value "Actief" at column "Contractnummer"
         Then Product Change dates are "parameter:startDate" and "parameter:EndDate-active-contract"
