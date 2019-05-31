@@ -7,6 +7,12 @@ import java.util.List;
 
 public class PayloadDTO {
 
+    @JsonProperty("accounts|aos_quotes|sign_date_c")
+    private String sign_date_c;
+
+    @JsonProperty("accounts|aos_quotes|pricing_date_c")
+    private String pricing_date_c;
+
     @JsonProperty("dgo_id_c")
     private String id;
     @JsonProperty("line_status_c")
@@ -791,5 +797,11 @@ public class PayloadDTO {
     public void setDiscountDetails(String discountDetails) {
         this.discountDetails = discountDetails;
     }
+
+    public String getSignDateC() { return sign_date_c;}
+    public void setSignDateC() {this.sign_date_c = sign_date_c;}
+
+    public String getPricingDateC() { return sign_date_c;}
+    public void setPricingDateC() {this.pricing_date_c = pricing_date_c;}
 
 }

@@ -16,6 +16,10 @@
     "road65_street_id": "36206",
     "address_region": "VLA"
   },
+
+  "accounts|aos_quotes|sign_date_c": "2019-04-26",
+  "accounts|aos_quotes|pricing_date_c": "2019-04-26",
+
   "delivery_address_postalcode": "3012",
   "addresses_aos_products_quotes|is_main": true,
   "tariffsheet_id": "b1eec744-c6ab-5a1f-887e-58f0ab4a5b92",
@@ -55,7 +59,7 @@
   "dwp|mig_label_c": "Move In",
   "mig_start_context_c": null,
   "previous_supplier_c": null,
-  "up_start_date_c": "2019-02-01",
+  "up_start_date_c": "2019-04-26",
   "prev_contract_line_id": null,
   "current_dealer_id": "de18128e-a6e3-aff9-e9df-57a8e1c88552",
   "contract_line_status_c": null,

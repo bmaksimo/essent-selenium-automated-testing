@@ -23,6 +23,9 @@
                     "road65_street_id": "36206",
                     "address_region": "VLA"
                 },
+                "accounts|aos_quotes|sign_date_c": "2019-04-26",
+                "accounts|aos_quotes|pricing_date_c": "2019-04-26",
+
                 "delivery_address_postalcode": "3012",
                 "addresses_aos_products_quotes|is_main": true,
                 "tariffsheet_id": "b1eec744-c6ab-5a1f-887e-58f0ab4a5b92",
