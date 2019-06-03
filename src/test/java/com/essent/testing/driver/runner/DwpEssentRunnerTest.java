@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
     features = { "src/featurefiles" },
     glue = { "stepdefinitions"},
-    plugin = { "com.billinghouse.cucumber.runtime.formatter.EssentPrettyFormatter",
+    plugin = { "pretty",
         "html:target/cucumber-html-report",
         "junit:target/cucumber-junit-report/allcukes.xml",
         "json:target/cucumber.json"}

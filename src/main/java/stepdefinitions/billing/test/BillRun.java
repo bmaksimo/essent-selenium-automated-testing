@@ -7,7 +7,7 @@ import com.essent.be.jbilling.api.rest.invoice.RSGetInvoicesForBillingIDs;
 import com.essent.be.jbilling.api.rest.invoice.RSInvoicesForBillingIDsResp;
 import com.essent.testing.client.billing.BillingInvoiceRest;
 import com.essent.testing.scenario.RegisteredScenario;
-import cucumber.api.DataTable;
+import io.cucumber.datatable.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Then;

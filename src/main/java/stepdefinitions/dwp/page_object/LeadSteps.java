@@ -3,7 +3,7 @@ package stepdefinitions.dwp.page_object;
 import com.essent.testing.dwp.pageobject.guided_flow.lead_create.NewLeadPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.leads.LeadsPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
-import cucumber.api.DataTable;
+import io.cucumber.datatable.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -33,7 +33,7 @@ public class LeadSteps extends DwpScenario {
     public void insertCompanyNameForCreatingLead(DataTable dbTabel) {
         seleniumDriver.waitForRequestsToFinish();
         NewLeadPage leadPage = new NewLeadPage();
-        List<List<String>> db = dbTabel.raw();
+        List<List<String>> db = dbTabel.asLists();
         leadPage.createLead(db);
         seleniumDriver.waitForRequestsToFinish();
     }

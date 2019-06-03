@@ -4,7 +4,7 @@ import com.essent.automation.util.Sleeper;
 import com.essent.testing.odoo.pageobject.elements.ListView;
 import com.essent.testing.odoo.pageobject.impl.elements.DefaultListView;
 import com.essent.testing.odoo.scenario.OdooScenario;
-import cucumber.api.DataTable;
+import io.cucumber.datatable.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -50,7 +50,7 @@ public class OdooListView extends OdooScenario  {
 
     @When("^Advanced search is$")
     public void setAdvancedSearchFilter(DataTable dbTable) {
-        List<List<String>> list = dbTable.raw();
+        List<List<String>> list = dbTable.asLists();
         String searchParameter = parameterProvider.getValueOrParameterAsString(list.get(1).get(2));
         AdvancedSearch advancedSearch = new AdvancedSearch(list.get(1).get(0), list.get(1).get(1), searchParameter);
         awaitOdooRequestToFinish(10);

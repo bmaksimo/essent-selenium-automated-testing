@@ -3,7 +3,7 @@ package stepdefinitions.odoo.page;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.odoo.pageobject.impl.page.JournalEntriesPage;
 import com.essent.testing.odoo.scenario.OdooScenario;
-import cucumber.api.DataTable;
+import io.cucumber.datatable.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -50,7 +50,7 @@ public class JournalEntriesSteps extends OdooScenario {
     public void newItemIs(DataTable dbTable) {
         awaitOdooRequestToFinish(10);
         JournalEntriesPage je = new JournalEntriesPage();
-        List<List<String>> db = dbTable.raw();
+        List<List<String>> db = dbTable.asLists();
         je.clickOnAddAnItem();
         je.createNewItem(db,1,parameterProvider.getValueOrParameterAsString(db.get(1).get(1)));
         Sleeper.sleepTightInSeconds(1);
