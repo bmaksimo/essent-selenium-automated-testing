@@ -6,78 +6,80 @@
 Feature: NSTA-445 Passive renewal of contract TK1 - with communication through Invoice
 
     Background:
-        Given I login to iWelcome as "soapui_b2c"
+#        Given I login to iWelcome as "soapui_b2c"
+        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
     @NSTA-445
     Scenario: Sign in to default electricity product
         #Contract creation via API
-        And "Create_Quote" flow is started
-        When Data is prepared for Create quote request for "prospect" and meter open is "Off"
-        And New tc1_quote is created
-        Then Quote status is "ACCEPTED"
-        And Quoteline exists
-        And Quoteline status is "Sent to customer"
-
-        When Simulation that customer signature is received
-        Then Quote stage status is "SIGNATURE RECEIVED"
-        And Quoteline status is "Signature received"
-
-        When File is uploaded as scanned signature
-        Then Signin is confirmed
-        And Contract is created
-        And Contracted EAN exists on account
-
-        When Payment details are received
-        Then Wait until contract instance starts
-        And Check order in jbilling
+#        And "Create_Quote" flow is started
+#        When Data is prepared for Create quote request for "prospect" and meter open is "Off"
+#        And New tc1_quote is created
+#        Then Quote status is "ACCEPTED"
+#        And Quoteline exists
+#        And Quoteline status is "Sent to customer"
+#
+#        When Simulation that customer signature is received
+#        Then Quote stage status is "SIGNATURE RECEIVED"
+#        And Quoteline status is "Signature received"
+#
+#        When File is uploaded as scanned signature
+#        Then Signin is confirmed
+#        And Contract is created
+#        And Contracted EAN exists on account
+#
+#        When Payment details are received
+#        Then Wait until contract instance starts
+#        And Check order in jbilling
 
 
 
 
         #1. Onboarding of B2C customer, with TC1 quote and active contract.
-#        When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
-#        Then Form header is "Quote details"
-#
-#        When "Tariefdatum" date is "35 days before now"
-#        And "Sales kanaal" selection is "Inbound"
-#        And Quote details are confirmed
-#        Then Form header is "Personal details"
-#
-#        When Customer is random
-#        And Customer address is
-#            | street | houseNr | houseNrAdd | bus | postalCode | city    | country |
-#            | Random | 1       |            |     | 2550       | Kontich |         |
-#        And Customer details are confirmed
-#        Then Form header is "Select package & fuel type"
-#        And "Pakket" selection is "Vast"
-#        And Checkbox "Gas Fix B2C (TC1)" is Unchecked
-#        And Package and Fuel Type is confirmed
-#        Then Form header is "Connection details"
-#
-#        When Electricity market mock mode is switched On on "Elektriciteit Vast" card
-#        And  EAN code is generated
-#        And "Startdatum" date is "35 days before now"
-#        And "EAN-code" input is "parameter:EAN-code-generated"
-#        And Connection details are confirmed
-#        Then Form header is "Billing details"
-#
-#        When "Betalingswijze" selection is "Overschrijving"
-#        And Billing details are confirmed
-#        Then Form header is "Quote overview"
-#
-#        When Option "Heeft de klant al getekend?" is On
-#        And "Kanaal ondertekening" selection is "Papier"
-#        And Quote is signed in "Kontich"
-#        And "Datum ondertekening" date is "35 days before now"
-#        And Quote is confirmed
-#        Then View list header is "Offertes"
-#        Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
+        When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
+        Then Form header is "Quote details"
+
+        When "Tariefdatum" date is "35 days before now"
+        And "Sales kanaal" selection is "Inbound"
+        And Quote details are confirmed
+        Then Form header is "Personal details"
+
+        When Customer is random
+        And Customer address is
+            | street | houseNr | houseNrAdd | bus | postalCode | city    | country |
+            | Random | 1       |            |     | 2550       | Kontich |         |
+        And Customer details are confirmed
+        Then Form header is "Select package & fuel type"
+        And "Pakket" selection is "Vast"
+        And Checkbox "Gas Fix B2C (TC1)" is Unchecked
+        And Package and Fuel Type is confirmed
+        Then Form header is "Connection details"
+
+        When Electricity market mock mode is switched On on "Elektriciteit Vast" card
+        And  EAN code is generated
+        And "Startdatum" date is "35 days before now"
+        And "EAN-code" input is "parameter:EAN-code-generated"
+        And Connection details are confirmed
+        Then Form header is "Billing details"
+
+        When "Betalingswijze" selection is "Overschrijving"
+        And Billing details are confirmed
+        Then Form header is "Quote overview"
+
+        When Option "Heeft de klant al getekend?" is On
+        And "Kanaal ondertekening" selection is "Papier"
+        And Quote is signed in "Kontich"
+        And "Datum ondertekening" date is "35 days before now"
+        And Quote is confirmed
+        Then View list header is "Offertes"
+        Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
 
         Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
         When Left menu is "contracting-switching"
         And Top menu item is "Klanten"
         When Top action is "Filters"
-        And "Klantnummer" input is "parameter:accountNumber"
+#        And "Klantnummer" input is "parameter:accountNumber"
+        And "Naam" input is "parameter:suitecrm-customer-name"
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
 
         When Dashboard menu is "Contracten"
@@ -101,7 +103,7 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         When "Batchnaam" input is "parameter:suitecrm-customer-name"
         And  "Renewal date from" date is "parameter:Start & Einddatum - start"
         And "Renewal date to" date is "parameter:Start & Einddatum - end"
-        And "EAN-code" input is "parameter:EAN-code"
+        And "EAN-code" input is "parameter:EAN-code-generated"
         Then Modal dialogue is confirmed
         And Table "TK1 - Hernieuwingsbatches" has matching value "parameter:suitecrm-customer-name" at column "Batchnaam"
 
@@ -143,27 +145,27 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         And  Modal dialog "Select" is not shown
         And  All date values at column "Geldig tot" from table "Bepaal het hernieuwingsproduct" are within the period "parameter:Start & einddatum hernieuwing"
 
-        #5 Communicate the renewal to the customer through the invoice
-        Given I renew login to DWP as "billing.testautomation@essent.be"
-
-        When Plus menu is "Billing -> Start facturatierun"
-        When Modal dialog is "Start invoicerun"
-        And "Naam job" selection is "recurrent"
-        And "ID Billing customer" input is "parameter:Id Billing customer"
-        And "Factuurdatum" date is "now"
-        And "Procesdatum" date is "now"
-        Then Invoice run is scheduled
-
-        When Left menu is "billing"
-        And Top menu item is "Klanten"
-        And Top action is "Filters"
-        And "Klantnummer" input is "parameter:accountNumber"
-        And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
-        When Dashboard menu is "Billing"
-        Then View list header is "Transacties"
-        And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
-
-        #6 Check communication
-        When Dashboard menu is "Service"
-        Then Table "Interacties" has matching value "Outbound document: Passive renewal communication" at column "Type & Onderwerp"
-        And  Table "Interacties" has matching value "Outbound document: advance" at column "Type & Onderwerp"
+#        #5 Communicate the renewal to the customer through the invoice
+#        Given I renew login to DWP as "billing.testautomation@essent.be"
+#
+#        When Plus menu is "Billing -> Start facturatierun"
+#        When Modal dialog is "Start invoicerun"
+#        And "Naam job" selection is "recurrent"
+#        And "ID Billing customer" input is "parameter:Id Billing customer"
+#        And "Factuurdatum" date is "now"
+#        And "Procesdatum" date is "now"
+#        Then Invoice run is scheduled
+#
+#        When Left menu is "billing"
+#        And Top menu item is "Klanten"
+#        And Top action is "Filters"
+#        And "Klantnummer" input is "parameter:accountNumber"
+#        And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
+#        When Dashboard menu is "Billing"
+#        Then View list header is "Transacties"
+#        And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
+#
+#        #6 Check communication
+#        When Dashboard menu is "Service"
+#        Then Table "Interacties" has matching value "Outbound document: Passive renewal communication" at column "Type & Onderwerp"
+#        And  Table "Interacties" has matching value "Outbound document: advance" at column "Type & Onderwerp"
