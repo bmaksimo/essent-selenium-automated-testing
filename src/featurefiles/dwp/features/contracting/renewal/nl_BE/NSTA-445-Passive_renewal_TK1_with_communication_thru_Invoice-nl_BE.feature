@@ -7,7 +7,7 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
 
     Background:
 #        Given I login to iWelcome as "soapui_b2c"
-        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
+        Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
 
     @NSTA-445
     Scenario: Sign in to default electricity product
