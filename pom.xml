@@ -28,10 +28,9 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
     <!-- Maven plugin version -->
-    <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
+
     <maven-failsafe-plugin.version>2.19.1</maven-failsafe-plugin.version>
-    <maven-cucumber-reporting.version>3.15.0</maven-cucumber-reporting.version>
-    <surefire-junit47.version>2.19.1</surefire-junit47.version>
+
     <maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
 
     <build.number>1</build.number>
@@ -54,7 +53,7 @@
      <cucumber-junit.version>1.2.5</cucumber-junit.version>
 +    -->
     <cucumber.version>4.2.0</cucumber.version>
-    <cucumber-reporting.version>3.16.0</cucumber-reporting.version>
+
 
     <commons-dbcp2.version>2.1.1</commons-dbcp2.version>
     <commons-csv.version>1.4</commons-csv.version>
@@ -269,12 +268,7 @@
         <artifactId>jsch</artifactId>
         <version>${jsch.version}</version>
       </dependency>
-      <dependency>
-        <groupId>net.masterthought</groupId>
-        <artifactId>cucumber-reporting</artifactId>
-        <version>${cucumber-reporting.version}</version>
-      </dependency>
-      <dependency>
+           <dependency>
         <groupId>com.essent</groupId>
         <artifactId>haulogy-jaxb</artifactId>
         <version>${haulogy-jaxb.version}</version>
@@ -372,15 +366,7 @@
       <groupId>org.awaitility</groupId>
       <artifactId>awaitility</artifactId>
     </dependency>
-    <dependency>
-      <groupId>info.cukes</groupId>
-      <artifactId>cucumber-spring</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>info.cukes</groupId>
-      <artifactId>cucumber-junit</artifactId>
-    </dependency>
-    <dependency>
+     <dependency>
       <groupId>io.cucumber</groupId>
       <artifactId>cucumber-core</artifactId>
     </dependency>
@@ -392,6 +378,22 @@
     <dependency>
       <groupId>io.cucumber</groupId>
       <artifactId>cucumber-java8</artifactId>
+    </dependency>
+    <!--<dependency>-->
+      <!--<groupId>io.cucumber</groupId>-->
+      <!--<artifactId>gherkin</artifactId>-->
+      <!--<version>2.12.2</version>-->
+    <!--</dependency>-->
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-testng</artifactId>
+      <version>2.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-jvm-deps</artifactId>
+      <version>1.0.6</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>io.cucumber</groupId>
@@ -506,11 +508,7 @@
       <groupId>com.jcraft</groupId>
       <artifactId>jsch</artifactId>
     </dependency>
-    <dependency>
-      <groupId>net.masterthought</groupId>
-      <artifactId>cucumber-reporting</artifactId>
-    </dependency>
-    <dependency>
+        <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
     </dependency>
@@ -608,53 +606,6 @@
 
   </dependencies>
   <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>${maven-surefire-plugin.version}</version>
-        <!--
-        <configuration>
-          <testFailureIgnore>true</testFailureIgnore>
-        </configuration>
-        -->
-        <dependencies>
-          <dependency>
-            <groupId>org.apache.maven.surefire</groupId>
-            <artifactId>surefire-junit47</artifactId>
-            <version>${surefire-junit47.version}</version>
-            <exclusions>
-              <exclusion>
-                <!-- exclude testNG, otherwise Maven doesn't run TestFeatures -->
-                <groupId>org.testng</groupId>
-                <artifactId>testng</artifactId>
-              </exclusion>
-            </exclusions>
-          </dependency>
-        </dependencies>
-      </plugin>
-      <plugin>
-        <groupId>net.masterthought</groupId>
-        <artifactId>maven-cucumber-reporting</artifactId>
-        <version>${maven-cucumber-reporting.version}</version>
-        <executions>
-          <execution>
-            <id>execution</id>
-            <phase>test</phase>
-            <goals>
-              <goal>generate</goal>
-            </goals>
-            <configuration>
-              <projectName>cucumber-jvm-example</projectName>
-              <outputDirectory>${project.build.directory}/cucumber-html-reports2</outputDirectory>
-              <cucumberOutput>${project.build.directory}/cucumber.json</cucumberOutput>
-              <buildNumber>1</buildNumber>
-              <checkBuildResult>true</checkBuildResult>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
     <resources> <!-- include xml and properties files -->
       <resource>
         <directory>src/main/java</directory>
@@ -677,28 +628,7 @@
       </activation>
       <build>
         <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <version>${maven-surefire-plugin.version}</version>
-            <configuration>
-              <skip>true</skip>
-            </configuration>
-            <dependencies>
-              <dependency>
-                <groupId>org.apache.maven.surefire</groupId>
-                <artifactId>surefire-junit47</artifactId>
-                <version>${surefire-junit47.version}</version>
-                <exclusions>
-                  <exclusion>
-                    <!-- exclude testNG, otherwise Maven doesn't run TestFeatures -->
-                    <groupId>org.testng</groupId>
-                    <artifactId>testng</artifactId>
-                  </exclusion>
-                </exclusions>
-              </dependency>
-            </dependencies>
-          </plugin>
+
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-failsafe-plugin</artifactId>
@@ -719,14 +649,7 @@
                 </configuration>
               </execution>
             </executions>
-            <dependencies>
-              <dependency>
-                <groupId>org.apache.maven.surefire</groupId>
-                <artifactId>surefire-junit47</artifactId>
-                <version>${surefire-junit47.version}</version>
-              </dependency>
-            </dependencies>
-          </plugin>
+                     </plugin>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-antrun-plugin</artifactId>

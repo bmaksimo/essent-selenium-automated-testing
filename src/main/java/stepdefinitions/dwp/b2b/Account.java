@@ -12,7 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import static org.junit.Assert.assertTrue;
 
-@ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
+//@ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 
 public class Account extends DwpScenario {
     @Before("@DWP, @REGRESSION")

@@ -17,7 +17,7 @@ import org.springframework.test.context.ContextConfiguration;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-@ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
+//@ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 
 public class OfferteStep extends DwpScenario {
     @Before("@DWP, @REGRESSION")

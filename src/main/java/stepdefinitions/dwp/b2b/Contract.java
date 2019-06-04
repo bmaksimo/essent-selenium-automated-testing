@@ -21,7 +21,7 @@ import static org.testng.AssertJUnit.assertEquals;
 
 
 
-@ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
+//@ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 
 public class Contract extends DwpScenario {
     private static String Klantnummer;
