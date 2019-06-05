@@ -66,8 +66,8 @@ class SSHTunnel {
     private void makeTunnel(String sshHostname, int sshRemoteport, String sshDbHostname) throws JSchException {
         if (useTunnel()) {
             // real tunnel
-            logger.info("STEP:");
-            logger.info(" - ACTION: MAKE_SSH_TUNNEL");
+            logger.debug("STEP:");
+            logger.debug(" - ACTION: MAKE_SSH_TUNNEL");
             if (StringUtils.isBlank(sshDbHostname)) {
                 sshDbHostname = "localhost";
             }
@@ -89,19 +89,19 @@ class SSHTunnel {
                     session.connect(1000000);
                     this.localPort = session.setPortForwardingL(localPort, sshDbHostname, sshRemoteport);
                     // got here, it worked :)
-                    logger.info("Tunnel created: dbhost = " + sshDbHostname + ", localport = " + localPort
+                    logger.debug("Tunnel created: dbhost = " + sshDbHostname + ", localport = " + localPort
                             + ", remoteport = " + sshRemoteport);
                     tunnelCreated = true;
                     // We should now connect to localhost instead of the given sshDbHostname in PSQLUtility
                     pushHost("localhost");
-                    logger.info(String.format(" - RESULT: Tunnel to %s, ssh_keypath: %s, userid: %s made successfully.", sshDbHostname, path, sshUser));
+                    logger.debug(String.format(" - RESULT: Tunnel to %s, ssh_keypath: %s, userid: %s made successfully.", sshDbHostname, path, sshUser));
                 } catch (JSchException e) {
                     logger.error(String.format(" - RESULT: Making tunnel to %s failed", sshDbHostname));
                     try {
                         if (session != null) {
-                            logger.info(" - ACTION: DESTROY_SESSION");
+                            logger.debug(" - ACTION: DESTROY_SESSION");
                             session.disconnect();
-                            logger.info(" - RESULT: Session has been destroyed.");
+                            logger.debug(" - RESULT: Session has been destroyed.");
                             session = null;
                         }
                     } catch (Exception ignore) {
@@ -172,13 +172,13 @@ class SSHTunnel {
 
     private void cleanUpTunnel() throws JSchException {
         if (useTunnel() && session != null) {
-            logger.info("STEP:");
-            logger.info(" - ACTION: DELETE_LOCAL_PORT");
+            logger.debug("STEP:");
+            logger.debug(" - ACTION: DELETE_LOCAL_PORT");
             session.delPortForwardingL(localPort);
-            logger.info(" - RESULT: Port " + localPort + " forwarding has been deleted.");
-            logger.info(" - ACTION: DESTROY_SESSION");
+            logger.debug(" - RESULT: Port " + localPort + " forwarding has been deleted.");
+            logger.debug(" - ACTION: DESTROY_SESSION");
             session.disconnect();
-            logger.info(" - RESULT: Session with host " + session.getHost() + " has been destroyed.");
+            logger.debug(" - RESULT: Session with host " + session.getHost() + " has been destroyed.");
             session = null;
             popHost();
         }

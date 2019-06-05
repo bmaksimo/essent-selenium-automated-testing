@@ -29,15 +29,15 @@ public class ContractUPB2BCreator extends QuoteCreatorB2BBase implements QuoteCr
 
 	@Override
 	public void setPreconditions(String accountName, String contractStartDate, String contractEndDate) throws Exception{
-		logger.info("Set preconditions before starting: " + this.getClass().getSimpleName());
+		logger.debug("Set preconditions before starting: " + this.getClass().getSimpleName());
 		super.setPreconditions(ContractConstants.PATH_TO_JSON_FILES_QUOTE_UP_B2B, accountName, contractStartDate, contractEndDate);
-		logger.info("Set preconditions after starting: " + this.getClass().getSimpleName() + " - PASSED");
+		logger.debug("Set preconditions after starting: " + this.getClass().getSimpleName() + " - PASSED");
 	}
 
 	@Override
 	public String createContract() throws Exception {
 
-		logger.info("createContractB2B: " + this.getClass().getSimpleName());
+		logger.debug("createContractB2B: " + this.getClass().getSimpleName());
 
 		login();
 		setPreconditions(ContractConstants.ACCOUNT_NAME_PREFIX_UP_B2B, upStartDate, PrepareDataForContract.getTodayDate());
@@ -51,7 +51,7 @@ public class ContractUPB2BCreator extends QuoteCreatorB2BBase implements QuoteCr
 		signMandatePaper(ContractConstants.PATH_TO_JSON_FILES_QUOTE_UP_B2B);
 		verifyContractCreated(ContractConstants.PATH_TO_JSON_FILES_QUOTE_UP_B2B, ContractConstants.SIGNED_EN.toUpperCase(), ContractConstants.ACCEPTED_EN.toUpperCase());
 
-		logger.info("createContractB2B: " + this.getClass().getSimpleName() + " - PASSED");
+		logger.debug("createContractB2B: " + this.getClass().getSimpleName() + " - PASSED");
 
 		return getAccountNumber(recordId, cookie);
 
@@ -59,65 +59,65 @@ public class ContractUPB2BCreator extends QuoteCreatorB2BBase implements QuoteCr
 
     @Override
 	public ContractStatus checkContractIsActive(String path) throws Exception {
-		logger.info("checkContractIsActive: " + this.getClass().getSimpleName());
+		logger.debug("checkContractIsActive: " + this.getClass().getSimpleName());
 		return super.checkContractIsActive(path);
 
 	}
 
 	@Override
 	public void login() {
-		logger.info("login: " + this.getClass().getSimpleName());
+		logger.debug("login: " + this.getClass().getSimpleName());
 		super.login();
-		logger.info("login: " + this.getClass().getSimpleName() + " - PASSED");
+		logger.debug("login: " + this.getClass().getSimpleName() + " - PASSED");
 	}
 
 	@Override
 	public void createQuote(String path, String pathJsonFile, String pathApiPath) throws IOException {
-		logger.info("createQuoteB2B: " + this.getClass().getSimpleName());
+		logger.debug("createQuoteB2B: " + this.getClass().getSimpleName());
 		super.createQuoteB2B(path, pathJsonFile, pathApiPath);
-		logger.info("createQuoteB2B: " + this.getClass().getSimpleName() + " - PASSED");
+		logger.debug("createQuoteB2B: " + this.getClass().getSimpleName() + " - PASSED");
 	}
 
 	@Override
 	public void sendToCustomer(String path) throws IOException {
-		logger.info("sendToCustomer: " + this.getClass().getSimpleName());
+		logger.debug("sendToCustomer: " + this.getClass().getSimpleName());
 		super.sendToCustomer(path);
-		logger.info("sendToCustomer: " + this.getClass().getSimpleName() + " - PASSED");
+		logger.debug("sendToCustomer: " + this.getClass().getSimpleName() + " - PASSED");
 	}
 
 	@Override
 	public void signatureReceived(String path, String pricingDate, String priceValidUntilDate, String signatureReceivedDate) throws IOException {
-		logger.info("signatureReceived: " + this.getClass().getSimpleName());
+		logger.debug("signatureReceived: " + this.getClass().getSimpleName());
 		super.signatureReceived(path, pricingDate, priceValidUntilDate, signatureReceivedDate);
-		logger.info("signatureReceived: " + this.getClass().getSimpleName() + " - PASSED");
+		logger.debug("signatureReceived: " + this.getClass().getSimpleName() + " - PASSED");
 	}
 
 	@Override
 	public void confirmSigning(String path, String pathJsonFileSignQuote, String apiPathSignQuote) throws IOException {
-		logger.info("confirmSigning: " + this.getClass().getSimpleName());
+		logger.debug("confirmSigning: " + this.getClass().getSimpleName());
 		super.confirmSigning(path, pathJsonFileSignQuote, apiPathSignQuote);
-		logger.info("confirmSigning: " + this.getClass().getSimpleName() + " - PASSED");
+		logger.debug("confirmSigning: " + this.getClass().getSimpleName() + " - PASSED");
 	}
 
 	// Only required if we want to have payment method: DOM
 	@Override
 	public void signMandatePaper(String path) throws IOException {
-		logger.info("signMandatePaper: " + this.getClass().getSimpleName());
+		logger.debug("signMandatePaper: " + this.getClass().getSimpleName());
 		super.signMandatePaper(path);
-		logger.info("signMandatePaper: " + this.getClass().getSimpleName() + " - PASSED");
+		logger.debug("signMandatePaper: " + this.getClass().getSimpleName() + " - PASSED");
 	}
 
 	@Override
 	public void verifyContractCreated(String path, String quoteStage, String quoteStatus) throws IOException {
-		logger.info("verifyContractCreated: " + this.getClass().getSimpleName());
+		logger.debug("verifyContractCreated: " + this.getClass().getSimpleName());
 		super.verifyContractCreated(path, quoteStage, quoteStatus);
-		logger.info("verifyContractCreated: " + this.getClass().getSimpleName() + " - PASSED");
+		logger.debug("verifyContractCreated: " + this.getClass().getSimpleName() + " - PASSED");
 	}
 
 	@Override
 	public String createContractAndCheckContractStatus() throws Exception {
 
-		logger.info("createContractB2BAndCheckContractStatus: " + this.getClass().getSimpleName());
+		logger.debug("createContractB2BAndCheckContractStatus: " + this.getClass().getSimpleName());
 
 		login();
 		setPreconditions(ContractConstants.ACCOUNT_NAME_PREFIX_UP_B2B, upStartDate, PrepareDataForContract.getTodayDate());
@@ -141,7 +141,7 @@ public class ContractUPB2BCreator extends QuoteCreatorB2BBase implements QuoteCr
 			Assert.fail("Contract status is not ACTIVE and it status is: " + contractStatus);
 		}
 
-		logger.info("createContractB2BAndCheckContractStatus: " + this.getClass().getSimpleName() + " - PASSED");
+		logger.debug("createContractB2BAndCheckContractStatus: " + this.getClass().getSimpleName() + " - PASSED");
 
 		return getAccountNumber(recordId, cookie);
 	}
@@ -149,14 +149,14 @@ public class ContractUPB2BCreator extends QuoteCreatorB2BBase implements QuoteCr
 
     @Override
     public String createQuoteWithoutSignature() throws Exception {
-        logger.info("createContractB2B: " + this.getClass().getSimpleName());
+        logger.debug("createContractB2B: " + this.getClass().getSimpleName());
 
         login();
         setPreconditions(ContractConstants.ACCOUNT_NAME_PREFIX_UP_B2B, upStartDate, PrepareDataForContract.getTodayDate());
         createQuoteB2B(ContractConstants.PATH_TO_JSON_FILES_QUOTE_UP_B2B, ContractConstants.PATH_TO_JSON_FILES_CREATE_QUOTE_B2B_UP, ApiPathsContract.API_CREATE_QUOTE_B2B_TC2_UP);
         sendToCustomer(ContractConstants.PATH_TO_JSON_FILES_QUOTE_UP_B2B);
 
-        logger.info("createContractB2B: " + this.getClass().getSimpleName() + " - PASSED");
+        logger.debug("createContractB2B: " + this.getClass().getSimpleName() + " - PASSED");
 
         return getAccountNumber(recordId, cookie);
     }

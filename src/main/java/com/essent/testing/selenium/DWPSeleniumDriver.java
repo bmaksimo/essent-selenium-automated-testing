@@ -71,22 +71,22 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
         }
 
         private boolean executeJavascriptTestWithImmediateFlag(String registeredJsClass, Object options, boolean runImmediately) {
-            logger.info("STEP:");
-            logger.info(" - ACTION: EXEC_JAVASCRIPT_TEST");
+            logger.debug("STEP:");
+            logger.debug(" - ACTION: EXEC_JAVASCRIPT_TEST");
             DateTime startOfMeasurement = DateTime.now();
             if (!runImmediately)
                 waitForRequestsToFinish();
             String executeTest = SeleniumJsTestExpanderService.get().expandToJavascript(registeredJsClass, options);
-            logger.info(" - TEST: " + executeTest);
+            logger.debug(" - TEST: " + executeTest);
             Map result = (Map) ((JavascriptExecutor) seleniumDriver.getDriver()).executeAsyncScript(executeTest);
             Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
-            logger.info(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
+            logger.debug(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
             String status = ((String) result.get("status"));
             boolean success = StringUtils.equals("PASSED", status);
-            logger.info(" - RESULT: " + status);
+            logger.debug(" - RESULT: " + status);
             if (StringUtils.equals("FAILED", status)) {
                 String reason = ((String) result.get("reason"));
-                logger.info(" - REASON: " + reason);
+                logger.debug(" - REASON: " + reason);
                 if (withException) {
                     fail(reason);
                 }
@@ -100,7 +100,7 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
 
     public void waitForRequestsToFinish() {
         awaitJqueryNotActive(200);
-        logger.info("STEP:");
+        logger.debug("STEP:");
         logger.debug(" - WAIT: waiting for all angular requests to finish on page at url: " + getDriver().getCurrentUrl());
         int secondsTimeout = 240;
         FluentWait<NgWebDriver> waiter = createWaiter(ngWebDriver, secondsTimeout);
@@ -109,7 +109,7 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
             ngWebDriver.waitForAngularRequestsToFinish();
             return true;
         });
-        logger.info(" - RESULT: all angular requests are finished on page at url: " + getDriver().getCurrentUrl());
+        logger.debug(" - RESULT: all angular requests are finished on page at url: " + getDriver().getCurrentUrl());
     }
 
     private void injectJavaScriptInline(File functionFile) {
@@ -163,24 +163,24 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
     }
 
     public Map executeJavascriptMethodWithImmediateFlag(String registeredJsClass, Object options, boolean immediate) {
-        logger.info("STEP:");
-        logger.info(" - ACTION: EVALUATE_JAVASCRIPT_METHOD");
+        logger.debug("STEP:");
+        logger.debug(" - ACTION: EVALUATE_JAVASCRIPT_METHOD");
         DateTime startOfMeasurement = DateTime.now();
         if (!immediate)
             waitForRequestsToFinish();
         String jsTestCall = SeleniumJsTestExpanderService.get().expandToJavascript(registeredJsClass, options);
-        logger.info(" - TEST: " + jsTestCall);
+        logger.debug(" - TEST: " + jsTestCall);
         Map result = (Map) ((JavascriptExecutor) driver).executeAsyncScript(jsTestCall);
         Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
-        logger.info(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
+        logger.debug(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
         String status = ((String) result.get("status"));
         if (StringUtils.isEmpty(status)) {
             status = "UNDEFINED";
         }
-        logger.info(" - RESULT: " + status);
+        logger.debug(" - RESULT: " + status);
         if (StringUtils.equals("FAILED", status)) {
             String reason = ((String) result.get("reason"));
-            logger.info(" - REASON: " + reason);
+            logger.warn(" - REASON: " + reason);
             takeScreenshot(false);
         }
         return result;

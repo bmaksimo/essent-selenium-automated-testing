@@ -20,7 +20,7 @@ public class DefaultListView extends Component implements ListView {
 
     @Override
     public void checkCellAt(String columnName, String rowIndex, String value) {
-        logger().info("STEP: checkValueAt");
+        logger().debug("STEP: checkValueAt");
         Map<String, String> valuesMapper = new HashMap<>();
         valuesMapper.put("rowIndex", rowIndex);
         valuesMapper.put("key", getKey(columnName));
@@ -41,7 +41,7 @@ public class DefaultListView extends Component implements ListView {
 
     @Override
     public void clickCellAt(String columnName, String rowIndex) {
-        logger().info("STEP: clickCellAt");
+        logger().debug("STEP: clickCellAt");
         Map<String, String> valuesMapper = new HashMap<>();
         valuesMapper.put("rowIndex", rowIndex);
         valuesMapper.put("key", getKey(columnName));
@@ -55,15 +55,15 @@ public class DefaultListView extends Component implements ListView {
             throw new CucumberException(String.format("Cell at column %s, row %s was not found", columnName, rowIndex));
         } else {
             WebElement webElement = rows.get(rows.size() - 1);
-            logger().info(" - CELL_TEXT: " + webElement.getText());
+            logger().debug(" - CELL_TEXT: " + webElement.getText());
             webElement.click();
-            logger().info(" - CELL_ACTION: click()");
+            logger().debug(" - CELL_ACTION: click()");
         }
     }
 
     @Override
     public void clickValueAt(String columnName, String value) {
-        logger().info("STEP: clickValueAt");
+        logger().debug("STEP: clickValueAt");
         awaitOdooRequestToFinish(30);
         List<WebElement> rows = extractTable();
         WebElement currentRow;
@@ -73,9 +73,9 @@ public class DefaultListView extends Component implements ListView {
                 + "'][1]"));
 
             if (currentRowEquals(currentRow, value)) {
-                logger().info(" - CELL_TEXT: " + currentRow.getText());
+                logger().debug(" - CELL_TEXT: " + currentRow.getText());
                 currentRow.click();
-                logger().info(" - CELL_ACTION: click()");
+                logger().debug(" - CELL_ACTION: click()");
                 awaitOdooRequestToFinish(10);
                 return;
             }
@@ -91,7 +91,7 @@ public class DefaultListView extends Component implements ListView {
     @Override
     public void checkValueAt(String columnName, String value) {
         awaitOdooRequestToFinish(10);
-        logger().info("STEP: clickValueAt");
+        logger().debug("STEP: clickValueAt");
         List<WebElement> rows = extractTable();
         WebElement currentRow;
         for (int i = 1; i <= rows.size(); i++) {
@@ -101,7 +101,7 @@ public class DefaultListView extends Component implements ListView {
                 Duration.ofSeconds(30),
                 Duration.ofSeconds(5));
             if (currentRow != null && value.equalsIgnoreCase(currentRow.getText())) {
-                logger().info(" - CELL_TEXT: " + currentRow.getText());
+                logger().debug(" - CELL_TEXT: " + currentRow.getText());
                 return;
             }
         }

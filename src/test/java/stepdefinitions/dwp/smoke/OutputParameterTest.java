@@ -28,10 +28,10 @@ public class OutputParameterTest extends RegisteredScenario {
 
     @When("^Contractor is ([^\"]*)$")
     public void setContractor(String contractor) throws Throwable {
-        logger().info("STEP:");
-        logger().info(" - ACTION: SET_OUTPUT_PARAM");
-        logger().info(" - NAME: contractor");
-        logger().info(" - VALUE: " + contractor);
+        logger().debug("STEP:");
+        logger().debug(" - ACTION: SET_OUTPUT_PARAM");
+        logger().debug(" - NAME: contractor");
+        logger().debug(" - VALUE: " + contractor);
         this.contractor = contractor;
     }
 
@@ -43,11 +43,11 @@ public class OutputParameterTest extends RegisteredScenario {
 
     @And("^Start of tenure is \"?([^\"]*)\"?$")
     public void startOfTenureIs(String startOfTenure) throws Throwable {
-        logger().info("STEP:");
-        logger().info(" - ACTION: SET_OUTPUT_PARAM");
-        logger().info(" - NAME: startOfTenure");
+        logger().debug("STEP:");
+        logger().debug(" - ACTION: SET_OUTPUT_PARAM");
+        logger().debug(" - NAME: startOfTenure");
         this.startOfTenure = expandFrom(startOfTenure);
-        logger().info(" - VALUE: " + this.startOfTenure.toString());
+        logger().debug(" - VALUE: " + this.startOfTenure.toString());
     }
 
 

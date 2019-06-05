@@ -32,13 +32,13 @@ public abstract class Component {
 
     public Component(By selector) {
         this();
-        logger().info("STEP:");
-        logger().info(" - ACTION: LOAD_PAGE_OBJECT");
+        logger.debug("STEP:");
+        logger.debug(" - ACTION: LOAD_PAGE_OBJECT");
         try {
             element = seleniumDriver.findElementWhenPresent(selector);
         } catch (TimeoutException te) {
-            logger().fatal(" - RESULT: FAILED");
-            logger().fatal(" - REASON: " + getClass() + "{null}: Web element was not found. ");
+            logger.error(" - RESULT: FAILED");
+            logger.error(" - REASON: " + getClass() + "{null}: Web element was not found. ");
             throw new CucumberException(getClass() + ": Web element was not found.");
         }
         logger.debug(String.format(" - TARGET: %s -> %s", selector, element.getAttribute("innerHTML")));
@@ -46,15 +46,15 @@ public abstract class Component {
 
     public Component(WebElement element) {
         this();
-        logger.info("STEP:");
-        logger.info(" - ACTION: LOAD_PAGE_OBJECT");
+        logger.debug("STEP:");
+        logger.debug(" - ACTION: LOAD_PAGE_OBJECT");
         if (element == null) {
             logger.error(" - RESULT: FAILED");
             logger.error(" - REASON: " + getClass() + "{null}: Web element was not found. ");
             throw new CucumberException(getClass() + ": Web element was not found.");
         }
 
-        logger.info(" - RESULT: " + element);
+        logger.debug(" - RESULT: " + element);
         this.element = element;
     }
 
@@ -114,7 +114,7 @@ public abstract class Component {
         try {
             Alert alert = seleniumDriver.getDriver().switchTo().alert();
             logger.warn("-WARN: unexpected alert: " + alert.getText());
-            logger.info("-ACTION: ACCEPT_ALERT");
+            logger.debug("-ACTION: ACCEPT_ALERT");
             alert.accept();
         } catch(NoAlertPresentException nape) {
 
@@ -157,7 +157,7 @@ public abstract class Component {
                 List<WebElement> elements = element.findElements(By.xpath("../span[contains(@class, 'icon')]"));
                 elements.forEach(siblingIcon -> {
                     String setProperty = "style = 'display:none'";
-                    logger().info("Executing javascript " + setProperty + " on target element");
+                    logger.debug("Executing javascript " + setProperty + " on target element");
                     jsExec.executeScript("arguments[0]." + setProperty, siblingIcon);
                 });
             }
