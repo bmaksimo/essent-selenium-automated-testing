@@ -47,7 +47,8 @@ Feature: NSTA-333: Social tariff (SOCTAR) contract creation
 
         #Step 4 Check the status of "Soctar file import"
         Given Click on "parameter:soctar-file-name" link
-        Then Soctar tariff type and status are "Import" - "DONE"
+        Then Soctar status is changed to "DONE" within 60 seconds
+        And Soctar type is changed to "Import" within 60 seconds
 
         #Step 5. Check the status of Social tariff quote
         When "1st" list element has cell value "parameter:EAN-code" at column "EAN-code"
@@ -74,7 +75,8 @@ Feature: NSTA-333: Social tariff (SOCTAR) contract creation
         #Step 9 Check batch SOCTAR confirmation letter
         When Plus menu is "Contracting -> Soctar -> Sociale tariefbatches"
         And Click on link in "Soctar Confirmation Letters" View List at "1st" row and "Batchnaam" column
-        Then Soctar tariff type and status are "Confirmation" - "DONE"
+        Then Soctar confirmation letters type is changed to "Confirmation" within 60 seconds
+        Then Soctar confirmation letters status is changed to "DONE" within 60 seconds
         When Top arrow button is "UP"
 
         #Step 10 Check if all changes are correct on the customer
