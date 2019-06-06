@@ -7,6 +7,7 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
 
     Background:
         Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
+        
     @NUAT-368-SPLIT-01
     Scenario: I Change status CSR and Externe partij is Contentia
         When Left menu is "sales-marketing"
