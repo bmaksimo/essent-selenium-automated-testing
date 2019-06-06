@@ -1,6 +1,7 @@
 package com.essent.testing.dwp.pageobject.impl.service_contracting;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 
@@ -8,7 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
-import static org.hamcrest.MatcherAssert.assertThat;
 import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.JS_TR_EAN_CHECK_BOX;
 import static org.hamcrest.Matchers.is;
 
@@ -25,7 +25,7 @@ public class EndOfContractPage extends Component {
 
     public void simpleExecuteJavaScript(String nameOfJavaScript) {
         boolean success = new ExecuteJavaScript().test(nameOfJavaScript);
-        assertThat(String.format("JavaScript file %s is undefined.", nameOfJavaScript),
+        Assert.assertThat(String.format("JavaScript file %s is undefined.", nameOfJavaScript),
             success, is(true));
     }
 
