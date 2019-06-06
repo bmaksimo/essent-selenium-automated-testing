@@ -12,7 +12,7 @@ Feature: NUAT-549 Send manual drop
     Background:
         Given  I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
 
-    Scenario:
+    Scenario: Send manual drop
         When Left menu is "sales-marketing"
         And Top menu item is "Klanten"
         And Top action is "Filters"
