@@ -13,6 +13,15 @@ public class PayloadDTO {
     @JsonProperty("accounts|aos_quotes|pricing_date_c")
     private String pricing_date_c;
 
+    @JsonProperty("sales_channel_legal_label")
+    private String sales_channel_legal_label;
+
+    @JsonProperty("dwp|accounts|aos_quotes|payment_details|com_prefs(type='MANDATE')|channel|matchedCondition")
+    private String paymentMethod;
+
+    @JsonProperty("accounts|aos_quotes|primary_group_id")
+    private  DealersDTO dealers;
+
     @JsonProperty("dgo_id_c")
     private String id;
     @JsonProperty("line_status_c")
@@ -803,5 +812,14 @@ public class PayloadDTO {
 
     public String getPricingDateC() { return sign_date_c;}
     public void setPricingDateC() {this.pricing_date_c = pricing_date_c;}
+
+    public String getSalesChannelLegalLabel() { return  sales_channel_legal_label;}
+    public void setSalesChannelLegalLabel() {this.sales_channel_legal_label = sales_channel_legal_label;}
+    public DealersDTO getDealers() {
+        return dealers;
+    }
+    public void setDealers(DealersDTO dealers) {
+        this.dealers = dealers;
+    }
 
 }

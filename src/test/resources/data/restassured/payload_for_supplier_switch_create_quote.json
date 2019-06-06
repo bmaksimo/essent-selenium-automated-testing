@@ -19,11 +19,14 @@
 
   "accounts|aos_quotes|sign_date_c": "2019-04-30",
   "accounts|aos_quotes|pricing_date_c": "2019-04-30",
+  "sales_channel_legal_label": "Telefonisch - inbound",
+  "dwp|accounts|aos_quotes|payment_details|com_prefs(type='MANDATE')|channel|matchedCondition": "model['accounts|aos_quotes|payment_details|payment_methods|payment_method'] === 'OV'",
+  "accounts|aos_quotes|primary_group_id": {"key": "2c527afa-b7d3-15c2-929c-580dba396784", "label": "Essent"},
 
   "delivery_address_postalcode": "3012",
   "addresses_aos_products_quotes|is_main": true,
-  "tariffsheet_id": "b1eec744-c6ab-5a1f-887e-58f0ab4a5b92",
-  "package_id": "96c0e8ef-d417-cefd-faa4-58c99268c784",
+  "tariffsheet_id": "cb80046d-6b10-317a-9b4a-5c4ac7a62d0b",
+  "package_id": "3e8a6e0d-726b-80c8-ae2a-5a12dd868d92",
   "advance_base_c": "EAV",
   "advance_frequency_c": "1",
   "product_id": "c0f94c2f-72e0-51b9-ce93-58930799ecf1",
