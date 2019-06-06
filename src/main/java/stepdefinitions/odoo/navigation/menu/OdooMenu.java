@@ -29,7 +29,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class OdooMenu extends OdooScenario {
 
-    @Before("@ODOO, @E2E, @REGRESSION")
+    @Before("@ODOO or @E2E or @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -161,7 +161,7 @@ public class OdooMenu extends OdooScenario {
 
 
     @Override
-    @After("@ODOO, @E2E, @REGRESSION")
+    @After("@ODOO or @E2E or @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }

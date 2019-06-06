@@ -17,13 +17,13 @@ import java.util.List;
 
 public class JournalEntriesSteps extends OdooScenario {
 
-    @Before("@ODOO,@B2B, @REGRESSION")
+    @Before("@ODOO or @B2B or @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
 
     @Override
-    @After("@ODOO, @REGRESSION")
+    @After("@ODOO or @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }

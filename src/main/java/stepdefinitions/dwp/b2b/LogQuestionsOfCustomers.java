@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
 public class LogQuestionsOfCustomers extends DwpScenario {
 
 
-    @Before("@DWP, @REGRESSION")
+    @Before("@DWP or @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
 
@@ -48,7 +48,7 @@ public class LogQuestionsOfCustomers extends DwpScenario {
     }
 
     @Override
-    @After("@DWP, @REGRESSION")
+    @After("@DWP or @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }

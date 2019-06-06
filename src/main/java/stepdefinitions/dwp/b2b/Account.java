@@ -15,7 +15,7 @@ import static org.junit.Assert.assertTrue;
 //@ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 
 public class Account extends DwpScenario {
-    @Before("@DWP, @REGRESSION")
+    @Before("@DWP or @REGRESSION")
     public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
     }
@@ -35,7 +35,7 @@ public class Account extends DwpScenario {
         ucdp.clickOnSaveButtonForFinanceAndLegalSection();
     }
 
-    @After("@DWP, @REGRESSION")
+    @After("@DWP or @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }

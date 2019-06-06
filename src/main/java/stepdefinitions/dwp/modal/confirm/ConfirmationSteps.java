@@ -28,7 +28,7 @@ public class ConfirmationSteps extends NavigationElements {
     }
   }
 
-    @Before("@DWP, @CORE, @E2E, @REGRESSION")
+    @Before("@DWP or @CORE or @E2E or @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -88,7 +88,7 @@ public class ConfirmationSteps extends NavigationElements {
   }
 
   @Override
-  @After("@DWP, @CORE, @E2E, @REGRESSION")
+  @After("@DWP or @CORE or @E2E or @REGRESSION")
   public void tearDown() {
     super.tearDown();
   }

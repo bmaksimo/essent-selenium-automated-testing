@@ -20,7 +20,7 @@ public class SearchAndMultipeChoice extends DwpScenario {
    * @param scenario Gherkin scenario descriptor
    * @throws Throwable
    */
-  @Before("@DWP, @B2C, @CORE, @E2E, @REGRESSION")
+  @Before("@DWP or @B2C or @CORE or @E2E or @REGRESSION")
   public void setupTest(Scenario scenario) throws Throwable {
     registerActiveScenario(scenario);
   }
@@ -53,7 +53,7 @@ public class SearchAndMultipeChoice extends DwpScenario {
 
   /** Cucumber-JVM After- hook */
   @Override
-  @After("@DWP, @CORE, @B2C, @E2E, @REGRESSION")
+  @After("@DWP or @CORE or @B2C or @E2E or @REGRESSION")
   public void tearDown() {
     super.tearDown();
   }

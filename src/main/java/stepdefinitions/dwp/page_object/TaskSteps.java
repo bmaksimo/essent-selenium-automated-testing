@@ -17,7 +17,7 @@ public class TaskSteps extends DwpScenario {
     private String taskId;
     private TasksPage tp;
 
-    @Before("@DWP, @REGRESSION")
+    @Before("@DWP or @REGRESSION")
     public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
     }
@@ -98,7 +98,7 @@ public class TaskSteps extends DwpScenario {
     }
 
     @Override
-    @After("@DWP, @REGRESSION")
+    @After("@DWP or @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }

@@ -20,7 +20,7 @@ import static org.hamcrest.Matchers.is;
 //@ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 
 public class OfferteStep extends DwpScenario {
-    @Before("@DWP, @REGRESSION")
+    @Before("@DWP or @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }

@@ -21,7 +21,7 @@ import static org.junit.Assert.assertTrue;
 public class SoctarSteps extends DwpScenario {
 
 
-    @Before("@DWP, @CORE, @E2E, @REGRESSION, @DB-CORE")
+    @Before("@DWP or @CORE or @E2E or @REGRESSION or @DB-CORE")
     public void setUp(Scenario scenario) {
         registerActiveScenario(scenario);
     }

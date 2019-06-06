@@ -33,7 +33,7 @@ public class CompanySteps extends DwpScenario {
         }
     }
 
-    @Before("@DWP, @E2E, @REGRESSION")
+    @Before("@DWP or @E2E or @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -74,7 +74,7 @@ public class CompanySteps extends DwpScenario {
     }
 
     @Override
-    @After("@DWP, @E2E, @REGRESSION")
+    @After("@DWP or @E2E or @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }

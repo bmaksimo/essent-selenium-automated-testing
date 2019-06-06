@@ -21,7 +21,7 @@ import java.util.List;
 public class MarketBerichtenSteps extends DwpScenario {
     private static String eanCode = null;
 
-    @Before("@DWP, @REGRESSION")
+    @Before("@DWP or @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -63,7 +63,7 @@ public class MarketBerichtenSteps extends DwpScenario {
     }
 
     @Override
-    @After("@DWP, @REGRESSION")
+    @After("@DWP or @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }

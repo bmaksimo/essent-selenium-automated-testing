@@ -12,7 +12,7 @@ import cucumber.api.java.en.Given;
 import static org.junit.Assert.assertNotNull;
 
 public class JBillingGenericSteps extends JBillingScenario {
-    @Before("@JBILLING, @B2B, @REGRESSION")
+    @Before("@JBILLING or @B2B or @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -31,7 +31,7 @@ public class JBillingGenericSteps extends JBillingScenario {
     }
 
 
-    @After("@JBILLING, @B2B, @REGRESSION")
+    @After("@JBILLING or @B2B or @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }

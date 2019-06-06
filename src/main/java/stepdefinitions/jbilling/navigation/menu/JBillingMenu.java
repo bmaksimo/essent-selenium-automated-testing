@@ -11,7 +11,7 @@ import cucumber.api.java.en.When;
 
 public class JBillingMenu extends JBillingScenario {
 
-    @Before("@JBILLING, @B2B, @REGRESSION")
+    @Before("@JBILLING or @B2B or @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -23,7 +23,7 @@ public class JBillingMenu extends JBillingScenario {
     }
 
     @Override
-    @After("@JBILLING, @B2B, @REGRESSION")
+    @After("@JBILLING or @B2B or @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }

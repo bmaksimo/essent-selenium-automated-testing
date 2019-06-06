@@ -12,7 +12,7 @@ import stepdefinitions.dwp.navigation.NavigationElements;
 
 public class MenuElements extends NavigationElements {
 
-    @Before("@DWP, @CORE, @E2E, @REGRESSION, @API")
+    @Before("@DWP or @CORE or @E2E or @REGRESSION or @API")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -55,7 +55,7 @@ public class MenuElements extends NavigationElements {
     }
 
     @Override
-    @After("@DWP, @CORE, @E2E, @REGRESSION")
+    @After("@DWP or @CORE or @E2E or @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }

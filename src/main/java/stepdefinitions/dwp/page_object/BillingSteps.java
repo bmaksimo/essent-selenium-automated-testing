@@ -11,13 +11,13 @@ import cucumber.api.java.en.Then;
 import org.junit.Assert;
 
 public class BillingSteps extends DwpScenario {
-    @Before("@DWP, @E2E, @REGRESSION")
+    @Before("@DWP or @E2E or @REGRESSION")
     public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
     }
 
     @Override
-    @After("@DWP, @E2E, @REGRESSION")
+    @After("@DWP or @E2E or @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }

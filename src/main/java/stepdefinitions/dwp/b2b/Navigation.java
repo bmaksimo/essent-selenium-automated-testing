@@ -21,7 +21,7 @@ import static org.awaitility.Duration.TEN_SECONDS;
 public class Navigation extends DwpScenario {
 
 
-    @Before("@DWP, @REGRESSION")
+    @Before("@DWP or @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
 
@@ -36,7 +36,7 @@ public class Navigation extends DwpScenario {
     }
 
     @Override
-    @After("@DWP, @REGRESSION")
+    @After("@DWP or @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }

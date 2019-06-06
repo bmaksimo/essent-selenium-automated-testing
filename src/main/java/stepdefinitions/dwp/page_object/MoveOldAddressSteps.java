@@ -9,7 +9,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 
 public class MoveOldAddressSteps extends DwpScenario {
-    @Before("@DWP, @REGRESSION")
+    @Before("@DWP or @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }

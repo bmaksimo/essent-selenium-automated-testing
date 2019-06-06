@@ -13,7 +13,7 @@ import static org.hamcrest.Matchers.is;
 public class Invoices extends JBillingScenario {
 
 
-	@Before("@JBILLING, @B2B, @REGRESSION")
+	@Before("@JBILLING or @B2B or @REGRESSION")
 	public void setupTest(Scenario scenario) throws Throwable {
 		registerActiveScenario(scenario);
 	}
@@ -28,7 +28,7 @@ public class Invoices extends JBillingScenario {
 
 
 	@Override
-	@After("@JBILLING, @B2B, @REGRESSION")
+	@After("@JBILLING or @B2B or @REGRESSION")
 	public void tearDown() {
 		super.tearDown();
 	}

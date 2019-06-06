@@ -29,7 +29,7 @@ public class ContractsSteps extends DwpScenario{
 
     private String eanCodeInput = null;
 
-    @Before("@DWP, @REGRESSION, @API")
+    @Before("@DWP or @REGRESSION or @API")
     public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
     }
@@ -72,7 +72,7 @@ public class ContractsSteps extends DwpScenario{
     }
 
     @Override
-    @After("@DWP, @REGRESSION")
+    @After("@DWP or @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }

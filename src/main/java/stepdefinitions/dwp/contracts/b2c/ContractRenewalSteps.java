@@ -25,7 +25,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContractRenewalSteps extends NavigationElements {
 
-  @Before("@DWP, @B2C, @E2E, @REGRESSION")
+  @Before("@DWP or @B2C or @E2E or @REGRESSION")
   public void setupTest(Scenario scenario) throws Throwable {
     registerActiveScenario(scenario);
   }
@@ -83,7 +83,7 @@ public class ContractRenewalSteps extends NavigationElements {
   }
 
   @Override
-  @After("@DWP, @B2C, @E2E, @REGRESSION")
+  @After("@DWP or @B2C or @E2E or @REGRESSION")
   public void tearDown() {
     super.tearDown();
   }

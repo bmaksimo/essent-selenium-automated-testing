@@ -9,7 +9,7 @@ import org.junit.Assert;
 
 public class DocumentSteps extends DwpScenario {
 
-    @Before("@DWP, @E2E, @REGRESSION")
+    @Before("@DWP or @E2E or @REGRESSION")
     public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
     }

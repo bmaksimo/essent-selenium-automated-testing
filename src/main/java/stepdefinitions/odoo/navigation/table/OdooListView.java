@@ -25,7 +25,7 @@ public class OdooListView extends OdooScenario  {
     private static final String TABLE_CELL_SELECTOR_TEMPLATE = "//table[@class='oe_list_content'][1]//tbody//tr[${rowIndex}]//td[@data-field='${key}'][1]";
 
 
-    @Before("@ODOO, @E2E, @REGRESSION")
+    @Before("@ODOO or @E2E or @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -95,7 +95,7 @@ public class OdooListView extends OdooScenario  {
     }
 
     @Override
-    @After("@ODOO, @E2E, @REGRESSION")
+    @After("@ODOO or @E2E or @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }

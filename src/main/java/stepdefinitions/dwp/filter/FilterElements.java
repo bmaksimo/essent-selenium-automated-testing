@@ -19,7 +19,7 @@ public class FilterElements extends NavigationElements {
     private static final String FILTER_BUTTON_ELEMENT = "FILTER_BUTTON_ELEMENT";
     private static final String FILTER_BUTTON_ELEMENT_QUERY = ".icon-filters";
 
-  @Before("@DWP, @CORE, @B2C, @E2E, @REGRESSION")
+  @Before("@DWP or @CORE or @B2C or @E2E or @REGRESSION")
   public void setupTest(Scenario scenario) throws Throwable {
     registerActiveScenario(scenario);
   }
@@ -47,7 +47,7 @@ public class FilterElements extends NavigationElements {
     }
 
     @Override
-    @After("@DWP, @CORE, @B2C, @E2E, @REGRESSION")
+    @After("@DWP or @CORE or @B2C or @E2E or @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }

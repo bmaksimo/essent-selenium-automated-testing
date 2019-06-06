@@ -24,7 +24,7 @@ import java.util.List;
 public class ContractSteps extends DwpScenario {
     private String amount;
 
-    @Before("@DWP, @REGRESSION")
+    @Before("@DWP or @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -59,7 +59,7 @@ public class ContractSteps extends DwpScenario {
     }
 
     @Override
-    @After("@DWP, @REGRESSION")
+    @After("@DWP or @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }

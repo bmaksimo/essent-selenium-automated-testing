@@ -24,7 +24,7 @@ public class DunningSteps extends DwpScenario {
     protected RestResponse balanceResponse = null;
     private int days_passed;
 
-    @Before("@DWP, @E2E, @REGRESSION, @DUNNING")
+    @Before("@DWP or @E2E or @REGRESSION or @DUNNING")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }

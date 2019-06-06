@@ -13,11 +13,10 @@ import org.openqa.selenium.By;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public class SoctarBatchSteps extends DwpScenario {
 
-    @Before("@DWP, @SOCTAR, @E2E")
+    @Before("@DWP or @SOCTAR or @E2E")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }

@@ -11,7 +11,7 @@ import org.junit.Assert;
 
 public class ServiceStep extends DwpScenario {
 
-    @Before("@DWP, @REGRESSION")
+    @Before("@DWP or @REGRESSION")
     public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
     }
@@ -23,7 +23,7 @@ public class ServiceStep extends DwpScenario {
     }
 
     @Override
-    @After("@DWP, @REGRESSION")
+    @After("@DWP or @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }
