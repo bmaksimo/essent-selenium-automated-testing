@@ -12,7 +12,6 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.springframework.test.context.ContextConfiguration;
 import stepdefinitions.dwp.tables.SalesChannel;
 
 import static org.hamcrest.core.Is.is;
@@ -20,10 +19,7 @@ import static org.junit.Assert.assertThat;
 import static org.testng.AssertJUnit.assertEquals;
 
 
-
-//@ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
-
-public class Contract extends DwpScenario {
+public class ContractSteps extends DwpScenario {
     private static String Klantnummer;
 
     @Before("@REGRESSION or @E2E or @API")

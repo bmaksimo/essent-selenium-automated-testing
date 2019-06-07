@@ -13,8 +13,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertTrue;
 
-//@ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
-public class LogQuestionsOfCustomers extends DwpScenario {
+public class LogQuestionsOfCustomersSteps extends DwpScenario {
 
 
     @Before("@DWP or @REGRESSION")

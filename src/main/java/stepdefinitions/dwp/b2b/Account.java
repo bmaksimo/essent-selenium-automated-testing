@@ -8,11 +8,9 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
-import org.springframework.test.context.ContextConfiguration;
 
 import static org.junit.Assert.assertTrue;
 
-//@ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 
 public class Account extends DwpScenario {
     @Before("@DWP or @REGRESSION")
