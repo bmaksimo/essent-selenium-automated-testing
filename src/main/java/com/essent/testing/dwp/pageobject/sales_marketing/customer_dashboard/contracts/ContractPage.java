@@ -4,6 +4,7 @@ import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -12,9 +13,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class ContractPage extends Component {
+
+    private final static Logger log = Logger.getLogger(ContractPage.class);
 
     private static final String NUMBER_ELECTRICITY_CONTRACT = "//list-icon-text-cell/div";
     private static final String REPLACEMENT_KEY = "replacement_key";
@@ -215,8 +217,7 @@ public class ContractPage extends Component {
         LocalDate startDate = LocalDate.parse(sd, DASH_SEPARATED_DATE_FORMATTER);
         LocalDate endDate = LocalDate.parse(ed, DASH_SEPARATED_DATE_FORMATTER);
         long range = ChronoUnit.DAYS.between(startDate, endDate);
-        Logger.getLogger("Number of days between the start date : " + startDate + " and end date : " + endDate
-            + " is  ==> " + range);
+        log.debug("Number of days between the start date : " + startDate + " and end date : " + endDate + " is  ==> " + range);
 
         return range;
     }
