@@ -20,10 +20,7 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-/**
- * The class prov
- */
-public class EssentPrettyFormatter extends PrettyFormatter implements ColorAware, Plugin {
+public class EssentPrettyFormatter extends PrettyFormatter implements ColorAware {
 
     private static final Logger logger = Logger.getLogger(EssentPrettyFormatter.class);
     private static final Map<Class, BiConsumer> annotationRules  = new HashMap<>();
@@ -102,7 +99,6 @@ public class EssentPrettyFormatter extends PrettyFormatter implements ColorAware
         ParameterProvider  parameterProvider = ((ParameterProvider) ContextService.getContext().getBean("parameterProvider")).consumingNullValues(true);
         Map<String, Object> parameters = parameterProvider.getParameters();
         if (!parameters.isEmpty()) logger.info("TEST END SCENARIO PARAMETERS: " + parameterProvider.toString());
-        parameters.clear();
     }
 }
 
