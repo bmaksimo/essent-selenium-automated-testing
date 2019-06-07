@@ -279,7 +279,7 @@ public class ContractsSteps extends DwpScenario{
   public void checkInstallmentsNumber(int expectedNumberOfInstallments, String amount) {
     ContractPage cp = new ContractPage();
     int actualNumberOfInstallments = cp.installmentsNumber(amount);
-        assertTrue("Insufficient Number of installments with amount of 50€.",expectedNumberOfInstallments<=actualNumberOfInstallments);
+        assertTrue("Insufficient Number of installments with given amount.",expectedNumberOfInstallments<=actualNumberOfInstallments);
     }
 
   @Then(
