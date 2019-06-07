@@ -11,7 +11,8 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Cucumber.class)
 @CucumberOptions(
-    features = { "src/features/feature_files" },
+    features = { "src/test/resources" },
+//    features = { "src/features/feature_files" },
     glue = { "stepdefinitions"},
     junit = "--step-notifications",
     plugin = { "pretty",
