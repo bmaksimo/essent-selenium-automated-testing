@@ -273,11 +273,12 @@ public class ContractsSteps extends DwpScenario{
         parameterProvider.put("invoiceAmount", cp.getInvoiceSum());
     }
 
+
     @Then("^Check is Number of Installments at least \"([^\"]*)\" for given amount \"([^\"]*)\"$")
     public void checkInstallmentsNumber(int expectedNumberOfInstallments, String amount) {
         ContractPage cp = new ContractPage();
         int actualNumberOfInstallments = cp.installmentsNumber(amount);
-        assertTrue("Insufficient Number of installments with amount of 50€.",expectedNumberOfInstallments <= actualNumberOfInstallments);
+        assertTrue("Insufficient Number of installments with given amount.",expectedNumberOfInstallments<=actualNumberOfInstallments);
     }
 
     @Then("^Installments Amount of \"([^\"]*)\" is by \"([^\"]*)\" bigger than Invoice Amount of \"([^\"]*)\"$")
