@@ -435,15 +435,21 @@ public class ContractPage extends Component {
     }
 
     public int installmentsNumber(String amount) {
-       seleniumDriver.waitForRequestsToFinish();
-       List<WebElement> installments = seleniumDriver.findElements(By.xpath(INSTALLMENTS_NUMBER));
-       int numInstallThanHaveGivenAmount= 0;
-       for (int i = 1; i <= installments.size()-1; i++) {
-           if (amount.equalsIgnoreCase(installments.get(i).getText()))
-               numInstallThanHaveGivenAmount+=1;
-       }
+        seleniumDriver.waitForRequestsToFinish();
+        List<WebElement> installments = seleniumDriver.findElements(By.xpath(INSTALLMENTS_NUMBER));
+
+        int numInstallThanHaveGivenAmount= 0;
+
+        for (WebElement matchValue : installments ) {
+
+            if (amount.equalsIgnoreCase(matchValue.getText())) {
+                numInstallThanHaveGivenAmount+=1;
+            }
+        }
+
        return numInstallThanHaveGivenAmount;
     }
+
 
     public int findDifferenceInAmounts(String installAmount, String invoiceAmount) {
         seleniumDriver.waitForRequestsToFinish();
