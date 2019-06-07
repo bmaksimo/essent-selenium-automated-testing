@@ -6,7 +6,6 @@ import com.billinghouse.cucumber.runtime.parameter.ParametersUtil;
 import com.billinghouse.cucumber.runtime.scenario.ActiveScenarioProvider;
 import com.essent.testing.context.ContextService;
 import com.essent.testing.scenario.RegisteredScenario;
-import cucumber.api.junit.Cucumber;
 import cucumber.api.Plugin;
 import cucumber.runtime.CucumberException;
 import cucumber.runtime.formatter.ColorAware;
@@ -14,7 +13,6 @@ import gherkin.formatter.PrettyFormatter;
 import gherkin.formatter.model.Match;
 import gherkin.formatter.model.Result;
 import gherkin.formatter.model.Scenario;
-import gherkin.formatter.model.Step;
 import org.apache.log4j.Logger;
 
 import java.util.HashMap;
@@ -51,20 +49,10 @@ public class EssentPrettyFormatter extends PrettyFormatter implements ColorAware
             parameterProvider.put("cucumber-scenario-status", result.getStatus());
             parameterProvider.consumingNullValues(true).put("cucumber-scenario-failure", result.getError());
         }
-//        logger.info(super;);
-        logger.info(" - TEST RESULT SCENARIO PARAMETERS: " + parameterProvider.toString());
+        Map<String, Object> parameters = parameterProvider.getParameters();
+        if (!parameters.isEmpty()) logger.info("TEST RESULT SCENARIO PARAMETERS: " + parameterProvider.toString());
     }
 
-    @Override
-    public void scenario(Scenario scenario) {
-        logger.info("STEP: " + scenario.getKeyword() + " " + scenario.getName());
-    }
-
-    @Override
-    public void step(Step step) {
-        super.step(step);
-        logger.info("STEP: " + step.getKeyword() + " " + step.getName());
-    }
 
     @Override
     public void match(Match match) {
@@ -76,7 +64,7 @@ public class EssentPrettyFormatter extends PrettyFormatter implements ColorAware
     }
 
     private void assignInputFromOuputParameters(RegisteredScenario activeScenario) {
-        ParameterProvider  parameterProvider = ((ParameterProvider) ContextService.getContext().getBean("parameterProvider")).consumingNullValues(true);
+        ParameterProvider parameterProvider = ((ParameterProvider) ContextService.getContext().getBean("parameterProvider")).consumingNullValues(true);
         ParametersUtil.assignOutValuesToInputParameters((Function<String, Object>) (s)-> parameterProvider.get(s), activeScenario);
     }
 
@@ -113,7 +101,8 @@ public class EssentPrettyFormatter extends PrettyFormatter implements ColorAware
         super.endOfScenarioLifeCycle(scenario);
         ParameterProvider  parameterProvider = ((ParameterProvider) ContextService.getContext().getBean("parameterProvider")).consumingNullValues(true);
         Map<String, Object> parameters = parameterProvider.getParameters();
-        if (!parameters.isEmpty()) logger.info(" - TEST END SCENARIO PARAMETERS: " + parameterProvider.toString());
+        if (!parameters.isEmpty()) logger.info("TEST END SCENARIO PARAMETERS: " + parameterProvider.toString());
+        parameters.clear();
     }
 }
 

@@ -76,6 +76,9 @@ public class ParameterProvider {
     public Object remove(Object key) {
         return parameters.remove(key);
     }
+    public void clean() {
+        parameters.clear();
+    }
 
     public boolean remove(Object key, Object value) {
         return parameters.remove(key, value);
