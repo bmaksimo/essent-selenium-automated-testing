@@ -164,7 +164,7 @@
         "accounts|aos_quotes|payment_details|bankaccounts|iban": null,
         "accounts|aos_quotes|payment_details|com_prefs(type='LEGAL')|channel": "EMAIL",
         "accounts|aos_quotes|payment_details|com_prefs(type='MANDATE')|channel": "EMAIL",
-        "accounts|aos_quotes|payment_details|payment_methods|payment_method": "DOM",
+        "accounts|aos_quotes|payment_details|payment_methods|payment_method": "OV",
         "accounts|aos_quotes|payment_details|paymentterms": "17",
         "accounts|aos_quotes|pricing_date_c": "2017-09-06 11:10:01",
         "accounts|aos_quotes|pricing_group_c": "TC1",

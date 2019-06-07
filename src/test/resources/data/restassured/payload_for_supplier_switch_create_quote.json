@@ -20,7 +20,6 @@
   "accounts|aos_quotes|sign_date_c": "2019-04-30",
   "accounts|aos_quotes|pricing_date_c": "2019-04-30",
   "sales_channel_legal_label": "Telefonisch - inbound",
-  "dwp|accounts|aos_quotes|payment_details|com_prefs(type='MANDATE')|channel|matchedCondition": "model['accounts|aos_quotes|payment_details|payment_methods|payment_method'] === 'OV'",
   "accounts|aos_quotes|primary_group_id": {"key": "de18128e-a6e3-aff9-e9df-57a8e1c88552", "label": "Essent"},
 
   "delivery_address_postalcode": "3012",
@@ -108,6 +107,7 @@
   "dwp|dwp|external_message_GUID_1|matchedCondition": "model['mig_version'] === '4' || model['market_mock_c'] === true ",
   "dwp|dwp|external_message_GUID_2|matchedCondition": "model['mig_version'] === '4' || model['market_mock_c'] === true ",
   "dwp|meter_type_c|matchedCondition": "default",
+  "dwp|accounts|aos_quotes|payment_details|com_prefs(type='MANDATE')|channel|matchedCondition": "OV",
   "dwp|meter_configuration_c|matchedCondition": "default",
   "dwp|external_message_id|matchedCondition": "model['dwp|mig_module_c'] === '' && model['dwp|mig_label_c'] === '' && model['market_mock_c'] == true",
   "advance_amount_incl_vat_c": null,
