@@ -4,19 +4,19 @@ import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class ContractPage extends Component {
+
+    private final static Logger log = Logger.getLogger(ContractPage.class);
 
     private static final String NUMBER_ELECTRICITY_CONTRACT = "//list-icon-text-cell/div";
     private static final String REPLACEMENT_KEY = "replacement_key";
@@ -39,19 +39,23 @@ public class ContractPage extends Component {
     private static final String INSTALLMENTS_SUM = "balance-field";
     private static final String INSTALLMENTS_NUMBER = "//list[@list-key='InstallmentsOnPaymentPlan']//h5";
     private static final String BILLING_NUMBER = "//list[@list-key='BillingCustomerOnaccount']//td[1]//span[1]";
-
-    private WebElement startData() {
-        return seleniumDriver.findElementWhenVisible(By.id(START_DATA_ID));
-    }
-
-    private static SimpleDateFormat SIMPLE_DATEF_ORMAT = new SimpleDateFormat("dd/MM/yyyy");
-
-
     private static final String LABELFORPRODUCTCHANGE = "//wysiwyg-editor-form-element[@id='description']/div[@class = 'non-editable-editor']";
     private static final String ACCOUNT_NUMBER = "//div[@class='card__content__inner-wrapper']/h4";
     private static final String CONTRACT_NUMBER = "//*[@id=\"account_number_c\"]/div";
     private static final String COMPANY_NUMBER = "//*//*[@id=\"company-number-c-field\"]";
+    private static final int JANUARY = 1;
+    private static final int MARCH = 3;
+    private static final int APRIL = 4;
+    private static final int JUNE = 6;
+    private static final int JULY = 7;
+    private static final int SEPTEMBER = 9;
+    private static final int OCTOBER = 10;
+    private static DateTimeFormatter DASH_SEPARATED_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    private static DateTimeFormatter SLASH_SEPARATED_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
+    private WebElement startData() {
+        return seleniumDriver.findElementWhenVisible(By.id(START_DATA_ID));
+    }
 
     public void startDateIsToday() {
         seleniumDriver.waitAndSendKeys(startData(), "date");
@@ -168,105 +172,52 @@ public class ContractPage extends Component {
     public String getStartDate() {
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath("//td[@class='list__cell cell__text'][4]//p/span[1]")).getText();
-
     }
 
     public String getQuarterForChosenStartDate(String startDate, String attestDate) {
-        String str[] = startDate.split("-");
-        int monthStartDate = Integer.parseInt(str[1]);
-        String yearStartDate = str[2];
+        LocalDate startDateTime = LocalDate.parse(startDate, DASH_SEPARATED_DATE_FORMATTER);
+        int yearStartDate = startDateTime.getYear();
+        int monthStartDate = startDateTime.getMonthValue();
 
-        String str2[] = attestDate.split("/");
-        String yearAttestDate = str2[2];
+        LocalDate attestDateTime = LocalDate.parse(attestDate, SLASH_SEPARATED_DATE_FORMATTER);
+        int yearAttestDate = attestDateTime.getYear();
 
-        String quarterEndMonth;
+        String quarterEndMonth = startDateTime.isBefore(attestDateTime) && yearStartDate < yearAttestDate ? "01" : getQuarterEndMonth(monthStartDate);
+        yearStartDate = startDateTime.isBefore(attestDateTime) ? yearAttestDate : attestDateTime.getYear();
 
+        return "01/"+quarterEndMonth+"/"+yearStartDate;
+    }
 
-        if (startDate.compareTo(attestDate) > 0) {
-            if (monthStartDate <= 3) {
-                quarterEndMonth = "03";
-            } else if (monthStartDate <= 6) {
-                quarterEndMonth = "06";
-            } else if (monthStartDate <= 9) {
-                quarterEndMonth = "09";
-            } else {
-                quarterEndMonth = "12";
-            }
-        } else if (startDate.compareTo(attestDate) < 0) {
-            if (yearStartDate.compareTo(yearAttestDate) < 0) {
-                quarterEndMonth = "01";
-
-            } else {
-                if (monthStartDate <= 3) {
-                    quarterEndMonth = "03";
-
-                } else if (monthStartDate <= 6) {
-                    quarterEndMonth = "06";
-
-                } else if (monthStartDate <= 9) {
-                    quarterEndMonth = "09";
-
-                } else {
-                    quarterEndMonth = "12";
-
-                }
-
-            }
-            yearStartDate = yearAttestDate;
+    private static String getQuarterEndMonth(int monthStartDate) {
+        if (monthStartDate <= MARCH) {
+            return JANUARY+"";
+        } else if (monthStartDate <= JUNE) {
+            return "0"+APRIL;
+        } else if (monthStartDate <= SEPTEMBER) {
+            return "0"+JULY;
         } else {
-            if (monthStartDate <= 3) {
-                quarterEndMonth = "03";
-            } else if (monthStartDate <= 6) {
-                quarterEndMonth = "06";
-            } else if (monthStartDate <= 9) {
-                quarterEndMonth = "09";
-            } else {
-                quarterEndMonth = "12";
-            }
-
+            return ""+OCTOBER;
         }
-
-        StringBuilder builder = new StringBuilder();
-        String date = SIMPLE_DATEF_ORMAT.format(new Date());
-        builder.append(date);
-        builder.replace(0, builder.length(), "01/");
-        builder.append(quarterEndMonth).append("/");
-
-        builder.append(yearStartDate);
-
-        return builder.toString();
-
     }
 
     public String getLastDayOfYear(String startDate, String attestDate) {
 
-        String str[] = startDate.split("-");
-        String str2[] = attestDate.split("/");
+        LocalDate startDateTime = LocalDate.parse(startDate, DASH_SEPARATED_DATE_FORMATTER);
+        int yearStartDate = startDateTime.getYear();
 
-        String yearStartDate = str[2];
-        String yearAttestDate = str2[2];
+        LocalDate attestDateTime = LocalDate.parse(attestDate, SLASH_SEPARATED_DATE_FORMATTER);
+        int yearAttestDate = attestDateTime.getYear();
 
-        if (startDate.compareTo(attestDate) < 0) {
-            yearStartDate = yearAttestDate;
-        }
+        yearStartDate = startDateTime.isBefore(attestDateTime) ? yearAttestDate : yearStartDate;
 
-        StringBuilder builder = new StringBuilder();
-        builder.append(startDate);
-        builder.replace(0, builder.length(), "31/12/");
-        builder.append(yearStartDate);
-        return builder.toString();
+        return "31/12/"+yearStartDate;
     }
 
     public static long rangeDates(String sd, String ed) {
-
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-
-        LocalDate sDate = LocalDate.parse(sd, format);
-        LocalDate eDate = LocalDate.parse(ed, format);
-        // Range = End date - Start date
-        long range = ChronoUnit.DAYS.between(sDate, eDate);
-        Logger.getLogger("Number of days between the start date : " + sDate + " and end date : " + eDate
-            + " is  ==> " + range);
+        LocalDate startDate = LocalDate.parse(sd, DASH_SEPARATED_DATE_FORMATTER);
+        LocalDate endDate = LocalDate.parse(ed, DASH_SEPARATED_DATE_FORMATTER);
+        long range = ChronoUnit.DAYS.between(startDate, endDate);
+        log.debug("Number of days between the start date : " + startDate + " and end date : " + endDate + " is  ==> " + range);
 
         return range;
     }
@@ -427,7 +378,7 @@ public class ContractPage extends Component {
     }
 
     public String getInstallmentSum() {
-       return seleniumDriver.findElementWhenPresent(By.id(INSTALLMENTS_SUM)).getText();
+        return seleniumDriver.findElementWhenPresent(By.id(INSTALLMENTS_SUM)).getText();
     }
     public String getInvoiceSum() {
         seleniumDriver.waitForRequestsToFinish();
@@ -435,14 +386,14 @@ public class ContractPage extends Component {
     }
 
     public int installmentsNumber(String amount) {
-       seleniumDriver.waitForRequestsToFinish();
-       List<WebElement> installments = seleniumDriver.findElements(By.xpath(INSTALLMENTS_NUMBER));
-       int numInstallThanHaveGivenAmount= 0;
-       for (int i = 1; i <= installments.size()-1; i++) {
-           if (amount.equalsIgnoreCase(installments.get(i).getText()))
-               numInstallThanHaveGivenAmount+=1;
-       }
-       return numInstallThanHaveGivenAmount;
+        seleniumDriver.waitForRequestsToFinish();
+        List<WebElement> installments = seleniumDriver.findElements(By.xpath(INSTALLMENTS_NUMBER));
+        int numInstallThanHaveGivenAmount= 0;
+        for (int i = 1; i <= installments.size()-1; i++) {
+            if (amount.equalsIgnoreCase(installments.get(i).getText()))
+                numInstallThanHaveGivenAmount+=1;
+        }
+        return numInstallThanHaveGivenAmount;
     }
 
     public int findDifferenceInAmounts(String installAmount, String invoiceAmount) {
@@ -452,7 +403,4 @@ public class ContractPage extends Component {
         int result2 = Integer.parseInt(invAmount);
         return result1 - result2;
     }
-
-
-
 }
