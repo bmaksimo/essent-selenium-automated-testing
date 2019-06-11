@@ -209,28 +209,14 @@ public class ContractB2BScenario extends RegisteredScenario {
     @Given("^B2B Active Contract is$")
     public String createContractB2B(final DataTable quote) throws Throwable {
         accountNumber = "";
-        String productType = null;
-        String isFakeAddress = null;
-        String switchType = null;
-        String meterType = null;
-        String kwMax = null;
-
-        List<Map<String,String>> list = quote.asMaps(String.class,String.class);
-        for (int i = 0; i < list.size(); i++) {
-
-            productType = list.get(i).get("productType");
-            isFakeAddress =list.get(i).get("isFakeAddress");
-            switchType =list.get(i).get("switchType");
-            meterType =list.get(i).get("meterType");
-            kwMax =list.get(i).get("kwMax");
-        }
+        List<List<String>> list = quote.asLists(String.class);
 
         QuoteB2B quoteB2B = new QuoteB2B();
-        quoteB2B.setProductType(productType);
-        quoteB2B.setIsFakeAddress(isFakeAddress);
-        quoteB2B.setSwitchType(switchType);
-        quoteB2B.setMeterType(meterType);
-        quoteB2B.setKwMax(kwMax);
+        quoteB2B.setProductType(list.get(1).get(0));
+        quoteB2B.setIsFakeAddress(list.get(1).get(1));
+        quoteB2B.setSwitchType(list.get(1).get(2));
+        quoteB2B.setMeterType(list.get(1).get(3));
+        quoteB2B.setKwMax(list.get(1).get(4));
 
         ProductTypes productTypes = ProductTypes.valueOf(quoteB2B.getProductType());
 
