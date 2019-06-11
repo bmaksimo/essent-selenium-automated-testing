@@ -34,7 +34,6 @@ public class EndOfContractPage extends Component {
         public boolean test(String s) {
             Map<String, Object> options = new HashMap<>();
             options.put("value", s);
-            System.out.println(s);
             boolean success = executeJavascriptTest(s, options);
             return success;
         }

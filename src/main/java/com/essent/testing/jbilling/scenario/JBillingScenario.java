@@ -34,7 +34,7 @@ public abstract class JBillingScenario extends RegisteredScenario {
             seleniumDriver.goToHomePage();
         }
         Sleeper.sleepTightInSeconds(3);
-        logger.info("Current URL: " + currentUrl);
+        logger.debug("Current URL: " + currentUrl);
         assertTrue(currentUrl.startsWith(seleniumDriver.getBaseUrl()));
     }
 

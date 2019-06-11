@@ -43,19 +43,19 @@ public class QuoteDetailsAPI extends AbstractAPI {
     private static String PATH_TO_PAYLOAD_SUPPLIER_SWITCH = ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_PAYLOAD_SUPPLIER_SWITCH);
 
     public String getTariffSheetID(Cookies cookie, String startedFlowName) throws IOException {
-    String tariffSheetID = null;
-    Integer expectedResponseCode = STATUS_OK;
-    String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
-        + ConfigProvider.getProperty(ConfigKey.CRM_B2CCQ_URL);
-    String payload = "";
+        String tariffSheetID = null;
+        Integer expectedResponseCode = STATUS_OK;
+        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
+            + ConfigProvider.getProperty(ConfigKey.CRM_B2CCQ_URL);
+        String payload = "";
 
-    RequestHelper helper = new RequestHelper();
-    Response tsResponse = helper.postRequest(expectedResponseCode, cookie, payload, path);
+        RequestHelper helper = new RequestHelper();
+        Response tsResponse = helper.postRequest(expectedResponseCode, cookie, payload, path);
 
-    tariffSheetID = getTarrifIDFromResponse(tsResponse);
-    LOGGER.info("TariffSheetID is: " + tariffSheetID);
+        tariffSheetID = getTarrifIDFromResponse(tsResponse);
+        LOGGER.debug("TariffSheetID is: " + tariffSheetID);
 
-    return tariffSheetID;
+        return tariffSheetID;
     }
 
     public QuoteDetails getQuoteDetails(Cookies cookie, String tariffSheetId, String startedFlowName, String meterOpen)
@@ -66,219 +66,217 @@ public class QuoteDetailsAPI extends AbstractAPI {
         String ibanBE = null;
         String companyNumber = null;
 
-	RequestHelper helper = new RequestHelper();
-	String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
-		+ ConfigProvider.getProperty(ConfigKey.CRM_B2CCQ_URL);
+        RequestHelper helper = new RequestHelper();
+        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
+            + ConfigProvider.getProperty(ConfigKey.CRM_B2CCQ_URL);
 
-
-    synchronized(this) {
-        ean = PrepareDataForContract.generateEAN();
-    }
-        synchronized(this) {
-            dateOfBirth = PrepareDataForContract.generateDOBForAnAdult();
-        }
 
         synchronized(this) {
-            ibanBE = PrepareDataForContract.getValidIbanBE();
+            ean = PrepareDataForContract.generateEAN();
         }
+            synchronized(this) {
+                dateOfBirth = PrepareDataForContract.generateDOBForAnAdult();
+            }
 
-        synchronized(this) {
-            companyNumber = PrepareDataForContract.generateValidBECompanyNumber();
-        }
+            synchronized(this) {
+                ibanBE = PrepareDataForContract.getValidIbanBE();
+            }
 
-    QuoteDetails quoteDetails = new QuoteDetails();
-    quoteDetails.setEan(ean);
+            synchronized(this) {
+                companyNumber = PrepareDataForContract.generateValidBECompanyNumber();
+            }
 
-        Map<String,String> generatedNames4account = new HashMap<String, String>();
-        generatedNames4account = createAccountName(startedFlowName);
-        quoteDetails.setFirstName(generatedNames4account.get("firstName"));
-        quoteDetails.setLastName(generatedNames4account.get("lastName"));
-        quoteDetails.setAccountName(generatedNames4account.get("accountName"));
-        quoteDetails.setiBan(ibanBE);
-        quoteDetails.setCompanyNumber(companyNumber);
+        QuoteDetails quoteDetails = new QuoteDetails();
+        quoteDetails.setEan(ean);
 
-    LOGGER.info("Generated EAN: " + ean);
+            Map<String,String> generatedNames4account = new HashMap<String, String>();
+            generatedNames4account = createAccountName(startedFlowName);
+            quoteDetails.setFirstName(generatedNames4account.get("firstName"));
+            quoteDetails.setLastName(generatedNames4account.get("lastName"));
+            quoteDetails.setAccountName(generatedNames4account.get("accountName"));
+            quoteDetails.setiBan(ibanBE);
+            quoteDetails.setCompanyNumber(companyNumber);
+
+        LOGGER.debug("Generated EAN: " + ean);
         quoteDetails.setDateOfBirth(dateOfBirth);
-    LOGGER.info("Generated date of birth: " + dateOfBirth);
+        LOGGER.debug("Generated date of birth: " + dateOfBirth);
 
-	String payload = createQuotePayload(tariffSheetId, ean, dateOfBirth, generatedNames4account.get("firstName"),generatedNames4account.get("lastName"), ibanBE, companyNumber, meterOpen);
+        String payload = createQuotePayload(tariffSheetId, ean, dateOfBirth, generatedNames4account.get("firstName"),generatedNames4account.get("lastName"), ibanBE, companyNumber, meterOpen);
 
-	Response quoteResponse = helper.postRequest(STATUS_CREATED, cookie, payload, path);
+        Response quoteResponse = helper.postRequest(STATUS_CREATED, cookie, payload, path);
 
-	LOGGER.info("Quote created");
-	String recordId = quoteResponse.jsonPath().getString("data.arguments.params.recordId");
-	quoteDetails.setRecordId(recordId);
-	LOGGER.info("Record ID: " + recordId);
-	String accountNumber = quoteResponse.jsonPath().getString("data.params.Account.account_number");
-	quoteDetails.setAccountNumber(accountNumber);
-	LOGGER.info("Account number: " + accountNumber);
-	String accountId = quoteResponse.jsonPath().getString("data.relatedBeans.Account[0]");
-	quoteDetails.setAccountId(accountId);
-	LOGGER.info("Account ID: " + accountId);
-	String quoteNumber = quoteResponse.jsonPath().getString("data.params.AOS_Quotes.quote_number");
-	quoteDetails.setQuoteNumber(quoteNumber);
-	LOGGER.info("Quote Number: " + quoteNumber);
-	String quoteId = quoteResponse.jsonPath().getString("data.relatedBeans.AOS_Quotes[0]");
-	quoteDetails.setQuoteId(quoteId);
-	LOGGER.info("Quote Id: " + quoteId);
+        LOGGER.debug("Quote created");
+        String recordId = quoteResponse.jsonPath().getString("data.arguments.params.recordId");
+        quoteDetails.setRecordId(recordId);
+        LOGGER.debug("Record ID: " + recordId);
+        String accountNumber = quoteResponse.jsonPath().getString("data.params.Account.account_number");
+        quoteDetails.setAccountNumber(accountNumber);
+        LOGGER.debug("Account number: " + accountNumber);
+        String accountId = quoteResponse.jsonPath().getString("data.relatedBeans.Account[0]");
+        quoteDetails.setAccountId(accountId);
+        LOGGER.debug("Account ID: " + accountId);
+        String quoteNumber = quoteResponse.jsonPath().getString("data.params.AOS_Quotes.quote_number");
+        quoteDetails.setQuoteNumber(quoteNumber);
+        LOGGER.debug("Quote Number: " + quoteNumber);
+        String quoteId = quoteResponse.jsonPath().getString("data.relatedBeans.AOS_Quotes[0]");
+        quoteDetails.setQuoteId(quoteId);
+        LOGGER.debug("Quote Id: " + quoteId);
 
-
-	return quoteDetails;
-
+        return quoteDetails;
     }
 
     public String getQuoteNumber(Cookies cookie, String recordId) throws IOException {
-	RequestHelper helper = new RequestHelper();
-	String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
-		+ ConfigProvider.getProperty(ConfigKey.CRM_QUOTES_ON_ACCOUNT_URL);
-	String payload = createListQuotePayload(recordId);
+        RequestHelper helper = new RequestHelper();
+        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
+            + ConfigProvider.getProperty(ConfigKey.CRM_QUOTES_ON_ACCOUNT_URL);
+        String payload = createListQuotePayload(recordId);
 
-	Response listQuoteResponse = helper.postRequest(STATUS_OK, cookie, payload, path);
+        Response listQuoteResponse = helper.postRequest(STATUS_OK, cookie, payload, path);
 
-	String quoteId = null;
+        String quoteId = null;
 
-	LOGGER.info("Quote list retrieved");
-	quoteId = listQuoteResponse.jsonPath().getString("data.rows[0].rowData.number");
-	LOGGER.info("Quote ID: " + quoteId);
+        LOGGER.debug("Quote list retrieved");
+        quoteId = listQuoteResponse.jsonPath().getString("data.rows[0].rowData.number");
+        LOGGER.debug("Quote ID: " + quoteId);
 
-	return quoteId;
+        return quoteId;
     }
 
     public String checkStatus(Cookies cookie, String quoteNumber) throws IOException {
-    String status = null;
-    Response response = quoteStatus(cookie, quoteNumber);
+        String status = null;
+        Response response = quoteStatus(cookie, quoteNumber);
 
-    LOGGER.info("Quote status retrieved");
-    status = response.jsonPath().getString("data.model.ca_status_c");
-    LOGGER.info("Status: " + status);
+        LOGGER.debug("Quote status retrieved");
+        status = response.jsonPath().getString("data.model.ca_status_c");
+        LOGGER.debug("Quote Status: " + status);
 
-    return status;
+        return status;
     }
 
     public String getStatus(Cookies cookie, String quoteId) throws IOException {
-    RequestHelper helper = new RequestHelper();
-    String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
-        + ConfigProvider.getProperty(ConfigKey.CRM_QUOTELINES_URL);
-    String payload = createQuoteLinesPayload(quoteId);
+        RequestHelper helper = new RequestHelper();
+        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
+            + ConfigProvider.getProperty(ConfigKey.CRM_QUOTELINES_URL);
+        String payload = createQuoteLinesPayload(quoteId);
 
-    Response statusResponse = helper.postRequest(STATUS_OK, cookie, payload, path);
+        Response statusResponse = helper.postRequest(STATUS_OK, cookie, payload, path);
 
-    String status = null;
+        String status = null;
 
-    LOGGER.info("Quotelines retrieved");
-    status = statusResponse.jsonPath().getString("data.rows[0].cells[1].options.line1");
-    LOGGER.info("Quotelinestatus is : " + status);
+        LOGGER.debug("Quotelines retrieved");
+        status = statusResponse.jsonPath().getString("data.rows[0].cells[1].options.line1");
+        LOGGER.debug("Quotelinestatus is : " + status);
 
-    return status;
+        return status;
 
     }
 
     public String checkStageStatus(Cookies cookie, String quoteNumber) throws IOException {
-    String status = null;
-    Response response = quoteStatus(cookie, quoteNumber);
+        String status = null;
+        Response response = quoteStatus(cookie, quoteNumber);
 
-    LOGGER.info("Quote stage status retrieved");
-    status = response.jsonPath().getString("data.model.stage");
-    LOGGER.info("Stage Status: " + status);
+        LOGGER.debug("Quote stage status retrieved");
+        status = response.jsonPath().getString("data.model.stage");
+        LOGGER.debug("Stage Status: " + status);
 
         return status;
     }
 
     public boolean checkIfEANexists(Cookies cookie, QuoteDetails quoteDetails) throws IOException {
-    RequestHelper helper = new RequestHelper();
-    String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
-        + ConfigProvider.getProperty(ConfigKey.CRM_QUOTELINES_URL);
-    String payload = createQuoteLinesPayload(quoteDetails.getQuoteId());
+        RequestHelper helper = new RequestHelper();
+        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
+            + ConfigProvider.getProperty(ConfigKey.CRM_QUOTELINES_URL);
+        String payload = createQuoteLinesPayload(quoteDetails.getQuoteId());
 
-    Response statusResponse = helper.postRequest(STATUS_OK, cookie, payload, path);
+        Response statusResponse = helper.postRequest(STATUS_OK, cookie, payload, path);
 
-    boolean eanExists = false;
+        boolean eanExists = false;
 
-    LOGGER.info("Quotelines retrieved");
-    eanExists = statusResponse.jsonPath().getString("data.rows[0].rowData.ean_c").contains(quoteDetails.getEan());
-    LOGGER.info("EAN: " + quoteDetails.getEan() + " exists in Quotelines: " + eanExists);
+        LOGGER.debug("Quotelines retrieved");
+        eanExists = statusResponse.jsonPath().getString("data.rows[0].rowData.ean_c").contains(quoteDetails.getEan());
+        LOGGER.debug("EAN: " + quoteDetails.getEan() + " exists in Quotelines: " + eanExists);
 
-    return eanExists;
+        return eanExists;
 
     }
 
     private String createQuotePayload(String tariffSheetId, String ean, String dateOfBirth, String firstName, String lastName, String iBan, String companyNumber, String meterOpen)
 	    throws JsonParseException, JsonMappingException, IOException {
-	ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper = new ObjectMapper();
 
-	String pathToQuote = ResourceUtil.toPath(PATH_TO_QUOTE);
-	String jsonQuote = new String(Files.readAllBytes(Paths.get(pathToQuote)));
-	QuoteDetailsDTO quote = mapper.readValue(jsonQuote, QuoteDetailsDTO.class);
+        String pathToQuote = ResourceUtil.toPath(PATH_TO_QUOTE);
+        String jsonQuote = new String(Files.readAllBytes(Paths.get(pathToQuote)));
+        QuoteDetailsDTO quote = mapper.readValue(jsonQuote, QuoteDetailsDTO.class);
 
-	String pathToPayload = ResourceUtil.toPath(PATH_TO_PAYLOAD);
+        String pathToPayload = ResourceUtil.toPath(PATH_TO_PAYLOAD);
 
-	if (meterOpen.equals("On")) {
-            pathToPayload = ResourceUtil.toPath(PATH_TO_PAYLOAD_SUPPLIER_SWITCH);
-        }
+        if (meterOpen.equals("On")) {
+                pathToPayload = ResourceUtil.toPath(PATH_TO_PAYLOAD_SUPPLIER_SWITCH);
+            }
 
-	String jsonPayload = new String(Files.readAllBytes(Paths.get(pathToPayload)));
-	PayloadDTO payload = mapper.readValue(jsonPayload, PayloadDTO.class);
-	payload.setTariffsheetId(tariffSheetId);
-	payload.setEan(ean);
-	quote.getModel().setBirthdate(dateOfBirth);
-	quote.getModel().setFirstName(firstName);
-	quote.getModel().setLastName(lastName);
-	quote.getModel().setIban(iBan);
-	quote.getModel().getPayloadWrapper().setPayload(payload);
+        String jsonPayload = new String(Files.readAllBytes(Paths.get(pathToPayload)));
+        PayloadDTO payload = mapper.readValue(jsonPayload, PayloadDTO.class);
+        payload.setTariffsheetId(tariffSheetId);
+        payload.setEan(ean);
+        quote.getModel().setBirthdate(dateOfBirth);
+        quote.getModel().setFirstName(firstName);
+        quote.getModel().setLastName(lastName);
+        quote.getModel().setIban(iBan);
+        quote.getModel().getPayloadWrapper().setPayload(payload);
 
 
 
-	return mapper.writeValueAsString(quote);
+        return mapper.writeValueAsString(quote);
     }
 
     private String createListQuotePayload(String recordId) throws JsonProcessingException {
-	ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper = new ObjectMapper();
 
-	QuotesOnAccount quotes = new QuotesOnAccount();
-	quotes.setRecordId(recordId);
-	quotes.setRecordType("Accounts");
-	quotes.setPage(1);
+        QuotesOnAccount quotes = new QuotesOnAccount();
+        quotes.setRecordId(recordId);
+        quotes.setRecordType("Accounts");
+        quotes.setPage(1);
 
-	return mapper.writeValueAsString(quotes);
+        return mapper.writeValueAsString(quotes);
     }
 
     private Response quoteStatus(Cookies cookie, String quoteNumber) throws IOException {
-    RequestHelper helper = new RequestHelper();
-    String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
-        + ConfigProvider.getProperty(ConfigKey.CRM_QUOTE_STATUS_URL) + "/" + quoteNumber + "/" + "readOnly";
-    PayloadMapper mapper = new PayloadMapper();
-    String payload = mapper.createPayload();
+        RequestHelper helper = new RequestHelper();
+        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
+            + ConfigProvider.getProperty(ConfigKey.CRM_QUOTE_STATUS_URL) + "/" + quoteNumber + "/" + "readOnly";
+        PayloadMapper mapper = new PayloadMapper();
+        String payload = mapper.createPayload();
 
-    Response response = helper.postRequest(STATUS_OK, cookie, payload, path);
-    return response;
+        Response response = helper.postRequest(STATUS_OK, cookie, payload, path);
+        return response;
     }
 
     private String createQuoteLinesPayload(String quoteId) throws JsonProcessingException {
-    ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper = new ObjectMapper();
 
-    QuoteLines quoteLines = new QuoteLines();
-    quoteLines.setRecordId(quoteId);
-    quoteLines.setPage(1);
+        QuoteLines quoteLines = new QuoteLines();
+        quoteLines.setRecordId(quoteId);
+        quoteLines.setPage(1);
 
-    return mapper.writeValueAsString(quoteLines);
+        return mapper.writeValueAsString(quoteLines);
     }
 
     private String getTarrifIDFromResponse(Response tsResponse) {
-    String id = null;
-    String part = tsResponse.jsonPath().getString("data.model");
-    String[] s = part.split("\\|");
-    for (String str : s) {
-        if (str.contains("tariffsheet_id")) {
-        String result = str.split(":")[1];
-        if (result.contains(",")) {
-            id = result.substring(0, result.indexOf(","));
-        } else {
-            id = result;
+        String id = null;
+        String part = tsResponse.jsonPath().getString("data.model");
+        String[] s = part.split("\\|");
+        for (String str : s) {
+            if (str.contains("tariffsheet_id")) {
+            String result = str.split(":")[1];
+            if (result.contains(",")) {
+                id = result.substring(0, result.indexOf(","));
+            } else {
+                id = result;
+            }
+            }
         }
-        }
-    }
 
-    return id;
+        return id;
     }
 
 
@@ -320,9 +318,9 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
 
 
-        LOGGER.info("First name: " + generatedNames.get("firstName"));
-        LOGGER.info("Last name: " + generatedNames.get("lastName"));
-        LOGGER.info("Account name: " + generatedNames.get("accountName"));
+        LOGGER.debug("First name: " + generatedNames.get("firstName"));
+        LOGGER.debug("Last name: " + generatedNames.get("lastName"));
+        LOGGER.debug("Account name: " + generatedNames.get("accountName"));
 
         return generatedNames;
 

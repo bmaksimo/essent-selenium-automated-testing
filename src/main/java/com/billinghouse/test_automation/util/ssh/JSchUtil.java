@@ -25,8 +25,8 @@ public class JSchUtil {
         Session session;
         final String path = ConfigProvider.getProperty(ConfigKey.SSH_KEYPATH);
         jSchell.addIdentity(path);
-        logger.info("STEP:");
-        logger.info(" - ACTION: SFTP_UPLOAD");
+        logger.debug("STEP:");
+        logger.debug(" - ACTION: SFTP_UPLOAD");
         session = jSchell.getSession(username, host);
         session.connect(1000000);
         logger.debug("-ACTION: JSch session has been established with " + host);
@@ -99,7 +99,7 @@ public class JSchUtil {
 
       @Override
       public void end() {
-        logger.info(
+        logger.debug(
             String.format(
                 " - SFTP_UPLOAD: Complete. Local file has been uploaded to uploaded to %s ", dest));
         FileUtils.deleteQuietly(localFile);

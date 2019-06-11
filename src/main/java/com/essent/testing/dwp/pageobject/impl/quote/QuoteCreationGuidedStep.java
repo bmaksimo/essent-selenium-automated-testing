@@ -37,8 +37,8 @@ public abstract class QuoteCreationGuidedStep extends Component implements Guide
       WebElement nextButton = nextButtonOptional.get();
       logger().debug("Found  element: " + nextButton.getTagName());
       logger().debug("CLICK ");
-        logger().info("- RESULT: Confirm guidance step, confirmation button attribute value: Next[disabled] = " + nextButton.getAttribute("disabled"));
-        seleniumDriver.waitForRequestsToFinish();
+      logger().debug("- RESULT: Confirm guidance step, confirmation button attribute value: Next[disabled] = " + nextButton.getAttribute("disabled"));
+      seleniumDriver.waitForRequestsToFinish();
       nextButton.click();
     } else {
         if(logger().isDebugEnabled()) {
@@ -55,14 +55,13 @@ public abstract class QuoteCreationGuidedStep extends Component implements Guide
     return BooleanUtils.toBoolean((String) result.get("enabled"));
   }
 
-    private void logMandatoryInputStatus() {
-        List<WebElement> elements = seleniumDriver.findElements(MANDATORY_INPUT_EXCLAMATION_CSS,
+  private void logMandatoryInputStatus() {
+     List<WebElement> elements = seleniumDriver.findElements(MANDATORY_INPUT_EXCLAMATION_CSS,
             java.time.Duration.ofSeconds(1),
             java.time.Duration.ofMillis(200));
-        String location = elements.stream().map(WebElement::getText).reduce("", (partialString, element) -> partialString + (" " + element + System.lineSeparator()));
-        if(StringUtils.isNotEmpty(location)) {
-            logger().error("- WARNING: Mandatory input failure in: " + location);
-        }
+     String location = elements.stream().map(WebElement::getText).reduce("", (partialString, element) -> partialString + (" " + element + System.lineSeparator()));
+     if(StringUtils.isNotEmpty(location)) {
+        logger().error("- WARNING: Mandatory input failure in: " + location);
+     }
     }
-
 }

@@ -38,4 +38,15 @@ public class ContractDetails {
     public String getContractEndDate(){return contractEndDate;}
     public void setContractEndDate(){this.contractEndDate = contractEndDate;}
 
+    @Override
+    public String toString() {
+        return "ContractDetails{" +
+            "contractRecordId='" + contractRecordId + '\'' +
+            ", contractNumber='" + contractNumber + '\'' +
+            ", aosProductsId='" + aosProductsId + '\'' +
+            ", jbillingId='" + jbillingId + '\'' +
+            ", contractStartDate='" + contractStartDate + '\'' +
+            ", contractEndDate='" + contractEndDate + '\'' +
+            '}';
+    }
 }

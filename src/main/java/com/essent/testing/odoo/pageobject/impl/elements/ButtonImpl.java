@@ -14,9 +14,9 @@ public class ButtonImpl implements Button {
     private WebElement element;
     @Override
     public void click() {
-        logger.info("STEP:");
-        logger.info(" - BUTTON TEXT: " + element.getText());
+        logger.debug("STEP:");
+        logger.debug(" - BUTTON TEXT: " + element.getText());
         element.click();
-        logger.info(" - ACTION: CLICK");
+        logger.debug(" - ACTION: CLICK");
     }
 }

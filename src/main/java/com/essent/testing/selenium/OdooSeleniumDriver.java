@@ -37,7 +37,7 @@ public class OdooSeleniumDriver extends SeleniumDriver {
             options.addArguments("user-data-dir=" + userDataPath);
             try {
                 FileUtils.cleanDirectory(new File((userDataPath)));
-                logger.info(" - CLEAN_DIR: " + userDataPath);
+                logger.debug(" - CLEAN_DIR: " + userDataPath);
             } catch (IOException e) {
                 logger.error(" - CLEAN_DIR: " + userDataPath);
             }
@@ -50,7 +50,7 @@ public class OdooSeleniumDriver extends SeleniumDriver {
         HashMap<String, Object> chromePrefs = new HashMap<>();
         chromePrefs.put("profile.default_content_settings.popups", 0);
         chromePrefs.put("download.default_directory", DEFAULT_DOWNLOAD_LOCATION);
-        logger.info("-Default download directory: " + DEFAULT_DOWNLOAD_LOCATION);
+        logger.debug("-Default download directory: " + DEFAULT_DOWNLOAD_LOCATION);
         options.setExperimentalOption("prefs", chromePrefs);
     }
 

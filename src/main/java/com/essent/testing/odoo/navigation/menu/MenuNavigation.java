@@ -99,7 +99,7 @@ public class MenuNavigation extends Component {
     }
 
     private Optional<WebElement> findElementOptional(WebElement element, By selector) {
-        logger().info("STEP:");
+        logger().debug("STEP:");
         DateTime startOfMeasurement = DateTime.now();
         FluentWait<WebElement> waiter = new FluentWait<>(element)
             .withTimeout(Duration.ofMinutes(1))
@@ -107,11 +107,11 @@ public class MenuNavigation extends Component {
             .ignoring(NoSuchElementException.class);
 
         WebElement elementFound = waiter.until(context -> {
-            logger().info(" - WAIT: polling findElementWhenPresent()");
+            logger().debug(" - WAIT: polling findElementWhenPresent()");
             return context.findElement(selector);
         });
         Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
-        logger().info(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
+        logger().debug(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
         if(element == null) {
             logger().warn(" - RESULT: empty");
         } else  {
