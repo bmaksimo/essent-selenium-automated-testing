@@ -4,6 +4,7 @@
 @B2C
 @API
 @ALL
+@slow
 Feature: NSTA-327: Creating a B2C Quote TC1 with "Supplier Switch" without using Market Mock.
 
     Background:

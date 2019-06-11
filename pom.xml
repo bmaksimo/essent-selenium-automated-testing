@@ -584,8 +584,14 @@
         <configuration>
           <!--<parallel>both</parallel>-->
           <!--<threadCount>4</threadCount>-->
-          <forkCount>3</forkCount>
-          <reuseForks>true</reuseForks>
+          <includes>
+            <include>**/*ParallelRunner.class</include>
+          </includes>
+          <excludes>
+            <exclude>**/*Test*.class</exclude>
+          </excludes>
+          <forkCount>10</forkCount>
+          <reuseForks>false</reuseForks>
         </configuration>
         <version>${maven-surefire-plugin.version}</version>
         <dependencies>

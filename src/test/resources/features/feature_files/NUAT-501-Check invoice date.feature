@@ -1,6 +1,7 @@
 @JBILLING
 @REGRESSION
 @B2B
+@slow
 Feature: NUAT-501: Check invoice date
 
     Background:
