@@ -27,91 +27,91 @@ public class ContractDetailsAPI extends AbstractAPI {
     private final static Logger LOGGER = Logger.getLogger(ContractDetailsAPI.class);
 
     public ContractDetails getContractDetails(Cookies cookie, QuoteDetails quoteDetails) throws IOException {
-    RequestHelper helper = new RequestHelper();
-    String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
-        + ConfigProvider.getProperty(ConfigKey.CRM_CONTRACTS_ON_ACCOUNT_URL);
-    String payload = createContractPayload(quoteDetails.getRecordId());
+        RequestHelper helper = new RequestHelper();
+        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
+            + ConfigProvider.getProperty(ConfigKey.CRM_CONTRACTS_ON_ACCOUNT_URL);
+        String payload = createContractPayload(quoteDetails.getRecordId());
 
-    Response contractResponse = helper.postRequest(STATUS_OK, cookie, payload, path);
+        Response contractResponse = helper.postRequest(STATUS_OK, cookie, payload, path);
 
-    ContractDetails contractDetails = new ContractDetails();
+        ContractDetails contractDetails = new ContractDetails();
 
-    LOGGER.info("Contract created");
-    String contractRecordId = contractResponse.jsonPath().getString("data.rows[0].id");
-    contractDetails.setContractRecordId(contractRecordId);
-    LOGGER.info("Contract record ID: " + contractRecordId);
-    String contractNumber = contractResponse.jsonPath().getString("data.rows[0].cells[3].options.line1");
-    contractDetails.setContractNumber(contractNumber);
-    LOGGER.info("Contract number: " + contractNumber);
-    String aosProductsId = contractResponse.jsonPath().getString("data.rows[0].cells[5].options.params.recordId");
-    contractDetails.setAosProductsId(aosProductsId);
-    LOGGER.info("Aos Products ID: " + aosProductsId);
-        String contractStartDate = contractResponse.jsonPath().getString("data.rows[0].rowData");
-        contractStartDate = findContractStartDate(contractStartDate);
-    contractDetails.setContractStartDate(contractStartDate);
-    LOGGER.info("contractStartDate: " + contractStartDate);
+        LOGGER.debug("Contract created");
+        String contractRecordId = contractResponse.jsonPath().getString("data.rows[0].id");
+        contractDetails.setContractRecordId(contractRecordId);
+        LOGGER.debug("Contract record ID: " + contractRecordId);
+        String contractNumber = contractResponse.jsonPath().getString("data.rows[0].cells[3].options.line1");
+        contractDetails.setContractNumber(contractNumber);
+        LOGGER.debug("Contract number: " + contractNumber);
+        String aosProductsId = contractResponse.jsonPath().getString("data.rows[0].cells[5].options.params.recordId");
+        contractDetails.setAosProductsId(aosProductsId);
+        LOGGER.debug("Aos Products ID: " + aosProductsId);
+            String contractStartDate = contractResponse.jsonPath().getString("data.rows[0].rowData");
+            contractStartDate = findContractStartDate(contractStartDate);
+        contractDetails.setContractStartDate(contractStartDate);
+        LOGGER.debug("contractStartDate: " + contractStartDate);
 
-    return contractDetails;
+        return contractDetails;
 
     }
 
     public boolean checkIfEanExists(Cookies cookie, QuoteDetails quoteDetails) throws IOException {
 
-    RequestHelper helper = new RequestHelper();
-    String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_CONTRACTED_EANS_ON_ACCOUNT_URL);
+        RequestHelper helper = new RequestHelper();
+        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_CONTRACTED_EANS_ON_ACCOUNT_URL);
 
-    String payload = createContractPayload(quoteDetails.getRecordId());
+        String payload = createContractPayload(quoteDetails.getRecordId());
 
-    Response statusResponse = helper.postRequest(STATUS_OK, cookie, payload, path);
+        Response statusResponse = helper.postRequest(STATUS_OK, cookie, payload, path);
 
-    boolean eanExists = false;
+        boolean eanExists = false;
 
-    LOGGER.info("Quotelines retrieved");
-    eanExists = statusResponse.jsonPath().getString("data.rows[0].rowData.ean_c").contains(quoteDetails.getEan());
-    LOGGER.info("EAN: " + quoteDetails.getEan() + " exists in Quotelines: " + eanExists);
+        LOGGER.debug("Quotelines retrieved");
+        eanExists = statusResponse.jsonPath().getString("data.rows[0].rowData.ean_c").contains(quoteDetails.getEan());
+        LOGGER.debug("EAN: " + quoteDetails.getEan() + " exists in Quotelines: " + eanExists);
 
-    return eanExists;
+        return eanExists;
 
     }
 
     public String getPaymentDetails(Cookies cookie, String quoteId, ContractDetails contractDetails) throws IOException {
-	RequestHelper helper = new RequestHelper();
-	String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
-		+ ConfigProvider.getProperty(ConfigKey.CRM_BILLING_DETAILS_URL) + "/" + quoteId + "/" + "readOnly";
-	PayloadMapper mapper = new PayloadMapper();
-	String payload = mapper.createPayload();
+        RequestHelper helper = new RequestHelper();
+        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
+            + ConfigProvider.getProperty(ConfigKey.CRM_BILLING_DETAILS_URL) + "/" + quoteId + "/" + "readOnly";
+        PayloadMapper mapper = new PayloadMapper();
+        String payload = mapper.createPayload();
 
-	Response quoteDetailsResponse = helper.postRequest(STATUS_OK, cookie, payload, path);
+        Response quoteDetailsResponse = helper.postRequest(STATUS_OK, cookie, payload, path);
 
-	String jbillingId = null;
+        String jbillingId = null;
 
-	LOGGER.info("Billing details retrieved");
-	jbillingId = getBillingIdFromResponse(quoteDetailsResponse);
-	LOGGER.info("JBilling ID: " + jbillingId);
-    contractDetails.setjBillingId(jbillingId);
+        LOGGER.debug("Billing details retrieved");
+        jbillingId = getBillingIdFromResponse(quoteDetailsResponse);
+        LOGGER.debug("JBilling ID: " + jbillingId);
+        contractDetails.setjBillingId(jbillingId);
 
-	return jbillingId;
+        return jbillingId;
 
     }
 
     public boolean getContractStatus(Cookies cookie, String contractRecordId)
         throws IOException, InterruptedException {
-	RequestHelper helper = new RequestHelper();
-	String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
-		+ ConfigProvider.getProperty(ConfigKey.CRM_CONTRACT_DETAILS_URL) + "/" + contractRecordId + "/"
-		+ "readOnly";
-	PayloadMapper mapper = new PayloadMapper();
-	String payload = mapper.createPayload();
+        RequestHelper helper = new RequestHelper();
+        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
+            + ConfigProvider.getProperty(ConfigKey.CRM_CONTRACT_DETAILS_URL) + "/" + contractRecordId + "/"
+            + "readOnly";
+        PayloadMapper mapper = new PayloadMapper();
+        String payload = mapper.createPayload();
 
-	Response contractDetailsResponse = helper.postRequest(STATUS_OK, cookie, payload, path);
+        Response contractDetailsResponse = helper.postRequest(STATUS_OK, cookie, payload, path);
 
-	String contractStatus = null;
+        String contractStatus = null;
 
-	LOGGER.info("Contract details retreived");
-	contractStatus = contractDetailsResponse.jsonPath().getString("data.model.start_contract_status_c");
-	LOGGER.info("Contract status: " + contractStatus);
+        LOGGER.debug("Contract details retreived");
+        contractStatus = contractDetailsResponse.jsonPath().getString("data.model.start_contract_status_c");
+        LOGGER.debug("Contract status: " + contractStatus);
 
-	return "success".equals(contractStatus);
+        return "success".equals(contractStatus);
 
     }
 
@@ -151,31 +151,31 @@ public class ContractDetailsAPI extends AbstractAPI {
 
 
     private String createContractPayload(String recordId) throws JsonProcessingException {
-    ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper = new ObjectMapper();
 
-    ContractsOnAccount contracts = new ContractsOnAccount();
-    contracts.setRecordId(recordId);
-    contracts.setPage(1);
+        ContractsOnAccount contracts = new ContractsOnAccount();
+        contracts.setRecordId(recordId);
+        contracts.setPage(1);
 
-    return mapper.writeValueAsString(contracts);
+        return mapper.writeValueAsString(contracts);
     }
 
     private String getBillingIdFromResponse(Response response) {
-	String id = null;
-	String part = response.jsonPath().getString("data.model");
-	String[] s = part.split("\\|");
-	for (String str : s) {
-	    if (str.contains("billingcustomerid")) {
-		String result = str.split(":")[1];
-		if (result.contains(",")) {
-		    id = result.substring(0, result.indexOf(","));
-		} else {
-		    id = result;
-		}
-	    }
-	}
+        String id = null;
+        String part = response.jsonPath().getString("data.model");
+        String[] s = part.split("\\|");
+        for (String str : s) {
+            if (str.contains("billingcustomerid")) {
+            String result = str.split(":")[1];
+            if (result.contains(",")) {
+                id = result.substring(0, result.indexOf(","));
+            } else {
+                id = result;
+            }
+            }
+        }
 
-	return id;
+        return id;
     }
 
     private String findContractStartDate(String part) {

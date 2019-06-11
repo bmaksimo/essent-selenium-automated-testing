@@ -42,7 +42,7 @@ public class BillingRootClient {
 	}
 
 	public String getBaseUrl() {
-		logger.info("Using base url : " + baseUrl);
+		logger.debug("Using base url : " + baseUrl);
 		return baseUrl;
 	}
 
@@ -89,8 +89,8 @@ public class BillingRootClient {
 			logResult(url, result, startedAt);
 			return result;
 		} catch (Exception e) {
-			logger.info("Error calling rest url : " + url);
-			logger.info(e.getMessage());
+			logger.debug("Error calling rest url : " + url);
+			logger.debug(e.getMessage());
 			throw new AssertionError("Failed to call JBilling, url='" + url + "', exception="+e.getMessage());
 		}
 
@@ -133,8 +133,8 @@ public class BillingRootClient {
 			return result;
 
 		} catch (Exception e) {
-			logger.info("Error calling rest url : " + url);
-			logger.info(e.getMessage());
+			logger.error("Error calling rest url : " + url);
+			logger.error(e.getMessage());
 			throw new AssertionError("Failed to call JBilling, url='" + url + "', excpetion="+e.getMessage());
 		}
 	}
@@ -175,8 +175,8 @@ public class BillingRootClient {
 
         }
         catch (Exception e) {
-            logger.info("Error calling rest url : " + url);
-            logger.info(e.getMessage());
+            logger.error("Error calling rest url : " + url);
+            logger.error(e.getMessage());
             throw new AssertionError("Failed to call JBilling, url='" + url + "', excpetion="+e.getMessage());
         }
 
@@ -201,12 +201,12 @@ public class BillingRootClient {
 		if (result.getResult()) {
 			String msg = result.getMsg();
 			if (msg != null) {
-				logger.info(time + ": Succesful call in " + duration + " ms to " + url + ", message is " + result.getMsg());
+				logger.debug(time + ": Succesful call in " + duration + " ms to " + url + ", message is " + result.getMsg());
 			} else {
-				logger.info(time + ": Succesful call in " + duration + " ms to " + url);
+				logger.debug(time + ": Succesful call in " + duration + " ms to " + url);
 			}
 		} else {
-			logger.info(time + ": FAILED call in  " + duration + " ms to " + url + ", message is " + result.getMsg());
+			logger.warn(time + ": FAILED call in  " + duration + " ms to " + url + ", message is " + result.getMsg());
 		}
 	}
 

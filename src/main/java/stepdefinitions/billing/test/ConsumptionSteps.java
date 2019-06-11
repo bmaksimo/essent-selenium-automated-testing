@@ -168,7 +168,7 @@ public class ConsumptionSteps extends DwpScenario {
 
             return consumptionRequest;
         } catch (IOException e) {
-            logger.warn("Something went wrong while creating consumption request.");
+            logger.error("Something went wrong while creating consumption request.");
         }
 
         return null;

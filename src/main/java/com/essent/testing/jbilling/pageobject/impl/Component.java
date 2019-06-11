@@ -29,21 +29,21 @@ public abstract class Component {
 
     public Component(By selector) {
         this();
-        logger().info("STEP:");
-        logger().info(" - ACTION: LOAD_PAGE_OBJECT");
+        logger.debug("STEP:");
+        logger.debug(" - ACTION: LOAD_PAGE_OBJECT");
         try {
             element = seleniumDriver.findElementWhenPresent(selector);
         } catch (TimeoutException te) {
-            logger().fatal(" - RESULT: FAILED");
-            logger().fatal(" - REASON: " + getClass() + "{null}: Web element was not found. ");
+            logger.error(" - RESULT: FAILED");
+            logger.error(" - REASON: " + getClass() + "{null}: Web element was not found. ");
             throw new CucumberException(getClass() + ": Web element was not found.");
         }
         logger.debug(String.format(" - TARGET: %s -> %s", selector, element.getAttribute("innerHTML")));
     }
 
     public Component(WebElement element) {
-        logger.info("STEP:");
-        logger.info(" - ACTION: LOAD_PAGE_OBJECT");
+        logger.debug("STEP:");
+        logger.debug(" - ACTION: LOAD_PAGE_OBJECT");
 
         if (element == null) {
             logger.error(" - RESULT: FAILED");
@@ -51,7 +51,7 @@ public abstract class Component {
             throw new CucumberException(getClass() + ": Web element was not found.");
         }
 
-        logger.info(" - RESULT: " + element);
+        logger.debug(" - RESULT: " + element);
         this.element = element;
     }
 

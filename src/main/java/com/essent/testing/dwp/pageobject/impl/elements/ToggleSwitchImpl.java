@@ -38,7 +38,7 @@ public class ToggleSwitchImpl extends ButtonImpl implements ToggleSwitch {
     WebElement webElement = findElementWhenVisible(xpathSelector);
     this.element = Optional.ofNullable(webElement);
     String switchState = webElement.getAttribute(VALUE_ATTRIBUTE);
-    logger().info("--ToggleSwitch, element value is: " + switchState);
+    logger.debug("--ToggleSwitch, element value is: " + switchState);
     return SwitchState.valueOf(switchState).isOn();
   }
 
@@ -53,7 +53,7 @@ public class ToggleSwitchImpl extends ButtonImpl implements ToggleSwitch {
         findElementWhenPresent(xpathSelector, Duration.ofSeconds(20), Duration.ofMillis(1));
     this.element = Optional.ofNullable(webElement);
     String switchState = webElement.getAttribute(VALUE_ATTRIBUTE);
-    logger().info("--ToggleSwitch, element value is: " + switchState);
+    logger.debug("--ToggleSwitch, element value is: " + switchState);
     return SwitchState.On.hasState(switchState);
   }
 
@@ -62,9 +62,9 @@ public class ToggleSwitchImpl extends ButtonImpl implements ToggleSwitch {
     if (!element.isPresent()) {
       throw new IllegalStateException("Wrapped web element is undefined");
     }
-    logger.info("STEP:");
+    logger.debug("STEP:");
     String status = element.get().getAttribute(VALUE_ATTRIBUTE);
-    logger.info(" - TOGGLE STATUS: " + status);
+    logger.debug(" - TOGGLE STATUS: " + status);
     return BooleanUtils.toBoolean(status);
   }
 
@@ -82,7 +82,7 @@ public class ToggleSwitchImpl extends ButtonImpl implements ToggleSwitch {
     } else if (switchState.isOff()) {
       switchOff(label);
     } else {
-      logger().warn("Element was not toggled to " + switchState + " state.");
+      logger.warn("Element was not toggled to " + switchState + " state.");
     }
   }
 
@@ -93,7 +93,7 @@ public class ToggleSwitchImpl extends ButtonImpl implements ToggleSwitch {
     } else if (switchState.isOff()) {
       switchOff(card, label);
     } else {
-      logger().warn("Element was not toggled to " + switchState + " state.");
+      logger.warn("Element was not toggled to " + switchState + " state.");
     }
   }
 

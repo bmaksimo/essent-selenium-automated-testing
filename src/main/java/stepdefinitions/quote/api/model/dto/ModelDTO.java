@@ -33,6 +33,13 @@ public class ModelDTO {
     private String doAutoCommunication;
     @JsonProperty("id")
     private String id;
+
+    @JsonProperty("accounts|aos_quotes|sign_date_c")
+    private String sign_date_c;
+
+    @JsonProperty("accounts|aos_quotes|pricing_date_c")
+    private String pricing_date_c;
+
     @JsonProperty("dwp|discount_gen_conditons")
     private String discountGenConditions;
     @JsonProperty("recordTypeOfRecordId")
@@ -184,6 +191,13 @@ public class ModelDTO {
     public void setContactType(String contactType) {
         this.contactType = contactType;
     }
+
+    public String getSignDateC() { return sign_date_c;}
+    public void setSignDateC() {this.sign_date_c = sign_date_c;}
+
+    public String getPricingDateC() { return sign_date_c;}
+    public void setPricingDateC() {this.pricing_date_c = pricing_date_c;}
+
     public String getPaymentMethod() {
         return paymentMethod;
     }

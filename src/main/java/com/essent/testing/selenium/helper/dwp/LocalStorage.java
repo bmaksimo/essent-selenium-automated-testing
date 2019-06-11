@@ -14,7 +14,7 @@ public class LocalStorage {
             logger.warn(" - WARNING: Application did not contain user language value. Default will be en_BE.");
             return "en_BE";
         } else {
-            logger.info(" - RESULT: setting preferred language: " + userLanguage);
+            logger.debug(" - RESULT: setting preferred language: " + userLanguage);
             return userLanguage;
         }
     }

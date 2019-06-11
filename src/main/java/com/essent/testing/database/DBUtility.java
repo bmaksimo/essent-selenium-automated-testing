@@ -43,7 +43,7 @@ public class DBUtility {
 
     public static void testJBillingDatabaseConnection() throws SQLException, JSchException {
         try (Connection conn = new DBConnector().getBillingConnection()) {
-            logger.info("Database connected successfully.");
+            logger.debug("Database connected successfully.");
         }
     }
 
@@ -1705,8 +1705,8 @@ public class DBUtility {
     public static void enableDunningForCrmId(String crmCustomerId) throws Exception {
         // @formatter:off
         String sql = "" + "update dunning_account " +  "set bre_id = 14 " +  "where external_id = ? ";
-        logger.info("STEP:");
-        logger.info(" - ACTION: SQL_UPDATE " + sql);
+        logger.debug("STEP:");
+        logger.debug(" - ACTION: SQL_UPDATE " + sql);
         // @formatter:on
         try (Connection conn = new DBConnector().getBillingConnection()) {
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -1722,8 +1722,8 @@ public class DBUtility {
     public static void switchSuiteCrmStatusExternal(SwitchState statusExternal, int crmCustomerId) throws Exception {
         // @formatter:off
         String sql = "" + "update accounts " + "set status_external = ? " + "where account_number_c = ? ";
-        logger.info("STEP:");
-        logger.info(" - ACTION: SQL_UPDATE " + sql);
+        logger.debug("STEP:");
+        logger.debug(" - ACTION: SQL_UPDATE " + sql);
 
         // @formatter:on
         try (Connection conn = new DBConnector().getSuiteCRMConnection()) {

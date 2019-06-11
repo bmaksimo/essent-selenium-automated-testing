@@ -26,11 +26,11 @@ public class ButtonImpl extends Component implements Button {
     if (!element.isPresent()) {
       throw new IllegalStateException("Wrapped web element is undefined");
     }
-    logger.info("STEP:");
-    logger.info(" - BUTTON TEXT: " + element.get().getText());
+    logger.debug("STEP:");
+    logger.debug(" - BUTTON TEXT: " + element.get().getText());
     seleniumDriver.waitForRequestsToFinish();
     element.get().click();
     seleniumDriver.waitForRequestsToFinish();
-    logger.info(" - ACTION: CLICK");
+    logger.debug(" - ACTION: CLICK");
   }
 }

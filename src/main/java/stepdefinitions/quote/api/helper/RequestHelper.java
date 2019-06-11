@@ -41,36 +41,36 @@ public class RequestHelper {
      */
     public Response simplePostRequest(Integer expectedStatusCode, String body, String path) {
 
-	Response response = expect().given().header(trackingHeader).contentType(ContentType.JSON).body(body).when()
-		.post(path);
+        Response response = expect().given().header(trackingHeader).contentType(ContentType.JSON).body(body).when()
+            .post(path);
 
-	Integer responseStatusCode = getResponseStatusCode(response, path, expectedStatusCode);
+        Integer responseStatusCode = getResponseStatusCode(response, path, expectedStatusCode);
 
-	if (!responseStatusCode.equals(expectedStatusCode)) {
-	    LOGGER.info("JSON body which was sent in the request is: " + body);
-	    LOGGER.error("RESPONSE IS: " + response.body().asString());
-	}
+        if (!responseStatusCode.equals(expectedStatusCode)) {
+            LOGGER.debug("JSON body which was sent in the request is: " + body);
+            LOGGER.error("RESPONSE IS: " + response.body().asString());
+        }
 
-	assertThat(responseStatusCode, is(equalTo(expectedStatusCode)));
-	return response;
+        assertThat(responseStatusCode, is(equalTo(expectedStatusCode)));
+        return response;
     }
 
     public Response postRequest(Integer expectedStatusCode, Cookies cookie, String payload, String path) throws IOException {
 
-	Response response = expect().given().header(trackingHeader).cookies(cookie).contentType(ContentType.JSON)
-		.body(payload).when().post(path);
+        Response response = expect().given().header(trackingHeader).cookies(cookie).contentType(ContentType.JSON)
+            .body(payload).when().post(path);
 
-	Integer responseStatusCode = getResponseStatusCode(response, path, expectedStatusCode);
+        Integer responseStatusCode = getResponseStatusCode(response, path, expectedStatusCode);
 
-	if (!responseStatusCode.equals(expectedStatusCode)) {
-	    LOGGER.info("JSON body which was sent in the request is: " + payload);
-	    LOGGER.error("RESPONSE IS: " + response.body().asString());
-	}
+        if (!responseStatusCode.equals(expectedStatusCode)) {
+            LOGGER.debug("JSON body which was sent in the request is: " + payload);
+            LOGGER.error("RESPONSE IS: " + response.body().asString());
+        }
 
-	assertFalse(new ExceptionChecker().checkForErrorInResponse(response));
-	assertThat(responseStatusCode, is(equalTo(expectedStatusCode)));
+        assertFalse(new ExceptionChecker().checkForErrorInResponse(response));
+        assertThat(responseStatusCode, is(equalTo(expectedStatusCode)));
 
-	return response;
+        return response;
     }
 
     public Response postXMLRequest(Integer expectedStatusCode, Cookies cookie, String payload, String path) throws IOException {
@@ -81,10 +81,10 @@ public class RequestHelper {
         Integer responseStatusCode = getResponseStatusCode(response, path, expectedStatusCode);
 
         if (!responseStatusCode.equals(expectedStatusCode)) {
-            LOGGER.info("XML body which was sent in the request is: " + payload);
+            LOGGER.debug("XML body which was sent in the request is: " + payload);
             LOGGER.error("RESPONSE IS: " + response.body().asString());
         }
-        LOGGER.info("RESPONSE IS: " + response.body().asString());
+        LOGGER.debug("RESPONSE IS: " + response.body().asString());
 
         assertThat(responseStatusCode, is(equalTo(expectedStatusCode)));
 
@@ -93,35 +93,34 @@ public class RequestHelper {
 
     public Response postMultipartRequest(Integer expectedStatusCode, Cookies cookie, Map<String, String> payload, String path) {
 
-	String pathToFile = ResourceUtil.toPath("/data/restassured/upload/fileupload.txt");
-	File file = new File(pathToFile);
-	Response response = expect().given().header(trackingHeader).cookies(cookie).multiPart("file", file)
-		.formParams(payload).when().post(path);
+        String pathToFile = ResourceUtil.toPath("/data/restassured/upload/fileupload.txt");
+        File file = new File(pathToFile);
+        Response response = expect().given().header(trackingHeader).cookies(cookie).multiPart("file", file)
+            .formParams(payload).when().post(path);
 
-	Integer responseStatusCode = getResponseStatusCode(response, path, expectedStatusCode);
+        Integer responseStatusCode = getResponseStatusCode(response, path, expectedStatusCode);
 
-	if (!responseStatusCode.equals(expectedStatusCode)) {
-	    LOGGER.info("JSON body which was sent in the request is: " + payload);
-	    LOGGER.error("RESPONSE IS: " + response.body().asString());
-	}
+        if (!responseStatusCode.equals(expectedStatusCode)) {
+            LOGGER.debug("JSON body which was sent in the request is: " + payload);
+            LOGGER.error("RESPONSE IS: " + response.body().asString());
+        }
 
-	assertThat(responseStatusCode, is(equalTo(expectedStatusCode)));
-	return response;
-    }
+        assertThat(responseStatusCode, is(equalTo(expectedStatusCode)));
+        return response;
+        }
 
-    private Integer getResponseStatusCode(Response response, String path, Integer exectedStatusCode) {
+        private Integer getResponseStatusCode(Response response, String path, Integer exectedStatusCode) {
 
-	Integer responseStatusCode = new Integer(response.statusCode());
-	LOGGER.info("POST " + path + " status : " + responseStatusCode + " (expected: " + exectedStatusCode + ")");
-	LOGGER.info("X-LOG-ID tracking header: " + trackingHeader.getValue());
-	logResponseTimeDuration(response, "for "+ path +" ");
-	return responseStatusCode;
+        Integer responseStatusCode = new Integer(response.statusCode());
+        LOGGER.debug("POST " + path + " status : " + responseStatusCode + " (expected: " + exectedStatusCode + ")");
+        LOGGER.info("X-LOG-ID tracking header: " + trackingHeader.getValue());
+        logResponseTimeDuration(response, "for "+ path +" ");
+        return responseStatusCode;
     }
 
     private void logResponseTimeDuration(Response response, String Description) {
 	    Long actualResponseTime = response.time();
-	    LOGGER.info("Measured response time, " + Description + "is : "
+	    LOGGER.debug("Measured response time, " + Description + "is : "
 	        + new SimpleDateFormat("ss.SSS").format(actualResponseTime) + " sec");
 	  }
-
 }
