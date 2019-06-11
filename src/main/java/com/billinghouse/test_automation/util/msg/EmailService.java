@@ -52,7 +52,7 @@ public class EmailService {
 
             return messageBody;
         } catch (IOException e) {
-            logger.warn("Something went wrong while creating the email message body.");
+            logger.error("Something went wrong while creating the email message body.");
         }
 
         return null;
@@ -62,9 +62,9 @@ public class EmailService {
         try {
             if (null != emailSender) {
                 MimeMessage message = getEmailMessage(messageBody, emailSender);
-                logger.info("Sending email report to SME...");
+                logger.debug("Sending email report to SME...");
                 emailSender.send(message);
-                logger.info("Done.");
+                logger.debug("Done.");
 
                 return true;
             }

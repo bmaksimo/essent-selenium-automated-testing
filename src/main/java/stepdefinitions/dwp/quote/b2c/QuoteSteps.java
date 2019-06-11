@@ -377,7 +377,7 @@ public class QuoteSteps extends DwpScenario {
     public void generateEan() throws Throwable {
         String eanCode = PrepareDataForContract.generateEAN();
         parameterProvider.put("EAN-code-generated", eanCode);
-        logger().info(" - Generated EAN code: " + eanCode);
+        logger().debug(" - Generated EAN code: " + eanCode);
     }
 
     @And("^Electricity EAN code is \"([^\"]*)\"$")

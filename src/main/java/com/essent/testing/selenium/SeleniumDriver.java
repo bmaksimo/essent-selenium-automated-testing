@@ -49,7 +49,7 @@ public abstract class SeleniumDriver {
         Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
         browserName = caps.getBrowserName();
         browserVersion = caps.getVersion();
-        logger.info(" - RESULT: Running tests on  " + browserName + " " + browserVersion);
+        logger.debug(" - RESULT: Running tests on  " + browserName + " " + browserVersion);
     }
 
     public void createWebDriver() {
@@ -59,7 +59,7 @@ public abstract class SeleniumDriver {
         options.addArguments("--incognito");
         options.addArguments("--disable-dev-shm-usage"); // overcome limited resource problems
         options.addArguments("--no-sandbox"); // Bypass OS security model
-        logger.info(" - OPTIONS: " + options.toString());
+        logger.debug(" - OPTIONS: " + options.toString());
         setChromeDriverBinary(options);
         ChromeDriver chromeDriver;
 

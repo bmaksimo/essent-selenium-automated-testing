@@ -38,7 +38,7 @@ public class ContractB2CScenario extends RegisteredScenario {
 			logger.error("Something went wrong with creation of B2C contract");
 		}
 
-		logger.info("ACCOUNT NUMBER: " + this.getAccountNumber());
+		logger.debug("ACCOUNT NUMBER: " + this.getAccountNumber());
 
 		return this.getAccountNumber();
 	}
@@ -61,7 +61,7 @@ public class ContractB2CScenario extends RegisteredScenario {
 			logger.error("Something went wrong with creation of ACTIVE B2C contract");
 		}
 
-		logger.info("ACCOUNT NUMBER: " + this.getAccountNumber());
+		logger.debug("ACCOUNT NUMBER: " + this.getAccountNumber());
 
 		parameterProvider.put("accountNumber", this.getAccountNumber());
 

@@ -35,10 +35,10 @@ public class InputParametersTest extends RegisteredScenario {
         assertThat("'startOfTenure' was null", startOfTenure, is(notNullValue()));
         assertThat("'startOfTenure' was null", parameterProvider.getValueOrParameterAsString("parameter:startOfTenure"), is(notNullValue()));
         DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("DD-MM-YYYY");
-        logger().info("STEP:");
-        logger().info(" - ACTION: GET_INPUT_PARAM");
+        logger().debug("STEP:");
+        logger().debug(" - ACTION: GET_INPUT_PARAM");
         Period diff = new Period(startOfTenure, DateTime.now());
-        logger().info(String.format(" - RESULT: %s's period of tenure is %s years", employee, diff.getYears()));
+        logger().debug(String.format(" - RESULT: %s's period of tenure is %s years", employee, diff.getYears()));
     }
 
     @And("^Contractor \"([^\"]*)\" has value \"([^\"]*)\"$")

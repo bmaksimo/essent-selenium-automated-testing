@@ -63,13 +63,13 @@ public class ParameterProvider {
     }
 
     public Object put(String key, Object value) {
-        log.info("STEP:");
-        log.info(" - ACTION: PUT_GLOBAL_PARAMETER");
+        log.debug("STEP:");
+        log.debug(" - ACTION: PUT_GLOBAL_PARAMETER");
         if(consumeNullValues && value == null) {
             log.warn("WARNING: Null value for output param " + key);
             return null;
         }
-        log.info(" - RESULT: Registered global parameter '" + key + "' = " + value);
+        log.debug(" - RESULT: Registered global parameter '" + key + "' = " + value);
         return parameters.put(key, value);
     }
 
@@ -94,5 +94,9 @@ public class ParameterProvider {
 
     public String toString() {
         return parameters.toString();
+    }
+
+    public Map<String, Object> getParameters() {
+        return parameters;
     }
 }
