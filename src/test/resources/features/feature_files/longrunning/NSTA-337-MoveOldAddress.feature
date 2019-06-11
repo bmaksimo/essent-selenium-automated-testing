@@ -35,7 +35,7 @@ Feature: NSTA - 337 Move old address
         And "Startdatum" date is "5 day before now"
         And "EAN-code" input is "parameter:EAN-code-generated"
         And "Meternummer" input is "1000"
-        And Option "test" is On
+        And Option "test" "is" "On"
         And Connection details are confirmed
         And Save changes
         Then Form header is "Billing details"
@@ -44,7 +44,7 @@ Feature: NSTA - 337 Move old address
         And  Billing details are confirmed
         Then  Form header is "Quote overview"
 
-        When Option "Heeft de klant al getekend?" is On
+        When Option "Heeft de klant al getekend?" "is" "On"
         And "Kanaal ondertekening" selection is "Papier"
         And "Datum ondertekening" date is "now"
         And Quote is signed
@@ -71,13 +71,13 @@ Feature: NSTA - 337 Move old address
         When Dashboard menu is "Contracten"
         And Plus action of "1" element from "ContractsOnAccount" and click on "Verhuis OA"
 
-        And Options "Testing?" is On
-        And Options "Market mock?" is On
+        And Options "Testing?" "is" "On"
+        And Options "Market mock?" "is" "On"
         And Communication channel is "E-mail"
         And Reason of move "Normal move"
         And Move date is "now"
 
-        And Options "Is de nieuwe bewoner de eigenaar?" is On
+        And Options "Is de nieuwe bewoner de eigenaar?" "is" "On"
         And "De nieuwe bewoner is" selection is "Particulier"
         And "Aanspreking" selection is "Meneer"
         And "Voornaam" input is "Petar"
@@ -95,7 +95,7 @@ Feature: NSTA - 337 Move old address
         And Low meter reading input is "parameter:meterstand"
         And Low date meter reading date is "now"
 
-        And Options "Push through incomplete move?" is On
+        And Options "Push through incomplete move?" "is" "On"
 
         Then Bevestigen
 

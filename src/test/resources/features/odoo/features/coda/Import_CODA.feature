@@ -39,7 +39,7 @@ Feature: Import a coda file
         And Billing details are confirmed
         Then  Form header is "Quote overview"
 
-        When Option "Heeft de klant al getekend?" is On
+        When Option "Heeft de klant al getekend?" "is" "On"
         And "Kanaal ondertekening" selection is "Papier"
         And Quote is signed in "Kontich"
         And "Datum ondertekening" date is "now"
@@ -50,7 +50,7 @@ Feature: Import a coda file
         When Dashboard menu is "Contracten"
         Then View list header is "Actieve en toekomstige connecties"
         And  "1st" List element with value at column "EAN-code" is checked
-        And  "1st" list element has cell value Actief at column "Contractnummer" polling 450 seconds
+        Then  "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
 
         #invoice run advance
         Given I renew login to DWP as "billing.testautomation@essent.be"

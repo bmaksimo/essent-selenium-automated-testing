@@ -30,7 +30,7 @@ Feature: NUAT-412 part: Create / import coda file
         And EAN code is generated
         And "Startdatum" date is "35 days before now"
         And "EAN-code" input is "parameter:EAN-code-generated"
-        And  Option "test" is On
+        And  Option "test" "is" "On"
         And Connection details are confirmed
         Then Form header is "Billing details"
 
@@ -38,7 +38,7 @@ Feature: NUAT-412 part: Create / import coda file
         And Billing details are confirmed
         Then Form header is "Quote overview"
 
-        When Option "Heeft de klant al getekend?" is On
+        When Option "Heeft de klant al getekend?" "is" "On"
         And "Kanaal ondertekening" selection is "Papier"
         And Quote is signed in "Kontich"
         And "Datum ondertekening" date is "now"

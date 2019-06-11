@@ -35,7 +35,7 @@ Feature: NSTA - 338 Move new address
         And "Startdatum" date is "5 day before now"
         And "EAN-code" input is "parameter:EAN-code-generated"
         And "Meternummer" input is "1000"
-        And Option "test" is On
+        And Option "test" "is" "On"
         And Connection details are confirmed
         And Save changes
         Then Form header is "Billing details"
@@ -44,7 +44,7 @@ Feature: NSTA - 338 Move new address
         And  Billing details are confirmed
         Then  Form header is "Quote overview"
 
-        When Option "Heeft de klant al getekend?" is On
+        When Option "Heeft de klant al getekend?" "is" "On"
         And "Kanaal ondertekening" selection is "Papier"
         And Quote is signed in "Kontich"
         And "Datum ondertekening" date is "now"
@@ -70,7 +70,7 @@ Feature: NSTA - 338 Move new address
         And "EAN-code" input is "parameter:randomEAN"
         And "Datum meteropname" date is "1 day before now"
         And "Meterstand enkelvoudig" input is "1000"
-        And Option "test" is on
+        And Option "test" "is" "On"
         And "MM should respond" turn on
         Then Bevestigen
 

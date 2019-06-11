@@ -44,7 +44,7 @@ Feature: NSTA 332 Soctar confirmation --> Manual
         And Billing details are confirmed
         Then  Form header is "Quote overview"
 
-        When Option "Heeft de klant al getekend?" is On
+        When Option "Heeft de klant al getekend?" "is" "On"
         And "Kanaal ondertekening" selection is "Papier"
         And "Datum ondertekening" date is "now"
         And Quote is signed

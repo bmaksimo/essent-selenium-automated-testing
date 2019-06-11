@@ -12,6 +12,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 import java.util.List;
+import java.util.Map;
 
 public class LeadSteps extends DwpScenario {
 
@@ -33,7 +34,7 @@ public class LeadSteps extends DwpScenario {
     public void insertCompanyNameForCreatingLead(DataTable dbTabel) {
         seleniumDriver.waitForRequestsToFinish();
         NewLeadPage leadPage = new NewLeadPage();
-        List<List<String>> db = dbTabel.asLists();
+        List<Map<String,String>> db = dbTabel.asMaps(String.class,String.class);
         leadPage.createLead(db);
         seleniumDriver.waitForRequestsToFinish();
     }

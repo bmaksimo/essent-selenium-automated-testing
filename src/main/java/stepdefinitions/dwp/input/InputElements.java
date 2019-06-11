@@ -9,6 +9,7 @@ import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -304,18 +305,21 @@ public class InputElements extends DwpScenario {
      * @param state Enumerated value: {@link SwitchState}
      * @throws Throwable  Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
    */
-  @And("^Options? \"([^\"]*)\" (is|are) ([^\"]*)$")
-  public void switchOption(String option, IsAre verb, SwitchState state) throws Throwable {
-    seleniumDriver.waitForRequestsToFinish();
-    Map<String, String> options = new HashMap<>();
-    options.put("label", option);
-    options.put("verb", verb.getVerb());
-    FluentWait<InputElements> waiter = waiter(this, 10, 1);
-    waiter.withMessage(String.format("Option %s is undefined.", option));
-    waiter.until(
-        (InputElements callback) -> executeJavascriptTest(JS_TR_CLICK_TOGGLE_INPUT, options));
-    seleniumDriver.waitForRequestsToFinish();
-  }
+    @And("Options? \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\"")
+    public void switchOption(String option, String verb, SwitchState state) throws Throwable {
+        if (!(verb.equalsIgnoreCase("is") || verb.equalsIgnoreCase("are")) ){
+            Assert.assertTrue("String is not valid (is/are expected)",false);
+        }
+        seleniumDriver.waitForRequestsToFinish();
+        Map<String, String> options = new HashMap<>();
+        options.put("label", option);
+        options.put("verb", verb);
+        FluentWait<InputElements> waiter = waiter(this, 10, 1);
+        waiter.withMessage(String.format("Option %s is undefined.", option));
+        waiter.until(
+            (InputElements callback) -> executeJavascriptTest(JS_TR_CLICK_TOGGLE_INPUT, options));
+        seleniumDriver.waitForRequestsToFinish();
+    }
 
     /**
      * Sets and asynchronously checks a checkbox on any DWP form

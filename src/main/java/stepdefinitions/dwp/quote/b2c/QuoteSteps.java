@@ -164,10 +164,9 @@ public class QuoteSteps extends DwpScenario {
     @And("^Customer address is$")
     public void initCustomerAddress(final DataTable address) throws Throwable {
         seleniumDriver.waitForRequestsToFinish();
-        List<CustomerAddress> list = address.asList(CustomerAddress.class);
-        CustomerAddress customerAddress = list.get(0);
-        boolean success = new InitialiseCustomerAddress().test(customerAddress);
-        assertThat("Customer Address data wasn't initialised.", success, is(true));
+        PersonalDetailsAddressPage pdap = new PersonalDetailsAddressPage();
+        List<Map<String,String>> add = address.asMaps(String.class, String.class);
+        pdap.fillInCustomerAddressx(add);
     }
 
     @And("^Customer details are confirmed$")

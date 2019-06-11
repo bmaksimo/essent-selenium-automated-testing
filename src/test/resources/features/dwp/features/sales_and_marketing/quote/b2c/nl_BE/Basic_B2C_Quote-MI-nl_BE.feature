@@ -39,7 +39,7 @@ Feature: Creating a B2C Quote TC1 with move in - Dutch language version
         And Billing details are confirmed
         Then  Form header is "Overzicht offerte"
 
-        When Option "Heeft de klant al getekend?" is On
+        When Option "Heeft de klant al getekend?" "is" "On"
         And Quote is signed in "Kontich"
         And "Datum ondertekening" date is "now"
         And Quote is confirmed

@@ -93,7 +93,7 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And  Billing details are confirmed
         Then  Form header is "Quote overview"
 
-        When Option "Heeft de klant al getekend?" is On
+        When Option "Heeft de klant al getekend?" "is" "On"
         And "Kanaal ondertekening" selection is "Papier"
         And "Plaats ondertekening" input is "Kontich"
         And "Datum ondertekening" date is "now"

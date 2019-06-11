@@ -27,7 +27,7 @@ Feature: NSTA-390. Sign-in a new customer with TC1 quote with electricity and ga
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        When Options "test" are On
+        When Options "test" "are" "On"
         And "Marktbericht" selection is "Volledig marktbericht"
         And EAN code is generated
         And "EAN-code" input on "Elektriciteit Vooraf" card is "parameter:EAN-code-generated"
@@ -42,7 +42,7 @@ Feature: NSTA-390. Sign-in a new customer with TC1 quote with electricity and ga
         And Billing details are confirmed
         Then Form header is "Quote overview"
 
-        When Option "Heeft de klant al getekend?" is On
+        When Option "Heeft de klant al getekend?" "is" "On"
         And Quote is signed
         And "Datum ondertekening" date is "2 weeks before now"
         And Quote is signed in "Kontich"
