@@ -28,12 +28,12 @@ public class NewLeadPage extends BaseObjectPage {
         String contactPersonFirstName = null;
         String contactPersonLastName = null;
 
-
         for (int i = 0; i < table.size(); i++) {
             companyNumber = table.get(i).get("companyName");
             contactPersonFirstName = table.get(i).get("firstName");
             contactPersonLastName = table.get(i).get("secondName");
         }
+
         fillInCompanyName(companyNumber);
         Sleeper.sleepTightInSeconds(2);
         fillInContactPerson(contactPersonFirstName, contactPersonLastName);

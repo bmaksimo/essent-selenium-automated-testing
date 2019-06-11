@@ -34,7 +34,8 @@ Feature: NSTA 331- Product Change for TK1 type
 
         When EAN code is generated
         And "Startdatum" date is "2 weeks before now"
-        And Electricity market mock test is Open
+#        And Electricity market mock test is Open
+        And Option "test" "is" "On"
         And "EAN-code" input is "parameter:EAN-code-generated"
         And Connection details are confirmed
         And Save changes
@@ -76,7 +77,6 @@ Feature: NSTA 331- Product Change for TK1 type
         Then Changes are confirmed
 
         #4 - Check correctness of product change
-
          #4.1 - Check Contractlines
         When Dashboard menu is "Contracten"
         Then Get Start Date
@@ -86,7 +86,7 @@ Feature: NSTA 331- Product Change for TK1 type
         Then Table "Actieve en toekomstige connecties" contains value "Actief" at column "Contractnummer"
         Then Product Change dates are "parameter:startDate" and "parameter:EndDate-active-contract"
         #check start date is same as from step 2 and end date is 1 day before start date
-        Then Start Date "parameter:startDate" is "365|366" day bigger than End Date "parameter:EndDate-active-contract"
+        Then Start Date "parameter:startDate" is "365 or 366" day bigger than End Date "parameter:EndDate-active-contract"
 
          #4.2 - Check Discounts
         And Click on link in View List at "1st" row and "Nummer & Aanmaakdatum" column polling 20 seconds
