@@ -9,6 +9,9 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.tables.CustomerAddress;
 
+import java.util.List;
+import java.util.Map;
+
 import static com.essent.automation.autocrat.Action.*;
 import static com.essent.testing.dwp.autocrat.element.quote.B2CQuoteElements.*;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.INPUT;
@@ -77,6 +80,65 @@ public class PersonalDetailsAddressPage extends QuoteCreationGuidedStep {
             initializeAddress.step(createStep(Action.SELECT).element(DELIVERY_ADDR_COUNTRY.name()).value(country));
         }
         if(!execute(initializeAddress)) {
+            fail("Customer Address fields were not initialized");
+        }
+        Model.Execution copyAddress = createExecution()
+            .element(COPY_ADDRESS_CONNECTION_TO_BILLING.element())
+            .step(createStep(SLEEP).sleepInMillis(3000))
+            .step(createStep(CLICK).element(COPY_ADDRESS_CONNECTION_TO_BILLING.name()).requireDisplayed(false), TOGGLE_CHECKBOX.getSleepInMillis());
+        return execute(copyAddress);
+    }
+
+    public boolean fillInCustomerAddressx(List<Map<String,String>> add) {
+
+        String street=null;
+        String houseNr=null;
+        String houseNrAdd=null;
+        String bus=null;
+        String postcode=null;
+        String city=null;
+        String country=null;
+        for (int i = 0; i < add.size(); i++) {
+            street = add.get(i).get("street");
+            if (street.equals("Random")) {
+                street = StreetGenerator.getRandomStreetInKontich();
+            }
+            houseNr = add.get(i).get("houseNr");
+            houseNrAdd = add.get(i).get("houseNrAdd");
+            bus = add.get(i).get("bus");
+            postcode = add.get(i).get("postalCode");
+            city = add.get(i).get("city");
+            country = add.get(i).get("country");
+        }
+
+        Model.Execution initializeAddress = createExecution();
+        initializeAddress.
+            element(DELIVERY_ADDR_STREET.element()).
+            element(DELIVERY_ADDR_STREET_SUGGESTION.element()).
+            element(DELIVERY_ADDR_HOUSE_NR.element()).
+            element(DELIVERY_ADDR_HOUSE_ADD.element()).
+            element(DELIVERY_ADDR_BUS.element()).
+            element(DELIVERY_ADDR_ZIPCODE.element()).
+            element(DELIVERY_ADDR_CITY.element()).
+            element(DELIVERY_ADDR_COUNTRY.element()).
+            element(COPY_ADDRESS_CONNECTION_TO_BILLING.element()).
+            step(createStep(ACCESS).element(COPY_ADDRESS_CONNECTION_TO_BILLING.name()).requireDisplayed(false).callback(hideIconOverlays())).
+            step(createStep(CLICK).element(COPY_ADDRESS_CONNECTION_TO_BILLING.name()).requireDisplayed(false), INPUT.getSleepInMillis());
+
+        initializeAddress.
+            step(createStep(TYPING).element(DELIVERY_ADDR_STREET.name()).value(street), INPUT.getSleepInMillis()).
+            step(createStep(ACCESS).element(DELIVERY_ADDR_STREET_SUGGESTION.name()).requireDisplayed(false).callback(new HideAddressSuggestion())).
+            step(createStep(TYPING).timeoutInSeconds(3).element(DELIVERY_ADDR_HOUSE_NR.name()).value(houseNr), INPUT.getSleepInMillis()).
+            step(createStep(TYPING).element(DELIVERY_ADDR_HOUSE_ADD.name()).value(houseNrAdd), INPUT.getSleepInMillis());
+        if (StringUtils.isNotEmpty(bus)) {
+            initializeAddress.step(createStep(TYPING).element(DELIVERY_ADDR_BUS.name()).value(bus), INPUT.getSleepInMillis());
+        }
+        initializeAddress.step(createStep(TYPING).element(DELIVERY_ADDR_ZIPCODE.name()).value(postcode), INPUT.getSleepInMillis()).
+            step(createStep(TYPING).element(DELIVERY_ADDR_CITY.name()).value(city), INPUT.getSleepInMillis());
+        if (StringUtils.isNotEmpty(country)) {
+            initializeAddress.step(createStep(Action.SELECT).element(DELIVERY_ADDR_COUNTRY.name()).value(country));
+        }
+        if (!execute(initializeAddress)) {
             fail("Customer Address fields were not initialized");
         }
         Model.Execution copyAddress = createExecution()
