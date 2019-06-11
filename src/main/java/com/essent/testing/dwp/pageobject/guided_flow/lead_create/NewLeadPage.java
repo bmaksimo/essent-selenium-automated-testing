@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 
 
 import java.util.List;
+import java.util.Map;
 
 public class NewLeadPage extends BaseObjectPage {
 
@@ -21,11 +22,21 @@ public class NewLeadPage extends BaseObjectPage {
   // Locale-specific elements of web element locators must be parameterized.
   // This is basic rule!
 
-    public void createLead(List<List<String>> table) {
+    public void createLead(List<Map<String,String>> table) {
         ToggleImpl tg = new ToggleImpl();
-        fillInCompanyName(table.get(1).get(0));
+        String companyNumber = null;
+        String contactPersonFirstName = null;
+        String contactPersonLastName = null;
+
+
+        for (int i = 0; i < table.size(); i++) {
+            companyNumber = table.get(i).get("companyName");
+            contactPersonFirstName = table.get(i).get("firstName");
+            contactPersonLastName = table.get(i).get("secondName");
+        }
+        fillInCompanyName(companyNumber);
         Sleeper.sleepTightInSeconds(2);
-        fillInContactPerson(table.get(1).get(1), table.get(1).get(2));
+        fillInContactPerson(contactPersonFirstName, contactPersonLastName);
     }
 
     private void fillInCompanyName(String companyNumber) {

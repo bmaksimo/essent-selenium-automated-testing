@@ -35,7 +35,7 @@ Feature: NSTA-329 Deduplication activated customer
         And "Startdatum" date is "1 months before now"
         And "Type aansluiting" selection is "YMR"
         And "Meternummer" input is "1000"
-        And Option "test" is On
+        And Option "test" "is" "On"
         And Connection details are confirmed
         And Save changes
         Then Form header is "Billing details"
@@ -44,7 +44,7 @@ Feature: NSTA-329 Deduplication activated customer
         And  Billing details are confirmed
         Then  Form header is "Quote overview"
 
-        When Option "Heeft de klant al getekend?" is On
+        When Option "Heeft de klant al getekend?" "is" "On"
         And "Kanaal ondertekening" selection is "Papier"
         And "Datum ondertekening" date is "now"
         And Quote is signed
@@ -104,7 +104,7 @@ Feature: NSTA-329 Deduplication activated customer
         And  Billing details are confirmed
         Then  Form header is "Quote overview"
 
-        When Option "Heeft de klant al getekend?" is On
+        When Option "Heeft de klant al getekend?" "is" "On"
         And "Kanaal ondertekening" selection is "Papier"
         And "Datum ondertekening" date is "now"
         And Getekend document is uploaded

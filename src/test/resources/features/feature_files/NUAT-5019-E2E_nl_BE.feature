@@ -32,7 +32,7 @@ Feature: NUAT-5019: Complete E2E scenario "Active customer to drop, through one 
         And EAN code is generated
         And "Startdatum" date is "35 days before now"
         And "EAN-code" input is "parameter:EAN-code-generated"
-        And  Option "test" is On
+        And  Option "test" "is" "On"
         And Connection details are confirmed
         Then Form header is "Billing details"
 
@@ -40,7 +40,7 @@ Feature: NUAT-5019: Complete E2E scenario "Active customer to drop, through one 
         And Billing details are confirmed
         Then Form header is "Quote overview"
 
-        When Option "Heeft de klant al getekend?" is On
+        When Option "Heeft de klant al getekend?" "is" "On"
         And "Kanaal ondertekening" selection is "Papier"
         And Quote is signed in "Kontich"
         And "Datum ondertekening" date is "now"
@@ -209,7 +209,7 @@ Feature: NUAT-5019: Complete E2E scenario "Active customer to drop, through one 
         When "Module" selection is "INITIATE STOP ACCESS"
         And "Label" selection is "Non-Residential End-of-Contract"
         And "Effective Date" date is "1 day before now"
-        And Option "Testing?" is On
+        And Option "Testing?" "is" "On"
         And Select Contractline dialog is confirmed
         Then "1st" list element has cell value "INITIATE STOP ACCESS" at column "Module & Label" polling 450 seconds
         And Refresh "REFRESH MARKTBERICHTEN" till "Geaccepteerd" is visible in table

@@ -44,7 +44,7 @@ Feature: NSTA 331- Product Change for TK1 type
         And Billing details are confirmed
         Then Form header is "Quote overview"
 
-        When Option "Heeft de klant al getekend?" is On
+        When Option "Heeft de klant al getekend?" "is" "On"
         And "Kanaal ondertekening" selection is "Papier"
         And Quote is signed in "Kontich"
         And "Datum ondertekening" date is "now"
@@ -61,8 +61,8 @@ Feature: NSTA 331- Product Change for TK1 type
         When Plus action of "1" element from "ContractsOnAccount" and click on "Productwijziging"
         And Tariff card has value of 1st item from list
         When "Pakket" selection is "Online"
-        When Option "test" is On
-        When Option "MM should respond?" is On
+        When Option "test" "is" "On"
+        When Option "MM should respond?" "is" "On"
         When "Kanaal ondertekening" selection is "Online"
         Then Changes are confirmed
         Then Bevestigen

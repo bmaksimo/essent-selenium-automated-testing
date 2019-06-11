@@ -37,7 +37,7 @@ Feature: NUAT-446: Check The Usage Of A Customer - nl_BE
         And "Startdatum" date is "5 day before now"
         And "EAN-code" input is "parameter:EAN-code-generated"
         And "Meternummer" input is "1000"
-        And Option "test" is On
+        And Option "test" "is" "On"
         And Connection details are confirmed
         Then Form header is "Billing details"
 
@@ -45,7 +45,7 @@ Feature: NUAT-446: Check The Usage Of A Customer - nl_BE
         And  Billing details are confirmed
         Then  Form header is "Quote overview"
 
-        When Option "Heeft de klant al getekend?" is On
+        When Option "Heeft de klant al getekend?" "is" "On"
         And "Kanaal ondertekening" selection is "Papier"
         And Quote is signed in "Kontich"
         And "Datum ondertekening" date is "now"

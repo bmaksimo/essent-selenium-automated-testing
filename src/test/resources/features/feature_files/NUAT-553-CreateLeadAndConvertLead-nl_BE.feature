@@ -21,7 +21,7 @@ Feature: NUAT-553: Create Lead And Convert Lead - nl_BE
         And "Telefoon" input is "+32 78 15 79 79"
         And "Mobiel" input is "+32 498 12 34 56"
         And "E-mailadres" input is "test@test.be"
-        And Options "Bel me niet?" is On
+        And Options "Bel me niet?" "is" "On"
         Then Save changes
 
         When Plus action and "Converteer lead" of first customer from list

@@ -70,7 +70,7 @@ Feature: NSTA - 338 Move new address
         And "EAN-code" input is "parameter:randomEAN"
         And "Datum meteropname" date is "1 day before now"
         And "Meterstand enkelvoudig" input is "1000"
-        And Option "test" "is" "on"
+        And Option "test" "is" "On"
         And "MM should respond" turn on
         Then Bevestigen
 

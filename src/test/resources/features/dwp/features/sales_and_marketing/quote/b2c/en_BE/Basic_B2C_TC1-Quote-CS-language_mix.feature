@@ -38,7 +38,7 @@ Feature: NUAT-5019-1: Creating a B2C Quote TC1 with move in, Dutch language vers
         And Billing details are confirmed
         Then  Form header is "Quote overview"
 
-        When Option "Heeft de klant al getekend?" is On
+        When Option "Heeft de klant al getekend?" "is" "On"
         And "Kanaal ondertekening" selection is "Papier"
         And Quote is signed in "Kontich"
         And "Datum ondertekening" date is "now"

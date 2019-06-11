@@ -34,7 +34,7 @@ Feature: NSTA-344:Payment Plan
         And Electricity EAN code is "random"
         And "Type aansluiting" selection is "YMR"
         And "Meternummer" input is "1000"
-        And Option "test" is On
+        And Option "test" "is" "On"
         And Connection details are confirmed
         And Save changes
         Then Form header is "Billing details"
@@ -43,7 +43,7 @@ Feature: NSTA-344:Payment Plan
         And  Billing details are confirmed
         Then  Form header is "Quote overview"
 
-        When Option "Heeft de klant al getekend?" is On
+        When Option "Heeft de klant al getekend?" "is" "On"
         And "Kanaal ondertekening" selection is "Papier"
         And Quote is signed in "Kontich"
         And "Datum ondertekening" date is "now"

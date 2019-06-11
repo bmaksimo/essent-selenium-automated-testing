@@ -29,8 +29,8 @@ Feature: NUAT-373: End Of Contract For Bankruptcy - nl_BE, NUAT-479: DROP For A 
     Scenario: NUAT-373 End of contract for bankruptcy
         When "Module" selection is "INITIATE STOP ACCESS"
         And  "Label" selection is "Non-Residential End-of-Contract"
-        And Option "Testing?" is On
-        And Option "Market mock?" is On
+        And Option "Testing?" "is" "On"
+        And Option "Market mock?" "is" "On"
         And "Effective Date" date is "1 month from now"
         And Changes are confirmed
         Then Confirm task was "Non-Residential End-of-Contract"
@@ -40,8 +40,8 @@ Feature: NUAT-373: End Of Contract For Bankruptcy - nl_BE, NUAT-479: DROP For A 
     Scenario: NUAT-479 DROP for a Non-residential client
         When "Module" selection is "INITIATE STOP ACCESS"
         And  "Label" selection is "Drop/Request Budget Meter"
-        And Option "Testing?" is On
-        And Option "Market mock?" is On
+        And Option "Testing?" "is" "On"
+        And Option "Market mock?" "is" "On"
         And Changes are confirmed
         Then  Confirm task was "Non-Residential Drop"
 
@@ -51,7 +51,7 @@ Feature: NUAT-373: End Of Contract For Bankruptcy - nl_BE, NUAT-479: DROP For A 
         When "Module" selection is "INITIATE STOP ACCESS"
         And  "Label" selection is "Non-Residential End-of-Contract"
         And "Effective Date" date is "1 month from now"
-        And Option "Testing?" is On
+        And Option "Testing?" "is" "On"
         And Changes are confirmed
         Then Confirm task was "Non-Residential End-of-Contract"
         When Refresh "REFRESH MARKTBERICHTEN" till "Geaccepteerd" is visible

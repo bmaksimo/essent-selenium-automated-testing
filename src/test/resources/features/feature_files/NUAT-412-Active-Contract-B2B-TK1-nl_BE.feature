@@ -44,7 +44,7 @@ Feature: NUAT-412 part: Create B2B TK1 Contract
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        When Option "test" is On
+        When Option "test" "is" "On"
         And EAN code is generated
         And "Startdatum" date on "Elektriciteit Vast" card is "now"
         And "EAN-code" input on "Elektriciteit Vast" card is "parameter:EAN-code-generated"
@@ -56,7 +56,7 @@ Feature: NUAT-412 part: Create B2B TK1 Contract
         And Billing details are confirmed
         Then Form header is "Quote overview"
 
-        When Option "Heeft de klant al getekend?" is On
+        When Option "Heeft de klant al getekend?" "is" "On"
         And "Kanaal ondertekening" selection is "Papier"
         And Quote is signed in "Kontich"
         And "Datum ondertekening" date is "now"
