@@ -15,6 +15,7 @@ import org.junit.Assert;
 import stepdefinitions.dwp.contracts.product_types.ProductTypes;
 
 import java.util.List;
+import java.util.Map;
 
 public class ContractB2BScenario extends RegisteredScenario {
 
@@ -208,9 +209,28 @@ public class ContractB2BScenario extends RegisteredScenario {
     @Given("^B2B Active Contract is$")
     public String createContractB2B(final DataTable quote) throws Throwable {
         accountNumber = "";
+        String productType = null;
+        String isFakeAddress = null;
+        String switchType = null;
+        String meterType = null;
+        String kwMax = null;
 
-        List<QuoteB2B> list = quote.asList(QuoteB2B.class);
-        QuoteB2B quoteB2B = list.get(0);
+        List<Map<String,String>> list = quote.asMaps(String.class,String.class);
+        for (int i = 0; i < list.size(); i++) {
+
+            productType = list.get(i).get("productType");
+            isFakeAddress =list.get(i).get("isFakeAddress");
+            switchType =list.get(i).get("switchType");
+            meterType =list.get(i).get("meterType");
+            kwMax =list.get(i).get("kwMax");
+        }
+
+        QuoteB2B quoteB2B = new QuoteB2B();
+        quoteB2B.setProductType(productType);
+        quoteB2B.setIsFakeAddress(isFakeAddress);
+        quoteB2B.setSwitchType(switchType);
+        quoteB2B.setMeterType(meterType);
+        quoteB2B.setKwMax(kwMax);
 
         ProductTypes productTypes = ProductTypes.valueOf(quoteB2B.getProductType());
 
