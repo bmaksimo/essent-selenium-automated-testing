@@ -563,7 +563,7 @@ public class ViewListChecks extends NavigationElements {
         FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), 10, 2).withMessage("Selected table is empty");
         waiter.until((ViewListTestObject callback) -> CollectionUtils.isNotEmpty(callback.fetchDataSelection(columnName)));
         List<String> cellSelection = viewListModel.fetchDataSelection(columnName);
-        String message = String.format("Value \"%s\" wasn't found in any row of \"%s\" column", columnName);
+        String message = String.format("Value \"%s\" wasn't found in any row of \"%s\" column",value, columnName);
         assertThat(message, cellSelection.get(0).contains(value), is(true));
         logger().debug(String.format("- STEP: Selected List rows have cell value \"%s\" at column \"%s\" - PASSED.",
             value, columnName));
@@ -599,7 +599,7 @@ public class ViewListChecks extends NavigationElements {
                 if (StringUtils.isNumeric(possibleAccountNumbers[i]))
                     return possibleAccountNumbers[i];
             }
-            throw new CucumberException(String.format("Input value \"%s\" didn't contain any numeric substring"));
+            throw new CucumberException(String.format("Input value \"%s\" didn't contain any numeric substring",input));
         }
         if (StringUtils.isNumeric(input))
             return input;
