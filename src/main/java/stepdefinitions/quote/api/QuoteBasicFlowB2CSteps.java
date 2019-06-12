@@ -57,7 +57,6 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 	    this.quoteDetails = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow, meterOpen);
         String retrievedAccountNumber = quoteDetails.getAccountNumber();
         int result = Integer.parseInt(retrievedAccountNumber);
-        result -=1;
         parameterProvider.put("accountNumber", result);
 	    parameterProvider.put("EAN-code", quoteDetails.getEan());
 	    parameterProvider.put("suitecrm-customer-name", quoteDetails.getAccountName());
