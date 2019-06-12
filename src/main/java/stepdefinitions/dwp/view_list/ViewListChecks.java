@@ -619,15 +619,15 @@ public class ViewListChecks extends NavigationElements {
     }
 
     @Then("^\"([^\"]*)\" list (is|is_not) empty$")
-    public void viewIsNotEmpty(String tableTitle, IsIsNot verb) {
+    public void viewIsNotEmpty(String tableTitle, String verb) {
         DefaultTableModel viewTableModel = new ViewListTestObject().getViewTableModel(tableTitle);
         boolean success = false;
-         if (verb.getVerb().equalsIgnoreCase("is")){
+         if (verb.equalsIgnoreCase("is")){
              success = viewTableModel.getRowCount() == 0;
-         }else if (verb.getVerb().equalsIgnoreCase("is not")){
+         }else if (verb.equalsIgnoreCase("is not")){
              success = viewTableModel.getRowCount() != 0;
          }
-        assertThat(String.format(tableTitle + " doesn't exist"), success, is(true));
+        assertThat(String.format(tableTitle + " doesn't exist or comparation is not valid"), success, is(true));
         logger().debug(String.format("- STEP: \"%s\" list is not empty - PASSED.", tableTitle));
     }
 
