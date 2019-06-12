@@ -47,8 +47,8 @@ Feature: NSTA-333: Social tariff (SOCTAR) contract creation
 
         #Step 4 Check the status of "Soctar file import"
         Given Click on "parameter:soctar-file-name" link
-        Then Soctar status is changed to "DONE" within 60 seconds
-        And Soctar type is changed to "Import" within 60 seconds
+        Then Soctar type is changed to "Import" within 60 seconds
+        And Soctar status is changed to "DONE" within 60 seconds
 
         #Step 5. Check the status of Social tariff quote
         When "1st" list element has cell value "parameter:EAN-code" at column "EAN-code"
