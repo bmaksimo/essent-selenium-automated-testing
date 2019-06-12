@@ -647,6 +647,23 @@ public class ViewListChecks extends NavigationElements {
             value, column));
     }
 
+    @And("^Table \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\" within (\\d+) seconds?$")
+    public void viewListContainsValueAtColumn(String table, String value, String column, int seconds) throws Throwable {
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
+        PlusActions scenario = (PlusActions) getScenarioInstance(PlusActions.class);
+
+        FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), seconds, 30);
+        waiter.withMessage(String.format("List element didn't contain any value at column \"%s\"", column));
+        waiter.until((ViewListTestObject callback) -> {
+            scenario.checkPlusMenu(plusMenuItem);
+            return !callback.fetchColumnData(table, column)
+                .stream().filter(element -> element.contains(inputValue)).collect(Collectors.toList()).isEmpty();
+        });
+
+        logger().debug(String.format("- STEP: Table \"%s\" does not contain value \"%s\" at column \"%s\".", table,
+            value, column));
+    }
+
     @And("^Table \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\"$")
     public void viewListContainsValueAtColumn(String table, String value, String column) throws Throwable {
         ViewListTestObject viewListModel = new ViewListTestObject();

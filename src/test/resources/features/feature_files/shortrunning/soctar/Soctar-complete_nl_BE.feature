@@ -43,12 +43,12 @@ Feature: NSTA-333: Social tariff (SOCTAR) contract creation
 
         #Step 3 Check the status of "Soctar file upload"
         When Plus menu is "Contracting -> Soctar -> Sociale tariefbatches"
-        Then "1st" list element has cell value "parameter:soctar-file-name" at column "Batchnaam" within 450 seconds
-        And "1st" list element has cell value "Import Klaar" at column "Type & Status"
+        And Table "Sociaal Tarief batches" contains value "parameter:soctar-file-name" at column "Batchnaam" within 60 seconds
 
         #Step 4 Check the status of "Soctar file import"
         Given Click on "parameter:soctar-file-name" link
-        Then Soctar tariff type and status are "Import" - "DONE"
+        Then Soctar type is changed to "Import" within 60 seconds
+        And Soctar status is changed to "DONE" within 60 seconds
 
         #Step 5. Check the status of Social tariff quote
         When "1st" list element has cell value "parameter:EAN-code" at column "EAN-code"
@@ -59,13 +59,13 @@ Feature: NSTA-333: Social tariff (SOCTAR) contract creation
         When Soctar batch action "CONTRACTEN AANMAKEN OP BASIS VAN OFFERTES" is clicked
         Then Soctar type is changed to "Create Contracts" within 30 seconds
         And "Status" field value is "DONE"
+
         #Step 7. Check if contract has been created
         And "1st" list element has cell value "Verwerkt" at column "Status"
         And "1st" list element has cell value "parameter:start-en-einddatum" at column "Contractnummer & start- en einddatum"
 
         #Step 8 Sent out the confirmation letter
         When Top arrow button is "UP"
-        And Left menu is "contracting-switching"
         And Plus menu is "Contracting -> Soctar -> Sociaal tarief contractlijnen"
         And "EAN-code" input is "parameter:EAN-code"
         Then "1st" List element with value at column "Status & Product" is checked
@@ -75,7 +75,8 @@ Feature: NSTA-333: Social tariff (SOCTAR) contract creation
         #Step 9 Check batch SOCTAR confirmation letter
         When Plus menu is "Contracting -> Soctar -> Sociale tariefbatches"
         And Click on link in "Soctar Confirmation Letters" View List at "1st" row and "Batchnaam" column
-        Then Soctar tariff type and status are "Confirmation" - "DONE"
+        Then Soctar confirmation letters type is changed to "Confirmation" within 60 seconds
+        Then Soctar confirmation letters status is changed to "DONE" within 60 seconds
         When Top arrow button is "UP"
 
         #Step 10 Check if all changes are correct on the customer
@@ -84,7 +85,7 @@ Feature: NSTA-333: Social tariff (SOCTAR) contract creation
 
         #part 1 check - customer status
         And Top action is "Filters"
-        And "Klantnummer" input is "parameter:Klantnummer & Naam"
+        And "Klantnummer" input is "parameter:accountNumber"
         And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
         When Dashboard menu is "Contracten"
         And Table "Contracten" contains value "Verwerkt (Geaccepteerd)" at column "Type & status"
@@ -92,14 +93,16 @@ Feature: NSTA-333: Social tariff (SOCTAR) contract creation
 
         #part 2 check - contract is soctar and start date matches
         And Table "Contracten" contains value "sociaal tarief (SOCTAR)" at column "EAN-codes & Producten"
-        And Table "Contracten" contains value "parameter:start-en-einddatum" at column "Start & Einddatum"
+        And Table "Contracten" contains value "parameter:start-date" at column "Start & Einddatum"
+        And Table "Contracten" contains value "parameter:end-date" at column "Start & Einddatum"
 
         #part 3 check - protected record
         And Click on link in View List at "1st" row and "Nummer & Aanmaakdatum" column polling 20 seconds
         When Plus action of "1" element from "ContractlinesOnContract" and click on "View protected"
 
         And Table "Protected records" contains value "Automatic" at column "Type"
-        And Table "Protected records" contains value "parameter:start-en-einddatum" at column "Start & End Date"
+        And Table "Protected records" contains value "parameter:start-date" at column "Protected Start- & Enddate"
+        And Table "Protected records" contains value "parameter:end-date" at column "Protected Start- & Enddate"
         Then Clicked on sign X
 
         #part 4 check - letter has been sent
