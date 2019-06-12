@@ -22,7 +22,6 @@ import org.openqa.selenium.support.ui.FluentWait;
 import stepdefinitions.dwp.b2b.Marketberichten;
 import stepdefinitions.dwp.navigation.NavigationElements;
 import stepdefinitions.dwp.plus.PlusActions;
-import stepdefinitions.dwp.tables.IsIsNot;
 
 import static com.billinghouse.test_automation.util.dsl.NumericUtil.checkAmount;
 import static org.hamcrest.CoreMatchers.containsString;
@@ -38,7 +37,6 @@ import java.util.stream.Collectors;
 import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkTimeBetween;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.getFormattedEnd;
-import static java.util.function.Predicate.isEqual;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
