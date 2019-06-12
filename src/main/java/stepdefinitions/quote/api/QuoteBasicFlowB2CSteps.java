@@ -55,7 +55,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     public void dataIsPreparedForCreateQuoteRequestFor(String arg1, String meterOpen) throws Throwable {
         this.flow = arg1;
 	    this.quoteDetails = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow, meterOpen);
-        String retrievedAccountNumber = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow, meterOpen).getAccountNumber();
+        String retrievedAccountNumber = quoteDetails.getAccountNumber();
         int result = Integer.parseInt(retrievedAccountNumber);
         result -=1;
         parameterProvider.put("accountNumber", result);

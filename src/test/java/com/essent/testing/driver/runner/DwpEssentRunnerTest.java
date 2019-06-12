@@ -14,4 +14,4 @@ import org.junit.runner.RunWith;
         "junit:target/cucumber-junit-report/allcukes.xml",
         "json:target/cucumber.json"}
 )
-public class EssentRunnerTest {}
+public class DwpEssentRunnerTest {}
