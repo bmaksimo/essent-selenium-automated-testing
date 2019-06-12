@@ -8,10 +8,7 @@ public class SoctarBatchPage extends Component {
     private static final By TYPE_SELECTOR = By.id("type-field");
 
     public void clickOnAction(String actionName) {
-//        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.name(actionName)));
-//        Sleeper.sleepTightInSeconds(60);
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.linkText(actionName)));
-//        seleniumDriver.clickNow(seleniumDriver.findElementWhenPresent(By.name(actionName), ));
         seleniumDriver.waitForRequestsToFinish();
     }
 
