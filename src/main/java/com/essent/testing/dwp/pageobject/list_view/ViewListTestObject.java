@@ -92,8 +92,8 @@ public class ViewListTestObject extends Component implements ViewList {
       if (i < columnCount - 1) columns.append(", ");
     }
     columns.append("]");
-    logger().info("- RESULT: Columns: " + columns.toString());
-    logger().info("- RESULT: Data vector: " + viewTableModel.getDataVector());
+    logger().debug("- RESULT: Columns: " + columns.toString());
+    logger().debug("- RESULT: Data vector: " + viewTableModel.getDataVector());
   }
 
   private List<List> getData(Map viewTable) {
@@ -201,9 +201,9 @@ public class ViewListTestObject extends Component implements ViewList {
   }
 
   public Optional<String> getCellValueAt(int row, String columnName) {
-    logger().info("STEP: JAVASCRIPT_FETCH_DATA");
+    logger().debug("STEP: JAVASCRIPT_FETCH_DATA");
     Map viewTable = executeJavascriptMethod(JS_TR_GET_TABLE_MODEL, new HashMap<>());
-    logger().info(" - RESULT: " + viewTable);
+    logger().debug(" - RESULT: " + viewTable);
     int index = getColumnNameIndex(columnName, viewTable);
     if (index < 0) {
       return Optional.empty();
@@ -226,9 +226,9 @@ public class ViewListTestObject extends Component implements ViewList {
   }
 
   public Optional<String> getValueAt(int row, String columnName, String tableName) {
-    logger().info("STEP: JAVASCRIPT_FETCH_DATA");
+    logger().debug("STEP: JAVASCRIPT_FETCH_DATA");
     DefaultTableModel viewTableModel = getViewTableModel(tableName);
-    logger().info(" - RESULT: Table name: " + tableName);
+    logger().debug(" - RESULT: Table name: " + tableName);
     logTableModel(viewTableModel);
     int column = viewTableModel.findColumn(columnName);
     if (column < 0) return Optional.empty();

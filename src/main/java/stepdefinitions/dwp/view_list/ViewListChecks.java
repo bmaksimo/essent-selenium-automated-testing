@@ -163,7 +163,7 @@ public class ViewListChecks extends NavigationElements {
         assertThat(String.format("View list header \"%s\" didn't appear", header),
             success, is(true));
         parameterProvider.put("current-view-list", header);
-        logger().info(String.format("- STEP: View list header is \"%s\" - PASSED.", header));
+        logger().debug(String.format("- STEP: View list header is \"%s\" - PASSED.", header));
         seleniumDriver.waitForRequestsToFinish();
     }
 
@@ -172,7 +172,7 @@ public class ViewListChecks extends NavigationElements {
         FluentWait<CheckViewListHeader> waiter = waiter(new CheckViewListHeader(), seconds, 5)
             .withMessage(String.format("View list header \"%s\" didn't appear within %s seconds", header, seconds));
         waiter.until((CheckViewListHeader callback) -> callback.test(header));
-        logger().info(String.format("- STEP: View list header is \"%s\" within %s second(s) - PASSED.", header, seconds));
+        logger().debug(String.format("- STEP: View list header is \"%s\" within %s second(s) - PASSED.", header, seconds));
     }
 
     @When("^View List is empty$")
@@ -180,7 +180,7 @@ public class ViewListChecks extends NavigationElements {
         DefaultTableModel viewTableModel = new ViewListTestObject().getViewTableModel();
         boolean success = viewTableModel.getRowCount() == 0;
         assertThat("View Table list is not empty", success, is(true));
-        logger().info("- STEP: View list header is empty - PASSED.");
+        logger().debug("- STEP: View list header is empty - PASSED.");
     }
 
     @Then("^Table \"([^\"]*)\" has matching value \"([^\"]*)\" at column \"([^\"]*)\"$")
@@ -213,7 +213,7 @@ public class ViewListChecks extends NavigationElements {
                 "Table \"%s\" didn't contain value \"%s\" at column \"%s\"", table, value, column);
         assertThat(message, containing.isPresent(), is(true));
         logger()
-            .info(
+            .debug(
                 String.format(
                     "- STEP: Table \"%s\" contains value \"%s\" at column \"%s\" - PASSED.",
                     table, value, column));
@@ -231,7 +231,7 @@ public class ViewListChecks extends NavigationElements {
         FluentWait<ClickTableCellUrl> waiter = waiter(new ClickTableCellUrl(), 30, 5).withMessage(
             String.format("Failed click on link in view list at \"%s\" row and \"%s\" column", ordinal, column));
         waiter.until((ClickTableCellUrl callback) -> callback.test(getColumnIndexListOptions(column, null, ordinal)));
-        logger().info(String.format("- STEP: Click on link in view list at \"%s\" row and \"%s\" column - PASSED.",
+        logger().debug(String.format("- STEP: Click on link in view list at \"%s\" row and \"%s\" column - PASSED.",
             ordinal, column));
     }
 
@@ -241,7 +241,7 @@ public class ViewListChecks extends NavigationElements {
         FluentWait<ClickTableCellUrl> waiter = waiter(new ClickTableCellUrl(), seconds, 5)
             .withMessage(String.format("Failed click on link in view list at \"%s\" row and \"%s\" column within \"%s\" seconds", ordinal, column, seconds));
         waiter.until((ClickTableCellUrl callback) -> callback.test(getColumnIndexListOptions(column, null, ordinal)));
-        logger().info(String.format("- STEP: Click on link in view list at \"%s\" row and \"%s\" column within \"%s\" seconds - PASSED.", ordinal, column, seconds));
+        logger().debug(String.format("- STEP: Click on link in view list at \"%s\" row and \"%s\" column within \"%s\" seconds - PASSED.", ordinal, column, seconds));
         seleniumDriver.waitForRequestsToFinish();
     }
 
@@ -259,7 +259,7 @@ public class ViewListChecks extends NavigationElements {
             .withMessage(String.format("Failed click on link in view list \"%s\" at \"%s\" row and \"%s\" column",
                 viewListName, ordinal, column));
         waiter.until((ClickTableCellUrl callback) -> callback.test(columnIndexListOptions));
-        logger().info(
+        logger().debug(
             String.format("- STEP: Click on link in view list \"%s\" at \"%s\" row and \"%s\" column - PASSED.",
                 viewListName, ordinal, column));
 
@@ -272,7 +272,7 @@ public class ViewListChecks extends NavigationElements {
         FluentWait<ClickTableRowAction> waiter = waiter(new ClickTableRowAction(), 30, 5);
         waiter.withMessage(String.format("Row actions \"%s\" was not clicked", rowAction));
         waiter.until((ClickTableRowAction callback) -> callback.test(options));
-        logger().info(String.format("- STEP: Row actions \"%s\" is clicked - PASSED.", rowAction));
+        logger().debug(String.format("- STEP: Row actions \"%s\" is clicked - PASSED.", rowAction));
     }
 
     @And("^\"([^\"]*)\" list element has cell value \"([^\"]*)\" at column \"([^\"]*)\"$")
@@ -283,7 +283,7 @@ public class ViewListChecks extends NavigationElements {
         waiter.withMessage(String.format("\"%s\" list element value \"%s\" at column \"%s\" was not found", ordinal,
             expectedValue, columnName));
         waiter.until((ViewListTestObject callback) -> callback.containsDataAt(row, expectedValue, columnName));
-        logger().info(String.format("- STEP: \"%s\" list element has cell value \"%s\" at column \"%s\"  - PASSED.",
+        logger().debug(String.format("- STEP: \"%s\" list element has cell value \"%s\" at column \"%s\"  - PASSED.",
             ordinal, expectedValue, columnName));
     }
 
@@ -297,7 +297,7 @@ public class ViewListChecks extends NavigationElements {
             String.format("Table \"%s\" did not contain expected cell value \"%s\" at column \"%s\" on \"%s\" row",
                 tableName, expectedValue, columnName, ordinal));
         waiter.until((ViewListTestObject callback) -> callback.containsCellValue(row, expectedValue, columnName, tableName));
-        logger().info(String.format(
+        logger().debug(String.format(
             "- STEP: Table \"%s\" did contains expected cell value \"%s\" at column \"%s\" on \"%s\" row  - PASSED.",
             tableName, expectedValue, columnName, ordinal));
     }
@@ -318,7 +318,7 @@ public class ViewListChecks extends NavigationElements {
             scenario.checkPlusMenu(plusMenuItem);
             return callback.containsDataAt(row, expectedValue, columnName);
         });
-        logger().info(String.format(
+        logger().debug(String.format(
             "- STEP: \"%s\" list element has cell value \"%s\" at column \"%s\" within \"%s\" seconds  - PASSED.",
             ordinal, expectedValue, columnName, seconds));
     }
@@ -337,7 +337,7 @@ public class ViewListChecks extends NavigationElements {
             loopBack(arrow, dashboardMenu);
             return callback.containsDataAt(row, expectedValue, columnName);
         });
-        logger().info(String.format(
+        logger().debug(String.format(
             "\"- STEP: \"%s\" list element did not have cell value \"%s\" at column \"%s\" within \"%s\" seconds - PASSED.",
             ordinal, expectedValue, columnName, seconds));
     }
@@ -393,7 +393,7 @@ public class ViewListChecks extends NavigationElements {
         assertThat(String.format("Data selection at column \"%s\" is empty", columnName), cellSelection,
             not(hasSize(0)));
         parameterProvider.put(columnName, cellSelection);
-        logger().info(String.format(
+        logger().debug(String.format(
             "- STEP: Cell value(s) from selected row(s) and column \"%s\" is/are checked - PASSED.", columnName));
     }
 
@@ -407,7 +407,7 @@ public class ViewListChecks extends NavigationElements {
             optionalValue.isPresent(), is(true));
         String splitValue = optionalValue.get().split(" ")[0];
         parameterProvider.put(columnName, splitValue);
-        logger().info(String.format("- STEP: \"%s\" list element with value at column \"%s\" is checked - PASSED.",
+        logger().debug(String.format("- STEP: \"%s\" list element with value at column \"%s\" is checked - PASSED.",
             ordinal, columnName));
     }
 
@@ -462,7 +462,7 @@ public class ViewListChecks extends NavigationElements {
             is(true));
         parameterProvider.put(columnName, first.get());
         logger()
-            .info(
+            .debug(
                 String.format(
                     "- STEP: \"%s\" list element with value at column \"%s\" is checked - PASSED.",
                     tableName, columnName));
@@ -495,7 +495,7 @@ public class ViewListChecks extends NavigationElements {
             success, is(true));
 
         parameterProvider.put(columnName, columnData.get(0));
-        logger().info(String.format("- STEP: \"%s\" list element with value at column \"%s\" is checked - PASSED.",
+        logger().debug(String.format("- STEP: \"%s\" list element with value at column \"%s\" is checked - PASSED.",
             tableName, columnName));
 
     }
@@ -514,7 +514,7 @@ public class ViewListChecks extends NavigationElements {
             is(true));
         parameterProvider.put(columnName, cellValue.get());
         logger()
-            .info(
+            .debug(
                 String.format(
                     "- STEP: \"%s\" list element with value at column \"%s\" is checked - PASSED.",
                     tableName, columnName));
@@ -528,7 +528,7 @@ public class ViewListChecks extends NavigationElements {
         String message = String.format("\"%s\" list row didn't contain value \"%s\" at column \"%s\"", ordinal, value,
             columnName);
         assertThat(message, success, is(true));
-        logger().info(String.format("- STEP: \"%s\" list row having cell value \"%s\" at column \"%s\" - PASSED.",
+        logger().debug(String.format("- STEP: \"%s\" list row having cell value \"%s\" at column \"%s\" - PASSED.",
             ordinal, value, columnName));
 
     }
@@ -542,7 +542,7 @@ public class ViewListChecks extends NavigationElements {
         String message = String.format("\"%s\" row list didn't have cell value \"%s\" at column \"%s\"", ordinal,
             expectedValue, columnName);
         assertThat(message, success, is(true));
-        logger().info(String.format(
+        logger().debug(String.format(
             "- STEP: Plus actions at \"%s\" list row having cell value \"%s\" at column \"%s\" are opened - PASSED.",
             ordinal, value, columnName));
     }
@@ -554,7 +554,7 @@ public class ViewListChecks extends NavigationElements {
         String message = String.format("\"%s\" list row(s) didn't have cell value \"%s\" at column \"%s\"", row, value,
             columnName);
         assertThat(message, success, is(true));
-        logger().info(String.format(
+        logger().debug(String.format(
             "- STEP: \"%s\" list row(s) having cell value \"%s\" at column \"%s\" is/are selected - PASSED.", row,
             value, columnName));
     }
@@ -567,7 +567,7 @@ public class ViewListChecks extends NavigationElements {
         List<String> cellSelection = viewListModel.fetchDataSelection(columnName);
         String message = String.format("Value \"%s\" wasn't found in any row of \"%s\" column", columnName);
         assertThat(message, cellSelection.get(0).contains(value), is(true));
-        logger().info(String.format("- STEP: Selected List rows have cell value \"%s\" at column \"%s\" - PASSED.",
+        logger().debug(String.format("- STEP: Selected List rows have cell value \"%s\" at column \"%s\" - PASSED.",
             value, columnName));
     }
 
@@ -575,14 +575,14 @@ public class ViewListChecks extends NavigationElements {
     public void getListAction(String name) throws Throwable {
         boolean success = new GetListAction().test(name);
         assertThat(String.format("List action \"%s\" is undefined.", name), success, is(true));
-        logger().info(String.format("- STEP: List view action is \"%s\" - PASSED.", name));
+        logger().debug(String.format("- STEP: List view action is \"%s\" - PASSED.", name));
     }
 
     @And("^View List element \"([^\"]*)\" is collected as parameter at \"([^\"]*)\" list row$")
     public void collectViewListElementAsParameter(String viewListElement, String ordinal) {
         String parameter = getViewListElementAtRow(viewListElement, ordinal);
         parameterProvider.put(viewListElement, parameter);
-        logger().info(String.format("View List element \"%s\" is collected as parameter at \"%s\" list row",
+        logger().debug(String.format("View List element \"%s\" is collected as parameter at \"%s\" list row",
             viewListElement, ordinal));
     }
 
@@ -628,7 +628,7 @@ public class ViewListChecks extends NavigationElements {
              success = viewTableModel.getRowCount() != 0;
          }
         assertThat(String.format(tableTitle + " doesn't exist"), success, is(true));
-        logger().info(String.format("- STEP: \"%s\" list is not empty - PASSED.", tableTitle));
+        logger().debug(String.format("- STEP: \"%s\" list is not empty - PASSED.", tableTitle));
     }
 
     @And("^Table \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\" within (\\d+) seconds? after clicking on \"([^\"]*)\"$")
@@ -645,7 +645,7 @@ public class ViewListChecks extends NavigationElements {
                 .stream().filter(element -> element.contains(inputValue)).collect(Collectors.toList()).isEmpty();
         });
 
-        logger().info(String.format("- STEP: Table \"%s\" does not contain value \"%s\" at column \"%s\".", table,
+        logger().debug(String.format("- STEP: Table \"%s\" does not contain value \"%s\" at column \"%s\".", table,
             value, column));
     }
 
@@ -678,7 +678,7 @@ public class ViewListChecks extends NavigationElements {
         String message = String.format("Table \"%s\" didn't contain value \"%s\" at column \"%s\"", table, value,
             column);
         assertThat(message, found, not(empty()));
-        logger().info(String.format("- STEP: Table \"%s\" contains value \"%s\" at column \"%s\" - PASSED.", table,
+        logger().debug(String.format("- STEP: Table \"%s\" contains value \"%s\" at column \"%s\" - PASSED.", table,
             value, column));
     }
 
@@ -702,7 +702,7 @@ public class ViewListChecks extends NavigationElements {
             String.format("Table \"%s\" didn't contain check mark at column \"%s\"", table, column);
         assertThat(message, null != checkmark);
         logger()
-            .info(
+            .debug(
                 String.format(
                     "- STEP: Table \"%s\" contains check mark at column \"%s\" - PASSED.",
                     table, column));
@@ -719,7 +719,7 @@ public class ViewListChecks extends NavigationElements {
             column);
         assertThat(message, found, empty());
         logger()
-            .info(
+            .debug(
                 String.format(
                     "- STEP: Table \"%s\" does not contain value \"%s\" at column \"%s\" - PASSED.",
                     table, value, column));

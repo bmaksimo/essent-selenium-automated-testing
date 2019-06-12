@@ -4,6 +4,7 @@ import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
 import com.essent.testing.scenario.RegisteredScenario;
 import cucumber.runtime.CucumberException;
+import groovy.util.logging.Slf4j;
 import org.apache.log4j.Logger;
 
 import java.lang.annotation.Annotation;
@@ -28,10 +29,10 @@ public class ParametersUtil {
     private static <T extends Annotation> String extractParameterName(T t) {
         try {
             Method method = t.getClass().getMethod("name");
-            logger.info("STEP:");
-            logger.info(" - ACTION: EXTRACT_PARAM_NAME");
+            logger.debug("STEP:");
+            logger.debug(" - ACTION: EXTRACT_PARAM_NAME");
             String name = (String) method.invoke(t);
-            logger.info(" - VALUE: " + name);
+            logger.debug(" - VALUE: " + name);
             return name;
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             logger.error(" - ERROR:  Failure when accessing the parameter");
@@ -49,12 +50,12 @@ public class ParametersUtil {
                 try {
                     String parameterName = extractParameterName(outParamAnnotation);
                     Object parameterValue = declaredField.get(registeredScenario);
-                    logger.info("STEP:");
+                    logger.debug("STEP:");
                     if(parameterNames.contains(parameterName)) {
-                        logger.info(" - ACTION: OUT_PARAM_OVERRIDE: Overriding output Parameter" + " '" + parameterName + "': " + (parameterValue == null ? "null" : parameterValue.toString()));
+                        logger.debug(" - ACTION: OUT_PARAM_OVERRIDE: Overriding output Parameter" + " '" + parameterName + "': " + (parameterValue == null ? "null" : parameterValue.toString()));
 
                     } else {
-                        logger.info(" - ACTION: OUT_PARAM_NEW: Output Parameter" + " '" + parameterName + "': " + (parameterValue == null ? "null" : parameterValue.toString()));
+                        logger.debug(" - ACTION: OUT_PARAM_NEW: Output Parameter" + " '" + parameterName + "': " + (parameterValue == null ? "null" : parameterValue.toString()));
                         parameterNames.add(parameterName);
                     }
                     putToParameterProvider.accept(parameterName, parameterValue);
@@ -74,10 +75,10 @@ public class ParametersUtil {
             forEach(field -> {
                 InputParameter annotation = field.getAnnotation(InputParameter.class);
                 Object outputParameter = outParamProvider.apply(annotation.name());
-                logger.info("STEP:");
+                logger.debug("STEP:");
                 try {
                     field.setAccessible(true);
-                    logger.info(" - ACTION: IN_PARAM_ASSIGN_VALUE: Assigning " + (outputParameter == null? "null": outputParameter.toString()) + " to " + field.getDeclaringClass().getName() +"."+field.getName());
+                    logger.debug(" - ACTION: IN_PARAM_ASSIGN_VALUE: Assigning " + (outputParameter == null? "null": outputParameter.toString()) + " to " + field.getDeclaringClass().getName() +"."+field.getName());
                     field.set(registeredScenario, outputParameter);
                 } catch (IllegalAccessException e) {
                     logger.error(" - FAILURE:  Failure accessing the InputParameter '" + annotation.name() + "'");

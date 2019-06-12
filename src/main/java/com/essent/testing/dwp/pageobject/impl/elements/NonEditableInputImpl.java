@@ -17,9 +17,9 @@ public class NonEditableInputImpl implements NonEditableInput {
 
     @Override
     public String getValue() {
-        logger.info("STEP:");
+        logger.debug("STEP:");
         String innerText = element.getAttribute("innerText");
-        logger.info(" - NON_EDITABLE: " + innerText);
+        logger.debug(" - NON_EDITABLE: " + innerText);
         return innerText;
     }
 }

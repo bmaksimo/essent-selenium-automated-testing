@@ -105,7 +105,7 @@ public class QuoteCreatorB2BBase {
             this.upStartDate = PrepareDataForContract.setStartContractDate(path, contractStartDate, contractEndDate, currentContractStartDateInDWP);
 
             if (this.upStartDate.equals("NOT_VALID")) {
-                logger.info("ALL START CONTRACT DATES ARE USED FOR ADDRESS STREET: " + addressStreet + " EAN: " + ean_c + "; PLEASE USE ANOTHER ADDRESS AND EAN");
+                logger.warn("ALL START CONTRACT DATES ARE USED FOR ADDRESS STREET: " + addressStreet + " EAN: " + ean_c + "; PLEASE USE ANOTHER ADDRESS AND EAN");
                 throw new CucumberException("ALL START CONTRACT DATES ARE USED FOR ADDRESS STREET: " + addressStreet + " EAN: " + ean_c + "; PLEASE USE ANOTHER ADDRESS AND EAN");
             }
         }

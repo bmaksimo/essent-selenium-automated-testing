@@ -56,9 +56,9 @@ public class AngularSeleniumPage extends SeleniumPage {
 
     public void waitUntilAngularPageIsLoaded() {
         super.waitForReady();
-        LOG.info("waiting for all angular requests to finish on page at url: " + getDriver().getCurrentUrl());
+        LOG.debug("waiting for all angular requests to finish on page at url: " + getDriver().getCurrentUrl());
         ngWebDriver.waitForAngularRequestsToFinish();
-        LOG.info("all angular requests finished! " + getDriver().getCurrentUrl());
+        LOG.debug("all angular requests finished! " + getDriver().getCurrentUrl());
     }
 
 

@@ -100,7 +100,7 @@ public class OdooCodaSteps extends OdooScenario {
         File downloadedCodaFile = retrieveDownloadedCodaFiles(path).iterator().next();
         String downloadedCodaFilePath = path + downloadedCodaFile.getName();
         parameterProvider.put("codaFile" , downloadedCodaFilePath);
-        logger().info(String.format("- STEP: Generated CODA file is downloaded at \"%s\"", path));
+        logger().debug(String.format("- STEP: Generated CODA file is downloaded at \"%s\"", path));
     }
 
     private Collection<File> retrieveDownloadedCodaFiles(String path) {

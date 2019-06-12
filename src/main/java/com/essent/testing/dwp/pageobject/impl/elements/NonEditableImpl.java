@@ -36,7 +36,7 @@ public class NonEditableImpl extends Component implements NonEditable {
         By.xpath(createQuery(CARD_TEMPLATE.getQuery() + XPATH_INPUT_TEPMPLATE, valuesMapper));
     WebElement webElement = findElementWhenVisible(xpathSelector);
     String innerText = webElement.getAttribute("innerText");
-    logger().info("--NonEditable, element value is: " + innerText);
+    logger().debug("--NonEditable, element value is: " + innerText);
     return innerText;
   }
 

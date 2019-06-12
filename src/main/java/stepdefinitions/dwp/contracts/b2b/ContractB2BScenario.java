@@ -89,7 +89,7 @@ public class ContractB2BScenario extends RegisteredScenario {
 			logger().error("Something went wrong with creation of B2B contract");
 		}
 
-		logger().info("ACCOUNT NUMBER: " + accountNumber);
+		logger().debug("ACCOUNT NUMBER: " + accountNumber);
         parameterProvider.put("accountNumber",accountNumber);
 		return accountNumber;
 	}
@@ -151,7 +151,7 @@ public class ContractB2BScenario extends RegisteredScenario {
 			logger().error("Something went wrong with creation of ACTIVE B2B contract");
 		}
 
-		logger().info("ACCOUNT NUMBER: " + accountNumber);
+		logger().debug("ACCOUNT NUMBER: " + accountNumber);
 		parameterProvider.put("accountNumber", accountNumber);
 		return accountNumber;
 	}
@@ -200,7 +200,7 @@ public class ContractB2BScenario extends RegisteredScenario {
             logger().error("Something went wrong with creation of B2B contract");
         }
 
-        logger().info("ACCOUNT NUMBER: " + accountNumber);
+        logger().debug("ACCOUNT NUMBER: " + accountNumber);
         parameterProvider.put("accountNumber",accountNumber);
         return accountNumber;
     }
@@ -244,7 +244,7 @@ public class ContractB2BScenario extends RegisteredScenario {
 			logger().error("Something went wrong with creation of ACTIVE B2B contract");
 		}
 
-		logger().info("ACCOUNT NUMBER: " + accountNumber);
+		logger().debug("ACCOUNT NUMBER: " + accountNumber);
 		parameterProvider.put("accountNumber", accountNumber);
 		return accountNumber;
 
