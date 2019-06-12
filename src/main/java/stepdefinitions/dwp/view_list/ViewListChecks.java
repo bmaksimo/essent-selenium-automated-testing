@@ -662,7 +662,7 @@ public class ViewListChecks extends NavigationElements {
                 .stream().filter(element -> element.contains(inputValue)).collect(Collectors.toList()).isEmpty();
         });
 
-        logger().info(String.format("- STEP: Table \"%s\" does not contain value \"%s\" at column \"%s\".", table,
+        logger().debug(String.format("- STEP: Table \"%s\" does not contain value \"%s\" at column \"%s\".", table,
             value, column));
     }
 
