@@ -18,6 +18,7 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
+import io.cucumber.datatable.DataTableType;
 import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
 import org.openqa.selenium.By;
@@ -283,9 +284,19 @@ public class QuoteSteps extends DwpScenario {
     @And("^Prepaid advance amounts are collected as numbers$")
     public void collectAdvanceAmountsAsNumbers(final DataTable cardsInfo) throws Throwable {
         seleniumDriver.waitForRequestsToFinish();
-        List<FieldDescriptor> cards = cardsInfo.asList(FieldDescriptor.class);
-        FieldDescriptor electricityAdvAmountField = cards.get(0);
-        FieldDescriptor gasAdvDescriptor = cards.get(1);
+
+        List<Map<String,String>> fieldDescriptors = cardsInfo.asMaps(String.class, String.class);
+
+        FieldDescriptor electricityAdvAmountField = new FieldDescriptor();
+        electricityAdvAmountField.setCardName(fieldDescriptors.get(0).get("cardName"));
+        electricityAdvAmountField.setFieldName(fieldDescriptors.get(0).get("fieldName"));
+        electricityAdvAmountField.setParameterName(fieldDescriptors.get(0).get("parameterName"));
+
+        FieldDescriptor gasAdvDescriptor = new FieldDescriptor();
+        gasAdvDescriptor.setCardName(fieldDescriptors.get(1).get("cardName"));
+        gasAdvDescriptor.setFieldName(fieldDescriptors.get(1).get("fieldName"));
+        gasAdvDescriptor.setParameterName(fieldDescriptors.get(1).get("parameterName"));
+
         BillingDetailsPage billingDetailsPage = new BillingDetailsPage();
         parameterProvider.put(electricityAdvAmountField.getParameterName(), billingDetailsPage.getElectricityAdvancedPaymentAmount(electricityAdvAmountField));
         parameterProvider.put(gasAdvDescriptor.getParameterName(), billingDetailsPage.getGasAdvancedPaymentAmount(gasAdvDescriptor));
