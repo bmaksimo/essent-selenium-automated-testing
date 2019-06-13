@@ -620,9 +620,9 @@ public class ViewListChecks extends NavigationElements {
     public void viewIsNotEmpty(String tableTitle, String verb) {
         DefaultTableModel viewTableModel = new ViewListTestObject().getViewTableModel(tableTitle);
         boolean success = false;
-         if ("is".equalsIgnoreCase(verb)){
+         if (verb.equalsIgnoreCase("is")){
              success = viewTableModel.getRowCount() == 0;
-         }else if ("is not".equalsIgnoreCase(verb)){
+         }else if (verb.equalsIgnoreCase("is_not")){
              success = viewTableModel.getRowCount() != 0;
          }
         assertThat(String.format(tableTitle + " doesn't exist or comparation is not valid"), success, is(true));
