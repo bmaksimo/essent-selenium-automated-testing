@@ -13,6 +13,7 @@ import stepdefinitions.dwp.page_object.CustomerAcceptance;
 import stepdefinitions.dwp.tables.CustomerAddress;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -58,10 +59,13 @@ public class CompanySteps extends DwpScenario {
 
     @And("^Company address is$")
     public void initCustomerAddress(final DataTable address) throws Throwable {
-        List<CustomerAddress> list = address.asList(CustomerAddress.class);
-        CustomerAddress customerAddress = list.get(0);
-        boolean success = new InitialiseCompanyAddress().test(customerAddress);
-        assertThat("Company Address data wasn't initialised.", success, is(true));
+        CompanyDetailsAddressPage companyDetailsAddressPage = new CompanyDetailsAddressPage();
+        List<Map<String,String>> addresses = address.asMaps(String.class, String.class);
+        companyDetailsAddressPage.setAddressNewDatatable(addresses);
+//        List<CustomerAddress> list = address.asList(CustomerAddress.class);
+//        CustomerAddress customerAddress = list.get(0);
+//        boolean success = new InitialiseCompanyAddress().test(customerAddress);
+//        assertThat("Company Address data wasn't initialised.", success, is(true));
     }
 
 

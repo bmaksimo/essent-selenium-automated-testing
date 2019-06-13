@@ -6,6 +6,9 @@ import com.essent.testing.datagenerator.address.StreetGenerator;
 import org.apache.commons.lang3.StringUtils;
 import stepdefinitions.dwp.tables.CustomerAddress;
 
+import java.util.List;
+import java.util.Map;
+
 import static com.essent.automation.autocrat.Action.TYPING;
 import static com.essent.testing.dwp.autocrat.element.quote.B2CQuoteElements.*;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.INPUT;
@@ -56,6 +59,54 @@ public class CompanyDetailsAddressPage extends QuoteCreationGuidedStep {
         if (StringUtils.isNotEmpty(country)) {
             initializeAddress.step(createStep(Action.SELECT).element(DELIVERY_ADDR_COUNTRY.name()).value(country));
         }
+        return execute(initializeAddress);
+    }
+
+    public boolean setAddressNewDatatable(List<Map<String,String>> addresses) {
+        String street = null;
+        String houseNr = null;
+        String houseNrAdd = null;
+        String bus = null;
+        String postalCode = null;
+        String city = null;
+        String country = null;
+
+        for (Map<String,String> address : addresses) {
+            street = "Random".equals(address.get("street")) ? StreetGenerator.getRandomStreetInKontich() : address.get("street");
+            houseNr = address.get("houseNr");
+            houseNrAdd = address.get("houseNrAdd");
+            bus = address.get("bus");
+            postalCode = address.get("postalCode");
+            city = address.get("city");
+            country = address.get("country");
+        }
+
+        Model.Execution initializeAddress = createExecution();
+        initializeAddress.
+            element(DELIVERY_ADDR_STREET.element()).
+            element(DELIVERY_ADDR_HOUSE_NR.element()).
+            element(DELIVERY_ADDR_HOUSE_ADD.element()).
+            element(DELIVERY_ADDR_BUS.element()).
+            element(DELIVERY_ADDR_ZIPCODE.element()).
+            element(DELIVERY_ADDR_CITY.element()).
+            element(DELIVERY_ADDR_COUNTRY.element());
+
+        initializeAddress.
+            step(createStep(TYPING).timeoutInSeconds(3).element(DELIVERY_ADDR_STREET.name()).value(street), INPUT.getSleepInMillis()).
+            step(createStep(TYPING).timeoutInSeconds(3).element(DELIVERY_ADDR_HOUSE_NR.name()).value(houseNr), INPUT.getSleepInMillis()).
+            step(createStep(TYPING).element(DELIVERY_ADDR_HOUSE_ADD.name()).value(houseNrAdd), INPUT.getSleepInMillis());
+
+        if (StringUtils.isNotEmpty(bus)) {
+            initializeAddress.step(createStep(TYPING).element(DELIVERY_ADDR_BUS.name()).value(bus), INPUT.getSleepInMillis());
+        }
+
+        initializeAddress.step(createStep(TYPING).element(DELIVERY_ADDR_ZIPCODE.name()).value(postalCode), INPUT.getSleepInMillis()).
+            step(createStep(TYPING).element(DELIVERY_ADDR_CITY.name()).value(city), INPUT.getSleepInMillis());
+
+        if (StringUtils.isNotEmpty(country)) {
+            initializeAddress.step(createStep(Action.SELECT).element(DELIVERY_ADDR_COUNTRY.name()).value(country));
+        }
+
         return execute(initializeAddress);
     }
 }
