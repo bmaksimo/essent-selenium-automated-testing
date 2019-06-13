@@ -63,23 +63,7 @@ public class CompanyDetailsAddressPage extends QuoteCreationGuidedStep {
     }
 
     public boolean setAddressNewDatatable(List<Map<String,String>> addresses) {
-        String street = null;
-        String houseNr = null;
-        String houseNrAdd = null;
-        String bus = null;
-        String postalCode = null;
-        String city = null;
-        String country = null;
-
-        for (Map<String,String> address : addresses) {
-            street = "Random".equals(address.get("street")) ? StreetGenerator.getRandomStreetInKontich() : address.get("street");
-            houseNr = address.get("houseNr");
-            houseNrAdd = address.get("houseNrAdd");
-            bus = address.get("bus");
-            postalCode = address.get("postalCode");
-            city = address.get("city");
-            country = address.get("country");
-        }
+        address = getCustomerAddressFromDataTable(addresses.get(0));
 
         Model.Execution initializeAddress = createExecution();
         initializeAddress.
@@ -92,21 +76,36 @@ public class CompanyDetailsAddressPage extends QuoteCreationGuidedStep {
             element(DELIVERY_ADDR_COUNTRY.element());
 
         initializeAddress.
-            step(createStep(TYPING).timeoutInSeconds(3).element(DELIVERY_ADDR_STREET.name()).value(street), INPUT.getSleepInMillis()).
-            step(createStep(TYPING).timeoutInSeconds(3).element(DELIVERY_ADDR_HOUSE_NR.name()).value(houseNr), INPUT.getSleepInMillis()).
-            step(createStep(TYPING).element(DELIVERY_ADDR_HOUSE_ADD.name()).value(houseNrAdd), INPUT.getSleepInMillis());
+            step(createStep(TYPING).timeoutInSeconds(3).element(DELIVERY_ADDR_STREET.name()).value(address.getStreet()), INPUT.getSleepInMillis()).
+            step(createStep(TYPING).timeoutInSeconds(3).element(DELIVERY_ADDR_HOUSE_NR.name()).value(Integer.toString(address.getHouseNr())), INPUT.getSleepInMillis()).
+            step(createStep(TYPING).element(DELIVERY_ADDR_HOUSE_ADD.name()).value(address.getHouseNrAdd()), INPUT.getSleepInMillis());
 
-        if (StringUtils.isNotEmpty(bus)) {
-            initializeAddress.step(createStep(TYPING).element(DELIVERY_ADDR_BUS.name()).value(bus), INPUT.getSleepInMillis());
+        if (StringUtils.isNotEmpty(address.getBus())) {
+            initializeAddress.step(createStep(TYPING).element(DELIVERY_ADDR_BUS.name()).value(address.getBus()), INPUT.getSleepInMillis());
         }
 
-        initializeAddress.step(createStep(TYPING).element(DELIVERY_ADDR_ZIPCODE.name()).value(postalCode), INPUT.getSleepInMillis()).
-            step(createStep(TYPING).element(DELIVERY_ADDR_CITY.name()).value(city), INPUT.getSleepInMillis());
+        initializeAddress.step(createStep(TYPING).element(DELIVERY_ADDR_ZIPCODE.name()).value(address.getPostalCode()), INPUT.getSleepInMillis()).
+            step(createStep(TYPING).element(DELIVERY_ADDR_CITY.name()).value(address.getCity()), INPUT.getSleepInMillis());
 
-        if (StringUtils.isNotEmpty(country)) {
-            initializeAddress.step(createStep(Action.SELECT).element(DELIVERY_ADDR_COUNTRY.name()).value(country));
+        if (StringUtils.isNotEmpty(address.getCountry())) {
+            initializeAddress.step(createStep(Action.SELECT).element(DELIVERY_ADDR_COUNTRY.name()).value(address.getCountry()));
         }
 
         return execute(initializeAddress);
+    }
+
+    private CustomerAddress getCustomerAddressFromDataTable(Map<String,String> address) {
+        CustomerAddress customerAddress = new CustomerAddress();
+
+        String street = "Random".equals(address.get("street")) ? StreetGenerator.getRandomStreetInKontich() : address.get("street");
+        customerAddress.setStreet(street);
+        customerAddress.setHouseNr(Integer.parseInt(address.get("houseNr")));
+        customerAddress.setHouseNrAdd(address.get("houseNrAdd"));
+        customerAddress.setBus(address.get("bus"));
+        customerAddress.setPostalCode(address.get("postalCode"));
+        customerAddress.setCity(address.get("city"));
+        customerAddress.setCountry(address.get("country"));
+
+        return customerAddress;
     }
 }
