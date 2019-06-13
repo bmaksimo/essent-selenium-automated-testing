@@ -34,7 +34,7 @@ public class MoveOldAddressSteps extends DwpScenario {
         cmoa.chooseMoveDate(inputValue);
     }
 
-    @And("^Get meter reading plus \"(\\d+)\"kwl from \"(\\d+)\"$")
+    @And("^Get meter reading plus \"([^\"]*)\" kwl from \"([^\"]*)\"$")
     public void getMeterReadingPlusKwl(int num, String rate){
         CreateMoveOAPage cmoa = new CreateMoveOAPage();
         String oldMeterReading = cmoa.getPreviousMeterReading(rate);
