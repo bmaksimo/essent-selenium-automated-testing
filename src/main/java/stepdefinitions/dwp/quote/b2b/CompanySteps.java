@@ -62,10 +62,6 @@ public class CompanySteps extends DwpScenario {
         CompanyDetailsAddressPage companyDetailsAddressPage = new CompanyDetailsAddressPage();
         List<Map<String,String>> addresses = address.asMaps(String.class, String.class);
         companyDetailsAddressPage.setAddressNewDatatable(addresses);
-//        List<CustomerAddress> list = address.asList(CustomerAddress.class);
-//        CustomerAddress customerAddress = list.get(0);
-//        boolean success = new InitialiseCompanyAddress().test(customerAddress);
-//        assertThat("Company Address data wasn't initialised.", success, is(true));
     }
 
 
