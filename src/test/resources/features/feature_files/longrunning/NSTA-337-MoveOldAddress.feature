@@ -88,10 +88,10 @@ Feature: NSTA - 337 Move old address
         And "E-mailadres" input is "petar.perovic@test.com"
 
         And "Datum meteropname" date is "now"
-        And Get meter reading plus "1000"kwl from "1"
+        And Get meter reading plus "1000" kwl from "1"
         And "Meterstand" input is "parameter:meterstand"
 
-        And Get meter reading plus "1000"kwl from "2"
+        And Get meter reading plus "1000" kwl from "2"
         And Low meter reading input is "parameter:meterstand"
         And Low date meter reading date is "now"
 
