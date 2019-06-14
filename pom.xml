@@ -610,25 +610,22 @@
         </dependencies>
       </plugin>
       <plugin>
-        <groupId>net.masterthought</groupId>
-        <artifactId>maven-cucumber-reporting</artifactId>
-        <version>${maven-cucumber-reporting.version}</version>
+        <groupId>com.trivago.rta</groupId>
+        <artifactId>cluecumber-report-plugin</artifactId>
+        <version>1.11.0</version>
         <executions>
           <execution>
-            <id>execution</id>
-            <phase>test</phase>
+            <id>report</id>
+            <phase>post-integration-test</phase>
             <goals>
-              <goal>generate</goal>
+              <goal>reporting</goal>
             </goals>
-            <configuration>
-              <projectName>cucumber-jvm-example</projectName>
-              <outputDirectory>${project.build.directory}/cucumber-html-reports2</outputDirectory>
-              <cucumberOutput>${project.build.directory}/cucumber.json</cucumberOutput>
-              <buildNumber>1</buildNumber>
-              <checkBuildResult>true</checkBuildResult>
-            </configuration>
           </execution>
         </executions>
+        <configuration>
+          <sourceJsonReportDirectory>${project.build.directory}/cucumber-reports</sourceJsonReportDirectory>
+          <generatedHtmlReportDirectory>${project.build.directory}/cucumber-html-reports2/cucumber-html-reports</generatedHtmlReportDirectory>
+        </configuration>
       </plugin>
     </plugins>
     <resources> <!-- include xml and properties files -->
