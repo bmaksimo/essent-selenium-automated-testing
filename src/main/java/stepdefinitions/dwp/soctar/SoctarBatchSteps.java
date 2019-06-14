@@ -16,7 +16,7 @@ public class SoctarBatchSteps extends DwpScenario {
 
     private static String SOCTAR_CONFIRMATION_LETTERS = "SocTar Confirmation Letters";
 
-    @Before("@DWP, @SOCTAR, @E2E")
+    @Before("@DWP or @SOCTAR or @E2E")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }

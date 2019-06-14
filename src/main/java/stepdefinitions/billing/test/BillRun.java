@@ -7,7 +7,7 @@ import com.essent.be.jbilling.api.rest.invoice.RSGetInvoicesForBillingIDs;
 import com.essent.be.jbilling.api.rest.invoice.RSInvoicesForBillingIDsResp;
 import com.essent.testing.client.billing.BillingInvoiceRest;
 import com.essent.testing.scenario.RegisteredScenario;
-import cucumber.api.DataTable;
+import io.cucumber.datatable.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Then;
@@ -26,7 +26,7 @@ public class BillRun extends RegisteredScenario {
 
     private List<BillingInvoice> billingInvoiceCache = new ArrayList<>();
 
-    @Before("@DWP, @CORE, @E2E, @REGRESSION")
+    @Before("@DWP or @CORE or @E2E or @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }

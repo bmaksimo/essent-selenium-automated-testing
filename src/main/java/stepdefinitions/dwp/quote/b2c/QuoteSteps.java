@@ -12,12 +12,13 @@ import com.essent.testing.dwp.pageobject.quote.GuidedStep;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
 import com.essent.testing.util.resource.ResourceUtil;
-import cucumber.api.DataTable;
+import io.cucumber.datatable.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
+import io.cucumber.datatable.DataTableType;
 import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
 import org.openqa.selenium.By;
@@ -48,7 +49,7 @@ public class QuoteSteps extends DwpScenario {
 
     private static final String ROW_INDEX_XPATH = "//input-form-element//autocomplete//ul//li[${rowIndex}]/a/b";
 
-    @Before("@DWP, @E2E, @REGRESSION")
+    @Before("@DWP or @E2E or @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -164,10 +165,9 @@ public class QuoteSteps extends DwpScenario {
     @And("^Customer address is$")
     public void initCustomerAddress(final DataTable address) throws Throwable {
         seleniumDriver.waitForRequestsToFinish();
-        List<CustomerAddress> list = address.asList(CustomerAddress.class);
-        CustomerAddress customerAddress = list.get(0);
-        boolean success = new InitialiseCustomerAddress().test(customerAddress);
-        assertThat("Customer Address data wasn't initialised.", success, is(true));
+        PersonalDetailsAddressPage pdap = new PersonalDetailsAddressPage();
+        List<Map<String,String>> add = address.asMaps(String.class, String.class);
+        pdap.fillInCustomerAddressx(add);
     }
 
     @And("^Customer details are confirmed$")
@@ -284,9 +284,19 @@ public class QuoteSteps extends DwpScenario {
     @And("^Prepaid advance amounts are collected as numbers$")
     public void collectAdvanceAmountsAsNumbers(final DataTable cardsInfo) throws Throwable {
         seleniumDriver.waitForRequestsToFinish();
-        List<FieldDescriptor> cards = cardsInfo.asList(FieldDescriptor.class);
-        FieldDescriptor electricityAdvAmountField = cards.get(0);
-        FieldDescriptor gasAdvDescriptor = cards.get(1);
+
+        List<Map<String,String>> fieldDescriptors = cardsInfo.asMaps(String.class, String.class);
+
+        FieldDescriptor electricityAdvAmountField = new FieldDescriptor();
+        electricityAdvAmountField.setCardName(fieldDescriptors.get(0).get("cardName"));
+        electricityAdvAmountField.setFieldName(fieldDescriptors.get(0).get("fieldName"));
+        electricityAdvAmountField.setParameterName(fieldDescriptors.get(0).get("parameterName"));
+
+        FieldDescriptor gasAdvDescriptor = new FieldDescriptor();
+        gasAdvDescriptor.setCardName(fieldDescriptors.get(1).get("cardName"));
+        gasAdvDescriptor.setFieldName(fieldDescriptors.get(1).get("fieldName"));
+        gasAdvDescriptor.setParameterName(fieldDescriptors.get(1).get("parameterName"));
+
         BillingDetailsPage billingDetailsPage = new BillingDetailsPage();
         parameterProvider.put(electricityAdvAmountField.getParameterName(), billingDetailsPage.getElectricityAdvancedPaymentAmount(electricityAdvAmountField));
         parameterProvider.put(gasAdvDescriptor.getParameterName(), billingDetailsPage.getGasAdvancedPaymentAmount(gasAdvDescriptor));
@@ -423,7 +433,7 @@ public class QuoteSteps extends DwpScenario {
 
 
     @Override
-    @After("@DWP, @E2E, @REGRESSION")
+    @After("@DWP or @E2E or @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }

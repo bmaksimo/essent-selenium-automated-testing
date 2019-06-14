@@ -5,7 +5,7 @@ import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.workflows.MarktBerichtenPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
-import cucumber.api.DataTable;
+import io.cucumber.datatable.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -21,7 +21,7 @@ import java.util.List;
 public class MarketBerichtenSteps extends DwpScenario {
     private static String eanCode = null;
 
-    @Before("@DWP, @REGRESSION")
+    @Before("@DWP or @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -63,7 +63,7 @@ public class MarketBerichtenSteps extends DwpScenario {
     }
 
     @Override
-    @After("@DWP, @REGRESSION")
+    @After("@DWP or @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }
@@ -118,7 +118,7 @@ public class MarketBerichtenSteps extends DwpScenario {
 
     @Then("^Check marktbericht$")
     public void checkMarktbericht(final DataTable dbTable) {
-        List<List<String>> info = dbTable.raw();
+        List<List<String>> info = dbTable.asLists();
         String ean = parameterProvider.getValueOrParameterAsString(info.get(1).get(0));
         String modul = info.get(1).get(1);
         String date = info.get(1).get(2);

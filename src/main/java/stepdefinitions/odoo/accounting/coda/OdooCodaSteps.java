@@ -25,7 +25,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 public class OdooCodaSteps extends OdooScenario {
-    @Before("@ODOO, @E2E, @REGRESSION")
+    @Before("@ODOO or @E2E or @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -123,7 +123,7 @@ public class OdooCodaSteps extends OdooScenario {
 
 
     @Override
-    @After("@ODOO, @E2E, @REGRESSION")
+    @After("@ODOO or @E2E or @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }

@@ -42,7 +42,7 @@ public class ConsumptionSteps extends DwpScenario {
     private static final String PATH = "/xml/";
     private static final String CONSUMPTION_FILE = "consumption.xml";
 
-    @Before("@DWP, @E2E, @REGRESSION")
+    @Before("@DWP or @E2E or @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -209,7 +209,7 @@ public class ConsumptionSteps extends DwpScenario {
     }
 
     @Override
-    @After("@DWP, @E2E, @REGRESSION")
+    @After("@DWP or @E2E or @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }

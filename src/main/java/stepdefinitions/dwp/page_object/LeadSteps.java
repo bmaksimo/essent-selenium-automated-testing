@@ -3,7 +3,7 @@ package stepdefinitions.dwp.page_object;
 import com.essent.testing.dwp.pageobject.guided_flow.lead_create.NewLeadPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.leads.LeadsPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
-import cucumber.api.DataTable;
+import io.cucumber.datatable.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -12,10 +12,11 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 import java.util.List;
+import java.util.Map;
 
 public class LeadSteps extends DwpScenario {
 
-    @Before("@DWP, @REGRESSION")
+    @Before("@DWP or @REGRESSION")
     public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
     }
@@ -33,7 +34,7 @@ public class LeadSteps extends DwpScenario {
     public void insertCompanyNameForCreatingLead(DataTable dbTabel) {
         seleniumDriver.waitForRequestsToFinish();
         NewLeadPage leadPage = new NewLeadPage();
-        List<List<String>> db = dbTabel.raw();
+        List<Map<String,String>> db = dbTabel.asMaps(String.class,String.class);
         leadPage.createLead(db);
         seleniumDriver.waitForRequestsToFinish();
     }
@@ -47,7 +48,7 @@ public class LeadSteps extends DwpScenario {
     }
 
     @Override
-    @After("@DWP, @REGRESSION")
+    @After("@DWP or @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }

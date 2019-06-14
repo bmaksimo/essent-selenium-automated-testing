@@ -4,7 +4,7 @@ import com.billinghouse.random.RandomUser;
 import com.essent.testing.dwp.pageobject.impl.quote.CompanyDetailsAddressPage;
 import com.essent.testing.dwp.pageobject.impl.quote.ContactDetailsPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
-import cucumber.api.DataTable;
+import io.cucumber.datatable.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -13,6 +13,7 @@ import stepdefinitions.dwp.page_object.CustomerAcceptance;
 import stepdefinitions.dwp.tables.CustomerAddress;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -33,7 +34,7 @@ public class CompanySteps extends DwpScenario {
         }
     }
 
-    @Before("@DWP, @E2E, @REGRESSION")
+    @Before("@DWP or @E2E or @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -58,10 +59,9 @@ public class CompanySteps extends DwpScenario {
 
     @And("^Company address is$")
     public void initCustomerAddress(final DataTable address) throws Throwable {
-        List<CustomerAddress> list = address.asList(CustomerAddress.class);
-        CustomerAddress customerAddress = list.get(0);
-        boolean success = new InitialiseCompanyAddress().test(customerAddress);
-        assertThat("Company Address data wasn't initialised.", success, is(true));
+        CompanyDetailsAddressPage companyDetailsAddressPage = new CompanyDetailsAddressPage();
+        List<Map<String,String>> addresses = address.asMaps(String.class, String.class);
+        companyDetailsAddressPage.setAddressNewDatatable(addresses);
     }
 
 
@@ -74,7 +74,7 @@ public class CompanySteps extends DwpScenario {
     }
 
     @Override
-    @After("@DWP, @E2E, @REGRESSION")
+    @After("@DWP or @E2E or @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }

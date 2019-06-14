@@ -4,7 +4,7 @@ import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.list_view.ViewListTestObject;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
-import cucumber.api.DataTable;
+import io.cucumber.datatable.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -22,7 +22,6 @@ import org.openqa.selenium.support.ui.FluentWait;
 import stepdefinitions.dwp.b2b.Marketberichten;
 import stepdefinitions.dwp.navigation.NavigationElements;
 import stepdefinitions.dwp.plus.PlusActions;
-import stepdefinitions.dwp.tables.IsIsNot;
 
 import static com.billinghouse.test_automation.util.dsl.NumericUtil.checkAmount;
 import static org.hamcrest.CoreMatchers.containsString;
@@ -38,7 +37,6 @@ import java.util.stream.Collectors;
 import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkTimeBetween;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.getFormattedEnd;
-import static java.util.function.Predicate.isEqual;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -151,7 +149,7 @@ public class ViewListChecks extends NavigationElements {
         return columnIndexListOptions;
     }
 
-    @Before("@DWP, @CORE, @E2E, @REGRESSION, @API")
+    @Before("@DWP or @CORE or @E2E or @REGRESSION or @API")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -565,7 +563,7 @@ public class ViewListChecks extends NavigationElements {
         FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), 10, 2).withMessage("Selected table is empty");
         waiter.until((ViewListTestObject callback) -> CollectionUtils.isNotEmpty(callback.fetchDataSelection(columnName)));
         List<String> cellSelection = viewListModel.fetchDataSelection(columnName);
-        String message = String.format("Value \"%s\" wasn't found in any row of \"%s\" column", columnName);
+        String message = String.format("Value \"%s\" wasn't found in any row of \"%s\" column", value, columnName);
         assertThat(message, cellSelection.get(0).contains(value), is(true));
         logger().debug(String.format("- STEP: Selected List rows have cell value \"%s\" at column \"%s\" - PASSED.",
             value, columnName));
@@ -601,7 +599,7 @@ public class ViewListChecks extends NavigationElements {
                 if (StringUtils.isNumeric(possibleAccountNumbers[i]))
                     return possibleAccountNumbers[i];
             }
-            throw new CucumberException(String.format("Input value \"%s\" didn't contain any numeric substring"));
+            throw new CucumberException(String.format("Input value \"%s\" didn't contain any numeric substring", input));
         }
         if (StringUtils.isNumeric(input))
             return input;
@@ -619,15 +617,15 @@ public class ViewListChecks extends NavigationElements {
     }
 
     @Then("^\"([^\"]*)\" list (is|is_not) empty$")
-    public void viewIsNotEmpty(String tableTitle, IsIsNot verb) {
+    public void viewIsNotEmpty(String tableTitle, String verb) {
         DefaultTableModel viewTableModel = new ViewListTestObject().getViewTableModel(tableTitle);
         boolean success = false;
-         if (verb.getVerb().equalsIgnoreCase("is")){
+         if (verb.equalsIgnoreCase("is")){
              success = viewTableModel.getRowCount() == 0;
-         }else if (verb.getVerb().equalsIgnoreCase("is not")){
+         }else if (verb.equalsIgnoreCase("is_not")){
              success = viewTableModel.getRowCount() != 0;
          }
-        assertThat(String.format(tableTitle + " doesn't exist"), success, is(true));
+        assertThat(String.format(tableTitle + " doesn't exist or comparation is not valid"), success, is(true));
         logger().debug(String.format("- STEP: \"%s\" list is not empty - PASSED.", tableTitle));
     }
 
@@ -790,7 +788,7 @@ public class ViewListChecks extends NavigationElements {
     }
 
     @Override
-    @After("@DWP, @CORE, @E2E, @REGRESSION")
+    @After("@DWP or @CORE or @E2E or @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }

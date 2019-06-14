@@ -24,7 +24,7 @@ public class DocumentsMenu extends NavigationElements {
     }
   }
 
-    @Before("@DWP, @CORE, @E2E, @REGRESSION")
+    @Before("@DWP or @CORE or @E2E or @REGRESSION")
     public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
     }
@@ -37,7 +37,7 @@ public class DocumentsMenu extends NavigationElements {
     }
 
     @Override
-    @After("@DWP, @CORE, @E2E, @REGRESSION")
+    @After("@DWP or @CORE or @E2E or @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }

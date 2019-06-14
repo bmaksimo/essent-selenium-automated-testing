@@ -70,6 +70,7 @@ public class ParameterProvider {
             return null;
         }
         log.debug(" - RESULT: Registered global parameter '" + key + "' = " + value);
+        log.info("Current parameters in context: " + this.toString());
         return parameters.put(key, value);
     }
 

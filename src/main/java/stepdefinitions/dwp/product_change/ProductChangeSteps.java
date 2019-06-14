@@ -10,7 +10,7 @@ import cucumber.api.java.en.And;
 
 public class ProductChangeSteps extends DwpScenario {
 
-    @Before("@DWP, @E2E, @REGRESSION, @B2C")
+    @Before("@DWP or @E2E or @REGRESSION or @B2C")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -24,7 +24,7 @@ public class ProductChangeSteps extends DwpScenario {
     }
 
     @Override
-    @After("@DWP, @E2E, @REGRESSION, @B2C")
+    @After("@DWP or @E2E or @REGRESSION or @B2C")
     public void tearDown() {
         super.tearDown();
     }

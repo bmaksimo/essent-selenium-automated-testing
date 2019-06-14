@@ -12,7 +12,7 @@ import cucumber.api.java.en.Given;
 import static org.junit.Assert.assertNotNull;
 
 public class OdooGenericSteps extends OdooScenario {
-    @Before("@ODOO, @E2E, @REGRESSION")
+    @Before("@ODOO or @E2E or @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -33,7 +33,7 @@ public class OdooGenericSteps extends OdooScenario {
         login(username);
     }
 
-    @After("@ODOO, @E2E, @REGRESSION")
+    @After("@ODOO or @E2E or @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }

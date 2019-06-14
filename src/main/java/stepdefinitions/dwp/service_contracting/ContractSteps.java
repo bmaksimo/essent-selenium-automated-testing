@@ -10,7 +10,7 @@ import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.deta
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.service.ServicePage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
-import cucumber.api.DataTable;
+import io.cucumber.datatable.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -24,7 +24,7 @@ import java.util.List;
 public class ContractSteps extends DwpScenario {
     private String amount;
 
-    @Before("@DWP, @REGRESSION")
+    @Before("@DWP or @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -59,7 +59,7 @@ public class ContractSteps extends DwpScenario {
     }
 
     @Override
-    @After("@DWP, @REGRESSION")
+    @After("@DWP or @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }
@@ -140,7 +140,7 @@ public class ContractSteps extends DwpScenario {
 
     @And("^New move customer address is$")
     public void newMoveCustomerAddressIs(final DataTable dbTable) {
-        List<List<String>> address = dbTable.raw();
+        List<List<String>> address = dbTable.asLists();
         MoveInPage mip = new MoveInPage();
         mip.setNewMoveAddress(address.get(1).get(0),address.get(1).get(1),address.get(1).get(4),address.get(1).get(5));
     }
@@ -199,7 +199,7 @@ public class ContractSteps extends DwpScenario {
 
     @Then("^Check customer information$")
     public void checkProspectCustomerInformation(final DataTable dbTable) {
-        List<List<String>> info = dbTable.raw();
+        List<List<String>> info = dbTable.asLists();
         DetailsPage dp = new DetailsPage();
         String address = dp.getAddress();
         Assert.assertEquals("Actual address differs from expected",address.replaceAll("\n"," "),info.get(1).get(0));
@@ -219,7 +219,7 @@ public class ContractSteps extends DwpScenario {
     @Then("^Check contract$")
     public void checkContract(final DataTable dbTable) {
         ContractPage cp = new ContractPage();
-        List<List<String>> info = dbTable.raw();
+        List<List<String>> info = dbTable.asLists();
         String type = info.get(1).get(0);
         String status = info.get(1).get(1);
         String date = toDwpEndDate(parameterProvider.getValueOrParameterAsString(info.get(1).get(2)));

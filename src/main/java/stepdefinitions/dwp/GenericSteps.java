@@ -25,7 +25,7 @@ import static org.junit.Assert.assertNotNull;
 public class GenericSteps extends DwpScenario {
 
 
-    @Before("@DWP, @CORE, @E2E, @REGRESSION, @API")
+    @Before("@DWP or @CORE or @E2E or @REGRESSION or @API")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -60,7 +60,7 @@ public class GenericSteps extends DwpScenario {
 
     }
 
-    @After("@DWP, @CORE, @E2E, @REGRESSION")
+    @After("@DWP or @CORE or @E2E or @REGRESSION")
     public void tearDown() {
         tidyUp(seleniumDriver);
     }

@@ -13,13 +13,13 @@ public class JBillingProcessSteps extends JBillingScenario {
 
     String invoiceDate;
 
-    @Before("@B2B,@JBILLING @REGRESSION")
+    @Before("@JBILLING or @B2B or @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
 
     @Override
-    @After("@B2B,@JBILLING @REGRESSION")
+    @After("@JBILLING or @B2B or @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }

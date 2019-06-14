@@ -11,7 +11,7 @@ import static com.essent.testing.database.DBUtility.switchSuiteCrmStatusExternal
 public class DatabaseSteps extends RegisteredScenario {
 
 
-    @Before("@DWP, @CORE, @E2E, @REGRESSION, @DB-CORE")
+    @Before("@DWP or @CORE or @E2E or @REGRESSION or @DB-CORE")
     public void setUp(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }

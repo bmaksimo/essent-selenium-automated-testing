@@ -17,7 +17,7 @@ import static org.hamcrest.Matchers.is;
 
 public class EndOfContractSteps extends DwpScenario {
 
-    @Before("@DWP, @E2E, @REGRESSION")
+    @Before("@DWP or @E2E or @REGRESSION")
     public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
     }
@@ -62,7 +62,7 @@ public class EndOfContractSteps extends DwpScenario {
     }
 
     @Override
-    @After("@DWP, @E2E, @REGRESSION")
+    @After("@DWP or @E2E or @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }

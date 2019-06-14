@@ -17,7 +17,7 @@ import static org.hamcrest.Matchers.is;
 
 public class ParametersSupport extends RegisteredScenario {
 
-  @Before("@DWP, @CORE, @B2C, @E2E, @REGRESSION")
+  @Before("@DWP or @CORE or @B2C or @E2E or @REGRESSION")
   public void setUp(Scenario scenario) {
     registerActiveScenario(scenario);
   }

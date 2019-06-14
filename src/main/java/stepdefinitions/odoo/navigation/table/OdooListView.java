@@ -4,7 +4,7 @@ import com.essent.automation.util.Sleeper;
 import com.essent.testing.odoo.pageobject.elements.ListView;
 import com.essent.testing.odoo.pageobject.impl.elements.DefaultListView;
 import com.essent.testing.odoo.scenario.OdooScenario;
-import cucumber.api.DataTable;
+import io.cucumber.datatable.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -25,7 +25,7 @@ public class OdooListView extends OdooScenario  {
     private static final String TABLE_CELL_SELECTOR_TEMPLATE = "//table[@class='oe_list_content'][1]//tbody//tr[${rowIndex}]//td[@data-field='${key}'][1]";
 
 
-    @Before("@ODOO, @E2E, @REGRESSION")
+    @Before("@ODOO or @E2E or @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
     }
@@ -50,7 +50,7 @@ public class OdooListView extends OdooScenario  {
 
     @When("^Advanced search is$")
     public void setAdvancedSearchFilter(DataTable dbTable) {
-        List<List<String>> list = dbTable.raw();
+        List<List<String>> list = dbTable.asLists();
         String searchParameter = parameterProvider.getValueOrParameterAsString(list.get(1).get(2));
         AdvancedSearch advancedSearch = new AdvancedSearch(list.get(1).get(0), list.get(1).get(1), searchParameter);
         awaitOdooRequestToFinish(10);
@@ -95,7 +95,7 @@ public class OdooListView extends OdooScenario  {
     }
 
     @Override
-    @After("@ODOO, @E2E, @REGRESSION")
+    @After("@ODOO or @E2E or @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }

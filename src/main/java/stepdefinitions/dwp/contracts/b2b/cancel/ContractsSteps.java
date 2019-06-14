@@ -19,6 +19,8 @@ import org.openqa.selenium.By;
 import stepdefinitions.dwp.page_object.CustomerAcceptance;
 import stepdefinitions.dwp.tables.CustomerStatus;
 
+import java.util.Arrays;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -29,7 +31,7 @@ public class ContractsSteps extends DwpScenario{
 
     private String eanCodeInput = null;
 
-    @Before("@DWP, @REGRESSION, @API")
+    @Before("@DWP or @REGRESSION or @API")
     public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
     }
@@ -72,7 +74,7 @@ public class ContractsSteps extends DwpScenario{
     }
 
     @Override
-    @After("@DWP, @REGRESSION")
+    @After("@DWP or @REGRESSION")
     public void tearDown() {
         super.tearDown();
     }
@@ -209,8 +211,9 @@ public class ContractsSteps extends DwpScenario{
     }
 
     @Then("^Start Date \"([^\"]*)\" is \"([^\"]*)\" day bigger than End Date \"([^\"]*)\"$")
-    public void compareStartAndEndDate(String startDate, long expectedRange, String endDate) {
+    public void compareStartAndEndDate(String startDate, String ex, String endDate) {
 
+        String[] expectedRange = ex.split(" or ");
         String sd = parameterProvider.getValueOrParameterAsString(startDate);
         String ed = parameterProvider.getValueOrParameterAsString(endDate);
 
@@ -218,7 +221,8 @@ public class ContractsSteps extends DwpScenario{
         parameterProvider.put("endDate", endDate);
 
         long actualRange = ContractPage.rangeDates(sd, ed);
-        assertThat(String.format("Start date \"%s\" differs from the end date \"%s\" by 1 year ", actualRange, expectedRange), actualRange, equalTo(expectedRange));
+        String ar = Long.toString(actualRange);
+        Assert.assertTrue(String.format("Start date \"%s\" differs from the end date \"%s\" by more than 1 year ", sd, ed), Arrays.asList(expectedRange).contains(ar));
     }
 
 
