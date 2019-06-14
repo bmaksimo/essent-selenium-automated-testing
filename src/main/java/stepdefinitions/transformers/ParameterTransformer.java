@@ -56,10 +56,6 @@ final class ParameterTransformer implements ParameterByTypeTransformer {
             return null;
         }
 
-//        if (String.class.equals(toValueClass) || Object.class.equals(toValueClass)) {
-//            return checkAndExpandDate(fromValue);
-//        }
-
         if (BigInteger.class.equals(toValueClass)) {
             return new BigInteger(fromValue);
         }
