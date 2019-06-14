@@ -12,7 +12,8 @@ import org.junit.runner.RunWith;
     plugin = { "pretty",
         "html:target/cucumber-html-report",
         "junit:target/cucumber-junit-report/allcukes.xml",
-        "json:target/cucumber.json"}
+        "json:target/cucumber-reports/cucumberlong.json"
+    }
 )
 public class EssentLongRunningParallelRunner {}
 
