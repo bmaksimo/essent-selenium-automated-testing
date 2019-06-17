@@ -106,7 +106,7 @@ Feature: NSTA-344:Payment Plan
         And Invoice checkbox with key "InvoicesOnAccountOpenBalance" is clicked
         And List option is "AANVRAAG AFBETALINGSPLAN"
 
-        And Input in "Type afbetalingsplan" is "Per schijf"
+        And Input in "Type afbetalingsplan" is "Per bedrag"
         And Input in "Periode schijven" is "Maandelijks"
         And "Bedrag eerste afbetalingsschijf" input is "50"
         And "Bedrag andere afbetalingsschijven" input is "50"
