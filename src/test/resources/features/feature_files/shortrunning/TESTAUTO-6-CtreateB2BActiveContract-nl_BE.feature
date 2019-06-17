@@ -2,13 +2,13 @@
 @B2B
 @REGRESSION
 @BUSINESS-DESK
-Feature: NUAT-3884: Copy contract
+Feature: TESTAUTO-6 Create new B2B active contract through api
 
     Background:
         Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
 
-    @NUAT-3884
-    Scenario: Copy Contract
+    @TESTAUTO-6
+    Scenario: Create a B2B Up active contract
         When Left menu is "sales-marketing"
         And Top menu item is "Klanten"
         And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
