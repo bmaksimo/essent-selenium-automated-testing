@@ -30,5 +30,5 @@ Feature: NUAT-490: Handle Task For Cancel - nl_BE
         And "Klantnummer" input is "parameter:contractNumber" waiting for 10 seconds
         And Click on link in View List at "1st" row and "Klantnummer & Naam" column waiting for 60 seconds
         And Dashboard menu is "Service" waiting for 100 seconds
-        Then Table "Taken" contains value "Marktberichten - Annulatie" at column "Naam & Type & Subtype" waiting for 20 seconds
+        Then Table "Taken" contains value "market_messaging - cancellation" at column "Naam & Type & Subtype" waiting for 20 seconds
         And Table "Taken" contains value "Afgehandeld" at column "Status" waiting for 20 seconds
