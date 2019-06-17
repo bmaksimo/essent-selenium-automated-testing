@@ -18,15 +18,4 @@ Feature: NUAT-3884: Copy contract
 
         When Dashboard menu is "Contracten"
 
-        And Find "Actief" contract
-        And Plus action of "1" element from "ContractsOnAccount" and click on "Kopie contract"
-        And "Testing" turn on
-        And Input in "Mystery switch" is "Hijacked"
-        And "EAN-code" input is "parameter:contractEanCode"
-        And "Module" selection is "START ACCESS"
-        And "Label" selection is "Supplier Switch after Mystery Switch"
-        And Save changes
-        And Sleep for 30 seconds
-        Then View list header is "Contractlijnen"
-        And Table "Contractlijnen" contains value "parameter:contractEanCode" at column "EAN-code & Metertype & Configuratie"
-
+        Then Find "Actief" contract
