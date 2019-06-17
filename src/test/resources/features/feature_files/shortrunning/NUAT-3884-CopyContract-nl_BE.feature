@@ -17,5 +17,4 @@ Feature: NUAT-3884: Copy contract
         Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
 
         When Dashboard menu is "Contracten"
-
         Then Find "Actief" contract
