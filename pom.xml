@@ -590,7 +590,7 @@
           <excludes>
             <exclude>**/*Test*.class</exclude>
           </excludes>
-          <forkCount>20</forkCount>
+          <forkCount>5</forkCount>
           <reuseForks>false</reuseForks>
         </configuration>
         <version>${maven-surefire-plugin.version}</version>
