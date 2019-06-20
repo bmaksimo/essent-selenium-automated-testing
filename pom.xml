@@ -402,38 +402,6 @@
               </dependency>
             </dependencies>
           </plugin>
-          <!--<plugin>-->
-            <!--<groupId>org.apache.maven.plugins</groupId>-->
-            <!--<artifactId>maven-antrun-plugin</artifactId>-->
-            <!--<version>${maven-antrun-plugin.version}</version>-->
-            <!--<executions>-->
-              <!--<execution>-->
-                <!--<id>test-reports</id>-->
-                <!--<phase>verify</phase>-->
-                <!--<configuration>-->
-                  <!--<target>-->
-                    <!--<junitreport todir="${project.build.directory}/failsafe-reports">-->
-                      <!--<fileset dir="${project.build.directory}/failsafe-reports">-->
-                        <!--<include name="*.xml" />-->
-                      <!--</fileset>-->
-                      <!--<report format="frames"-->
-                              <!--todir="${project.build.directory}/failsafe-reports" />-->
-                    <!--</junitreport>-->
-                  <!--</target>-->
-                <!--</configuration>-->
-                <!--<goals>-->
-                  <!--<goal>run</goal>-->
-                <!--</goals>-->
-              <!--</execution>-->
-            <!--</executions>-->
-            <!--<dependencies>-->
-              <!--<dependency>-->
-                <!--<groupId>org.apache.ant</groupId>-->
-                <!--<artifactId>ant-junit</artifactId>-->
-                <!--<version>${ant-junit.version}</version>-->
-              <!--</dependency>-->
-            <!--</dependencies>-->
-          <!--</plugin>-->
         </plugins>
       </build>
     </profile>
