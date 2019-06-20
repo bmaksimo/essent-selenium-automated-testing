@@ -2,14 +2,14 @@
 @DWP
 @B2C
 @ALL
-Feature: NSTA - 337 Move old address
+Feature: TESTAUTO - 4 Move old address  - Gas ean
 
     Background:
 
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
-    @NSTA-337
-    Scenario: Move old address
+    @TESTAUTO-4
+    Scenario: Move old address - Gas
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
@@ -26,7 +26,7 @@ Feature: NSTA - 337 Move old address
         Then Form header is "Select package & fuel type"
 
         When Package is "Vast"
-        And Checkbox "Gas Fix B2C (TC1)" is Unchecked
+        And Checkbox "Electricity Fix B2C (TC1)" is Unchecked
         And Kortingen is "50_part"
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
@@ -76,7 +76,6 @@ Feature: NSTA - 337 Move old address
         And Communication channel is "E-mail"
         And Reason of move "Normal move"
         And Move date is "now"
-
         And Options "Is de nieuwe bewoner de eigenaar?" "is" "On"
         And "De nieuwe bewoner is" selection is "Particulier"
         And "Aanspreking" selection is "Meneer"
@@ -90,10 +89,6 @@ Feature: NSTA - 337 Move old address
         And "Datum meteropname" date is "now"
         And Get meter reading plus "1000" kwl from "1"
         And "Meterstand" input is "parameter:meterstand"
-
-        And Get meter reading plus "1000" kwl from "2"
-        And Low meter reading input is "parameter:meterstand"
-        And Low date meter reading date is "now"
 
         And Options "Push through incomplete move?" "is" "On"
 
@@ -139,4 +134,3 @@ Feature: NSTA - 337 Move old address
         Then Check contract
             | type |         status          | start date |              EAN             |      product      |
             | GLN  |  Verwerkt (Geaccepteerd)|  now       | parameter:EAN-code-generated | parameter:product |
-

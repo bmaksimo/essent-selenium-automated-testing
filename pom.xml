@@ -287,12 +287,12 @@
           <!--<parallel>both</parallel>-->
           <!--<threadCount>4</threadCount>-->
           <includes>
-            <include>**/*ParallelRunner.class</include>
+            <include>**/*Runner.class</include>
           </includes>
           <excludes>
             <exclude>**/*Test*.class</exclude>
           </excludes>
-          <forkCount>10</forkCount>
+          <forkCount>5</forkCount>
           <reuseForks>false</reuseForks>
         </configuration>
         <version>${maven-surefire-plugin.version}</version>

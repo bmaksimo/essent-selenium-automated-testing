@@ -55,7 +55,7 @@ Feature: NUAT-417: Payment Plan creation/reversal
         And View list header is "Openstaande facturen"
         And Invoice checkbox with key "InvoicesOnAccountOpenBalance" is clicked
         And List option is "AANVRAAG AFBETALINGSPLAN"
-        And Input in "Type afbetalingsplan" is "Bedrag"
+        And Input in "Type afbetalingsplan" is "Per schijf"
         And Input in "Periode schijven" is "Maandelijks"
         And "Startdatum" date is "now"
         And "Aantal schijven" input is "5"
