@@ -26,7 +26,6 @@ public class JsTestRegistry {
   public static final String JS_TR_GET_LIST_ACTION = "TrGetListAction";
   public static final String JS_TR_SELECT_LIST_ROW = "TrSelectListRow";
   public static final String JS_TR_OPEN_LIST_PLUS_ACTIONS = "TrOpenListPlusActions";
-  public static final String JS_TR_CHECK_FORM_HEADER = "TrCheckFormHeader";
   public static final String JS_TR_EAN_CHECK_BOX = "TrEanCheckBox";
   public static final String JS_TR_SUBMIT_FORM = "TrSubmitForm";
   public static final String JS_TR_CLICK_TOGGLE_INPUT = "TrClickToggleInput";
@@ -34,11 +33,8 @@ public class JsTestRegistry {
   public static final String JS_TR_APPLY_MULTIPLE_FILTER_INPUT = "TrApplyMultipleFilterInput";
   public static final String JS_TR_CHECK_MODAL_DIALOG = "TrCheckModalDialog";
   public static final String JS_TR_IS_NEXT_BUTTON_ENABLED = "TrIsNextButtonEnabled";
-  public static final String JS_TR_GET_COLUMN_INDEX_LIST = "TrGetColumnIndexList";
-  public static final String JS_TR_SELECT_EAN_CODE = "TrSelectEanCode";
   public static final String JS_TR_CHECK_DOCUMENT_TYPE = "TrCheckDocumentType";
   public static final String JS_TR_CHECK_TABLE_CELL_VALUE = "TrCheckTableCellValue";
-  public static final String JS_TR_PLUS_MENU_SELECT_ACTION = "TrPlusMenuSelectAction";
   public static final String JS_TR_GET_COCKPIT_ITEM = "TrGetCockpitItem";
   public static final String JS_TR_LIST_PLUS_MENU_ACTION = "TrListPlusMenuAction";
   public static final String JS_TR_ARROW_ACTION = "TrArrowAction";
