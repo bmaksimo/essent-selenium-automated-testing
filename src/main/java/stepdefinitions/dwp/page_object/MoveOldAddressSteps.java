@@ -38,6 +38,10 @@ public class MoveOldAddressSteps extends DwpScenario {
     public void getMeterReadingPlusKwl(int num, String rate){
         CreateMoveOAPage cmoa = new CreateMoveOAPage();
         String oldMeterReading = cmoa.getPreviousMeterReading(rate);
+        if(oldMeterReading.contains(",")){
+            String [] number= oldMeterReading.split(",");
+            oldMeterReading = number[0];
+            }
         int newMeterReading = Integer.parseInt(oldMeterReading)+num;
         parameterProvider.put("meterstand",newMeterReading);
     }
