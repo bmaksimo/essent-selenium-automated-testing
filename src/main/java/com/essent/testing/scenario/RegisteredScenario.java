@@ -36,6 +36,7 @@ public abstract class RegisteredScenario {
         logger().debug(" - CLASS: " + this.getClass().getSimpleName());
         logger().debug(" - NAME: " + scenario.getName());
         ActiveScenarioProvider.get().setActiveScenario(this.getClass().getSimpleName(), this);
+        parameterProvider.setNewScenario(scenario);
     }
 
     protected RegisteredScenario getScenarioInstance(Class scenarioClass) {
