@@ -54,10 +54,10 @@
     <selenium-firefox-driver.version>3.12.0</selenium-firefox-driver.version>
     <selenium-server.version>3.12.0</selenium-server.version>
     <selenium-java.version>3.12.0</selenium-java.version>
-    <jackson-databind.version>2.9.9</jackson-databind.version>
-    <jackson-annotations.version>2.9.9</jackson-annotations.version>
-    <jackson-module-jaxb-annotations.version>2.9.9</jackson-module-jaxb-annotations.version>
-    <jackson-jaxrs-json-provider.version>2.9.9</jackson-jaxrs-json-provider.version>
+    <jackson-databind.version>2.7.5</jackson-databind.version>
+    <jackson-annotations.version>2.7.5</jackson-annotations.version>
+    <jackson-module-jaxb-annotations.version>2.7.5</jackson-module-jaxb-annotations.version>
+    <jackson-jaxrs-json-provider.version>2.7.5</jackson-jaxrs-json-provider.version>
     <aspectjweaver.version>1.8.9</aspectjweaver.version>
     <slf4j-api.version>1.7.12</slf4j-api.version>
     <slf4j-log4j12.version>1.7.12</slf4j-log4j12.version>
