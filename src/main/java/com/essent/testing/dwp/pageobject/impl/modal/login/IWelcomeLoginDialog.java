@@ -34,8 +34,6 @@ public class IWelcomeLoginDialog extends LoginComponent implements Dialog {
         element = seleniumDriver.findElementWhenPresent(By.id(submitButtonField));
         assertNotNull(element);
         element.click();
-        seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.getDriver().manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
         return new MainWindow(seleniumDriver);
     }
