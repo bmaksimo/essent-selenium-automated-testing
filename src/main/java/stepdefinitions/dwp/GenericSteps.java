@@ -35,7 +35,6 @@ public class GenericSteps extends DwpScenario {
         UserRoles dwpUser = UserRoles.get(username);
         Window application = new LoginAction().doLogin(dwpUser.getUsername(), dwpUser.getPassword());
         assertNotNull("DWP application did not appear after a login", application);
-        logger().info("logged in");
         injectJavaScriptTestRunner();
         discardPreviousFlow();
     }
