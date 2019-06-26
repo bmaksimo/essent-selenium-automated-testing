@@ -58,7 +58,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
         return tariffSheetID;
     }
 
-    public QuoteDetails getQuoteDetails(Cookies cookie, String tariffSheetId, String startedFlowName, String meterOpen)
+    public QuoteDetails getQuoteDetails(Cookies cookie, String tariffSheetId, String startedFlowName, String meterOpen, String residentialStartdate)
 	    throws JsonParseException, JsonMappingException, IOException {
 
         String ean = null;
@@ -101,7 +101,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
         quoteDetails.setDateOfBirth(dateOfBirth);
         LOGGER.debug("Generated date of birth: " + dateOfBirth);
 
-        String payload = createQuotePayload(tariffSheetId, ean, dateOfBirth, generatedNames4account.get("firstName"),generatedNames4account.get("lastName"), ibanBE, companyNumber, meterOpen);
+        String payload = createQuotePayload(tariffSheetId, ean, dateOfBirth, generatedNames4account.get("firstName"),generatedNames4account.get("lastName"), ibanBE, companyNumber, meterOpen, residentialStartdate);
 
         Response quoteResponse = helper.postRequest(STATUS_CREATED, cookie, payload, path);
 
@@ -124,6 +124,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
         return quoteDetails;
     }
+
 
     public String getQuoteNumber(Cookies cookie, String recordId) throws IOException {
         RequestHelper helper = new RequestHelper();
@@ -200,7 +201,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
     }
 
-    private String createQuotePayload(String tariffSheetId, String ean, String dateOfBirth, String firstName, String lastName, String iBan, String companyNumber, String meterOpen)
+    private String createQuotePayload(String tariffSheetId, String ean, String dateOfBirth, String firstName, String lastName, String iBan, String companyNumber, String meterOpen, String residentialStartdate)
 	    throws JsonParseException, JsonMappingException, IOException {
         ObjectMapper mapper = new ObjectMapper();
 
@@ -222,9 +223,8 @@ public class QuoteDetailsAPI extends AbstractAPI {
         quote.getModel().setFirstName(firstName);
         quote.getModel().setLastName(lastName);
         quote.getModel().setIban(iBan);
+        quote.getModel().setresidentialStartdate(residentialStartdate);
         quote.getModel().getPayloadWrapper().setPayload(payload);
-
-
 
         return mapper.writeValueAsString(quote);
     }
@@ -239,6 +239,32 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
         return mapper.writeValueAsString(quotes);
     }
+
+
+    private String createQuotePayloadDates(String tariffSheetId, String residentialStartdate)
+        throws JsonParseException, JsonMappingException, IOException {
+        ObjectMapper mapper = new ObjectMapper();
+
+        String pathToQuote = ResourceUtil.toPath(PATH_TO_QUOTE);
+        String jsonQuote = new String(Files.readAllBytes(Paths.get(pathToQuote)));
+        QuoteDetailsDTO quote = mapper.readValue(jsonQuote, QuoteDetailsDTO.class);
+
+        String pathToPayload = ResourceUtil.toPath(PATH_TO_PAYLOAD);
+
+
+
+        String jsonPayload = new String(Files.readAllBytes(Paths.get(pathToPayload)));
+        PayloadDTO payload = mapper.readValue(jsonPayload, PayloadDTO.class);
+        payload.setTariffsheetId(tariffSheetId);
+        quote.getModel().setresidentialStartdate(residentialStartdate);
+
+        quote.getModel().getPayloadWrapper().setPayload(payload);
+
+
+
+        return mapper.writeValueAsString(quote);
+    }
+
 
     private Response quoteStatus(Cookies cookie, String quoteNumber) throws IOException {
         RequestHelper helper = new RequestHelper();

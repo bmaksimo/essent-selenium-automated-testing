@@ -184,6 +184,10 @@ public class ModelDTO {
     private List<String> discountIds = new ArrayList<>();
     @JsonProperty("dwp|line_items|package_properties|vooraf")
     private String lineItemPackageProperties;
+    @JsonProperty("residentialStartdate")
+    private String residentialStartdate;
+
+
 
     public String getContactType() {
         return contactType;
@@ -702,5 +706,12 @@ public class ModelDTO {
     public void setLineItemPackageProperties(String lineItemPackageProperties) {
         this.lineItemPackageProperties = lineItemPackageProperties;
     }
+    public String getresidentialStartdate() {
+        return residentialStartdate;
+    }
+    public void setresidentialStartdate(String residentialStartdate) {
+        this.residentialStartdate = residentialStartdate;
+    }
+
 
 }

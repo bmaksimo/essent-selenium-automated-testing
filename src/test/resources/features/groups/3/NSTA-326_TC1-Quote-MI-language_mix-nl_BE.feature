@@ -14,7 +14,7 @@ Feature: NSTA-326:Creating a B2C Quote TC1 with "Move In" without using Market M
     Scenario: Create a B2C Account with Quote, With move in, without using Market Mock
 
         And "Create_Quote" flow is started
-        When Data is prepared for Create quote request for "prospect" and meter open is "Off"
+        When Data is prepared for Create quote request for "prospect" and meter open is "Off" and residential date is "2019-02-01"
         And New tc1_quote is created
         Then Quote status is "ACCEPTED"
         And Quoteline exists

@@ -51,10 +51,10 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 	    this.tariffSheetID = new QuoteDetailsAPI().getTariffSheetID(cookie, arg1);
     }
 
-    @When("^Data is prepared for Create quote request for \"([^\"]*)\" and meter open is \"([^\"]*)\"$")
-    public void dataIsPreparedForCreateQuoteRequestFor(String arg1, String meterOpen) throws Throwable {
+    @When("^Data is prepared for Create quote request for \"([^\"]*)\" and meter open is \"([^\"]*)\" and residential date is \"([^\"]*)\"$")
+    public void dataIsPreparedForCreateQuoteRequestFor(String arg1, String meterOpen, String residentialStartdate) throws Throwable {
         this.flow = arg1;
-	    this.quoteDetails = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow, meterOpen);
+	    this.quoteDetails = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow, meterOpen, residentialStartdate);
         String retrievedAccountNumber = quoteDetails.getAccountNumber();
         int result = Integer.parseInt(retrievedAccountNumber);
         parameterProvider.put("accountNumber", result);

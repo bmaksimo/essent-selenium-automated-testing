@@ -14,6 +14,7 @@ public class QuoteDetails {
     private String lastName;
     private String iBan;
     private String companyNumber;
+    private String residentialStartdate;
 
 
     public String getRecordId() {
@@ -77,4 +78,11 @@ public class QuoteDetails {
     public String getCompanyNumber() { return companyNumber; }
 
     public void setCompanyNumber(String companyNumber) { this.companyNumber = companyNumber; }
+
+    public String getresidentialStartdate() {
+        return residentialStartdate;
+    }
+    public void setresidentialStartdate(String residentialStartdate) {
+        this.residentialStartdate = residentialStartdate;
+    }
 }

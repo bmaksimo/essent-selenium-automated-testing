@@ -2,7 +2,7 @@
   "dgo_id_c": "de227714-027d-98fa-c70c-573343442d8f",
   "line_status_c": "PRICED",
   "dwp|is_main": false,
-  "residential|startdate": "2019-02-01",
+  "residential|startdate": "${residentialStartdate}",
   "addresses_aos_products_quotes": {
     "id": null,
     "address_type": null,
