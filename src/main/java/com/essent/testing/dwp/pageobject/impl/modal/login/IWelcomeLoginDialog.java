@@ -7,8 +7,6 @@ import com.essent.testing.selenium.SeleniumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import java.util.concurrent.TimeUnit;
-
 import static org.junit.Assert.assertNotNull;
 
 public class IWelcomeLoginDialog extends LoginComponent implements Dialog {
@@ -16,9 +14,10 @@ public class IWelcomeLoginDialog extends LoginComponent implements Dialog {
 
     public IWelcomeLoginDialog(SeleniumDriver seleniumDriver) {
         super(seleniumDriver.findElementWhenPresent(SELECTOR));
+
     }
 
-    public Window login(String username, String password) throws Throwable {
+    public Window login(String username, String password) {
         final String usernameField = "idToken1";
         final String passwordField = "idToken2";
         final String submitButtonField = "loginButton_0";
@@ -34,8 +33,6 @@ public class IWelcomeLoginDialog extends LoginComponent implements Dialog {
         element = seleniumDriver.findElementWhenPresent(By.id(submitButtonField));
         assertNotNull(element);
         element.click();
-        seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.getDriver().manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
         return new MainWindow(seleniumDriver);
     }
