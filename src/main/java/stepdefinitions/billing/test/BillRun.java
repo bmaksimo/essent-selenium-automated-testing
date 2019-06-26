@@ -58,7 +58,7 @@ public class BillRun extends RegisteredScenario {
 
         for (Entry<Integer, BillingInvoiceOrder> entry : billingInvoice.getInvoicedOrders().entrySet()) {
 
-            if (!"ADVANCE".equals(entry.getValue().getOrderType())) {
+            if (!"ADVANCE".equalsIgnoreCase(entry.getValue().getOrderType())) {
                 // we are looking at advanced lines
                 continue;
             }
