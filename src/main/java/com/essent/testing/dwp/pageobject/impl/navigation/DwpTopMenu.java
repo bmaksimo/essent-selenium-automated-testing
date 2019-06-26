@@ -14,7 +14,7 @@ public class DwpTopMenu extends Component {
 
     private static final String XPATH_SUBMENU_TEMPLATE = "//sub-menu-link[normalize-space(@label)='${label}']//a";
     private static final String CSS_HAMBURGER_TOP_MENU = ".top.mobile-menu [name='top-menu-toggle']";
-    private static final String  XPATH_HOME_BUTTON = "//div[@class='top']/a[2]/span";
+    public static final String  XPATH_HOME_BUTTON = "//div[@class='top']/a[2]/span";
 
     public void findAndClickTopMenu(String label) {
         checkAndOpenTopMenu();
@@ -32,11 +32,11 @@ public class DwpTopMenu extends Component {
 
     private void checkAndOpenTopMenu() {
         try{
-            WebElement hamburger = seleniumDriver.findElementWhenPresent(By.cssSelector(CSS_HAMBURGER_TOP_MENU), Duration.ofSeconds(3), Duration.ofMillis(100));
+            WebElement hamburger = seleniumDriver.findElementWhenPresent(By.cssSelector(CSS_HAMBURGER_TOP_MENU), Duration.ofSeconds(30), Duration.ofMillis(100));
             Button hamButton = new ButtonImpl(hamburger);
             hamButton.click();
         } catch(TimeoutException te) {
-            logger().debug("no hamburger button there");
+            //no hamburger button there
         }
     }
 

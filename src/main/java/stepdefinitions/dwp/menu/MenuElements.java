@@ -19,12 +19,15 @@ public class MenuElements extends NavigationElements {
 
     @When("^Left menu is \"([^\"]*)\"$")
     public void clickLeftMenuItem(String tabName) throws Throwable {
-        new DwpLeftMenu().clickOnLeftElement(tabName);
+        seleniumDriver.waitForRequestsToFinish();
+        DwpLeftMenu lm = new DwpLeftMenu();
+        lm.clickOnLeftElement(tabName);
     }
 
     @When("^Left menu is \"([^\"]*)\" waiting for (\\d+) seconds$")
     public void clickLeftMenuItemFixedWait(String tabName, int waitingTime) throws Throwable {
-        new DwpLeftMenu().clickOnLeftElement(tabName, waitingTime);
+        DwpLeftMenu lm = new DwpLeftMenu();
+        lm.clickOnLeftElement(tabName, waitingTime);
     }
 
     @When("^Left Tab is \"([^\"]*)\"$")
@@ -34,13 +37,16 @@ public class MenuElements extends NavigationElements {
 
     @When("^Top menu item is \"([^\"]*)\"$")
     public void clickTopMenuItem(String tabName) throws Throwable {
-        new DwpTopMenu().findAndClickTopMenu(tabName);
+        seleniumDriver.waitForRequestsToFinish();
+        DwpTopMenu tm = new DwpTopMenu();
+        tm.findAndClickTopMenu(tabName);
     }
 
     @When("^Top menu item is \"([^\"]*)\" waiting for (\\d+) seconds$")
     public void clickTopMenuItemFixedWait(String tabName, int waitingTime) throws Throwable {
         Sleeper.sleepTightInSeconds(waitingTime);
-        new DwpTopMenu().findAndClickTopMenuNow(tabName);
+        DwpTopMenu tm = new DwpTopMenu();
+        tm.findAndClickTopMenuNow(tabName);
     }
 
     @Then("^Sleep for (\\d+) seconds$")
