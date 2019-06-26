@@ -16,7 +16,7 @@ import stepdefinitions.dwp.tables.SalesChannel;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static org.testng.AssertJUnit.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 public class ContractSteps extends DwpScenario {
@@ -86,7 +86,8 @@ public class ContractSteps extends DwpScenario {
     public void contractIsInState(String status) {
         ContractPage cp = new ContractPage();
         seleniumDriver.waitForRequestsToFinish();
-        assertEquals(cp.contractStatus(),status);
+//        assertEquals(cp.contractStatus(),status);
+        assertTrue(cp.contractStatus().equalsIgnoreCase(status));
     }
 
     @And("^Clicked on sign X$")
