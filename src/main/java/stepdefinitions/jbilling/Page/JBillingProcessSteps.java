@@ -24,19 +24,19 @@ public class JBillingProcessSteps extends JBillingScenario {
         super.tearDown();
     }
     @And("^Choose on time billing process$")
-    public void chooseOnTimeBillingProcess() throws Throwable {
+    public void chooseOnTimeBillingProcess() {
         BillingProcessPage bp = new BillingProcessPage();
         bp.onTimeBillingProcess();
     }
 
     @And("^Select edit billing proces$")
-    public void selectOnConfigurationPage() throws Throwable {
+    public void selectOnConfigurationPage() {
         BillingProcessPage bp = new BillingProcessPage();
         bp.editButton();
     }
 
     @And("^Invoice date is \"([^\"]*)\" days ago$")
-    public void invoiceDateIsDaysAgo(String day) throws Throwable {
+    public void invoiceDateIsDaysAgo(String day) {
         BillingProcessPage bp = new BillingProcessPage();
         invoiceDate= bp.getInvoiceDate();
         bp.invoiceDateInPast(Integer.parseInt(day));
@@ -44,27 +44,27 @@ public class JBillingProcessSteps extends JBillingScenario {
     }
 
     @And("^Save billing proces$")
-    public void saveBillingProces() throws Throwable {
+    public void saveBillingProces() {
         BillingProcessPage bp = new BillingProcessPage();
         bp.saveProccessBilling();
     }
     @And("^Cancel billing proces$")
-    public void cancelBillingProces() throws Throwable {
+    public void cancelBillingProces() {
         BillingProcessPage bp = new BillingProcessPage();
         bp.cancelProccessBilling();
     }
 
     @Then("^Error message is displayed$")
-    public void errorMessageIsDisplayed() throws Throwable {
+    public void errorMessageIsDisplayed() {
         BillingProcessPage bp = new BillingProcessPage();
         String msg = "The Billing Configuration has an error in the invoice Date field: The date entered is not valid.";
-        Assert.assertEquals(msg,bp.errorMsg());
+        Assert.assertTrue(bp.errorMsg().equalsIgnoreCase(msg));
     }
 
     @And("^Date in not changed$")
-    public void dateInNotChanged() throws Throwable {
+    public void dateInNotChanged() {
         BillingProcessPage bp = new BillingProcessPage();
         String date = bp.getInvoiceDate();
-        Assert.assertEquals(date, invoiceDate);
+        Assert.assertTrue(date.equalsIgnoreCase(invoiceDate));
     }
 }
