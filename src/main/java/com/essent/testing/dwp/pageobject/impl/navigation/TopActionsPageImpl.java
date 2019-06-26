@@ -16,11 +16,13 @@ public class TopActionsPageImpl extends Component implements TopActionsPage {
 
     @Override
     public boolean executeTopAction(String name) {
+        seleniumDriver.waitForRequestsToFinish();
         String query = createQuery(BUTTON_ELEMENT_QUERY_TEMPLATE, "name", name);
         Model.Execution execution = newExecution().element(BUTTON_ELEMENT, createElement("SELECTOR", query));
         execution
             .flow()
-            .step(createStep(CLICK).element(BUTTON_ELEMENT).requireDisplayed(false));
+            .step(createStep(CLICK).element(BUTTON_ELEMENT).requireDisplayed(false))
+            .step(createStep(SLEEP).sleepInMillis(2500));
         return execute(execution);
     }
 
