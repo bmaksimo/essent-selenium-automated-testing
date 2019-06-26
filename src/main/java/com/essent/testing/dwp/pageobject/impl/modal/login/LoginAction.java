@@ -11,11 +11,13 @@ public class LoginAction extends Component {
     private final static By DWP_SELECTOR = By.cssSelector(".modal__container.login");
 
     public Window doLogin(String username, String password) throws Throwable {
-        return getCurrentLoginDialog().login(username, password);
+        LoginComponent loginComponent = getCurrentLoginDialog();
+        if (null == loginComponent) return null;
+        return loginComponent.login(username, password);
     }
 
     private LoginComponent getCurrentLoginDialog() {
-        Sleeper.sleepTightInSeconds(20);
+        Sleeper.sleepTightInSeconds(40);
         try {
             seleniumDriver.findElementWhenPresent(IWELCOME_SELECTOR);
             return new IWelcomeLoginDialog(seleniumDriver);
