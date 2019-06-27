@@ -86,7 +86,6 @@ public class ContractSteps extends DwpScenario {
     public void contractIsInState(String status) {
         ContractPage cp = new ContractPage();
         seleniumDriver.waitForRequestsToFinish();
-//        assertEquals(cp.contractStatus(),status);
         assertTrue(cp.contractStatus().equalsIgnoreCase(status));
     }
 
