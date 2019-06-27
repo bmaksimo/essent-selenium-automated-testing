@@ -13,6 +13,7 @@ import io.restassured.http.Cookies;
 import stepdefinitions.quote.api.helper.AsyncExecutor;
 import stepdefinitions.quote.api.model.ContractDetails;
 import stepdefinitions.quote.api.model.QuoteDetails;
+
 import java.util.concurrent.TimeUnit;
 
 import static org.awaitility.Awaitility.await;
@@ -20,10 +21,14 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+
+
 /**
  * @author n.grkavac
  *
  */
+
+
 public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     private Cookies cookie;
@@ -51,8 +56,8 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 	    this.tariffSheetID = new QuoteDetailsAPI().getTariffSheetID(cookie, arg1);
     }
 
-    @When("^Data is prepared for Create quote request for \"([^\"]*)\" and meter open is \"([^\"]*)\" and residential date is \"([^\"]*)\"$")
-    public void dataIsPreparedForCreateQuoteRequestFor(String arg1, String meterOpen, String residentialStartdate) throws Throwable {
+    @When("^Data is prepared for Create quote request for \"([^\"]*)\" and meter open is \"([^\"]*)\" and contract date is \"([^\"]*)\"$")
+    public void dataIsPreparedForCreateQuoteWithDateRequestFor(String arg1, String meterOpen, String residentialStartdate) throws Throwable {
         this.flow = arg1;
 	    this.quoteDetails = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow, meterOpen, residentialStartdate);
         String retrievedAccountNumber = quoteDetails.getAccountNumber();
