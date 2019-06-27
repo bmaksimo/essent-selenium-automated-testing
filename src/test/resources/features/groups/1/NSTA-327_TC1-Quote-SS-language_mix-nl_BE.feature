@@ -4,7 +4,7 @@
 @B2C
 @API
 @ALL
-Feature: NSTA-327: Creating a B2C Quote TC1 with "Supplier Switch" without using Market Mock.
+Feature: NSTA-327: Creating a B2C Quote TC1 with "Supplier Switch" without using Market Mock
 
     Background:
         Given I login to iWelcome as "soapui_b2c"
