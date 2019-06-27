@@ -91,7 +91,7 @@ public class JournalEntriesSteps extends OdooScenario {
         JournalEntriesPage je = new JournalEntriesPage();
         String reconcile1 = je.reconcileText(1);
         String reconcile2 = je.reconcileText(2);
-        Assert.assertEquals(reconcile1,reconcile2);
+        Assert.assertTrue(reconcile1.equalsIgnoreCase(reconcile2));
     }
 
     @Then("^Reconcile number is removed$")

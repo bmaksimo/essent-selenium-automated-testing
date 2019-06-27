@@ -62,7 +62,7 @@ public class FormElements extends DwpScenario {
             String actualValue = p.getValue(label);
             String assertionMessage = String.format("Actual value of \"%s\" was \"%s\" differs from expected \"%s\"", label, actualValue, expectedValue);
             waiter.withMessage(assertionMessage);
-            return StringUtils.equals(expectedValue, actualValue);
+            return StringUtils.equalsIgnoreCase(expectedValue, actualValue);
         });
     }
 
