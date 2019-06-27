@@ -68,7 +68,7 @@ public class ContractRenewalSteps extends NavigationElements {
                   "Actual value of \"%s\" was \"%s\" differs from expected \"%s\"",
                   label, actualValue, expectedValue);
           waiter.withMessage(assertionMessage);
-          return StringUtils.equals(expectedValue, actualValue);
+          return StringUtils.equalsIgnoreCase(expectedValue, actualValue);
         });
   }
 

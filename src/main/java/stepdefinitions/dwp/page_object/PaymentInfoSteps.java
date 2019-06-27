@@ -33,7 +33,7 @@ public class PaymentInfoSteps extends NavigationElements {
     public boolean test(Map options) {
       Map result = executeJavascriptMethod(JS_TR_SWITCH_PAYMENT_METHOD, options);
       String status = ((String) result.get("status"));
-      boolean success = StringUtils.equals("PASSED", status);
+      boolean success = StringUtils.equalsIgnoreCase("PASSED", status);
       if (success) {
                 String switchedPaymentMethod = ((String) result.get("paymentMethod")).equalsIgnoreCase("string:OV") ?
                     "Overschrijving" : "Domiciliëring";

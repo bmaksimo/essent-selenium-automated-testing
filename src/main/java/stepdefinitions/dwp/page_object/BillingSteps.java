@@ -37,7 +37,7 @@ public class BillingSteps extends DwpScenario {
     @Then("^Transaction is created with TYPE \"([^\"]*)\"$")
     public void transactiesIsCreatedWithTYPE(String type){
         BillingPage bp = new BillingPage();
-        Assert.assertEquals("Type does not mach", bp.selectProductCode(),type);
+        Assert.assertTrue("Type does not mach", bp.selectProductCode().equalsIgnoreCase(type));
     }
 
     @And("^Send$")

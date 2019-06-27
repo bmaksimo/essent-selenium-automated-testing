@@ -149,14 +149,14 @@ public class OdooMenu extends OdooScenario {
     public void odooValidateBankAccountWasChangedOn(String ban) {
         String bankAccountNumber = parameterProvider.getValueOrParameterAsString(ban);
         CustomerPage cp = new CustomerPage();
-        Assert.assertEquals("Check if band account number is same as in DWP",cp.getBankAccountAsString(), bankAccountNumber);
+        Assert.assertTrue("Check if band account number is same as in DWP",cp.getBankAccountAsString().equalsIgnoreCase(bankAccountNumber));
     }
 
     @Then("^Odoo verify payment method has changed to \"([^\"]*)\"$")
     public void odooVerifyPaymentMethodChanged(String pm) {
         String paymentMethod = parameterProvider.getValueOrParameterAsString(pm);
         CustomerPage cp = new CustomerPage();
-        Assert.assertEquals("Check if payment method is same as in DWP",cp.getPaymentMethodAsString(), paymentMethod);
+        Assert.assertTrue("Check if payment method is same as in DWP",cp.getPaymentMethodAsString().equalsIgnoreCase(paymentMethod));
     }
 
 

@@ -31,8 +31,8 @@ public class ServiceStep extends DwpScenario {
     @And("^Interaction is created with Type \"([^\"]*)\" and Onderwerp \"([^\"]*)\"$")
     public void interactionIsCreatedWithTypeAndOnderwerpAndVerwanteCaseIs(String type, String onderwerp) {
         ServicePage sp = new ServicePage();
-        Assert.assertEquals("Actual Interaction Type differs from expected",sp.getInteractionType(type),type);
-        Assert.assertEquals("Actual Interaction Onderwerp differs from expected",sp.getInteractionOnderwerp(type),onderwerp);
+        Assert.assertTrue("Actual Interaction Type differs from expected",sp.getInteractionType(type).equalsIgnoreCase(type));
+        Assert.assertTrue("Actual Interaction Onderwerp differs from expected",sp.getInteractionOnderwerp(type).equalsIgnoreCase(onderwerp));
     }
 
     @And("^Go to prospect$")
