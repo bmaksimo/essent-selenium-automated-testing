@@ -188,16 +188,7 @@ public class DateExpressionsUtil {
       return expandFrom(input).toString(DwpDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat());
     }
   }
-
-
-    public static String checkAndConvertToDwpContractAPIDate(String input) {
-        if (matchesDwpDateFormat(input)) {
-            return buildContractStartEndDate(input);
-        } else {
-            return expandFrom(input).toString(DwpDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat());
-        }
-    }
-
+  
   private static String buildContractStartEndDate(String input) {
     StringBuilder dateBuilder = new StringBuilder();
     DateTimeFormatter fmt =
@@ -220,11 +211,6 @@ public class DateExpressionsUtil {
     DateTime dateTime = DateTime.parse(consumptionsFormatDate);
     return dateTime.toString(DwpDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
   }
-
-    public static String toDwpAPIDate(String consumptionsFormatDate) {
-        DateTime dateTime = DateTime.parse(consumptionsFormatDate);
-        return dateTime.toString(DwpDateTimeFormat.DWP_API_DATE_FORMAT.getFormat());
-    }
 
   /** @param interval DWP interval, formatted "dd-MM-yyyy dd-MM-yyyy" */
   public static String getFormattedEnd(String interval, int daysEarlierOrLater) {

@@ -201,7 +201,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
     }
 
-    private String createQuotePayload(String tariffSheetId, String ean, String dateOfBirth, String firstName, String lastName, String iBan, String companyNumber, String meterOpen, String residentialStartdate)
+    private String createQuotePayload(String tariffSheetId, String ean, String dateOfBirth, String firstName, String lastName, String iBan, String companyNumber, String meterOpen, String signInDate)
 	    throws JsonParseException, JsonMappingException, IOException {
         ObjectMapper mapper = new ObjectMapper();
 
@@ -223,7 +223,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
         quote.getModel().setFirstName(firstName);
         quote.getModel().setLastName(lastName);
         quote.getModel().setIban(iBan);
-        quote.getModel().setresidentialStartdate(residentialStartdate);
+        quote.getModel().setSignDateC(signInDate);
         quote.getModel().getPayloadWrapper().setPayload(payload);
 
         return mapper.writeValueAsString(quote);
@@ -239,32 +239,6 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
         return mapper.writeValueAsString(quotes);
     }
-
-
-    private String createQuotePayloadDates(String tariffSheetId, String residentialStartdate)
-        throws JsonParseException, JsonMappingException, IOException {
-        ObjectMapper mapper = new ObjectMapper();
-
-        String pathToQuote = ResourceUtil.toPath(PATH_TO_QUOTE);
-        String jsonQuote = new String(Files.readAllBytes(Paths.get(pathToQuote)));
-        QuoteDetailsDTO quote = mapper.readValue(jsonQuote, QuoteDetailsDTO.class);
-
-        String pathToPayload = ResourceUtil.toPath(PATH_TO_PAYLOAD);
-
-
-
-        String jsonPayload = new String(Files.readAllBytes(Paths.get(pathToPayload)));
-        PayloadDTO payload = mapper.readValue(jsonPayload, PayloadDTO.class);
-        payload.setTariffsheetId(tariffSheetId);
-        quote.getModel().setresidentialStartdate(residentialStartdate);
-
-        quote.getModel().getPayloadWrapper().setPayload(payload);
-
-
-
-        return mapper.writeValueAsString(quote);
-    }
-
 
     private Response quoteStatus(Cookies cookie, String quoteNumber) throws IOException {
         RequestHelper helper = new RequestHelper();

@@ -184,9 +184,6 @@ public class ModelDTO {
     private List<String> discountIds = new ArrayList<>();
     @JsonProperty("dwp|line_items|package_properties|vooraf")
     private String lineItemPackageProperties;
-    @JsonProperty("residentialStartdate")
-    private String residentialStartdate;
-
 
 
     public String getContactType() {
@@ -197,7 +194,7 @@ public class ModelDTO {
     }
 
     public String getSignDateC() { return sign_date_c;}
-    public void setSignDateC() {this.sign_date_c = sign_date_c;}
+    public void setSignDateC(String signInDate) {this.sign_date_c = sign_date_c;}
 
     public String getPricingDateC() { return sign_date_c;}
     public void setPricingDateC() {this.pricing_date_c = pricing_date_c;}
@@ -706,12 +703,8 @@ public class ModelDTO {
     public void setLineItemPackageProperties(String lineItemPackageProperties) {
         this.lineItemPackageProperties = lineItemPackageProperties;
     }
-    public String getresidentialStartdate() {
-        return residentialStartdate;
-    }
-    public void setresidentialStartdate(String residentialStartdate) {
-        this.residentialStartdate = residentialStartdate;
-    }
+
+
 
 
 }
