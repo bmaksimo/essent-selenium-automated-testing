@@ -1,6 +1,5 @@
 package stepdefinitions.dwp.view_list;
 
-import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.list_view.ViewListTestObject;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
@@ -299,9 +298,6 @@ public class ViewListChecks extends NavigationElements {
             "- STEP: Table \"%s\" did contains expected cell value \"%s\" at column \"%s\" on \"%s\" row  - PASSED.",
             tableName, expectedValue, columnName, ordinal));
     }
-
-//    @InputParameter(name = "plus-menu-item")
-//    String plusMenuItem;
 
     @And("^\"([^\"]*)\" list element has cell value \"([^\"]*)\" at column \"([^\"]*)\" within (\\d+) seconds?$")
     public void containsElementWithin(String ordinal, String value, String columnName, int seconds) throws Throwable {
