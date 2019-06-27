@@ -16,7 +16,7 @@ public class LoginAction extends Component {
 
     private LoginComponent getCurrentLoginDialog() {
         try {
-            seleniumDriver.findElementWhenPresent(IWELCOME_SELECTOR, Duration.ofSeconds(90), Duration.ofSeconds(10));
+            seleniumDriver.findElementWhenPresent(IWELCOME_SELECTOR, Duration.ofSeconds(90), Duration.ofSeconds(5));
             return new IWelcomeLoginDialog(seleniumDriver);
         } catch (TimeoutException te) {
             throw new TimeoutException("No login page was found");
