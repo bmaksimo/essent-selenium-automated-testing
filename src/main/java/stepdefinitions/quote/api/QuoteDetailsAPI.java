@@ -125,7 +125,6 @@ public class QuoteDetailsAPI extends AbstractAPI {
         return quoteDetails;
     }
 
-
     public String getQuoteNumber(Cookies cookie, String recordId) throws IOException {
         RequestHelper helper = new RequestHelper();
         String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)

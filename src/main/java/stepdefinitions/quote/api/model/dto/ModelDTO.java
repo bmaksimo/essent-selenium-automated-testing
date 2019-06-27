@@ -704,7 +704,4 @@ public class ModelDTO {
         this.lineItemPackageProperties = lineItemPackageProperties;
     }
 
-
-
-
 }

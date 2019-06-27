@@ -136,8 +136,6 @@ public class DateExpressionsUtil {
     else return expandFrom(input).toString(DwpDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
   }
 
-
-
   public static String convertToDwpTime(String input) {
     return expandFromTime(input).toString(DwpDateTimeFormat.DWP_TIME_FORMAT.getFormat());
   }
@@ -188,7 +186,7 @@ public class DateExpressionsUtil {
       return expandFrom(input).toString(DwpDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat());
     }
   }
-  
+
   private static String buildContractStartEndDate(String input) {
     StringBuilder dateBuilder = new StringBuilder();
     DateTimeFormatter fmt =
@@ -205,7 +203,6 @@ public class DateExpressionsUtil {
   static boolean matchesDwpDateFormat(String date) {
     return date.matches(DateTimeRegex.DWP_DATE_FORMAT_REGEX.getExpression());
   }
-
 
   public static String toDwpDate(String consumptionsFormatDate) {
     DateTime dateTime = DateTime.parse(consumptionsFormatDate);
