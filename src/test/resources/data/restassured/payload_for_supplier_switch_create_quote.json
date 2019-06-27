@@ -2,7 +2,7 @@
   "dgo_id_c": "de227714-027d-98fa-c70c-573343442d8f",
   "line_status_c": "PRICED",
   "dwp|is_main": false,
-  "residential|startdate": "${residentialStartdate}",
+  "residential|startdate": "2019-02-01",
   "addresses_aos_products_quotes": {
     "id": null,
     "address_type": null,
@@ -17,7 +17,7 @@
     "address_region": "VLA"
   },
 
-  "accounts|aos_quotes|sign_date_c": "2019-04-30",
+  "accounts|aos_quotes|sign_date_c": "${signInDate}",
   "accounts|aos_quotes|pricing_date_c": "2019-04-30",
   "sales_channel_legal_label": "Telefonisch - inbound",
   "accounts|aos_quotes|primary_group_id": {"key": "de18128e-a6e3-aff9-e9df-57a8e1c88552", "label": "Essent"},

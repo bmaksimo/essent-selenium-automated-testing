@@ -12,7 +12,7 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
     Scenario: Sign in to default electricity product
         #Create contract via API
         And "Create_Quote" flow is started
-        When Data is prepared for Create quote request for "prospect" and meter open is "Off" and contract date is "2019-06-06"
+        When Data is prepared for Create quote request for "prospect" and meter open is "Off" and sign date is "35 days before now"
         And New tc1_quote is created
         Then Quote status is "ACCEPTED"
         And Quoteline exists

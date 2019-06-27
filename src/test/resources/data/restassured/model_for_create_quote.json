@@ -23,7 +23,7 @@
                     "road65_street_id": "36206",
                     "address_region": "VLA"
                 },
-                "accounts|aos_quotes|sign_date_c": "2019-04-26",
+                "accounts|aos_quotes|sign_date_c": "${signInDate}",
                 "accounts|aos_quotes|pricing_date_c": "2019-04-26",
 
                 "delivery_address_postalcode": "3012",

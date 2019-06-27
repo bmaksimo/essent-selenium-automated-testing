@@ -58,7 +58,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
         return tariffSheetID;
     }
 
-    public QuoteDetails getQuoteDetails(Cookies cookie, String tariffSheetId, String startedFlowName, String meterOpen, String residentialStartdate)
+    public QuoteDetails getQuoteDetails(Cookies cookie, String tariffSheetId, String startedFlowName, String meterOpen, String signInDate)
 	    throws JsonParseException, JsonMappingException, IOException {
 
         String ean = null;
@@ -101,7 +101,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
         quoteDetails.setDateOfBirth(dateOfBirth);
         LOGGER.debug("Generated date of birth: " + dateOfBirth);
 
-        String payload = createQuotePayload(tariffSheetId, ean, dateOfBirth, generatedNames4account.get("firstName"),generatedNames4account.get("lastName"), ibanBE, companyNumber, meterOpen, residentialStartdate);
+        String payload = createQuotePayload(tariffSheetId, ean, dateOfBirth, generatedNames4account.get("firstName"),generatedNames4account.get("lastName"), ibanBE, companyNumber, meterOpen, signInDate);
 
         Response quoteResponse = helper.postRequest(STATUS_CREATED, cookie, payload, path);
 

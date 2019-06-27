@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.JS_TR_GET_RANDOM_USER;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpDate;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.convertToDwpTime;
 import static com.billinghouse.test_automation.util.dsl.NumericUtil.amountAsInt;
