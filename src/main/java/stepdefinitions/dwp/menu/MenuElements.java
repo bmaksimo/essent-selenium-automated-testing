@@ -19,10 +19,8 @@ public class MenuElements extends NavigationElements {
 
     @When("^Left menu is \"([^\"]*)\"$")
     public void clickLeftMenuItem(String tabName) throws Throwable {
-        logger().info("start left menu");
         seleniumDriver.waitForRequestsToFinish();
         new DwpLeftMenu().clickOnLeftElement(tabName);
-        logger().info("end left menu");
     }
 
     @When("^Left menu is \"([^\"]*)\" waiting for (\\d+) seconds$")
@@ -37,10 +35,8 @@ public class MenuElements extends NavigationElements {
 
     @When("^Top menu item is \"([^\"]*)\"$")
     public void clickTopMenuItem(String tabName) throws Throwable {
-        logger().info("start top menu item");
         seleniumDriver.waitForRequestsToFinish();
         new DwpTopMenu().findAndClickTopMenu(tabName);
-        logger().info("end top menu item");
     }
 
     @When("^Top menu item is \"([^\"]*)\" waiting for (\\d+) seconds$")
