@@ -14,7 +14,6 @@ import cucumber.api.java.en.Given;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.time.Duration;
@@ -49,13 +48,11 @@ public class GenericSteps extends DwpScenario {
 
     private void discardPreviousFlow() throws Throwable {
         try {
-            WebElement cancelWebElement = seleniumDriver.findElementWhenPresent(By.id("cancel-button"), Duration.ofSeconds(30), Duration.ofMillis(500));
-            (new WebDriverWait(seleniumDriver.getDriver(), 2)).until(ExpectedConditions.elementToBeClickable(cancelWebElement));
+            WebElement cancelWebElement = seleniumDriver.findElementWhenPresent(By.id("cancel-button"), Duration.ofSeconds(5), Duration.ofMillis(100));
             Button cancelButton = new ButtonImpl(cancelWebElement);
             cancelButton.click();
-
         } catch(TimeoutException te) {
-            //there is nothing to disacrd
+            logger().debug("there is no flow to discard");
         }
 
     }
