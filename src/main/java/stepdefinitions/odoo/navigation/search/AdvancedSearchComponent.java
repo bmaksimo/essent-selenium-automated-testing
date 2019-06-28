@@ -1,7 +1,7 @@
 package stepdefinitions.odoo.navigation.search;
 
 import com.essent.testing.odoo.pageobject.impl.Component;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;

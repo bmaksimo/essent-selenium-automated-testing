@@ -1,7 +1,7 @@
 package com.essent.testing.jbilling.pageobject.impl.page;
 
 import com.essent.testing.jbilling.pageobject.impl.Component;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 

@@ -4,7 +4,7 @@ import com.billinghouse.test_automation.javascript.testrunner.JsTestExpanderServ
 import com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry;
 import com.google.gson.Gson;
 import cucumber.runtime.CucumberException;
-import org.apache.commons.text.StrSubstitutor;
+import org.apache.commons.lang3.text.StrSubstitutor;
 
 import java.util.HashMap;
 import java.util.Map;

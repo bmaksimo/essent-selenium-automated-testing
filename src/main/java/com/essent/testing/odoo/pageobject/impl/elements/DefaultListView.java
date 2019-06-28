@@ -3,7 +3,7 @@ package com.essent.testing.odoo.pageobject.impl.elements;
 import com.essent.testing.odoo.pageobject.elements.ListView;
 import com.essent.testing.odoo.pageobject.impl.Component;
 import cucumber.runtime.CucumberException;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 

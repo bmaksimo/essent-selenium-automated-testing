@@ -12,8 +12,8 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.text.StrSubstitutor;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.text.StrSubstitutor;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -31,9 +31,9 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.function.Predicate;
 
+import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.JS_TR_CHECK_TABLE_CELL_VALUE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 
 public class ConsumptionSteps extends DwpScenario {
 
