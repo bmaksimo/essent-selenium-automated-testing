@@ -15,15 +15,13 @@ public class PlusActions extends NavigationElements {
         registerActiveScenario(scenario);
     }
 
-    @OutputParameter(name = "plus-menu-item")
-    private String plusMenuAction;
     @And("^Plus menu is \"([^\"]*)\"$")
     public void checkPlusMenu(String path) throws CucumberException {
         try {
             seleniumDriver.waitForRequestsToFinish();
             clickTopAction("Plus Menu");
             clickPlusAction(path);
-            plusMenuAction = path;
+            parameterProvider.put("plus-menu-item", path);
         } catch (Throwable t) {
           throw  new CucumberException(t);
         }

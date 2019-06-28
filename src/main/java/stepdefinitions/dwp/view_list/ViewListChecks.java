@@ -1,6 +1,5 @@
 package stepdefinitions.dwp.view_list;
 
-import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.list_view.ViewListTestObject;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
@@ -300,9 +299,6 @@ public class ViewListChecks extends NavigationElements {
             tableName, expectedValue, columnName, ordinal));
     }
 
-    @InputParameter(name = "plus-menu-item")
-    String plusMenuItem;
-
     @And("^\"([^\"]*)\" list element has cell value \"([^\"]*)\" at column \"([^\"]*)\" within (\\d+) seconds?$")
     public void containsElementWithin(String ordinal, String value, String columnName, int seconds) throws Throwable {
         String expectedValue = parameterProvider.getValueOrParameterAsString(value);
@@ -313,7 +309,7 @@ public class ViewListChecks extends NavigationElements {
             "\"%s\" list element did not contain expected cell value \"%s\" at column \"%s\" within \"%s\" seconds  - PASSED.",
             ordinal, expectedValue, columnName, seconds));
         waiter.until((ViewListTestObject callback) -> {
-            scenario.checkPlusMenu(plusMenuItem);
+            scenario.checkPlusMenu(parameterProvider.getValueOrParameterAsString("parameter:plus-menu-item"));
             return callback.containsDataAt(row, expectedValue, columnName);
         });
         logger().debug(String.format(
@@ -655,7 +651,7 @@ public class ViewListChecks extends NavigationElements {
         FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), seconds, 30);
         waiter.withMessage(String.format("List element didn't contain any value at column \"%s\"", column));
         waiter.until((ViewListTestObject callback) -> {
-            scenario.checkPlusMenu(plusMenuItem);
+            scenario.checkPlusMenu(parameterProvider.getValueOrParameterAsString("parameter:plus-menu-item"));
             return !callback.fetchColumnData(table, column)
                 .stream().filter(element -> element.contains(inputValue)).collect(Collectors.toList()).isEmpty();
         });

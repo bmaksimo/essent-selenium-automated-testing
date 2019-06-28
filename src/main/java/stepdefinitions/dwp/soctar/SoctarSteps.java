@@ -1,6 +1,5 @@
 package stepdefinitions.dwp.soctar;
 
-import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
 import com.billinghouse.test_automation.util.dsl.DateExpressionsUtil;
 import com.billinghouse.test_automation.util.soctar_file.SoctarFileUtil;
 import com.billinghouse.test_automation.util.ssh.JSchUtil;
@@ -27,15 +26,13 @@ public class SoctarSteps extends DwpScenario {
         registerActiveScenario(scenario);
     }
 
-    @OutputParameter(name ="soctar-file-name")
-    private String soctarFileName;
     @Then("^Soctar file is uploaded to \"([^\"]*)\" remote directory$")
     public void uploadSoctarFile(String remoteDirectory) throws Throwable {
         String custId = parameterProvider.getValueOrParameterAsString("parameter:cust_id");
         String eanId =  parameterProvider.getValueOrParameterAsString("parameter:ean_id");
         String soctarDate = parameterProvider.getValueOrParameterAsString("parameter:start-end-date");
         String soctarFilePath = SoctarFileUtil.getSoctarFileFromTemplate(custId, eanId, soctarDate);
-        soctarFileName = FilenameUtils.getName(soctarFilePath);
+        parameterProvider.put("soctar-file-name", FilenameUtils.getName(soctarFilePath));
         final String sftpHost = ConfigProvider.getProperty(ConfigKey.SSH_NOVA_SFTP_HOST);
         JSchUtil.get().sftpPut(sftpHost, remoteDirectory, soctarFilePath);
     }

@@ -1,6 +1,5 @@
 package stepdefinitions.dwp.contracts.b2b;
 
-import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
 import com.essent.testing.restassured.create_contract.QuoteCreator;
 import com.essent.testing.restassured.create_contract.impl.b2b.ContractTC1B2BCreator;
 import com.essent.testing.restassured.create_contract.impl.b2b.ContractTC2B2BCreator;
@@ -15,7 +14,6 @@ import org.junit.Assert;
 import stepdefinitions.dwp.contracts.product_types.ProductTypes;
 
 import java.util.List;
-import java.util.Map;
 
 public class ContractB2BScenario extends RegisteredScenario {
 
@@ -24,7 +22,6 @@ public class ContractB2BScenario extends RegisteredScenario {
         registerActiveScenario(scenario);
     }
 
-    @OutputParameter(name="account-nr")
     private String accountNumber;
 
 	 /**
