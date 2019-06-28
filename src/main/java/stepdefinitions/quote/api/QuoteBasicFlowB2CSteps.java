@@ -1,5 +1,7 @@
 package stepdefinitions.quote.api;
 
+import com.billinghouse.test_automation.util.dsl.DateTimeRegex;
+import com.billinghouse.test_automation.util.dsl.DwpDateTimeFormat;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.restassured.B2CCreateContractScenario;
@@ -13,17 +15,23 @@ import io.restassured.http.Cookies;
 import stepdefinitions.quote.api.helper.AsyncExecutor;
 import stepdefinitions.quote.api.model.ContractDetails;
 import stepdefinitions.quote.api.model.QuoteDetails;
+
 import java.util.concurrent.TimeUnit;
 
+import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.expandFrom;
 import static org.awaitility.Awaitility.await;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+
+
 /**
  * @author n.grkavac
  *
  */
+
+
 public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     private Cookies cookie;
@@ -40,6 +48,18 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 	    registerActiveScenario(scenario);
     }
 
+    public String toDwpAPIDate(String parameter) {
+        return checkAndConvertToDwpAPIDate(parameter);
+    }
+    public static String checkAndConvertToDwpAPIDate(String input) {
+        if (matchesDwpAPIDateFormat(input)) return input;
+        else return expandFrom(input).toString(DwpDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
+    }
+
+    static boolean matchesDwpAPIDateFormat(String date) {
+        return date.matches(DateTimeRegex.DWP_API_DATE_FORMAT_REGEX.getExpression());
+    }
+
     @Given("^I login to iWelcome as \"([^\"]*)\"$")
     public void iLoginToIWelcomeAs(String username) throws Throwable {
         String password = ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_SOAPUI_B2C);
@@ -51,10 +71,11 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 	    this.tariffSheetID = new QuoteDetailsAPI().getTariffSheetID(cookie, arg1);
     }
 
-    @When("^Data is prepared for Create quote request for \"([^\"]*)\" and meter open is \"([^\"]*)\"$")
-    public void dataIsPreparedForCreateQuoteRequestFor(String arg1, String meterOpen) throws Throwable {
+    @When("^Data is prepared for Create quote request for \"([^\"]*)\" and meter open is \"([^\"]*)\" and sign date is \"([^\"]*)\"$")
+    public void dataIsPreparedForCreateQuoteWithDateRequestFor(String arg1, String meterOpen, String signInDate) throws Throwable {
         this.flow = arg1;
-	    this.quoteDetails = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow, meterOpen);
+        String inputValue = toDwpAPIDate(parameterProvider.getValueOrParameterAsString(signInDate));
+	    this.quoteDetails = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow, meterOpen, inputValue);
         String retrievedAccountNumber = quoteDetails.getAccountNumber();
         int result = Integer.parseInt(retrievedAccountNumber);
         parameterProvider.put("accountNumber", result);

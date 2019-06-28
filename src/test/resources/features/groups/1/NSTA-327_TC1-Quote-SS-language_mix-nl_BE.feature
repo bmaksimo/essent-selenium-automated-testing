@@ -4,7 +4,7 @@
 @B2C
 @API
 @ALL
-Feature: NSTA-327: Creating a B2C Quote TC1 with "Supplier Switch" without using Market Mock.
+Feature: NSTA-327: Creating a B2C Quote TC1 with "Supplier Switch" without using Market Mock
 
     Background:
         Given I login to iWelcome as "soapui_b2c"
@@ -15,7 +15,7 @@ Feature: NSTA-327: Creating a B2C Quote TC1 with "Supplier Switch" without using
 
         #Step 1. Selecteer type Offerte / Select Quote type
         And "Create_Quote" flow is started
-        When Data is prepared for Create quote request for "prospect" and meter open is "On"
+        When Data is prepared for Create quote request for "prospect" and meter open is "On" and sign date is "35 days before now"
         And New tc1_quote is created
         Then Quote status is "ACCEPTED"
         And Quoteline exists

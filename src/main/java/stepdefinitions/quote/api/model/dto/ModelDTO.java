@@ -185,6 +185,7 @@ public class ModelDTO {
     @JsonProperty("dwp|line_items|package_properties|vooraf")
     private String lineItemPackageProperties;
 
+
     public String getContactType() {
         return contactType;
     }
@@ -193,7 +194,7 @@ public class ModelDTO {
     }
 
     public String getSignDateC() { return sign_date_c;}
-    public void setSignDateC() {this.sign_date_c = sign_date_c;}
+    public void setSignDateC(String signInDate) {this.sign_date_c = sign_date_c;}
 
     public String getPricingDateC() { return sign_date_c;}
     public void setPricingDateC() {this.pricing_date_c = pricing_date_c;}

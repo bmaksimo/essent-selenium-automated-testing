@@ -12,7 +12,7 @@ Feature: NSTA-345:Credit Invoice
     Scenario: Credit Invoice
         #Create an active contract via API
         And "Create_Quote" flow is started
-        When Data is prepared for Create quote request for "prospect" and meter open is "Off"
+        When Data is prepared for Create quote request for "prospect" and meter open is "Off" and sign date is "35 days before now"
         And New tc1_quote is created
         Then Quote status is "ACCEPTED"
         And Quoteline exists

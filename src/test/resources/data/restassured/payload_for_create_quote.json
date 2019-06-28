@@ -17,7 +17,7 @@
     "address_region": "VLA"
   },
 
-  "accounts|aos_quotes|sign_date_c": "2019-04-29",
+  "accounts|aos_quotes|sign_date_c": "${signInDate}",
   "accounts|aos_quotes|pricing_date_c": "2019-04-29",
 
   "delivery_address_postalcode": "3012",

@@ -4,7 +4,8 @@
 @B2C
 @API
 @ALL
-Feature: NSTA-326:Creating a B2C Quote TC1 with "Move In" without using Market Mock.
+
+Feature: NSTA-326: Creating a B2C Quote TC1 with "Move In" without using Market Mock
 
     Background:
         Given I login to iWelcome as "soapui_b2c"
@@ -14,7 +15,7 @@ Feature: NSTA-326:Creating a B2C Quote TC1 with "Move In" without using Market M
     Scenario: Create a B2C Account with Quote, With move in, without using Market Mock
 
         And "Create_Quote" flow is started
-        When Data is prepared for Create quote request for "prospect" and meter open is "Off"
+        When Data is prepared for Create quote request for "prospect" and meter open is "Off" and sign date is "35 days before now"
         And New tc1_quote is created
         Then Quote status is "ACCEPTED"
         And Quoteline exists

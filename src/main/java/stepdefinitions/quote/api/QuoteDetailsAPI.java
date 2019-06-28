@@ -58,7 +58,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
         return tariffSheetID;
     }
 
-    public QuoteDetails getQuoteDetails(Cookies cookie, String tariffSheetId, String startedFlowName, String meterOpen)
+    public QuoteDetails getQuoteDetails(Cookies cookie, String tariffSheetId, String startedFlowName, String meterOpen, String signInDate)
 	    throws JsonParseException, JsonMappingException, IOException {
 
         String ean = null;
@@ -101,7 +101,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
         quoteDetails.setDateOfBirth(dateOfBirth);
         LOGGER.debug("Generated date of birth: " + dateOfBirth);
 
-        String payload = createQuotePayload(tariffSheetId, ean, dateOfBirth, generatedNames4account.get("firstName"),generatedNames4account.get("lastName"), ibanBE, companyNumber, meterOpen);
+        String payload = createQuotePayload(tariffSheetId, ean, dateOfBirth, generatedNames4account.get("firstName"),generatedNames4account.get("lastName"), ibanBE, companyNumber, meterOpen, signInDate);
 
         Response quoteResponse = helper.postRequest(STATUS_CREATED, cookie, payload, path);
 
@@ -200,7 +200,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
     }
 
-    private String createQuotePayload(String tariffSheetId, String ean, String dateOfBirth, String firstName, String lastName, String iBan, String companyNumber, String meterOpen)
+    private String createQuotePayload(String tariffSheetId, String ean, String dateOfBirth, String firstName, String lastName, String iBan, String companyNumber, String meterOpen, String signInDate)
 	    throws JsonParseException, JsonMappingException, IOException {
         ObjectMapper mapper = new ObjectMapper();
 
@@ -222,9 +222,8 @@ public class QuoteDetailsAPI extends AbstractAPI {
         quote.getModel().setFirstName(firstName);
         quote.getModel().setLastName(lastName);
         quote.getModel().setIban(iBan);
+        quote.getModel().setSignDateC(signInDate);
         quote.getModel().getPayloadWrapper().setPayload(payload);
-
-
 
         return mapper.writeValueAsString(quote);
     }
