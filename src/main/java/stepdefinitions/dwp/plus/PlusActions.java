@@ -1,6 +1,6 @@
 package stepdefinitions.dwp.plus;
 
-import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
+import com.essent.automation.util.Sleeper;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -19,6 +19,7 @@ public class PlusActions extends NavigationElements {
     public void checkPlusMenu(String path) throws CucumberException {
         try {
             seleniumDriver.waitForRequestsToFinish();
+            Sleeper.sleepTightInSeconds(5);
             clickTopAction("Plus Menu");
             clickPlusAction(path);
             parameterProvider.put("plus-menu-item", path);

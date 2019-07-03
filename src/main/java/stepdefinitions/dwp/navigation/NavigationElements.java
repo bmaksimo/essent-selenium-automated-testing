@@ -76,10 +76,12 @@ public abstract class NavigationElements extends DwpScenario {
     @Override
     public boolean test(String name) {
       boolean success = executeJavascriptTest(JS_TR_SELECT_BUTTON, "");
+      seleniumDriver.waitForRequestsToFinish();
       return success;
     }
     public boolean testNow(String name) {
       boolean success = executeJavascriptTestImmediately(JS_TR_SELECT_BUTTON, "", true);
+      seleniumDriver.waitForRequestsToFinish();
       return success;
     }
   }
