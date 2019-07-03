@@ -2,7 +2,7 @@ package com.billinghouse.test_automation.util.soctar_file;
 
 import com.essent.testing.util.resource.ResourceUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.text.StrSubstitutor;
+import org.apache.commons.lang3.text.StrSubstitutor;
 
 import java.io.*;
 import java.nio.file.Files;

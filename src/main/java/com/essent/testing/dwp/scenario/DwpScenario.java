@@ -15,7 +15,7 @@ import com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter;
 import com.google.gson.Gson;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.text.StrSubstitutor;
+import org.apache.commons.lang3.text.StrSubstitutor;
 import org.iban4j.CountryCode;
 
 import javax.annotation.Resource;

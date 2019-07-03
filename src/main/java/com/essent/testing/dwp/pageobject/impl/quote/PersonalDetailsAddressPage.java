@@ -52,6 +52,8 @@ public class PersonalDetailsAddressPage extends QuoteCreationGuidedStep {
         String city = address.getCity();
         String country = address.getCountry();
 
+        seleniumDriver.waitForRequestsToFinish();
+
         Model.Execution initializeAddress = createExecution();
         initializeAddress.
             element(DELIVERY_ADDR_STREET.element()).
@@ -110,6 +112,8 @@ public class PersonalDetailsAddressPage extends QuoteCreationGuidedStep {
             city = add.get(i).get("city");
             country = add.get(i).get("country");
         }
+
+        seleniumDriver.waitForRequestsToFinish();
 
         Model.Execution initializeAddress = createExecution();
         initializeAddress.

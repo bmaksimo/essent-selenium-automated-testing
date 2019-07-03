@@ -11,7 +11,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.runtime.CucumberException;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -64,7 +64,7 @@ public class ViewListChecks extends NavigationElements {
     private class CheckViewListHeader implements Predicate<String> {
         @Override
         public boolean test(String header) {
-            int sec = 2;
+            int sec = 5;
             Map<String, Object> options = new HashMap<>();
             options.put("schedule_seconds", sec);
             options.put("header", header);
@@ -153,23 +153,20 @@ public class ViewListChecks extends NavigationElements {
         registerActiveScenario(scenario);
     }
 
-    @When("^View list header is \"([^\"]*)\"$")
-    public void checkViewListHeader(String header) throws Throwable {
-        seleniumDriver.waitForRequestsToFinish();
-        boolean success = new CheckViewListHeader().test(header);
-        assertThat(String.format("View list header \"%s\" didn't appear", header),
-            success, is(true));
-        parameterProvider.put("current-view-list", header);
-        logger().debug(String.format("- STEP: View list header is \"%s\" - PASSED.", header));
-        seleniumDriver.waitForRequestsToFinish();
-    }
-
     @When("^View list header is \"([^\"]*)\" appears within (\\d+) seconds?$")
     public void checkViewListHeaderUntil(String header, int seconds) throws Throwable {
         FluentWait<CheckViewListHeader> waiter = waiter(new CheckViewListHeader(), seconds, 5)
             .withMessage(String.format("View list header \"%s\" didn't appear within %s seconds", header, seconds));
         waiter.until((CheckViewListHeader callback) -> callback.test(header));
         logger().debug(String.format("- STEP: View list header is \"%s\" within %s second(s) - PASSED.", header, seconds));
+    }
+
+    @When("^View list header is \"([^\"]*)\"$")
+    public void checkViewListHeaderUntil(String header) throws Throwable {
+        FluentWait<CheckViewListHeader> waiter = waiter(new CheckViewListHeader(), 20, 5)
+            .withMessage(String.format("View list header \"%s\" didn't appear within %s seconds", header, 20));
+        waiter.until((CheckViewListHeader callback) -> callback.test(header));
+        logger().debug(String.format("- STEP: View list header is \"%s\" within %s second(s) - PASSED.", header, 20));
     }
 
     @When("^View List is empty$")

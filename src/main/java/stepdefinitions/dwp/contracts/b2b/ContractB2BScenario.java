@@ -9,7 +9,7 @@ import io.cucumber.datatable.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import stepdefinitions.dwp.contracts.product_types.ProductTypes;
 
