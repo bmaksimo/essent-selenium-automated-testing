@@ -14,6 +14,13 @@ public class CustomerPage extends Component {
     private static final String REVERSE_BUTTON_2 ="//div[@class='modal-footer']//button[1]//span";
     private static final String JOURNAL_ENTRY_BUTTON = "//tbody/tr[9]//span/a";
     private static final String JOURNAL_ENTRY_ROW = "//table[@class='oe_list_content'][1]//tbody//tr[1]//td[@data-field='move_id'][1]//a";
+    private static final String ACITVE_CHECKBOX = "//div[@class='oe_form_nosheet']//tbody/tr[3]/td[2]//input";
+    private static final String SENT_TO_CUSTOMER_CHECKBOX = "//td[@class='oe_list_field_cell oe_list_field_boolean   oe_readonly ']/input";
+    private static final String FORMAT = "//td[@class='oe_list_field_cell oe_list_field_selection   oe_readonly oe_required']";
+    private static final String SENT_DATE = "(//td[@class='oe_list_field_cell oe_list_field_date   oe_readonly '])[3]";
+
+
+
     public void clickOnTabMenu(String tab){
        awaitOdooRequestToFinish(20);
        String xpath = createQuery(tabMenuXpath, nameTab, tab);
@@ -55,7 +62,7 @@ public class CustomerPage extends Component {
     }
 
     public WebElement activeCheckboxElement(){
-        return seleniumDriver.findElementWhenVisible(By.xpath("//div[@class='oe_form_nosheet']//tbody/tr[3]/td[2]//input"));
+        return seleniumDriver.findElementWhenVisible(By.xpath(ACITVE_CHECKBOX));
     }
 
     public boolean activeCheckboxElementIsChecked(){
@@ -63,14 +70,14 @@ public class CustomerPage extends Component {
     }
 
     public String getDirectDebitFormat(){
-        return seleniumDriver.findElementWhenVisible(By.xpath("//td[@class='oe_list_field_cell oe_list_field_selection   oe_readonly oe_required']")).getText();
+        return seleniumDriver.findElementWhenVisible(By.xpath(FORMAT)).getText();
     }
 
     public boolean isSentToCustomerChecked(){
-        return seleniumDriver.findElementWhenVisible(By.xpath("//td[@class='oe_list_field_cell oe_list_field_boolean   oe_readonly ']/input")).isSelected();
+        return seleniumDriver.findElementWhenVisible(By.xpath(SENT_TO_CUSTOMER_CHECKBOX)).isSelected();
     }
 
     public String getDirectDebitSentDate(){
-        return seleniumDriver.findElementWhenVisible(By.xpath("(//td[@class='oe_list_field_cell oe_list_field_date   oe_readonly '])[3]")).getText();
+        return seleniumDriver.findElementWhenVisible(By.xpath(SENT_DATE)).getText();
     }
 }
