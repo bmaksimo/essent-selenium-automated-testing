@@ -53,14 +53,8 @@ public class DetailsFormSteps extends DwpScenario {
     @Then("^Customer bank number is \"([^\"]*)\" and payment method is \"([^\"]*)\"$")
     public void customerBankNumberIsAndPaymentMethodIs(String iban, String method) {
         DetailsPage dp = new DetailsPage();
-
-        System.out.println("-----------------------"+dp.getIban());
-        System.out.println("++++++++++++++++++++++"+parameterProvider.getValueOrParameterAsString(iban));
-
-        if (dp.getIban().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString(iban))) {System.out.println("ok--------------------");
-            if (dp.getIban().equals(parameterProvider.getValueOrParameterAsString(iban))) {System.out.println("ok--------------------");}}else{
-        Assert.assertEquals("Customer iban does not match expected value", dp.getIban(), parameterProvider.getValueOrParameterAsString(iban));
-        Assert.assertTrue("Customer payment method does not match expected value", dp.getPaymentMethod().equalsIgnoreCase(method));}
+        Assert.assertThat("Customer iban does not match expected value", dp.getIban().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString(iban)), is(true));
+        Assert.assertThat("Customer payment method does not match expected value", dp.getPaymentMethod().equalsIgnoreCase(method), is(true));
 
     }
 }

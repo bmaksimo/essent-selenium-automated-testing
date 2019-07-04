@@ -21,6 +21,14 @@ public class CustomerPage extends Component {
 
     }
 
+    public WebElement bankAccountElement(){
+        return seleniumDriver.findElementWhenVisible(By.xpath(labelBankAccount));
+    }
+
+    public void clikcOnBankAccoutElement(){
+        seleniumDriver.waitAndClick(bankAccountElement());
+    }
+
     public String getBankAccountAsString(){
         return seleniumDriver.findElementWhenVisible(By.xpath(labelBankAccount)).getText();
     }
@@ -44,5 +52,25 @@ public class CustomerPage extends Component {
         journal.click();
         awaitOdooRequestToFinish(45);
         seleniumDriver.findElement(By.xpath(JOURNAL_ENTRY_BUTTON)).click();
+    }
+
+    public WebElement activeCheckboxElement(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("//div[@class='oe_form_nosheet']//tbody/tr[3]/td[2]//input"));
+    }
+
+    public boolean activeCheckboxElementIsChecked(){
+        return activeCheckboxElement().isSelected();
+    }
+
+    public String getDirectDebitFormat(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("//td[@class='oe_list_field_cell oe_list_field_selection   oe_readonly oe_required']")).getText();
+    }
+
+    public boolean isSentToCustomerChecked(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("//td[@class='oe_list_field_cell oe_list_field_boolean   oe_readonly ']/input")).isSelected();
+    }
+
+    public String getDirectDebitSentDate(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//td[@class='oe_list_field_cell oe_list_field_date   oe_readonly '])[3]")).getText();
     }
 }
