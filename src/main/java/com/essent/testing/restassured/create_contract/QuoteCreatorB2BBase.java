@@ -22,6 +22,8 @@ import stepdefinitions.dwp.contracts.b2b.QuoteB2B;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -475,7 +477,7 @@ public class QuoteCreatorB2BBase {
 
 		Properties prop = ContractUtil.loadProperties(path);
 
-		pricingDate = prop.getProperty("pricing_date");
+		pricingDate = ContractConstants.PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_UP.equalsIgnoreCase(path) ? getPricingDateToday() : prop.getProperty("pricing_date");
 		priceValidUntilDate = prop.getProperty("price_valid_until_date");
 		signatureReceivedDate = prop.getProperty("signature_received_date");
 
@@ -506,12 +508,17 @@ public class QuoteCreatorB2BBase {
 		}
 	}
 
+	private String getPricingDateToday() {
+        DateTimeFormatter dwpDateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return LocalDateTime.now().format(dwpDateTimeFormatter);
+    }
+
 	protected void getQuoteProperties(String path, QuoteB2B quoteB2B) throws FileNotFoundException, IOException {
 		this.isFakeAddress = quoteB2B.getIsFakeAddress();
 
 		Properties prop = ContractUtil.loadProperties(path);
 
-		pricingDate = prop.getProperty("pricing_date");
+		pricingDate = ContractConstants.PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_UP.equalsIgnoreCase(path) ? getPricingDateToday() : prop.getProperty("pricing_date");
 		priceValidUntilDate = prop.getProperty("price_valid_until_date");
 		signatureReceivedDate = prop.getProperty("signature_received_date");
 
