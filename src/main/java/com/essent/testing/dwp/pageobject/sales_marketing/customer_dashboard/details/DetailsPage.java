@@ -12,8 +12,8 @@ public class DetailsPage extends Component {
     private static final String EMAIL = "//div[@class='card__content__inner-wrapper']/p[2]/span[3]";
     private static final String CUSTOMER_NAME = "//div[@class='card__header']/h1";
     private static final String TYPE = "account-type-field";
-    private static final String BANKNUMBER = "//list[@list-key='BillingCustomerOnaccount']//tbody//td[2]//span[1]";
-    private static final String PAYMENTMETHOD = "//list[@list-key='BillingCustomerOnaccount']//tbody//td[3]//span[2]";
+    private static final String BANK_ACCOUNT = "//list[@list-key='BillingCustomerOnaccount']//tbody//td[2]//span[1]";
+    private static final String PAYMENT_METHOD = "//list[@list-key='BillingCustomerOnaccount']//tbody//td[3]//span[2]";
 
     public void findIban(String iban) {
         seleniumDriver.waitForRequestsToFinish();
@@ -46,10 +46,10 @@ public class DetailsPage extends Component {
     }
 
     public String getIban(){
-        return seleniumDriver.findElementWhenVisible(By.xpath(BANKNUMBER)).getText();
+        return seleniumDriver.findElementWhenVisible(By.xpath(BANK_ACCOUNT)).getText();
     }
 
     public String getPaymentMethod(){
-        return seleniumDriver.findElementWhenVisible(By.xpath(PAYMENTMETHOD)).getText();
+        return seleniumDriver.findElementWhenVisible(By.xpath(PAYMENT_METHOD)).getText();
     }
 }

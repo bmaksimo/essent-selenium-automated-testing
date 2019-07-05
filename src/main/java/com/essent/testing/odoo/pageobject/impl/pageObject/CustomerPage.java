@@ -28,12 +28,12 @@ public class CustomerPage extends Component {
 
     }
 
-    public WebElement bankAccountElement(){
+    public WebElement getBankAccountElement(){
         return seleniumDriver.findElementWhenVisible(By.xpath(labelBankAccount));
     }
 
-    public void clikcOnBankAccoutElement(){
-        seleniumDriver.waitAndClick(bankAccountElement());
+    public void clickOnBankAccoutElement(){
+        seleniumDriver.waitAndClick(getBankAccountElement());
     }
 
     public String getBankAccountAsString(){
@@ -61,12 +61,12 @@ public class CustomerPage extends Component {
         seleniumDriver.findElement(By.xpath(JOURNAL_ENTRY_BUTTON)).click();
     }
 
-    public WebElement activeCheckboxElement(){
+    public WebElement getActiveCheckboxElement(){
         return seleniumDriver.findElementWhenVisible(By.xpath(ACITVE_CHECKBOX));
     }
 
-    public boolean activeCheckboxElementIsChecked(){
-        return activeCheckboxElement().isSelected();
+    public boolean isActiveCheckboxElementChecked(){
+        return getActiveCheckboxElement().isSelected();
     }
 
     public String getDirectDebitFormat(){

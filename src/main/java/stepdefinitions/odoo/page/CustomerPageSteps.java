@@ -45,13 +45,13 @@ public class CustomerPageSteps extends OdooScenario {
     @And("^Odoo click on account number$")
     public void odooClickOnAccountNumber(){
         CustomerPage cp = new CustomerPage();
-        cp.clikcOnBankAccoutElement();
+        cp.clickOnBankAccoutElement();
     }
 
     @Then("^Odoo check if bank account checkbox 'active' is checked$")
     public void odooBankAccountCheckboxActiveIsChecked(){
         CustomerPage cp = new CustomerPage();
-        Assert.assertTrue("Active checkbox is not checked",cp.activeCheckboxElementIsChecked());
+        Assert.assertTrue("Active checkbox is not checked",cp.isActiveCheckboxElementChecked());
     }
 
     @And("^Odoo check if format is \"([^\"]*)\"$")
@@ -69,8 +69,6 @@ public class CustomerPageSteps extends OdooScenario {
     @And("^Odoo check if send date is today$")
     public void odooSendDateIs(){
         CustomerPage cp = new CustomerPage();
-        System.out.println("----------------date:"+cp.getDirectDebitSentDate());
-        System.out.println("----------------format:"+LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
         Assert.assertThat("Sent date is not as expected", cp.getDirectDebitSentDate().equalsIgnoreCase(LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"))), is(true));
     }
 }
