@@ -3,7 +3,7 @@ package com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.con
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
-import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -52,6 +52,8 @@ public class ContractPage extends Component {
     private static final int OCTOBER = 10;
     private static DateTimeFormatter DASH_SEPARATED_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     private static DateTimeFormatter SLASH_SEPARATED_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static String HIGH_RATES_QUOTE = "//list[@list-key='QuoteComponentLines']//span[contains(., 'High')]/../../../..//td[6]";
+    private static String LOW_RATES_QUOTE = "//list[@list-key='QuoteComponentLines']//span[contains(., 'Low')]/../../../..//td[6]";
 
     private WebElement startData() {
         return seleniumDriver.findElementWhenVisible(By.id(START_DATA_ID));
@@ -398,7 +400,7 @@ public class ContractPage extends Component {
             }
         }
 
-       return numInstallThanHaveGivenAmount;
+        return numInstallThanHaveGivenAmount;
     }
 
 
@@ -408,5 +410,31 @@ public class ContractPage extends Component {
         int result1 = Integer.parseInt(installAmount);
         int result2 = Integer.parseInt(invAmount);
         return result1 - result2;
+    }
+
+    public float sumHighRates() {
+        seleniumDriver.waitForRequestsToFinish();
+        List<WebElement> highRates = seleniumDriver.findElements(By.xpath(HIGH_RATES_QUOTE));
+        float sumHigh=0.000f;
+        for (WebElement matchValue : highRates ) {
+            String [] str = matchValue.getText().split(",");
+            String finalStr = str[0] + "." + str[1];
+            float price = Float.parseFloat(finalStr);
+            sumHigh += price;
+        }
+        return sumHigh;
+    }
+
+    public float sumLowRates() {
+        seleniumDriver.waitForRequestsToFinish();
+        List<WebElement> lowRates = seleniumDriver.findElements(By.xpath(LOW_RATES_QUOTE));
+        float sumLow = 0.000f;
+        for (WebElement matchValue : lowRates ) {
+            String [] str = matchValue.getText().split(",");
+            String finalStr = str[0] + "." + str[1];
+            float price = Float.parseFloat(finalStr);
+            sumLow += price;
+        }
+        return sumLow;
     }
 }
