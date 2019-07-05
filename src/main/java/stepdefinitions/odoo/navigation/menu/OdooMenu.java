@@ -17,6 +17,7 @@ import org.awaitility.Duration;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.FluentWait;
 
 import java.util.HashMap;
 import java.util.List;
@@ -141,15 +142,25 @@ public class OdooMenu extends OdooScenario {
 
     @And("^Odoo click on tab \"([^\"]*)\"$")
     public void odooClickOnTab(String tab){
-        CustomerPage cp = new CustomerPage();
-        cp.clickOnTabMenu(tab);
+        FluentWait<CustomerPage> waiter = waiter(new CustomerPage(), 60, 5)
+            .withMessage(String.format("Failed click on tab \"%s\" column within 60 seconds", tab));
+        waiter.until(c -> c.clickOnTabMenu(tab));
     }
 
     @Then("^Odoo validate bank account was changed on \"([^\"]*)\"$")
-    public void odooValidateBankAccountWasChangedOn(String ban) {
-        String bankAccountNumber = parameterProvider.getValueOrParameterAsString(ban);
-        CustomerPage cp = new CustomerPage();
-        Assert.assertTrue("Check if band account number is same as in DWP",cp.getBankAccountAsString().equalsIgnoreCase(bankAccountNumber));
+    public void odooValidateBankAccountWasChangedOn(String iban) {
+        String bankAccountNumber = parameterProvider.getValueOrParameterAsString(iban);
+        FluentWait<CustomerPage> waiter = waiter(new CustomerPage(), 600, 20)
+            .withMessage(String.format("Check if bank account number is same as in DWP", iban, 20));
+        waiter.until(cp -> {
+            loopback("Accounting");
+            return cp.getBankAccountAsString().equalsIgnoreCase(bankAccountNumber);
+        });
+    }
+
+    private void loopback(String destinationTab) {
+        seleniumDriver.getDriver().navigate().refresh();
+        new CustomerPage().clickOnTabMenu(destinationTab);
     }
 
     @Then("^Odoo verify payment method has changed to \"([^\"]*)\"$")

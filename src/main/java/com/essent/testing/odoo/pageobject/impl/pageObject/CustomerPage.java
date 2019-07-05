@@ -14,11 +14,13 @@ public class CustomerPage extends Component {
     private static final String REVERSE_BUTTON_2 ="//div[@class='modal-footer']//button[1]//span";
     private static final String JOURNAL_ENTRY_BUTTON = "//tbody/tr[9]//span/a";
     private static final String JOURNAL_ENTRY_ROW = "//table[@class='oe_list_content'][1]//tbody//tr[1]//td[@data-field='move_id'][1]//a";
-    public void clickOnTabMenu(String tab){
+
+    public boolean clickOnTabMenu(String tab){
        awaitOdooRequestToFinish(20);
        String xpath = createQuery(tabMenuXpath, nameTab, tab);
        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(xpath)));
 
+       return true;
     }
 
     public String getBankAccountAsString(){
