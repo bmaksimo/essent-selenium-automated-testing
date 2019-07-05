@@ -45,7 +45,7 @@ public class CustomerPageSteps extends OdooScenario {
     @And("^Odoo click on account number$")
     public void odooClickOnAccountNumber(){
         CustomerPage cp = new CustomerPage();
-        cp.clickOnBankAccoutElement();
+        cp.clickOnBankAccountElement();
     }
 
     @Then("^Odoo check if bank account checkbox 'active' is checked$")

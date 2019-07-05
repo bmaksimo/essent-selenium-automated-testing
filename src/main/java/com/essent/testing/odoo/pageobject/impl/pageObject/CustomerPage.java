@@ -32,7 +32,7 @@ public class CustomerPage extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath(labelBankAccount));
     }
 
-    public void clickOnBankAccoutElement(){
+    public void clickOnBankAccountElement(){
         seleniumDriver.waitAndClick(getBankAccountElement());
     }
 
