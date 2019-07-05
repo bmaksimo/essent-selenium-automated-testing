@@ -49,4 +49,12 @@ public class DetailsFormSteps extends DwpScenario {
         DetailsPage dp = new DetailsPage();        ;
         Assert.assertTrue("Customer type does not match expected value", dp.getCustomerType().equalsIgnoreCase(type));
     }
+
+    @Then("^Customer bank number is \"([^\"]*)\" and payment method is \"([^\"]*)\"$")
+    public void customerBankNumberIsAndPaymentMethodIs(String iban, String method) {
+        DetailsPage dp = new DetailsPage();
+        Assert.assertThat("Customer iban does not match expected value", dp.getIban().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString(iban)), is(true));
+        Assert.assertThat("Customer payment method does not match expected value", dp.getPaymentMethod().equalsIgnoreCase(method), is(true));
+
+    }
 }
