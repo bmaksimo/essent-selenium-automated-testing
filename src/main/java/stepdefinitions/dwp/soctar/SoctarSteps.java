@@ -5,7 +5,6 @@ import com.billinghouse.test_automation.util.soctar_file.SoctarFileUtil;
 import com.billinghouse.test_automation.util.ssh.JSchUtil;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
-import com.essent.testing.dwp.pageobject.guided_flow.soctar.SoctarTariffBatchDetailsPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
@@ -16,7 +15,6 @@ import org.apache.commons.io.FilenameUtils;
 
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpContractStartEndDate;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToSoctarFileDate;
-import static org.junit.Assert.assertTrue;
 
 public class SoctarSteps extends DwpScenario {
 
@@ -52,14 +50,6 @@ public class SoctarSteps extends DwpScenario {
         String dates[] = startEndDates.split(DateExpressionsUtil.DATE_SEPARATOR);
         parameterProvider.put("start-date", dates[0]);
         parameterProvider.put("end-date", dates[1]);
-
-    }
-
-    @Then("^Soctar tariff type and status are \"([^\"]*)\" - \"([^\"]*)\"$")
-    public void checkSuccess(String tariffType, String tariffStatus) {
-        SoctarTariffBatchDetailsPage soc = new SoctarTariffBatchDetailsPage();
-        assertTrue(soc.getTariffType().equalsIgnoreCase(tariffType));
-        assertTrue(soc.getTariffStatus().equalsIgnoreCase(tariffStatus));
 
     }
 
