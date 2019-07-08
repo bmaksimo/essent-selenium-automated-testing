@@ -42,9 +42,10 @@ Feature: Price validity check on an Elec UP quote
 
         When Plus action of "1" element from "Quotelines" and click on "Bekijk details tarief"
         And View list header is "Prijzen offertelijn"
-        And Sum of Rate for High and Low prices for signature received
+        And Sum of Rate for signature received is "High"
+        And Sum of Rate for signature received is "Low"
         Then Clicked on sign X
 
         When Plus action of "2" element from "Quotelines" and click on "Bekijk details tarief"
         And View list header is "Prijzen offertelijn"
-        Then "parameter:sumHighRatesSignature" and "parameter:sumLowRatesSignature" equals Sum of High&Low rates for rejected rates
+        Then "parameter:sumRatesHighSignature" and "parameter:sumRatesLowSignature" equals Sum of High&Low rates for rejected rates

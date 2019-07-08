@@ -412,29 +412,25 @@ public class ContractPage extends Component {
         return result1 - result2;
     }
 
-    public float sumHighRates() {
+    public float sumRates(String typeRate) {
         seleniumDriver.waitForRequestsToFinish();
-        List<WebElement> highRates = seleniumDriver.findElements(By.xpath(HIGH_RATES_QUOTE));
-        float sumHigh=0.000f;
-        for (WebElement matchValue : highRates ) {
-            String [] str = matchValue.getText().split(",");
-            String finalStr = str[0] + "." + str[1];
-            float price = Float.parseFloat(finalStr);
-            sumHigh += price;
-        }
-        return sumHigh;
-    }
+        String typeQuoteRate = "";
 
-    public float sumLowRates() {
-        seleniumDriver.waitForRequestsToFinish();
-        List<WebElement> lowRates = seleniumDriver.findElements(By.xpath(LOW_RATES_QUOTE));
-        float sumLow = 0.000f;
-        for (WebElement matchValue : lowRates ) {
+        if (typeRate.contains("High")) {
+            typeQuoteRate = HIGH_RATES_QUOTE;
+
+        }
+        else if (typeRate.contains("Low")) {
+            typeQuoteRate = LOW_RATES_QUOTE;
+        }
+
+        List<WebElement> rates = seleniumDriver.findElements(By.xpath(typeQuoteRate));
+        float sumRate=0.000f;
+        for (WebElement matchValue : rates ) {
             String [] str = matchValue.getText().split(",");
             String finalStr = str[0] + "." + str[1];
-            float price = Float.parseFloat(finalStr);
-            sumLow += price;
+            sumRate += Float.parseFloat(finalStr);
         }
-        return sumLow;
+        return sumRate;
     }
 }

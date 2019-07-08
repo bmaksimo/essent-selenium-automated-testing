@@ -292,7 +292,6 @@ public class ContractB2BScenario extends RegisteredScenario {
             logger().error("Something went wrong with creation of B2B contract");
         }
 
-        logger().debug("ACCOUNT NUMBER: " + accountNumber);
         parameterProvider.put("accountNumber",accountNumber);
         return accountNumber;
     }

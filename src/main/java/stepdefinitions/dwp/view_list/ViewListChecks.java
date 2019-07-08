@@ -159,7 +159,6 @@ public class ViewListChecks extends NavigationElements {
         assertThat(String.format("View list header \"%s\" didn't appear", header),
             success, is(true));
         parameterProvider.put("current-view-list", header);
-        logger().debug(String.format("- STEP: View list header is \"%s\" - PASSED.", header));
         seleniumDriver.waitForRequestsToFinish();
     }
 
@@ -775,22 +774,28 @@ public class ViewListChecks extends NavigationElements {
         Assert.assertTrue("Balance is not correct", cp.getBalance().contains(expectedBalance));
     }
 
-    @And("Sum of Rate for High and Low prices for signature received$")
-    public void sumHighAndLowRates() {
+    @And("Sum of Rate for signature received is \"([^\"]*)\"$")
+    public void sumRates(String typeRate) {
         ContractPage cp = new ContractPage();
-        parameterProvider.put("sumHighRatesSignature", cp.sumHighRates());
-        parameterProvider.put("sumLowRatesSignature", cp.sumLowRates());
+        if (typeRate.equals("High")) {
+            parameterProvider.put("sumRatesHighSignature", cp.sumRates(typeRate));
+        }
+        else if (typeRate.equals("Low")) {
+            parameterProvider.put("sumRatesLowSignature", cp.sumRates(typeRate));
+        }
+       else
+        throw new CucumberException(getClass() + ": Only High and Low values can be passed as parameters");
     }
 
     @Then("\"([^\"]*)\" and \"([^\"]*)\" equals Sum of High&Low rates for rejected rates$")
-    public void compareSumOfRatesForSignatureQuoteAndRejectedQuote(String sumHighRatesSignature, String sumLowRatesSignature) {
+    public void compareSumOfRatesForSignatureQuoteAndRejectedQuote(String sumRatesHighSignature, String sumRatesLowSignature) {
         ContractPage cp = new ContractPage();
-        float sumHighRatesSignatureToFloat= Float.parseFloat(parameterProvider.getValueOrParameterAsString(sumHighRatesSignature));
-        float sumLowRatesSignatureToFloat = Float.parseFloat(parameterProvider.getValueOrParameterAsString(sumLowRatesSignature));
-        cp.sumHighRates();
-        cp.sumLowRates();
-        assertThat("Sum of signature and rejected quote for High prices is not equal", sumHighRatesSignatureToFloat, equalTo(cp.sumHighRates()));
-        assertThat("Sum of signature and rejected quote for Low prices is not equal", sumLowRatesSignatureToFloat, equalTo(cp.sumLowRates()));
+        float sumHighRatesSignatureToFloat= Float.parseFloat(parameterProvider.getValueOrParameterAsString(sumRatesHighSignature));
+        float sumLowRatesSignatureToFloat = Float.parseFloat(parameterProvider.getValueOrParameterAsString(sumRatesLowSignature));
+        cp.sumRates(sumRatesHighSignature);
+        cp.sumRates(sumRatesLowSignature);
+        assertThat("Sum of signature and rejected quote for High prices is not equal", sumHighRatesSignatureToFloat, equalTo( cp.sumRates(sumRatesHighSignature)));
+        assertThat("Sum of signature and rejected quote for Low prices is not equal", sumLowRatesSignatureToFloat, equalTo(cp.sumRates(sumRatesLowSignature)));
     }
 
 
