@@ -82,6 +82,15 @@ public class TopActions extends NavigationElements {
             success, is(true));
     }
 
+    @And("Intermittent Alert window is confirmed")
+    public void handleAlert() {
+        boolean actualAlert = isAlertPresent();
+        if (actualAlert)
+        {
+            seleniumDriver.getDriver().switchTo().alert().accept();
+        }
+    }
+
     @Override
     @After("@DWP or @CORE or @E2E or @REGRESSION")
     public void tearDown() {
