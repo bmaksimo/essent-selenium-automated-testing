@@ -82,7 +82,7 @@ public class TopActions extends NavigationElements {
             success, is(true));
     }
 
-    @And("Possible Alert window is handled$")
+    @And("Intermittent Alert window is handled$")
     public void handleAlert() {
         boolean actualAlert = isAlertPresent();
         if (actualAlert)
