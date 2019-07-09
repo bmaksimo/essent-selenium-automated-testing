@@ -6,6 +6,7 @@ import com.essent.testing.dwp.pageobject.impl.navigation.DwpPlusMenu;
 import com.essent.testing.dwp.pageobject.impl.navigation.TopActionsPageImpl;
 import com.essent.testing.dwp.pageobject.navigation.TopActionsPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.support.ui.FluentWait;
 
 import java.util.HashMap;
@@ -168,5 +169,18 @@ public abstract class NavigationElements extends DwpScenario {
     protected void clickDashboardMenu(String menu, int waitingTime) {
         Sleeper.sleepTightInSeconds(waitingTime);
         new ClickDashboardMenu().testNow(menu);
+    }
+
+    protected boolean isAlertPresent()
+    {
+        try
+        {
+            seleniumDriver.getDriver().switchTo().alert();
+            return true;
+        }
+        catch (NoAlertPresentException ex)
+        {
+            return false;
+        }
     }
 }
