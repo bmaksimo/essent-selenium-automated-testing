@@ -39,7 +39,7 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
         
         When Dashboard menu is "Contracten"
-        Then View list header is "Actieve en toekomstige connecties"
+        Then View list header is "Actieve en toekomstige connecties" appears within 30 seconds
         And "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
 
         #2. Trigger renewal batch
