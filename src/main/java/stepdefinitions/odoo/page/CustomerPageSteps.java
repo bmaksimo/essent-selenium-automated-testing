@@ -27,21 +27,6 @@ public class CustomerPageSteps extends OdooScenario {
         super.tearDown();
     }
 
-
-    @Then("^Odoo validate bank account was changed on \"([^\"]*)\"$")
-    public void odooValidateBankAccountWasChangedOn(String ban) {
-        String bankAccountNumber = parameterProvider.getValueOrParameterAsString(ban);
-        com.essent.testing.odoo.pageobject.impl.pageObject.CustomerPage cp = new com.essent.testing.odoo.pageobject.impl.pageObject.CustomerPage();
-        Assert.assertTrue("Check if band account number is same as in DWP",cp.getBankAccountAsString().equalsIgnoreCase(bankAccountNumber));
-    }
-
-    @Then("^Odoo verify payment method has changed to \"([^\"]*)\"$")
-    public void odooVerifyPaymentMethodChanged(String pm) {
-        String paymentMethod = parameterProvider.getValueOrParameterAsString(pm);
-        com.essent.testing.odoo.pageobject.impl.pageObject.CustomerPage cp = new com.essent.testing.odoo.pageobject.impl.pageObject.CustomerPage();
-        Assert.assertTrue("Check if payment method is same as in DWP",cp.getPaymentMethodAsString().equalsIgnoreCase(paymentMethod));
-    }
-
     @And("^Odoo click on account number$")
     public void odooClickOnAccountNumber(){
         CustomerPage cp = new CustomerPage();

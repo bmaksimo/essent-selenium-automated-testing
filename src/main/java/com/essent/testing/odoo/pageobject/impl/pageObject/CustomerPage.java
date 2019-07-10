@@ -21,11 +21,12 @@ public class CustomerPage extends Component {
 
 
 
-    public void clickOnTabMenu(String tab){
+    public boolean clickOnTabMenu(String tab){
        awaitOdooRequestToFinish(20);
        String xpath = createQuery(tabMenuXpath, nameTab, tab);
        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(xpath)));
 
+       return true;
     }
 
     public WebElement getBankAccountElement(){
