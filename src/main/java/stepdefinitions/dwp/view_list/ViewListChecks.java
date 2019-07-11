@@ -3,7 +3,6 @@ package stepdefinitions.dwp.view_list;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.list_view.ViewListTestObject;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
-import io.cucumber.datatable.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -11,6 +10,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.runtime.CucumberException;
+import io.cucumber.datatable.DataTable;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.Matchers;
@@ -21,9 +21,6 @@ import org.openqa.selenium.support.ui.FluentWait;
 import stepdefinitions.dwp.b2b.Marketberichten;
 import stepdefinitions.dwp.navigation.NavigationElements;
 import stepdefinitions.dwp.plus.PlusActions;
-
-import static com.billinghouse.test_automation.util.dsl.NumericUtil.checkAmount;
-import static org.hamcrest.CoreMatchers.containsString;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.HashMap;
@@ -36,6 +33,8 @@ import java.util.stream.Collectors;
 import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkTimeBetween;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.getFormattedEnd;
+import static com.billinghouse.test_automation.util.dsl.NumericUtil.checkAmount;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -64,7 +63,7 @@ public class ViewListChecks extends NavigationElements {
     private class CheckViewListHeader implements Predicate<String> {
         @Override
         public boolean test(String header) {
-            int sec = 5;
+            int sec = 2;
             Map<String, Object> options = new HashMap<>();
             options.put("schedule_seconds", sec);
             options.put("header", header);
@@ -153,20 +152,22 @@ public class ViewListChecks extends NavigationElements {
         registerActiveScenario(scenario);
     }
 
+    @When("^View list header is \"([^\"]*)\"$")
+    public void checkViewListHeader(String header) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
+        boolean success = new CheckViewListHeader().test(header);
+        assertThat(String.format("View list header \"%s\" didn't appear", header),
+            success, is(true));
+        parameterProvider.put("current-view-list", header);
+        seleniumDriver.waitForRequestsToFinish();
+    }
+
     @When("^View list header is \"([^\"]*)\" appears within (\\d+) seconds?$")
     public void checkViewListHeaderUntil(String header, int seconds) throws Throwable {
         FluentWait<CheckViewListHeader> waiter = waiter(new CheckViewListHeader(), seconds, 5)
             .withMessage(String.format("View list header \"%s\" didn't appear within %s seconds", header, seconds));
         waiter.until((CheckViewListHeader callback) -> callback.test(header));
         logger().debug(String.format("- STEP: View list header is \"%s\" within %s second(s) - PASSED.", header, seconds));
-    }
-
-    @When("^View list header is \"([^\"]*)\"$")
-    public void checkViewListHeaderUntil(String header) throws Throwable {
-        FluentWait<CheckViewListHeader> waiter = waiter(new CheckViewListHeader(), 20, 5)
-            .withMessage(String.format("View list header \"%s\" didn't appear within %s seconds", header, 20));
-        waiter.until((CheckViewListHeader callback) -> callback.test(header));
-        logger().debug(String.format("- STEP: View list header is \"%s\" within %s second(s) - PASSED.", header, 20));
     }
 
     @When("^View List is empty$")
@@ -472,7 +473,7 @@ public class ViewListChecks extends NavigationElements {
                 parameterProvider.put(columnName.get(), value.get());
             }
         }
-     }
+    }
 
     @Then("^List element with value at column \"([^\"]*)\" from table \"([^\"]*)\" is checked$")
     public void storeColumnValueInParameterProvider(String columnName, String tableName) throws Throwable {
@@ -613,11 +614,11 @@ public class ViewListChecks extends NavigationElements {
     public void viewIsNotEmpty(String tableTitle, String verb) {
         DefaultTableModel viewTableModel = new ViewListTestObject().getViewTableModel(tableTitle);
         boolean success = false;
-         if (verb.equalsIgnoreCase("is")){
-             success = viewTableModel.getRowCount() == 0;
-         }else if (verb.equalsIgnoreCase("is_not")){
-             success = viewTableModel.getRowCount() != 0;
-         }
+        if (verb.equalsIgnoreCase("is")){
+            success = viewTableModel.getRowCount() == 0;
+        }else if (verb.equalsIgnoreCase("is_not")){
+            success = viewTableModel.getRowCount() != 0;
+        }
         assertThat(String.format(tableTitle + " doesn't exist or comparation is not valid"), success, is(true));
         logger().debug(String.format("- STEP: \"%s\" list is not empty - PASSED.", tableTitle));
     }
@@ -772,6 +773,31 @@ public class ViewListChecks extends NavigationElements {
         }
         Assert.assertTrue("Balance is not correct", cp.getBalance().contains(expectedBalance));
     }
+
+    @And("Sum of Rate for signature received is \"([^\"]*)\"$")
+    public void sumRates(String typeRate) {
+        ContractPage cp = new ContractPage();
+        if (typeRate.equals("High")) {
+            parameterProvider.put("sumRatesHighSignature", cp.sumRates(typeRate));
+        }
+        else if (typeRate.equals("Low")) {
+            parameterProvider.put("sumRatesLowSignature", cp.sumRates(typeRate));
+        }
+       else
+        throw new CucumberException(getClass() + ": Only High and Low values can be passed as parameters");
+    }
+
+    @Then("\"([^\"]*)\" and \"([^\"]*)\" equals Sum of High&Low rates for rejected rates$")
+    public void compareSumOfRatesForSignatureQuoteAndRejectedQuote(String sumRatesHighSignature, String sumRatesLowSignature) {
+        ContractPage cp = new ContractPage();
+        float sumHighRatesSignatureToFloat= Float.parseFloat(parameterProvider.getValueOrParameterAsString(sumRatesHighSignature));
+        float sumLowRatesSignatureToFloat = Float.parseFloat(parameterProvider.getValueOrParameterAsString(sumRatesLowSignature));
+        cp.sumRates(sumRatesHighSignature);
+        cp.sumRates(sumRatesLowSignature);
+        assertThat("Sum of signature and rejected quote for High prices is not equal", sumHighRatesSignatureToFloat, equalTo( cp.sumRates(sumRatesHighSignature)));
+        assertThat("Sum of signature and rejected quote for Low prices is not equal", sumLowRatesSignatureToFloat, equalTo(cp.sumRates(sumRatesLowSignature)));
+    }
+
 
     //TODO Create a special test harness class for wait methods,
     //and move the methods, related to test execution timing, there.

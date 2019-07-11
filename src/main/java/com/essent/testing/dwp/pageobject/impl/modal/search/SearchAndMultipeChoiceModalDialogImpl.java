@@ -1,5 +1,6 @@
 package com.essent.testing.dwp.pageobject.impl.modal.search;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.elements.Button;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.elements.ButtonImpl;
@@ -17,7 +18,7 @@ public class SearchAndMultipeChoiceModalDialogImpl extends Component
     implements SearchAndMultipeChoiceModalDialog {
 
     private static final String XPATH_MODAL_SEARCH_RESULT_LOCATOR_TEMPLATE =
-        "//label[input[@type='checkbox']]";
+        "//div[@class='modal__content']//label[input[@type='checkbox']]";
     private static final By CSS_MODAL_TITLE_LOCATOR = By.cssSelector(".view__modal .modal__header");
     private static final By CSS_MODAL_SEARCH_FIELD_LOCATOR =
         By.cssSelector(".input-holder #search-input");
@@ -55,15 +56,16 @@ public class SearchAndMultipeChoiceModalDialogImpl extends Component
 
     @Override
     public boolean checkSearchResult(String match) {
-        List<WebElement> elements =
-            seleniumDriver.findElements(
-                XPATH_MODAL_SEARCH_RESULT_LABEL_LOCATOR,
-                Duration.ofSeconds(10),
-                Duration.ofMillis(500));
-        Optional<WebElement> first =
-            elements.stream().filter(e -> e.getText().contains(match)).findFirst();
-        first.ifPresent(e -> e.click());
-        return first.isPresent();
+          Sleeper.sleepTightInSeconds(5);
+          List<WebElement> elements =
+                 seleniumDriver.findElements(
+                     XPATH_MODAL_SEARCH_RESULT_LABEL_LOCATOR,
+                     Duration.ofSeconds(10),
+                     Duration.ofMillis(500));
+             Optional<WebElement> first =
+                 elements.stream().filter(e -> e.getText().trim().contains(match)).findFirst();
+             first.ifPresent(WebElement::click);
+          return first.isPresent();
     }
 
     @Override

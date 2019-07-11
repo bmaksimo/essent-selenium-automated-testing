@@ -52,6 +52,8 @@ public class ContractPage extends Component {
     private static final int OCTOBER = 10;
     private static DateTimeFormatter DASH_SEPARATED_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     private static DateTimeFormatter SLASH_SEPARATED_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static String HIGH_RATES_QUOTE = "//list[@list-key='QuoteComponentLines']//span[contains(., 'High')]/../../../..//td[6]";
+    private static String LOW_RATES_QUOTE = "//list[@list-key='QuoteComponentLines']//span[contains(., 'Low')]/../../../..//td[6]";
 
     private WebElement startData() {
         return seleniumDriver.findElementWhenVisible(By.id(START_DATA_ID));
@@ -398,7 +400,7 @@ public class ContractPage extends Component {
             }
         }
 
-       return numInstallThanHaveGivenAmount;
+        return numInstallThanHaveGivenAmount;
     }
 
 
@@ -408,5 +410,27 @@ public class ContractPage extends Component {
         int result1 = Integer.parseInt(installAmount);
         int result2 = Integer.parseInt(invAmount);
         return result1 - result2;
+    }
+
+    public float sumRates(String typeRate) {
+        seleniumDriver.waitForRequestsToFinish();
+        String typeQuoteRate = "";
+
+        if (typeRate.contains("High")) {
+            typeQuoteRate = HIGH_RATES_QUOTE;
+
+        }
+        else if (typeRate.contains("Low")) {
+            typeQuoteRate = LOW_RATES_QUOTE;
+        }
+
+        List<WebElement> rates = seleniumDriver.findElements(By.xpath(typeQuoteRate));
+        float sumRate=0.000f;
+        for (WebElement matchValue : rates ) {
+            String [] str = matchValue.getText().split(",");
+            String finalStr = str[0] + "." + str[1];
+            sumRate += Float.parseFloat(finalStr);
+        }
+        return sumRate;
     }
 }
