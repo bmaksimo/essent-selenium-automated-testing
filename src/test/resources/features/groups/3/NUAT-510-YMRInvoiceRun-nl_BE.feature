@@ -12,7 +12,7 @@ Feature: NUAT-510 Triggering advance invoice run. Check is invoice created in DW
         And Top menu item is "Klanten"
         Given B2B Active Contract is
             | productType    | isFakeAddress | switchType       | meterType       | kwMax |
-            | UP             | FAKE          |  SUPPLIER SWITCH | YMR             | 50000 |
+            | TC1            | FAKE          |  SUPPLIER SWITCH | YMR             | 50000 |
         And Top action is "Filters"
         And "Klantnummer" input is "parameter:accountNumber"
         Then List element with value at column "Id Billing customer & persoon/familie sleutel" from table "Klanten" is checked
@@ -23,7 +23,7 @@ Feature: NUAT-510 Triggering advance invoice run. Check is invoice created in DW
         And Modal dialog is "Start invoicerun"
         And "Naam job" selection is "recurrent"
         And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
-        
+
         Then Invoice run is scheduled
 
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds

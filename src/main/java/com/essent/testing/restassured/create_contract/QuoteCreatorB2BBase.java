@@ -22,6 +22,7 @@ import stepdefinitions.dwp.contracts.b2b.QuoteB2B;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -481,8 +482,8 @@ public class QuoteCreatorB2BBase {
 		priceValidUntilDate = prop.getProperty("price_valid_until_date");
 		signatureReceivedDate = prop.getProperty("signature_received_date");
 
-		upStartDate = prop.getProperty("up_start_date");
-		upEndDate = prop.getProperty("up_end_date");
+        upStartDate = ContractConstants.PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_UP.equalsIgnoreCase(path) ? getUPStartDate() : prop.getProperty("up_start_date");
+        upEndDate = ContractConstants.PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_UP.equalsIgnoreCase(path) ? getUPEndDate() : prop.getProperty("up_end_date");
 
 		paymentMethod = prop.getProperty("payment_method");
 		legalCommunicationBy = prop.getProperty("legal_communication_by");
@@ -513,6 +514,18 @@ public class QuoteCreatorB2BBase {
         return LocalDateTime.now().format(dwpDateTimeFormatter);
     }
 
+    private String getUPStartDate() {
+        DateTimeFormatter dwpDateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-01");
+        return LocalDate.now().format(dwpDateTimeFormatter);
+    }
+
+    private String getUPEndDate() {
+        DateTimeFormatter dwpDateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate oneYearFromNow = LocalDate.now().plusYears(1);
+        LocalDate upEndDate = oneYearFromNow.withDayOfMonth(oneYearFromNow.lengthOfMonth()).minusMonths(1);
+	    return upEndDate.format(dwpDateTimeFormatter);
+    }
+
 	protected void getQuoteProperties(String path, QuoteB2B quoteB2B) throws FileNotFoundException, IOException {
 		this.isFakeAddress = quoteB2B.getIsFakeAddress();
 
@@ -522,8 +535,8 @@ public class QuoteCreatorB2BBase {
 		priceValidUntilDate = prop.getProperty("price_valid_until_date");
 		signatureReceivedDate = prop.getProperty("signature_received_date");
 
-		upStartDate = prop.getProperty("up_start_date");
-		upEndDate = prop.getProperty("up_end_date");
+		upStartDate = ContractConstants.PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_UP.equalsIgnoreCase(path) ? getUPStartDate() : prop.getProperty("up_start_date");
+		upEndDate = ContractConstants.PATH_TO_PROPERTIES_FILE_CREATE_QUOTE_UP.equalsIgnoreCase(path) ? getUPEndDate() : prop.getProperty("up_end_date");
 
 		paymentMethod = prop.getProperty("payment_method");
 		legalCommunicationBy = prop.getProperty("legal_communication_by");
