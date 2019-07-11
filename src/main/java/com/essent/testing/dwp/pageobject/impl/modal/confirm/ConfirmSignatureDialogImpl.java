@@ -17,7 +17,7 @@ public class ConfirmSignatureDialogImpl extends Component implements ConfirmSign
 
   private static final By CONFIRM_BUTTON_SELECTOR = By.id("confirm-button");
 
-  private static final By ACTION_LIST_LOCATOR = By.xpath("//*[@class='action-list']");
+  private static final By ACTION_LIST_LOCATOR = By.xpath("//*[@class='action-list']//li[contains(., '')]");
 
   public ConfirmSignatureDialogImpl(String title) {
     super();

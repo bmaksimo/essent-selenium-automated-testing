@@ -3,7 +3,7 @@
 @REGRESSION
 @ALL
 
-Feature: Price validity check on an Elec UP quote
+Feature: TESTAUTO-32: Price validity check on an Elec UP quote
 
     Background:
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
