@@ -12,7 +12,7 @@ Feature: NUAT-417: Payment Plan creation/reversal
         And Top menu item is "Klanten"
         Given B2B Active Contract is
             | productType | isFakeAddress | switchType      | meterType | kwMax |
-            | UP          | FAKE          | SUPPLIER SWITCH | YMR       | 50000 |
+            | TC1         | FAKE          | SUPPLIER SWITCH | YMR       | 50000 |
         And Top action is "Filters"
         And "B2C/B2B" selection is "B2B"
         And "Type klant" selection is "Klant"
