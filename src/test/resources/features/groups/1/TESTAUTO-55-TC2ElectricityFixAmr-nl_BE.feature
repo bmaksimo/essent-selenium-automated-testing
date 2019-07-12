@@ -26,5 +26,5 @@ Feature: TESTAUTO-55 TC2 Electricity fix – AMR
         And "Type meter" selection is "Enkelvoudig"
         And "Verbruik enkelvoudig (kWh)" input is "10000"
         And "kW Max" input is "20"
-        And Table price calcualtion is not empty
+        And Table price calculation is not empty
 
