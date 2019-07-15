@@ -17,23 +17,20 @@ Feature: TESTAUTO-32: Price validity check on an Elec UP quote
         And "Klantnummer" input is "parameter:accountNumber"
         And Click on "parameter:accountNumber" link
         And Dashboard menu is "Sales"
-        And View list header is "Offertes"
         Then Table "Offertes" contains value "Verstuurd naar de klant - Geaccepteerd" at column "Type & status"
 
         When Plus action of "1" element from "QuotesOnAccount" and click on "Handtekening ontvangen"
-        And "Datum handtekening ontvangen" date is "01/11/2016"
+        And "Datum handtekening ontvangen" date is "now"
         And Option "Taak aanmaken voor de manager?" "is" "On"
         And Changes are confirmed
         Then Table "Offertes" contains value "Handtekening ontvangen - Geaccepteerd" at column "Type & status"
 
         When Click on link in View List at "1st" row and "Nummer & Getekend contractnummer" column polling 30 seconds
-        And View list header is "Taken"
         Then Table "Taken" contains value "Check quote" at column "Naam & Type & Subtype"
         Then Table "Taken" contains value "quotation - quote_price_validity" at column "Naam & Type & Subtype"
 
         When Plus menu is "Offertes -> Check geldigheid tarieven"
-        And Form header is "Updated Prices"
-        And "Nieuwe tariefdatum" date is "01/11/2016"
+        And "Nieuwe tariefdatum" date is "now"
         And Option "Ja, ik wil de offerte met de nieuwe tarieven goedkeuren." "is" "On"
         And Changes are confirmed
         And Bevestigen
@@ -41,11 +38,9 @@ Feature: TESTAUTO-32: Price validity check on an Elec UP quote
         Then Table "Offertelijnen" contains value "Afgekeurd" at column "Status & Product"
 
         When Plus action of "1" element from "Quotelines" and click on "Bekijk details tarief"
-        And View list header is "Prijzen offertelijn"
         And Sum of Rate for signature received is "High"
         And Sum of Rate for signature received is "Low"
         Then Clicked on sign X
 
         When Plus action of "2" element from "Quotelines" and click on "Bekijk details tarief"
-        And View list header is "Prijzen offertelijn"
         Then "parameter:sumRatesHighSignature" and "parameter:sumRatesLowSignature" equals Sum of High&Low rates for rejected rates
