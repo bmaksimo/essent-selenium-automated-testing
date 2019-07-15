@@ -35,6 +35,7 @@ Feature: TESTAUTO-32: Price validity check on an Elec UP quote
         And Option "Ja, ik wil de offerte met de nieuwe tarieven goedkeuren." "is" "On"
         And Changes are confirmed
         And Bevestigen
+        And Sleep for 20 seconds
         Then Table "Offertelijnen" contains value "Handtekening ontvangen" at column "Status & Product"
         Then Table "Offertelijnen" contains value "Afgekeurd" at column "Status & Product"
 
