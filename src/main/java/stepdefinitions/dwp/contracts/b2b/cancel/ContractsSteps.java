@@ -230,7 +230,7 @@ public class ContractsSteps extends DwpScenario{
     public void checkProductChangeSuccess(String expectedMessage) {
         seleniumDriver.waitForRequestsToFinish();
         ContractPage cp = new ContractPage();
-        int refreshCount = 10;
+        int refreshCount = 30;
         for (int i = 0; i < refreshCount; i++) {
             if (cp.locateMessageElement().getText().contains(expectedMessage)) {
                 break;

@@ -33,7 +33,7 @@ Feature: NSTA 332 Soctar confirmation --> Manual
         Then Form header is "Connection details"
 
         When EAN code is generated
-        And Electricity market mock test is Open
+        And Option "test" "is" "On"
         And "Startdatum" date is "2 weeks before now"
         And "EAN-code" input is "parameter:EAN-code-generated"
         And Connection details are confirmed
@@ -42,7 +42,7 @@ Feature: NSTA 332 Soctar confirmation --> Manual
 
         When "Betalingswijze" selection is "Overschrijving"
         And Billing details are confirmed
-        Then  Form header is "Quote overview"
+        Then Form header is "Quote overview"
 
         When Option "Heeft de klant al getekend?" "is" "On"
         And "Kanaal ondertekening" selection is "Papier"
@@ -50,11 +50,9 @@ Feature: NSTA 332 Soctar confirmation --> Manual
         And Quote is signed
         And Quote is signed in "Kontich"
         When Quote is confirmed
-        Then View list header is "Offertes"
         Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
 
         When Dashboard menu is "Contracten"
-        Then View list header is "Actieve en toekomstige connecties"
         And  "1st" List element with value at column "EAN-code" is checked
         And  "1st" list element has cell value "Actief" at column "Contractnummer" polling 450 seconds
 
@@ -79,9 +77,9 @@ Feature: NSTA 332 Soctar confirmation --> Manual
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
 
         When Dashboard menu is "Contracten"
+        And  "1st" list element has cell value "Actief" at column "Contractnummer" polling 450 seconds
         And Table "Contracten" contains value "Geannuleerd (Geaccepteerd)" at column "Type & status"
         And Table "Contracten" contains value "Verwerkt (Geaccepteerd)" at column "Type & status"
-        And Table "Actieve en toekomstige connecties" contains value "Actief" at column "Contractnummer"
         And Table "Actieve en toekomstige connecties" contains value "sociaal tarief (SOCTAR)" at column "EAN-code"
 
 

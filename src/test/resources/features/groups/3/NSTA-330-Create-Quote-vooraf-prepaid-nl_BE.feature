@@ -59,7 +59,6 @@ Feature: NSTA-330. Check the generation of prepaid advance invoice.
         And "Datum ondertekening" date is "35 days before now"
         And Quote is signed in "Kontich"
         And Quote is confirmed
-        Then View list header is "Offertes"
         And "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
 
         When Click on link in View List at "1st" row and "Nummer & Getekend contractnummer" column

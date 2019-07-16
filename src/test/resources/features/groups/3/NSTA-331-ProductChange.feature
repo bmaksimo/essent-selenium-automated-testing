@@ -34,7 +34,6 @@ Feature: NSTA 331- Product Change for TK1 type
 
         When EAN code is generated
         And "Startdatum" date is "2 weeks before now"
-#        And Electricity market mock test is Open
         And Option "test" "is" "On"
         And "EAN-code" input is "parameter:EAN-code-generated"
         And Connection details are confirmed
@@ -50,11 +49,8 @@ Feature: NSTA 331- Product Change for TK1 type
         And Quote is signed in "Kontich"
         And "Datum ondertekening" date is "now"
         And Quote is confirmed
-        Then View list header is "Offertes"
-        Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
 
         When Dashboard menu is "Contracten"
-        Then View list header is "Actieve en toekomstige connecties"
         And "1st" List element with value at column "EAN-code" is checked
         And "1st" list element has cell value "Actief" at column "Contractnummer" polling 450 seconds
 
