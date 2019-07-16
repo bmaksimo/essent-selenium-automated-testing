@@ -79,6 +79,7 @@ Feature: NSTA-329 Deduplication activated customer
         Then Form header is "Connection details"
 
         When Field "Housenumber" input is "22"
+        And Sleep for 10 seconds
         And Deduplication dialogue "Soortgelijke klanten" is shown
         Then Deduplication dialogue link "Create quote for account" is clicked
 
