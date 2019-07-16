@@ -16,7 +16,8 @@ Feature: NUAT-482: Restart SA or MI - nl_BE
         And "Status EC" selection is "Geweigerd" waiting for 30 seconds
         Then Plus action and "Herstuur marktbericht" of first customer from list waiting for 30 seconds
 
-        When "Startdatum" date is "3 weeks from now" waiting for 60 seconds
+        When "Startdatum" date is "3 weeks from now" waiting for 45 seconds
+        And "Einddatum" date is "1 year from now" waiting for 45 seconds
         And "Module" selection is "START ACCESS" waiting for 10 seconds
         And "Label" selection is "Supplier Switch" waiting for 10 seconds
         And "Testing" turn on waiting for 10 seconds
