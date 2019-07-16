@@ -44,11 +44,9 @@ Feature: NSTA-341: Block dunning for invoice
         And Quote is signed in "Kontich"
         And "Datum ondertekening" date is "now"
         And Quote is confirmed
-        Then View list header is "Offertes"
         And "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
 
         When Dashboard menu is "Contracten"
-        And View list header is "Actieve en toekomstige connecties"
         And "1st" List element with value at column "EAN-code" is checked
         Then "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
 
@@ -63,7 +61,6 @@ Feature: NSTA-341: Block dunning for invoice
         And View List element "Klantnummer & Naam" using "accountNumber" as alias is collected as parameter at "1st" list row
         And Click on "parameter:accountNumber" link
         And Dashboard menu is "Contracten"
-        Then View list header is "Actieve en toekomstige connecties"
 
         Given Top arrow button is "Up"
         And Plus menu is "Billing -> Start facturatierun"
@@ -76,7 +73,6 @@ Feature: NSTA-341: Block dunning for invoice
 
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
         When Dashboard menu is "Billing"
-        Then View list header is "Transacties"
         And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
 
         # 3 - Block dunning for the invoice
@@ -90,6 +86,5 @@ Feature: NSTA-341: Block dunning for invoice
         And Sleep for 60 seconds
         When Dashboard menu is "Contracten"
         When Dashboard menu is "Billing"
-        And View list header is "Transacties"
         And Table "Transacties" does not contain value "Invoice (DUNNINGCOST)" at column "ID & Type"
 
