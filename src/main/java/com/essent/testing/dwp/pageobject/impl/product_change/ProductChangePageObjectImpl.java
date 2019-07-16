@@ -1,5 +1,6 @@
 package com.essent.testing.dwp.pageobject.impl.product_change;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.product_change.ProductChangePageObject;
 import org.openqa.selenium.By;
@@ -13,6 +14,7 @@ public class ProductChangePageObjectImpl extends Component implements ProductCha
     @Override
     public void selectFirstItemFromList() {
         seleniumDriver.waitAndClick(seleniumDriver.findElement(By.id(TARIFF_ID)));
+        Sleeper.sleepTightInSeconds(5);
         seleniumDriver.waitAndClick(seleniumDriver.findElement(By.xpath(TARIFF_FIRST_LIST_ITEM)));
      }
 }
