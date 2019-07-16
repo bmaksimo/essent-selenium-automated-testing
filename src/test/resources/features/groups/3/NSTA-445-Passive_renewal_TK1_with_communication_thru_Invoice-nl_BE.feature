@@ -39,7 +39,6 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
 
         When Dashboard menu is "Contracten"
-        Then View list header is "Actieve en toekomstige connecties"
         And "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
 
         #2. Trigger renewal batch
@@ -59,7 +58,7 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         And  "Renewal date from" date is "parameter:Start & Einddatum - start"
         And "Renewal date to" date is "parameter:Start & Einddatum - end"
         And "EAN-code" input is "parameter:EAN-code"
-        Then Modal dialogue is confirmed
+        Then Changes are confirmed
         And Table "TK1 - Hernieuwingsbatches" has matching value "parameter:suitecrm-customer-name" at column "Batchnaam"
 
         #Checks
@@ -70,7 +69,7 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         And  Click on "VALIDEER PASSIEVE HERNIEUWINGSBATCH" link
         And  Modal dialog is "Valideer contractlijnen hernieuwing"
         And  Modal dialog contains "parameter:suitecrm-customer-name" in action list
-        And  Modal dialogue is confirmed
+        Then Changes are confirmed
         And  All cell values at "1st" row from table "Geselecteerde contractlijn voor hernieuwingsbatch" are checked
 
 
@@ -110,13 +109,13 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         And "ID Billing customer" input is "parameter:Id Billing customer"
         Then Invoice run is scheduled
 
+        And Sleep for 15 seconds
         When Left menu is "billing"
         And Top menu item is "Klanten"
         And Top action is "Filters"
         And "Klantnummer" input is "parameter:accountNumber"
         And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
         When Dashboard menu is "Billing"
-        Then View list header is "Transacties"
         And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
 
         #6 Check communication

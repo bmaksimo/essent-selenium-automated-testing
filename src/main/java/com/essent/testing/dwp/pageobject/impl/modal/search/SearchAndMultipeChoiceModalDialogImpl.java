@@ -56,7 +56,7 @@ public class SearchAndMultipeChoiceModalDialogImpl extends Component
 
     @Override
     public boolean checkSearchResult(String match) {
-          Sleeper.sleepTightInSeconds(5);
+          Sleeper.sleepTightInSeconds(10);
           List<WebElement> elements =
                  seleniumDriver.findElements(
                      XPATH_MODAL_SEARCH_RESULT_LABEL_LOCATOR,
