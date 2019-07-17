@@ -40,7 +40,6 @@ Feature: NSTA-345:Credit Invoice
         Given View List element "Id Billing customer & persoon/familie sleutel" is collected as parameter at "1st" list row
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
         When Dashboard menu is "Contracten"
-        Then View list header is "Actieve en toekomstige connecties"
         And "1st" List element with value at column "EAN-code" is checked
         And "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
         And Top arrow button is "UP"
@@ -60,7 +59,6 @@ Feature: NSTA-345:Credit Invoice
         And "Klantnummer" input is "parameter:accountNumber"
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
         When Dashboard menu is "Billing"
-        Then View list header is "Transacties"
 
         #Recalculate invoice
         When Plus action of "1" element from "TransactionsOnAccount" and click on "Herbereken tussentijdse factuur"
@@ -74,18 +72,16 @@ Feature: NSTA-345:Credit Invoice
         And "Klantnummer" input is "parameter:accountNumber"
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
         When Dashboard menu is "Service"
-        Then View list header is "Interacties"
 
           #3 - Check if interactions are created for VKM and CNM
         Then Table "Interacties" contains value "VKM" at column "Type & Onderwerp"
         Then Table "Interacties" contains value "CNM" at column "Type & Onderwerp"
         When Dashboard menu is "Billing"
-        Then View list header is "Transacties"
 
         #Asserts
          #1 - Check if Old invoice is credited (check if CNM is created for same amount as old VKM)
          #2 - Check if there is a new invoice created for the amount you selected
-        Then Invoice Amounts have values "336 €", "-336 €" and "900 €"
+        Then Invoice Amounts have values "448 €", "-448 €" and "1200 €"
 
          #4 - Check if CNM has been sent to customer
         When Dashboard menu is "Service"
@@ -95,8 +91,7 @@ Feature: NSTA-345:Credit Invoice
 
         #5 - Check Balance of new invoice credit
         When Dashboard menu is "Billing"
-        Then View list header is "Transacties"
-        Then Balance is "€ 900,00"
+        Then Balance is "€ 1200,00"
 
 
 

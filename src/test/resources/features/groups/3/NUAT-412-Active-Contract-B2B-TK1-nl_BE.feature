@@ -34,7 +34,6 @@ Feature: NUAT-412 part: Create B2B TK1 Contract
             | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
             | Random           | 1       |            |     | 2550       | Kontich |         |
 
-
         And Company contact info is generated
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
@@ -61,10 +60,8 @@ Feature: NUAT-412 part: Create B2B TK1 Contract
         And Quote is signed in "Kontich"
         And "Datum ondertekening" date is "now"
         And Quote is confirmed
-        Then View list header is "Offertes"
         Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
 
         When Dashboard menu is "Contracten"
-        Then View list header is "Actieve en toekomstige connecties"
         And "1st" List element with value at column "EAN-code" is checked
         And "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds

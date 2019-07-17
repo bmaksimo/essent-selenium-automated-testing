@@ -17,13 +17,14 @@ Feature: NUAT-447: Check validity prices
         And Label "Status" is "Verstuurd naar klant"
         And Take Offertenummer from first offerte
         And Plus action and "Handtekening ontvangen" of first customer from list
-        And Client signature receive data is "01/11/2016"
+        And "Datum handtekening ontvangen" date is "now"
         And "Taak aanmaken voor de manager" turn on
         Then Changes are confirmed
 
+        And Sleep for 30 seconds
         When Reset filter
         And "Offertenummer" input is "parameter:offertenummer"
-        And Click on link in View List at "1st" row and "Nummer & Getekend contractnummer" column polling 20 seconds
+        And Click on link in View List at "1st" row and "Nummer & Getekend contractnummer" column polling 120 seconds
         And Plus menu is "Offertes -> Check geldigheid tarieven"
         And "Ja, ik wil de offerte met de nieuwe tarieven goedkeuren" turn on with dot
         Then Bevestigen
@@ -35,4 +36,5 @@ Feature: NUAT-447: Check validity prices
         When Plus menu is "Offertes -> Status - getekend"
         And Sign quote file is uploaded
         And Changes are confirmed
+        And Sleep for 10 seconds
         Then Offerte status is "Getekend"
