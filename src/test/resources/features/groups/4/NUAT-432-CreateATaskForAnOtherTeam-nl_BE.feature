@@ -23,5 +23,6 @@ Feature: NUAT-432: Create A Task For An Other Team - nl_BE
         And "Test Nuat - 432" input in omschrijving
         Then Changes are confirmed
 
+        And Sleep for 10 seconds
         When Dashboard menu is "Service"
         Then "Test" is created

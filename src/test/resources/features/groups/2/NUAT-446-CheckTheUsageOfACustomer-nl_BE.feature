@@ -70,6 +70,5 @@ Feature: NUAT-446: Check The Usage Of A Customer - nl_BE
         Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
 
         When Plus menu is "Billing -> Verbruiken voor klant"
-        And View list header is "Verbruiken"
         And "Verbruiken" list is_not empty
 
