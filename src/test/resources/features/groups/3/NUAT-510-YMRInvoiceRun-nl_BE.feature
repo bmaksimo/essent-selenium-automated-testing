@@ -28,7 +28,6 @@ Feature: NUAT-510 Triggering advance invoice run. Check is invoice created in DW
 
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
         When Dashboard menu is "Billing"
-        Then View list header is "Transacties"
         And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
         And "1st" List element with value at column "ID & Type" is checked
 

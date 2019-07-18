@@ -42,7 +42,6 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         Then  Form header is "Quote overview"
 
         When Quote is confirmed
-        Then View list header is "Offertes"
         And "1st" list element has cell value "Sales Verstuurd naar de klant - Geaccepteerd" at column "Type & status"
 
         When Top arrow button is "Up"
@@ -99,7 +98,6 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And "Datum ondertekening" date is "now"
         And Quote for account is signed
         When Quote for account is confirmed
-        Then View list header is "Offertes"
         And "1st" list element has cell value "Sales Getekend - Waarborg" at column "Type & status"
 
         When Dashboard menu is "Marktberichten"
@@ -142,7 +140,6 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And Top menu item is "Klanten"
         And Top action is "Filters"
         And "Naam" input is "parameter:suitecrm-customer-name"
-        Then View list header is "Klanten"
 
         And Click on link in View List at "1st" row and "Klantnummer & Naam" column
         And Dashboard menu is "Billing"

@@ -43,11 +43,9 @@ Feature: NUAT-412 part: Create / import coda file
         And Quote is signed in "Kontich"
         And "Datum ondertekening" date is "now"
         And Quote is confirmed
-        Then View list header is "Offertes"
         Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
 
         When Dashboard menu is "Contracten"
-        Then View list header is "Actieve en toekomstige connecties"
         And "1st" List element with value at column "EAN-code" is checked
         And "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
 
@@ -63,7 +61,6 @@ Feature: NUAT-412 part: Create / import coda file
         And View List element "Klantnummer & Naam" using "accountNumber" as alias is collected as parameter at "1st" list row
         And Click on "parameter:accountNumber" link
         And Dashboard menu is "Contracten"
-        Then View list header is "Actieve en toekomstige connecties"
 
         Given Top arrow button is "Up"
         And Plus menu is "Billing -> Start facturatierun"
@@ -74,9 +71,8 @@ Feature: NUAT-412 part: Create / import coda file
         And "Procesdatum" date is "1 month from now"
         Then Invoice run is scheduled
 
-        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
+        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
         When Dashboard menu is "Billing"
-        Then View list header is "Transacties"
         And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
 
         # 3 - Download CODA

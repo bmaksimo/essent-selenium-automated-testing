@@ -16,8 +16,10 @@ Feature: NUAT-428: Pay Delay - nl_BE
         When Left menu is "billing"
         And Top menu item is "Klanten"
         And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
-        And Search field input is "parameter:accountNumber"
-        And Click on link in View List at "1st" row and "Klantnaam & nummer" column polling 20 seconds
+        And Top action is "Filters"
+        And "Type klant" selection is "Klant"
+        And "Klantnummer" input is "parameter:accountNumber"
+        And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 45 seconds
         And Plus menu is "Billing -> Vrije tekstfactuur aanmaken"
         And Click select product code
         And Select "Value_Samsung" product code
@@ -30,13 +32,16 @@ Feature: NUAT-428: Pay Delay - nl_BE
     @NUAT-428-02
     Scenario: Pay delay
         Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
-        When Search field input is "parameter:accountNumber"
-        Then Click on link in View List at "1st" row and "Klantnaam & nummer" column polling 20 seconds
+        When Left menu is "contracting-switching"
+        And Top menu item is "Klanten"
+        And Top action is "Filters"
+        And "Type klant" selection is "Klant"
+        Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 45 seconds
 
         When Dashboard menu is "Billing"
         Then "1st" list element has cell value "Invoice (FREE_TEXT)" at column "ID & Type" polling 450 seconds
         When List option is "ENKEL FACTUREN"
-        Then Table "Openstaande facturen" contains value "Issued" at column "Extra info" within 600 seconds after clicking on "ENKEL FACTUREN"
+        Then Table "Openstaande facturen" contains value "Issued" at column "Extra info" within 1200 seconds after clicking on "ENKEL FACTUREN"
         Given List element with value at column "Datum & Vervaldatum" from table "Openstaande facturen" is checked
         And Plus action of "1" element from "InvoicesOnAccountOpenBalance" and click on "Betalingsuitstel"
         And "Selecteer nieuwe vervaldatum" date is "3 week from now"
