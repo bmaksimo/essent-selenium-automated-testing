@@ -56,18 +56,6 @@ Feature: NSTA - 337 Move old address - Elec
         And Get Account Number
         And Copy product name
         Then  "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
-
-        Given I renew login to DWP as "contracting.testautomation.b2c@essent.be"
-        When Left menu is "contracting-switching"
-        And Top menu item is "Klanten"
-        And Top action is "Filters"
-        And "B2C/B2B" selection is "B2C"
-        And "Type klant" selection is "Klant"
-
-        And "Klantnummer" input is "parameter:accountNumber"
-        Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
-
-        When Dashboard menu is "Contracten"
         And Plus action of "1" element from "ContractsOnAccount" and click on "Verhuis OA"
 
         And Options "Testing?" "is" "On"
@@ -95,10 +83,8 @@ Feature: NSTA - 337 Move old address - Elec
         And Low date meter reading date is "now"
 
         And Options "Push through incomplete move?" "is" "On"
-
+        And Sleep for 20 seconds
         Then Bevestigen
-        When Dashboard menu is "Service"
-        When Dashboard menu is "Contracten"
 
         When Plus action of "1" element from "BillingCustomerOnaccount" and click on "Update"
         And Change house number to "4"
@@ -117,8 +103,6 @@ Feature: NSTA - 337 Move old address - Elec
 
         When Dashboard menu is "Service"
         Then Interaction is created with Type "Document" and Onderwerp "Outbound document: Move - New Inhabitants"
-
-        When Top arrow button is "up"
         Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
 
         When Dashboard menu is "Service"
@@ -139,4 +123,3 @@ Feature: NSTA - 337 Move old address - Elec
         Then Check contract
             | type |         status          | start date |              EAN             |      product      |
             | GLN  |  Verwerkt (Geaccepteerd)|  now       | parameter:EAN-code-generated | parameter:product |
-
