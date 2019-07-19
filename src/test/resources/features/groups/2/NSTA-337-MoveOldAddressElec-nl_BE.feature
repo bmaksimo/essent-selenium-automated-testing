@@ -64,7 +64,7 @@ Feature: NSTA - 337 Move old address - Elec
         And "B2C/B2B" selection is "B2C"
         And "Type klant" selection is "Klant"
 
-        And "Klantnummer" input is "1000108993"
+        And "Klantnummer" input is "parameter:accountNumber"
         Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
 
         When Dashboard menu is "Contracten"
