@@ -101,11 +101,9 @@ Feature: NSTA - 337 Move old address - Elec
             |              address            |      phone       |         email         |
             | Mechelsesteenweg 2 2550 Kontich | +32 483 08 06 44 | petar.perovic@test.com|
 
-        When Dashboard menu is "Service"
         Then Interaction is created with Type "Document" and Onderwerp "Outbound document: Move - New Inhabitants"
         Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
-
-        When Dashboard menu is "Service"
+        
         And Click on link in View List at "1st" row and "Nummer & Aanmaakdatum" column polling 20 seconds
         And Go to GLN account
         Then Check if customer name contains "GLN"
