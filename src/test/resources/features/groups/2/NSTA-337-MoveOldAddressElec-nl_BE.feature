@@ -52,7 +52,6 @@ Feature: NSTA - 337 Move old address - Elec
         When Quote is confirmed
 
         When Dashboard menu is "Contracten"
-        Then View list header is "Actieve en toekomstige connecties"
         And  "1st" List element with value at column "EAN-code" is checked
         And Get Account Number
         And Copy product name
@@ -65,7 +64,7 @@ Feature: NSTA - 337 Move old address - Elec
         And "B2C/B2B" selection is "B2C"
         And "Type klant" selection is "Klant"
 
-        And "Klantnummer" input is "parameter:accountNumber"
+        And "Klantnummer" input is "1000108993"
         Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
 
         When Dashboard menu is "Contracten"
@@ -98,6 +97,8 @@ Feature: NSTA - 337 Move old address - Elec
         And Options "Push through incomplete move?" "is" "On"
 
         Then Bevestigen
+        When Dashboard menu is "Service"
+        When Dashboard menu is "Contracten"
 
         When Plus action of "1" element from "BillingCustomerOnaccount" and click on "Update"
         And Change house number to "4"
@@ -107,9 +108,9 @@ Feature: NSTA - 337 Move old address - Elec
         Then There is a case where onderwerp is "Verhuis"
         And Interaction is created with Type "Interaction" and Onderwerp "Move OA"
 
-        When View list header is "Cases" appears within 20 seconds
         And Click on link in View List at "1st" row and "Nummer & Aanmaakdatum" column polling 20 seconds
         And  Go to prospect
+        And Sleep for 20 seconds
         Then Check customer information
             |              address            |      phone       |         email         |
             | Mechelsesteenweg 2 2550 Kontich | +32 483 08 06 44 | petar.perovic@test.com|
@@ -121,7 +122,6 @@ Feature: NSTA - 337 Move old address - Elec
         Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
 
         When Dashboard menu is "Service"
-        And View list header is "Cases" appears within 20 seconds
         And Click on link in View List at "1st" row and "Nummer & Aanmaakdatum" column polling 20 seconds
         And Go to GLN account
         Then Check if customer name contains "GLN"
