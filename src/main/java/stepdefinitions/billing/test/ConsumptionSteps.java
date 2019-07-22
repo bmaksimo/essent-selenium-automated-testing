@@ -2,6 +2,7 @@ package stepdefinitions.billing.test;
 
 import com.billinghouse.test_automation.util.dsl.DateExpressionsUtil;
 import com.billinghouse.test_automation.util.ssh.JSchUtil;
+import com.essent.be.api.config.RestServiceFactory;
 import com.essent.be.jbilling.api.rest.RestResponse;
 import com.essent.belgium.energycomm.ws_to_bo.BasePayload;
 import com.essent.restclients.BillingEnergyCommRest;
@@ -25,6 +26,7 @@ import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
 import javax.xml.bind.JAXBContext;
@@ -47,6 +49,9 @@ public class ConsumptionSteps extends DwpScenario {
 
     private static final String PATH = "/xml/";
     private static final String CONSUMPTION_FILE = "consumption.xml";
+
+    @Autowired
+    private RestServiceFactory billingServiceFactory;
 
     @Before("@DWP or @E2E or @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
@@ -150,7 +155,7 @@ public class ConsumptionSteps extends DwpScenario {
         String consumptionData = getConsumptionRequest(deliveryPointId, dateFrom, dateTo);
         BasePayload msg = generatePayloadFromString(consumptionData);
 
-        return new BillingEnergyCommRest().postEnergyCommMessage(msg);
+        return billingServiceFactory.createEnergyCommService().doRequest(msg);
     }
 
     private String getConsumptionRequest(String deliveryPoint, String dateFrom, String dateTo) {
