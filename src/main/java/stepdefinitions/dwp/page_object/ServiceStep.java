@@ -37,6 +37,7 @@ public class ServiceStep extends DwpScenario {
 
     @And("^Go to prospect$")
     public void goToProspect() {
+        seleniumDriver.waitForRequestsToFinish();
         ServicePage servicePage = new ServicePage();
         servicePage.goToProspect();
     }

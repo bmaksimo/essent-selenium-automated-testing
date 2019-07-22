@@ -41,7 +41,7 @@ Feature: NUAT-428: Pay Delay - nl_BE
         When Dashboard menu is "Billing"
         Then "1st" list element has cell value "Invoice (FREE_TEXT)" at column "ID & Type" polling 450 seconds
         When List option is "ENKEL FACTUREN"
-        Then Table "Openstaande facturen" contains value "Issued" at column "Extra info" within 1200 seconds after clicking on "ENKEL FACTUREN"
+        Then Table "Openstaande facturen" contains value "Issued" at column "Extra info" within 120 seconds after clicking on "ENKEL FACTUREN"
         Given List element with value at column "Datum & Vervaldatum" from table "Openstaande facturen" is checked
         And Plus action of "1" element from "InvoicesOnAccountOpenBalance" and click on "Betalingsuitstel"
         And "Selecteer nieuwe vervaldatum" date is "3 week from now"
