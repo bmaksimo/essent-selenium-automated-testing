@@ -52,21 +52,10 @@ Feature: TESTAUTO - 4 Move old address  - Gas ean
         When Quote is confirmed
 
         When Dashboard menu is "Contracten"
-        Then View list header is "Actieve en toekomstige connecties"
         And  "1st" List element with value at column "EAN-code" is checked
         And Get Account Number
         And Copy product name
         Then  "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
-
-        Given I renew login to DWP as "contracting.testautomation.b2c@essent.be"
-        When Left menu is "contracting-switching"
-        And Top menu item is "Klanten"
-        And Top action is "Filters"
-        And "B2C/B2B" selection is "B2C"
-        And "Type klant" selection is "Klant"
-
-        And "Klantnummer" input is "parameter:accountNumber"
-        Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
 
         When Dashboard menu is "Contracten"
         And Plus action of "1" element from "ContractsOnAccount" and click on "Verhuis OA"
@@ -91,7 +80,7 @@ Feature: TESTAUTO - 4 Move old address  - Gas ean
         And "Meterstand" input is "parameter:meterstand"
 
         And Options "Push through incomplete move?" "is" "On"
-
+        And Sleep for 20 seconds
         Then Bevestigen
 
         When Plus action of "1" element from "BillingCustomerOnaccount" and click on "Update"
@@ -102,9 +91,9 @@ Feature: TESTAUTO - 4 Move old address  - Gas ean
         Then There is a case where onderwerp is "Verhuis"
         And Interaction is created with Type "Interaction" and Onderwerp "Move OA"
 
-        When View list header is "Cases" appears within 20 seconds
         And Click on link in View List at "1st" row and "Nummer & Aanmaakdatum" column polling 20 seconds
         And  Go to prospect
+        And Sleep for 30 seconds
         Then Check customer information
             |              address            |      phone       |         email         |
             | Mechelsesteenweg 2 2550 Kontich | +32 483 08 06 44 | petar.perovic@test.com|
@@ -113,10 +102,13 @@ Feature: TESTAUTO - 4 Move old address  - Gas ean
         Then Interaction is created with Type "Document" and Onderwerp "Outbound document: Move - New Inhabitants"
 
         When Top arrow button is "up"
+        And Left menu is "sales-marketing"
+        And Top menu item is "Klanten"
+        And Top action is "Filters"
+        And "Klantnummer" input is "parameter:accountNumber"
         Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
 
         When Dashboard menu is "Service"
-        And View list header is "Cases" appears within 20 seconds
         And Click on link in View List at "1st" row and "Nummer & Aanmaakdatum" column polling 20 seconds
         And Go to GLN account
         Then Check if customer name contains "GLN"

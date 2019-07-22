@@ -17,6 +17,7 @@ public class CreateMoveOAPage extends Component {
     public static final String METER_READING = "(//validation-wrapper[@label='Meterstand']//div[@class='auto-complete']/input)[2]";
 
     public WebElement getCommunicationChannelElement(){
+        seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.id(COMMUNICATION_CHANNEL_ELEMENT));
     }
 
@@ -41,6 +42,7 @@ public class CreateMoveOAPage extends Component {
     }
 
     public String getPreviousMeterReading(String rate){
+        seleniumDriver.waitForRequestsToFinish();
         String previousMeterReadiong = createQuery(PREVIOUS_METER_, REPLACEMENT_KEY, rate);
         return seleniumDriver.findElementWhenVisible(By.xpath(previousMeterReadiong)).getText();
     }

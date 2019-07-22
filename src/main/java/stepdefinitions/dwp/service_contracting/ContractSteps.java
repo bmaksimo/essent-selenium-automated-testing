@@ -210,11 +210,6 @@ public class ContractSteps extends DwpScenario {
             Assert.assertThat("Actual phone differs from expected", dp.getPhone(), equalTo(info.get(1).get(1)));
             Assert.assertThat("Actual email differs from expected", dp.getEmail(), equalTo(info.get(1).get(2)));
         }
-//        Assert.assertTrue("Actual address differs from expected",address.replaceAll("\n"," ").equalsIgnoreCase(info.get(1).get(0)));
-//        if (info.get(1).get(1)!= null) {
-//            Assert.assertTrue("Actual phone differs from expected", dp.getPhone().equalsIgnoreCase(info.get(1).get(1)));
-//            Assert.assertTrue("Actual email differs from expected", dp.getEmail().equalsIgnoreCase(info.get(1).get(2)));
-//        }
     }
 
     @Then("^Check if customer name contains \"([^\"]*)\"$")

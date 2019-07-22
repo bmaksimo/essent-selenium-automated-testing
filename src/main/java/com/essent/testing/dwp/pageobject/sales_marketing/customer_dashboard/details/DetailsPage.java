@@ -22,34 +22,42 @@ public class DetailsPage extends Component {
     }
 
     public int getNumberOfBillingCustomers(){
+        seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElements(By.xpath(NUMBER_BILLING_CUSTOMER)).size();
     }
 
     public String getAddress(){
+        seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath(ADDRESS)).getText();
     }
 
     public String getPhone(){
+        seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath(PHONE)).getText();
     }
 
     public String getEmail(){
+        seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath(EMAIL)).getText();
     }
 
     public String getCustomerName(){
+        seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath(CUSTOMER_NAME)).getText();
     }
 
     public String getCustomerType(){
+        seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.id(TYPE)).getText();
     }
 
     public String getIban(){
+        seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath(BANK_ACCOUNT)).getText();
     }
 
     public String getPaymentMethod(){
+        seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath(PAYMENT_METHOD)).getText();
     }
 }
