@@ -1,16 +1,23 @@
 package stepdefinitions.billing.test;
 
 import com.billinghouse.test_automation.util.dsl.DateExpressionsUtil;
+import com.billinghouse.test_automation.util.ssh.JSchUtil;
 import com.essent.be.jbilling.api.rest.RestResponse;
 import com.essent.belgium.energycomm.ws_to_bo.BasePayload;
 import com.essent.restclients.BillingEnergyCommRest;
+import com.essent.testing.config.ConfigKey;
+import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.util.resource.ResourceUtil;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.StrSubstitutor;
@@ -22,10 +29,9 @@ import org.springframework.util.Assert;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
-import java.io.File;
-import java.io.IOException;
-import java.io.StringReader;
+import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -115,6 +121,29 @@ public class ConsumptionSteps extends DwpScenario {
 
         RestResponse resp = postConsumption(deliveryPointId, fromDate, toDate);
         Assert.isTrue(resp.getResult(), resp.getMsg());
+    }
+
+    @Given("generate consumptions")
+    public void sendEANsToJBilling() throws Exception {
+//        String sftpHost = "test.rebex.net"; //ConfigProvider.getProperty(ConfigKey.SSH_NOVA_SFTP_HOST);
+//        String remoteDir = "/pub/example/";
+//        String fileName = "readme.txt";
+//        File file = JSchUtil.get().sftpGet(sftpHost, remoteDir, fileName);
+        File file = new File("/home/marcelocure/billinghouse/eans_file.csv");
+        InputStream inputStream = new FileInputStream(file);
+
+        Iterable<CSVRecord> records = CSVFormat.TDF
+            .withHeader("EAN","start date","end date")
+            .withFirstRecordAsHeader()
+            .parse(new InputStreamReader(inputStream));
+
+        for (CSVRecord record : records) {
+            String ean = record.get("EAN");
+            String startDate = record.get("start date");
+            String endDate = record.get("end date");
+            System.out.println("postConsumption("+ean+", "+startDate+", "+endDate+")");
+            postConsumption(ean, startDate, endDate);
+        }
     }
 
     private RestResponse postConsumption(String deliveryPointId, String dateFrom, String dateTo) throws Exception {

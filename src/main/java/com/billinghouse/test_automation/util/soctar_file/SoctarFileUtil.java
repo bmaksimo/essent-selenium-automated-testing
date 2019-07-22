@@ -22,7 +22,7 @@ public class SoctarFileUtil {
                 + "soctar"
                 + File.separator);
 
-    private static final String DESTINATION_LOCATION = System.getProperty("user.dir") + File.separator + "target" + File.separator;
+    public static final String DESTINATION_LOCATION = System.getProperty("user.dir") + File.separator + "target" + File.separator;
 
     public static String getSoctarFileFromTemplate(String cust_Id, String ean_id, String soctarStartDatEndDate) throws IOException {
         String sourcePath = DEFAULT_SOCTAR_LOCATION + "soctar-template.csv";
