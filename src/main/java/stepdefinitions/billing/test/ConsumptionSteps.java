@@ -1,6 +1,7 @@
 package stepdefinitions.billing.test;
 
 import com.billinghouse.test_automation.util.dsl.DateExpressionsUtil;
+import com.billinghouse.test_automation.util.soctar_file.SoctarFileUtil;
 import com.billinghouse.test_automation.util.ssh.JSchUtil;
 import com.essent.be.api.config.RestServiceFactory;
 import com.essent.be.jbilling.api.rest.RestResponse;
@@ -130,11 +131,11 @@ public class ConsumptionSteps extends DwpScenario {
 
     @Given("generate consumptions")
     public void sendEANsToJBilling() throws Exception {
-//        String sftpHost = "test.rebex.net"; //ConfigProvider.getProperty(ConfigKey.SSH_NOVA_SFTP_HOST);
-//        String remoteDir = "/pub/example/";
-//        String fileName = "readme.txt";
+//        String sftpHost = ConfigProvider.getProperty(ConfigKey.SSH_NOVA_SFTP_HOST);
+//        String remoteDir = "/";
+//        String fileName = "eans_consumption.csv";
 //        File file = JSchUtil.get().sftpGet(sftpHost, remoteDir, fileName);
-        File file = new File("/home/marcelocure/billinghouse/eans_file.csv");
+        File file = new File(SoctarFileUtil.JBILLING_CONSUMPTION_LOCATION + "eans_consumption.csv");
         InputStream inputStream = new FileInputStream(file);
 
         Iterable<CSVRecord> records = CSVFormat.TDF
@@ -146,7 +147,6 @@ public class ConsumptionSteps extends DwpScenario {
             String ean = record.get("EAN");
             String startDate = record.get("start date");
             String endDate = record.get("end date");
-            System.out.println("postConsumption("+ean+", "+startDate+", "+endDate+")");
             postConsumption(ean, startDate, endDate);
         }
     }

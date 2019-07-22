@@ -13,14 +13,10 @@ import java.util.Map;
 public class SoctarFileUtil {
 
     private static final String DEFAULT_SOCTAR_LOCATION =
-        ResourceUtil.toPath(
-            File.separator
-                + "data"
-                + File.separator
-                + "dwp"
-                + File.separator
-                + "soctar"
-                + File.separator);
+        ResourceUtil.toPath(File.separator + "data" + File.separator + "dwp" + File.separator + "soctar" + File.separator);
+
+    public static final String JBILLING_CONSUMPTION_LOCATION =
+        ResourceUtil.toPath(File.separator + "data" + File.separator + "jbilling" + File.separator + "consumption" + File.separator);
 
     public static final String DESTINATION_LOCATION = System.getProperty("user.dir") + File.separator + "target" + File.separator;
 
