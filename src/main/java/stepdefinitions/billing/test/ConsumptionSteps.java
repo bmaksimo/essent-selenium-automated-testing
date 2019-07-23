@@ -2,13 +2,10 @@ package stepdefinitions.billing.test;
 
 import com.billinghouse.test_automation.util.dsl.DateExpressionsUtil;
 import com.billinghouse.test_automation.util.soctar_file.SoctarFileUtil;
-import com.billinghouse.test_automation.util.ssh.JSchUtil;
 import com.essent.be.api.config.RestServiceFactory;
 import com.essent.be.jbilling.api.rest.RestResponse;
 import com.essent.belgium.energycomm.ws_to_bo.BasePayload;
 import com.essent.restclients.BillingEnergyCommRest;
-import com.essent.testing.config.ConfigKey;
-import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.util.resource.ResourceUtil;
 import cucumber.api.Scenario;
@@ -18,7 +15,6 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -34,11 +30,9 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 import java.io.*;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.JS_TR_CHECK_TABLE_CELL_VALUE;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -53,6 +47,9 @@ public class ConsumptionSteps extends DwpScenario {
 
     @Autowired
     private RestServiceFactory billingServiceFactory;
+
+    @Autowired
+    private ConsumptionService consumptionService;
 
     @Before("@DWP or @E2E or @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
@@ -143,12 +140,17 @@ public class ConsumptionSteps extends DwpScenario {
             .withFirstRecordAsHeader()
             .parse(new InputStreamReader(inputStream));
 
-        for (CSVRecord record : records) {
-            String ean = record.get("EAN");
-            String startDate = record.get("start date");
-            String endDate = record.get("end date");
-            postConsumption(ean, startDate, endDate);
-        }
+        records.forEach(record -> consumptionService.postConsumption(buildConsumptionRecords(record)));
+    }
+
+    private ConsumptionRecord buildConsumptionRecords(CSVRecord record) {
+        String ean = record.get("EAN");
+        String type = record.get("TYPE");
+        String meterTypeValue = record.get("Meter Type");
+        String meterType = StringUtils.isNotBlank(meterTypeValue) ? meterTypeValue : type;
+        String startDate = record.get("start date");
+        String endDate = record.get("end date");
+        return new ConsumptionRecord(ean, type, meterType, startDate, endDate);
     }
 
     private RestResponse postConsumption(String deliveryPointId, String dateFrom, String dateTo) throws Exception {

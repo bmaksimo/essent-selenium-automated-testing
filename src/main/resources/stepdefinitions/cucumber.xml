@@ -21,6 +21,7 @@
     <property name="ignoreTracingContextIssues" value="true" />
   </bean>
   <bean name="restServiceFactory" factory-bean="billingClientConfiguration" factory-method="getRestServiceFactory" />
+  <bean id="consumptionService" class="stepdefinitions.billing.test.ConsumptionService" />
 
   <bean id="qaProps" class="com.essent.testing.context.beans.SystemPropsIncludingPropertiesFactoryBean">
     <property name="locations">
