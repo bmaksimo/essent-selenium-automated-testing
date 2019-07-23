@@ -64,18 +64,11 @@ public class ServicePage extends Component {
     }
 
     public void goToProspect(){
-        //TODO Remove locale-specific hard code.
-        // The project must support official Belgian languages.
-        // Locale-specific elements of web element locators must be parameterized.
-        // This is basic rule!
         seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.linkText("Go to prospect")));
     }
+
     public void  gotoGLNAccount (){
-        //TODO Remove locale-specific hard code.
-        // The project must support official Belgian languages.
-        // Locale-specific elements of web element locators must be parameterized.
-        // This is basic rule!
         seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.linkText("Go to GLN Account")));
         Sleeper.sleepTightInSeconds(10);
