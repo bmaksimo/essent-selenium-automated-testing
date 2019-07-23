@@ -1,5 +1,6 @@
 package com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.service;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import org.junit.Assert;
 import org.openqa.selenium.By;
@@ -63,19 +64,13 @@ public class ServicePage extends Component {
     }
 
     public void goToProspect(){
-        //TODO Remove locale-specific hard code.
-        // The project must support official Belgian languages.
-        // Locale-specific elements of web element locators must be parameterized.
-        // This is basic rule!
         seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.linkText("Go to prospect")));
     }
+
     public void  gotoGLNAccount (){
-        //TODO Remove locale-specific hard code.
-        // The project must support official Belgian languages.
-        // Locale-specific elements of web element locators must be parameterized.
-        // This is basic rule!
         seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.linkText("Go to GLN Account")));
+        Sleeper.sleepTightInSeconds(10);
     }
 }

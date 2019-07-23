@@ -26,6 +26,7 @@ Feature: NUAT-447: Check validity prices
         And "Offertenummer" input is "parameter:offertenummer"
         And Click on link in View List at "1st" row and "Nummer & Getekend contractnummer" column polling 300 seconds
         And Plus menu is "Offertes -> Check geldigheid tarieven"
+        And Sleep for 120 seconds
         And "Ja, ik wil de offerte met de nieuwe tarieven goedkeuren" turn on with dot
         Then Bevestigen
 
