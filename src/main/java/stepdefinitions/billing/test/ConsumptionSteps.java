@@ -128,10 +128,6 @@ public class ConsumptionSteps extends DwpScenario {
 
     @Given("generate consumptions")
     public void sendEANsToJBilling() throws Exception {
-//        String sftpHost = ConfigProvider.getProperty(ConfigKey.SSH_NOVA_SFTP_HOST);
-//        String remoteDir = "/";
-//        String fileName = "eans_consumption.csv";
-//        File file = JSchUtil.get().sftpGet(sftpHost, remoteDir, fileName);
         File file = new File(SoctarFileUtil.JBILLING_CONSUMPTION_LOCATION + "eans_consumption.csv");
         InputStream inputStream = new FileInputStream(file);
 
