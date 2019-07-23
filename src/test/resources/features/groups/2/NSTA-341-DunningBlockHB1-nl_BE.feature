@@ -5,7 +5,7 @@
 Feature: NSTA-341: Block dunning for invoice
 
     Background:
-        Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
+        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
     @NSTA-341
     Scenario: Create active contract that after dunning the contract becomes inactive
         #1 - GUI contract creation
@@ -50,26 +50,23 @@ Feature: NSTA-341: Block dunning for invoice
         And "1st" List element with value at column "EAN-code" is checked
         Then "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
 
-        # 2 - invoice run advance
-        Given I renew login to DWP as "billing.testautomation@essent.be"
-        When Left menu is "billing"
-        And Top menu item is "Klanten"
-        And Top action is "Filters"
-        And "Naam" input is "parameter:suitecrm-customer-name"
-
-        Given View List element "Id Billing customer & persoon/familie sleutel" is collected as parameter at "1st" list row
-        And View List element "Klantnummer & Naam" using "accountNumber" as alias is collected as parameter at "1st" list row
-        And Click on "parameter:accountNumber" link
-        And Dashboard menu is "Contracten"
+        And Get Account Number
+        And Dashboard menu is "Details"
+        And Get billing number
 
         Given Top arrow button is "Up"
         And Plus menu is "Billing -> Start facturatierun"
-        When Modal dialog is "Start invoicerun"
-        And "Naam job" selection is "recurrent"
-        And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
         And "Factuurdatum" date is "now"
         And "Procesdatum" date is "1 month from now"
+        When Modal dialog is "Start invoicerun"
+        And "Naam job" selection is "recurrent"
+        And "ID Billing customer" input is "parameter:billingNumber"
         Then Invoice run is scheduled
+
+        And Sleep for 20 seconds
+        And Left menu is "sales-marketing"
+        And Top menu item is "Klanten"
+        And "Klantnummer" input is "parameter:accountNumber"
 
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
         When Dashboard menu is "Billing"
@@ -87,4 +84,3 @@ Feature: NSTA-341: Block dunning for invoice
         When Dashboard menu is "Contracten"
         When Dashboard menu is "Billing"
         And Table "Transacties" does not contain value "Invoice (DUNNINGCOST)" at column "ID & Type"
-

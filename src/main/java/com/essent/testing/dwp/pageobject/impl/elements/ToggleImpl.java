@@ -62,7 +62,7 @@ public class ToggleImpl extends Component {
     }
 
     public void switchOnWithDot(String toogleInputName)  {
-         seleniumDriver.waitForRequestsToFinish();
+        seleniumDriver.waitForRequestsToFinish();
         if (!isOnWithDot(toogleInputName)) {
             seleniumDriver.waitAndClick(getToggleInputWithDot(toogleInputName));
         }

@@ -1,5 +1,6 @@
 package com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.service;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import org.junit.Assert;
 import org.openqa.selenium.By;
@@ -77,5 +78,6 @@ public class ServicePage extends Component {
         // This is basic rule!
         seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.linkText("Go to GLN Account")));
+        Sleeper.sleepTightInSeconds(10);
     }
 }

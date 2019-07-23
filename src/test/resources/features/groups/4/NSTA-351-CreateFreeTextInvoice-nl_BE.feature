@@ -6,7 +6,7 @@
 Feature: NSTA-351: Create free text invoice - nl_BE
 
     Background:
-        Given   I logged in to DWP as "billing.testautomation@essent.be"
+        Given   I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
         And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
 
     @NSTA-351
@@ -25,6 +25,7 @@ Feature: NSTA-351: Create free text invoice - nl_BE
 
         And "Value_Samsung PRODUCT_CODE_QUANTITY" input is "1"
         And "Value_Samsung PRODUCT_CODE_PRICE" input is "5718"
+        And Sleep for 20 seconds
         Then Changes are confirmed
 
         When Dashboard menu is "Billing"
