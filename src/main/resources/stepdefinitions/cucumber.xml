@@ -14,6 +14,15 @@
   <bean id="jBillingSeleniumDriver" class="com.essent.testing.selenium.JBillingSeleniumDriver" />
   <bean id="parameterProvider" class="com.billinghouse.cucumber.runtime.parameter.ParameterProvider" />
 
+
+  <bean id="billingClientConfiguration" class="com.essent.be.api.config.BillingClientConfiguration" depends-on="qaProps">
+    <property name="billingBaseUrl" value="#{ qaProps.getProperty('billing.baseurl') }" />
+    <property name="billingReceiveTimeout" value="#{ qaProps.getProperty('billing.receiveTimeout') }" />
+    <property name="ignoreTracingContextIssues" value="true" />
+  </bean>
+  <bean name="restServiceFactory" factory-bean="billingClientConfiguration" factory-method="getRestServiceFactory" />
+  <bean id="consumptionService" class="stepdefinitions.billing.test.ConsumptionService" />
+
   <bean id="qaProps" class="com.essent.testing.context.beans.SystemPropsIncludingPropertiesFactoryBean">
     <property name="locations">
       <list>

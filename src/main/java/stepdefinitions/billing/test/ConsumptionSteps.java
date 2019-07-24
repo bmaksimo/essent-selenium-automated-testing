@@ -1,6 +1,8 @@
 package stepdefinitions.billing.test;
 
 import com.billinghouse.test_automation.util.dsl.DateExpressionsUtil;
+import com.billinghouse.test_automation.util.file.FileUtil;
+import com.essent.be.api.config.RestServiceFactory;
 import com.essent.be.jbilling.api.rest.RestResponse;
 import com.essent.belgium.energycomm.ws_to_bo.BasePayload;
 import com.essent.restclients.BillingEnergyCommRest;
@@ -9,8 +11,11 @@ import com.essent.testing.util.resource.ResourceUtil;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.StrSubstitutor;
@@ -18,13 +23,12 @@ import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
-import java.io.File;
-import java.io.IOException;
-import java.io.StringReader;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,6 +45,12 @@ public class ConsumptionSteps extends DwpScenario {
 
     private static final String PATH = "/xml/";
     private static final String CONSUMPTION_FILE = "consumption.xml";
+
+    @Autowired
+    private RestServiceFactory billingServiceFactory;
+
+    @Autowired
+    private ConsumptionService consumptionService;
 
     @Before("@DWP or @E2E or @REGRESSION")
     public void setupTest(Scenario scenario) throws Throwable {
@@ -117,11 +127,34 @@ public class ConsumptionSteps extends DwpScenario {
         Assert.isTrue(resp.getResult(), resp.getMsg());
     }
 
+    @Given("generate consumptions")
+    public void sendEANsToJBilling() throws Exception {
+        File file = new File(FileUtil.JBILLING_CONSUMPTION_LOCATION + "eans_consumption.csv");
+        InputStream inputStream = new FileInputStream(file);
+
+        Iterable<CSVRecord> records = CSVFormat.TDF
+            .withHeader("EAN","start date","end date")
+            .withFirstRecordAsHeader()
+            .parse(new InputStreamReader(inputStream));
+
+        records.forEach(record -> consumptionService.postConsumption(buildConsumptionRecords(record)));
+    }
+
+    private ConsumptionRecord buildConsumptionRecords(CSVRecord record) {
+        String ean = record.get("EAN");
+        String type = record.get("TYPE");
+        String meterTypeValue = record.get("Meter Type");
+        String meterType = StringUtils.isNotBlank(meterTypeValue) ? meterTypeValue : type;
+        String startDate = record.get("start date");
+        String endDate = record.get("end date");
+        return new ConsumptionRecord(ean, type, meterType, startDate, endDate);
+    }
+
     private RestResponse postConsumption(String deliveryPointId, String dateFrom, String dateTo) throws Exception {
         String consumptionData = getConsumptionRequest(deliveryPointId, dateFrom, dateTo);
         BasePayload msg = generatePayloadFromString(consumptionData);
 
-        return new BillingEnergyCommRest().postEnergyCommMessage(msg);
+        return billingServiceFactory.createEnergyCommService().doRequest(msg);
     }
 
     private String getConsumptionRequest(String deliveryPoint, String dateFrom, String dateTo) {

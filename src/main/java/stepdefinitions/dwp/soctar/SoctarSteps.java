@@ -1,7 +1,7 @@
 package stepdefinitions.dwp.soctar;
 
 import com.billinghouse.test_automation.util.dsl.DateExpressionsUtil;
-import com.billinghouse.test_automation.util.soctar_file.SoctarFileUtil;
+import com.billinghouse.test_automation.util.file.FileUtil;
 import com.billinghouse.test_automation.util.ssh.JSchUtil;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
@@ -29,7 +29,7 @@ public class SoctarSteps extends DwpScenario {
         String custId = parameterProvider.getValueOrParameterAsString("parameter:cust_id");
         String eanId =  parameterProvider.getValueOrParameterAsString("parameter:ean_id");
         String soctarDate = parameterProvider.getValueOrParameterAsString("parameter:start-end-date");
-        String soctarFilePath = SoctarFileUtil.getSoctarFileFromTemplate(custId, eanId, soctarDate);
+        String soctarFilePath = FileUtil.getSoctarFileFromTemplate(custId, eanId, soctarDate);
         parameterProvider.put("soctar-file-name", FilenameUtils.getName(soctarFilePath));
         final String sftpHost = ConfigProvider.getProperty(ConfigKey.SSH_NOVA_SFTP_HOST);
         JSchUtil.get().sftpPut(sftpHost, remoteDirectory, soctarFilePath);

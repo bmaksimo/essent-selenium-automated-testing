@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Consumption xmlns="EnergyComm-out-bo" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Consumption">
   <messageid>${uuid}</messageid>
   <sender>5414488000608</sender>
@@ -10,7 +10,6 @@
   <consumptionid>79</consumptionid>
   <release>1</release>
   <continuous>false</continuous>
-  <direction>CONSUMPTION</direction>
   <readingfrequency>YEAR</readingfrequency>
   <measurementfrequency>YEARLY</measurementfrequency>
   <fromdate>${fromDate}</fromdate>
@@ -21,37 +20,11 @@
   <context>PERIODIC_METERING</context>
   <register>
     <measurementnature>ACTIVE_ENERGY</measurementnature>
-    <!--
-    <timeframe>${hourlyTariff}</timeframe>
-    -->
-    <timeframe>NIGHT_EXCLUSIVE</timeframe>
+    <timeframe>TOTAL_HOUR</timeframe>
     <direction>CONSUMPTION</direction>
-    <deliverypoint>${deliveryPoint}</deliverypoint>
     <values>
       <number>1</number>
-      <value>4321.0</value>
-      <quality>VALIDATED</quality>
-    </values>
-  </register>
-  <register>
-    <measurementnature>ACTIVE_ENERGY</measurementnature>
-    <timeframe>HIGH</timeframe>
-    <direction>CONSUMPTION</direction>
-    <deliverypoint>${deliveryPoint}</deliverypoint>
-    <values>
-      <number>1</number>
-      <value>43210.0</value>
-      <quality>DEFAULT</quality>
-    </values>
-  </register>
-  <register>
-    <measurementnature>ACTIVE_ENERGY</measurementnature>
-    <timeframe>LOW</timeframe>
-    <direction>CONSUMPTION</direction>
-    <deliverypoint>${deliveryPoint}</deliverypoint>
-    <values>
-      <number>1</number>
-      <value>83410.0</value>
+      <value>5000.0</value>
       <quality>DEFAULT</quality>
     </values>
   </register>

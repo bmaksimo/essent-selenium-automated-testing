@@ -1,5 +1,6 @@
 package com.billinghouse.test_automation.util.ssh;
 
+import com.billinghouse.test_automation.util.file.FileUtil;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.jcraft.jsch.*;
@@ -39,11 +40,23 @@ public class JSchUtil {
     }
 
     public void sftpPut(final String sftpHost, final String remoteDir, final String localFilePath) throws JSchException {
-        this.session = getSession(ConfigProvider.getProperty(ConfigKey.SSH_USER),
-            sftpHost);
+        this.session = getSession(ConfigProvider.getProperty(ConfigKey.SSH_USER), sftpHost);
         try {
             channelSftpPut(remoteDir, localFilePath);
             this.session.disconnect();
+        } catch (JSchException e) {
+            this.session.disconnect();
+            this.session = null;
+            throw new CucumberException(e);
+        }
+    }
+
+    public File sftpGet(String sftpHost, String remoteDir, String fileName) throws JSchException{
+        this.session = getSession(ConfigProvider.getProperty(ConfigKey.SSH_USER), sftpHost);
+        try {
+            File fileResult = channelSftpGet(remoteDir, fileName);
+            this.session.disconnect();
+            return fileResult;
         } catch (JSchException e) {
             this.session.disconnect();
             this.session = null;
@@ -69,6 +82,26 @@ public class JSchUtil {
 
         } catch (SftpException | IOException e) {
             logger.error(" - SFTP_UPLOAD: sftp transfer aborted;");
+            chanSftp.disconnect();
+            this.session.disconnect();
+            throw new CucumberException(e);
+        }
+    }
+
+    private File channelSftpGet(String remoteDir, String fileName) throws JSchException {
+        Channel chan = this.session.openChannel("sftp");
+        ChannelSftp chanSftp = (ChannelSftp) chan;
+        chanSftp.connect();
+        try {
+            chanSftp.cd(remoteDir);
+            InputStream inputStream = chanSftp.get(remoteDir + fileName);
+            File targetFile = new File(FileUtil.DESTINATION_LOCATION, fileName);
+            FileUtils.copyInputStreamToFile(inputStream, targetFile);
+            chanSftp.exit();
+            chanSftp.disconnect();
+            return targetFile;
+        } catch (SftpException | IOException e) {
+            logger.error(" - SFTP_DOWNLOAD: sftp transfer aborted;");
             chanSftp.disconnect();
             this.session.disconnect();
             throw new CucumberException(e);
