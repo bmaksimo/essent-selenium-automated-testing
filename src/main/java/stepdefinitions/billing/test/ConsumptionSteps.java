@@ -1,7 +1,7 @@
 package stepdefinitions.billing.test;
 
 import com.billinghouse.test_automation.util.dsl.DateExpressionsUtil;
-import com.billinghouse.test_automation.util.soctar_file.SoctarFileUtil;
+import com.billinghouse.test_automation.util.file.FileUtil;
 import com.essent.be.api.config.RestServiceFactory;
 import com.essent.be.jbilling.api.rest.RestResponse;
 import com.essent.belgium.energycomm.ws_to_bo.BasePayload;
@@ -30,9 +30,10 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 import java.io.*;
 import java.nio.charset.Charset;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.JS_TR_CHECK_TABLE_CELL_VALUE;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -128,7 +129,7 @@ public class ConsumptionSteps extends DwpScenario {
 
     @Given("generate consumptions")
     public void sendEANsToJBilling() throws Exception {
-        File file = new File(SoctarFileUtil.JBILLING_CONSUMPTION_LOCATION + "eans_consumption.csv");
+        File file = new File(FileUtil.JBILLING_CONSUMPTION_LOCATION + "eans_consumption.csv");
         InputStream inputStream = new FileInputStream(file);
 
         Iterable<CSVRecord> records = CSVFormat.TDF

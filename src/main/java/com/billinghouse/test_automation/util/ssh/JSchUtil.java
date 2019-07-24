@@ -1,6 +1,6 @@
 package com.billinghouse.test_automation.util.ssh;
 
-import com.billinghouse.test_automation.util.soctar_file.SoctarFileUtil;
+import com.billinghouse.test_automation.util.file.FileUtil;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.jcraft.jsch.*;
@@ -95,7 +95,7 @@ public class JSchUtil {
         try {
             chanSftp.cd(remoteDir);
             InputStream inputStream = chanSftp.get(remoteDir + fileName);
-            File targetFile = new File(SoctarFileUtil.DESTINATION_LOCATION, fileName);
+            File targetFile = new File(FileUtil.DESTINATION_LOCATION, fileName);
             FileUtils.copyInputStreamToFile(inputStream, targetFile);
             chanSftp.exit();
             chanSftp.disconnect();
