@@ -333,7 +333,7 @@ public class InputElements extends DwpScenario {
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
         options.put("state", state.name().toLowerCase());
-        FluentWait<ToggleCheckBox> waiter = waiter(new ToggleCheckBox(), 10, 1);
+        FluentWait<ToggleCheckBox> waiter = waiter(new ToggleCheckBox(), 30, 2);
         waiter.withMessage(String.format("Failure toggling checkbox %s to  target state %s.", label, state.name()));
         waiter.until((ToggleCheckBox callback) -> callback.test(options));
         seleniumDriver.waitForRequestsToFinish();
