@@ -747,6 +747,14 @@ public class ViewListChecks extends NavigationElements {
 
     }
 
+    @Then("^Transactions table has outstanding amount of \"([^\"]*)\"")
+    public void checkInvoiceCurrencyAmount(String expectedCurrencyAmountAsString) {
+        ContractPage cp = new ContractPage();
+        String actualCurrencyAmountAsString = cp.getActualOutstandingValueCurrencyInvoiceAsString();
+        String message = String.format("Table Transactions doesn't have value for invoice outstanding amount of \"%s\"", expectedCurrencyAmountAsString);
+        assertThat(message, actualCurrencyAmountAsString, equalTo(expectedCurrencyAmountAsString));
+    }
+
     @Then("^Invoice Amounts have values \"([^\"]*)\", \"([^\"]*)\" and \"([^\"]*)\"$")
     public void checkInvoiceAmount(String invoiceAmount1, String invoiceAmount2, String invoiceAmount3) {
         ContractPage cp = new ContractPage();
@@ -772,6 +780,20 @@ public class ViewListChecks extends NavigationElements {
             }
         }
         Assert.assertTrue("Balance is not correct", cp.getBalance().contains(expectedBalance));
+    }
+
+    @Then("^Table Offertelijnen has value \"([^\"]*)\"$")
+    public void checkTableValue(String expectedTableValue) {
+        ContractPage cp = new ContractPage();
+        int refreshCount = 5;
+        for (int i = 0; i < refreshCount; i++) {
+            if (cp.getTableValue().contains(expectedTableValue)) {
+                break;
+            } else {
+                seleniumDriver.getDriver().navigate().refresh();
+            }
+        }
+       Assert.assertTrue("There is no expected value in the table", cp.getTableValue().contains(expectedTableValue));
     }
 
     @And("Sum of Rate for signature received is \"([^\"]*)\"$")

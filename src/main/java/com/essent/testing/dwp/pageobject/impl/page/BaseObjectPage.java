@@ -33,17 +33,20 @@ public class BaseObjectPage extends Component {
     private static final String CARD_TEXT_XPATH = "//h2[normalize-space(text())='${"+REPLACEMENT_KEY+"}']/parent::div/parent::div/div[@class='form__group']//label[normalize-space(text())='${"+REPLACEMENT_KEY1+"}']/parent::div//strong";
 
     public void clickOnPlus() {
+        seleniumDriver.waitForRequestsToFinish();
     	seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(PLUS_BUTTON_XPATH)));
     }
 
     public void clickOnPlusNow() {
+        seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.clickNow(seleniumDriver.findElementWhenVisible(By.xpath(PLUS_BUTTON_XPATH)));
     }
 
     public void plusSubaction(String actionValue) {
-	String xpathSubaction = createQuery(PLUS_MENU_XPATH, REPLACEMENT_KEY, actionValue);
-	try {
-	    seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(xpathSubaction)));
+        seleniumDriver.waitForRequestsToFinish();
+	    String xpathSubaction = createQuery(PLUS_MENU_XPATH, REPLACEMENT_KEY, actionValue);
+	    try {
+	        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(xpathSubaction)));
 
         } catch (org.openqa.selenium.StaleElementReferenceException ex) {
             seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(xpathSubaction)));
@@ -61,10 +64,12 @@ public class BaseObjectPage extends Component {
     }
 
     public void clickOnMarkAsDonePlusMenuSubAction() {
+        seleniumDriver.waitForRequestsToFinish();
 	    seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(PLUS_MARK_DONE_XPATH)));
     }
 
     public void clickOnMarkAsDonePlusMenuSubActionNow() {
+        seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.clickNow(seleniumDriver.findElementWhenVisible(By.xpath(PLUS_MARK_DONE_XPATH)));
     }
 
