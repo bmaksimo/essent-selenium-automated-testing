@@ -31,6 +31,8 @@ public class ContractPage extends Component {
     private static final String FIRST_INVOICE = "//tbody/tr[1]/td[5]//span[1]";
     private static final String SECOND_INVOICE = "//tbody/tr[3]/td[5]//span[1]";
     private static final String THIRD_INVOICE = "//tbody/tr[5]/td[5]//span[1]";
+    private static final String TABLE_VALUE = "//list[@list-key='Quotelines']//tbody[@id='rows']";
+    private static final String INVOICE_CURRENCY_OUTSTANDING_AMOUNT = "//list[@list-key='TransactionsOnAccount']//h6[contains(., 'Invoice')]/../../../../td[6]";
     private static final String EAN_LOCATOR_INVOICE_AMOUNT = "dwp-ean-'${" + REPLACEMENT_KEY + "}'-field";
     private static final String CONTRACT_STATUS = "(//list[@list-key='ContractsOnAccount']//list-simple-two-liner-cell/p/span[2])[1]";
     private static final String PRODUCT_CONTRACT = "(//list[@list-key='ContractsOnAccount']//list-link-bold-top-two-liner-cell/div/a/h5)[3]";
@@ -228,30 +230,6 @@ public class ContractPage extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath(LABELFORPRODUCTCHANGE));
     }
 
-    public String checkSuccessMessage() {
-        seleniumDriver.waitForRequestsToFinish();
-        String messageProductChange = locateMessageElement().getText();
-        String[] values = {"1 succeeded", "1 queued", "1 failed"};
-        String match = "";
-
-        for (String value : values) {
-            if (messageProductChange.contains(value)) {
-                match = value;
-                break;
-            }
-        }
-        switch (match) {
-            case "succeeded":
-                break;
-            case "queued":
-                break;
-            case "failed":
-                break;
-
-        }
-        return match;
-    }
-
     public void openFirstContractFromList() {
         seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath(FIRST_CONTRACT_LINE_XPATH_EXPRESSION)));
         seleniumDriver.waitForRequestsToFinish();
@@ -368,9 +346,19 @@ public class ContractPage extends Component {
         return sb.append(firstInvoice).append(' ').append(secondInvoice).append(' ').append(thirdInvoice).toString();
     }
 
+    public String getActualOutstandingValueCurrencyInvoiceAsString() {
+        seleniumDriver.waitForRequestsToFinish();
+        return seleniumDriver.findElementWhenVisible(By.xpath(INVOICE_CURRENCY_OUTSTANDING_AMOUNT)).getText();
+    }
+
     public String getBalance() {
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.id(SALDO_CREDIT_INVOICE)).getText();
+    }
+
+    public String getTableValue() {
+        seleniumDriver.waitForRequestsToFinish();
+        return seleniumDriver.findElementWhenVisible(By.xpath(TABLE_VALUE)).getText();
     }
 
     public void getElementByEanNewInvoiceAmount(String ean, String value) {
