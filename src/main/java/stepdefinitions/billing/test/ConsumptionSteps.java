@@ -132,8 +132,10 @@ public class ConsumptionSteps extends DwpScenario {
         File file = new File(FileUtil.JBILLING_CONSUMPTION_LOCATION + "eans_consumption.csv");
         InputStream inputStream = new FileInputStream(file);
 
-        Iterable<CSVRecord> records = CSVFormat.TDF
-            .withHeader("EAN","start date","end date")
+        Iterable<CSVRecord> records = CSVFormat.DEFAULT
+            .withHeader("EAN","start date","end date", "TYPE", "Meter Type")
+            .withRecordSeparator(",")
+            .withTrailingDelimiter(true)
             .withFirstRecordAsHeader()
             .parse(new InputStreamReader(inputStream));
 
@@ -142,11 +144,11 @@ public class ConsumptionSteps extends DwpScenario {
 
     private ConsumptionRecord buildConsumptionRecords(CSVRecord record) {
         String ean = record.get("EAN");
+        String startDate = record.get("start date");
+        String endDate = record.get("end date");
         String type = record.get("TYPE");
         String meterTypeValue = record.get("Meter Type");
         String meterType = StringUtils.isNotBlank(meterTypeValue) ? meterTypeValue : type;
-        String startDate = record.get("start date");
-        String endDate = record.get("end date");
         return new ConsumptionRecord(ean, type, meterType, startDate, endDate);
     }
 
