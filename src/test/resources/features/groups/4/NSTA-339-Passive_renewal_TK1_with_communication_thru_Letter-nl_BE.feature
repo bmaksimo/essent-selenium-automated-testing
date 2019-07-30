@@ -37,7 +37,7 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
         When Top action is "Filters"
         And "Klantnummer" input is "parameter:accountNumber"
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
-        
+
         When Dashboard menu is "Contracten"
         Then View list header is "Actieve en toekomstige connecties" appears within 30 seconds
         And "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
@@ -75,13 +75,13 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
 
         #3.1. Validate renewal batch - checks
         Then "Status batch" field value is switched to "VALIDATED" within 60 seconds
-        And Table "Geselecteerde contractlijn voor hernieuwingsbatch" has matching value "Gevalideerd" at column "Status hernieuwing"
+        And Table "Geselecteerde contractlijn voor hernieuwingsbatch" has matching value "Gevalideerd" at column "Status hernieuwing" polling 10 seconds
 
         When Click on "parameter:Contractnummer" link
         And  Dashboard menu is "Sales"
-        And Table "Offertes" has matching value "Passieve hernieuwing Geprijsd - Geaccepteerd" at column "Type & status"
-        And Table "Offertes" has matching value "parameter:Contract Start & Einddatum" at column "Start & Einddatum"
-        And Table "Offertes" has matching value "parameter:Id Billing customer" at column "Billing klant & Tariefdatum"
+        And Table "Offertes" has matching value "Passieve hernieuwing Geprijsd - Geaccepteerd" at column "Type & status" polling 10 seconds
+        And Table "Offertes" has matching value "parameter:Contract Start & Einddatum" at column "Start & Einddatum" polling 10 seconds
+        And Table "Offertes" has matching value "parameter:Id Billing customer" at column "Billing klant & Tariefdatum" polling 10 seconds
 
         #4 Validate the definition of renewal product (date valid within the period: "Start & einddatum hernieuwing")
         When Top arrow button is "Up"
@@ -106,10 +106,10 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
         And Modal dialog is "Send passive renewal letter"
         And Changes are confirmed
         Then "Status batch" field value is switched to "LETTERS_SENT" within 120 seconds
-        And Table "Geselecteerde contractlijn voor hernieuwingsbatch" has matching value "verstuurd" at column "Status hernieuwing"
-        And Table "Geselecteerde contractlijn voor hernieuwingsbatch" has matching value "Passief hernieuwd" at column "Offerte & status hernieuwing"
+        And Table "Geselecteerde contractlijn voor hernieuwingsbatch" has matching value "verstuurd" at column "Status hernieuwing" polling 10 seconds
+        And Table "Geselecteerde contractlijn voor hernieuwingsbatch" has matching value "Passief hernieuwd" at column "Offerte & status hernieuwing" polling 10 seconds
 
         #6 Check communication
         When Click on "parameter:Contractnummer" link
         And Dashboard menu is "Service"
-        Then Table "Interacties" has matching value "Outbound document: Passive renewal communication" at column "Type & Onderwerp"
+        Then Table "Interacties" has matching value "Outbound document: Passive renewal communication" at column "Type & Onderwerp" polling 10 seconds
