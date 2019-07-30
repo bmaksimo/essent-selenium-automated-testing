@@ -12,47 +12,42 @@ Feature: NSTA 331- Product Change for TK1 type
 
         # 1 - GUI Creation of active contract TK1 type
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
-        Then Form header is "Quote details"
 
-        When "Tariefdatum" date is "now"
+        And "Tariefdatum" date is "now"
         And "Sales kanaal" selection is "Inbound"
-        And Quote details are confirmed
-        Then Form header is "Personal details"
+        Then Quote details are confirmed
+
 
         When Customer is random
         And Customer address is
             | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
             | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
-        And Customer details are confirmed
-        Then Form header is "Select package & fuel type"
+        Then Customer details are confirmed
 
         When Package is "Vast"
         And Checkbox "Gas Fix B2C (TC1)" is Unchecked
         And Kortingen is "50_part"
-        And Package and Fuel Type is confirmed
-        Then Form header is "Connection details"
+        Then Package and Fuel Type is confirmed
 
         When EAN code is generated
         And "Startdatum" date is "2 weeks before now"
         And Option "test" "is" "On"
         And "EAN-code" input is "parameter:EAN-code-generated"
         And Connection details are confirmed
-        And Save changes
-        Then Form header is "Billing details"
+        Then Save changes
 
         When "Betalingswijze" selection is "Overschrijving"
-        And Billing details are confirmed
-        Then Form header is "Quote overview"
+        Then Billing details are confirmed
 
         When Option "Heeft de klant al getekend?" "is" "On"
         And "Kanaal ondertekening" selection is "Papier"
         And Quote is signed in "Kontich"
         And "Datum ondertekening" date is "now"
-        And Quote is confirmed
+        Then Quote is confirmed
 
         When Dashboard menu is "Contracten"
         And "1st" List element with value at column "EAN-code" is checked
-        And "1st" list element has cell value "Actief" at column "Contractnummer" polling 450 seconds
+        Then "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
 
         #2 - Start product change
         When Plus action of "1" element from "ContractsOnAccount" and click on "Productwijziging"
