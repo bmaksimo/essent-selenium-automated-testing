@@ -6,7 +6,7 @@ Feature: NUAT-412 part: Create / import coda file
     Background:
         Given  I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
     @NUAT-412
-    Scenario: Create active contract TK1
+    Scenario: Create active contract via GUI and Create / import coda file
         # 1 - GUI B2C contract creation
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         And "Tariefdatum" date is "now"
