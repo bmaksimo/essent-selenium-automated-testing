@@ -1,5 +1,7 @@
 package stepdefinitions.dwp.input;
 
+import com.billinghouse.test_automation.util.dsl.DateExpressionsUtil;
+import com.billinghouse.test_automation.util.dsl.DwpDateTimeFormat;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.elements.SelectWithSearch;
 import com.essent.testing.dwp.pageobject.impl.elements.SelectWithSearchImpl;
@@ -20,8 +22,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
-import static org.hamcrest.MatcherAssert.assertThat;
 import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class InputElements extends DwpScenario {
@@ -162,6 +164,14 @@ public class InputElements extends DwpScenario {
         FluentWait<ApplyInput> waiter = waiter(new ApplyInput(), 10, 1);
         waiter.withMessage(String.format("Input field %s is undefined.", label));
         waiter.until((ApplyInput callback) -> callback.testNow(options));
+    }
+
+    @And("^\"([^\"]*)\" date is first day of next month$")
+    public void setDateInputFirstDayNextMonth(String label) throws Throwable {
+        String value = DateExpressionsUtil
+            .getFirstDateOfNextMonth()
+            .toString(DwpDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
+        setDateInput(label, value);
     }
 
     /**
