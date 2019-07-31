@@ -12,62 +12,57 @@ Feature: NSTA 331- Product Change for TK1 type
 
         # 1 - GUI Creation of active contract TK1 type
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
-        Then Form header is "Quote details"
 
-        When "Tariefdatum" date is "now"
+        And "Tariefdatum" date is "now"
         And "Sales kanaal" selection is "Inbound"
-        And Quote details are confirmed
-        Then Form header is "Personal details"
+        Then Quote details are confirmed
+
 
         When Customer is random
         And Customer address is
             | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
             | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
-        And Customer details are confirmed
-        Then Form header is "Select package & fuel type"
+        Then Customer details are confirmed
 
         When Package is "Vast"
         And Checkbox "Gas Fix B2C (TC1)" is Unchecked
         And Kortingen is "50_part"
-        And Package and Fuel Type is confirmed
-        Then Form header is "Connection details"
+        Then Package and Fuel Type is confirmed
 
         When EAN code is generated
         And "Startdatum" date is "2 weeks before now"
         And Option "test" "is" "On"
         And "EAN-code" input is "parameter:EAN-code-generated"
         And Connection details are confirmed
-        And Save changes
-        Then Form header is "Billing details"
+        Then Save changes
 
         When "Betalingswijze" selection is "Overschrijving"
-        And Billing details are confirmed
-        Then Form header is "Quote overview"
+        Then Billing details are confirmed
 
         When Option "Heeft de klant al getekend?" "is" "On"
         And "Kanaal ondertekening" selection is "Papier"
         And Quote is signed in "Kontich"
         And "Datum ondertekening" date is "now"
-        And Quote is confirmed
+        Then Quote is confirmed
 
         When Dashboard menu is "Contracten"
         And "1st" List element with value at column "EAN-code" is checked
-        And "1st" list element has cell value "Actief" at column "Contractnummer" polling 450 seconds
+        Then "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
 
         #2 - Start product change
         When Plus action of "1" element from "ContractsOnAccount" and click on "Productwijziging"
         And Tariff card has value of 1st item from list
-        When "Pakket" selection is "Online"
-        When Option "test" "is" "On"
-        When Option "MM should respond?" "is" "On"
-        When "Kanaal ondertekening" selection is "Online"
+        And "Pakket" selection is "Online"
+        And Option "test" "is" "On"
+        And Option "MM should respond?" "is" "On"
+        And "Kanaal ondertekening" selection is "Online"
         Then Changes are confirmed
-        Then Bevestigen
+        And Bevestigen
 
         #3 - Confirm Product Change
         When Dashboard menu is "Sales"
-        When Plus action of "1" element from "QuotesOnAccount" and click on "Handtekening ontvangen"
-        When "Datum ondertekening" date is "now"
+        And Plus action of "1" element from "QuotesOnAccount" and click on "Handtekening ontvangen"
+        And "Datum ondertekening" date is "now"
         Then Changes are confirmed
         When Plus action of "1" element from "QuotesOnAccount" and click on "Bevestig"
         Then Changes are confirmed
@@ -76,29 +71,29 @@ Feature: NSTA 331- Product Change for TK1 type
          #4.1 - Check Contractlines
         When Dashboard menu is "Contracten"
         Then Get Start Date
-        Then Save End Date from active contract
+        And Save End Date from active contract
         And "1st" list element has cell value "Wacht op startdatum" at column "Contractnummer" polling 120 seconds
-        Then Table "Actieve en toekomstige connecties" contains value "ONLINE" at column "EAN-code"
-        Then Table "Actieve en toekomstige connecties" contains value "Actief" at column "Contractnummer"
-        Then Product Change dates are "parameter:startDate" and "parameter:EndDate-active-contract"
+        And Table "Actieve en toekomstige connecties" contains value "ONLINE" at column "EAN-code"
+        And Table "Actieve en toekomstige connecties" contains value "Actief" at column "Contractnummer"
+        And Product Change dates are "parameter:startDate" and "parameter:EndDate-active-contract"
         #check start date is same as from step 2 and end date is 1 day before start date
-        Then Start Date "parameter:startDate" is "365 or 366" day bigger than End Date "parameter:EndDate-active-contract"
+        And Start Date "parameter:startDate" is "365 or 366" day bigger than End Date "parameter:EndDate-active-contract"
 
          #4.2 - Check Discounts
         And Click on link in View List at "1st" row and "Nummer & Aanmaakdatum" column polling 20 seconds
-        Then Product Change dates are "parameter:startDate" and "parameter:EndDate-active-contract"
+        And Product Change dates are "parameter:startDate" and "parameter:EndDate-active-contract"
 
          #4.3 - Check Interactions
         When Dashboard menu is "Service"
         Then Table "Interacties" contains value "Confirmation product change" at column "Type & Onderwerp"
         And Click on link in View List at "1st" row and "Nummer & Communicatiekanaal" column polling 60 seconds
-        Then Check is product change "1 succeeded"
+        And Check is product change "1 succeeded"
 
          #4.4 - Check Orders
         When Dashboard menu is "Contracten"
         And Click on link in View List at "1st" row and "EAN-code" column polling 20 seconds
         Then Table "Afrekeningsfacturen" contains value "RUNNING" at column "Status & Triggered plan"
-        Then Product Change dates are "parameter:startDate" and "parameter:EndDate-active-contract"
+        And Product Change dates are "parameter:startDate" and "parameter:EndDate-active-contract"
 
 
 

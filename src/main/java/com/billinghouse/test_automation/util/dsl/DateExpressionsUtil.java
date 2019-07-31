@@ -65,6 +65,11 @@ public class DateExpressionsUtil {
     throw new CucumberException("Unable to parse intarval expression " + interval);
   }
 
+  public static LocalDate getFirstDateOfNextMonth() {
+      LocalDate today = new LocalDate();
+      return today.plusMonths(1).withDayOfMonth(1);
+  }
+
   public static DateTime expandFrom(String expression) {
     if (!expression.matches(DateTimeLanguageRegex.DATE_EXPR_REGEX.getExpression())) {
       throw new CucumberException(

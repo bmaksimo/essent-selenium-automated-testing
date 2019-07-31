@@ -183,6 +183,7 @@ public class ViewListChecks extends NavigationElements {
         throws Throwable {
         List<String> columnData = new ViewListTestObject().fetchColumnData(tableName, columnName);
         String inputValue = parameterProvider.getValueOrParameterAsString(match);
+
         Optional<String> first =
             columnData.stream().filter(element -> element.contains(inputValue)).findAny();
         assertThat(
@@ -191,6 +192,24 @@ public class ViewListChecks extends NavigationElements {
                 tableName, match, columnName),
             first.isPresent(),
             is(true));
+    }
+
+    @Then("^Table \"([^\"]*)\" has matching value \"([^\"]*)\" at column \"([^\"]*)\" polling (\\d+) seconds$")
+    public void isMatchingValueAtColumnWithPolling(String tableName, String match, String columnName, int waitingTime)
+        throws Throwable {
+        List<String> columnData = new ViewListTestObject().fetchColumnData(tableName, columnName);
+        String inputValue = parameterProvider.getValueOrParameterAsString(match);
+        String arrow = parameterProvider.getValueOrParameterAsString("parameter:navigation");
+        String dashboardMenu = parameterProvider.getValueOrParameterAsString("parameter:dashboard-menu");
+
+        FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), waitingTime, 60);
+        waiter.withMessage(String.format(
+            "Table does not contain cell value \"%s\" at column \"%s\" within \"%s\" seconds.",
+            match, columnName, waitingTime));
+        waiter.until((ViewListTestObject callback) -> {
+            loopBack(arrow, dashboardMenu);
+            return columnData.stream().filter(element -> element.contains(inputValue)).findAny();
+        });
     }
 
     @And(
@@ -793,7 +812,7 @@ public class ViewListChecks extends NavigationElements {
                 seleniumDriver.getDriver().navigate().refresh();
             }
         }
-       Assert.assertTrue("There is no expected value in the table", cp.getTableValue().contains(expectedTableValue));
+        Assert.assertTrue("There is no expected value in the table", cp.getTableValue().contains(expectedTableValue));
     }
 
     @And("Sum of Rate for signature received is \"([^\"]*)\"$")
@@ -805,8 +824,8 @@ public class ViewListChecks extends NavigationElements {
         else if (typeRate.equals("Low")) {
             parameterProvider.put("sumRatesLowSignature", cp.sumRates(typeRate));
         }
-       else
-        throw new CucumberException(getClass() + ": Only High and Low values can be passed as parameters");
+        else
+            throw new CucumberException(getClass() + ": Only High and Low values can be passed as parameters");
     }
 
     @Then("\"([^\"]*)\" and \"([^\"]*)\" equals Sum of High&Low rates for rejected rates$")
@@ -822,7 +841,7 @@ public class ViewListChecks extends NavigationElements {
 
 
     //TODO Create a special test harness class for wait methods,
-    //and move the methods, related to test execution timing, there.
+    //and move the methods, related to test execution timing, there.logger().info(column);
     @And("^Wait for (\\d+) seconds$")
     public void waitForSeconds(int seconds) {
         Sleeper.sleepTightInSeconds(seconds);
