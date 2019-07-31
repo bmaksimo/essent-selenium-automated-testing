@@ -84,4 +84,3 @@ Feature: NUAT-412 part: Create / import coda file
 
         When Modal button "View Bank Statement" is clicked
         And Column "Reference" of the "1st" row is clicked
-        Then Modal button "Close" is clicked
