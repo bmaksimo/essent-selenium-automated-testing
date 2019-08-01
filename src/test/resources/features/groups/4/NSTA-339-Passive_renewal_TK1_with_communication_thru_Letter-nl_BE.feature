@@ -112,4 +112,4 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
         #6 Check communication
         When Click on "parameter:Contractnummer" link
         And Dashboard menu is "Service"
-        Then Table "Interacties" has matching value "Outbound document: Passive renewal communication" at column "Type & Onderwerp"
+        Then Table "Interacties" has matching value "Outbound document: Passive renewal communication" at column "Type & Onderwerp" polling 10 seconds
