@@ -1,7 +1,6 @@
 @REGRESSION
 @DWP
 @B2B
-@REGRESSION
 @ALL
 
 Feature: TESTAUTO-45 "Electricity – UP – Electricity fix UP -YMR"
