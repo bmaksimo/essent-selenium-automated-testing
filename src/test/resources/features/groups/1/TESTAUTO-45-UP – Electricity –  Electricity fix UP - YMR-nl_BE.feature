@@ -3,7 +3,7 @@
 @B2B
 @ALL
 
-Feature: TESTAUTO-45 "Electricity – UP – Electricity fix UP -YMR"
+Feature: TESTAUTO-45:Electricity-UP-Electricity-fix-UP-YMR
 
     Background:
         Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
