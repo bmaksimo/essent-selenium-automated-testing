@@ -9,12 +9,13 @@ import cucumber.runtime.CucumberException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.StrSubstitutor;
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -25,10 +26,7 @@ import java.io.FileFilter;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 import static com.billinghouse.test_automation.util.gherkin.DateTimeFormatUtil.printPeriod;
 import static com.essent.testing.selenium.helper.fluent_wait.FluentWaitUtil.createWaiter;
@@ -139,13 +137,20 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
         String testRunnerClassPath = ResourceUtil.toPath(PATH + TEST_RUNNER_CLASS);
         File testRunnerClassFile = new File(testRunnerClassPath);
         injectJavaScriptInline(testRunnerClassFile);
-        String pathToClasses = ResourceUtil.toPath(PATH_TO_INLINE_CLASSES);
-        File dirClasses = new File(pathToClasses);
-        FileFilter fileFilterClasses = new WildcardFileFilter("*.js");
-        for (File file : Objects.requireNonNull(dirClasses.listFiles(fileFilterClasses))) {
+
+        for (File file : getJSFilesSortedByName()) {
             injectJavaScriptInline(file);
             JsTestRegistry.get().register(FilenameUtils.getBaseName(file.getName()));
         }
+    }
+
+    private List<File> getJSFilesSortedByName() {
+        String pathToClasses = ResourceUtil.toPath(PATH_TO_INLINE_CLASSES);
+        File dirClasses = new File(pathToClasses);
+        FileFilter fileFilterClasses = new WildcardFileFilter("*.js");
+        List<File> files = Arrays.asList(Objects.requireNonNull(dirClasses.listFiles(fileFilterClasses)));
+        files.sort((o1, o2) ->o1.getName().compareTo(o2.getName()));
+        return files;
     }
 
     @Override
