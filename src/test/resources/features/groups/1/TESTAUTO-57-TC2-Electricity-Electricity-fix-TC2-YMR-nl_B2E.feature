@@ -14,8 +14,8 @@ Feature: TESTAUTO-57:Electricity-TC2-Electricity-fix-TC2-YMR
         Then Form header is "Calculate price"
 
         When "Producttype" selection is "Elektriciteit"
-        And "Tariefgroep" selection is "UP"
-        And "Product" selection is "Elektriciteit Vast"
+        And "Tariefgroep" selection is "TK2"
+        And "Product" selection is "Elektriciteit Vast TK2"
         And "Startdatum" date is "14 days from now"
         And "Duurtijd" selection is "24 Months"
 
