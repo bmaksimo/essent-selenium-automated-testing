@@ -16,7 +16,7 @@ Feature: NUAT-558: Check status of customer with Customer Acceptance Tool
         And "B2C/B2B" selection is "B2B"
         And "Type klant" selection is "Klant"
         And "Klantnummer" input is "parameter:accountNumber"
-        And Click on link in View List at "1st" row and "Klantnummer & Naam" column
+        And Click on link in View List at "1st" row and "Klantnummer & Naam" column waiting for 60 seconds
         And Dashboard menu is "Details"
         Then Get Company Number
 
