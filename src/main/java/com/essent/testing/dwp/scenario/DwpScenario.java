@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpApiDate;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpDate;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.convertToDwpTime;
 import static com.billinghouse.test_automation.util.dsl.NumericUtil.amountAsInt;
@@ -35,9 +36,6 @@ import static org.junit.Assert.assertTrue;
  *
  */
 public abstract class DwpScenario extends RegisteredScenario {
-
-
-
 
     @Resource(name="dwpSeleniumDriver")
     protected DWPSeleniumDriver seleniumDriver;
@@ -103,6 +101,10 @@ public abstract class DwpScenario extends RegisteredScenario {
 
     protected String toDwpDate(String parameter) {
         return checkAndConvertToDwpDate(parameter);
+    }
+
+    protected String toDwpApiDate(String parameter) {
+        return checkAndConvertToDwpApiDate(parameter);
     }
 
     protected String toDwpTime(String parameter) {
