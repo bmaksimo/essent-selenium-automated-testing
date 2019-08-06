@@ -25,8 +25,9 @@ Feature: NSTA-351: Create free text invoice - nl_BE
 
         And "Value_Samsung PRODUCT_CODE_QUANTITY" input is "1"
         And "Value_Samsung PRODUCT_CODE_PRICE" input is "5718"
-        And Sleep for 20 seconds
+        And Sleep for 10 seconds
         Then Changes are confirmed
+        And Sleep for 5 seconds
 
         When Dashboard menu is "Billing"
         Then Transaction is created with TYPE "INVOICE (FREE_TEXT)"
