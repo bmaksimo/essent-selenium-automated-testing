@@ -14,7 +14,7 @@ public class BillingService {
     @Autowired
     private RestServiceFactory billingServiceFactory;
 
-    public RestResponse startBillRun(String jobName, String billingCustomerId, Date processDate, String selectionDay, boolean wait, boolean expectSuccess) {
+    public BillingRunResult startBillRun(String jobName, String billingCustomerId, Date processDate) {
 
         RSTriggerBillRunRequest request = new RSTriggerBillRunRequest();
         request.setJobName(jobName);
@@ -22,10 +22,12 @@ public class BillingService {
         request.setInvoiceDate(new Date());
         request.setBillingCustomerId(billingCustomerId);
 
-        return billingServiceFactory.createBatchService().triggerBillingJob(request);
+        RestResponse response = billingServiceFactory.createBatchService().triggerBillingJob(request);
+
+        return new BillingRunResult(response.getMsg(), response.getResult());
     }
 
-    public RestResponse runMediationJob(String jobName, String billingCustomerId, String deliverypointId, Date settlementDate) throws InterruptedException {
+    public MediationRunResult runMediationJob(String jobName, String billingCustomerId, String deliverypointId, Date settlementDate) {
         BillingBatchRestService mediationRun =  billingServiceFactory.createBatchService();
 
         RSTriggerMediationRequest request = new RSTriggerMediationRequest();
@@ -34,6 +36,8 @@ public class BillingService {
         request.setBillingId(billingCustomerId);
         request.setDeliveryPointId(deliverypointId);
 
-        return mediationRun.triggerMediationJob(request);
+        RestResponse response = mediationRun.triggerMediationJob(request);
+
+        return new MediationRunResult(response.getMsg(), response.getResult());
     }
 }

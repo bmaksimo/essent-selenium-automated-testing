@@ -12,7 +12,9 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
+import stepdefinitions.billing.test.BillingRunResult;
 import stepdefinitions.billing.test.BillingService;
+import stepdefinitions.billing.test.MediationRunResult;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -48,11 +50,11 @@ public class BillingBatchRunSteps extends DwpScenario {
         SimpleDateFormat formatter = new SimpleDateFormat(DwpDateTimeFormat.DWP_API_DATE_FORMAT.getFormat());
         try {
             Date parsedDate = formatter.parse(inputValue);
-            RestResponse response = billingService.startBillRun(jobName, billingCustomerId, parsedDate, "31", true, true);
+            BillingRunResult billingRunResult = billingService.startBillRun(jobName, billingCustomerId, parsedDate);
 
-            Assert.assertTrue(response.getMsg(), response.getResult());
+            Assert.assertTrue(billingRunResult.getMessage(), billingRunResult.getResult());
         } catch (ParseException e) {
-            e.printStackTrace();
+            logger().error("Something went wrong with billing run...");
         }
     }
 
@@ -65,11 +67,11 @@ public class BillingBatchRunSteps extends DwpScenario {
 
         try {
             Date parsedDate = formatter.parse(inputValue);
-            RestResponse response = billingService.runMediationJob(jobName, billingCustomerId, deliveryPointId, parsedDate);
+            MediationRunResult mediationRunResult = billingService.runMediationJob(jobName, billingCustomerId, deliveryPointId, parsedDate);
 
-            Assert.assertTrue(response.getMsg(), response.getResult());
-        } catch (InterruptedException | ParseException e) {
-            e.printStackTrace();
+            Assert.assertTrue(mediationRunResult.getMessage(), mediationRunResult.getResult());
+        } catch (ParseException e) {
+            logger().error("Something went wrong with mediation run...");
         }
     }
 
