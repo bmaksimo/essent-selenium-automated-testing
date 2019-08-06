@@ -65,7 +65,7 @@ public class BillingBatchRunSteps extends DwpScenario {
 
         try {
             Date parsedDate = formatter.parse(inputValue);
-            RestResponse response = billingService.runAndWaitMediationJob(jobName, billingCustomerId, deliveryPointId, parsedDate);
+            RestResponse response = billingService.runMediationJob(jobName, billingCustomerId, deliveryPointId, parsedDate);
 
             Assert.assertTrue(response.getMsg(), response.getResult());
         } catch (InterruptedException | ParseException e) {

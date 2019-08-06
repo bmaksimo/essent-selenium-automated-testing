@@ -25,7 +25,7 @@ public class BillingService {
         return billingServiceFactory.createBatchService().triggerBillingJob(request);
     }
 
-    public RestResponse runAndWaitMediationJob(String jobName, String billingCustomerId, String deliverypointId, Date settlementDate) throws InterruptedException {
+    public RestResponse runMediationJob(String jobName, String billingCustomerId, String deliverypointId, Date settlementDate) throws InterruptedException {
         BillingBatchRestService mediationRun =  billingServiceFactory.createBatchService();
 
         RSTriggerMediationRequest request = new RSTriggerMediationRequest();
