@@ -141,6 +141,11 @@ public class DateExpressionsUtil {
     else return expandFrom(input).toString(DwpDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
   }
 
+  public static String checkAndConvertToDwpApiDate(String input) {
+    if (matchesDwpDateFormat(input)) return input;
+    else return expandFrom(input).toString(DwpDateTimeFormat.DWP_API_DATE_FORMAT.getFormat());
+  }
+
   public static String convertToDwpTime(String input) {
     return expandFromTime(input).toString(DwpDateTimeFormat.DWP_TIME_FORMAT.getFormat());
   }
