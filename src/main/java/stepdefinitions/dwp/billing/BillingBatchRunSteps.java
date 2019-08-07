@@ -54,7 +54,7 @@ public class BillingBatchRunSteps extends DwpScenario {
 
             Assert.assertTrue(billingRunResult.getMessage(), billingRunResult.getResult());
         } catch (ParseException e) {
-            logger().error("Something went wrong with billing run...");
+            logger().error("Billing job did not execute successfully");
         }
     }
 
@@ -71,7 +71,7 @@ public class BillingBatchRunSteps extends DwpScenario {
 
             Assert.assertTrue(mediationRunResult.getMessage(), mediationRunResult.getResult());
         } catch (ParseException e) {
-            logger().error("Something went wrong with mediation run...");
+            logger().error("Mediation job did not execute successfully");
         }
     }
 
