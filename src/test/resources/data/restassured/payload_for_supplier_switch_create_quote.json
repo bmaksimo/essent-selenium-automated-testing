@@ -53,7 +53,7 @@
   "dwp|tariffsheet_price|indexation_parameter": null,
   "dwp|tariffsheet_price|sourcing_product": "Endex_fixed",
   "dwp|available_product_ids": [],
-  "dwp|discount_assigned": [],
+  "dwp|discount_assigned": [1],
   "meter_open_c": true,
   "move_in_c": false,
   "switchtype_c": "SUPPLY_START_REQUEST",

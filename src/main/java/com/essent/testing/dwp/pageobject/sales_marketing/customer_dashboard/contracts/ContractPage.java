@@ -218,6 +218,7 @@ public class ContractPage extends Component {
     }
 
     public static long rangeDates(String sd, String ed) {
+        Sleeper.sleepTightInSeconds(8);
         LocalDate startDate = LocalDate.parse(sd, DASH_SEPARATED_DATE_FORMATTER);
         LocalDate endDate = LocalDate.parse(ed, DASH_SEPARATED_DATE_FORMATTER);
         long range = ChronoUnit.DAYS.between(startDate, endDate);
