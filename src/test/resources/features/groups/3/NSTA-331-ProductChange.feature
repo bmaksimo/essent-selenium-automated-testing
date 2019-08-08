@@ -5,45 +5,38 @@
 Feature: NSTA 331- Product Change for TK1 type
 
     Background:
-        Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
+        Given I login to iWelcome as "soapui_b2c"
 
     @NSTA-331
     Scenario: Product Change TK1 type
 
-        # 1 - GUI Creation of active contract TK1 type
-        When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
 
-        And "Tariefdatum" date is "now"
-        And "Sales kanaal" selection is "Inbound"
-        Then Quote details are confirmed
+        And "Create_Quote" flow is started
+        When Data is prepared for Create quote request for "prospect" and meter open is "On" and sign date is "35 days before now"
+        And New tc1_quote is created
+        Then Quote status is "ACCEPTED"
+        And Quoteline exists
+        And Quoteline status is "Sent to customer"
 
+        When Simulation that customer signature is received
+        Then Quote stage status is "SIGNATURE RECEIVED"
+        And Quoteline status is "Signature received"
 
-        When Customer is random
-        And Customer address is
-            | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-            | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
-        Then Customer details are confirmed
+        When File is uploaded as scanned signature
+        Then Signin is confirmed
+        And Contract is created
+        And Contracted EAN exists on account
 
-        When Package is "Vast"
-        And Checkbox "Gas Fix B2C (TC1)" is Unchecked
-        And Kortingen is "50_part"
-        Then Package and Fuel Type is confirmed
+        When Payment details are received
+        Then Wait until contract instance starts
+        And Check order in jbilling
 
-        When EAN code is generated
-        And "Startdatum" date is "2 weeks before now"
-        And Option "test" "is" "On"
-        And "EAN-code" input is "parameter:EAN-code-generated"
-        And Connection details are confirmed
-        Then Save changes
-
-        When "Betalingswijze" selection is "Overschrijving"
-        Then Billing details are confirmed
-
-        When Option "Heeft de klant al getekend?" "is" "On"
-        And "Kanaal ondertekening" selection is "Papier"
-        And Quote is signed in "Kontich"
-        And "Datum ondertekening" date is "now"
-        Then Quote is confirmed
+        Given I renew login to DWP as "salesmarketing.testautomation.b2c@essent.be"
+        When Left menu is "sales-marketing"
+        And Top menu item is "Klanten"
+        And Top action is "Filters"
+        And "Klantnummer" input is "parameter:accountNumber"
+        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
 
         When Dashboard menu is "Contracten"
         And "1st" List element with value at column "EAN-code" is checked
@@ -92,7 +85,7 @@ Feature: NSTA 331- Product Change for TK1 type
          #4.4 - Check Orders
         When Dashboard menu is "Contracten"
         And Click on link in View List at "1st" row and "EAN-code" column polling 20 seconds
-        Then Table "Afrekeningsfacturen" contains value "RUNNING" at column "Status & Triggered plan"
+        And Table "Afrekeningsfacturen" has matching value "RUNNING" at column "Status & Triggered plan" polling 15 seconds
         And Product Change dates are "parameter:startDate" and "parameter:EndDate-active-contract"
 
 
