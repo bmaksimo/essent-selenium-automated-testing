@@ -73,7 +73,7 @@ public class ViewListTestObject extends Component implements ViewList {
 
   private DefaultTableModel getDefaultTableModel(
       DefaultTableModel tableModel, HashMap<Object, Object> options) {
-    Map viewTable = executeJavascriptMethod(JS_TR_GET_TABLE_MODEL, options);
+    Map<String, Object> viewTable = executeJavascriptMethod(JS_TR_GET_TABLE_MODEL, options);
     List columnNames = (List) viewTable.get("column_names");
     List rows = getData(viewTable);
     tableModel.setColumnIdentifiers(columnNames.toArray());
@@ -166,15 +166,13 @@ public class ViewListTestObject extends Component implements ViewList {
   public List<String> fetchDataSelection(String columnName) {
     Map<String, Object> options = new HashMap<>();
     options.put("include_selection", true);
-    Map viewTable = executeJavascriptMethod(JS_TR_FETCH_DATA_SELECTION, options);
+    Map<String, Object> viewTable = executeJavascriptMethod(JS_TR_FETCH_DATA_SELECTION, options);
     int index = getColumnNameIndex(columnName, viewTable);
     if (index < 0) {
       return Collections.emptyList();
     }
     List<List> rows = getData(viewTable);
-    List selection;
-    selection = rows.stream().map((e) -> e.get(index)).collect(Collectors.toList());
-    return selection;
+    return rows.stream().map((e) -> e.get(index).toString()).collect(Collectors.toList());
   }
 
   public List<String> fetchColumnData(String table, String columnName) {
@@ -195,14 +193,12 @@ public class ViewListTestObject extends Component implements ViewList {
       return Collections.emptyList();
     }
     List<List> rows = getData(viewTable);
-    List selection;
-    selection = rows.stream().map((e) -> e.get(index)).collect(Collectors.toList());
-    return selection;
+    return rows.stream().map((e) -> e.get(index).toString()).collect(Collectors.toList());
   }
 
   public Optional<String> getCellValueAt(int row, String columnName) {
     logger().debug("STEP: JAVASCRIPT_FETCH_DATA");
-    Map viewTable = executeJavascriptMethod(JS_TR_GET_TABLE_MODEL, new HashMap<>());
+    Map<String, Object> viewTable = executeJavascriptMethod(JS_TR_GET_TABLE_MODEL, new HashMap<>());
     logger().debug(" - RESULT: " + viewTable);
     int index = getColumnNameIndex(columnName, viewTable);
     if (index < 0) {

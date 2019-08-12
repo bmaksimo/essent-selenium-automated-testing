@@ -45,13 +45,11 @@ public class InputElements extends DwpScenario {
   private class ApplyInput implements Predicate<Map> {
     @Override
     public boolean test(Map options) {
-      boolean success = executeJavascriptTest(JS_BASE_FORM_INPUT, options);
-      return success;
+      return executeJavascriptTest(JS_BASE_FORM_INPUT, options);
     }
 
     public boolean testNow(Map options) {
-      boolean success = executeJavascriptTestImmediately(JS_BASE_FORM_INPUT, options, true);
-      return success;
+      return executeJavascriptTestImmediately(JS_BASE_FORM_INPUT, options, true);
     }
   }
 
@@ -61,13 +59,11 @@ public class InputElements extends DwpScenario {
   private class ApplySelection implements Predicate<Map> {
     @Override
     public boolean test(Map options) {
-      boolean success = executeJavascriptTest(JS_TR_FORM_SELECTION, options);
-      return success;
+      return executeJavascriptTest(JS_TR_FORM_SELECTION, options);
     }
 
     public boolean testNow(Map options) {
-      boolean success = executeJavascriptTestImmediately(JS_TR_FORM_SELECTION, options, true);
-      return success;
+      return executeJavascriptTestImmediately(JS_TR_FORM_SELECTION, options, true);
     }
   }
 
@@ -75,13 +71,11 @@ public class InputElements extends DwpScenario {
   private class ApplyDateInput implements Predicate<Map> {
     @Override
     public boolean test(Map options) {
-      boolean success = executeJavascriptTest(JS_TR_DATE_PICKER_INPUT, options);
-      return success;
+      return executeJavascriptTest(JS_TR_DATE_PICKER_INPUT, options);
     }
 
     public boolean testNow(Map options) {
-      boolean success = executeJavascriptTestImmediately(JS_TR_DATE_PICKER_INPUT, options, true);
-      return success;
+      return executeJavascriptTestImmediately(JS_TR_DATE_PICKER_INPUT, options, true);
     }
   }
 
@@ -91,8 +85,7 @@ public class InputElements extends DwpScenario {
   private class ToggleCheckBox implements Predicate<Map<String, String>> {
     @Override
     public boolean test(Map<String, String> options) {
-      boolean success = executeJavascriptTest(JS_TR_TOGGLE_CHECK_BOX, options);
-      return success;
+      return executeJavascriptTest(JS_TR_TOGGLE_CHECK_BOX, options);
     }
   }
 
