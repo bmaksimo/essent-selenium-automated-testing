@@ -88,7 +88,7 @@ public class ContractPage extends Component {
     }
 
     public void searchByClientNumber(String number) {
-        seleniumDriver.waitAndSendKeys(getSearchInputElemnt(), number);
+        seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndSendKeys(getSearchInputElemnt(), number);
     }
 

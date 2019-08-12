@@ -41,6 +41,7 @@ public class NewQuotePage extends QuoteCreationGuidedStep {
     }
 
     public void saveSelectedItem() {
+        seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//select-with-search-modal/section//div[@class = 'modal__header']/a")));
     }
 
