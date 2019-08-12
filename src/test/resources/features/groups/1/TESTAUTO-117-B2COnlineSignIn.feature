@@ -2,13 +2,13 @@
 @DWP
 @B2C
 @ALL
-Feature: TESTAUTO-117-B2C online sidn in
+Feature: TESTAUTO-117-B2C online sign in
 
     Background:
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
     @TESTAUTO-117
-    Scenario: B2C online sidn in
+    Scenario: B2C online sign in
         #Create an active contract
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         And "Tariefdatum" date is "now"
@@ -46,12 +46,10 @@ Feature: TESTAUTO-117-B2C online sidn in
         And Plus action of "1" element from "QuotesOnAccount" and click on "Handtekening ontvangen"
         And "Datum ondertekening" date is "now"
         And Changes are confirmed
-        And Sleep for 3 seconds
         Then "1st" list element has cell value "Sales Handtekening ontvangen - Geaccepteerd" at column "Type & status"
 
-        When Plus action of "1" element from "QuotesOnAccount" And Click on "Bevestig"
+        When Plus action of "1" element from "QuotesOnAccount" and click on "Bevestig"
         And Changes are confirmed
-        And Sleep for 4 seconds
         Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
 
         When Dashboard menu is "Contracten"
