@@ -124,17 +124,28 @@ public class MarketBerichtenSteps extends DwpScenario {
         String date = info.get(1).get(2);
         MarktBerichtenPage mp = new MarktBerichtenPage();
         String module = "UPDATE BUSINESS MASTER DATA";
-        if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht("1")) && !(mp.getModulFromMarketbericht("2").equals(module)) ) {
-            Assert.assertEquals(modul, mp.getModulFromMarketbericht("2"));
-            Assert.assertEquals(mp.getMarketberichtEndDateElement("1"), toDwpEndDate(parameterProvider.getValueOrParameterAsString(date)));
+        String eanFromMarketberichtRow1 = "1";
+        String eanFromMarketberichtRow2 = "3";
+        String eanFromMarketberichtRow3 = "5";
+        String modulFromMarketberichtRow1 = "2";
+        String modulFromMarketberichtRow2 = "4";
+        String modulFromMarketberichtRow3 = "6";
+        String marketberichtEndDateElementRow1 = "1";
+        String marketberichtEndDateElementRow2 = "5";
+        String marketberichtEndDateElementRow3 = "9";
+
+
+        if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht(eanFromMarketberichtRow1)) && !(mp.getModulFromMarketbericht(modulFromMarketberichtRow1).equals(module)) ) {
+            Assert.assertEquals(modul, mp.getModulFromMarketbericht(modulFromMarketberichtRow1));
+            Assert.assertEquals(mp.getMarketberichtEndDateElement(marketberichtEndDateElementRow1), toDwpEndDate(parameterProvider.getValueOrParameterAsString(date)));
         } else {
-            if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht("3")) && !(mp.getModulFromMarketbericht("4").equals(module)) ) {
-                Assert.assertEquals(modul, mp.getModulFromMarketbericht("4"));
-                Assert.assertEquals(mp.getMarketberichtEndDateElement("5"), toDwpEndDate(parameterProvider.getValueOrParameterAsString(date)));
+            if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht(eanFromMarketberichtRow2)) && !(mp.getModulFromMarketbericht(modulFromMarketberichtRow2).equals(module)) ) {
+                Assert.assertEquals(modul, mp.getModulFromMarketbericht(modulFromMarketberichtRow2));
+                Assert.assertEquals(mp.getMarketberichtEndDateElement(marketberichtEndDateElementRow2), toDwpEndDate(parameterProvider.getValueOrParameterAsString(date)));
             } else {
-                if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht("5")) && !(mp.getModulFromMarketbericht("6").equals(module)) ) {
-                    Assert.assertEquals(modul, mp.getModulFromMarketbericht("6"));
-                    Assert.assertEquals(mp.getMarketberichtEndDateElement("9"), toDwpEndDate(parameterProvider.getValueOrParameterAsString(date)));
+                if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht(eanFromMarketberichtRow3)) && !(mp.getModulFromMarketbericht(modulFromMarketberichtRow3).equals(module)) ) {
+                    Assert.assertEquals(modul, mp.getModulFromMarketbericht(modulFromMarketberichtRow3));
+                    Assert.assertEquals(mp.getMarketberichtEndDateElement(marketberichtEndDateElementRow3), toDwpEndDate(parameterProvider.getValueOrParameterAsString(date)));
                 }
             }
         }
