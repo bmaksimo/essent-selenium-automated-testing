@@ -33,7 +33,6 @@ Background:
         Then Form header is "Connection details"
         When "Producttype" selection is "Elektriciteit"
         And "Type aansluiting" selection is "YMR"
-#        And "Meter type" selection is "YMR"
         And "Meternummer" input is "30301267ISK"
         And Option "test" "is" "On"
         And EAN code is generated
@@ -46,7 +45,6 @@ Background:
         And "Einddatum" date is "1 year from now"
         And "Verbruik enkelvoudig (kWh)" input is "5000"
         And Bevestigen
-#        And Pricing details are confirmed
         Then Form header is "Billing details"
 
         When "Betalingswijze" selection is "Overschrijving"
