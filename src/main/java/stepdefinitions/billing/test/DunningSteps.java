@@ -38,7 +38,7 @@ public class DunningSteps extends DwpScenario {
         request.setAccountUUID(accountNumber);
         request.setCount(count);
 
-        List dunningSteps = (List) new DunningService().callDunningStep(request);
+        new DunningService().callDunningStep(request);
     }
 
     @When("^Dunning is advanced for (\\d+) day\\(s\\)$")

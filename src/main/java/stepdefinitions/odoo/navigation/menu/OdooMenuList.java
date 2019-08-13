@@ -29,7 +29,7 @@ public class OdooMenuList {
         return null;
     }
 
-    public static Map getMenu() {
+    public static Map<String, String> getMenu() {
         return menuMap;
     }
 }

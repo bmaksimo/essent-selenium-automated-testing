@@ -71,7 +71,7 @@ public class ToggleSwitchImpl extends ButtonImpl implements ToggleSwitch {
   @Override
   public void switchOn(String label) {
     if (!isOn(label)) {
-      element.get().click();
+        element.ifPresent(WebElement::click);
     }
   }
 
