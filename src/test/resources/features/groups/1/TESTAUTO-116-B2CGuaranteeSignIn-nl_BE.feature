@@ -60,34 +60,6 @@ Feature: TESTAUTO-116-B2C guarantee sign in
         And Changes are confirmed
         Then "1st" list element has cell value "Sales Getekend - Waarborg" at column "Type & status"
 
-#        Given I renew login to Odoo as "role_essent_ccm_user"
-#        And Cleanup Odoo CODA files
-#        When Odoo top menu is "Accounting"
-#        And  Odoo left menu is "Customers"
-#        And Odoo filter is "parameter:accountNumber"
-#        When Column "Account Number" with value "parameter:accountNumber" is clicked
-#        And Button "Journal Items" is clicked
-#        And Generate CODA in the first row with "Amount receivable" is clicked
-#        Then Modal title contains "Download CODA"
-#        And Generated CODA file is downloaded
-#        And Modal button "Close" is clicked
-
-#        When Odoo left menu is "CODA Processing->Import CODA Files"
-#        Then Odoo file upload dialog is "Import CODA File"
-#        Then CODA file is "parameter:codaFile"
-#        And  Odoo file upload confirm button is "Import"
-#        And  Odoo file import report
-#        And Modal button "View Bank Statement" is clicked
-#        When Column "Reference" of the "1st" row is clicked
-#        Then Modal button "Close" is clicked
-#
-#        Given I renew login to DWP as "salesmarketing.testautomation.b2c@essent.be"
-#        When Left menu is "billing"
-#        And Top menu item is "Klanten"
-#        And Top action is "Filters"
-#        And "Klantnummer" input is "parameter:accountNumber"
-#        Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
-
         When Dashboard menu is "Contracten"
         Then  "1st" list element has cell value "Te activeren" at column "Contractnummer" polling 550 seconds
 
