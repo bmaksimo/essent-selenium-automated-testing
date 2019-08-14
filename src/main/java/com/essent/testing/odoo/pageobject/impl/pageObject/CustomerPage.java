@@ -16,7 +16,7 @@ public class CustomerPage extends Component {
     private static final String JOURNAL_ENTRY_ROW = "//table[@class='oe_list_content'][1]//tbody//tr[1]//td[@data-field='move_id'][1]//a";
     private static final String ACITVE_CHECKBOX = "//div[@class='oe_form_nosheet']//tbody/tr[3]/td[2]//input";
     private static final String SENT_TO_CUSTOMER_CHECKBOX = "//td[@class='oe_list_field_cell oe_list_field_boolean   oe_readonly ']/input";
-    private static final String FORMAT = "//td[@class='oe_list_field_cell oe_list_field_selection   oe_readonly oe_required']";
+    private static final String FORMAT = "//td[@data-field='format']";
     private static final String SENT_DATE = "(//td[@class='oe_list_field_cell oe_list_field_date   oe_readonly '])[3]";
 
 
