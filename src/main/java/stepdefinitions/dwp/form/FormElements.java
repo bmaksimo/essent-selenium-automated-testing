@@ -77,7 +77,7 @@ public class FormElements extends DwpScenario {
     public void checkValueInCard(String label, String cardName, String expectedParameter) {
         String expectedValue = parameterProvider.getValueOrParameterAsString(expectedParameter);
         NonEditable card = new NonEditableImpl();
-        FluentWait<NonEditable> waiter = waiter(card, 20, 1);
+        FluentWait<NonEditable> waiter = waiter(card, 60, 3);
         waiter.until(field -> StringUtils.equalsIgnoreCase(field.getValue(cardName, label), expectedValue));
 
     }
