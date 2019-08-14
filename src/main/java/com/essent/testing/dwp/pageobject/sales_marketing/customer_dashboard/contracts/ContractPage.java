@@ -343,13 +343,9 @@ public class ContractPage extends Component {
         String secondInvoice = seleniumDriver.findElementWhenVisible(By.xpath(SECOND_INVOICE)).getText();
         String thirdInvoice = seleniumDriver.findElementWhenVisible(By.xpath(THIRD_INVOICE)).getText();
 
-        List<String> actualInvoicesAmounts = new ArrayList<>();
-
-        actualInvoicesAmounts.add(getAmountWithoutCurrency(firstInvoice));
-        actualInvoicesAmounts.add(getAmountWithoutCurrency(secondInvoice));
-        actualInvoicesAmounts.add(getAmountWithoutCurrency(thirdInvoice));
-
-        return actualInvoicesAmounts;
+        return Arrays.asList(getAmountWithoutCurrency(firstInvoice),
+                            getAmountWithoutCurrency(secondInvoice),
+                            getAmountWithoutCurrency(thirdInvoice));
     }
 
     public Map<String, String> getNumericInvoicesAmounts() {
