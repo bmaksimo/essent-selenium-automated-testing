@@ -43,7 +43,7 @@ Feature: TESTAUTO-117-B2C online sign in
         Then "1st" list element has cell value "Sales Verstuurd naar de klant - Geaccepteerd" at column "Type & status"
 
          #2.1 Sign quote
-        And Plus action of "1" element from "QuotesOnAccount" and click on "Handtekening ontvangen"
+        When Plus action of "1" element from "QuotesOnAccount" and click on "Handtekening ontvangen"
         And "Datum ondertekening" date is "now"
         And Changes are confirmed
         Then "1st" list element has cell value "Sales Handtekening ontvangen - Geaccepteerd" at column "Type & status"
