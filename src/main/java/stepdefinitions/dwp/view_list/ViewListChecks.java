@@ -34,7 +34,6 @@ import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegis
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkTimeBetween;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.getFormattedEnd;
 import static com.billinghouse.test_automation.util.dsl.NumericUtil.checkAmount;
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -144,6 +143,15 @@ public class ViewListChecks extends NavigationElements {
             else if (BILLING_CUSTOMER.equalsIgnoreCase(viewListName))
                 columnIndexListOptions.put("view_list_name", BILLING_CUSTOMER_VIEW_LIST);
         }
+        return columnIndexListOptions;
+    }
+
+    private Map<String, String> getColumnIndexListOptionsFromRow(String columnToBeClicked, String tableName, String filterColumn, String data) {
+        Integer rowIndex = new ViewListTestObject().fetchRowIndexFromData(tableName, filterColumn, data);
+        Map<String, String> columnIndexListOptions = new HashMap<>();
+        columnIndexListOptions.put("column", columnToBeClicked);
+        columnIndexListOptions.put("index", rowIndex.toString());
+
         return columnIndexListOptions;
     }
 
@@ -325,8 +333,10 @@ public class ViewListChecks extends NavigationElements {
         waiter.withMessage(String.format(
             "\"%s\" list element did not contain expected cell value \"%s\" at column \"%s\" within \"%s\" seconds  - PASSED.",
             ordinal, expectedValue, columnName, seconds));
+        String plusMenu = parameterProvider.getValueOrParameterAsString("parameter:plus-menu-item");
+
         waiter.until((ViewListTestObject callback) -> {
-            scenario.checkPlusMenu(parameterProvider.getValueOrParameterAsString("parameter:plus-menu-item"));
+            scenario.checkPlusMenu(plusMenu);
             return callback.containsDataAt(row, expectedValue, columnName);
         });
         logger().debug(String.format(
@@ -458,30 +468,25 @@ public class ViewListChecks extends NavigationElements {
         parameterProvider.put(column + " - end", getFormattedEnd(intervalOfContract.get(), +1));
     }
 
-    @Then(
-        "^List element matching value \"([^\"]*)\" at column \"([^\"]*)\" from table \"([^\"]*)\" is checked$")
-    public void storeColumnValueInParameterProvider(String match, String columnName, String tableName)
-        throws Throwable {
+    @Then("^List element matching value \"([^\"]*)\" at column \"([^\"]*)\" from table \"([^\"]*)\" is checked$")
+    public void storeColumnValueInParameterProvider(String match, String columnName, String tableName) throws Throwable {
         List<String> columnData = new ViewListTestObject().fetchColumnData(tableName, columnName);
-        Optional<String> first =
-            columnData.stream().filter(element -> element.contains(match)).findAny();
-        assertThat(
-            String.format(
-                "\"%s\" list element didn't contain value \"%s\" at column \"%s\"",
-                tableName, match, columnName),
+        Optional<String> first = columnData.stream().filter(element -> element.contains(match)).findAny();
+        assertThat(String.format("\"%s\" list element didn't contain value \"%s\" at column \"%s\"",
+            tableName, match, columnName),
             first.isPresent(),
             is(true));
         parameterProvider.put(columnName, first.get());
-        logger()
-            .debug(
-                String.format(
-                    "- STEP: \"%s\" list element with value at column \"%s\" is checked - PASSED.",
-                    tableName, columnName));
+        logger().debug(String.format("- STEP: \"%s\" list element with value at column \"%s\" is checked - PASSED.", tableName, columnName));
+    }
+
+    @When("^Click on \"([^\"]*)\" matching value \"([^\"]*)\" at column \"([^\"]*)\"$")
+    public void clickOnElementWithMatchingValue(String columnToBeClicked, String match, String filterColumn) throws Throwable {
+        new ClickTableCellUrl().testNow(getColumnIndexListOptionsFromRow(columnToBeClicked, null, filterColumn, match));
     }
 
     @And("^All cell values at \"([^\"]*)\" row from table \"([^\"]*)\" are checked$")
-    public void cellValuesAtRowFromTableAreChecked(String ordinal, String tableName)
-        throws Throwable {
+    public void cellValuesAtRowFromTableAreChecked(String ordinal, String tableName) throws Throwable {
         ViewListTestObject viewListTestObject = new ViewListTestObject(tableName);
         int row = extractNumericValue(ordinal);
         for (int column = 1; viewListTestObject.getColumnCount().isPresent() &&
@@ -633,9 +638,9 @@ public class ViewListChecks extends NavigationElements {
     public void viewIsNotEmpty(String tableTitle, String verb) {
         DefaultTableModel viewTableModel = new ViewListTestObject().getViewTableModel(tableTitle);
         boolean success = false;
-        if (verb.equalsIgnoreCase("is")){
+        if (verb.equalsIgnoreCase("is")) {
             success = viewTableModel.getRowCount() == 0;
-        }else if (verb.equalsIgnoreCase("is_not")){
+        } else if (verb.equalsIgnoreCase("is_not")) {
             success = viewTableModel.getRowCount() != 0;
         }
         assertThat(String.format(tableTitle + " doesn't exist or comparation is not valid"), success, is(true));
@@ -663,14 +668,15 @@ public class ViewListChecks extends NavigationElements {
     @And("^Table \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\" within (\\d+) seconds?$")
     public void viewListContainsValueAtColumn(String table, String value, String column, int seconds) throws Throwable {
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
-        PlusActions scenario = (PlusActions) getScenarioInstance(PlusActions.class);
+        String arrow = parameterProvider.getValueOrParameterAsString("parameter:navigation");
+        String dashboardMenu = parameterProvider.getValueOrParameterAsString("parameter:dashboard-menu");
 
-        FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), seconds, 30);
+        FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), seconds, 10);
         waiter.withMessage(String.format("List element didn't contain any value at column \"%s\"", column));
         waiter.until((ViewListTestObject callback) -> {
-            scenario.checkPlusMenu(parameterProvider.getValueOrParameterAsString("parameter:plus-menu-item"));
-            return !callback.fetchColumnData(table, column)
-                .stream().filter(element -> element.contains(inputValue)).collect(Collectors.toList()).isEmpty();
+            loopBack(arrow, dashboardMenu);
+            return callback.fetchColumnData(table, column).stream().
+                filter(element -> element.contains(inputValue)).collect(Collectors.toList());
         });
 
         logger().debug(String.format("- STEP: Table \"%s\" does not contain value \"%s\" at column \"%s\".", table,
@@ -774,31 +780,39 @@ public class ViewListChecks extends NavigationElements {
         assertThat(message, actualCurrencyAmountAsString, equalTo(expectedCurrencyAmountAsString));
     }
 
-    @Then("^Invoice Amounts have values \"([^\"]*)\", \"([^\"]*)\" and \"([^\"]*)\"$")
-    public void checkInvoiceAmount(String invoiceAmount1, String invoiceAmount2, String invoiceAmount3) {
-        ContractPage cp = new ContractPage();
-        String actualValuesOfInvoices = cp.getActualValuesOfInvoicesAsString();
-        final String message = "Invoice Amount is not correct";
+    @Then("Credit invoice has same negative amount as advance invoice")
+    public void checkInvoiceAmount() {
+        Map<String, String> actualValuesOfInvoices = new ContractPage().getNumericInvoicesAmounts();
 
-        assertThat(message, actualValuesOfInvoices, containsString(invoiceAmount1));
-        assertThat(message, actualValuesOfInvoices, containsString(invoiceAmount2));
-        assertThat(message, actualValuesOfInvoices, containsString(invoiceAmount3));
+        final String message = "Invoices amounts are not matching.";
+
+        Long unsignedCreditInvoice = Long.parseLong(actualValuesOfInvoices.get("creditInvoice").substring(1));
+        Long debitInvoice = Long.parseLong(actualValuesOfInvoices.get("debitInvoice"));
+        Long additionalInvoice = Long.parseLong(actualValuesOfInvoices.get("additionalInvoice"));
+
+        parameterProvider.put("additionalInvoice", additionalInvoice);
+
+        assertThat(message, unsignedCreditInvoice.equals(debitInvoice));
     }
 
-    @Then("^Balance is \"([^\"]*)\"$")
-    public void checkValue(String expectedBalance) {
+    @Then("Balance is the same as from the latest invoice")
+    public void checkValue() {
         ContractPage cp = new ContractPage();
 
-        int refreshCount = 15;
+        String expectedBalance = parameterProvider.getValueOrParameterAsString("parameter:additionalInvoice") + ",00";
+
+        int refreshCount = 100;
+        String actualBalance = "";
         for (int i = 0; i < refreshCount; i++) {
-            if (cp.getBalance().contains(expectedBalance)) {
+            actualBalance = cp.getBalance();
+            if (expectedBalance.equals(actualBalance)) {
                 break;
             } else {
                 seleniumDriver.getDriver().navigate().back();
                 seleniumDriver.getDriver().navigate().forward();
             }
         }
-        Assert.assertTrue("Balance is not correct", cp.getBalance().contains(expectedBalance));
+        Assert.assertEquals("Balance is not correct", expectedBalance, actualBalance);
     }
 
     @Then("^Table Offertelijnen has value \"([^\"]*)\"$")
@@ -820,22 +834,20 @@ public class ViewListChecks extends NavigationElements {
         ContractPage cp = new ContractPage();
         if (typeRate.equals("High")) {
             parameterProvider.put("sumRatesHighSignature", cp.sumRates(typeRate));
-        }
-        else if (typeRate.equals("Low")) {
+        } else if (typeRate.equals("Low")) {
             parameterProvider.put("sumRatesLowSignature", cp.sumRates(typeRate));
-        }
-        else
+        } else
             throw new CucumberException(getClass() + ": Only High and Low values can be passed as parameters");
     }
 
     @Then("\"([^\"]*)\" and \"([^\"]*)\" equals Sum of High&Low rates for rejected rates$")
     public void compareSumOfRatesForSignatureQuoteAndRejectedQuote(String sumRatesHighSignature, String sumRatesLowSignature) {
         ContractPage cp = new ContractPage();
-        float sumHighRatesSignatureToFloat= Float.parseFloat(parameterProvider.getValueOrParameterAsString(sumRatesHighSignature));
+        float sumHighRatesSignatureToFloat = Float.parseFloat(parameterProvider.getValueOrParameterAsString(sumRatesHighSignature));
         float sumLowRatesSignatureToFloat = Float.parseFloat(parameterProvider.getValueOrParameterAsString(sumRatesLowSignature));
         cp.sumRates(sumRatesHighSignature);
         cp.sumRates(sumRatesLowSignature);
-        assertThat("Sum of signature and rejected quote for High prices is not equal", sumHighRatesSignatureToFloat, equalTo( cp.sumRates(sumRatesHighSignature)));
+        assertThat("Sum of signature and rejected quote for High prices is not equal", sumHighRatesSignatureToFloat, equalTo(cp.sumRates(sumRatesHighSignature)));
         assertThat("Sum of signature and rejected quote for Low prices is not equal", sumLowRatesSignatureToFloat, equalTo(cp.sumRates(sumRatesLowSignature)));
     }
 

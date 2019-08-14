@@ -3,6 +3,7 @@ package com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.con
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
+import cucumber.runtime.CucumberException;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -12,7 +13,7 @@ import org.openqa.selenium.WebElement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
+import java.util.*;
 
 public class ContractPage extends Component {
 
@@ -41,7 +42,7 @@ public class ContractPage extends Component {
     private static final String INSTALLMENTS_SUM = "balance-field";
     private static final String INSTALLMENTS_NUMBER = "//list[@list-key='InstallmentsOnPaymentPlan']//h5";
     private static final String BILLING_NUMBER = "//list[@list-key='BillingCustomerOnaccount']//td[1]//span[1]";
-    private static final String LABELFORPRODUCTCHANGE = "//wysiwyg-editor-form-element[@id='description']/div[@class = 'non-editable-editor']";
+    private static final String LABELFORPRODUCTCHANGE = "//wysiwyg-editor-form-element[@id='description']/div[@class='non-editable-editor']";
     private static final String ACCOUNT_NUMBER = "//div[@class='card__content__inner-wrapper']/h4";
     private static final String CONTRACT_NUMBER = "//*[@id=\"account_number_c\"]/div";
     private static final String COMPANY_NUMBER = "//*//*[@id=\"company-number-c-field\"]";
@@ -228,6 +229,7 @@ public class ContractPage extends Component {
     }
 
     public WebElement locateMessageElement(){
+        seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath(LABELFORPRODUCTCHANGE));
     }
 
@@ -335,16 +337,45 @@ public class ContractPage extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath(PRODUCT_CONTRACT)).getText();
     }
 
-    public String getActualValuesOfInvoicesAsString() {
+    private List<String> getActualInvoicesAmounts() {
         seleniumDriver.waitForRequestsToFinish();
-        String firstInvoice  =  seleniumDriver.findElementWhenVisible(By.xpath(FIRST_INVOICE)).getText();
+        String firstInvoice = seleniumDriver.findElementWhenVisible(By.xpath(FIRST_INVOICE)).getText();
         String secondInvoice = seleniumDriver.findElementWhenVisible(By.xpath(SECOND_INVOICE)).getText();
-        String thirdInvoice  = seleniumDriver.findElementWhenVisible(By.xpath(THIRD_INVOICE)).getText();
+        String thirdInvoice = seleniumDriver.findElementWhenVisible(By.xpath(THIRD_INVOICE)).getText();
 
-        StringBuilder sb;
-        sb = new StringBuilder();
+        List<String> actualInvoicesAmounts = new ArrayList<>();
 
-        return sb.append(firstInvoice).append(' ').append(secondInvoice).append(' ').append(thirdInvoice).toString();
+        actualInvoicesAmounts.add(getAmountWithoutCurrency(firstInvoice));
+        actualInvoicesAmounts.add(getAmountWithoutCurrency(secondInvoice));
+        actualInvoicesAmounts.add(getAmountWithoutCurrency(thirdInvoice));
+
+        return actualInvoicesAmounts;
+    }
+
+    public Map<String, String> getNumericInvoicesAmounts() {
+        Map<String, String> numericInvoicesAmounts = new HashMap<>();
+
+        List<String> invoicesAmounts = getActualInvoicesAmounts();
+
+        Optional<String> creditInvoice = invoicesAmounts.stream().filter(amount -> amount.startsWith("-")).findAny();
+        if (creditInvoice.isPresent()) numericInvoicesAmounts.put("creditInvoice", creditInvoice.get());
+        else throw new CucumberException("Credit invoice was not found");
+
+        Optional<String> debitInvoice = invoicesAmounts.stream()
+            .filter(amount -> creditInvoice.get().substring(1).equals(amount)).findAny();
+        if (debitInvoice.isPresent()) numericInvoicesAmounts.put("debitInvoice", debitInvoice.get());
+        else throw new CucumberException("Debit invoice was not found");
+
+        Optional<String> additionalInvoice = invoicesAmounts.stream()
+            .filter(amount -> !creditInvoice.get().equals(amount) && !debitInvoice.get().equals(amount)).findAny();
+        if (additionalInvoice.isPresent()) numericInvoicesAmounts.put("additionalInvoice", additionalInvoice.get());
+        else throw new CucumberException("Additional invoice was not found");
+
+        return numericInvoicesAmounts;
+    }
+
+    private String getAmountWithoutCurrency(String amount) {
+        return amount.replaceAll("[^-\\d.,]", "");
     }
 
     public String getActualOutstandingValueCurrencyInvoiceAsString() {
@@ -354,7 +385,9 @@ public class ContractPage extends Component {
 
     public String getBalance() {
         seleniumDriver.waitForRequestsToFinish();
-        return seleniumDriver.findElementWhenVisible(By.id(SALDO_CREDIT_INVOICE)).getText();
+        String balance = seleniumDriver.findElementWhenVisible(By.id(SALDO_CREDIT_INVOICE)).getText();
+
+        return getAmountWithoutCurrency(balance);
     }
 
     public String getTableValue() {
