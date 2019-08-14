@@ -24,6 +24,7 @@ public abstract class NavigationElements extends DwpScenario {
     private class ClickTopAction implements Predicate<String> {
         @Override
         public boolean test(String action) {
+            seleniumDriver.waitForRequestsToFinish();
             TopActionsPage topActions = new TopActionsPageImpl();
             return topActions.executeTopAction(action);
         }
