@@ -38,27 +38,10 @@ Feature: NSTA-345:Credit Invoice
         And Top action is "Filters"
         And "Klantnummer" input is "parameter:accountNumber"
         Given View List element "Id Billing customer & persoon/familie sleutel" is collected as parameter at "1st" list row
-        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
-        When Dashboard menu is "Contracten"
-        And "1st" List element with value at column "EAN-code" is checked
-        And "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
-        And Top arrow button is "UP"
-
-        And Plus menu is "Billing -> Start facturatierun"
-        When Modal dialog is "Start invoicerun"
-        And "Factuurdatum" date is "now"
-        And "Procesdatum" date is "1 month from now"
-        And "Naam job" selection is "recurrent"
-        And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
-        Then Invoice run is scheduled
-
-        Given I renew login to DWP as "billing.testautomation@essent.be"
-        When Left menu is "billing"
-        And Top menu item is "Klanten"
-        And Top action is "Filters"
-        And "Klantnummer" input is "parameter:accountNumber"
+        When Billing run "RECURRING" is triggered with process date "1 month from now"
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
         When Dashboard menu is "Billing"
+        And "1st" List element with value at column "ID & Type" is checked
 
         #Recalculate invoice
         When Plus action of "1" element from "TransactionsOnAccount" and click on "Herbereken tussentijdse factuur"
@@ -74,30 +57,21 @@ Feature: NSTA-345:Credit Invoice
         When Dashboard menu is "Service"
 
           #3 - Check if interactions are created for VKM and CNM
-        Then Table "Interacties" contains value "VKM" at column "Type & Onderwerp"
-        Then Table "Interacties" contains value "CNM" at column "Type & Onderwerp"
+        Then Table "Interacties" contains value "VKM" at column "Type & Onderwerp" within 120 seconds
+        Then Table "Interacties" contains value "CNM" at column "Type & Onderwerp" within 120 seconds
         When Dashboard menu is "Billing"
 
         #Asserts
          #1 - Check if Old invoice is credited (check if CNM is created for same amount as old VKM)
          #2 - Check if there is a new invoice created for the amount you selected
-        Then Invoice Amounts have values "448 €", "-448 €" and "1200 €"
+        Then Credit invoice has same negative amount as advance invoice
 
          #4 - Check if CNM has been sent to customer
         When Dashboard menu is "Service"
-        Then View list header is "Interacties"
-        And Click on link in View List at "2nd" row and "Nummer & Communicatiekanaal" column waiting for 40 seconds
-        Then Check is product change "1 succeeded"
+        And Click on "Nummer & Communicatiekanaal" matching value "CNM" at column "Type & Onderwerp"
+        Then Check product change has succeeded
 
-        #5 - Check Balance of new invoice credit
-        When Dashboard menu is "Billing"
-        Then Balance is "€ 1200,00"
-
-
-
-
-
-
-
-
-
+        #5 - Check Balance of new invoice credit -- currently not being tested as balance update can take too long to occur and this is momentarily an accepted behavior
+        # when balance update is timeboxed this check needs to be uncommented
+#        When Dashboard menu is "Billing"
+#        Then Balance is the same as from the latest invoice

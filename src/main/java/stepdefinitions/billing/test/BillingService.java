@@ -1,6 +1,6 @@
 package stepdefinitions.billing.test;
 
-import com.essent.be.api.config.RestServiceFactory;
+import com.essent.be.api.config.BillingServiceFactory;
 import com.essent.be.jbilling.api.rest.RestResponse;
 import com.essent.be.jbilling.api.rest.batch.RSTriggerBillRunRequest;
 import com.essent.be.jbilling.api.rest.batch.RSTriggerMediationRequest;
@@ -12,7 +12,7 @@ import java.util.Date;
 public class BillingService {
 
     @Autowired
-    private RestServiceFactory billingServiceFactory;
+    private BillingServiceFactory billingServiceFactory;
 
     public BillingRunResult startBillRun(String jobName, String billingCustomerId, Date processDate) {
 

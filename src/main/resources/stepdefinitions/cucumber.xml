@@ -16,11 +16,11 @@
 
 
   <bean id="billingClientConfiguration" class="com.essent.be.api.config.BillingClientConfiguration" depends-on="qaProps">
-    <property name="billingBaseUrl" value="#{ qaProps.getProperty('billing.baseurl') }" />
-    <property name="billingReceiveTimeout" value="#{ qaProps.getProperty('billing.receiveTimeout') }" />
+    <property name="baseUrl" value="#{ qaProps.getProperty('billing.baseurl') }" />
+    <property name="receiveTimeout" value="#{ qaProps.getProperty('billing.receiveTimeout') }" />
     <property name="ignoreTracingContextIssues" value="true" />
   </bean>
-  <bean name="restServiceFactory" factory-bean="billingClientConfiguration" factory-method="getRestServiceFactory" />
+  <bean id="billingServiceFactory" factory-bean="billingClientConfiguration" factory-method="getServiceFactory" />
   <bean id="consumptionService" class="stepdefinitions.billing.test.ConsumptionService" />
   <bean id="billingService" class="stepdefinitions.billing.test.BillingService" />
 
