@@ -30,7 +30,6 @@ public class IWelcomeLoginAPI extends AbstractAPI {
     }
 
     public Cookies getCookie(String username, String password) throws JsonProcessingException {
-        Cookies cookie = null;
         Integer expectedResponseCode = STATUS_OK;
         String payload = createPayload(username, password);
         RequestHelper helper = new RequestHelper();
@@ -38,7 +37,7 @@ public class IWelcomeLoginAPI extends AbstractAPI {
             + ConfigProvider.getProperty(ConfigKey.CRM_LOGIN_URL);
         Response iWelcomeResponse = helper.simplePostRequest(expectedResponseCode, payload, path);
 
-        cookie = (Cookies) iWelcomeResponse.getDetailedCookies();
+        Cookies cookie = iWelcomeResponse.getDetailedCookies();
         LOGGER.debug("Cookie is: " + cookie);
 
         return cookie;
