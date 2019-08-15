@@ -57,10 +57,17 @@ Feature: TESTAUTO-118: Sign in: TC1 B2B Online
 
         When "Kanaal ondertekening" selection is "Online"
         And Quote is confirmed
-        Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
+        Then "1st" list element has cell value "Sales Verstuurd naar de klant - Geaccepteerd" at column "Type & status"
 
         #2.1 Sign quote
+        When Plus action of "1" element from "QuotesOnAccount" and click on "Handtekening ontvangen"
+        And "Datum ondertekening" date is "now"
+        And Changes are confirmed
+        Then "1st" list element has cell value "Sales Handtekening ontvangen - Geaccepteerd" at column "Type & status"
 
+        When Plus action of "1" element from "QuotesOnAccount" and click on "Bevestig"
+        And Changes are confirmed
+        Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
 
         When Dashboard menu is "Contracten"
         Then "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
