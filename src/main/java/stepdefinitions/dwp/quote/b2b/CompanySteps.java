@@ -10,32 +10,13 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import stepdefinitions.dwp.page_object.CustomerAcceptance;
-import stepdefinitions.dwp.tables.CustomerAddress;
-
 import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
 
 public class CompanySteps extends DwpScenario {
 
-    private class InitialiseCompanyAddress implements Predicate<CustomerAddress> {
-        @Override
-        public boolean test(CustomerAddress customerAddress) {
-            return setAddress(customerAddress);
-        }
-
-        private boolean setAddress(CustomerAddress customerAddress) {
-            CompanyDetailsAddressPage companyAddressView = new CompanyDetailsAddressPage();
-            companyAddressView.setAddress(customerAddress);
-            return companyAddressView.setAddress();
-        }
-    }
-
     @Before("@DWP or @E2E or @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 
@@ -46,19 +27,19 @@ public class CompanySteps extends DwpScenario {
     }
 
     @And("^Company VAT number is random$")
-    public void generateRandomUser() throws Throwable {
+    public void generateRandomUser(){
         String vat = generateVat("generator:vat:BEL");
         parameterProvider.put("VAT", vat);
     }
 
     @And("^Company name is random$")
-    public void generateRandomCompanyName() throws Throwable {
+    public void generateRandomCompanyName(){
         String companyName = generateCompanyName();
         parameterProvider.put("company-name", companyName);
     }
 
     @And("^Company address is$")
-    public void initCustomerAddress(final DataTable address) throws Throwable {
+    public void initCustomerAddress(final DataTable address){
         CompanyDetailsAddressPage companyDetailsAddressPage = new CompanyDetailsAddressPage();
         List<Map<String,String>> addresses = address.asMaps(String.class, String.class);
         companyDetailsAddressPage.setAddressNewDatatable(addresses);

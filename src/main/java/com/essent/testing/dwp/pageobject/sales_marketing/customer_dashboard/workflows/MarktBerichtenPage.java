@@ -134,10 +134,6 @@ public class MarktBerichtenPage extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath(endDateElement)).getText();
     }
 
-    public String getEanCode() {
-        return findElementWhenVisible(By.id(EAN_CODE)).getText();
-    }
-
     public String getEanCodeNow() {
         return seleniumDriver.findElementWhenVisible(By.id(EAN_CODE)).getText();
     }

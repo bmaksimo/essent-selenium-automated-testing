@@ -97,7 +97,7 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And "Plaats ondertekening" input is "Kontich"
         And "Datum ondertekening" date is "now"
         And Quote for account is signed
-        When Quote for account is confirmed
+        When Quote is confirmed
         And "1st" list element has cell value "Sales Getekend - Waarborg" at column "Type & status"
 
         When Dashboard menu is "Marktberichten"

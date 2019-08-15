@@ -1,11 +1,8 @@
 package stepdefinitions.quote.api.helper;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
+
 import io.restassured.response.Response;
 import org.apache.log4j.Logger;
-
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -13,8 +10,7 @@ import java.util.Map;
 public class ExceptionChecker {
     private final static Logger LOGGER = Logger.getLogger(RequestHelper.class);
 
-    public boolean checkForErrorInResponse(Response response)throws JsonParseException, JsonMappingException, IOException
-    {
+    public boolean checkForErrorInResponse(Response response){
         boolean errorExists = false;
         String pathToError = "data.arguments.errors";
         String errorFromResponse;
@@ -35,7 +31,7 @@ public class ExceptionChecker {
     }
 
 
-        public boolean checkForErrorInFlashMessages(Response response)throws JsonParseException, JsonMappingException, IOException {
+        public boolean checkForErrorInFlashMessages(Response response){
 
             boolean errorExists = false;
 

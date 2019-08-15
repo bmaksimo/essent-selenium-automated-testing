@@ -13,7 +13,7 @@ import static org.junit.Assert.assertNotNull;
 
 public class JBillingGenericSteps extends JBillingScenario {
     @Before("@JBILLING or @B2B or @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 

@@ -26,7 +26,7 @@ import static org.hamcrest.Matchers.*;
 
 public class OdooCodaSteps extends OdooScenario {
     @Before("@ODOO or @E2E or @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 
@@ -72,7 +72,7 @@ public class OdooCodaSteps extends OdooScenario {
     }
 
     @And("^Odoo file import report$")
-    public void odooFileImportReport() throws Throwable {
+    public void odooFileImportReport(){
         CodaImportDialog dialog = new CodaImportDialogImpl();
         String report = dialog.getImportReport();
         assertThat(report, not(isEmptyString()));
@@ -80,7 +80,7 @@ public class OdooCodaSteps extends OdooScenario {
     }
 
     @And("^Odoo file import report contains success string \"([^\"]*)\"$")
-    public void isSuccessfulReport(String success) throws Throwable {
+    public void isSuccessfulReport(String success){
         CodaImportDialog dialog = new CodaImportDialogImpl();
         String report = dialog.getImportReport();
         assertThat(report, not(isEmptyString()));
@@ -88,7 +88,7 @@ public class OdooCodaSteps extends OdooScenario {
     }
 
     @And("^Generated CODA file is downloaded$")
-    public void odooDownloadGeneratedCodaFile() throws Throwable {
+    public void odooDownloadGeneratedCodaFile(){
         WebElement downloadLink = seleniumDriver.findElement(By.xpath("//div[@class='modal-content openerp']//a[@class='oe_form_uri']"));
         if (null == downloadLink) throw new CucumberException("CODA file download link was not found");
         downloadLink.click();
@@ -108,7 +108,7 @@ public class OdooCodaSteps extends OdooScenario {
     }
 
     @And("^Cleanup Odoo CODA files$")
-    public void odooCleanupOdooCodaFiles() throws Throwable {
+    public void odooCleanupOdooCodaFiles(){
         cleanCodaFilesFromDirectory();
     }
 

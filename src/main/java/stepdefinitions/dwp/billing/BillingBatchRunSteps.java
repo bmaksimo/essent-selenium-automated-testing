@@ -1,7 +1,6 @@
 package stepdefinitions.dwp.billing;
 
 import com.billinghouse.test_automation.util.dsl.DwpDateTimeFormat;
-import com.essent.be.jbilling.api.rest.RestResponse;
 import com.essent.testing.dwp.pageobject.impl.modal.confirm.ConfirmSignatureDialogImpl;
 import com.essent.testing.dwp.pageobject.modal.confirm.ConfirmSignatureDialog;
 import com.essent.testing.dwp.scenario.DwpScenario;
@@ -29,12 +28,12 @@ public class BillingBatchRunSteps extends DwpScenario {
     BillingService billingService;
 
     @Before("@DWP or @E2E or @API")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 
     @And("^Invoice run is scheduled$")
-    public void invoiceRunIsScheduled() throws Throwable {
+    public void invoiceRunIsScheduled(){
         ConfirmSignatureDialog dialog = new ConfirmSignatureDialogImpl();
         boolean success = dialog.confirm();
         assertThat("Invoice run dialog was not confirmed.",

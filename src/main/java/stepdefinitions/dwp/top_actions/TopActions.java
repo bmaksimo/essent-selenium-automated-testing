@@ -18,32 +18,32 @@ import static org.hamcrest.Matchers.is;
 public class TopActions extends NavigationElements {
 
     @Before("@DWP or @CORE or @E2E or @REGRESSION or @API")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 
     @When("^Top action is \"([^\"]*)\"$")
-    public void checkTopAction(String action) throws Throwable {
+    public void checkTopAction(String action){
         clickTopAction(action);
     }
 
     @When("^Top action is \"([^\"]*)\" waiting for (\\d+) seconds$")
-    public void checkTopAction(String action, int waitingTime) throws Throwable {
+    public void checkTopAction(String action, int waitingTime){
         clickTopAction(action, waitingTime);
     }
 
     @And("^Top arrow button is \"([^\"]*)\"$")
-    public void clickTopArrowButton(String arrow) throws Throwable {
+    public void clickTopArrowButton(String arrow){
         super.clickTopArrow(arrow);
     }
 
     @And("^Top arrow button is \"([^\"]*)\" waiting for (\\d+) seconds$")
-    public void clickTopArrowButton(String arrow, int waitingTime) throws Throwable {
+    public void clickTopArrowButton(String arrow, int waitingTime){
         super.clickTopArrow(arrow.toLowerCase(), waitingTime);
     }
 
     @When("^Cockpit item is \"([^\"]*)\"$")
-    public void checkCockpitItem(String item) throws Throwable {
+    public void checkCockpitItem(String item){
         clickCockpitItem(item);
     }
 
@@ -57,12 +57,12 @@ public class TopActions extends NavigationElements {
     @And("^Changes are confirmed waiting for (\\d+) seconds$")
     public void confirmChange(int waitingTime) {
         Sleeper.sleepTightInSeconds(waitingTime);
-        boolean success = new ClickConfirm().testNow("");
+        boolean success = new ClickConfirm().testNow();
         assertThat(String.format("Button %s was not available.", ""), success, is(true));
     }
 
     @And("^Search input is \"([^\"]*)\"$")
-    public void input(String inputName) throws Throwable {
+    public void input(String inputName){
         String name = parameterProvider.getValueOrParameterAsString(inputName);
         Map<String, String> customerName = new HashMap<>();
         customerName.put("name", name);
@@ -72,7 +72,7 @@ public class TopActions extends NavigationElements {
     }
 
     @And("^Customer \"([^\"]*)\" is found$")
-    public void customerFind(String inputName) throws Throwable {
+    public void customerFind(String inputName){
         String name = parameterProvider.getValueOrParameterAsString(inputName);
         Map<String, String> customerName = new HashMap<>();
         String Inputname = parameterProvider.getValueOrParameterAsString(name);

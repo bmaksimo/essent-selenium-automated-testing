@@ -204,7 +204,7 @@ public class ContractB2BScenario extends RegisteredScenario {
     }
 
     @Given("^B2B Active Contract is$")
-    public String createContractB2B(final DataTable quote) throws Throwable {
+    public String createContractB2B(final DataTable quote){
         accountNumber = "";
         List<List<String>> list = quote.asLists(String.class);
 

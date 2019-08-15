@@ -30,8 +30,6 @@ import static org.testng.AssertJUnit.assertTrue;
 
 public class ContractsSteps extends DwpScenario{
 
-    private String eanCodeInput = null;
-
     @Before("@DWP or @REGRESSION or @API")
     public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
@@ -55,7 +53,7 @@ public class ContractsSteps extends DwpScenario{
     @When("^Find \"([^\"]*)\" contract$")
     public void findContract(String input) {
         ContractPage contractenPage = new ContractPage();
-        eanCodeInput = contractenPage.findActiveContract(input);
+        String eanCodeInput = contractenPage.findActiveContract(input);
         logger().debug("EAN CODE: " + eanCodeInput);
         parameterProvider.put("contractEanCode", eanCodeInput);
     }
@@ -257,7 +255,7 @@ public class ContractsSteps extends DwpScenario{
     }
 
     @When("^Payment table is not empty$")
-    public void checkPaymentTableNotEmpty() throws Throwable {
+    public void checkPaymentTableNotEmpty(){
         seleniumDriver.waitForRequestsToFinish();
         ContractPage contractenPage = new ContractPage();
         boolean success = contractenPage.checkPaymentTableNotEmpty();

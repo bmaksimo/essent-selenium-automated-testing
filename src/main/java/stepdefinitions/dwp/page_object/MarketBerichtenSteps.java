@@ -22,7 +22,7 @@ public class MarketBerichtenSteps extends DwpScenario {
     private static String eanCode = null;
 
     @Before("@DWP or @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 
@@ -44,13 +44,6 @@ public class MarketBerichtenSteps extends DwpScenario {
     public void saveEANCodeOfCustomer() {
         MarktBerichtenPage marktberichtenPage = new MarktBerichtenPage();
         seleniumDriver.waitForRequestsToFinish();
-        eanCode = marktberichtenPage.getEanCode();
-        parameterProvider.put("eanCode", eanCode);
-    }
-
-    @When("^Save EAN code of customer now$")
-    public void saveEANCodeOfCustomerNow() {
-        MarktBerichtenPage marktberichtenPage = new MarktBerichtenPage();
         eanCode = marktberichtenPage.getEanCodeNow();
         parameterProvider.put("eanCode", eanCode);
     }

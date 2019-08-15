@@ -21,7 +21,7 @@ Feature: NUAT-482: Restart SA or MI - nl_BE
         And "Module" selection is "START ACCESS" waiting for 10 seconds
         And "Label" selection is "Supplier Switch" waiting for 10 seconds
         And "Testing" turn on waiting for 10 seconds
-        And Save EAN code of customer now
+        And Save EAN code of customer
         Then Changes are confirmed waiting for 10 seconds
 
         When Left menu is "sales-marketing" waiting for 10 seconds

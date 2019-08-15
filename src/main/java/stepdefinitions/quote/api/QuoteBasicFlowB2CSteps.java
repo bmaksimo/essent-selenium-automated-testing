@@ -44,7 +44,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
 
     @Before("@API")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
 	    registerActiveScenario(scenario);
     }
 
@@ -84,8 +84,8 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
     }
 
-    @When("^New tc(\\d+)_quote is created$")
-    public void newTcQuoteIsCreated(int arg1) throws Throwable {
+    @When("^New tc_quote is created$")
+    public void newTcQuoteIsCreated() throws Throwable {
         String retreivedQuoteNumber = new QuoteDetailsAPI().getQuoteNumber(cookie, quoteDetails.getRecordId());
         assertThat(retreivedQuoteNumber, is(equalTo(quoteDetails.getQuoteNumber())));
     }
@@ -141,7 +141,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     }
 
     @Then("^Contracted EAN exists on account$")
-    public void contracted_EAN_exists_on_account() throws Throwable {
+    public void contractedEANExistsOnAccount() throws Throwable {
 	    assertThat(new ContractDetailsAPI().checkIfEanExists(cookie, quoteDetails), is(true));
     }
 

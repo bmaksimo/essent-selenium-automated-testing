@@ -18,7 +18,7 @@ import static org.hamcrest.Matchers.is;
 public class DetailsFormSteps extends DwpScenario {
 
     @Before("@DWP or @CORE or @E2E or @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 
@@ -46,7 +46,7 @@ public class DetailsFormSteps extends DwpScenario {
 
     @And("^Customer type is \"([^\"]*)\"$")
     public void customerTypeIs(String type){
-        DetailsPage dp = new DetailsPage();        ;
+        DetailsPage dp = new DetailsPage();
         Assert.assertTrue("Customer type does not match expected value", dp.getCustomerType().equalsIgnoreCase(type));
     }
 

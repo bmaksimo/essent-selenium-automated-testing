@@ -18,7 +18,6 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
-import io.cucumber.datatable.DataTableType;
 import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
 import org.openqa.selenium.By;
@@ -50,14 +49,14 @@ public class QuoteSteps extends DwpScenario {
     private static final String ROW_INDEX_XPATH = "//input-form-element//autocomplete//ul//li[${rowIndex}]/a/b";
 
     @Before("@DWP or @E2E or @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 
 
 
     @When("^B2C sales channel is \"([^\"]*)\"$")
-    public void initSalesChannel(SalesChannel salesChannel) throws Throwable {
+    public void initSalesChannel(SalesChannel salesChannel){
         QuoteDetailsPage quoteDetailsPage = new QuoteDetailsPage();
         Sleeper.sleepTightInSeconds(5);
         quoteDetailsPage.setSalesChannel(salesChannel);
@@ -66,7 +65,7 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^Deduplication dialogue \"([^\"]*)\" is shown$")
-    public void deduplicationDialogueIsShown(String title) throws Throwable {
+    public void deduplicationDialogueIsShown(String title){
         SimilarAccountDialog dialog = new SimilarAccountDialogImpl(title);
         assertThat("Similar clients dialogue was not shown.",
             dialog.getTitle(),
@@ -121,34 +120,21 @@ public class QuoteSteps extends DwpScenario {
         }
     }
 
-    private class InitialiseCustomerAddress implements Predicate<CustomerAddress> {
-        @Override
-        public boolean test(CustomerAddress customerAddress) {
-            return fillInCustomerAddress(customerAddress);
-        }
-
-        private boolean fillInCustomerAddress(CustomerAddress customerAddress) {
-            PersonalDetailsAddressPage customerAddressView = new PersonalDetailsAddressPage();
-            customerAddressView.setCustometAddress(customerAddress);
-            return customerAddressView.fillInCustomerAddress();
-        }
-    }
-
     @And("^Quote details are confirmed$")
-    public void confirmQuoteDetails() throws Throwable {
+    public void confirmQuoteDetails(){
         QuoteDetailsPage quoteDetailsPage = new QuoteDetailsPage();
         quoteDetailsPage.next();
     }
 
     @And("^Customer is random$")
-    public void checkAndGetRandomUser() throws Throwable {
+    public void checkAndGetRandomUser(){
         boolean success = generateRandomUser();
         assertThat("Random customer data was not fetched.", success,
             is(true));
     }
 
     @And("^Customer is duplicated$")
-    public void duplicateRandomUser() throws Throwable {
+    public void duplicateRandomUser(){
         RandomUser randomUser = (RandomUser) parameterProvider.getValueOrParameter("parameter:suitecrm-customer");
         boolean success = new RandomUserActions().fillInCustomerDetails(randomUser);
         assertThat("Random customer data was not fetched.", success,
@@ -163,7 +149,7 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^Customer address is$")
-    public void initCustomerAddress(final DataTable address) throws Throwable {
+    public void initCustomerAddress(final DataTable address){
         seleniumDriver.waitForRequestsToFinish();
         PersonalDetailsAddressPage pdap = new PersonalDetailsAddressPage();
         List<Map<String,String>> add = address.asMaps(String.class, String.class);
@@ -171,14 +157,14 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^Customer details are confirmed$")
-    public void confirmCustomerDetails() throws Throwable {
+    public void confirmCustomerDetails(){
         GuidedStep quoteDetailsPage = new PersonalDetailsAddressPage();
         quoteDetailsPage.next();
     }
 
     @And("^Package is \"([^\"]*)\"$")
     public void
-    selectPackage(String packaqe) throws Throwable {
+    selectPackage(String packaqe){
         seleniumDriver.waitForRequestsToFinish();
         TariffTable tariff = new TariffTable();
         tariff.setPackageName(packaqe);
@@ -194,20 +180,20 @@ public class QuoteSteps extends DwpScenario {
 
 
     @And("^Package and Fuel Type is confirmed$")
-    public void confirmPackageAndFuelType() throws Throwable {
+    public void confirmPackageAndFuelType(){
         seleniumDriver.waitForRequestsToFinish();
         PackageAndFuelTypeSelectionPage selectPackageAndFuelTypeView = new PackageAndFuelTypeSelectionPage();
         selectPackageAndFuelTypeView.next();
     }
 
     @And("^Price sheet alert doesn't pop up$")
-    public void verifySelectTariffSheetAndPackage() throws Throwable {
+    public void verifySelectTariffSheetAndPackage(){
         assertThat("Failure. Tariff sheet alerts were generated although they were not expected.", true,
             is(new VerifyTariffSheetPriceAlert().test(this)));
     }
 
     @And("^Electricity and gas meter numbers and their EANs are:$")
-    public void selectMeterIdAndEan(final DataTable connectionTable) throws Throwable {
+    public void selectMeterIdAndEan(final DataTable connectionTable){
         List<ConnectionDetails> list = connectionTable.asList(ConnectionDetails.class);
         ConnectionDetails electricityConnectionDetails = list.get(0);
         ConnectionDetails gasConnectionDetails = list.get(1);
@@ -219,7 +205,7 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^([^\"]*) meter is ([^\"]*)$")
-    public void setMeterState(final ProductType productType, final SwitchState meterState) throws Throwable {
+    public void setMeterState(final ProductType productType, final SwitchState meterState){
         ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
         given().await()
             .ignoreExceptions()
@@ -230,7 +216,7 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^Switch type is Move in$")
-    public void setMoveIn() throws Throwable {
+    public void setMoveIn(){
         ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
         given().await()
             .ignoreExceptions()
@@ -241,7 +227,7 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^([^\"]*) market mock test is ([^\"]*)$")
-    public void setMarketMockTest(final ProductType productType, final SwitchState state) throws Throwable {
+    public void setMarketMockTest(final ProductType productType, final SwitchState state){
         seleniumDriver.waitForRequestsToFinish();
         ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
         given().await()
@@ -254,7 +240,7 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^Connection details are confirmed$")
-    public void confirmConnection() throws Throwable {
+    public void confirmConnection(){
         seleniumDriver.waitForRequestsToFinish();
         ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
         connectionDetailsView.next();
@@ -282,7 +268,7 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^Prepaid advance amounts are collected as numbers$")
-    public void collectAdvanceAmountsAsNumbers(final DataTable cardsInfo) throws Throwable {
+    public void collectAdvanceAmountsAsNumbers(final DataTable cardsInfo){
         seleniumDriver.waitForRequestsToFinish();
 
         List<Map<String,String>> fieldDescriptors = cardsInfo.asMaps(String.class, String.class);
@@ -304,13 +290,13 @@ public class QuoteSteps extends DwpScenario {
 
 
     @And("^Billing details are confirmed$")
-    public void confirmBillingDetaile() throws Throwable {
+    public void confirmBillingDetaile(){
         BillingDetailsPage billingDetailsPage = new BillingDetailsPage();
         billingDetailsPage.next();
     }
 
     @And("^Quote is signed in \"([^\"]*)\"$")
-    public void submitSignedQuote(String location) throws Throwable {
+    public void submitSignedQuote(String location){
         seleniumDriver.waitForRequestsToFinish();
         String path = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
         File document = new File(path);
@@ -330,7 +316,7 @@ public class QuoteSteps extends DwpScenario {
 
 
     @And("^Quote is signed$")
-    public void submitQuote() throws Throwable {
+    public void submitQuote(){
         String path = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
         File document = new File(path);
         assertThat("File at path " + document.getAbsolutePath() + " doesn't exist.", true,
@@ -346,7 +332,7 @@ public class QuoteSteps extends DwpScenario {
 
 
     @And("^Quote for account is signed$")
-    public void submitQuoteForAccount() throws Throwable {
+    public void submitQuoteForAccount(){
         String path = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
         File document = new File(path);
         assertThat("File at path " + document.getAbsolutePath() + " doesn't exist.", true,
@@ -362,36 +348,30 @@ public class QuoteSteps extends DwpScenario {
 
 
     @And("^Quote is confirmed$")
-    public void confirmQuote() throws Throwable {
+    public void confirmQuote(){
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(5);
         QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage();
         quoteOverviewView.next();
         seleniumDriver.waitForRequestsToFinish();
     }
-    @And("^Quote for account is confirmed$")
-    public void confirmQuoteForAccount() throws Throwable {
-       confirmQuote();
-    }
-
-
 
     @And("^Electricity EAN code is selected$")
-    public void selectEanCode() throws Throwable {
+    public void selectEanCode(){
         Map<String, String> options = new HashMap<>();
         boolean success = executeJavascriptTest("TrSelectEanCode", options);
         assertThat(success, is(true));
     }
 
     @And("^EAN code is generated$")
-    public void generateEan() throws Throwable {
+    public void generateEan(){
         String eanCode = PrepareDataForContract.generateEAN();
         parameterProvider.put("EAN-code-generated", eanCode);
         logger().debug(" - Generated EAN code: " + eanCode);
     }
 
     @And("^Electricity EAN code is \"([^\"]*)\"$")
-    public void electricityEANCodeIs(String ean) throws Throwable {
+    public void electricityEANCodeIs(String ean){
         ConnectionDetails electricityConnectionDetails = new ConnectionDetails();
         switch (ean) {
             case "selected":
@@ -413,7 +393,7 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^Electricity EAN code is put as output parameter \"?([^\"]*)\"?$")
-    public void putElectricityEanCode(String parameter) throws Throwable {
+    public void putElectricityEanCode(String parameter){
         ConnectionDetailsPage page = new ConnectionDetailsPage();
         String eanCode = page.getEan();
         assertThat(StringUtils.isNotEmpty(eanCode), is(true));
@@ -421,7 +401,7 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^EAN-code autocomplete value from the \"([^\"]*)\" row is checked$")
-    public void selectEanCodeFromAutoComplete(String ordinal) throws Throwable {
+    public void selectEanCodeFromAutoComplete(String ordinal){
         int rowIndex = extractNumericValue(ordinal);
         String locator = createQuery(ROW_INDEX_XPATH, "rowIndex", String.valueOf(rowIndex));
         WebElement eanElement = seleniumDriver.findElementWhenPresent(By.xpath(locator));
@@ -430,7 +410,6 @@ public class QuoteSteps extends DwpScenario {
         assertThat(String.format("EAN code '%s' was not found.", ean), eanWasFound, is(true));
         parameterProvider.put("EAN-code", ean);
     }
-
 
     @Override
     @After("@DWP or @E2E or @REGRESSION")

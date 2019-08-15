@@ -52,7 +52,7 @@ public class PaymentInfoSteps extends NavigationElements {
   }
 
     @Before("@DWP or @CORE or @E2E or @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 
@@ -77,7 +77,7 @@ public class PaymentInfoSteps extends NavigationElements {
     }
 
     @And("^Payment method is updated$")
-    public void listSwitchedPaymentMethod() throws Throwable {
+    public void listSwitchedPaymentMethod(){
         String updatedPaymentMethodName = parameterProvider.getValueOrParameterAsString("parameter:paymentMethod");
         final String UPDATED_PAYMENT_METHOD = "//list-simple-two-liner-cell[contains(@line-2,'" + updatedPaymentMethodName + "')]";
         WebElement element = seleniumDriver.findElementWhenPresent(By.xpath(UPDATED_PAYMENT_METHOD));

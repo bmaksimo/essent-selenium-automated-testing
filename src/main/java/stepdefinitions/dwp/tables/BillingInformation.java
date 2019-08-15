@@ -11,10 +11,6 @@ public class BillingInformation {
         this.bic = bic;
     }
 
-    public BillingInformation() {
-
-    }
-
     public String getPaymentMethod() {
         return paymentMethod;
     }

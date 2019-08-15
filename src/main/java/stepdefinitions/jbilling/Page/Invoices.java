@@ -14,12 +14,12 @@ public class Invoices extends JBillingScenario {
 
 
 	@Before("@JBILLING or @B2B or @REGRESSION")
-	public void setupTest(Scenario scenario) throws Throwable {
+	public void setupTest(Scenario scenario){
 		registerActiveScenario(scenario);
 	}
 
 	@When("^Invoice table is not empty$")
-	public void checkInvoiceTableNotEmpty() throws Throwable {
+	public void checkInvoiceTableNotEmpty(){
 		InvoicesPage invoicesPage = new InvoicesPage();
 		boolean success = invoicesPage.checkInvoiceTableNotEmpty();
 

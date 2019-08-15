@@ -15,12 +15,12 @@ public class Orders extends JBillingScenario {
 
 
 	@Before("@JBILLING or @B2B or @REGRESSION")
-	public void setupTest(Scenario scenario) throws Throwable {
+	public void setupTest(Scenario scenario){
 		registerActiveScenario(scenario);
 	}
 
 	@When("^Order table is not empty$")
-	public void checkOrderTableNotEmpty() throws Throwable {
+	public void checkOrderTableNotEmpty(){
 		OrdersPage ordersPage = new OrdersPage();
 		boolean success = ordersPage.checkOrderTableNotEmpty();
 
@@ -28,7 +28,7 @@ public class Orders extends JBillingScenario {
 	}
 
     @When("^JBilling Value next to label \"([^\"]*)\" is \"([^\"]*)\" in Inner Table$")
-	public void checkValueNextToLabel(String label, String expectedValue) throws Throwable {
+	public void checkValueNextToLabel(String label, String expectedValue){
 		OrdersPage orderPage = new OrdersPage();
 		String actualResult = orderPage.checkValueNextToLabel(label);
 		assertThat("Value " + expectedValue + " is not shown next to label " + label, actualResult.equalsIgnoreCase(expectedValue), is(true));
