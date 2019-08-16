@@ -239,7 +239,7 @@ public class ContractsSteps extends DwpScenario{
                 seleniumDriver.getDriver().navigate().forward();
             }
         }
-        Assert.assertTrue("Product change wasn't successfully done", succeededMessage);
+        Assert.assertTrue("Product change has failed.", succeededMessage);
     }
 
     private boolean containsAtLeastOneSucceededMessage(ContractPage cp) {

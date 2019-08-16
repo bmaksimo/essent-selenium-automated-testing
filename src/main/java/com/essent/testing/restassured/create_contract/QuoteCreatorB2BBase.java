@@ -643,5 +643,10 @@ public class QuoteCreatorB2BBase {
                 Assert.fail("Switch type: " + typeSwitch + " doesn't exist. Please use another switch type.");
         }
     }
+
+    public String getCompanyNumber() {
+        return this.companyNumber;
+    }
 }
+
 
