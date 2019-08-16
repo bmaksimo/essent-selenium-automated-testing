@@ -16,7 +16,7 @@ public class DWPLoginDialog extends LoginComponent implements Dialog {
         super(seleniumDriver.findElementWhenPresent(SELECOR));
     }
 
-    public Window login(String username, String password) throws Throwable {
+    public Window login(String username, String password){
 
         WebElement element = seleniumDriver.findElementWhenPresent(By.id("username"));
         assertNotNull(element);

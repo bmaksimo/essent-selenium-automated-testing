@@ -10,7 +10,7 @@ import cucumber.api.java.en.When;
 public class MarketMessagesSteps extends DwpScenario {
 
     @Before("@DWP or @REGRESSION or @E2E")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 

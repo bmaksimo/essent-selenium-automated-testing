@@ -17,7 +17,7 @@ import static org.hamcrest.Matchers.is;
 public class EmailReporter extends RegisteredScenario {
 
     @Before("@DWP or @CORE or @E2E or @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 

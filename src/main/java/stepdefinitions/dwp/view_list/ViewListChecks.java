@@ -142,7 +142,7 @@ public class ViewListChecks extends NavigationElements {
     }
 
     @Before("@DWP or @CORE or @E2E or @REGRESSION or @API")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 
@@ -258,8 +258,7 @@ public class ViewListChecks extends NavigationElements {
     }
 
     @When("^Click on link in \"([^\"]*)\" View List at \"([^\"]*)\" row and \"([^\"]*)\" column$")
-    public void clickOnSuppliedViewListAtRowAndColumn(String viewListName, String ordinal, String column)
-        throws Throwable {
+    public void clickOnSuppliedViewListAtRowAndColumn(String viewListName, String ordinal, String column){
         Map<String, String> columnIndexListOptions = getColumnIndexListOptions(column, viewListName, ordinal);
         FluentWait<ClickTableCellUrl> waiter = waiter(new ClickTableCellUrl(), 60, 5)
             .withMessage(String.format("Failed click on link in view list \"%s\" at \"%s\" row and \"%s\" column",
@@ -294,8 +293,7 @@ public class ViewListChecks extends NavigationElements {
     }
 
     @And("^Table \"([^\"]*)\" contains cell value \"([^\"]*)\" at column \"([^\"]*)\" on \"([^\"]*)\" row$")
-    public void listElementWithFromTable(String tableName, String value, String columnName, String ordinal)
-        throws Throwable {
+    public void listElementWithFromTable(String tableName, String value, String columnName, String ordinal){
         int row = extractNumericValue(ordinal);
         String expectedValue = parameterProvider.getValueOrParameterAsString(value);
         FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), 30, 1);

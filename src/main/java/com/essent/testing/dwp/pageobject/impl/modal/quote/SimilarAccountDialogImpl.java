@@ -31,7 +31,7 @@ public class SimilarAccountDialogImpl extends Component implements SimilarAccoun
 
 
     @Override
-    public void clickOnLink(String linkText) throws Throwable {
+    public void clickOnLink(String linkText){
         goToLink(linkText);
     }
 

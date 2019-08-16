@@ -18,7 +18,7 @@ import java.util.List;
 public class ContractB2BScenario extends RegisteredScenario {
 
 	@Before("@DWP or @E2E or @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 

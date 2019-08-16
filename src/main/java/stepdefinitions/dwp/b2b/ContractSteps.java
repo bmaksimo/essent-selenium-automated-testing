@@ -23,7 +23,7 @@ public class ContractSteps extends DwpScenario {
     private static String Klantnummer;
 
     @Before("@REGRESSION or @E2E or @API")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 

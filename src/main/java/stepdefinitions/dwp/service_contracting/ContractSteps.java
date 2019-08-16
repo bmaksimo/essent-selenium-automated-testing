@@ -27,7 +27,7 @@ public class ContractSteps extends DwpScenario {
     private String amount;
 
     @Before("@DWP or @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 
