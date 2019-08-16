@@ -13,7 +13,7 @@ Feature: NUAT-557: Check guarantee status of customer with Customer Acceptance T
         And Top action is "Filters"
         And "B2C/B2B" selection is "B2B"
         And "Klantnummer" input is "parameter:accountNumber"
-        And Click on "parameter:accountNumber" link
+        And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
         And Dashboard menu is "Details"
         Then Get Company Number
 
