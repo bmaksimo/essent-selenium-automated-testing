@@ -264,7 +264,6 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
     }
 
     public void clickNow(final WebElement element) {
-        ngWebDriver.waitForAngularRequestsToFinish();
         element.click();
     }
 
