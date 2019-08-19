@@ -16,6 +16,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.page_object.CustomerAcceptance;
 import stepdefinitions.dwp.tables.CustomerStatus;
 
@@ -165,14 +166,6 @@ public class ContractsSteps extends DwpScenario{
 
     }
 
-    @Then("^Get Company Number$")
-    public void searchForCompanyNumber() {
-        ContractPage cp = new ContractPage();
-        String companyNumber = cp.getCompanyNumber();
-        parameterProvider.put("companyNumber", companyNumber);
-
-    }
-
     @Then("^Get Account Number$")
     public void searchForAccountNumber() {
         ContractPage cp = new ContractPage();
@@ -223,20 +216,27 @@ public class ContractsSteps extends DwpScenario{
     }
 
 
-    @Then("^Check is product change \"([^\"]*)\"$")
-    public void checkProductChangeSuccess(String expectedMessage) {
+    @Then("Check product change has succeeded$")
+    public void checkProductChangeSuccess() {
         seleniumDriver.waitForRequestsToFinish();
         ContractPage cp = new ContractPage();
-        int refreshCount = 30;
+        int refreshCount = 10;
+        boolean succeededMessage = false;
         for (int i = 0; i < refreshCount; i++) {
-            if (cp.locateMessageElement().getText().contains(expectedMessage)) {
+            if (containsAtLeastOneSucceededMessage(cp)) {
+                succeededMessage = true;
                 break;
             } else {
                 seleniumDriver.getDriver().navigate().back();
                 seleniumDriver.getDriver().navigate().forward();
             }
         }
-        Assert.assertTrue("Product change wasn't successfully done", cp.locateMessageElement().getText().contains(expectedMessage));
+        Assert.assertTrue("Product change has failed.", succeededMessage);
+    }
+
+    private boolean containsAtLeastOneSucceededMessage(ContractPage cp) {
+        WebElement messageElement = cp.locateMessageElement();
+        return !messageElement.getText().contains("0 succeeded");
     }
 
     @Then("^Product Change dates are \"([^\"]*)\" and \"([^\"]*)\"$")

@@ -1,6 +1,6 @@
 package stepdefinitions.billing.test;
 
-import com.essent.be.api.config.RestServiceFactory;
+import com.essent.be.api.config.BillingServiceFactory;
 import com.essent.be.jbilling.api.rest.RestResponse;
 import com.essent.belgium.energycomm.ws_to_bo.BasePayload;
 import com.essent.testing.util.resource.ResourceUtil;
@@ -35,7 +35,7 @@ public class ConsumptionService {
     private static final String GAS = "gas.xml";
 
     @Autowired
-    private RestServiceFactory billingServiceFactory;
+    private BillingServiceFactory billingServiceFactory;
 
     public void postConsumption(ConsumptionRecord consumptionRecord) {
         Optional<String> consumptionData = getConsumptionRequest(consumptionRecord);

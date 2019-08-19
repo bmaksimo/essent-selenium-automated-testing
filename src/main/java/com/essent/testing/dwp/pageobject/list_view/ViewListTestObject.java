@@ -21,8 +21,7 @@ import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegis
  */
 public class ViewListTestObject extends Component implements ViewList {
 
-  private static final String TRANSACTIONS_TABLE_HEADERS =
-      "//list[@list-key='TransactionsOnAccount']//th[@class='list__cell']";
+  private static final String TRANSACTIONS_TABLE_HEADERS = "//list[@list-key='TransactionsOnAccount']//th[@class='list__cell']";
 
   private Optional<DefaultTableModel> tableModel;
 
@@ -196,7 +195,37 @@ public class ViewListTestObject extends Component implements ViewList {
     return rows.stream().map((e) -> e.get(index).toString()).collect(Collectors.toList());
   }
 
+  public int fetchRowIndexFromData(String table, String columnName, String data) {
+      return fetchRowFromDataNow(table, columnName, data, false);
+  }
+
+  private int fetchRowFromDataNow(String table, String columnName, String data, boolean immediate) {
+    Map<String, Object> options = new HashMap<>();
+    options.put("include_selection", false);
+    options.put("table", table);
+    Map viewTable =
+        immediate
+            ? executeJavascriptMethodImmediately(JS_TR_FETCH_DATA_SELECTION, options)
+            : executeJavascriptMethod(JS_TR_FETCH_DATA_SELECTION, options);
+
+    List<List> rows = getData(viewTable);
+
+    int currentIndex = -1;
+    Optional row;
+    for (int i = 0; i < rows.size(); i++) {
+        List currentRow = rows.get(i);
+        row = currentRow.stream().filter(r -> r.toString().contains(data)).findFirst();
+        if (row.isPresent()) {
+            currentIndex = i;
+            break;
+        }
+    }
+
+    return currentIndex;
+  }
+
   public Optional<String> getCellValueAt(int row, String columnName) {
+    seleniumDriver.waitForRequestsToFinish();
     logger().debug("STEP: JAVASCRIPT_FETCH_DATA");
     Map<String, Object> viewTable = executeJavascriptMethod(JS_TR_GET_TABLE_MODEL, new HashMap<>());
     logger().debug(" - RESULT: " + viewTable);

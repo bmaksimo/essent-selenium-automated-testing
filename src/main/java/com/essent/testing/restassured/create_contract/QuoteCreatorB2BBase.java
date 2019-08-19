@@ -47,6 +47,7 @@ public class QuoteCreatorB2BBase {
     protected String aosProductsQuotesId = "";
     protected String docId = "";
     protected String bilingCustomerId = "";
+    protected String billingId = "";
     protected String accountName = "";
     protected String companyNumber = "";
     protected String yesterdayDate = "";
@@ -249,6 +250,7 @@ public class QuoteCreatorB2BBase {
             .extract().response();
 
         bilingCustomerId = new JsonPath(response.getBody().asString()).get("data.rows[0].id");
+        billingId = new JsonPath(response.getBody().asString()).get("data.rows[0].rowData.billingcustomerid");
 
         String payloadModalSignMandatePaper = path + "modal_to_gf_sign_mandate_paper.json.template";
         String originalModalPayloadSignMandatePaper = path + "modal_to_gf_sign_mandate_paper.json";
@@ -643,5 +645,14 @@ public class QuoteCreatorB2BBase {
                 Assert.fail("Switch type: " + typeSwitch + " doesn't exist. Please use another switch type.");
         }
     }
+
+    public String getCompanyNumber() {
+        return this.companyNumber;
+    }
+
+    public String getBillingId() {
+        return this.billingId;
+    }
 }
+
 
