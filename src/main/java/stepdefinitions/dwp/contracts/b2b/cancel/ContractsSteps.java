@@ -166,14 +166,6 @@ public class ContractsSteps extends DwpScenario{
 
     }
 
-    @Then("^Get Company Number$")
-    public void searchForCompanyNumber() {
-        ContractPage cp = new ContractPage();
-        String companyNumber = cp.getCompanyNumber();
-        parameterProvider.put("companyNumber", companyNumber);
-
-    }
-
     @Then("^Get Account Number$")
     public void searchForAccountNumber() {
         ContractPage cp = new ContractPage();

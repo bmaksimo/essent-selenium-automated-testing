@@ -225,6 +225,7 @@ public class ViewListTestObject extends Component implements ViewList {
   }
 
   public Optional<String> getCellValueAt(int row, String columnName) {
+    seleniumDriver.waitForRequestsToFinish();
     logger().debug("STEP: JAVASCRIPT_FETCH_DATA");
     Map<String, Object> viewTable = executeJavascriptMethod(JS_TR_GET_TABLE_MODEL, new HashMap<>());
     logger().debug(" - RESULT: " + viewTable);
