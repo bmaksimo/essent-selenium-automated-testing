@@ -70,6 +70,5 @@ Feature: TESTAUTO-109: Create B2B TK2 Contract with Online Signing
         Then "1st" list element has cell value "Getekend - Geaccepteerd" at column "Type & status"
 
         When Dashboard menu is "Contracten"
-#        Then View list header is "Actieve en toekomstige connecties"
         And "1st" List element with value at column "EAN-code" is checked
         Then "1st" list element has cell value "Actief" at column "Contractnummer" polling 1200 seconds
