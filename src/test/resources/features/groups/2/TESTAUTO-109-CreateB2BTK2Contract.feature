@@ -36,6 +36,7 @@ Feature: TESTAUTO-109: Create B2B TK2 Contract with Online Signing
         And EAN code is generated
         And "Type aansluiting" selection is "YMR"
         And "EAN-code" input is "parameter:EAN-code-generated"
+        And "Meternummer" input is "30301267ISK"
         When Connection details are confirmed
         And Save changes
         Then Form header is "Pricing details"
@@ -70,5 +71,5 @@ Feature: TESTAUTO-109: Create B2B TK2 Contract with Online Signing
 
         When Dashboard menu is "Contracten"
 #        Then View list header is "Actieve en toekomstige connecties"
-#        And "1st" List element with value at column "EAN-code" is checked
-#        And "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
+        And "1st" List element with value at column "EAN-code" is checked
+        Then "1st" list element has cell value "Actief" at column "Contractnummer" polling 1200 seconds
