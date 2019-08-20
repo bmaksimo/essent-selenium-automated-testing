@@ -19,7 +19,18 @@ public class PricingToolDashboardSteps extends DwpScenario {
         PricingToolDashboardPage ptdp = new PricingToolDashboardPage();
         Assert.assertTrue("Purchase price column is not displayed", ptdp.getPurchasePriceHeader().isDisplayed());
         Assert.assertTrue("Purchase price column first row is not displayed",ptdp.getPurchasePriceFirstRow().isDisplayed());
+    }
 
+    @And("^Indexatieparameter is not empty$")
+    public void indexatieparameterIsNotEmpty(){
+        PricingToolDashboardPage ptdp = new PricingToolDashboardPage();
+        Assert.assertTrue("Indexatieparameter is empty", ptdp.getIndexatieParameter().getText() != null);
+    }
+
+    @And("^Huidige waarde is not empty$")
+    public void huidigeWaardeIsNotEmpty(){
+        PricingToolDashboardPage ptdp = new PricingToolDashboardPage();
+        Assert.assertTrue("Huidige waarde is empty", ptdp.getHuidigeWaarde().getText() != null);
     }
 
 }
