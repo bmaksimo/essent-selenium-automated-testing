@@ -16,6 +16,7 @@ import stepdefinitions.quote.api.helper.AsyncExecutor;
 import stepdefinitions.quote.api.model.ContractDetails;
 import stepdefinitions.quote.api.model.QuoteDetails;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.expandFrom;
@@ -85,9 +86,11 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     }
 
     @When("^New tc(\\d+)_quote is created$")
-    public void newTcQuoteIsCreated(int arg1) throws Throwable {
-        String retreivedQuoteNumber = new QuoteDetailsAPI().getQuoteNumber(cookie, quoteDetails.getRecordId());
-        assertThat(retreivedQuoteNumber, is(equalTo(quoteDetails.getQuoteNumber())));
+        public void newTcQuoteIsCreated(int arg1) throws IOException {
+            String retrievedQuoteNumber = new QuoteDetailsAPI().getQuoteNumber(cookie, quoteDetails.getRecordId());
+            assertThat(retrievedQuoteNumber, is(equalTo(quoteDetails.getQuoteNumber())));
+            String retrievedBillingNumber = new QuoteDetailsAPI().getBillingNumber(cookie, quoteDetails.getRecordId());
+            assertThat(retrievedBillingNumber, is(equalTo(quoteDetails.getBillingNumber())));
     }
 
     @Then("^Quote status is \"([^\"]*)\"$")

@@ -14,6 +14,7 @@ public class QuoteDetails {
     private String lastName;
     private String iBan;
     private String companyNumber;
+    private String billingNumber;
 
 
     public String getRecordId() {
@@ -77,4 +78,9 @@ public class QuoteDetails {
     public String getCompanyNumber() { return companyNumber; }
 
     public void setCompanyNumber(String companyNumber) { this.companyNumber = companyNumber; }
+
+    public String getBillingNumber() { return billingNumber; }
+
+    public void setBillingNumber(String billingNumber) { this.billingNumber = billingNumber; }
+
 }

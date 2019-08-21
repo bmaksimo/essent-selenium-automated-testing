@@ -121,6 +121,10 @@ public class QuoteDetailsAPI extends AbstractAPI {
         String quoteId = quoteResponse.jsonPath().getString("data.relatedBeans.AOS_Quotes[0]");
         quoteDetails.setQuoteId(quoteId);
         LOGGER.debug("Quote Id: " + quoteId);
+        String billingNumber = quoteResponse.jsonPath().getString("data.params.AOS_Quotes.billing_number");
+        quoteDetails.setBillingNumber(billingNumber);
+        LOGGER.debug("Quote Number: " + billingNumber);
+
 
         return quoteDetails;
     }
@@ -140,6 +144,22 @@ public class QuoteDetailsAPI extends AbstractAPI {
         LOGGER.debug("Quote ID: " + quoteId);
 
         return quoteId;
+    }
+
+
+    public String getBillingNumber(Cookies cookie, String recordId) throws IOException {
+        RequestHelper helper = new RequestHelper();
+        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
+            + ConfigProvider.getProperty(ConfigKey.CRM_BILLING_DETAILS_URL);
+        String payload = createListQuotePayload(recordId);
+
+        Response listBillingResponse = helper.postRequest(STATUS_OK, cookie, payload, path);
+        String billingId;
+        LOGGER.debug("Billing ID retrieved");
+        billingId = listBillingResponse.jsonPath().getString("data.rows[0].rowData.billingcustomerid");
+        LOGGER.debug("Billing ID: " + billingId);
+
+        return billingId;
     }
 
     public String checkStatus(Cookies cookie, String quoteNumber) throws IOException {
