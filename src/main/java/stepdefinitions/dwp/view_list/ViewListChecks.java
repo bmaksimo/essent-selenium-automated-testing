@@ -654,8 +654,8 @@ public class ViewListChecks extends NavigationElements {
         waiter.withMessage(String.format("List element didn't contain any value at column \"%s\"", column));
         waiter.until((ViewListTestObject callback) -> {
             loopBack(arrow, dashboardMenu);
-            return callback.fetchColumnData(table, column).stream().
-                filter(element -> element.contains(inputValue)).collect(Collectors.toList());
+            return !callback.fetchColumnData(table, column).stream().
+                filter(element -> element.contains(inputValue)).collect(Collectors.toList()).isEmpty();
         });
 
         logger().debug(String.format("- STEP: Table \"%s\" does not contain value \"%s\" at column \"%s\".", table,
