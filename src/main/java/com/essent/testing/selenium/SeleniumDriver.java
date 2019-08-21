@@ -146,14 +146,14 @@ public abstract class SeleniumDriver {
     }
 
     public WebElement findElementWhenPresent(By selector) {
-        return findElementWhenPresent(selector, Duration.ofMinutes(1), Duration.ofSeconds(10));
+        return findElementWhenPresent(selector, Duration.ofMinutes(2), Duration.ofSeconds(20));
     }
 
   public Optional<WebElement> findElementOptional(By selector) {
     FluentWait<WebDriver> waiter =
         new FluentWait<>(driver)
-            .withTimeout(Duration.ofSeconds(3))
-            .pollingEvery(Duration.ofSeconds(1))
+            .withTimeout(Duration.ofSeconds(60))
+            .pollingEvery(Duration.ofSeconds(10))
             .ignoring(NoSuchElementException.class);
     List<WebElement> element =
         waiter.until(
@@ -217,8 +217,8 @@ public abstract class SeleniumDriver {
 
     public WebElement findElementWhenVisible(By selector) {
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)
-            .withTimeout(Duration.ofSeconds(50))
-            .pollingEvery(Duration.ofSeconds(5))
+            .withTimeout(Duration.ofSeconds(90))
+            .pollingEvery(Duration.ofSeconds(10))
             .ignoring(ElementNotVisibleException.class)
             .ignoring(NoSuchElementException.class);
         WebElement element = waiter.until(ExpectedConditions.visibilityOfElementLocated(selector));

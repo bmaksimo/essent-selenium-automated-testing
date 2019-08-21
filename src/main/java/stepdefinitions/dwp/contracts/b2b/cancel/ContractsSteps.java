@@ -164,14 +164,6 @@ public class ContractsSteps extends DwpScenario{
 
     }
 
-    @Then("^Get Company Number$")
-    public void searchForCompanyNumber() {
-        ContractPage cp = new ContractPage();
-        String companyNumber = cp.getCompanyNumber();
-        parameterProvider.put("companyNumber", companyNumber);
-
-    }
-
     @Then("^Get Account Number$")
     public void searchForAccountNumber() {
         ContractPage cp = new ContractPage();
@@ -237,7 +229,7 @@ public class ContractsSteps extends DwpScenario{
                 seleniumDriver.getDriver().navigate().forward();
             }
         }
-        Assert.assertTrue("Product change wasn't successfully done", succeededMessage);
+        Assert.assertTrue("Product change has failed.", succeededMessage);
     }
 
     private boolean containsAtLeastOneSucceededMessage(ContractPage cp) {

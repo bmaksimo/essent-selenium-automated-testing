@@ -6,6 +6,7 @@ import com.essent.automation.autocrat.Model;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.modal.quote.SimilarAccountDialogImpl;
 import com.essent.testing.dwp.pageobject.impl.quote.*;
+import com.essent.testing.dwp.pageobject.impl.quote_for_account.OnlineQuoteSignatureModalPage;
 import com.essent.testing.dwp.pageobject.impl.quote_for_account.QuoteForAccountOverviewPage;
 import com.essent.testing.dwp.pageobject.modal.quote.SimilarAccountDialog;
 import com.essent.testing.dwp.pageobject.quote.GuidedStep;
@@ -160,6 +161,11 @@ public class QuoteSteps extends DwpScenario {
     public void confirmCustomerDetails(){
         GuidedStep quoteDetailsPage = new PersonalDetailsAddressPage();
         quoteDetailsPage.next();
+    }
+
+    @And("^Pricing details are confirmed$")
+    public void confirmPricingDetails() throws Throwable {
+        new QuoteDetailsPage().next();
     }
 
     @And("^Package is \"([^\"]*)\"$")
@@ -343,6 +349,18 @@ public class QuoteSteps extends DwpScenario {
         QuoteForAccountOverviewPage quoteOverviewView = new QuoteForAccountOverviewPage();
         quoteOverviewView.setSignatureData(signature);
         boolean success = quoteOverviewView.fillInFormData();
+        assertThat("Failure when signing up the quote.", success, is(true));
+    }
+
+    @And("Quote for account is signed online in modal")
+    public void onlineSignQuote() throws Throwable {
+        String path = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
+        File document = new File(path);
+        assertThat("File at path " + document.getAbsolutePath() + " doesn't exist.", true, is(document.exists()));
+        SignatureData signature = new SignatureData(DwpDateFormats.DWP_TODAY, path);
+        OnlineQuoteSignatureModalPage onlineQuoteSignatureModalPage = new OnlineQuoteSignatureModalPage();
+        onlineQuoteSignatureModalPage.setSignatureData(signature);
+        boolean success = onlineQuoteSignatureModalPage.fillInFormData();
         assertThat("Failure when signing up the quote.", success, is(true));
     }
 
