@@ -21,7 +21,7 @@ Feature: NUAT-481: Rejection - nl_BE
         And "Module" selection is "MOVE IN" waiting for 10 seconds
         And "Testing" turn on waiting for 10 seconds
         And "Market mock" turn on waiting for 10 seconds
-        And Save EAN code of customer
+        And Save EAN code of customer now
         Then Changes are confirmed waiting for 10 seconds
 
         When Left menu is "sales-marketing" waiting for 10 seconds
