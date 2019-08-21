@@ -46,8 +46,8 @@ public class ContractDetailsAPI extends AbstractAPI {
         String aosProductsId = contractResponse.jsonPath().getString("data.rows[0].cells[5].options.params.recordId");
         contractDetails.setAosProductsId(aosProductsId);
         LOGGER.debug("Aos Products ID: " + aosProductsId);
-            String contractStartDate = contractResponse.jsonPath().getString("data.rows[0].rowData");
-            contractStartDate = findContractStartDate(contractStartDate);
+        String contractStartDate = contractResponse.jsonPath().getString("data.rows[0].rowData");
+        contractStartDate = findContractStartDate(contractStartDate);
         contractDetails.setContractStartDate(contractStartDate);
         LOGGER.debug("contractStartDate: " + contractStartDate);
 

@@ -45,28 +45,28 @@ Feature: NSTA-344:Payment Plan
         When Billing run "RECURRING" is triggered with process date "1 month from now"
 
         When Dashboard menu is "Billing"
-        And Table "Transacties" contains value "Invoice (ADVANCE)" at column "ID & Type" within 120 seconds
+        And Table "Transacties" has matching value "Invoice (ADVANCE)" at column "ID & Type" polling 120 seconds
         And "1st" List element with value at column "ID & Type" is checked
         Then Click on link in View List at "1st" row and "ID & Type" column polling 60 seconds
         And Save Invoice Sum
 
         #Create a payment plan for this customer
         And List option is "ENKEL FACTUREN"
-        And Table "Openstaande facturen" contains value "Invoice (ADVANCE)" at column "ID & Type" within 1200 seconds
+        And Table "Openstaande facturen" contains value "Invoice (ADVANCE)" at column "ID & Type" within 1800 seconds
         And Invoice checkbox with key "InvoicesOnAccountOpenBalance" is clicked
         And List option is "AANVRAAG AFBETALINGSPLAN"
 
         And Input in "Type afbetalingsplan" is "Per bedrag"
         And Input in "Periode schijven" is "Maandelijks"
+        And "Startdatum" date is "now"
         And "Bedrag eerste afbetalingsschijf" input is "50"
         And "Bedrag andere afbetalingsschijven" input is "50"
-        And "Startdatum" date is "now"
         And Contract signature is confirmed
 
         #payment plan checks
         When Dashboard menu is "Billing"
         And Payment table is not empty
-        And Table "Afbetalingsplannen" contains value "open" at column "Status" within 60 seconds
+        And Table "Afbetalingsplannen" contains value "open" at column "Status" within 120 seconds
         Then Click on link in View List at "1st" row and "Nummer & referentie" column polling 60 seconds
         And Save Installments Sum
         Then Check is Number of Installments at least "2" for given amount "€ 50"

@@ -72,6 +72,7 @@ public class ContractPage extends Component {
 
 
     public String getClientNumber() {
+        seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath("//blue-sidebar//h4")).getText();
     }
 
@@ -107,6 +108,7 @@ public class ContractPage extends Component {
     }
 
     public void checkInvoiceOpenBalance(String key) {
+        seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-checkbox-cell[@list-key='" + key + "']")));
     }
 
