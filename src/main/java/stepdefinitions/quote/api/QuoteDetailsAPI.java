@@ -156,7 +156,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
         Response listBillingResponse = helper.postRequest(STATUS_OK, cookie, payload, path);
         String billingId;
         LOGGER.debug("Billing ID retrieved");
-        billingId = listBillingResponse.jsonPath().getString("data.rows[0].rowData.billingcustomerid");
+        billingId = listBillingResponse.jsonPath().getString("data.form.r1c1.default");
         LOGGER.debug("Billing ID: " + billingId);
 
         return billingId;
