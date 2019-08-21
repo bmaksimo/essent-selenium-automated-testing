@@ -51,6 +51,7 @@ Feature: NSTA-344:Payment Plan
         And Save Invoice Sum
 
         #Create a payment plan for this customer
+        When Dashboard menu is "Billing"
         And List option is "ENKEL FACTUREN"
         And Table "Openstaande facturen" contains value "Invoice (ADVANCE)" at column "ID & Type" within 1800 seconds
         And Invoice checkbox with key "InvoicesOnAccountOpenBalance" is clicked
