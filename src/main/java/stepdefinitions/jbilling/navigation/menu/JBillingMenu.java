@@ -17,7 +17,7 @@ public class JBillingMenu extends JBillingScenario {
     }
 
     @When("^JBilling top menu item is \"([^\"]*)\"$")
-    public void jbillingTopMenuItemIs(String item) throws Throwable {
+    public void jbillingTopMenuItemIs(String item){
         TopMenuPage menu = new TopMenuPage();
         menu.topMenu(item);
     }
@@ -29,7 +29,7 @@ public class JBillingMenu extends JBillingScenario {
     }
 
     @And("^Configuration left menu item is \"([^\"]*)\"$")
-    public void configurationLeftMenuItemIs(String left) throws Throwable {
+    public void configurationLeftMenuItemIs(String left){
         ConfigurationManuPage confManu = new ConfigurationManuPage();
         confManu.configurationLeftMenu(left);
     }

@@ -28,7 +28,7 @@ public class ParametersUtilTest extends RegisteredScenario {
     public String cto;
 
     @Test
-    public void testOutputParameter() throws Throwable {
+    public void testOutputParameter(){
         customerName = "Sjaak van Vliet";
 
         ParametersUtil.collectScenarioOutputParameters(this, (BiConsumer<String, Object>) (n, v) -> {

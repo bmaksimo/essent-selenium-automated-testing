@@ -31,7 +31,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class OdooMenu extends OdooScenario {
 
     @Before("@ODOO or @E2E or @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 
@@ -151,7 +151,7 @@ public class OdooMenu extends OdooScenario {
     public void odooValidateBankAccountWasChangedOn(String iban) {
         String bankAccountNumber = parameterProvider.getValueOrParameterAsString(iban);
         FluentWait<CustomerPage> waiter = waiter(new CustomerPage(), 600, 20)
-            .withMessage(String.format("Check if bank account number is same as in DWP", iban, 20));
+            .withMessage(String.format("Check if bank account number is same as in DWP"));
         waiter.until(cp -> {
             loopback("Accounting");
             return cp.getBankAccountAsString().equalsIgnoreCase(bankAccountNumber);

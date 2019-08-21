@@ -12,7 +12,7 @@ public class DatabaseSteps extends RegisteredScenario {
 
 
     @Before("@DWP or @CORE or @E2E or @REGRESSION or @DB-CORE")
-    public void setUp(Scenario scenario) throws Throwable {
+    public void setUp(Scenario scenario){
         registerActiveScenario(scenario);
     }
 

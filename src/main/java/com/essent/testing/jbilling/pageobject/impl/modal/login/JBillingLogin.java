@@ -15,7 +15,7 @@ public class JBillingLogin extends LoginComponent implements Dialog {
         super(SELECTOR);
     }
 
-    public Window login(String username, String password) throws Throwable {
+    public Window login(String username, String password){
         WebElement user = seleniumDriver.findElementWhenVisible(By.id("j_username"));
         seleniumDriver.waitAndSendKeys(user,username);
 

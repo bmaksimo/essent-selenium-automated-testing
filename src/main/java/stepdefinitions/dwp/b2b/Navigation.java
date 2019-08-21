@@ -22,7 +22,7 @@ public class Navigation extends DwpScenario {
 
 
     @Before("@DWP or @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
 
     }

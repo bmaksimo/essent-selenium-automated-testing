@@ -30,7 +30,7 @@ public class InputParametersTest extends RegisteredScenario {
     private DateTime startOfTenure;
 
     @Then("^Period of tenure is printed.?$")
-    public void printContractorTenureDate() throws Throwable {
+    public void printContractorTenureDate(){
         assertThat("'employee' was null", employee, is(notNullValue()));
         assertThat("'startOfTenure' was null", startOfTenure, is(notNullValue()));
         assertThat("'startOfTenure' was null", parameterProvider.getValueOrParameterAsString("parameter:startOfTenure"), is(notNullValue()));
@@ -42,7 +42,7 @@ public class InputParametersTest extends RegisteredScenario {
     }
 
     @And("^Contractor \"([^\"]*)\" has value \"([^\"]*)\"$")
-    public void contractorHasValue(String parameter, String expected) throws Throwable {
+    public void contractorHasValue(String parameter, String expected){
         assertThat(parameterProvider.getValueOrParameterAsString(parameter), is(expected));
     }
 

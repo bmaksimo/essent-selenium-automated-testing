@@ -18,7 +18,7 @@ import java.util.List;
 public class JournalEntriesSteps extends OdooScenario {
 
     @Before("@ODOO or @B2B or @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 

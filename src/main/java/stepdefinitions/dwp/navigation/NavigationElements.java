@@ -81,7 +81,7 @@ public abstract class NavigationElements extends DwpScenario {
       seleniumDriver.waitForRequestsToFinish();
       return success;
     }
-    public boolean testNow(String name) {
+    public boolean testNow() {
       boolean success = executeJavascriptTestImmediately(JS_TR_SELECT_BUTTON, "", true);
       seleniumDriver.waitForRequestsToFinish();
       return success;

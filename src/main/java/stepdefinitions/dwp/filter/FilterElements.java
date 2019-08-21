@@ -20,7 +20,7 @@ public class FilterElements extends NavigationElements {
     private static final String FILTER_BUTTON_ELEMENT_QUERY = ".icon-filters";
 
   @Before("@DWP or @CORE or @B2C or @E2E or @REGRESSION")
-  public void setupTest(Scenario scenario) throws Throwable {
+  public void setupTest(Scenario scenario){
     registerActiveScenario(scenario);
   }
 
@@ -38,7 +38,7 @@ public class FilterElements extends NavigationElements {
     }
 
     @When("^I click on the filter button$")
-    public void i_click_on_filter_button() throws Throwable {
+    public void iClickOnFilterButton(){
         TogggleFilterMode togggleFilterMode = new TogggleFilterMode();
         togggleFilterMode.test(this);
         boolean success = togggleFilterMode.test(this);

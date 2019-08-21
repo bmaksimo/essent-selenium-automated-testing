@@ -14,20 +14,14 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 public class TaskSteps extends DwpScenario {
-    private String taskId;
-    private TasksPage tp;
 
     @Before("@DWP or @REGRESSION")
     public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
     }
 
-    @When("^Plus action of first customer from list$")
-    public void plusActionOfFirstCustomerFromList() {
-    }
-
     @When("^Plus action and \"([^\"]*)\" of first customer from list$")
-    public void plusActionAndOfFirstCustomerFromList(String action) throws Throwable {
+    public void plusActionAndOfFirstCustomerFromList(String action){
         BaseObjectPage baseObject = new BaseObjectPage();
         Sleeper.sleepTightInSeconds(30);
         baseObject.clickOnPlus();
@@ -36,7 +30,7 @@ public class TaskSteps extends DwpScenario {
     }
 
     @When("^Plus action and \"([^\"]*)\" of first customer from list waiting for (\\d+) seconds$")
-    public void plusActionAndOfFirstCustomerFromList(String action, int waitingTime) throws Throwable {
+    public void plusActionAndOfFirstCustomerFromList(String action, int waitingTime){
         BaseObjectPage baseObject = new BaseObjectPage();
         Sleeper.sleepTightInSeconds(waitingTime);
         baseObject.clickOnPlusNow();
@@ -45,7 +39,7 @@ public class TaskSteps extends DwpScenario {
     }
 
     @When("^Plus action and Mark As Done/Markeren Als Verwerkt of first customer from list$")
-    public void plusActionAndOfFirstCustomerFromList() throws Throwable {
+    public void plusActionAndOfFirstCustomerFromList(){
         BaseObjectPage baseObject = new BaseObjectPage();
         baseObject.clickOnPlus();
         seleniumDriver.waitForRequestsToFinish();
@@ -53,18 +47,12 @@ public class TaskSteps extends DwpScenario {
     }
 
     @When("^Plus action and Mark As Done/Markeren Als Verwerkt of first customer from list waiting for (\\d+) seconds$")
-    public void plusActionAndOfFirstCustomerFromList(int waitingTime) throws Throwable {
+    public void plusActionAndOfFirstCustomerFromList(int waitingTime){
         BaseObjectPage baseObject = new BaseObjectPage();
         Sleeper.sleepTightInSeconds(waitingTime);
         baseObject.clickOnPlusNow();
         Sleeper.sleepTightInSeconds(waitingTime);
         baseObject.clickOnMarkAsDonePlusMenuSubActionNow();
-    }
-
-    @When("^Save task ID of first customer in list$")
-    public void saveTaskIDOfFirstCustomerInList() {
-        TasksPage tp = new TasksPage();
-        taskId = tp.getTaskId();
     }
 
     @And("^Resolution input is \"([^\"]*)\"$")

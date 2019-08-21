@@ -21,25 +21,25 @@ public class SearchAndMultipeChoice extends DwpScenario {
    * @throws Throwable
    */
   @Before("@DWP or @B2C or @CORE or @E2E or @REGRESSION")
-  public void setupTest(Scenario scenario) throws Throwable {
+  public void setupTest(Scenario scenario){
     registerActiveScenario(scenario);
   }
 
   @When("^Search option is \"([^\"]*)\"$")
-  public void setSearchOption(String searchOption) throws Throwable {
+  public void setSearchOption(String searchOption){
     String inputValue = parameterProvider.getValueOrParameterAsString(searchOption);
     SearchAndMultipeChoiceModalDialog searchDialog = new SearchAndMultipeChoiceModalDialogImpl();
     searchDialog.setSearchOption(inputValue);
   }
 
   @And("^Search button with label \"([^\"]*)\" is clicked$")
-  public void clickSearchButton(String searchButtonLabel) throws Throwable {
+  public void clickSearchButton(String searchButtonLabel){
     SearchAndMultipeChoiceModalDialog searchDialog = new SearchAndMultipeChoiceModalDialogImpl();
     searchDialog.search(searchButtonLabel);
   }
 
   @And("^First search result matching \"([^\"]*)\" is checked$")
-  public void checkFirstSearchResult(String match) throws Throwable {
+  public void checkFirstSearchResult(String match){
     String input = parameterProvider.getValueOrParameterAsString(match);
     SearchAndMultipeChoiceModalDialog searchDialog = new SearchAndMultipeChoiceModalDialogImpl();
     assertThat(searchDialog.checkSearchResult(input), is(true));

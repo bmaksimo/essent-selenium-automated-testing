@@ -30,7 +30,7 @@ import static org.hamcrest.Matchers.is;
 public class FormElements extends DwpScenario {
 
     @Before("@DWP or @CORE or @E2E or @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 
@@ -47,7 +47,7 @@ public class FormElements extends DwpScenario {
     }
 
     @Then("^Form header is \"([^\"]*)\"$")
-    public void checkFormHeader(String formHeader) throws Throwable {
+    public void checkFormHeader(String formHeader){
         given().await()
             .pollInterval(FIVE_HUNDRED_MILLISECONDS)
             .pollDelay(ONE_SECOND)
@@ -55,7 +55,7 @@ public class FormElements extends DwpScenario {
     }
 
     @And("^\"([^\"]*)\" field value is \"([^\"]*)\"$")
-    public void setFieldValue(String label, String expectedValue) throws Throwable {
+    public void setFieldValue(String label, String expectedValue){
         NonEditable field = new NonEditableImpl();
         FluentWait<NonEditable> waiter = waiter(field, 20, 5);
         waiter.until((NonEditable p) -> {
@@ -87,7 +87,7 @@ public class FormElements extends DwpScenario {
    * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
    */
   @And("^Form is submitted$")
-  public void formIsSubmitted() throws Throwable {
+  public void formIsSubmitted(){
     seleniumDriver.waitForRequestsToFinish();
     Map<String, String> options = new HashMap<>();
     executeJavascriptTest(JS_TR_SUBMIT_FORM, options);
@@ -95,8 +95,7 @@ public class FormElements extends DwpScenario {
   }
 
   @And("^Option value of \"([^\"]*)\" selection in the card \"([^\"]*)\" is matching \"([^\"]*)\"$")
-  public void checkSelectionOption(String label, String cardName, String expected)
-      throws Throwable {
+  public void checkSelectionOption(String label, String cardName, String expected){
     String expectedValue = parameterProvider.getValueOrParameterAsString(expected);
     String message =
         String.format("Dropdown box labelled \"%s\" in the card \"%s\"", label, cardName);
