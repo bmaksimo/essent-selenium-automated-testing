@@ -11,6 +11,7 @@ public class TasksPage extends Component {
     private static final String RESOLUTION_INPUT_ID = "task-resolution-c-field";
     private static final String TASK_ID_SEARCH_FIELD_ID = "task-number-c-default-value-field";
 
+// TODO remove if not used in next sprint (29)
 //    public String getTaskId() {
 //        final String taskId;
 //        taskId = seleniumDriver.findElementWhenVisible(By.xpath(TASK_ID)).getText();
