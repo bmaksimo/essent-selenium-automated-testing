@@ -16,16 +16,12 @@ Feature: NSTA-344:Payment Plan
         Then Quote status is "ACCEPTED"
         And Quoteline exists
         And Quoteline status is "Sent to customer"
-
         When Simulation that customer signature is received
         Then Quote stage status is "SIGNATURE RECEIVED"
         And Quoteline status is "Signature received"
-
         When File is uploaded as scanned signature
         Then Signin is confirmed
         And Contract is created
-        And Contracted EAN exists on account
-
         When Payment details are received
         Then Wait until contract instance starts
         And Check order in jbilling
@@ -53,7 +49,7 @@ Feature: NSTA-344:Payment Plan
         #Create a payment plan for this customer
         When Dashboard menu is "Billing"
         And List option is "ENKEL FACTUREN"
-        And Table "Openstaande facturen" contains value "Invoice (ADVANCE)" at column "ID & Type" within 1800 seconds
+        Then Table "Openstaande facturen" contains value "Invoice (ADVANCE)" at column "ID & Type" within 1800 seconds after clicking on "ENKEL FACTUREN"
         And Invoice checkbox with key "InvoicesOnAccountOpenBalance" is clicked
         And List option is "AANVRAAG AFBETALINGSPLAN"
 
@@ -67,7 +63,7 @@ Feature: NSTA-344:Payment Plan
         #payment plan checks
         When Dashboard menu is "Billing"
         And Payment table is not empty
-        And Table "Afbetalingsplannen" contains value "open" at column "Status" within 120 seconds
+        And Table "Afbetalingsplannen" has matching value "open" at column "Status" polling 120 seconds
         Then Click on link in View List at "1st" row and "Nummer & referentie" column polling 60 seconds
         And Save Installments Sum
         Then Check is Number of Installments at least "2" for given amount "€ 50"
