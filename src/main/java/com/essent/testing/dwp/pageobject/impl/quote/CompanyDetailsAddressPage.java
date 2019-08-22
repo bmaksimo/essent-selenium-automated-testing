@@ -84,8 +84,8 @@ public class CompanyDetailsAddressPage extends QuoteCreationGuidedStep {
             initializeAddress.step(createStep(TYPING).element(DELIVERY_ADDR_BUS.name()).value(address.getBus()), INPUT.getSleepInMillis());
         }
 
-        initializeAddress.step(createStep(TYPING).element(DELIVERY_ADDR_ZIPCODE.name()).value(address.getPostalCode()), INPUT.getSleepInMillis()).
-            step(createStep(TYPING).element(DELIVERY_ADDR_CITY.name()).value(address.getCity()), INPUT.getSleepInMillis());
+        initializeAddress.step(createStep(TYPING).timeoutInSeconds(3).element(DELIVERY_ADDR_ZIPCODE.name()).value(address.getPostalCode()), INPUT.getSleepInMillis()).
+            step(createStep(TYPING).timeoutInSeconds(3).element(DELIVERY_ADDR_CITY.name()).value(address.getCity()), INPUT.getSleepInMillis());
 
         if (StringUtils.isNotEmpty(address.getCountry())) {
             initializeAddress.step(createStep(Action.SELECT).element(DELIVERY_ADDR_COUNTRY.name()).value(address.getCountry()));
