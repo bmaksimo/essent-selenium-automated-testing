@@ -1,7 +1,7 @@
 package com.essent.testing.dwp.autocrat.timing.quote;
 
 public enum TimeoutValues {
-    INPUT(2000, 1.5),
+    INPUT(5000, 1.5),
     TOGGLE_CHECKBOX(3000, 3),
     NEXT_STEP(3000, 3),
     WAIT_NEXT_PAGE(1500, 10),

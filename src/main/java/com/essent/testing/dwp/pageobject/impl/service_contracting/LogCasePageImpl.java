@@ -44,11 +44,11 @@ public class LogCasePageImpl extends Component implements Form, LogCasePage {
             .element(solutionSolutionElement, createElement("SELECTOR", "#cases-resolution-field"))
 
             .flow()
-            .step(createStep(SELECT).element(specificationsSubjectElement).value(subject))
-            .step(createStep(SELECT).element(specificationsPriorityElement).value(priority))
-            .step(createStep(CLICK).element(questionQuestionElement))
-            .step(createStep(TYPING).element(questionQuestionElement).value(description))
-            .step(createStep(ACCESS).element(solutionSolutionElement).callback(scrollToView()))
+            .step(createStep(SELECT).element(specificationsSubjectElement).value(subject).timeoutInSeconds(4))
+            .step(createStep(SELECT).element(specificationsPriorityElement).value(priority).timeoutInSeconds(4))
+            .step(createStep(CLICK).element(questionQuestionElement).timeoutInSeconds(4))
+            .step(createStep(TYPING).element(questionQuestionElement).value(description).timeoutInSeconds(4))
+            .step(createStep(ACCESS).element(solutionSolutionElement).callback(scrollToView()).timeoutInSeconds(4))
             .step(createStep(TYPING).element(solutionSolutionElement).value(solution));
         return execute(execution);
     }

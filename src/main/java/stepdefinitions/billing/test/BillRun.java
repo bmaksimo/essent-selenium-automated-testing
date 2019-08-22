@@ -27,14 +27,13 @@ public class BillRun extends RegisteredScenario {
     private List<BillingInvoice> billingInvoiceCache = new ArrayList<>();
 
     @Before("@DWP or @CORE or @E2E or @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 
 
     @Then("^I expect an invoice for \"([^\"]*)\" after date \"([^\"]*)\" with periods:$")
-    public void i_expect_an_invoice_for_after_date_with_periods(String billingId, String invoiceDate, DataTable periods)
-        throws Throwable {
+    public void i_expect_an_invoice_for_after_date_with_periods(String billingId, String invoiceDate, DataTable periods){
         List<PeriodTable> expectedResult = null;
         expectedResult = periods.asList(PeriodTable.class);
         // get the invoice
@@ -131,7 +130,7 @@ public class BillRun extends RegisteredScenario {
 
     @Then("^I expect an invoice for \"([^\"]*)\" after date \"([^\"]*)\" with advance amount change \"([^\"]*)\"$")
     public void i_expect_an_invoice_for_after_date_with_advance_amount_change(String billingId, String invoiceDate,
-                                                                              String advanceChanged) throws Throwable {
+                                                                              String advanceChanged){
 
         RSGetInvoicesForBillingIDs request = new RSGetInvoicesForBillingIDs();
         DateTime startDate = new DateTime(invoiceDate);
@@ -159,7 +158,7 @@ public class BillRun extends RegisteredScenario {
     }
 
     @Then("^I expect no invoice for \"([^\"]*)\" after date \"([^\"]*)\"$")
-    public void i_expect_no_invoice_for_after_date(String billingId, String invoiceDate) throws Throwable {
+    public void i_expect_no_invoice_for_after_date(String billingId, String invoiceDate){
         RSGetInvoicesForBillingIDs request = new RSGetInvoicesForBillingIDs();
         DateTime startDate = new DateTime(invoiceDate);
         request.setStartDate(startDate.toDate());
@@ -208,7 +207,7 @@ public class BillRun extends RegisteredScenario {
 
     @Then("^I expect an invoice for \"([^\"]*)\" after date \"([^\"]*)\" with reactive energy \"([^\"]*)\"$")
     public void i_expect_an_invoice_for_after_date_with_reactive_energy(String billingId, String invoiceDate,
-                                                                        String amount) throws Throwable {
+                                                                        String amount){
         RSGetInvoicesForBillingIDs request = new RSGetInvoicesForBillingIDs();
         DateTime startDate = new DateTime(invoiceDate);
         request.setStartDate(startDate.toDate());
@@ -231,8 +230,7 @@ public class BillRun extends RegisteredScenario {
     }
 
     @Then("^I expect an invoice for \"([^\"]*)\" after date \"([^\"]*)\" with kWmax  \"([^\"]*)\"$")
-    public void i_expect_an_invoice_for_after_date_with_kWmax(String billingId, String invoiceDate, String amount)
-        throws Throwable {
+    public void i_expect_an_invoice_for_after_date_with_kWmax(String billingId, String invoiceDate, String amount){
         RSGetInvoicesForBillingIDs request = new RSGetInvoicesForBillingIDs();
         DateTime startDate = new DateTime(invoiceDate);
         request.setStartDate(startDate.toDate());

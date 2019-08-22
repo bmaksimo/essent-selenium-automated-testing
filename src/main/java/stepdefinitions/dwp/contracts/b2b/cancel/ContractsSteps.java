@@ -17,6 +17,7 @@ import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.page_object.CustomerAcceptance;
 import stepdefinitions.dwp.tables.CustomerStatus;
 
@@ -28,8 +29,6 @@ import static org.hamcrest.Matchers.is;
 import static org.testng.AssertJUnit.assertTrue;
 
 public class ContractsSteps extends DwpScenario{
-
-    private String eanCodeInput = null;
 
     @Before("@DWP or @REGRESSION or @API")
     public void setupTest(Scenario scenario) {
@@ -54,7 +53,7 @@ public class ContractsSteps extends DwpScenario{
     @When("^Find \"([^\"]*)\" contract$")
     public void findContract(String input) {
         ContractPage contractenPage = new ContractPage();
-        eanCodeInput = contractenPage.findActiveContract(input);
+        String eanCodeInput = contractenPage.findActiveContract(input);
         logger().debug("EAN CODE: " + eanCodeInput);
         parameterProvider.put("contractEanCode", eanCodeInput);
     }
@@ -131,9 +130,6 @@ public class ContractsSteps extends DwpScenario{
         Assert.assertTrue("Correct ean code was not found.", seleniumDriver.findElementWhenVisible(By.xpath("//h5[.='" + inputEanCode + "']")).isDisplayed());
     }
 
-    /**
-     * @deprecated - use generic '"1st" list element has cell value "value" at column "columnName"'
-     */
     @Then("^Get Contract Number$")
     public void searchForContractNumber() {
         ContractPage contractenPage = new ContractPage();
@@ -164,14 +160,6 @@ public class ContractsSteps extends DwpScenario{
         boolean success = CustomerStatus.containsStatus(actualStatus);
         assertThat(String.format("Actual customer acceptance status \"%s\" does not exist", actualStatus),
             success, is(true));
-
-    }
-
-    @Then("^Get Company Number$")
-    public void searchForCompanyNumber() {
-        ContractPage cp = new ContractPage();
-        String companyNumber = cp.getCompanyNumber();
-        parameterProvider.put("companyNumber", companyNumber);
 
     }
 
@@ -225,20 +213,27 @@ public class ContractsSteps extends DwpScenario{
     }
 
 
-    @Then("^Check is product change \"([^\"]*)\"$")
-    public void checkProductChangeSuccess(String expectedMessage) {
+    @Then("Check product change has succeeded$")
+    public void checkProductChangeSuccess() {
         seleniumDriver.waitForRequestsToFinish();
         ContractPage cp = new ContractPage();
-        int refreshCount = 30;
+        int refreshCount = 10;
+        boolean succeededMessage = false;
         for (int i = 0; i < refreshCount; i++) {
-            if (cp.locateMessageElement().getText().contains(expectedMessage)) {
+            if (containsAtLeastOneSucceededMessage(cp)) {
+                succeededMessage = true;
                 break;
             } else {
                 seleniumDriver.getDriver().navigate().back();
                 seleniumDriver.getDriver().navigate().forward();
             }
         }
-        Assert.assertTrue("Product change wasn't successfully done", cp.locateMessageElement().getText().contains(expectedMessage));
+        Assert.assertTrue("Product change has failed.", succeededMessage);
+    }
+
+    private boolean containsAtLeastOneSucceededMessage(ContractPage cp) {
+        WebElement messageElement = cp.locateMessageElement();
+        return !messageElement.getText().contains("0 succeeded");
     }
 
     @Then("^Product Change dates are \"([^\"]*)\" and \"([^\"]*)\"$")
@@ -251,7 +246,7 @@ public class ContractsSteps extends DwpScenario{
     }
 
     @When("^Payment table is not empty$")
-    public void checkPaymentTableNotEmpty() throws Throwable {
+    public void checkPaymentTableNotEmpty(){
         seleniumDriver.waitForRequestsToFinish();
         ContractPage contractenPage = new ContractPage();
         boolean success = contractenPage.checkPaymentTableNotEmpty();

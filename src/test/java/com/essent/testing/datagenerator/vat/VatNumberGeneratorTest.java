@@ -16,7 +16,7 @@ public class VatNumberGeneratorTest {
     }
 
     @Test
-    public void testBelgianVat() throws Throwable {
+    public void testBelgianVat(){
         for(int i = 0; i < 1000; i++)
             assertVat(generator.getVatNum(CountryCode.BE));
     }

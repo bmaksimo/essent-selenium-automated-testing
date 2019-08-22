@@ -17,7 +17,7 @@ public class OdooLogin extends LoginComponent implements Dialog {
         super(SELECTOR);
     }
 
-    public Window login(String username, String password) throws Throwable {
+    public Window login(String username, String password){
         WebElement element = seleniumDriver.findElementWhenVisible(By.id("login"));
         assertNotNull(element);
         element.clear();

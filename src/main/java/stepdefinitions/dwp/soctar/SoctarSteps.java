@@ -47,7 +47,7 @@ public class SoctarSteps extends DwpScenario {
         parameterProvider.put("start-end-date", dateValue);
         String startEndDates = checkAndConvertToDwpContractStartEndDate(value);
         parameterProvider.put("start-en-einddatum", startEndDates);
-        String dates[] = startEndDates.split(DateExpressionsUtil.DATE_SEPARATOR);
+        String[] dates = startEndDates.split(DateExpressionsUtil.DATE_SEPARATOR);
         parameterProvider.put("start-date", dates[0]);
         parameterProvider.put("end-date", dates[1]);
 

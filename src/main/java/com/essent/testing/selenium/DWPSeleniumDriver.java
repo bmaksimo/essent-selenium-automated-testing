@@ -253,8 +253,8 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
 
     private void waitForElement(final WebElement element) {
         ngWebDriver.waitForAngularRequestsToFinish();
-        waitForElementToBeVisible(element, 30, 5);
-        waitForElementToBeClickable(element, 30, 5);
+        waitForElementToBeVisible(element, 90, 30);
+        waitForElementToBeClickable(element, 90, 30);
     }
 
     public void waitAndClick(final WebElement element) {

@@ -24,6 +24,7 @@ public abstract class NavigationElements extends DwpScenario {
     private class ClickTopAction implements Predicate<String> {
         @Override
         public boolean test(String action) {
+            seleniumDriver.waitForRequestsToFinish();
             TopActionsPage topActions = new TopActionsPageImpl();
             return topActions.executeTopAction(action);
         }
@@ -80,7 +81,7 @@ public abstract class NavigationElements extends DwpScenario {
       seleniumDriver.waitForRequestsToFinish();
       return success;
     }
-    public boolean testNow(String name) {
+    public boolean testNow() {
       boolean success = executeJavascriptTestImmediately(JS_TR_SELECT_BUTTON, "", true);
       seleniumDriver.waitForRequestsToFinish();
       return success;
@@ -161,7 +162,7 @@ public abstract class NavigationElements extends DwpScenario {
 
     protected void clickDashboardMenu(String menu) {
         seleniumDriver.waitForRequestsToFinish();
-        FluentWait<ClickDashboardMenu> waiter = waiter(new ClickDashboardMenu(), 60, 2);
+        FluentWait<ClickDashboardMenu> waiter = waiter(new ClickDashboardMenu(), 120, 10);
         waiter.withMessage(String.format("Dashboard Menu  \"%s\" is undefined.", menu));
         waiter.until((ClickDashboardMenu dashboardMenu) -> dashboardMenu.test(menu));
     }

@@ -28,7 +28,7 @@ public class EmailService {
     private static final String PATH = "/email/";
     private static final String NUAT5019_TEMPLATE = "nuat5019_template.tpl";
 
-    public boolean createTestReport(Map input) {
+    public boolean createTestReport(Map<String, String> input) {
         String messageBody = getMessageFromTemplate(input);
         return sendEmailNow(getJavaMailSender(), messageBody);
     }
@@ -36,7 +36,7 @@ public class EmailService {
     private JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost(ConfigProvider.getProperty(ConfigKey.ESSENT_SMTP_HOST));
-        Integer port = Integer.parseInt(ConfigProvider.getProperty(ConfigKey.ESSENT_SMTP_PORT));
+        int port = Integer.parseInt(ConfigProvider.getProperty(ConfigKey.ESSENT_SMTP_PORT));
         mailSender.setPort(port);
 
         return mailSender;
