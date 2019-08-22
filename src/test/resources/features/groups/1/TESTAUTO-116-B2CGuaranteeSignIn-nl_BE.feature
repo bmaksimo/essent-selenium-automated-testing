@@ -40,7 +40,6 @@ Feature: TESTAUTO-116-B2C guarantee sign in
 
         When "Kanaal ondertekening" selection is "Online"
         And Quote is confirmed
-        And Get Account Number
         Then "1st" list element has cell value "Sales Verstuurd naar de klant - Geaccepteerd" at column "Type & status"
 
         #2.1 Set up guarantee amount
