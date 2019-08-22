@@ -4,6 +4,7 @@ import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -371,6 +372,7 @@ public class ContractPage extends Component {
     }
 
     public String getInstallmentSum() {
+        seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenPresent(By.id(INSTALLMENTS_SUM)).getText();
     }
     public String getInvoiceSum() {
@@ -398,8 +400,10 @@ public class ContractPage extends Component {
     public int findDifferenceInAmounts(String installAmount, String invoiceAmount) {
         seleniumDriver.waitForRequestsToFinish();
         String invAmount = invoiceAmount.replaceAll(" .+$", "");
-        int result1 = Integer.parseInt(installAmount);
+        String insAmount = StringUtils.substringBefore(installAmount, ",");
+        int result1 = Integer.parseInt(insAmount);
         int result2 = Integer.parseInt(invAmount);
+
         return result1 - result2;
     }
 

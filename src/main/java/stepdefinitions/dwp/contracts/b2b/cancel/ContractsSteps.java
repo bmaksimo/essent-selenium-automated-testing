@@ -14,6 +14,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import stepdefinitions.dwp.page_object.CustomerAcceptance;
@@ -24,7 +25,6 @@ import java.util.Arrays;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertTrue;
 
 public class ContractsSteps extends DwpScenario{
@@ -284,13 +284,17 @@ public class ContractsSteps extends DwpScenario{
         assertTrue("Insufficient Number of installments with given amount.",expectedNumberOfInstallments<=actualNumberOfInstallments);
     }
 
-    @Then("^Installments Amount of \"([^\"]*)\" is by \"([^\"]*)\" bigger than Invoice Amount of \"([^\"]*)\"$")
+    @Then("^Installments Amount of \"([^\"]*)\" is bigger than Invoice Amount of \"([^\"]*)\"$")
     public void checkIsInstallmentAmountBiggerThanInvoiceAmount(
         String installmentsAmount, int expectedDifference, String invoiceAmount) {
-        ContractPage cp = new ContractPage();
+//        ContractPage cp = new ContractPage();
         String installAmount = parameterProvider.getValueOrParameterAsString(installmentsAmount);
         String invAmount = parameterProvider.getValueOrParameterAsString(invoiceAmount);
-        int actualDifference = cp.findDifferenceInAmounts(installAmount, invAmount);
-        assertEquals(expectedDifference, actualDifference);
+        invAmount.replaceAll(" .+$", "");
+        String insAmount = StringUtils.substringBefore(installAmount, ",");
+        int result1 = Integer.parseInt(insAmount);
+        int result2 = Integer.parseInt(invAmount);
+//        int actualDifference = cp.findDifferenceInAmounts(installAmount, invAmount);
+        assertThat("Installments amount is not bigger than invoice amount", result1>result2);
     }
 }

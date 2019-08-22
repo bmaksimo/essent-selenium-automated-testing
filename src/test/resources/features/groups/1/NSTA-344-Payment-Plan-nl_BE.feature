@@ -41,7 +41,7 @@ Feature: NSTA-344:Payment Plan
         When Billing run "RECURRING" is triggered with process date "1 month from now"
 
         When Dashboard menu is "Billing"
-        And Table "Transacties" has matching value "Invoice (ADVANCE)" at column "ID & Type" polling 120 seconds
+        And Table "Transacties" contains value "Invoice (ADVANCE)" at column "ID & Type" within 120 seconds
         And "1st" List element with value at column "ID & Type" is checked
         Then Click on link in View List at "1st" row and "ID & Type" column polling 60 seconds
         And Save Invoice Sum
@@ -58,13 +58,14 @@ Feature: NSTA-344:Payment Plan
         And "Startdatum" date is "now"
         And "Bedrag eerste afbetalingsschijf" input is "50"
         And "Bedrag andere afbetalingsschijven" input is "50"
-        And Contract signature is confirmed
+        And Changes are confirmed
 
         #payment plan checks
         When Dashboard menu is "Billing"
         And Payment table is not empty
-        And Table "Afbetalingsplannen" has matching value "open" at column "Status" polling 120 seconds
+
+        And Table "Afbetalingsplannen" contains value "open" at column "Status" within 120 seconds
         Then Click on link in View List at "1st" row and "Nummer & referentie" column polling 60 seconds
         And Save Installments Sum
         Then Check is Number of Installments at least "2" for given amount "€ 50"
-        Then Installments Amount of "parameter:installmentsAmount" is by "10" bigger than Invoice Amount of "parameter:invoiceAmount"
+        Then Installments Amount of "parameter:installmentsAmount" is bigger than Invoice Amount of "parameter:invoiceAmount"
