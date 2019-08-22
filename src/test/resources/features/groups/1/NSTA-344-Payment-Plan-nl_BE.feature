@@ -31,7 +31,7 @@ Feature: NSTA-344:Payment Plan
         And Top menu item is "Klanten"
         And Top action is "Filters"
         And "Klantnummer" input is "parameter:accountNumber"
-        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
+        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
 
         When Dashboard menu is "Contracten"
         And Get client number
