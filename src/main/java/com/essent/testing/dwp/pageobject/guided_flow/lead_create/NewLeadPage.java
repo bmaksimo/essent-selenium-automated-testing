@@ -13,7 +13,8 @@ import java.util.Map;
 public class NewLeadPage extends BaseObjectPage {
 
     private final static String COMPANYNAME="company-name-c-field";
-    private final static String COMPANYNAMEBUTTON=".//*[@id='company_name_c']/div/autocomplete/ul/li[4]";
+//    private final static String COMPANYNAMEBUTTON=".//*[@id='company_name_c']/div/autocomplete/ul";
+//    private final static String COMPANYNAMEBUTTON=".//*[@id='company_name_c']/div/autocomplete/ul/li[4]";
     private final static String FIRSTNAME="first-name-field";
     private final static String LASTNAME="last-name-field";
 
@@ -35,13 +36,14 @@ public class NewLeadPage extends BaseObjectPage {
         }
 
         fillInCompanyName(companyNumber);
-        Sleeper.sleepTightInSeconds(2);
+        seleniumDriver.waitForRequestsToFinish();
+//        Sleeper.sleepTightInSeconds(2);
         fillInContactPerson(contactPersonFirstName, contactPersonLastName);
     }
 
     private void fillInCompanyName(String companyNumber) {
         seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id(COMPANYNAME)), companyNumber);
-        seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath(COMPANYNAMEBUTTON)));
+//        seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath(COMPANYNAMEBUTTON)));
         seleniumDriver.waitForRequestsToFinish();
     }
 
