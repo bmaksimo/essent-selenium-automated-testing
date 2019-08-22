@@ -22,6 +22,7 @@ public class TopActions extends NavigationElements {
 
     private static final String TOP_FILTER_BUTTON = "Filters";
     private static final String TOP_MENU_KLANTEN = "Klanten";
+    private static final String FILTER_MENU_REQUIRED_ELEMENT = "record-type-default-value-field";
 
     @Before("@DWP or @CORE or @E2E or @REGRESSION or @API")
     public void setupTest(Scenario scenario) throws Throwable {
@@ -45,7 +46,7 @@ public class TopActions extends NavigationElements {
     private boolean isFilterExpectedElementVisible() {
         try {
             return seleniumDriver
-                .findElementWhenPresent(By.id("record-type-default-value-field"))
+                .findElementWhenPresent(By.id(FILTER_MENU_REQUIRED_ELEMENT))
                 .isDisplayed();
         } catch (Exception e) {
             return false;
