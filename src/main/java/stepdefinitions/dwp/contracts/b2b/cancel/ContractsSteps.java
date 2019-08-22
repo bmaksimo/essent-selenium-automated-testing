@@ -281,15 +281,21 @@ public class ContractsSteps extends DwpScenario{
 
     @Then("^Installments Amount of \"([^\"]*)\" is bigger than Invoice Amount of \"([^\"]*)\"$")
     public void checkIsInstallmentAmountBiggerThanInvoiceAmount(
-        String installmentsAmount, int expectedDifference, String invoiceAmount) {
-//        ContractPage cp = new ContractPage();
+        String installmentsAmount, String invoiceAmount) {
         String installAmount = parameterProvider.getValueOrParameterAsString(installmentsAmount);
         String invAmount = parameterProvider.getValueOrParameterAsString(invoiceAmount);
-        invAmount.replaceAll(" .+$", "");
-        String insAmount = StringUtils.substringBefore(installAmount, ",");
-        int result1 = Integer.parseInt(insAmount);
-        int result2 = Integer.parseInt(invAmount);
-//        int actualDifference = cp.findDifferenceInAmounts(installAmount, invAmount);
-        assertThat("Installments amount is not bigger than invoice amount", result1>result2);
+        if (invAmount.contains("."))
+            invAmount = StringUtils.substringBefore(invAmount, ".");
+        else if (invAmount.contains(","))
+            invAmount = StringUtils.substringBefore(invAmount, ",");
+
+        if (installAmount.contains("."))
+            installAmount = StringUtils.substringBefore(installAmount, ".");
+        else if (installAmount.contains(","))
+            installAmount = StringUtils.substringBefore(installAmount, ",");
+
+        int result1 = Integer.parseInt(invAmount);
+        int result2 = Integer.parseInt(installAmount);
+        assertThat("Installments amount is not bigger than invoice amount", result2>result1);
     }
 }

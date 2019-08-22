@@ -42,6 +42,7 @@ Feature: NSTA-344:Payment Plan
 
         When Dashboard menu is "Billing"
         And Table "Transacties" contains value "Invoice (ADVANCE)" at column "ID & Type" within 120 seconds
+        And Table "Transacties" contains value "Issued" at column "Extra info" within 1800 seconds
         And "1st" List element with value at column "ID & Type" is checked
         Then Click on link in View List at "1st" row and "ID & Type" column polling 60 seconds
         And Save Invoice Sum
@@ -49,7 +50,6 @@ Feature: NSTA-344:Payment Plan
         #Create a payment plan for this customer
         When Dashboard menu is "Billing"
         And List option is "ENKEL FACTUREN"
-        Then Table "Openstaande facturen" contains value "Invoice (ADVANCE)" at column "ID & Type" within 1800 seconds after clicking on "ENKEL FACTUREN"
         And Invoice checkbox with key "InvoicesOnAccountOpenBalance" is clicked
         And List option is "AANVRAAG AFBETALINGSPLAN"
 
