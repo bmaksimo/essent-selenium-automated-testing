@@ -85,7 +85,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     }
 
     @When("^New tc1_quote is created$")
-    public void newTcQuoteIsCreated(int arg1) throws IOException {
+    public void newTcQuoteIsCreated() throws IOException {
         String retrievedQuoteNumber = new QuoteDetailsAPI().getQuoteNumber(cookie, quoteDetails.getRecordId());
         assertThat(retrievedQuoteNumber, is(equalTo(quoteDetails.getQuoteNumber())));
 
