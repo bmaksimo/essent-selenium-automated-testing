@@ -78,7 +78,7 @@ public class CompanyDetailsAddressPage extends QuoteCreationGuidedStep {
         initializeAddress.
             step(createStep(TYPING).timeoutInSeconds(3).element(DELIVERY_ADDR_STREET.name()).value(address.getStreet()), INPUT.getSleepInMillis()).
             step(createStep(TYPING).timeoutInSeconds(3).element(DELIVERY_ADDR_HOUSE_NR.name()).value(Integer.toString(address.getHouseNr())), INPUT.getSleepInMillis()).
-            step(createStep(TYPING).element(DELIVERY_ADDR_HOUSE_ADD.name()).value(address.getHouseNrAdd()), INPUT.getSleepInMillis());
+            step(createStep(TYPING).timeoutInSeconds(3).element(DELIVERY_ADDR_HOUSE_ADD.name()).value(address.getHouseNrAdd()), INPUT.getSleepInMillis());
 
         if (StringUtils.isNotEmpty(address.getBus())) {
             initializeAddress.step(createStep(TYPING).element(DELIVERY_ADDR_BUS.name()).value(address.getBus()), INPUT.getSleepInMillis());
