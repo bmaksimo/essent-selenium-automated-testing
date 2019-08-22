@@ -1,11 +1,14 @@
 package stepdefinitions.dwp.top_actions;
 
 import com.essent.automation.util.Sleeper;
+import com.essent.testing.dwp.pageobject.impl.navigation.DwpLeftMenu;
+import com.essent.testing.dwp.pageobject.impl.navigation.DwpTopMenu;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
+import org.openqa.selenium.By;
 import stepdefinitions.dwp.navigation.NavigationElements;
 
 import java.util.HashMap;
@@ -17,9 +20,36 @@ import static org.hamcrest.Matchers.is;
 
 public class TopActions extends NavigationElements {
 
+    private static final String TOP_FILTER_BUTTON = "Filters";
+    private static final String TOP_MENU_KLANTEN = "Klanten";
+
     @Before("@DWP or @CORE or @E2E or @REGRESSION or @API")
     public void setupTest(Scenario scenario) throws Throwable {
         registerActiveScenario(scenario);
+    }
+
+    @When("^Top action is Filter from \"([^\"]*)\" menu retrying until filter is shown")
+    public void checkTopActionFilterWithWaiting(String sideMenu) throws Throwable {
+        seleniumDriver.waitForRequestsToFinish();
+        boolean elementVisible = false;
+        while (!elementVisible) {
+            seleniumDriver.findElement(By.name(TOP_FILTER_BUTTON)).click();
+            elementVisible = isFilterExpectedElementVisible();
+            if (!elementVisible) {
+                new DwpLeftMenu().clickOnLeftElement(sideMenu);
+                new DwpTopMenu().findAndClickTopMenu(TOP_MENU_KLANTEN);
+            }
+        }
+    }
+
+    private boolean isFilterExpectedElementVisible() {
+        try {
+            return seleniumDriver
+                .findElementWhenPresent(By.id("record-type-default-value-field"))
+                .isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @When("^Top action is \"([^\"]*)\"$")
