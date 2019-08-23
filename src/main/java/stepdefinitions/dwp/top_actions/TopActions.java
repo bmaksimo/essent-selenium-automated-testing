@@ -29,11 +29,15 @@ public class TopActions extends NavigationElements {
         registerActiveScenario(scenario);
     }
 
-    @When("^Top action is Filter from \"([^\"]*)\" menu retrying until filter is shown")
-    public void checkTopActionFilterWithWaiting(String sideMenu) throws Throwable {
+    @When("^Top action is Filter from \"([^\"]*)\" menu retrying ([^\"]*) times")
+    public void checkTopActionFilterWithWaiting(String sideMenu, int maxAttempts) throws Throwable {
         seleniumDriver.waitForRequestsToFinish();
         boolean elementVisible = false;
-        while (!elementVisible) {
+        int currentAttempt = 0;
+
+        while (!elementVisible && currentAttempt <= maxAttempts) {
+            currentAttempt++;
+            Sleeper.sleepTightInSeconds(1);
             seleniumDriver.findElement(By.name(TOP_FILTER_BUTTON)).click();
             elementVisible = isFilterExpectedElementVisible();
             if (!elementVisible) {
