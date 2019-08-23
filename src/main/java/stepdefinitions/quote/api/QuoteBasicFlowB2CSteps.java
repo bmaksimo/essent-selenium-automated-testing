@@ -16,6 +16,7 @@ import stepdefinitions.quote.api.helper.AsyncExecutor;
 import stepdefinitions.quote.api.model.ContractDetails;
 import stepdefinitions.quote.api.model.QuoteDetails;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.expandFrom;
@@ -44,7 +45,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
 
     @Before("@API")
-    public void setupTest(Scenario scenario){
+    public void setupTest(Scenario scenario) throws IOException {
 	    registerActiveScenario(scenario);
     }
 
@@ -61,13 +62,13 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     }
 
     @Given("^I login to iWelcome as \"([^\"]*)\"$")
-    public void iLoginToIWelcomeAs(String username) throws Throwable {
+    public void iLoginToIWelcomeAs(String username) throws IOException {
         String password = ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_SOAPUI_B2C);
         this.cookie = new IWelcomeLoginAPI().getCookie(username, password);
     }
 
     @Given("^\"([^\"]*)\" flow is started$")
-    public void flowIsStarted(String arg1) throws Throwable {
+    public void flowIsStarted(String arg1) throws IOException {
 	    this.tariffSheetID = new QuoteDetailsAPI().getTariffSheetID(cookie, arg1);
     }
 
@@ -77,44 +78,44 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
         String inputValue = toDwpAPIDate(parameterProvider.getValueOrParameterAsString(signInDate));
 	    this.quoteDetails = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow, meterOpen, inputValue);
         String retrievedAccountNumber = quoteDetails.getAccountNumber();
-        int result = Integer.parseInt(retrievedAccountNumber);
-        parameterProvider.put("accountNumber", result);
+        parameterProvider.put("accountNumber", retrievedAccountNumber);
 	    parameterProvider.put("EAN-code", quoteDetails.getEan());
 	    parameterProvider.put("suitecrm-customer-name", quoteDetails.getAccountName());
 
     }
 
     @When("^New tc1_quote is created$")
-    public void newTcQuoteIsCreated() throws Throwable {
-        String retreivedQuoteNumber = new QuoteDetailsAPI().getQuoteNumber(cookie, quoteDetails.getRecordId());
-        assertThat(retreivedQuoteNumber, is(equalTo(quoteDetails.getQuoteNumber())));
+    public void newTcQuoteIsCreated() throws IOException {
+        String retrievedQuoteNumber = new QuoteDetailsAPI().getQuoteNumber(cookie, quoteDetails.getRecordId());
+        assertThat(retrievedQuoteNumber, is(equalTo(quoteDetails.getQuoteNumber())));
+
     }
 
     @Then("^Quote status is \"([^\"]*)\"$")
-    public void quoteStatusIs(String arg1) throws Throwable {
+    public void quoteStatusIs(String arg1) throws IOException {
         String status = new QuoteDetailsAPI().checkStatus(cookie, quoteDetails.getQuoteId());
         assertThat(status.toLowerCase(), is(equalTo(arg1.toLowerCase())));
     }
 
     @Then("^Quoteline exists$")
-    public void quotelineExists() throws Throwable {
+    public void quotelineExists() throws IOException {
         boolean eanExists = new QuoteDetailsAPI().checkIfEANexists(cookie, quoteDetails);
         assertThat(eanExists, is(true));
     }
 
     @Then("^Quoteline status is \"([^\"]*)\"$")
-    public void quotelineStatusIs(String arg1) throws Throwable {
+    public void quotelineStatusIs(String arg1) throws IOException {
         String status = new QuoteDetailsAPI().getStatus(cookie, quoteDetails.getQuoteId());
         assertThat(status.toLowerCase(), is(equalTo(arg1.toLowerCase())));
     }
 
     @When("^Simulation that customer signature is received$")
-    public void simulationThatCustomerSignatureIsReceived() throws Throwable {
+    public void simulationThatCustomerSignatureIsReceived() throws IOException {
 	    new QuoteSignatureAPI().setSignatureReceived(cookie, quoteDetails);
     }
 
     @Then("^Quote stage status is \"([^\"]*)\"$")
-    public void quoteStageStatusIs(String arg1) throws Throwable {
+    public void quoteStageStatusIs(String arg1) throws IOException {
         String status = new QuoteDetailsAPI().checkStageStatus(cookie, quoteDetails.getQuoteId());
         assertThat(status.toLowerCase(), is(equalTo(arg1.toLowerCase())));
     }
@@ -125,29 +126,32 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     }
 
     @Then("^Signin is confirmed$")
-    public void signinIsConfirmed() throws Throwable {
+    public void signinIsConfirmed() throws IOException {
 	    new QuoteSignatureAPI().confirmSigning(cookie, quoteDetails.getQuoteId(), docId);
     }
 
     @Then("^Contract is created$")
-    public void contractIsCreated() throws Throwable {
+    public void contractIsCreated() throws IOException {
 	    this.contractDetails = new ContractDetailsAPI().getContractDetails(cookie, quoteDetails);
 	    String contractDate = new ContractDetailsAPI().getContractDetails(cookie, quoteDetails).getContractStartDate();
         StringBuilder builder = new StringBuilder();
         String[] str = contractDate.split("-");
-        String yearContractDate = str[0], monthContractDate = str[1], dayContractDate = str[2];
+        String yearContractDate = str[0];
+        String monthContractDate = str[1];
+        String dayContractDate = str[2];
         builder.append(dayContractDate).append("-").append(monthContractDate).append("-").append(yearContractDate);
         parameterProvider.put("contractDate", builder);
     }
 
     @Then("^Contracted EAN exists on account$")
-    public void contractedEANExistsOnAccount() throws Throwable {
+    public void contracted_EAN_exists_on_account() throws IOException {
 	    assertThat(new ContractDetailsAPI().checkIfEanExists(cookie, quoteDetails), is(true));
     }
 
     @When("^Payment details are received$")
-    public void paymentDetailsAreReceived() throws Throwable {
+    public void paymentDetailsAreReceived() throws IOException {
 	    this.jbillingId = new ContractDetailsAPI().getPaymentDetails(cookie, quoteDetails.getQuoteId(), contractDetails);
+        parameterProvider.put("billingId", jbillingId);
     }
 
     @Then("^Wait until contract instance starts$")
