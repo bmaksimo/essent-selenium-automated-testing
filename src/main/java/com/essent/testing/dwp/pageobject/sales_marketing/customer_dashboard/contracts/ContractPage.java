@@ -5,7 +5,6 @@ import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -431,17 +430,6 @@ public class ContractPage extends Component {
         }
 
         return numInstallThanHaveGivenAmount;
-    }
-
-
-    public int findDifferenceInAmounts(String installAmount, String invoiceAmount) {
-        seleniumDriver.waitForRequestsToFinish();
-        String invAmount = invoiceAmount.replaceAll(" .+$", "");
-        String insAmount = StringUtils.substringBefore(installAmount, ",");
-        int result1 = Integer.parseInt(insAmount);
-        int result2 = Integer.parseInt(invAmount);
-
-        return result1 - result2;
     }
 
     public float sumRates(String typeRate) {
