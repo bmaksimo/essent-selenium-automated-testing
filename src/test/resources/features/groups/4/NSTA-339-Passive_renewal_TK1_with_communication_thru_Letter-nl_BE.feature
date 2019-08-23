@@ -6,7 +6,7 @@
 Feature: NSTA-339 Passive renewal of contract TK1 - with communication through letter
 
     Background:
-        Given I login to iWelcome as "soapui_b2c"
+        Given I login as API user "soapui_b2c"
 
     @NSTA-339
     Scenario: Sign in to default electricity product

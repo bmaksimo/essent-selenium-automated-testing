@@ -8,7 +8,7 @@
 Feature: NSTA-326: Creating a B2C Quote TC1 with "Move In" without using Market Mock
 
     Background:
-        Given I login to iWelcome as "soapui_b2c"
+        Given I login as API user "soapui_b2c"
 
     @NSTA-326
     @MOVE-IN-NO-MM
