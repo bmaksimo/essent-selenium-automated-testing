@@ -151,7 +151,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     @When("^Payment details are received$")
     public void paymentDetailsAreReceived() throws IOException {
 	    this.jbillingId = new ContractDetailsAPI().getPaymentDetails(cookie, quoteDetails.getQuoteId(), contractDetails);
-        parameterProvider.put("Id Billing customer & persoon/familie sleutel", jbillingId);
+        parameterProvider.put("billingId", jbillingId);
     }
 
     @Then("^Wait until contract instance starts$")
