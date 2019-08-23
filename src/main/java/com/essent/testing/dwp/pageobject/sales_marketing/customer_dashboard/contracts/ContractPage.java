@@ -402,18 +402,12 @@ public class ContractPage extends Component {
     public String getInstallmentSum() {
         seleniumDriver.waitForRequestsToFinish();
         String installSum = seleniumDriver.findElementWhenPresent(By.id(INSTALLMENTS_SUM)).getText();
-        if (installSum.contains(" €")) {
-            installSum = installSum.replace(" €", "");
-        }
-        return installSum;
+        return installSum.replace(" €", "");
     }
     public String getInvoiceSum() {
         seleniumDriver.waitForRequestsToFinish();
         String invoiceSum = seleniumDriver.findElementWhenPresent(By.id(INVOICE_SUM)).getText();
-        if (invoiceSum.contains(" €")) {
-            invoiceSum = invoiceSum.replace(" €", "");
-        }
-        return invoiceSum;
+        return invoiceSum.replace(" €", "");
     }
 
     public int installmentsNumber(String amount) {
