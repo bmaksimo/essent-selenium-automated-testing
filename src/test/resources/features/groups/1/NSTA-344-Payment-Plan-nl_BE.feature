@@ -1,6 +1,7 @@
 @REGRESSION
 @DWP
 @B2C
+@PERFORMANCE
 @ALL
 Feature: NSTA-344:Payment Plan
 
@@ -34,7 +35,6 @@ Feature: NSTA-344:Payment Plan
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
 
         When Dashboard menu is "Contracten"
-        And Get client number
         And  "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
 
         #run invoice
@@ -43,7 +43,6 @@ Feature: NSTA-344:Payment Plan
         When Dashboard menu is "Billing"
         And Table "Transacties" contains value "Invoice (ADVANCE)" at column "ID & Type" within 120 seconds
         And Table "Transacties" contains value "Issued" at column "Extra info" within 1800 seconds
-        And "1st" List element with value at column "ID & Type" is checked
         Then Click on link in View List at "1st" row and "ID & Type" column polling 60 seconds
         And Save Invoice Sum
 
@@ -62,7 +61,6 @@ Feature: NSTA-344:Payment Plan
 
         #payment plan checks
         When Dashboard menu is "Billing"
-        And Payment table is not empty
 
         And Table "Afbetalingsplannen" contains value "open" at column "Status" within 120 seconds
         Then Click on link in View List at "1st" row and "Nummer & referentie" column polling 60 seconds
