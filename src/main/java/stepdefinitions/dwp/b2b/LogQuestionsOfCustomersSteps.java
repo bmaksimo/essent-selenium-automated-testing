@@ -25,8 +25,8 @@ public class LogQuestionsOfCustomersSteps extends DwpScenario {
     @Then("^Case details are visible$")
     public void checkSuccess() {
         CaseDetailsPage cdp = new CaseDetailsPage();
-        String complaintText = "TextForComplaint";
-        String solutionText = "TextForSolution";
+        String complaintText = "Neki tekst - Pitanje";
+        String solutionText = "Neki tekst - Resenje";
         assertTrue("Actual complaint text is different from expected", cdp.getComplaintText().equalsIgnoreCase(complaintText));
         assertTrue("Actual solution field text is different from expected", cdp.getSolutionFieldText().equalsIgnoreCase(solutionText));
         assertTrue("Actual priority is different from expected", cdp.checkIfPriorityIsHigh());
@@ -36,8 +36,8 @@ public class LogQuestionsOfCustomersSteps extends DwpScenario {
     public void createCaseForAccount() {
         LogCasePageImpl logCasePage = new LogCasePageImpl();
         logCasePage.setSubjectSelection("Afrekeningsfactuur");
-        logCasePage.setDescription("TextForComplaint");
-        logCasePage.setSolution("TextForSolution");
+        logCasePage.setDescription("Neki tekst - Pitanje");
+        logCasePage.setSolution("Neki tekst - Resenje");
         logCasePage.setPriority("Hoog");
         boolean success = logCasePage.fillInFormData();
         assertThat("Log Case Form was not filled in",
