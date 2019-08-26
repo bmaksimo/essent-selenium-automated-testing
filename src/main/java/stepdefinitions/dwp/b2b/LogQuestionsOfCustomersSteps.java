@@ -27,9 +27,9 @@ public class LogQuestionsOfCustomersSteps extends DwpScenario {
         CaseDetailsPage cdp = new CaseDetailsPage();
         String complaintText = "TextForComplaint";
         String solutionText = "TextForSolution";
-        assertTrue(cdp.getComplaintText().equalsIgnoreCase(complaintText));
-        assertTrue(cdp.getSolutionFieldText().equalsIgnoreCase(solutionText));
-        assertTrue(cdp.checkIfPriorityIsHigh());
+        assertTrue("Actual complaint text is different from expected", cdp.getComplaintText().equalsIgnoreCase(complaintText));
+        assertTrue("Actual solution field text is different from expected", cdp.getSolutionFieldText().equalsIgnoreCase(solutionText));
+        assertTrue("Actual priority is different from expected", cdp.checkIfPriorityIsHigh());
     }
 
     @And("^New case for account is created$")

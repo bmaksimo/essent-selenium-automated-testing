@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 
 public class CaseDetailsPage extends Component {
     public String getComplaintText() {
+        seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.id("description")).getText();
     }
 
