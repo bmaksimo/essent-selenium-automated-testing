@@ -5,7 +5,7 @@
 Feature: NSTA 331- Product Change for TK1 type
 
     Background:
-        Given I login to iWelcome as "soapui_b2c"
+        Given I login as API user "soapui_b2c"
 
     @NSTA-331
     Scenario: Product Change TK1 type

@@ -6,7 +6,7 @@
 Feature: NSTA-345:Credit Invoice
 
     Background:
-        Given I login to iWelcome as "soapui_b2c"
+        Given I login as API user "soapui_b2c"
 
     @NSTA-345
     Scenario: Credit Invoice
