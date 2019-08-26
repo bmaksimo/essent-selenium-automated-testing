@@ -45,7 +45,7 @@ public class BillingBatchRunSteps extends DwpScenario {
     @When("^Billing run \"([^\"]*)\" is triggered with process date \"([^\"]*)\"$")
     public void startBillingRun(String jobName, String processDate) {
         String inputValue = toDwpApiDate(parameterProvider.getValueOrParameterAsString(processDate));
-        String billingCustomerId = parameterProvider.getValueOrParameterAsString("parameter:Id Billing customer & persoon/familie sleutel");
+        String billingCustomerId = parameterProvider.getValueOrParameterAsString("parameter:billingId");
         SimpleDateFormat formatter = new SimpleDateFormat(DwpDateTimeFormat.DWP_API_DATE_FORMAT.getFormat());
         try {
             Date parsedDate = formatter.parse(inputValue);
@@ -60,7 +60,7 @@ public class BillingBatchRunSteps extends DwpScenario {
     @When("^Mediation run \"([^\"]*)\" is triggered with settlement date \"([^\"]*)\"$")
     public void startMediation(String jobName, String settlementDate) {
         String inputValue = toDwpApiDate(parameterProvider.getValueOrParameterAsString(settlementDate));
-        String billingCustomerId = parameterProvider.getValueOrParameterAsString("parameter:Id Billing customer & persoon/familie sleutel");
+        String billingCustomerId = parameterProvider.getValueOrParameterAsString("parameter:billingId");
         String deliveryPointId = parameterProvider.getValueOrParameterAsString("parameter:EAN-code");
         SimpleDateFormat formatter = new SimpleDateFormat(DwpDateTimeFormat.DWP_API_DATE_FORMAT.getFormat());
 

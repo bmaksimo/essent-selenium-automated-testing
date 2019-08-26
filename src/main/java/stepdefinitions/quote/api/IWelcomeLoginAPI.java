@@ -19,17 +19,17 @@ public class IWelcomeLoginAPI extends AbstractAPI {
     private final static Logger LOGGER = Logger.getLogger(IWelcomeLoginAPI.class);
 
     public String createPayload(String username, String password) throws JsonProcessingException {
-        String payload_m = serializePayloadForiWelcome(username, password);
-        return payload_m;
+        return serializePayloadForiWelcome(username, password);
     }
 
-    private String serializePayloadForiWelcome(String username_m, String password_m) throws JsonProcessingException {
-        IWelcomeLogin iWelcome_Login_m = new IWelcomeLogin(username_m, password_m);
+    private String serializePayloadForiWelcome(String username, String password) throws JsonProcessingException {
+        IWelcomeLogin iWelcomeLogin = new IWelcomeLogin(username, password);
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(iWelcome_Login_m);
+        return mapper.writeValueAsString(iWelcomeLogin);
     }
 
     public Cookies getCookie(String username, String password) throws JsonProcessingException {
+        Cookies cookie;
         Integer expectedResponseCode = STATUS_OK;
         String payload = createPayload(username, password);
         RequestHelper helper = new RequestHelper();
@@ -37,7 +37,7 @@ public class IWelcomeLoginAPI extends AbstractAPI {
             + ConfigProvider.getProperty(ConfigKey.CRM_LOGIN_URL);
         Response iWelcomeResponse = helper.simplePostRequest(expectedResponseCode, payload, path);
 
-        Cookies cookie = iWelcomeResponse.getDetailedCookies();
+        cookie = iWelcomeResponse.getDetailedCookies();
         LOGGER.debug("Cookie is: " + cookie);
 
         return cookie;
