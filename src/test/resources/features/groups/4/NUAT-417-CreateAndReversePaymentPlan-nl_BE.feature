@@ -23,7 +23,6 @@ Feature: NUAT-417: Payment Plan creation/reversal
         And "Klantnummer" input is "parameter:accountNumber"
         And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
         And Dashboard menu is "Billing"
-        And Table "Transacties" contains value "Invoice (ADVANCE)" at column "ID & Type" within 120 seconds
         Then Table "Transacties" contains value "Issued" at column "Extra info" within 1800 seconds
 
         #Payment plan creation
