@@ -152,15 +152,13 @@ public class QuoteSteps extends DwpScenario {
     @And("^Customer address is$")
     public void initCustomerAddress(final DataTable address){
         seleniumDriver.waitForRequestsToFinish();
-        PersonalDetailsAddressPage pdap = new PersonalDetailsAddressPage();
         List<Map<String,String>> add = address.asMaps(String.class, String.class);
-        pdap.fillInCustomerAddressx(add);
+        new PersonalDetailsAddressPage().fillInCustomerAddressx(add);
     }
 
     @And("^Customer details are confirmed$")
-    public void confirmCustomerDetails(){
-        GuidedStep quoteDetailsPage = new PersonalDetailsAddressPage();
-        quoteDetailsPage.next();
+    public void confirmCustomerDetails() {
+        new PersonalDetailsAddressPage().next();
     }
 
     @And("^Pricing details are confirmed$")

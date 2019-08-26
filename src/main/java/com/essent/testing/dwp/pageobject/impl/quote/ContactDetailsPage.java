@@ -23,19 +23,12 @@ public class ContactDetailsPage extends QuoteCreationGuidedStep {
   }
 
   private boolean fillInContactDetails() {
-
     String mobilePhone = getMobilePhone();
-
     Model.Execution initializeFields = createExecution();
-    initializeFields
-        .element(EMAIL.element())
-        .element(MOBILE_NR.element())
-        .step(
-            createStep(TYPING).element(EMAIL.name()).value(customer.getEmail()).timeoutInSeconds(4),
-            INPUT.getSleepInMillis())
-        .step(
-            createStep(TYPING).element(MOBILE_NR.name()).value(mobilePhone).timeoutInSeconds(4),
-            INPUT.getSleepInMillis());
+    initializeFields.element(EMAIL.element()).element(MOBILE_NR.element());
+    initializeFields.step(createStep(TYPING).element(EMAIL.name()).value(customer.getEmail()).timeoutInSeconds(4), INPUT.getSleepInMillis());
+    initializeFields.step(createStep(TYPING).element(MOBILE_NR.name()).value(mobilePhone).timeoutInSeconds(4), INPUT.getSleepInMillis());
+
     return execute(initializeFields);
   }
 }
