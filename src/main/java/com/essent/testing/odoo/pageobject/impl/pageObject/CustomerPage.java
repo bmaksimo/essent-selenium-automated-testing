@@ -62,11 +62,12 @@ public class CustomerPage extends Component {
     }
 
     public void modalReverseClickButton(String buttonLabel) {
-        awaitOdooRequestToFinish(20);
+        awaitOdooRequestToFinish(60);
         String xpath = createQuery(BUTTON_LABEL, NAME_TAB, buttonLabel);
         WebElement button = seleniumDriver.findElementWhenVisible(By.xpath(xpath));
         if (null == button) throw new CucumberException("Button " + buttonLabel + " was not found.");
         button.click();
+        awaitOdooRequestToFinish(60);
     }
 
     private WebElement getActiveCheckboxElement(){
