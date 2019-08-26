@@ -92,11 +92,8 @@ public class OdooMenu extends OdooScenario {
 
     @Then("^Button \"([^\"]*)\" on Journal Items is clicked$")
     public void clickButtonJournalItems(String label) {
-        awaitOdooRequestToFinish(180);
-        WebElement webElement = seleniumDriver.findElementWhenVisible(By.xpath("//button//span[contains(., '" + label + "')]"));
-        if (null == webElement) throw new CucumberException("Button was not found");
-        new ButtonImpl(webElement).click();
-        awaitOdooRequestToFinish(180);
+        CustomerPage cp = new CustomerPage();
+        cp.buttonJournalItemsClicked(label);
     }
 
     @Then("^Modal title contains \"([^\"]*)\"$")
