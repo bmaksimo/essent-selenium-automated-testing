@@ -19,7 +19,7 @@ Feature: NUAT-417: Payment Plan creation/reversal
         #check is invoice created
         And Left menu is "sales-marketing"
         And Top menu item is "Klanten"
-        And Top action is "Filters"
+        And Top action is Filter from "sales-marketing" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
         And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
         And Dashboard menu is "Billing"
@@ -49,16 +49,14 @@ Feature: NUAT-417: Payment Plan creation/reversal
         When Column "Account Number" with value "parameter:accountNumber" is clicked
 
         And Button "Journal Items" is clicked
-        And Sleep for 30 seconds
         And Journal entry is open
-        And Sleep for 30 seconds
         And Modal button "Reverse" clicked
 
         #Check in DWP is payment plan reversed
         Given I renew login to DWP as "salesmarketing.testautomation.b2c@essent.be"
         When Left menu is "sales-marketing"
         And Top menu item is "Klanten"
-        And Top action is "Filters"
+        And Top action is "Filter" waiting for 60 seconds
         And "B2C/B2B" selection is "B2B"
         And "Type klant" selection is "Klant"
         And "Klantnummer" input is "parameter:accountNumber"
