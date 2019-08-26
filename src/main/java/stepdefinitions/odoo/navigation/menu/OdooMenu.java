@@ -87,7 +87,6 @@ public class OdooMenu extends OdooScenario {
         if (null == webElement) throw new CucumberException("Button was not found");
         new ButtonImpl(webElement).click();
         awaitOdooRequestToFinish(180);
-
     }
 
     @Then("^Button \"([^\"]*)\" on Journal Items is clicked$")
@@ -116,8 +115,7 @@ public class OdooMenu extends OdooScenario {
         CustomerPage cp = new CustomerPage();
         cp.modalReverseClickButton(buttonLabel);
     }
-
-
+    
     @Then("^Bank Statement \"([^\"]*)\" button is clicked$")
     public void odooBankStatementClickButton(String buttonLabel) {
         given()
