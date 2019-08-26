@@ -6,7 +6,7 @@
 Feature: NSTA-445 Passive renewal of contract TK1 - with communication through Invoice
 
     Background:
-        Given I login to iWelcome as "soapui_b2c"
+        Given I login as API user "soapui_b2c"
 
     @NSTA-445
     Scenario: Sign in to default electricity product

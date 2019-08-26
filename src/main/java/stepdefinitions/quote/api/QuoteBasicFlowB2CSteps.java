@@ -61,8 +61,8 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
         return date.matches(DateTimeRegex.DWP_API_DATE_FORMAT_REGEX.getExpression());
     }
 
-    @Given("^I login to iWelcome as \"([^\"]*)\"$")
-    public void iLoginToIWelcomeAs(String username) throws IOException {
+    @Given("^I login as API user \"([^\"]*)\"$")
+    public void iLoginAsAPIUser(String username) throws Throwable {
         String password = ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_SOAPUI_B2C);
         this.cookie = new IWelcomeLoginAPI().getCookie(username, password);
     }

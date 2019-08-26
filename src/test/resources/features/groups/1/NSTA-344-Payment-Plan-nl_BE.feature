@@ -6,7 +6,7 @@
 Feature: NSTA-344:Payment Plan
 
     Background:
-        Given I login to iWelcome as "soapui_b2c"
+        Given I login as API user "soapui_b2c"
 
     @NSTA-344
     Scenario: Payment plan for B2C
