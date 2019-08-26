@@ -127,16 +127,15 @@ public class ContractSteps extends DwpScenario {
     @And("^Select Nace-Code$")
     public void select() throws Throwable {
         seleniumDriver.waitForRequestsToFinish();
-        Thread.sleep(2000);
-        NewQuotePage nq = new NewQuotePage();
-        nq.clickNaceCodeButton();
+        Sleeper.sleepTightInSeconds(10);
+        new NewQuotePage().clickNaceCodeButton();
     }
 
     @And("^NaceCode in search is ([^\"]*)$")
-    public void searchByNaceCode(String NaceCode) {
+    public void searchByNaceCode(String naceCode) {
+        new ContractPage().searchByClientNumber(naceCode);
+
         NewQuotePage nq = new NewQuotePage();
-        ContractPage cp = new ContractPage();
-        cp.searchByClientNumber(NaceCode);
         nq.clickOnSearch();
         nq.checkNaceCodeCheckBox();
         nq.saveSelectedItem();
