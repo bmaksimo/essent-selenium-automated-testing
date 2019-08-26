@@ -38,8 +38,8 @@ Feature: NUAT-417: Payment Plan creation/reversal
 
         #Payment plan check payment and status
         When Dashboard menu is "Billing"
-        Then Table "Transacties" contains value "Payment" at column "ID & Type" within 120 seconds
-        And Table "Afbetalingsplannen" contains value "open" at column "Status" within 120 seconds
+        And Table "Transacties" contains value "Payment" at column "ID & Type" within 120 seconds
+        Then Table "Afbetalingsplannen" contains value "open" at column "Status" within 120 seconds
 
         #Reverse payment plan
         Given I logged in to Odoo as "role_essent_ccm_user"
@@ -50,7 +50,8 @@ Feature: NUAT-417: Payment Plan creation/reversal
 
         And Button "Journal Items" is clicked
         And Journal entry is open
-        And Modal button "Reverse" clicked
+        And Button "Reverse" on Journal Items is clicked
+        And Button "Reverse" is clicked within Reverse modal
 
         #Check in DWP is payment plan reversed
         Given I renew login to DWP as "salesmarketing.testautomation.b2c@essent.be"

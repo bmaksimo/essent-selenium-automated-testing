@@ -90,6 +90,15 @@ public class OdooMenu extends OdooScenario {
 
     }
 
+    @Then("^Button \"([^\"]*)\" on Journal Items is clicked$")
+    public void clickButtonJournalItems(String label) {
+        awaitOdooRequestToFinish(180);
+        WebElement webElement = seleniumDriver.findElementWhenVisible(By.xpath("//button//span[contains(., '" + label + "')]"));
+        if (null == webElement) throw new CucumberException("Button was not found");
+        new ButtonImpl(webElement).click();
+        awaitOdooRequestToFinish(180);
+    }
+
     @Then("^Modal title contains \"([^\"]*)\"$")
     public void odooContainsModalTitle(String modalTitle) {
         WebElement title = seleniumDriver.findElementWhenVisible(By.xpath("//h3[@class='modal-title']"));
@@ -104,6 +113,13 @@ public class OdooMenu extends OdooScenario {
         if (null == button) throw new CucumberException("Button " + buttonLabel + " was not found.");
         button.click();
     }
+
+    @Then("^Button \"([^\"]*)\" is clicked within Reverse modal$")
+    public void modalClickButton(String buttonLabel) {
+        CustomerPage cp = new CustomerPage();
+        cp.modalReverseClickButton(buttonLabel);
+    }
+
 
     @Then("^Bank Statement \"([^\"]*)\" button is clicked$")
     public void odooBankStatementClickButton(String buttonLabel) {
@@ -135,12 +151,6 @@ public class OdooMenu extends OdooScenario {
         CustomerPage cp = new CustomerPage();
         cp.openJournalEntry();
     }
-
-   @And("^Modal button \"([^\"]*)\" clicked$")
-   public void modalButtons(String name) {
-       CustomerPage cp = new CustomerPage();
-       cp.reversePaymentPlan();
-   }
 
     @And("^Odoo click on tab \"([^\"]*)\"$")
     public void odooClickOnTab(String tab){
