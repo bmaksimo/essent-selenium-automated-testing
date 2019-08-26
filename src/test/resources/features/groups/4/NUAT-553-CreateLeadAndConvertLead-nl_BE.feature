@@ -10,10 +10,9 @@ Feature: NUAT-553: Create Lead And Convert Lead - nl_BE
 
     @NUAT-553
     Scenario: Create lead and convert lead
-        When Left menu is "sales-marketing"
-        Then Top menu item is "Leads"
-
-        When Add lead
+        And Left menu is "sales-marketing"
+        And Top menu item is "Leads"
+        And Add lead
         And New lead is
             | companyName    | firstName | secondName |
             | ESSENT BELGIUM | Levi      | Nine       |
@@ -22,11 +21,19 @@ Feature: NUAT-553: Create Lead And Convert Lead - nl_BE
         And "Mobiel" input is "+32 498 12 34 56"
         And "E-mailadres" input is "test@test.be"
         And Options "Bel me niet?" "is" "On"
-        Then Save changes
+        And Company VAT number is random
+        And "Ondernemingsnummer" input is "parameter:VAT"
+        And "Rechtsvorm" selection is "bvba"
+        And Select Nace-Code
+        And NaceCode in search is 01120 - Teelt van rijst
+        And Company address is
+            | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
+            | Random           | 1       |            |     | 2550       | Kontich |         |
 
-        When Plus action and "Converteer lead" of first customer from list
-        Then Changes are confirmed
-
-        When Dashboard menu is "Details"
+        When Customer details are confirmed
+        And Plus action and "Converteer lead" of first customer from list
+        And Changes are confirmed
+        And Dashboard menu is "Details"
         And Customer type is "Prospect"
+
         Then There is one billing customer

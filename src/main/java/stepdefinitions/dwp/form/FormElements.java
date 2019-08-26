@@ -51,7 +51,7 @@ public class FormElements extends DwpScenario {
         given().await()
             .pollInterval(FIVE_HUNDRED_MILLISECONDS)
             .pollDelay(ONE_SECOND)
-            .atMost(new Duration(150, SECONDS)).until(() -> new CheckFormHeader().test(formHeader));
+            .atMost(new Duration(300, SECONDS)).until(() -> new CheckFormHeader().test(formHeader));
     }
 
     @And("^\"([^\"]*)\" field value is \"([^\"]*)\"$")

@@ -40,9 +40,8 @@ public class CompanySteps extends DwpScenario {
 
     @And("^Company address is$")
     public void initCustomerAddress(final DataTable address){
-        CompanyDetailsAddressPage companyDetailsAddressPage = new CompanyDetailsAddressPage();
         List<Map<String,String>> addresses = address.asMaps(String.class, String.class);
-        companyDetailsAddressPage.setAddressNewDatatable(addresses);
+        new CompanyDetailsAddressPage().setAddressNewDatatable(addresses);
     }
 
 
