@@ -11,24 +11,27 @@ import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.INPUT;
 
 public class ContactDetailsPage extends QuoteCreationGuidedStep {
 
-  private RandomUser customer;
+    private RandomUser customer;
 
-  public void setRandomUser(RandomUser randomUser) {
-    this.customer = randomUser;
-  }
+    public void setRandomUser(RandomUser randomUser) {
+        this.customer = randomUser;
+    }
 
-  @Override
-  public boolean fillInFormData() {
-    return fillInContactDetails();
-  }
+    @Override
+    public boolean fillInFormData() {
+        return fillInContactDetails();
+    }
 
-  private boolean fillInContactDetails() {
-    String mobilePhone = getMobilePhone();
-    Model.Execution initializeFields = createExecution();
-    initializeFields.element(EMAIL.element()).element(MOBILE_NR.element());
-    initializeFields.step(createStep(TYPING).element(EMAIL.name()).value(customer.getEmail()).timeoutInSeconds(4), INPUT.getSleepInMillis());
-    initializeFields.step(createStep(TYPING).element(MOBILE_NR.name()).value(mobilePhone).timeoutInSeconds(4), INPUT.getSleepInMillis());
+    private boolean fillInContactDetails() {
+        String mobilePhone = getMobilePhone();
+        Model.Execution initializeFields = createExecution();
+        initializeFields.element(EMAIL.element()).element(MOBILE_NR.element());
+        seleniumDriver.waitForRequestsToFinish();
+        initializeFields.step(createStep(TYPING).element(EMAIL.name()).value(customer.getEmail()).timeoutInSeconds(4), INPUT.getSleepInMillis());
+        seleniumDriver.waitForRequestsToFinish();
+        initializeFields.step(createStep(TYPING).element(MOBILE_NR.name()).value(mobilePhone).timeoutInSeconds(4), INPUT.getSleepInMillis());
+        seleniumDriver.waitForRequestsToFinish();
 
-    return execute(initializeFields);
-  }
+        return execute(initializeFields);
+    }
 }
