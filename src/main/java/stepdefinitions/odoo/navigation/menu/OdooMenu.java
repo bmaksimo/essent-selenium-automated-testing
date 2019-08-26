@@ -82,7 +82,7 @@ public class OdooMenu extends OdooScenario {
 
     @Then("^Button \"([^\"]*)\" is clicked$")
     public void clickButton(String label) {
-        awaitOdooRequestToFinish(180);
+        awaitOdooRequestToFinish(120);
         WebElement webElement = seleniumDriver.findElement(By.xpath("//button//div[contains(., '" + label + "')]"));
         if (null == webElement) throw new CucumberException("Button was not found");
         new ButtonImpl(webElement).click();
