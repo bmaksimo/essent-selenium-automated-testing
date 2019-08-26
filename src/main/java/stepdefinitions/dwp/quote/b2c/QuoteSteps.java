@@ -159,6 +159,7 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^Customer details are confirmed$")
     public void confirmCustomerDetails(){
+        seleniumDriver.waitForRequestsToFinish();
         GuidedStep quoteDetailsPage = new PersonalDetailsAddressPage();
         quoteDetailsPage.next();
     }

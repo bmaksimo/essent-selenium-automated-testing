@@ -1,136 +1,69 @@
 @REGRESSION
 @DWP
 @B2C
+@PERFORMANCE
 @ALL
 Feature: NSTA-344:Payment Plan
 
     Background:
-        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
+        Given I login as API user "soapui_b2c"
 
     @NSTA-344
     Scenario: Payment plan for B2C
         #Create an active contract
-        When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
-        Then Form header is "Quote details"
+        And "Create_Quote" flow is started
+        When Data is prepared for Create quote request for "prospect" and meter open is "On" and sign date is "35 days before now"
+        And New tc1_quote is created
+        Then Quote status is "ACCEPTED"
+        And Quoteline exists
+        And Quoteline status is "Sent to customer"
+        When Simulation that customer signature is received
+        Then Quote stage status is "SIGNATURE RECEIVED"
+        And Quoteline status is "Signature received"
+        When File is uploaded as scanned signature
+        Then Signin is confirmed
+        And Contract is created
+        When Payment details are received
+        Then Wait until contract instance starts
+        And Check order in jbilling
 
-        When "Tariefdatum" date is "now"
-        And "Sales kanaal" selection is "Inbound"
-        And Quote details are confirmed
-        Then Form header is "Personal details"
-
-        When Customer is random
-        And Customer address is
-            | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
-            | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
-        And Customer details are confirmed
-        Then Form header is "Select package & fuel type"
-
-        When Package is "Vast"
-        And Checkbox "Gas Fix B2C (TC1)" is Unchecked
-        And Package and Fuel Type is confirmed
-        Then Form header is "Connection details"
-
-        When "Startdatum" date is "35 days before now"
-        And Electricity EAN code is "random"
-        And "Type aansluiting" selection is "YMR"
-        And "Meternummer" input is "1000"
-        And Option "test" "is" "On"
-        And Connection details are confirmed
-        And Save changes
-        Then Form header is "Billing details"
-
-        When "Betalingswijze" selection is "Overschrijving"
-        And  Billing details are confirmed
-        Then  Form header is "Quote overview"
-
-        When Option "Heeft de klant al getekend?" "is" "On"
-        And "Kanaal ondertekening" selection is "Papier"
-        And Quote is signed in "Kontich"
-        And "Datum ondertekening" date is "now"
-        And Quote is confirmed
-        Then View list header is "Offertes"
-        Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
+        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
+        When Left menu is "sales-marketing"
+        And Top menu item is "Klanten"
+        And Top action is "Filters"
+        And "Klantnummer" input is "parameter:accountNumber"
+        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
 
         When Dashboard menu is "Contracten"
-        And Get client number
-        Then View list header is "Actieve en toekomstige connecties"
-        And  "1st" List element with value at column "EAN-code" is checked
         And  "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
-        When Dashboard menu is "Details"
-        Then View list header is "Billing customer"
-        And Get billing number
 
         #run invoice
-        Given I renew login to DWP as "billing.testautomation@essent.be"
-        When Left menu is "billing"
-        And Top menu item is "Klanten"
-        And Top action is "Filters"
-        And "Type klant" selection is "Klant"
-        And "Klantnummer" input is "parameter:accountNumber"
-        When Plus menu is "Billing -> Start facturatierun"
-        And Modal dialog is "Start invoicerun"
-        And "Factuurdatum" date is "now"
-        And "Procesdatum" date is "now"
-        And "Naam job" selection is "recurrent"
-        And "ID Billing customer" input is "parameter:billingNumber"
-        Then Invoice run is scheduled
+        When Billing run "RECURRING" is triggered with process date "1 month from now"
 
-        Given I renew login to DWP as "businessdesk.testautomation.b2b@essent.be"
-        When Left menu is "contracting-switching"
-        And Top menu item is "Klanten"
-        And Top action is "Filters"
-        And "Type klant" selection is "Klant"
-        And "Klantnummer" input is "parameter:accountNumber"
-        Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
         When Dashboard menu is "Billing"
-        Then View list header is "Transacties"
-        And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type"
+        And Table "Transacties" contains value "Invoice (ADVANCE)" at column "ID & Type" within 120 seconds
+        And Table "Transacties" contains value "Issued" at column "Extra info" within 1800 seconds
         Then Click on link in View List at "1st" row and "ID & Type" column polling 60 seconds
         And Save Invoice Sum
-        When Dashboard menu is "Billing"
-        Then View list header is "Transacties"
-        And "1st" List element with value at column "ID & Type" is checked
 
         #Create a payment plan for this customer
-        Given I renew login to DWP as "businessdesk.testautomation.b2b@essent.be"
-        When Left menu is "contracting-switching"
-        And Top menu item is "Klanten"
-        And Top action is "Filters"
-        And "Type klant" selection is "Klant"
-        And "Klantnummer" input is "parameter:accountNumber"
-        Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
         When Dashboard menu is "Billing"
-        Then View list header is "Transacties"
         And List option is "ENKEL FACTUREN"
-        And View list header is "Openstaande facturen"
         And Invoice checkbox with key "InvoicesOnAccountOpenBalance" is clicked
         And List option is "AANVRAAG AFBETALINGSPLAN"
 
         And Input in "Type afbetalingsplan" is "Per bedrag"
         And Input in "Periode schijven" is "Maandelijks"
+        And "Startdatum" date is "now"
         And "Bedrag eerste afbetalingsschijf" input is "50"
         And "Bedrag andere afbetalingsschijven" input is "50"
-        And "Startdatum" date is "now"
-        And Contract signature is confirmed
+        And Changes are confirmed
 
         #payment plan checks
-        Given I renew login to DWP as "contracting.testautomation.b2c@essent.be"
-        When Left menu is "contracting-switching"
-        And Top menu item is "Klanten"
-        And Top action is "Filters"
-        And "Type klant" selection is "Klant"
-        And "Klantnummer" input is "parameter:accountNumber"
-        Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
         When Dashboard menu is "Billing"
-        Then View list header is "Transacties"
-        Then View list header is "Afbetalingsplannen"
-        And Payment table is not empty
-        And Table "Afbetalingsplannen" contains value "open" at column "Status"
+
+        And Table "Afbetalingsplannen" contains value "open" at column "Status" within 120 seconds
         Then Click on link in View List at "1st" row and "Nummer & referentie" column polling 60 seconds
         And Save Installments Sum
         Then Check is Number of Installments at least "2" for given amount "€ 50"
-        Then Installments Amount of "parameter:installmentsAmount" is by "10" bigger than Invoice Amount of "parameter:invoiceAmount"
-
-
-
-
+        Then Installments Amount of "parameter:installmentsAmount" is bigger than Invoice Amount of "parameter:invoiceAmount"

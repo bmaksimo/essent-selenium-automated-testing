@@ -15,7 +15,6 @@ public class QuoteDetails {
     private String iBan;
     private String companyNumber;
 
-
     public String getRecordId() {
         return recordId;
     }
@@ -77,4 +76,5 @@ public class QuoteDetails {
     public String getCompanyNumber() { return companyNumber; }
 
     public void setCompanyNumber(String companyNumber) { this.companyNumber = companyNumber; }
+
 }

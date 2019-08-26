@@ -14,6 +14,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -25,7 +26,6 @@ import java.util.Arrays;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertTrue;
 
 public class ContractsSteps extends DwpScenario{
@@ -139,7 +139,6 @@ public class ContractsSteps extends DwpScenario{
 
     @And("^Invoice checkbox with key \"([^\"]*)\" is clicked$")
     public void checkInvoiceOpenBalance(String text) {
-        seleniumDriver.waitForRequestsToFinish();
         ContractPage contractenPage = new ContractPage();
         contractenPage.checkInvoiceOpenBalance(text);
     }
@@ -280,13 +279,20 @@ public class ContractsSteps extends DwpScenario{
         assertTrue("Insufficient Number of installments with given amount.",expectedNumberOfInstallments<=actualNumberOfInstallments);
     }
 
-    @Then("^Installments Amount of \"([^\"]*)\" is by \"([^\"]*)\" bigger than Invoice Amount of \"([^\"]*)\"$")
+    @Then("^Installments Amount of \"([^\"]*)\" is bigger than Invoice Amount of \"([^\"]*)\"$")
     public void checkIsInstallmentAmountBiggerThanInvoiceAmount(
-        String installmentsAmount, int expectedDifference, String invoiceAmount) {
-        ContractPage cp = new ContractPage();
+        String installmentsAmount, String invoiceAmount) {
         String installAmount = parameterProvider.getValueOrParameterAsString(installmentsAmount);
         String invAmount = parameterProvider.getValueOrParameterAsString(invoiceAmount);
-        int actualDifference = cp.findDifferenceInAmounts(installAmount, invAmount);
-        assertEquals(expectedDifference, actualDifference);
+        
+        StringUtils.substringBefore(invAmount, ".");
+        StringUtils.substringBefore(invAmount, ",");
+
+        StringUtils.substringBefore(installAmount, ".");
+        StringUtils.substringBefore(installAmount, ",");
+
+        int result1 = Integer.parseInt(invAmount);
+        int result2 = Integer.parseInt(installAmount);
+        assertThat("Installments amount is not bigger than invoice amount", result2>result1);
     }
 }
