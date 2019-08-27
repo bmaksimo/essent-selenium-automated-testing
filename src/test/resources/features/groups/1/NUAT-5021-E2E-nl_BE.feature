@@ -2,6 +2,7 @@
 @E2E
 @DWP
 @REGRESSION
+@PERFORMANCE
 Feature: NUAT-5021 Complete scenario from de-duplication of client with guarantee to inactive client
 
     @NUAT-5021
@@ -147,4 +148,4 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
 
         #Step 5 - Should create Supplier Switch market message
         When Dashboard menu is "Marktberichten"
-        Then "1st" list element has cell value "Supplier Switch" at column "Module & Label" polling 450 seconds
+        Then "1st" list element has cell value "Supplier Switch" at column "Module & Label" polling 1200 seconds
