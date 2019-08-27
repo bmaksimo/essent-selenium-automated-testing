@@ -655,8 +655,8 @@ public class ViewListChecks extends NavigationElements {
         waiter.withMessage(String.format("List element didn't contain any value at column \"%s\"", column));
         waiter.until((ViewListTestObject callback) -> {
             loopBack(arrow, dashboardMenu);
-            return !callback.fetchColumnData(table, column).stream().
-                filter(element -> element.contains(inputValue)).collect(Collectors.toList()).isEmpty();
+            return !(callback.fetchColumnData(table, column).stream().
+                filter(element -> element.contains(inputValue)).collect(Collectors.toList()).isEmpty());
         });
 
         logger().debug(String.format("- STEP: Table \"%s\" does not contain value \"%s\" at column \"%s\".", table,
@@ -703,21 +703,23 @@ public class ViewListChecks extends NavigationElements {
                     table, column));
     }
 
-    @And("^Table \"([^\"]*)\" does not contain value \"([^\"]*)\" at column \"([^\"]*)\"$")
-    public void viewListDoesNotContainsValueAtColumn(String table, String value, String column){
+    @And("^Table \"([^\"]*)\" does not contain value \"([^\"]*)\" at column \"([^\"]*)\" within (\\d+) seconds?$")
+    public void viewListDoesNotContainsValueAtColumn(String table, String value, String column, int seconds){
         ViewListTestObject viewListModel = new ViewListTestObject();
+        String arrow = parameterProvider.getValueOrParameterAsString("parameter:navigation");
+        String dashboardMenu = parameterProvider.getValueOrParameterAsString("parameter:dashboard-menu");
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
-        List<String> columnData = viewListModel.fetchColumnData(table, column);
-        List<String> found = columnData.stream().filter(element -> element.contains(inputValue))
-            .collect(Collectors.toList());
+
+        FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), seconds, 10);
+        waiter.withMessage(String.format("List element didn't contain any value at column \"%s\"", column));
+        List<String> found =  waiter.until((ViewListTestObject callback) -> {
+            loopBack(arrow, dashboardMenu);
+            return callback.fetchColumnData(table, column).stream().
+                filter(element -> element.contains(inputValue)).collect(Collectors.toList());
+        });
         String message = String.format("Table \"%s\" should not contain value \"%s\" at column \"%s\"", table, value,
             column);
         assertThat(message, found, empty());
-        logger()
-            .debug(
-                String.format(
-                    "- STEP: Table \"%s\" does not contain value \"%s\" at column \"%s\" - PASSED.",
-                    table, value, column));
     }
 
 

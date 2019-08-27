@@ -32,13 +32,14 @@ Feature: NSTA-341: Block dunning for invoice
         And Top menu item is "Klanten"
         And Top action is Filter from "sales-marketing" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
-        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
+        And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
+        And Dashboard menu is "Contracten"
         Then "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
 
         #Create invoice via jBilling client call
         When Billing run "RECURRING" is triggered with process date "1 month from now"
-        When Dashboard menu is "Billing"
-        And Table "Transacties" contains value "Invoice (ADVANCE)" at column "ID & Type" within 120 seconds
+        And Dashboard menu is "Billing"
+        Then Table "Transacties" contains value "Invoice (ADVANCE)" at column "ID & Type" within 180 seconds
 
         # 3 - Block dunning for the invoice
         When Plus action of "1" element from "TransactionsOnAccount" and click on "Plaats aanmaningsblokkade op factuur"
@@ -48,7 +49,4 @@ Feature: NSTA-341: Block dunning for invoice
 
         # 4 - Trigger dunning
         Given Dunning day countdown for "parameter:accountNumber" goes down 12 days
-        And Sleep for 60 seconds
-        When Dashboard menu is "Contracten"
-        When Dashboard menu is "Billing"
-        And Table "Transacties" does not contain value "Invoice (DUNNINGCOST)" at column "ID & Type"
+        Then Table "Transacties" does not contain value "Invoice (DUNNINGCOST)" at column "ID & Type" within 60 seconds
