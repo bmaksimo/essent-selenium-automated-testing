@@ -71,7 +71,7 @@ public class ContractSteps extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
         ContractPage cp = new ContractPage();
         BaseObjectPage baseObject = new BaseObjectPage();
-        Sleeper.sleepTightInSeconds(5);
+        Sleeper.sleepTightInSeconds(10);
         cp.clickOnPlusMeniInTable(row,table);
         baseObject.plusSubaction(action);
     }
