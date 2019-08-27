@@ -811,12 +811,16 @@ public class ViewListChecks extends NavigationElements {
     @And("Sum of Rate for signature received is \"([^\"]*)\"$")
     public void sumRates(String typeRate) {
         ContractPage cp = new ContractPage();
-        if (typeRate.equals("High")) {
-            parameterProvider.put("sumRatesHighSignature", cp.sumRates(typeRate));
-        } else if (typeRate.equals("Low")) {
-            parameterProvider.put("sumRatesLowSignature", cp.sumRates(typeRate));
-        } else
-            throw new CucumberException(getClass() + ": Only High and Low values can be passed as parameters");
+        switch (typeRate) {
+            case "High":
+                parameterProvider.put("sumRatesHighSignature", cp.sumRates(typeRate));
+                break;
+            case "Low":
+                parameterProvider.put("sumRatesLowSignature", cp.sumRates(typeRate));
+                break;
+            default:
+                throw new CucumberException(getClass() + ": Only High and Low values can be passed as parameters");
+        }
     }
 
     @Then("\"([^\"]*)\" and \"([^\"]*)\" equals Sum of High&Low rates for rejected rates$")
