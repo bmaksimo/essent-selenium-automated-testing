@@ -2,6 +2,7 @@
 @DWP
 @B2C
 @API
+@PERFORMANCE
 @ALL
 Feature: NSTA-345:Credit Invoice
 
@@ -57,8 +58,8 @@ Feature: NSTA-345:Credit Invoice
         When Dashboard menu is "Service"
 
           #3 - Check if interactions are created for VKM and CNM
-        Then Table "Interacties" contains value "VKM" at column "Type & Onderwerp" within 120 seconds
-        Then Table "Interacties" contains value "CNM" at column "Type & Onderwerp" within 120 seconds
+        Then Table "Interacties" contains value "VKM" at column "Type & Onderwerp" within 600 seconds
+        Then Table "Interacties" contains value "CNM" at column "Type & Onderwerp" within 600 seconds
         When Dashboard menu is "Billing"
 
         #Asserts
@@ -73,5 +74,5 @@ Feature: NSTA-345:Credit Invoice
 
         #5 - Check Balance of new invoice credit -- currently not being tested as balance update can take too long to occur and this is momentarily an accepted behavior
         # when balance update is timeboxed this check needs to be uncommented
-#        When Dashboard menu is "Billing"
-#        Then Balance is the same as from the latest invoice
+        When Dashboard menu is "Billing"
+        Then Balance is the same as from the latest invoice

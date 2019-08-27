@@ -30,7 +30,7 @@ Feature: NSTA-344:Payment Plan
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
         When Left menu is "sales-marketing"
         And Top menu item is "Klanten"
-        And Top action is "Filters"
+        And Top action is Filter from "sales-marketing" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
 

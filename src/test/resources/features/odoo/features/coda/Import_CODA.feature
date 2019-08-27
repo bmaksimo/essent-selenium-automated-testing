@@ -54,7 +54,7 @@ Feature: Import a coda file
         Given I renew login to DWP as "billing.testautomation@essent.be"
         When Left menu is "billing"
         And Top menu item is "Klanten"
-        And Top action is "Filters"
+        And Top action is Filter from "billing" menu retrying 5 times
         And "Naam" input is "parameter:suitecrm-customer-name"
 
         Given View List element "Id Billing customer & persoon/familie sleutel" is collected as parameter at "1st" list row

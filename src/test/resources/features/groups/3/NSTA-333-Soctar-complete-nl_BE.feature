@@ -84,7 +84,7 @@ Feature: NSTA-333: Social tariff (SOCTAR) contract creation
         And Top menu item is "Klanten"
 
         #part 1 check - customer status
-        And Top action is "Filters"
+        And Top action is Filter from "contracting-switching" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
         And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
         When Dashboard menu is "Contracten"

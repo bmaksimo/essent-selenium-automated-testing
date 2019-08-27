@@ -762,7 +762,7 @@ public class ViewListChecks extends NavigationElements {
 
         String expectedBalance = parameterProvider.getValueOrParameterAsString("parameter:additionalInvoice") + ",00";
 
-        int refreshCount = 100;
+        int refreshCount = 600;
         String actualBalance = "";
         for (int i = 0; i < refreshCount; i++) {
             actualBalance = cp.getBalance();
