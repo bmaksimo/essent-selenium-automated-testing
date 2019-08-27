@@ -18,6 +18,5 @@ Feature: NUAT-433: Log Questions Of Customers - en_BE
         And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
         And Plus menu is "Service -> Case aanmaken voor de klant"
         And New case for account is created
-        And View list header is "Cases" appears within 20 seconds
         And Click on link in View List at "1st" row and "Nummer & Aanmaakdatum" column polling 20 seconds
         And Case details are visible

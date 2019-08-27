@@ -9,7 +9,6 @@ Feature: Applying filters, View List Header check with waiter
     Scenario: Menu navigation and filter input
         When Left menu is "contracting-switching"
         And Top menu item is "Marktberichten"
-        Then View list header is "Marktberichten" appears within 25 seconds
 
         When Top action is "Filters"
         And "Aangemaakt na" date is "3 months before now"
@@ -19,7 +18,6 @@ Feature: Applying filters, View List Header check with waiter
 
     Scenario: Plus Menu navigation to view list
         When Plus menu is "Contracting -> UP-TK2 - Om contracten te hernieuwen"
-        Then View list header is "UP-TK2 - Om contracten te hernieuwen" appears within 25 seconds
 
         When Top action is "Filters"
         And "Klantnummer" input is "6574"

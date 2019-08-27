@@ -29,5 +29,4 @@ Feature: NUAT-3886 Sent out non-residential End of contract (EOC)
         And "Effective Date" date is "1 month from now"
         And  Option "Testing?" "is" "On"
         And Changes are confirmed
-        Then View list header is "Marktberichten" appears within 10 seconds
         And Click on "INITIATE STOP ACCESS" link

@@ -12,7 +12,6 @@ Feature: NSTA-391
 
         When Left menu is "sales-marketing"
         And Top menu item is "Klanten"
-        Then View list header is "Klanten" appears within 25 seconds
 
         When Top action is "Filters"
         And  "Klantnummer" input is "{changeme}"

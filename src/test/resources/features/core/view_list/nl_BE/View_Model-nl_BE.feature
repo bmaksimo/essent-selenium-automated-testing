@@ -8,7 +8,6 @@ Feature: View list model functions, extracting data from web page and passing pa
     Scenario: Navigate, then store values selected in list view
         When Left menu is "contracting-switching"
         And Top menu item is "Marktberichten"
-        Then View list header is "Marktberichten" appears within 25 seconds
 
         When Top action is "Filters"
         And "Module" selection is "CANCEL"

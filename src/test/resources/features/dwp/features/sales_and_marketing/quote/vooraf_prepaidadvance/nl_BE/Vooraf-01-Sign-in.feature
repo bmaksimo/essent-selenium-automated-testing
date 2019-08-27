@@ -47,7 +47,6 @@ Feature: NSTA-390. Sign-in a new customer with TC1 quote with electricity and ga
         And "Datum ondertekening" date is "2 weeks before now"
         And Quote is signed in "Kontich"
         And Quote is confirmed
-        Then View list header is "Offertes"
         Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
 
 
@@ -62,7 +61,3 @@ Feature: NSTA-390. Sign-in a new customer with TC1 quote with electricity and ga
         And Click on link in "Contracten" View List at "1st" row and "Nummer & Aanmaakdatum" column
         And Table "Contractlijnen" contains cell value "Wacht op startdatum TK1-Elektriciteit Vooraf (TC_VOORAF_B2C)" at column "Status & Product" on "1st" row
         And Table "Contractlijnen" contains cell value "Wacht op startdatum TK1-Aardgas Vooraf (TC_VOORAF_B2C)" at column "Status & Product" on "2nd" row
-
-
-        #And Dashboard menu is "Service"
-
