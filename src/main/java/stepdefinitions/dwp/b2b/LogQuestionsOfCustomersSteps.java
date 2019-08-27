@@ -28,7 +28,7 @@ public class LogQuestionsOfCustomersSteps extends DwpScenario {
         String complaintText = "Neki tekst - Pitanje";
         String solutionText = "Neki tekst - Resenje";
         assertTrue("Actual complaint text: "+cdp.getComplaintText()+" is different from expected: "+complaintText, cdp.getComplaintText().equalsIgnoreCase(complaintText));
-        assertTrue("Actual solution field text: "+cdp.getSolutionFieldText()+" is different from expected"+solutionText, cdp.getSolutionFieldText().equalsIgnoreCase(solutionText));
+        assertTrue("Actual solution field text: "+cdp.getSolutionFieldText()+" is different from expected: "+solutionText, cdp.getSolutionFieldText().equalsIgnoreCase(solutionText));
         assertTrue("Actual priority is different from expected: High", cdp.checkIfPriorityIsHigh());
     }
 
