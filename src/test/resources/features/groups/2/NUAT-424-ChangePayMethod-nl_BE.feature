@@ -17,7 +17,6 @@ Feature: NUAT-424: Change Pay Method - nl_BE
         And "Klantnummer" input is "parameter:accountNumber"
         Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
         And Dashboard menu is "Details"
-        Then View list header is "Billing customer"
 
         When Plus action of "1" element from "BillingCustomerOnaccount" and click on "Update"
         Then Modal "Update billing customer" is displayed

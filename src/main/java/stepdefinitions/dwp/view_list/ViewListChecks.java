@@ -146,30 +146,12 @@ public class ViewListChecks extends NavigationElements {
         registerActiveScenario(scenario);
     }
 
-    @When("^View list header is \"([^\"]*)\"$")
-    public void checkViewListHeader(String header){
-        seleniumDriver.waitForRequestsToFinish();
-        boolean success = new CheckViewListHeader().test(header);
-        assertThat(String.format("View list header \"%s\" didn't appear", header),
-            success, is(true));
-        parameterProvider.put("current-view-list", header);
-        seleniumDriver.waitForRequestsToFinish();
-    }
-
-    @When("^View list header is \"([^\"]*)\" appears within (\\d+) seconds?$")
-    public void checkViewListHeaderUntil(String header, int seconds){
-        FluentWait<CheckViewListHeader> waiter = waiter(new CheckViewListHeader(), seconds, 5)
-            .withMessage(String.format("View list header \"%s\" didn't appear within %s seconds", header, seconds));
-        waiter.until((CheckViewListHeader callback) -> callback.test(header));
-        logger().debug(String.format("- STEP: View list header is \"%s\" within %s second(s) - PASSED.", header, seconds));
-    }
-
     @When("^View List is empty$")
     public void checkTableModel(){
         DefaultTableModel viewTableModel = new ViewListTestObject().getViewTableModel();
         boolean success = viewTableModel.getRowCount() == 0;
         assertThat("View Table list is not empty", success, is(true));
-        logger().debug("- STEP: View list header is empty - PASSED.");
+        logger().debug("- STEP: View list is empty - PASSED.");
     }
 
     @Then("^Table \"([^\"]*)\" has matching value \"([^\"]*)\" at column \"([^\"]*)\"$")

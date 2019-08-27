@@ -43,7 +43,6 @@ Feature: NSTA-327: Creating a B2C Quote TC1 with "Supplier Switch" without using
 
         #Step 9. Check market messages
         When Dashboard menu is "Marktberichten"
-        Then View list header is "Marktberichten" appears within 30 seconds
         Then Table "Marktberichten" contains value "START ACCESS Supplier Switch" at column "Module & Label"
         Then Table "Marktberichten" contains value "parameter:contractDate" at column "Status & ED"
         Then Table "Marktberichten" contains value "Gesloten" at column "Status & ED"

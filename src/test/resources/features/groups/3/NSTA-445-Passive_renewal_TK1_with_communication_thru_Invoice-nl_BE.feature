@@ -50,7 +50,6 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
 
         When Top arrow button is "Up"
         And Plus menu is "Contracting -> TK1 Hernieuwingen -> Hernieuwingsbatches"
-        Then View list header is "TK1 - Hernieuwingsbatches" appears within 20 seconds
 
         When Click on "START NIEUWE HERNIEUWINGSBATCH" link
         Then Modal dialog is "Start passive renewal batch"
@@ -86,7 +85,6 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         #4 Validate the definition of renewal product (date valid within the period: "Start & einddatum hernieuwing")
         When Top arrow button is "Up"
         And  Plus menu is "Contracting -> TK1 Hernieuwingen -> Bepaal het hernieuwingsproduct"
-        Then View list header is "Bepaal het hernieuwingsproduct" appears within 20 seconds
 
         When Top action is "Filters"
         And  Selection with search is "Van pakket"

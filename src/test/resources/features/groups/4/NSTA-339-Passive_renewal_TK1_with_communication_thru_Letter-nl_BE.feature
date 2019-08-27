@@ -39,7 +39,6 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
 
         When Dashboard menu is "Contracten"
-        Then View list header is "Actieve en toekomstige connecties" appears within 30 seconds
         And "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
 
         #2. Trigger renewal batch
@@ -51,7 +50,6 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
 
         When Top arrow button is "Up"
         And Plus menu is "Contracting -> TK1 Hernieuwingen -> Hernieuwingsbatches"
-        Then View list header is "TK1 - Hernieuwingsbatches" appears within 30 seconds
 
         When Click on "START NIEUWE HERNIEUWINGSBATCH" link
         Then Modal dialog is "Start passive renewal batch"
@@ -86,7 +84,6 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
         #4 Validate the definition of renewal product (date valid within the period: "Start & einddatum hernieuwing")
         When Top arrow button is "Up"
         And  Plus menu is "Contracting -> TK1 Hernieuwingen -> Bepaal het hernieuwingsproduct"
-        Then View list header is "Bepaal het hernieuwingsproduct" appears within 30 seconds
 
         When Top action is "Filters"
         And  Selection with search is "Van pakket"
@@ -100,7 +97,6 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
 
         #5 Communicate the renewal to the customer through the invoice
         When Plus menu is "Contracting -> TK1 Hernieuwingen -> Hernieuwingsbatches"
-        Then View list header is "TK1 - Hernieuwingsbatches" appears within 30 seconds
         When Click on "parameter:suitecrm-customer-name" link
         And  Click on "VERSTUUR PASSIEVE HERNIEUWINGSBRIEVEN" link
         And Modal dialog is "Send passive renewal letter"
