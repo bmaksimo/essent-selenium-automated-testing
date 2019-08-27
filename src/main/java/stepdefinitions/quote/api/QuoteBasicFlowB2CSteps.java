@@ -45,7 +45,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
 
     @Before("@API")
-    public void setupTest(Scenario scenario) throws IOException {
+    public void setupTest(Scenario scenario){
 	    registerActiveScenario(scenario);
     }
 
@@ -62,7 +62,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     }
 
     @Given("^I login as API user \"([^\"]*)\"$")
-    public void iLoginAsAPIUser(String username) throws Throwable {
+    public void iLoginAsAPIUser(String username) throws IOException {
         String password = ConfigProvider.getProperty(ConfigKey.DWP_PASSWORD_SOAPUI_B2C);
         this.cookie = new IWelcomeLoginAPI().getCookie(username, password);
     }
@@ -73,7 +73,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     }
 
     @When("^Data is prepared for Create quote request for \"([^\"]*)\" and meter open is \"([^\"]*)\" and sign date is \"([^\"]*)\"$")
-    public void dataIsPreparedForCreateQuoteWithDateRequestFor(String arg1, String meterOpen, String signInDate) throws Throwable {
+    public void dataIsPreparedForCreateQuoteWithDateRequestFor(String arg1, String meterOpen, String signInDate) throws IOException {
         this.flow = arg1;
         String inputValue = toDwpAPIDate(parameterProvider.getValueOrParameterAsString(signInDate));
 	    this.quoteDetails = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow, meterOpen, inputValue);
