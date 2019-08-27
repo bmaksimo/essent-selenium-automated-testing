@@ -6,7 +6,7 @@
 Feature: NSTA-341: Block dunning for invoice
 
     Background:
-        Given I login to iWelcome as "soapui_b2c"
+        Given I login as API user "soapui_b2c"
 
     @NSTA-341
     Scenario: Create active contract that after dunning the contract becomes inactive
