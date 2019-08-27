@@ -14,7 +14,7 @@ Feature: NUAT-489: Handle Task For Rejection - nl_BE
         And Top action is "Filters" waiting for 30 seconds
         And "Status" selection is "Open" waiting for 30 seconds
         And "Label" selection is "Move In" waiting for 60 seconds
-        And Click on link in View List at "1st" row and "Klant & EAN-code" column waiting for 60 seconds
+        And Click on link in View List at "1st" row and "Klant & EAN-code" column waiting for 120 seconds
         When Dashboard menu is "Details" waiting for 60 seconds
         And Get Contract Number
         And Top arrow button is "Back" waiting for 5 seconds
