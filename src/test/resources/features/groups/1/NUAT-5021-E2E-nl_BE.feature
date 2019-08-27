@@ -47,7 +47,7 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         When Top arrow button is "Up"
         And Left menu is "sales-marketing"
         And Top menu item is "Klanten"
-        And Top action is "Filters"
+        And Top action is Filter from "sales-marketing" menu retrying 5 times
         And "Naam" input is "parameter:suitecrm-customer-name"
 
         Given "1st" List element with value at column "Klantnummer & Naam" is checked

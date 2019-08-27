@@ -65,7 +65,7 @@ Feature: NUAT-446: Check The Usage Of A Customer - nl_BE
         When I renew login to DWP as "billing.testautomation@essent.be"
         And Left menu is "contracting-switching"
         And Top menu item is "Klanten"
-        And Top action is "Filters"
+        And Top action is Filter from "contracting-switching" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
         Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
 
