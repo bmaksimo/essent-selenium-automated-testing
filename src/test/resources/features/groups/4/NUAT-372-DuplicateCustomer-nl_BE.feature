@@ -12,11 +12,9 @@ Feature: NUAT-372: Duplicate Customer - nl_BE
         When Left menu is "sales-marketing"
         And Top menu item is "Klanten"
         And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
-        And Top action is "Filters"
-        And "B2C/B2B" selection is "B2B"
-        And "Type klant" selection is "Klant"
+        And Top action is Filter from "sales-marketing" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
-        And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
+        And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
         And Plus menu is "Service -> Dupliceer klant"
         When "Bedrijfsnaam" input is "Test Nuat 372"
         Then Changes are confirmed
