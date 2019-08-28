@@ -168,7 +168,7 @@ public class ContractSteps extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
         ContractPage cp = new ContractPage();
         cp.chooseDiscounts(kortingen);
-        Sleeper.sleepTightInSeconds(0.5);
+        Sleeper.sleepTightInSeconds(2);
         seleniumDriver.waitForRequestsToFinish();
 
     }
