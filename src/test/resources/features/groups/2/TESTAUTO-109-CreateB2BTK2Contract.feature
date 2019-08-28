@@ -1,6 +1,7 @@
 @DWP
 @REGRESSION
 @ALL
+@PERFORMANCE
 Feature: TESTAUTO-109: Create B2B TK2 Contract with Online Signing
 
     Background:
