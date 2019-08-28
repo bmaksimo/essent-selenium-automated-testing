@@ -20,10 +20,13 @@ public class QuoteForAccountOverviewPage extends QuoteCreationGuidedStep {
     public boolean fillInFormData() {
         String filePath = signatureData.getFilePath();
         Model.Execution execution = createExecution();
-        execution
-            .element(SIGN_UPLOAD_DOC.element())
-            .step(createStep(Action.REQUIRE).element(SIGN_UPLOAD_DOC.name()).requireDisplayed(false))
-            .step(createStep(Action.UPLOAD).element(SIGN_UPLOAD_DOC.name()).value(filePath).requireDisplayed(false), UPLOAD_FILE.getSleepInMillis());
+        execution.element(SIGN_UPLOAD_DOC.element());
+        seleniumDriver.waitForRequestsToFinish();
+        execution.step(createStep(Action.REQUIRE).element(SIGN_UPLOAD_DOC.name()).requireDisplayed(false));
+        seleniumDriver.waitForRequestsToFinish();
+        execution.step(createStep(Action.UPLOAD).element(SIGN_UPLOAD_DOC.name()).value(filePath).requireDisplayed(false), UPLOAD_FILE.getSleepInMillis());
+        seleniumDriver.waitForRequestsToFinish();
+
         return execute(execution);
     }
 }
