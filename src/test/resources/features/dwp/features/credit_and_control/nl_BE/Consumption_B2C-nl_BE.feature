@@ -15,10 +15,8 @@ Feature: Received consumption
         And "Type klant" selection is "Klant"
         And Click on link in View List at "1st" row and "Klantnummer & Naam" column
         And Dashboard menu is "Contracten"
-        Then View list header is "Actieve en toekomstige connecties"
         And "1st" List element with value at column "EAN-code" is checked
 
         When Consumption at current deliverypointid with "NIGHT_EXCLUSIVE" hourly-tariff is generated from now until "6" months after
         And Click on link in "Actieve en toekomstige connecties" View List at "1st" row and "EAN-code" column
-        And View list header is "Verbruiken"
         Then Consumption is available at "1st" row in "Van - Aan" column

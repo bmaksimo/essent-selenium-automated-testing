@@ -83,7 +83,7 @@ Feature: TESTAUTO - 4 Move old address  - Gas ean
         When Top arrow button is "up"
         And Left menu is "sales-marketing"
         And Top menu item is "Klanten"
-        And Top action is "Filters"
+        And Top action is Filter from "sales-marketing" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
         Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
 
@@ -103,5 +103,5 @@ Feature: TESTAUTO - 4 Move old address  - Gas ean
 
         When Dashboard menu is "Contracten"
         Then Check contract
-            | type |         status          | start date |              EAN             |      product      |
-            | GLN  |  Verwerkt (Geaccepteerd)|    now     |       parameter:EAN-code     | parameter:product |
+            | type |         status          | start date |              EAN             |
+            | GLN  |  Verwerkt (Geaccepteerd)|  now       | parameter:EAN-code-generated |

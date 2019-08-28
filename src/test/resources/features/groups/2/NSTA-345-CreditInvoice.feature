@@ -58,8 +58,8 @@ Feature: NSTA-345:Credit Invoice
         When Dashboard menu is "Service"
 
           #3 - Check if interactions are created for VKM and CNM
-        Then Table "Interacties" contains value "VKM" at column "Type & Onderwerp" within 120 seconds
-        Then Table "Interacties" contains value "CNM" at column "Type & Onderwerp" within 120 seconds
+        Then Table "Interacties" contains value "VKM" at column "Type & Onderwerp" within 600 seconds
+        Then Table "Interacties" contains value "CNM" at column "Type & Onderwerp" within 600 seconds
         When Dashboard menu is "Billing"
 
         #Asserts

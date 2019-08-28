@@ -226,7 +226,6 @@ public class InputElements extends DwpScenario {
 
     @And("^\"([^\"]*)\" date on \"([^\"]*)\" card is \"([^\"]*)\"$")
     public void setDateInput (String label, String card, String value){
-        Sleeper.sleepTightInSeconds(2);
         seleniumDriver.waitForRequestsToFinish();
         String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(value));
         parameterProvider.put("inputValue", inputValue);
@@ -234,7 +233,7 @@ public class InputElements extends DwpScenario {
         options.put("label", label);
         options.put("value", inputValue);
         options.put("card", card);
-        FluentWait<ApplyDateInput> waiter = waiter(new ApplyDateInput(), 10, 5);
+        FluentWait<ApplyDateInput> waiter = waiter(new ApplyDateInput(), 20, 5);
         waiter.withMessage(String.format("Date value %s input at '%s' failed.", inputValue, label));
         waiter.until((ApplyDateInput callback) -> callback.test(options));
         seleniumDriver.waitForRequestsToFinish();

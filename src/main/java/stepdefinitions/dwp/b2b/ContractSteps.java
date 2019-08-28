@@ -62,18 +62,16 @@ public class ContractSteps extends DwpScenario {
         ContractPage cp = new ContractPage();
         BaseObjectPage baseObject = new BaseObjectPage();
         Sleeper.sleepTightInSeconds(5);
-        cp.clickOnPlusMeniInTable(row,table);
+        cp.clickOnPlusMenuInTable(row,table);
         baseObject.clickOnMarkAsDonePlusMenuSubAction();
     }
 
     @When("^Plus action of \"([^\"]*)\" element from \"([^\"]*)\" and click on \"([^\"]*)\"$")
     public void plusActionOfElementFromAndClickOn(String row, String table, String action) {
         seleniumDriver.waitForRequestsToFinish();
-        ContractPage cp = new ContractPage();
-        BaseObjectPage baseObject = new BaseObjectPage();
-        Sleeper.sleepTightInSeconds(5);
-        cp.clickOnPlusMeniInTable(row,table);
-        baseObject.plusSubaction(action);
+        Sleeper.sleepTightInSeconds(10);
+        new ContractPage().clickOnPlusMenuInTable(row, table);
+        new BaseObjectPage().plusSubaction(action);
     }
 
     @And("^Save EAN from active contract$")

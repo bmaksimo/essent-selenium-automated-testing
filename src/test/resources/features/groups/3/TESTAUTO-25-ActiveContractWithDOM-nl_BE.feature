@@ -53,7 +53,6 @@ Feature: TESTAUTO - 25 Active contract with DOM
         When Quote is confirmed
 
         When Dashboard menu is "Contracten"
-        Then View list header is "Actieve en toekomstige connecties"
         And  "1st" List element with value at column "EAN-code" is checked
         And Get Account Number
         And Copy product name
