@@ -33,6 +33,7 @@ public class ContractPage extends Component {
     private static final String SECOND_INVOICE = "//tbody/tr[3]/td[5]//span[1]";
     private static final String THIRD_INVOICE = "//tbody/tr[5]/td[5]//span[1]";
     private static final String TABLE_VALUE = "//list[@list-key='Quotelines']//tbody[@id='rows']";
+    private static final String QUOTE_TABLES = "//div[@class='col-3-4 guidance']//div[@class='col-1-1']";
     private static final String INVOICE_CURRENCY_OUTSTANDING_AMOUNT = "//list[@list-key='TransactionsOnAccount']//h6[contains(., 'Invoice')]/../../../../td[6]";
     private static final String EAN_LOCATOR_INVOICE_AMOUNT = "dwp-ean-'${" + REPLACEMENT_KEY + "}'-field";
     private static final String CONTRACT_STATUS = "(//list[@list-key='ContractsOnAccount']//list-simple-two-liner-cell/p/span[2])[1]";
@@ -233,6 +234,11 @@ public class ContractPage extends Component {
     public WebElement locateMessageElement(){
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath(LABELFORPRODUCTCHANGE));
+    }
+
+    public WebElement locateTableElement(){
+        seleniumDriver.waitForRequestsToFinish();
+        return seleniumDriver.findElementWhenVisible(By.xpath(QUOTE_TABLES));
     }
 
     public void openFirstContractFromList() {
@@ -447,4 +453,11 @@ public class ContractPage extends Component {
         }
         return sumRate;
     }
+
+    public boolean containsTableValue(String tableValue) {
+        WebElement messageElement = locateTableElement();
+        return messageElement.getText().contains(tableValue);
+    }
+
+
 }
