@@ -43,11 +43,11 @@ Feature: NUAT-412 part: Create / import coda file
         # 2 - invoice run advance
         When Left menu is "sales-marketing"
         And Top menu item is "Klanten"
-        And Top action is "Filters"
+        And Top action is Filter from "sales-marketing" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
 
-        Given View List element "Id Billing customer & persoon/familie sleutel" is collected as parameter at "1st" list row
-        And View List element "Klantnummer & Naam" using "accountNumber" as alias is collected as parameter at "1st" list row
+#        Given View List element "Id Billing customer & persoon/familie sleutel" is collected as parameter at "1st" list row
+        And "1st" List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
 
         And Plus menu is "Billing -> Start facturatierun"
         When Modal dialog is "Start invoicerun"
