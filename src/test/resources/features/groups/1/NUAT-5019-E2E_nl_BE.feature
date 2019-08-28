@@ -56,7 +56,7 @@ Feature: NUAT-5019: Complete E2E scenario "Active customer to drop, through one 
         Given I renew login to DWP as "billing.testautomation@essent.be"
         When Left menu is "billing"
         And Top menu item is "Klanten"
-        And Top action is "Filters"
+        And Top action is Filter from "billing" menu retrying 5 times
         And "Naam" input is "parameter:suitecrm-customer-name"
 
         Given View List element "Id Billing customer & persoon/familie sleutel" is collected as parameter at "1st" list row
@@ -101,7 +101,7 @@ Feature: NUAT-5019: Complete E2E scenario "Active customer to drop, through one 
         Given I renew login to DWP as "billing.testautomation@essent.be"
         When Left menu is "contracting-switching"
         And Top menu item is "Klanten"
-        And Top action is "Filters"
+        And Top action is Filter from "contracting-switching" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
         Then "1st" List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
 
@@ -140,7 +140,7 @@ Feature: NUAT-5019: Complete E2E scenario "Active customer to drop, through one 
         And "Procesdatum" date is "11 months from now"
         Then Invoice run is scheduled
 
-        Given Top action is "Filters"
+        And Top action is Filter from "billing" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
         And Click on "parameter:accountNumber" link
         And Dashboard menu is "Billing"
@@ -150,7 +150,7 @@ Feature: NUAT-5019: Complete E2E scenario "Active customer to drop, through one 
         Given I renew login to DWP as "billing.testautomation@essent.be"
         When Left menu is "billing"
         And Top menu item is "Klanten"
-        And Top action is "Filters"
+        And Top action is Filter from "billing" menu retrying 5 times
         And "Naam" input is "parameter:suitecrm-customer-name"
         And View List element "Id Billing customer & persoon/familie sleutel" using "billingCustomerId" as alias is collected as parameter at "1st" list row
         And View List element "Klantnummer & Naam" using "accountNumber" as alias is collected as parameter at "1st" list row
@@ -182,7 +182,7 @@ Feature: NUAT-5019: Complete E2E scenario "Active customer to drop, through one 
         Given I renew login to DWP as "contracting.testautomation.b2c@essent.be"
         When Left menu is "contracting-switching"
         And Top menu item is "Klanten"
-        And Top action is "Filters"
+        And Top action is Filter from "contracting-switching" menu retrying 5 times
         And "Naam" input is "parameter:suitecrm-customer-name"
         Then "1st" List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
 

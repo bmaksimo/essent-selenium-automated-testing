@@ -110,7 +110,7 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         And Sleep for 15 seconds
         When Left menu is "billing"
         And Top menu item is "Klanten"
-        And Top action is "Filters"
+        And Top action is Filter from "billing" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
         And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
         When Dashboard menu is "Billing"
