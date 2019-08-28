@@ -362,6 +362,7 @@ public class InputElements extends DwpScenario {
 
   @And("^Selection with search is \"([^\"]*)\"$")
   public void selectWithSearchIsClicked(String label){
+    seleniumDriver.waitForRequestsToFinish();
     SelectWithSearch button = new SelectWithSearchImpl();
     button.click(label);
   }
