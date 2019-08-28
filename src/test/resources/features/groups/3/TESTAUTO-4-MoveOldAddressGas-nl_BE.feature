@@ -103,5 +103,5 @@ Feature: TESTAUTO - 4 Move old address  - Gas ean
 
         When Dashboard menu is "Contracten"
         Then Check contract
-            | type |         status          | start date |              EAN             |
-            | GLN  |  Verwerkt (Geaccepteerd)|  now       | parameter:EAN-code-generated |
+            | type |         status          | start date |         EAN        |
+            | GLN  |  Verwerkt (Geaccepteerd)|     now    | parameter:EAN-code |
