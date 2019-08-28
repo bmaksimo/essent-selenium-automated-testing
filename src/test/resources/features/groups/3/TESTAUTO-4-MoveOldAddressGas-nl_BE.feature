@@ -82,6 +82,7 @@ Feature: TESTAUTO - 4 Move old address  - Gas ean
         And Options "Push through incomplete move?" "is" "On"
         And Sleep for 20 seconds
         Then Bevestigen
+        And Sleep for 5 seconds
 
         When Plus action of "1" element from "BillingCustomerOnaccount" and click on "Update"
         And Change house number to "4"
@@ -124,5 +125,5 @@ Feature: TESTAUTO - 4 Move old address  - Gas ean
 
         When Dashboard menu is "Contracten"
         Then Check contract
-            | type |         status          | start date |              EAN             |      product      |
-            | GLN  |  Verwerkt (Geaccepteerd)|  now       | parameter:EAN-code-generated | parameter:product |
+            | type |         status          | start date |              EAN             |
+            | GLN  |  Verwerkt (Geaccepteerd)|  now       | parameter:EAN-code-generated |
