@@ -34,7 +34,7 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
         When Left menu is "contracting-switching"
         And Top menu item is "Klanten"
-        When Top action is "Filters"
+        And Top action is Filter from "contracting-switching" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
 
@@ -86,7 +86,7 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         When Top arrow button is "Up"
         And  Plus menu is "Contracting -> TK1 Hernieuwingen -> Bepaal het hernieuwingsproduct"
 
-        When Top action is "Filters"
+        And Top action is Filter from "contracting-switching" menu retrying 5 times
         And  Selection with search is "Van pakket"
         And  Modal dialog is "Select"
         And  Search option is "parameter:PackageName"
