@@ -66,6 +66,7 @@ public class ServicePage extends Component {
     public void goToProspect(){
         seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.linkText("Go to prospect")));
+        Sleeper.sleepTightInSeconds(10);
     }
 
     public void  gotoGLNAccount (){
