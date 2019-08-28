@@ -310,6 +310,7 @@ public class InputElements extends DwpScenario {
    */
     @And("Options? \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\"")
     public void switchOption(String option, String verb, SwitchState state){
+        Sleeper.sleepTightInSeconds(5);
         if (!(verb.equalsIgnoreCase("is") || verb.equalsIgnoreCase("are")) ){
             Assert.assertTrue("String is not valid (is/are expected)",false);
         }
