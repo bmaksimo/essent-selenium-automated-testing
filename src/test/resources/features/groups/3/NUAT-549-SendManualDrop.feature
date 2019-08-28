@@ -15,7 +15,7 @@ Feature: NUAT-549 Send manual drop
     Scenario: Send manual drop
         When Left menu is "sales-marketing"
         And Top menu item is "Klanten"
-        And Top action is "Filters"
+        And Top action is Filter from "sales-marketing" menu retrying 5 times
         And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
         And "Klantnummer" input is "parameter:accountNumber"
         Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
