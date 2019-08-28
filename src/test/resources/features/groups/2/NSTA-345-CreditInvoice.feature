@@ -36,7 +36,7 @@ Feature: NSTA-345:Credit Invoice
         Given I renew login to DWP as "billing.testautomation@essent.be"
         When Left menu is "billing"
         And Top menu item is "Klanten"
-        And Top action is "Filters"
+        And Top action is Filter from "billing" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
         Given View List element "Id Billing customer & persoon/familie sleutel" is collected as parameter at "1st" list row
         When Billing run "RECURRING" is triggered with process date "1 month from now"
