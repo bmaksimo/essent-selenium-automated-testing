@@ -45,7 +45,7 @@ Feature: NUAT-412 part: Create / import coda file
         And Top menu item is "Klanten"
         And Top action is Filter from "sales-marketing" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
-
+        And "1st" List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
 
         And Plus menu is "Billing -> Start facturatierun"
         When Modal dialog is "Start invoicerun"
