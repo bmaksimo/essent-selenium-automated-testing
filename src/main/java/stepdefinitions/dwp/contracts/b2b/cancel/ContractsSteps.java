@@ -231,6 +231,26 @@ public class ContractsSteps extends DwpScenario{
         Assert.assertTrue("Product change has failed.", succeededMessage);
     }
 
+    @Then("Check table value \"([^\"]*)\" is found for created quote")
+    public void checkTableValueMatches(String tableValue) {
+        seleniumDriver.waitForRequestsToFinish();
+        ContractPage cp = new ContractPage();
+        int refreshCount = 10;
+        boolean expectedValue = false;
+        for (int i = 0; i < refreshCount; i++) {
+            if (cp.containsTableValue(tableValue)) {
+                expectedValue = true;
+                break;
+            } else {
+                seleniumDriver.getDriver().navigate().back();
+                Sleeper.sleepTightInSeconds(2);
+                seleniumDriver.getDriver().navigate().forward();
+                Sleeper.sleepTightInSeconds(2);
+            }
+        }
+        assertThat(String.format("Table value \"%s\" does not exist in quote data", tableValue), expectedValue, is(true));
+    }
+
     private boolean containsAtLeastOneSucceededMessage(ContractPage cp) {
         WebElement messageElement = cp.locateMessageElement();
         return !messageElement.getText().contains("0 succeeded");
