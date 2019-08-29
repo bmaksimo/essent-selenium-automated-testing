@@ -24,13 +24,13 @@ public class PricingToolDashboardSteps extends DwpScenario {
     @And("^Indexatieparameter is not empty$")
     public void indexatieparameterIsNotEmpty(){
         PricingToolDashboardPage ptdp = new PricingToolDashboardPage();
-        Assert.assertTrue("Indexatieparameter is empty", ptdp.getIndexatieParameter().getText() != null);
+        Assert.assertTrue("Index Parameter is empty", ptdp.GetIndexParameter().getText() != null);
     }
 
     @And("^Huidige waarde is not empty$")
     public void huidigeWaardeIsNotEmpty(){
         PricingToolDashboardPage ptdp = new PricingToolDashboardPage();
-        Assert.assertTrue("Huidige waarde is empty", ptdp.getHuidigeWaarde().getText() != null);
+        Assert.assertTrue("Current value is empty", ptdp.getCurrentValue().getText() != null);
     }
 
 }

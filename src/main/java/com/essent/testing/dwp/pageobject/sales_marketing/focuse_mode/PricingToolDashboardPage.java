@@ -7,8 +7,8 @@ import org.openqa.selenium.WebElement;
 public class PricingToolDashboardPage extends Component {
     private final static String PURCHASE_PRICE_HEADER = "//tariff-calculation-form-element//table//th[1]";
     private final static String PURCHASE_PRICE_FIRST_ROW = "//tariff-calculation-form-element//tbody//div[1]";
-    private final static String INDEXATIEPARAMETER = "dwp-indexation-param-field";
-    private final static String HUIDIGE_WAARDE= "dwp-floating-base-price-field";
+    private final static String INDEX_PARAMETER = "dwp-indexation-param-field";
+    private final static String CURRENT_VALUE = "dwp-floating-base-price-field";
 
 
     public WebElement getPurchasePriceHeader(){
@@ -21,12 +21,12 @@ public class PricingToolDashboardPage extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath(PURCHASE_PRICE_FIRST_ROW));
     }
 
-    public WebElement getIndexatieParameter(){
-        return seleniumDriver.findElementWhenVisible(By.id(INDEXATIEPARAMETER));
+    public WebElement GetIndexParameter(){
+        return seleniumDriver.findElementWhenVisible(By.id(INDEX_PARAMETER));
     }
 
-    public WebElement getHuidigeWaarde(){
-        return seleniumDriver.findElementWhenVisible(By.id(HUIDIGE_WAARDE));
+    public WebElement getCurrentValue(){
+        return seleniumDriver.findElementWhenVisible(By.id(CURRENT_VALUE));
     }
 
 }
