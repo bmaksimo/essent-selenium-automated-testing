@@ -167,6 +167,14 @@ public class InputElements extends DwpScenario {
         setDateInput(label, value);
     }
 
+    @And("^\"([^\"]*)\" date is last day of current month next year$")
+    public void setDateInputLastDayCurrentMonthNextYear(String label){
+        String value = DateExpressionsUtil
+            .getLastDayOfCurrentMonthNextYear()
+            .toString(DwpDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
+        setDateInput(label, value);
+    }
+
     /**
      * Sets and asynchronously checks date input on any DWP form
      * @param label Text label
