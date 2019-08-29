@@ -70,6 +70,11 @@ public class DateExpressionsUtil {
       return today.plusMonths(1).withDayOfMonth(1);
   }
 
+  public static LocalDate getLastDayOfCurrentMonthNextYear() {
+      LocalDate today = new LocalDate();
+      return today.plusYears(1).dayOfMonth().withMaximumValue();
+  }
+
   public static DateTime expandFrom(String expression) {
     if (!expression.matches(DateTimeLanguageRegex.DATE_EXPR_REGEX.getExpression())) {
       throw new CucumberException(

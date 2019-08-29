@@ -10,10 +10,12 @@ public class PricingToolDashboardPage extends Component {
 
 
     public WebElement getPurchasePriceHeader(){
+        seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath(PURCHASE_PRICE_HEADER));
     }
 
     public WebElement getPurchasePriceFirstRow(){
+        seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath(PURCHASE_PRICE_FIRST_ROW));
     }
 
