@@ -17,12 +17,12 @@ Feature: TESTAUTO-47 Electricity floating UP – MMR
         And "Tariefgroep" selection is "UP"
         And "Product" selection is "Elektriciteit Variabel"
         And "Startdatum" date is first day of next month
-        Then "Einddatum" date is "2 years from now"
+        And "Einddatum" date is last day of current month next year
 
         When "Tariefdatum" date is "now"
         And "Type aansluiting" selection is "MMR"
 
-        And "Verbruik enkelvoudig (kWh)" input is "1000"
+        And "Verbruik enkelvoudig (kWh)" input is "3000"
         And Huidige waarde is not empty
         And Indexatieparameter is not empty
         And Table price calculation is not empty
