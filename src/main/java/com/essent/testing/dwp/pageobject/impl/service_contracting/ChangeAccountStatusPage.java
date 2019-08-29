@@ -2,11 +2,11 @@ package com.essent.testing.dwp.pageobject.impl.service_contracting;
 
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import static com.essent.testing.dwp.autocrat.element.quote_for_account.QuoteForAccountSignatureElements.SIGN_UPLOAD_DOC;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.UPLOAD_FILE;
 
 public class ChangeAccountStatusPage extends Component {
@@ -37,6 +37,9 @@ public class ChangeAccountStatusPage extends Component {
     public boolean uploadFileForSign(String path) {
         String elementName = "dwp.attachment.field";
         String query = "#signed-contract-docguid-c-field:not([disabled])";
+
+        Sleeper.sleepTightInSeconds(15);
+
         Model.Execution execution = createExecution();
         execution.element(elementName, createElement("SELECTOR", query));
         seleniumDriver.waitForRequestsToFinish();
