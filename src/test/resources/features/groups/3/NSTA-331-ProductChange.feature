@@ -5,7 +5,7 @@
 Feature: NSTA 331- Product Change for TK1 type
 
     Background:
-        Given I login to iWelcome as "soapui_b2c"
+        Given I login as API user "soapui_b2c"
 
     @NSTA-331
     Scenario: Product Change TK1 type
@@ -80,7 +80,7 @@ Feature: NSTA 331- Product Change for TK1 type
         When Dashboard menu is "Service"
         Then Table "Interacties" contains value "Confirmation product change" at column "Type & Onderwerp"
         And Click on link in View List at "1st" row and "Nummer & Communicatiekanaal" column polling 60 seconds
-        And Check is product change "1 succeeded"
+        And Check product change has succeeded
 
          #4.4 - Check Orders
         When Dashboard menu is "Contracten"

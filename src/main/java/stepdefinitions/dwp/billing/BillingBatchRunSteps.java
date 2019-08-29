@@ -1,7 +1,6 @@
 package stepdefinitions.dwp.billing;
 
 import com.billinghouse.test_automation.util.dsl.DwpDateTimeFormat;
-import com.essent.be.jbilling.api.rest.RestResponse;
 import com.essent.testing.dwp.pageobject.impl.modal.confirm.ConfirmSignatureDialogImpl;
 import com.essent.testing.dwp.pageobject.modal.confirm.ConfirmSignatureDialog;
 import com.essent.testing.dwp.scenario.DwpScenario;
@@ -29,12 +28,12 @@ public class BillingBatchRunSteps extends DwpScenario {
     BillingService billingService;
 
     @Before("@DWP or @E2E or @API")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 
     @And("^Invoice run is scheduled$")
-    public void invoiceRunIsScheduled() throws Throwable {
+    public void invoiceRunIsScheduled(){
         ConfirmSignatureDialog dialog = new ConfirmSignatureDialogImpl();
         boolean success = dialog.confirm();
         assertThat("Invoice run dialog was not confirmed.",
@@ -46,7 +45,7 @@ public class BillingBatchRunSteps extends DwpScenario {
     @When("^Billing run \"([^\"]*)\" is triggered with process date \"([^\"]*)\"$")
     public void startBillingRun(String jobName, String processDate) {
         String inputValue = toDwpApiDate(parameterProvider.getValueOrParameterAsString(processDate));
-        String billingCustomerId = parameterProvider.getValueOrParameterAsString("parameter:Id Billing customer & persoon/familie sleutel");
+        String billingCustomerId = parameterProvider.getValueOrParameterAsString("parameter:billingId");
         SimpleDateFormat formatter = new SimpleDateFormat(DwpDateTimeFormat.DWP_API_DATE_FORMAT.getFormat());
         try {
             Date parsedDate = formatter.parse(inputValue);
@@ -61,7 +60,7 @@ public class BillingBatchRunSteps extends DwpScenario {
     @When("^Mediation run \"([^\"]*)\" is triggered with settlement date \"([^\"]*)\"$")
     public void startMediation(String jobName, String settlementDate) {
         String inputValue = toDwpApiDate(parameterProvider.getValueOrParameterAsString(settlementDate));
-        String billingCustomerId = parameterProvider.getValueOrParameterAsString("parameter:Id Billing customer & persoon/familie sleutel");
+        String billingCustomerId = parameterProvider.getValueOrParameterAsString("parameter:billingId");
         String deliveryPointId = parameterProvider.getValueOrParameterAsString("parameter:EAN-code");
         SimpleDateFormat formatter = new SimpleDateFormat(DwpDateTimeFormat.DWP_API_DATE_FORMAT.getFormat());
 

@@ -14,7 +14,7 @@ Feature: NUAT-448: Change The Advance Amount For A Customer - nl_BE
         Given B2B Active Contract is
             | productType | isFakeAddress | switchType      | meterType | kwMax |
             | TC1         | FAKE          | SUPPLIER SWITCH | YMR       | 50000 |
-        And Top action is "Filters"
+        And Top action is Filter from "sales-marketing" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
         Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 40 seconds
 

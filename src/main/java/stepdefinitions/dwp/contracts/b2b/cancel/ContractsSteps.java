@@ -14,6 +14,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -25,12 +26,9 @@ import java.util.Arrays;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertTrue;
 
 public class ContractsSteps extends DwpScenario{
-
-    private String eanCodeInput = null;
 
     @Before("@DWP or @REGRESSION or @API")
     public void setupTest(Scenario scenario) {
@@ -55,7 +53,7 @@ public class ContractsSteps extends DwpScenario{
     @When("^Find \"([^\"]*)\" contract$")
     public void findContract(String input) {
         ContractPage contractenPage = new ContractPage();
-        eanCodeInput = contractenPage.findActiveContract(input);
+        String eanCodeInput = contractenPage.findActiveContract(input);
         logger().debug("EAN CODE: " + eanCodeInput);
         parameterProvider.put("contractEanCode", eanCodeInput);
     }
@@ -141,7 +139,6 @@ public class ContractsSteps extends DwpScenario{
 
     @And("^Invoice checkbox with key \"([^\"]*)\" is clicked$")
     public void checkInvoiceOpenBalance(String text) {
-        seleniumDriver.waitForRequestsToFinish();
         ContractPage contractenPage = new ContractPage();
         contractenPage.checkInvoiceOpenBalance(text);
     }
@@ -234,6 +231,26 @@ public class ContractsSteps extends DwpScenario{
         Assert.assertTrue("Product change has failed.", succeededMessage);
     }
 
+    @Then("Check table value \"([^\"]*)\" is found for created quote")
+    public void checkTableValueMatches(String tableValue) {
+        seleniumDriver.waitForRequestsToFinish();
+        ContractPage cp = new ContractPage();
+        int refreshCount = 10;
+        boolean expectedValue = false;
+        for (int i = 0; i < refreshCount; i++) {
+            if (cp.containsTableValue(tableValue)) {
+                expectedValue = true;
+                break;
+            } else {
+                seleniumDriver.getDriver().navigate().back();
+                Sleeper.sleepTightInSeconds(2);
+                seleniumDriver.getDriver().navigate().forward();
+                Sleeper.sleepTightInSeconds(2);
+            }
+        }
+        assertThat(String.format("Table value \"%s\" does not exist in quote data", tableValue), expectedValue, is(true));
+    }
+
     private boolean containsAtLeastOneSucceededMessage(ContractPage cp) {
         WebElement messageElement = cp.locateMessageElement();
         return !messageElement.getText().contains("0 succeeded");
@@ -249,7 +266,7 @@ public class ContractsSteps extends DwpScenario{
     }
 
     @When("^Payment table is not empty$")
-    public void checkPaymentTableNotEmpty() throws Throwable {
+    public void checkPaymentTableNotEmpty(){
         seleniumDriver.waitForRequestsToFinish();
         ContractPage contractenPage = new ContractPage();
         boolean success = contractenPage.checkPaymentTableNotEmpty();
@@ -282,13 +299,20 @@ public class ContractsSteps extends DwpScenario{
         assertTrue("Insufficient Number of installments with given amount.",expectedNumberOfInstallments<=actualNumberOfInstallments);
     }
 
-    @Then("^Installments Amount of \"([^\"]*)\" is by \"([^\"]*)\" bigger than Invoice Amount of \"([^\"]*)\"$")
+    @Then("^Installments Amount of \"([^\"]*)\" is bigger than Invoice Amount of \"([^\"]*)\"$")
     public void checkIsInstallmentAmountBiggerThanInvoiceAmount(
-        String installmentsAmount, int expectedDifference, String invoiceAmount) {
-        ContractPage cp = new ContractPage();
+        String installmentsAmount, String invoiceAmount) {
         String installAmount = parameterProvider.getValueOrParameterAsString(installmentsAmount);
         String invAmount = parameterProvider.getValueOrParameterAsString(invoiceAmount);
-        int actualDifference = cp.findDifferenceInAmounts(installAmount, invAmount);
-        assertEquals(expectedDifference, actualDifference);
+        
+        StringUtils.substringBefore(invAmount, ".");
+        StringUtils.substringBefore(invAmount, ",");
+
+        StringUtils.substringBefore(installAmount, ".");
+        StringUtils.substringBefore(installAmount, ",");
+
+        int result1 = Integer.parseInt(invAmount);
+        int result2 = Integer.parseInt(installAmount);
+        assertThat("Installments amount is not bigger than invoice amount", result2>result1);
     }
 }

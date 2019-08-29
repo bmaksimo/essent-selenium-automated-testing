@@ -22,11 +22,8 @@ import java.util.List;
 
 public class OdooListView extends OdooScenario  {
 
-    private static final String TABLE_CELL_SELECTOR_TEMPLATE = "//table[@class='oe_list_content'][1]//tbody//tr[${rowIndex}]//td[@data-field='${key}'][1]";
-
-
     @Before("@ODOO or @E2E or @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 

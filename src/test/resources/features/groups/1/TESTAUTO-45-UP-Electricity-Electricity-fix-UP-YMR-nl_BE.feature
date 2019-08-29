@@ -17,7 +17,7 @@ Feature: TESTAUTO-45:Electricity-UP-Electricity-fix-UP-YMR
         And "Tariefgroep" selection is "UP"
         And "Product" selection is "Elektriciteit Vast"
         And "Startdatum" date is first day of next month
-        And "Einddatum" date is "2 years from now"
+        And "Einddatum" date is last day of current month next year
 
 
         When "Tariefdatum" date is "now"

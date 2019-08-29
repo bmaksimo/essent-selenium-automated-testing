@@ -46,8 +46,8 @@ public class ContractDetailsAPI extends AbstractAPI {
         String aosProductsId = contractResponse.jsonPath().getString("data.rows[0].cells[5].options.params.recordId");
         contractDetails.setAosProductsId(aosProductsId);
         LOGGER.debug("Aos Products ID: " + aosProductsId);
-            String contractStartDate = contractResponse.jsonPath().getString("data.rows[0].rowData");
-            contractStartDate = findContractStartDate(contractStartDate);
+        String contractStartDate = contractResponse.jsonPath().getString("data.rows[0].rowData");
+        contractStartDate = findContractStartDate(contractStartDate);
         contractDetails.setContractStartDate(contractStartDate);
         LOGGER.debug("contractStartDate: " + contractStartDate);
 
@@ -95,7 +95,7 @@ public class ContractDetailsAPI extends AbstractAPI {
     }
 
     public boolean getContractStatus(Cookies cookie, String contractRecordId)
-        throws IOException, InterruptedException {
+        throws IOException{
         RequestHelper helper = new RequestHelper();
         String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
             + ConfigProvider.getProperty(ConfigKey.CRM_CONTRACT_DETAILS_URL) + "/" + contractRecordId + "/"
@@ -145,8 +145,7 @@ public class ContractDetailsAPI extends AbstractAPI {
         orderDetailsPayload.setIncludeSettlement("true");
         orderDetailsPayload.setSettlementStatus("1");
 
-        String xml = xmlMapper.writeValueAsString(orderDetailsPayload);
-        return xml;
+        return xmlMapper.writeValueAsString(orderDetailsPayload);
     }
 
 
@@ -168,7 +167,7 @@ public class ContractDetailsAPI extends AbstractAPI {
             if (str.contains("billingcustomerid")) {
             String result = str.split(":")[1];
             if (result.contains(",")) {
-                id = result.substring(0, result.indexOf(","));
+                id = result.substring(0, result.indexOf(','));
             } else {
                 id = result;
             }
@@ -186,7 +185,7 @@ public class ContractDetailsAPI extends AbstractAPI {
             if (str.contains("up_start_date_c")) {
                 String result = str.split(":")[1];
                 if (result.contains(",")) {
-                    startDate = result.substring(0, result.indexOf(","));
+                    startDate = result.substring(0, result.indexOf(','));
                 } else {
                     startDate = result;
                 }

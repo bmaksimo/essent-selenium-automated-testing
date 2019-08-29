@@ -6,7 +6,6 @@ import com.google.gson.annotations.Expose;
 import javax.annotation.Generated;
 
 @Generated("net.hexar.json2pojo")
-@SuppressWarnings("unused")
 public class RandomUser {
 
     @Expose
@@ -174,15 +173,16 @@ public class RandomUser {
             return randomUser;
         }
 
-        @Override
-        public String toString() {
-            return "RandomUser{" +
-                "cell='" + cell + '\'' +
-                ", email='" + email + '\'' +
-                ", gender='" + gender + '\'' +
-                ", name=" + name +
-                '}';
-        }
+    }
+
+    @Override
+    public String toString() {
+        return "RandomUser {" +
+            "cell='" + cell + '\'' +
+            ", email='" + email + '\'' +
+            ", gender='" + gender + '\'' +
+            ", name=" + name +
+            '}';
     }
 
 }

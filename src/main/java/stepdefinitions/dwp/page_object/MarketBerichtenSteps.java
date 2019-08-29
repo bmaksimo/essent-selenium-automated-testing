@@ -22,7 +22,7 @@ public class MarketBerichtenSteps extends DwpScenario {
     private static String eanCode = null;
 
     @Before("@DWP or @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 

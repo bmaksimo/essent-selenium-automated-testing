@@ -13,7 +13,7 @@ import static org.junit.Assert.assertNotNull;
 
 public class OdooGenericSteps extends OdooScenario {
     @Before("@ODOO or @E2E or @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 

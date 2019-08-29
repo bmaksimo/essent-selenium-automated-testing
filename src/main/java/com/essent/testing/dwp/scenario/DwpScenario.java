@@ -120,6 +120,7 @@ public abstract class DwpScenario extends RegisteredScenario {
     }
 
     protected boolean executeJavascriptTest(String registeredJsClass, Object options) {
+        seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.executeJavascriptTest(registeredJsClass, options);
     }
 

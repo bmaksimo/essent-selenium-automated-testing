@@ -53,7 +53,7 @@ public class ConsumptionSteps extends DwpScenario {
     private ConsumptionService consumptionService;
 
     @Before("@DWP or @E2E or @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 
@@ -210,7 +210,7 @@ public class ConsumptionSteps extends DwpScenario {
     }
 
     @Then("^Consumption is available at \"([^\"]*)\" row in \"([^\"]*)\" column$")
-    public void checkCreatedConsumption(String ordinal, String column) throws Throwable {
+    public void checkCreatedConsumption(String ordinal, String column) {
         String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
         String fromDate = parameterProvider.getValueOrParameterAsString("parameter:fromDate");
         String toDate = parameterProvider.getValueOrParameterAsString("parameter:toDate");

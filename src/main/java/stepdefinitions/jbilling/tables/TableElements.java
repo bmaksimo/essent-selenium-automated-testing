@@ -13,12 +13,12 @@ import static org.hamcrest.Matchers.is;
 public class TableElements extends JBillingScenario {
 
 	@Before("@JBILLING or @B2B or @REGRESSION")
-	public void setupTest(Scenario scenario) throws Throwable {
+	public void setupTest(Scenario scenario){
 		registerActiveScenario(scenario);
 	}
 
 	@When("^JBilling Click on row in Table by entering first cell value \"([^\"]*)\"$")
-	public void clickFirstCellInTable(String expectedResult) throws Throwable {
+	public void clickFirstCellInTable(String expectedResult){
         if(expectedResult.startsWith("parameter:")) {
             expectedResult = parameterProvider.getValueOrParameterAsString(expectedResult);
         }
@@ -30,7 +30,7 @@ public class TableElements extends JBillingScenario {
 	}
 
 	@When("^JBilling Click on row \"([^\"]*)\" in Table$")
-	public void clickOnRowInTable(String rowNumber) throws Throwable {
+	public void clickOnRowInTable(String rowNumber){
 		TablePage tablePage = new TablePage();
 		boolean success = tablePage.clickOnRowInTable(rowNumber);
 
@@ -38,7 +38,7 @@ public class TableElements extends JBillingScenario {
 	}
 
 	@When("^JBilling Click on text link \"([^\"]*)\"$")
-	public void clickTextLink(String label) throws Throwable {
+	public void clickTextLink(String label){
 		TablePage tablePage = new TablePage();
 		boolean success = tablePage.clickTextLink(label);
 
@@ -46,7 +46,7 @@ public class TableElements extends JBillingScenario {
 	}
 
 	@When("^JBilling First cell value in first row is \"([^\"]*)\"$")
-	public void checkFirstCellValueInFirstRow(String expectedResult) throws Throwable {
+	public void checkFirstCellValueInFirstRow(String expectedResult){
         if(expectedResult.startsWith("parameter:")) {
             expectedResult = parameterProvider.getValueOrParameterAsString(expectedResult);
         }
@@ -59,7 +59,7 @@ public class TableElements extends JBillingScenario {
 	}
 
 	@When("^JBilling Value next to label \"([^\"]*)\" is \"([^\"]*)\"$")
-	public void checkValueNextToLabel(String label, String expectedResult) throws Throwable {
+	public void checkValueNextToLabel(String label, String expectedResult){
 		if(expectedResult.startsWith("parameter:")) {
 			expectedResult = parameterProvider.getValueOrParameterAsString(expectedResult);
 		}
@@ -70,7 +70,7 @@ public class TableElements extends JBillingScenario {
 	}
 
 	@When("^Inner tables are not empty$")
-	public void checkInnerOrderTablesNotEmpty() throws Throwable {
+	public void checkInnerOrderTablesNotEmpty(){
 		TablePage tablePage = new TablePage();
 		boolean isNotEmpty = tablePage.checkInnerTablesNotEmpty();
 

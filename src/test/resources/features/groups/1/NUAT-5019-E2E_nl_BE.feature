@@ -45,11 +45,9 @@ Feature: NUAT-5019: Complete E2E scenario "Active customer to drop, through one 
         And Quote is signed in "Kontich"
         And "Datum ondertekening" date is "now"
         And Quote is confirmed
-        Then View list header is "Offertes"
         Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
 
         When Dashboard menu is "Contracten"
-        Then View list header is "Actieve en toekomstige connecties"
         And "1st" List element with value at column "EAN-code" is checked
         And "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
 
@@ -58,14 +56,13 @@ Feature: NUAT-5019: Complete E2E scenario "Active customer to drop, through one 
         Given I renew login to DWP as "billing.testautomation@essent.be"
         When Left menu is "billing"
         And Top menu item is "Klanten"
-        And Top action is "Filters"
+        And Top action is Filter from "billing" menu retrying 5 times
         And "Naam" input is "parameter:suitecrm-customer-name"
 
         Given View List element "Id Billing customer & persoon/familie sleutel" is collected as parameter at "1st" list row
         And View List element "Klantnummer & Naam" using "accountNumber" as alias is collected as parameter at "1st" list row
         And Click on "parameter:accountNumber" link
         And Dashboard menu is "Contracten"
-        Then View list header is "Actieve en toekomstige connecties"
 
         Given Top arrow button is "Up"
         And Plus menu is "Billing -> Start facturatierun"
@@ -78,7 +75,6 @@ Feature: NUAT-5019: Complete E2E scenario "Active customer to drop, through one 
 
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
         When Dashboard menu is "Billing"
-        Then View list header is "Transacties"
         And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
 
         # 3 - Download CODA
@@ -105,7 +101,7 @@ Feature: NUAT-5019: Complete E2E scenario "Active customer to drop, through one 
         Given I renew login to DWP as "billing.testautomation@essent.be"
         When Left menu is "contracting-switching"
         And Top menu item is "Klanten"
-        And Top action is "Filters"
+        And Top action is Filter from "contracting-switching" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
         Then "1st" List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
 
@@ -117,7 +113,6 @@ Feature: NUAT-5019: Complete E2E scenario "Active customer to drop, through one 
 
         # 5 - Create consumptions
         Given Dashboard menu is "Contracten"
-        And View list header is "Actieve en toekomstige connecties"
         And "1st" List element with value at column "EAN-code" is checked
         Then Consumption at deliverypointid "parameter:EAN-code" is generated from "35 days before now" until "12" months after
 
@@ -145,20 +140,18 @@ Feature: NUAT-5019: Complete E2E scenario "Active customer to drop, through one 
         And "Procesdatum" date is "11 months from now"
         Then Invoice run is scheduled
 
-        Given Top action is "Filters"
+        And Top action is Filter from "billing" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
         And Click on "parameter:accountNumber" link
         And Dashboard menu is "Billing"
-        Then View list header is "Transacties"
         And Table "Transacties" contains value "Invoice (SETTLEMENT)" at column "ID & Type"
 
         # 8 - Reach HB3 dunning level
         Given I renew login to DWP as "billing.testautomation@essent.be"
         When Left menu is "billing"
         And Top menu item is "Klanten"
-        And Top action is "Filters"
+        And Top action is Filter from "billing" menu retrying 5 times
         And "Naam" input is "parameter:suitecrm-customer-name"
-        Then View list header is "Klanten"
         And View List element "Id Billing customer & persoon/familie sleutel" using "billingCustomerId" as alias is collected as parameter at "1st" list row
         And View List element "Klantnummer & Naam" using "accountNumber" as alias is collected as parameter at "1st" list row
 
@@ -171,7 +164,6 @@ Feature: NUAT-5019: Complete E2E scenario "Active customer to drop, through one 
         And Sleep for 90 seconds
 
         When Dashboard menu is "Billing"
-        Then View list header is "Transacties"
         And Table "Transacties" contains value "Invoice (SETTLEMENT)" at column "ID & Type"
         And Table "Transacties" contains value "Invoice (ADVANCE)" at column "ID & Type"
         And Table "Transacties" contains value "Payment" at column "ID & Type"
@@ -190,7 +182,7 @@ Feature: NUAT-5019: Complete E2E scenario "Active customer to drop, through one 
         Given I renew login to DWP as "contracting.testautomation.b2c@essent.be"
         When Left menu is "contracting-switching"
         And Top menu item is "Klanten"
-        And Top action is "Filters"
+        And Top action is Filter from "contracting-switching" menu retrying 5 times
         And "Naam" input is "parameter:suitecrm-customer-name"
         Then "1st" List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
 
@@ -215,6 +207,5 @@ Feature: NUAT-5019: Complete E2E scenario "Active customer to drop, through one 
         And Refresh "REFRESH MARKTBERICHTEN" till "Geaccepteerd" is visible in table
 
         When Dashboard menu is "Contracten"
-        Then View list header is "Actieve en toekomstige connecties"
         And "Actieve en toekomstige connecties" list is empty
         And Table "Contracten" contains value "Inactief" at column "Type & status"

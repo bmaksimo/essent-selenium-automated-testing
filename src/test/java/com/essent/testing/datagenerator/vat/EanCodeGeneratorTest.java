@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 
 public class EanCodeGeneratorTest {
     @Test
-    public void testGeneratedEanCode() throws Throwable {
+    public void testGeneratedEanCode(){
         for(int i = 0; i < 100; i++) {
             String eanCode = PrepareDataForContract.generateEAN();
             System.out.println(eanCode);

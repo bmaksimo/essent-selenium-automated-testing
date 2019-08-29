@@ -3,8 +3,6 @@ package stepdefinitions.quote.api;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.util.resource.ResourceUtil;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.http.Cookies;
 import io.restassured.response.Response;
@@ -121,7 +119,7 @@ public class QuoteSignatureAPI extends AbstractAPI {
         return uploadMap;
     }
 
-    private String signQuoteModalPayload(String rowId, String docId) throws JsonParseException, JsonMappingException, IOException {
+    private String signQuoteModalPayload(String rowId, String docId) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
 
         String pathToPayload = ResourceUtil.toPath(PATH_TO_SIGN_QUOTE_MODAL);

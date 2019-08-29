@@ -18,7 +18,7 @@ import java.util.List;
 public class ContractB2BScenario extends RegisteredScenario {
 
 	@Before("@DWP or @E2E or @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 
@@ -216,11 +216,11 @@ public class ContractB2BScenario extends RegisteredScenario {
     }
 
     @Given("^B2B Active Contract is$")
-    public String createContractB2B(final DataTable quote) throws Throwable {
+
+    public String createContractB2B(final DataTable quote){
         accountNumber = StringUtils.EMPTY;
         companyNumber = StringUtils.EMPTY;
         billingId = StringUtils.EMPTY;
-
         List<List<String>> list = quote.asLists(String.class);
 
         QuoteB2B quoteB2B = new QuoteB2B();

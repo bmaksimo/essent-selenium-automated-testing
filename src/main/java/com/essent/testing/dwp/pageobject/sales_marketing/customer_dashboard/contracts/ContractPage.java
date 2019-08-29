@@ -33,6 +33,7 @@ public class ContractPage extends Component {
     private static final String SECOND_INVOICE = "//tbody/tr[3]/td[5]//span[1]";
     private static final String THIRD_INVOICE = "//tbody/tr[5]/td[5]//span[1]";
     private static final String TABLE_VALUE = "//list[@list-key='Quotelines']//tbody[@id='rows']";
+    private static final String QUOTE_TABLES = "//div[@class='col-3-4 guidance']//div[@class='col-1-1']";
     private static final String INVOICE_CURRENCY_OUTSTANDING_AMOUNT = "//list[@list-key='TransactionsOnAccount']//h6[contains(., 'Invoice')]/../../../../td[6]";
     private static final String EAN_LOCATOR_INVOICE_AMOUNT = "dwp-ean-'${" + REPLACEMENT_KEY + "}'-field";
     private static final String CONTRACT_STATUS = "(//list[@list-key='ContractsOnAccount']//list-simple-two-liner-cell/p/span[2])[1]";
@@ -73,6 +74,7 @@ public class ContractPage extends Component {
 
 
     public String getClientNumber() {
+        seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath("//blue-sidebar//h4")).getText();
     }
 
@@ -89,11 +91,11 @@ public class ContractPage extends Component {
     }
 
     public void searchByClientNumber(String number) {
-        seleniumDriver.waitAndSendKeys(getSearchInputElemnt(), number);
+        seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndSendKeys(getSearchInputElemnt(), number);
     }
 
-    public void clickOnPlusMeniInTable(String row, String table) {
+    public void clickOnPlusMenuInTable(String row, String table) {
         seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenPresent(By.xpath("(//list[@list-key='" + table + "']//tbody[@id='rows']//list-plus-cell//a[@class='show-actions icon-plus'])[" + row + "]")));
     }
@@ -108,6 +110,7 @@ public class ContractPage extends Component {
     }
 
     public void checkInvoiceOpenBalance(String key) {
+        seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-checkbox-cell[@list-key='" + key + "']")));
     }
 
@@ -231,6 +234,11 @@ public class ContractPage extends Component {
     public WebElement locateMessageElement(){
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath(LABELFORPRODUCTCHANGE));
+    }
+
+    public WebElement locateTableElement(){
+        seleniumDriver.waitForRequestsToFinish();
+        return seleniumDriver.findElementWhenVisible(By.xpath(QUOTE_TABLES));
     }
 
     public void openFirstContractFromList() {
@@ -398,11 +406,14 @@ public class ContractPage extends Component {
     }
 
     public String getInstallmentSum() {
-        return seleniumDriver.findElementWhenPresent(By.id(INSTALLMENTS_SUM)).getText();
+        seleniumDriver.waitForRequestsToFinish();
+        String installSum = seleniumDriver.findElementWhenPresent(By.id(INSTALLMENTS_SUM)).getText();
+        return installSum.replace(" €", "");
     }
     public String getInvoiceSum() {
         seleniumDriver.waitForRequestsToFinish();
-        return seleniumDriver.findElementWhenPresent(By.id(INVOICE_SUM)).getText();
+        String invoiceSum = seleniumDriver.findElementWhenPresent(By.id(INVOICE_SUM)).getText();
+        return invoiceSum.replace(" €", "");
     }
 
     public int installmentsNumber(String amount) {
@@ -419,15 +430,6 @@ public class ContractPage extends Component {
         }
 
         return numInstallThanHaveGivenAmount;
-    }
-
-
-    public int findDifferenceInAmounts(String installAmount, String invoiceAmount) {
-        seleniumDriver.waitForRequestsToFinish();
-        String invAmount = invoiceAmount.replaceAll(" .+$", "");
-        int result1 = Integer.parseInt(installAmount);
-        int result2 = Integer.parseInt(invAmount);
-        return result1 - result2;
     }
 
     public float sumRates(String typeRate) {
@@ -451,4 +453,11 @@ public class ContractPage extends Component {
         }
         return sumRate;
     }
+
+    public boolean containsTableValue(String tableValue) {
+        WebElement messageElement = locateTableElement();
+        return messageElement.getText().contains(tableValue);
+    }
+
+
 }

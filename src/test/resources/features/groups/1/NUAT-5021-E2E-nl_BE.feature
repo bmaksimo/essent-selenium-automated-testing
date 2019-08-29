@@ -2,6 +2,7 @@
 @E2E
 @DWP
 @REGRESSION
+@PERFORMANCE
 Feature: NUAT-5021 Complete scenario from de-duplication of client with guarantee to inactive client
 
     @NUAT-5021
@@ -47,7 +48,7 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         When Top arrow button is "Up"
         And Left menu is "sales-marketing"
         And Top menu item is "Klanten"
-        And Top action is "Filters"
+        And Top action is Filter from "sales-marketing" menu retrying 5 times
         And "Naam" input is "parameter:suitecrm-customer-name"
 
         Given "1st" List element with value at column "Klantnummer & Naam" is checked
@@ -97,7 +98,7 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         And "Plaats ondertekening" input is "Kontich"
         And "Datum ondertekening" date is "now"
         And Quote for account is signed
-        When Quote for account is confirmed
+        When Quote is confirmed
         And "1st" list element has cell value "Sales Getekend - Waarborg" at column "Type & status"
 
         When Dashboard menu is "Marktberichten"
@@ -147,4 +148,4 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
 
         #Step 5 - Should create Supplier Switch market message
         When Dashboard menu is "Marktberichten"
-        Then "1st" list element has cell value "Supplier Switch" at column "Module & Label" polling 450 seconds
+        Then "1st" list element has cell value "Supplier Switch" at column "Module & Label" polling 1200 seconds

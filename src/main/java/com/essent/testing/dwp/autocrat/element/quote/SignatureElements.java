@@ -8,7 +8,8 @@ public enum SignatureElements {
     SIGN_ALREADYSIGNED_CHECKBOX("SELECTOR", "#dwp-alreadysigned-field:not([disabled])"),
     SIGN_DATE("SELECTOR", "#accounts-aos-quotes-sign-date-c-field"),
     SIGN_LOCATION("SELECTOR", "#accounts-aos-quotes-sign-location-c-field"),
-    SIGN_UPLOAD_DOC("SELECTOR", "#accounts-aos-quotes-signed-contract-docguid-c-field:not([disabled])");
+    SIGN_UPLOAD_DOC("SELECTOR", "#accounts-aos-quotes-signed-contract-docguid-c-field:not([disabled])"),
+    B2B_TK2_ONLINE_SIGN_UPLOAD_DOC("SELECTOR", "#signed-contract-docguid-c-field:not([disabled])");
 
     private String searchBy;
     private String query;
@@ -19,7 +20,6 @@ public enum SignatureElements {
     }
 
     public Model.Element element() {
-        Model.Element element = new Model.Element().search(searchBy).query(this.query).key(this.name());
-        return element;
+        return new Model.Element().search(searchBy).query(this.query).key(this.name());
     }
 }
