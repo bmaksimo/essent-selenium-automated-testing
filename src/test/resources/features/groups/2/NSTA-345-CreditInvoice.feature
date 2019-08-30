@@ -38,7 +38,6 @@ Feature: NSTA-345:Credit Invoice
         And Top menu item is "Klanten"
         And Top action is Filter from "billing" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
-        Given View List element "Id Billing customer & persoon/familie sleutel" is collected as parameter at "1st" list row
         When Billing run "RECURRING" is triggered with process date "1 month from now"
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
         When Dashboard menu is "Billing"
@@ -58,8 +57,8 @@ Feature: NSTA-345:Credit Invoice
         When Dashboard menu is "Service"
 
           #3 - Check if interactions are created for VKM and CNM
-        Then Table "Interacties" contains value "VKM" at column "Type & Onderwerp" within 600 seconds
-        Then Table "Interacties" contains value "CNM" at column "Type & Onderwerp" within 600 seconds
+        Then Table "Interacties" contains value "VKM" at column "Type & Onderwerp" retrying 60 times
+        Then Table "Interacties" contains value "CNM" at column "Type & Onderwerp" retrying 60 times
         When Dashboard menu is "Billing"
 
         #Asserts
