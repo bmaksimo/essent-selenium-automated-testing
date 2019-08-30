@@ -2,7 +2,6 @@
 @DWP
 @B2C
 @API
-@PERFORMANCE
 @ALL
 Feature: NSTA-345:Credit Invoice
 
