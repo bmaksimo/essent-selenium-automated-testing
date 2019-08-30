@@ -15,6 +15,7 @@ public class UpdateCustomerDetailsPage extends Component {
     }
 
     public void clickOnSaveButtonForFinanceAndLegalSection()  {
+        seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(saveButtonForFinanceAndLegalSection());
     }
 }
