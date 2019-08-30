@@ -217,8 +217,8 @@ public abstract class SeleniumDriver {
 
     public WebElement findElementWhenVisible(By selector) {
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)
-            .withTimeout(Duration.ofSeconds(90))
-            .pollingEvery(Duration.ofSeconds(10))
+            .withTimeout(Duration.ofSeconds(180))
+            .pollingEvery(Duration.ofSeconds(20))
             .ignoring(ElementNotVisibleException.class)
             .ignoring(NoSuchElementException.class);
         WebElement element = waiter.until(ExpectedConditions.visibilityOfElementLocated(selector));
