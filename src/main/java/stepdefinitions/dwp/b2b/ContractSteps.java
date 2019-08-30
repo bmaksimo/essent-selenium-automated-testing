@@ -69,7 +69,7 @@ public class ContractSteps extends DwpScenario {
     @When("^Plus action of \"([^\"]*)\" element from \"([^\"]*)\" and click on \"([^\"]*)\"$")
     public void plusActionOfElementFromAndClickOn(String row, String table, String action) {
         seleniumDriver.waitForRequestsToFinish();
-        Sleeper.sleepTightInSeconds(10);
+        Sleeper.sleepTightInSeconds(20);
         new ContractPage().clickOnPlusMenuInTable(row, table);
         new BaseObjectPage().plusSubaction(action);
     }
