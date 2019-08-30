@@ -18,12 +18,14 @@ public class ToggleImpl extends Component {
     }
 
     public boolean isOn(String toggleInputName)  {
+        seleniumDriver.waitForRequestsToFinish();
         String classValue = getToggleInput(toggleInputName).findElement(By.cssSelector("input")).getAttribute("class");
         return classValue.contains("not-empty");
 
     }
 
     public void switchOn(String toggleInputName)  {
+        seleniumDriver.waitForRequestsToFinish();
         if (!isOn(toggleInputName)) {
             seleniumDriver.waitAndClick(getToggleInput(toggleInputName));
         }

@@ -118,6 +118,7 @@ public abstract class NavigationElements extends DwpScenario {
   }
 
     protected void clickTopAction(String name) {
+        seleniumDriver.waitForRequestsToFinish();
         boolean success = new ClickTopAction().test(name);
         assertThat(String.format("Top Menu item %s was not available.", name),
             success, is(true));
@@ -142,6 +143,7 @@ public abstract class NavigationElements extends DwpScenario {
     }
 
     protected void clickPlusAction(String path) {
+        seleniumDriver.waitForRequestsToFinish();
         DwpPlusMenu plusMenu = new DwpPlusMenu();
         boolean success = plusMenu.executeAction(path);
         assertThat(String.format("Plus Menu Path %s undefined.", path),
