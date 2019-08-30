@@ -2,32 +2,43 @@
 @DWP
 @REGRESSION
 @CREDIT-AND-CONTROL
-Feature: NUAT-412 part: Create / import coda file
+Feature: NUAT-412: Import coda file
     Background:
-        Given  I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
+        Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
     @NUAT-412
-    Scenario: Create active contract via GUI and Create / import coda file
-        # 1 - GUI B2C contract creation
+    Scenario: NUAT-412: Import coda file
+        #1 - GUI contract creation
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
-        And "Tariefdatum" date is "now"
+        Then Form header is "Quote details"
+
+        When "Tariefdatum" date is "now"
         And "Sales kanaal" selection is "Inbound"
         And Quote details are confirmed
-        And Customer is random
+        Then Form header is "Personal details"
+
+        When Customer is random
         And Customer address is
             | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
             | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
         And Customer details are confirmed
+        Then Form header is "Select package & fuel type"
         And "Pakket" selection is "Vast"
         And Checkbox "Gas Fix B2C (TC1)" is Unchecked
         And Package and Fuel Type is confirmed
+        Then Form header is "Connection details"
+
         And EAN code is generated
         And "Startdatum" date is "35 days before now"
         And "EAN-code" input is "parameter:EAN-code-generated"
         And  Option "test" "is" "On"
         And Connection details are confirmed
-        And "Betalingswijze" selection is "Overschrijving"
+        Then Form header is "Billing details"
+
+        When "Betalingswijze" selection is "Overschrijving"
         And Billing details are confirmed
-        And Option "Heeft de klant al getekend?" "is" "On"
+        Then Form header is "Quote overview"
+
+        When Option "Heeft de klant al getekend?" "is" "On"
         And "Kanaal ondertekening" selection is "Papier"
         And Quote is signed in "Kontich"
         And "Datum ondertekening" date is "now"
@@ -36,26 +47,31 @@ Feature: NUAT-412 part: Create / import coda file
 
         When Dashboard menu is "Contracten"
         And "1st" List element with value at column "EAN-code" is checked
-        And Get Account Number
-        Then "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
-        Given Top arrow button is "Up"
+        And "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
+
 
         # 2 - invoice run advance
-        When Left menu is "sales-marketing"
+        Given I renew login to DWP as "billing.testautomation@essent.be"
+        When Left menu is "billing"
         And Top menu item is "Klanten"
-        And Top action is Filter from "sales-marketing" menu retrying 5 times
-        And "Klantnummer" input is "parameter:accountNumber"
-        And "1st" List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
+        And Top action is Filter from "billing" menu retrying 5 times
+        And "Naam" input is "parameter:suitecrm-customer-name"
 
+        Given View List element "Id Billing customer & persoon/familie sleutel" is collected as parameter at "1st" list row
+        And View List element "Klantnummer & Naam" using "accountNumber" as alias is collected as parameter at "1st" list row
+        And Click on "parameter:accountNumber" link
+        And Dashboard menu is "Contracten"
+
+        Given Top arrow button is "Up"
         And Plus menu is "Billing -> Start facturatierun"
         When Modal dialog is "Start invoicerun"
-        And "Factuurdatum" date is "now"
-        And "Procesdatum" date is "1 month from now"
         And "Naam job" selection is "recurrent"
         And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
+        And "Factuurdatum" date is "now"
+        And "Procesdatum" date is "1 month from now"
         Then Invoice run is scheduled
 
-        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
+        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
         When Dashboard menu is "Billing"
         And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
 
