@@ -14,6 +14,7 @@ import static org.hamcrest.Matchers.is;
 
 public class EndOfContractPage extends Component {
     public void searchInputField(String input) {
+        seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//top-search/div[@class='top-search']/input[@type='search']")), input);
         seleniumDriver.findElementWhenVisible(By.xpath("//top-search/div[@class='top-search']/input[@type='search']")).sendKeys(Keys.ENTER);
     }

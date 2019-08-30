@@ -30,6 +30,7 @@ public abstract class NavigationElements extends DwpScenario {
         }
 
         public boolean testWithFixedTime(String action, int waitingTime) {
+            seleniumDriver.waitForRequestsToFinish();
             TopActionsPage topActions = new TopActionsPageImpl();
             return topActions.executeTopActionWithFixedWait(action, waitingTime);
         }
@@ -40,6 +41,7 @@ public abstract class NavigationElements extends DwpScenario {
   private class ClickCockpitItem implements Predicate<String> {
     @Override
     public boolean test(String item) {
+      seleniumDriver.waitForRequestsToFinish();
       Map<String, String> options = new HashMap<>();
       options.put("item", item);
       boolean success = executeJavascriptTest(JS_TR_GET_COCKPIT_ITEM, options);
@@ -50,6 +52,7 @@ public abstract class NavigationElements extends DwpScenario {
   private class ClickListPlusAction implements Predicate<String> {
     @Override
     public boolean test(String item) {
+      seleniumDriver.waitForRequestsToFinish();
       Map<String, String> options = new HashMap<>();
       options.put("item", item);
       boolean success = executeJavascriptTest(JS_TR_LIST_PLUS_MENU_ACTION, options);
@@ -60,6 +63,7 @@ public abstract class NavigationElements extends DwpScenario {
   private class ClickTopArrowButton implements Predicate<String> {
     @Override
     public boolean test(String arrow) {
+      seleniumDriver.waitForRequestsToFinish();
       Map<String, String> options = new HashMap<>();
       options.put("arrow", arrow.toLowerCase());
       boolean success = executeJavascriptTest(JS_TR_ARROW_ACTION, options);
@@ -106,29 +110,34 @@ public abstract class NavigationElements extends DwpScenario {
   public class ValidateCustomer implements Predicate<Map> {
     @Override
     public boolean test(Map name) {
-      return executeJavascriptTest(JS_TR_FIND_CUSTOMER, name);
+        seleniumDriver.waitForRequestsToFinish();
+        return executeJavascriptTest(JS_TR_FIND_CUSTOMER, name);
     }
   }
 
   public class SearchCustomer implements Predicate<String> {
     @Override
     public boolean test(String name) {
-      return executeJavascriptTest(JS_TR_SEARCH_CUSTOMER, name);
+        seleniumDriver.waitForRequestsToFinish();
+        return executeJavascriptTest(JS_TR_SEARCH_CUSTOMER, name);
     }
   }
 
     protected void clickTopAction(String name) {
+        seleniumDriver.waitForRequestsToFinish();
         boolean success = new ClickTopAction().test(name);
         assertThat(String.format("Top Menu item %s was not available.", name),
             success, is(true));
     }
     protected void clickTopAction(String name, int waitingTime) {
+        seleniumDriver.waitForRequestsToFinish();
         boolean success = new ClickTopAction().testWithFixedTime(name, waitingTime);
         assertThat(String.format("Top Menu item %s was not available.", name),
             success, is(true));
     }
 
     protected void clickTopArrow(String arrow)  {
+        seleniumDriver.waitForRequestsToFinish();
         boolean success = new ClickTopArrowButton().test(arrow);
         assertThat(String.format("Top Arrow %s is undefined.", arrow),
             success, is(true));
@@ -142,6 +151,7 @@ public abstract class NavigationElements extends DwpScenario {
     }
 
     protected void clickPlusAction(String path) {
+        seleniumDriver.waitForRequestsToFinish();
         DwpPlusMenu plusMenu = new DwpPlusMenu();
         boolean success = plusMenu.executeAction(path);
         assertThat(String.format("Plus Menu Path %s undefined.", path),
@@ -149,6 +159,7 @@ public abstract class NavigationElements extends DwpScenario {
     }
 
     protected void clickCockpitItem(String item) {
+        seleniumDriver.waitForRequestsToFinish();
         boolean success = new ClickCockpitItem().test(item);
         assertThat(String.format("Cockpit item %s was not available.", item),
             success, is(true));

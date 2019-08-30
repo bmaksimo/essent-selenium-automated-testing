@@ -5,7 +5,7 @@
 Feature: NUAT-372: Duplicate Customer - nl_BE
 
     Background:
-        Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
+        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
     @NUAT-372
     Scenario: Duplicate customer
@@ -19,5 +19,6 @@ Feature: NUAT-372: Duplicate Customer - nl_BE
         When "Bedrijfsnaam" input is "Test Nuat 372"
         Then Changes are confirmed
         And Top arrow button is "Up"
+        And Left menu is "sales-marketing"
         And Search field input is "parameter:inputValue"
         Then Customer "parameter:inputValue" is found
