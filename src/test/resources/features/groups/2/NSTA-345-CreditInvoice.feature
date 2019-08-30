@@ -74,5 +74,5 @@ Feature: NSTA-345:Credit Invoice
 
         #5 - Check Balance of new invoice credit -- currently not being tested as balance update can take too long to occur and this is momentarily an accepted behavior
         # when balance update is timeboxed this check needs to be uncommented
-        When Dashboard menu is "Billing"
-        Then Balance is the same as from the latest invoice
+#        When Dashboard menu is "Billing"
+#        Then Balance is the same as from the latest invoice
