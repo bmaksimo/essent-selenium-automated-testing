@@ -334,6 +334,7 @@ public class ViewListChecks extends NavigationElements {
             clickTopArrow(arrow);
             seleniumDriver.waitForRequestsToFinish();
             clickDashboardMenu(dashboardMenu);
+            seleniumDriver.waitForRequestsToFinish();
         } catch (Throwable t) {
             throw new CucumberException(t);
         }
@@ -637,12 +638,36 @@ public class ViewListChecks extends NavigationElements {
         waiter.withMessage(String.format("List element didn't contain any value at column \"%s\"", column));
         waiter.until((ViewListTestObject callback) -> {
             loopBack(arrow, dashboardMenu);
-            return !(callback.fetchColumnData(table, column).stream().
-                filter(element -> element.contains(inputValue)).collect(Collectors.toList()).isEmpty());
+            return CollectionUtils.isNotEmpty(callback.fetchColumnData(table, column).stream().
+                filter(element -> element.contains(inputValue)).collect(Collectors.toList()));
         });
 
         logger().debug(String.format("- STEP: Table \"%s\" does not contain value \"%s\" at column \"%s\".", table,
             value, column));
+    }
+
+    @Then("^Table \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\" retrying (\\d+) times?$")
+    public void viewListContainsValueAtColumnRetrying(String table, String value, String column, int maxRetries) {
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
+        String arrow = parameterProvider.getValueOrParameterAsString("parameter:navigation");
+        String dashboardMenu = parameterProvider.getValueOrParameterAsString("parameter:dashboard-menu");
+
+        int attempt = 0;
+        boolean found = false;
+
+        while (attempt < maxRetries && !found) {
+            attempt++;
+            found = CollectionUtils.isNotEmpty(new ViewListTestObject().fetchColumnData(table, column).stream().
+                filter(element -> element.contains(inputValue)).collect(Collectors.toList()));
+
+            if (!found) {
+                Sleeper.sleepTightInSeconds(10);
+                loopBack(arrow, dashboardMenu);
+            }
+        }
+
+        assertThat(value + " was not found in " + table + " at " + column + " column", found);
+        logger().debug(value + " was found in " + table + " at " + column + " column at attempt #" + attempt);
     }
 
     @And("^Table \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\"$")
