@@ -24,7 +24,7 @@ Feature: TESTAUTO-116-B2C guarantee sign in
 
         When Package is "Vast"
         And Checkbox "Gas Fix B2C (TC1)" is Unchecked
-        And Kortingen is "50_part"
+        And "Kortingen" selection is "50_part"
         Then Package and Fuel Type is confirmed
 
         When "Startdatum" date is "35 days before now"
