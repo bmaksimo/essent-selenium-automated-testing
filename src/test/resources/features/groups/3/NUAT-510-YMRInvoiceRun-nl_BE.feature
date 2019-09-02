@@ -3,30 +3,25 @@
 @B2B
 @REGRESSION
 @JBILLING
+
 Feature: NUAT-510 Triggering advance invoice run. Check is invoice created in DWP and jbilling
 
     Background:
-        Given B2B Active Contract is
-            | productType    | isFakeAddress | switchType       | meterType       | kwMax |
-            | TC1            | FAKE          |  SUPPLIER SWITCH | YMR             | 50000 |
         And I logged in to DWP as "billing.testautomation@essent.be"
 
     @NUAT-510
     Scenario: NUAT-510: Trigger Invoice run process for B2B TK1
-        And Left menu is "billing"
+        Given B2B Active Contract is
+            | productType    | isFakeAddress | switchType       | meterType       | kwMax |
+            | TC1            | FAKE          |  SUPPLIER SWITCH | YMR             | 50000 |
+        And Left menu is "contracting-switching"
         And Top menu item is "Klanten"
-        And Top action is "Filters"
+        And Top action is Filter from "contracting-switching" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
-        And Plus menu is "Billing -> Start facturatierun"
-        And "Factuurdatum" date is "now"
-        And "Procesdatum" date is "now"
-        And Modal dialog is "Start invoicerun"
-        And "Naam job" selection is "recurrent"
-        And "ID Billing customer" input is "parameter:billingId"
-
-        When Invoice run is scheduled
-        And Sleep for 10 seconds
-        And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
+        
+        #run invoice
+        When Billing run "RECURRING" is triggered with process date "1 month from now"
+        And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 90 seconds
         And Dashboard menu is "Billing"
 
         Then "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
