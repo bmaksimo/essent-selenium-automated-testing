@@ -202,16 +202,11 @@ public class ContractDetailsAPI extends AbstractAPI {
     private String findContractEndDate(String part) {
         String endDate = null;
 
-        String[] s = part.split("\\|");
-        for (String str : s) {
-            if (str.contains("up_end_date_c")) {
-                String result = str.split(":")[1];
-                if (result.contains(",")) {
-                    endDate = result.substring(0, result.indexOf(','));
-                } else {
-                    endDate = result;
-                }
-            }
+        String[] splitter = part.split("\\|");
+        for (String endDateString : splitter) {
+            if (endDateString.contains("up_end_date_c")) {
+                String result = endDateString.split(":")[1];
+                endDate = result.contains(",") ? result.substring(0, result.indexOf(',')) : result;
         }
         return endDate;
     }
