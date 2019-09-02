@@ -17,6 +17,9 @@ import stepdefinitions.quote.api.model.QuoteDetails;
 import stepdefinitions.quote.api.model.getOrderDetailsRequest;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @author n.grkavac
@@ -185,33 +188,21 @@ public class ContractDetailsAPI extends AbstractAPI {
     }
 
     private String findContractStartDate(String part) {
-        String startDate = null;
-
-        String[] s = part.split("\\|");
-        for (String str : s) {
-            if (str.contains("up_start_date_c")) {
-                String result = str.split(":")[1];
-                if (result.contains(",")) {
-                    startDate = result.substring(0, result.indexOf(','));
-                } else {
-                    startDate = result;
-                }
-            }
-        }
-        return startDate;
+        List<String> s = Arrays.asList(part.split("\\|"));
+        Optional<String> optional = s.stream()
+            .filter(it -> it.contains("up_start_date_c"))
+            .map(result -> result.contains(",") ? result.substring(0, result.indexOf(',')) : result)
+            .findFirst();
+        return optional.orElse(null).split(":")[1];
     }
 
     private String findContractEndDate(String part) {
-        String endDate = null;
-
-        String[] splitter = part.split("\\|");
-        for (String endDateString : splitter) {
-            if (endDateString.contains("up_end_date_c")) {
-                String result = endDateString.split(":")[1];
-                endDate = result.contains(",") ? result.substring(0, result.indexOf(',')) : result;
-            }
-        }
-        return endDate;
+        List<String> s = Arrays.asList(part.split("\\|"));
+        Optional<String> optional = s.stream()
+            .filter(it -> it.contains("up_end_date_c"))
+            .map(result -> result.contains(",") ? result.substring(0, result.indexOf(',')) : result)
+            .findFirst();
+        return optional.orElse(null).split(":")[1];
     }
 
 }
