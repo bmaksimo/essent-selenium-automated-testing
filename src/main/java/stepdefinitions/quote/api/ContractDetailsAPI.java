@@ -100,7 +100,7 @@ public class ContractDetailsAPI extends AbstractAPI {
     }
 
     public boolean getContractStatus(Cookies cookie, String contractRecordId)
-        throws IOException{
+        throws IOException {
         RequestHelper helper = new RequestHelper();
         String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
             + ConfigProvider.getProperty(ConfigKey.CRM_CONTRACT_DETAILS_URL) + "/" + contractRecordId + "/"
@@ -121,7 +121,7 @@ public class ContractDetailsAPI extends AbstractAPI {
     }
 
 
-    public boolean getOrderDetails(Cookies cookie, QuoteDetails quoteDetails, ContractDetails contractDetails ) throws IOException {
+    public boolean getOrderDetails(Cookies cookie, QuoteDetails quoteDetails, ContractDetails contractDetails) throws IOException {
         RequestHelper helper = new RequestHelper();
         String path = ConfigProvider.getProperty(ConfigKey.BILLING_ORDER_DETAILS_URL);
 
@@ -133,7 +133,9 @@ public class ContractDetailsAPI extends AbstractAPI {
 
         resultStatusStr = getOrderDetailsResponse.xmlPath().getString("//getOrderDetailsResponse/result");
 
-        if (resultStatusStr.startsWith("true") ){resultStatus = true;}
+        if (resultStatusStr.startsWith("true")) {
+            resultStatus = true;
+        }
         return resultStatus;
     }
 
@@ -170,12 +172,12 @@ public class ContractDetailsAPI extends AbstractAPI {
         String[] s = part.split("\\|");
         for (String str : s) {
             if (str.contains("billingcustomerid")) {
-            String result = str.split(":")[1];
-            if (result.contains(",")) {
-                id = result.substring(0, result.indexOf(','));
-            } else {
-                id = result;
-            }
+                String result = str.split(":")[1];
+                if (result.contains(",")) {
+                    id = result.substring(0, result.indexOf(','));
+                } else {
+                    id = result;
+                }
             }
         }
 
@@ -207,8 +209,10 @@ public class ContractDetailsAPI extends AbstractAPI {
             if (endDateString.contains("up_end_date_c")) {
                 String result = endDateString.split(":")[1];
                 endDate = result.contains(",") ? result.substring(0, result.indexOf(',')) : result;
+            }
         }
         return endDate;
     }
 
 }
+
