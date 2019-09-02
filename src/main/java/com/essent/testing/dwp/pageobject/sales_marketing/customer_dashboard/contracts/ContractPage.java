@@ -55,6 +55,7 @@ public class ContractPage extends Component {
     private static final int SEPTEMBER = 9;
     private static final int OCTOBER = 10;
     private static DateTimeFormatter DASH_SEPARATED_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    private static DateTimeFormatter DASH_SEPARATED_YMD_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static DateTimeFormatter SLASH_SEPARATED_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static String HIGH_RATES_QUOTE = "//list[@list-key='QuoteComponentLines']//span[contains(., 'High')]/../../../..//td[6]";
     private static String LOW_RATES_QUOTE = "//list[@list-key='QuoteComponentLines']//span[contains(., 'Low')]/../../../..//td[6]";
@@ -223,8 +224,8 @@ public class ContractPage extends Component {
 
     public static long rangeDates(String sd, String ed) {
         Sleeper.sleepTightInSeconds(8);
-        LocalDate startDate = LocalDate.parse(sd, DASH_SEPARATED_DATE_FORMATTER);
-        LocalDate endDate = LocalDate.parse(ed, DASH_SEPARATED_DATE_FORMATTER);
+        LocalDate startDate = LocalDate.parse(sd, DASH_SEPARATED_YMD_DATE_FORMATTER);
+        LocalDate endDate = LocalDate.parse(ed, DASH_SEPARATED_YMD_DATE_FORMATTER);
         long range = ChronoUnit.DAYS.between(startDate, endDate);
         log.debug("Number of days between the start date : " + startDate + " and end date : " + endDate + " is  ==> " + range);
 

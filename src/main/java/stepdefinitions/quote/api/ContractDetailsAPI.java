@@ -50,6 +50,11 @@ public class ContractDetailsAPI extends AbstractAPI {
         contractStartDate = findContractStartDate(contractStartDate);
         contractDetails.setContractStartDate(contractStartDate);
         LOGGER.debug("contractStartDate: " + contractStartDate);
+        String contractEndDate = contractResponse.jsonPath().getString("data.rows[0].rowData");
+        contractEndDate = findContractEndDate(contractEndDate);
+        contractDetails.setContractEndDate(contractEndDate);
+        LOGGER.debug("contractEndDate: " + contractEndDate);
+
 
         return contractDetails;
 
@@ -192,6 +197,23 @@ public class ContractDetailsAPI extends AbstractAPI {
             }
         }
         return startDate;
+    }
+
+    private String findContractEndDate(String part) {
+        String endDate = null;
+
+        String[] s = part.split("\\|");
+        for (String str : s) {
+            if (str.contains("up_end_date_c")) {
+                String result = str.split(":")[1];
+                if (result.contains(",")) {
+                    endDate = result.substring(0, result.indexOf(','));
+                } else {
+                    endDate = result;
+                }
+            }
+        }
+        return endDate;
     }
 
 }

@@ -133,9 +133,12 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     @Then("^Contract is created$")
     public void contractIsCreated() throws IOException {
 	    this.contractDetails = new ContractDetailsAPI().getContractDetails(cookie, quoteDetails);
-	    String contractDate = new ContractDetailsAPI().getContractDetails(cookie, quoteDetails).getContractStartDate();
+	    String contractStartDate = new ContractDetailsAPI().getContractDetails(cookie, quoteDetails).getContractStartDate();
+        String contractEndDate = new ContractDetailsAPI().getContractDetails(cookie, quoteDetails).getContractEndDate();
+        parameterProvider.put("contractStartDate", contractStartDate);
+        parameterProvider.put("contractEndDate", contractEndDate);
         StringBuilder builder = new StringBuilder();
-        String[] str = contractDate.split("-");
+        String[] str = contractStartDate.split("-");
         String yearContractDate = str[0];
         String monthContractDate = str[1];
         String dayContractDate = str[2];

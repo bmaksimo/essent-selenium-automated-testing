@@ -13,6 +13,7 @@ public class ProductChangePageObjectImpl extends Component implements ProductCha
 
     @Override
     public void selectFirstItemFromList() {
+        seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(seleniumDriver.findElement(By.id(TARIFF_ID)));
         Sleeper.sleepTightInSeconds(5);
         seleniumDriver.waitAndClick(seleniumDriver.findElement(By.xpath(TARIFF_FIRST_LIST_ITEM)));
