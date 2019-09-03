@@ -30,6 +30,7 @@ public class GenericSteps extends DwpScenario {
 
     @Given("^I logged in to DWP as \"([^\"]*)\"$")
     public void loginAs(String username) throws Throwable {
+        logger().info("Logging into DWP as " + username);
         setUpWebDriver();
         isDwpRunning();
         UserRoles dwpUser = UserRoles.get(username);

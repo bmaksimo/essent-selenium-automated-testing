@@ -39,7 +39,7 @@ Feature: NSTA-341: Block dunning for invoice
         #Create invoice via jBilling client call
         When Billing run "RECURRING" is triggered with process date "1 month from now"
         And Dashboard menu is "Billing"
-        Then Table "Transacties" contains value "Invoice (ADVANCE)" at column "ID & Type" within 180 seconds
+        Then Table "Transacties" contains value "Invoice (ADVANCE)" at column "ID & Type" retrying 10 times
 
         # 3 - Block dunning for the invoice
         When Plus action of "1" element from "TransactionsOnAccount" and click on "Plaats aanmaningsblokkade op factuur"

@@ -1,6 +1,5 @@
 package stepdefinitions.odoo.navigation.menu;
 
-import com.essent.automation.util.Sleeper;
 import com.essent.testing.odoo.navigation.menu.MenuNavigation;
 import com.essent.testing.odoo.pageobject.impl.elements.ButtonImpl;
 import com.essent.testing.odoo.pageobject.impl.pageObject.CustomerPage;
@@ -47,7 +46,7 @@ public class OdooMenu extends OdooScenario {
 
     @When("^Odoo left menu is \"([^\"]*)\"$")
     public void executeLeftMenuAction(String menuPath) {
-        Sleeper.sleepTightInSeconds(3);
+        awaitOdooRequestToFinish(60);
         MenuNavigation odooMenuNavigation = new MenuNavigation();
         odooMenuNavigation.executeAction(menuPath);
         awaitOdooRequestToFinish(120);
@@ -72,21 +71,40 @@ public class OdooMenu extends OdooScenario {
         mapper.put("value", value);
         awaitOdooRequestToFinish(10);
         List<WebElement> buttons = seleniumDriver.findElements(By.xpath(createQuery(locator, mapper)));
-        if(buttons.isEmpty()) {
+
+        if(buttons.isEmpty())
             throw new CucumberException("Coda download button was not found");
-        } else {
-            seleniumDriver.moveToElementAndClick(buttons.get(0));
-        }
+
+        seleniumDriver.moveToElementAndClick(buttons.get(0));
+    }
+
+    @Then("^Generate CODA is clicked$")
+    public void clickDownloadCoda() {
+        String locator = "//button[@title='Download coda']";
+        awaitOdooRequestToFinish(10);
+        List<WebElement> buttons = seleniumDriver.findElements(By.xpath(locator));
+
+        if(buttons.isEmpty())
+            throw new CucumberException("Coda download button was not found");
+
+        seleniumDriver.moveToElementAndClick(buttons.get(0));
     }
 
 
     @Then("^Button \"([^\"]*)\" is clicked$")
     public void clickButton(String label) {
-        awaitOdooRequestToFinish(120);
+        awaitOdooRequestToFinish(60);
         WebElement webElement = seleniumDriver.findElement(By.xpath("//button//div[contains(., '" + label + "')]"));
         if (null == webElement) throw new CucumberException("Button was not found");
         new ButtonImpl(webElement).click();
         awaitOdooRequestToFinish(180);
+    }
+
+    @When("Expand results")
+    public void expandResults() {
+        awaitOdooRequestToFinish(60);
+        seleniumDriver.findElement(By.xpath("//span[@class='ui-icon ui-icon-triangle-1-e']")).click();
+        awaitOdooRequestToFinish(60);
     }
 
     @Then("^Button \"([^\"]*)\" on Journal Items is clicked$")
@@ -115,7 +133,7 @@ public class OdooMenu extends OdooScenario {
         CustomerPage cp = new CustomerPage();
         cp.modalReverseClickButton(buttonLabel);
     }
-    
+
     @Then("^Bank Statement \"([^\"]*)\" button is clicked$")
     public void odooBankStatementClickButton(String buttonLabel) {
         given()

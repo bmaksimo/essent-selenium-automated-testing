@@ -84,6 +84,7 @@ public class ViewListChecks extends NavigationElements {
         @Override
         public boolean test(Map options) {
             String viewList = (String) options.get("view_list_name");
+            seleniumDriver.waitForRequestsToFinish();
             if (null == viewList) return executeJavascriptTest(JS_TR_CLICK_TABLE_CELL_URL, options);
             return testKnownColumns(viewList, options, (String) options.get("column"));
         }
