@@ -3,7 +3,6 @@ package com.essent.testing.selenium;
 import com.billinghouse.test_automation.javascript.testrunner.JavascriptTestRunner;
 import com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry;
 import com.billinghouse.test_automation.javascript.testrunner.impl.SeleniumJsTestExpanderService;
-import com.essent.automation.util.Sleeper;
 import com.essent.testing.util.resource.ResourceUtil;
 import com.paulhammant.ngwebdriver.NgWebDriver;
 import cucumber.runtime.CucumberException;
