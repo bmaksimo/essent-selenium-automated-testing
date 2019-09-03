@@ -454,11 +454,23 @@ public class ViewListChecks extends NavigationElements {
     public void cellValuesAtRowFromTableAreChecked(String ordinal, String tableName){
         ViewListTestObject viewListTestObject = new ViewListTestObject(tableName);
         int row = extractNumericValue(ordinal);
-        for (int column = 1; viewListTestObject.getColumnCount().isPresent() &&
-            column <= viewListTestObject.getColumnCount().get(); column++) {
+        logger().info("445_445_445_445_445_445_445_445_445_445_445_445_445_445_445_445_445_445_445_445_445_445_445");
+        logger().info("row: "+row);
+
+        Optional<Integer> columnCountOptional = viewListTestObject.getColumnCount();
+        if (!columnCountOptional.isPresent()) throw new CucumberException("Column count is 0");
+
+        logger().info("columnCountOptional: " + columnCountOptional.get());
+
+        for (int column = 1; column <= columnCountOptional.get(); column++) {
+            logger().info("viewListTestObject: " + viewListTestObject);
+
             Optional<String> columnName = viewListTestObject.getColumnName(column);
             Optional<Object> value = viewListTestObject.getValueAt(row, column);
+
             if (columnName.isPresent() && value.isPresent()) {
+                logger().info("columnName: " + columnName.get());
+                logger().info("value: " + value.get());
                 parameterProvider.put(columnName.get(), value.get());
             }
         }

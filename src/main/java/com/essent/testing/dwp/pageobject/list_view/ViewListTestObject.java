@@ -35,27 +35,15 @@ public class ViewListTestObject extends Component implements ViewList {
   }
 
   public Optional<Integer> getColumnCount() {
-    if (tableModel.isPresent()) {
-      return Optional.of(tableModel.get().getColumnCount());
-    } else {
-      return Optional.of(0);
-    }
+    return tableModel.map(DefaultTableModel::getColumnCount);
   }
 
   public Optional<String> getColumnName(int column) {
-    if (tableModel.isPresent()) {
-      return Optional.of(tableModel.get().getColumnName(column - 1));
-    } else {
-      return Optional.empty();
-    }
+      return tableModel.map(defaultTableModel -> defaultTableModel.getColumnName(column - 1));
   }
 
   public Optional<Object> getValueAt(int row, int column) {
-    if (tableModel.isPresent()) {
-      return Optional.of(tableModel.get().getValueAt(row - 1, column - 1));
-    } else {
-      return Optional.empty();
-    }
+      return tableModel.map(defaultTableModel -> defaultTableModel.getValueAt(row - 1, column - 1));
   }
 
   public DefaultTableModel getViewTableModel() {
