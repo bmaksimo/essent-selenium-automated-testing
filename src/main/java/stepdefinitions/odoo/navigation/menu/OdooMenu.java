@@ -71,11 +71,11 @@ public class OdooMenu extends OdooScenario {
         mapper.put("value", value);
         awaitOdooRequestToFinish(10);
         List<WebElement> buttons = seleniumDriver.findElements(By.xpath(createQuery(locator, mapper)));
-        if(buttons.isEmpty()) {
+
+        if(buttons.isEmpty())
             throw new CucumberException("Coda download button was not found");
-        } else {
-            seleniumDriver.moveToElementAndClick(buttons.get(0));
-        }
+
+        seleniumDriver.moveToElementAndClick(buttons.get(0));
     }
 
     @Then("^Generate CODA is clicked$")
@@ -83,11 +83,11 @@ public class OdooMenu extends OdooScenario {
         String locator = "//button[@title='Download coda']";
         awaitOdooRequestToFinish(10);
         List<WebElement> buttons = seleniumDriver.findElements(By.xpath(locator));
-        if(buttons.isEmpty()) {
+
+        if(buttons.isEmpty())
             throw new CucumberException("Coda download button was not found");
-        } else {
-            seleniumDriver.moveToElementAndClick(buttons.get(0));
-        }
+
+        seleniumDriver.moveToElementAndClick(buttons.get(0));
     }
 
 
