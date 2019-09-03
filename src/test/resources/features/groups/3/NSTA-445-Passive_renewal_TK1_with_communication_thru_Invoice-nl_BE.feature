@@ -85,8 +85,8 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         #4 Validate the definition of renewal product (date valid within the period: "Start & einddatum hernieuwing")
         When Top arrow button is "Up"
         And  Plus menu is "Contracting -> TK1 Hernieuwingen -> Bepaal het hernieuwingsproduct"
-
-        And Top action is Filter from "contracting-switching" menu retrying 5 times
+        And Sleep for 20 seconds
+        And Top action is "Filters"
         And  Selection with search is "Van pakket"
         And  Modal dialog is "Select"
         And  Search option is "parameter:PackageName"
