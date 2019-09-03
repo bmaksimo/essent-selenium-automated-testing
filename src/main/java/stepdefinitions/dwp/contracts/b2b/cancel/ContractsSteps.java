@@ -15,6 +15,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.tools.ant.taskdefs.Sleep;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -224,6 +225,7 @@ public class ContractsSteps extends DwpScenario{
                 succeededMessage = true;
                 break;
             } else {
+                Sleeper.sleepTightInSeconds(10);
                 seleniumDriver.getDriver().navigate().back();
                 seleniumDriver.getDriver().navigate().forward();
             }
@@ -304,7 +306,7 @@ public class ContractsSteps extends DwpScenario{
         String installmentsAmount, String invoiceAmount) {
         String installAmount = parameterProvider.getValueOrParameterAsString(installmentsAmount);
         String invAmount = parameterProvider.getValueOrParameterAsString(invoiceAmount);
-        
+
         StringUtils.substringBefore(invAmount, ".");
         StringUtils.substringBefore(invAmount, ",");
 
