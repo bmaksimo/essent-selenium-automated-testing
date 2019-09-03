@@ -79,6 +79,11 @@ public class JournalEntriesSteps extends OdooScenario {
         je.clickOnMoreMenuItem(item);
     }
 
+    @And("^More filter is \"([^\"]*)\"$")
+    public void moreFilterIs(String filter) {
+        new JournalEntriesPage().clickOnMoreFilter(filter);
+    }
+
     @And("^Confirm action$")
     public void confirm() {
         awaitOdooRequestToFinish(10);

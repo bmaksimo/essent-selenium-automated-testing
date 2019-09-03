@@ -19,6 +19,7 @@ public class OdooGenericSteps extends OdooScenario {
 
     @Given("^I logged in to Odoo as \"([^\"]*)\"$")
     public void login(String username) throws Throwable {
+        logger().info("Logging into Odoo as " + username);
         setUpWebDriver();
         isOdooRunning();
         UserRoles odooUser = UserRoles.get(username);

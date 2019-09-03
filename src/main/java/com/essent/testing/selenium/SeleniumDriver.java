@@ -242,8 +242,8 @@ public abstract class SeleniumDriver {
         return driver.manage().getCookies();
     }
 
-    public void awaitJqueryNotActive(long milliseconds) {
-        new org.openqa.selenium.support.ui.WebDriverWait(driver, milliseconds).until(webDriver -> {
+    public void awaitJqueryNotActive(long seconds) {
+        new org.openqa.selenium.support.ui.WebDriverWait(driver, seconds).until(webDriver -> {
             final JavascriptExecutor js = (JavascriptExecutor) driver;
             return (Boolean) js
                 .executeScript(JQUERY_IS_NOT_ACTIVE);
