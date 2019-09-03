@@ -241,7 +241,7 @@ public class InputElements extends DwpScenario {
         options.put("label", label);
         options.put("value", inputValue);
         options.put("card", card);
-        FluentWait<ApplyDateInput> waiter = waiter(new ApplyDateInput(), 20, 5);
+        FluentWait<ApplyDateInput> waiter = waiter(new ApplyDateInput(), 90, 15);
         waiter.withMessage(String.format("Date value %s input at '%s' failed.", inputValue, label));
         waiter.until((ApplyDateInput callback) -> callback.test(options));
         seleniumDriver.waitForRequestsToFinish();

@@ -12,6 +12,7 @@ public class NewLeadPage extends BaseObjectPage {
     private final static String LASTNAME="last-name-field";
 
     public void createLead(List<Map<String,String>> table) {
+        seleniumDriver.waitForRequestsToFinish();
         String companyNumber = null;
         String contactPersonFirstName = null;
         String contactPersonLastName = null;
@@ -28,8 +29,8 @@ public class NewLeadPage extends BaseObjectPage {
     }
 
     private void fillInCompanyName(String companyNumber) {
-        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id(COMPANYNAME)), companyNumber);
         seleniumDriver.waitForRequestsToFinish();
+        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id(COMPANYNAME)), companyNumber);
     }
 
 
