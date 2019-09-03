@@ -1,7 +1,5 @@
 package stepdefinitions.odoo.navigation.menu;
 
-import com.essent.automation.util.Sleeper;
-import com.essent.belgium.energycomm.ws_to_bo.Customer;
 import com.essent.testing.odoo.navigation.menu.MenuNavigation;
 import com.essent.testing.odoo.pageobject.impl.elements.ButtonImpl;
 import com.essent.testing.odoo.pageobject.impl.pageObject.CustomerPage;
