@@ -72,7 +72,7 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
         And  All cell values at "1st" row from table "Geselecteerde contractlijn voor hernieuwingsbatch" are checked
 
         #3.1. Validate renewal batch - checks
-        Then "Status batch" field value is switched to "VALIDATED" within 120 seconds
+        Then "Status batch" field value is switched to "VALIDATED" within 180 seconds
         And Table "Geselecteerde contractlijn voor hernieuwingsbatch" has matching value "Gevalideerd" at column "Status hernieuwing"
 
         When Click on "parameter:Contractnummer" link
