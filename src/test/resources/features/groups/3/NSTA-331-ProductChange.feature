@@ -5,12 +5,10 @@
 Feature: NSTA 331- Product Change for TK1 type
 
     Background:
-        Given I login to iWelcome as "soapui_b2c"
+        Given I login as API user "soapui_b2c"
 
     @NSTA-331
     Scenario: Product Change TK1 type
-
-
         And "Create_Quote" flow is started
         When Data is prepared for Create quote request for "prospect" and meter open is "On" and sign date is "35 days before now"
         And New tc1_quote is created
@@ -34,9 +32,9 @@ Feature: NSTA 331- Product Change for TK1 type
         Given I renew login to DWP as "salesmarketing.testautomation.b2c@essent.be"
         When Left menu is "sales-marketing"
         And Top menu item is "Klanten"
-        And Top action is "Filters"
+        And Top action is Filter from "sales-marketing" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
-        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
+        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
 
         When Dashboard menu is "Contracten"
         And "1st" List element with value at column "EAN-code" is checked
@@ -63,30 +61,28 @@ Feature: NSTA 331- Product Change for TK1 type
         #4 - Check correctness of product change
          #4.1 - Check Contractlines
         When Dashboard menu is "Contracten"
-        Then Get Start Date
-        And Save End Date from active contract
         And "1st" list element has cell value "Wacht op startdatum" at column "Contractnummer" polling 120 seconds
         And Table "Actieve en toekomstige connecties" contains value "ONLINE" at column "EAN-code"
         And Table "Actieve en toekomstige connecties" contains value "Actief" at column "Contractnummer"
-        And Product Change dates are "parameter:startDate" and "parameter:EndDate-active-contract"
+        And Product Change dates are "parameter:contractStartDate" and "parameter:contractEndDate"
         #check start date is same as from step 2 and end date is 1 day before start date
-        And Start Date "parameter:startDate" is "365 or 366" day bigger than End Date "parameter:EndDate-active-contract"
+        And Start Date "parameter:contractStartDate" is "365 or 366" day bigger than End Date "parameter:contractEndDate"
 
          #4.2 - Check Discounts
-        And Click on link in View List at "1st" row and "Nummer & Aanmaakdatum" column polling 20 seconds
-        And Product Change dates are "parameter:startDate" and "parameter:EndDate-active-contract"
+        And Click on link in View List at "1st" row and "Nummer & Aanmaakdatum" column polling 60 seconds
+        And Product Change dates are "parameter:contractStartDate" and "parameter:contractEndDate"
 
          #4.3 - Check Interactions
         When Dashboard menu is "Service"
         Then Table "Interacties" contains value "Confirmation product change" at column "Type & Onderwerp"
         And Click on link in View List at "1st" row and "Nummer & Communicatiekanaal" column polling 60 seconds
-        And Check is product change "1 succeeded"
+        And Check product change has succeeded
 
          #4.4 - Check Orders
         When Dashboard menu is "Contracten"
-        And Click on link in View List at "1st" row and "EAN-code" column polling 20 seconds
+        And Click on link in View List at "1st" row and "EAN-code" column polling 60 seconds
         And Table "Afrekeningsfacturen" has matching value "RUNNING" at column "Status & Triggered plan" polling 15 seconds
-        And Product Change dates are "parameter:startDate" and "parameter:EndDate-active-contract"
+        And Product Change dates are "parameter:contractStartDate" and "parameter:contractEndDate"
 
 
 

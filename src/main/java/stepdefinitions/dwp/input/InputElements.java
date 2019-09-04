@@ -35,7 +35,7 @@ public class InputElements extends DwpScenario {
      * @throws Throwable
      */
     @Before("@DWP or @CORE or @E2E or @REGRESSION or @API")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 
@@ -45,13 +45,11 @@ public class InputElements extends DwpScenario {
   private class ApplyInput implements Predicate<Map> {
     @Override
     public boolean test(Map options) {
-      boolean success = executeJavascriptTest(JS_BASE_FORM_INPUT, options);
-      return success;
+      return executeJavascriptTest(JS_BASE_FORM_INPUT, options);
     }
 
     public boolean testNow(Map options) {
-      boolean success = executeJavascriptTestImmediately(JS_BASE_FORM_INPUT, options, true);
-      return success;
+      return executeJavascriptTestImmediately(JS_BASE_FORM_INPUT, options, true);
     }
   }
 
@@ -61,13 +59,11 @@ public class InputElements extends DwpScenario {
   private class ApplySelection implements Predicate<Map> {
     @Override
     public boolean test(Map options) {
-      boolean success = executeJavascriptTest(JS_TR_FORM_SELECTION, options);
-      return success;
+      return executeJavascriptTest(JS_TR_FORM_SELECTION, options);
     }
 
     public boolean testNow(Map options) {
-      boolean success = executeJavascriptTestImmediately(JS_TR_FORM_SELECTION, options, true);
-      return success;
+      return executeJavascriptTestImmediately(JS_TR_FORM_SELECTION, options, true);
     }
   }
 
@@ -75,13 +71,11 @@ public class InputElements extends DwpScenario {
   private class ApplyDateInput implements Predicate<Map> {
     @Override
     public boolean test(Map options) {
-      boolean success = executeJavascriptTest(JS_TR_DATE_PICKER_INPUT, options);
-      return success;
+      return executeJavascriptTest(JS_TR_DATE_PICKER_INPUT, options);
     }
 
     public boolean testNow(Map options) {
-      boolean success = executeJavascriptTestImmediately(JS_TR_DATE_PICKER_INPUT, options, true);
-      return success;
+      return executeJavascriptTestImmediately(JS_TR_DATE_PICKER_INPUT, options, true);
     }
   }
 
@@ -91,8 +85,7 @@ public class InputElements extends DwpScenario {
   private class ToggleCheckBox implements Predicate<Map<String, String>> {
     @Override
     public boolean test(Map<String, String> options) {
-      boolean success = executeJavascriptTest(JS_TR_TOGGLE_CHECK_BOX, options);
-      return success;
+      return executeJavascriptTest(JS_TR_TOGGLE_CHECK_BOX, options);
     }
   }
 
@@ -104,7 +97,7 @@ public class InputElements extends DwpScenario {
      * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
    */
   @And("^\"([^\"]*)\" input is \"([^\"]*)\"$")
-  public void setInput(String label, String value) throws Throwable {
+  public void setInput(String label, String value){
     seleniumDriver.waitForRequestsToFinish();
     String inputValue = parameterProvider.getValueOrParameterAsString(value);
     parameterProvider.put("inputValue", inputValue);
@@ -125,7 +118,7 @@ public class InputElements extends DwpScenario {
      * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
      */
     @And("^\"([^\"]*)\" input on \"([^\"]*)\" card is \"([^\"]*)\"$")
-    public void setInput(String label, String card, String value) throws Throwable {
+    public void setInput(String label, String card, String value){
         seleniumDriver.waitForRequestsToFinish();
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
         parameterProvider.put("inputValue", inputValue);
@@ -140,7 +133,7 @@ public class InputElements extends DwpScenario {
     }
 
     @And("^\"([^\"]*)\" input is \"([^\"]*)\" waiting for (\\d+) seconds$")
-    public void setInputWithFixedTime(String label, String value, int waitingTime) throws Throwable {
+    public void setInputWithFixedTime(String label, String value, int waitingTime){
         Sleeper.sleepTightInSeconds(waitingTime);
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
         parameterProvider.put("inputValue", inputValue);
@@ -153,7 +146,7 @@ public class InputElements extends DwpScenario {
     }
 
     @And("^\"([^\"]*)\" input on card \"([^\"]*)\" is \"([^\"]*)\" waiting for (\\d+) seconds$")
-    public void setInputWithFixedTime(String label, String card, String value, int waitingTime) throws Throwable {
+    public void setInputWithFixedTime(String label, String card, String value, int waitingTime){
         Sleeper.sleepTightInSeconds(waitingTime);
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
         parameterProvider.put("inputValue", inputValue);
@@ -167,9 +160,17 @@ public class InputElements extends DwpScenario {
     }
 
     @And("^\"([^\"]*)\" date is first day of next month$")
-    public void setDateInputFirstDayNextMonth(String label) throws Throwable {
+    public void setDateInputFirstDayNextMonth(String label){
         String value = DateExpressionsUtil
             .getFirstDateOfNextMonth()
+            .toString(DwpDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
+        setDateInput(label, value);
+    }
+
+    @And("^\"([^\"]*)\" date is last day of current month next year$")
+    public void setDateInputLastDayCurrentMonthNextYear(String label){
+        String value = DateExpressionsUtil
+            .getLastDayOfCurrentMonthNextYear()
             .toString(DwpDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
         setDateInput(label, value);
     }
@@ -181,7 +182,7 @@ public class InputElements extends DwpScenario {
      * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
      */
     @And("^\"([^\"]*)\" date is \"([^\"]*)\"$")
-    public void setDateInput(String label, String value) throws Throwable {
+    public void setDateInput(String label, String value){
         Sleeper.sleepTightInSeconds(2);
         seleniumDriver.waitForRequestsToFinish();
         String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(value));
@@ -197,7 +198,7 @@ public class InputElements extends DwpScenario {
     }
 
     @And("^\"([^\"]*)\" date is \"([^\"]*)\" waiting for (\\d+) seconds$")
-    public void setDateInput(String label, String value, int waitingTime) throws Throwable {
+    public void setDateInput(String label, String value, int waitingTime){
         Sleeper.sleepTightInSeconds(waitingTime);
         String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(value));
         parameterProvider.put("inputValue", inputValue);
@@ -210,7 +211,7 @@ public class InputElements extends DwpScenario {
     }
 
     @And("^\"([^\"]*)\" date is \"([^\"]*)\" and time is \"([^\"]*)\"$")
-    public void setDateTimeInput(String label, String date, String time) throws Throwable {
+    public void setDateTimeInput(String label, String date, String time){
         Sleeper.sleepTightInSeconds(2);
         seleniumDriver.waitForRequestsToFinish();
         String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(date));
@@ -232,8 +233,7 @@ public class InputElements extends DwpScenario {
     }
 
     @And("^\"([^\"]*)\" date on \"([^\"]*)\" card is \"([^\"]*)\"$")
-    public void setDateInput (String label, String card, String value) throws Throwable {
-        Sleeper.sleepTightInSeconds(2);
+    public void setDateInput (String label, String card, String value){
         seleniumDriver.waitForRequestsToFinish();
         String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(value));
         parameterProvider.put("inputValue", inputValue);
@@ -241,7 +241,7 @@ public class InputElements extends DwpScenario {
         options.put("label", label);
         options.put("value", inputValue);
         options.put("card", card);
-        FluentWait<ApplyDateInput> waiter = waiter(new ApplyDateInput(), 10, 1);
+        FluentWait<ApplyDateInput> waiter = waiter(new ApplyDateInput(), 90, 15);
         waiter.withMessage(String.format("Date value %s input at '%s' failed.", inputValue, label));
         waiter.until((ApplyDateInput callback) -> callback.test(options));
         seleniumDriver.waitForRequestsToFinish();
@@ -254,12 +254,12 @@ public class InputElements extends DwpScenario {
      * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
      */
     @And("^\"([^\"]*)\" selection is \"([^\"]*)\"$")
-    public void setSelection(String label, String value) throws Throwable {
+    public void setSelection(String label, String value){
         seleniumDriver.waitForRequestsToFinish();
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
         options.put("value", value);
-        FluentWait<ApplySelection> waiter = waiter(new ApplySelection(), 20, 1);
+        FluentWait<ApplySelection> waiter = waiter(new ApplySelection(), 60, 5);
         waiter.withMessage(String.format("Selection %s is undefined.", label));
         waiter.until((ApplySelection callback) -> callback.test(options));
         seleniumDriver.waitForRequestsToFinish();
@@ -273,7 +273,7 @@ public class InputElements extends DwpScenario {
      * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
      */
     @And("^\"([^\"]*)\" selection on card \"([^\"]*)\" is \"([^\"]*)\"$")
-    public void setSelection(String label, String card, String value) throws Throwable {
+    public void setSelection(String label, String card, String value){
         seleniumDriver.waitForRequestsToFinish();
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
@@ -286,7 +286,7 @@ public class InputElements extends DwpScenario {
     }
 
     @And("^\"([^\"]*)\" selection is \"([^\"]*)\" waiting for (\\d+) seconds$")
-    public void setSelection(String label, String value, int waitingTime) throws Throwable {
+    public void setSelection(String label, String value, int waitingTime){
         Sleeper.sleepTightInSeconds(waitingTime);
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
@@ -297,7 +297,7 @@ public class InputElements extends DwpScenario {
     }
 
     @And("^\"([^\"]*)\" selection on card \"([^\"]*)\" is \"([^\"]*)\" waiting for (\\d+) seconds$")
-    public void setSelection(String label, String card, String value, int waitingTime) throws Throwable {
+    public void setSelection(String label, String card, String value, int waitingTime){
         Sleeper.sleepTightInSeconds(waitingTime);
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
@@ -316,7 +316,8 @@ public class InputElements extends DwpScenario {
      * @throws Throwable  Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
    */
     @And("Options? \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\"")
-    public void switchOption(String option, String verb, SwitchState state) throws Throwable {
+    public void switchOption(String option, String verb, SwitchState state){
+        Sleeper.sleepTightInSeconds(5);
         if (!(verb.equalsIgnoreCase("is") || verb.equalsIgnoreCase("are")) ){
             Assert.assertTrue("String is not valid (is/are expected)",false);
         }
@@ -338,7 +339,7 @@ public class InputElements extends DwpScenario {
      * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
      */
     @And("^Checkbox \"([^\"]*)\" is ([^\"]*)$")
-    public void toggleCheckbox(String label, SwitchState state) throws Throwable {
+    public void toggleCheckbox(String label, SwitchState state){
         seleniumDriver.waitForRequestsToFinish();
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
@@ -368,7 +369,8 @@ public class InputElements extends DwpScenario {
     }
 
   @And("^Selection with search is \"([^\"]*)\"$")
-  public void selectWithSearchIsClicked(String label) throws Throwable {
+  public void selectWithSearchIsClicked(String label){
+    seleniumDriver.waitForRequestsToFinish();
     SelectWithSearch button = new SelectWithSearchImpl();
     button.click(label);
   }

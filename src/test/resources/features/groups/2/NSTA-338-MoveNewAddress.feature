@@ -51,7 +51,6 @@ Feature: NSTA - 338 Move new address
         And Quote is confirmed
 
         When Dashboard menu is "Contracten"
-        Then View list header is "Actieve en toekomstige connecties"
         And  "1st" List element with value at column "EAN-code" is checked
         And  "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
 

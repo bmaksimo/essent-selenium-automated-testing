@@ -2,7 +2,7 @@ package stepdefinitions.billing.test;
 
 import com.billinghouse.test_automation.util.dsl.DateExpressionsUtil;
 import com.billinghouse.test_automation.util.file.FileUtil;
-import com.essent.be.api.config.RestServiceFactory;
+import com.essent.be.api.config.BillingServiceFactory;
 import com.essent.be.jbilling.api.rest.RestResponse;
 import com.essent.belgium.energycomm.ws_to_bo.BasePayload;
 import com.essent.restclients.BillingEnergyCommRest;
@@ -47,13 +47,13 @@ public class ConsumptionSteps extends DwpScenario {
     private static final String CONSUMPTION_FILE = "consumption.xml";
 
     @Autowired
-    private RestServiceFactory billingServiceFactory;
+    private BillingServiceFactory billingServiceFactory;
 
     @Autowired
     private ConsumptionService consumptionService;
 
     @Before("@DWP or @E2E or @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 
@@ -210,7 +210,7 @@ public class ConsumptionSteps extends DwpScenario {
     }
 
     @Then("^Consumption is available at \"([^\"]*)\" row in \"([^\"]*)\" column$")
-    public void checkCreatedConsumption(String ordinal, String column) throws Throwable {
+    public void checkCreatedConsumption(String ordinal, String column) {
         String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
         String fromDate = parameterProvider.getValueOrParameterAsString("parameter:fromDate");
         String toDate = parameterProvider.getValueOrParameterAsString("parameter:toDate");

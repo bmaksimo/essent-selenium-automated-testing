@@ -3,6 +3,7 @@ package com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.con
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
+import cucumber.runtime.CucumberException;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -12,7 +13,7 @@ import org.openqa.selenium.WebElement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
+import java.util.*;
 
 public class ContractPage extends Component {
 
@@ -32,6 +33,7 @@ public class ContractPage extends Component {
     private static final String SECOND_INVOICE = "//tbody/tr[3]/td[5]//span[1]";
     private static final String THIRD_INVOICE = "//tbody/tr[5]/td[5]//span[1]";
     private static final String TABLE_VALUE = "//list[@list-key='Quotelines']//tbody[@id='rows']";
+    private static final String QUOTE_TABLES = "//div[@class='col-3-4 guidance']//div[@class='col-1-1']";
     private static final String INVOICE_CURRENCY_OUTSTANDING_AMOUNT = "//list[@list-key='TransactionsOnAccount']//h6[contains(., 'Invoice')]/../../../../td[6]";
     private static final String EAN_LOCATOR_INVOICE_AMOUNT = "dwp-ean-'${" + REPLACEMENT_KEY + "}'-field";
     private static final String CONTRACT_STATUS = "(//list[@list-key='ContractsOnAccount']//list-simple-two-liner-cell/p/span[2])[1]";
@@ -41,7 +43,7 @@ public class ContractPage extends Component {
     private static final String INSTALLMENTS_SUM = "balance-field";
     private static final String INSTALLMENTS_NUMBER = "//list[@list-key='InstallmentsOnPaymentPlan']//h5";
     private static final String BILLING_NUMBER = "//list[@list-key='BillingCustomerOnaccount']//td[1]//span[1]";
-    private static final String LABELFORPRODUCTCHANGE = "//wysiwyg-editor-form-element[@id='description']/div[@class = 'non-editable-editor']";
+    private static final String LABELFORPRODUCTCHANGE = "//wysiwyg-editor-form-element[@id='description']/div[@class='non-editable-editor']";
     private static final String ACCOUNT_NUMBER = "//div[@class='card__content__inner-wrapper']/h4";
     private static final String CONTRACT_NUMBER = "//*[@id=\"account_number_c\"]/div";
     private static final String COMPANY_NUMBER = "//*//*[@id=\"company-number-c-field\"]";
@@ -53,6 +55,7 @@ public class ContractPage extends Component {
     private static final int SEPTEMBER = 9;
     private static final int OCTOBER = 10;
     private static DateTimeFormatter DASH_SEPARATED_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    private static DateTimeFormatter DASH_SEPARATED_YMD_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static DateTimeFormatter SLASH_SEPARATED_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static String HIGH_RATES_QUOTE = "//list[@list-key='QuoteComponentLines']//span[contains(., 'High')]/../../../..//td[6]";
     private static String LOW_RATES_QUOTE = "//list[@list-key='QuoteComponentLines']//span[contains(., 'Low')]/../../../..//td[6]";
@@ -72,6 +75,7 @@ public class ContractPage extends Component {
 
 
     public String getClientNumber() {
+        seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath("//blue-sidebar//h4")).getText();
     }
 
@@ -92,9 +96,9 @@ public class ContractPage extends Component {
         seleniumDriver.waitAndSendKeys(getSearchInputElemnt(), number);
     }
 
-    public void clickOnPlusMeniInTable(String row, String table) {
+    public void clickOnPlusMenuInTable(String row, String table) {
         seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenPresent(By.xpath("(//list[@list-key='" + table + "']//tbody[@id='rows']//list-plus-cell//a[@class='show-actions icon-plus'])[" + row + "]")));
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("(//list[@list-key='" + table + "']//tbody[@id='rows']//list-plus-cell//a[@class='show-actions icon-plus'])[" + row + "]")));
     }
 
     public String getActiveContractEAN() {
@@ -107,6 +111,7 @@ public class ContractPage extends Component {
     }
 
     public void checkInvoiceOpenBalance(String key) {
+        seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//list-checkbox-cell[@list-key='" + key + "']")));
     }
 
@@ -219,8 +224,8 @@ public class ContractPage extends Component {
 
     public static long rangeDates(String sd, String ed) {
         Sleeper.sleepTightInSeconds(8);
-        LocalDate startDate = LocalDate.parse(sd, DASH_SEPARATED_DATE_FORMATTER);
-        LocalDate endDate = LocalDate.parse(ed, DASH_SEPARATED_DATE_FORMATTER);
+        LocalDate startDate = LocalDate.parse(sd, DASH_SEPARATED_YMD_DATE_FORMATTER);
+        LocalDate endDate = LocalDate.parse(ed, DASH_SEPARATED_YMD_DATE_FORMATTER);
         long range = ChronoUnit.DAYS.between(startDate, endDate);
         log.debug("Number of days between the start date : " + startDate + " and end date : " + endDate + " is  ==> " + range);
 
@@ -228,7 +233,13 @@ public class ContractPage extends Component {
     }
 
     public WebElement locateMessageElement(){
+        seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath(LABELFORPRODUCTCHANGE));
+    }
+
+    public WebElement locateTableElement(){
+        seleniumDriver.waitForRequestsToFinish();
+        return seleniumDriver.findElementWhenVisible(By.xpath(QUOTE_TABLES));
     }
 
     public void openFirstContractFromList() {
@@ -335,16 +346,41 @@ public class ContractPage extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath(PRODUCT_CONTRACT)).getText();
     }
 
-    public String getActualValuesOfInvoicesAsString() {
+    private List<String> getActualInvoicesAmounts() {
         seleniumDriver.waitForRequestsToFinish();
-        String firstInvoice  =  seleniumDriver.findElementWhenVisible(By.xpath(FIRST_INVOICE)).getText();
+        String firstInvoice = seleniumDriver.findElementWhenVisible(By.xpath(FIRST_INVOICE)).getText();
         String secondInvoice = seleniumDriver.findElementWhenVisible(By.xpath(SECOND_INVOICE)).getText();
-        String thirdInvoice  = seleniumDriver.findElementWhenVisible(By.xpath(THIRD_INVOICE)).getText();
+        String thirdInvoice = seleniumDriver.findElementWhenVisible(By.xpath(THIRD_INVOICE)).getText();
 
-        StringBuilder sb;
-        sb = new StringBuilder();
+        return Arrays.asList(getAmountWithoutCurrency(firstInvoice),
+                            getAmountWithoutCurrency(secondInvoice),
+                            getAmountWithoutCurrency(thirdInvoice));
+    }
 
-        return sb.append(firstInvoice).append(' ').append(secondInvoice).append(' ').append(thirdInvoice).toString();
+    public Map<String, String> getNumericInvoicesAmounts() {
+        Map<String, String> numericInvoicesAmounts = new HashMap<>();
+
+        List<String> invoicesAmounts = getActualInvoicesAmounts();
+
+        Optional<String> creditInvoice = invoicesAmounts.stream().filter(amount -> amount.startsWith("-")).findAny();
+        if (creditInvoice.isPresent()) numericInvoicesAmounts.put("creditInvoice", creditInvoice.get());
+        else throw new CucumberException("Credit invoice was not found");
+
+        Optional<String> debitInvoice = invoicesAmounts.stream()
+            .filter(amount -> creditInvoice.get().substring(1).equals(amount)).findAny();
+        if (debitInvoice.isPresent()) numericInvoicesAmounts.put("debitInvoice", debitInvoice.get());
+        else throw new CucumberException("Debit invoice was not found");
+
+        Optional<String> additionalInvoice = invoicesAmounts.stream()
+            .filter(amount -> !creditInvoice.get().equals(amount) && !debitInvoice.get().equals(amount)).findAny();
+        if (additionalInvoice.isPresent()) numericInvoicesAmounts.put("additionalInvoice", additionalInvoice.get());
+        else throw new CucumberException("Additional invoice was not found");
+
+        return numericInvoicesAmounts;
+    }
+
+    private String getAmountWithoutCurrency(String amount) {
+        return amount.replaceAll("[^-\\d.,]", "");
     }
 
     public String getActualOutstandingValueCurrencyInvoiceAsString() {
@@ -354,7 +390,9 @@ public class ContractPage extends Component {
 
     public String getBalance() {
         seleniumDriver.waitForRequestsToFinish();
-        return seleniumDriver.findElementWhenVisible(By.id(SALDO_CREDIT_INVOICE)).getText();
+        String balance = seleniumDriver.findElementWhenVisible(By.id(SALDO_CREDIT_INVOICE)).getText();
+
+        return getAmountWithoutCurrency(balance);
     }
 
     public String getTableValue() {
@@ -369,11 +407,14 @@ public class ContractPage extends Component {
     }
 
     public String getInstallmentSum() {
-        return seleniumDriver.findElementWhenPresent(By.id(INSTALLMENTS_SUM)).getText();
+        seleniumDriver.waitForRequestsToFinish();
+        String installSum = seleniumDriver.findElementWhenPresent(By.id(INSTALLMENTS_SUM)).getText();
+        return installSum.replace(" €", "");
     }
     public String getInvoiceSum() {
         seleniumDriver.waitForRequestsToFinish();
-        return seleniumDriver.findElementWhenPresent(By.id(INVOICE_SUM)).getText();
+        String invoiceSum = seleniumDriver.findElementWhenPresent(By.id(INVOICE_SUM)).getText();
+        return invoiceSum.replace(" €", "");
     }
 
     public int installmentsNumber(String amount) {
@@ -390,15 +431,6 @@ public class ContractPage extends Component {
         }
 
         return numInstallThanHaveGivenAmount;
-    }
-
-
-    public int findDifferenceInAmounts(String installAmount, String invoiceAmount) {
-        seleniumDriver.waitForRequestsToFinish();
-        String invAmount = invoiceAmount.replaceAll(" .+$", "");
-        int result1 = Integer.parseInt(installAmount);
-        int result2 = Integer.parseInt(invAmount);
-        return result1 - result2;
     }
 
     public float sumRates(String typeRate) {
@@ -422,4 +454,11 @@ public class ContractPage extends Component {
         }
         return sumRate;
     }
+
+    public boolean containsTableValue(String tableValue) {
+        WebElement messageElement = locateTableElement();
+        return messageElement.getText().contains(tableValue);
+    }
+
+
 }

@@ -14,7 +14,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 public class ChangeAccountStatusSteps extends DwpScenario {
     @Before("@SMOKE or @QUOTE or @QUOTE_CS or @QUOTE_MI or @QUOTE_SS or @BILLING or @B2B_REGRESSION or @REGRESSION or @E2E or @B2C")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 

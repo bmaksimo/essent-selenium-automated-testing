@@ -75,20 +75,26 @@ public class CompanyDetailsAddressPage extends QuoteCreationGuidedStep {
             element(DELIVERY_ADDR_CITY.element()).
             element(DELIVERY_ADDR_COUNTRY.element());
 
-        initializeAddress.
-            step(createStep(TYPING).timeoutInSeconds(3).element(DELIVERY_ADDR_STREET.name()).value(address.getStreet()), INPUT.getSleepInMillis()).
-            step(createStep(TYPING).timeoutInSeconds(3).element(DELIVERY_ADDR_HOUSE_NR.name()).value(Integer.toString(address.getHouseNr())), INPUT.getSleepInMillis()).
-            step(createStep(TYPING).element(DELIVERY_ADDR_HOUSE_ADD.name()).value(address.getHouseNrAdd()), INPUT.getSleepInMillis());
+        initializeAddress.step(createStep(TYPING).timeoutInSeconds(3).element(DELIVERY_ADDR_STREET.name()).value(address.getStreet()), INPUT.getSleepInMillis());
+        seleniumDriver.waitForRequestsToFinish();
+        initializeAddress.step(createStep(TYPING).timeoutInSeconds(3).element(DELIVERY_ADDR_HOUSE_NR.name()).value(Integer.toString(address.getHouseNr())), INPUT.getSleepInMillis());
+        seleniumDriver.waitForRequestsToFinish();
+        initializeAddress.step(createStep(TYPING).timeoutInSeconds(3).element(DELIVERY_ADDR_HOUSE_ADD.name()).value(address.getHouseNrAdd()), INPUT.getSleepInMillis());
+        seleniumDriver.waitForRequestsToFinish();
 
         if (StringUtils.isNotEmpty(address.getBus())) {
-            initializeAddress.step(createStep(TYPING).element(DELIVERY_ADDR_BUS.name()).value(address.getBus()), INPUT.getSleepInMillis());
+            initializeAddress.step(createStep(TYPING).timeoutInSeconds(3).element(DELIVERY_ADDR_BUS.name()).value(address.getBus()), INPUT.getSleepInMillis());
+            seleniumDriver.waitForRequestsToFinish();
         }
 
-        initializeAddress.step(createStep(TYPING).element(DELIVERY_ADDR_ZIPCODE.name()).value(address.getPostalCode()), INPUT.getSleepInMillis()).
-            step(createStep(TYPING).element(DELIVERY_ADDR_CITY.name()).value(address.getCity()), INPUT.getSleepInMillis());
+        initializeAddress.step(createStep(TYPING).timeoutInSeconds(3).element(DELIVERY_ADDR_ZIPCODE.name()).value(address.getPostalCode()), INPUT.getSleepInMillis());
+        seleniumDriver.waitForRequestsToFinish();
+        initializeAddress.step(createStep(TYPING).timeoutInSeconds(3).element(DELIVERY_ADDR_CITY.name()).value(address.getCity()), INPUT.getSleepInMillis());
+        seleniumDriver.waitForRequestsToFinish();
 
         if (StringUtils.isNotEmpty(address.getCountry())) {
-            initializeAddress.step(createStep(Action.SELECT).element(DELIVERY_ADDR_COUNTRY.name()).value(address.getCountry()));
+            initializeAddress.step(createStep(Action.SELECT).timeoutInSeconds(3).element(DELIVERY_ADDR_COUNTRY.name()).value(address.getCountry()));
+            seleniumDriver.waitForRequestsToFinish();
         }
 
         return execute(initializeAddress);

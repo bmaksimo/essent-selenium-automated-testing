@@ -11,7 +11,7 @@ Feature: NUAT-370: Create Case With Complaint - nl_BE
         And  Top menu item is "Klanten"
 
         When B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
-        And Top action is "Filters"
+        And Top action is Filter from "sales-marketing" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
         And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
 
@@ -19,7 +19,6 @@ Feature: NUAT-370: Create Case With Complaint - nl_BE
     Scenario: Create case for an account
         When Plus menu is "Service -> Case aanmaken voor de klant"
         And New case for account is created
-        And View list header is "Cases" appears within 20 seconds
         And Click on link in View List at "1st" row and "Nummer & Aanmaakdatum" column polling 20 seconds
         Then Case details are visible
 
@@ -28,6 +27,5 @@ Feature: NUAT-370: Create Case With Complaint - nl_BE
         When Dashboard menu is "Service"
         And "CASE TOEVOEGEN" is clicked
         And New case for account is created
-        And View list header is "Cases" appears within 20 seconds
         And Click on link in View List at "1st" row and "Nummer & Aanmaakdatum" column polling 20 seconds
         And Case details are visible

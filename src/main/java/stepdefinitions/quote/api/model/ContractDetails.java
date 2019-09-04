@@ -36,7 +36,7 @@ public class ContractDetails {
     public String getContractStartDate(){return contractStartDate;}
     public void setContractStartDate(String contractStartDate){this.contractStartDate = contractStartDate;}
     public String getContractEndDate(){return contractEndDate;}
-    public void setContractEndDate(){this.contractEndDate = contractEndDate;}
+    public void setContractEndDate(String contractEndDate){this.contractEndDate = contractEndDate;}
 
     @Override
     public String toString() {

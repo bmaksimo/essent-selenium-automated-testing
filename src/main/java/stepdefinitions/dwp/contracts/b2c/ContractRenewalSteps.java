@@ -26,14 +26,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ContractRenewalSteps extends NavigationElements {
 
   @Before("@DWP or @B2C or @E2E or @REGRESSION")
-  public void setupTest(Scenario scenario) throws Throwable {
+  public void setupTest(Scenario scenario){
     registerActiveScenario(scenario);
   }
 
   @And(
       "^All date values at column \"([^\"]*)\" from table \"([^\"]*)\" are within the period \"([^\"]*)\"$")
-  public void checkProductValidnessPeriod(String column, String table, String intervalParameter)
-      throws Throwable {
+  public void checkProductValidnessPeriod(String column, String table, String intervalParameter){
     String periodOfRenewal = parameterProvider.getValueOrParameterAsString(intervalParameter);
     ViewList viewList = new ViewListTestObject();
     List<String> dateValues = viewList.fetchColumnData(table, column);
@@ -56,7 +55,7 @@ public class ContractRenewalSteps extends NavigationElements {
   }
 
   @And("^\"([^\"]*)\" field value is switched to \"([^\"]*)\" within (\\d+) seconds?$")
-  public void checkFieldValue(String label, String expectedValue, int seconds) throws Throwable {
+  public void checkFieldValue(String label, String expectedValue, int seconds){
     NonEditable field = new NonEditableImpl();
     FluentWait<NonEditable> waiter = waiter(field, seconds, 5);
     waiter.until(

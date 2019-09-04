@@ -42,7 +42,6 @@ Feature: Creating a B2C Quote with customer switch - Dutch language version.
         And Quote is signed in "Kontich"
         And "Datum ondertekening" date is "now"
         And Quote is confirmed
-        Then View list header is "Offertes"
 
         When Plus actions at "1st" list row having cell value "Sales Handtekening ontvangen - Geaccepteerd" at column "Type & status" are open
         And List plus action is "Bevestig"

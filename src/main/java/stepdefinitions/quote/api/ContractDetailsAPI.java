@@ -17,6 +17,9 @@ import stepdefinitions.quote.api.model.QuoteDetails;
 import stepdefinitions.quote.api.model.getOrderDetailsRequest;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @author n.grkavac
@@ -46,10 +49,15 @@ public class ContractDetailsAPI extends AbstractAPI {
         String aosProductsId = contractResponse.jsonPath().getString("data.rows[0].cells[5].options.params.recordId");
         contractDetails.setAosProductsId(aosProductsId);
         LOGGER.debug("Aos Products ID: " + aosProductsId);
-            String contractStartDate = contractResponse.jsonPath().getString("data.rows[0].rowData");
-            contractStartDate = findContractStartDate(contractStartDate);
+        String contractStartDate = contractResponse.jsonPath().getString("data.rows[0].rowData");
+        contractStartDate = findContractStartDate(contractStartDate);
         contractDetails.setContractStartDate(contractStartDate);
         LOGGER.debug("contractStartDate: " + contractStartDate);
+        String contractEndDate = contractResponse.jsonPath().getString("data.rows[0].rowData");
+        contractEndDate = findContractEndDate(contractEndDate);
+        contractDetails.setContractEndDate(contractEndDate);
+        LOGGER.debug("contractEndDate: " + contractEndDate);
+
 
         return contractDetails;
 
@@ -95,7 +103,7 @@ public class ContractDetailsAPI extends AbstractAPI {
     }
 
     public boolean getContractStatus(Cookies cookie, String contractRecordId)
-        throws IOException, InterruptedException {
+        throws IOException {
         RequestHelper helper = new RequestHelper();
         String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
             + ConfigProvider.getProperty(ConfigKey.CRM_CONTRACT_DETAILS_URL) + "/" + contractRecordId + "/"
@@ -116,7 +124,7 @@ public class ContractDetailsAPI extends AbstractAPI {
     }
 
 
-    public boolean getOrderDetails(Cookies cookie, QuoteDetails quoteDetails, ContractDetails contractDetails ) throws IOException {
+    public boolean getOrderDetails(Cookies cookie, QuoteDetails quoteDetails, ContractDetails contractDetails) throws IOException {
         RequestHelper helper = new RequestHelper();
         String path = ConfigProvider.getProperty(ConfigKey.BILLING_ORDER_DETAILS_URL);
 
@@ -128,7 +136,9 @@ public class ContractDetailsAPI extends AbstractAPI {
 
         resultStatusStr = getOrderDetailsResponse.xmlPath().getString("//getOrderDetailsResponse/result");
 
-        if (resultStatusStr.startsWith("true") ){resultStatus = true;}
+        if (resultStatusStr.startsWith("true")) {
+            resultStatus = true;
+        }
         return resultStatus;
     }
 
@@ -145,8 +155,7 @@ public class ContractDetailsAPI extends AbstractAPI {
         orderDetailsPayload.setIncludeSettlement("true");
         orderDetailsPayload.setSettlementStatus("1");
 
-        String xml = xmlMapper.writeValueAsString(orderDetailsPayload);
-        return xml;
+        return xmlMapper.writeValueAsString(orderDetailsPayload);
     }
 
 
@@ -166,12 +175,12 @@ public class ContractDetailsAPI extends AbstractAPI {
         String[] s = part.split("\\|");
         for (String str : s) {
             if (str.contains("billingcustomerid")) {
-            String result = str.split(":")[1];
-            if (result.contains(",")) {
-                id = result.substring(0, result.indexOf(","));
-            } else {
-                id = result;
-            }
+                String result = str.split(":")[1];
+                if (result.contains(",")) {
+                    id = result.substring(0, result.indexOf(','));
+                } else {
+                    id = result;
+                }
             }
         }
 
@@ -179,20 +188,22 @@ public class ContractDetailsAPI extends AbstractAPI {
     }
 
     private String findContractStartDate(String part) {
-        String startDate = null;
+        List<String> s = Arrays.asList(part.split("\\|"));
+        Optional<String> optional = s.stream()
+            .filter(it -> it.contains("up_start_date_c"))
+            .map(result -> result.contains(",") ? result.substring(0, result.indexOf(',')) : result)
+            .findFirst();
+        return optional.orElse(null).split(":")[1];
+    }
 
-        String[] s = part.split("\\|");
-        for (String str : s) {
-            if (str.contains("up_start_date_c")) {
-                String result = str.split(":")[1];
-                if (result.contains(",")) {
-                    startDate = result.substring(0, result.indexOf(","));
-                } else {
-                    startDate = result;
-                }
-            }
-        }
-        return startDate;
+    private String findContractEndDate(String part) {
+        List<String> s = Arrays.asList(part.split("\\|"));
+        Optional<String> optional = s.stream()
+            .filter(it -> it.contains("up_end_date_c"))
+            .map(result -> result.contains(",") ? result.substring(0, result.indexOf(',')) : result)
+            .findFirst();
+        return optional.orElse(null).split(":")[1];
     }
 
 }
+

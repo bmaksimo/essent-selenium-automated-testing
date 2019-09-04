@@ -11,10 +11,10 @@ import org.junit.Assert;
 
 public class JBillingProcessSteps extends JBillingScenario {
 
-    String invoiceDate;
+    private String invoiceDate;
 
     @Before("@JBILLING or @B2B or @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 

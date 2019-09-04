@@ -23,7 +23,7 @@ public class ContractSteps extends DwpScenario {
     private static String Klantnummer;
 
     @Before("@REGRESSION or @E2E or @API")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 
@@ -62,18 +62,16 @@ public class ContractSteps extends DwpScenario {
         ContractPage cp = new ContractPage();
         BaseObjectPage baseObject = new BaseObjectPage();
         Sleeper.sleepTightInSeconds(5);
-        cp.clickOnPlusMeniInTable(row,table);
+        cp.clickOnPlusMenuInTable(row,table);
         baseObject.clickOnMarkAsDonePlusMenuSubAction();
     }
 
     @When("^Plus action of \"([^\"]*)\" element from \"([^\"]*)\" and click on \"([^\"]*)\"$")
     public void plusActionOfElementFromAndClickOn(String row, String table, String action) {
         seleniumDriver.waitForRequestsToFinish();
-        ContractPage cp = new ContractPage();
-        BaseObjectPage baseObject = new BaseObjectPage();
-        Sleeper.sleepTightInSeconds(5);
-        cp.clickOnPlusMeniInTable(row,table);
-        baseObject.plusSubaction(action);
+        Sleeper.sleepTightInSeconds(20);
+        new ContractPage().clickOnPlusMenuInTable(row, table);
+        new BaseObjectPage().plusSubaction(action);
     }
 
     @And("^Save EAN from active contract$")
@@ -127,16 +125,15 @@ public class ContractSteps extends DwpScenario {
     @And("^Select Nace-Code$")
     public void select() throws Throwable {
         seleniumDriver.waitForRequestsToFinish();
-        Thread.sleep(2000);
-        NewQuotePage nq = new NewQuotePage();
-        nq.clickNaceCodeButton();
+        Sleeper.sleepTightInSeconds(10);
+        new NewQuotePage().clickNaceCodeButton();
     }
 
     @And("^NaceCode in search is ([^\"]*)$")
-    public void searchByNaceCode(String NaceCode) {
+    public void searchByNaceCode(String naceCode) {
+        new ContractPage().searchByClientNumber(naceCode);
+
         NewQuotePage nq = new NewQuotePage();
-        ContractPage cp = new ContractPage();
-        cp.searchByClientNumber(NaceCode);
         nq.clickOnSearch();
         nq.checkNaceCodeCheckBox();
         nq.saveSelectedItem();

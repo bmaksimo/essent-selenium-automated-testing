@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 public class LeadsPage extends Component {
 
     public void plusAddLead() {
+        seleniumDriver.waitForRequestsToFinish();
         findElementWhenVisible(By.xpath("//span[@class='icon-plus']")).click();
     }
 

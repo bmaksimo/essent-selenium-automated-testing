@@ -16,7 +16,7 @@ Feature: TESTAUTO-43 Up Electricity fix UP AMR
         And "Tariefgroep" selection is "UP"
         And "Product" selection is "Elektriciteit Vast"
         And "Startdatum" date is first day of next month
-        Then "Einddatum" date is "2 years from now"
+        And "Einddatum" date is last day of current month next year
 
         When "Tariefdatum" date is "now"
         And "Type aansluiting" selection is "AMR"

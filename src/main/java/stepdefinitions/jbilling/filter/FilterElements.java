@@ -13,12 +13,12 @@ import static org.hamcrest.Matchers.is;
 public class FilterElements extends JBillingScenario {
 
 	@Before("@JBILLING or @B2B or @REGRESSION")
-	public void setupTest(Scenario scenario) throws Throwable {
+	public void setupTest(Scenario scenario){
 		registerActiveScenario(scenario);
 	}
 
 	@When("^JBilling \"([^\"]*)\" input is \"([^\"]*)\"$")
-	public void setInput(String label, String value) throws Throwable {
+	public void setInput(String label, String value){
 		if(value.startsWith("parameter:")) {
 			value = parameterProvider.getValueOrParameterAsString(value);
 		}
@@ -30,7 +30,7 @@ public class FilterElements extends JBillingScenario {
     }
 
 	@When("^JBilling Click on \"([^\"]*)\" filter button$")
-	public void clickFilterButton(String label) throws Throwable {
+	public void clickFilterButton(String label){
 		FilterPage filterPage = new FilterPage();
         boolean success = filterPage.clickFilterButton(label);
 

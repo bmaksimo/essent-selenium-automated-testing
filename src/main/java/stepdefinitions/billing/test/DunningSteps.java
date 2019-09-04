@@ -10,27 +10,23 @@ import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.When;
 import org.joda.time.LocalDate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Collections;
 import java.util.List;
 
 public class DunningSteps extends DwpScenario {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DunningSteps.class);
 
     public LocalDate dunningStartDate = null;
     protected RestResponse balanceResponse = null;
     private int days_passed;
 
     @Before("@DWP or @E2E or @REGRESSION or @DUNNING")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 
     @When("^Dunning day countdown for \"([^\"]*)\" goes down (\\d+) days$")
-    public void dunningStepRequest(String accountNumberParam, int count) throws Throwable {
+    public void dunningStepRequest(String accountNumberParam, int count){
 
 
         DunningStepRequest request = new DunningStepRequest();
@@ -38,7 +34,7 @@ public class DunningSteps extends DwpScenario {
         request.setAccountUUID(accountNumber);
         request.setCount(count);
 
-        List dunningSteps = (List) new DunningService().callDunningStep(request);
+        new DunningService().callDunningStep(request);
     }
 
     @When("^Dunning is advanced for (\\d+) day\\(s\\)$")
@@ -54,7 +50,7 @@ public class DunningSteps extends DwpScenario {
         dunningStartDate = today.plusDays(1);
 
         for (int ix = 0; ix < nr_days; ix++) {
-            System.out.println( "Dunning on " + dayToDate(days_passed) + " ");
+            logger().info( "Dunning on " + dayToDate(days_passed) + " ");
             days_passed++;
             RestResponse response = service.triggerDunning(request);
             if( response == null ) {

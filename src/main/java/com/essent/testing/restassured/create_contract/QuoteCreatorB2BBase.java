@@ -47,6 +47,7 @@ public class QuoteCreatorB2BBase {
     protected String aosProductsQuotesId = "";
     protected String docId = "";
     protected String bilingCustomerId = "";
+    protected String billingId = "";
     protected String accountName = "";
     protected String companyNumber = "";
     protected String yesterdayDate = "";
@@ -160,7 +161,7 @@ public class QuoteCreatorB2BBase {
             .statusCode(200).extract().response();
 
 
-        HashMap model = new JsonPath(response.getBody().asString()).get("data.arguments.model");
+        Map<String, Object> model = new JsonPath(response.getBody().asString()).get("data.arguments.model");
         model.put("dwp|sendemailtocust", true);
         model.put("dwp|sendemailtome", false);
         model.put("send_quote_to_c", "BOTH");
@@ -249,6 +250,7 @@ public class QuoteCreatorB2BBase {
             .extract().response();
 
         bilingCustomerId = new JsonPath(response.getBody().asString()).get("data.rows[0].id");
+        billingId = new JsonPath(response.getBody().asString()).get("data.rows[0].rowData.billingcustomerid");
 
         String payloadModalSignMandatePaper = path + "modal_to_gf_sign_mandate_paper.json.template";
         String originalModalPayloadSignMandatePaper = path + "modal_to_gf_sign_mandate_paper.json";
@@ -264,14 +266,14 @@ public class QuoteCreatorB2BBase {
             .body(jsonBody).when().post(ApiPathsContract.API_MODAL_TO_GF_SIGN_MANDATE_PAPER).then().statusCode(200)
             .extract().response();
 
-        HashMap modelMandatePaper = new JsonPath(response.getBody().asString()).get("data.arguments.model");
+        Map<String, String> modelMandatePaper = new JsonPath(response.getBody().asString()).get("data.arguments.model");
 
         response = RestAssured.given().cookies(cookie).contentType("multipart/form-data")
             .multiPart("file", new File(ContractConstants.PATH_TO_PDF), "application/pdf")
             .formParams(createFormParamsMapMandatePaper(bilingCustomerId, recordId)).when().post(ApiPathsContract.API_FILE_UPLOAD).then().statusCode(200).extract()
             .response();
 
-        HashMap upload = new JsonPath(response.getBody().asString()).get("data");
+        Map<String, Object> upload = new JsonPath(response.getBody().asString()).get("data");
         String payloadUpload = gson.toJson(upload);
         modelMandatePaper.put("dwp|attachment", payloadUpload);
         String payloadModelMandatePaper = gson.toJson(modelMandatePaper);
@@ -281,8 +283,16 @@ public class QuoteCreatorB2BBase {
 
         String jsonBodyPayloadSignMandatePaper = PrepareDataForContract.createRequestJsonPayload(payloadSignMandatePaper, originalPayloadSignMandatePaper, "${modelMandatePaper}", payloadModelMandatePaper);
 
-        RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
-            .body(jsonBodyPayloadSignMandatePaper).when().post(ApiPathsContract.API_GF_SIGN_MANDATE_PAPER).then().statusCode(201);
+        RestAssured
+            .given()
+            .cookies(cookie)
+            .contentType(ContentType.JSON)
+            .accept(ContentType.JSON)
+            .body(jsonBodyPayloadSignMandatePaper)
+            .when()
+            .post(ApiPathsContract.API_GF_SIGN_MANDATE_PAPER)
+            .then()
+            .statusCode(201);
     }
 
     private void listOfQuotesOnAccount(String path) throws IOException {
@@ -391,8 +401,8 @@ public class QuoteCreatorB2BBase {
             .body(jsonBody).when().post(ApiPathsContract.API_MODAL_TO_GF_QUOTE_SEND_TO_CUSTOMER).then().statusCode(200)
             .extract().response();
 
-        HashMap model = new JsonPath(response.getBody().asString()).get("data.arguments.model");
-        aosProductsQuotesId = (String) model.get("aos_products_quotes|id");
+        Map<String, String> model = new JsonPath(response.getBody().asString()).get("data.arguments.model");
+        aosProductsQuotesId = model.get("aos_products_quotes|id");
     }
 
     private Map<String, String> createFormParamsMap(String rowId, String accountName, String companyNumber, String recordId, String yesterdayDate, String aosProductsQuotesId) {
@@ -576,10 +586,10 @@ public class QuoteCreatorB2BBase {
             .body(jsonBody).when().post(ApiPathsContract.API_LIST_QUOTES).then().statusCode(200)
             .extract().response();
 
-        HashMap isContractExist = new JsonPath(response.getBody().asString()).get("data.rows[0]");
+        Map<String, Map<String, String>> isContractExist = new JsonPath(response.getBody().asString()).get("data.rows[0]");
         if (isContractExist != null) {
-            HashMap rowData = (HashMap) isContractExist.get("rowData");
-            upStartDate = (String) rowData.get("aos_products_quotes|up_start_date_c");
+            Map<String, String> rowData = isContractExist.get("rowData");
+            upStartDate = rowData.get("aos_products_quotes|up_start_date_c");
         }
 
         return upStartDate;
@@ -635,5 +645,14 @@ public class QuoteCreatorB2BBase {
                 Assert.fail("Switch type: " + typeSwitch + " doesn't exist. Please use another switch type.");
         }
     }
+
+    public String getCompanyNumber() {
+        return this.companyNumber;
+    }
+
+    public String getBillingId() {
+        return this.billingId;
+    }
 }
+
 

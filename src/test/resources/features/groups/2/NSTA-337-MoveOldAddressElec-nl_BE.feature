@@ -105,7 +105,7 @@ Feature: NSTA - 337 Move old address - Elec
         When Top arrow button is "up"
         And Left menu is "sales-marketing"
         And Top menu item is "Klanten"
-        And Top action is "Filters"
+        And Top action is Filter from "sales-marketing" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
         Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
 

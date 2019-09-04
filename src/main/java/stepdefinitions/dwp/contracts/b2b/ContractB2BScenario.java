@@ -18,11 +18,13 @@ import java.util.List;
 public class ContractB2BScenario extends RegisteredScenario {
 
 	@Before("@DWP or @E2E or @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 
     private String accountNumber;
+	private String companyNumber;
+	private String billingId;
 
 	 /**
 	   * This method is used to create B2B contract without checking is contract ACTIVE or not.
@@ -58,9 +60,7 @@ public class ContractB2BScenario extends RegisteredScenario {
 
 				case UP: {
 					QuoteCreator quoteB2BUP = new ContractUPB2BCreator(isFakeAddress, switchType);
-
 					accountNumber = quoteB2BUP.createContract();
-
 					break;
 				}
 				case TC1: {
@@ -116,7 +116,8 @@ public class ContractB2BScenario extends RegisteredScenario {
 	   */
 	@Given("^B2B Active Contract is \"([^\"]*)\" product type and use \"([^\"]*)\" address and switch type is \"([^\"]*)\"$")
 	public String createContractB2BAndCheckContractStatus(String productType, String isFakeAddress, String switchType) {
-		accountNumber = "";
+		accountNumber = StringUtils.EMPTY;
+        companyNumber = StringUtils.EMPTY;
 		ProductTypes productTypes = ProductTypes.valueOf(productType);
 
 		try {
@@ -124,16 +125,19 @@ public class ContractB2BScenario extends RegisteredScenario {
 				case UP: {
 					QuoteCreator quoteB2BUP = new ContractUPB2BCreator(isFakeAddress, switchType);
 					accountNumber = quoteB2BUP.createContractAndCheckContractStatus();
+					companyNumber = ((ContractUPB2BCreator) quoteB2BUP).getCompanyNumber();
 					break;
 				}
 				case TC1: {
 					QuoteCreator quoteB2BTC1 = new ContractTC1B2BCreator(isFakeAddress, switchType);
 					accountNumber = quoteB2BTC1.createContractAndCheckContractStatus();
+					companyNumber = ((ContractTC1B2BCreator) quoteB2BTC1).getCompanyNumber();
 					break;
 				}
 				case TC2: {
 					QuoteCreator quoteB2BTC2 = new ContractTC2B2BCreator(isFakeAddress, switchType);
 					accountNumber = quoteB2BTC2.createContractAndCheckContractStatus();
+					companyNumber = ((ContractTC2B2BCreator) quoteB2BTC2).getCompanyNumber();
 					break;
 				}
 				default:
@@ -149,8 +153,16 @@ public class ContractB2BScenario extends RegisteredScenario {
 			logger().error("Something went wrong with creation of ACTIVE B2B contract");
 		}
 
+		if(StringUtils.isEmpty(companyNumber)) {
+			Assert.fail("Failed to obtain company number");
+			logger().error("Something went wrong with creation of ACTIVE B2B contract");
+		}
+
 		logger().debug("ACCOUNT NUMBER: " + accountNumber);
+		logger().debug("COMPANY NUMBER: " + companyNumber);
 		parameterProvider.put("accountNumber", accountNumber);
+		parameterProvider.put("companyNumber", companyNumber);
+
 		return accountNumber;
 	}
 
@@ -204,8 +216,11 @@ public class ContractB2BScenario extends RegisteredScenario {
     }
 
     @Given("^B2B Active Contract is$")
-    public String createContractB2B(final DataTable quote) throws Throwable {
-        accountNumber = "";
+
+    public String createContractB2B(final DataTable quote){
+        accountNumber = StringUtils.EMPTY;
+        companyNumber = StringUtils.EMPTY;
+        billingId = StringUtils.EMPTY;
         List<List<String>> list = quote.asLists(String.class);
 
         QuoteB2B quoteB2B = new QuoteB2B();
@@ -222,16 +237,22 @@ public class ContractB2BScenario extends RegisteredScenario {
 				case UP: {
 					QuoteCreator quoteB2BUP = new ContractUPB2BCreator(quoteB2B);
 					accountNumber = quoteB2BUP.createContractAndCheckContractStatus();
+					companyNumber = ((ContractUPB2BCreator) quoteB2BUP).getCompanyNumber();
+					billingId = ((ContractUPB2BCreator) quoteB2BUP).getBillingId();
 					break;
 				}
 				case TC1: {
 					QuoteCreator quoteB2BTC1 = new ContractTC1B2BCreator(quoteB2B);
 					accountNumber = quoteB2BTC1.createContractAndCheckContractStatus();
+					companyNumber = ((ContractTC1B2BCreator) quoteB2BTC1).getCompanyNumber();
+					billingId = ((ContractTC1B2BCreator) quoteB2BTC1).getBillingId();
 					break;
 				}
 				case TC2: {
 					QuoteCreator quoteB2BTC2 = new ContractTC2B2BCreator(quoteB2B);
 					accountNumber = quoteB2BTC2.createContractAndCheckContractStatus();
+					companyNumber = ((ContractTC2B2BCreator) quoteB2BTC2).getCompanyNumber();
+					billingId = ((ContractTC2B2BCreator) quoteB2BTC2).getBillingId();
 					break;
 				}
 				default:
@@ -247,8 +268,23 @@ public class ContractB2BScenario extends RegisteredScenario {
 			logger().error("Something went wrong with creation of ACTIVE B2B contract");
 		}
 
-		logger().debug("ACCOUNT NUMBER: " + accountNumber);
-		parameterProvider.put("accountNumber", accountNumber);
+        if(StringUtils.isEmpty(companyNumber)) {
+            Assert.fail("Failed to obtain company number");
+            logger().error("Something went wrong with creation of ACTIVE B2B contract");
+        }
+
+        if(StringUtils.isEmpty(billingId)) {
+            Assert.fail("Failed to obtain billing number");
+            logger().error("Something went wrong with creation of ACTIVE B2B contract");
+        }
+
+        logger().debug("ACCOUNT NUMBER: " + accountNumber);
+        logger().debug("COMPANY NUMBER: " + companyNumber);
+        logger().debug("BILLING NUMBER: " + billingId);
+        parameterProvider.put("accountNumber", accountNumber);
+        parameterProvider.put("companyNumber", companyNumber);
+        parameterProvider.put("billingId", billingId);
+
 		return accountNumber;
     }
 

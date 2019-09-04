@@ -29,7 +29,7 @@ public class ConfirmationSteps extends NavigationElements {
   }
 
     @Before("@DWP or @CORE or @E2E or @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 
@@ -51,12 +51,12 @@ public class ConfirmationSteps extends NavigationElements {
     }
 
   @Then("^Modal dialogue is confirmed$")
-  public void confirm() throws Throwable {
+  public void confirm(){
     confirmModalDialogue();
   }
 
   @Then("^Contract signature is confirmed$")
-  public void contractSignatureIsConfirmed() throws Throwable {
+  public void contractSignatureIsConfirmed(){
     confirmModalDialogue();
   }
 
@@ -70,6 +70,7 @@ public class ConfirmationSteps extends NavigationElements {
 
     @When("^Modal \"([^\"]*)\" is displayed$")
     public void checkModalDialogOpen(String headerText) {
+        seleniumDriver.waitForRequestsToFinish();
         Map<String, String> options = new HashMap<>();
         options.put("headerText", headerText);
         boolean success = new CheckModalDialog().test(options);
@@ -77,7 +78,7 @@ public class ConfirmationSteps extends NavigationElements {
     }
 
   @When("^Modal dialog contains \"([^\"]*)\" in action list$")
-  public void hasActionInActionList(String match) throws Throwable {
+  public void hasActionInActionList(String match){
     seleniumDriver.waitForRequestsToFinish();
     String textToLookup = parameterProvider.getValueOrParameterAsString(match);
     ConfirmSignatureDialog dialog = new ConfirmSignatureDialogImpl();

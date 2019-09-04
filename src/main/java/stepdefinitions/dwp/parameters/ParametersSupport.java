@@ -23,7 +23,7 @@ public class ParametersSupport extends RegisteredScenario {
   }
 
   @Given("^Parameter \"([^\"]*)\" is \"([^\"]*)\"$")
-  public void putParameter(String key, String value) throws Throwable {
+  public void putParameter(String key, String value){
     String inputValue = value;
     try {
       inputValue = checkAndConvertToDwpDate(value);
@@ -34,8 +34,7 @@ public class ParametersSupport extends RegisteredScenario {
   }
 
   @And("^([^\"]*) is extracted as \"([^\"]*)\" word from \"([^\"]*)\"$")
-  public void extractPackageName(DwpEntity dwpEntity, String ordinal, String packageAndProduct)
-      throws Throwable {
+  public void extractPackageName(DwpEntity dwpEntity, String ordinal, String packageAndProduct){
     int index = asArrayIndex(ordinal);
     Optional<String> value = parameterProvider.getParameterAsString(packageAndProduct);
     assertThat(

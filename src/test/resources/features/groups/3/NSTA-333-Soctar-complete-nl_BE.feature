@@ -9,7 +9,7 @@ Feature: NSTA-333: Social tariff (SOCTAR) contract creation
 
     Background:
         # 1 - API contract creation
-        Given I login to iWelcome as "soapui_b2c"
+        Given I login as API user "soapui_b2c"
         And "Create_Quote" flow is started
         When Data is prepared for Create quote request for "prospect" and meter open is "Off" and sign date is "35 days before now"
         And New tc1_quote is created
@@ -84,7 +84,7 @@ Feature: NSTA-333: Social tariff (SOCTAR) contract creation
         And Top menu item is "Klanten"
 
         #part 1 check - customer status
-        And Top action is "Filters"
+        And Top action is Filter from "contracting-switching" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
         And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
         When Dashboard menu is "Contracten"

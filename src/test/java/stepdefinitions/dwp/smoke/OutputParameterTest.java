@@ -27,7 +27,7 @@ public class OutputParameterTest extends RegisteredScenario {
 
 
     @When("^Contractor is ([^\"]*)$")
-    public void setContractor(String contractor) throws Throwable {
+    public void setContractor(String contractor){
         logger().debug("STEP:");
         logger().debug(" - ACTION: SET_OUTPUT_PARAM");
         logger().debug(" - NAME: contractor");
@@ -36,13 +36,13 @@ public class OutputParameterTest extends RegisteredScenario {
     }
 
     @When("^Contractor \"?([^\"]*)\"? is put as \"?([^\"]*)\"?$")
-    public void putContractor(String contractor, String parameterName) throws Throwable {
+    public void putContractor(String contractor, String parameterName){
         setContractor(contractor);
         parameterProvider.put(parameterName, contractor);
     }
 
     @And("^Start of tenure is \"?([^\"]*)\"?$")
-    public void startOfTenureIs(String startOfTenure) throws Throwable {
+    public void startOfTenureIs(String startOfTenure){
         logger().debug("STEP:");
         logger().debug(" - ACTION: SET_OUTPUT_PARAM");
         logger().debug(" - NAME: startOfTenure");
@@ -52,14 +52,14 @@ public class OutputParameterTest extends RegisteredScenario {
 
 
     @And("^Start of tenure \"?([^\"]*)\"? is put as \"?([^\"]*)\"?$")
-    public void putStartOfTenure(String value, String parameterName) throws Throwable {
+    public void putStartOfTenure(String value, String parameterName){
         startOfTenureIs(value);
         parameterProvider.put(parameterName, startOfTenure);
     }
 
 
     @And("^Fail$")
-    public void fail() throws Throwable {
+    public void fail(){
         Assert.fail("Checkpoint failure.");
     }
 }

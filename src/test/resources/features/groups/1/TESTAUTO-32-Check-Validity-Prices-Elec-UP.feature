@@ -17,26 +17,25 @@ Feature: TESTAUTO-32: Price validity check on an Elec UP quote
         And "Klantnummer" input is "parameter:accountNumber"
         And Click on "parameter:accountNumber" link
         And Dashboard menu is "Sales"
-        Then Table "Offertes" contains value "Verstuurd naar de klant - Geaccepteerd" at column "Type & status"
+        Then Table "Offertes" contains value "Verstuurd naar de klant - Geaccepteerd" at column "Type & status" within 60 seconds
 
         When Plus action of "1" element from "QuotesOnAccount" and click on "Handtekening ontvangen"
         And "Datum handtekening ontvangen" date is "now"
         And Option "Taak aanmaken voor de manager?" "is" "On"
         And Changes are confirmed
-        Then Table "Offertes" contains value "Handtekening ontvangen - Geaccepteerd" at column "Type & status"
+        Then Table "Offertes" contains value "Handtekening ontvangen - Geaccepteerd" at column "Type & status" within 60 seconds
 
-        When Click on link in View List at "1st" row and "Nummer & Getekend contractnummer" column polling 30 seconds
-        Then Table "Taken" contains value "Check quote" at column "Naam & Type & Subtype"
-        Then Table "Taken" contains value "quotation - quote_price_validity" at column "Naam & Type & Subtype"
+        When Click on link in View List at "1st" row and "Nummer & Getekend contractnummer" column polling 60 seconds
+        And Check table value "Check quote" is found for created quote
+        Then Check table value "quotation - quote_price_validity" is found for created quote
 
         When Plus menu is "Offertes -> Check geldigheid tarieven"
         And Form header is "Updated Prices"
         And "Nieuwe tariefdatum" date is "now"
         And Option "Ja, ik wil de offerte met de nieuwe tarieven goedkeuren." "is" "On"
         And Bevestigen
-        And Sleep for 20 seconds
-        Then Table Offertelijnen has value "Handtekening ontvangen"
-        Then Table Offertelijnen has value "Afgekeurd"
+        And Check table value "Handtekening ontvangen" is found for created quote
+        Then Check table value "Afgekeurd" is found for created quote
 
         When Plus action of "1" element from "Quotelines" and click on "Bekijk details tarief"
         And Sum of Rate for signature received is "High"

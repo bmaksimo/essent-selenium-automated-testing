@@ -40,6 +40,7 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
     private static final String PATH = "/js/runner/";
     private static final String PATH_TO_INLINE_CLASSES = "/js/runner/tests/";
     private static final String TEST_RUNNER_CLASS = "TestRunnerBase.js";
+    private static final String JS_EXECUTOR_RETURNED_NULL = "JavascriptExecutor returned null";
 
     public void initNgWebDriver() {
         ngWebDriver = new NgWebDriver((JavascriptExecutor) driver);
@@ -79,11 +80,11 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
             Map result = (Map) ((JavascriptExecutor) seleniumDriver.getDriver()).executeAsyncScript(executeTest);
             Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
             logger.debug(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
-            String status = ((String) result.get("status"));
+            String status = null == result ? "FAILED" : ((String) result.get("status"));
             boolean success = StringUtils.equals("PASSED", status);
             logger.debug(" - RESULT: " + status);
             if (StringUtils.equals("FAILED", status)) {
-                String reason = ((String) result.get("reason"));
+                String reason = null == result ? JS_EXECUTOR_RETURNED_NULL : ((String) result.get("reason"));
                 logger.debug(" - REASON: " + reason);
                 if (withException) {
                     fail(reason);
@@ -178,13 +179,13 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
         Map result = (Map) ((JavascriptExecutor) driver).executeAsyncScript(jsTestCall);
         Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
         logger.debug(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
-        String status = ((String) result.get("status"));
+        String status = null == result ? "FAILED" : ((String) result.get("status"));
         if (StringUtils.isEmpty(status)) {
             status = "UNDEFINED";
         }
         logger.debug(" - RESULT: " + status);
         if (StringUtils.equals("FAILED", status)) {
-            String reason = ((String) result.get("reason"));
+            String reason = null == result ? JS_EXECUTOR_RETURNED_NULL : ((String) result.get("reason"));
             logger.warn(" - REASON: " + reason);
             takeScreenshot(false);
         }
@@ -253,8 +254,8 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
 
     private void waitForElement(final WebElement element) {
         ngWebDriver.waitForAngularRequestsToFinish();
-        waitForElementToBeVisible(element, 30, 5);
-        waitForElementToBeClickable(element, 30, 5);
+        waitForElementToBeVisible(element, 90, 30);
+        waitForElementToBeClickable(element, 90, 30);
     }
 
     public void waitAndClick(final WebElement element) {

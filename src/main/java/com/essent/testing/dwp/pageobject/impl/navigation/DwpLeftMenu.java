@@ -16,6 +16,7 @@ public class DwpLeftMenu extends Component {
     }
 
     public void clickOnLeftElement(String element) {
+        Sleeper.sleepTightInSeconds(5);
         seleniumDriver.waitAndClick(getLeftElement(element));
         seleniumDriver.waitForRequestsToFinish();
     }

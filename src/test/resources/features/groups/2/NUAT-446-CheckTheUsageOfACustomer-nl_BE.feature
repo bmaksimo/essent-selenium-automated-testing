@@ -52,20 +52,18 @@ Feature: NUAT-446: Check The Usage Of A Customer - nl_BE
         And Quote is confirmed
 
         When Dashboard menu is "Contracten"
-        Then View list header is "Actieve en toekomstige connecties"
         And  "1st" List element with value at column "EAN-code" is checked
         And Get Account Number
         Then  "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
 
         When Dashboard menu is "Contracten"
-        And View list header is "Actieve en toekomstige connecties"
         And "1st" List element with value at column "EAN-code" is checked
         Then Consumption at deliverypointid "parameter:EAN-code" is generated until "now"
 
         When I renew login to DWP as "billing.testautomation@essent.be"
         And Left menu is "contracting-switching"
         And Top menu item is "Klanten"
-        And Top action is "Filters"
+        And Top action is Filter from "contracting-switching" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
         Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
 

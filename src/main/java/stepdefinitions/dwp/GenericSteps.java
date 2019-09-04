@@ -1,6 +1,5 @@
 package stepdefinitions.dwp;
 
-import com.essent.automation.core.WebDriverWait;
 import com.essent.roles.UserRoles;
 import com.essent.testing.dwp.pageobject.Window;
 import com.essent.testing.dwp.pageobject.elements.Button;
@@ -25,12 +24,13 @@ public class GenericSteps extends DwpScenario {
 
 
     @Before("@DWP or @CORE or @E2E or @REGRESSION or @API")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 
     @Given("^I logged in to DWP as \"([^\"]*)\"$")
     public void loginAs(String username) throws Throwable {
+        logger().info("Logging into DWP as " + username);
         setUpWebDriver();
         isDwpRunning();
         UserRoles dwpUser = UserRoles.get(username);
@@ -46,7 +46,7 @@ public class GenericSteps extends DwpScenario {
         loginAs(username);
     }
 
-    private void discardPreviousFlow() throws Throwable {
+    private void discardPreviousFlow(){
         try {
             WebElement cancelWebElement = seleniumDriver.findElementWhenPresent(By.id("cancel-button"), Duration.ofSeconds(5), Duration.ofMillis(100));
             Button cancelButton = new ButtonImpl(cancelWebElement);

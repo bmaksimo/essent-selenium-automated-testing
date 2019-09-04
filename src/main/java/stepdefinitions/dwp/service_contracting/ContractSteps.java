@@ -27,7 +27,7 @@ public class ContractSteps extends DwpScenario {
     private String amount;
 
     @Before("@DWP or @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 
@@ -168,7 +168,7 @@ public class ContractSteps extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
         ContractPage cp = new ContractPage();
         cp.chooseDiscounts(kortingen);
-        Sleeper.sleepTightInSeconds(0.5);
+        Sleeper.sleepTightInSeconds(2);
         seleniumDriver.waitForRequestsToFinish();
 
     }
@@ -227,13 +227,11 @@ public class ContractSteps extends DwpScenario {
         String status = info.get(1).get(1);
         String date = toDwpEndDate(parameterProvider.getValueOrParameterAsString(info.get(1).get(2)));
         String ean = parameterProvider.getValueOrParameterAsString(info.get(1).get(3));
-        String product = parameterProvider.getValueOrParameterAsString(info.get(1).get(4));
 
         Assert.assertTrue("Actual type differs from expected",cp.getContractType().equalsIgnoreCase(type));
         Assert.assertTrue("Actual status differs from expected", cp.getStatusFromContracten().equalsIgnoreCase(status));
         Assert.assertTrue("Actual start date differs from expected", cp.getStartDate().equalsIgnoreCase(date));
         Assert.assertTrue("Actual EAN differs from expected",cp.getEanFromContract().equalsIgnoreCase(ean));
-        Assert.assertTrue("Actual product differs from expected",cp.getProductFromContracten().equalsIgnoreCase(product));
     }
 
     @And("^Copy product name$")

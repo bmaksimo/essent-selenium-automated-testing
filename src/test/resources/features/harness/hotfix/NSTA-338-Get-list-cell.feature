@@ -11,8 +11,6 @@ Feature: View list model  function, getting cell value for given table
         And Top menu item is "Klanten"
         And Top action is "Filters"
         And "Klantnummer" input is "parameter:suitecrm-customer-nr"
-        And View list header is "Klanten"
         And Click on "parameter:suitecrm-customer-nr" link
         And Dashboard menu is "Contracten"
-        And View list header is "Actieve en toekomstige connecties"
         Then Table "Contracten" contains cell value "Sales Getekend (Geaccepteerd)" at column "Type & status" on "2nd" row

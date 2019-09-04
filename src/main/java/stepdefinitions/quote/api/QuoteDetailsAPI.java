@@ -4,9 +4,7 @@ import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
 import com.essent.testing.util.resource.ResourceUtil;
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.http.Cookies;
 import io.restassured.response.Response;
@@ -58,8 +56,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
         return tariffSheetID;
     }
 
-    public QuoteDetails getQuoteDetails(Cookies cookie, String tariffSheetId, String startedFlowName, String meterOpen, String signInDate)
-	    throws JsonParseException, JsonMappingException, IOException {
+    public QuoteDetails getQuoteDetails(Cookies cookie, String tariffSheetId, String startedFlowName, String meterOpen, String signInDate) throws IOException {
 
         String ean = null;
         String dateOfBirth = null;
@@ -89,7 +86,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
         QuoteDetails quoteDetails = new QuoteDetails();
         quoteDetails.setEan(ean);
 
-            Map<String,String> generatedNames4account = new HashMap<String, String>();
+            Map<String,String> generatedNames4account;
             generatedNames4account = createAccountName(startedFlowName);
             quoteDetails.setFirstName(generatedNames4account.get("firstName"));
             quoteDetails.setLastName(generatedNames4account.get("lastName"));
@@ -201,7 +198,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
     }
 
     private String createQuotePayload(String tariffSheetId, String ean, String dateOfBirth, String firstName, String lastName, String iBan, String companyNumber, String meterOpen, String signInDate)
-	    throws JsonParseException, JsonMappingException, IOException {
+	    throws  IOException {
         ObjectMapper mapper = new ObjectMapper();
 
         String pathToQuote = ResourceUtil.toPath(PATH_TO_QUOTE);
@@ -291,7 +288,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
         String lastName = "default";
         String accountName = "API_" + startedFlowName + "_BasicQuoteB2C_TC1_YMR_MoveIn";
         String reversedLastName = "";
-        Map<String,String> generatedNames = new HashMap<String, String>();
+        Map<String,String> generatedNames = new HashMap();
 
         accountName = accountName + getCurrentDateTime();
 

@@ -1,6 +1,5 @@
 package stepdefinitions.odoo.navigation.menu;
 
-import com.essent.automation.util.Sleeper;
 import com.essent.testing.odoo.navigation.menu.MenuNavigation;
 import com.essent.testing.odoo.pageobject.impl.elements.ButtonImpl;
 import com.essent.testing.odoo.pageobject.impl.pageObject.CustomerPage;
@@ -31,7 +30,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class OdooMenu extends OdooScenario {
 
     @Before("@ODOO or @E2E or @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
+    public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 
@@ -47,7 +46,7 @@ public class OdooMenu extends OdooScenario {
 
     @When("^Odoo left menu is \"([^\"]*)\"$")
     public void executeLeftMenuAction(String menuPath) {
-        Sleeper.sleepTightInSeconds(3);
+        awaitOdooRequestToFinish(60);
         MenuNavigation odooMenuNavigation = new MenuNavigation();
         odooMenuNavigation.executeAction(menuPath);
         awaitOdooRequestToFinish(120);
@@ -72,20 +71,46 @@ public class OdooMenu extends OdooScenario {
         mapper.put("value", value);
         awaitOdooRequestToFinish(10);
         List<WebElement> buttons = seleniumDriver.findElements(By.xpath(createQuery(locator, mapper)));
-        if(buttons.isEmpty()) {
+
+        if(buttons.isEmpty())
             throw new CucumberException("Coda download button was not found");
-        } else {
-            seleniumDriver.moveToElementAndClick(buttons.get(0));
-        }
+
+        seleniumDriver.moveToElementAndClick(buttons.get(0));
+    }
+
+    @Then("^Generate CODA is clicked$")
+    public void clickDownloadCoda() {
+        String locator = "//button[@title='Download coda']";
+        awaitOdooRequestToFinish(10);
+        List<WebElement> buttons = seleniumDriver.findElements(By.xpath(locator));
+
+        if(buttons.isEmpty())
+            throw new CucumberException("Coda download button was not found");
+
+        seleniumDriver.moveToElementAndClick(buttons.get(0));
     }
 
 
     @Then("^Button \"([^\"]*)\" is clicked$")
     public void clickButton(String label) {
+        awaitOdooRequestToFinish(60);
         WebElement webElement = seleniumDriver.findElement(By.xpath("//button//div[contains(., '" + label + "')]"));
         if (null == webElement) throw new CucumberException("Button was not found");
         new ButtonImpl(webElement).click();
         awaitOdooRequestToFinish(180);
+    }
+
+    @When("Expand results")
+    public void expandResults() {
+        awaitOdooRequestToFinish(60);
+        seleniumDriver.findElement(By.xpath("//span[@class='ui-icon ui-icon-triangle-1-e']")).click();
+        awaitOdooRequestToFinish(60);
+    }
+
+    @Then("^Button \"([^\"]*)\" on Journal Items is clicked$")
+    public void clickButtonJournalItems(String label) {
+        CustomerPage cp = new CustomerPage();
+        cp.buttonJournalItemsClicked(label);
     }
 
     @Then("^Modal title contains \"([^\"]*)\"$")
@@ -101,6 +126,12 @@ public class OdooMenu extends OdooScenario {
         WebElement button = seleniumDriver.findElementWhenVisible(By.xpath("//button//span[contains(., '" + buttonLabel + "')]"));
         if (null == button) throw new CucumberException("Button " + buttonLabel + " was not found.");
         button.click();
+    }
+
+    @Then("^Button \"([^\"]*)\" is clicked within Reverse modal$")
+    public void modalClickButton(String buttonLabel) {
+        CustomerPage cp = new CustomerPage();
+        cp.modalReverseClickButton(buttonLabel);
     }
 
     @Then("^Bank Statement \"([^\"]*)\" button is clicked$")
@@ -134,12 +165,6 @@ public class OdooMenu extends OdooScenario {
         cp.openJournalEntry();
     }
 
-   @And("^Modal button \"([^\"]*)\" clicked$")
-   public void modalButtons(String name) {
-       CustomerPage cp = new CustomerPage();
-       cp.reversePaymentPlan();
-   }
-
     @And("^Odoo click on tab \"([^\"]*)\"$")
     public void odooClickOnTab(String tab){
         FluentWait<CustomerPage> waiter = waiter(new CustomerPage(), 60, 5)
@@ -151,7 +176,7 @@ public class OdooMenu extends OdooScenario {
     public void odooValidateBankAccountWasChangedOn(String iban) {
         String bankAccountNumber = parameterProvider.getValueOrParameterAsString(iban);
         FluentWait<CustomerPage> waiter = waiter(new CustomerPage(), 600, 20)
-            .withMessage(String.format("Check if bank account number is same as in DWP", iban, 20));
+            .withMessage(String.format("Check if bank account number is same as in DWP"));
         waiter.until(cp -> {
             loopback("Accounting");
             return cp.getBankAccountAsString().equalsIgnoreCase(bankAccountNumber);
