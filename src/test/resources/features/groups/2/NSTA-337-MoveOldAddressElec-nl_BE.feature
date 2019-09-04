@@ -3,10 +3,7 @@
 @B2C
 @ALL
 Feature: NSTA-337: Move old address - Electricity
-
     Background:
-
-#        Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
     @NSTA-337
