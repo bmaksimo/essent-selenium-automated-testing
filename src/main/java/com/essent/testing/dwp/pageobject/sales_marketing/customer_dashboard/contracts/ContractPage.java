@@ -59,6 +59,8 @@ public class ContractPage extends Component {
     private static DateTimeFormatter SLASH_SEPARATED_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static String HIGH_RATES_QUOTE = "//list[@list-key='QuoteComponentLines']//span[contains(., 'High')]/../../../..//td[6]";
     private static String LOW_RATES_QUOTE = "//list[@list-key='QuoteComponentLines']//span[contains(., 'Low')]/../../../..//td[6]";
+    private static final String ELEKTRICITY_IN_ADVANCE_START_DATE = "//div[@class='row- card'][2]//datepicker-form-element[@id='up_start_date_c']//input";
+    private static final String GAS_IN_ADVANCE_START_DATE = "//div[@class='row- card'][3]//datepicker-form-element[@id='up_start_date_c']//input";
 
     private WebElement startData() {
         return seleniumDriver.findElementWhenVisible(By.id(START_DATA_ID));
@@ -458,6 +460,16 @@ public class ContractPage extends Component {
     public boolean containsTableValue(String tableValue) {
         WebElement messageElement = locateTableElement();
         return messageElement.getText().contains(tableValue);
+    }
+
+    public void getStartDateInAdvanceElektricityCard(String value) {
+        seleniumDriver.waitForRequestsToFinish();
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath(ELEKTRICITY_IN_ADVANCE_START_DATE)), value);
+    }
+
+    public void getStartDateInAdvanceGasCard(String value) {
+        seleniumDriver.waitForRequestsToFinish();
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath(GAS_IN_ADVANCE_START_DATE)), value);
     }
 
 
