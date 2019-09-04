@@ -386,6 +386,15 @@ public class InputElements extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
     }
 
+    @And("Start date in cards is \"([^\"]*)\"$")
+    public void setInputByDate(String value) {
+        String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(value));
+        parameterProvider.put("inputValue", inputValue);
+        ContractPage cp = new ContractPage();
+        cp.getStartDateInAdvanceElektricityCard(inputValue);
+        cp.getStartDateInAdvanceGasCard(inputValue);
+    }
+
     @Override
     @After("@DWP or @CORE or @E2E or @REGRESSION")
     public void tearDown() {
