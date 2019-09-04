@@ -41,8 +41,8 @@ Background:
         Then Form header is "Pricing details"
         And "Tariefgroep" selection is "UP"
         And "Product" selection is "Elektriciteit Vast"
-        And "Startdatum" date is "5 day before now"
-        And "Einddatum" date is "1 year from now"
+        And "Startdatum" date is first day of next month
+        And "Einddatum" date is "2 years from now"
         And "Verbruik enkelvoudig (kWh)" input is "5000"
         And Bevestigen
         Then Form header is "Billing details"
