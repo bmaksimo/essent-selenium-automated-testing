@@ -234,9 +234,9 @@ public class ContractPage extends Component {
         return range;
     }
 
-    public WebElement locateMessageElement(){
+    public Optional<WebElement> locateMessageElement(){
         seleniumDriver.waitForRequestsToFinish();
-        return seleniumDriver.findElementWhenVisible(By.xpath(LABELFORPRODUCTCHANGE));
+        return seleniumDriver.findElementOptional(By.xpath(LABELFORPRODUCTCHANGE));
     }
 
     public WebElement locateTableElement(){

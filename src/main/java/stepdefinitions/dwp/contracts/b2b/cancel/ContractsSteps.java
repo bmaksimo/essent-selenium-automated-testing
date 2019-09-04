@@ -22,6 +22,7 @@ import stepdefinitions.dwp.page_object.CustomerAcceptance;
 import stepdefinitions.dwp.tables.CustomerStatus;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -252,9 +253,8 @@ public class ContractsSteps extends DwpScenario{
         assertThat(String.format("Table value \"%s\" does not exist in quote data", tableValue), expectedValue, is(true));
     }
 
-    private boolean containsAtLeastOneSucceededMessage(ContractPage cp) {
-        WebElement messageElement = cp.locateMessageElement();
-        return !messageElement.getText().contains("0 succeeded");
+    private boolean containsAtLeastOneSucceededMessage(ContractPage contractPage) {
+        return contractPage.locateMessageElement().filter(me -> !me.getText().contains("0 succeeded")).isPresent();
     }
 
     @Then("^Product Change dates are \"([^\"]*)\" and \"([^\"]*)\"$")
