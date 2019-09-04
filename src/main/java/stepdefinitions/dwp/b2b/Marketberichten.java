@@ -1,6 +1,6 @@
 package stepdefinitions.dwp.b2b;
 
-import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.workflows.MarktBerichtenPage;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.workflows.MarketMessagesPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
@@ -18,7 +18,7 @@ public class Marketberichten extends DwpScenario {
 
     @And("^Select \"([^\"]*)\" on Marktberichten page$")
     public void selectOnMarktberichtenPage(String element) {
-        MarktBerichtenPage mb = new MarktBerichtenPage();
+        MarketMessagesPage mb = new MarketMessagesPage();
         EAN = mb.getEanFromTheFirstTransaction();
         mb.clickOnListActionsElemet(element);
         mb.clickOnSelectNewContractlineButton();
@@ -30,14 +30,14 @@ public class Marketberichten extends DwpScenario {
 
     @And("^Click on \"([^\"]*)\"$")
     public void clickOn(String newMarktbericht) {
-        MarktBerichtenPage mp = new MarktBerichtenPage();
+        MarketMessagesPage mp = new MarketMessagesPage();
         mp.createNewMarktBericht(newMarktbericht);
     }
 
     @And("^Search by \"([^\"]*)\"$")
     public void searchBy(String str) {
         String ean = parameterProvider.getValueOrParameterAsString(str);
-        MarktBerichtenPage mb = new MarktBerichtenPage();
+        MarketMessagesPage mb = new MarketMessagesPage();
         mb.enterContractNumber(ean);
         seleniumDriver.waitForRequestsToFinish();
         mb.clickOnSearchButton();
