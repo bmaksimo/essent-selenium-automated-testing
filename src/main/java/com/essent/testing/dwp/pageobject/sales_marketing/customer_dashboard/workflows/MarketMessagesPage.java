@@ -1,11 +1,14 @@
 package com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.workflows;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public class MarktBerichtenPage extends Component {
+import java.util.Optional;
+
+public class MarketMessagesPage extends Component {
 
     private static final String REPLACEMENT_KEY = "replacement_key";
     private static final String EAN_FROM_MARKET = "(//h5)[${" + REPLACEMENT_KEY + "}]";
@@ -56,10 +59,6 @@ public class MarktBerichtenPage extends Component {
     }
 
     public WebElement selectNewContractlineButton() {
-        //TODO Remove locale-specific hard code.
-        // The project must support official Belgian languages.
-        // Locale-specific elements of web element locators must be parameterized.
-        // This is basic rule!
         return seleniumDriver.findElementWhenVisible(By.xpath("//button[contains(.,'Select Contractline')]"));
     }
 
@@ -104,10 +103,6 @@ public class MarktBerichtenPage extends Component {
     }
 
     public String getModulFromCancelTransaction()  {
-        //TODO Remove locale-specific hard code.
-        // The project must support official Belgian languages.
-        // Locale-specific elements of web element locators must be parameterized.
-        // This is basic rule!
         return seleniumDriver.findElementWhenVisible(By.xpath("//list-link-bold-top-two-liner-cell[@line-1='INITIATE STOP ACCESS']/div/a/h5")).getText();
     }
 
@@ -152,8 +147,25 @@ public class MarktBerichtenPage extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath(taskStatus));
     }
 
-    public String getMarketberichtLabel(){
-        return seleniumDriver.findElementWhenVisible(By.xpath(MARKET_LABEL)).getText();
+    public String getMarketMessageLabel() {
+        final int maxAttempts = 10;
+        int currentAttempt = 0;
+
+        Optional<WebElement> marketMessageLabelElement = seleniumDriver.findElementOptional(By.xpath(MARKET_LABEL));
+
+        while (currentAttempt < maxAttempts) {
+            if (marketMessageLabelElement.isPresent())
+                return marketMessageLabelElement.get().getText();
+
+            currentAttempt++;
+            Sleeper.sleepTightInSeconds(5);
+            seleniumDriver.getDriver().navigate().back();
+            Sleeper.sleepTightInSeconds(2);
+            seleniumDriver.getDriver().navigate().forward();
+            Sleeper.sleepTightInSeconds(2);
+        }
+
+        return "Market message label was not found.";
     }
 }
 

@@ -6,7 +6,7 @@ import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.Invo
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.details.DetailsPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.sales.SalesPage;
-import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.workflows.MarktBerichtenPage;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.workflows.MarketMessagesPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -69,7 +69,7 @@ public class ContractsSteps extends DwpScenario{
     @Then("^Confirm task was \"([^\"]*)\"$")
     public void confirmTaskWas(String value) {
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
-        MarktBerichtenPage mp = new MarktBerichtenPage();
+        MarketMessagesPage mp = new MarketMessagesPage();
         Assert.assertTrue(mp.getTaskStatus(inputValue).isDisplayed());
     }
 

@@ -3,7 +3,7 @@ package stepdefinitions.dwp.page_object;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
-import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.workflows.MarktBerichtenPage;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.workflows.MarketMessagesPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import io.cucumber.datatable.DataTable;
 import cucumber.api.Scenario;
@@ -42,7 +42,7 @@ public class MarketBerichtenSteps extends DwpScenario {
 
     @When("^Save EAN code of customer$")
     public void saveEANCodeOfCustomer() {
-        MarktBerichtenPage marktberichtenPage = new MarktBerichtenPage();
+        MarketMessagesPage marktberichtenPage = new MarketMessagesPage();
         seleniumDriver.waitForRequestsToFinish();
         eanCode = marktberichtenPage.getEanCode();
         parameterProvider.put("eanCode", eanCode);
@@ -50,14 +50,14 @@ public class MarketBerichtenSteps extends DwpScenario {
 
     @When("^Save EAN code of customer now$")
     public void saveEANCodeOfCustomerNow() {
-        MarktBerichtenPage marktberichtenPage = new MarktBerichtenPage();
+        MarketMessagesPage marktberichtenPage = new MarketMessagesPage();
         eanCode = marktberichtenPage.getEanCodeNow();
         parameterProvider.put("eanCode", eanCode);
     }
 
     @Then("^Validate rejection status is \"([^\"]*)\"$")
     public void validateRejection(String rejectionStatus) {
-        MarktBerichtenPage marktberichtenPage = new MarktBerichtenPage();
+        MarketMessagesPage marktberichtenPage = new MarketMessagesPage();
         Assert.assertTrue(marktberichtenPage.validateRejectionHeader(eanCode));
         Assert.assertTrue(marktberichtenPage.validateRejectionHeader(rejectionStatus));
     }
@@ -70,17 +70,17 @@ public class MarketBerichtenSteps extends DwpScenario {
 
     @Then("^Validate contract was \"([^\"]*)\" and \"([^\"]*)\"$")
     public void validateContractWasTakenOver(String taken, String signed) {
-        MarktBerichtenPage marktBerichtenPage = new MarktBerichtenPage();
-        marktBerichtenPage.takenOver(taken, signed);
+        MarketMessagesPage marketMessagesPage = new MarketMessagesPage();
+        marketMessagesPage.takenOver(taken, signed);
     }
 
     @When("^Refresh \"([^\"]*)\" till \"([^\"]*)\" is visible$")
     public void refreshTillIsVisible(String name, String status) {
-        MarktBerichtenPage mp = new MarktBerichtenPage();
+        MarketMessagesPage mp = new MarketMessagesPage();
         int atMostSeconds = 450;
-        FluentWait<MarktBerichtenPage> waiter = waiter(mp, atMostSeconds, 10);
+        FluentWait<MarketMessagesPage> waiter = waiter(mp, atMostSeconds, 10);
         waiter.withMessage(String.format("Message status did not switch to \"%s\" within \"%s\" seconds", status, atMostSeconds));
-        waiter.until((MarktBerichtenPage page) -> {
+        waiter.until((MarketMessagesPage page) -> {
             mp.refreshByName(name);
             return mp.marketberichtStatus().equalsIgnoreCase(status);
         });
@@ -88,7 +88,7 @@ public class MarketBerichtenSteps extends DwpScenario {
 
     @Then("^Confirm status is \"([^\"]*)\"$")
     public void confirmStatusIs(String status) {
-        MarktBerichtenPage mp = new MarktBerichtenPage();
+        MarketMessagesPage mp = new MarketMessagesPage();
         Assert.assertTrue(mp.marketberichtStatus().equalsIgnoreCase(status));
     }
 
@@ -101,7 +101,7 @@ public class MarketBerichtenSteps extends DwpScenario {
     @Then("^Marketbericht with EAN \"([^\"]*)\" and module \"([^\"]*)\" is in status \"([^\"]*)\"$")
     public void marketBerichtWithEANAndModuleIsInStatus(String enaP, String modul, String status) {
         String ean = parameterProvider.getValueOrParameterAsString(enaP);
-        MarktBerichtenPage mp = new MarktBerichtenPage();
+        MarketMessagesPage mp = new MarketMessagesPage();
         Assert.assertEquals(ean, mp.getEanFromTheFirstTransaction());
         Assert.assertEquals(modul, mp.getModulFromTheFirstTransaction());
         Assert.assertEquals(status, mp.marketberichtStatus());
@@ -110,7 +110,7 @@ public class MarketBerichtenSteps extends DwpScenario {
 
     @Then("^Marketbericht with module \"([^\"]*)\" changed to status \"([^\"]*)\"$")
     public void marketBerichtWithEANAndModuleSecondTransactionIsInStatus(String modul, String status) {
-        MarktBerichtenPage mp = new MarktBerichtenPage();
+        MarketMessagesPage mp = new MarketMessagesPage();
         Assert.assertEquals(modul, mp.getModulFromCancelTransaction());
         Assert.assertEquals(status, mp.marketberichtCancelStatus());
 
@@ -122,7 +122,7 @@ public class MarketBerichtenSteps extends DwpScenario {
         String ean = parameterProvider.getValueOrParameterAsString(info.get(1).get(0));
         String modul = info.get(1).get(1);
         String date = info.get(1).get(2);
-        MarktBerichtenPage mp = new MarktBerichtenPage();
+        MarketMessagesPage mp = new MarketMessagesPage();
         String module = "UPDATE BUSINESS MASTER DATA";
         String eanFromMarketberichtRow1 = "1";
         String eanFromMarketberichtRow2 = "3";
@@ -152,8 +152,8 @@ public class MarketBerichtenSteps extends DwpScenario {
     }
 
     @And("^Marktbericht has label \"([^\"]*)\"$")
-    public void marktberichtHasLabel(String label) {
-        MarktBerichtenPage mp = new MarktBerichtenPage();
-        Assert.assertEquals("Actual label differs from expected", mp.getMarketberichtLabel(), label);
+    public void marketMessageHasLabel(String label) {
+        MarketMessagesPage mp = new MarketMessagesPage();
+        Assert.assertEquals("Actual label differs from expected", mp.getMarketMessageLabel(), label);
     }
 }

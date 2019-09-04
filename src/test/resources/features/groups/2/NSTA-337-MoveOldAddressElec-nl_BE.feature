@@ -2,14 +2,12 @@
 @DWP
 @B2C
 @ALL
-Feature: NSTA - 337 Move old address - Elec
-
+Feature: NSTA-337: Move old address - Electricity
     Background:
-
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
     @NSTA-337
-    Scenario: Move old address - Elec
+    Scenario: NSTA-337: Move old address - Electricity
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
