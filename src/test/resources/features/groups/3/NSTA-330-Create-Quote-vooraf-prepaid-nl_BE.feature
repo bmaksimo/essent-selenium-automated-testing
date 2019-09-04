@@ -31,8 +31,7 @@ Feature: NSTA-330. Check the generation of prepaid advance invoice.
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        When "Startdatum" date on "Aardgas Vooraf" card is "35 days before now"
-        And "Startdatum" date on "Elektriciteit Vooraf" card is "35 days before now"
+        And Start date in cards is "35 days before now"
         And Options "test" "are" "On"
         And EAN code is generated
         And "EAN-code" input on "Elektriciteit Vooraf" card is "parameter:EAN-code-generated"

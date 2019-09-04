@@ -224,6 +224,7 @@ public class ContractsSteps extends DwpScenario{
                 succeededMessage = true;
                 break;
             } else {
+                Sleeper.sleepTightInSeconds(10);
                 seleniumDriver.getDriver().navigate().back();
                 seleniumDriver.getDriver().navigate().forward();
             }

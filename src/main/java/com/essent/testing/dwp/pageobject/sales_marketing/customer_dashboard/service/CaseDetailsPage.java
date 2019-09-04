@@ -11,19 +11,17 @@ public class CaseDetailsPage extends Component {
     }
 
     private WebElement priorityField() {
-
+        seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.id("priority-field"));
     }
 
     public boolean checkIfPriorityIsHigh() {
-        //TODO Remove locale-specific hard code.
-        // The project must support official Belgian languages.
-        // Locale-specific elements of web element locators must be parameterized.
-        // This is basic rule!
+        seleniumDriver.waitForRequestsToFinish();
         return priorityField().getText().equalsIgnoreCase("Hoog");
     }
 
     public String getSolutionFieldText() {
+        seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.id("resolution-field")).getText();
 
     }
