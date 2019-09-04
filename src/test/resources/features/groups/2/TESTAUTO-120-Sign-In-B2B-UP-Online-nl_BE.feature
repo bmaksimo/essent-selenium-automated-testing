@@ -1,17 +1,16 @@
 @REGRESSION
 @DWP
-@B2C
+@B2B
 @ALL
 
-Feature: NSTA - 337 Move old address - Elec
+Feature: TESTAUTO-120 UP B2B create quote flow online sign in
 
-Background:
-    Given   I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
+     Background:
+        Given   I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
 
     @TESTAUTO-120
-    Scenario: UP B2B create quote flow online signin
+    Scenario: UP B2B create quote flow online sign in
         When Plus menu is "Sales -> UP/TK2 -> Creëer nieuwe offerte (B2B)"
-#        Then Form header is "Perform customer acceptance check"
         And Company VAT number is random
         And "Ondernemingsnummer" input is "parameter:VAT"
         And Company name is random
@@ -39,32 +38,30 @@ Background:
         And "EAN-code" input is "parameter:EAN-code-generated"
         And Connection details are confirmed
         Then Form header is "Pricing details"
-        And "Tariefgroep" selection is "UP"
+        When "Tariefgroep" selection is "UP"
         And "Product" selection is "Elektriciteit Vast"
         And "Startdatum" date is first day of next month
-        And "Einddatum" date is "2 years from now"
+        And "Einddatum" date is last day of current month next year
         And "Verbruik enkelvoudig (kWh)" input is "5000"
         And Bevestigen
         Then Form header is "Billing details"
-
         When "Betalingswijze" selection is "Overschrijving"
-        And Quote is confirmed
+        Then Quote is confirmed
 
-        #2.1 Sign quote
         When Dashboard menu is "Sales"
         And Plus action of "1" element from "QuotesOnAccount" and click on "Verzenden naar klant"
-        And Option "Mij een e-mail sturen?" "is" "on"
+        And Option "Mij een e-mail sturen?" "is" "On"
         And Changes are confirmed
-        Then Quote status is "Verstuurd naar de klant - Geaccepteerd"
-        When Plus action of "1" element from "QuotesOnAccount" and click on "Handtekening ontvangen"
-        And Set Signature received is confirmed
-        Then Quote status is "Handtekening ontvangen - Geaccepteerd"
+        Then Table "Offertes" contains value "Verstuurd naar de klant - Geaccepteerd" at column "Type & status" retrying 5 times
 
-        When Plus action of "1" element from "QuotesOnAccount" and Click on "Bevestig"
-        And Client signature file is uploaded
-        And Quote is signed
-        Then Quote status is "Getekend - Geaccepteerd"
+        When Plus action of "1" element from "QuotesOnAccount" and click on "Handtekening ontvangen"
+        And Changes are confirmed
+        Then Table "Offertes" contains value "Handtekening ontvangen - Geaccepteerd" at column "Type & status" retrying 5 times
+
+        When Plus action of "1" element from "QuotesOnAccount" and click on "Bevestig"
+        And Quote for account is signed online in modal
+        And Changes are confirmed
+        Then Table "Offertes" contains value "Getekend - Geaccepteerd" at column "Type & status" retrying 5 times
+
         When Dashboard menu is "Contracten"
-        Then View list header is "Actieve en toekomstige connecties"
-        And "1st" List element with value at column "EAN-code" is checked
-        And "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
+        Then "1st" list element has cell value "Actief" at column "Contractnummer" polling 1200 seconds
