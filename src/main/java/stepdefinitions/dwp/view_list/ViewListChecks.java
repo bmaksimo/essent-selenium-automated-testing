@@ -454,10 +454,14 @@ public class ViewListChecks extends NavigationElements {
     public void cellValuesAtRowFromTableAreChecked(String ordinal, String tableName){
         ViewListTestObject viewListTestObject = new ViewListTestObject(tableName);
         int row = extractNumericValue(ordinal);
-        for (int column = 1; viewListTestObject.getColumnCount().isPresent() &&
-            column <= viewListTestObject.getColumnCount().get(); column++) {
+
+        Optional<Integer> columnCountOptional = viewListTestObject.getColumnCount();
+        if (!columnCountOptional.isPresent()) return;
+
+        for (int column = 1; column <= columnCountOptional.get(); column++) {
             Optional<String> columnName = viewListTestObject.getColumnName(column);
             Optional<Object> value = viewListTestObject.getValueAt(row, column);
+
             if (columnName.isPresent() && value.isPresent()) {
                 parameterProvider.put(columnName.get(), value.get());
             }
