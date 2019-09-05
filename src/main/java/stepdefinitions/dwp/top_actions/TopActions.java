@@ -37,7 +37,7 @@ public class TopActions extends NavigationElements {
 
         while (!elementVisible && currentAttempt <= maxAttempts) {
             currentAttempt++;
-            Sleeper.sleepTightInSeconds(1);
+            Sleeper.sleepTightInSeconds(4);
             seleniumDriver.findElement(By.name(TOP_FILTER_BUTTON)).click();
             elementVisible = isFilterExpectedElementVisible();
             if (!elementVisible) {
