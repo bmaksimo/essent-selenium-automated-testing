@@ -20,12 +20,12 @@ Feature: NUAT-448: Change The Advance Amount For A Customer - nl_BE
 
         When Dashboard menu is "Contracten"
         And Change amount for a customer
-        And Sleep for 10 seconds
+        And Sleep for 20 seconds
         And Contract plus and "Voorschotbedrag aanpassen"
         And Amount values is "125"
         And "Betalingsfrequentie" selection is "Maandelijks"
         Then Changes are confirmed
-        And Sleep for 10 seconds
+        And Sleep for 20 seconds
 
         When Contract plus and "Bekijk voorschotdata"
         Then Amount of a customer value
