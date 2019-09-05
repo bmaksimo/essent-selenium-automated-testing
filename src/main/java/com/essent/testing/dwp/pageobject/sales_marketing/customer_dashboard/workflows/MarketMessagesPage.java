@@ -47,6 +47,7 @@ public class MarketMessagesPage extends Component {
     }
 
     public void createNewMarktBericht(String newMarktbericht){
+        seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.name(newMarktbericht)));
     }
 

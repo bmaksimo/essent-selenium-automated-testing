@@ -24,6 +24,7 @@ public class ConfirmationSteps extends NavigationElements {
   private class CheckModalDialog implements Predicate<Map> {
     @Override
     public boolean test(Map options) {
+      seleniumDriver.waitForRequestsToFinish();
       return executeJavascriptTest(JS_TR_CHECK_MODAL_DIALOG, options);
     }
   }
