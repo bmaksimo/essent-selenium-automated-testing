@@ -6,91 +6,127 @@
 Feature: NUAT-5019: Complete E2E scenario "Active customer to drop, through one payment and 3 dunning levels, with SS and Market Mock"
 
     Background:
-        Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
+#        Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
+        Given I login as API user "soapui_b2c"
     @NUAT-5019
     Scenario: Create active contract that after dunning the contract becomes inactive
         #1 - GUI contract creation
-        When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
-        Then Form header is "Quote details"
+#        When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
+#        Then Form header is "Quote details"
+#
+#        When "Tariefdatum" date is "now"
+#        And "Sales kanaal" selection is "Inbound"
+#        And Quote details are confirmed
+#        Then Form header is "Personal details"
+#
+#        When Customer is random
+#        And Customer address is
+#            | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
+#            | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
+#        And Customer details are confirmed
+#        Then Form header is "Select package & fuel type"
+#        And "Pakket" selection is "Vast"
+#        And Checkbox "Gas Fix B2C (TC1)" is Unchecked
+#        And Package and Fuel Type is confirmed
+#        Then Form header is "Connection details"
+#
+#        And EAN code is generated
+#        And "Startdatum" date is "35 days before now"
+#        And "EAN-code" input is "parameter:EAN-code-generated"
+#        And  Option "test" "is" "On"
+#        And Connection details are confirmed
+#        Then Form header is "Billing details"
+#
+#        When "Betalingswijze" selection is "Overschrijving"
+#        And Billing details are confirmed
+#        Then Form header is "Quote overview"
+#
+#        When Option "Heeft de klant al getekend?" "is" "On"
+#        And "Kanaal ondertekening" selection is "Papier"
+#        And Quote is signed in "Kontich"
+#        And "Datum ondertekening" date is "now"
+#        And Quote is confirmed
+#        Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
+#
+#        When Dashboard menu is "Contracten"
+#        And "1st" List element with value at column "EAN-code" is checked
+#        And "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
 
-        When "Tariefdatum" date is "now"
-        And "Sales kanaal" selection is "Inbound"
-        And Quote details are confirmed
-        Then Form header is "Personal details"
+        And "Create_Quote" flow is started
+        When Data is prepared for Create quote request for "prospect" and meter open is "On" and sign date is "35 days before now"
+        And New tc1_quote is created
+        Then Quote status is "ACCEPTED"
+        And Quoteline exists
+        And Quoteline status is "Sent to customer"
 
-        When Customer is random
-        And Customer address is
-            | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-            | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
-        And Customer details are confirmed
-        Then Form header is "Select package & fuel type"
-        And "Pakket" selection is "Vast"
-        And Checkbox "Gas Fix B2C (TC1)" is Unchecked
-        And Package and Fuel Type is confirmed
-        Then Form header is "Connection details"
+        When Simulation that customer signature is received
+        Then Quote stage status is "SIGNATURE RECEIVED"
+        And Quoteline status is "Signature received"
 
-        And EAN code is generated
-        And "Startdatum" date is "35 days before now"
-        And "EAN-code" input is "parameter:EAN-code-generated"
-        And  Option "test" "is" "On"
-        And Connection details are confirmed
-        Then Form header is "Billing details"
+        When File is uploaded as scanned signature
+        Then Signin is confirmed
+        And Contract is created
+        And Contracted EAN exists on account
 
-        When "Betalingswijze" selection is "Overschrijving"
-        And Billing details are confirmed
-        Then Form header is "Quote overview"
-
-        When Option "Heeft de klant al getekend?" "is" "On"
-        And "Kanaal ondertekening" selection is "Papier"
-        And Quote is signed in "Kontich"
-        And "Datum ondertekening" date is "now"
-        And Quote is confirmed
-        Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
-
-        When Dashboard menu is "Contracten"
-        And "1st" List element with value at column "EAN-code" is checked
-        And "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
+        When Payment details are received
+        Then Wait until contract instance starts
+        And Check order in jbilling
 
 
         # 2 - invoice run advance
-        Given I renew login to DWP as "billing.testautomation@essent.be"
-        When Left menu is "billing"
-        And Top menu item is "Klanten"
-        And Top action is Filter from "billing" menu retrying 5 times
-        And "Naam" input is "parameter:suitecrm-customer-name"
+        When Billing run "RECURRING" is triggered with process date "1 month from now"
+#        Given I renew login to DWP as "billing.testautomation@essent.be"
+#        When Left menu is "billing"
+#        And Top menu item is "Klanten"
+#        And Top action is Filter from "billing" menu retrying 5 times
+#        And "Naam" input is "parameter:suitecrm-customer-name"
+#
+#        Given View List element "Id Billing customer & persoon/familie sleutel" is collected as parameter at "1st" list row
+#        And View List element "Klantnummer & Naam" using "accountNumber" as alias is collected as parameter at "1st" list row
+#        And Click on "parameter:accountNumber" link
+#        And Dashboard menu is "Contracten"
+#
+#        Given Top arrow button is "Up"
+#        And Plus menu is "Billing -> Start facturatierun"
+#        When Modal dialog is "Start invoicerun"
+#        And "Naam job" selection is "recurrent"
+#        And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
+#        And "Factuurdatum" date is "now"
+#        And "Procesdatum" date is "1 month from now"
+#        Then Invoice run is scheduled
+#
+#        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
+#        When Dashboard menu is "Billing"
+#        And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
 
-        Given View List element "Id Billing customer & persoon/familie sleutel" is collected as parameter at "1st" list row
-        And View List element "Klantnummer & Naam" using "accountNumber" as alias is collected as parameter at "1st" list row
-        And Click on "parameter:accountNumber" link
-        And Dashboard menu is "Contracten"
 
-        Given Top arrow button is "Up"
-        And Plus menu is "Billing -> Start facturatierun"
-        When Modal dialog is "Start invoicerun"
-        And "Naam job" selection is "recurrent"
-        And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
-        And "Factuurdatum" date is "now"
-        And "Procesdatum" date is "1 month from now"
-        Then Invoice run is scheduled
-
-        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
-        When Dashboard menu is "Billing"
-        And "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
 
         # 3 - Download CODA
+#        Given I renew login to Odoo as "role_essent_ccm_user"
+#        When Cleanup Odoo CODA files
+#        And Odoo top menu is "Accounting"
+#        And Odoo left menu is "Customers"
+#        And Odoo filter is "parameter:accountNumber"
+#        When Column "Account Number" with value "parameter:accountNumber" is clicked
+#        And Button "Journal Items" is clicked
+#        And Generate CODA in the first row with "Amount receivable" is clicked
+#        Then Modal title contains "Download CODA"
+#        And Generated CODA file is downloaded
         Given I renew login to Odoo as "role_essent_ccm_user"
         When Cleanup Odoo CODA files
         And Odoo top menu is "Accounting"
         And Odoo left menu is "Customers"
         And Odoo filter is "parameter:accountNumber"
         When Column "Account Number" with value "parameter:accountNumber" is clicked
-        And Button "Journal Items" is clicked
-        And Generate CODA in the first row with "Amount receivable" is clicked
+        And Button "Outstanding" is clicked
+        And Expand results
+        And Generate CODA is clicked
         Then Modal title contains "Download CODA"
         And Generated CODA file is downloaded
 
         # 4 - import and match CODA
-        Given I renew login to Odoo as "role_essent_ccm_user"
+#        Given I renew login to Odoo as "role_essent_ccm_user"
+        When Modal button "Close" is clicked
         When Odoo top menu is "Accounting"
         And Odoo left menu is "CODA Processing->Import CODA Files"
         Then Odoo file upload dialog is "Import CODA File"
@@ -98,12 +134,13 @@ Feature: NUAT-5019: Complete E2E scenario "Active customer to drop, through one 
         And Odoo file upload confirm button is "Import"
         And Odoo file import report contains success string "Number of statements processed : 1"
 
-        Given I renew login to DWP as "billing.testautomation@essent.be"
+#        Given I renew login to DWP as "billing.testautomation@essent.be"
+        Given I renew login to DWP as "contracting.testautomation.b2c@essent.be"
         When Left menu is "contracting-switching"
         And Top menu item is "Klanten"
         And Top action is Filter from "contracting-switching" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
-        Then "1st" List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
+#        Then "1st" List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
 
         When Click on "parameter:accountNumber" link
         And Dashboard menu is "Billing"
@@ -112,50 +149,15 @@ Feature: NUAT-5019: Complete E2E scenario "Active customer to drop, through one 
         And Table "Transacties" contains value "Paid by OV" at column "Extra info"
 
         # 5 - Create consumptions
-        Given Dashboard menu is "Contracten"
-        And "1st" List element with value at column "EAN-code" is checked
         Then Consumption at deliverypointid "parameter:EAN-code" is generated from "35 days before now" until "12" months after
 
         # 6 - Run mediation
-        When Top arrow button is "Up"
-        And Left menu is "billing"
-        And Top menu item is "Klanten"
-        And Plus menu is "Billing -> Start mediationrun"
-        Then Modal dialog is "Start mediationrun"
-
-        Given "Naam job" selection is "Voorschot"
-        And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
-        And "Datum afrekeningsfactuur" date is "11 months from now"
-        Then Form is submitted
+        When Mediation run "Advance" is triggered with settlement date "11 months from now"
 
         # 7 - Create settlement invoice
-        When Left menu is "billing"
-        And Top menu item is "Klanten"
-        And Plus menu is "Billing -> Start facturatierun"
-        Then  Modal dialog is "Start invoicerun"
-
-        When "Naam job" selection is "Eenmalig"
-        And "ID Billing customer" input is "parameter:Id Billing customer & persoon/familie sleutel"
-        And "Factuurdatum" date is "now"
-        And "Procesdatum" date is "11 months from now"
-        Then Invoice run is scheduled
-
-        And Top action is Filter from "billing" menu retrying 5 times
-        And "Klantnummer" input is "parameter:accountNumber"
-        And Click on "parameter:accountNumber" link
-        And Dashboard menu is "Billing"
-        And Table "Transacties" contains value "Invoice (SETTLEMENT)" at column "ID & Type"
+        When Billing run "ONETIME" is triggered with process date "11 months from now"
 
         # 8 - Reach HB3 dunning level
-        Given I renew login to DWP as "billing.testautomation@essent.be"
-        When Left menu is "billing"
-        And Top menu item is "Klanten"
-        And Top action is Filter from "billing" menu retrying 5 times
-        And "Naam" input is "parameter:suitecrm-customer-name"
-        And View List element "Id Billing customer & persoon/familie sleutel" using "billingCustomerId" as alias is collected as parameter at "1st" list row
-        And View List element "Klantnummer & Naam" using "accountNumber" as alias is collected as parameter at "1st" list row
-
-        Given Click on "parameter:accountNumber" link
         And Dunning day countdown for "parameter:accountNumber" goes down 12 days
         And Sleep for 60 seconds
         And Dunning day countdown for "parameter:accountNumber" goes down 28 days
@@ -163,6 +165,7 @@ Feature: NUAT-5019: Complete E2E scenario "Active customer to drop, through one 
         And Dunning day countdown for "parameter:accountNumber" goes down 28 days
         And Sleep for 90 seconds
 
+        When Dashboard menu is "Contracten"
         When Dashboard menu is "Billing"
         And Table "Transacties" contains value "Invoice (SETTLEMENT)" at column "ID & Type"
         And Table "Transacties" contains value "Invoice (ADVANCE)" at column "ID & Type"
@@ -179,18 +182,21 @@ Feature: NUAT-5019: Complete E2E scenario "Active customer to drop, through one 
         And Table "Taken" contains value "Soft-Dunning Call POST HB1 B2C HIGH" at column "Naam & Type & Subtype"
 
         # 10 - Check for INITIATE STOP ACCESS market message creation
-        Given I renew login to DWP as "contracting.testautomation.b2c@essent.be"
-        When Left menu is "contracting-switching"
-        And Top menu item is "Klanten"
-        And Top action is Filter from "contracting-switching" menu retrying 5 times
-        And "Naam" input is "parameter:suitecrm-customer-name"
-        Then "1st" List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
+#        Given I renew login to DWP as "contracting.testautomation.b2c@essent.be"
+#        When Left menu is "contracting-switching"
+#        And Top menu item is "Klanten"
+#        And Top action is Filter from "contracting-switching" menu retrying 5 times
+#        And "Klantnummer" input is "parameter:accountNumber"
+#        When Click on "parameter:accountNumber" link
+#        And "Naam" input is "parameter:suitecrm-customer-name"
+#        Then "1st" List element with value at column "Id Billing customer & persoon/familie sleutel" is checked
 
-        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column
+#        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column
         When Dashboard menu is "Marktberichten"
-        Then "1st" list element has cell value "INITIATE STOP ACCESS" at column "Module & Label" polling 450 seconds
-
-        # 11 - Cancel INITIATE STOP ACCESS market message and create a new INITIATE STOP ACCESS market message effective from NOW
+##        Then "1st" list element has cell value "INITIATE STOP ACCESS" at column "Module & Label" polling 450 seconds
+        Then Table "Marktberichten" contains value "INITIATE STOP ACCESS" at column "Module & Label" retrying 5 times
+#
+#        # 11 - Cancel INITIATE STOP ACCESS market message and create a new INITIATE STOP ACCESS market message effective from NOW
         When Plus action of "1" element from "MarketTransactionsOnAccount" and click on "Annuleer Marktbericht"
         And Select Contractline dialog is confirmed
 

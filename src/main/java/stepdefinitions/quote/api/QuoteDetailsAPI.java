@@ -35,7 +35,6 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
     private final static Logger LOGGER = Logger.getLogger(QuoteDetailsAPI.class);
 
-
     private static String PATH_TO_QUOTE = ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_QUOTE);
     private static String PATH_TO_PAYLOAD = ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_PAYLOAD);
     private static String PATH_TO_PAYLOAD_SUPPLIER_SWITCH = ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_PAYLOAD_SUPPLIER_SWITCH);
@@ -71,17 +70,17 @@ public class QuoteDetailsAPI extends AbstractAPI {
         synchronized(this) {
             ean = PrepareDataForContract.generateEAN();
         }
-            synchronized(this) {
-                dateOfBirth = PrepareDataForContract.generateDOBForAnAdult();
-            }
+        synchronized(this) {
+            dateOfBirth = PrepareDataForContract.generateDOBForAnAdult();
+        }
 
-            synchronized(this) {
-                ibanBE = PrepareDataForContract.getValidIbanBE();
-            }
+        synchronized(this) {
+            ibanBE = PrepareDataForContract.getValidIbanBE();
+        }
 
-            synchronized(this) {
-                companyNumber = PrepareDataForContract.generateValidBECompanyNumber();
-            }
+        synchronized(this) {
+            companyNumber = PrepareDataForContract.generateValidBECompanyNumber();
+        }
 
         QuoteDetails quoteDetails = new QuoteDetails();
         quoteDetails.setEan(ean);

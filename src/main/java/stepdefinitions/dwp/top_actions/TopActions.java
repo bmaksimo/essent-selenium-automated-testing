@@ -38,10 +38,13 @@ public class TopActions extends NavigationElements {
         while (!elementVisible && currentAttempt <= maxAttempts) {
             currentAttempt++;
             Sleeper.sleepTightInSeconds(1);
+            seleniumDriver.waitForRequestsToFinish();
             seleniumDriver.findElement(By.name(TOP_FILTER_BUTTON)).click();
             elementVisible = isFilterExpectedElementVisible();
             if (!elementVisible) {
+                seleniumDriver.waitForRequestsToFinish();
                 new DwpLeftMenu().clickOnLeftElement(sideMenu);
+                seleniumDriver.waitForRequestsToFinish();
                 new DwpTopMenu().findAndClickTopMenu(TOP_MENU_KLANTEN);
             }
         }
