@@ -153,6 +153,7 @@ public class MarketBerichtenSteps extends DwpScenario {
 
     @And("^Marktbericht has label \"([^\"]*)\"$")
     public void marketMessageHasLabel(String label) {
+        seleniumDriver.waitForRequestsToFinish();
         MarketMessagesPage mp = new MarketMessagesPage();
         Assert.assertEquals("Actual label differs from expected", mp.getMarketMessageLabel(), label);
     }
