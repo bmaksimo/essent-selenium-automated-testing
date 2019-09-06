@@ -452,11 +452,21 @@ public class ViewListChecks extends NavigationElements {
 
     @And("^All cell values at \"([^\"]*)\" row from table \"([^\"]*)\" are checked$")
     public void cellValuesAtRowFromTableAreChecked(String ordinal, String tableName){
+        seleniumDriver.waitForRequestsToFinish();
         ViewListTestObject viewListTestObject = new ViewListTestObject(tableName);
         int row = extractNumericValue(ordinal);
 
-        Optional<Integer> columnCountOptional = viewListTestObject.getColumnCount();
-        if (!columnCountOptional.isPresent()) return;
+        Optional<Integer> columnCountOptional = Optional.empty();
+        boolean found = false;
+        int currentAttempt = 0;
+        int maxAttempts = 10;
+        while (!found && currentAttempt <= maxAttempts) {
+            currentAttempt++;
+            columnCountOptional = viewListTestObject.getColumnCount();
+            found = columnCountOptional.isPresent();
+        }
+
+        if (!found) throw new CucumberException("Column count not found");
 
         for (int column = 1; column <= columnCountOptional.get(); column++) {
             Optional<String> columnName = viewListTestObject.getColumnName(column);
