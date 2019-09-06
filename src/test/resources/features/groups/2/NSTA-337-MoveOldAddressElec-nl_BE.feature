@@ -4,56 +4,80 @@
 @ALL
 Feature: NSTA-337: Move old address - Electricity
     Background:
-        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
-
+#        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
+        Given I login as API user "soapui_b2c"
     @NSTA-337
     Scenario: NSTA-337: Move old address - Electricity
-        When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
-        Then Form header is "Quote details"
+#        When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
+#        Then Form header is "Quote details"
+#
+#        When "Tariefdatum" date is "1 month before now"
+#        And "Sales kanaal" selection is "Inbound"
+#        And Quote details are confirmed
+#        Then Form header is "Personal details"
+#
+#        When Customer is random
+#        And Customer address is
+#            | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
+#            | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
+#        And Customer details are confirmed
+#        Then Form header is "Select package & fuel type"
+#
+#        When Package is "Vast"
+#        And Checkbox "Gas Fix B2C (TC1)" is Unchecked
+#        And Kortingen is "50_part"
+#        And Package and Fuel Type is confirmed
+#        Then Form header is "Connection details"
+#
+#        When EAN code is generated
+#        And "Startdatum" date is "5 day before now"
+#        And "EAN-code" input is "parameter:EAN-code-generated"
+#        And "Meternummer" input is "1000"
+#        And Option "test" "is" "On"
+#        And Connection details are confirmed
+#        And Save changes
+#        Then Form header is "Billing details"
+#
+#        When "Betalingswijze" selection is "Overschrijving"
+#        And  Billing details are confirmed
+#        Then  Form header is "Quote overview"
+#
+#        When Option "Heeft de klant al getekend?" "is" "On"
+#        And "Kanaal ondertekening" selection is "Papier"
+#        And "Datum ondertekening" date is "now"
+#        And Quote is signed
+#        And Quote is signed in "Kontich"
+#        When Quote is confirmed
+#
+#        When Dashboard menu is "Contracten"
+##        And  "1st" List element with value at column "EAN-code" is checked
+#        And Get Account Number
+#        And Copy product name
+#        Then  "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
 
-        When "Tariefdatum" date is "1 month before now"
-        And "Sales kanaal" selection is "Inbound"
-        And Quote details are confirmed
-        Then Form header is "Personal details"
+        And "Create_Quote" flow is started
+        When Data is prepared for Create quote request for "prospect" and meter open is "Off" and sign date is "35 days before now"
+        And New tc1_quote is created
+        Then Quote status is "ACCEPTED"
+        And Quoteline exists
+        And Quoteline status is "Sent to customer"
+        When Simulation that customer signature is received
+        Then Quote stage status is "SIGNATURE RECEIVED"
+        And Quoteline status is "Signature received"
+        When File is uploaded as scanned signature
+        Then Signin is confirmed
+        And Contract is created
+        When Payment details are received
+        Then Wait until contract instance starts
+        And Check order in jbilling
 
-        When Customer is random
-        And Customer address is
-            | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
-            | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
-        And Customer details are confirmed
-        Then Form header is "Select package & fuel type"
-
-        When Package is "Vast"
-        And Checkbox "Gas Fix B2C (TC1)" is Unchecked
-        And Kortingen is "50_part"
-        And Package and Fuel Type is confirmed
-        Then Form header is "Connection details"
-
-        When EAN code is generated
-        And "Startdatum" date is "5 day before now"
-        And "EAN-code" input is "parameter:EAN-code-generated"
-        And "Meternummer" input is "1000"
-        And Option "test" "is" "On"
-        And Connection details are confirmed
-        And Save changes
-        Then Form header is "Billing details"
-
-        When "Betalingswijze" selection is "Overschrijving"
-        And  Billing details are confirmed
-        Then  Form header is "Quote overview"
-
-        When Option "Heeft de klant al getekend?" "is" "On"
-        And "Kanaal ondertekening" selection is "Papier"
-        And "Datum ondertekening" date is "now"
-        And Quote is signed
-        And Quote is signed in "Kontich"
-        When Quote is confirmed
-
+        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
+        When Left menu is "sales-marketing"
+        And Top menu item is "Klanten"
+        And Top action is Filter from "sales-marketing" menu retrying 5 times
+        And "Klantnummer" input is "parameter:accountNumber"
+        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
         When Dashboard menu is "Contracten"
-        And  "1st" List element with value at column "EAN-code" is checked
-        And Get Account Number
-        And Copy product name
-        Then  "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
         And Plus action of "1" element from "ContractsOnAccount" and click on "Verhuis OA"
 
         And Options "Testing?" "is" "On"
@@ -88,8 +112,16 @@ Feature: NSTA-337: Move old address - Electricity
         And Change house number to "4"
         Then Changes are confirmed
 
+        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
+        And Left menu is "sales-marketing"
+        And Top menu item is "Klanten"
+        And Top action is Filter from "sales-marketing" menu retrying 5 times
+        And "Klantnummer" input is "parameter:accountNumber"
+        Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
+
         When Dashboard menu is "Service"
-        Then There is a case where onderwerp is "Verhuis"
+#        Then There is a case where onderwerp is "Verhuis"
+        Then Table "Cases" contains value "Verhuis" at column "Onderwerp" retrying 15 times
         And Interaction is created with Type "Interaction" and Onderwerp "Move OA"
 
         And Click on link in View List at "1st" row and "Nummer & Aanmaakdatum" column polling 20 seconds
@@ -118,10 +150,10 @@ Feature: NSTA-337: Move old address - Electricity
         When Dashboard menu is "Marktberichten"
         Then Marktbericht has label "CUSTOMER SWITCH"
         And Check marktbericht
-            |               ean            |     modul    |  end date |
-            | parameter:EAN-code-generated | START ACCESS |     now   |
+            | ean                | modul        | end date |
+            | parameter:EAN-code | START ACCESS | now      |
 
         When Dashboard menu is "Contracten"
         Then Check contract
-            | type |         status          | start date |              EAN             |      product      |
-            | GLN  |  Verwerkt (Geaccepteerd)|  now       | parameter:EAN-code-generated | parameter:product |
+            | type | status                  | start date | EAN                | product           |
+            | GLN  | Verwerkt (Geaccepteerd) | now        | parameter:EAN-code | parameter:product |

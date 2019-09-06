@@ -1,5 +1,6 @@
 package com.essent.testing.dwp.pageobject.guidance_mode;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -42,6 +43,7 @@ public class CreateMoveOAPage extends Component {
 
     public void chooseMoveDate(String date){
         seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(5);
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id(MOVE_DATE_ID)),date);
     }
 

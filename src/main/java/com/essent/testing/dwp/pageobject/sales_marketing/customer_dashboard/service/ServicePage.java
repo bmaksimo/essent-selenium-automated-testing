@@ -39,7 +39,7 @@ public class ServicePage extends Component {
         Assert.assertTrue(seleniumDriver.findElementWhenVisible(By.xpath("(//span[.='" + input + "'])[1]")).isDisplayed());
     }
 
-    public String getCaseOnderwerp(){
+    public String getCaseOnderwerp() {
         return seleniumDriver.findElementWhenVisible(By.xpath(CASE_TOPIC)).getText();
     }
     public String getCaseNumber(){
