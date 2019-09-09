@@ -16,22 +16,19 @@ public class MoveOldAddressSteps extends DwpScenario {
 
     @And("^Communication channel is \"([^\"]*)\"$")
     public void communicationChannelIs(String channel) {
-        CreateMoveOAPage cmoa = new CreateMoveOAPage();
-        cmoa.chooseCommunicationChannel(channel);
+        new CreateMoveOAPage().chooseCommunicationChannel(channel);
 
     }
 
     @And("^Reason of move \"([^\"]*)\"$")
     public void reasonOfMove(String reason) {
-        CreateMoveOAPage cmoa = new CreateMoveOAPage();
-        cmoa.chooseReasonOfMove(reason);
+        new CreateMoveOAPage().chooseReasonOfMove(reason);
     }
 
     @And("^Move date is \"([^\"]*)\"$")
     public void moveDateIs(String value) {
-        CreateMoveOAPage cmoa = new CreateMoveOAPage();
         String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(value));
-        cmoa.chooseMoveDate(inputValue);
+        new CreateMoveOAPage().chooseMoveDate(inputValue);
     }
 
     @And("^Get meter reading plus \"([^\"]*)\" kwl from \"([^\"]*)\"$")
@@ -57,9 +54,9 @@ public class MoveOldAddressSteps extends DwpScenario {
         CreateMoveOAPage cmoa = new CreateMoveOAPage();
         String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(value));
         seleniumDriver.waitForRequestsToFinish();
-        Sleeper.sleepTightInSeconds(2);
+        Sleeper.sleepTightInSeconds(3);
         cmoa.chooseMeterReadingDate(inputValue);
-        Sleeper.sleepTightInSeconds(1);
+        Sleeper.sleepTightInSeconds(3);
     }
 
     @And("^Low meter reading input is \"([^\"]*)\"$")
@@ -67,9 +64,9 @@ public class MoveOldAddressSteps extends DwpScenario {
         CreateMoveOAPage cmoa = new CreateMoveOAPage();
         String meterReading = parameterProvider.getValueOrParameterAsString(value);
         seleniumDriver.waitForRequestsToFinish();
-        Sleeper.sleepTightInSeconds(2);
+        Sleeper.sleepTightInSeconds(3);
         cmoa.setMeterReading(meterReading);
-        Sleeper.sleepTightInSeconds(1);
+        Sleeper.sleepTightInSeconds(3);
 
     }
 }

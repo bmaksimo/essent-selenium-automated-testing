@@ -12,6 +12,7 @@ public class OnlineQuoteSignatureModalPage  extends QuoteCreationGuidedStep {
     private SignatureData signatureData;
 
     public void setSignatureData(SignatureData signatureData) {
+        seleniumDriver.waitForRequestsToFinish();
         this.signatureData = signatureData;
     }
 

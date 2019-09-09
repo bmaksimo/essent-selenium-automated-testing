@@ -50,7 +50,6 @@ Feature: NSTA 332 Soctar confirmation --> Manual
         And Quote is signed
         And Quote is signed in "Kontich"
         When Quote is confirmed
-        Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
 
         When Dashboard menu is "Contracten"
         And  "1st" List element with value at column "EAN-code" is checked

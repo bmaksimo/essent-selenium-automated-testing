@@ -39,6 +39,7 @@ public class TopActions extends NavigationElements {
             currentAttempt++;
             Sleeper.sleepTightInSeconds(1);
             seleniumDriver.waitForRequestsToFinish();
+            Sleeper.sleepTightInSeconds(4);
             seleniumDriver.findElement(By.name(TOP_FILTER_BUTTON)).click();
             elementVisible = isFilterExpectedElementVisible();
             if (!elementVisible) {
