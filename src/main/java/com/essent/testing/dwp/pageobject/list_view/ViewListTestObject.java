@@ -35,8 +35,11 @@ public class ViewListTestObject extends Component implements ViewList {
   }
 
   public Optional<Integer> getColumnCount() {
-    int count = new DefaultTableModel().getColumnCount();
-    return count > 0 ? Optional.of(count) : Optional.empty();
+    if (tableModel.isPresent()) {
+        int count = tableModel.get().getColumnCount();
+        return count > 0 ? Optional.of(count) : Optional.empty();
+    }
+    return Optional.empty();
   }
 
   public Optional<String> getColumnName(int column) {
