@@ -461,10 +461,16 @@ public class ViewListChecks extends NavigationElements {
         int currentAttempt = 0;
         int maxAttempts = 20;
         while (!found && currentAttempt <= maxAttempts) {
+            logger().info("Attempt " + currentAttempt);
             currentAttempt++;
             columnCountOptional = viewListTestObject.getColumnCount();
             found = columnCountOptional.isPresent();
-            if (!found) Sleeper.sleepTightInSeconds(10);
+            logger().info("found " + found);
+            if (!found) {
+                logger().info("SLEEP");
+                Sleeper.sleepTightInSeconds(10);
+            }
+
         }
 
         if (!found) throw new CucumberException("Column count not found");
