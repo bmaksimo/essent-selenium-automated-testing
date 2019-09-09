@@ -459,7 +459,7 @@ public class ViewListChecks extends NavigationElements {
         Optional<Integer> columnCountOptional = Optional.empty();
         boolean found = false;
         int currentAttempt = 0;
-        int maxAttempts = 20;
+        int maxAttempts = 30;
         while (!found && currentAttempt <= maxAttempts) {
             logger().info("Attempt " + currentAttempt);
             currentAttempt++;
@@ -468,7 +468,7 @@ public class ViewListChecks extends NavigationElements {
             logger().info("found " + found);
             if (!found) {
                 logger().info("SLEEP");
-                Sleeper.sleepTightInSeconds(10);
+                Sleeper.sleepTightInSeconds(30);
             }
 
         }
