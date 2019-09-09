@@ -27,6 +27,7 @@ public class CreateMoveOAPage extends Component {
         seleniumDriver.waitAndClick(getCommunicationChannelElement());
         String communicationChannel = createQuery(COMMUNICATION_CHANNEL, REPLACEMENT_KEY, channel);
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(communicationChannel)));
+        seleniumDriver.waitForRequestsToFinish();
     }
 
     private WebElement getReasonOfMoveElement(){
@@ -37,14 +38,17 @@ public class CreateMoveOAPage extends Component {
     public void chooseReasonOfMove(String reason){
         seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.waitAndClick(getReasonOfMoveElement());
+        seleniumDriver.waitForRequestsToFinish();
         String reasonOfMove = createQuery(REASON_OF_MOVE, REPLACEMENT_KEY, reason);
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(reasonOfMove)));
+        seleniumDriver.waitForRequestsToFinish();
     }
 
     public void chooseMoveDate(String date){
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(5);
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.id(MOVE_DATE_ID)),date);
+        seleniumDriver.waitForRequestsToFinish();
     }
 
     public String getPreviousMeterReading(String rate){
