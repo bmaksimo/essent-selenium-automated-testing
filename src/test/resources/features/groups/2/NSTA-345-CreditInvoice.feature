@@ -3,7 +3,6 @@
 @B2C
 @API
 @ALL
-    @CI
 Feature: NSTA-345:Credit Invoice
 
     Background:
