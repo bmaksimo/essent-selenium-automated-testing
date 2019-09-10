@@ -129,6 +129,8 @@ public abstract class DwpScenario extends RegisteredScenario {
     }
 
     public boolean executeJavascriptTestImmediately(String registeredJsClass, Object options, boolean withException) {
+        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(5);
         return seleniumDriver.executeJavascriptTestImmediately(registeredJsClass, options, withException);
     }
 

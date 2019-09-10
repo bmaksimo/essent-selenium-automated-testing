@@ -3,6 +3,7 @@
 @B2C
 @API
 @ALL
+    @CI
 Feature: NSTA-345:Credit Invoice
 
     Background:
@@ -40,13 +41,14 @@ Feature: NSTA-345:Credit Invoice
         When Billing run "RECURRING" is triggered with process date "1 month from now"
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
         When Dashboard menu is "Billing"
-        And "1st" List element with value at column "ID & Type" is checked
+#        And "1st" List element with value at column "ID & Type" is checked
 
         #Recalculate invoice
         When Plus action of "1" element from "TransactionsOnAccount" and click on "Herbereken tussentijdse factuur"
         And New Amount Invoice is "300" for EAN "parameter:EAN-code"
         Then Invoice run is scheduled
 
+        #3 - Check if interactions are created for VKM and CNM
         Given I renew login to DWP as "billing.testautomation@essent.be"
         When Left menu is "billing"
         And Top menu item is "Klanten"
@@ -54,15 +56,13 @@ Feature: NSTA-345:Credit Invoice
         And "Klantnummer" input is "parameter:accountNumber"
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
         When Dashboard menu is "Service"
-
-          #3 - Check if interactions are created for VKM and CNM
         Then Table "Interacties" contains value "VKM" at column "Type & Onderwerp" retrying 60 times
         Then Table "Interacties" contains value "CNM" at column "Type & Onderwerp" retrying 60 times
-        When Dashboard menu is "Billing"
 
         #Asserts
          #1 - Check if Old invoice is credited (check if CNM is created for same amount as old VKM)
          #2 - Check if there is a new invoice created for the amount you selected
+        When Dashboard menu is "Billing"
         Then Credit invoice has same negative amount as advance invoice
 
          #4 - Check if CNM has been sent to customer

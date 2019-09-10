@@ -447,7 +447,7 @@ public class ViewListChecks extends NavigationElements {
 
     @When("^Click on \"([^\"]*)\" matching value \"([^\"]*)\" at column \"([^\"]*)\"$")
     public void clickOnElementWithMatchingValue(String columnToBeClicked, String match, String filterColumn){
-        new ClickTableCellUrl().testNow(getColumnIndexListOptionsFromRow(columnToBeClicked, null, filterColumn, match));
+        new ClickTableCellUrl().test(getColumnIndexListOptionsFromRow(columnToBeClicked, null, filterColumn, match));
     }
 
     @And("^All cell values at \"([^\"]*)\" row from table \"([^\"]*)\" are checked$")
