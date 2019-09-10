@@ -357,7 +357,7 @@ public class ContractPage extends Component {
 
         Optional<WebElement> firstInvoiceElement = seleniumDriver.findElementOptional(By.xpath(FIRST_INVOICE));
         while (currentAttempt < maxAttempts && !firstInvoiceElement.isPresent()) {
-            logger().info("Attempt #"+currentAttempt);
+            logger().debug("Attempt #" + currentAttempt);
             currentAttempt++;
             Sleeper.sleepTightInSeconds(10);
 
