@@ -55,6 +55,11 @@ public class DetailsFormSteps extends DwpScenario {
         DetailsPage dp = new DetailsPage();
         Assert.assertThat("Customer iban does not match expected value", dp.getIban().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString(iban)), is(true));
         Assert.assertThat("Customer payment method does not match expected value", dp.getPaymentMethod().equalsIgnoreCase(method), is(true));
+    }
 
+    @And("Account block start and end dates are the same")
+    public void customerBankNumberIsAndPaymentMethodIs() {
+        DetailsPage dp = new DetailsPage();
+        Assert.assertThat("Dunning account block star and end dates are different", dp.getAccountBlockStartDate().equalsIgnoreCase(dp.getAccountBlockEndDate()), is(true));
     }
 }
