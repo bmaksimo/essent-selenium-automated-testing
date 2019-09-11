@@ -24,6 +24,7 @@ public class ContactDetailsPage extends QuoteCreationGuidedStep {
 
     private boolean fillInContactDetails() {
         String mobilePhone = getMobilePhone();
+
         Model.Execution initializeFields = createExecution();
         initializeFields.element(EMAIL.element()).element(MOBILE_NR.element());
         seleniumDriver.waitForRequestsToFinish();
