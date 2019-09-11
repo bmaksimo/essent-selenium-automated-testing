@@ -15,6 +15,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
+import static org.junit.Assert.fail;
+
 public class ContractPage extends Component {
 
     private final static Logger log = Logger.getLogger(ContractPage.class);
@@ -350,7 +352,21 @@ public class ContractPage extends Component {
 
     private List<String> getActualInvoicesAmounts() {
         seleniumDriver.waitForRequestsToFinish();
-        String firstInvoice = seleniumDriver.findElementWhenVisible(By.xpath(FIRST_INVOICE)).getText();
+        int maxAttempts = 10;
+        int currentAttempt = 0;
+
+        Optional<WebElement> firstInvoiceElement = seleniumDriver.findElementOptional(By.xpath(FIRST_INVOICE));
+        while (currentAttempt < maxAttempts && !firstInvoiceElement.isPresent()) {
+            logger().debug("Attempt #" + currentAttempt);
+            currentAttempt++;
+            Sleeper.sleepTightInSeconds(10);
+
+            firstInvoiceElement = seleniumDriver.findElementOptional(By.xpath(FIRST_INVOICE));
+        }
+
+        if (!firstInvoiceElement.isPresent()) fail("Invoices are not available");
+
+        String firstInvoice = firstInvoiceElement.get().getText();
         String secondInvoice = seleniumDriver.findElementWhenVisible(By.xpath(SECOND_INVOICE)).getText();
         String thirdInvoice = seleniumDriver.findElementWhenVisible(By.xpath(THIRD_INVOICE)).getText();
 

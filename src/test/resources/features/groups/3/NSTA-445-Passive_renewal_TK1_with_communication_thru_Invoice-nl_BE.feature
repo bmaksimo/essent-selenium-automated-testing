@@ -119,5 +119,5 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
 
         #6 Check communication
         When Dashboard menu is "Service"
-        Then Table "Interacties" has matching value "Outbound document: Passive renewal communication" at column "Type & Onderwerp"
-        And  Table "Interacties" has matching value "Outbound document: advance" at column "Type & Onderwerp"
+        Then Table "Interacties" has matching value "Outbound document: Passive renewal communication" at column "Type & Onderwerp" polling 20 seconds
+        And  Table "Interacties" has matching value "Outbound document: advance" at column "Type & Onderwerp" polling 20 seconds
