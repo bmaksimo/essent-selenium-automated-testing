@@ -60,6 +60,12 @@ public class DetailsFormSteps extends DwpScenario {
     @And("Account block start and end dates are the same")
     public void customerBankNumberIsAndPaymentMethodIs() {
         DetailsPage dp = new DetailsPage();
+        parameterProvider.put("startDate", dp.getAccountBlockStartDate());
         Assert.assertThat("Dunning account block star and end dates are different", dp.getAccountBlockStartDate().equalsIgnoreCase(dp.getAccountBlockEndDate()), is(true));
+    }
+
+    @And("^Date is saved$")
+    public void dateIsSaved(){
+         parameterProvider.put("endDate", toDwpEndDate("now"));
     }
 }

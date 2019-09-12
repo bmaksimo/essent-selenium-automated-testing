@@ -89,4 +89,24 @@ public class CustomerPage extends Component {
     public String getDirectDebitSentDate(){
         return seleniumDriver.findElementWhenVisible(By.xpath(SENT_DATE)).getText();
     }
+
+    public void clickOnAccountBlockButton(){
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//div[@class='stat_button_icon fa fa-exclamation-triangle fa-fw']")));
+    }
+
+    public String getAccountBlockReason(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("//td[@data-field='reason_id']")).getText();
+    }
+
+    public String getAccountBlockStartDate(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("//td[@data-field='start_date']")).getText();
+    }
+
+    public String getAccountBlockEndDate(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("//td[@data-field='end_date']")).getText();
+    }
+
+    public String getAccountBlockActiveStatus(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//td[@data-field='active']/input)[2]")).getAttribute("checked");
+    }
 }
