@@ -23,9 +23,7 @@ Feature: TESTAUTO-194 Dunning-create-account-block-service
         When Plus menu is "Service -> Dunning stop on customer-NEW"
         And "Block reason" selection is "Official complaint"
         And "Startdatum" date is "now"
-        And Sleep for 10 seconds
         And Changes are confirmed
-        And Sleep for 60 seconds
         When Dashboard menu is "Details"
 
         And Table "Lijst blokkeringen" contains value "Official complaint" at column "Reden" retrying 30 times
@@ -38,4 +36,9 @@ Feature: TESTAUTO-194 Dunning-create-account-block-service
         And Odoo left menu is "Customers"
         And Odoo filter is "parameter:accountNumber"
         When Column "Account Number" with value "parameter:accountNumber" is clicked
-        And Button "Account Blocks" is clicked
+        And Button Account Blocks is clicked
+        And Account Block Reason is E-plus
+        And Account Block is Active
+        And Account Block Start date is today
+        Then Account Block End date is 7 days from today
+
