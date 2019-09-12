@@ -35,7 +35,7 @@ public class AccountBlockSteps extends OdooScenario {
         String endDate = DateExpressionsUtil
             .getNDaysFromToday(amountOfDays)
             .toString(EssentDateTimeFormat.ODOO_DATE_FORMAT.getFormat());
-        String pageStartDate = new AccountBlockPage().getAccountBlockEndDate();
-        Assert.assertTrue("Account block end date is not " + amountOfDays + " days from today", pageStartDate.equalsIgnoreCase(endDate));
+        String pageEndDate = new AccountBlockPage().getAccountBlockEndDate();
+        Assert.assertTrue("Account block end date is not " + amountOfDays + " days from today", pageEndDate.equalsIgnoreCase(endDate));
     }
 }

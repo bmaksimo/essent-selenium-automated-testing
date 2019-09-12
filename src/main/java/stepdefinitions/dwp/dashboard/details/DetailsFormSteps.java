@@ -72,7 +72,7 @@ public class DetailsFormSteps extends DwpScenario {
         String endDate = DateExpressionsUtil
             .getNDaysFromToday(amountOfDays)
             .toString(EssentDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat());
-        DetailsPage dp = new DetailsPage();
-        Assert.assertThat("Account block end date is not " + amountOfDays + " days from today", dp.getAccountBlockEndDate().equalsIgnoreCase(endDate), is(true));
+        String pageEndDate = new DetailsPage().getAccountBlockEndDate();
+        Assert.assertThat("Account block end date is not " + amountOfDays + " days from today", pageEndDate.equalsIgnoreCase(endDate), is(true));
     }
 }
