@@ -29,8 +29,8 @@ Feature: TESTAUTO-193 Dunning-create-account-block
         And Changes are confirmed
         And Sleep for 60 seconds
 
-        Then Table "Lijst met blokken" contains value "E-plus" at column "reden" retrying 60 times
-        And Table "Lijst met blokken" contains value "true" at column "Actief" retrying 60 times
+        Then Table "Blocking list" contains value "E-plus" at column "reden" retrying 60 times
+        And Table "Blocking list" contains value "true" at column "Actief" retrying 60 times
         And Account block Start date is today
         And Account block End date is today plus 7 days
 
