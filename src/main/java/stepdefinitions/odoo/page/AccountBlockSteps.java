@@ -23,19 +23,19 @@ public class AccountBlockSteps extends OdooScenario {
 
     @And("Account Block Start date is today")
     public void accountBlockStartDateIsToday(){
-        String today = DateExpressionsUtil
+        String startDate = DateExpressionsUtil
             .getToday()
             .toString(EssentDateTimeFormat.ODOO_DATE_FORMAT.getFormat());
         String pageStartDate = new AccountBlockPage().getAccountBlockStartDate();
-        Assert.assertTrue("Account block start date is not today", pageStartDate.equalsIgnoreCase(today));
+        Assert.assertTrue("Account block start date is not today", pageStartDate.equalsIgnoreCase(startDate));
     }
 
-    @And("Account Block End date is 7 days from today")
-    public void accountBlockEndDateIsSevenDaysFromToday(){
-        String aWeekFromToday = DateExpressionsUtil
-            .getNDaysFromToday(7)
+    @And("^Account Block End date is \"([^\"]*)\" days from today$")
+    public void accountBlockEndDateIsSevenDaysFromToday(int amountOfDays){
+        String endDate = DateExpressionsUtil
+            .getNDaysFromToday(amountOfDays)
             .toString(EssentDateTimeFormat.ODOO_DATE_FORMAT.getFormat());
         String pageStartDate = new AccountBlockPage().getAccountBlockEndDate();
-        Assert.assertTrue("Account block end date is not 7 days from today", pageStartDate.equalsIgnoreCase(aWeekFromToday    ));
+        Assert.assertTrue("Account block end date is not " + amountOfDays + " days from today", pageStartDate.equalsIgnoreCase(endDate));
     }
 }

@@ -43,4 +43,4 @@ Feature: TESTAUTO-193 Dunning-create-account-block
         And Account Block Reason is E-plus
         And Account Block is Active
         And Account Block Start date is today
-        And Account Block End date is 7 days from today
+        And Account Block End date is "7" days from today
