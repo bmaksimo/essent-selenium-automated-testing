@@ -60,19 +60,19 @@ public class DetailsFormSteps extends DwpScenario {
     }
     @And("Account block Start date is today")
     public void accountBlockStartDateIsToday() {
-        String today = DateExpressionsUtil
+        String startDate = DateExpressionsUtil
             .getToday()
             .toString(EssentDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat());
         DetailsPage dp = new DetailsPage();
-        Assert.assertThat("Dunning account block start date is not today", dp.getAccountBlockStartDate().equalsIgnoreCase(today), is(true));
+        Assert.assertThat("Account block start date is not today", dp.getAccountBlockStartDate().equalsIgnoreCase(startDate), is(true));
     }
 
-    @And("Account block End date is today plus 7 days")
-    public void accountBlockEndDateIsToday() {
-        String oneWeekFromToday = DateExpressionsUtil
+    @And("^Account Block End date is ([^\"]*) days from today$")
+    public void accountBlockEndDateIsToday(int amountOfDays) {
+        String endDate = DateExpressionsUtil
             .getNDaysFromToday(7)
             .toString(EssentDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat());
         DetailsPage dp = new DetailsPage();
-        Assert.assertThat("Dunning account block end date is not today plus 7 days", dp.getAccountBlockEndDate().equalsIgnoreCase(oneWeekFromToday), is(true));
+        Assert.assertThat("Account block end date is not " + amountOfDays + " days from today", dp.getAccountBlockEndDate().equalsIgnoreCase(endDate), is(true));
     }
 }
