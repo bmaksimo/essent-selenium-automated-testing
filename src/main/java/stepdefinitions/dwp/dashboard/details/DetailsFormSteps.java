@@ -58,7 +58,8 @@ public class DetailsFormSteps extends DwpScenario {
         Assert.assertThat("Customer iban does not match expected value", dp.getIban().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString(iban)), is(true));
         Assert.assertThat("Customer payment method does not match expected value", dp.getPaymentMethod().equalsIgnoreCase(method), is(true));
     }
-    @And("Account block Start date is today")
+
+    @And("Account Block Start date is today")
     public void accountBlockStartDateIsToday() {
         String startDate = DateExpressionsUtil
             .getToday()

@@ -8,20 +8,20 @@ import cucumber.api.java.en.And;
 import org.junit.Assert;
 
 public class AccountBlockSteps extends OdooScenario {
-    @And("Account Block Reason is E-plus")
+    @And("Reason is E-plus on Account Blocks page")
     public void accountBlockReasonIsEPlus(){
         String pageReason = new AccountBlockPage().getAccountBlockReason();
         Assert.assertTrue("Account block reason is not E-plus", pageReason.equalsIgnoreCase("E-plus"));
     }
 
-    @And("Account Block is Active")
+    @And("Active is checked on Account Blocks page")
     public void accountBlockAtiveIsTrue(){
         boolean pageActive = new AccountBlockPage().isAccountBlockActive();
         logger().info("pageActive: " + pageActive);
         Assert.assertTrue("Account block active is not true", pageActive);
     }
 
-    @And("Account Block Start date is today")
+    @And("Start date is today on Account Blocks page")
     public void accountBlockStartDateIsToday(){
         String startDate = DateExpressionsUtil
             .getToday()
@@ -30,7 +30,7 @@ public class AccountBlockSteps extends OdooScenario {
         Assert.assertTrue("Account block start date is not today", pageStartDate.equalsIgnoreCase(startDate));
     }
 
-    @And("^Account Block End date is ([^\"]*) days from today$")
+    @And("^End date is ([^\"]*) days from today on Account Blocks page$")
     public void accountBlockEndDateIsSevenDaysFromToday(int amountOfDays){
         String endDate = DateExpressionsUtil
             .getNDaysFromToday(amountOfDays)
