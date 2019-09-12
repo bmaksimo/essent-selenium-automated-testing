@@ -8,10 +8,10 @@ import cucumber.api.java.en.And;
 import org.junit.Assert;
 
 public class AccountBlockSteps extends OdooScenario {
-    @And("Reason is E-plus on Account Blocks page")
-    public void accountBlockReasonIsEPlus(){
+    @And("Reason is \"([^\"]*)\" on Account Blocks page")
+    public void accountBlockReasonIsEPlus(String reason){
         String pageReason = new AccountBlockPage().getAccountBlockReason();
-        Assert.assertTrue("Account block reason is not E-plus", pageReason.equalsIgnoreCase("E-plus"));
+        Assert.assertTrue("Account block reason is not E-plus", pageReason.equalsIgnoreCase(reason));
     }
 
     @And("Active is checked on Account Blocks page")
