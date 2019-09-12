@@ -27,9 +27,8 @@ Feature: TESTAUTO-194 Dunning-create-account-block-service
         When Dashboard menu is "Details"
 
         And Table "Lijst blokkeringen" contains value "Official complaint" at column "Reden" retrying 30 times
-        And Table "Lijst blokkeringen" contains value "parameter:inputValue" at column "Startdatum" retrying 30 times
         And Table "Lijst blokkeringen" contains value "true" at column "Actief" retrying 30 times
-        And Table "Lijst blokkeringen" contains value "" at column "Einddatum" retrying 30 times
+        And Account Block Start date is today
 
         Given I renew login to Odoo as "role_essent_ccm_user"
         And Odoo top menu is "Accounting"
