@@ -21,23 +21,23 @@ import static org.hamcrest.Matchers.is;
 
 public class ConfirmationSteps extends NavigationElements {
 
-  private class CheckModalDialog implements Predicate<Map> {
-    @Override
-    public boolean test(Map options) {
-      seleniumDriver.waitForRequestsToFinish();
-      return executeJavascriptTest(JS_TR_CHECK_MODAL_DIALOG, options);
+    private class CheckModalDialog implements Predicate<Map> {
+        @Override
+        public boolean test(Map options) {
+            seleniumDriver.waitForRequestsToFinish();
+            return executeJavascriptTest(JS_TR_CHECK_MODAL_DIALOG, options);
+        }
     }
-  }
 
     @Before("@DWP or @CORE or @E2E or @REGRESSION")
-    public void setupTest(Scenario scenario){
+    public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
     }
 
     @And("^Modal dialog is \"([^\"]*)\"$")
     public void verifyDialogue(String title) {
-        ConfirmSignatureDialog dialog = new ConfirmSignatureDialogImpl(title);
-        boolean success = dialog.isShown();
+        seleniumDriver.waitForRequestsToFinish();
+        boolean success = new ConfirmSignatureDialogImpl(title).isShown();
         assertThat("Contract signature dialog was not shown.",
             success,
             is(true));
@@ -51,23 +51,23 @@ public class ConfirmationSteps extends NavigationElements {
             is(false));
     }
 
-  @Then("^Modal dialogue is confirmed$")
-  public void confirm(){
-    confirmModalDialogue();
-  }
+    @Then("^Modal dialogue is confirmed$")
+    public void confirm() {
+        confirmModalDialogue();
+    }
 
-  @Then("^Contract signature is confirmed$")
-  public void contractSignatureIsConfirmed(){
-    confirmModalDialogue();
-  }
+    @Then("^Contract signature is confirmed$")
+    public void contractSignatureIsConfirmed() {
+        confirmModalDialogue();
+    }
 
-  private void confirmModalDialogue() {
-    Sleeper.sleepTightInSeconds(3);
-    ConfirmSignatureDialog dialog = new ConfirmSignatureDialogImpl();
-    dialog.confirm();
-    boolean shown = dialog.isShown();
-    assertThat("Modal dialogue was not confirmed.", shown, is(false));
-  }
+    private void confirmModalDialogue() {
+        Sleeper.sleepTightInSeconds(3);
+        ConfirmSignatureDialog dialog = new ConfirmSignatureDialogImpl();
+        dialog.confirm();
+        boolean shown = dialog.isShown();
+        assertThat("Modal dialogue was not confirmed.", shown, is(false));
+    }
 
     @When("^Modal \"([^\"]*)\" is displayed$")
     public void checkModalDialogOpen(String headerText) {
@@ -78,20 +78,20 @@ public class ConfirmationSteps extends NavigationElements {
         assertThat(String.format("Action row %s was not found", headerText), success, is(true));
     }
 
-  @When("^Modal dialog contains \"([^\"]*)\" in action list$")
-  public void hasActionInActionList(String match){
-    seleniumDriver.waitForRequestsToFinish();
-    String textToLookup = parameterProvider.getValueOrParameterAsString(match);
-    ConfirmSignatureDialog dialog = new ConfirmSignatureDialogImpl();
-    assertThat(
-        String.format("Dialogue doesn't contain given text \"%s\"", textToLookup),
-        dialog.isInActionList(textToLookup),
-        is(true));
-  }
+    @When("^Modal dialog contains \"([^\"]*)\" in action list$")
+    public void hasActionInActionList(String match) {
+        seleniumDriver.waitForRequestsToFinish();
+        String textToLookup = parameterProvider.getValueOrParameterAsString(match);
+        ConfirmSignatureDialog dialog = new ConfirmSignatureDialogImpl();
+        assertThat(
+            String.format("Dialogue doesn't contain given text \"%s\"", textToLookup),
+            dialog.isInActionList(textToLookup),
+            is(true));
+    }
 
-  @Override
-  @After("@DWP or @CORE or @E2E or @REGRESSION")
-  public void tearDown() {
-    super.tearDown();
-  }
+    @Override
+    @After("@DWP or @CORE or @E2E or @REGRESSION")
+    public void tearDown() {
+        super.tearDown();
+    }
 }
