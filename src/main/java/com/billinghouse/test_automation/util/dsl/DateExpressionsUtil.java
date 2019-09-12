@@ -66,13 +66,11 @@ public class DateExpressionsUtil {
   }
 
   public static LocalDate getFirstDateOfNextMonth() {
-      LocalDate today = new LocalDate();
-      return today.plusMonths(1).withDayOfMonth(1);
+      return new LocalDate().plusMonths(1).withDayOfMonth(1);
   }
 
   public static LocalDate getLastDayOfCurrentMonthNextYear() {
-      LocalDate today = new LocalDate();
-      return today.plusYears(1).dayOfMonth().withMaximumValue();
+      return new LocalDate().plusYears(1).dayOfMonth().withMaximumValue();
   }
 
   public static LocalDate getToday() {
@@ -80,8 +78,7 @@ public class DateExpressionsUtil {
   }
 
   public static LocalDate getNDaysFromToday(int amountOfDays) {
-      LocalDate today = new LocalDate();
-      return today.plusDays(amountOfDays);
+      return new LocalDate().plusDays(amountOfDays);
   }
 
   public static DateTime expandFrom(String expression) {
