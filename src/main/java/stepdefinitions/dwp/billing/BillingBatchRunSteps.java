@@ -1,6 +1,6 @@
 package stepdefinitions.dwp.billing;
 
-import com.billinghouse.test_automation.util.dsl.DwpDateTimeFormat;
+import com.billinghouse.test_automation.util.dsl.EssentDateTimeFormat;
 import com.essent.testing.dwp.pageobject.impl.modal.confirm.ConfirmSignatureDialogImpl;
 import com.essent.testing.dwp.pageobject.modal.confirm.ConfirmSignatureDialog;
 import com.essent.testing.dwp.scenario.DwpScenario;
@@ -46,7 +46,7 @@ public class BillingBatchRunSteps extends DwpScenario {
     public void startBillingRun(String jobName, String processDate) {
         String inputValue = toDwpApiDate(parameterProvider.getValueOrParameterAsString(processDate));
         String billingCustomerId = parameterProvider.getValueOrParameterAsString("parameter:billingId");
-        SimpleDateFormat formatter = new SimpleDateFormat(DwpDateTimeFormat.DWP_API_DATE_FORMAT.getFormat());
+        SimpleDateFormat formatter = new SimpleDateFormat(EssentDateTimeFormat.DWP_API_DATE_FORMAT.getFormat());
         try {
             Date parsedDate = formatter.parse(inputValue);
             BillingRunResult billingRunResult = billingService.startBillRun(jobName, billingCustomerId, parsedDate);
@@ -62,7 +62,7 @@ public class BillingBatchRunSteps extends DwpScenario {
         String inputValue = toDwpApiDate(parameterProvider.getValueOrParameterAsString(settlementDate));
         String billingCustomerId = parameterProvider.getValueOrParameterAsString("parameter:billingId");
         String deliveryPointId = parameterProvider.getValueOrParameterAsString("parameter:EAN-code");
-        SimpleDateFormat formatter = new SimpleDateFormat(DwpDateTimeFormat.DWP_API_DATE_FORMAT.getFormat());
+        SimpleDateFormat formatter = new SimpleDateFormat(EssentDateTimeFormat.DWP_API_DATE_FORMAT.getFormat());
 
         try {
             Date parsedDate = formatter.parse(inputValue);

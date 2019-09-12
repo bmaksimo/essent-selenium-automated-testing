@@ -1,5 +1,7 @@
 package stepdefinitions.dwp.dashboard.details;
 
+import com.billinghouse.test_automation.util.dsl.DateExpressionsUtil;
+import com.billinghouse.test_automation.util.dsl.EssentDateTimeFormat;
 import com.essent.testing.dwp.pageobject.dashboard.AccountDetails;
 import com.essent.testing.dwp.pageobject.impl.dashboard.AccountDetailsImpl;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.details.DetailsPage;
@@ -56,10 +58,21 @@ public class DetailsFormSteps extends DwpScenario {
         Assert.assertThat("Customer iban does not match expected value", dp.getIban().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString(iban)), is(true));
         Assert.assertThat("Customer payment method does not match expected value", dp.getPaymentMethod().equalsIgnoreCase(method), is(true));
     }
-
-    @And("Account block start and end dates are the same")
-    public void customerBankNumberIsAndPaymentMethodIs() {
+    @And("Account block Start date is today")
+    public void accountBlockStartDateIsToday() {
+        String today = DateExpressionsUtil
+            .getToday()
+            .toString(EssentDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat());
         DetailsPage dp = new DetailsPage();
-        Assert.assertThat("Dunning account block star and end dates are different", dp.getAccountBlockStartDate().equalsIgnoreCase(dp.getAccountBlockEndDate()), is(true));
+        Assert.assertThat("Dunning account block start date is not today", dp.getAccountBlockStartDate().equalsIgnoreCase(today), is(true));
+    }
+
+    @And("Account block End date is today plus 7 days")
+    public void accountBlockEndDateIsToday() {
+        String oneWeekFromToday = DateExpressionsUtil
+            .getNDaysFromToday(7)
+            .toString(EssentDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat());
+        DetailsPage dp = new DetailsPage();
+        Assert.assertThat("Dunning account block end date is not today plus 7 days", dp.getAccountBlockEndDate().equalsIgnoreCase(oneWeekFromToday), is(true));
     }
 }
