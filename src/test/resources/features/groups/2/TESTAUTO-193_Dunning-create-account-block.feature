@@ -12,7 +12,6 @@ Feature: TESTAUTO-193 Dunning-create-account-block
     @TESTAUTO-193
     Scenario: create-account-block
         When Left menu is "contracting-switching"
-        And Sleep for 60 seconds
         And Top menu item is "Klanten"
         When B2C TC1 Contract uses "FAKE" address and switch type is "MOVE IN"
         And Top action is Filter from "contracting-switching" menu retrying 5 times
@@ -25,7 +24,6 @@ Feature: TESTAUTO-193 Dunning-create-account-block
         And Click on "CREEREN BLOKKERING"
         And "Block reason" selection is "E-plus"
         And "Einddatum" date is "7 days from now"
-        And Sleep for 10 seconds
         And Changes are confirmed
         And Sleep for 60 seconds
 
