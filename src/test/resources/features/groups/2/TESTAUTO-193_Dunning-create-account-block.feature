@@ -8,7 +8,7 @@
 Feature: TESTAUTO-193 Dunning-create-account-block
 
      Background:
-        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
+        Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
     @TESTAUTO-193
     Scenario: create-account-block
         When Left menu is "contracting-switching"
@@ -20,17 +20,17 @@ Feature: TESTAUTO-193 Dunning-create-account-block
         And Click on "parameter:accountNumber" link
 
         When Dashboard menu is "Contracten"
-        And "1st" list element has cell value "ACTIEF" at column "Klantnummer" polling 500 seconds
+        And "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
         And Dashboard menu is "Details"
-        And Click on "MAAK EEN BLOK"
+        And Click on "CREEREN BLOKKERING"
         And "Block reason" selection is "E-plus"
-        And "Date de fin" date is "7 days from now"
+        And "Einddatum" date is "7 days from now"
         And Sleep for 10 seconds
         And Changes are confirmed
         And Sleep for 60 seconds
 
-        Then Table "Blocking list" contains value "E-plus" at column "reden" retrying 60 times
-        And Table "Blocking list" contains value "true" at column "Actief" retrying 60 times
+        Then Table "Lijst blokkeringen" contains value "E-plus" at column "Reden" retrying 60 times
+        And Table "Lijst blokkeringen" contains value "true" at column "Actief" retrying 60 times
         And Account Block Start date is today
         And Account Block End date is 7 days from today
 
