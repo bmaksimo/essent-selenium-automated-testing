@@ -13,7 +13,6 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -75,5 +74,11 @@ public class DetailsFormSteps extends DwpScenario {
             .toString(EssentDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat());
         String pageEndDate = new DetailsPage().getAccountBlockEndDate();
         Assert.assertThat("Account block end date is not " + amountOfDays + " days from today", pageEndDate.equalsIgnoreCase(endDate), is(true));
+    }
+
+    @And("Account Block end date not exist in table")
+    public void accountBlockEndDateNotExist() {
+        DetailsPage dp = new DetailsPage();
+        Assert.assertNull("Account block end date exists" + dp.getAccountBlockEndDateNotExist(), dp.getAccountBlockEndDateNotExist());
     }
 }

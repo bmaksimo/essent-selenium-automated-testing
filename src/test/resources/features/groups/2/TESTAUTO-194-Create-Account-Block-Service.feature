@@ -29,6 +29,7 @@ Feature: TESTAUTO-194 Dunning-create-account-block-service
         And Table "Lijst blokkeringen" contains value "Official complaint" at column "Reden" retrying 30 times
         And Table "Lijst blokkeringen" contains value "true" at column "Actief" retrying 30 times
         And Account Block Start date is today
+        Then Account Block end date not exist in table
 
         Given I renew login to Odoo as "role_essent_ccm_user"
         And Odoo top menu is "Accounting"
