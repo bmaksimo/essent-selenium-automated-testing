@@ -38,9 +38,9 @@ public class ContractB2CScenario extends RegisteredScenario {
 			logger.error("Something went wrong with creation of B2C contract");
 		}
 
-		logger.debug("ACCOUNT NUMBER: " + this.getAccountNumber());
-
-		return this.getAccountNumber();
+        String accountNumber = this.getAccountNumber();
+        parameterProvider.put("accountNumber", accountNumber);
+		return accountNumber;
 	}
 
     @Given("^B2C TC1 Active Contract uses \"([^\"]*)\" address and switch type is \"([^\"]*)\"$")
@@ -60,8 +60,6 @@ public class ContractB2CScenario extends RegisteredScenario {
 			Assert.fail("B2C contract is not ACTIVE");
 			logger.error("Something went wrong with creation of ACTIVE B2C contract");
 		}
-
-		logger.debug("ACCOUNT NUMBER: " + this.getAccountNumber());
 
 		parameterProvider.put("accountNumber", this.getAccountNumber());
 
