@@ -75,7 +75,6 @@ public class OdooListView extends OdooScenario  {
     @Then("^Column \"([^\"]*)\" with value \"([^\"]*)\" is clicked$")
     public void clickValueAt(String column, String value) {
         awaitOdooRequestToFinish(60);
-        parameterProvider.put("accountNumber", value);
         String input = parameterProvider.getValueOrParameterAsString(value) == null ?
             value : parameterProvider.getValueOrParameterAsString(value);
         ListView odooList = new DefaultListView();
