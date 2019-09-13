@@ -269,7 +269,7 @@ public class QuoteSteps extends DwpScenario {
 
 
     @And("^Billing details are confirmed$")
-    public void confirmBillingDetaile() {
+    public void confirmBillingDetails() {
         BillingDetailsPage billingDetailsPage = new BillingDetailsPage();
         billingDetailsPage.next();
     }
