@@ -46,9 +46,9 @@ Feature: TESTAUTO-195 Dunning-update-account-block
         And Odoo filter is "parameter:accountNumber"
         When Column "Account Number" with value "parameter:accountNumber" is clicked
         Then Button Account Blocks is clicked
-        And Account Block Reason is E-plus
-        And Account Block Start date is today
-        And Account Block End date is "0" days from today
+        And Reason is "E-plus" on Account Blocks page
+        And Start date is today on Account Blocks page
+        And End date is 0 days from today on Account Blocks page
 
 
 

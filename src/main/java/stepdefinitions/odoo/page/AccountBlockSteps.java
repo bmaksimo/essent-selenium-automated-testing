@@ -8,28 +8,27 @@ import cucumber.api.java.en.And;
 import org.junit.Assert;
 
 public class AccountBlockSteps extends OdooScenario {
-    @And("Account Block Reason is E-plus")
-    public void accountBlockReasonIsEPlus(){
+    @And("Reason is \"([^\"]*)\" on Account Blocks page")
+    public void accountBlockReasonIsEPlus(String reason){
         String pageReason = new AccountBlockPage().getAccountBlockReason();
-        Assert.assertTrue("Account block reason is not E-plus", pageReason.equalsIgnoreCase("E-plus"));
+        Assert.assertTrue("Account block reason is not " + reason, pageReason.equalsIgnoreCase(reason));
     }
 
-    @And("Account Block Start date is today")
+    @And("Start date is today on Account Blocks page")
     public void accountBlockStartDateIsToday(){
-        String today = DateExpressionsUtil
+        String startDate = DateExpressionsUtil
             .getToday()
             .toString(EssentDateTimeFormat.ODOO_DATE_FORMAT.getFormat());
         String pageStartDate = new AccountBlockPage().getAccountBlockStartDate();
-        Assert.assertTrue("Account block start date is not today", pageStartDate.equalsIgnoreCase(today));
+        Assert.assertTrue("Account block start date is not today", pageStartDate.equalsIgnoreCase(startDate));
     }
 
-    @And("Account Block End date is \"([^\"]*)\" days from today")
-    public void accountBlockEndDateIsSevenDaysFromToday(int num){
-        String aWeekFromToday = DateExpressionsUtil
-            .getNDaysFromToday(num)
+    @And("^End date is ([^\"]*) days from today on Account Blocks page$")
+    public void accountBlockEndDateIsSevenDaysFromToday(int amountOfDays){
+        String endDate = DateExpressionsUtil
+            .getNDaysFromToday(amountOfDays)
             .toString(EssentDateTimeFormat.ODOO_DATE_FORMAT.getFormat());
-        String pageStartDate = new AccountBlockPage().getAccountBlockEndDate();
-        Assert.assertTrue("Account block end date is not 7 days from today", pageStartDate.equalsIgnoreCase(aWeekFromToday    ));
+        String pageEndDate = new AccountBlockPage().getAccountBlockEndDate();
+        Assert.assertTrue("Account block end date is not " + amountOfDays + " days from today", pageEndDate.equalsIgnoreCase(endDate));
     }
-
 }
