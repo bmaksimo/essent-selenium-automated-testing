@@ -1,7 +1,7 @@
 package stepdefinitions.dwp.input;
 
 import com.billinghouse.test_automation.util.dsl.DateExpressionsUtil;
-import com.billinghouse.test_automation.util.dsl.DwpDateTimeFormat;
+import com.billinghouse.test_automation.util.dsl.EssentDateTimeFormat;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.elements.SelectWithSearch;
 import com.essent.testing.dwp.pageobject.impl.elements.SelectWithSearchImpl;
@@ -165,7 +165,7 @@ public class InputElements extends DwpScenario {
     public void setDateInputFirstDayNextMonth(String label){
         String value = DateExpressionsUtil
             .getFirstDateOfNextMonth()
-            .toString(DwpDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
+            .toString(EssentDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
         setDateInput(label, value);
     }
 
@@ -173,7 +173,7 @@ public class InputElements extends DwpScenario {
     public void setDateInputLastDayCurrentMonthNextYear(String label){
         String value = DateExpressionsUtil
             .getLastDayOfCurrentMonthNextYear()
-            .toString(DwpDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
+            .toString(EssentDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
         setDateInput(label, value);
     }
 

@@ -10,7 +10,7 @@ import org.joda.time.format.DateTimeFormatter;
 public class IntervalUtil {
 
   private static final DateTimeFormatter INTERVAL_DATE_FORMATTER =
-      DateTimeFormat.forPattern(DwpDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat());
+      DateTimeFormat.forPattern(EssentDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat());
 
   private IntervalUtil() {}
 
@@ -33,7 +33,7 @@ public class IntervalUtil {
   }
 
   public static boolean containsDate(
-      String period, String dateToContain, DwpDateTimeFormat format) {
+      String period, String dateToContain, EssentDateTimeFormat format) {
     if (StringUtils.isEmpty(dateToContain)) {
       return true;
     }

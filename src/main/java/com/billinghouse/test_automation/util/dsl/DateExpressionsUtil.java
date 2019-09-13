@@ -23,7 +23,7 @@ public class DateExpressionsUtil {
 
   private static final DateTimeFormatter FRENCH_DATE_FORMATTER_HYPHENATED =
       org.joda.time.format.DateTimeFormat.forPattern(
-          DwpDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat());
+          EssentDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat());
 
   public static final String DATE_SEPARATOR = " - ";
   private static final LocalDate LAST_DATE_OF_YEAR = LocalDate.now().dayOfYear().withMaximumValue();
@@ -66,13 +66,19 @@ public class DateExpressionsUtil {
   }
 
   public static LocalDate getFirstDateOfNextMonth() {
-      LocalDate today = new LocalDate();
-      return today.plusMonths(1).withDayOfMonth(1);
+      return new LocalDate().plusMonths(1).withDayOfMonth(1);
   }
 
   public static LocalDate getLastDayOfCurrentMonthNextYear() {
-      LocalDate today = new LocalDate();
-      return today.plusYears(1).dayOfMonth().withMaximumValue();
+      return new LocalDate().plusYears(1).dayOfMonth().withMaximumValue();
+  }
+
+  public static LocalDate getToday() {
+      return new LocalDate();
+  }
+
+  public static LocalDate getNDaysFromToday(int amountOfDays) {
+      return new LocalDate().plusDays(amountOfDays);
   }
 
   public static DateTime expandFrom(String expression) {
@@ -143,16 +149,16 @@ public class DateExpressionsUtil {
 
   public static String checkAndConvertToDwpDate(String input) {
     if (matchesDwpDateFormat(input)) return input;
-    else return expandFrom(input).toString(DwpDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
+    else return expandFrom(input).toString(EssentDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
   }
 
   public static String checkAndConvertToDwpApiDate(String input) {
     if (matchesDwpDateFormat(input)) return input;
-    else return expandFrom(input).toString(DwpDateTimeFormat.DWP_API_DATE_FORMAT.getFormat());
+    else return expandFrom(input).toString(EssentDateTimeFormat.DWP_API_DATE_FORMAT.getFormat());
   }
 
   public static String convertToDwpTime(String input) {
-    return expandFromTime(input).toString(DwpDateTimeFormat.DWP_TIME_FORMAT.getFormat());
+    return expandFromTime(input).toString(EssentDateTimeFormat.DWP_TIME_FORMAT.getFormat());
   }
 
   public static String checkAndConvertToSoctarFileDate(String input) {
@@ -160,19 +166,19 @@ public class DateExpressionsUtil {
     if (matchesDwpDateFormat(input)) {
       DateTimeFormatter fmt =
           org.joda.time.format.DateTimeFormat.forPattern(
-              DwpDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
+              EssentDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
       return fmt.parseDateTime(input)
-          .toString(DwpDateTimeFormat.DWP_SOCTAR_STARTDAT_ENDDATE.getFormat());
+          .toString(EssentDateTimeFormat.DWP_SOCTAR_STARTDAT_ENDDATE.getFormat());
     } else {
-      return expandFrom(input).toString(DwpDateTimeFormat.DWP_SOCTAR_STARTDAT_ENDDATE.getFormat());
+      return expandFrom(input).toString(EssentDateTimeFormat.DWP_SOCTAR_STARTDAT_ENDDATE.getFormat());
     }
   }
 
   public static List<String> getSoctarStartAndEndDates(String input) {
     List<String> dates = new ArrayList<>();
     String startDate =
-        expandFrom(input).toString(DwpDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat());
-    String endDate = expandFrom(input).toString(DwpDateTimeFormat.DWP_SOCTAR_ENDDATE.getFormat());
+        expandFrom(input).toString(EssentDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat());
+    String endDate = expandFrom(input).toString(EssentDateTimeFormat.DWP_SOCTAR_ENDDATE.getFormat());
     dates.add(startDate);
     dates.add(endDate);
 
@@ -185,11 +191,11 @@ public class DateExpressionsUtil {
     } else {
 
       String dateBuilder =
-          expandFrom(input).toString(DwpDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat());
+          expandFrom(input).toString(EssentDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat());
       dateBuilder = dateBuilder.concat(DATE_SEPARATOR);
       dateBuilder =
           dateBuilder.concat(
-              LAST_DATE_OF_YEAR.toString(DwpDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat()));
+              LAST_DATE_OF_YEAR.toString(EssentDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat()));
       return dateBuilder;
     }
   }
@@ -198,7 +204,7 @@ public class DateExpressionsUtil {
     if (matchesDwpDateFormat(input)) {
       return buildContractStartEndDate(input);
     } else {
-      return expandFrom(input).toString(DwpDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat());
+      return expandFrom(input).toString(EssentDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat());
     }
   }
 
@@ -206,12 +212,12 @@ public class DateExpressionsUtil {
     StringBuilder dateBuilder = new StringBuilder();
     DateTimeFormatter fmt =
         org.joda.time.format.DateTimeFormat.forPattern(
-            DwpDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
+            EssentDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
     dateBuilder.append(
-        fmt.parseDateTime(input).toString(DwpDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat()));
+        fmt.parseDateTime(input).toString(EssentDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat()));
     dateBuilder.append(DATE_SEPARATOR);
     dateBuilder.append(
-        LAST_DATE_OF_YEAR.toString(DwpDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat()));
+        LAST_DATE_OF_YEAR.toString(EssentDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat()));
     return dateBuilder.toString();
   }
 
@@ -221,7 +227,7 @@ public class DateExpressionsUtil {
 
   public static String toDwpDate(String consumptionsFormatDate) {
     DateTime dateTime = DateTime.parse(consumptionsFormatDate);
-    return dateTime.toString(DwpDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
+    return dateTime.toString(EssentDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
   }
 
   /** @param interval DWP interval, formatted "dd-MM-yyyy dd-MM-yyyy" */
@@ -232,10 +238,10 @@ public class DateExpressionsUtil {
     String end = split[1];
     DateTimeFormatter fmt =
         org.joda.time.format.DateTimeFormat.forPattern(
-            DwpDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat());
+            EssentDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat());
     return fmt.parseDateTime(end)
         .plusDays(daysEarlierOrLater)
-        .toString(DwpDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
+        .toString(EssentDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
   }
 
   /** @param interval DWP interval, formatted "dd-MM-yyyy dd-MM-yyyy" */
@@ -246,7 +252,7 @@ public class DateExpressionsUtil {
     String end = split[1];
     DateTimeFormatter fmt =
         org.joda.time.format.DateTimeFormat.forPattern(
-            DwpDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat());
-    return fmt.parseDateTime(end).toString(DwpDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
+            EssentDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat());
+    return fmt.parseDateTime(end).toString(EssentDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
   }
 }
