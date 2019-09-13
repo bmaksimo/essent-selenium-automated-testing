@@ -1,6 +1,6 @@
 package stepdefinitions.dwp.quote.b2b;
 
-import com.billinghouse.random.RandomUser;
+import com.billinghouse.test_automation.util.random.CustomerRandomDataGenerator;
 import com.essent.testing.dwp.pageobject.impl.quote.CompanyDetailsAddressPage;
 import com.essent.testing.dwp.pageobject.impl.quote.ContactDetailsPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
@@ -10,6 +10,8 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import stepdefinitions.dwp.page_object.CustomerAcceptance;
+import stepdefinitions.dwp.tables.CustomerDetails;
+
 import java.util.List;
 import java.util.Map;
 
@@ -28,8 +30,8 @@ public class CompanySteps extends DwpScenario {
 
     @And("^Company VAT number is random$")
     public void generateRandomUser(){
-        seleniumDriver.waitForRequestsToFinish();
-        parameterProvider.put("VAT", generateVat("generator:vat:BEL"));
+        String vat = CustomerRandomDataGenerator.generateVat("generator:vat:BEL");
+        parameterProvider.put("VAT", vat);
     }
 
     @And("^Company name is random$")
@@ -47,10 +49,8 @@ public class CompanySteps extends DwpScenario {
 
     @And("^Company contact info is generated$")
     public void generateContactInfo() {
-        RandomUser genetaredUser = (RandomUser)parameterProvider.getValueOrParameter("parameter:suitecrm-company-account");
-        ContactDetailsPage contactDetailsPage = new ContactDetailsPage();
-        contactDetailsPage.setRandomUser(genetaredUser);
-        contactDetailsPage.fillInFormData();
+        CustomerDetails customerDetails = (CustomerDetails) parameterProvider.getValueOrParameter("parameter:suitecrm-company-account");
+        new ContactDetailsPage(customerDetails).fillInFormData();
     }
 
     @Override
@@ -60,4 +60,18 @@ public class CompanySteps extends DwpScenario {
     }
 
 
+    private String generateCompanyName() {
+        CustomerDetails customer = new CustomerDetails();
+        Map<String, String> customerName = CustomerRandomDataGenerator.createCompanyAccountName();
+        String firstName = customerName.get("firstName");
+        String lastName = customerName.get("lastName");
+        String email = firstName + "." + lastName + "@company.com";
+        customer.setFirstName(firstName);
+        customer.setLastName(lastName);
+        customer.setEmail(email);
+        parameterProvider.put("suitecrm-company-account", customer);
+        parameterProvider.put("contact-person-first-name", customer.getFirstName());
+        parameterProvider.put("contact-person-last-name", customer.getLastName());
+        return customer.getFirstName() + " " + customer.getLastName();
+    }
 }
