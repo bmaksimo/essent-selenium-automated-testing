@@ -4,8 +4,6 @@ import com.essent.automation.core.WebDriverWait;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
@@ -20,10 +18,6 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
@@ -41,7 +35,7 @@ public abstract class SeleniumDriver {
     protected String browserName;
     private String browserVersion;
     protected ChromeOptions options;
-    protected ChromeDriverService driverService;
+    ChromeDriverService driverService;
 
     public void setUp() {
         baseUrl = ConfigProvider.getProperty(ConfigKey.TESTING_BASE_URL);
@@ -93,33 +87,6 @@ public abstract class SeleniumDriver {
             return;
         driver.close();
         driver.quit();
-    }
-
-    public void takeScreenshot(boolean success) {
-        if (success) {
-            return;
-        }
-        File screenshot = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
-        logger.debug(" - ACTION: CAPTURE_SCREENSHOT: " + screenshot.getPath());
-        Path currentRelativePath = Paths.get("").resolveSibling("target");
-        String currentAbsolutePath = currentRelativePath.toAbsolutePath().toString();
-        try {
-            FileUtils.copyFile(screenshot, new File(FilenameUtils.concat(currentAbsolutePath, screenshot.getName())));
-        } catch (IOException e) {
-            logger.warn(String.format("- ACTION: failed copying screenshot to %s", currentAbsolutePath));
-        }
-    }
-
-    public void takeScreenshot(String name) {
-        File screenshot = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
-        logger.debug(" - ACTION: CAPTURE_SCREENSHOT: " + screenshot.getPath());
-        Path currentRelativePath = Paths.get("").resolveSibling("target");
-        String currentAbsolutePath = currentRelativePath.toAbsolutePath().toString();
-        try {
-            FileUtils.copyFile(screenshot, new File(FilenameUtils.concat(currentAbsolutePath, name + "_" + screenshot.getName())));
-        } catch (IOException e) {
-            logger.warn(String.format("- ACTION: failed copying screenshot to %s", currentAbsolutePath));
-        }
     }
 
     public void goToHomePage() {
@@ -221,8 +188,7 @@ public abstract class SeleniumDriver {
             .pollingEvery(Duration.ofSeconds(20))
             .ignoring(ElementNotVisibleException.class)
             .ignoring(NoSuchElementException.class);
-        WebElement element = waiter.until(ExpectedConditions.visibilityOfElementLocated(selector));
-        return element;
+        return waiter.until(ExpectedConditions.visibilityOfElementLocated(selector));
     }
 
     public <V> void waitForExpectedCondition(final ExpectedCondition<?> expectedCondition, final long timeoutInSeconds, final long sleepInMillis) {

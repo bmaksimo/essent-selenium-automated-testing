@@ -45,7 +45,6 @@ public class SimilarAccountDialogImpl extends Component implements SimilarAccoun
             logger().debug("CLICK ");
             link.click();
         } else {
-            seleniumDriver.takeScreenshot(linkText + "-");
             throw new CucumberException("Element not found by link text " + linkText);
         }
         logger().debug("ACTION REQIURED: CONFIRM_ALERT");

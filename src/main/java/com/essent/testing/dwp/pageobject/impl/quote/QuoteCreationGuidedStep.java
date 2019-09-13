@@ -41,9 +41,6 @@ public abstract class QuoteCreationGuidedStep extends Component implements Guide
       seleniumDriver.waitForRequestsToFinish();
       nextButton.click();
     } else {
-        if(logger().isDebugEnabled()) {
-            seleniumDriver.takeScreenshot("guidance-confirm-failure");
-        }
         throw new CucumberException("Element not found by selector " + NEXT_BUTTON.getQuery());
     }
     seleniumDriver.waitForRequestsToFinish();
