@@ -28,14 +28,14 @@ public class CompanySteps extends DwpScenario {
 
     @And("^Company VAT number is random$")
     public void generateRandomUser(){
-        String vat = generateVat("generator:vat:BEL");
-        parameterProvider.put("VAT", vat);
+        seleniumDriver.waitForRequestsToFinish();
+        parameterProvider.put("VAT", generateVat("generator:vat:BEL"));
     }
 
     @And("^Company name is random$")
     public void generateRandomCompanyName(){
-        String companyName = generateCompanyName();
-        parameterProvider.put("company-name", companyName);
+        seleniumDriver.waitForRequestsToFinish();
+        parameterProvider.put("company-name", generateCompanyName());
     }
 
     @And("^Company address is$")
