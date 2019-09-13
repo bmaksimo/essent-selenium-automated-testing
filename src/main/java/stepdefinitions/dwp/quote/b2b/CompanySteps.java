@@ -36,8 +36,8 @@ public class CompanySteps extends DwpScenario {
 
     @And("^Company name is random$")
     public void generateRandomCompanyName(){
-        String companyName = generateCompanyName();
-        parameterProvider.put("company-name", companyName);
+        seleniumDriver.waitForRequestsToFinish();
+        parameterProvider.put("company-name", generateCompanyName());
     }
 
     @And("^Company address is$")
@@ -60,7 +60,7 @@ public class CompanySteps extends DwpScenario {
     }
 
 
-    protected String generateCompanyName() {
+    private String generateCompanyName() {
         CustomerDetails customer = new CustomerDetails();
         Map<String, String> customerName = CustomerRandomDataGenerator.createCompanyAccountName();
         String firstName = customerName.get("firstName");
