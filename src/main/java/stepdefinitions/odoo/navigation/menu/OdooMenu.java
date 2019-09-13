@@ -113,6 +113,12 @@ public class OdooMenu extends OdooScenario {
         cp.buttonJournalItemsClicked(label);
     }
 
+    @Then("Button Account Blocks is clicked")
+    public void clickButtonAccountBlocks() {
+        CustomerPage cp = new CustomerPage();
+        cp.buttonAccountBlocksClicked();
+    }
+
     @Then("^Modal title contains \"([^\"]*)\"$")
     public void odooContainsModalTitle(String modalTitle) {
         WebElement title = seleniumDriver.findElementWhenVisible(By.xpath("//h3[@class='modal-title']"));

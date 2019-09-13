@@ -31,7 +31,8 @@ Feature: TESTAUTO-195 Dunning-update-account-block
 
         Then Table "Lijst blokkeringen" contains value "E-plus" at column "Reden" retrying 60 times
         And Table "Lijst blokkeringen" contains value "true" at column "Actief" retrying 60 times
-#        And Account block start and end dates are the same
+        And Account block Start date is today
+        And Account block End date is today plus 7 days
 
         When Plus action of "1" element from "accountBlockReasonsForAccountList" and click on "Update"
         And "Einddatum" date is "now"
@@ -43,16 +44,13 @@ Feature: TESTAUTO-195 Dunning-update-account-block
         Given I renew login to Odoo as "role_essent_ccm_user"
         When Odoo top menu is "Accounting"
         And  Odoo left menu is "Customers"
-        And Odoo filter is "151263959"
-#        And Odoo filter is "parameter:accountNumber"
-        When Column "Account Number" with value "151263959" is clicked
-#        When Column "Account Number" with value "parameter:accountNumber" is clicked
-        And Odoo click on account block button
-        Then Check account blocks data
-         | Reason |      Start date    |     End date     | Active  |
-#         | E-plus | parameter:startDate| parameter:endDate| checked |
-         | E-plus | 12-09-2019 | 12-09-2019 | checked |
-
+        And Odoo filter is "parameter:accountNumber"
+        When Column "Account Number" with value "parameter:accountNumber" is clicked
+        Then Button Account Blocks is clicked
+        And Account Block Reason is E-plus
+        And Account Block is Active
+        And Account Block Start date is today
+        And Account Block End date is "0" days from today
 
 
 

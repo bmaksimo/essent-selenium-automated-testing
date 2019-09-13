@@ -1,7 +1,7 @@
 package stepdefinitions.quote.api;
 
 import com.billinghouse.test_automation.util.dsl.DateTimeRegex;
-import com.billinghouse.test_automation.util.dsl.DwpDateTimeFormat;
+import com.billinghouse.test_automation.util.dsl.EssentDateTimeFormat;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.restassured.B2CCreateContractScenario;
@@ -54,7 +54,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     }
     public static String checkAndConvertToDwpAPIDate(String input) {
         if (matchesDwpAPIDateFormat(input)) return input;
-        else return expandFrom(input).toString(DwpDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
+        else return expandFrom(input).toString(EssentDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
     }
 
     static boolean matchesDwpAPIDateFormat(String date) {
