@@ -17,7 +17,6 @@ public class AccountBlockSteps extends OdooScenario {
     @And("Active is checked on Account Blocks page")
     public void accountBlockAtiveIsTrue(){
         boolean pageActive = new AccountBlockPage().isAccountBlockActive();
-        logger().info("pageActive: " + pageActive);
         Assert.assertTrue("Account block active is not true", pageActive);
     }
 

@@ -109,14 +109,12 @@ public class OdooMenu extends OdooScenario {
 
     @Then("^Button \"([^\"]*)\" on Journal Items is clicked$")
     public void clickButtonJournalItems(String label) {
-        CustomerPage cp = new CustomerPage();
-        cp.buttonJournalItemsClicked(label);
+        new CustomerPage().buttonJournalItemsClicked(label);
     }
 
     @Then("Button Account Blocks is clicked")
     public void clickButtonAccountBlocks() {
-        CustomerPage cp = new CustomerPage();
-        cp.buttonAccountBlocksClicked();
+        new CustomerPage().buttonAccountBlocksClicked();
     }
 
     @Then("^Modal title contains \"([^\"]*)\"$")

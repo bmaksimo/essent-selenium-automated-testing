@@ -29,8 +29,8 @@ public class OdooListView extends OdooScenario  {
 
     @When("^Odoo filter is \"([^\"]*)\"$")
     public void setAdvancedSearchFilter(String expression) {
-//        String filter = parameterProvider.getValueOrParameterAsString(expression) == null ?
-//            expression : parameterProvider.getValueOrParameterAsString(expression);
+        String filter = parameterProvider.getValueOrParameterAsString(expression) == null ?
+            expression : parameterProvider.getValueOrParameterAsString(expression);
         String selector = "//div[@class='oe_searchview_input']";
         By xpath = By.xpath(selector);
         List<WebElement> filterElements = seleniumDriver.findElements(xpath,
@@ -40,7 +40,7 @@ public class OdooListView extends OdooScenario  {
 
         WebElement filterElement = filterElements.get(1);
         filterElement.click();
-        filterElement.sendKeys("151263955");
+        filterElement.sendKeys(filter);
         filterElement.sendKeys(Keys.RETURN);
         awaitOdooRequestToFinish(600);
     }
@@ -76,11 +76,11 @@ public class OdooListView extends OdooScenario  {
     public void clickValueAt(String column, String value) {
         awaitOdooRequestToFinish(60);
         parameterProvider.put("accountNumber", value);
-//        String input = parameterProvider.getValueOrParameterAsString(value) == null ?
-//            value : parameterProvider.getValueOrParameterAsString(value);
+        String input = parameterProvider.getValueOrParameterAsString(value) == null ?
+            value : parameterProvider.getValueOrParameterAsString(value);
         ListView odooList = new DefaultListView();
         Sleeper.sleepTightInSeconds(5);
-        odooList.clickValueAt(column, "151263955");
+        odooList.clickValueAt(column, input);
         awaitOdooRequestToFinish(180);
     }
 
