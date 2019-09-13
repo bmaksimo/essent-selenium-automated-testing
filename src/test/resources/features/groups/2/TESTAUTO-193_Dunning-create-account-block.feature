@@ -8,7 +8,7 @@
 Feature: TESTAUTO-193 Dunning-create-account-block
 
      Background:
-        Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
+        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
     @TESTAUTO-193
     Scenario: create-account-block
         When Left menu is "contracting-switching"
@@ -39,6 +39,5 @@ Feature: TESTAUTO-193 Dunning-create-account-block
         When Column "Account Number" with value "parameter:accountNumber" is clicked
         Then Button Account Blocks is clicked
         And Reason is "E-plus" on Account Blocks page
-        And Active is checked on Account Blocks page
         And Start date is today on Account Blocks page
         And End date is 7 days from today on Account Blocks page

@@ -63,7 +63,7 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         #Checks
         #3. Validate renewal batch
         When Click on "parameter:suitecrm-customer-name" link
-        And "Status batch" field value is switched to "QUOTES CREATED" within 240 seconds
+        And "Status batch" field value is switched to "QUOTES_CREATED" within 240 seconds
         And  All cell values at "1st" row from table "Geselecteerde contractlijn voor hernieuwingsbatch" are checked
         And  PackageName is extracted as "1st" word from "parameter:Nieuw pakket/product"
         And  Click on "VALIDEER PASSIEVE HERNIEUWINGSBATCH" link
@@ -74,7 +74,7 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
 
 
         #3.1. Validate renewal batch - checks
-        Then "Status batch" field value is switched to "VALIDATED" within 120 seconds
+        Then "Status batch" field value is switched to "VALIDATED" within 180 seconds
         And Table "Geselecteerde contractlijn voor hernieuwingsbatch" has matching value "Gevalideerd" at column "Status hernieuwing"
 
         When Click on "parameter:Contractnummer" link
@@ -119,5 +119,5 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
 
         #6 Check communication
         When Dashboard menu is "Service"
-        Then Table "Interacties" has matching value "Outbound document: Passive renewal communication" at column "Type & Onderwerp"
-        And  Table "Interacties" has matching value "Outbound document: advance" at column "Type & Onderwerp"
+        Then Table "Interacties" has matching value "Outbound document: Passive renewal communication" at column "Type & Onderwerp" polling 20 seconds
+        And  Table "Interacties" has matching value "Outbound document: advance" at column "Type & Onderwerp" polling 20 seconds

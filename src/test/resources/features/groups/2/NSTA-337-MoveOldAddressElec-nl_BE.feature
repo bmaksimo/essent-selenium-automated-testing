@@ -64,7 +64,7 @@ Feature: NSTA-337: Move old address - Electricity
         And Change house number to "4"
         Then Changes are confirmed
 
-        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
+        Given I renew login to DWP as "salesmarketing.testautomation.b2c@essent.be"
         And Left menu is "sales-marketing"
         And Top menu item is "Klanten"
         And Top action is Filter from "sales-marketing" menu retrying 5 times

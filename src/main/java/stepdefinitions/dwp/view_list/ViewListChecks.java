@@ -447,7 +447,7 @@ public class ViewListChecks extends NavigationElements {
 
     @When("^Click on \"([^\"]*)\" matching value \"([^\"]*)\" at column \"([^\"]*)\"$")
     public void clickOnElementWithMatchingValue(String columnToBeClicked, String match, String filterColumn){
-        new ClickTableCellUrl().testNow(getColumnIndexListOptionsFromRow(columnToBeClicked, null, filterColumn, match));
+        new ClickTableCellUrl().test(getColumnIndexListOptionsFromRow(columnToBeClicked, null, filterColumn, match));
     }
 
     @And("^All cell values at \"([^\"]*)\" row from table \"([^\"]*)\" are checked$")
@@ -459,12 +459,12 @@ public class ViewListChecks extends NavigationElements {
         Optional<Integer> columnCountOptional = Optional.empty();
         boolean found = false;
         int currentAttempt = 0;
-        int maxAttempts = 20;
+        int maxAttempts = 30;
         while (!found && currentAttempt <= maxAttempts) {
             currentAttempt++;
             columnCountOptional = viewListTestObject.getColumnCount();
             found = columnCountOptional.isPresent();
-            if (!found) Sleeper.sleepTightInSeconds(10);
+            if (!found) Sleeper.sleepTightInSeconds(30);
         }
 
         if (!found) throw new CucumberException("Column count not found");
