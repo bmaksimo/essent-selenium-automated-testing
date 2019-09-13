@@ -14,13 +14,6 @@ public class AccountBlockSteps extends OdooScenario {
         Assert.assertTrue("Account block reason is not E-plus", pageReason.equalsIgnoreCase("E-plus"));
     }
 
-    @And("Account Block is Active")
-    public void accountBlockAtiveIsTrue(){
-        boolean pageActive = new AccountBlockPage().isAccountBlockActive();
-        logger().info("pageActive: " + pageActive);
-        Assert.assertTrue("Account block active is not true", pageActive);
-    }
-
     @And("Account Block Start date is today")
     public void accountBlockStartDateIsToday(){
         String today = DateExpressionsUtil

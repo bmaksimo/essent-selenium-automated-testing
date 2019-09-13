@@ -6,7 +6,6 @@ import com.essent.testing.dwp.pageobject.dashboard.AccountDetails;
 import com.essent.testing.dwp.pageobject.impl.dashboard.AccountDetailsImpl;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.details.DetailsPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -67,8 +66,6 @@ public class DetailsFormSteps extends DwpScenario {
         DetailsPage dp = new DetailsPage();
         Assert.assertThat("Dunning account block start date is not today", dp.getAccountBlockStartDate().equalsIgnoreCase(today), is(true));
     }
-
-
 
     @And("Account block End date is today plus 7 days")
     public void accountBlockEndDateIsToday() {

@@ -12,7 +12,6 @@ Feature: TESTAUTO-195 Dunning-update-account-block
     @TESTAUTO-195
     Scenario: update-account-block
         When Left menu is "contracting-switching"
-#        And Sleep for 60 seconds
         And Top menu item is "Klanten"
         When B2C TC1 Contract uses "FAKE" address and switch type is "MOVE IN"
         And Top action is Filter from "contracting-switching" menu retrying 5 times
@@ -48,7 +47,6 @@ Feature: TESTAUTO-195 Dunning-update-account-block
         When Column "Account Number" with value "parameter:accountNumber" is clicked
         Then Button Account Blocks is clicked
         And Account Block Reason is E-plus
-        And Account Block is Active
         And Account Block Start date is today
         And Account Block End date is "0" days from today
 
