@@ -8,7 +8,7 @@
 Feature: TESTAUTO-193 Dunning-create-account-block
 
      Background:
-        Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
+        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
     @TESTAUTO-193
     Scenario: create-account-block
         When Left menu is "contracting-switching"
