@@ -37,4 +37,11 @@ public class AccountBlockSteps extends OdooScenario {
         String pageEndDate = new AccountBlockPage().getAccountBlockEndDate();
         Assert.assertTrue("Account block end date is not " + amountOfDays + " days from today", pageEndDate.equalsIgnoreCase(endDate));
     }
+
+    @And("^End date is empty on Account Blocks page$")
+    public void accountBlockEndDateIsEmpty() {
+        String pageEndDate = new AccountBlockPage().getAccountBlockEndDateIsEmpty();
+        Assert.assertNull("Account block end date is not empty"+ pageEndDate, pageEndDate);
+    }
+
 }

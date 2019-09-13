@@ -24,4 +24,8 @@ public class AccountBlockPage extends Component {
     public String getAccountBlockEndDate() {
         return seleniumDriver.findElementWhenVisible(By.xpath(ACCOUNT_BLOCK_END_DATE)).getText();
     }
+
+    public String getAccountBlockEndDateIsEmpty() {
+        return seleniumDriver.findElement(By.xpath(ACCOUNT_BLOCK_END_DATE)).getAttribute("value");
+    }
 }

@@ -38,7 +38,6 @@ Feature: TESTAUTO-194 Dunning-create-account-block-service
         When Column "Account Number" with value "parameter:accountNumber" is clicked
         Then Button Account Blocks is clicked
         And Reason is "Official complaint" on Account Blocks page
-        And Active is checked on Account Blocks page
         And Start date is today on Account Blocks page
-        And End date is 7 days from today on Account Blocks page
+        Then End date is empty on Account Blocks page
 
