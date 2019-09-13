@@ -10,10 +10,10 @@ Feature: NUAT-412 part: Create B2B TK1 Contract
     @NUAT-412-1
     Scenario: Create active contract TK1 ->
         When Plus menu is "Sales -> TK1 -> Nieuwe TK1 offerte (B2B) aanmaken"
-        And Company VAT number is random
-        And "Ondernemingsnummer" input is "parameter:VAT"
         And Company name is random
         And "Bedrijfsnaam" input is "parameter:company-name"
+        And Company VAT number is random
+        And "Ondernemingsnummer" input is "parameter:VAT"
         And Value at "Klantacceptatie" in the card "Perform customer acceptance check" is "Geaccepteerd"
         And Customer acceptance checks page is confirmed
         Then Form header is "Quote details"
