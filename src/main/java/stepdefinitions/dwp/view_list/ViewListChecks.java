@@ -33,7 +33,10 @@ import java.util.stream.Collectors;
 import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkTimeBetween;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.getFormattedEnd;
+import static com.billinghouse.test_automation.util.dsl.NumericUtil.amountAsInt;
 import static com.billinghouse.test_automation.util.dsl.NumericUtil.checkAmount;
+import static com.billinghouse.test_automation.util.dsl.NumericUtil.sumOfAmounts;
+import static com.essent.testing.dwp.constant.DwpConstants.FLEMISCH_LOCALE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -774,6 +777,14 @@ public class ViewListChecks extends NavigationElements {
         boolean success = checkAmount(actualAmount, expression);
         assertThat("The expected value differs from the real value", success, is(true));
 
+    }
+
+    private int amountInCurrencyAsInt(String amountInCurrency) {
+        return amountAsInt(amountInCurrency, FLEMISCH_LOCALE);
+    }
+
+    private int sumOf(List<String> amounts) {
+        return sumOfAmounts(amounts);
     }
 
     @Then("^Transactions table has outstanding amount of \"([^\"]*)\"")

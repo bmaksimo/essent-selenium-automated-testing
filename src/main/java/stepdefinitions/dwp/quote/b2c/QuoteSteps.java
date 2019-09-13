@@ -1,6 +1,6 @@
 package stepdefinitions.dwp.quote.b2c;
 
-import com.billinghouse.random.RandomUser;
+import com.billinghouse.test_automation.util.random.CustomerRandomDataGenerator;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.automation.util.Sleeper;
@@ -31,9 +31,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
 
-import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 import static com.essent.testing.dwp.autocrat.element.quote.TariffElements.NO_PRICESHEET_ALERT;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.NEXT_STEP;
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -49,14 +47,13 @@ public class QuoteSteps extends DwpScenario {
     private static final String ROW_INDEX_XPATH = "//input-form-element//autocomplete//ul//li[${rowIndex}]/a/b";
 
     @Before("@DWP or @E2E or @REGRESSION")
-    public void setupTest(Scenario scenario){
+    public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
     }
 
 
-
     @When("^B2C sales channel is \"([^\"]*)\"$")
-    public void initSalesChannel(SalesChannel salesChannel){
+    public void initSalesChannel(SalesChannel salesChannel) {
         QuoteDetailsPage quoteDetailsPage = new QuoteDetailsPage();
         Sleeper.sleepTightInSeconds(5);
         quoteDetailsPage.setSalesChannel(salesChannel);
@@ -65,7 +62,7 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^Deduplication dialogue \"([^\"]*)\" is shown$")
-    public void deduplicationDialogueIsShown(String title){
+    public void deduplicationDialogueIsShown(String title) {
         SimilarAccountDialog dialog = new SimilarAccountDialogImpl(title);
         assertThat("Similar clients dialogue was not shown.",
             dialog.getTitle(),
@@ -95,63 +92,46 @@ public class QuoteSteps extends DwpScenario {
         }
     }
 
-  private class RandomUserActions implements Predicate<CustomerDetails> {
-    @Override
-    public boolean test(CustomerDetails customer) {
-      Map<String, String> options = new HashMap<>();
-      Map reply = executeJavascriptMethod(JS_TR_GET_RANDOM_USER, options);
-      String status = ((String) reply.get("status"));
-      boolean success = StringUtils.equals("PASSED", status);
-      if (success) {
-        Map userData = (Map) reply.get("user");
-        RandomUser randomUser = randomUser(userData);
-        customer.setLastName(randomUser.getName().getLast());
-        customer.setFirstName(randomUser.getName().getFirst());
-        success = fillInCustomerDetails(randomUser);
-        parameterProvider.put("suitecrm-customer", randomUser);
-      }
-      return success;
-    }
-
-        private boolean fillInCustomerDetails(RandomUser randomUser) {
-            PersonalDetailsPage customerDetailsView = new PersonalDetailsPage();
-            customerDetailsView.setRandomUser(randomUser);
-            return customerDetailsView.fillInFormData();
-        }
-    }
-
     @And("^Quote details are confirmed$")
-    public void confirmQuoteDetails(){
+    public void confirmQuoteDetails() {
         QuoteDetailsPage quoteDetailsPage = new QuoteDetailsPage();
         quoteDetailsPage.next();
     }
 
     @And("^Customer is random$")
-    public void checkAndGetRandomUser(){
-        boolean success = generateRandomUser();
-        assertThat("Random customer data was not fetched.", success,
-            is(true));
+    public void checkAndGetRandomUser() {
+        generateRandomUser();
     }
 
     @And("^Customer is duplicated$")
-    public void duplicateRandomUser(){
-        RandomUser randomUser = (RandomUser) parameterProvider.getValueOrParameter("parameter:suitecrm-customer");
-        boolean success = new RandomUserActions().fillInCustomerDetails(randomUser);
-        assertThat("Random customer data was not fetched.", success,
-            is(true));
+    public void duplicateRandomUser() {
+        CustomerDetails customerDetails = (CustomerDetails) parameterProvider.getValueOrParameter("parameter:suitecrm-customer");
+        fillInCustomerDetails(customerDetails);
     }
 
-    private boolean generateRandomUser() {
+    private void generateRandomUser() {
         CustomerDetails customer = new CustomerDetails();
-        boolean success = new RandomUserActions().test(customer);
+        Map<String, String> customerName = CustomerRandomDataGenerator.createAccountName("prospect");
+        String firstName = customerName.get("firstName");
+        String lastName = customerName.get("lastName");
+        String email = firstName + "." + lastName + "@person.com";
+        customer.setFirstName(customerName.get("firstName"));
+        customer.setLastName(customerName.get("lastName"));
+        customer.setEmail(email);
+        customer.setBirthDate(CustomerRandomDataGenerator.getDOB());
         parameterProvider.put("suitecrm-customer-name", customer.getFirstName() + " " + customer.getLastName());
-        return success;
+        parameterProvider.put("suitecrm-customer", customer);
+        fillInCustomerDetails(customer);
+    }
+
+    private boolean fillInCustomerDetails(CustomerDetails customer) {
+        return new PersonalDetailsPage(customer).fillInFormData();
     }
 
     @And("^Customer address is$")
-    public void initCustomerAddress(final DataTable address){
+    public void initCustomerAddress(final DataTable address) {
         seleniumDriver.waitForRequestsToFinish();
-        List<Map<String,String>> add = address.asMaps(String.class, String.class);
+        List<Map<String, String>> add = address.asMaps(String.class, String.class);
         new PersonalDetailsAddressPage().fillInCustomerAddressx(add);
     }
 
@@ -161,42 +141,38 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^Pricing details are confirmed$")
-    public void confirmPricingDetails() throws Throwable {
+    public void confirmPricingDetails() {
         new QuoteDetailsPage().next();
     }
 
     @And("^Package is \"([^\"]*)\"$")
-    public void
-    selectPackage(String packaqe){
+    public void selectPackage(String packaqe) {
         seleniumDriver.waitForRequestsToFinish();
         TariffTable tariff = new TariffTable();
         tariff.setPackageName(packaqe);
         PackageAndFuelTypeSelectionPage selectPackageAndFuelTypeView = new PackageAndFuelTypeSelectionPage();
         selectPackageAndFuelTypeView.setTariffData(tariff);
         boolean success = selectPackageAndFuelTypeView.fillInFormData();
-        assertThat(String.format("Failure when selecting the package %s.", packaqe),
-            success,
-            is(true));
+        assertThat(String.format("Failure when selecting the package %s.", packaqe), success, is(true));
         seleniumDriver.waitForRequestsToFinish();
     }
 
 
-
     @And("^Package and Fuel Type is confirmed$")
-    public void confirmPackageAndFuelType(){
+    public void confirmPackageAndFuelType() {
         seleniumDriver.waitForRequestsToFinish();
         PackageAndFuelTypeSelectionPage selectPackageAndFuelTypeView = new PackageAndFuelTypeSelectionPage();
         selectPackageAndFuelTypeView.next();
     }
 
     @And("^Price sheet alert doesn't pop up$")
-    public void verifySelectTariffSheetAndPackage(){
+    public void verifySelectTariffSheetAndPackage() {
         assertThat("Failure. Tariff sheet alerts were generated although they were not expected.", true,
             is(new VerifyTariffSheetPriceAlert().test(this)));
     }
 
     @And("^Electricity and gas meter numbers and their EANs are:$")
-    public void selectMeterIdAndEan(final DataTable connectionTable){
+    public void selectMeterIdAndEan(final DataTable connectionTable) {
         List<ConnectionDetails> list = connectionTable.asList(ConnectionDetails.class);
         ConnectionDetails electricityConnectionDetails = list.get(0);
         ConnectionDetails gasConnectionDetails = list.get(1);
@@ -208,7 +184,7 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^([^\"]*) meter is ([^\"]*)$")
-    public void setMeterState(final ProductType productType, final SwitchState meterState){
+    public void setMeterState(final ProductType productType, final SwitchState meterState) {
         ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
         given().await()
             .ignoreExceptions()
@@ -219,7 +195,7 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^Switch type is Move in$")
-    public void setMoveIn(){
+    public void setMoveIn() {
         ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
         given().await()
             .ignoreExceptions()
@@ -230,7 +206,7 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^([^\"]*) market mock test is ([^\"]*)$")
-    public void setMarketMockTest(final ProductType productType, final SwitchState state){
+    public void setMarketMockTest(final ProductType productType, final SwitchState state) {
         seleniumDriver.waitForRequestsToFinish();
         ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
         given().await()
@@ -243,7 +219,7 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^Connection details are confirmed$")
-    public void confirmConnection(){
+    public void confirmConnection() {
         seleniumDriver.waitForRequestsToFinish();
         ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
         connectionDetailsView.next();
@@ -271,10 +247,10 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^Prepaid advance amounts are collected as numbers$")
-    public void collectAdvanceAmountsAsNumbers(final DataTable cardsInfo){
+    public void collectAdvanceAmountsAsNumbers(final DataTable cardsInfo) {
         seleniumDriver.waitForRequestsToFinish();
 
-        List<Map<String,String>> fieldDescriptors = cardsInfo.asMaps(String.class, String.class);
+        List<Map<String, String>> fieldDescriptors = cardsInfo.asMaps(String.class, String.class);
 
         FieldDescriptor electricityAdvAmountField = new FieldDescriptor();
         electricityAdvAmountField.setCardName(fieldDescriptors.get(0).get("cardName"));
@@ -293,13 +269,13 @@ public class QuoteSteps extends DwpScenario {
 
 
     @And("^Billing details are confirmed$")
-    public void confirmBillingDetaile(){
+    public void confirmBillingDetaile() {
         BillingDetailsPage billingDetailsPage = new BillingDetailsPage();
         billingDetailsPage.next();
     }
 
     @And("^Quote is signed in \"([^\"]*)\"$")
-    public void submitSignedQuote(String location){
+    public void submitSignedQuote(String location) {
         seleniumDriver.waitForRequestsToFinish();
         String path = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
         File document = new File(path);
@@ -319,7 +295,7 @@ public class QuoteSteps extends DwpScenario {
 
 
     @And("^Quote is signed$")
-    public void submitQuote(){
+    public void submitQuote() {
         String path = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
         File document = new File(path);
         assertThat("File at path " + document.getAbsolutePath() + " doesn't exist.", true,
@@ -335,7 +311,7 @@ public class QuoteSteps extends DwpScenario {
 
 
     @And("^Quote for account is signed$")
-    public void submitQuoteForAccount(){
+    public void submitQuoteForAccount() {
         String path = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
         File document = new File(path);
         assertThat("File at path " + document.getAbsolutePath() + " doesn't exist.", true,
@@ -363,7 +339,7 @@ public class QuoteSteps extends DwpScenario {
 
 
     @And("^Quote is confirmed$")
-    public void confirmQuote(){
+    public void confirmQuote() {
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(5);
         QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage();
@@ -372,21 +348,21 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^Electricity EAN code is selected$")
-    public void selectEanCode(){
+    public void selectEanCode() {
         Map<String, String> options = new HashMap<>();
         boolean success = executeJavascriptTest("TrSelectEanCode", options);
         assertThat(success, is(true));
     }
 
     @And("^EAN code is generated$")
-    public void generateEan(){
+    public void generateEan() {
         String eanCode = PrepareDataForContract.generateEAN();
         parameterProvider.put("EAN-code-generated", eanCode);
         logger().debug(" - Generated EAN code: " + eanCode);
     }
 
     @And("^Electricity EAN code is \"([^\"]*)\"$")
-    public void electricityEANCodeIs(String ean){
+    public void electricityEANCodeIs(String ean) {
         ConnectionDetails electricityConnectionDetails = new ConnectionDetails();
         switch (ean) {
             case "selected":
@@ -408,7 +384,7 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^Electricity EAN code is put as output parameter \"?([^\"]*)\"?$")
-    public void putElectricityEanCode(String parameter){
+    public void putElectricityEanCode(String parameter) {
         ConnectionDetailsPage page = new ConnectionDetailsPage();
         String eanCode = page.getEan();
         assertThat(StringUtils.isNotEmpty(eanCode), is(true));
@@ -416,7 +392,7 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^EAN-code autocomplete value from the \"([^\"]*)\" row is checked$")
-    public void selectEanCodeFromAutoComplete(String ordinal){
+    public void selectEanCodeFromAutoComplete(String ordinal) {
         int rowIndex = extractNumericValue(ordinal);
         String locator = createQuery(ROW_INDEX_XPATH, "rowIndex", String.valueOf(rowIndex));
         WebElement eanElement = seleniumDriver.findElementWhenPresent(By.xpath(locator));

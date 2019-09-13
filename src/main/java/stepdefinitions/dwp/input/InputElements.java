@@ -118,7 +118,8 @@ public class InputElements extends DwpScenario {
      * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
      */
     @And("^\"([^\"]*)\" input on \"([^\"]*)\" card is \"([^\"]*)\"$")
-    public void setInput(String label, String card, String value){
+    public void setInput(String label, String card, String value) {
+        Sleeper.sleepTightInSeconds(10);
         seleniumDriver.waitForRequestsToFinish();
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
         parameterProvider.put("inputValue", inputValue);
@@ -126,10 +127,11 @@ public class InputElements extends DwpScenario {
         options.put("label", label);
         options.put("value", inputValue);
         options.put("card", card);
-        FluentWait<ApplyInput> waiter = waiter(new ApplyInput(), 10, 1);
+        FluentWait<ApplyInput> waiter = waiter(new ApplyInput(), 30, 1);
         waiter.withMessage(String.format("Input field %s is undefined.", label));
         waiter.until((ApplyInput callback) -> callback.test(options));
         seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(10);
     }
 
     @And("^\"([^\"]*)\" input is \"([^\"]*)\" waiting for (\\d+) seconds$")
