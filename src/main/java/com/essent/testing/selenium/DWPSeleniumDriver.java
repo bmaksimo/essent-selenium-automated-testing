@@ -89,7 +89,6 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
                 if (withException) {
                     fail(reason);
                 }
-                takeScreenshot(false);
             }
             if (!runImmediately)
                 waitForRequestsToFinish();
@@ -187,7 +186,6 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
         if (StringUtils.equals("FAILED", status)) {
             String reason = null == result ? JS_EXECUTOR_RETURNED_NULL : ((String) result.get("reason"));
             logger.warn(" - REASON: " + reason);
-            takeScreenshot(false);
         }
         return result;
     }

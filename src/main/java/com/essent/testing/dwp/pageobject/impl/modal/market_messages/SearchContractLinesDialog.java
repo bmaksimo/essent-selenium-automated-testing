@@ -47,6 +47,10 @@ public class SearchContractLinesDialog extends Component implements ConfirmDialo
     public boolean confirm() {
         Sleeper.sleepTightInSeconds(5);
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenPresent(By.id("confirm-button")));
+        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(5);
+        handleAlert();
+        seleniumDriver.waitForRequestsToFinish();
         return true;
     }
 

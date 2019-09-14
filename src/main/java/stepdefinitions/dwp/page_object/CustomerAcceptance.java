@@ -32,7 +32,6 @@ public class CustomerAcceptance extends QuoteCreationGuidedStep {
 
     @Override
     public boolean fillInFormData() {
-        seleniumDriver.takeScreenshot("customerAcceptanceChecks");
         return true;
     }
 }
