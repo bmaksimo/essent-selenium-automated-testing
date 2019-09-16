@@ -10,7 +10,7 @@ Feature: NSTA-351: Create free text invoice - nl_BE
         And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
 
     @NSTA-351
-    Scenario: Checking usage of a customer
+    Scenario: NSTA-351: Create free text invoice
         When Left menu is "billing"
         And Top menu item is "Klanten"
         And Top action is "Filters"
@@ -30,4 +30,4 @@ Feature: NSTA-351: Create free text invoice - nl_BE
         And Sleep for 5 seconds
 
         When Dashboard menu is "Billing"
-        Then Transaction is created with TYPE "INVOICE (FREE_TEXT)"
+        Then Table "Transacties" contains value "Invoice (FREE_TEXT)" at column "ID & Type" retrying 10 times
