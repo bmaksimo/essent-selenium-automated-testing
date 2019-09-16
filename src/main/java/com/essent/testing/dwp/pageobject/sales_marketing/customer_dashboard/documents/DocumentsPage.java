@@ -10,6 +10,7 @@ public class DocumentsPage extends Component {
     private static final String findDocument = "(//span[.='customer-signature.pdf'])[1]";
 
     public String documentText(){
+        seleniumDriver.waitForRequestsToFinish();
         return findElementWhenVisible(By.xpath(labelDocument)).getText();
 
     }
