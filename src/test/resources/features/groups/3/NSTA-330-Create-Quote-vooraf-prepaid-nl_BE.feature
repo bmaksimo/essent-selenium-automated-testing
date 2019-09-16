@@ -60,18 +60,18 @@ Feature: NSTA-330. Check the generation of prepaid advance invoice.
         And Quote is confirmed
         And Dashboard menu is "Contracten"
         And Dashboard menu is "Sales"
-        And Table "Offertes" contains value "Sales Getekend - Geaccepteerd" at column "Type & status" retrying 30 times
+        Then Table "Offertes" contains value "Sales Getekend - Geaccepteerd" at column "Type & status" retrying 30 times
 
         When Click on link in View List at "1st" row and "Nummer & Getekend contractnummer" column
         And "Kortingen op de offerte" list is empty
-        And Table "Offertelijnen" contains value "Getekend TK1-Aardgas Vooraf (TC_VOORAF_B2C)" at column "Status & Product" retrying 30 times
+        Then Table "Offertelijnen" contains value "Getekend TK1-Aardgas Vooraf (TC_VOORAF_B2C)" at column "Status & Product" retrying 30 times
         And Table "Offertelijnen" contains value "Getekend TK1-Elektriciteit Vooraf (TC_VOORAF_B2C)" at column "Status & Product" retrying 30 times
 
         When Dashboard menu is "Contracten"
         And "1st" list element has cell value "Actief" at column "Contractnummer" polling 450 seconds
         And "2nd" list element has cell value "Actief" at column "Contractnummer" polling 450 seconds
         And Click on link in "Contracten" View List at "1st" row and "Nummer & Aanmaakdatum" column
-        And Table "Contractlijnen" contains value "Actief TK1-Aardgas Vooraf (TC_VOORAF_B2C)" at column "Status & Product" retrying 30 times
+        Then Table "Contractlijnen" contains value "Actief TK1-Aardgas Vooraf (TC_VOORAF_B2C)" at column "Status & Product" retrying 30 times
         And Table "Contractlijnen" contains value "Actief TK1-Elektriciteit Vooraf (TC_VOORAF_B2C)" at column "Status & Product" retrying 30 times
 
         #2.1 Check prepaid advance invoice total amount as sum of electricity and gas advance amounts.
@@ -79,7 +79,7 @@ Feature: NSTA-330. Check the generation of prepaid advance invoice.
         Then List element matching value "Outbound document: prepaidadvance" at column "Type & Onderwerp" from table "Interacties" is checked
 
         When Dashboard menu is "Billing"
-        And Table "Transacties" contains value "Invoice (PREPAIDADVANCE)" at column "ID & Type" retrying 30 times
+        Then Table "Transacties" contains value "Invoice (PREPAIDADVANCE)" at column "ID & Type" retrying 30 times
         And  "1st" element of table "Transacties" at currency column "Bedrag" is sum of
         |parameter:bedrag-vooraf-el |
         |parameter:bedrag-vooraf-gas|
