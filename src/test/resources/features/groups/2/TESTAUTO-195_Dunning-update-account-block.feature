@@ -10,7 +10,7 @@ Feature: TESTAUTO-195 Dunning-update-account-block
      Background:
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
     @TESTAUTO-195
-    Scenario: update-account-block
+    Scenario: Update account block
         When Left menu is "contracting-switching"
         And Top menu item is "Klanten"
         When B2C TC1 Contract uses "FAKE" address and switch type is "MOVE IN"
@@ -35,7 +35,7 @@ Feature: TESTAUTO-195 Dunning-update-account-block
 
         When Plus action of "1" element from "accountBlockReasonsForAccountList" and click on "Update"
         And "Einddatum" date is "now"
-        And Date is saved
+        And Date "now" is saved
         And Changes are confirmed
         Then Table "Lijst blokkeringen" contains value "parameter:endDate" at column "Einddatum" retrying 60 times
         Then Account block start and end dates are the same

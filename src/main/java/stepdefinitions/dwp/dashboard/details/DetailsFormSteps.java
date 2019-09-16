@@ -76,9 +76,9 @@ public class DetailsFormSteps extends DwpScenario {
         Assert.assertThat("Dunning account block end date is not today plus 7 days", dp.getAccountBlockEndDate().equalsIgnoreCase(oneWeekFromToday), is(true));
     }
 
-    @And("^Date is saved$")
-    public void dateIsSaved(){
-         parameterProvider.put("endDate", toDwpEndDate("now"));
+    @And("^Date \"([^\"]*)\" is saved$")
+    public void dateIsSaved(String date){
+         parameterProvider.put("endDate", toDwpEndDate(date));
     }
 
     @Then("^Account block start and end dates are the same$")
