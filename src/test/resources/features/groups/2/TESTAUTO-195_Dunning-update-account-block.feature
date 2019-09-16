@@ -24,9 +24,8 @@ Feature: TESTAUTO-195 Dunning-update-account-block
         And Click on "CREEREN BLOKKERING"
         And "Block reason" selection is "E-plus"
         And "Einddatum" date is "7 days from now"
-        And Sleep for 10 seconds
         And Changes are confirmed
-        And Sleep for 60 seconds
+        And Sleep for 30 seconds
 
         Then Table "Lijst blokkeringen" contains value "E-plus" at column "Reden" retrying 60 times
         And Table "Lijst blokkeringen" contains value "true" at column "Actief" retrying 60 times
@@ -35,7 +34,7 @@ Feature: TESTAUTO-195 Dunning-update-account-block
 
         When Plus action of "1" element from "accountBlockReasonsForAccountList" and click on "Update"
         And "Einddatum" date is "now"
-        And Date "now" is saved
+        And End date "now" is saved
         And Changes are confirmed
         Then Table "Lijst blokkeringen" contains value "parameter:endDate" at column "Einddatum" retrying 60 times
         Then Account block start and end dates are the same
