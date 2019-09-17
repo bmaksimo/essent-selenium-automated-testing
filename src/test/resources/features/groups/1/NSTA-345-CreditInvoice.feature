@@ -45,6 +45,7 @@ Feature: NSTA-345:Credit Invoice
         When Plus action of "1" element from "TransactionsOnAccount" and click on "Herbereken tussentijdse factuur"
         And New Amount Invoice is "300" for EAN "parameter:EAN-code"
         Then Invoice run is scheduled
+        And Sleep for 10 seconds
 
         # 3 - Check if interactions are created for VKM and CNM
         When Dashboard menu is "Service"
