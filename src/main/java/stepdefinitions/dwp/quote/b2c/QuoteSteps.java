@@ -142,7 +142,7 @@ public class QuoteSteps extends DwpScenario {
         ContractPage cp = new ContractPage();
         List<Map<String, String>> add = address.asMaps(String.class, String.class);
         if (cp.checkDeliveryAddress().isEmpty()) {
-            cp.addAddressData(add);
+            cp.populateAddressData(add);
         }
     }
 

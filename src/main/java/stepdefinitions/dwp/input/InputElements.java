@@ -402,7 +402,7 @@ public class InputElements extends DwpScenario {
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
         parameterProvider.put("EAN-code-generated", inputValue);
         ContractPage cp = new ContractPage();
-        cp.eanInAdvanceElektricityCard(inputValue);
+        cp.setEanInAdvanceElectricityCard(inputValue);
     }
 
     @And("EAN in card Gas is \"([^\"]*)\"$")
@@ -410,7 +410,7 @@ public class InputElements extends DwpScenario {
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
         parameterProvider.put("EAN-code-generated", inputValue);
         ContractPage cp = new ContractPage();
-        cp.eanInAdvanceGASCard(inputValue);
+        cp.setEanInAdvanceGasCard(inputValue);
     }
 
     @Override

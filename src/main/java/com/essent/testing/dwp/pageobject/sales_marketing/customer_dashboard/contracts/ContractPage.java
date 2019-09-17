@@ -495,13 +495,13 @@ public class ContractPage extends Component {
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath(GAS_IN_ADVANCE_START_DATE)), value);
     }
 
-    public void eanInAdvanceElektricityCard(String value) {
+    public void setEanInAdvanceElectricityCard(String value) {
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(20);
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath(EAN_ELECTRICITY)), value);
     }
 
-    public void eanInAdvanceGASCard(String value) {
+    public void setEanInAdvanceGasCard(String value) {
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(20);
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath(EAN_GAS)), value);
@@ -512,21 +512,19 @@ public class ContractPage extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath(DELIVERY_ADDRESS)).getText();
     }
 
-    public void addAddressData(List<Map<String,String>> add) {
+    public void populateAddressData(List<Map<String,String>> add) {
         String street = null;
         String houseNr = null;
         String postcode = null;
         String city = null;
 
-        for (int i = 0; i < add.size(); i++) {
-            street = add.get(i).get("street");
-            if (street.equals("Random")) {
-                street = StreetGenerator.getRandomStreetInKontich();
-            }
-            houseNr = add.get(i).get("houseNr");
-            postcode = add.get(i).get("postalCode");
-            city = add.get(i).get("city");
+        street = add.get(0).get("street");
+        if (street.equals("Random")) {
+            street = StreetGenerator.getRandomStreetInKontich();
         }
+        houseNr = add.get(0).get("houseNr");
+        postcode = add.get(0).get("postalCode");
+        city = add.get(0).get("city");
 
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(4);
