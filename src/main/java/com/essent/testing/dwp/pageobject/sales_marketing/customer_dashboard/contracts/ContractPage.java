@@ -354,17 +354,19 @@ public class ContractPage extends Component {
         seleniumDriver.waitForRequestsToFinish();
         int maxAttempts = 10;
         int currentAttempt = 0;
+        boolean found = false;
+        Optional<WebElement> firstInvoiceElement = Optional.empty();
 
-        Optional<WebElement> firstInvoiceElement = seleniumDriver.findElementOptional(By.xpath(FIRST_INVOICE));
-        while (currentAttempt < maxAttempts && !firstInvoiceElement.isPresent()) {
+        while (!found && currentAttempt <= maxAttempts) {
             logger().debug("Attempt #" + currentAttempt);
             currentAttempt++;
             Sleeper.sleepTightInSeconds(10);
 
             firstInvoiceElement = seleniumDriver.findElementOptional(By.xpath(FIRST_INVOICE));
+            found = firstInvoiceElement.isPresent();
         }
 
-        if (!firstInvoiceElement.isPresent()) fail("Invoices are not available");
+        if (!found) fail("Invoices are not available");
 
         String firstInvoice = firstInvoiceElement.get().getText();
         String secondInvoice = seleniumDriver.findElementWhenVisible(By.xpath(SECOND_INVOICE)).getText();
