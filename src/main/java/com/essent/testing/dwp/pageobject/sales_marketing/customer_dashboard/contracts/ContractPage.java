@@ -512,19 +512,14 @@ public class ContractPage extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath(DELIVERY_ADDRESS)).getText();
     }
 
-    public void populateAddressData(List<Map<String,String>> add) {
-        String street = null;
-        String houseNr = null;
-        String postcode = null;
-        String city = null;
-
-        street = add.get(0).get("street");
+    public void populateAddressData(List<Map<String,String>> field) {
+        String street = field.get(0).get("street");
         if (street.equals("Random")) {
             street = StreetGenerator.getRandomStreetInKontich();
         }
-        houseNr = add.get(0).get("houseNr");
-        postcode = add.get(0).get("postalCode");
-        city = add.get(0).get("city");
+        String houseNr = field.get(0).get("houseNr");
+        String postcode = field.get(0).get("postalCode");
+        String city = field.get(0).get("city");
 
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(4);
