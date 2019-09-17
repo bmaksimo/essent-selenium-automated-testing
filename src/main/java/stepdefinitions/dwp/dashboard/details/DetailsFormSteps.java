@@ -81,4 +81,16 @@ public class DetailsFormSteps extends DwpScenario {
         DetailsPage dp = new DetailsPage();
         Assert.assertNull("Account block end date exists" + dp.getAccountBlockEndDateNotExist(), dp.getAccountBlockEndDateNotExist());
     }
+
+    @And("^End date \"([^\"]*)\" is saved$")
+    public void dateIsSaved(String date){
+         parameterProvider.put("endDate", toDwpEndDate(date));
+    }
+
+    @Then("^Account block start and end dates are the same$")
+    public void accountBlockStartAndEndDatesAreTheSame(){
+        DetailsPage dp = new DetailsPage();
+        parameterProvider.put("startDate", dp.getAccountBlockStartDate());
+        Assert.assertThat("Dunning account block star and end dates are different", dp.getAccountBlockStartDate().equalsIgnoreCase(dp.getAccountBlockEndDate()), is(true));
+    }
 }
