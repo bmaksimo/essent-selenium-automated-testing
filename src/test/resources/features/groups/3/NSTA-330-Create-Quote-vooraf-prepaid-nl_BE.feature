@@ -24,7 +24,7 @@ Feature: NSTA-330. Check the generation of prepaid advance invoice.
         When Customer is random
         And Customer address is
             | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
-            | Random           | 1       |            |     | 2550       | Kontich |         |
+            | Mechelsesteenweg | 1       |            |     | 2550       | Kontich |         |
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
 
@@ -34,10 +34,14 @@ Feature: NSTA-330. Check the generation of prepaid advance invoice.
 
         And Start date in cards is "35 days before now"
         And Options "test" "are" "On"
+
         And EAN code is generated
-        And "EAN-code" input on "Elektriciteit Vooraf" card is "parameter:EAN-code-generated"
+        And EAN in card Electricity is "parameter:EAN-code-generated"
         And EAN code is generated
-        And "EAN-code" input on "Aardgas Vooraf" card is "parameter:EAN-code-generated"
+        And EAN in card Gas is "parameter:EAN-code-generated"
+        And Add customer address again if not populated first time
+            | street           | houseNr | postalCode | city    |
+            | Mechelsesteenweg | 1       | 2550       | Kontich |
         And Connection details are confirmed
         And Save changes
         Then Form header is "Billing details"

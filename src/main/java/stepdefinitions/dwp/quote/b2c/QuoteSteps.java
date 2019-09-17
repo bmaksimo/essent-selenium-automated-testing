@@ -9,6 +9,7 @@ import com.essent.testing.dwp.pageobject.impl.quote.*;
 import com.essent.testing.dwp.pageobject.impl.quote_for_account.OnlineQuoteSignatureModalPage;
 import com.essent.testing.dwp.pageobject.impl.quote_for_account.QuoteForAccountOverviewPage;
 import com.essent.testing.dwp.pageobject.modal.quote.SimilarAccountDialog;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
 import com.essent.testing.util.resource.ResourceUtil;
@@ -133,6 +134,16 @@ public class QuoteSteps extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
         List<Map<String, String>> add = address.asMaps(String.class, String.class);
         new PersonalDetailsAddressPage().fillInCustomerAddressx(add);
+    }
+
+    @And("^Add customer address again if not populated first time$")
+    public void secondTimeCustomerAddress(final DataTable address) {
+        seleniumDriver.waitForRequestsToFinish();
+        ContractPage cp = new ContractPage();
+        List<Map<String, String>> add = address.asMaps(String.class, String.class);
+        if (cp.checkDeliveryAddress().isEmpty()) {
+            cp.addAddressData(add);
+        }
     }
 
     @And("^Customer details are confirmed$")

@@ -1,6 +1,7 @@
 package com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts;
 
 import com.essent.automation.util.Sleeper;
+import com.essent.testing.datagenerator.address.StreetGenerator;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import cucumber.runtime.CucumberException;
@@ -63,6 +64,12 @@ public class ContractPage extends Component {
     private static String LOW_RATES_QUOTE = "//list[@list-key='QuoteComponentLines']//span[contains(., 'Low')]/../../../..//td[6]";
     private static final String ELEKTRICITY_IN_ADVANCE_START_DATE = "//div[@class='row- card'][2]//datepicker-form-element[@id='up_start_date_c']//input";
     private static final String GAS_IN_ADVANCE_START_DATE = "//div[@class='row- card'][3]//datepicker-form-element[@id='up_start_date_c']//input";
+    private static final String EAN_ELECTRICITY = "//div[@class='row- card'][2]//validation-wrapper[@label='EAN-code']//input";
+    private static final String EAN_GAS = "//div[@class='row- card'][3]//validation-wrapper[@label='EAN-code']//input";
+    private static final String DELIVERY_ADDRESS = "//input[@id='address-street-field']";
+    private static final String DELIVERY_ADDRESS_NUMBER = "//input[@id='address-number-field']";
+    private static final String DELIVERY_ADDRESS_POSTAL_CODE = "//input[@id='address-postalcode-field']";
+    private static final String DELIVERY_ADDRESS_CITY = "//input[@id='address-city-field']";
 
     private WebElement startData() {
         return seleniumDriver.findElementWhenVisible(By.id(START_DATA_ID));
@@ -488,5 +495,53 @@ public class ContractPage extends Component {
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath(GAS_IN_ADVANCE_START_DATE)), value);
     }
 
+    public void eanInAdvanceElektricityCard(String value) {
+        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(20);
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath(EAN_ELECTRICITY)), value);
+    }
+
+    public void eanInAdvanceGASCard(String value) {
+        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(20);
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath(EAN_GAS)), value);
+    }
+
+    public String checkDeliveryAddress() {
+        seleniumDriver.waitForRequestsToFinish();
+        return seleniumDriver.findElementWhenVisible(By.xpath(DELIVERY_ADDRESS)).getText();
+    }
+
+    public void addAddressData(List<Map<String,String>> add) {
+        String street = null;
+        String houseNr = null;
+        String postcode = null;
+        String city = null;
+
+        for (int i = 0; i < add.size(); i++) {
+            street = add.get(i).get("street");
+            if (street.equals("Random")) {
+                street = StreetGenerator.getRandomStreetInKontich();
+            }
+            houseNr = add.get(i).get("houseNr");
+            postcode = add.get(i).get("postalCode");
+            city = add.get(i).get("city");
+        }
+
+        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(4);
+        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.xpath(DELIVERY_ADDRESS)), street);
+        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(4);
+        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.xpath(DELIVERY_ADDRESS_NUMBER)), houseNr);
+        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(4);
+        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.xpath(DELIVERY_ADDRESS_POSTAL_CODE)), postcode);
+        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(4);
+        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.xpath(DELIVERY_ADDRESS_CITY)), city);
+        seleniumDriver.waitForRequestsToFinish();
+
+    }
 
 }
