@@ -22,7 +22,6 @@ public class CustomerPage extends Component {
     private static final String ACCOUNT_BLOCKS_BUTTON_LABEL=  "//div[contains(@class, 'fa-exclamation-triangle')]";
 
 
-
     public boolean clickOnTabMenu(String tab){
        awaitOdooRequestToFinish(20);
        String xpath = createQuery(TAB_MENU_XPATH, NAME_TAB, tab);
@@ -98,4 +97,5 @@ public class CustomerPage extends Component {
     public String getDirectDebitSentDate(){
         return seleniumDriver.findElementWhenVisible(By.xpath(SENT_DATE)).getText();
     }
+
 }

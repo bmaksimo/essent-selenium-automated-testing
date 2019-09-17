@@ -397,6 +397,22 @@ public class InputElements extends DwpScenario {
         cp.getStartDateInAdvanceGasCard(inputValue);
     }
 
+    @And("EAN in card Electricity is \"([^\"]*)\"$")
+    public void setInputByELecEAN(String value) {
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
+        parameterProvider.put("EAN-code-generated", inputValue);
+        ContractPage cp = new ContractPage();
+        cp.setEanInAdvanceElectricityCard(inputValue);
+    }
+
+    @And("EAN in card Gas is \"([^\"]*)\"$")
+    public void setInputByGasEAN(String value) {
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
+        parameterProvider.put("EAN-code-generated", inputValue);
+        ContractPage cp = new ContractPage();
+        cp.setEanInAdvanceGasCard(inputValue);
+    }
+
     @Override
     @After("@DWP or @CORE or @E2E or @REGRESSION")
     public void tearDown() {
