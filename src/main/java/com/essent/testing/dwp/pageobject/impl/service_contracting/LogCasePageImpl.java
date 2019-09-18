@@ -29,7 +29,7 @@ public class LogCasePageImpl extends Component implements Form, LogCasePage {
 
     @Override
     public boolean fillInFormData() {
-
+        seleniumDriver.waitForRequestsToFinish();
         String specificationsSubjectElement = "element.specifications.subject";
         String specificationsPriorityElement = "element.specifications.priority";
 
@@ -55,31 +55,37 @@ public class LogCasePageImpl extends Component implements Form, LogCasePage {
 
     @Override
     public void setSubjectSelection(String subject) {
+        seleniumDriver.waitForRequestsToFinish();
         this.subject = subject;
     }
 
     @Override
     public void setDescription(String description) {
+        seleniumDriver.waitForRequestsToFinish();
         this.description = description;
     }
 
     @Override
     public void setSolution(String solution) {
+        seleniumDriver.waitForRequestsToFinish();
         this.solution = solution;
     }
 
     @Override
     public void setPriority(String priority) {
+        seleniumDriver.waitForRequestsToFinish();
         this.priority = priority;
     }
 
     @Override
     public void save(String buttonText) {
+        seleniumDriver.waitForRequestsToFinish();
         String query = createQuery(BUTTON_SELECTOR_TEMPLATE, "text", buttonText);
         findAndClickButton(query);
     }
 
     private void findAndClickButton(String query) {
+        seleniumDriver.waitForRequestsToFinish();
         waitUntil(FIVE_HUNDRED_MILLISECONDS, TWO_SECONDS, () -> isEnabled(query));
         seleniumDriver.findElementWhenPresent(By.xpath(query));
         waitUntil(FIVE_HUNDRED_MILLISECONDS, TWO_SECONDS, () -> isEnabled(query));
@@ -96,9 +102,9 @@ public class LogCasePageImpl extends Component implements Form, LogCasePage {
     }
 
     private Boolean isEnabled(String query) {
+        seleniumDriver.waitForRequestsToFinish();
         WebElement button = seleniumDriver.findElementWhenPresent(By.xpath(query));
         String disabled = button.getAttribute("disabled");
         return StringUtils.isEmpty(disabled) || !StringUtils.equals(disabled, "disabled");
-
     }
 }
