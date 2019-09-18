@@ -20,6 +20,7 @@ import stepdefinitions.dwp.tables.plus.SwitchState;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
@@ -321,7 +322,7 @@ public class InputElements extends DwpScenario {
     public void switchOption(String option, String verb, SwitchState state){
         Sleeper.sleepTightInSeconds(5);
         if (!(verb.equalsIgnoreCase("is") || verb.equalsIgnoreCase("are")) ){
-            Assert.assertTrue("String is not valid (is/are expected)",false);
+            Assert.fail("String is not valid (is/are expected)");
         }
         seleniumDriver.waitForRequestsToFinish();
         Map<String, String> options = new HashMap<>();
@@ -352,22 +353,17 @@ public class InputElements extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
     }
 
-    /**
-     * Sets and asynchronously checks unlabelled placeholder input on any DWP form
-     * @param placeholder Placeholder suggestion text
-     * @param value Input value
-     * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
-     */
     @And("^Field \"([^\"]*)\" input is \"([^\"]*)\"$")
     public void setInputByPlaceholder(String placeholder, String value) {
         seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(30);
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
-        WebElement placeHolderInputElement = seleniumDriver.findElement(By.xpath("//input[@placeholder='"+placeholder+"']"));
-        boolean placeHolderWasFound = placeHolderInputElement != null;
+        Optional<WebElement> placeHolderInputElement = seleniumDriver.findElementOptional(By.xpath("//input[@placeholder='"+placeholder+"']"));
+        boolean placeHolderWasFound = placeHolderInputElement.isPresent();
         assertThat(String.format("Placeholder element '%s' was not found.", placeholder), placeHolderWasFound, is(true));
-        placeHolderInputElement.clear();
-        placeHolderInputElement.sendKeys(inputValue);
+        placeHolderInputElement.ifPresent(e -> e.sendKeys(inputValue));
         seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(30);
     }
 
   @And("^Selection with search is \"([^\"]*)\"$")
