@@ -352,29 +352,32 @@ public class ContractPage extends Component {
 
     private List<String> getActualInvoicesAmounts() {
         seleniumDriver.waitForRequestsToFinish();
-        int maxAttempts = 10;
+
+        String firstInvoice = getInvoice(FIRST_INVOICE, 10);
+        String secondInvoice = getInvoice(SECOND_INVOICE, 10);
+        String thirdInvoice = getInvoice(THIRD_INVOICE, 10);
+
+        return Arrays.asList(getAmountWithoutCurrency(firstInvoice),
+                             getAmountWithoutCurrency(secondInvoice),
+                             getAmountWithoutCurrency(thirdInvoice));
+    }
+
+    private String getInvoice(String xpath, int maxAttempts) {
         int currentAttempt = 0;
         boolean found = false;
-        Optional<WebElement> firstInvoiceElement = Optional.empty();
+        Optional<WebElement> invoiceElementOptional = Optional.empty();
 
         while (!found && currentAttempt <= maxAttempts) {
             logger().debug("Attempt #" + currentAttempt);
             currentAttempt++;
             Sleeper.sleepTightInSeconds(10);
 
-            firstInvoiceElement = seleniumDriver.findElementOptional(By.xpath(FIRST_INVOICE));
-            found = firstInvoiceElement.isPresent();
+            invoiceElementOptional = seleniumDriver.findElementOptional(By.xpath(xpath));
+            found = invoiceElementOptional.isPresent();
         }
 
         if (!found) fail("Invoices are not available");
-
-        String firstInvoice = firstInvoiceElement.get().getText();
-        String secondInvoice = seleniumDriver.findElementWhenVisible(By.xpath(SECOND_INVOICE)).getText();
-        String thirdInvoice = seleniumDriver.findElementWhenVisible(By.xpath(THIRD_INVOICE)).getText();
-
-        return Arrays.asList(getAmountWithoutCurrency(firstInvoice),
-                            getAmountWithoutCurrency(secondInvoice),
-                            getAmountWithoutCurrency(thirdInvoice));
+        return invoiceElementOptional.get().getText();
     }
 
     public Map<String, String> getNumericInvoicesAmounts() {
