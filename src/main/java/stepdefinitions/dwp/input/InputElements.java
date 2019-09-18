@@ -356,14 +356,14 @@ public class InputElements extends DwpScenario {
     @And("^Field \"([^\"]*)\" input is \"([^\"]*)\"$")
     public void setInputByPlaceholder(String placeholder, String value) {
         seleniumDriver.waitForRequestsToFinish();
-        Sleeper.sleepTightInSeconds(10);
+        Sleeper.sleepTightInSeconds(30);
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
         Optional<WebElement> placeHolderInputElement = seleniumDriver.findElementOptional(By.xpath("//input[@placeholder='"+placeholder+"']"));
         boolean placeHolderWasFound = placeHolderInputElement.isPresent();
         assertThat(String.format("Placeholder element '%s' was not found.", placeholder), placeHolderWasFound, is(true));
         placeHolderInputElement.ifPresent(e -> e.sendKeys(inputValue));
         seleniumDriver.waitForRequestsToFinish();
-        Sleeper.sleepTightInSeconds(10);
+        Sleeper.sleepTightInSeconds(30);
     }
 
   @And("^Selection with search is \"([^\"]*)\"$")
