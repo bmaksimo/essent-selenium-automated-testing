@@ -5,7 +5,7 @@
 Feature: TESTAUTO-118: Sign in: TC1 B2B Online
 
     Background:
-        Given  I logged in to DWP as "contracting.testautomation.b2c@essent.be"
+        Given  I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
     @TESTAUTO-118
     Scenario: Sign in: TC1 B2B Online

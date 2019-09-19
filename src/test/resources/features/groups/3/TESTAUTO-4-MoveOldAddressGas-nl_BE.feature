@@ -66,6 +66,7 @@ Feature: TESTAUTO - 4 Move old address  - Gas ean
         When Plus action of "1" element from "BillingCustomerOnaccount" and click on "Update"
         And Change house number to "4"
         Then Changes are confirmed
+        And Sleep for 10 seconds
 
         When Dashboard menu is "Service"
         Then There is a case where onderwerp is "Verhuis"
@@ -96,7 +97,7 @@ Feature: TESTAUTO - 4 Move old address  - Gas ean
             | Mechelsesteenweg 2 2550 Kontich |       |       |
 
         When Dashboard menu is "Marktberichten"
-        Then Marktbericht has label "CUSTOMER SWITCH"
+        Then Table "Marktberichten" contains value "Customer Switch" at column "Module & Label" retrying 10 times
         And Check marktbericht
             |         ean        |     modul    |  end date |
             | parameter:EAN-code | START ACCESS |    now    |

@@ -123,7 +123,6 @@ public class MarketBerichtenSteps extends DwpScenario {
         String modul = info.get(1).get(1);
         String date = info.get(1).get(2);
         MarketMessagesPage mp = new MarketMessagesPage();
-        String module = "UPDATE BUSINESS MASTER DATA";
         String eanFromMarketberichtRow1 = "1";
         String eanFromMarketberichtRow2 = "3";
         String eanFromMarketberichtRow3 = "5";
@@ -134,23 +133,22 @@ public class MarketBerichtenSteps extends DwpScenario {
         String marketberichtEndDateElementRow2 = "5";
         String marketberichtEndDateElementRow3 = "9";
 
-
-        if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht(eanFromMarketberichtRow1)) && !(mp.getModulFromMarketbericht(modulFromMarketberichtRow1).equals(module)) ) {
+        if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht(eanFromMarketberichtRow1)) && (mp.getModulFromMarketbericht(modulFromMarketberichtRow1).equals(modul)) ) {
             Assert.assertEquals(modul, mp.getModulFromMarketbericht(modulFromMarketberichtRow1));
             Assert.assertEquals(mp.getMarketberichtEndDateElement(marketberichtEndDateElementRow1), toDwpEndDate(parameterProvider.getValueOrParameterAsString(date)));
         } else {
-            if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht(eanFromMarketberichtRow2)) && !(mp.getModulFromMarketbericht(modulFromMarketberichtRow2).equals(module)) ) {
+            if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht(eanFromMarketberichtRow2)) && (mp.getModulFromMarketbericht(modulFromMarketberichtRow2).equals(modul)) ) {
                 Assert.assertEquals(modul, mp.getModulFromMarketbericht(modulFromMarketberichtRow2));
                 Assert.assertEquals(mp.getMarketberichtEndDateElement(marketberichtEndDateElementRow2), toDwpEndDate(parameterProvider.getValueOrParameterAsString(date)));
             } else {
-                if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht(eanFromMarketberichtRow3)) && !(mp.getModulFromMarketbericht(modulFromMarketberichtRow3).equals(module)) ) {
+                if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht(eanFromMarketberichtRow3)) && (mp.getModulFromMarketbericht(modulFromMarketberichtRow3).equals(modul)) ) {
                     Assert.assertEquals(modul, mp.getModulFromMarketbericht(modulFromMarketberichtRow3));
                     Assert.assertEquals(mp.getMarketberichtEndDateElement(marketberichtEndDateElementRow3), toDwpEndDate(parameterProvider.getValueOrParameterAsString(date)));
                 }
             }
         }
     }
-
+//TODO delete if not needed
     @And("^Marktbericht has label \"([^\"]*)\"$")
     public void marketMessageHasLabel(String label) {
         seleniumDriver.waitForRequestsToFinish();
