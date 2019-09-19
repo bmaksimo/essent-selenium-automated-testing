@@ -47,6 +47,7 @@ public class MoveOldAddressSteps extends DwpScenario {
     public void changeHouseNumber(int num) {
         UpdateBillingCustomerPage ubcp = new UpdateBillingCustomerPage();
         ubcp.changeHouseNumber(num);
+        Sleeper.sleepTightInSeconds(2);
     }
 
     @And("^Low date meter reading date is \"([^\"]*)\"$")
