@@ -1,20 +1,24 @@
 package com.essent.testing.dwp.pageobject.impl.quote;
 
-import com.billinghouse.random.RandomUser;
+import com.billinghouse.test_automation.util.random.CustomerRandomDataGenerator;
 import com.essent.automation.autocrat.Model;
+import stepdefinitions.dwp.tables.CustomerDetails;
 
 import static com.essent.automation.autocrat.Action.TYPING;
-import static com.essent.testing.datagenerator.phone.PhoneNumberGenerator.getMobilePhone;
 import static com.essent.testing.dwp.autocrat.element.quote.B2CQuoteElements.EMAIL;
 import static com.essent.testing.dwp.autocrat.element.quote.B2CQuoteElements.MOBILE_NR;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.INPUT;
 
 public class ContactDetailsPage extends QuoteCreationGuidedStep {
 
-    private RandomUser customer;
+    private CustomerDetails customer;
 
-    public void setRandomUser(RandomUser randomUser) {
-        this.customer = randomUser;
+    public ContactDetailsPage(CustomerDetails customer) {
+        setCustomer(customer);
+    }
+
+    public void setCustomer(CustomerDetails customer) {
+        this.customer = customer;
     }
 
     @Override
@@ -23,8 +27,7 @@ public class ContactDetailsPage extends QuoteCreationGuidedStep {
     }
 
     private boolean fillInContactDetails() {
-        String mobilePhone = getMobilePhone();
-
+        String mobilePhone = CustomerRandomDataGenerator.getMobilePhone();
         Model.Execution initializeFields = createExecution();
         initializeFields.element(EMAIL.element()).element(MOBILE_NR.element());
         seleniumDriver.waitForRequestsToFinish();

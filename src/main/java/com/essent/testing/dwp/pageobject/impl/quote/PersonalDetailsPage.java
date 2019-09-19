@@ -1,27 +1,26 @@
 package com.essent.testing.dwp.pageobject.impl.quote;
 
-import com.billinghouse.random.RandomUser;
 import com.billinghouse.test_automation.util.gherkin.DateTimeFormatUtil;
 import com.essent.automation.autocrat.Model;
 import org.apache.commons.lang3.StringUtils;
-import org.openqa.selenium.html5.WebStorage;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import stepdefinitions.dwp.tables.CustomerDetails;
 
 import static com.essent.automation.autocrat.Action.*;
 import static com.essent.testing.dwp.autocrat.element.quote.B2CQuoteElements.*;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.INPUT;
-import static com.essent.testing.selenium.helper.dwp.LocalStorage.fetchPreferredLanguage;
 
 public class PersonalDetailsPage extends QuoteCreationGuidedStep {
 
-    private RandomUser customer;
+    private static final String SALUTATION_FEMALE = "Mevr.";
 
-    public void setRandomUser(RandomUser randomUser) {
-        this.customer = randomUser;
+    private CustomerDetails customer;
+
+    public PersonalDetailsPage(CustomerDetails customer) {
+        setCustomerDetails(customer);
+    }
+
+    private void setCustomerDetails(CustomerDetails customer) {
+        this.customer = customer;
     }
 
     @Override
@@ -29,19 +28,10 @@ public class PersonalDetailsPage extends QuoteCreationGuidedStep {
         return fillInCustomerDetails();
     }
 
-    public boolean fillInCustomerDetails() {
-        Map<String, String[][]> titles = new HashMap<>();
-        String[][] en_Titles = new String[][]{{"male", "Mr."}, {"female", "Ms."}};
-        String[][] nl_Titles = new String[][]{{"male", "Meneer"}, {"female", "Mevr."}};
-        titles.put("en_BE", en_Titles);
-        titles.put("nl_BE", nl_Titles);
-        String[][] salutations = titles.get(fetchPreferredLanguage((WebStorage) seleniumDriver.getDriver()));
-        Map<String, String> titleMap = Stream.of(salutations).collect(Collectors.toMap(d -> d[0], d -> d[1]));
-
-        String firstName = StringUtils.capitalize(customer.getName().getFirst());
-        String lastName = StringUtils.capitalize(customer.getName().getLast());
-        String salutation = titleMap.get(customer.getGender());
-        String birthDate = DateTimeFormatUtil.getBirthDate(customer.getDob().getDate());
+    private boolean fillInCustomerDetails() {
+        String firstName = StringUtils.capitalize(customer.getFirstName());
+        String lastName = StringUtils.capitalize(customer.getLastName());
+        String birthDate = DateTimeFormatUtil.getBirthDate(customer.getBirthDate());
         String mobilePhone = "+3168" + (int) (Math.floor(Math.random() * 9000000) + 1000000);
 
         Model.Execution initializeFields = createExecution();
@@ -52,15 +42,24 @@ public class PersonalDetailsPage extends QuoteCreationGuidedStep {
             element(BIRTHDAY.element()).
             element(LAST_NAME.element()).
             element(EMAIL.element()).
-            element(MOBILE_NR.element()).
-            element(WORK_PHONE_NR.element()).
-            step(createStep(ACCESS).element(COPY_ADDRESS_CONNECTION_TO_BILLING.name()).requireDisplayed(false).callback(hideIconOverlays())).
-            step(createStep(SELECT).element(SALUTATION.name()).value(salutation).timeoutInSeconds(4), INPUT.getSleepInMillis()).
-            step(createStep(TYPING).element(FIRST_NAME.name()).value(firstName).timeoutInSeconds(4), INPUT.getSleepInMillis()).
-            step(createStep(TYPING).element(LAST_NAME.name()).value(lastName).timeoutInSeconds(15), INPUT.getSleepInMillis()).
-            step(createStep(TYPING).element(EMAIL.name()).value(customer.getEmail()).timeoutInSeconds(4), INPUT.getSleepInMillis()).
-            step(createStep(TYPING).element(MOBILE_NR.name()).value(mobilePhone).timeoutInSeconds(4), INPUT.getSleepInMillis()).
-            step(createStep(TYPING).element(BIRTHDAY.name()).value(birthDate).timeoutInSeconds(4), INPUT.getSleepInMillis());
+            element(MOBILE_NR.element());
+
+        seleniumDriver.waitForRequestsToFinish();
+        initializeFields.step(createStep(ACCESS).element(COPY_ADDRESS_CONNECTION_TO_BILLING.name()).requireDisplayed(false).callback(hideIconOverlays()));
+        seleniumDriver.waitForRequestsToFinish();
+        initializeFields.step(createStep(SELECT).element(SALUTATION.name()).value(SALUTATION_FEMALE).timeoutInSeconds(4), INPUT.getSleepInMillis());
+        seleniumDriver.waitForRequestsToFinish();
+        initializeFields.step(createStep(TYPING).element(FIRST_NAME.name()).value(firstName).timeoutInSeconds(4), INPUT.getSleepInMillis());
+        seleniumDriver.waitForRequestsToFinish();
+        initializeFields.step(createStep(TYPING).element(LAST_NAME.name()).value(lastName).timeoutInSeconds(15), INPUT.getSleepInMillis());
+        seleniumDriver.waitForRequestsToFinish();
+        initializeFields.step(createStep(TYPING).element(EMAIL.name()).value(customer.getEmail()).timeoutInSeconds(4), INPUT.getSleepInMillis());
+        seleniumDriver.waitForRequestsToFinish();
+        initializeFields.step(createStep(TYPING).element(MOBILE_NR.name()).value(mobilePhone).timeoutInSeconds(4), INPUT.getSleepInMillis());
+        seleniumDriver.waitForRequestsToFinish();
+        initializeFields.step(createStep(TYPING).element(BIRTHDAY.name()).value(birthDate).timeoutInSeconds(4), INPUT.getSleepInMillis());
+        seleniumDriver.waitForRequestsToFinish();
+
         return execute(initializeFields);
     }
 }

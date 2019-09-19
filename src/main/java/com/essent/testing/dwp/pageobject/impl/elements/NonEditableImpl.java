@@ -20,6 +20,7 @@ public class NonEditableImpl extends Component implements NonEditable {
 
   @Override
   public String getValue(String label) {
+    seleniumDriver.waitForRequestsToFinish();
     Map<String, String> valuesMapper = new HashMap<>();
     valuesMapper.put("label", label);
     By xpathSelector = By.xpath(createQuery(XPATH_INPUT_TEPMPLATE, valuesMapper));
@@ -29,6 +30,7 @@ public class NonEditableImpl extends Component implements NonEditable {
 
   @Override
   public String getValue(String title, String label) {
+    seleniumDriver.waitForRequestsToFinish();
     Map<String, String> valuesMapper = new HashMap<>();
     valuesMapper.put("title", title);
     valuesMapper.put("label", label);
@@ -42,12 +44,14 @@ public class NonEditableImpl extends Component implements NonEditable {
 
   @Override
   public boolean checkAmountUsingExpression(String title, String label, String expression) {
+    seleniumDriver.waitForRequestsToFinish();
     String amount = getValue(title, label).replaceAll("\\s+", " ");
     Integer amountAsInt = amountInCurrencyAsInt(amount);
     return checkAmount(amountAsInt, expression);
   }
 
   protected Integer amountInCurrencyAsInt(String amountInCurrency) {
+    seleniumDriver.waitForRequestsToFinish();
     return amountAsInt(amountInCurrency, FLEMISCH_LOCALE);
   }
 }

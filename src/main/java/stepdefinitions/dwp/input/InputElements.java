@@ -1,7 +1,7 @@
 package stepdefinitions.dwp.input;
 
 import com.billinghouse.test_automation.util.dsl.DateExpressionsUtil;
-import com.billinghouse.test_automation.util.dsl.DwpDateTimeFormat;
+import com.billinghouse.test_automation.util.dsl.EssentDateTimeFormat;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.elements.SelectWithSearch;
 import com.essent.testing.dwp.pageobject.impl.elements.SelectWithSearchImpl;
@@ -20,6 +20,7 @@ import stepdefinitions.dwp.tables.plus.SwitchState;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
@@ -118,7 +119,8 @@ public class InputElements extends DwpScenario {
      * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
      */
     @And("^\"([^\"]*)\" input on \"([^\"]*)\" card is \"([^\"]*)\"$")
-    public void setInput(String label, String card, String value){
+    public void setInput(String label, String card, String value) {
+        Sleeper.sleepTightInSeconds(10);
         seleniumDriver.waitForRequestsToFinish();
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
         parameterProvider.put("inputValue", inputValue);
@@ -126,10 +128,11 @@ public class InputElements extends DwpScenario {
         options.put("label", label);
         options.put("value", inputValue);
         options.put("card", card);
-        FluentWait<ApplyInput> waiter = waiter(new ApplyInput(), 10, 1);
+        FluentWait<ApplyInput> waiter = waiter(new ApplyInput(), 30, 1);
         waiter.withMessage(String.format("Input field %s is undefined.", label));
         waiter.until((ApplyInput callback) -> callback.test(options));
         seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(10);
     }
 
     @And("^\"([^\"]*)\" input is \"([^\"]*)\" waiting for (\\d+) seconds$")
@@ -163,7 +166,7 @@ public class InputElements extends DwpScenario {
     public void setDateInputFirstDayNextMonth(String label){
         String value = DateExpressionsUtil
             .getFirstDateOfNextMonth()
-            .toString(DwpDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
+            .toString(EssentDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
         setDateInput(label, value);
     }
 
@@ -171,7 +174,7 @@ public class InputElements extends DwpScenario {
     public void setDateInputLastDayCurrentMonthNextYear(String label){
         String value = DateExpressionsUtil
             .getLastDayOfCurrentMonthNextYear()
-            .toString(DwpDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
+            .toString(EssentDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
         setDateInput(label, value);
     }
 
@@ -319,7 +322,7 @@ public class InputElements extends DwpScenario {
     public void switchOption(String option, String verb, SwitchState state){
         Sleeper.sleepTightInSeconds(5);
         if (!(verb.equalsIgnoreCase("is") || verb.equalsIgnoreCase("are")) ){
-            Assert.assertTrue("String is not valid (is/are expected)",false);
+            Assert.fail("String is not valid (is/are expected)");
         }
         seleniumDriver.waitForRequestsToFinish();
         Map<String, String> options = new HashMap<>();
@@ -350,22 +353,17 @@ public class InputElements extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
     }
 
-    /**
-     * Sets and asynchronously checks unlabelled placeholder input on any DWP form
-     * @param placeholder Placeholder suggestion text
-     * @param value Input value
-     * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
-     */
     @And("^Field \"([^\"]*)\" input is \"([^\"]*)\"$")
     public void setInputByPlaceholder(String placeholder, String value) {
         seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(30);
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
-        WebElement placeHolderInputElement = seleniumDriver.findElement(By.xpath("//input[@placeholder='"+placeholder+"']"));
-        boolean placeHolderWasFound = placeHolderInputElement != null;
+        Optional<WebElement> placeHolderInputElement = seleniumDriver.findElementOptional(By.xpath("//input[@placeholder='"+placeholder+"']"));
+        boolean placeHolderWasFound = placeHolderInputElement.isPresent();
         assertThat(String.format("Placeholder element '%s' was not found.", placeholder), placeHolderWasFound, is(true));
-        placeHolderInputElement.clear();
-        placeHolderInputElement.sendKeys(inputValue);
+        placeHolderInputElement.ifPresent(e -> e.sendKeys(inputValue));
         seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(30);
     }
 
   @And("^Selection with search is \"([^\"]*)\"$")
@@ -393,6 +391,22 @@ public class InputElements extends DwpScenario {
         ContractPage cp = new ContractPage();
         cp.getStartDateInAdvanceElektricityCard(inputValue);
         cp.getStartDateInAdvanceGasCard(inputValue);
+    }
+
+    @And("EAN in card Electricity is \"([^\"]*)\"$")
+    public void setInputByELecEAN(String value) {
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
+        parameterProvider.put("EAN-code-generated", inputValue);
+        ContractPage cp = new ContractPage();
+        cp.setEanInAdvanceElectricityCard(inputValue);
+    }
+
+    @And("EAN in card Gas is \"([^\"]*)\"$")
+    public void setInputByGasEAN(String value) {
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
+        parameterProvider.put("EAN-code-generated", inputValue);
+        ContractPage cp = new ContractPage();
+        cp.setEanInAdvanceGasCard(inputValue);
     }
 
     @Override

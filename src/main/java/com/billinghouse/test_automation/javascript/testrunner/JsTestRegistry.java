@@ -21,7 +21,6 @@ public class JsTestRegistry {
   public static final String JS_TR_TOGGLE_CHECK_BOX = "TrToggleCheckBox";
   public static final String JS_TR_APPLY_FORM_INPUT = "TrApplyFormInput";
   public static final String JS_TR_TOGGLE_INPUT_STATE = "TrToggleInputState";
-  public static final String JS_TR_GET_RANDOM_USER = "TrGetRandomUser";
   public static final String JS_TR_CHECK_VIEW_LIST_HEADER = "TrCheckViewListHeader";
   public static final String JS_TR_GET_LIST_ACTION = "TrGetListAction";
   public static final String JS_TR_SELECT_LIST_ROW = "TrSelectListRow";

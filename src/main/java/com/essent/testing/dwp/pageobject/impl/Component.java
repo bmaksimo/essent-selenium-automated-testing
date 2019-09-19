@@ -15,13 +15,13 @@ import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public abstract class Component {
 
     protected WebElement element;
     protected DWPSeleniumDriver seleniumDriver;
     private final Logger logger = Logger.getLogger(Component.class);
+
     protected Logger logger() {
         return logger;
     }
@@ -79,46 +79,31 @@ public abstract class Component {
         return seleniumDriver.findElementWhenVisible(selector);
     }
 
-    public WebElement findElementWhenClickable(By selector) {
+    protected WebElement findElementWhenClickable(By selector) {
         return seleniumDriver.findElementWhenClickable(selector);
     }
 
-  public Optional<WebElement> findElementOptional(By selector) {
-    return seleniumDriver.findElementOptional(selector);
-  }
+    public WebElement findElementWhenPresent(By selector, Duration timeout, Duration pollingEvery) {
+        return seleniumDriver.findElementWhenPresent(selector, timeout, pollingEvery);
+    }
 
-  public Optional<WebElement> findElementsWhenVisible(By selector) {
-    return seleniumDriver.findElementOptional(selector);
-  }
-
-  public WebElement findElementWhenPresent(By selector, Duration timeout, Duration pollingEvery) {
-    return seleniumDriver.findElementWhenPresent(selector, timeout, pollingEvery);
-  }
-
-  protected Model.Execution createExecution() {
-    return AutocratExecutionAdapter.newExecution();
-  }
+    protected Model.Execution createExecution() {
+        return AutocratExecutionAdapter.newExecution();
+    }
 
     protected Model.Step createStep(Action action) {
         return new Model.Step().action(action);
     }
+
     protected Model.Element createElement(String searchType, String query) {
-        return new Model.Element()
-            .search(searchType)
-            .query(query);
+        return new Model.Element().search(searchType).query(query);
     }
 
     protected boolean execute(final Model.Execution execution) {
         seleniumDriver.waitForRequestsToFinish();
-        boolean result =  AutocratExecutionAdapter.execute(seleniumDriver.getDriver(), execution);
-        try {
-            Alert alert = seleniumDriver.getDriver().switchTo().alert();
-            logger.warn("-WARN: unexpected alert: " + alert.getText());
-            logger.debug("-ACTION: ACCEPT_ALERT");
-            alert.accept();
-        } catch(NoAlertPresentException nape) {
-
-        }
+        boolean result = AutocratExecutionAdapter.execute(seleniumDriver.getDriver(), execution);
+        seleniumDriver.waitForRequestsToFinish();
+        handleAlert();
         seleniumDriver.waitForRequestsToFinish();
         return result;
     }
@@ -162,5 +147,20 @@ public abstract class Component {
                 });
             }
         };
+    }
+
+    protected void handleAlert() {
+        if (isAlertPresent()) {
+            seleniumDriver.getDriver().switchTo().alert().accept();
+        }
+    }
+
+    private boolean isAlertPresent() {
+        try {
+            seleniumDriver.getDriver().switchTo().alert();
+            return true;
+        } catch (NoAlertPresentException ex) {
+            return false;
+        }
     }
 }

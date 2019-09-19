@@ -31,7 +31,6 @@ public class ViewListTestObject extends Component implements ViewList {
 
   public ViewListTestObject(String table) {
     this.tableModel = Optional.of(getViewTableModel(table));
-    seleniumDriver.takeScreenshot("View List");
   }
 
   public Optional<Integer> getColumnCount() {

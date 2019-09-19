@@ -1,5 +1,6 @@
 package stepdefinitions.quote.api;
 
+import com.billinghouse.test_automation.util.random.CustomerRandomDataGenerator;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
@@ -20,10 +21,6 @@ import stepdefinitions.quote.api.model.dto.QuoteDetailsDTO;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 
@@ -63,8 +60,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
         String companyNumber = null;
 
         RequestHelper helper = new RequestHelper();
-        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
-            + ConfigProvider.getProperty(ConfigKey.CRM_B2CCQ_URL);
+        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_B2CCQ_URL);
 
 
         synchronized(this) {
@@ -85,13 +81,13 @@ public class QuoteDetailsAPI extends AbstractAPI {
         QuoteDetails quoteDetails = new QuoteDetails();
         quoteDetails.setEan(ean);
 
-            Map<String,String> generatedNames4account;
-            generatedNames4account = createAccountName(startedFlowName);
-            quoteDetails.setFirstName(generatedNames4account.get("firstName"));
-            quoteDetails.setLastName(generatedNames4account.get("lastName"));
-            quoteDetails.setAccountName(generatedNames4account.get("accountName"));
-            quoteDetails.setiBan(ibanBE);
-            quoteDetails.setCompanyNumber(companyNumber);
+        Map<String,String> generatedNames4account;
+        generatedNames4account = CustomerRandomDataGenerator.createAccountName(startedFlowName);
+        quoteDetails.setFirstName(generatedNames4account.get("firstName"));
+        quoteDetails.setLastName(generatedNames4account.get("lastName"));
+        quoteDetails.setAccountName(generatedNames4account.get("accountName"));
+        quoteDetails.setiBan(ibanBE);
+        quoteDetails.setCompanyNumber(companyNumber);
 
         LOGGER.debug("Generated EAN: " + ean);
         quoteDetails.setDateOfBirth(dateOfBirth);
@@ -272,52 +268,5 @@ public class QuoteDetailsAPI extends AbstractAPI {
         }
 
         return id;
-    }
-
-
-    private String getCurrentDateTime() {
-        Date now = new Date();
-
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yy_HHmmSS");
-        return dateFormat.format(now);
-    }
-    private Map<String,String> createAccountName(String startedFlowName){
-
-        String firstName = "default";
-        String lastName = "default";
-        String accountName = "API_" + startedFlowName + "_BasicQuoteB2C_TC1_YMR_MoveIn";
-        String reversedLastName = "";
-        Map<String,String> generatedNames = new HashMap();
-
-        accountName = accountName + getCurrentDateTime();
-
-        int nameLength = accountName.length();
-        if (nameLength > 35){
-            firstName = accountName.substring(0,35);
-            lastName = "L" + accountName.substring(35,nameLength);
-            if (lastName.length() > 35){
-                StringBuilder sb=new StringBuilder(lastName);
-                reversedLastName = String.valueOf(sb.reverse());
-                lastName = reversedLastName.substring(35,nameLength);
-                StringBuilder sb2 = new StringBuilder(lastName);
-                lastName = String.valueOf(sb2);
-            }
-        }else{
-            firstName = accountName.substring(0,nameLength-2);
-            lastName = "L" + accountName.substring(nameLength-2,nameLength);
-        }
-
-        generatedNames.put("firstName",firstName);
-        generatedNames.put("lastName", lastName);
-        generatedNames.put("accountName", accountName);
-
-
-
-        LOGGER.debug("First name: " + generatedNames.get("firstName"));
-        LOGGER.debug("Last name: " + generatedNames.get("lastName"));
-        LOGGER.debug("Account name: " + generatedNames.get("accountName"));
-
-        return generatedNames;
-
     }
 }

@@ -1,7 +1,6 @@
 package stepdefinitions.dwp.tables;
 
-public class CustomerDetails
-{
+public class CustomerDetails {
     private String firstName;
     private String lastName;
     private String gender;
@@ -84,4 +83,10 @@ public class CustomerDetails
         this.street = street;
     }
 
+    public String toString() {
+        return "Customer {" +
+            "name='" + firstName + " " + lastName + "\'" +
+            ", email='" + email + '\'' +
+            '}';
+    }
 }

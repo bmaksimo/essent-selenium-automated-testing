@@ -17,7 +17,7 @@ public class IntervalUtilTest {
     assertThat(
         IntervalUtil.containsDate(
             startEndDateRenewal,
-            DateTime.now().toString(DwpDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat())),
+            DateTime.now().toString(EssentDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat())),
         is(false));
   }
 }

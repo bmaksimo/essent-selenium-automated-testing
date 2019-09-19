@@ -1,6 +1,6 @@
 package stepdefinitions.dwp.contracts.b2c;
 
-import com.billinghouse.test_automation.util.dsl.DwpDateTimeFormat;
+import com.billinghouse.test_automation.util.dsl.EssentDateTimeFormat;
 import com.billinghouse.test_automation.util.dsl.IntervalUtil;
 import com.essent.testing.dwp.constant.ParameterKeys;
 import com.essent.testing.dwp.pageobject.ViewList;
@@ -44,7 +44,7 @@ public class ContractRenewalSteps extends NavigationElements {
                         IntervalUtil.containsDate(
                             periodOfRenewal,
                             date,
-                            DwpDateTimeFormat.DWP_PRODUCT_VALIDNESS_DATE_FORMAT))
+                            EssentDateTimeFormat.DWP_PRODUCT_VALIDNESS_DATE_FORMAT))
                 .count();
     assertThat(
         String.format(

@@ -45,14 +45,9 @@ Feature: NSTA-345:Credit Invoice
         When Plus action of "1" element from "TransactionsOnAccount" and click on "Herbereken tussentijdse factuur"
         And New Amount Invoice is "300" for EAN "parameter:EAN-code"
         Then Invoice run is scheduled
+        And Sleep for 10 seconds
 
         # 3 - Check if interactions are created for VKM and CNM
-        Given I renew login to DWP as "billing.testautomation@essent.be"
-        When Left menu is "billing"
-        And Top menu item is "Klanten"
-        And Top action is "Filters"
-        And "Klantnummer" input is "parameter:accountNumber"
-        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
         When Dashboard menu is "Service"
         Then Table "Interacties" contains value "VKM" at column "Type & Onderwerp" retrying 60 times
         Then Table "Interacties" contains value "CNM" at column "Type & Onderwerp" retrying 60 times

@@ -1,6 +1,5 @@
 package com.essent.testing.dwp.scenario;
 
-import com.billinghouse.random.RandomUser;
 import com.billinghouse.test_automation.util.dsl.DateExpressionsUtil;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model.Execution;
@@ -8,39 +7,27 @@ import com.essent.automation.autocrat.Model.Step;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
-import com.essent.testing.datagenerator.vat.VatNumberGenerator;
 import com.essent.testing.scenario.RegisteredScenario;
 import com.essent.testing.selenium.DWPSeleniumDriver;
 import com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter;
-import com.google.gson.Gson;
-import cucumber.runtime.CucumberException;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.StrSubstitutor;
-import org.iban4j.CountryCode;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpApiDate;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpDate;
 import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.convertToDwpTime;
-import static com.billinghouse.test_automation.util.dsl.NumericUtil.amountAsInt;
-import static com.billinghouse.test_automation.util.dsl.NumericUtil.sumOfAmounts;
-import static com.essent.testing.dwp.constant.DwpConstants.FLEMISCH_LOCALE;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by Jim on 27-12-2017.
- *
- */
 public abstract class DwpScenario extends RegisteredScenario {
 
-    @Resource(name="dwpSeleniumDriver")
+    @Resource(name = "dwpSeleniumDriver")
     protected DWPSeleniumDriver seleniumDriver;
 
-    protected void isDwpRunning() throws Exception {
+    protected void isDwpRunning() {
         String dwpUrl = ConfigProvider.getProperty(ConfigKey.DWP_BASE_URL);
         seleniumDriver.setBaseUrl(dwpUrl);
         seleniumDriver.goToHomePage();
@@ -51,39 +38,8 @@ public abstract class DwpScenario extends RegisteredScenario {
         }
         Sleeper.sleepTightInSeconds(3);
         logger().debug("Current URL: " + currentUrl);
+        assertNotNull(currentUrl);
         assertTrue(currentUrl.startsWith(seleniumDriver.getBaseUrl()));
-    }
-
-    protected String generateVat(String generatorParam) {
-        String countryCode = generatorParam.replace("generator:vat:", "");
-        if(countryCode.length() > 3 || CountryCode.getByCode(countryCode) == null) {
-            throw new CucumberException("Wrong country code: " + countryCode);
-        }
-        return new VatNumberGenerator().getVatNum(CountryCode.getByCode(countryCode));
-    }
-
-    protected String generateCompanyName() {
-        Map<String, String> options = new HashMap<>();
-        Map reply = executeJavascriptMethod("TrGetRandomUser", options);
-        String status = ((String) reply.get("status"));
-        boolean success = StringUtils.equals("PASSED", status);
-        if (success) {
-            Map userData = (Map) reply.get("user");
-            RandomUser randomUser = randomUser(userData);
-            String first = randomUser.getName().getFirst();
-            String last = randomUser.getName().getLast();
-            parameterProvider.put("suitecrm-company-account", randomUser);
-            parameterProvider.put("contact-person-first-name", first);
-            parameterProvider.put("contact-person-last-name", last);
-            return first + " " + last;
-        }
-        else throw new CucumberException("ramdomuser.me API failure");
-    }
-
-    protected RandomUser randomUser(Map reply) {
-        Gson gson = new Gson();
-        String randomUserJs = gson.toJson(reply);
-        return gson.fromJson(randomUserJs, RandomUser.class);
     }
 
     protected Execution createExecution() {
@@ -138,10 +94,6 @@ public abstract class DwpScenario extends RegisteredScenario {
         return seleniumDriver.executeJavascriptMethod(registeredJsClass, options);
     }
 
-    protected Map executeJavascriptMethodImmediately(String registeredJsClass, Object options) {
-        return seleniumDriver.executeJavascriptMethodWithImmediateFlag(registeredJsClass, options, true);
-    }
-
     public void tearDown() {
         if (seleniumDriver != null) {
             tidyUp(seleniumDriver);
@@ -151,14 +103,6 @@ public abstract class DwpScenario extends RegisteredScenario {
     protected void setUpWebDriver() throws Exception {
         setUpWebDriver(seleniumDriver);
         seleniumDriver.initNgWebDriver();
-    }
-
-  protected int amountInCurrencyAsInt(String amountInCurrency) {
-    return amountAsInt(amountInCurrency, FLEMISCH_LOCALE);
-  }
-
-    protected int sumOf(List<String> amounts) {
-        return sumOfAmounts(amounts);
     }
 
     protected String createQuery(String template, String key, String value) {

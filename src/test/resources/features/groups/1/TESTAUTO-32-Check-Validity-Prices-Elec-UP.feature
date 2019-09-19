@@ -17,7 +17,7 @@ Feature: TESTAUTO-32: Price validity check on an Elec UP quote
         And "Klantnummer" input is "parameter:accountNumber"
         And Click on "parameter:accountNumber" link
         And Dashboard menu is "Sales"
-        Then Table "Offertes" contains value "Verstuurd naar de klant - Geaccepteerd" at column "Type & status" within 60 seconds
+        Then Table "Offertes" contains value "Verstuurd naar de klant - Geaccepteerd" at column "Type & status" within 120 seconds
 
         When Plus action of "1" element from "QuotesOnAccount" and click on "Handtekening ontvangen"
         And "Datum handtekening ontvangen" date is "now"
