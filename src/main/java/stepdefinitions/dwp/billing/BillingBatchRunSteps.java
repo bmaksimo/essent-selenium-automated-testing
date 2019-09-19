@@ -59,7 +59,7 @@ public class BillingBatchRunSteps extends DwpScenario {
             try {
                 BillingRunResult result = billingService.startBillRun(jobName, billingId, formatter.parse(inputValue));
                 currentAttempt++;
-                success = result.getMessage().equals(result.getResult());
+                success = result.getResult();
                 Sleeper.sleepTightInSeconds(60);
             } catch (ParseException e) {
                 logger().error("Billing job did not execute successfully");
