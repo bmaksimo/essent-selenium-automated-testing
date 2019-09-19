@@ -6,7 +6,6 @@ import org.openqa.selenium.By;
 public class SalesPage extends Component {
     public void inputText(String text) {
         seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//text-angular[@id='description-field']/div[2]/div[3]")));
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("//text-angular[@id='description-field']/div[2]/div[3]")), text);
     }
 }
