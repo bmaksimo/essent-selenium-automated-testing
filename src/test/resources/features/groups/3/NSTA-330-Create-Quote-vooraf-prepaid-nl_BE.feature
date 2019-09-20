@@ -80,7 +80,7 @@ Feature: NSTA-330. Check the generation of prepaid advance invoice.
 
         #2.1 Check prepaid advance invoice total amount as sum of electricity and gas advance amounts.
         When Dashboard menu is "Service"
-        Then List element matching value "Outbound document: prepaidadvance" at column "Type & Onderwerp" from table "Interacties" is checked
+        And Table "Interacties" contains value "Outbound document: prepaidadvance" at column "Type & Onderwerp" retrying 20 times
 
         When Dashboard menu is "Billing"
         Then Table "Transacties" contains value "Invoice (PREPAIDADVANCE)" at column "ID & Type" retrying 30 times
