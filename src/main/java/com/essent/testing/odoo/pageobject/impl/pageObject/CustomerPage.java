@@ -19,7 +19,7 @@ public class CustomerPage extends Component {
     private static final String SENT_DATE = "//td[@data-field='date_sent']";
     private static final String BUTTON_LABEL = "//div[@class='modal in']//span[contains(text(),'${"+NAME_TAB+"}')]";
     private static final String JOURNAL_BUTTON_LABEL = "//button//span[contains(., '" + NAME_TAB + "')]";
-    private static final String ACCOUNT_BLOCKS_BUTTON_LABEL=  "//div[contains(@class, 'fa-exclamation-triangle')]";
+    private static final String ACCOUNT_BLOCKS_BUTTON_LABEL=  "//div[@class='oe_right oe_button_box']/button[2]";
 
 
     public boolean clickOnTabMenu(String tab){
