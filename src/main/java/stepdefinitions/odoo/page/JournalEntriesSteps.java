@@ -65,11 +65,10 @@ public class JournalEntriesSteps extends OdooScenario {
         je.saveJournal();
     }
 
-    @And("^Mark first two journal items one with credit and one with debit \"([^\"]*)\"$")
-    public void markFirstTwoJournalItemsOneWithCreditAndOneWithDebit(String money) {
+    @And("^Mark journal items with credit and with debit$")
+    public void markFirstTwoJournalItemsOneWithCreditAndOneWithDebit() {
         JournalEntriesPage je = new JournalEntriesPage();
-        je.clickOnJournalItemsCheckBox(1);
-        je.clickOnJournalItemsCheckBox(2);
+        je.clickOnJournalItemsCheckBox();
     }
 
     @And("^More menu is \"([^\"]*)\"$")

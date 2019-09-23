@@ -79,14 +79,13 @@ public class JournalEntriesPage extends Component {
         }
     }
 
-    public WebElement journalItemsCheckBox(Integer row){
-        return  seleniumDriver.findElementWhenVisible(By.xpath(("(//tbody/tr["+row+"]/th/input)[2]")));
+    public WebElement journalItemsCheckBox(){
+        return  seleniumDriver.findElementWhenVisible(By.xpath(("//div[@class='oe_view_manager oe_view_manager_current'][2]//input[@class='oe_list_record_selector']")));
     }
 
-    public void clickOnJournalItemsCheckBox(Integer row){
-        journalItemsCheckBox(row).click();
+    public void clickOnJournalItemsCheckBox(){
+        journalItemsCheckBox().click();
     }
-
 
     public WebElement findMoreElement(){
         return seleniumDriver.findElementWhenVisible(By.xpath("(//button[@class='oe_dropdown_toggle oe_dropdown_arrow'])[8]"));
