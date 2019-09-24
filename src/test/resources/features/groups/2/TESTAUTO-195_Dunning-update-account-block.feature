@@ -29,7 +29,7 @@ Feature: TESTAUTO-195 Dunning-update-account-block
         Then Table "Lijst blokkeringen" contains value "E-plus" at column "Reden" retrying 60 times
         And Table "Lijst blokkeringen" contains value "true" at column "Actief" retrying 60 times
         And Account Block Start date is today
-        And Account Block End date is 7 days from today
+        And Account Block End date is "7" days from today
 
         When Plus action of "1" element from "accountBlockReasonsForAccountList" and click on "Update"
         And "Einddatum" date is "now"
@@ -46,7 +46,7 @@ Feature: TESTAUTO-195 Dunning-update-account-block
         Then Button Account Blocks is clicked
         And Reason is "E-plus" on Account Blocks page
         And Start date is today on Account Blocks page
-        And End date is 0 days from today on Account Blocks page
+        And End date is "0" days from today on Account Blocks page
 
 
 

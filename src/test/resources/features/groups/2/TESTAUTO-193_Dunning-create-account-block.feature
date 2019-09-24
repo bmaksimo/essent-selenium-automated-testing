@@ -30,7 +30,7 @@ Feature: TESTAUTO-193 Dunning-create-account-block
         Then Table "Lijst blokkeringen" contains value "E-plus" at column "Reden" retrying 60 times
         And Table "Lijst blokkeringen" contains value "true" at column "Actief" retrying 60 times
         And Account Block Start date is today
-        And Account Block End date is 7 days from today
+        And Account Block End date is "7" days from today
 
         Given I logged in to Odoo as "role_essent_ccm_user"
         When Odoo top menu is "Accounting"
@@ -40,4 +40,4 @@ Feature: TESTAUTO-193 Dunning-create-account-block
         Then Button Account Blocks is clicked
         And Reason is "E-plus" on Account Blocks page
         And Start date is today on Account Blocks page
-        And End date is 7 days from today on Account Blocks page
+        And End date is "7" days from today on Account Blocks page
