@@ -24,9 +24,11 @@ Feature: NUAT-482: Restart SA or MI - nl_BE
         And Save EAN code of customer now
         Then Changes are confirmed waiting for 10 seconds
 
-        When Left menu is "sales-marketing" waiting for 10 seconds
-        And Search field input is "parameter:eanCode" waiting for 30 seconds
-        And Click on link in View List at "1st" row and "Klantnaam & nummer" column waiting for 20 seconds
+        When Left menu is "contracting-switching" waiting for 10 seconds
+        And Top menu item is "Marktberichten"
+        And Top action is "Filters" waiting for 30 seconds
+        And "EAN-code" input is "parameter:eanCode"
+        And Click on link in View List at "1st" row and "Klant & EAN-code" column waiting for 10 seconds
         And Dashboard menu is "Marktberichten" waiting for 10 seconds
         Then Validate rejection status is "START ACCESS"
 
