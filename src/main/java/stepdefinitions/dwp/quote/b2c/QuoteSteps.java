@@ -281,8 +281,7 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^Billing details are confirmed$")
     public void confirmBillingDetails() {
-        BillingDetailsPage billingDetailsPage = new BillingDetailsPage();
-        billingDetailsPage.next();
+        new BillingDetailsPage().next();
     }
 
     @And("^Quote is signed in \"([^\"]*)\"$")

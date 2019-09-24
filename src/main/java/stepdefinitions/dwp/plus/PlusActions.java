@@ -19,7 +19,7 @@ public class PlusActions extends NavigationElements {
     public void checkPlusMenu(String path) throws CucumberException {
         try {
             seleniumDriver.waitForRequestsToFinish();
-            Sleeper.sleepTightInSeconds(5);
+            Sleeper.sleepTightInSeconds(15);
             clickTopAction("Plus Menu");
             clickPlusAction(path);
             parameterProvider.put("plus-menu-item", path);
