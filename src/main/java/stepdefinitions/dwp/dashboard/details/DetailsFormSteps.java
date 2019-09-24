@@ -67,7 +67,7 @@ public class DetailsFormSteps extends DwpScenario {
         Assert.assertThat("Account block start date is not today", dp.getAccountBlockStartDate().equalsIgnoreCase(startDate), is(true));
     }
 
-    @And("^Account Block End date is ([^\"]*) days from today$")
+    @And("^Account Block End date is \"([^\"]*)\" days from today$")
     public void accountBlockEndDateIsToday(int amountOfDays) {
         String endDate = DateExpressionsUtil
             .getNDaysFromToday(amountOfDays)

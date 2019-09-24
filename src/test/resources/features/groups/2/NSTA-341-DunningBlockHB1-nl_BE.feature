@@ -1,8 +1,4 @@
-@ALL
-@DWP
-@REGRESSION
-@API
-@B2C
+@NOT-IN-SCOPE
 Feature: NSTA-341: Block dunning for invoice
 
     Background:

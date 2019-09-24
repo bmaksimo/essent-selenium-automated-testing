@@ -99,7 +99,7 @@ Feature: NSTA-337: Move old address - Electricity
             | Mechelsesteenweg 2 2550 Kontich |       |       |
 
         When Dashboard menu is "Marktberichten"
-        Then Marktbericht has label "CUSTOMER SWITCH"
+        Then Table "Marktberichten" contains value "Customer Switch" at column "Module & Label" retrying 10 times
         And Check marktbericht
             | ean                | modul        | end date |
             | parameter:EAN-code | START ACCESS | now      |

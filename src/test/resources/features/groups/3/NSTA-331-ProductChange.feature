@@ -61,7 +61,7 @@ Feature: NSTA 331- Product Change for TK1 type
         #4 - Check correctness of product change
          #4.1 - Check Contractlines
         When Dashboard menu is "Contracten"
-        And "1st" list element has cell value "Wacht op startdatum" at column "Contractnummer" polling 120 seconds
+        And "1st" list element has cell value "Wacht op startdatum" at column "Contractnummer" polling 550 seconds
         And Table "Actieve en toekomstige connecties" contains value "ONLINE" at column "EAN-code"
         And Table "Actieve en toekomstige connecties" contains value "Actief" at column "Contractnummer"
         And Product Change dates are "parameter:contractStartDate" and "parameter:contractEndDate"

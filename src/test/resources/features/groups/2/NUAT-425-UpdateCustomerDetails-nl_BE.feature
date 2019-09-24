@@ -1,7 +1,4 @@
-@DWP
-@B2B
-@REGRESSION
-@CREDIT-AND-CONTROL
+@NOT-IN-SCOPE
 Feature: NUAT-425: Update Customer Details - nl_BE
 
     Background:

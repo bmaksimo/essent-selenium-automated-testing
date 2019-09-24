@@ -1,6 +1,7 @@
 package stepdefinitions.dwp.billing;
 
 import com.billinghouse.test_automation.util.dsl.EssentDateTimeFormat;
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.modal.confirm.ConfirmSignatureDialogImpl;
 import com.essent.testing.dwp.pageobject.modal.confirm.ConfirmSignatureDialog;
 import com.essent.testing.dwp.scenario.DwpScenario;
@@ -44,17 +45,29 @@ public class BillingBatchRunSteps extends DwpScenario {
 
     @When("^Billing run \"([^\"]*)\" is triggered with process date \"([^\"]*)\"$")
     public void startBillingRun(String jobName, String processDate) {
-        String inputValue = toDwpApiDate(parameterProvider.getValueOrParameterAsString(processDate));
-        String billingCustomerId = parameterProvider.getValueOrParameterAsString("parameter:billingId");
-        SimpleDateFormat formatter = new SimpleDateFormat(EssentDateTimeFormat.DWP_API_DATE_FORMAT.getFormat());
-        try {
-            Date parsedDate = formatter.parse(inputValue);
-            BillingRunResult billingRunResult = billingService.startBillRun(jobName, billingCustomerId, parsedDate);
+        seleniumDriver.waitForRequestsToFinish();
 
-            Assert.assertTrue(billingRunResult.getMessage(), billingRunResult.getResult());
-        } catch (ParseException e) {
-            logger().error("Billing job did not execute successfully");
+        String inputValue = toDwpApiDate(parameterProvider.getValueOrParameterAsString(processDate));
+        String billingId = parameterProvider.getValueOrParameterAsString("parameter:billingId");
+        SimpleDateFormat formatter = new SimpleDateFormat(EssentDateTimeFormat.DWP_API_DATE_FORMAT.getFormat());
+
+        boolean success = false;
+        int maxRetries = 10;
+        int currentAttempt = 0;
+
+        while (!success && currentAttempt <= maxRetries) {
+            try {
+                BillingRunResult result = billingService.startBillRun(jobName, billingId, formatter.parse(inputValue));
+                currentAttempt++;
+                success = result.getResult();
+                Sleeper.sleepTightInSeconds(60);
+            } catch (ParseException e) {
+                logger().error("Billing job did not execute successfully");
+                success = false;
+            }
         }
+
+        if (!success) Assert.fail("Billing was not triggered after retrying 10 times");
     }
 
     @When("^Mediation run \"([^\"]*)\" is triggered with settlement date \"([^\"]*)\"$")

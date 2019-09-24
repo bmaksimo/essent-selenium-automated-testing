@@ -48,28 +48,27 @@ public class JournalEntriesSteps extends OdooScenario {
 
     @And("^New item is$")
     public void newItemIs(DataTable dbTable) {
-        awaitOdooRequestToFinish(10);
-        JournalEntriesPage je = new JournalEntriesPage();
+        awaitOdooRequestToFinish(20);
+        JournalEntriesPage journalEntriesPage = new JournalEntriesPage();
         List<List<String>> db = dbTable.asLists();
-        je.clickOnAddAnItem();
-        je.createNewItem(db,1,parameterProvider.getValueOrParameterAsString(db.get(1).get(1)));
-        Sleeper.sleepTightInSeconds(1);
-        je.clickOnAddAnItem();
-        je.createNewItem(db,2,parameterProvider.getValueOrParameterAsString(db.get(2).get(1)));
+        journalEntriesPage.clickOnAddAnItem();
+        journalEntriesPage.createNewItem(db,1, parameterProvider.getValueOrParameterAsString(db.get(1).get(1)));
+        Sleeper.sleepTightInSeconds(5);
+        journalEntriesPage.clickOnAddAnItem();
+        journalEntriesPage.createNewItem(db,2, parameterProvider.getValueOrParameterAsString(db.get(2).get(1)));
     }
 
     @And("^Save journal entry")
     public void saveJornalEntery() {
-        awaitOdooRequestToFinish(10);
+        awaitOdooRequestToFinish(20);
         JournalEntriesPage je = new JournalEntriesPage();
         je.saveJournal();
     }
 
-    @And("^Mark first two journal items one with credit and one with debit \"([^\"]*)\"$")
-    public void markFirstTwoJournalItemsOneWithCreditAndOneWithDebit(String money) {
+    @And("^Mark journal items with credit and with debit$")
+    public void markFirstTwoJournalItemsOneWithCreditAndOneWithDebit() {
         JournalEntriesPage je = new JournalEntriesPage();
-        je.clickOnJournalItemsCheckBox(1);
-        je.clickOnJournalItemsCheckBox(2);
+        je.clickOnJournalItemsCheckBox();
     }
 
     @And("^More menu is \"([^\"]*)\"$")

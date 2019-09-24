@@ -25,11 +25,11 @@ Feature: NUAT-413: Manual reconcile en unreconcile
         And Odoo filter is "parameter:accountNumber"
         And Column "Account Number" with value "parameter:accountNumber" is clicked
         Then Button "Journal Items" is clicked
-        When Mark first two journal items one with credit and one with debit "100"
+        When Mark journal items with credit and with debit
         And More menu is "Reconcile Entries"
         And Confirm action
         Then Reconcile number is shown
-        When Mark first two journal items one with credit and one with debit "100"
+        When Mark journal items with credit and with debit
         And More menu is "Unreconcile Entries"
         And Confirm action
         Then Reconcile number is removed

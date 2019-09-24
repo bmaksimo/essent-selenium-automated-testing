@@ -1,5 +1,6 @@
 package com.essent.testing.dwp.pageobject.impl.quote;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.Form;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.quote.GuidedStep;
@@ -30,6 +31,7 @@ public abstract class QuoteCreationGuidedStep extends Component implements Guide
   @Override
   public void next() {
     seleniumDriver.waitForRequestsToFinish();
+    Sleeper.sleepTightInSeconds(10);
     logger().debug("Guided step to be confirmed");
     logMandatoryInputStatus();
     Optional<WebElement> nextButtonOptional = Optional.of(findElementWhenClickable(By.cssSelector(NEXT_BUTTON.getQuery())));

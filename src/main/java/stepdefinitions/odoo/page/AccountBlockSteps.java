@@ -23,7 +23,7 @@ public class AccountBlockSteps extends OdooScenario {
         Assert.assertTrue("Account block start date is not today", pageStartDate.equalsIgnoreCase(startDate));
     }
 
-    @And("^End date is ([^\"]*) days from today on Account Blocks page$")
+    @And("^End date is \"([^\"]*)\" days from today on Account Blocks page$")
     public void accountBlockEndDateIsSevenDaysFromToday(int amountOfDays){
         String endDate = DateExpressionsUtil
             .getNDaysFromToday(amountOfDays)

@@ -4,7 +4,7 @@ import com.essent.testing.util.resource.ResourceUtil;
 
 public class ContractConstants {
 
-	public static final int TIMEOUT_SET_CONTRACT_ACTIVE = 15;
+	public static final int TIMEOUT_SET_CONTRACT_ACTIVE = 20;
 
 	// Paths to the pdf files
 	public static final String PATH_TO_PDF = ResourceUtil.toPath("/data/contract/pdf/customer-signature.pdf");

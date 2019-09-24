@@ -1,5 +1,6 @@
 package com.essent.testing.dwp.pageobject.impl.elements;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.elements.NonEditable;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import org.openqa.selenium.By;
@@ -45,6 +46,7 @@ public class NonEditableImpl extends Component implements NonEditable {
   @Override
   public boolean checkAmountUsingExpression(String title, String label, String expression) {
     seleniumDriver.waitForRequestsToFinish();
+    Sleeper.sleepTightInSeconds(10);
     String amount = getValue(title, label).replaceAll("\\s+", " ");
     Integer amountAsInt = amountInCurrencyAsInt(amount);
     return checkAmount(amountAsInt, expression);
