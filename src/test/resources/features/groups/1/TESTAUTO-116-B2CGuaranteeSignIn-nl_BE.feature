@@ -64,10 +64,10 @@ Feature: TESTAUTO-116-B2C guarantee sign in
 
         #2.3 Check guarantee advance invoice total amount as sum of electricity and gas advance amounts.
         When Dashboard menu is "Service"
-        Then List element matching value "Outbound document: guarantee" at column "Type & Onderwerp" from table "Interacties" is checked
+        Then Table "Interacties" contains value "Outbound document: guarantee" at column "Type & Onderwerp" retrying 10 times
 
         When Dashboard menu is "Billing"
-        Then Table "Transacties" contains value "Invoice (GUARANTEE)" at column "ID & Type"
+        Then Table "Transacties" contains value "Invoice (GUARANTEE)" at column "ID & Type" retrying 10 times
         And "1st" list element has cell value "200" at column "Bedrag" polling 10 seconds
 
         #2.2 Check invoice due date, should be 19 days after transaction date.
