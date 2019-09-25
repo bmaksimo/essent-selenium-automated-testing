@@ -41,7 +41,7 @@ public class GenericSteps extends DwpScenario {
     }
 
     @Given("^I renew login to DWP as \"([^\"]*)\"$")
-    public void rrenewLoginAs(String username) throws Throwable {
+    public void renewLoginAs(String username) throws Throwable {
         tearDown();
         loginAs(username);
     }

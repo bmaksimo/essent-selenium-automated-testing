@@ -32,7 +32,7 @@ public class BillingService {
             if (response.getResult())
                 return new BillingRunResult(response.getMsg(), response.getResult());
 
-            log.info("Response was: " + response.getMsg() + ". Retrying billing " + jobName + " run...");
+            log.debug("Response was: " + response.getMsg() + ". Retrying billing " + jobName + " run...");
             Sleeper.sleepTightInSeconds(60);
             currentAttempt++;
         }
@@ -58,7 +58,7 @@ public class BillingService {
             if (response.getResult())
                 return new MediationRunResult(response.getMsg(), response.getResult());
 
-            log.info("Response was: " + response.getMsg() + ". Retrying mediation " + jobName + " run...");
+            log.debug("Response was: " + response.getMsg() + ". Retrying mediation " + jobName + " run...");
             Sleeper.sleepTightInSeconds(60);
             currentAttempt++;
         }
