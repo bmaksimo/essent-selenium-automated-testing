@@ -29,8 +29,7 @@ public class MarketBerichtenSteps extends DwpScenario {
     @And("^\"([^\"]*)\" turn on$")
     public void turnOn(String label) {
         seleniumDriver.waitForRequestsToFinish();
-        ToggleImpl ti = new ToggleImpl();
-        ti.clickOnToggle(label);
+        new ToggleImpl().clickOnToggle(label);
     }
 
     @And("^\"([^\"]*)\" turn on waiting for (\\d+) seconds$")

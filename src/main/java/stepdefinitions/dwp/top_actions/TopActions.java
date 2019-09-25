@@ -1,6 +1,7 @@
 package stepdefinitions.dwp.top_actions;
 
 import com.essent.automation.util.Sleeper;
+import com.essent.testing.dwp.pageobject.impl.modal.ModalBase;
 import com.essent.testing.dwp.pageobject.impl.navigation.DwpLeftMenu;
 import com.essent.testing.dwp.pageobject.impl.navigation.DwpTopMenu;
 import cucumber.api.Scenario;
@@ -53,9 +54,7 @@ public class TopActions extends NavigationElements {
 
     private boolean isFilterExpectedElementVisible() {
         try {
-            return seleniumDriver
-                .findElementWhenPresent(By.id(FILTER_MENU_REQUIRED_ELEMENT))
-                .isDisplayed();
+            return seleniumDriver.findElementWhenPresent(By.id(FILTER_MENU_REQUIRED_ELEMENT)).isDisplayed();
         } catch (Exception e) {
             return false;
         }
@@ -86,17 +85,17 @@ public class TopActions extends NavigationElements {
         clickCockpitItem(item);
     }
 
-    @And("^Changes are confirmed$")
+    @And("Changes are confirmed")
     public void confirmChange() {
         seleniumDriver.waitForRequestsToFinish();
-        boolean success = new ClickConfirm().test("");
+        boolean success = new ModalBase().confirm();
         assertThat(String.format("Button %s was not available.", ""), success, is(true));
     }
 
     @And("^Changes are confirmed waiting for (\\d+) seconds$")
     public void confirmChange(int waitingTime) {
         Sleeper.sleepTightInSeconds(waitingTime);
-        boolean success = new ClickConfirm().testNow();
+        boolean success = new ModalBase().confirmNow(waitingTime);
         assertThat(String.format("Button %s was not available.", ""), success, is(true));
     }
 
