@@ -36,7 +36,6 @@ public class PersonalDetailsPage extends QuoteCreationGuidedStep {
 
         Model.Execution initializeFields = createExecution();
         initializeFields.
-            element(COPY_ADDRESS_CONNECTION_TO_BILLING.element()).
             element(SALUTATION.element()).
             element(FIRST_NAME.element()).
             element(BIRTHDAY.element()).
@@ -44,8 +43,6 @@ public class PersonalDetailsPage extends QuoteCreationGuidedStep {
             element(EMAIL.element()).
             element(MOBILE_NR.element());
 
-        seleniumDriver.waitForRequestsToFinish();
-        initializeFields.step(createStep(ACCESS).element(COPY_ADDRESS_CONNECTION_TO_BILLING.name()).requireDisplayed(false).callback(hideIconOverlays()));
         seleniumDriver.waitForRequestsToFinish();
         initializeFields.step(createStep(SELECT).element(SALUTATION.name()).value(SALUTATION_FEMALE).timeoutInSeconds(4), INPUT.getSleepInMillis());
         seleniumDriver.waitForRequestsToFinish();
