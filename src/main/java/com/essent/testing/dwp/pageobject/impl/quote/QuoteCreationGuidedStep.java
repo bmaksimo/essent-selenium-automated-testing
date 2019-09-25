@@ -31,20 +31,14 @@ public abstract class QuoteCreationGuidedStep extends Component implements Guide
   @Override
   public void next() {
     seleniumDriver.waitForRequestsToFinish();
-    Sleeper.sleepTightInSeconds(10);
+    Sleeper.sleepTightInSeconds(30);
     logger().debug("Guided step to be confirmed");
     logMandatoryInputStatus();
-    Optional<WebElement> nextButtonOptional = Optional.of(findElementWhenClickable(By.cssSelector(NEXT_BUTTON.getQuery())));
-    if (nextButtonOptional.isPresent()) {
-      WebElement nextButton = nextButtonOptional.get();
-      logger().debug("Found  element: " + nextButton.getTagName());
-      logger().debug("CLICK ");
-      logger().debug("- RESULT: Confirm guidance step, confirmation button attribute value: Next[disabled] = " + nextButton.getAttribute("disabled"));
-      seleniumDriver.waitForRequestsToFinish();
-      nextButton.click();
-    } else {
-        throw new CucumberException("Element not found by selector " + NEXT_BUTTON.getQuery());
-    }
+    WebElement nextButton = findElementWhenClickable(By.cssSelector(NEXT_BUTTON.getQuery()));
+    logger().debug("Found  element: " + nextButton.getTagName());
+    logger().debug("- RESULT: Confirm guidance step, confirmation button attribute value: Next[disabled] = " + nextButton.getAttribute("disabled"));
+    seleniumDriver.waitForRequestsToFinish();
+    nextButton.click();
     seleniumDriver.waitForRequestsToFinish();
   }
 
