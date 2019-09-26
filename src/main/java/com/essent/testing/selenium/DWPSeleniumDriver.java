@@ -133,6 +133,7 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
             throw new CucumberException(e);
         }
     }
+
     public void injectJavaScriptTestRunner() {
         String testRunnerClassPath = ResourceUtil.toPath(PATH + TEST_RUNNER_CLASS);
         File testRunnerClassFile = new File(testRunnerClassPath);
@@ -149,7 +150,7 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
         File dirClasses = new File(pathToClasses);
         FileFilter fileFilterClasses = new WildcardFileFilter("*.js");
         List<File> files = Arrays.asList(Objects.requireNonNull(dirClasses.listFiles(fileFilterClasses)));
-        files.sort((o1, o2) ->o1.getName().compareTo(o2.getName()));
+        files.sort((o1, o2) -> o1.getName().compareTo(o2.getName()));
         return files;
     }
 
@@ -266,28 +267,31 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
         element.click();
     }
 
-  public void waitAndSendKeys(final WebElement element, final String keysToSend) {
-    waitForElement(element);
-    element.clear();
-    waitForElement(element);
-    element.sendKeys(keysToSend);
-    ngWebDriver.waitForAngularRequestsToFinish();
-  }
-  public void sendKeysNow(final WebElement element, final String keysToSend) {
-    element.clear();
-    element.sendKeys(keysToSend);
-  }
+    public void waitAndSendKeys(final WebElement element, final String keysToSend) {
+        waitForElement(element);
+        element.click();
+        element.clear();
+        waitForElement(element);
+        element.sendKeys(keysToSend);
+        ngWebDriver.waitForAngularRequestsToFinish();
+    }
 
-  @Override
-  public List<WebElement> findElements(By selector, Duration timeout, Duration pollingEvery) {
-    List<WebElement> result = super.findElements(selector, timeout, pollingEvery);
-    waitForRequestsToFinish();
-    return result;
-  }
+    public void sendKeysNow(final WebElement element, final String keysToSend) {
+        element.click();
+        element.clear();
+        element.sendKeys(keysToSend);
+    }
 
-  @Override
-  public WebElement findElementWhenPresent(By selector) {
-    waitForRequestsToFinish();
-    return super.findElementWhenPresent(selector);
-  }
+    @Override
+    public List<WebElement> findElements(By selector, Duration timeout, Duration pollingEvery) {
+        List<WebElement> result = super.findElements(selector, timeout, pollingEvery);
+        waitForRequestsToFinish();
+        return result;
+    }
+
+    @Override
+    public WebElement findElementWhenPresent(By selector) {
+        waitForRequestsToFinish();
+        return super.findElementWhenPresent(selector);
+    }
 }

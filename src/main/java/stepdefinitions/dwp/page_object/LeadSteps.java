@@ -11,9 +11,6 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
-import java.util.List;
-import java.util.Map;
-
 public class LeadSteps extends DwpScenario {
 
     @Before("@DWP or @REGRESSION")
@@ -22,29 +19,19 @@ public class LeadSteps extends DwpScenario {
     }
 
 
-    @When("^Add lead$")
+    @When("Add lead")
     public void addLead() {
-        seleniumDriver.waitForRequestsToFinish();
-        LeadsPage leadPage = new LeadsPage();
-        leadPage.plusAddLead();
-        seleniumDriver.waitForRequestsToFinish();
+        new LeadsPage().plusAddLead();
     }
 
     @And("^New lead is$")
-    public void insertCompanyNameForCreatingLead(DataTable dbTabel) {
-        seleniumDriver.waitForRequestsToFinish();
-        NewLeadPage leadPage = new NewLeadPage();
-        List<Map<String,String>> db = dbTabel.asMaps(String.class,String.class);
-        leadPage.createLead(db);
-        seleniumDriver.waitForRequestsToFinish();
+    public void insertCompanyNameForCreatingLead(DataTable leadDataTable) {
+        new NewLeadPage().createLead(leadDataTable.asMaps(String.class, String.class));
     }
 
     @Then("^\"([^\"]*)\" lead was created$")
     public void leadWasCreated(String name) {
-        seleniumDriver.waitForRequestsToFinish();
-        LeadsPage leadPage = new LeadsPage();
-        leadPage.validateCreatingLead(name);
-        seleniumDriver.waitForRequestsToFinish();
+        new LeadsPage().validateCreatingLead(name);
     }
 
     @Override

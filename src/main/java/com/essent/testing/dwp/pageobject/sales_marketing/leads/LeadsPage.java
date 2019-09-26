@@ -8,10 +8,12 @@ public class LeadsPage extends Component {
     public void plusAddLead() {
         seleniumDriver.waitForRequestsToFinish();
         findElementWhenVisible(By.xpath("//span[@class='icon-plus']")).click();
+        seleniumDriver.waitForRequestsToFinish();
     }
 
     public void validateCreatingLead(String name) {
         seleniumDriver.waitForRequestsToFinish();
         seleniumDriver.findElementWhenVisible(By.xpath("(//h5)[.='" + name + "'][1]")).isDisplayed();
+        seleniumDriver.waitForRequestsToFinish();
     }
 }
