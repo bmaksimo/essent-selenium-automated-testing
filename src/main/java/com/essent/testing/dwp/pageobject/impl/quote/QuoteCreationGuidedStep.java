@@ -28,6 +28,17 @@ public abstract class QuoteCreationGuidedStep extends Component implements Guide
     super(STANDARD_UI_VIEW);
   }
 
+  public void fillFieldByXPath (String xPath, String value) {
+    // Silent ignore any empty inputs
+    if (StringUtils.isEmpty(value)) {
+      return;
+    }
+    WebElement e = seleniumDriver.findElement(By.xpath(xPath));
+    // Click the element to move the focus there, that's what a user would do
+    e.click();
+    e.sendKeys(value);
+  }
+
   @Override
   public void next() {
     seleniumDriver.waitForRequestsToFinish();

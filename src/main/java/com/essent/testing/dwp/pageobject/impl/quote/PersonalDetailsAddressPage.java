@@ -41,7 +41,7 @@ public class PersonalDetailsAddressPage extends QuoteCreationGuidedStep {
         return fillInCustomerAddress();
     }
 
-    public boolean fillInCustomerAddress() {
+    private boolean fillInCustomerAddress() {
 
         String street = address.getStreet();
         if(street.equals("Random")) { street = StreetGenerator.getRandomStreetInKontich(); }
@@ -91,7 +91,7 @@ public class PersonalDetailsAddressPage extends QuoteCreationGuidedStep {
         return execute(copyAddress);
     }
 
-    public boolean fillInCustomerAddressx(List<Map<String,String>> add) {
+    public void fillInCustomerAddressx(List<Map<String,String>> add) {
 
         String street = null;
         String houseNr = null;
@@ -114,58 +114,14 @@ public class PersonalDetailsAddressPage extends QuoteCreationGuidedStep {
             country = add.get(i).get("country");
         }
 
+        // There is no need to wait inbetween, we don't care what happens, just wait at the end
+        this.fillFieldByXPath(DELIVERY_ADDR_STREET.getQuery(), street);
+        this.fillFieldByXPath(DELIVERY_ADDR_HOUSE_NR.getQuery(), houseNr);
+        this.fillFieldByXPath(DELIVERY_ADDR_HOUSE_ADD.getQuery(), houseNrAdd);
+        this.fillFieldByXPath(DELIVERY_ADDR_ZIPCODE.getQuery(), postcode);
+        this.fillFieldByXPath(DELIVERY_ADDR_CITY.getQuery(), city);
+        this.fillFieldByXPath(DELIVERY_ADDR_BUS.getQuery(), bus);
+        this.fillFieldByXPath(DELIVERY_ADDR_COUNTRY.getQuery(), country);
         seleniumDriver.waitForRequestsToFinish();
-
-        Model.Execution initializeAddress = createExecution();
-        initializeAddress.
-            element(DELIVERY_ADDR_STREET.element()).
-            element(DELIVERY_ADDR_STREET_SUGGESTION.element()).
-            element(DELIVERY_ADDR_HOUSE_NR.element()).
-            element(DELIVERY_ADDR_HOUSE_ADD.element()).
-            element(DELIVERY_ADDR_BUS.element()).
-            element(DELIVERY_ADDR_ZIPCODE.element()).
-            element(DELIVERY_ADDR_CITY.element()).
-            element(DELIVERY_ADDR_COUNTRY.element()).
-            element(COPY_ADDRESS_CONNECTION_TO_BILLING.element());
-        seleniumDriver.waitForRequestsToFinish();
-
-        initializeAddress.step(createStep(ACCESS).timeoutInSeconds(3).element(COPY_ADDRESS_CONNECTION_TO_BILLING.name()).requireDisplayed(false).callback(hideIconOverlays()));
-        seleniumDriver.waitForRequestsToFinish();
-        initializeAddress.step(createStep(CLICK).timeoutInSeconds(3).element(COPY_ADDRESS_CONNECTION_TO_BILLING.name()).requireDisplayed(false), INPUT.getSleepInMillis());
-        seleniumDriver.waitForRequestsToFinish();
-        initializeAddress.step(createStep(TYPING).timeoutInSeconds(3).element(DELIVERY_ADDR_STREET.name()).value(street), INPUT.getSleepInMillis());
-        seleniumDriver.waitForRequestsToFinish();
-        initializeAddress.step(createStep(ACCESS).timeoutInSeconds(3).element(DELIVERY_ADDR_STREET_SUGGESTION.name()).requireDisplayed(false).callback(new HideAddressSuggestion()));
-        seleniumDriver.waitForRequestsToFinish();
-        initializeAddress.step(createStep(TYPING).timeoutInSeconds(3).element(DELIVERY_ADDR_HOUSE_NR.name()).value(houseNr), INPUT.getSleepInMillis());
-        seleniumDriver.waitForRequestsToFinish();
-        initializeAddress.step(createStep(TYPING).timeoutInSeconds(3).element(DELIVERY_ADDR_HOUSE_ADD.name()).value(houseNrAdd), INPUT.getSleepInMillis());
-        seleniumDriver.waitForRequestsToFinish();
-
-        if (StringUtils.isNotEmpty(bus)) {
-            initializeAddress.step(createStep(TYPING).element(DELIVERY_ADDR_BUS.name()).value(bus), INPUT.getSleepInMillis());
-            seleniumDriver.waitForRequestsToFinish();
-        }
-        initializeAddress.step(createStep(TYPING).element(DELIVERY_ADDR_ZIPCODE.name()).value(postcode), INPUT.getSleepInMillis());
-        seleniumDriver.waitForRequestsToFinish();
-        initializeAddress.step(createStep(TYPING).timeoutInSeconds(3).element(DELIVERY_ADDR_CITY.name()).value(city), INPUT.getSleepInMillis());
-        seleniumDriver.waitForRequestsToFinish();
-
-        if (StringUtils.isNotEmpty(country)) {
-            initializeAddress.step(createStep(Action.SELECT).element(DELIVERY_ADDR_COUNTRY.name()).value(country));
-            seleniumDriver.waitForRequestsToFinish();
-        }
-        if (!execute(initializeAddress)) {
-            fail("Customer Address fields were not initialized");
-        }
-
-        Model.Execution copyAddress = createExecution().element(COPY_ADDRESS_CONNECTION_TO_BILLING.element());
-        seleniumDriver.waitForRequestsToFinish();
-        copyAddress.step(createStep(SLEEP).sleepInMillis(3000));
-        seleniumDriver.waitForRequestsToFinish();
-        copyAddress.step(createStep(CLICK).element(COPY_ADDRESS_CONNECTION_TO_BILLING.name()).requireDisplayed(false), TOGGLE_CHECKBOX.getSleepInMillis());
-        seleniumDriver.waitForRequestsToFinish();
-
-        return execute(copyAddress);
     }
 }
