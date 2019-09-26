@@ -1,7 +1,7 @@
 package com.essent.testing.dwp.pageobject.impl.modal.market_messages;
 
 import com.essent.automation.util.Sleeper;
-import com.essent.testing.dwp.pageobject.impl.Component;
+import com.essent.testing.dwp.pageobject.impl.modal.ModalBase;
 import com.essent.testing.dwp.pageobject.modal.ConfirmDialog;
 import org.apache.commons.collections4.CollectionUtils;
 import org.awaitility.Duration;
@@ -12,7 +12,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
 import static org.awaitility.Duration.TWO_SECONDS;
 
-public class SearchContractLinesDialog extends Component implements ConfirmDialog  {
+public class SearchContractLinesDialog extends ModalBase implements ConfirmDialog  {
 
     private final static By SELECTOR = By.cssSelector(".view__modal .modal__header");
 
@@ -41,17 +41,6 @@ public class SearchContractLinesDialog extends Component implements ConfirmDialo
 
         WebElement sendButton = seleniumDriver.findElements(By.xpath("//a[@class='button']")).get(1);
         seleniumDriver.waitAndClick(sendButton);
-    }
-
-    @Override
-    public boolean confirm() {
-        Sleeper.sleepTightInSeconds(5);
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenPresent(By.id("confirm-button")));
-        seleniumDriver.waitForRequestsToFinish();
-        Sleeper.sleepTightInSeconds(5);
-        handleAlert();
-        seleniumDriver.waitForRequestsToFinish();
-        return true;
     }
 
     @Override

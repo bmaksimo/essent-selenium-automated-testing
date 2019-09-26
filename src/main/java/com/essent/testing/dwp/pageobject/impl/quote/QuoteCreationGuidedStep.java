@@ -22,7 +22,6 @@ import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.VIEW;
 public abstract class QuoteCreationGuidedStep extends Component implements GuidedStep, Form {
 
   private static By STANDARD_UI_VIEW = By.xpath(VIEW.getQuery());
-  private static By MANDATORY_INPUT_EXCLAMATION_CSS = By.cssSelector(".is-error");
 
   public QuoteCreationGuidedStep() {
     super(STANDARD_UI_VIEW);
@@ -58,14 +57,4 @@ public abstract class QuoteCreationGuidedStep extends Component implements Guide
     Map result = seleniumDriver.executeJavascriptMethod(JS_TR_IS_NEXT_BUTTON_ENABLED, options);
     return BooleanUtils.toBoolean((String) result.get("enabled"));
   }
-
-  private void logMandatoryInputStatus() {
-     List<WebElement> elements = seleniumDriver.findElements(MANDATORY_INPUT_EXCLAMATION_CSS,
-            java.time.Duration.ofSeconds(1),
-            java.time.Duration.ofMillis(200));
-     String location = elements.stream().map(WebElement::getText).reduce("", (partialString, element) -> partialString + (" " + element + System.lineSeparator()));
-     if(StringUtils.isNotEmpty(location)) {
-        logger().error("- WARNING: Mandatory input failure in: " + location);
-     }
-    }
 }

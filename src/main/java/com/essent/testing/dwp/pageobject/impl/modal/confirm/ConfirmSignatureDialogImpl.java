@@ -1,21 +1,16 @@
 package com.essent.testing.dwp.pageobject.impl.modal.confirm;
 
-import com.essent.automation.util.Sleeper;
-import com.essent.testing.dwp.pageobject.elements.Button;
-import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.dwp.pageobject.impl.elements.ButtonImpl;
+import com.essent.testing.dwp.pageobject.impl.modal.ModalBase;
 import com.essent.testing.dwp.pageobject.modal.confirm.ConfirmSignatureDialog;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-public class ConfirmSignatureDialogImpl extends Component implements ConfirmSignatureDialog {
+public class ConfirmSignatureDialogImpl extends ModalBase implements ConfirmSignatureDialog {
 
   private static final By CONFIRM_SIGNATURE_MODAL_SELECTOR =
       By.cssSelector(".view__modal .modal__header");
-
-  private static final By CONFIRM_BUTTON_SELECTOR = By.id("confirm-button");
 
   private static final By ACTION_LIST_LOCATOR = By.xpath("//*[@class='action-list']//li[contains(., '')]");
 
@@ -54,20 +49,6 @@ public class ConfirmSignatureDialogImpl extends Component implements ConfirmSign
     return actionList.stream()
         .filter(WebElement::isDisplayed)
         .anyMatch(element -> element.getText().contains(textToLookup));
-  }
-
-  @Override
-  public boolean confirm() {
-    seleniumDriver.waitForRequestsToFinish();
-    Sleeper.sleepTightInSeconds(2);
-    WebElement element = seleniumDriver.findElementWhenPresent(CONFIRM_BUTTON_SELECTOR);
-    Button confirmButton = new ButtonImpl(element);
-    confirmButton.click();
-    seleniumDriver.waitForRequestsToFinish();
-    Sleeper.sleepTightInSeconds(5);
-    handleAlert();
-    seleniumDriver.waitForRequestsToFinish();
-    return true;
   }
 
   @Override

@@ -20,7 +20,10 @@ public class ChangeAccountStatusPage extends Component {
     }
 
     public void chooseAccountStatus(String status) {
+        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(5);
         seleniumDriver.findElementWhenVisible(By.id("status-field")).sendKeys(status);
+        seleniumDriver.waitForRequestsToFinish();
     }
 
     public boolean uploadFile(String path) {

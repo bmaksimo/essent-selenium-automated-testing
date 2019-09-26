@@ -37,91 +37,73 @@ public abstract class NavigationElements extends DwpScenario {
     }
 
 
-
-  private class ClickCockpitItem implements Predicate<String> {
-    @Override
-    public boolean test(String item) {
-      seleniumDriver.waitForRequestsToFinish();
-      Map<String, String> options = new HashMap<>();
-      options.put("item", item);
-      boolean success = executeJavascriptTest(JS_TR_GET_COCKPIT_ITEM, options);
-      return success;
-    }
-  }
-
-  private class ClickListPlusAction implements Predicate<String> {
-    @Override
-    public boolean test(String item) {
-      seleniumDriver.waitForRequestsToFinish();
-      Map<String, String> options = new HashMap<>();
-      options.put("item", item);
-      boolean success = executeJavascriptTest(JS_TR_LIST_PLUS_MENU_ACTION, options);
-      return success;
-    }
-  }
-
-  private class ClickTopArrowButton implements Predicate<String> {
-    @Override
-    public boolean test(String arrow) {
-      seleniumDriver.waitForRequestsToFinish();
-      Map<String, String> options = new HashMap<>();
-      options.put("arrow", arrow.toLowerCase());
-      boolean success = executeJavascriptTest(JS_TR_ARROW_ACTION, options);
-      return success;
+    private class ClickCockpitItem implements Predicate<String> {
+        @Override
+        public boolean test(String item) {
+            seleniumDriver.waitForRequestsToFinish();
+            Map<String, String> options = new HashMap<>();
+            options.put("item", item);
+            return executeJavascriptTest(JS_TR_GET_COCKPIT_ITEM, options);
+        }
     }
 
-    public boolean testNow(String arrow) {
-      Map<String, String> options = new HashMap<>();
-      options.put("arrow", arrow);
-      boolean success = executeJavascriptTestImmediately(JS_TR_ARROW_ACTION, options, true);
-      return success;
+    private class ClickListPlusAction implements Predicate<String> {
+        @Override
+        public boolean test(String item) {
+            seleniumDriver.waitForRequestsToFinish();
+            Map<String, String> options = new HashMap<>();
+            options.put("item", item);
+            return executeJavascriptTest(JS_TR_LIST_PLUS_MENU_ACTION, options);
+        }
     }
-  }
 
-  public class ClickConfirm implements Predicate<String> {
-    @Override
-    public boolean test(String name) {
-      boolean success = executeJavascriptTest(JS_TR_SELECT_BUTTON, "");
-      seleniumDriver.waitForRequestsToFinish();
-      return success;
-    }
-    public boolean testNow() {
-      boolean success = executeJavascriptTestImmediately(JS_TR_SELECT_BUTTON, "", true);
-      seleniumDriver.waitForRequestsToFinish();
-      return success;
-    }
-  }
+    private class ClickTopArrowButton implements Predicate<String> {
+        @Override
+        public boolean test(String arrow) {
+            seleniumDriver.waitForRequestsToFinish();
+            Map<String, String> options = new HashMap<>();
+            options.put("arrow", arrow.toLowerCase());
+            return executeJavascriptTest(JS_TR_ARROW_ACTION, options);
+        }
 
-  private class ClickDashboardMenu implements Predicate<String> {
-    @Override
-    public boolean test(String menu) {
-      Map<String, Object> options = new HashMap<>();
-      options.put("menu", menu);
-      return executeJavascriptTest(JS_TR_CLICK_DASHBOARD_MENU_BUTTON, options);
+        public boolean testNow(String arrow) {
+            Map<String, String> options = new HashMap<>();
+            options.put("arrow", arrow);
+            return executeJavascriptTestImmediately(JS_TR_ARROW_ACTION, options, true);
+        }
     }
-    public boolean testNow(String menu) {
-      Map<String, Object> options = new HashMap<>();
-      options.put("menu", menu);
-      return executeJavascriptTestImmediately(JS_TR_CLICK_DASHBOARD_MENU_BUTTON, options, true);
+
+    private class ClickDashboardMenu implements Predicate<String> {
+        @Override
+        public boolean test(String menu) {
+            Map<String, Object> options = new HashMap<>();
+            options.put("menu", menu);
+            return executeJavascriptTest(JS_TR_CLICK_DASHBOARD_MENU_BUTTON, options);
+        }
+
+        public boolean testNow(String menu) {
+            Map<String, Object> options = new HashMap<>();
+            options.put("menu", menu);
+            return executeJavascriptTestImmediately(JS_TR_CLICK_DASHBOARD_MENU_BUTTON, options, true);
+        }
     }
-  }
 
 
-  public class ValidateCustomer implements Predicate<Map> {
-    @Override
-    public boolean test(Map name) {
-        seleniumDriver.waitForRequestsToFinish();
-        return executeJavascriptTest(JS_TR_FIND_CUSTOMER, name);
+    public class ValidateCustomer implements Predicate<Map> {
+        @Override
+        public boolean test(Map name) {
+            seleniumDriver.waitForRequestsToFinish();
+            return executeJavascriptTest(JS_TR_FIND_CUSTOMER, name);
+        }
     }
-  }
 
-  public class SearchCustomer implements Predicate<String> {
-    @Override
-    public boolean test(String name) {
-        seleniumDriver.waitForRequestsToFinish();
-        return executeJavascriptTest(JS_TR_SEARCH_CUSTOMER, name);
+    public class SearchCustomer implements Predicate<String> {
+        @Override
+        public boolean test(String name) {
+            seleniumDriver.waitForRequestsToFinish();
+            return executeJavascriptTest(JS_TR_SEARCH_CUSTOMER, name);
+        }
     }
-  }
 
     protected void clickTopAction(String name) {
         seleniumDriver.waitForRequestsToFinish();
@@ -129,6 +111,7 @@ public abstract class NavigationElements extends DwpScenario {
         assertThat(String.format("Top Menu item %s was not available.", name),
             success, is(true));
     }
+
     protected void clickTopAction(String name, int waitingTime) {
         seleniumDriver.waitForRequestsToFinish();
         boolean success = new ClickTopAction().testWithFixedTime(name, waitingTime);
@@ -136,14 +119,14 @@ public abstract class NavigationElements extends DwpScenario {
             success, is(true));
     }
 
-    protected void clickTopArrow(String arrow)  {
+    protected void clickTopArrow(String arrow) {
         seleniumDriver.waitForRequestsToFinish();
         boolean success = new ClickTopArrowButton().test(arrow);
         assertThat(String.format("Top Arrow %s is undefined.", arrow),
             success, is(true));
     }
 
-    protected void clickTopArrow(String arrow, int waitingTime)  {
+    protected void clickTopArrow(String arrow, int waitingTime) {
         Sleeper.sleepTightInSeconds(waitingTime);
         boolean success = new ClickTopArrowButton().testNow(arrow);
         assertThat(String.format("Top Arrow %s is undefined.", arrow),
@@ -183,15 +166,11 @@ public abstract class NavigationElements extends DwpScenario {
         new ClickDashboardMenu().testNow(menu);
     }
 
-    protected boolean isAlertPresent()
-    {
-        try
-        {
+    protected boolean isAlertPresent() {
+        try {
             seleniumDriver.getDriver().switchTo().alert();
             return true;
-        }
-        catch (NoAlertPresentException ex)
-        {
+        } catch (NoAlertPresentException ex) {
             return false;
         }
     }

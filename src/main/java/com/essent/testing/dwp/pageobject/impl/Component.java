@@ -7,6 +7,7 @@ import com.essent.testing.context.ContextService;
 import com.essent.testing.selenium.DWPSeleniumDriver;
 import com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter;
 import cucumber.runtime.CucumberException;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.StrSubstitutor;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
@@ -17,6 +18,8 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class Component {
+
+    private static By MANDATORY_INPUT_EXCLAMATION_CSS = By.cssSelector(".is-error");
 
     protected WebElement element;
     protected DWPSeleniumDriver seleniumDriver;
@@ -161,6 +164,16 @@ public abstract class Component {
             return true;
         } catch (NoAlertPresentException ex) {
             return false;
+        }
+    }
+
+    protected void logMandatoryInputStatus() {
+        List<WebElement> elements = seleniumDriver.findElements(MANDATORY_INPUT_EXCLAMATION_CSS,
+            java.time.Duration.ofSeconds(1),
+            java.time.Duration.ofMillis(200));
+        String location = elements.stream().map(WebElement::getText).reduce("", (partialString, element) -> partialString + (" " + element + System.lineSeparator()));
+        if(StringUtils.isNotEmpty(location)) {
+            logger().error("- WARNING: Mandatory input failure in: " + location);
         }
     }
 }

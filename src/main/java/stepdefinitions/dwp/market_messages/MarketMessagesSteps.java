@@ -17,14 +17,12 @@ public class MarketMessagesSteps extends DwpScenario {
     @When("^Dialog search input is current \"([^\"]*)\"$")
     public void runDialogSearch(String searchInput) {
         String currentSearchInputValue = parameterProvider.getValueOrParameterAsString(searchInput);
-        SearchContractLinesDialog dialog = new SearchContractLinesDialog();
-        dialog.searchContractLine(currentSearchInputValue);
+        new SearchContractLinesDialog().searchContractLine(currentSearchInputValue);
     }
 
     @When("^Select Contractline dialog is confirmed$")
     public void clickConfirmButton() {
-        SearchContractLinesDialog dialog = new SearchContractLinesDialog();
-        dialog.confirm();
+        new SearchContractLinesDialog().confirm();
     }
 
     @Override

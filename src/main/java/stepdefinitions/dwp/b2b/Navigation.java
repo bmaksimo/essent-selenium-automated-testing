@@ -1,5 +1,6 @@
 package stepdefinitions.dwp.b2b;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.navigation.DwpTopMenu;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.service.ServicePage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.workflows.MarketMessagesPage;
@@ -48,6 +49,7 @@ public class Navigation extends DwpScenario {
     @Then("^Verify status is \"([^\"]*)\" and \"([^\"]*)\"$")
     public void verifyStatusIsAnd(String external, String status) {
         seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(10);
         if (status.equalsIgnoreCase("Normaal") || (status.equalsIgnoreCase("Normal"))) {
             Assert.assertTrue(checkStatusIsNormal(external));
         } else {

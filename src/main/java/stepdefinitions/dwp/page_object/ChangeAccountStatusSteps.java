@@ -26,8 +26,7 @@ public class ChangeAccountStatusSteps extends DwpScenario {
 
     @And("^Update account status on \"([^\"]*)\"$")
     public void updateAccountStatusOn(String status) {
-        ChangeAccountStatusPage changeAccountStatusPage = new ChangeAccountStatusPage();
-        changeAccountStatusPage.chooseAccountStatus(status);
+        new ChangeAccountStatusPage().chooseAccountStatus(status);
     }
 
     @And("^Client signature file is uploaded$")
