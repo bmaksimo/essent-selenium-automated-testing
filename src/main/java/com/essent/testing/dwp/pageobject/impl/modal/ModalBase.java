@@ -18,7 +18,7 @@ public class ModalBase extends Component {
         confirm.ifPresent(WebElement::click);
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(5);
-        logMandatoryInputStatus(scenarioInfo);
+        validateForm(scenarioInfo);
         handleAlert();
         seleniumDriver.waitForRequestsToFinish();
 
@@ -30,7 +30,7 @@ public class ModalBase extends Component {
         Optional<WebElement> confirm = seleniumDriver.findElementOptional(CONFIRM_BUTTON_SELECTOR);
         confirm.ifPresent(WebElement::click);
         Sleeper.sleepTightInSeconds(waitingTime);
-        logMandatoryInputStatus(scenarioInfo);
+        validateForm(scenarioInfo);
         handleAlert();
         Sleeper.sleepTightInSeconds(waitingTime);
 

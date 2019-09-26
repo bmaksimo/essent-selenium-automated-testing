@@ -167,7 +167,7 @@ public abstract class Component {
         }
     }
 
-    protected void logMandatoryInputStatus(String scenarioInfo) {
+    protected void validateForm(String scenarioInfo) {
         List<WebElement> elements = seleniumDriver.findElements(MANDATORY_INPUT_EXCLAMATION_CSS,
             java.time.Duration.ofSeconds(1),
             java.time.Duration.ofMillis(200));
