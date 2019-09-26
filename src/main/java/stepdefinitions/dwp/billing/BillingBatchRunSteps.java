@@ -37,9 +37,7 @@ public class BillingBatchRunSteps extends DwpScenario {
     public void invoiceRunIsScheduled(){
         ConfirmSignatureDialog dialog = new ConfirmSignatureDialogImpl();
         boolean success = dialog.confirm(parameterProvider.getScenarioInfo());
-        assertThat("Invoice run dialog was not confirmed.",
-            success,
-            is(true));
+        assertThat("Invoice run dialog was not confirmed.", success, is(true));
     }
 
 
