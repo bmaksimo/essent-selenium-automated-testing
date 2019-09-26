@@ -11,26 +11,26 @@ public class ModalBase extends Component {
 
     private static final By CONFIRM_BUTTON_SELECTOR = By.id("confirm-button");
 
-    public boolean confirm() {
+    public boolean confirm(String scenarioInfo) {
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(2);
         Optional<WebElement> confirm = seleniumDriver.findElementOptional(CONFIRM_BUTTON_SELECTOR);
         confirm.ifPresent(WebElement::click);
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(5);
-        logMandatoryInputStatus();
+        logMandatoryInputStatus(scenarioInfo);
         handleAlert();
         seleniumDriver.waitForRequestsToFinish();
 
         return true;
     }
 
-    public boolean confirmNow(int waitingTime) {
+    public boolean confirmNow(String scenarioInfo, int waitingTime) {
         Sleeper.sleepTightInSeconds(waitingTime);
         Optional<WebElement> confirm = seleniumDriver.findElementOptional(CONFIRM_BUTTON_SELECTOR);
         confirm.ifPresent(WebElement::click);
         Sleeper.sleepTightInSeconds(waitingTime);
-        logMandatoryInputStatus();
+        logMandatoryInputStatus(scenarioInfo);
         handleAlert();
         Sleeper.sleepTightInSeconds(waitingTime);
 

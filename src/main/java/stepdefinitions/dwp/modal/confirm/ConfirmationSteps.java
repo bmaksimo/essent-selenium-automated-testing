@@ -64,7 +64,7 @@ public class ConfirmationSteps extends NavigationElements {
     private void confirmModalDialogue() {
         Sleeper.sleepTightInSeconds(3);
         ConfirmSignatureDialog dialog = new ConfirmSignatureDialogImpl();
-        dialog.confirm();
+        dialog.confirm(parameterProvider.getScenarioInfo());
         boolean shown = dialog.isShown();
         assertThat("Modal dialogue was not confirmed.", shown, is(false));
     }

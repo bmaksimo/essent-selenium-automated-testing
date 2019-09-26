@@ -88,14 +88,14 @@ public class TopActions extends NavigationElements {
     @And("Changes are confirmed")
     public void confirmChange() {
         seleniumDriver.waitForRequestsToFinish();
-        boolean success = new ModalBase().confirm();
+        boolean success = new ModalBase().confirm(parameterProvider.getScenarioInfo());
         assertThat(String.format("Button %s was not available.", ""), success, is(true));
     }
 
     @And("^Changes are confirmed waiting for (\\d+) seconds$")
     public void confirmChange(int waitingTime) {
         Sleeper.sleepTightInSeconds(waitingTime);
-        boolean success = new ModalBase().confirmNow(waitingTime);
+        boolean success = new ModalBase().confirmNow(parameterProvider.getScenarioInfo(), waitingTime);
         assertThat(String.format("Button %s was not available.", ""), success, is(true));
     }
 
