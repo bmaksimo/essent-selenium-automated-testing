@@ -1,5 +1,6 @@
 package com.essent.testing.dwp.pageobject.impl.service_contracting;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import org.junit.Assert;
 import org.openqa.selenium.By;
@@ -19,12 +20,14 @@ public class EndOfContractPage extends Component {
         seleniumDriver.findElementWhenVisible(By.xpath("//top-search/div[@class='top-search']/input[@type='search']")).sendKeys(Keys.ENTER);
     }
 
-    public void searchInputFieldNow(String input) {
+    public void searchInputFieldNow(String input, int waitingTime) {
+        Sleeper.sleepTightInSeconds(waitingTime);
         seleniumDriver.sendKeysNow(seleniumDriver.findElementWhenVisible(By.xpath("//top-search/div[@class='top-search']/input[@type='search']")), input);
         seleniumDriver.findElementWhenVisible(By.xpath("//top-search/div[@class='top-search']/input[@type='search']")).sendKeys(Keys.ENTER);
     }
 
     public void simpleExecuteJavaScript(String nameOfJavaScript) {
+        seleniumDriver.waitForRequestsToFinish();
         boolean success = new ExecuteJavaScript().test(nameOfJavaScript);
         Assert.assertThat(String.format("JavaScript file %s is undefined.", nameOfJavaScript),
             success, is(true));
