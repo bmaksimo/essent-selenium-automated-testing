@@ -20,7 +20,7 @@ Feature: NUAT-373: End Of Contract For Bankruptcy - nl_BE, NUAT-479: DROP For A 
 
         When List View action is "START NIEUW MARKTBERICHT"
         And Click Select Contractline
-        And Contract line EAN-code "parameter:EAN-code & Producttype" is submitted
+        And Dialog search input is current "parameter:EAN-code & Producttype"
         Then Changes are confirmed
         And Modal dialog is "Start new market scenario"
 
