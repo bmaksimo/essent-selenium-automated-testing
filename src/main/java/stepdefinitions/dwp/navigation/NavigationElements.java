@@ -43,8 +43,7 @@ public abstract class NavigationElements extends DwpScenario {
             seleniumDriver.waitForRequestsToFinish();
             Map<String, String> options = new HashMap<>();
             options.put("item", item);
-            boolean success = executeJavascriptTest(JS_TR_GET_COCKPIT_ITEM, options);
-            return success;
+            return executeJavascriptTest(JS_TR_GET_COCKPIT_ITEM, options);
         }
     }
 
@@ -54,8 +53,7 @@ public abstract class NavigationElements extends DwpScenario {
             seleniumDriver.waitForRequestsToFinish();
             Map<String, String> options = new HashMap<>();
             options.put("item", item);
-            boolean success = executeJavascriptTest(JS_TR_LIST_PLUS_MENU_ACTION, options);
-            return success;
+            return executeJavascriptTest(JS_TR_LIST_PLUS_MENU_ACTION, options);
         }
     }
 
@@ -65,15 +63,13 @@ public abstract class NavigationElements extends DwpScenario {
             seleniumDriver.waitForRequestsToFinish();
             Map<String, String> options = new HashMap<>();
             options.put("arrow", arrow.toLowerCase());
-            boolean success = executeJavascriptTest(JS_TR_ARROW_ACTION, options);
-            return success;
+            return executeJavascriptTest(JS_TR_ARROW_ACTION, options);
         }
 
         public boolean testNow(String arrow) {
             Map<String, String> options = new HashMap<>();
             options.put("arrow", arrow);
-            boolean success = executeJavascriptTestImmediately(JS_TR_ARROW_ACTION, options, true);
-            return success;
+            return executeJavascriptTestImmediately(JS_TR_ARROW_ACTION, options, true);
         }
     }
 
