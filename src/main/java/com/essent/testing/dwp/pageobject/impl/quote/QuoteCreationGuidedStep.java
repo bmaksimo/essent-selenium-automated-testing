@@ -33,8 +33,7 @@ public abstract class QuoteCreationGuidedStep extends Component implements Guide
     if (StringUtils.isEmpty(value)) {
       return;
     }
-    WebElement e;
-    e = seleniumDriver.findElement(By.xpath(xPath));
+    WebElement e = seleniumDriver.findElement(By.xpath(xPath));
     // Click the element to move the focus there, that's what a user would do
     e.click();
     e.sendKeys(value);
