@@ -34,25 +34,24 @@ public class EndOfContractSteps extends DwpScenario {
 
     @And("^Search field input is \"([^\"]*)\"$")
     public void searchFieldInputIs(String input) {
-       EndOfContractPage endOfContractPage = new EndOfContractPage();
-       String inputValue = parameterProvider.getValueOrParameterAsString(input);
-       endOfContractPage.searchInputField(inputValue);
+        EndOfContractPage endOfContractPage = new EndOfContractPage();
+        String inputValue = parameterProvider.getValueOrParameterAsString(input);
+        endOfContractPage.searchInputField(inputValue);
     }
 
     @And("^Search field input is \"([^\"]*)\" waiting for (\\d+) seconds$")
     public void searchFieldInputIs(String input, int waitingTime) {
-       EndOfContractPage endOfContractPage = new EndOfContractPage();
-       String inputValue = parameterProvider.getValueOrParameterAsString(input);
+        EndOfContractPage endOfContractPage = new EndOfContractPage();
+        String inputValue = parameterProvider.getValueOrParameterAsString(input);
         Sleeper.sleepTightInSeconds(waitingTime);
-       endOfContractPage.searchInputFieldNow(inputValue);
+        endOfContractPage.searchInputFieldNow(inputValue);
     }
 
-  @And("^Click Select Contractline$")
-  public void clickSelectContractline() {
-    seleniumDriver.waitForRequestsToFinish();
-    EndOfContractPage endOfContractPage = new EndOfContractPage();
-    endOfContractPage.simpleExecuteJavaScript(JS_TR_SELECT_CONTRACTLINE);
-  }
+    @And("^Click Select Contractline$")
+    public void clickSelectContractline() {
+        seleniumDriver.waitForRequestsToFinish();
+        new EndOfContractPage().simpleExecuteJavaScript(JS_TR_SELECT_CONTRACTLINE);
+    }
 
     @And("^EAN check box$")
     public void eanCheckBox() {
