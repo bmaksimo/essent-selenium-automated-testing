@@ -172,7 +172,8 @@ public class ContractPage extends Component {
     }
 
     public void chooseDiscounts(String discount) {
-        Sleeper.sleepTightInSeconds(6);
+        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(10);
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.id("dwp|discount_id")));
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id='dwp-discount-id-field']/option[@label='" + discount + "']")));
     }
