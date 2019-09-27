@@ -184,7 +184,7 @@ public class InputElements extends DwpScenario {
      */
     @And("^\"([^\"]*)\" date is \"([^\"]*)\"$")
     public void setDateInput(String label, String value){
-        Sleeper.sleepTightInSeconds(2);
+        Sleeper.sleepTightInSeconds(10);
         seleniumDriver.waitForRequestsToFinish();
         String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(value));
         parameterProvider.put("inputValue", inputValue);
