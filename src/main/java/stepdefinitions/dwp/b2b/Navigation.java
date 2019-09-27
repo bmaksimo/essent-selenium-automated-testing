@@ -84,14 +84,14 @@ public class Navigation extends DwpScenario {
             By selector = By.xpath("//tr[1]//list-simple-two-liner-cell/p/span[1]");
             given().await()
                 .pollInterval(TEN_SECONDS)
-                .atMost(new org.awaitility.Duration(450, SECONDS))
+                .atMost(new org.awaitility.Duration(600, SECONDS))
                 .until(()-> mp.isRefreshedByName(name)
                     && seleniumDriver.findElementWhenVisible(selector).getText().equalsIgnoreCase(status));
         } else if (seleniumDriver.findElement(By.xpath("//tr[3]//list-link-bold-top-two-liner-cell/div/a/h5")).isDisplayed()) {
             By selector = By.xpath("//tr[3]//list-simple-two-liner-cell/p/span[1]");
             given().await()
                 .pollInterval(TEN_SECONDS)
-                .atMost(new org.awaitility.Duration(450, SECONDS))
+                .atMost(new org.awaitility.Duration(600, SECONDS))
                 .until(()-> mp.isRefreshedByName(name)
                     && seleniumDriver.findElementWhenVisible(selector).getText().equalsIgnoreCase(status));
         }
