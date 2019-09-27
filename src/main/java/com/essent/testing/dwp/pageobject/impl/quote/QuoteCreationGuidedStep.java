@@ -25,9 +25,7 @@ public abstract class QuoteCreationGuidedStep extends Component implements Form 
 
   public void fillFieldByXPath (String xPath, String value) {
     // Silent ignore any empty inputs
-    if (StringUtils.isEmpty(value)) {
-      return;
-    }
+    if (StringUtils.isEmpty(value)) return;
     WebElement e = seleniumDriver.findElement(By.xpath(xPath));
     // Click the element to move the focus there, that's what a user would do
     e.click();
@@ -43,13 +41,13 @@ public abstract class QuoteCreationGuidedStep extends Component implements Form 
     logger().debug("Found  element: " + nextButton.getTagName());
     logger().debug("- RESULT: Confirm guidance step, confirmation button attribute value: Next[disabled] = " + nextButton.getAttribute("disabled"));
     seleniumDriver.waitForRequestsToFinish();
+    Sleeper.sleepTightInSeconds(10);
     nextButton.click();
     seleniumDriver.waitForRequestsToFinish();
   }
 
   public Boolean isNextButtonEnabled() {
-    Map options = new HashMap<>();
-    Map result = seleniumDriver.executeJavascriptMethod(JS_TR_IS_NEXT_BUTTON_ENABLED, options);
+    Map result = seleniumDriver.executeJavascriptMethod(JS_TR_IS_NEXT_BUTTON_ENABLED, new HashMap<>());
     return BooleanUtils.toBoolean((String) result.get("enabled"));
   }
 }
