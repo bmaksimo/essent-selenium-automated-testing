@@ -13,6 +13,9 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
@@ -65,9 +68,16 @@ public class Navigation extends DwpScenario {
 
     private boolean checkStatusValidation(String external, String status) {
         seleniumDriver.waitForRequestsToFinish();
-        String externalFromPage = seleniumDriver.findElementWhenVisible(By.xpath("//gridlr[@class='']//blue-sidebar/div/div[2]")).getText();
-        String statusFromPage = seleniumDriver.findElementWhenVisible(By.xpath("//gridlr[@class='']//blue-sidebar/div/div[3]")).getText();
-        return externalFromPage.equalsIgnoreCase(external) && statusFromPage.equalsIgnoreCase(status);
+        List<WebElement> elements = seleniumDriver.findElements(By.xpath("//div[@class='card__message']"));
+        List<String> statuses = null;
+        for (WebElement element : elements){
+            statuses.add(element.getText());
+        }
+        return statuses.contains(external) && statuses.contains(status);
+
+//        String externalFromPage = seleniumDriver.findElementWhenVisible(By.xpath("//gridlr//blue-sidebar/div/div[2]")).getText();
+//        String statusFromPage = seleniumDriver.findElementWhenVisible(By.xpath("//gridlr//blue-sidebar/div/div[3]")).getText();
+//        return externalFromPage.equalsIgnoreCase(external) && statusFromPage.equalsIgnoreCase(status);
     }
 
     @And("^Go back to home screen$")
