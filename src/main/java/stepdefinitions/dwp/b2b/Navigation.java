@@ -70,10 +70,8 @@ public class Navigation extends DwpScenario {
     private boolean checkStatusValidation(String external, String status) {
         seleniumDriver.waitForRequestsToFinish();
         List<WebElement> allElements = seleniumDriver.findElements(By.xpath("//div[@class='card__message']"));
-        System.out.println("SIZE----------------------------"+allElements.size());
         List<String> statuses = new ArrayList<String>();
         for (WebElement element : allElements){
-            System.out.println("----------------------------"+element.getText());
             statuses.add(element.getText());
         }
         return statuses.contains(external) && statuses.contains(status);
