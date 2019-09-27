@@ -22,7 +22,7 @@ public class MarketMessagesSteps extends DwpScenario {
 
     @When("^Select Contractline dialog is confirmed$")
     public void clickConfirmButton() {
-        new SearchContractLinesDialog().confirm();
+        new SearchContractLinesDialog().confirm(parameterProvider.getScenarioInfo());
     }
 
     @Override

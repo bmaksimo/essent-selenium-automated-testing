@@ -24,14 +24,12 @@ public class CompanySteps extends DwpScenario {
 
     @And("^Customer acceptance checks page is confirmed$")
     public void confirmCustomerAcceptanceChecksPage() {
-        CustomerAcceptance pageObject = new CustomerAcceptance();
-        pageObject.next();
+        new CustomerAcceptance().next(parameterProvider.getScenarioInfo());
     }
 
     @And("^Company VAT number is random$")
     public void generateRandomUser(){
-        String vat = CustomerRandomDataGenerator.generateVat("generator:vat:BEL");
-        parameterProvider.put("VAT", vat);
+        parameterProvider.put("VAT", CustomerRandomDataGenerator.generateVat("generator:vat:BEL"));
     }
 
     @And("^Company name is random$")

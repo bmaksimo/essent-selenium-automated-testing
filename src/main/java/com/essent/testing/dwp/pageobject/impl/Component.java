@@ -167,13 +167,13 @@ public abstract class Component {
         }
     }
 
-    protected void logMandatoryInputStatus() {
+    protected void validateForm(String scenarioInfo) {
         List<WebElement> elements = seleniumDriver.findElements(MANDATORY_INPUT_EXCLAMATION_CSS,
             java.time.Duration.ofSeconds(1),
             java.time.Duration.ofMillis(200));
         String location = elements.stream().map(WebElement::getText).reduce("", (partialString, element) -> partialString + (" " + element + System.lineSeparator()));
         if(StringUtils.isNotEmpty(location)) {
-            logger().error("- WARNING: Mandatory input failure in: " + location);
+            logger().error(scenarioInfo + " - WARNING: Mandatory input failure in: " + location);
         }
     }
 }
