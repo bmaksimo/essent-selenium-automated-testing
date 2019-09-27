@@ -3,7 +3,6 @@ package com.essent.testing.dwp.pageobject.impl.quote;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.Form;
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.dwp.pageobject.quote.GuidedStep;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
@@ -16,7 +15,7 @@ import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegis
 import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.NEXT_BUTTON;
 import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.VIEW;
 
-public abstract class QuoteCreationGuidedStep extends Component implements GuidedStep, Form {
+public abstract class QuoteCreationGuidedStep extends Component implements Form {
 
   private static By STANDARD_UI_VIEW = By.xpath(VIEW.getQuery());
 
@@ -33,13 +32,12 @@ public abstract class QuoteCreationGuidedStep extends Component implements Guide
     e.sendKeys(value);
   }
 
-  @Override
-  public void next() {
+  public void next(String scenarioInfo) {
     seleniumDriver.waitForRequestsToFinish();
     Sleeper.sleepTightInSeconds(30);
     logger().debug("Guided step to be confirmed");
-    logMandatoryInputStatus();
-    WebElement nextButton = seleniumDriver.findElementWhenClickable(By.cssSelector(NEXT_BUTTON.getQuery()));
+    validateForm(scenarioInfo);
+    WebElement nextButton = findElementWhenClickable(By.cssSelector(NEXT_BUTTON.getQuery()));
     logger().debug("Found  element: " + nextButton.getTagName());
     logger().debug("- RESULT: Confirm guidance step, confirmation button attribute value: Next[disabled] = " + nextButton.getAttribute("disabled"));
     seleniumDriver.waitForRequestsToFinish();

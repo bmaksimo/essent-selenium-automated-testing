@@ -119,6 +119,10 @@ public class ParameterProvider {
             this.currentScenario = newScenario;
     }
 
+    public String getScenarioInfo() {
+        return "[" + this.currentScenario.getName() + this.currentScenario.getSourceTagNames().toString() + " ]";
+    }
+
     private boolean scenarioHasChanged(Scenario scenario) {
         return !scenario.getName().equalsIgnoreCase(this.currentScenario.getName());
     }

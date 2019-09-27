@@ -29,23 +29,19 @@ public class ContractSteps extends DwpScenario {
 
     @And("^Contract startdatum is today$")
     public void contractStartdatumIsToday(){
-        ContractPage cp = new ContractPage();
-        cp.startDateIsToday();
+        new ContractPage().startDateIsToday();
     }
 
 
     @And("^Get client number$")
     public void getClientNumber() {
-        ContractPage cp = new ContractPage();
-        Klantnummer=cp.getClientNumber();
-        parameterProvider.put("accountNumber",Klantnummer);
+        Klantnummer = new ContractPage().getClientNumber();
+        parameterProvider.put("accountNumber", new ContractPage().getClientNumber());
     }
 
     @And("^Get billing number$")
     public void getBillingNumber() {
-        ContractPage cp = new ContractPage();
-        String billingNumber=cp.getBillingNumber();
-        parameterProvider.put("billingNumber",billingNumber);
+        parameterProvider.put("billingNumber", new ContractPage().getBillingNumber());
     }
 
     @And("^Search by client number$")
@@ -59,10 +55,9 @@ public class ContractSteps extends DwpScenario {
     @When("^Plus action of \"([^\"]*)\" element from \"([^\"]*)\" and click on Mark As Done/Markeren Als Verwerkt$")
     public void plusActionOfElementFromAndClickOnMarkAsDone(String row, String table){
         seleniumDriver.waitForRequestsToFinish();
-        ContractPage cp = new ContractPage();
         BaseObjectPage baseObject = new BaseObjectPage();
         Sleeper.sleepTightInSeconds(5);
-        cp.clickOnPlusMenuInTable(row,table);
+        new ContractPage().clickOnPlusMenuInTable(row,table);
         baseObject.clickOnMarkAsDonePlusMenuSubAction();
     }
 
@@ -77,21 +72,18 @@ public class ContractSteps extends DwpScenario {
 
     @And("^Save EAN from active contract$")
     public void saveEANFromActiveContract() {
-        ContractPage cp = new ContractPage();
-        parameterProvider.put("EAN-active-contract",cp.getActiveContractEAN());
+        parameterProvider.put("EAN-active-contract",new ContractPage().getActiveContractEAN());
     }
 
     @Then("^Contract is in \"([^\"]*)\" state$")
     public void contractIsInState(String status) {
-        ContractPage cp = new ContractPage();
         seleniumDriver.waitForRequestsToFinish();
-        assertTrue(cp.contractStatus().equalsIgnoreCase(status));
+        assertTrue(new ContractPage().contractStatus().equalsIgnoreCase(status));
     }
 
     @And("^Clicked on sign X$")
     public void clickOnX() {
-        NewQuotePage nq = new NewQuotePage();
-        nq.clickOnX();
+        new NewQuotePage().clickOnX();
     }
 
 
@@ -106,20 +98,17 @@ public class ContractSteps extends DwpScenario {
 
     @When("^Rechtsvorm is bvba$")
     public void formLegal() {
-        NewQuotePage nq = new NewQuotePage();
-        nq.selectItemLegalForm();
+        new NewQuotePage().selectItemLegalForm();
     }
 
     @And("^Gender is male$")
     public void gender() {
-        NewQuotePage nq = new NewQuotePage();
-        nq.selectGender();
+        new NewQuotePage().selectGender();
     }
 
     @And("^E-mailadres is \"([^\"]*)\"$")
     public void emailContract(String emailContract) {
-        NewQuotePage nq = new NewQuotePage();
-        nq.getEmail(emailContract);
+        new NewQuotePage().getEmail(emailContract);
     }
 
 
@@ -143,48 +132,41 @@ public class ContractSteps extends DwpScenario {
 
     @And("^Customer Details are populated with: Address is \"([^\"]*)\" and HouseNumber is \"([^\"]*)\" and PostalCode is \"([^\"]*)\" and City is \"([^\"]*)\"$")
     public void populateAddress(String Address, String houseNumber, String postalCode, String City) {
-        NewQuotePage nq = new NewQuotePage();
-        nq.setAddress(Address, houseNumber, postalCode, City);
+        new NewQuotePage().setAddress(Address, houseNumber, postalCode, City);
     }
 
     @And("^Telefoon is \"([^\"]*)\"$")
     public void populateTelephone(String telephone) {
-        NewQuotePage nq = new NewQuotePage();
-        nq.setTelephone(telephone);
+        new NewQuotePage().setTelephone(telephone);
 
     }
 
     @And("^First Name is \"([^\"]*)\" and Last Name is \"([^\"]*)\"$")
     public void populateName(String fname, String lname) {
-        NewQuotePage nq = new NewQuotePage();
-        nq.setName(fname, lname);
+        new NewQuotePage().setName(fname, lname);
     }
 
     @And("^BEDRIJFSNAAM is \"([^\"]*)\"$")
     public void companyName(String cname) {
-        NewQuotePage nq = new NewQuotePage();
-        nq.setCompanyName(cname);
+        new NewQuotePage().setCompanyName(cname);
     }
 
 
     @And("^Ean-Code is \"([^\"]*)\"$")
     public void eanCode(String eancode) {
         seleniumDriver.waitForRequestsToFinish();
-        NewQuotePage nq = new NewQuotePage();
-        nq.setEanCode(eancode);
+        new NewQuotePage().setEanCode(eancode);
     }
 
 
     @And("^New Quote is saved$")
     public void newQuoteSaved() {
-        NewQuotePage nq = new NewQuotePage();
-        nq.next();
+        new NewQuotePage().next(parameterProvider.getScenarioInfo());
     }
 
     @And("^Save End Date from active contract$")
     public void saveEndDateFromActiveContract() {
-        ContractPage cp = new ContractPage();
-        parameterProvider.put("EndDate-active-contract",cp.getActiveContractEndDate());
+        parameterProvider.put("EndDate-active-contract", new ContractPage().getActiveContractEndDate());
 
     }
     @After("@REGRESSION")

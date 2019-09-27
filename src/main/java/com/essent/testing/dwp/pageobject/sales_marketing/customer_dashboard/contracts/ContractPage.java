@@ -292,12 +292,9 @@ public class ContractPage extends Component {
 
     public void searchForEanCode(String eanCode) {
         seleniumDriver.waitForRequestsToFinish();
-        getSearchInputElemnt().clear();
         seleniumDriver.waitAndSendKeys(getSearchInputElemnt(), eanCode);
         seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//input[@value='Search']")));
-        seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//div[@class='multi-select__results']//ul[2]")));
-        seleniumDriver.waitForRequestsToFinish();
+        seleniumDriver.waitAndClick(this.findElementWhenClickable(By.xpath("//div[@class='multi-select__results']//label[@class='input__checkbox']")));
         seleniumDriver.waitAndClick(findElementWhenVisible(By.xpath("//section[@class='view__modal']//a[@href='']")));
     }
 
