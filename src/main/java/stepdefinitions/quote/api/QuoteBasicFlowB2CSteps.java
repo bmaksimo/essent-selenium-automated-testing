@@ -73,10 +73,10 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     }
 
     @When("^Data is prepared for Create quote request for \"([^\"]*)\" and meter open is \"([^\"]*)\" and sign date is \"([^\"]*)\"$")
-    public void dataIsPreparedForCreateQuoteWithDateRequestFor(String arg1, String meterOpen, String signInDate) throws IOException {
-        this.flow = arg1;
-        String inputValue = toDwpAPIDate(parameterProvider.getValueOrParameterAsString(signInDate));
-	    this.quoteDetails = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow, meterOpen, inputValue);
+    public void dataIsPreparedForCreateQuoteWithDateRequestFor(String flowType, String meterOpen, String signInDate) throws IOException {
+        this.flow = flowType;
+        String signInDateApiDate = toDwpAPIDate(parameterProvider.getValueOrParameterAsString(signInDate));
+	    this.quoteDetails = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow, meterOpen, signInDateApiDate);
         String retrievedAccountNumber = quoteDetails.getAccountNumber();
         parameterProvider.put("accountNumber", retrievedAccountNumber);
 	    parameterProvider.put("EAN-code", quoteDetails.getEan());
