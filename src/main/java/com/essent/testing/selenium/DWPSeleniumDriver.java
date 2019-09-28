@@ -222,7 +222,7 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
         ngWebDriver.waitForAngularRequestsToFinish();
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)
             .withTimeout(Duration.ofSeconds(30))
-            .pollingEvery(Duration.ofMillis(200))
+            .pollingEvery(Duration.ofMillis(500))
             .ignoring(ElementNotVisibleException.class)
             .ignoring(NoSuchElementException.class);
         WebElement element = waiter.until(ExpectedConditions.elementToBeClickable(selector));

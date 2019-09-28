@@ -37,17 +37,15 @@ public class ConfirmationSteps extends NavigationElements {
     @And("^Modal dialog is \"([^\"]*)\"$")
     public void verifyDialogue(String title) {
         seleniumDriver.waitForRequestsToFinish();
-        boolean success = new ConfirmSignatureDialogImpl(title).isShown();
         assertThat("Contract signature dialog was not shown.",
-            success,
+            new ConfirmSignatureDialogImpl(title).isShown(),
             is(true));
     }
 
     @And("^Modal dialog \"([^\"]*)\" is not shown$")
     public void isDialogShown(String title) {
-        ConfirmSignatureDialog dialog = new ConfirmSignatureDialogImpl(title);
         assertThat("Contract signature dialog was not shown.",
-            dialog.isShown(),
+            new ConfirmSignatureDialogImpl(title).isShown(),
             is(false));
     }
 
@@ -64,9 +62,8 @@ public class ConfirmationSteps extends NavigationElements {
     private void confirmModalDialogue() {
         Sleeper.sleepTightInSeconds(3);
         ConfirmSignatureDialog dialog = new ConfirmSignatureDialogImpl();
-        dialog.confirm();
-        boolean shown = dialog.isShown();
-        assertThat("Modal dialogue was not confirmed.", shown, is(false));
+        dialog.confirm(parameterProvider.getScenarioInfo());
+        assertThat("Modal dialogue was not confirmed.", dialog.isShown(), is(false));
     }
 
     @When("^Modal \"([^\"]*)\" is displayed$")
@@ -82,10 +79,9 @@ public class ConfirmationSteps extends NavigationElements {
     public void hasActionInActionList(String match) {
         seleniumDriver.waitForRequestsToFinish();
         String textToLookup = parameterProvider.getValueOrParameterAsString(match);
-        ConfirmSignatureDialog dialog = new ConfirmSignatureDialogImpl();
         assertThat(
             String.format("Dialogue doesn't contain given text \"%s\"", textToLookup),
-            dialog.isInActionList(textToLookup),
+            new ConfirmSignatureDialogImpl().isInActionList(textToLookup),
             is(true));
     }
 

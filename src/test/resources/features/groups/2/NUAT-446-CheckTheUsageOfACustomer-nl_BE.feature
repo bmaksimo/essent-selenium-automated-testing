@@ -9,7 +9,6 @@ Feature: NUAT-446: Check The Usage Of A Customer - nl_BE
     Background:
         Given   I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
-
     @NUAT-446
     Scenario: Checking usage of a customer
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
@@ -69,4 +68,3 @@ Feature: NUAT-446: Check The Usage Of A Customer - nl_BE
 
         When Plus menu is "Billing -> Verbruiken voor klant"
         And "Verbruiken" list is_not empty
-

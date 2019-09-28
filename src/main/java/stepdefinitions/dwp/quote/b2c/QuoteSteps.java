@@ -8,7 +8,6 @@ import com.essent.testing.dwp.pageobject.impl.modal.quote.SimilarAccountDialogIm
 import com.essent.testing.dwp.pageobject.impl.quote.*;
 import com.essent.testing.dwp.pageobject.impl.quote_for_account.OnlineQuoteSignatureModalPage;
 import com.essent.testing.dwp.pageobject.impl.quote_for_account.QuoteForAccountOverviewPage;
-import com.essent.testing.dwp.pageobject.modal.quote.SimilarAccountDialog;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
@@ -64,16 +63,12 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^Deduplication dialogue \"([^\"]*)\" is shown$")
     public void deduplicationDialogueIsShown(String title) {
-        SimilarAccountDialog dialog = new SimilarAccountDialogImpl(title);
-        assertThat("Similar clients dialogue was not shown.",
-            dialog.getTitle(),
-            equalTo(title));
+        assertThat("Similar clients dialogue was not shown.", new SimilarAccountDialogImpl(title).getTitle(), equalTo(title));
     }
 
     @And("^Deduplication dialogue link \"([^\"]*)\" is clicked$")
     public void deduplicationDialogueLinkIsClicked(String linkText) throws Throwable {
-        SimilarAccountDialog dialog = new SimilarAccountDialogImpl();
-        dialog.clickOnLink(linkText);
+        new SimilarAccountDialogImpl().clickOnLink(linkText);
     }
 
     private class VerifyTariffSheetPriceAlert implements FlowAwarePredicate<QuoteSteps> {
@@ -95,8 +90,7 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^Quote details are confirmed$")
     public void confirmQuoteDetails() {
-        QuoteDetailsPage quoteDetailsPage = new QuoteDetailsPage();
-        quoteDetailsPage.next();
+        new QuoteDetailsPage().next(parameterProvider.getScenarioInfo());
     }
 
     @And("^Customer is random$")
@@ -148,12 +142,12 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^Customer details are confirmed$")
     public void confirmCustomerDetails() {
-        new PersonalDetailsAddressPage().next();
+        new PersonalDetailsAddressPage().next(parameterProvider.getScenarioInfo());
     }
 
     @And("^Pricing details are confirmed$")
     public void confirmPricingDetails() {
-        new QuoteDetailsPage().next();
+        new QuoteDetailsPage().next(parameterProvider.getScenarioInfo());
     }
 
     @And("^Package is \"([^\"]*)\"$")
@@ -172,8 +166,7 @@ public class QuoteSteps extends DwpScenario {
     @And("^Package and Fuel Type is confirmed$")
     public void confirmPackageAndFuelType() {
         seleniumDriver.waitForRequestsToFinish();
-        PackageAndFuelTypeSelectionPage selectPackageAndFuelTypeView = new PackageAndFuelTypeSelectionPage();
-        selectPackageAndFuelTypeView.next();
+        new PackageAndFuelTypeSelectionPage().next(parameterProvider.getScenarioInfo());
     }
 
     @And("^Price sheet alert doesn't pop up$")
@@ -232,8 +225,7 @@ public class QuoteSteps extends DwpScenario {
     @And("^Connection details are confirmed$")
     public void confirmConnection() {
         seleniumDriver.waitForRequestsToFinish();
-        ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
-        connectionDetailsView.next();
+        new ConnectionDetailsPage().next(parameterProvider.getScenarioInfo());
     }
 
     @And("^Payment details are: method \"([^\"]*)\", IBAN \"([^\"]*)\", bic \"([^\"]*)\"$")
@@ -281,7 +273,7 @@ public class QuoteSteps extends DwpScenario {
 
     @And("^Billing details are confirmed$")
     public void confirmBillingDetails() {
-        new BillingDetailsPage().next();
+        new BillingDetailsPage().next(parameterProvider.getScenarioInfo());
     }
 
     @And("^Quote is signed in \"([^\"]*)\"$")
@@ -289,12 +281,8 @@ public class QuoteSteps extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
         String path = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
         File document = new File(path);
-        assertThat("File at path " + document.getAbsolutePath() + " doesn't exist.", true,
-            is(document.exists()));
-        SignatureData signature = new SignatureData(
-            DwpDateFormats.DWP_TODAY,
-            location,
-            path);
+        assertThat("File at path " + document.getAbsolutePath() + " doesn't exist.", true, is(document.exists()));
+        SignatureData signature = new SignatureData(DwpDateFormats.DWP_TODAY, location, path);
         Sleeper.sleepTightInSeconds(10);
         QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage();
         quoteOverviewView.setSignatureData(signature);
@@ -308,11 +296,8 @@ public class QuoteSteps extends DwpScenario {
     public void submitQuote() {
         String path = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
         File document = new File(path);
-        assertThat("File at path " + document.getAbsolutePath() + " doesn't exist.", true,
-            is(document.exists()));
-        SignatureData signature = new SignatureData(
-            DwpDateFormats.DWP_TODAY,
-            path);
+        assertThat("File at path " + document.getAbsolutePath() + " doesn't exist.", true, is(document.exists()));
+        SignatureData signature = new SignatureData(DwpDateFormats.DWP_TODAY, path);
         QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage();
         quoteOverviewView.setSignatureData(signature);
         boolean success = quoteOverviewView.fillInFormData();
@@ -324,11 +309,8 @@ public class QuoteSteps extends DwpScenario {
     public void submitQuoteForAccount() {
         String path = ResourceUtil.toPath("/data/dwp/customer-signature.pdf");
         File document = new File(path);
-        assertThat("File at path " + document.getAbsolutePath() + " doesn't exist.", true,
-            is(document.exists()));
-        SignatureData signature = new SignatureData(
-            DwpDateFormats.DWP_TODAY,
-            path);
+        assertThat("File at path " + document.getAbsolutePath() + " doesn't exist.", true, is(document.exists()));
+        SignatureData signature = new SignatureData(DwpDateFormats.DWP_TODAY, path);
         QuoteForAccountOverviewPage quoteOverviewView = new QuoteForAccountOverviewPage();
         quoteOverviewView.setSignatureData(signature);
         boolean success = quoteOverviewView.fillInFormData();
@@ -352,8 +334,7 @@ public class QuoteSteps extends DwpScenario {
     public void confirmQuote() {
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(5);
-        QuoteOverviewPage quoteOverviewView = new QuoteOverviewPage();
-        quoteOverviewView.next();
+        new QuoteOverviewPage().next(parameterProvider.getScenarioInfo());
         seleniumDriver.waitForRequestsToFinish();
     }
 

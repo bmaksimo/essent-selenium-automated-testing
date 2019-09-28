@@ -18,9 +18,7 @@ import org.openqa.selenium.support.ui.FluentWait;
 import stepdefinitions.dwp.tables.IsAre;
 import stepdefinitions.dwp.tables.plus.SwitchState;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Predicate;
 
 import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
@@ -186,7 +184,7 @@ public class InputElements extends DwpScenario {
      */
     @And("^\"([^\"]*)\" date is \"([^\"]*)\"$")
     public void setDateInput(String label, String value){
-        Sleeper.sleepTightInSeconds(2);
+        Sleeper.sleepTightInSeconds(10);
         seleniumDriver.waitForRequestsToFinish();
         String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(value));
         parameterProvider.put("inputValue", inputValue);
@@ -332,6 +330,22 @@ public class InputElements extends DwpScenario {
         waiter.withMessage(String.format("Option %s is undefined.", option));
         waiter.until(
             (InputElements callback) -> executeJavascriptTest(JS_TR_CLICK_TOGGLE_INPUT, options));
+        seleniumDriver.waitForRequestsToFinish();
+    }
+
+    @And("Option \"([^\"]*)\" is \"([^\"]*)\"")
+    public void setOption(String label, SwitchState state){
+        seleniumDriver.waitForRequestsToFinish();
+        List<WebElement> inputList = seleniumDriver.findElements(By.xpath("//div[label=\"" + label + "\"]//input"));
+        // There should be only one to guarantee a consistent behaviour
+        if (inputList.size() != 1) {
+            Assert.fail(String.format("The label %s is not unique", label));
+        }
+        WebElement inputField = inputList.get(0);
+        boolean currentValue = Boolean.parseBoolean(inputField.getAttribute("autotest-value"));
+        if (currentValue != state.isOn()) {
+            inputField.click();
+        }
         seleniumDriver.waitForRequestsToFinish();
     }
 
