@@ -1,7 +1,7 @@
 @DWP
 @B2B
 @BUSINESS-DESK
-@ignore
+@Ignore
 Feature: NUAT-423: Change Bank Account - nl_BE
 
     Background:

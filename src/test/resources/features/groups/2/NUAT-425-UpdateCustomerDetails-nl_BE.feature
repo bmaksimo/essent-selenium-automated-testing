@@ -1,4 +1,4 @@
-@NOT-IN-SCOPE
+@Ignore
 Feature: NUAT-425: Update Customer Details - nl_BE
 
     Background:
