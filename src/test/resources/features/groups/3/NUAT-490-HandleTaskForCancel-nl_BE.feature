@@ -3,7 +3,7 @@
 @REGRESSION
 @BUSINESS-DESK
 @UAT08ONLY
-@NOTUSED
+@NOT-IN-SCOPE
 Feature: NUAT-490: Handle Task For Cancel - nl_BE
 
     Background:
