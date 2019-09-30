@@ -1,4 +1,4 @@
-@NOT-IN-SCOPE
+@Ignore
 Feature: NSTA-341: Block dunning for invoice
 
     Background:

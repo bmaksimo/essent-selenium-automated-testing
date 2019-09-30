@@ -19,7 +19,7 @@ public class MarketMessagesPage extends Component {
     private static final String MARKET_LABEL = "(//list-link-bold-top-two-liner-cell/div/h6)[2]";
 
 
-    public WebElement listActionsElemet(String element) {
+    private WebElement listActionsElement(String element) {
         return seleniumDriver.findElementWhenVisible(By.name(element));
     }
 
@@ -52,7 +52,7 @@ public class MarketMessagesPage extends Component {
     }
 
     public void clickOnListActionsElemet(String element) {
-        seleniumDriver.waitAndClick(listActionsElemet(element));
+        seleniumDriver.waitAndClick(listActionsElement(element));
     }
 
     public String getEanFromTheFirstTransaction()  {
