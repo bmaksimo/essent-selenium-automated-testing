@@ -195,8 +195,12 @@ public class OdooMenu extends OdooScenario {
     @Then("^Odoo verify payment method has changed to \"([^\"]*)\"$")
     public void odooVerifyPaymentMethodChanged(String pm) {
         String paymentMethod = parameterProvider.getValueOrParameterAsString(pm);
-        CustomerPage cp = new CustomerPage();
-        Assert.assertTrue("Check if payment method is same as in DWP",cp.getPaymentMethodAsString().equalsIgnoreCase(paymentMethod));
+        FluentWait<CustomerPage> waiter = waiter(new CustomerPage(), 600, 20)
+            .withMessage(String.format("Check if payment method is same as in DWP"));
+        waiter.until(cp -> {
+            loopback("Accounting");
+            return cp.getPaymentMethodAsString().equalsIgnoreCase(paymentMethod);
+        });
     }
 
 
