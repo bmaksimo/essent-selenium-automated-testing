@@ -2,7 +2,6 @@ package com.essent.testing.dwp.pageobject.impl.quote;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.Form;
-import com.essent.testing.dwp.pageobject.guided_flow.cupq.NewQuotePage;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
