@@ -5,6 +5,8 @@ import com.essent.testing.dwp.pageobject.impl.quote.QuoteCreationGuidedStep;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.util.Optional;
+
 public class NewQuotePage extends QuoteCreationGuidedStep {
 
     private static final String X_ELEMENT_SELECTOR = "//guidance-modal//div[@class = 'modal__header']/a";
@@ -14,6 +16,11 @@ public class NewQuotePage extends QuoteCreationGuidedStep {
         seleniumDriver.waitForRequestsToFinish();
         WebElement xElement = seleniumDriver.findElementWhenVisible(By.xpath(X_ELEMENT_SELECTOR));
         seleniumDriver.waitAndClick(xElement);
+    }
+
+    public void closeGuidanceModalIfPresent() {
+        Optional<WebElement> guidanceModal = seleniumDriver.findElementOptional(By.xpath(X_ELEMENT_SELECTOR));
+        guidanceModal.ifPresent(m -> clickOnX());
     }
 
     public void selectItemLegalForm() {

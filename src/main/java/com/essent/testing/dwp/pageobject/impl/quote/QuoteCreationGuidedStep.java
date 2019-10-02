@@ -2,6 +2,7 @@ package com.essent.testing.dwp.pageobject.impl.quote;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.Form;
+import com.essent.testing.dwp.pageobject.guided_flow.cupq.NewQuotePage;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -37,6 +38,7 @@ public abstract class QuoteCreationGuidedStep extends Component implements Form 
     Sleeper.sleepTightInSeconds(30);
     logger().debug("Guided step to be confirmed");
     validateForm(scenarioInfo);
+    new NewQuotePage().closeGuidanceModalIfPresent();
     WebElement nextButton = findElementWhenClickable(By.cssSelector(NEXT_BUTTON.getQuery()));
     logger().debug("Found  element: " + nextButton.getTagName());
     logger().debug("- RESULT: Confirm guidance step, confirmation button attribute value: Next[disabled] = " + nextButton.getAttribute("disabled"));
