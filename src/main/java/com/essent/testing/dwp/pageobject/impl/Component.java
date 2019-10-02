@@ -179,7 +179,7 @@ public abstract class Component {
         }
     }
 
-    public void closeGuidanceModalIfPresent() {
+    protected void closeGuidanceModalIfPresent() {
         Optional<WebElement> guidanceModal = seleniumDriver.findElementOptional(By.xpath(CLOSE_MODAL_BUTTON));
         guidanceModal.ifPresent(m -> closeModal());
         seleniumDriver.waitForRequestsToFinish();
