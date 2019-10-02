@@ -38,7 +38,7 @@ public abstract class QuoteCreationGuidedStep extends Component implements Form 
     Sleeper.sleepTightInSeconds(30);
     logger().debug("Guided step to be confirmed");
     validateForm(scenarioInfo);
-    new NewQuotePage().closeGuidanceModalIfPresent();
+    closeGuidanceModalIfPresent();
     WebElement nextButton = findElementWhenClickable(By.cssSelector(NEXT_BUTTON.getQuery()));
     logger().debug("Found  element: " + nextButton.getTagName());
     logger().debug("- RESULT: Confirm guidance step, confirmation button attribute value: Next[disabled] = " + nextButton.getAttribute("disabled"));

@@ -3,25 +3,10 @@ package com.essent.testing.dwp.pageobject.guided_flow.cupq;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.quote.QuoteCreationGuidedStep;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-
-import java.util.Optional;
 
 public class NewQuotePage extends QuoteCreationGuidedStep {
 
-    private static final String X_ELEMENT_SELECTOR = "//guidance-modal//div[@class = 'modal__header']/a";
     private static final String CONFIRM_SIGNIN_PLACE = "//*[@id=\"accounts|aos_quotes|sign_location_c\"]/div[1]/input";
-
-    public void clickOnX() {
-        seleniumDriver.waitForRequestsToFinish();
-        WebElement xElement = seleniumDriver.findElementWhenVisible(By.xpath(X_ELEMENT_SELECTOR));
-        seleniumDriver.waitAndClick(xElement);
-    }
-
-    public void closeGuidanceModalIfPresent() {
-        Optional<WebElement> guidanceModal = seleniumDriver.findElementOptional(By.xpath(X_ELEMENT_SELECTOR));
-        guidanceModal.ifPresent(m -> clickOnX());
-    }
 
     public void selectItemLegalForm() {
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"legal-form-c-field\"]/option[2]")));
