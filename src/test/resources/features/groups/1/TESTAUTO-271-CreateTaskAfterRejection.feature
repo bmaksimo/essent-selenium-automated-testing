@@ -32,12 +32,12 @@ Feature: TESTAUTO-271-Create task after rejection
         And Select Contractline dialog is confirmed
         Then "1st" list element has cell value "INITIATE STOP ACCESS" at column "Module & Label" polling 450 seconds
         And Refresh "REFRESH MARKTBERICHTEN" till "Geweigerd" is visible in table
+#        And Copy task number
 
-        And Dashboard menu is "Service"
-        And Table "Taken" contains value "Soft-Dunning Call POST HB3 B2C HIGH" at column "Naam & Type & Subtype"
 
-#        When Dashboard menu is "Contracten"
-#        And "Actieve en toekomstige connecties" list is empty
-#        And Table "Contracten" contains value "Inactief" at column "Type & status"
-#
+        When Dashboard menu is "Service"
+        Then Table "Taken" contains value "parameter: taskNumber" at column "Number & Start data"
+        And Table "Taken" contains value "Handle rejection market_messaging - rejection" at column "Naam & Type & Subtype"
+
+
 
