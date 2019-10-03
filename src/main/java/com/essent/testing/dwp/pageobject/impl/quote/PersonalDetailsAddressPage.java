@@ -3,6 +3,7 @@ package com.essent.testing.dwp.pageobject.impl.quote;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.datagenerator.address.StreetGenerator;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.JavascriptExecutor;
@@ -123,5 +124,6 @@ public class PersonalDetailsAddressPage extends QuoteCreationGuidedStep {
         this.fillFieldByXPath(DELIVERY_ADDR_BUS.getQuery(), bus);
         this.fillFieldByXPath(DELIVERY_ADDR_COUNTRY.getQuery(), country);
         seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(5);
     }
 }

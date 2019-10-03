@@ -20,8 +20,6 @@ import static org.junit.Assert.assertTrue;
 
 
 public class ContractSteps extends DwpScenario {
-    private static String Klantnummer;
-
     @Before("@REGRESSION or @E2E or @API")
     public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
@@ -35,7 +33,6 @@ public class ContractSteps extends DwpScenario {
 
     @And("^Get client number$")
     public void getClientNumber() {
-        Klantnummer = new ContractPage().getClientNumber();
         parameterProvider.put("accountNumber", new ContractPage().getClientNumber());
     }
 
@@ -44,21 +41,12 @@ public class ContractSteps extends DwpScenario {
         parameterProvider.put("billingNumber", new ContractPage().getBillingNumber());
     }
 
-    @And("^Search by client number$")
-    public void searchByClientNumber() {
-        ContractPage cp = new ContractPage();
-        cp.selectAccount();
-        cp.searchByClientNumber(Klantnummer);
-        cp.searchForEanCode(Klantnummer);
-    }
-
     @When("^Plus action of \"([^\"]*)\" element from \"([^\"]*)\" and click on Mark As Done/Markeren Als Verwerkt$")
     public void plusActionOfElementFromAndClickOnMarkAsDone(String row, String table){
         seleniumDriver.waitForRequestsToFinish();
-        BaseObjectPage baseObject = new BaseObjectPage();
         Sleeper.sleepTightInSeconds(5);
         new ContractPage().clickOnPlusMenuInTable(row,table);
-        baseObject.clickOnMarkAsDonePlusMenuSubAction();
+        new BaseObjectPage().clickOnMarkAsDonePlusMenuSubAction();
     }
 
     @When("^Plus action of \"([^\"]*)\" element from \"([^\"]*)\" and click on \"([^\"]*)\"$")
@@ -82,8 +70,8 @@ public class ContractSteps extends DwpScenario {
     }
 
     @And("^Clicked on sign X$")
-    public void clickOnX() {
-        new NewQuotePage().clickOnX();
+    public void closeModal() {
+        new NewQuotePage().closeModal();
     }
 
 

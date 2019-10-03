@@ -16,10 +16,12 @@ import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public abstract class Component {
 
-    private static By MANDATORY_INPUT_EXCLAMATION_CSS = By.cssSelector(".is-error");
+    private static final By MANDATORY_INPUT_EXCLAMATION_CSS = By.cssSelector(".is-error");
+    private static final String CLOSE_MODAL_BUTTON = "//guidance-modal//div[@class = 'modal__header']/a";
 
     protected WebElement element;
     protected DWPSeleniumDriver seleniumDriver;
@@ -175,5 +177,17 @@ public abstract class Component {
         if(StringUtils.isNotEmpty(location)) {
             logger().error(scenarioInfo + " - WARNING: Mandatory input failure in: " + location);
         }
+    }
+
+    protected void closeGuidanceModalIfPresent() {
+        Optional<WebElement> guidanceModal = seleniumDriver.findElementOptional(By.xpath(CLOSE_MODAL_BUTTON));
+        guidanceModal.ifPresent(m -> closeModal());
+        seleniumDriver.waitForRequestsToFinish();
+    }
+
+    public void closeModal() {
+        seleniumDriver.waitForRequestsToFinish();
+        WebElement xElement = seleniumDriver.findElementWhenVisible(By.xpath(CLOSE_MODAL_BUTTON));
+        seleniumDriver.waitAndClick(xElement);
     }
 }
