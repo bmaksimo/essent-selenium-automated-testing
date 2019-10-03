@@ -121,12 +121,17 @@ public class ContractSteps extends DwpScenario {
 
     @And("^NaceCode in search is ([^\"]*)$")
     public void searchByNaceCode(String naceCode) {
-        new ContractPage().searchByClientNumber(naceCode);
-
+        int currentAttempt = 0;
+        boolean displayed = false;
         NewQuotePage nq = new NewQuotePage();
-        nq.clickOnSearch();
-        nq.checkNaceCodeCheckBox();
-        nq.saveSelectedItem();
+        while (!displayed && currentAttempt<2){
+            new ContractPage().searchByClientNumber(naceCode);
+            nq.clickOnSearch();
+            nq.checkNaceCodeCheckBox();
+            nq.saveSelectedItem();
+            displayed=nq.isNaceCodeElementDisplayed();
+            currentAttempt++;
+        }
     }
 
 
