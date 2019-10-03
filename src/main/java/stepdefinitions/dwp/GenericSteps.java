@@ -47,14 +47,14 @@ public class GenericSteps extends DwpScenario {
     }
 
     private void discardPreviousFlow(){
+        seleniumDriver.waitForRequestsToFinish();
         try {
-            WebElement cancelWebElement = seleniumDriver.findElementWhenPresent(By.id("cancel-button"), Duration.ofSeconds(5), Duration.ofMillis(100));
-            Button cancelButton = new ButtonImpl(cancelWebElement);
-            cancelButton.click();
+            boolean buttonVisible = seleniumDriver.findElementWhenPresent(By.id("cancel-button"), Duration.ofSeconds(6), Duration.ofMillis(100)).isDisplayed();
+            if (buttonVisible)
+                seleniumDriver.findElementWhenVisible(By.id("cancel-button")).click();
         } catch(TimeoutException te) {
             logger().debug("there is no flow to discard");
         }
-
     }
 
     @After("@DWP or @CORE or @E2E or @REGRESSION")
