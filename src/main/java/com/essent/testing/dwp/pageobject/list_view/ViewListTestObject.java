@@ -61,8 +61,7 @@ public class ViewListTestObject extends Component implements ViewList {
     return getDefaultTableModel(tableModel, options);
   }
 
-  private DefaultTableModel getDefaultTableModel(
-      DefaultTableModel tableModel, HashMap<Object, Object> options) {
+  private DefaultTableModel getDefaultTableModel(DefaultTableModel tableModel, HashMap<Object, Object> options) {
     Map<String, Object> viewTable = executeJavascriptMethod(JS_TR_GET_TABLE_MODEL, options);
     List columnNames = (List) viewTable.get("column_names");
     List rows = getData(viewTable);

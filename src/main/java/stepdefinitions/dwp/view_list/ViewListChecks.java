@@ -314,11 +314,12 @@ public class ViewListChecks extends NavigationElements {
 
     @And("^\"([^\"]*)\" list element has cell value \"([^\"]*)\" at column \"([^\"]*)\" polling (\\d+) seconds?$")
     public void containsElementAt(String ordinal, String value, String columnName, int seconds){
+        seleniumDriver.waitForRequestsToFinish();
         int row = extractNumericValue(ordinal);
         String expectedValue = parameterProvider.getValueOrParameterAsString(value);
         String arrow = parameterProvider.getValueOrParameterAsString("parameter:navigation");
         String dashboardMenu = parameterProvider.getValueOrParameterAsString("parameter:dashboard-menu");
-        FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), seconds, 20);
+        FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), seconds, 30);
         waiter.withMessage(String.format(
             "\"%s\" list element did not have cell value \"%s\" at column \"%s\" within \"%s\" seconds.", ordinal,
             expectedValue, columnName, seconds));
@@ -330,7 +331,6 @@ public class ViewListChecks extends NavigationElements {
             "\"- STEP: \"%s\" list element did not have cell value \"%s\" at column \"%s\" within \"%s\" seconds - PASSED.",
             ordinal, expectedValue, columnName, seconds));
     }
-
 
     private void loopBack(String arrow, String dashboardMenu) {
         try {

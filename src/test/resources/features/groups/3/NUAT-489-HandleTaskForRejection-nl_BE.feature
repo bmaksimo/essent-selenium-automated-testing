@@ -2,7 +2,7 @@
 @B2B
 @REGRESSION
 @BUSINESS-DESK
-@NOTUSED
+@Ignore
 Feature: NUAT-489: Handle Task For Rejection - nl_BE
 
     Background:

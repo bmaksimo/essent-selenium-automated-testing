@@ -59,7 +59,7 @@ public class RequestHelper {
 
     public Response postRequest(Integer expectedStatusCode, Cookies cookie, String payload, String path) throws IOException {
 
-        Response response = expect().given().header(trackingHeader).cookies(cookie).contentType(ContentType.JSON)
+        Response response = expect().given().header(trackingHeader).cookies(cookie)
             .body(payload).when().post(path);
 
         Integer responseStatusCode = getResponseStatusCode(response, path, expectedStatusCode);
