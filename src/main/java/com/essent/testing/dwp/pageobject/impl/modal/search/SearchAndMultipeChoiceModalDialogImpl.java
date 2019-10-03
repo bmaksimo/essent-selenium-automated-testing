@@ -31,12 +31,16 @@ public class SearchAndMultipeChoiceModalDialogImpl extends Component
 
     @Override
     public String getTitle() {
+        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(10);
         WebElement titleWebElement = findElementWhenVisible(CSS_MODAL_TITLE_LOCATOR);
         return titleWebElement.getText();
     }
 
     @Override
     public void setSearchOption(String searchOption) {
+        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(10);
         WebElement searchTextWebElement =
             findElementWhenPresent(
                 CSS_MODAL_SEARCH_FIELD_LOCATOR, Duration.ofSeconds(10), Duration.ofMillis(500));
@@ -45,6 +49,8 @@ public class SearchAndMultipeChoiceModalDialogImpl extends Component
 
     @Override
     public void search(String label) {
+        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(10);
         Map<String, String> valuesMapper = new HashMap<>();
         valuesMapper.put("label", label);
         By selector = By.cssSelector(createQuery(CSS_MODAL_SEARCH_BUTTON_TEMPLATE, valuesMapper));
@@ -56,6 +62,7 @@ public class SearchAndMultipeChoiceModalDialogImpl extends Component
 
     @Override
     public boolean checkSearchResult(String match) {
+          seleniumDriver.waitForRequestsToFinish();
           Sleeper.sleepTightInSeconds(10);
           List<WebElement> elements =
                  seleniumDriver.findElements(
@@ -70,6 +77,8 @@ public class SearchAndMultipeChoiceModalDialogImpl extends Component
 
     @Override
     public void submitSearchResult(String submitBtnLabel) {
+        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(10);
         Map<String, String> valuesMapper = new HashMap<>();
         valuesMapper.put("label", submitBtnLabel);
         By selector = By.xpath(createQuery(XPATH_MODAL_SUBMIT_TEMPLATE, valuesMapper));
