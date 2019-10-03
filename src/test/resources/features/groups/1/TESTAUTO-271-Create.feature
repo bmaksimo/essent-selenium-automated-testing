@@ -36,8 +36,5 @@ Feature: TESTAUTO-271-Create task after rejection
         And Dashboard menu is "Service"
         And Table "Taken" contains value "Soft-Dunning Call POST HB3 B2C HIGH" at column "Naam & Type & Subtype"
 
-#        When Dashboard menu is "Contracten"
-#        And "Actieve en toekomstige connecties" list is empty
-#        And Table "Contracten" contains value "Inactief" at column "Type & status"
-#
+
 
