@@ -63,6 +63,7 @@ Feature: NSTA-329 Deduplication activated customer
         Then Form header is "Quote details"
 
         When B2C sales channel is "Inbound"
+#        When "Sales kanaal" selection is "Inbound"
         And Quote details are confirmed
         Then Form header is "Personal details"
 
@@ -70,8 +71,15 @@ Feature: NSTA-329 Deduplication activated customer
         And Customer address is
             | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
             | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
-        Then Save changes
+#        Then Customer details are confirmed
+#        Then Save changes
 
+        Given "Sales kanaal" selection is "Inbound"
+        And Quote details are confirmed
+
+#        When Package is "Vast"
+#        And Checkbox "Gas Fix B2C (TC1)" is Unchecked
+#        And Package and Fuel Type is confirmed
         When "Pakket" selection is "Vast"
         And Checkbox "Gas Fix B2C (TC1)" is Unchecked
         And Package and Fuel Type is confirmed
