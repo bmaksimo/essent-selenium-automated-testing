@@ -76,6 +76,15 @@ public class DetailsFormSteps extends DwpScenario {
         Assert.assertThat("Account block end date is not " + amountOfDays + " days from today", pageEndDate.equalsIgnoreCase(endDate), is(true));
     }
 
+    @And("^Invoice Block End date is \"([^\"]*)\" days from today$")
+    public void invoiceBlockEndDateIsToday(int amountOfDays) {
+        String endDate = DateExpressionsUtil
+            .getNDaysFromToday(amountOfDays)
+            .toString(EssentDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat());
+        String pageEndDate = new DetailsPage().getInvoiceBlockEndDate();
+        Assert.assertThat("Account block end date is not " + amountOfDays + " days from today", pageEndDate.equalsIgnoreCase(endDate), is(true));
+    }
+
     @And("Account Block end date not exist in table")
     public void accountBlockEndDateNotExist() {
         DetailsPage dp = new DetailsPage();
