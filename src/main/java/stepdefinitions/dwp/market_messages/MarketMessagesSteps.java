@@ -1,10 +1,12 @@
 package stepdefinitions.dwp.market_messages;
 
 import com.essent.testing.dwp.pageobject.impl.modal.market_messages.SearchContractLinesDialog;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.workflows.MarketMessagesPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 
 public class MarketMessagesSteps extends DwpScenario {
@@ -29,5 +31,13 @@ public class MarketMessagesSteps extends DwpScenario {
     @After("@DWP or @REGRESSION or @E2E")
     public void tearDown() {
         super.tearDown();
+    }
+
+    @And("^Copy task number with modul \"([^\"]*)\"$")
+    public void copyTaskNumberWithModul(String modul)  {
+        MarketMessagesPage mmp = new MarketMessagesPage();
+        String taskNumber = mmp.getTaskNumber(modul);
+//        System.out.println("-----------------------------------"+taskNumber);
+        parameterProvider.put("taskNumber", taskNumber);
     }
 }

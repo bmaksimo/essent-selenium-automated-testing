@@ -6,6 +6,8 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class MarketMessagesPage extends Component {
@@ -168,5 +170,29 @@ public class MarketMessagesPage extends Component {
 
         return "Market message label was not found.";
     }
+
+    public String getTaskNumber(String modul) {
+        String taskNumber = "";
+        List<WebElement> tr_collection = new ArrayList<WebElement>();
+        tr_collection = seleniumDriver.findElements(By.xpath("//list[@list-key='MarketTransactionsOnAccount']//tbody[@id='rows']/tr"));
+        for (WebElement trElement : tr_collection) {
+            List<WebElement> td_collection = trElement.findElements(By.xpath("td"));
+
+            if (!td_collection.isEmpty() && td_collection.size() != 1) {
+
+                for (int i = 0; i < td_collection.size(); i++) {
+                    String line1 = td_collection.get(i).findElement(By.xpath("//list-link-bold-top-two-liner-cell")).getAttribute("line-1");
+                    System.out.println("---------------------------------------------"+line1);
+                    if (line1 == modul) {
+                        taskNumber = td_collection.get(i+3).findElement(By.xpath("//list-link-bold-top-two-liner-cell")).getAttribute("line-1");
+                    }i++;
+
+                }
+            }
+
+        }
+        return taskNumber;
+    }
+
 }
 
