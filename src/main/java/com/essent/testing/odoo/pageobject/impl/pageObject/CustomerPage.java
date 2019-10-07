@@ -73,7 +73,6 @@ public class CustomerPage extends Component {
     public void buttonInvoiceBlocksClicked() {
         awaitOdooRequestToFinish(120);
         WebElement webElement = seleniumDriver.findElementWhenVisible(By.xpath(INVOICE_BLOCKS_BUTTON_LABEL));
-        if (null == webElement) throw new CucumberException("Button was not found");
         new ButtonImpl(webElement).click();
         awaitOdooRequestToFinish(120);
     }
