@@ -16,6 +16,7 @@ public class DetailsPage extends Component {
     private static final String PAYMENT_METHOD = "//list[@list-key='BillingCustomerOnaccount']//tbody//td[3]//span[2]";
     private static final String ACCOUNT_BLOCK_START_DATE = "//*[@id=\"rows\"]/tr[1]/td[2]/list-simple-two-liner-cell/p/span[1]";
     private static final String ACCOUNT_BLOCK_END_DATE = "//list[@list-key='accountBlockReasonsForAccountList']//tr[1]/td[3]/list-simple-two-liner-cell/p";
+    private static final String INVOICE_BLOCK_END_DATE = "//list[@list-key='invoiceBlockReasonsForInvoice']//tr[1]/td[3]/list-simple-two-liner-cell/p";
 
 
     public void findIban(String iban) {
@@ -73,6 +74,12 @@ public class DetailsPage extends Component {
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath(ACCOUNT_BLOCK_END_DATE)).getText();
     }
+
+    public String getInvoiceBlockEndDate() {
+        seleniumDriver.waitForRequestsToFinish();
+        return seleniumDriver.findElementWhenVisible(By.xpath(INVOICE_BLOCK_END_DATE)).getText();
+    }
+
     public String getAccountBlockEndDateNotExist() {
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElement(By.xpath(ACCOUNT_BLOCK_END_DATE)).getAttribute("value");
