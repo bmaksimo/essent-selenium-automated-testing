@@ -31,6 +31,8 @@ public class SearchAndMultipeChoiceModalDialogImpl extends Component
 
     @Override
     public String getTitle() {
+        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(10);
         WebElement titleWebElement = findElementWhenVisible(CSS_MODAL_TITLE_LOCATOR);
         return titleWebElement.getText();
     }
@@ -43,31 +45,33 @@ public class SearchAndMultipeChoiceModalDialogImpl extends Component
 
     @Override
     public void search(String label) {
-        seleniumDriver.waitAndClick(
-                findElementWhenVisible(
-                        By.xpath(
-                            String.format(XPATH_MODAL_SEARCH_BUTTON_TEMPLATE, label)
-                        )
+        seleniumDriver.waitAndClick(findElementWhenVisible(
+                By.xpath(
+                    String.format(XPATH_MODAL_SEARCH_BUTTON_TEMPLATE, label)
                 )
+            )
         );
     }
 
     @Override
     public boolean checkSearchResult(String match) {
-          Sleeper.sleepTightInSeconds(10);
-          List<WebElement> elements =
-                 seleniumDriver.findElements(
-                     XPATH_MODAL_SEARCH_RESULT_LABEL_LOCATOR,
-                     Duration.ofSeconds(10),
-                     Duration.ofMillis(500));
-             Optional<WebElement> first =
-                 elements.stream().filter(e -> e.getText().trim().contains(match)).findFirst();
-             first.ifPresent(WebElement::click);
-          return first.isPresent();
+        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(10);
+        List<WebElement> elements =
+            seleniumDriver.findElements(
+                XPATH_MODAL_SEARCH_RESULT_LABEL_LOCATOR,
+                Duration.ofSeconds(10),
+                Duration.ofMillis(500));
+        Optional<WebElement> first =
+            elements.stream().filter(e -> e.getText().trim().contains(match)).findFirst();
+        first.ifPresent(WebElement::click);
+        return first.isPresent();
     }
 
     @Override
     public void submitSearchResult(String submitBtnLabel) {
+        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(10);
         Map<String, String> valuesMapper = new HashMap<>();
         valuesMapper.put("label", submitBtnLabel);
         By selector = By.xpath(createQuery(XPATH_MODAL_SUBMIT_TEMPLATE, valuesMapper));
