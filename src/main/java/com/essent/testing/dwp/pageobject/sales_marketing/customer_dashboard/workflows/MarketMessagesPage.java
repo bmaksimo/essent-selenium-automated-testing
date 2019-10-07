@@ -171,25 +171,21 @@ public class MarketMessagesPage extends Component {
         return "Market message label was not found.";
     }
 
-    public String getTaskNumber(String modul) {
+    public String getTaskNumber(String modul, String list) {
         String taskNumber = "";
-        List<WebElement> tr_collection = new ArrayList<WebElement>();
-        tr_collection = seleniumDriver.findElements(By.xpath("//list[@list-key='MarketTransactionsOnAccount']//tbody[@id='rows']/tr"));
+        List<WebElement> tr_collection = seleniumDriver.findElements(By.xpath("//list[@list-key='"+list+"']//tbody[@id='rows']/tr"));
         for (WebElement trElement : tr_collection) {
             List<WebElement> td_collection = trElement.findElements(By.xpath("td"));
-
             if (!td_collection.isEmpty() && td_collection.size() != 1) {
-
-                for (int i = 0; i < td_collection.size(); i++) {
-                    String line1 = td_collection.get(i).findElement(By.xpath("//list-link-bold-top-two-liner-cell")).getAttribute("line-1");
-                    System.out.println("---------------------------------------------"+line1);
-                    if (line1 == modul) {
-                        taskNumber = td_collection.get(i+3).findElement(By.xpath("//list-link-bold-top-two-liner-cell")).getAttribute("line-1");
-                    }i++;
-
-                }
+                for (int i = 0; i < 2; i++) {
+                    String line1 = td_collection.get(i).findElement(By.xpath("list-link-bold-top-two-liner-cell")).getAttribute("line-1");
+                    if (line1.equalsIgnoreCase(modul)) {
+                        int p=i+3;
+                        taskNumber = td_collection.get(p).findElement(By.xpath("list-simple-two-liner-cell")).getAttribute("line-1");
+                        break;
+                    }
+                }break;
             }
-
         }
         return taskNumber;
     }

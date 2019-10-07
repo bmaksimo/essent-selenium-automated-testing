@@ -33,11 +33,10 @@ public class MarketMessagesSteps extends DwpScenario {
         super.tearDown();
     }
 
-    @And("^Copy task number with modul \"([^\"]*)\"$")
-    public void copyTaskNumberWithModul(String modul)  {
+    @And("^Copy task number with modul \"([^\"]*)\" in list \"([^\"]*)\"$")
+    public void copyTaskNumberWithModul(String modul, String list)  {
         MarketMessagesPage mmp = new MarketMessagesPage();
-        String taskNumber = mmp.getTaskNumber(modul);
-//        System.out.println("-----------------------------------"+taskNumber);
-        parameterProvider.put("taskNumber", taskNumber);
+        String taskNumber = mmp.getTaskNumber(modul, list);
+        parameterProvider.put("taskNumber", taskNumber.substring(0,taskNumber.indexOf(' ')));
     }
 }
