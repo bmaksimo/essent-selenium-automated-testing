@@ -3,8 +3,8 @@
 @DWP
 @B2C
 @REGRESSION
-  // I try to start this first, since this can have a 'run out' of 15 minutes.
-  // there is a check in the actual tests to verify that the job is actually stopped
+  # I try to start this first, since this can have a 'run out' of 15 minutes.
+  # there is a check in the actual tests to verify that the job is actually stopped
 Feature: Stop the batchjobs that interfere with our tests
 
   Background:

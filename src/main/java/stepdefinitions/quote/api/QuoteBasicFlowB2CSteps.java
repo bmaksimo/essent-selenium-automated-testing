@@ -26,8 +26,7 @@ import static org.awaitility.Awaitility.await;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static stepdefinitions.quote.api.AbstractAPI.STATUS_CREATED;
-import static stepdefinitions.quote.api.AbstractAPI.STATUS_FOUND;
+import static stepdefinitions.quote.api.AbstractAPI.*;
 
 
 /**
@@ -182,7 +181,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
                     targetStatus
                 );
 
-        helper.simplePutRequest(STATUS_CREATED, cookie, path);
+        helper.simplePutRequest(STATUS_OK, cookie, path);
     }
 
     @And("the bachjob {string} is not running")
@@ -197,7 +196,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
                 );
 
         do {
-            response = helper.simpleGetRequest(STATUS_CREATED, cookie, path);
+            response = helper.simpleGetRequest(STATUS_OK, cookie, path);
             if (!firstRun) {
                 TimeUnit.MINUTES.sleep(1);
             }
