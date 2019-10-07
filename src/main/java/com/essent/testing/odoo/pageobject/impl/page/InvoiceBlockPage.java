@@ -12,15 +12,15 @@ public class InvoiceBlockPage extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath(INVOICE_BLOCK_REASON)).getText();
     }
 
-    public String getAccountBlockStartDate() {
+    public String getInvoiceBlockStartDate() {
         return seleniumDriver.findElementWhenVisible(By.xpath(INVOICE_BLOCK_START_DATE)).getText();
     }
 
-    public String getAccountBlockEndDate() {
+    public String getInvoiceBlockEndDate() {
         return seleniumDriver.findElementWhenVisible(By.xpath(INVOICE_BLOCK_END_DATE)).getText();
     }
 
-    public String getAccountBlockEndDateIsEmpty() {
+    public String getInvoiceBlockEndDateIsEmpty() {
         return seleniumDriver.findElement(By.xpath(INVOICE_BLOCK_END_DATE)).getAttribute("value");
     }
 }

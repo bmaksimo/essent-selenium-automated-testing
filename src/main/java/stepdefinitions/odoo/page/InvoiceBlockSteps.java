@@ -15,11 +15,11 @@ public class InvoiceBlockSteps extends OdooScenario {
     }
 
     @And("Start date is today on Invoice Blocks page")
-    public void accountBlockStartDateIsToday(){
+    public void invoiceBlockStartDateIsToday(){
         String startDate = DateExpressionsUtil
             .getToday()
             .toString(EssentDateTimeFormat.ODOO_DATE_FORMAT.getFormat());
-        String pageStartDate = new InvoiceBlockPage().getAccountBlockStartDate();
+        String pageStartDate = new InvoiceBlockPage().getInvoiceBlockStartDate();
         Assert.assertTrue("Invoice block start date is not today", pageStartDate.equalsIgnoreCase(startDate));
     }
 
@@ -28,13 +28,13 @@ public class InvoiceBlockSteps extends OdooScenario {
         String endDate = DateExpressionsUtil
             .getNDaysFromToday(amountOfDays)
             .toString(EssentDateTimeFormat.ODOO_DATE_FORMAT.getFormat());
-        String pageEndDate = new InvoiceBlockPage().getAccountBlockEndDate();
+        String pageEndDate = new InvoiceBlockPage().getInvoiceBlockEndDate();
         Assert.assertTrue("Invoice block end date is not " + amountOfDays + " days from today", pageEndDate.equalsIgnoreCase(endDate));
     }
 
     @And("^End date is empty on Invoice Blocks page$")
     public void invoiceBlockEndDateIsEmpty() {
-        String pageEndDate = new InvoiceBlockPage().getAccountBlockEndDateIsEmpty();
+        String pageEndDate = new InvoiceBlockPage().getInvoiceBlockEndDateIsEmpty();
         Assert.assertNull("Invoice block end date is not empty"+ pageEndDate, pageEndDate);
     }
 
