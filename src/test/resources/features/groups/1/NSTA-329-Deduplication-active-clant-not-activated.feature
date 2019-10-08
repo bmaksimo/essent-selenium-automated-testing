@@ -61,46 +61,24 @@ Feature: NSTA-329 Deduplication activated customer
         #Step 2: should deduplicate customer
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
-
-        When B2C sales channel is "Inbound"
-#        When "Sales kanaal" selection is "Inbound"
+        When "Sales kanaal" selection is "Inbound"
         And Quote details are confirmed
         Then Form header is "Personal details"
 
         When Customer is duplicated
         And Customer address is
             | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
-<<<<<<< Updated upstream
-            | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
-#        Then Customer details are confirmed
-#        Then Save changes
-
-        Given "Sales kanaal" selection is "Inbound"
-        And Quote details are confirmed
-
-#        When Package is "Vast"
-#        And Checkbox "Gas Fix B2C (TC1)" is Unchecked
-#        And Package and Fuel Type is confirmed
-        When "Pakket" selection is "Vast"
-        And Checkbox "Gas Fix B2C (TC1)" is Unchecked
-        And Package and Fuel Type is confirmed
-        Then Form header is "Connection details"
-
-        When Field "Housenumber" input is "22"
-        And Sleep for 10 seconds
-=======
             | Mechelsesteenweg | 2       |            |     | 2550       |         |         |
->>>>>>> Stashed changes
         And Deduplication dialogue "Soortgelijke klanten" is shown
         Then Deduplication dialogue link "Create quote for account" is clicked
         Then Save changes
 
-        When "Sales kanaal" selection is "Inbound"
-        Then Quote details are confirmed
+        Given "Sales kanaal" selection is "Inbound"
+        And Quote details are confirmed
 
         When "Pakket" selection is "Vast"
         And Checkbox "Gas Fix B2C (TC1)" is Unchecked
-        Then Package and Fuel Type is confirmed
+        And Package and Fuel Type is confirmed
 
         When Field "Street" input is "Mechelsesteenweg"
         And Field "Housenumber" input is "2"
