@@ -204,7 +204,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
         do {
             response = helper.simpleGetRequest(STATUS_OK, cookie, path);
             if (currentAttempt > 0) {
-                Sleeper.sleepTightInSeconds(15);
+                Sleeper.sleepTightInSeconds(waitSecondsInLoop);
             }
             currentAttempt++;
             if (currentAttempt > maxAttempts) {
