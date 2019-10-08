@@ -96,24 +96,17 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
         }
     }
 
-    /*
-   This checks for the presence of the loading-bar element (the blue fake progress bar on top), and if
-   that one is NOT present, all is done
-    */
     public void waitForRequestsToFinish() {
-        FluentWait<WebDriver> waiter = new FluentWait<>(this.driver)
-                .withTimeout(Duration.ofSeconds(999))
-                .pollingEvery(Duration.ofMillis(25));
-
-        waiter.until(driver -> {
-                    try {
-                        driver.findElement(By.xpath("//div[@id = 'loading-bar']"));
-                    } catch (Exception e) {
+                logger.debug("STEP:");
+                logger.debug(" - WAIT: waiting for all angular requests to finish on page at url: " + getDriver().getCurrentUrl());
+                int secondsTimeout = 240;
+                FluentWait<NgWebDriver> waiter = createWaiter(ngWebDriver, secondsTimeout);
+                waiter.until((NgWebDriver ngWebDriver) -> {
+                        waiter.withMessage(String.format("DWP working too slowly. Unable to complete the request within %s seconds.", secondsTimeout));
+                        ngWebDriver.waitForAngularRequestsToFinish();
                         return true;
-                    }
-                    return false;
-                }
-        );
+                    });
+                logger.debug(" - RESULT: all angular requests are finished on page at url: " + getDriver().getCurrentUrl());
 
         // Just to be sure, we add this here too (should never hit)
         awaitJqueryNotActive(200);
