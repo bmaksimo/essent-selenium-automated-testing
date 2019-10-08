@@ -53,7 +53,7 @@ Feature: NSTA-329 Deduplication activated customer
 
         When Dashboard menu is "Contracten"
         And  "1st" List element with value at column "EAN-code" is checked
-        Then "1st" list element has cell value "Actief" at column "Contractnummer" polling 900 seconds
+        Then "1st" list element has cell value "Actief" at column "Contractnummer" polling 450 seconds
 
         When Top arrow button is "Up"
         Then Left menu is "sales-marketing"
