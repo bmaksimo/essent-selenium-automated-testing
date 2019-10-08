@@ -3,6 +3,8 @@
 @DWP
 @B2C
 @REGRESSION
+@Unstable
+
 Feature: NSTA-445 Passive renewal of contract TK1 - with communication through Invoice
 
     Background:

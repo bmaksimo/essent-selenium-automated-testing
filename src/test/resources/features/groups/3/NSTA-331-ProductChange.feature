@@ -1,6 +1,7 @@
 @DWP
 @B2C
 @REGRESSION
+@Unstable
 
 Feature: NSTA 331- Product Change for TK1 type
 
