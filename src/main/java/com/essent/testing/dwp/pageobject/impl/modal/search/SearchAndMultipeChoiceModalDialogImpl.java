@@ -20,14 +20,14 @@ public class SearchAndMultipeChoiceModalDialogImpl extends Component
     private static final String XPATH_MODAL_SEARCH_RESULT_LOCATOR_TEMPLATE =
         "//div[@class='modal__content']//label[input[@type='checkbox']]";
     private static final By CSS_MODAL_TITLE_LOCATOR = By.cssSelector(".view__modal .modal__header");
-    private static final By CSS_MODAL_SEARCH_FIELD_LOCATOR =
-        By.cssSelector(".input-holder #search-input");
+    private static final By ID_MODAL_SEARCH_FIELD_LOCATOR =
+        By.id("search-input");
     private static final By XPATH_MODAL_SEARCH_RESULT_LABEL_LOCATOR =
         By.xpath(XPATH_MODAL_SEARCH_RESULT_LOCATOR_TEMPLATE);
 
     private static final String XPATH_MODAL_SUBMIT_TEMPLATE =
         "//a[normalize-space(text())='${label}']";
-    private static final String CSS_MODAL_SEARCH_BUTTON_TEMPLATE = "input[value='${label}']";
+    private static final String XPATH_MODAL_SEARCH_BUTTON_TEMPLATE = "//input[@value='%s']']";
 
     @Override
     public String getTitle() {
@@ -39,40 +39,33 @@ public class SearchAndMultipeChoiceModalDialogImpl extends Component
 
     @Override
     public void setSearchOption(String searchOption) {
-        seleniumDriver.waitForRequestsToFinish();
-        Sleeper.sleepTightInSeconds(10);
-        WebElement searchTextWebElement =
-            findElementWhenPresent(
-                CSS_MODAL_SEARCH_FIELD_LOCATOR, Duration.ofSeconds(10), Duration.ofMillis(500));
-        seleniumDriver.waitAndSendKeys(searchTextWebElement, searchOption);
+        WebElement searchTextE = seleniumDriver.findElementWhenClickable(ID_MODAL_SEARCH_FIELD_LOCATOR);
+        seleniumDriver.sendKeysNow(searchTextE, searchOption);
     }
 
     @Override
     public void search(String label) {
-        seleniumDriver.waitForRequestsToFinish();
-        Sleeper.sleepTightInSeconds(10);
-        Map<String, String> valuesMapper = new HashMap<>();
-        valuesMapper.put("label", label);
-        By selector = By.cssSelector(createQuery(CSS_MODAL_SEARCH_BUTTON_TEMPLATE, valuesMapper));
-        Button searchButton =
-            new ButtonImpl(
-                findElementWhenPresent(selector, Duration.ofSeconds(10), Duration.ofMillis(500)));
-        searchButton.click();
+        seleniumDriver.waitAndClick(findElementWhenVisible(
+                By.xpath(
+                    String.format(XPATH_MODAL_SEARCH_BUTTON_TEMPLATE, label)
+                )
+            )
+        );
     }
 
     @Override
     public boolean checkSearchResult(String match) {
-          seleniumDriver.waitForRequestsToFinish();
-          Sleeper.sleepTightInSeconds(10);
-          List<WebElement> elements =
-                 seleniumDriver.findElements(
-                     XPATH_MODAL_SEARCH_RESULT_LABEL_LOCATOR,
-                     Duration.ofSeconds(10),
-                     Duration.ofMillis(500));
-             Optional<WebElement> first =
-                 elements.stream().filter(e -> e.getText().trim().contains(match)).findFirst();
-             first.ifPresent(WebElement::click);
-          return first.isPresent();
+        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(10);
+        List<WebElement> elements =
+            seleniumDriver.findElements(
+                XPATH_MODAL_SEARCH_RESULT_LABEL_LOCATOR,
+                Duration.ofSeconds(10),
+                Duration.ofMillis(500));
+        Optional<WebElement> first =
+            elements.stream().filter(e -> e.getText().trim().contains(match)).findFirst();
+        first.ifPresent(WebElement::click);
+        return first.isPresent();
     }
 
     @Override
