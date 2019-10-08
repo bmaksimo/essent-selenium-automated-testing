@@ -1,7 +1,6 @@
 package com.essent.testing.dwp.pageobject.table;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
-import cucumber.runtime.CucumberException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -10,12 +9,14 @@ import java.util.stream.Collectors;
 
 /*
     Usage example:
+       List<Filter> filters = Arrays.asList(new Filter("COMMUNICATIETYPE", "Legal"));
        List<WebElement> row = new TableFilter()
             .getTable("CommunicationPreferencesOnAccount")
-            .filterBy("COMMUNICATIETYPE", "Legal")
+            .findBy(filters)
             .get();
 
     The returning value is the row, which is a List<WebElement>, each item on the list is a cell of the row.
+    Initially we'll support ONE filter, next step is to support more than one, that's why the method signature has a list of filters
  */
 public class TableFilter extends Component {
 
@@ -30,25 +31,26 @@ public class TableFilter extends Component {
         return this;
     }
 
-    public TableFilter filterBy(String columnName, String columnValue) {
+    public TableFilter findBy(List<Filter> filters) throws Exception {
         for (WebElement row : this.rows) {
             List<WebElement> cells = row.findElements(By.tagName("td"));
-            if (isExpectedColumnValue(columnName, columnValue, cells)) {
+            if (isExpectedColumnValue(filters, cells)) {
                 selectedRow = cells;
                 return this;
             }
         }
-        throw new CucumberException(columnValue + " was not found on column " + columnName + " on any row of the table");
+        throw new Exception("Filter didn't match any rows on the table");
     }
 
     public List<WebElement> get() {
         return this.selectedRow;
     }
 
-    private boolean isExpectedColumnValue(String columnName, String columnValue, List<WebElement> cells) {
+    private boolean isExpectedColumnValue(List<Filter> filters, List<WebElement> cells) {
         try {
-            int columnIndex = headers.indexOf(columnName);
-            return cells.get(columnIndex).getText().equals(columnValue);
+            Filter filter = filters.get(0);
+            int columnIndex = headers.indexOf(filter.getColumnName());
+            return cells.get(columnIndex).getText().equals(filter.getColumnValue());
         } catch (Exception e) {
             return false;
         }
