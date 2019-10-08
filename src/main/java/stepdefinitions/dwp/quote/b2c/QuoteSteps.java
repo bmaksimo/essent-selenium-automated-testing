@@ -101,6 +101,7 @@ public class QuoteSteps extends DwpScenario {
     @And("^Customer is duplicated$")
     public void duplicateRandomUser() {
         CustomerDetails customerDetails = (CustomerDetails) parameterProvider.getValueOrParameter("parameter:suitecrm-customer");
+        customerDetails.setFirstName("DUP-" + customerDetails.getFirstName());
         fillInCustomerDetails(customerDetails);
     }
 
