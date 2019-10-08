@@ -10,7 +10,7 @@ Feature: Stop the batchjobs that interfere with our tests
   Background:
     Given I login as API user "soapui_b2c"
 
-  @TEST
+  @DISABLE-URD-BATCH-JOB
   Scenario: Disable the URD batchjob
     And the batchjob "UPDATE URD" is set to "Inactive"
 
