@@ -237,4 +237,16 @@ public class ContractSteps extends DwpScenario {
         ContractPage cp = new ContractPage();
         parameterProvider.put("product",cp.getProductFromContracten());
     }
+
+    @And("E-mailadres input is cleared")
+    public void inputIsCleared() {
+        DetailsPage detailsPage = new DetailsPage();
+        detailsPage.emailAddressInputIsCleared();
+    }
+
+    @And("^Message \"([^\"]*)\" is shown$")
+    public void communicationPreferencesUpdatedSuccessMessageIsShown(String message) {
+        String elementMessage = new DetailsPage().getCommunicationPreferencesUpdatedMessage();
+        Assert.assertTrue("Communication preference message is not as expected", message.equalsIgnoreCase(elementMessage));
+    }
 }
