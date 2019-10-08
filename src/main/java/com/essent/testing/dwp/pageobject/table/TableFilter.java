@@ -41,6 +41,10 @@ public class TableFilter extends Component {
         throw new CucumberException(columnValue + " was not found on column " + columnName + " on any row of the table");
     }
 
+    public List<WebElement> get() {
+        return this.selectedRow;
+    }
+
     private boolean isExpectedColumnValue(String columnName, String columnValue, List<WebElement> cells) {
         try {
             int columnIndex = headers.indexOf(columnName);
@@ -48,10 +52,6 @@ public class TableFilter extends Component {
         } catch (Exception e) {
             return false;
         }
-    }
-
-    public List<WebElement> get() {
-        return this.selectedRow;
     }
 
     private List<String> getHeaders(String table) {
