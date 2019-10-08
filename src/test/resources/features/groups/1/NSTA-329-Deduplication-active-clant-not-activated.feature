@@ -53,7 +53,7 @@ Feature: NSTA-329 Deduplication activated customer
 
         When Dashboard menu is "Contracten"
         And  "1st" List element with value at column "EAN-code" is checked
-        Then "1st" list element has cell value "Actief" at column "Contractnummer" polling 450 seconds
+        Then "1st" list element has cell value "Actief" at column "Contractnummer" polling 900 seconds
 
         When Top arrow button is "Up"
         Then Left menu is "sales-marketing"
@@ -70,6 +70,7 @@ Feature: NSTA-329 Deduplication activated customer
         When Customer is duplicated
         And Customer address is
             | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
+<<<<<<< Updated upstream
             | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
 #        Then Customer details are confirmed
 #        Then Save changes
@@ -87,8 +88,12 @@ Feature: NSTA-329 Deduplication activated customer
 
         When Field "Housenumber" input is "22"
         And Sleep for 10 seconds
+=======
+            | Mechelsesteenweg | 2       |            |     | 2550       |         |         |
+>>>>>>> Stashed changes
         And Deduplication dialogue "Soortgelijke klanten" is shown
         Then Deduplication dialogue link "Create quote for account" is clicked
+        Then Save changes
 
         When "Sales kanaal" selection is "Inbound"
         Then Quote details are confirmed
