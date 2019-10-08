@@ -8,6 +8,15 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/*
+    Usage example:
+       List<WebElement> row = new TableFilter()
+            .getTable("CommunicationPreferencesOnAccount")
+            .filterBy("COMMUNICATIETYPE", "Legal")
+            .get();
+
+    The returning value is the row, which is a List<WebElement>, each item on the list is a cell of the row.
+ */
 public class TableFilter extends Component {
 
     private List<String> headers;
@@ -43,10 +52,6 @@ public class TableFilter extends Component {
 
     public List<WebElement> get() {
         return this.selectedRow;
-    }
-
-    public void plusActionIsClicked() {
-        //TODO implement this method
     }
 
     private List<String> getHeaders(String table) {
