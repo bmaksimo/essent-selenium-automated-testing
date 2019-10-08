@@ -249,7 +249,7 @@ public class ContractPage extends Component {
         return seleniumDriver.findElementOptional(By.xpath(LABELFORPRODUCTCHANGE));
     }
 
-    public WebElement locateTableElement(){
+    private WebElement locateTableElement(){
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath(QUOTE_TABLES));
     }
@@ -484,17 +484,18 @@ public class ContractPage extends Component {
     }
 
     public boolean containsTableValue(String tableValue) {
-        WebElement messageElement = locateTableElement();
-        return messageElement.getText().contains(tableValue);
+        return locateTableElement().getText().contains(tableValue);
     }
 
     public void getStartDateInAdvanceElektricityCard(String value) {
         seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(20);
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath(ELEKTRICITY_IN_ADVANCE_START_DATE)), value);
     }
 
     public void getStartDateInAdvanceGasCard(String value) {
         seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(20);
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath(GAS_IN_ADVANCE_START_DATE)), value);
     }
 
@@ -512,6 +513,7 @@ public class ContractPage extends Component {
 
     public String checkDeliveryAddress() {
         seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(20);
         return seleniumDriver.findElementWhenVisible(By.xpath(DELIVERY_ADDRESS)).getText();
     }
 
