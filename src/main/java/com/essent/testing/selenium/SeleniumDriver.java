@@ -53,6 +53,18 @@ public abstract class SeleniumDriver {
         options.addArguments("--incognito");
         options.addArguments("--disable-dev-shm-usage"); // overcome limited resource problems
         options.addArguments("--no-sandbox"); // Bypass OS security model
+
+        if (ConfigProvider.getProperty(ConfigKey.PROXY_ENABLE).equals("yes")) {
+            Proxy proxy = new Proxy();
+            proxy.setSslProxy(
+                    String.format("%s:%s",
+                            ConfigProvider.getProperty(ConfigKey.PROXY_HOST),
+                            ConfigProvider.getProperty(ConfigKey.PROXY_PORT)
+                    )
+            );
+            proxy.setHttpProxy(proxy.getSslProxy());
+            options.setCapability("proxy", proxy);
+        }
         logger.debug(" - OPTIONS: " + options.toString());
         setChromeDriverBinary(options);
         ChromeDriver chromeDriver;
