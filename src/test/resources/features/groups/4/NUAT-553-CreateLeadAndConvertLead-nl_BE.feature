@@ -25,6 +25,7 @@ Feature: NUAT-553: Create Lead And Convert Lead - nl_BE
         And "Ondernemingsnummer" input is "parameter:VAT"
         And "Rechtsvorm" selection is "bvba"
         And Select Nace-Code
+        And Sleep for 10 seconds
         And NaceCode in search is 01120 - Teelt van rijst
         And Company address is
             | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |

@@ -1,5 +1,6 @@
 package com.essent.testing.dwp.pageobject.guided_flow.lead_create;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -38,19 +39,11 @@ public class NewLeadPage extends BaseObjectPage {
 
 
     private void fillInContactPerson(String contactPersonName, String contactPersonLastName) {
-        seleniumDriver.waitForRequestsToFinish();
-        Optional<WebElement> firstNameField = seleniumDriver.findElementOptional(By.id(FIRST_NAME));
-        firstNameField.ifPresent(WebElement::click);
-        seleniumDriver.waitForRequestsToFinish();
-        firstNameField.ifPresent(firstName -> seleniumDriver.waitAndSendKeys(firstName, contactPersonName));
-
-        seleniumDriver.waitForRequestsToFinish();
-
-        Optional<WebElement> lastNameField = seleniumDriver.findElementOptional(By.id(LAST_NAME));
-        lastNameField.ifPresent(WebElement::click);
-        seleniumDriver.waitForRequestsToFinish();
-        lastNameField.ifPresent(lastName -> seleniumDriver.waitAndSendKeys(lastName, contactPersonLastName));
-        seleniumDriver.waitForRequestsToFinish();
+        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id(FIRST_NAME)), contactPersonName);
+        Sleeper.sleepTightInSeconds(2);
+        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id(FIRST_NAME)), contactPersonName);
+        Sleeper.sleepTightInSeconds(2);
+        seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.id(LAST_NAME)), contactPersonLastName);
     }
 
 }

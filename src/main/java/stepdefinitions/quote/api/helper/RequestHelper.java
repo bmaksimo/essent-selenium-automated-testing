@@ -1,10 +1,12 @@
 package stepdefinitions.quote.api.helper;
 
 import com.essent.testing.util.resource.ResourceUtil;
+import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookies;
 import io.restassured.http.Header;
 import io.restassured.response.Response;
+import io.restassured.specification.ProxySpecification;
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -63,7 +65,7 @@ public class RequestHelper {
         Integer responseStatusCode = getResponseStatusCode(response, path, expectedStatusCode);
 
         if (!responseStatusCode.equals(expectedStatusCode)) {
-            LOGGER.debug("JSON body which was sent in the request is: " + payload);
+            LOGGER.error("JSON body which was sent in the request is: " + payload);
             LOGGER.error("RESPONSE IS: " + response.body().asString());
         }
 
