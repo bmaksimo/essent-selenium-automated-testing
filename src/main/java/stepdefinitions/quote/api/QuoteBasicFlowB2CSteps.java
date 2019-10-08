@@ -2,6 +2,7 @@ package stepdefinitions.quote.api;
 
 import com.billinghouse.test_automation.util.dsl.DateTimeRegex;
 import com.billinghouse.test_automation.util.dsl.EssentDateTimeFormat;
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.restassured.B2CCreateContractScenario;
@@ -13,6 +14,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.restassured.http.Cookies;
 import io.restassured.response.Response;
+import org.junit.Assert;
 import stepdefinitions.quote.api.helper.AsyncExecutor;
 import stepdefinitions.quote.api.helper.RequestHelper;
 import stepdefinitions.quote.api.model.ContractDetails;
@@ -184,11 +186,15 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
         helper.simplePutRequest(STATUS_OK, cookie, path);
     }
 
-    @And("the bachjob {string} is not running")
-    public void theBachjobIsNotRunning(String batchJobName) throws InterruptedException {
+    @And("the batchjob {string} is not running")
+    public void theBatchjobIsNotRunning(String batchJobName) throws InterruptedException {
         RequestHelper helper = new RequestHelper();
         Response response;
-        boolean firstRun = true;
+        final int waitSecondsInLoop = 15;
+        int currentAttempt = 0;
+
+        // 20 Minutes
+        final int maxAttempts = (20 * 60) / waitSecondsInLoop;
         String path =
                 String.format(
                         ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_BATCHJOBSTATE_URL),
@@ -197,10 +203,13 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 
         do {
             response = helper.simpleGetRequest(STATUS_OK, cookie, path);
-            if (!firstRun) {
-                TimeUnit.MINUTES.sleep(1);
+            if (currentAttempt > 0) {
+                Sleeper.sleepTightInSeconds(15);
             }
-            firstRun = false;
+            currentAttempt++;
+            if (currentAttempt > maxAttempts) {
+                Assert.fail(String.format("Unable to stop batchjob %s - Aborting test", batchJobName));
+            }
         } while (response.getBody().toString().contains("done"));
 
     }
