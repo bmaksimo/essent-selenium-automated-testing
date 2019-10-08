@@ -39,7 +39,7 @@ public abstract class SeleniumDriver {
 
     public void setUp() {
         baseUrl = ConfigProvider.getProperty(ConfigKey.TESTING_BASE_URL);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
         browserName = caps.getBrowserName();
         browserVersion = caps.getVersion();
@@ -69,8 +69,7 @@ public abstract class SeleniumDriver {
         } else {
             options.addArguments("--start-maximized");
         }
-        driverService = ChromeDriverService.createDefaultService();
-        chromeDriver = new ChromeDriver(driverService, options);
+        chromeDriver = new ChromeDriver(options);
         chromeDriver.manage().timeouts().implicitlyWait(3, TimeUnit.MINUTES).setScriptTimeout(5, TimeUnit.MINUTES);
         driver = chromeDriver;
     }
@@ -85,8 +84,8 @@ public abstract class SeleniumDriver {
     public void tearDown() {
         if (driver == null)
             return;
-        driver.close();
-        driver.quit();
+//        driver.close();
+//        driver.quit();
     }
 
     public void goToHomePage() {
@@ -176,7 +175,7 @@ public abstract class SeleniumDriver {
     public WebElement findElement(By selector) {
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)
             .withTimeout(Duration.ofSeconds(30))
-            .pollingEvery(Duration.ofSeconds(5))
+            .pollingEvery(Duration.ofMillis(250))
             .ignoring(NoSuchElementException.class);
         WebElement element = waiter.until(driver -> driver.findElement(selector));
         return element;
@@ -185,7 +184,7 @@ public abstract class SeleniumDriver {
     public WebElement findElementWhenVisible(By selector) {
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)
             .withTimeout(Duration.ofSeconds(180))
-            .pollingEvery(Duration.ofSeconds(20))
+            .pollingEvery(Duration.ofSeconds(1))
             .ignoring(ElementNotVisibleException.class)
             .ignoring(NoSuchElementException.class);
         return waiter.until(ExpectedConditions.visibilityOfElementLocated(selector));
