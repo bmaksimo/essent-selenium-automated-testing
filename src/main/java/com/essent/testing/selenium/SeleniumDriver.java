@@ -124,7 +124,7 @@ public abstract class SeleniumDriver {
     }
 
     public WebElement findElementWhenPresent(By selector) {
-        return findElementWhenPresent(selector, Duration.ofMinutes(5), Duration.ofSeconds(20));
+        return findElementWhenPresent(selector, Duration.ofMinutes(5), Duration.ofSeconds(1));
     }
 
   public Optional<WebElement> findElementOptional(By selector) {
