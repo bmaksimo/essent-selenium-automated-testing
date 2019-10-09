@@ -153,12 +153,11 @@ public enum ConfigKey {
     CRM_PATH_TO_QUOTE_SIGNATURE("crm.quotesignature.path"),
     CRM_PATH_TO_SIGN_QUOTE_MODAL("crm.signquotemodal.path"),
     BILLING_ORDER_DETAILS_URL("jbilling.order.details"),
+    CRM_BATCHJOBSTATE_URL("crm.batchjobstateapi.url"),
+    CRM_BATCHJOBSETTING_URL("crm.batchjobsettingapi.url"),
     PROXY_ENABLE("local.useproxy"),
     PROXY_HOST("local.proxy.url"),
     PROXY_PORT("local.proxy.port");
-    BILLING_ORDER_DETAILS_URL("jbilling.order.details"),
-    CRM_BATCHJOBSETTING_URL("crm.batchjobsettingapi.url"),
-    CRM_BATCHJOBSTATE_URL("crm.batchjobstateapi.url");
 
 	private String resourceKey;
     ConfigKey(String resourceKey) {
