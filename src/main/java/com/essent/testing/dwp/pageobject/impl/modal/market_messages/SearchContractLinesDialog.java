@@ -39,7 +39,7 @@ public class SearchContractLinesDialog extends ModalBase implements ConfirmDialo
 
         seleniumDriver.findElements(By.xpath(checkBoxesQuery)).get(0).click();
 
-        WebElement sendButton = seleniumDriver.findElements(By.xpath("//a[@class='button']")).get(1);
+        WebElement sendButton = seleniumDriver.findElementWhenVisible(By.xpath("//div[@class='modal__header']/a[@class='button']"));
         seleniumDriver.waitAndClick(sendButton);
     }
 
