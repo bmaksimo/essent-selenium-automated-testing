@@ -156,6 +156,9 @@ public enum ConfigKey {
     PROXY_ENABLE("local.useproxy"),
     PROXY_HOST("local.proxy.url"),
     PROXY_PORT("local.proxy.port");
+    BILLING_ORDER_DETAILS_URL("jbilling.order.details"),
+    CRM_BATCHJOBSETTING_URL("crm.batchjobsettingapi.url"),
+    CRM_BATCHJOBSTATE_URL("crm.batchjobstateapi.url");
 
 	private String resourceKey;
     ConfigKey(String resourceKey) {

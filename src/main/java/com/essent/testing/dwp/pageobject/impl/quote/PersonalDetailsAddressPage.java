@@ -125,5 +125,6 @@ public class PersonalDetailsAddressPage extends QuoteCreationGuidedStep {
         this.fillFieldByXPath(DELIVERY_ADDR_COUNTRY.getQuery(), country);
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(5);
+        handleAlert();
     }
 }

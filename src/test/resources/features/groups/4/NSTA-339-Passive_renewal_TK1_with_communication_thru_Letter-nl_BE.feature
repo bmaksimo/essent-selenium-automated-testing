@@ -7,6 +7,8 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
 
     Background:
         Given I login as API user "soapui_b2c"
+        And the batchjob "UPDATE URD" is set to "Inactive"
+        And the batchjob "UPDATE URD" is not running
 
     @NSTA-339
     Scenario: Sign in to default electricity product
