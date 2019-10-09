@@ -13,6 +13,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
 import stepdefinitions.dwp.tables.IsAre;
@@ -37,6 +38,44 @@ public class InputElements extends DwpScenario {
     public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
+
+    @And("Search for {string} in the SelectWithSearch {string} and select option {string} and Submit")
+    public void searchForInTheSelectWithSearchAndSelectOptionAndSubmit(String SearchText, String SelectWithSearchLink, String OptionToSelect) {
+        // Grab and click the base element
+        WebElement SelectWithSearchOpenElement;
+        SelectWithSearchOpenElement = seleniumDriver.findElementWhenClickable(
+                By.xpath(
+                        String.format("//label[text()='%s']/parent::div//button", SelectWithSearchLink)
+                )
+        );
+        SelectWithSearchOpenElement.click();
+        seleniumDriver.waitForRequestsToFinish();
+
+        //Grab and fill the search box
+        WebElement SearchInputBox;
+        SearchInputBox = seleniumDriver.findElementWhenVisible(By.id("search-input"));
+        SearchInputBox.sendKeys(SearchText);
+        SearchInputBox.sendKeys(Keys.ENTER);
+        seleniumDriver.waitForRequestsToFinish();
+
+        //Select the intended result
+        // The extra spaces surrouning the result are intentional
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenClickable(
+                By.xpath(
+                        String.format("//div[@class='multi-select__results']/ul[@class='jq-non-selected-results']//label[text()=' %s ']", OptionToSelect)
+                )
+                )
+        );
+
+        //Aaaaaaand submit ;-)
+        seleniumDriver.waitAndClick(
+                seleniumDriver.findElement(
+                        By.xpath("//a[normalize-space(text())='Verzenden']")
+                )
+        );
+        seleniumDriver.waitForRequestsToFinish();
+    }
+
 
     /**
      * Class, delegating form input to <code>BaseFormInput.js</code>

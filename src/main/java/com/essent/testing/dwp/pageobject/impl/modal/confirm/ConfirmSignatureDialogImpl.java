@@ -12,7 +12,7 @@ public class ConfirmSignatureDialogImpl extends ModalBase implements ConfirmSign
   private static final By CONFIRM_SIGNATURE_MODAL_SELECTOR =
       By.cssSelector(".view__modal .modal__header");
 
-  private static final By ACTION_LIST_LOCATOR = By.xpath("//*[@class='action-list']//li[contains(., '')]");
+  private static final String ACTION_LIST_LOCATOR = "//div[@class='action-list']//li/span[contains(text(), '%s')]";
 
   public ConfirmSignatureDialogImpl(String title) {
     super();
@@ -45,10 +45,11 @@ public class ConfirmSignatureDialogImpl extends ModalBase implements ConfirmSign
 
   @Override
   public boolean isInActionList(String textToLookup) {
-    List<WebElement> actionList = seleniumDriver.findElements(ACTION_LIST_LOCATOR);
-    return actionList.stream()
-        .filter(WebElement::isDisplayed)
-        .anyMatch(element -> element.getText().contains(textToLookup));
+    return !seleniumDriver.findElements(
+            By.xpath(
+                String.format(ACTION_LIST_LOCATOR, textToLookup)
+            )
+    ).isEmpty();
   }
 
   @Override
