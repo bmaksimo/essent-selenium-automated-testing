@@ -190,5 +190,9 @@ public class MarketMessagesPage extends Component {
         return taskNumber;
     }
 
+    public void selectExternBericht(String label){
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id='dwp-external-message-id-field']/option[@label='"+label+"']")));
+    }
+
 }
 

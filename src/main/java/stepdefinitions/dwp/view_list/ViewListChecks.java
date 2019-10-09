@@ -696,11 +696,11 @@ public class ViewListChecks extends NavigationElements {
         List<String> columnData = viewListModel.fetchColumnData(table, column);
         List<String> found = columnData.stream().filter(element -> element.contains(inputValue))
             .collect(Collectors.toList());
-        String message = String.format("Table \"%s\" didn't contain value \"%s\" at column \"%s\"", table, value,
+        String message = String.format("Table \"%s\" didn't contain value \"%s\" at column \"%s\"", table, inputValue,
             column);
         assertThat(message, found, not(empty()));
         logger().debug(String.format("- STEP: Table \"%s\" contains value \"%s\" at column \"%s\" - PASSED.", table,
-            value, column));
+            inputValue, column));
     }
 
     @And("^Table \"([^\"]*)\" contains check mark at column \"([^\"]*)\"$")

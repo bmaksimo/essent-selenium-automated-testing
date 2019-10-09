@@ -1,4 +1,6 @@
 @REGRESSION
+@NOREG04
+@API
 @DWP
 @B2C
 @ALL
@@ -28,15 +30,15 @@ Feature: TESTAUTO-271-Create task after rejection
         Then Select Contractline dialog is confirmed
         When "Module" selection is "INITIATE LEAVING CUSTOMER"
         And "Label" selection is "Without Handover Document "
-        And "Extern bericht" selection is "ILC - zonder energieovernamedocument - Afgewezen"
-        And Option "Testing?" "is" "On"
+        And Option "Testing?" is "On"
+        And  Extern bericht is "ILC - zonder energieovernamedocument - Afgewezen"
         And Select Contractline dialog is confirmed
-        Then "1st" list element has cell value "INITIATE STOP ACCESS" at column "Module & Label" polling 450 seconds
+        Then "1st" list element has cell value "INITIATE LEAVING CUSTOMER" at column "Module & Label" polling 450 seconds
         And Refresh "REFRESH MARKTBERICHTEN" till "Geweigerd" is visible in table
         And Copy task number with modul "INITIATE LEAVING CUSTOMER" in list "MarketTransactionsOnAccount"
 
         When Dashboard menu is "Service"
-        Then Table "Taken" contains value "parameter:taskNumber" at column "Number & Start data"
+        Then Table "Taken" contains value "parameter:taskNumber" at column "Number & Start date"
         And Table "Taken" contains value "Handle rejection market_messaging - rejection" at column "Naam & Type & Subtype"
 
 
