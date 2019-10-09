@@ -1,12 +1,10 @@
 package stepdefinitions.quote.api.helper;
 
 import com.essent.testing.util.resource.ResourceUtil;
-import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookies;
 import io.restassured.http.Header;
 import io.restassured.response.Response;
-import io.restassured.specification.ProxySpecification;
 import org.apache.log4j.Logger;
 
 import java.io.File;

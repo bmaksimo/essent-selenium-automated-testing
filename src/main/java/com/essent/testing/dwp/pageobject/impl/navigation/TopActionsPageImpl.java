@@ -1,40 +1,29 @@
 package com.essent.testing.dwp.pageobject.impl.navigation;
 
-import com.essent.automation.autocrat.Model;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.navigation.TopActionsPage;
-
-import static com.essent.automation.autocrat.Action.CLICK;
-import static com.essent.automation.autocrat.Action.SLEEP;
-import static com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter.newExecution;
+import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 
 public class TopActionsPageImpl extends Component implements TopActionsPage {
 
-    private static final String BUTTON_ELEMENT = "button.element.name";
-    private static final String BUTTON_ELEMENT_QUERY_TEMPLATE = ".top-actions > a[name='${name}']";
+    private static final String TOPACTION_BUTTON_ELEMENT_XPATH = "//div[@class='top-actions']/a[@name='%s']";
 
     @Override
     public boolean executeTopAction(String name) {
-        seleniumDriver.waitForRequestsToFinish();
-        String query = createQuery(BUTTON_ELEMENT_QUERY_TEMPLATE, "name", name);
-        Model.Execution execution = newExecution().element(BUTTON_ELEMENT, createElement("SELECTOR", query));
-        execution
-            .flow()
-            .step(createStep(CLICK).element(BUTTON_ELEMENT).requireDisplayed(false))
-            .step(createStep(SLEEP).sleepInMillis(2500));
-        return execute(execution);
+        String query = String.format(TOPACTION_BUTTON_ELEMENT_XPATH, name);
+        try {
+            seleniumDriver.findElementWhenClickable(By.xpath(query)).click();
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
     }
 
     @Override
     public boolean executeTopActionWithFixedWait(String name, int waitingTime) {
         Sleeper.sleepTightInSeconds(waitingTime);
-        String query = createQuery(BUTTON_ELEMENT_QUERY_TEMPLATE, "name", name);
-        Model.Execution execution = newExecution().element(BUTTON_ELEMENT, createElement("SELECTOR", query));
-        execution
-            .flow()
-            .step(createStep(CLICK).element(BUTTON_ELEMENT).requireDisplayed(false))
-            .step(createStep(SLEEP).sleepInMillis(2500));
-        return executeNow(execution);
+        return this.executeTopAction(name);
     }
 }
