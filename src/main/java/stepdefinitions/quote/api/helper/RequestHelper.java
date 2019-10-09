@@ -57,10 +57,7 @@ public class RequestHelper {
 
     public void simplePutRequest(Integer expectedStatusCode, Cookies cookie, String path) {
 
-        RestAssured.proxy = ProxySpecification.host("localhost").withPort(8888);
-        RestAssured.useRelaxedHTTPSValidation();
-
-        Response response = RestAssured.expect().given().header(trackingHeader).cookies(cookie).when()
+        Response response = expect().given().header(trackingHeader).cookies(cookie).when()
                 .put(path);
 
         Integer responseStatusCode = getResponseStatusCode(response, path, expectedStatusCode);
@@ -74,10 +71,7 @@ public class RequestHelper {
 
     public Response simpleGetRequest(Integer expectedStatusCode, Cookies cookie, String path) {
 
-        RestAssured.proxy = ProxySpecification.host("localhost").withPort(8888);
-        RestAssured.useRelaxedHTTPSValidation();
-
-        Response response = RestAssured.expect().given().header(trackingHeader).cookies(cookie).when()
+        Response response = expect().given().header(trackingHeader).cookies(cookie).when()
                 .get(path);
 
         Integer responseStatusCode = getResponseStatusCode(response, path, expectedStatusCode);
