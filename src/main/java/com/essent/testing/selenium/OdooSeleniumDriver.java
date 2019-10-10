@@ -64,19 +64,23 @@ public class OdooSeleniumDriver extends SeleniumDriver {
         ObjectMapper objectMapper = new ObjectMapper();
         HttpClient httpClient = HttpClientBuilder.create().build();
         String command = null;
+
         try {
             command = objectMapper.writeValueAsString(commandParams);
         } catch (JsonProcessingException e) {
             logger.error("Object serialization has failed. Reason: " + e.getMessage());
         }
+
         String remoteBrowserUrl = driverService.getUrl().toString() + "/session/" + chromeDriver.getSessionId() + "/chromium/send_command";
         HttpPost request = new HttpPost(remoteBrowserUrl);
         request.addHeader("content-type", "application/json");
+
         try {
             request.setEntity(new StringEntity(command));
         } catch (UnsupportedEncodingException e) {
             logger.error("Error on HttpPost request creation. Reason: " + e.getMessage());
         }
+
         try {
             httpClient.execute(request);
         } catch (IOException e2) {

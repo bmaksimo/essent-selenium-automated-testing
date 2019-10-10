@@ -39,7 +39,6 @@ public abstract class SeleniumDriver {
 
     public void setUp() {
         baseUrl = ConfigProvider.getProperty(ConfigKey.TESTING_BASE_URL);
-        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
         browserName = caps.getBrowserName();
         browserVersion = caps.getVersion();
@@ -81,7 +80,8 @@ public abstract class SeleniumDriver {
         } else {
             options.addArguments("--start-maximized");
         }
-        chromeDriver = new ChromeDriver(options);
+        driverService = ChromeDriverService.createDefaultService();
+        chromeDriver = new ChromeDriver(driverService, options);
         chromeDriver.manage().timeouts().implicitlyWait(3, TimeUnit.MINUTES).setScriptTimeout(5, TimeUnit.MINUTES);
         driver = chromeDriver;
     }
