@@ -180,7 +180,7 @@ public class ViewListChecks extends NavigationElements {
         String arrow = parameterProvider.getValueOrParameterAsString("parameter:navigation");
         String dashboardMenu = parameterProvider.getValueOrParameterAsString("parameter:dashboard-menu");
 
-        FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), waitingTime, 60);
+        FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), waitingTime, 1);
         waiter.withMessage(String.format(
             "Table does not contain cell value \"%s\" at column \"%s\" within \"%s\" seconds.",
             match, columnName, waitingTime));

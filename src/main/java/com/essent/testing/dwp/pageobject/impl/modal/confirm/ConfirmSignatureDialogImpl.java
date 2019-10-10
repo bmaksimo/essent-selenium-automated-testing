@@ -3,9 +3,8 @@ package com.essent.testing.dwp.pageobject.impl.modal.confirm;
 import com.essent.testing.dwp.pageobject.impl.modal.ModalBase;
 import com.essent.testing.dwp.pageobject.modal.confirm.ConfirmSignatureDialog;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-
-import java.util.List;
+import org.openqa.selenium.TimeoutException;
+import java.time.Duration;
 
 public class ConfirmSignatureDialogImpl extends ModalBase implements ConfirmSignatureDialog {
 
@@ -45,11 +44,16 @@ public class ConfirmSignatureDialogImpl extends ModalBase implements ConfirmSign
 
   @Override
   public boolean isInActionList(String textToLookup) {
-    return !seleniumDriver.findElements(
-            By.xpath(
-                String.format(ACTION_LIST_LOCATOR, textToLookup)
-            )
-    ).isEmpty();
+    try {
+      seleniumDriver.findElementWhenPresent(
+              By.xpath(
+                      String.format(ACTION_LIST_LOCATOR, textToLookup)
+              ), Duration.ofSeconds(10), Duration.ofMillis(50)
+      );
+      return true;
+    } catch (TimeoutException e) {
+      return false;
+    }
   }
 
   @Override

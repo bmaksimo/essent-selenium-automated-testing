@@ -31,7 +31,7 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
 
         When Payment details are received
         Then Wait until contract instance starts
-        And Check order in jbilling
+       # And Check order in jbilling
 
         Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
         When Left menu is "contracting-switching"
@@ -41,7 +41,7 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
 
         When Dashboard menu is "Contracten"
-        And "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
+        # And "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
 
         #2. Trigger renewal batch
         #"Start & Einddatum" is parsed, start is put to parameterProvider as "Start & Einddatum - start", end - as "Start & Einddatum - end"
@@ -86,10 +86,9 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
         #4 Validate the definition of renewal product (date valid within the period: "Start & einddatum hernieuwing")
         When Top arrow button is "Up"
         And Plus menu is "Contracting -> TK1 Hernieuwingen -> Bepaal het hernieuwingsproduct"
-        And Sleep for 20 seconds
         And Top action is "Filters"
         And Search for "COMFORT_TEST" in the SelectWithSearch "Van pakket" and select option "COMFORT_TEST" and Submit
-        And All date values at column "Geldig tot" from table "Bepaal het hernieuwingsproduct" are within the period "parameter:Start & einddatum hernieuwing"
+        And Check if our "parameter:Start & einddatum hernieuwing" is covered by a valid tariffsheetperiod from table "Bepaal het hernieuwingsproduct"
 
         #5 Communicate the renewal to the customer through the invoice
         When Plus menu is "Contracting -> TK1 Hernieuwingen -> Hernieuwingsbatches"

@@ -13,15 +13,13 @@ public class ModalBase extends Component {
 
     public boolean confirm(String scenarioInfo) {
         seleniumDriver.waitForRequestsToFinish();
-        Sleeper.sleepTightInSeconds(2);
-        Optional<WebElement> confirm = seleniumDriver.findElementOptional(CONFIRM_BUTTON_SELECTOR);
-        confirm.ifPresent(WebElement::click);
-        seleniumDriver.waitForRequestsToFinish();
-        Sleeper.sleepTightInSeconds(5);
+        // Is there a normal 'Confirm' button
+        if (!seleniumDriver.findElements(CONFIRM_BUTTON_SELECTOR).isEmpty()) {
+            seleniumDriver.findElementWhenClickable(CONFIRM_BUTTON_SELECTOR).click();
+            return true;
+        }
         validateForm(scenarioInfo);
         handleAlert();
-        seleniumDriver.waitForRequestsToFinish();
-
         return true;
     }
 

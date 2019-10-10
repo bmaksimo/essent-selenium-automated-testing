@@ -2,6 +2,7 @@ package stepdefinitions.dwp.contracts.b2c;
 
 import com.billinghouse.test_automation.util.dsl.EssentDateTimeFormat;
 import com.billinghouse.test_automation.util.dsl.IntervalUtil;
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.constant.ParameterKeys;
 import com.essent.testing.dwp.pageobject.ViewList;
 import com.essent.testing.dwp.pageobject.elements.NonEditable;
@@ -14,6 +15,9 @@ import cucumber.api.java.en.And;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.Matchers;
+import org.joda.time.Interval;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.support.ui.FluentWait;
 import stepdefinitions.dwp.navigation.NavigationElements;
 import stepdefinitions.dwp.tables.DwpArrows;
@@ -21,31 +25,93 @@ import stepdefinitions.dwp.view_list.ViewListChecks;
 
 import java.util.List;
 
+import static com.billinghouse.test_automation.util.dsl.IntervalUtil.productTnterval;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.fail;
 
 public class ContractRenewalSteps extends NavigationElements {
+
+  private static final DateTimeFormatter INTERVAL_DATE_FORMATTER =
+          DateTimeFormat.forPattern(EssentDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat());
 
   @Before("@DWP or @B2C or @E2E or @REGRESSION")
   public void setupTest(Scenario scenario){
     registerActiveScenario(scenario);
   }
 
+  @And("Check if our {string} is covered by a valid tariffsheetperiod from table {string}")
+  public void checkIfOurIsCoveredByAValidTariffsheetperiodFromTable(String intervalParameter, String table) {
+    seleniumDriver.waitForRequestsToFinish();
+    String periodOfRenewal = parameterProvider.getValueOrParameterAsString(intervalParameter);
+    ViewList viewList = new ViewListTestObject();
+    int count = 0;
+    int loopCounter = 0;
+    List<String> dateValuesUntil;
+    List<String> dateValuesFrom;
+
+    do {
+      dateValuesUntil = viewList.fetchColumnData(table, "Geldig tot");
+      loopCounter++;
+    } while (dateValuesUntil.size() == 0 && loopCounter < 50);
+
+    loopCounter = 0;
+    do {
+      dateValuesFrom = viewList.fetchColumnData(table, "Geldig van");
+      loopCounter++;
+    } while (dateValuesFrom.size() == 0 && loopCounter < 50);
+
+    if (dateValuesFrom.size() == 0 || dateValuesUntil.size() == 0) {
+      fail("Could not fetch validy period of tariffsheets from table");
+
+    }
+    Interval renewalPeriod = productTnterval(periodOfRenewal);
+
+    for (int i = 0; i < dateValuesFrom.size(); i++) {
+      Interval myInterval = new Interval(
+              INTERVAL_DATE_FORMATTER.parseDateTime(dateValuesFrom.get(i)),
+              INTERVAL_DATE_FORMATTER.parseDateTime(dateValuesUntil.get(i))
+      );
+      if (myInterval.contains(renewalPeriod)) {
+        return;
+      }
+    }
+    fail(
+            String.format("Renewal period %s is not covered by a tariffsheet", intervalParameter)
+    );
+  }
+
   @And(
       "^All date values at column \"([^\"]*)\" from table \"([^\"]*)\" are within the period \"([^\"]*)\"$")
   public void checkProductValidnessPeriod(String column, String table, String intervalParameter){
+    seleniumDriver.waitForRequestsToFinish();
     String periodOfRenewal = parameterProvider.getValueOrParameterAsString(intervalParameter);
     ViewList viewList = new ViewListTestObject();
-    List<String> dateValues = viewList.fetchColumnData(table, column);
-    int count =
-        (int)
-            dateValues.stream()
-                .filter(
-                    date ->
-                        IntervalUtil.containsDate(
-                            periodOfRenewal,
-                            date,
-                            EssentDateTimeFormat.DWP_PRODUCT_VALIDNESS_DATE_FORMAT))
-                .count();
+    int count = 0;
+    int loopCounter = 0;
+    List<String> dateValues;
+    do {
+      dateValues = viewList.fetchColumnData(table, column);
+      loopCounter++;
+    } while (dateValues.size() == 0 && loopCounter < 50);
+    //We need to check if our renewal period is covered by some tariffsheet period
+
+      count =
+              (int)
+                      dateValues.stream()
+                              .filter(
+                                      date ->
+                                              IntervalUtil.containsDate(
+                                                      periodOfRenewal,
+                                                      date,
+                                                      EssentDateTimeFormat.DWP_PRODUCT_VALIDNESS_DATE_FORMAT))
+                              .count();
+      if (loopCounter == 0) {
+        Sleeper.sleepTight(100);
+      }
+
+
+
+
     assertThat(
         String.format(
             "Date(s) at column  \"%s\" in table \"%s\" are not within the period \"%s\"",
@@ -86,4 +152,5 @@ public class ContractRenewalSteps extends NavigationElements {
   public void tearDown() {
     super.tearDown();
   }
+
 }

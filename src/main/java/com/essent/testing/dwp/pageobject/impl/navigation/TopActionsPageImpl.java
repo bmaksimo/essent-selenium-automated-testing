@@ -14,7 +14,11 @@ public class TopActionsPageImpl extends Component implements TopActionsPage {
     public boolean executeTopAction(String name) {
         String query = String.format(TOPACTION_BUTTON_ELEMENT_XPATH, name);
         try {
-            seleniumDriver.findElementWhenClickable(By.xpath(query)).click();
+            do {
+                seleniumDriver.findElementWhenClickable(By.xpath(query)).click();
+                seleniumDriver.waitForRequestsToFinish();
+                // Check if the click worked
+            } while (!seleniumDriver.findElement(By.xpath(query)).getAttribute("class").contains("is-active"));
             return true;
         } catch (TimeoutException e) {
             return false;
