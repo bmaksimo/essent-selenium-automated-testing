@@ -34,7 +34,7 @@ Feature: TESTAUTO-271-Create task after rejection
         And  Extern bericht is "ILC - zonder energieovernamedocument - Afgewezen"
         And Select Contractline dialog is confirmed
         Then "1st" list element has cell value "INITIATE LEAVING CUSTOMER" at column "Module & Label" polling 450 seconds
-        And Refresh "REFRESH MARKTBERICHTEN" till "Geweigerd" is visible in table
+        And "1st" list element has cell value "Geweigerd" at column "Status & ED" polling 550 seconds
         And Copy task number with modul "INITIATE LEAVING CUSTOMER" in list "MarketTransactionsOnAccount"
 
         When Dashboard menu is "Service"
