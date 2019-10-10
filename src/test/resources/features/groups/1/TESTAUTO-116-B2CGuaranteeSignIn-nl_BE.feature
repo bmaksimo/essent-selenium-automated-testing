@@ -64,7 +64,7 @@ Feature: TESTAUTO-116-B2C guarantee sign in
 
         #2.3 Check guarantee advance invoice total amount as sum of electricity and gas advance amounts.
         When Dashboard menu is "Service"
-        Then Table "Interacties" contains value "Outbound document: guarantee" at column "Type & Onderwerp" retrying 10 times
+        Then Table "Interacties" contains value "Outbound document: guarantee" at column "Type & Onderwerp" retrying 50 times
 
         When Dashboard menu is "Billing"
         Then Table "Transacties" contains value "Invoice (GUARANTEE)" at column "ID & Type" retrying 10 times
