@@ -4,6 +4,7 @@
 @B2C
 @ALL
 @DUNNING
+@Unstable
 
 Feature: TESTAUTO-193 Dunning-create-account-block
 

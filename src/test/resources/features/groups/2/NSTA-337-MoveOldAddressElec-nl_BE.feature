@@ -2,6 +2,8 @@
 @DWP
 @B2C
 @ALL
+@Unstable
+
 Feature: NSTA-337: Move old address - Electricity
     Background:
         Given I login as API user "soapui_b2c"

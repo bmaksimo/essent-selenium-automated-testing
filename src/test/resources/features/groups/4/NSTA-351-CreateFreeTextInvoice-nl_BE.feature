@@ -2,6 +2,7 @@
 @B2B
 @REGRESSION
 @ALL
+@Unstable
 
 Feature: NSTA-351: Create free text invoice - nl_BE
 
