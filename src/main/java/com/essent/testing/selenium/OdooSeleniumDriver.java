@@ -84,7 +84,7 @@ public class OdooSeleniumDriver extends SeleniumDriver {
         try {
             httpClient.execute(request);
         } catch (IOException e2) {
-            logger.error(" - ERROR_CONFIGURE_HEADLESS_DOWNLOAD: request" + request.toString() + "comand: " + command);
+            logger.error(" - ERROR_CONFIGURE_HEADLESS_DOWNLOAD: request " + request.toString() + " - Command: " + command + " - Error message: " + e2.getMessage());
         }
     }
 
