@@ -5,6 +5,8 @@
 @API
 @NOREG04
 @ALL
+@Unstable
+
 Feature: NSTA-333: Social tariff (SOCTAR) contract creation
 
     Background:

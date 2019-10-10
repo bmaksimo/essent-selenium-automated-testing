@@ -24,13 +24,11 @@ public abstract class NavigationElements extends DwpScenario {
     private class ClickTopAction implements Predicate<String> {
         @Override
         public boolean test(String action) {
-            seleniumDriver.waitForRequestsToFinish();
             TopActionsPage topActions = new TopActionsPageImpl();
             return topActions.executeTopAction(action);
         }
 
-        public boolean testWithFixedTime(String action, int waitingTime) {
-            seleniumDriver.waitForRequestsToFinish();
+        private boolean testWithFixedTime(String action, int waitingTime) {
             TopActionsPage topActions = new TopActionsPageImpl();
             return topActions.executeTopActionWithFixedWait(action, waitingTime);
         }

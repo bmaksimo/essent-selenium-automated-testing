@@ -15,6 +15,7 @@ import io.restassured.http.ContentType;
 import io.restassured.http.Cookies;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import io.restassured.specification.ProxySpecification;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import stepdefinitions.dwp.contracts.b2b.QuoteB2B;
@@ -360,6 +361,13 @@ public class QuoteCreatorB2BBase {
 
         String jsonBody = PrepareDataForContract.createRequestJsonPayload(payloadCreateQuoteB2B, originalPayloadCreateQuoteB2B, testMap);
 
+        if (ConfigProvider.getProperty(ConfigKey.PROXY_ENABLE).equals("yes")) {
+            RestAssured.proxy =
+                    ProxySpecification
+                            .host(ConfigProvider.getProperty(ConfigKey.PROXY_HOST))
+                            .withPort(Integer.parseInt(ConfigProvider.getProperty(ConfigKey.PROXY_PORT)));
+            RestAssured.useRelaxedHTTPSValidation();
+        }
         Response response = RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
             .when().body(jsonBody).post(pathApiPath).then().statusCode(201).body("data.arguments.errors", equalTo(null)).extract().response();
 

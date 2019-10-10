@@ -228,14 +228,12 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
     }
 
     public WebElement findElementWhenClickable(By selector) {
-        ngWebDriver.waitForAngularRequestsToFinish();
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)
             .withTimeout(Duration.ofSeconds(30))
             .pollingEvery(Duration.ofMillis(500))
             .ignoring(ElementNotVisibleException.class)
             .ignoring(NoSuchElementException.class);
         WebElement element = waiter.until(ExpectedConditions.elementToBeClickable(selector));
-        ngWebDriver.waitForAngularRequestsToFinish();
         return element;
     }
 
@@ -269,7 +267,7 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
     public void waitAndClick(final WebElement element) {
         waitForElement(element);
         element.click();
-        ngWebDriver.waitForAngularRequestsToFinish();
+        waitForRequestsToFinish();
     }
 
     public void clickNow(final WebElement element) {
@@ -282,7 +280,7 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
         element.clear();
         waitForElement(element);
         element.sendKeys(keysToSend);
-        ngWebDriver.waitForAngularRequestsToFinish();
+        waitForRequestsToFinish();
     }
 
     public void sendKeysNow(final WebElement element, final String keysToSend) {

@@ -55,6 +55,36 @@ public class RequestHelper {
         return response;
     }
 
+    public void simplePutRequest(Integer expectedStatusCode, Cookies cookie, String path) {
+
+        Response response = expect().given().header(trackingHeader).cookies(cookie).when()
+                .put(path);
+
+        Integer responseStatusCode = getResponseStatusCode(response, path, expectedStatusCode);
+
+        if (!responseStatusCode.equals(expectedStatusCode)) {
+            LOGGER.error("RESPONSE IS: " + response.body().asString());
+        }
+
+        assertThat(responseStatusCode, is(equalTo(expectedStatusCode)));
+    }
+
+    public Response simpleGetRequest(Integer expectedStatusCode, Cookies cookie, String path) {
+
+        Response response = expect().given().header(trackingHeader).cookies(cookie).when()
+                .get(path);
+
+        Integer responseStatusCode = getResponseStatusCode(response, path, expectedStatusCode);
+
+        if (!responseStatusCode.equals(expectedStatusCode)) {
+            LOGGER.error("RESPONSE IS: " + response.body().asString());
+        }
+
+        assertThat(responseStatusCode, is(equalTo(expectedStatusCode)));
+
+        return response;
+    }
+
     public Response postRequest(Integer expectedStatusCode, Cookies cookie, String payload, String path) throws IOException {
 
         Response response = expect().given().header(trackingHeader).cookies(cookie).contentType(ContentType.JSON)
@@ -63,7 +93,7 @@ public class RequestHelper {
         Integer responseStatusCode = getResponseStatusCode(response, path, expectedStatusCode);
 
         if (!responseStatusCode.equals(expectedStatusCode)) {
-            LOGGER.debug("JSON body which was sent in the request is: " + payload);
+            LOGGER.error("JSON body which was sent in the request is: " + payload);
             LOGGER.error("RESPONSE IS: " + response.body().asString());
         }
 

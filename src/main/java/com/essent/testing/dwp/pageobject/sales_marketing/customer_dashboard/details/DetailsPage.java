@@ -18,7 +18,7 @@ public class DetailsPage extends Component {
     private static final String ACCOUNT_BLOCK_END_DATE = "//list[@list-key='accountBlockReasonsForAccountList']//tr[1]/td[3]/list-simple-two-liner-cell/p";
     private static final String PREFERENCES_EMAIL_ADDRESS = "paym-details-accounts-contacts-primary-contact-c-1-contacts-contact-details-contact-details-type-email-contact-details-value-field";
     private static final String COMMUNICATION_PREFERENCES_UPDATED_SUCCESS_MESSAGE = "//div/focus-mode/focus-mode-content/div/div/div[2]/flash-message-renderer/flash-message";
-
+    private static final String INVOICE_BLOCK_END_DATE = "//list[@list-key='invoiceBlockReasonsForInvoice']//tr[1]/td[3]/list-simple-two-liner-cell/p";
 
     public void findIban(String iban) {
         seleniumDriver.waitForRequestsToFinish();
@@ -75,6 +75,12 @@ public class DetailsPage extends Component {
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath(ACCOUNT_BLOCK_END_DATE)).getText();
     }
+
+    public String getInvoiceBlockEndDate() {
+        seleniumDriver.waitForRequestsToFinish();
+        return seleniumDriver.findElementWhenVisible(By.xpath(INVOICE_BLOCK_END_DATE)).getText();
+    }
+
     public String getAccountBlockEndDateNotExist() {
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElement(By.xpath(ACCOUNT_BLOCK_END_DATE)).getAttribute("value");
