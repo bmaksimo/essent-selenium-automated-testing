@@ -39,6 +39,7 @@ public abstract class SeleniumDriver {
 
     public void setUp() {
         baseUrl = ConfigProvider.getProperty(ConfigKey.TESTING_BASE_URL);
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
         browserName = caps.getBrowserName();
         browserVersion = caps.getVersion();
