@@ -32,7 +32,7 @@ import static org.junit.Assert.fail;
 public class ContractRenewalSteps extends NavigationElements {
 
   private static final DateTimeFormatter INTERVAL_DATE_FORMATTER =
-          DateTimeFormat.forPattern(EssentDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat());
+          DateTimeFormat.forPattern(EssentDateTimeFormat.DWP_PRODUCT_VALIDNESS_DATE_FORMAT.getFormat());
 
   @Before("@DWP or @B2C or @E2E or @REGRESSION")
   public void setupTest(Scenario scenario){

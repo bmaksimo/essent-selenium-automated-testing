@@ -60,7 +60,7 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
         And "Renewal date to" date is "parameter:Start & Einddatum - end"
         And "EAN-code" input is "parameter:EAN-code"
         Then Changes are confirmed
-        And Table "TK1 - Hernieuwingsbatches" contains value "parameter:suitecrm-customer-name" at column "Batchnaam" waiting for 25 seconds
+        And Table "TK1 - Hernieuwingsbatches" contains value "parameter:suitecrm-customer-name" at column "Batchnaam"
 
         #Checks
         #3. Validate renewal batch
@@ -79,9 +79,9 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
 
         When Click on "parameter:Contractnummer" link
         And  Dashboard menu is "Sales"
-        And Table "Offertes" has matching value "Passieve hernieuwing Geprijsd - Geaccepteerd" at column "Type & status" polling 10 seconds
-        And Table "Offertes" has matching value "parameter:Contract Start & Einddatum" at column "Start & Einddatum" polling 10 seconds
-        And Table "Offertes" has matching value "parameter:Id Billing customer" at column "Billing klant & Tariefdatum" polling 10 seconds
+        And Table "Offertes" has matching value "Passieve hernieuwing" at column "Type & status"
+        And Table "Offertes" has matching value "Geprijsd - Geaccepteerd" at column "Type & status"
+        And Table "Offertes" has matching value "parameter:Id Billing customer" at column "Billing klant & Tariefdatum"
 
         #4 Validate the definition of renewal product (date valid within the period: "Start & einddatum hernieuwing")
         When Top arrow button is "Up"
@@ -103,4 +103,4 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
         #6 Check communication
         When Click on "parameter:Contractnummer" link
         And Dashboard menu is "Service"
-        Then Table "Interacties" has matching value "Outbound document: Passive renewal communication" at column "Type & Onderwerp" polling 10 seconds
+        Then Table "Interacties" has matching value "Outbound document: Passive renewal communication" at column "Type & Onderwerp"
