@@ -44,7 +44,6 @@ public class ContractRenewalSteps extends NavigationElements {
     seleniumDriver.waitForRequestsToFinish();
     String periodOfRenewal = parameterProvider.getValueOrParameterAsString(intervalParameter);
     ViewList viewList = new ViewListTestObject();
-    int count = 0;
     int loopCounter = 0;
     List<String> dateValuesUntil;
     List<String> dateValuesFrom;
@@ -83,35 +82,19 @@ public class ContractRenewalSteps extends NavigationElements {
   @And(
       "^All date values at column \"([^\"]*)\" from table \"([^\"]*)\" are within the period \"([^\"]*)\"$")
   public void checkProductValidnessPeriod(String column, String table, String intervalParameter){
-    seleniumDriver.waitForRequestsToFinish();
     String periodOfRenewal = parameterProvider.getValueOrParameterAsString(intervalParameter);
     ViewList viewList = new ViewListTestObject();
-    int count = 0;
-    int loopCounter = 0;
-    List<String> dateValues;
-    do {
-      dateValues = viewList.fetchColumnData(table, column);
-      loopCounter++;
-    } while (dateValues.size() == 0 && loopCounter < 50);
-    //We need to check if our renewal period is covered by some tariffsheet period
-
-      count =
-              (int)
-                      dateValues.stream()
-                              .filter(
-                                      date ->
-                                              IntervalUtil.containsDate(
-                                                      periodOfRenewal,
-                                                      date,
-                                                      EssentDateTimeFormat.DWP_PRODUCT_VALIDNESS_DATE_FORMAT))
-                              .count();
-      if (loopCounter == 0) {
-        Sleeper.sleepTight(100);
-      }
-
-
-
-
+    List<String> dateValues = viewList.fetchColumnData(table, column);
+    int count =
+        (int)
+            dateValues.stream()
+                .filter(
+                    date ->
+                        IntervalUtil.containsDate(
+                            periodOfRenewal,
+                            date,
+                            EssentDateTimeFormat.DWP_PRODUCT_VALIDNESS_DATE_FORMAT))
+                .count();
     assertThat(
         String.format(
             "Date(s) at column  \"%s\" in table \"%s\" are not within the period \"%s\"",
