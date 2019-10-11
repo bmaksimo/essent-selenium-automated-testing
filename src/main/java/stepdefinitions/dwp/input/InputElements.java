@@ -42,13 +42,11 @@ public class InputElements extends DwpScenario {
     @And("Search for {string} in the SelectWithSearch {string} and select option {string} and Submit")
     public void searchForInTheSelectWithSearchAndSelectOptionAndSubmit(String SearchText, String SelectWithSearchLink, String OptionToSelect) {
         // Grab and click the base element
-        WebElement SelectWithSearchOpenElement;
-        SelectWithSearchOpenElement = seleniumDriver.findElementWhenClickable(
+        seleniumDriver.findElementWhenClickable(
                 By.xpath(
                         String.format("//label[text()='%s']/parent::div//button", SelectWithSearchLink)
                 )
-        );
-        SelectWithSearchOpenElement.click();
+        ).click();
         seleniumDriver.waitForRequestsToFinish();
 
         //Grab and fill the search box

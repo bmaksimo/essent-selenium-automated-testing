@@ -39,25 +39,15 @@ public class ContractRenewalSteps extends NavigationElements {
     registerActiveScenario(scenario);
   }
 
+
+
   @And("Check if our {string} is covered by a valid tariffsheetperiod from table {string}")
   public void checkIfOurIsCoveredByAValidTariffsheetperiodFromTable(String intervalParameter, String table) {
     seleniumDriver.waitForRequestsToFinish();
-    String periodOfRenewal = parameterProvider.getValueOrParameterAsString(intervalParameter);
     ViewList viewList = new ViewListTestObject();
-    int loopCounter = 0;
-    List<String> dateValuesUntil;
-    List<String> dateValuesFrom;
-
-    do {
-      dateValuesUntil = viewList.fetchColumnData(table, "Geldig tot");
-      loopCounter++;
-    } while (dateValuesUntil.size() == 0 && loopCounter < 50);
-
-    loopCounter = 0;
-    do {
-      dateValuesFrom = viewList.fetchColumnData(table, "Geldig van");
-      loopCounter++;
-    } while (dateValuesFrom.size() == 0 && loopCounter < 50);
+    String periodOfRenewal = parameterProvider.getValueOrParameterAsString(intervalParameter);
+    List<String> dateValuesUntil = viewList.fetchColumnData(table, "Geldig tot");
+    List<String> dateValuesFrom = viewList.fetchColumnData(table ,"Geldig van");
 
     if (dateValuesFrom.size() == 0 || dateValuesUntil.size() == 0) {
       fail("Could not fetch validy period of tariffsheets from table");

@@ -165,7 +165,14 @@ public class ViewListTestObject extends Component implements ViewList {
   }
 
   public List<String> fetchColumnData(String table, String columnName) {
-    return fetchColumnDataNow(table, columnName, false);
+    List<String> dateValuesUntil;
+
+    int loopCounter = 0;
+    do {
+      dateValuesUntil = fetchColumnDataNow(table, columnName, false);
+      loopCounter++;
+    } while (dateValuesUntil.size() == 0 && loopCounter < 50);
+    return dateValuesUntil;
   }
 
   public List<String> fetchColumnDataNow(String table, String columnName, boolean immediate) {
