@@ -44,13 +44,6 @@ public class PaymentInfoSteps extends NavigationElements {
     }
   }
 
-  private class PaymentDetailsIBANChange implements Predicate<Map> {
-    @Override
-    public boolean test(Map options) {
-      return executeJavascriptTest(JS_TR_ADD_IBAN_TO_PAYMENT_DETAILS, options);
-    }
-  }
-
     @Before("@DWP or @CORE or @E2E or @REGRESSION")
     public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
@@ -66,14 +59,6 @@ public class PaymentInfoSteps extends NavigationElements {
     public void switchPaymentMethod() {
         boolean success = new PaymentMethodSwitch().test(new HashMap<>());
         assertThat("Payment method has not been switched", success, is(true));
-    }
-
-    @And("^IBAN is \"([^\"]*)\" if not empty$")
-    public void changeIBAN(String iban) {
-        Map<String, String> options = new HashMap<>();
-        options.put("iban", iban);
-        boolean success = new PaymentDetailsIBANChange().test(options);
-        assertThat("IBAN has failed to be updated", success, is(true));
     }
 
     @And("^Payment method is updated$")
