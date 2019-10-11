@@ -21,7 +21,6 @@ public class JsTestRegistry {
     public static final String JS_TR_GET_LIST_ACTION = "TrGetListAction";
     public static final String JS_TR_SELECT_LIST_ROW = "TrSelectListRow";
     public static final String JS_TR_OPEN_LIST_PLUS_ACTIONS = "TrOpenListPlusActions";
-    public static final String JS_TR_EAN_CHECK_BOX = "TrEanCheckBox";
     public static final String JS_TR_SUBMIT_FORM = "TrSubmitForm";
     public static final String JS_TR_CLICK_TOGGLE_INPUT = "TrClickToggleInput";
     public static final String JS_TR_OPEN_MULTIPLE_INPUT_DIALOG = "TrOpenMultipleInputDialog";
@@ -40,7 +39,7 @@ public class JsTestRegistry {
     public static final String JS_TR_PAYMENT_DETAILS_MODAL_SAVE_ACTION = "TrPaymentDetailsModalSaveAction";
     public static final String JS_TR_SWITCH_PAYMENT_METHOD = "TrSwitchPaymentMethod";
     public static final String JS_TR_ADD_IBAN_TO_PAYMENT_DETAILS = "TrAddIBANToPaymentDetails";
-    
+
     private static final JsTestRegistry instance = new JsTestRegistry();
 
     public static final JsTestRegistry get() {
