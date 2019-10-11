@@ -247,6 +247,6 @@ public class ContractSteps extends DwpScenario {
     @And("^Message \"([^\"]*)\" is shown$")
     public void communicationPreferencesUpdatedSuccessMessageIsShown(String message) {
         String elementMessage = new DetailsPage().getCommunicationPreferencesUpdatedMessage();
-gd         Assert.assertTrue("Communication preference message is not as expected", message.equalsIgnoreCase(elementMessage));
+        Assert.assertTrue("Communication preference message is not as expected", message.equalsIgnoreCase(elementMessage));
     }
 }
