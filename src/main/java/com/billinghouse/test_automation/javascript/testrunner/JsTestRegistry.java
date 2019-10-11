@@ -21,7 +21,6 @@ public class JsTestRegistry {
     public static final String JS_TR_GET_LIST_ACTION = "TrGetListAction";
     public static final String JS_TR_SELECT_LIST_ROW = "TrSelectListRow";
     public static final String JS_TR_OPEN_LIST_PLUS_ACTIONS = "TrOpenListPlusActions";
-    public static final String JS_TR_SUBMIT_FORM = "TrSubmitForm";
     public static final String JS_TR_CLICK_TOGGLE_INPUT = "TrClickToggleInput";
     public static final String JS_TR_OPEN_MULTIPLE_INPUT_DIALOG = "TrOpenMultipleInputDialog";
     public static final String JS_TR_APPLY_MULTIPLE_FILTER_INPUT = "TrApplyMultipleFilterInput";
