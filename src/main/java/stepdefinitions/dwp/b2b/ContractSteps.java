@@ -5,6 +5,7 @@ import com.essent.testing.dwp.pageobject.guided_flow.cupq.NewQuotePage;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import com.essent.testing.dwp.pageobject.impl.quote.QuoteDetailsPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.details.DetailsPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -12,7 +13,11 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.junit.Assert;
+import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.tables.SalesChannel;
+
+import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -56,6 +61,29 @@ public class ContractSteps extends DwpScenario {
         new ContractPage().clickOnPlusMenuInTable(row, table);
         seleniumDriver.waitForRequestsToFinish();
         new BaseObjectPage().plusSubaction(action);
+    }
+
+    @When("^Click on Plus action of table \"([^\"]*)\" at row where \"([^\"]*)\" is \"([^\"]*)\" and click on \"([^\"]*)\"$")
+    public void clickPlusActionOnTableFilteringRows(String tableName, String columnName, String columnValue, String action) throws Exception {
+        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(10);
+        DetailsPage detailsPage = new DetailsPage();
+        List<WebElement> row = detailsPage.selectRowOnTable(tableName, columnName, columnValue);
+        WebElement plusActionElement = row.get(row.size()-1);
+        detailsPage.clickOnPlusMenuInRow(plusActionElement);
+        seleniumDriver.waitForRequestsToFinish();
+        new BaseObjectPage().plusSubaction(action);
+    }
+
+    @And("^\"([^\"]*)\" preference at column \"([^\"]*)\" is \"([^\"]*)\" on table \"([^\"]*)\"$")
+    public void checkPreferenceColumnData(String communicationType, String columnName, String expectedPreference, String tableName) throws Exception{
+        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(10);
+        DetailsPage detailsPage = new DetailsPage();
+        List<WebElement> row = detailsPage.selectRowOnTable(tableName, columnName, communicationType);
+        int preferenceColumn = 3;
+        WebElement communicationPreferenceRow = row.get(preferenceColumn);
+        Assert.assertTrue("Preference is not " + expectedPreference, communicationPreferenceRow.getText().equals(expectedPreference));
     }
 
     @And("^Save EAN from active contract$")

@@ -1,7 +1,14 @@
 package com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.details;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
+import com.essent.testing.dwp.pageobject.table.Filter;
+import com.essent.testing.dwp.pageobject.table.TableFilter;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class DetailsPage extends Component {
 
@@ -88,11 +95,24 @@ public class DetailsPage extends Component {
 
     public void emailAddressInputIsCleared() {
         seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.findElement(By.id(PREFERENCES_EMAIL_ADDRESS)).sendKeys("");
+        Sleeper.sleepTightInSeconds(5);
+        seleniumDriver.findElement(By.id(PREFERENCES_EMAIL_ADDRESS)).clear();
     }
 
     public String getCommunicationPreferencesUpdatedMessage() {
         seleniumDriver.waitForRequestsToFinish();
-        return seleniumDriver.findElement(By.id(COMMUNICATION_PREFERENCES_UPDATED_SUCCESS_MESSAGE)).getAttribute("value");
+        return seleniumDriver.findElementWhenPresent(By.xpath(COMMUNICATION_PREFERENCES_UPDATED_SUCCESS_MESSAGE)).getText();
+    }
+
+    public List<WebElement> selectRowOnTable(String tableName, String columnName, String columnValue) throws Exception {
+        List<Filter> filters = Arrays.asList(new Filter(columnName, columnValue));
+        return new TableFilter()
+            .getTable(tableName)
+            .findBy(filters)
+            .get();
+    }
+
+    public void clickOnPlusMenuInRow(WebElement plusMenu) {
+        plusMenu.click();
     }
 }

@@ -51,13 +51,14 @@ Feature: Create new customer with general communication preference: By email and
         Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
 
         When Dashboard menu is "Details"
-        And Plus action of "Legal" element from "Communicatievoorkeuren" and click on "Update"
+        And Click on Plus action of table "CommunicationPreferencesOnAccount" at row where "COMMUNICATIETYPE" is "Legal" and click on "Update"
         And E-mailadres input is cleared
         And "Kanaal" selection is "Per post"
-        And click on "Opslaan"
-        Then Message "Communication preferences for Billing customers switched from EMAIL to POST." is shown        ***********
-        And "Algemeen" (General) preference has value "Per post"
-        And "Mandaat" preference has value "Per post"
-        And "Legal" preference has value "Per post"
-        And Go to "Primary" contact persons and check if there isn’t an emailaddress
+        And Wait for 5 seconds
 
+        And Click on "OPSLAAN" link
+        Then Message "Communication preferences for Billing customers switched from EMAIL to POST." is shown
+        And "Algemeen" preference at column "COMMUNICATIETYPE" is "Per post" on table "CommunicationPreferencesOnAccount"
+        And "Mandaat" preference at column "COMMUNICATIETYPE" is "Per post" on table "CommunicationPreferencesOnAccount"
+        And "Legal" preference at column "COMMUNICATIETYPE" is "Per post" on table "CommunicationPreferencesOnAccount"
+        And Table "ContactpersonsOnAccount" does not contain any value at column "E-mail & Mijn essent" within 5 seconds
