@@ -168,7 +168,6 @@ public class ContractSteps extends DwpScenario {
         new ContractPage().chooseDiscounts(kortingen);
         Sleeper.sleepTightInSeconds(10);
         seleniumDriver.waitForRequestsToFinish();
-
     }
 
     @And("^Wait for the first contract to be activated$")
@@ -212,8 +211,7 @@ public class ContractSteps extends DwpScenario {
 
     @Then("^Check if customer name contains \"([^\"]*)\"$")
     public void checkIfCustomerNameContains(String name) {
-        DetailsPage dp = new DetailsPage();
-        String customerName = dp.getCustomerName();
+        String customerName = new DetailsPage().getCustomerName();
         Assert.assertTrue("Actual customer name does not contain GLN",customerName.contains(name));
     }
 
@@ -234,19 +232,17 @@ public class ContractSteps extends DwpScenario {
 
     @And("^Copy product name$")
     public void copyProductName() {
-        ContractPage cp = new ContractPage();
-        parameterProvider.put("product",cp.getProductFromContracten());
+        parameterProvider.put("product", new ContractPage().getProductFromContracten());
     }
 
     @And("E-mailadres input is cleared")
     public void inputIsCleared() {
-        DetailsPage detailsPage = new DetailsPage();
-        detailsPage.emailAddressInputIsCleared();
+        new DetailsPage().emailAddressInputIsCleared();
     }
 
     @And("^Message \"([^\"]*)\" is shown$")
-    public void communicationPreferencesUpdatedSuccessMessageIsShown(String message) {
+    public void communicationPreferencesUpdatedSuccessMessageIsShown(String expectedMessage) {
         String elementMessage = new DetailsPage().getCommunicationPreferencesUpdatedMessage();
-        Assert.assertTrue("Communication preference message is not as expected", message.equalsIgnoreCase(elementMessage));
+        Assert.assertTrue("Communication preference message is not as expected", expectedMessage.equalsIgnoreCase(elementMessage));
     }
 }

@@ -66,10 +66,11 @@ public class ContractSteps extends DwpScenario {
     @When("^Click on Plus action of table \"([^\"]*)\" at row where \"([^\"]*)\" is \"([^\"]*)\" and click on \"([^\"]*)\"$")
     public void clickPlusActionOnTableFilteringRows(String tableName, String columnName, String columnValue, String action) throws Exception {
         seleniumDriver.waitForRequestsToFinish();
-        Sleeper.sleepTightInSeconds(10);
+        Sleeper.sleepTightInSeconds(5);
         DetailsPage detailsPage = new DetailsPage();
         List<WebElement> row = detailsPage.selectRowOnTable(tableName, columnName, columnValue);
-        WebElement plusActionElement = row.get(row.size()-1);
+        int plusMenuColumn = row.size()-1;
+        WebElement plusActionElement = row.get(plusMenuColumn);
         detailsPage.clickOnPlusMenuInRow(plusActionElement);
         seleniumDriver.waitForRequestsToFinish();
         new BaseObjectPage().plusSubaction(action);
@@ -78,12 +79,11 @@ public class ContractSteps extends DwpScenario {
     @And("^\"([^\"]*)\" preference at column \"([^\"]*)\" is \"([^\"]*)\" on table \"([^\"]*)\"$")
     public void checkPreferenceColumnData(String communicationType, String columnName, String expectedPreference, String tableName) throws Exception{
         seleniumDriver.waitForRequestsToFinish();
-        Sleeper.sleepTightInSeconds(10);
-        DetailsPage detailsPage = new DetailsPage();
-        List<WebElement> row = detailsPage.selectRowOnTable(tableName, columnName, communicationType);
+        Sleeper.sleepTightInSeconds(5);
+        List<WebElement> row = new DetailsPage().selectRowOnTable(tableName, columnName, communicationType);
         int preferenceColumn = 3;
-        WebElement communicationPreferenceRow = row.get(preferenceColumn);
-        Assert.assertTrue("Preference is not " + expectedPreference, communicationPreferenceRow.getText().equals(expectedPreference));
+        String communicationPreference = row.get(preferenceColumn).getText();
+        Assert.assertTrue("Preference is not " + expectedPreference, communicationPreference.equals(expectedPreference));
     }
 
     @And("^Save EAN from active contract$")
