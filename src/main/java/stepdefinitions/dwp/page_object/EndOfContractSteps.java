@@ -9,10 +9,7 @@ import cucumber.api.java.en.And;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 
-import static org.hamcrest.MatcherAssert.assertThat;
 import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.JS_TR_SELECT_CONTRACTLINE;
-import static org.hamcrest.Matchers.is;
-
 
 public class EndOfContractSteps extends DwpScenario {
 
@@ -46,11 +43,6 @@ public class EndOfContractSteps extends DwpScenario {
     @And("^Click Select Contractline$")
     public void clickSelectContractline() {
         new EndOfContractPage().simpleExecuteJavaScript(JS_TR_SELECT_CONTRACTLINE);
-    }
-
-    @And("^EAN check box$")
-    public void eanCheckBox() {
-        assertThat(new EndOfContractPage().checkEanCheckBox(), is(true));
     }
 
     @Override
