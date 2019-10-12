@@ -31,6 +31,7 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
 
         When Payment details are received
         Then Wait until contract instance starts
+        And Check order in jbilling
 
         Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
         When Left menu is "contracting-switching"
@@ -39,10 +40,12 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
         And "Klantnummer" input is "parameter:accountNumber"
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
 
+#        When Dashboard menu is "Contracten"
+         And "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
+
         #2. Trigger renewal batch
         #"Start & Einddatum" is parsed, start is put to parameterProvider as "Start & Einddatum - start", end - as "Start & Einddatum - end"
-        When Dashboard menu is "Contracten"
-        And End of interval from "1st" row of table "Contracten" at column "Start & Einddatum" is checked
+        When End of interval from "1st" row of table "Contracten" at column "Start & Einddatum" is checked
         #1.1. Collect jBilling customer Id
         And  Dashboard menu is "Details"
         And  Cell value at "1st" row at column "Id Billing customer" from table "Billing customer" is checked
