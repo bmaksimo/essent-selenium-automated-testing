@@ -38,8 +38,6 @@ public class ContractRenewalSteps extends NavigationElements {
     registerActiveScenario(scenario);
   }
 
-
-
   @And("Check if our {string} is covered by a valid tariffsheetperiod from table {string}")
   public void checkIfOurIsCoveredByAValidTariffsheetperiodFromTable(String intervalParameter, String table) {
     seleniumDriver.waitForRequestsToFinish();
