@@ -2,7 +2,6 @@ package stepdefinitions.dwp.contracts.b2c;
 
 import com.billinghouse.test_automation.util.dsl.EssentDateTimeFormat;
 import com.billinghouse.test_automation.util.dsl.IntervalUtil;
-import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.constant.ParameterKeys;
 import com.essent.testing.dwp.pageobject.ViewList;
 import com.essent.testing.dwp.pageobject.elements.NonEditable;
