@@ -81,23 +81,16 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
 
         When Click on "parameter:Contractnummer" link
         And  Dashboard menu is "Sales"
-        And Table "Offertes" has matching value "Passieve hernieuwing Geprijsd - Geaccepteerd" at column "Type & status"
-        And Table "Offertes" has matching value "parameter:Contract Start & Einddatum" at column "Start & Einddatum"
+        And Table "Offertes" has matching value "Passieve hernieuwing" at column "Type & status"
+        And Table "Offertes" has matching value "Geprijsd - Geaccepteerd" at column "Type & status"
         And Table "Offertes" has matching value "parameter:Id Billing customer" at column "Billing klant & Tariefdatum"
 
         #4 Validate the definition of renewal product (date valid within the period: "Start & einddatum hernieuwing")
         When Top arrow button is "Up"
         And  Plus menu is "Contracting -> TK1 Hernieuwingen -> Bepaal het hernieuwingsproduct"
-        And Sleep for 20 seconds
         And Top action is "Filters"
-        And  Selection with search is "Van pakket"
-        And  Modal dialog is "Select"
-        And  Search option is "parameter:PackageName"
-        And  Search button with label "Search" is clicked
-        And  First search result matching "parameter:PackageName" is checked
-        And  Submit search results button "Verzenden" is clicked
-        And  Modal dialog "Select" is not shown
-        And  All date values at column "Geldig tot" from table "Bepaal het hernieuwingsproduct" are within the period "parameter:Start & einddatum hernieuwing"
+        And Search for "parameter:PackageName" in the SelectWithSearch "Van pakket" and select option "parameter:PackageName" and Submit
+        And Check if our "parameter:Start & einddatum hernieuwing" is covered by a valid tariffsheetperiod from table "Bepaal het hernieuwingsproduct"
 
         #5 Communicate the renewal to the customer through the invoice
         Given I renew login to DWP as "billing.testautomation@essent.be"

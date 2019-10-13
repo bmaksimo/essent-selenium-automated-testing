@@ -80,17 +80,17 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
         When Click on "parameter:Contractnummer" link
         And  Dashboard menu is "Sales"
         And Table "Offertes" has matching value "Passieve hernieuwing" at column "Type & status"
-        And Table "Offertes" has matching value "Geprijsd - Geaccepteerd" at column "Type & status"
+        And Table "Offertes" has matching value "Geprijsd" at column "Type & status"
         And Table "Offertes" has matching value "parameter:Id Billing customer" at column "Billing klant & Tariefdatum"
 
         #4 Validate the definition of renewal product (date valid within the period: "Start & einddatum hernieuwing")
         When Top arrow button is "Up"
         And Plus menu is "Contracting -> TK1 Hernieuwingen -> Bepaal het hernieuwingsproduct"
         And Top action is "Filters"
-        And Search for "COMFORT_TEST" in the SelectWithSearch "Van pakket" and select option "COMFORT_TEST" and Submit
+        And Search for "parameter:PackageName" in the SelectWithSearch "Van pakket" and select option "parameter:PackageName" and Submit
         And Check if our "parameter:Start & einddatum hernieuwing" is covered by a valid tariffsheetperiod from table "Bepaal het hernieuwingsproduct"
 
-        #5 Communicate the renewal to the customer through the invoice
+        #5 Communicate the renewal to the customer through a letter
         When Plus menu is "Contracting -> TK1 Hernieuwingen -> Hernieuwingsbatches"
         When Click on "parameter:suitecrm-customer-name" link
         And Click on "VERSTUUR PASSIEVE HERNIEUWINGSBRIEVEN" link

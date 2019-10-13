@@ -56,9 +56,14 @@ public class ContractRenewalSteps extends NavigationElements {
     Interval renewalPeriod = productTnterval(periodOfRenewal);
 
     for (int i = 0; i < dateValuesFrom.size(); i++) {
-      Interval myInterval = new Interval(
+      //The endDate might be empty, this means the line is valid for eternity
+      String endDate = dateValuesUntil.get(i);
+      if (endDate.isEmpty()) {
+        endDate = "2999-12-31";
+      }
+              Interval myInterval = new Interval(
               INTERVAL_DATE_FORMATTER.parseDateTime(dateValuesFrom.get(i)),
-              INTERVAL_DATE_FORMATTER.parseDateTime(dateValuesUntil.get(i))
+              INTERVAL_DATE_FORMATTER.parseDateTime(endDate)
       );
       if (myInterval.contains(renewalPeriod)) {
         return;
