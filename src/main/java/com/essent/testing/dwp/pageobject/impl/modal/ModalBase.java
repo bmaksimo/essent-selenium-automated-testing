@@ -36,4 +36,8 @@ public class ModalBase extends Component {
 
         return true;
     }
+
+    public boolean modalContainsHeader(String expectedModalHeader) {
+        return null != seleniumDriver.findElementWhenVisible(By.xpath("//h5[text()[contains(.,'" + expectedModalHeader + "')]]"));
+    }
 }
