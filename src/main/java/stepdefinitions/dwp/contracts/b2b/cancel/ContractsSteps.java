@@ -213,6 +213,26 @@ public class ContractsSteps extends DwpScenario{
         Assert.assertTrue(String.format("Start date \"%s\" differs from the end date \"%s\" by more than 1 year ", sd, ed), Arrays.asList(expectedRange).contains(ar));
     }
 
+
+    @Then("Check product change has succeeded$")
+    public void checkProductChangeSuccess() {
+        seleniumDriver.waitForRequestsToFinish();
+        ContractPage cp = new ContractPage();
+        int refreshCount = 10;
+        boolean succeededMessage = false;
+        for (int i = 0; i < refreshCount; i++) {
+            if (containsAtLeastOneSucceededMessage(cp)) {
+                succeededMessage = true;
+                break;
+            } else {
+                Sleeper.sleepTightInSeconds(10);
+                seleniumDriver.getDriver().navigate().back();
+                seleniumDriver.getDriver().navigate().forward();
+            }
+        }
+        Assert.assertTrue("Product change has failed.", succeededMessage);
+    }
+
     @Then("Check table value \"([^\"]*)\" is found for created quote")
     public void checkTableValueMatches(String tableValue) {
         seleniumDriver.waitForRequestsToFinish();
@@ -231,6 +251,10 @@ public class ContractsSteps extends DwpScenario{
             }
         }
         assertThat(String.format("Table value \"%s\" does not exist in quote data", tableValue), expectedValue, is(true));
+    }
+
+    private boolean containsAtLeastOneSucceededMessage(ContractPage contractPage) {
+        return contractPage.locateMessageElement().filter(me -> !me.getText().contains("0 succeeded")).isPresent();
     }
 
     @Then("^Product Change dates are \"([^\"]*)\" and \"([^\"]*)\"$")
