@@ -748,6 +748,21 @@ public class ViewListChecks extends NavigationElements {
         assertThat(message, found, empty());
     }
 
+    @And("^Table \"([^\"]*)\" does not contain any value at column \"([^\"]*)\" within (\\d+) seconds?$")
+    public void viewListDoesNotContainAnyValueAtColumn(String table, String column, int seconds){
+        ViewListTestObject viewListModel = new ViewListTestObject();
+        String arrow = parameterProvider.getValueOrParameterAsString("parameter:navigation");
+        String dashboardMenu = parameterProvider.getValueOrParameterAsString("parameter:dashboard-menu");
+
+        FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), seconds, 10);
+        waiter.withMessage(String.format("List element contains some value at column \"%s\"", column));
+        List<String> found =  waiter.until((ViewListTestObject callback) -> {
+            loopBack(arrow, dashboardMenu);
+            return callback.fetchColumnData(table, column).stream().filter(String::isEmpty).collect(Collectors.toList());
+        });
+        String message = String.format("Table \"%s\" should not contain value any value at column \"%s\"", table, column);
+        assertThat(message, found, empty());
+    }
 
     //TODO Create a special test harness class for invoice checks,
     //and move the methods, related to invoice checks, there.

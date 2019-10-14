@@ -1,7 +1,14 @@
 package com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.details;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
+import com.essent.testing.dwp.pageobject.table.Filter;
+import com.essent.testing.dwp.pageobject.table.TableFilter;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class DetailsPage extends Component {
 
@@ -16,8 +23,9 @@ public class DetailsPage extends Component {
     private static final String PAYMENT_METHOD = "//list[@list-key='BillingCustomerOnaccount']//tbody//td[3]//span[2]";
     private static final String ACCOUNT_BLOCK_START_DATE = "//*[@id=\"rows\"]/tr[1]/td[2]/list-simple-two-liner-cell/p/span[1]";
     private static final String ACCOUNT_BLOCK_END_DATE = "//list[@list-key='accountBlockReasonsForAccountList']//tr[1]/td[3]/list-simple-two-liner-cell/p";
+    private static final String PREFERENCES_EMAIL_ADDRESS = "paym-details-accounts-contacts-primary-contact-c-1-contacts-contact-details-contact-details-type-email-contact-details-value-field";
+    private static final String COMMUNICATION_PREFERENCES_UPDATED_SUCCESS_MESSAGE = "//div/focus-mode/focus-mode-content/div/div/div[2]/flash-message-renderer/flash-message";
     private static final String INVOICE_BLOCK_END_DATE = "//list[@list-key='invoiceBlockReasonsForInvoice']//tr[1]/td[3]/list-simple-two-liner-cell/p";
-
 
     public void findIban(String iban) {
         seleniumDriver.waitForRequestsToFinish();
@@ -83,5 +91,28 @@ public class DetailsPage extends Component {
     public String getAccountBlockEndDateNotExist() {
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElement(By.xpath(ACCOUNT_BLOCK_END_DATE)).getAttribute("value");
+    }
+
+    public void emailAddressInputIsCleared() {
+        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(5);
+        seleniumDriver.findElement(By.id(PREFERENCES_EMAIL_ADDRESS)).clear();
+    }
+
+    public String getCommunicationPreferencesUpdatedMessage() {
+        seleniumDriver.waitForRequestsToFinish();
+        return seleniumDriver.findElementWhenPresent(By.xpath(COMMUNICATION_PREFERENCES_UPDATED_SUCCESS_MESSAGE)).getText();
+    }
+
+    public List<WebElement> selectRowOnTable(String tableName, String columnName, String columnValue) throws Exception {
+        List<Filter> filters = Arrays.asList(new Filter(columnName, columnValue));
+        return new TableFilter()
+            .getTable(tableName)
+            .findBy(filters)
+            .get();
+    }
+
+    public void clickOnPlusMenuInRow(WebElement plusMenu) {
+        plusMenu.click();
     }
 }
