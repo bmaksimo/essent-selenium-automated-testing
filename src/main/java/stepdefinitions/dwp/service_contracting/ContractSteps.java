@@ -235,9 +235,9 @@ public class ContractSteps extends DwpScenario {
         parameterProvider.put("product", new ContractPage().getProductFromContracten());
     }
 
-    @And("E-mailadres input is cleared")
-    public void inputIsCleared() {
-        new DetailsPage().emailAddressInputIsCleared();
+    @And("\"([^\"]*)\" E-mailadres input is cleared")
+    public void inputIsCleared(String preference) {
+        new DetailsPage().emailAddressInputIsCleared(preference);
     }
 
     @And("^Message \"([^\"]*)\" is shown$")
