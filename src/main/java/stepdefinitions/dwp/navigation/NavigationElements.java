@@ -86,15 +86,6 @@ public abstract class NavigationElements extends DwpScenario {
         }
     }
 
-
-    public class ValidateCustomer implements Predicate<Map> {
-        @Override
-        public boolean test(Map name) {
-            seleniumDriver.waitForRequestsToFinish();
-            return executeJavascriptTest(JS_TR_FIND_CUSTOMER, name);
-        }
-    }
-
     public class SearchCustomer implements Predicate<String> {
         @Override
         public boolean test(String name) {

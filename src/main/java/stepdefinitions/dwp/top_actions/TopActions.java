@@ -109,17 +109,6 @@ public class TopActions extends NavigationElements {
             success, is(true));
     }
 
-    @And("^Customer \"([^\"]*)\" is found$")
-    public void customerFind(String inputName){
-        String name = parameterProvider.getValueOrParameterAsString(inputName);
-        Map<String, String> customerName = new HashMap<>();
-        String Inputname = parameterProvider.getValueOrParameterAsString(name);
-        customerName.put("name", Inputname);
-        boolean success = new ValidateCustomer().test(customerName);
-        assertThat(String.format("View list did not contain customer '%s'", inputName),
-            success, is(true));
-    }
-
     @And("Intermittent Alert window is confirmed")
     public void handleAlert() {
         boolean actualAlert = isAlertPresent();
