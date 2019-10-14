@@ -36,7 +36,6 @@ public class JsTestRegistry {
     public static final String JS_TR_SELECT_CONTRACTLINE = "TrSelectContractline";
     public static final String JS_TR_PAYMENT_DETAILS_MODAL_SAVE_ACTION = "TrPaymentDetailsModalSaveAction";
     public static final String JS_TR_SWITCH_PAYMENT_METHOD = "TrSwitchPaymentMethod";
-    public static final String JS_TR_ADD_IBAN_TO_PAYMENT_DETAILS = "TrAddIBANToPaymentDetails";
 
     private static final JsTestRegistry instance = new JsTestRegistry();
 
