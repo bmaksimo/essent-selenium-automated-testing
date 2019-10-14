@@ -11,12 +11,11 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
@@ -33,24 +32,13 @@ public class FormElements extends DwpScenario {
         registerActiveScenario(scenario);
     }
 
-    private class CheckFormHeader implements Predicate<String> {
-        @Override
-        public boolean test(String header) {
-            int sec = 7;
-            Map<String, Object> options = new HashMap<>();
-            options.put("schedule_seconds", sec);
-            options.put("header", header);
-            boolean success = executeJavascriptTest("TrCheckFormHeader", options);
-            return success;
-        }
-    }
-
     @Then("^Form header is \"([^\"]*)\"$")
-    public void checkFormHeader(String formHeader) {
+    public void checkFormHeader(String expectedFormHeader) {
+        WebElement actualFormHeader = seleniumDriver.findElementWhenVisible(By.xpath("//div[contains(@class, 'form__header')]/*[normalize-space()='" + expectedFormHeader + "']"));
         given().await()
             .pollInterval(FIVE_HUNDRED_MILLISECONDS)
             .pollDelay(ONE_SECOND)
-            .atMost(new Duration(300, SECONDS)).until(() -> new CheckFormHeader().test(formHeader));
+            .atMost(new Duration(300, SECONDS)).until(actualFormHeader::isDisplayed);
     }
 
     @And("^\"([^\"]*)\" field value is \"([^\"]*)\"$")
