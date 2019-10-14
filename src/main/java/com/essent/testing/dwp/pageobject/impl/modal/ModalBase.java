@@ -15,21 +15,17 @@ public class ModalBase extends Component {
         seleniumDriver.waitForRequestsToFinish();
         int loopCounter = 0;
         // Is there a normal 'Confirm' button
-        if (!seleniumDriver.findElements(CONFIRM_BUTTON_SELECTOR).isEmpty()) {
-            logger().info("Button found ... trying to click it");
-            do {
-                try {
-                    seleniumDriver.waitAndClick(seleniumDriver.findElement(CONFIRM_BUTTON_SELECTOR));
-                    // If the button exist, and we clicked it, the button should not be present anymore
-                    loopCounter++;
-                } catch (Exception e) {
-                    break;
-                }
+        do {
+            try {
+                seleniumDriver.waitAndClick(seleniumDriver.findElement(CONFIRM_BUTTON_SELECTOR));
+                // If the button exist, and we clicked it, the button should not be present anymore
+                loopCounter++;
+            } catch (Exception e) {
+                validateForm(scenarioInfo);
+                break;
             }
-            while (loopCounter < 20 && !seleniumDriver.findElements(CONFIRM_BUTTON_SELECTOR).isEmpty());
-            return true;
         }
-        validateForm(scenarioInfo);
+        while (loopCounter < 20 && !seleniumDriver.findElements(CONFIRM_BUTTON_SELECTOR).isEmpty());
         handleAlert();
         return true;
     }
