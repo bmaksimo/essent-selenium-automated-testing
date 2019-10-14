@@ -531,20 +531,6 @@ public class ViewListChecks extends NavigationElements {
 
     }
 
-    @And("^Plus actions at \"([^\"]*)\" list row having cell value \"([^\"]*)\" at column \"([^\"]*)\" are open$")
-    public void openPlusActions(String ordinal, String value, String columnName){
-        int row = extractNumericValue(ordinal);
-        String expectedValue = parameterProvider.getValueOrParameterAsString(value);
-        ViewListTestObject viewListModel = new ViewListTestObject();
-        boolean success = viewListModel.openListPlusActions(row);
-        String message = String.format("\"%s\" row list didn't have cell value \"%s\" at column \"%s\"", ordinal,
-            expectedValue, columnName);
-        assertThat(message, success, is(true));
-        logger().debug(String.format(
-            "- STEP: Plus actions at \"%s\" list row having cell value \"%s\" at column \"%s\" are opened - PASSED.",
-            ordinal, value, columnName));
-    }
-
     @Then("^Selected List rows have cell value \"([^\"]*)\" at column \"([^\"]*)\"$")
     public void checkSelectionData(String value, String columnName){
         ViewListTestObject viewListModel = new ViewListTestObject();

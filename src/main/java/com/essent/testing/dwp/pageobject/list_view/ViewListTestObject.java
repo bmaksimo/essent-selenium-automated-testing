@@ -105,12 +105,6 @@ public class ViewListTestObject extends Component implements ViewList {
     return cell.isPresent() && cell.get().contains(value);
   }
 
-  public boolean openListPlusActions(int row) {
-    Map<String, Object> options = new HashMap<>();
-    options.put("index", row);
-    return executeJavascriptTest(JS_TR_OPEN_LIST_PLUS_ACTIONS, options);
-  }
-
   public List<Integer> fetchListRowsIndices(String value, String columnName) {
     Map viewTable = executeJavascriptMethod(JS_TR_GET_TABLE_MODEL, new HashMap<>());
     int index = getColumnNameIndex(columnName, viewTable);

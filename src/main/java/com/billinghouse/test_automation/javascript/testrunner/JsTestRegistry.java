@@ -18,7 +18,6 @@ public class JsTestRegistry {
     public static final String JS_TR_TOGGLE_INPUT_STATE = "TrToggleInputState";
     public static final String JS_TR_CHECK_VIEW_LIST_HEADER = "TrCheckViewListHeader";
     public static final String JS_TR_GET_LIST_ACTION = "TrGetListAction";
-    public static final String JS_TR_OPEN_LIST_PLUS_ACTIONS = "TrOpenListPlusActions";
     public static final String JS_TR_CLICK_TOGGLE_INPUT = "TrClickToggleInput";
     public static final String JS_TR_OPEN_MULTIPLE_INPUT_DIALOG = "TrOpenMultipleInputDialog";
     public static final String JS_TR_APPLY_MULTIPLE_FILTER_INPUT = "TrApplyMultipleFilterInput";
