@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class JsTestRegistry {
-    public static final String JS_TR_SELECT_LIST_ROWS = "TrSelectListRows";
     public static final String JS_TR_FETCH_DATA_SELECTION = "TrFetchDataSelection";
     public static final String JS_TR_GET_TABLE_MODEL = "TrGetTableModel";
     public static final String JS_TR_CLICK_TABLE_CELL_URL = "TrClickTableCellUrl";

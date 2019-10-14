@@ -141,17 +141,6 @@ public class ViewListTestObject extends Component implements ViewList {
     return CollectionUtils.isNotEmpty(indices) && row <= indices.size();
   }
 
-  public boolean selectListRows(int numRows, String value, String columnName) {
-    List<Integer> rows = fetchListRowsIndices(value, columnName);
-    if (CollectionUtils.isEmpty(rows) || numRows > rows.size()) {
-      return false;
-    }
-    List<Integer> indices = IntStream.range(1, numRows + 1).boxed().collect(Collectors.toList());
-    Map<String, Object> options = new HashMap<>();
-    options.put("indices", indices);
-    return executeJavascriptTest(JS_TR_SELECT_LIST_ROWS, options, true);
-  }
-
   public List<String> fetchDataSelection(String columnName) {
     Map<String, Object> options = new HashMap<>();
     options.put("include_selection", true);

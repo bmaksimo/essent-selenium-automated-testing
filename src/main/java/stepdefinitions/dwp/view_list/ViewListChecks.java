@@ -545,18 +545,6 @@ public class ViewListChecks extends NavigationElements {
             ordinal, value, columnName));
     }
 
-    @And("^\"([^\"]*)\" List rows? having cell value \"([^\"]*)\" at column \"([^\"]*)\" (?:is|are) selected$")
-    public void selectListRowHavingCellValueAtColumn(int row, String value, String columnName){
-        ViewListTestObject viewListModel = new ViewListTestObject();
-        boolean success = viewListModel.selectListRows(row, value, columnName);
-        String message = String.format("\"%s\" list row(s) didn't have cell value \"%s\" at column \"%s\"", row, value,
-            columnName);
-        assertThat(message, success, is(true));
-        logger().debug(String.format(
-            "- STEP: \"%s\" list row(s) having cell value \"%s\" at column \"%s\" is/are selected - PASSED.", row,
-            value, columnName));
-    }
-
     @Then("^Selected List rows have cell value \"([^\"]*)\" at column \"([^\"]*)\"$")
     public void checkSelectionData(String value, String columnName){
         ViewListTestObject viewListModel = new ViewListTestObject();

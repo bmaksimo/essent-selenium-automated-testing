@@ -22,8 +22,6 @@ public interface ViewList {
 
   boolean selectListRow(int row, String value, String columnName);
 
-  boolean selectListRows(int numRows, String value, String columnName);
-
   List<String> fetchDataSelection(String columnName);
 
   List<String> fetchColumnData(String table, String columnName);
