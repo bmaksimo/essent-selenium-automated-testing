@@ -60,7 +60,7 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
         And "Renewal date to" date is "parameter:Start & Einddatum - end"
         And "EAN-code" input is "parameter:EAN-code"
         Then Changes are confirmed
-        And Table "TK1 - Hernieuwingsbatches" contains value "parameter:suitecrm-customer-name" at column "Batchnaam"
+        And Table "TK1 - Hernieuwingsbatches" has matching value "parameter:suitecrm-customer-name" at column "Batchnaam"
 
         #Checks
         #3. Validate renewal batch
