@@ -15,10 +15,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
@@ -36,12 +33,12 @@ public class FormElements extends DwpScenario {
     }
 
     @Then("^Form header is \"([^\"]*)\"$")
-    public void checkFormHeader(String formHeader) {
-        WebElement header = seleniumDriver.findElementWhenVisible(By.xpath("//div[contains(@class, 'form__header')]/*[normalize-space()='" + formHeader + "']"));
+    public void checkFormHeader(String expectedFormHeader) {
+        WebElement actualFormHeader = seleniumDriver.findElementWhenVisible(By.xpath("//div[contains(@class, 'form__header')]/*[normalize-space()='" + expectedFormHeader + "']"));
         given().await()
             .pollInterval(FIVE_HUNDRED_MILLISECONDS)
             .pollDelay(ONE_SECOND)
-            .atMost(new Duration(300, SECONDS)).until(header::isDisplayed);
+            .atMost(new Duration(300, SECONDS)).until(actualFormHeader::isDisplayed);
     }
 
     @And("^\"([^\"]*)\" field value is \"([^\"]*)\"$")
