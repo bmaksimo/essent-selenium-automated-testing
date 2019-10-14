@@ -2,6 +2,8 @@
 @DWP
 @REGRESSION
 @CREDIT-AND-CONTROL
+@Unstable
+
 Feature: NUAT-412: Import coda file
     Background:
         Given I login as API user "soapui_b2c"

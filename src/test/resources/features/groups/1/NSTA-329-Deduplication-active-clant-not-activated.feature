@@ -2,6 +2,7 @@
 @DWP
 @B2C
 @ALL
+@Unstable
 
 Feature: NSTA-329 Deduplication activated customer
 
@@ -69,9 +70,9 @@ Feature: NSTA-329 Deduplication activated customer
         And Customer address is
             | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
             | Mechelsesteenweg | 2       |            |     | 2550       |         |         |
-        And Deduplication dialogue "Soortgelijke klanten" is shown
-        Then Deduplication dialogue link "Create quote for account" is clicked
-        Then Save changes
+        Then Deduplication dialogue "Soortgelijke klanten" is shown
+        And Deduplication dialogue link "Create quote for account" is clicked
+        And Save changes
 
         Given "Sales kanaal" selection is "Inbound"
         And Quote details are confirmed

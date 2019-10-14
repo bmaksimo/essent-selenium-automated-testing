@@ -21,10 +21,10 @@ Feature: NUAT-424: Change Pay Method - nl_BE
         When Plus action of "1" element from "BillingCustomerOnaccount" and click on "Update"
         Then Modal "Update billing customer" is displayed
 
-        When Payment method is switched
-        And IBAN is "NL43ABNA0978459932" if not empty
-        And Payment details are confirmed
+        Given Payment method is switched
+        When Payment details are confirmed
         Then Payment method is updated
+
         When Dashboard menu is "Documenten"
         Then Check if document "customer-signature.pdf" is present
 

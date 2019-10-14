@@ -4,6 +4,7 @@
 @B2C
 @ALL
 @DUNNING
+@Unstable
 
 Feature: TESTAUTO-204 Dunning-create-invoice-block
 

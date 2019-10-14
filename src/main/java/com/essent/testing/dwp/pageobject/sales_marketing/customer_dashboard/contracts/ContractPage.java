@@ -539,7 +539,5 @@ public class ContractPage extends Component {
         Sleeper.sleepTightInSeconds(4);
         seleniumDriver.waitAndSendKeys(findElementWhenVisible(By.xpath(DELIVERY_ADDRESS_CITY)), city);
         seleniumDriver.waitForRequestsToFinish();
-
     }
-
 }

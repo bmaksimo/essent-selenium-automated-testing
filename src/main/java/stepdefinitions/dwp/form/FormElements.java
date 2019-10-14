@@ -18,7 +18,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.JS_TR_SUBMIT_FORM;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
 import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
@@ -30,7 +29,7 @@ import static org.hamcrest.Matchers.is;
 public class FormElements extends DwpScenario {
 
     @Before("@DWP or @CORE or @E2E or @REGRESSION")
-    public void setupTest(Scenario scenario){
+    public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
     }
 
@@ -47,7 +46,7 @@ public class FormElements extends DwpScenario {
     }
 
     @Then("^Form header is \"([^\"]*)\"$")
-    public void checkFormHeader(String formHeader){
+    public void checkFormHeader(String formHeader) {
         given().await()
             .pollInterval(FIVE_HUNDRED_MILLISECONDS)
             .pollDelay(ONE_SECOND)
@@ -55,7 +54,7 @@ public class FormElements extends DwpScenario {
     }
 
     @And("^\"([^\"]*)\" field value is \"([^\"]*)\"$")
-    public void setFieldValue(String label, String expectedValue){
+    public void setFieldValue(String label, String expectedValue) {
         NonEditable field = new NonEditableImpl();
         FluentWait<NonEditable> waiter = waiter(field, 20, 5);
         waiter.until((NonEditable p) -> {
@@ -82,36 +81,24 @@ public class FormElements extends DwpScenario {
 
     }
 
-  /**
-   * Confirms the form submission.
-   * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
-   */
-  @And("^Form is submitted$")
-  public void formIsSubmitted(){
-    seleniumDriver.waitForRequestsToFinish();
-    Map<String, String> options = new HashMap<>();
-    executeJavascriptTest(JS_TR_SUBMIT_FORM, options);
-    seleniumDriver.waitForRequestsToFinish();
-  }
+    @And("^Option value of \"([^\"]*)\" selection in the card \"([^\"]*)\" is matching \"([^\"]*)\"$")
+    public void checkSelectionOption(String label, String cardName, String expected) {
+        String expectedValue = parameterProvider.getValueOrParameterAsString(expected);
+        String message =
+            String.format("Dropdown box labelled \"%s\" in the card \"%s\"", label, cardName);
+        Optional<String> option = new ComboBoxImpl().getOption(cardName, label);
+        assertThat(message + " was empty", option.isPresent(), is(true));
+        String actual = option.get();
+        assertThat(
+            message + String.format(" expected \"%s\" but actually was \"%s\"", expectedValue, actual),
+            actual,
+            containsString(expectedValue));
+    }
 
-  @And("^Option value of \"([^\"]*)\" selection in the card \"([^\"]*)\" is matching \"([^\"]*)\"$")
-  public void checkSelectionOption(String label, String cardName, String expected){
-    String expectedValue = parameterProvider.getValueOrParameterAsString(expected);
-    String message =
-        String.format("Dropdown box labelled \"%s\" in the card \"%s\"", label, cardName);
-    Optional<String> option = new ComboBoxImpl().getOption(cardName, label);
-    assertThat(message + " was empty", option.isPresent(), is(true));
-    String actual = option.get();
-    assertThat(
-        message + String.format(" expected \"%s\" but actually was \"%s\"", expectedValue, actual),
-        actual,
-        containsString(expectedValue));
-  }
-
-  @Override
-  @After("@DWP or @CORE or @E2E or @REGRESSION")
-  public void tearDown() {
-    super.tearDown();
-  }
+    @Override
+    @After("@DWP or @CORE or @E2E or @REGRESSION")
+    public void tearDown() {
+        super.tearDown();
+    }
 
 }

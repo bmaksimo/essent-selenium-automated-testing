@@ -3,7 +3,8 @@
 @B2C
 @REGRESSION
 @ALL
-
+@Unstable
+    
 Feature: NSTA - 338 Move new address
 
     Background:
