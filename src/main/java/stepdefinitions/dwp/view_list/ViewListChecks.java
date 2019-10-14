@@ -62,17 +62,6 @@ public class ViewListChecks extends NavigationElements {
         }
     }
 
-    private class CheckViewListHeader implements Predicate<String> {
-        @Override
-        public boolean test(String header) {
-            int sec = 2;
-            Map<String, Object> options = new HashMap<>();
-            options.put("schedule_seconds", sec);
-            options.put("header", header);
-            return executeJavascriptTest(JS_TR_CHECK_VIEW_LIST_HEADER, options);
-        }
-    }
-
     private class GetListAction implements Predicate<String> {
         @Override
         public boolean test(String name) {
