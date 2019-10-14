@@ -14,8 +14,6 @@ public interface ViewList {
 
   boolean containsCellValue(int rowFromOne, String value, String columnName, String tableName);
 
-  boolean selectListRow(int row);
-
   boolean openListPlusActions(int row);
 
   List<Integer> fetchListRowsIndices(String value, String columnName);

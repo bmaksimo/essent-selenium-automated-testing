@@ -105,12 +105,6 @@ public class ViewListTestObject extends Component implements ViewList {
     return cell.isPresent() && cell.get().contains(value);
   }
 
-  public boolean selectListRow(int row) {
-    Map<String, Object> options = new HashMap<>();
-    options.put("index", row);
-    return executeJavascriptTest(JS_TR_SELECT_LIST_ROW, options);
-  }
-
   public boolean openListPlusActions(int row) {
     Map<String, Object> options = new HashMap<>();
     options.put("index", row);
