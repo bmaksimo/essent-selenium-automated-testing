@@ -356,24 +356,6 @@ public class ViewListChecks extends NavigationElements {
         });
     }
 
-
-    @When("^First list element with value \"([^\"]*)\" at column \"([^\"]*)\" has status \"([^\"]*)\" at column \"([^\"]*)\" within (\\d+) seconds refreshing \"([^\"]*)\"$")
-    public void hasStatusWithinTimeout(String value, String columnName, String status, String secondColumnName, int seconds, String linkText){
-        String expectedValue = parameterProvider.getValueOrParameterAsString(value);
-        FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), seconds / 2, 5);
-        waiter.withMessage(String.format("Status did not switch to \"%s\" within \"%s\" seconds", status, seconds));
-        waiter.until((ViewListTestObject callback) -> {
-            seleniumDriver.waitAndClick(seleniumDriver.findElement(By.linkText(linkText)));
-            return CollectionUtils.isNotEmpty(callback.fetchListRowsIndices(expectedValue, columnName));
-        });
-        waiter = waiter(new ViewListTestObject(), seconds / 2, 5);
-        waiter.until((ViewListTestObject callback) -> {
-            seleniumDriver.waitAndClick(seleniumDriver.findElement(By.linkText(linkText)));
-            int row = callback.fetchListRowsIndices(value, columnName).get(0);
-            return callback.containsDataAt(row, status, secondColumnName);
-        });
-    }
-
     @And("^Cell values? from selected rows? and column \"([^\"]*)\" (?:are|is) checked$")
     public void checkDataSelection(String columnName){
         ViewListTestObject viewListModel = new ViewListTestObject();
@@ -516,19 +498,6 @@ public class ViewListChecks extends NavigationElements {
                 String.format(
                     "- STEP: \"%s\" list element with value at column \"%s\" is checked - PASSED.",
                     tableName, columnName));
-    }
-
-    @And("^Select \"([^\"]*)\" List row having cell value \"([^\"]*)\" at column \"([^\"]*)\"$")
-    public void selectListRows(String ordinal, String value, String columnName){
-        int row = extractNumericValue(ordinal);
-        ViewListTestObject viewListModel = new ViewListTestObject();
-        boolean success = viewListModel.selectListRow(row, value, columnName);
-        String message = String.format("\"%s\" list row didn't contain value \"%s\" at column \"%s\"", ordinal, value,
-            columnName);
-        assertThat(message, success, is(true));
-        logger().debug(String.format("- STEP: \"%s\" list row having cell value \"%s\" at column \"%s\" - PASSED.",
-            ordinal, value, columnName));
-
     }
 
     @Then("^Selected List rows have cell value \"([^\"]*)\" at column \"([^\"]*)\"$")

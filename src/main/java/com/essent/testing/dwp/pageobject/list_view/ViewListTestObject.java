@@ -105,30 +105,6 @@ public class ViewListTestObject extends Component implements ViewList {
     return cell.isPresent() && cell.get().contains(value);
   }
 
-  public List<Integer> fetchListRowsIndices(String value, String columnName) {
-    Map viewTable = executeJavascriptMethod(JS_TR_GET_TABLE_MODEL, new HashMap<>());
-    int index = getColumnNameIndex(columnName, viewTable);
-    if (index < 0) {
-      return Collections.emptyList();
-    }
-    List<List> rows = getData(viewTable);
-    AtomicInteger idx = new AtomicInteger(1);
-    List<Integer> collect =
-        IntStream.range(1, rows.size() + 1)
-            .filter(
-                i ->
-                    idx.compareAndSet(i, i + 1)
-                        & ((ArrayList<String>) rows.get(i - 1)).get(index).contains(value))
-            .boxed()
-            .collect(Collectors.toList());
-    return collect;
-  }
-
-  public boolean selectListRow(int row, String value, String columnName) {
-    List<Integer> indices = fetchListRowsIndices(value, columnName);
-    return CollectionUtils.isNotEmpty(indices) && row <= indices.size();
-  }
-
   public List<String> fetchDataSelection(String columnName) {
     Map<String, Object> options = new HashMap<>();
     options.put("include_selection", true);
