@@ -24,7 +24,6 @@ public class JsTestRegistry {
     public static final String JS_TR_CLICK_TOGGLE_INPUT = "TrClickToggleInput";
     public static final String JS_TR_OPEN_MULTIPLE_INPUT_DIALOG = "TrOpenMultipleInputDialog";
     public static final String JS_TR_APPLY_MULTIPLE_FILTER_INPUT = "TrApplyMultipleFilterInput";
-    public static final String JS_TR_CHECK_MODAL_DIALOG = "TrCheckModalDialog";
     public static final String JS_TR_IS_NEXT_BUTTON_ENABLED = "TrIsNextButtonEnabled";
     public static final String JS_TR_CHECK_TABLE_CELL_VALUE = "TrCheckTableCellValue";
     public static final String JS_TR_GET_COCKPIT_ITEM = "TrGetCockpitItem";

@@ -1,6 +1,7 @@
 package stepdefinitions.dwp.modal.confirm;
 
 import com.essent.automation.util.Sleeper;
+import com.essent.testing.dwp.pageobject.impl.modal.ModalBase;
 import com.essent.testing.dwp.pageobject.impl.modal.confirm.ConfirmSignatureDialogImpl;
 import com.essent.testing.dwp.pageobject.modal.confirm.ConfirmSignatureDialog;
 import cucumber.api.Scenario;
@@ -11,23 +12,10 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import stepdefinitions.dwp.navigation.NavigationElements;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Predicate;
-
 import static org.hamcrest.MatcherAssert.assertThat;
-import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.JS_TR_CHECK_MODAL_DIALOG;
 import static org.hamcrest.Matchers.is;
 
 public class ConfirmationSteps extends NavigationElements {
-
-    private class CheckModalDialog implements Predicate<Map> {
-        @Override
-        public boolean test(Map options) {
-            seleniumDriver.waitForRequestsToFinish();
-            return executeJavascriptTest(JS_TR_CHECK_MODAL_DIALOG, options);
-        }
-    }
 
     @Before("@DWP or @CORE or @E2E or @REGRESSION")
     public void setupTest(Scenario scenario) {
@@ -69,9 +57,7 @@ public class ConfirmationSteps extends NavigationElements {
     @When("^Modal \"([^\"]*)\" is displayed$")
     public void checkModalDialogOpen(String headerText) {
         seleniumDriver.waitForRequestsToFinish();
-        Map<String, String> options = new HashMap<>();
-        options.put("headerText", headerText);
-        boolean success = new CheckModalDialog().test(options);
+        boolean success = new ModalBase().modalContainsHeader(headerText);
         assertThat(String.format("Action row %s was not found", headerText), success, is(true));
     }
 
