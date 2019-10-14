@@ -40,8 +40,8 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
         And "Klantnummer" input is "parameter:accountNumber"
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
 
-#        When Dashboard menu is "Contracten"
-         And "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
+        When Dashboard menu is "Contracten"
+        And "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
 
         #2. Trigger renewal batch
         #"Start & Einddatum" is parsed, start is put to parameterProvider as "Start & Einddatum - start", end - as "Start & Einddatum - end"
@@ -80,7 +80,7 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
         When Click on "parameter:Contractnummer" link
         And  Dashboard menu is "Sales"
         And Table "Offertes" has matching value "Passieve hernieuwing" at column "Type & status"
-        And Table "Offertes" has matching value "Geprijsd" at column "Type & status"
+        And Table "Offertes" has matching value "Geprijsd - Geaccepteerd" at column "Type & status"
         And Table "Offertes" has matching value "parameter:Id Billing customer" at column "Billing klant & Tariefdatum"
 
         #4 Validate the definition of renewal product (date valid within the period: "Start & einddatum hernieuwing")
