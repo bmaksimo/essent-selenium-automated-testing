@@ -30,7 +30,6 @@ public class JsTestRegistry {
     public static final String JS_TR_LIST_PLUS_MENU_ACTION = "TrListPlusMenuAction";
     public static final String JS_TR_ARROW_ACTION = "TrArrowAction";
     public static final String JS_TR_CLICK_DASHBOARD_MENU_BUTTON = "TrClickDashboardMenuButton";
-    public static final String JS_TR_FIND_CUSTOMER = "TrFindCustomer";
     public static final String JS_TR_SEARCH_CUSTOMER = "TrSearchCustomer";
     public static final String JS_TR_SELECT_CONTRACTLINE = "TrSelectContractline";
     public static final String JS_TR_PAYMENT_DETAILS_MODAL_SAVE_ACTION = "TrPaymentDetailsModalSaveAction";
