@@ -37,6 +37,7 @@ import static com.billinghouse.test_automation.util.dsl.NumericUtil.amountAsInt;
 import static com.billinghouse.test_automation.util.dsl.NumericUtil.checkAmount;
 import static com.billinghouse.test_automation.util.dsl.NumericUtil.sumOfAmounts;
 import static com.essent.testing.dwp.constant.DwpConstants.FLEMISCH_LOCALE;
+import static junit.framework.TestCase.fail;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -159,18 +160,19 @@ public class ViewListChecks extends NavigationElements {
     }
 
     @Then("^Table \"([^\"]*)\" has matching value \"([^\"]*)\" at column \"([^\"]*)\"$")
-    public void isMatchingValueAtColumn(String tableName, String match, String columnName){
-        List<String> columnData = new ViewListTestObject().fetchColumnData(tableName, columnName);
+    public void isMatchingValueAtColumn(String tableName, String match, String columnName) {
+        seleniumDriver.waitForRequestsToFinish();
         String inputValue = parameterProvider.getValueOrParameterAsString(match);
+        String queryTemplate = "//h2[contains(text(), \"%s\")]/parent::div/parent::div/parent::*/parent::div //table[@class=\"list__content\"]/tbody/tr/td[count(//table/thead/tr/th[.=\"%s\"]/preceding-sibling::th)+1]/*[@line-1=\"%s\" or @line-2=\"%s\"]";
+        String query = String.format(queryTemplate, tableName, columnName, inputValue, inputValue);
 
-        Optional<String> first =
-            columnData.stream().filter(element -> element.contains(inputValue)).findAny();
-        assertThat(
-            String.format(
+        try {
+            WebElement e = seleniumDriver.findElementWhenPresent(By.xpath(query));
+        } catch (Exception e) {
+            fail(String.format(
                 "Table \"%s\" didn't contain value matching \"%s\" at column \"%s\"",
-                tableName, match, columnName),
-            first.isPresent(),
-            is(true));
+                tableName, inputValue, columnName));
+        }
     }
 
     @Then("^Table \"([^\"]*)\" has matching value \"([^\"]*)\" at column \"([^\"]*)\" polling (\\d+) seconds$")
@@ -180,7 +182,7 @@ public class ViewListChecks extends NavigationElements {
         String arrow = parameterProvider.getValueOrParameterAsString("parameter:navigation");
         String dashboardMenu = parameterProvider.getValueOrParameterAsString("parameter:dashboard-menu");
 
-        FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), waitingTime, 60);
+        FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), waitingTime, 1);
         waiter.withMessage(String.format(
             "Table does not contain cell value \"%s\" at column \"%s\" within \"%s\" seconds.",
             match, columnName, waitingTime));

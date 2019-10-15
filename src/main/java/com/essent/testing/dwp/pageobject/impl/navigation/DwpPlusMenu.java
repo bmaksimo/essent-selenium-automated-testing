@@ -95,11 +95,10 @@ public class DwpPlusMenu extends Component {
             return item;
         }
         String menuItem = menu.remove(0);
-        By labeledAccordionWrapperBy = By.cssSelector(createQuery(LABELED_ACCORDION_WRAPPER_SELECTOR, "text", menuItem));
-        FluentWait<WebDriver> waiter = new FluentWait<>(seleniumDriver.getDriver()).withTimeout(Duration.ofSeconds(5));
-        WebElement result = waiter.until(ExpectedConditions.presenceOfElementLocated(labeledAccordionWrapperBy));
+        WebElement result = seleniumDriver.findElementWhenClickable(
+                By.cssSelector(createQuery(LABELED_ACCORDION_WRAPPER_SELECTOR, "text", menuItem))
+        );
         result.click();
-        Sleeper.sleepTight(200);
         return this.findMenu(result, menu);
     }
 }

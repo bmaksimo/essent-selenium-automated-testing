@@ -147,14 +147,14 @@ public abstract class NavigationElements extends DwpScenario {
     }
 
     protected void clickListPlusAction(String item) {
-        FluentWait<ClickListPlusAction> waiter = waiter(new ClickListPlusAction(), 20, 2);
+        FluentWait<ClickListPlusAction> waiter = waiter(new ClickListPlusAction(), 20, 1);
         waiter.withMessage(String.format("List Plus Action \"%s\" is undefined or disabled.", item));
         waiter.until((ClickListPlusAction action) -> action.test(item));
     }
 
     protected void clickDashboardMenu(String menu) {
         seleniumDriver.waitForRequestsToFinish();
-        FluentWait<ClickDashboardMenu> waiter = waiter(new ClickDashboardMenu(), 120, 10);
+        FluentWait<ClickDashboardMenu> waiter = waiter(new ClickDashboardMenu(), 120, 1);
         waiter.withMessage(String.format("Dashboard Menu  \"%s\" is undefined.", menu));
         waiter.until((ClickDashboardMenu dashboardMenu) -> dashboardMenu.test(menu));
     }
