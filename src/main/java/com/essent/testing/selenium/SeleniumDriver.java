@@ -137,7 +137,7 @@ public abstract class SeleniumDriver {
     List<WebElement> element =
         waiter.until(
             driver -> {
-              logger.debug(" - WAIT: polling findElementWhenPresent()");
+              logger.debug(" - WAIT: polling findElementOptional()");
               return driver.findElements(selector);
             });
     if (element.isEmpty()) {
