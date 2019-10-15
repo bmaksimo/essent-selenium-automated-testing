@@ -21,9 +21,9 @@ Feature: NUAT-424: Change Pay Method - nl_BE
         When Plus action of "1" element from "BillingCustomerOnaccount" and click on "Update"
         Then Modal "Update billing customer" is displayed
 
-        Given Payment method is switched
-        When Payment details are confirmed
-        Then Payment method is updated
+        Given "Betalingswijze" selection is "Overschrijving"
+        When Changes are confirmed
+        Then Payment method is Wire Transfer
 
         When Dashboard menu is "Documenten"
         Then Check if document "customer-signature.pdf" is present

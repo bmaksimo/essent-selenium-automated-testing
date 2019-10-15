@@ -99,16 +99,6 @@ public class TopActions extends NavigationElements {
         assertThat(String.format("Button %s was not available.", ""), success, is(true));
     }
 
-    @And("^Search input is \"([^\"]*)\"$")
-    public void input(String inputName){
-        String name = parameterProvider.getValueOrParameterAsString(inputName);
-        Map<String, String> customerName = new HashMap<>();
-        customerName.put("name", name);
-        boolean success = new SearchCustomer().test(name);
-        assertThat(String.format("Customer %s was not found.", name),
-            success, is(true));
-    }
-
     @And("Intermittent Alert window is confirmed")
     public void handleAlert() {
         boolean actualAlert = isAlertPresent();

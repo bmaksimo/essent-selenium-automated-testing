@@ -21,52 +21,16 @@ import static org.hamcrest.Matchers.notNullValue;
 
 public class PaymentInfoSteps extends NavigationElements {
 
-  private class PaymentDetailsModalSaveAction implements Predicate<Map> {
-    @Override
-    public boolean test(Map options) {
-      return executeJavascriptTest(JS_TR_PAYMENT_DETAILS_MODAL_SAVE_ACTION, options);
-    }
-  }
-
-  private class PaymentMethodSwitch implements Predicate<Map> {
-    @Override
-    public boolean test(Map options) {
-      Map result = executeJavascriptMethod(JS_TR_SWITCH_PAYMENT_METHOD, options);
-      String status = ((String) result.get("status"));
-      boolean success = StringUtils.equalsIgnoreCase("PASSED", status);
-      if (success) {
-                String switchedPaymentMethod = ((String) result.get("paymentMethod")).equalsIgnoreCase("string:OV") ?
-                    "Overschrijving" : "Domiciliëring";
-        parameterProvider.put("paymentMethod", switchedPaymentMethod);
-      }
-
-      return success;
-    }
-  }
-
     @Before("@DWP or @CORE or @E2E or @REGRESSION")
     public void setupTest(Scenario scenario){
         registerActiveScenario(scenario);
     }
 
-    @And("^Payment details are confirmed$")
-    public void clickSaveOnPaymentDetailsModal() {
-        boolean success = new PaymentDetailsModalSaveAction().test(null);
-        assertThat("Billing customer update has failed.", success, is(true));
-    }
-
-    @When("^Payment method is switched$")
-    public void switchPaymentMethod() {
-        boolean success = new PaymentMethodSwitch().test(new HashMap<>());
-        assertThat("Payment method has not been switched", success, is(true));
-    }
-
-    @And("^Payment method is updated$")
+    @And("^Payment method is Wire Transfer$")
     public void listSwitchedPaymentMethod(){
-        String updatedPaymentMethodName = parameterProvider.getValueOrParameterAsString("parameter:paymentMethod");
-        final String UPDATED_PAYMENT_METHOD = "//list-simple-two-liner-cell[contains(@line-2,'" + updatedPaymentMethodName + "')]";
-        WebElement element = seleniumDriver.findElementWhenPresent(By.xpath(UPDATED_PAYMENT_METHOD));
-        assertThat(String.format("View list did not contain payment method %s", updatedPaymentMethodName),
+        final By wireTramsferPaymentMethod = By.xpath("//list-simple-two-liner-cell[contains(@line-2,'Overschrijving')]");
+        WebElement element = seleniumDriver.findElementWhenPresent(wireTramsferPaymentMethod);
+        assertThat(String.format("View list did not contain payment method %s", "Overschrijving"),
             element, is(notNullValue()));
     }
 

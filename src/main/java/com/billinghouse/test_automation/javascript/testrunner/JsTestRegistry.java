@@ -10,7 +10,6 @@ public class JsTestRegistry {
     public static final String JS_TR_CLICK_TABLE_CELL_URL = "TrClickTableCellUrl";
     public static final String JS_TR_PLUS_ACTION_IN_MARKET_MESSAGE_TABLE = "TrPlusActionInMarketMessageTable";
     public static final String JS_TR_PLUS_ACTION_IN_BILLING_CUSTOMER_TABLE = "TrPlusActionInBillingCustomerTable";
-    public static final String JS_TR_CLICK_TABLE_ROW_ACTION = "TrClickTableRowAction";
     public static final String JS_BASE_FORM_INPUT = "BaseFormInput";
     public static final String JS_TR_FORM_SELECTION = "TrFormSelection";
     public static final String JS_TR_DATE_PICKER_INPUT = "TrDatePickerInput";
@@ -21,18 +20,13 @@ public class JsTestRegistry {
     public static final String JS_TR_SELECT_LIST_ROW = "TrSelectListRow";
     public static final String JS_TR_OPEN_LIST_PLUS_ACTIONS = "TrOpenListPlusActions";
     public static final String JS_TR_CLICK_TOGGLE_INPUT = "TrClickToggleInput";
-    public static final String JS_TR_OPEN_MULTIPLE_INPUT_DIALOG = "TrOpenMultipleInputDialog";
-    public static final String JS_TR_APPLY_MULTIPLE_FILTER_INPUT = "TrApplyMultipleFilterInput";
     public static final String JS_TR_IS_NEXT_BUTTON_ENABLED = "TrIsNextButtonEnabled";
     public static final String JS_TR_CHECK_TABLE_CELL_VALUE = "TrCheckTableCellValue";
     public static final String JS_TR_GET_COCKPIT_ITEM = "TrGetCockpitItem";
     public static final String JS_TR_LIST_PLUS_MENU_ACTION = "TrListPlusMenuAction";
     public static final String JS_TR_ARROW_ACTION = "TrArrowAction";
     public static final String JS_TR_CLICK_DASHBOARD_MENU_BUTTON = "TrClickDashboardMenuButton";
-    public static final String JS_TR_SEARCH_CUSTOMER = "TrSearchCustomer";
     public static final String JS_TR_SELECT_CONTRACTLINE = "TrSelectContractline";
-    public static final String JS_TR_PAYMENT_DETAILS_MODAL_SAVE_ACTION = "TrPaymentDetailsModalSaveAction";
-    public static final String JS_TR_SWITCH_PAYMENT_METHOD = "TrSwitchPaymentMethod";
 
     private static final JsTestRegistry instance = new JsTestRegistry();
 
@@ -42,7 +36,8 @@ public class JsTestRegistry {
 
     private static final Set<String> javaScriptClasses = new HashSet<>();
 
-    private JsTestRegistry() {}
+    private JsTestRegistry() {
+    }
 
     public boolean register(String jsClass) {
         return javaScriptClasses.add(jsClass);

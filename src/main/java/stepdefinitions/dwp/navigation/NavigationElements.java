@@ -86,14 +86,6 @@ public abstract class NavigationElements extends DwpScenario {
         }
     }
 
-    public class SearchCustomer implements Predicate<String> {
-        @Override
-        public boolean test(String name) {
-            seleniumDriver.waitForRequestsToFinish();
-            return executeJavascriptTest(JS_TR_SEARCH_CUSTOMER, name);
-        }
-    }
-
     protected void clickTopAction(String name) {
         seleniumDriver.waitForRequestsToFinish();
         boolean success = new ClickTopAction().test(name);

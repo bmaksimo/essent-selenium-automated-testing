@@ -104,13 +104,6 @@ public class ViewListChecks extends NavigationElements {
         }
     }
 
-    private class ClickTableRowAction implements Predicate<Map> {
-        @Override
-        public boolean test(Map options) {
-            return executeJavascriptTest(JS_TR_CLICK_TABLE_ROW_ACTION, options);
-        }
-    }
-
     private Map<String, String> getColumnIndexListOptions(String column, String viewListName, String ordinal) {
         String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
         Map<String, String> columnIndexListOptions = new HashMap<>();
@@ -245,16 +238,6 @@ public class ViewListChecks extends NavigationElements {
             String.format("- STEP: Click on link in view list \"%s\" at \"%s\" row and \"%s\" column - PASSED.",
                 viewListName, ordinal, column));
 
-    }
-
-    @Then("^Row actions \"([^\"]*)\" is clicked$")
-    public void clickOnRowAction(String rowAction) {
-        Map<String, String> options = new HashMap<>();
-        options.put("rowAction", rowAction);
-        FluentWait<ClickTableRowAction> waiter = waiter(new ClickTableRowAction(), 30, 5);
-        waiter.withMessage(String.format("Row actions \"%s\" was not clicked", rowAction));
-        waiter.until((ClickTableRowAction callback) -> callback.test(options));
-        logger().debug(String.format("- STEP: Row actions \"%s\" is clicked - PASSED.", rowAction));
     }
 
     @And("^\"([^\"]*)\" list element has cell value \"([^\"]*)\" at column \"([^\"]*)\"$")

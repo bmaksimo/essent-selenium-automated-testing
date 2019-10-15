@@ -29,13 +29,14 @@ import static org.hamcrest.Matchers.is;
 public class InputElements extends DwpScenario {
     private static final String CALENDAR_VALIDTO_TIME_ID = "validto-c-time-field";
 
-        /**
+    /**
      * Cucumber-JVM Before- hook
+     *
      * @param scenario Gherkin scenario descriptor
      * @throws Throwable
      */
     @Before("@DWP or @CORE or @E2E or @REGRESSION or @API")
-    public void setupTest(Scenario scenario){
+    public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
     }
 
@@ -43,9 +44,9 @@ public class InputElements extends DwpScenario {
     public void searchForInTheSelectWithSearchAndSelectOptionAndSubmit(String SearchText, String SelectWithSearchLink, String OptionToSelect) {
         // Grab and click the base element
         seleniumDriver.findElementWhenClickable(
-                By.xpath(
-                        String.format("//label[text()='%s']/parent::div//button", SelectWithSearchLink)
-                )
+            By.xpath(
+                String.format("//label[text()='%s']/parent::div//button", SelectWithSearchLink)
+            )
         ).click();
         seleniumDriver.waitForRequestsToFinish();
 
@@ -59,17 +60,17 @@ public class InputElements extends DwpScenario {
         //Select the intended result
         // The extra spaces surrouning the result are intentional
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenClickable(
-                By.xpath(
-                        String.format("//div[@class='multi-select__results']/ul[@class='jq-non-selected-results']//label[text()=' %s ']", OptionToSelect)
-                )
-                )
+            By.xpath(
+                String.format("//div[@class='multi-select__results']/ul[@class='jq-non-selected-results']//label[text()=' %s ']", OptionToSelect)
+            )
+            )
         );
 
         //Aaaaaaand submit ;-)
         seleniumDriver.waitAndClick(
-                seleniumDriver.findElement(
-                        By.xpath("//a[normalize-space(text())='Verzenden']")
-                )
+            seleniumDriver.findElement(
+                By.xpath("//a[normalize-space(text())='Verzenden']")
+            )
         );
         seleniumDriver.waitForRequestsToFinish();
     }
@@ -78,79 +79,83 @@ public class InputElements extends DwpScenario {
     /**
      * Class, delegating form input to <code>BaseFormInput.js</code>
      */
-  private class ApplyInput implements Predicate<Map> {
-    @Override
-    public boolean test(Map options) {
-      return executeJavascriptTest(JS_BASE_FORM_INPUT, options);
-    }
+    private class ApplyInput implements Predicate<Map> {
+        @Override
+        public boolean test(Map options) {
+            return executeJavascriptTest(JS_BASE_FORM_INPUT, options);
+        }
 
-    public boolean testNow(Map options) {
-      return executeJavascriptTestImmediately(JS_BASE_FORM_INPUT, options, true);
+        public boolean testNow(Map options) {
+            return executeJavascriptTestImmediately(JS_BASE_FORM_INPUT, options, true);
+        }
     }
-  }
 
     /**
      * Class, delegating value selection to <code>TrFormSelection.js</code>
      */
-  private class ApplySelection implements Predicate<Map> {
-    @Override
-    public boolean test(Map options) {
-      return executeJavascriptTest(JS_TR_FORM_SELECTION, options);
+    private class ApplySelection implements Predicate<Map> {
+        @Override
+        public boolean test(Map options) {
+            return executeJavascriptTest(JS_TR_FORM_SELECTION, options);
+        }
+
+        public boolean testNow(Map options) {
+            return executeJavascriptTestImmediately(JS_TR_FORM_SELECTION, options, true);
+        }
     }
 
-    public boolean testNow(Map options) {
-      return executeJavascriptTestImmediately(JS_TR_FORM_SELECTION, options, true);
-    }
-  }
+    /**
+     * Class, delegating Date picker selection to <code>TrDatePickerInput.js</code>
+     */
+    private class ApplyDateInput implements Predicate<Map> {
+        @Override
+        public boolean test(Map options) {
+            return executeJavascriptTest(JS_TR_DATE_PICKER_INPUT, options);
+        }
 
-  /** Class, delegating Date picker selection to <code>TrDatePickerInput.js</code> */
-  private class ApplyDateInput implements Predicate<Map> {
-    @Override
-    public boolean test(Map options) {
-      return executeJavascriptTest(JS_TR_DATE_PICKER_INPUT, options);
+        public boolean testNow(Map options) {
+            return executeJavascriptTestImmediately(JS_TR_DATE_PICKER_INPUT, options, true);
+        }
     }
-
-    public boolean testNow(Map options) {
-      return executeJavascriptTestImmediately(JS_TR_DATE_PICKER_INPUT, options, true);
-    }
-  }
 
     /**
      * Class, delegating checkbox state toggling to <code>TrToggleCheckBox.js</code>
      */
-  private class ToggleCheckBox implements Predicate<Map<String, String>> {
-    @Override
-    public boolean test(Map<String, String> options) {
-      return executeJavascriptTest(JS_TR_TOGGLE_CHECK_BOX, options);
+    private class ToggleCheckBox implements Predicate<Map<String, String>> {
+        @Override
+        public boolean test(Map<String, String> options) {
+            return executeJavascriptTest(JS_TR_TOGGLE_CHECK_BOX, options);
+        }
     }
-  }
 
-
-  /**
-   * Sets and asynchronously checks text input on any DWP form
-   * @param label Text label
-   * @param value Input value
-     * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
-   */
-  @And("^\"([^\"]*)\" input is \"([^\"]*)\"$")
-  public void setInput(String label, String value){
-    seleniumDriver.waitForRequestsToFinish();
-    String inputValue = parameterProvider.getValueOrParameterAsString(value);
-    parameterProvider.put("inputValue", inputValue);
-    Map<String, String> options = new HashMap<>();
-    options.put("label", label);
-    options.put("value", inputValue);
-    FluentWait<ApplyInput> waiter = waiter(new ApplyInput(), 10, 1);
-    waiter.withMessage(String.format("Input field %s is undefined.", label));
-    waiter.until((ApplyInput callback) -> callback.test(options));
-    seleniumDriver.waitForRequestsToFinish();
-  }
 
     /**
      * Sets and asynchronously checks text input on any DWP form
+     *
      * @param label Text label
      * @param value Input value
-     * @param card Card title, for example "Gas Vooraf"
+     * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
+     */
+    @And("^\"([^\"]*)\" input is \"([^\"]*)\"$")
+    public void setInput(String label, String value) {
+        seleniumDriver.waitForRequestsToFinish();
+        String inputValue = parameterProvider.getValueOrParameterAsString(value);
+        parameterProvider.put("inputValue", inputValue);
+        Map<String, String> options = new HashMap<>();
+        options.put("label", label);
+        options.put("value", inputValue);
+        FluentWait<ApplyInput> waiter = waiter(new ApplyInput(), 10, 1);
+        waiter.withMessage(String.format("Input field %s is undefined.", label));
+        waiter.until((ApplyInput callback) -> callback.test(options));
+        seleniumDriver.waitForRequestsToFinish();
+    }
+
+    /**
+     * Sets and asynchronously checks text input on any DWP form
+     *
+     * @param label Text label
+     * @param value Input value
+     * @param card  Card title, for example "Gas Vooraf"
      * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
      */
     @And("^\"([^\"]*)\" input on \"([^\"]*)\" card is \"([^\"]*)\"$")
@@ -171,7 +176,7 @@ public class InputElements extends DwpScenario {
     }
 
     @And("^\"([^\"]*)\" input is \"([^\"]*)\" waiting for (\\d+) seconds$")
-    public void setInputWithFixedTime(String label, String value, int waitingTime){
+    public void setInputWithFixedTime(String label, String value, int waitingTime) {
         Sleeper.sleepTightInSeconds(waitingTime);
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
         parameterProvider.put("inputValue", inputValue);
@@ -184,7 +189,7 @@ public class InputElements extends DwpScenario {
     }
 
     @And("^\"([^\"]*)\" input on card \"([^\"]*)\" is \"([^\"]*)\" waiting for (\\d+) seconds$")
-    public void setInputWithFixedTime(String label, String card, String value, int waitingTime){
+    public void setInputWithFixedTime(String label, String card, String value, int waitingTime) {
         Sleeper.sleepTightInSeconds(waitingTime);
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
         parameterProvider.put("inputValue", inputValue);
@@ -198,7 +203,7 @@ public class InputElements extends DwpScenario {
     }
 
     @And("^\"([^\"]*)\" date is first day of next month$")
-    public void setDateInputFirstDayNextMonth(String label){
+    public void setDateInputFirstDayNextMonth(String label) {
         String value = DateExpressionsUtil
             .getFirstDateOfNextMonth()
             .toString(EssentDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
@@ -206,7 +211,7 @@ public class InputElements extends DwpScenario {
     }
 
     @And("^\"([^\"]*)\" date is last day of current month next year$")
-    public void setDateInputLastDayCurrentMonthNextYear(String label){
+    public void setDateInputLastDayCurrentMonthNextYear(String label) {
         String value = DateExpressionsUtil
             .getLastDayOfCurrentMonthNextYear()
             .toString(EssentDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
@@ -215,12 +220,13 @@ public class InputElements extends DwpScenario {
 
     /**
      * Sets and asynchronously checks date input on any DWP form
+     *
      * @param label Text label
      * @param value Date input value
      * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
      */
     @And("^\"([^\"]*)\" date is \"([^\"]*)\"$")
-    public void setDateInput(String label, String value){
+    public void setDateInput(String label, String value) {
         Sleeper.sleepTightInSeconds(10);
         seleniumDriver.waitForRequestsToFinish();
         String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(value));
@@ -236,7 +242,7 @@ public class InputElements extends DwpScenario {
     }
 
     @And("^\"([^\"]*)\" date is \"([^\"]*)\" waiting for (\\d+) seconds$")
-    public void setDateInput(String label, String value, int waitingTime){
+    public void setDateInput(String label, String value, int waitingTime) {
         Sleeper.sleepTightInSeconds(waitingTime);
         String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(value));
         parameterProvider.put("inputValue", inputValue);
@@ -249,7 +255,7 @@ public class InputElements extends DwpScenario {
     }
 
     @And("^\"([^\"]*)\" date is \"([^\"]*)\" and time is \"([^\"]*)\"$")
-    public void setDateTimeInput(String label, String date, String time){
+    public void setDateTimeInput(String label, String date, String time) {
         Sleeper.sleepTightInSeconds(2);
         seleniumDriver.waitForRequestsToFinish();
         String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(date));
@@ -271,7 +277,7 @@ public class InputElements extends DwpScenario {
     }
 
     @And("^\"([^\"]*)\" date on \"([^\"]*)\" card is \"([^\"]*)\"$")
-    public void setDateInput (String label, String card, String value){
+    public void setDateInput(String label, String card, String value) {
         seleniumDriver.waitForRequestsToFinish();
         String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(value));
         parameterProvider.put("inputValue", inputValue);
@@ -287,12 +293,13 @@ public class InputElements extends DwpScenario {
 
     /**
      * Sets and asynchronously checks dropdown selection on any DWP form
+     *
      * @param label Text label
      * @param value Input value
      * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
      */
     @And("^\"([^\"]*)\" selection is \"([^\"]*)\"$")
-    public void setSelection(String label, String value){
+    public void setSelection(String label, String value) {
         seleniumDriver.waitForRequestsToFinish();
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
@@ -305,13 +312,14 @@ public class InputElements extends DwpScenario {
 
     /**
      * Sets and asynchronously checks dropdown selection on any DWP form
+     *
      * @param label Text label
      * @param value Input value
-     * @param card Card title, for example "Gas Vooraf"
+     * @param card  Card title, for example "Gas Vooraf"
      * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
      */
     @And("^\"([^\"]*)\" selection on card \"([^\"]*)\" is \"([^\"]*)\"$")
-    public void setSelection(String label, String card, String value){
+    public void setSelection(String label, String card, String value) {
         seleniumDriver.waitForRequestsToFinish();
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
@@ -324,7 +332,7 @@ public class InputElements extends DwpScenario {
     }
 
     @And("^\"([^\"]*)\" selection is \"([^\"]*)\" waiting for (\\d+) seconds$")
-    public void setSelection(String label, String value, int waitingTime){
+    public void setSelection(String label, String value, int waitingTime) {
         Sleeper.sleepTightInSeconds(waitingTime);
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
@@ -335,7 +343,7 @@ public class InputElements extends DwpScenario {
     }
 
     @And("^\"([^\"]*)\" selection on card \"([^\"]*)\" is \"([^\"]*)\" waiting for (\\d+) seconds$")
-    public void setSelection(String label, String card, String value, int waitingTime){
+    public void setSelection(String label, String card, String value, int waitingTime) {
         Sleeper.sleepTightInSeconds(waitingTime);
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
@@ -348,15 +356,16 @@ public class InputElements extends DwpScenario {
 
     /**
      * Sets and asynchronously checks toggle option on any DWP form
+     *
      * @param option Option label
-     * @param verb One of verbs: {@link IsAre}
-     * @param state Enumerated value: {@link SwitchState}
-     * @throws Throwable  Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
-   */
+     * @param verb   One of verbs: {@link IsAre}
+     * @param state  Enumerated value: {@link SwitchState}
+     * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
+     */
     @And("Options? \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\"")
-    public void switchOption(String option, String verb, SwitchState state){
+    public void switchOption(String option, String verb, SwitchState state) {
         Sleeper.sleepTightInSeconds(5);
-        if (!(verb.equalsIgnoreCase("is") || verb.equalsIgnoreCase("are")) ){
+        if (!(verb.equalsIgnoreCase("is") || verb.equalsIgnoreCase("are"))) {
             Assert.fail("String is not valid (is/are expected)");
         }
         seleniumDriver.waitForRequestsToFinish();
@@ -371,7 +380,7 @@ public class InputElements extends DwpScenario {
     }
 
     @And("Option \"([^\"]*)\" is \"([^\"]*)\"")
-    public void setOption(String label, SwitchState state){
+    public void setOption(String label, SwitchState state) {
         seleniumDriver.waitForRequestsToFinish();
         List<WebElement> inputList = seleniumDriver.findElements(By.xpath("//div[label=\"" + label + "\"]//input"));
         // There should be only one to guarantee a consistent behaviour
@@ -388,12 +397,13 @@ public class InputElements extends DwpScenario {
 
     /**
      * Sets and asynchronously checks a checkbox on any DWP form
+     *
      * @param label Text label
      * @param state Checkbox state, one of values: {@link SwitchState}
      * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
      */
     @And("^Checkbox \"([^\"]*)\" is ([^\"]*)$")
-    public void toggleCheckbox(String label, SwitchState state){
+    public void toggleCheckbox(String label, SwitchState state) {
         seleniumDriver.waitForRequestsToFinish();
         Map<String, String> options = new HashMap<>();
         options.put("label", label);
@@ -409,7 +419,7 @@ public class InputElements extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(30);
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
-        Optional<WebElement> placeHolderInputElement = seleniumDriver.findElementOptional(By.xpath("//input[@placeholder='"+placeholder+"']"));
+        Optional<WebElement> placeHolderInputElement = seleniumDriver.findElementOptional(By.xpath("//input[@placeholder='" + placeholder + "']"));
         boolean placeHolderWasFound = placeHolderInputElement.isPresent();
         assertThat(String.format("Placeholder element '%s' was not found.", placeholder), placeHolderWasFound, is(true));
         placeHolderInputElement.ifPresent(e -> e.sendKeys(inputValue));
@@ -417,12 +427,12 @@ public class InputElements extends DwpScenario {
         Sleeper.sleepTightInSeconds(30);
     }
 
-  @And("^Selection with search is \"([^\"]*)\"$")
-  public void selectWithSearchIsClicked(String label){
-    seleniumDriver.waitForRequestsToFinish();
-    SelectWithSearch button = new SelectWithSearchImpl();
-    button.click(label);
-  }
+    @And("^Selection with search is \"([^\"]*)\"$")
+    public void selectWithSearchIsClicked(String label) {
+        seleniumDriver.waitForRequestsToFinish();
+        SelectWithSearch button = new SelectWithSearchImpl();
+        button.click(label);
+    }
 
     @And("New Amount Invoice is \"([^\"]*)\" for EAN \"([^\"]*)\"$")
     public void setInputByEanLabel(String value, String EAN) {
