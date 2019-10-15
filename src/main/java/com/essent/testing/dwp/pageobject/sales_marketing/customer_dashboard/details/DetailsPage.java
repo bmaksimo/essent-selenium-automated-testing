@@ -23,7 +23,8 @@ public class DetailsPage extends Component {
     private static final String PAYMENT_METHOD = "//list[@list-key='BillingCustomerOnaccount']//tbody//td[3]//span[2]";
     private static final String ACCOUNT_BLOCK_START_DATE = "//*[@id=\"rows\"]/tr[1]/td[2]/list-simple-two-liner-cell/p/span[1]";
     private static final String ACCOUNT_BLOCK_END_DATE = "//list[@list-key='accountBlockReasonsForAccountList']//tr[1]/td[3]/list-simple-two-liner-cell/p";
-    private static final String PREFERENCES_EMAIL_ADDRESS = "paym-details-accounts-contacts-primary-contact-c-1-contacts-contact-details-contact-details-type-email-contact-details-value-field";
+    private static final String PREFERENCES_EMAIL_ADDRESS_LEGAL = "paym-details-accounts-contacts-primary-contact-c-1-contacts-contact-details-contact-details-type-email-contact-details-value-field";
+    private static final String PREFERENCES_EMAIL_ADDRESS_GENERAL = "contacts-contacts-contact-details-contact-details-type-email-contact-details-value-field";
     private static final String COMMUNICATION_PREFERENCES_UPDATED_SUCCESS_MESSAGE = "//div/focus-mode/focus-mode-content/div/div/div[2]/flash-message-renderer/flash-message";
     private static final String INVOICE_BLOCK_END_DATE = "//list[@list-key='invoiceBlockReasonsForInvoice']//tr[1]/td[3]/list-simple-two-liner-cell/p";
 
@@ -93,10 +94,12 @@ public class DetailsPage extends Component {
         return seleniumDriver.findElement(By.xpath(ACCOUNT_BLOCK_END_DATE)).getAttribute("value");
     }
 
-    public void emailAddressInputIsCleared() {
+    public void emailAddressInputIsCleared(String preference) {
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(5);
-        seleniumDriver.findElement(By.id(PREFERENCES_EMAIL_ADDRESS)).clear();
+        String id = preference.equalsIgnoreCase("Algemeen") ? PREFERENCES_EMAIL_ADDRESS_GENERAL : PREFERENCES_EMAIL_ADDRESS_LEGAL;
+
+        seleniumDriver.findElement(By.id(id)).clear();
     }
 
     public String getCommunicationPreferencesUpdatedMessage() {

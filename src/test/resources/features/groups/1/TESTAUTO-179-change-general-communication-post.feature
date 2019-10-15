@@ -4,12 +4,12 @@
 @ALL
 @DUNNING
 
-Feature: Create new customer with general communication preference: By email and update "Mandate"
+Feature: Create new customer with general communication preference: By email and update "General"
 
     Background:
         Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
-    @TESTAUTO-181
-    Scenario: Change LEGAL communication preference from EMAIL on POST
+    @TESTAUTO-179
+    Scenario: Change GENERAL communication preference from EMAIL on POST
         #1 - GUI contract creation
         When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
@@ -50,8 +50,8 @@ Feature: Create new customer with general communication preference: By email and
         Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
 
         When Dashboard menu is "Details"
-        And Click on Plus action of table "CommunicationPreferencesOnAccount" at row where "COMMUNICATIETYPE" is "Legal" and click on "Update"
-        And "Legal" E-mailadres input is cleared
+        And Click on Plus action of table "CommunicationPreferencesOnAccount" at row where "COMMUNICATIETYPE" is "Algemeen" and click on "Update"
+        And "Algemeen" E-mailadres input is cleared
         And "Kanaal" selection is "Per post"
         And Wait for 5 seconds
 
