@@ -42,8 +42,8 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
         And "Klantnummer" input is "parameter:accountNumber"
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
 
-#        When Dashboard menu is "Contracten"
-         And "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
+        When Dashboard menu is "Contracten"
+        And "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
 
         #2. Trigger renewal batch
         #"Start & Einddatum" is parsed, start is put to parameterProvider as "Start & Einddatum - start", end - as "Start & Einddatum - end"
@@ -62,7 +62,7 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
         And "Renewal date to" date is "parameter:Start & Einddatum - end"
         And "EAN-code" input is "parameter:EAN-code"
         Then Changes are confirmed
-        And Table "TK1 - Hernieuwingsbatches" contains value "parameter:suitecrm-customer-name" at column "Batchnaam"
+        And Table "TK1 - Hernieuwingsbatches" has matching value "parameter:suitecrm-customer-name" at column "Batchnaam"
 
         #Checks
         #3. Validate renewal batch
@@ -89,10 +89,10 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
         When Top arrow button is "Up"
         And Plus menu is "Contracting -> TK1 Hernieuwingen -> Bepaal het hernieuwingsproduct"
         And Top action is "Filters"
-        And Search for "COMFORT_TEST" in the SelectWithSearch "Van pakket" and select option "COMFORT_TEST" and Submit
+        And Search for "parameter:PackageName" in the SelectWithSearch "Van pakket" and select option "parameter:PackageName" and Submit
         And Check if our "parameter:Start & einddatum hernieuwing" is covered by a valid tariffsheetperiod from table "Bepaal het hernieuwingsproduct"
 
-        #5 Communicate the renewal to the customer through the invoice
+        #5 Communicate the renewal to the customer through a letter
         When Plus menu is "Contracting -> TK1 Hernieuwingen -> Hernieuwingsbatches"
         When Click on "parameter:suitecrm-customer-name" link
         And Click on "VERSTUUR PASSIEVE HERNIEUWINGSBRIEVEN" link

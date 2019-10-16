@@ -9,16 +9,23 @@ import java.util.Optional;
 
 public class ModalBase extends Component {
 
-    private static final By CONFIRM_BUTTON_SELECTOR = By.id("confirm-button");
+    private static final By CONFIRM_BUTTON_SELECTOR = By.xpath("//a[text() !=\"YES\" and text() != \"NO\" and @id=\"confirm-button\"]");
 
     public boolean confirm(String scenarioInfo) {
         seleniumDriver.waitForRequestsToFinish();
+        int loopCounter = 0;
         // Is there a normal 'Confirm' button
-        if (!seleniumDriver.findElements(CONFIRM_BUTTON_SELECTOR).isEmpty()) {
-            seleniumDriver.findElementWhenClickable(CONFIRM_BUTTON_SELECTOR).click();
-            return true;
+        do {
+            try {
+                seleniumDriver.waitAndClick(seleniumDriver.findElement(CONFIRM_BUTTON_SELECTOR));
+                // If the button exist, and we clicked it, the button should not be present anymore
+                loopCounter++;
+            } catch (Exception e) {
+                validateForm(scenarioInfo);
+                break;
+            }
         }
-        validateForm(scenarioInfo);
+        while (loopCounter < 20 && !seleniumDriver.findElements(CONFIRM_BUTTON_SELECTOR).isEmpty());
         handleAlert();
         return true;
     }
