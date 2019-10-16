@@ -89,7 +89,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     public void createQuoteAndSaveResult(String flowType, String meterOpen, String signInDate, String contactPreference) throws IOException {
         this.flow = flowType;
         String signInDateApiDate = toDwpAPIDate(parameterProvider.getValueOrParameterAsString(signInDate));
-        this.quoteDetails = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow, meterOpen, signInDateApiDate);
+        this.quoteDetails = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow, meterOpen, signInDateApiDate, contactPreference);
         String retrievedAccountNumber = quoteDetails.getAccountNumber();
         parameterProvider.put("accountNumber", retrievedAccountNumber);
         parameterProvider.put("EAN-code", quoteDetails.getEan());

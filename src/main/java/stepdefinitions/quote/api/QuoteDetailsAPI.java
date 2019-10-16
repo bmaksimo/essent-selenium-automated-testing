@@ -44,14 +44,14 @@ public class QuoteDetailsAPI extends AbstractAPI {
         return tariffSheetID;
     }
 
-    public QuoteDetails getQuoteDetails(Cookies cookie, String tariffSheetId, String startedFlowName, String meterOpen, String signInDate) throws IOException {
+    public QuoteDetails getQuoteDetails(Cookies cookie, String tariffSheetId, String startedFlowName, String meterOpen, String signInDate, String contactPreference) throws IOException {
         String ean = PrepareDataForContract.generateEAN();
         String birthDate = PrepareDataForContract.generateDOBForAnAdult();
         String ibanBE = PrepareDataForContract.getValidIbanBE();
         String companyNumber = PrepareDataForContract.generateValidBECompanyNumber();
         Map<String, String> accountNames = CustomerRandomDataGenerator.createAccountName(startedFlowName);
 
-        QuoteDetailsDTO dto = buildQuoteDetailsDTO(tariffSheetId, meterOpen, signInDate, ean, birthDate, ibanBE, accountNames);
+        QuoteDetailsDTO dto = buildQuoteDetailsDTO(tariffSheetId, meterOpen, signInDate, ean, birthDate, ibanBE, accountNames, contactPreference);
         String payload = new ObjectMapper().writeValueAsString(dto);
         Response quoteResponse = new RequestHelper().postRequest(STATUS_CREATED, cookie, payload, buildCreateQuotePath());
 
@@ -60,12 +60,12 @@ public class QuoteDetailsAPI extends AbstractAPI {
         return quoteDetails;
     }
 
-    private QuoteDetailsDTO buildQuoteDetailsDTO(String tariffSheetId, String meterOpen, String signInDate, String ean, String birthDate, String ibanBE, Map<String, String> generatedNames4account) throws IOException {
+    private QuoteDetailsDTO buildQuoteDetailsDTO(String tariffSheetId, String meterOpen, String signInDate, String ean, String birthDate, String ibanBE, Map<String, String> generatedNames4account, String contactPreference) throws IOException {
         return new QuoteDetailsDTOBuilder()
                 .withBirthdate(birthDate)
                 .withFirstName(generatedNames4account.get("firstName"))
                 .withLastName(generatedNames4account.get("lastName"))
-                .withGeneralChannel("EMAIL")
+                .withGeneralChannel(contactPreference)
                 .withIban(ibanBE)
                 .withSignInDate(signInDate)
                 .withPayload(meterOpen, tariffSheetId, ean)
@@ -154,36 +154,6 @@ public class QuoteDetailsAPI extends AbstractAPI {
         LOGGER.debug("EAN: " + quoteDetails.getEan() + " exists in Quotelines: " + eanExists);
 
         return eanExists;
-
-    }
-
-    private String createQuotePayload(String tariffSheetId, String ean, String dateOfBirth, String firstName, String lastName, String iBan, String companyNumber, String meterOpen, String signInDate)
-        throws  IOException {
-        ObjectMapper mapper = new ObjectMapper();
-
-        String pathToQuote = ResourceUtil.toPath(PATH_TO_QUOTE);
-        String jsonQuote = new String(Files.readAllBytes(Paths.get(pathToQuote)));
-        QuoteDetailsDTO quote = mapper.readValue(jsonQuote, QuoteDetailsDTO.class);
-
-        String pathToPayload = ResourceUtil.toPath(PATH_TO_PAYLOAD);
-
-        if (meterOpen.equals("On")) {
-            pathToPayload = ResourceUtil.toPath(PATH_TO_PAYLOAD_SUPPLIER_SWITCH);
-        }
-
-        String jsonPayload = new String(Files.readAllBytes(Paths.get(pathToPayload)));
-        PayloadDTO payload = mapper.readValue(jsonPayload, PayloadDTO.class);
-        payload.setTariffsheetId(tariffSheetId);
-        payload.setEan(ean);
-        quote.getModel().setBirthdate(dateOfBirth);
-        quote.getModel().setFirstName(firstName);
-        quote.getModel().setLastName(lastName);
-        quote.getModel().setIban(iBan);
-        quote.getModel().setSignDateC(signInDate);
-        quote.getModel().getPayloadWrapper().setPayload(payload);
-        quote.getModel().setGeneralChannel("EMAIL");
-
-        return mapper.writeValueAsString(quote);
     }
 
     private String createListQuotePayload(String recordId) throws JsonProcessingException {
