@@ -32,7 +32,6 @@ public class InputElements extends DwpScenario {
         /**
      * Cucumber-JVM Before- hook
      * @param scenario Gherkin scenario descriptor
-     * @throws Throwable
      */
     @Before("@DWP or @CORE or @E2E or @REGRESSION or @API")
     public void setupTest(Scenario scenario){
@@ -40,29 +39,31 @@ public class InputElements extends DwpScenario {
     }
 
     @And("Search for {string} in the SelectWithSearch {string} and select option {string} and Submit")
-    public void searchForInTheSelectWithSearchAndSelectOptionAndSubmit(String SearchText, String SelectWithSearchLink, String OptionToSelect) {
+    public void searchForInTheSelectWithSearchAndSelectOptionAndSubmit(String searchText, String selectWithSearchLink, String optionToSelect) {
         // Grab and click the base element
         seleniumDriver.findElementWhenClickable(
                 By.xpath(
-                        String.format("//label[text()='%s']/parent::div//button", SelectWithSearchLink)
+                        String.format("//label[text()='%s']/parent::div//button", selectWithSearchLink)
                 )
         ).click();
         seleniumDriver.waitForRequestsToFinish();
 
         //Grab and fill the search box
-        WebElement SearchInputBox;
-        SearchInputBox = seleniumDriver.findElementWhenVisible(By.id("search-input"));
-        SearchInputBox.sendKeys(SearchText);
-        SearchInputBox.sendKeys(Keys.ENTER);
+        WebElement searchInputBox;
+        String searchTextParsed = parameterProvider.getValueOrParameterAsString(searchText);
+        String optionToSelectParsed = parameterProvider.getValueOrParameterAsString(optionToSelect);
+        searchInputBox = seleniumDriver.findElementWhenVisible(By.id("search-input"));
+        searchInputBox.sendKeys(searchTextParsed);
+        searchInputBox.sendKeys(Keys.ENTER);
         seleniumDriver.waitForRequestsToFinish();
 
         //Select the intended result
         // The extra spaces surrouning the result are intentional
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenClickable(
                 By.xpath(
-                        String.format("//div[@class='multi-select__results']/ul[@class='jq-non-selected-results']//label[text()=' %s ']", OptionToSelect)
+                        String.format("//div[@class='multi-select__results']/ul[@class='jq-non-selected-results']//label[text()=' %s ']", optionToSelectParsed)
                 )
-                )
+            )
         );
 
         //Aaaaaaand submit ;-)
@@ -221,7 +222,6 @@ public class InputElements extends DwpScenario {
      */
     @And("^\"([^\"]*)\" date is \"([^\"]*)\"$")
     public void setDateInput(String label, String value){
-        Sleeper.sleepTightInSeconds(10);
         seleniumDriver.waitForRequestsToFinish();
         String inputValue = toDwpDate(parameterProvider.getValueOrParameterAsString(value));
         parameterProvider.put("inputValue", inputValue);
@@ -232,7 +232,6 @@ public class InputElements extends DwpScenario {
         waiter.withMessage(String.format("Date value %s input at '%s' failed.", inputValue, label));
         waiter.until((ApplyDateInput callback) -> callback.test(options));
         seleniumDriver.waitForRequestsToFinish();
-        Sleeper.sleepTightInSeconds(3);
     }
 
     @And("^\"([^\"]*)\" date is \"([^\"]*)\" waiting for (\\d+) seconds$")
