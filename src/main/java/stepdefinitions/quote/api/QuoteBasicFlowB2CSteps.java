@@ -76,16 +76,35 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
 	    this.tariffSheetID = new QuoteDetailsAPI().getTariffSheetID(cookie, arg1);
     }
 
+//    @When("^Data is prepared for Create quote request for \"([^\"]*)\" and meter open is \"([^\"]*)\" and sign date is \"([^\"]*)\"$")
+//    public void dataIsPreparedForCreateQuoteWithDateRequestFor(String flowType, String meterOpen, String signInDate) throws IOException {
+//        this.flow = flowType;
+//        String signInDateApiDate = toDwpAPIDate(parameterProvider.getValueOrParameterAsString(signInDate));
+//	    this.quoteDetails = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow, meterOpen, signInDateApiDate);
+//        String retrievedAccountNumber = quoteDetails.getAccountNumber();
+//        parameterProvider.put("accountNumber", retrievedAccountNumber);
+//	    parameterProvider.put("EAN-code", quoteDetails.getEan());
+//	    parameterProvider.put("suitecrm-customer-name", quoteDetails.getAccountName());
+//    }
+
     @When("^Data is prepared for Create quote request for \"([^\"]*)\" and meter open is \"([^\"]*)\" and sign date is \"([^\"]*)\"$")
-    public void dataIsPreparedForCreateQuoteWithDateRequestFor(String flowType, String meterOpen, String signInDate) throws IOException {
+    public void dataIsPreparedForCreateQuoteWithDateRequestAndPostPreference(String flowType, String meterOpen, String signInDate) throws IOException {
+        createQuoteAndSaveResult(flowType, meterOpen, signInDate, "POST");
+    }
+
+    @When("^Data is prepared for Create quote request for \"([^\"]*)\" and meter open is \"([^\"]*)\" and sign date is \"([^\"]*)\" with communication by email$")
+    public void dataIsPreparedForCreateQuoteWithDateRequestAndEmailPreference(String flowType, String meterOpen, String signInDate) throws IOException {
+        createQuoteAndSaveResult(flowType, meterOpen, signInDate, "EMAIL");
+    }
+
+    public void createQuoteAndSaveResult(String flowType, String meterOpen, String signInDate, String contactPreference) throws IOException {
         this.flow = flowType;
         String signInDateApiDate = toDwpAPIDate(parameterProvider.getValueOrParameterAsString(signInDate));
-	    this.quoteDetails = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow, meterOpen, signInDateApiDate);
+        this.quoteDetails = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow, meterOpen, signInDateApiDate);
         String retrievedAccountNumber = quoteDetails.getAccountNumber();
         parameterProvider.put("accountNumber", retrievedAccountNumber);
-	    parameterProvider.put("EAN-code", quoteDetails.getEan());
-	    parameterProvider.put("suitecrm-customer-name", quoteDetails.getAccountName());
-
+        parameterProvider.put("EAN-code", quoteDetails.getEan());
+        parameterProvider.put("suitecrm-customer-name", quoteDetails.getAccountName());
     }
 
     @When("^New tc1_quote is created$")
