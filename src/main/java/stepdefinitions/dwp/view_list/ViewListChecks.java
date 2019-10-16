@@ -347,24 +347,6 @@ public class ViewListChecks extends NavigationElements {
         });
     }
 
-
-    @When("^First list element with value \"([^\"]*)\" at column \"([^\"]*)\" has status \"([^\"]*)\" at column \"([^\"]*)\" within (\\d+) seconds refreshing \"([^\"]*)\"$")
-    public void hasStatusWithinTimeout(String value, String columnName, String status, String secondColumnName, int seconds, String linkText){
-        String expectedValue = parameterProvider.getValueOrParameterAsString(value);
-        FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), seconds / 2, 5);
-        waiter.withMessage(String.format("Status did not switch to \"%s\" within \"%s\" seconds", status, seconds));
-        waiter.until((ViewListTestObject callback) -> {
-            seleniumDriver.waitAndClick(seleniumDriver.findElement(By.linkText(linkText)));
-            return CollectionUtils.isNotEmpty(callback.fetchListRowsIndices(expectedValue, columnName));
-        });
-        waiter = waiter(new ViewListTestObject(), seconds / 2, 5);
-        waiter.until((ViewListTestObject callback) -> {
-            seleniumDriver.waitAndClick(seleniumDriver.findElement(By.linkText(linkText)));
-            int row = callback.fetchListRowsIndices(value, columnName).get(0);
-            return callback.containsDataAt(row, status, secondColumnName);
-        });
-    }
-
     @And("^Cell values? from selected rows? and column \"([^\"]*)\" (?:are|is) checked$")
     public void checkDataSelection(String columnName){
         ViewListTestObject viewListModel = new ViewListTestObject();
@@ -507,45 +489,6 @@ public class ViewListChecks extends NavigationElements {
                 String.format(
                     "- STEP: \"%s\" list element with value at column \"%s\" is checked - PASSED.",
                     tableName, columnName));
-    }
-
-    @And("^Select \"([^\"]*)\" List row having cell value \"([^\"]*)\" at column \"([^\"]*)\"$")
-    public void selectListRows(String ordinal, String value, String columnName){
-        int row = extractNumericValue(ordinal);
-        ViewListTestObject viewListModel = new ViewListTestObject();
-        boolean success = viewListModel.selectListRow(row, value, columnName);
-        String message = String.format("\"%s\" list row didn't contain value \"%s\" at column \"%s\"", ordinal, value,
-            columnName);
-        assertThat(message, success, is(true));
-        logger().debug(String.format("- STEP: \"%s\" list row having cell value \"%s\" at column \"%s\" - PASSED.",
-            ordinal, value, columnName));
-
-    }
-
-    @And("^Plus actions at \"([^\"]*)\" list row having cell value \"([^\"]*)\" at column \"([^\"]*)\" are open$")
-    public void openPlusActions(String ordinal, String value, String columnName){
-        int row = extractNumericValue(ordinal);
-        String expectedValue = parameterProvider.getValueOrParameterAsString(value);
-        ViewListTestObject viewListModel = new ViewListTestObject();
-        boolean success = viewListModel.openListPlusActions(row);
-        String message = String.format("\"%s\" row list didn't have cell value \"%s\" at column \"%s\"", ordinal,
-            expectedValue, columnName);
-        assertThat(message, success, is(true));
-        logger().debug(String.format(
-            "- STEP: Plus actions at \"%s\" list row having cell value \"%s\" at column \"%s\" are opened - PASSED.",
-            ordinal, value, columnName));
-    }
-
-    @And("^\"([^\"]*)\" List rows? having cell value \"([^\"]*)\" at column \"([^\"]*)\" (?:is|are) selected$")
-    public void selectListRowHavingCellValueAtColumn(int row, String value, String columnName){
-        ViewListTestObject viewListModel = new ViewListTestObject();
-        boolean success = viewListModel.selectListRows(row, value, columnName);
-        String message = String.format("\"%s\" list row(s) didn't have cell value \"%s\" at column \"%s\"", row, value,
-            columnName);
-        assertThat(message, success, is(true));
-        logger().debug(String.format(
-            "- STEP: \"%s\" list row(s) having cell value \"%s\" at column \"%s\" is/are selected - PASSED.", row,
-            value, columnName));
     }
 
     @Then("^Selected List rows have cell value \"([^\"]*)\" at column \"([^\"]*)\"$")
