@@ -80,11 +80,6 @@ public class TopActions extends NavigationElements {
         super.clickTopArrow(arrow.toLowerCase(), waitingTime);
     }
 
-    @When("^Cockpit item is \"([^\"]*)\"$")
-    public void checkCockpitItem(String item){
-        clickCockpitItem(item);
-    }
-
     @And("Changes are confirmed")
     public void confirmChange() {
         seleniumDriver.waitForRequestsToFinish();

@@ -188,28 +188,6 @@ public class QuoteSteps extends DwpScenario {
         connectionDetailsView.fillInFormData();
     }
 
-    @And("^([^\"]*) meter is ([^\"]*)$")
-    public void setMeterState(final ProductType productType, final SwitchState meterState) {
-        ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
-        given().await()
-            .ignoreExceptions()
-            .pollInterval(FIVE_HUNDRED_MILLISECONDS)
-            .pollDelay(ONE_HUNDRED_MILLISECONDS)
-            .atMost(new Duration(10, SECONDS)).until(connectionDetailsView::isNextButtonEnabled);
-        connectionDetailsView.toggleMeter(productType, meterState);
-    }
-
-    @And("^Switch type is Move in$")
-    public void setMoveIn() {
-        ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
-        given().await()
-            .ignoreExceptions()
-            .pollInterval(FIVE_HUNDRED_MILLISECONDS)
-            .pollDelay(ONE_HUNDRED_MILLISECONDS)
-            .atMost(new Duration(10, SECONDS)).until(connectionDetailsView::isNextButtonEnabled);
-        connectionDetailsView.toggleMeter(ProductType.Electricity, SwitchState.Closed);
-    }
-
     @And("^([^\"]*) market mock test is ([^\"]*)$")
     public void setMarketMockTest(final ProductType productType, final SwitchState state) {
         seleniumDriver.waitForRequestsToFinish();

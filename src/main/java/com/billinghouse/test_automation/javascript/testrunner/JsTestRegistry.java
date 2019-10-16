@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class JsTestRegistry {
-    public static final String JS_TR_SELECT_LIST_ROWS = "TrSelectListRows";
     public static final String JS_TR_FETCH_DATA_SELECTION = "TrFetchDataSelection";
     public static final String JS_TR_GET_TABLE_MODEL = "TrGetTableModel";
     public static final String JS_TR_CLICK_TABLE_CELL_URL = "TrClickTableCellUrl";
@@ -17,12 +16,8 @@ public class JsTestRegistry {
     public static final String JS_TR_APPLY_FORM_INPUT = "TrApplyFormInput";
     public static final String JS_TR_TOGGLE_INPUT_STATE = "TrToggleInputState";
     public static final String JS_TR_GET_LIST_ACTION = "TrGetListAction";
-    public static final String JS_TR_SELECT_LIST_ROW = "TrSelectListRow";
-    public static final String JS_TR_OPEN_LIST_PLUS_ACTIONS = "TrOpenListPlusActions";
     public static final String JS_TR_CLICK_TOGGLE_INPUT = "TrClickToggleInput";
-    public static final String JS_TR_IS_NEXT_BUTTON_ENABLED = "TrIsNextButtonEnabled";
     public static final String JS_TR_CHECK_TABLE_CELL_VALUE = "TrCheckTableCellValue";
-    public static final String JS_TR_GET_COCKPIT_ITEM = "TrGetCockpitItem";
     public static final String JS_TR_LIST_PLUS_MENU_ACTION = "TrListPlusMenuAction";
     public static final String JS_TR_ARROW_ACTION = "TrArrowAction";
     public static final String JS_TR_CLICK_DASHBOARD_MENU_BUTTON = "TrClickDashboardMenuButton";

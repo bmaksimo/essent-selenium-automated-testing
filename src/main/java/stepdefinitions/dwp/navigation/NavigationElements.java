@@ -34,17 +34,6 @@ public abstract class NavigationElements extends DwpScenario {
         }
     }
 
-
-    private class ClickCockpitItem implements Predicate<String> {
-        @Override
-        public boolean test(String item) {
-            seleniumDriver.waitForRequestsToFinish();
-            Map<String, String> options = new HashMap<>();
-            options.put("item", item);
-            return executeJavascriptTest(JS_TR_GET_COCKPIT_ITEM, options);
-        }
-    }
-
     private class ClickListPlusAction implements Predicate<String> {
         @Override
         public boolean test(String item) {
@@ -119,13 +108,6 @@ public abstract class NavigationElements extends DwpScenario {
         DwpPlusMenu plusMenu = new DwpPlusMenu();
         boolean success = plusMenu.executeAction(path);
         assertThat(String.format("Plus Menu Path %s undefined.", path),
-            success, is(true));
-    }
-
-    protected void clickCockpitItem(String item) {
-        seleniumDriver.waitForRequestsToFinish();
-        boolean success = new ClickCockpitItem().test(item);
-        assertThat(String.format("Cockpit item %s was not available.", item),
             success, is(true));
     }
 
