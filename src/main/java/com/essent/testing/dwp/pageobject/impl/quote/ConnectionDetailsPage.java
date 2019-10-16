@@ -21,147 +21,120 @@ import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.INPUT;
 
 public class ConnectionDetailsPage extends QuoteCreationGuidedStep {
 
+    //These two locators are for web elements, not used in production.
+    //These elements are provided in test environments, in English only
+    private static final String MM_MODE_LABEL = "test";
+    private static final String MM_MODE_ON_LABEL = "MM should respond?";
 
-  //These two locators are for web elements, not used in production.
-  //These elements are provided in test environments, in English only
-  private static final String MM_MODE_LABEL = "test";
-  private static final String MM_MODE_ON_LABEL = "MM should respond?";
+    private ConnectionDetails electricityConnectionDetails;
+    private ConnectionDetails gasConnectionDetails;
 
-  private ConnectionDetails electricityConnectionDetails;
-  private ConnectionDetails gasConnectionDetails;
+    private ToggleSwitch electricityMarketMockTestSwitch;
+    private ToggleSwitch gasMarketMockTestSwitch;
 
-  private ToggleSwitch electricityMarketMockTestSwitch;
-  private ToggleSwitch gasMarketMockTestSwitch;
-
-  public ConnectionDetailsPage() {
-    this.electricityMarketMockTestSwitch = new ToggleSwitchImpl();
-    this.gasMarketMockTestSwitch = new ToggleSwitchImpl();
-  }
-
-  @Override
-  public boolean fillInFormData() {
-    Map<String, String> options = new HashMap<>();
-    options.put("selector", ELEC_EAN.element().query);
-    options.put("value", electricityConnectionDetails.getEan());
-    seleniumDriver.executeJavascriptTest(JS_TR_APPLY_FORM_INPUT, options, true);
-
-    options.put("selector", GAS_EAN.element().query);
-    options.put("value", gasConnectionDetails.getEan());
-    seleniumDriver.executeJavascriptTest(JS_TR_APPLY_FORM_INPUT, options, true);
-
-    Model.Execution execution = createExecution();
-    execution
-        .element(ELEC_METER_NR.element())
-        .element(GAS_METER_NR.element())
-        .step(
-            createStep(Action.TYPING)
-                .element(ELEC_METER_NR.name())
-                .value(electricityConnectionDetails.getMeterNumber()),
-            INPUT.getSleepInMillis())
-        .step(
-            createStep(Action.TYPING)
-                .element(GAS_METER_NR.name())
-                .value(gasConnectionDetails.getMeterNumber()),
-            INPUT.getSleepInMillis());
-    return execute(execution);
-  }
-
-  public boolean fillInElectricityEanCode() {
-    Model.Execution execution = createExecution();
-    execution
-        .element(ELEC_EAN.element())
-        .step(
-            createStep(Action.TYPING)
-                .element(ELEC_EAN.name())
-                .value(electricityConnectionDetails.getEan()),
-            INPUT.getSleepInMillis());
-    return execute(execution);
-  }
-
-  public void setElectricityConnectionDetails(ConnectionDetails electricityConnectionDetails) {
-    this.electricityConnectionDetails = electricityConnectionDetails;
-  }
-
-  public void setGasConnectionDetails(ConnectionDetails gasConnectionDetails) {
-    this.gasConnectionDetails = gasConnectionDetails;
-  }
-
-  public boolean toggleMeter(ProductType productType, SwitchState state) {
-    String query = ELEC_METER_OPEN_CHECKBOX.getQuery();
-    switch (productType) {
-      case Gas:
-        query = GAS_METER_OPEN_CHECKBOX.getQuery();
-        break;
-      default:
-        break;
+    public ConnectionDetailsPage() {
+        this.electricityMarketMockTestSwitch = new ToggleSwitchImpl();
+        this.gasMarketMockTestSwitch = new ToggleSwitchImpl();
     }
-    Map<String, String> options = new HashMap<>();
-    options.put("id", query);
-    boolean result = executeJavascriptTest(JS_TR_TOGGLE_INPUT_STATE, options);
-    return result;
-  }
 
-  public boolean toggleMarketMockTest(ProductType productType, SwitchState state) {
-    seleniumDriver.waitForRequestsToFinish();
-    String query = ELEC_MARKET_MOCK.getQuery();
-    switch (productType) {
-      case Gas:
-        query = GAS_MARKET_MOCK.getQuery();
-        break;
-      default:
-        break;
+    @Override
+    public boolean fillInFormData() {
+        Map<String, String> options = new HashMap<>();
+        options.put("selector", ELEC_EAN.element().query);
+        options.put("value", electricityConnectionDetails.getEan());
+        seleniumDriver.executeJavascriptTest(JS_TR_APPLY_FORM_INPUT, options, true);
+
+        options.put("selector", GAS_EAN.element().query);
+        options.put("value", gasConnectionDetails.getEan());
+        seleniumDriver.executeJavascriptTest(JS_TR_APPLY_FORM_INPUT, options, true);
+
+        Model.Execution execution = createExecution();
+        execution
+            .element(ELEC_METER_NR.element())
+            .element(GAS_METER_NR.element())
+            .step(
+                createStep(Action.TYPING)
+                    .element(ELEC_METER_NR.name())
+                    .value(electricityConnectionDetails.getMeterNumber()),
+                INPUT.getSleepInMillis())
+            .step(
+                createStep(Action.TYPING)
+                    .element(GAS_METER_NR.name())
+                    .value(gasConnectionDetails.getMeterNumber()),
+                INPUT.getSleepInMillis());
+        return execute(execution);
     }
-    Map<String, String> options = new HashMap<>();
-    options.put("id", query);
-    boolean result = executeJavascriptTest(JS_TR_TOGGLE_INPUT_STATE, options);
-    return result;
-  }
 
-  public String getEan() {
-    WebElement element =
-        seleniumDriver.findElement(By.cssSelector(ELECTRICITY_EAN_CODE.element().query));
-    return element.getAttribute("value");
-  }
+    public boolean fillInElectricityEanCode() {
+        Model.Execution execution = createExecution();
+        execution
+            .element(ELEC_EAN.element())
+            .step(
+                createStep(Action.TYPING)
+                    .element(ELEC_EAN.name())
+                    .value(electricityConnectionDetails.getEan()),
+                INPUT.getSleepInMillis());
+        return execute(execution);
+    }
 
-  /**
-   * Method is exceptionally using hard-coded "test" label, for the sake of simplicity of parameters
-   * because the 'test' toggle switch is not included in productional versions, and it is unlikely
-   * that Dutch and French UAT versions of switch have different labels in UAT
-   */
-  public void switchOnElectricityMarketMock(SwitchState switchState) {
-    electricityMarketMockTestSwitch.switchOn(MM_MODE_LABEL);
-  }
+    public void setElectricityConnectionDetails(ConnectionDetails electricityConnectionDetails) {
+        this.electricityConnectionDetails = electricityConnectionDetails;
+    }
 
-  public void switchOnElectricityMarketMock(String card) {
-    electricityMarketMockTestSwitch.switchOn(card, MM_MODE_LABEL);
-  }
+    public void setGasConnectionDetails(ConnectionDetails gasConnectionDetails) {
+        this.gasConnectionDetails = gasConnectionDetails;
+    }
 
-  public void isElectricityMarketMockOn(String card) {
-    electricityMarketMockTestSwitch.checkVisibility(card, MM_MODE_ON_LABEL);
-  }
+    public boolean toggleMeter(ProductType productType, SwitchState state) {
+        String query = ELEC_METER_OPEN_CHECKBOX.getQuery();
+        switch (productType) {
+            case Gas:
+                query = GAS_METER_OPEN_CHECKBOX.getQuery();
+                break;
+            default:
+                break;
+        }
+        Map<String, String> options = new HashMap<>();
+        options.put("id", query);
+        boolean result = executeJavascriptTest(JS_TR_TOGGLE_INPUT_STATE, options);
+        return result;
+    }
 
-  /**
-   * Method is exceptionally using hard-coded "test" label, for the sake of simplicity of parameters
-   * because the 'test' toggle switch is not included in productional versions, and it is unlikely
-   * that Dutch and French UAT versions of switch have different labels in UAT
-   */
-  public void switchOnGasMarketMock() {
-    gasMarketMockTestSwitch.switchOn(MM_MODE_LABEL);
-  }
+    public boolean toggleMarketMockTest(ProductType productType, SwitchState state) {
+        seleniumDriver.waitForRequestsToFinish();
+        String query = ELEC_MARKET_MOCK.getQuery();
+        switch (productType) {
+            case Gas:
+                query = GAS_MARKET_MOCK.getQuery();
+                break;
+            default:
+                break;
+        }
+        Map<String, String> options = new HashMap<>();
+        options.put("id", query);
+        boolean result = executeJavascriptTest(JS_TR_TOGGLE_INPUT_STATE, options);
+        return result;
+    }
 
-  public void switchOnGasMarketMock(String card) {
-    gasMarketMockTestSwitch.switchOn(card, MM_MODE_LABEL);
-  }
+    public String getEan() {
+        WebElement element =
+            seleniumDriver.findElement(By.cssSelector(ELECTRICITY_EAN_CODE.element().query));
+        return element.getAttribute("value");
+    }
 
-  public void isGasMarketMockOn(String card) {
-    gasMarketMockTestSwitch.checkVisibility(card, MM_MODE_ON_LABEL);
-  }
+    public void isElectricityMarketMockOn(String card) {
+        electricityMarketMockTestSwitch.checkVisibility(card, MM_MODE_ON_LABEL);
+    }
 
-  public void toggleElectricityMarketMockTest(SwitchState switchState, String card) {
-    electricityMarketMockTestSwitch.toggle(switchState, card, MM_MODE_LABEL);
-  }
+    public void isGasMarketMockOn(String card) {
+        gasMarketMockTestSwitch.checkVisibility(card, MM_MODE_ON_LABEL);
+    }
 
-  public void toggleGasMarketMockTest(SwitchState switchState, String card) {
-    gasMarketMockTestSwitch.toggle(switchState, card, MM_MODE_LABEL);
-  }
+    public void toggleElectricityMarketMockTest(SwitchState switchState, String card) {
+        electricityMarketMockTestSwitch.toggle(switchState, card, MM_MODE_LABEL);
+    }
+
+    public void toggleGasMarketMockTest(SwitchState switchState, String card) {
+        gasMarketMockTestSwitch.toggle(switchState, card, MM_MODE_LABEL);
+    }
 }
