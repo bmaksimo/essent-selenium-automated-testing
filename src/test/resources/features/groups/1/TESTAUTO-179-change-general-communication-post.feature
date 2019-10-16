@@ -7,48 +7,35 @@
 Feature: Create new customer with general communication preference: By email and update "General"
 
     Background:
-        Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
+        Given I login as API user "soapui_b2c"
     @TESTAUTO-179
     Scenario: Change GENERAL communication preference from EMAIL on POST
-        #1 - GUI contract creation
-        When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
-        Then Form header is "Quote details"
+        And "Create_Quote" flow is started
+        When Data is prepared for Create quote request for "prospect" and meter open is "On" and sign date is "35 days before now" with communication by email
+        And New tc1_quote is created
+        Then Quote status is "ACCEPTED"
+        And Quoteline exists
+        And Quoteline status is "Sent to customer"
 
-        When "Tariefdatum" date is "now"
-        And "Sales kanaal" selection is "Inbound"
-        And Quote details are confirmed
-        Then Form header is "Personal details"
+        When Simulation that customer signature is received
+        Then Quote stage status is "SIGNATURE RECEIVED"
+        And Quoteline status is "Signature received"
 
-        When Customer is random
-        And Customer address is
-                    | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
-                    | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
+        When File is uploaded as scanned signature
+        Then Signin is confirmed
+        And Contract is created
+        And Contracted EAN exists on account
 
-        And Customer details are confirmed
-        Then Form header is "Select package & fuel type"
-        And "Pakket" selection is "Vast"
-        And Checkbox "Gas Fix B2C (TC1)" is Unchecked
-        And Package and Fuel Type is confirmed
-        Then Form header is "Connection details"
+        When Payment details are received
+        Then Wait until contract instance starts
+        And Check order in jbilling
 
-        And EAN code is generated
-        When "Startdatum" date is "35 days before now"
-        And "EAN-code" input is "parameter:EAN-code-generated"
-        And Option "test" "is" "On"
-        And Connection details are confirmed
-        Then Form header is "Billing details"
-
-        When "Betalingswijze" selection is "Overschrijving"
-        And Billing details are confirmed
-        Then Form header is "Quote overview"
-
-        When Option "Heeft de klant al getekend?" "is" "On"
-        And "Kanaal ondertekening" selection is "Papier"
-        And Quote is signed in "Kontich"
-        And "Datum ondertekening" date is "now"
-        And Quote is confirmed
-        Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
-
+        Given I renew login to DWP as "contracting.testautomation.b2c@essent.be"
+        When Left menu is "sales-marketing"
+        And Top menu item is "Klanten"
+        And Top action is Filter from "sales-marketing" menu retrying 5 times
+        And "Klantnummer" input is "parameter:accountNumber"
+        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
         When Dashboard menu is "Details"
         And Click on Plus action of table "CommunicationPreferencesOnAccount" at row where "COMMUNICATIETYPE" is "Algemeen" and click on "Update"
         And "Algemeen" E-mailadres input is cleared

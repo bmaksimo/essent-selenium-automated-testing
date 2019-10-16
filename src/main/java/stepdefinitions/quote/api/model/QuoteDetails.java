@@ -77,4 +77,21 @@ public class QuoteDetails {
 
     public void setCompanyNumber(String companyNumber) { this.companyNumber = companyNumber; }
 
+    @Override
+    public String toString() {
+        return "QuoteDetails{" +
+            "recordId='" + recordId + '\'' +
+            ", quoteId='" + quoteId + '\'' +
+            ", quoteNumber='" + quoteNumber + '\'' +
+            ", accountNumber='" + accountNumber + '\'' +
+            ", accountId='" + accountId + '\'' +
+            ", ean='" + ean + '\'' +
+            ", dateOfBirth='" + dateOfBirth + '\'' +
+            ", accountName='" + accountName + '\'' +
+            ", firstName='" + firstName + '\'' +
+            ", lastName='" + lastName + '\'' +
+            ", iBan='" + iBan + '\'' +
+            ", companyNumber='" + companyNumber + '\'' +
+            '}';
+    }
 }
