@@ -48,3 +48,25 @@ Feature: TESTAUTO-285 Dunning-invoice-block-from-Odoo
         And  Odoo left menu is "Customers"
         And Odoo filter is "parameter:accountNumber"
         Then Column "Account Number" with value "parameter:accountNumber" is clicked
+
+        When Button "Outstanding" is clicked
+        And "Verkoop manueel" is open
+        And Manage invoice block is clicked
+        And Crete new invoice block button is clicked
+        And Invoice block reason is "WCO"
+#        And End date is "31" days from today
+        And End date is "1 month from now"
+        Then Save invoice block button is clicked
+
+        Given I renew login to DWP as "salesmarketing.testautomation.b2c@essent.be"
+        When Left menu is "sales-marketing"
+        And Top menu item is "Klanten"
+        And Top action is Filter from "sales-marketing" menu retrying 5 times
+        And "Klantnummer" input is "parameter:accountNumber"
+        And Click on "parameter:accountNumber" link
+        And Dashboard menu is "Billing"
+        Then Table "Transacties" contains check mark at column "Geblokkeerd?"
+
+        When Click on link in View List at "1st" row and "ID & Type" column polling 60 seconds
+        Then Table "Lijst met factuur blokkeringen" contains value "WCO" at column "Reden" retrying 30 times
+        And Invoice Block End date is "31" days from today
