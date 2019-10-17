@@ -5,6 +5,7 @@ import com.billinghouse.test_automation.util.dsl.EssentDateTimeFormat;
 import com.essent.testing.odoo.pageobject.impl.page.InvoiceBlockPage;
 import com.essent.testing.odoo.scenario.OdooScenario;
 import cucumber.api.java.en.And;
+import cucumber.api.java.en.Then;
 import org.junit.Assert;
 
 public class InvoiceBlockSteps extends OdooScenario {
@@ -37,5 +38,37 @@ public class InvoiceBlockSteps extends OdooScenario {
         String pageEndDate = new InvoiceBlockPage().getInvoiceBlockEndDateIsEmpty();
         Assert.assertNull("Invoice block end date is not empty"+ pageEndDate, pageEndDate);
     }
+
+    @And("^\"([^\"]*)\" is open$")
+    public void isOpen(String text){
+        new InvoiceBlockPage().expand(text);
+    }
+
+    @And("^Manage invoice block is clicked$")
+    public void manageInvoiceBlockIsClicked(){
+        new InvoiceBlockPage().clickManageInvoiceBlock();
+    }
+
+    @And("^Create new invoice block button is clicked$")
+    public void createNewInvoiceBlockButtonIsClicked(){
+        new InvoiceBlockPage().clickCreateNewInvoiceBlockButton();
+    }
+
+    @And("^Invoice block reason is \"([^\"]*)\"$")
+    public void invoiceBlockReasonIs(String reason){
+       new InvoiceBlockPage().selectInvoiceBlockReason(reason);
+    }
+
+    @And("^End date is \"([^\"]*)\"$")
+    public void endDateIs(String date){
+        String endDate=toOdooDate(date);
+        new InvoiceBlockPage().selectEndDateInInvoiceBlock(endDate);
+    }
+
+    @Then("^Save invoice block button is clicked$")
+    public void saveInvoiceBlockButtonIsClicked(){
+        new InvoiceBlockPage().clickSaveInvoiceBlockButton();
+    }
+
 
 }
