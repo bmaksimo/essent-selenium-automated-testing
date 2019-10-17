@@ -59,16 +59,8 @@ public class InvoiceBlockSteps extends OdooScenario {
        new InvoiceBlockPage().SelectInvoiceBlockReason(reason);
     }
 
-//    public String toOdooDateDaysFromToday(int amountOfDays){
-//        return DateExpressionsUtil
-//            .getNDaysFromToday(amountOfDays)
-//            .toString(EssentDateTimeFormat.ODOO_DATE_FORMAT.getFormat());
-//    }
-
-    //    @And("^End date is \"([^\"]*)\" days from today$")
     @And("^End date is \"([^\"]*)\"$")
     public void endDateIs(String date){
-//        String endDate = toOdooDateDaysFromToday(date);
         String endDate=toOdooDate(date);
         new InvoiceBlockPage().selectEndDateInInvoiceBlock(endDate);
     }
