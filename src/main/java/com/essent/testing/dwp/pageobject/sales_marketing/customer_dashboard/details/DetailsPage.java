@@ -4,7 +4,6 @@ import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.table.Filter;
 import com.essent.testing.dwp.pageobject.table.TableFilter;
-import org.apache.tools.ant.taskdefs.Sleep;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
