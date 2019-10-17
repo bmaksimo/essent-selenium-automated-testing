@@ -4,6 +4,7 @@ import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.table.Filter;
 import com.essent.testing.dwp.pageobject.table.TableFilter;
+import org.apache.tools.ant.taskdefs.Sleep;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -36,6 +37,7 @@ public class DetailsPage extends Component {
 
     public int getNumberOfBillingCustomers(){
         seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(5);
         return seleniumDriver.findElements(By.xpath(NUMBER_BILLING_CUSTOMER)).size();
     }
 
