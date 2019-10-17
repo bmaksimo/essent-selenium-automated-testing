@@ -52,7 +52,7 @@ Feature: TESTAUTO-285 Dunning-invoice-block-from-Odoo
         When Button "Outstanding" is clicked
         And "Verkoop manueel" is open
         And Manage invoice block is clicked
-        And Crete new invoice block button is clicked
+        And Create new invoice block button is clicked
         And Invoice block reason is "WCO"
         And End date is "1 month from now"
         Then Save invoice block button is clicked

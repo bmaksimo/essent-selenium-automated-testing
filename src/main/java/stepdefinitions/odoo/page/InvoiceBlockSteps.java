@@ -46,17 +46,17 @@ public class InvoiceBlockSteps extends OdooScenario {
 
     @And("^Manage invoice block is clicked$")
     public void manageInvoiceBlockIsClicked(){
-        new InvoiceBlockPage().ClickManageInvoiceBlock();
+        new InvoiceBlockPage().clickManageInvoiceBlock();
     }
 
-    @And("^Crete new invoice block button is clicked$")
-    public void creteNewInvoiceBlockButtonIsClicked(){
-        new InvoiceBlockPage().ClickCreteNewInvoiceBlockButton();
+    @And("^Create new invoice block button is clicked$")
+    public void createNewInvoiceBlockButtonIsClicked(){
+        new InvoiceBlockPage().clickCreateNewInvoiceBlockButton();
     }
 
     @And("^Invoice block reason is \"([^\"]*)\"$")
     public void invoiceBlockReasonIs(String reason){
-       new InvoiceBlockPage().SelectInvoiceBlockReason(reason);
+       new InvoiceBlockPage().selectInvoiceBlockReason(reason);
     }
 
     @And("^End date is \"([^\"]*)\"$")
@@ -67,7 +67,7 @@ public class InvoiceBlockSteps extends OdooScenario {
 
     @Then("^Save invoice block button is clicked$")
     public void saveInvoiceBlockButtonIsClicked(){
-        new InvoiceBlockPage().ClickSaveInvoiceBlockButton();
+        new InvoiceBlockPage().clickSaveInvoiceBlockButton();
     }
 
 
