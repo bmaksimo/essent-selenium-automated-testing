@@ -117,6 +117,14 @@ public class DetailsPage extends Component {
     }
 
     public void clickOnPlusMenuInRow(WebElement plusMenu) {
-        plusMenu.click();
+        int attempts = 20;
+        int currentAttempt = 0;
+        boolean isDisplayed = false;
+        while (!isDisplayed && currentAttempt <= attempts) {
+            currentAttempt++;
+            isDisplayed = plusMenu.isDisplayed();
+            Sleeper.sleepTightInSeconds(2);
+            if (isDisplayed) plusMenu.click();
+        }
     }
 }

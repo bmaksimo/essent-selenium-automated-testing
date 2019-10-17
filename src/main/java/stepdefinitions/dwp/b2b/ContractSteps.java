@@ -72,7 +72,7 @@ public class ContractSteps extends DwpScenario {
         int plusMenuColumn = row.size()-1;
         WebElement plusActionElement = row.get(plusMenuColumn);
         detailsPage.clickOnPlusMenuInRow(plusActionElement);
-        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(2);
         new BaseObjectPage().plusSubaction(action);
     }
 
