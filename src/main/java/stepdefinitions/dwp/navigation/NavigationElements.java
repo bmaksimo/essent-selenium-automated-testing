@@ -24,26 +24,13 @@ public abstract class NavigationElements extends DwpScenario {
     private class ClickTopAction implements Predicate<String> {
         @Override
         public boolean test(String action) {
-            seleniumDriver.waitForRequestsToFinish();
             TopActionsPage topActions = new TopActionsPageImpl();
             return topActions.executeTopAction(action);
         }
 
-        public boolean testWithFixedTime(String action, int waitingTime) {
-            seleniumDriver.waitForRequestsToFinish();
+        private boolean testWithFixedTime(String action, int waitingTime) {
             TopActionsPage topActions = new TopActionsPageImpl();
             return topActions.executeTopActionWithFixedWait(action, waitingTime);
-        }
-    }
-
-
-    private class ClickCockpitItem implements Predicate<String> {
-        @Override
-        public boolean test(String item) {
-            seleniumDriver.waitForRequestsToFinish();
-            Map<String, String> options = new HashMap<>();
-            options.put("item", item);
-            return executeJavascriptTest(JS_TR_GET_COCKPIT_ITEM, options);
         }
     }
 
@@ -88,23 +75,6 @@ public abstract class NavigationElements extends DwpScenario {
         }
     }
 
-
-    public class ValidateCustomer implements Predicate<Map> {
-        @Override
-        public boolean test(Map name) {
-            seleniumDriver.waitForRequestsToFinish();
-            return executeJavascriptTest(JS_TR_FIND_CUSTOMER, name);
-        }
-    }
-
-    public class SearchCustomer implements Predicate<String> {
-        @Override
-        public boolean test(String name) {
-            seleniumDriver.waitForRequestsToFinish();
-            return executeJavascriptTest(JS_TR_SEARCH_CUSTOMER, name);
-        }
-    }
-
     protected void clickTopAction(String name) {
         seleniumDriver.waitForRequestsToFinish();
         boolean success = new ClickTopAction().test(name);
@@ -141,22 +111,15 @@ public abstract class NavigationElements extends DwpScenario {
             success, is(true));
     }
 
-    protected void clickCockpitItem(String item) {
-        seleniumDriver.waitForRequestsToFinish();
-        boolean success = new ClickCockpitItem().test(item);
-        assertThat(String.format("Cockpit item %s was not available.", item),
-            success, is(true));
-    }
-
     protected void clickListPlusAction(String item) {
-        FluentWait<ClickListPlusAction> waiter = waiter(new ClickListPlusAction(), 20, 2);
+        FluentWait<ClickListPlusAction> waiter = waiter(new ClickListPlusAction(), 20, 1);
         waiter.withMessage(String.format("List Plus Action \"%s\" is undefined or disabled.", item));
         waiter.until((ClickListPlusAction action) -> action.test(item));
     }
 
     protected void clickDashboardMenu(String menu) {
         seleniumDriver.waitForRequestsToFinish();
-        FluentWait<ClickDashboardMenu> waiter = waiter(new ClickDashboardMenu(), 120, 10);
+        FluentWait<ClickDashboardMenu> waiter = waiter(new ClickDashboardMenu(), 120, 1);
         waiter.withMessage(String.format("Dashboard Menu  \"%s\" is undefined.", menu));
         waiter.until((ClickDashboardMenu dashboardMenu) -> dashboardMenu.test(menu));
     }

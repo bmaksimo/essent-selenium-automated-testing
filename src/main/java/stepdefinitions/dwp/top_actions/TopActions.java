@@ -80,11 +80,6 @@ public class TopActions extends NavigationElements {
         super.clickTopArrow(arrow.toLowerCase(), waitingTime);
     }
 
-    @When("^Cockpit item is \"([^\"]*)\"$")
-    public void checkCockpitItem(String item){
-        clickCockpitItem(item);
-    }
-
     @And("Changes are confirmed")
     public void confirmChange() {
         seleniumDriver.waitForRequestsToFinish();
@@ -97,27 +92,6 @@ public class TopActions extends NavigationElements {
         Sleeper.sleepTightInSeconds(waitingTime);
         boolean success = new ModalBase().confirmNow(parameterProvider.getScenarioInfo(), waitingTime);
         assertThat(String.format("Button %s was not available.", ""), success, is(true));
-    }
-
-    @And("^Search input is \"([^\"]*)\"$")
-    public void input(String inputName){
-        String name = parameterProvider.getValueOrParameterAsString(inputName);
-        Map<String, String> customerName = new HashMap<>();
-        customerName.put("name", name);
-        boolean success = new SearchCustomer().test(name);
-        assertThat(String.format("Customer %s was not found.", name),
-            success, is(true));
-    }
-
-    @And("^Customer \"([^\"]*)\" is found$")
-    public void customerFind(String inputName){
-        String name = parameterProvider.getValueOrParameterAsString(inputName);
-        Map<String, String> customerName = new HashMap<>();
-        String Inputname = parameterProvider.getValueOrParameterAsString(name);
-        customerName.put("name", Inputname);
-        boolean success = new ValidateCustomer().test(customerName);
-        assertThat(String.format("View list did not contain customer '%s'", inputName),
-            success, is(true));
     }
 
     @And("Intermittent Alert window is confirmed")

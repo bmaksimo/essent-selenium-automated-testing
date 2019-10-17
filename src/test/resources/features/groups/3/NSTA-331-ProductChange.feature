@@ -1,6 +1,7 @@
 @DWP
 @B2C
 @REGRESSION
+@Unstable
 
 Feature: NSTA 331- Product Change for TK1 type
 
@@ -76,7 +77,7 @@ Feature: NSTA 331- Product Change for TK1 type
         When Dashboard menu is "Service"
         Then Table "Interacties" contains value "Confirmation product change" at column "Type & Onderwerp"
         And Click on link in View List at "1st" row and "Nummer & Communicatiekanaal" column polling 60 seconds
-        And Check product change has succeeded
+        And Table "Communicatie" has matching value "Processed" at column "Status"
 
          #4.4 - Check Orders
         When Dashboard menu is "Contracten"

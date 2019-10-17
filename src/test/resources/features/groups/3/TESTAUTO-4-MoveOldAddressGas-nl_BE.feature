@@ -3,6 +3,8 @@
 @B2C
 @API
 @ALL
+@Unstable
+
 Feature: TESTAUTO - 4 Move old address  - Gas ean
 
     Background:

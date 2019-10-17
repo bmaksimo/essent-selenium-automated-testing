@@ -2,6 +2,7 @@
 @DWP
 @REGRESSION
 @CREDIT-AND-CONTROL
+
 Feature: NUAT-412: Import coda file
     Background:
         Given I login as API user "soapui_b2c"
@@ -60,5 +61,4 @@ Feature: NUAT-412: Import coda file
         And Odoo file upload confirm button is "Import"
         And Odoo file import report contains success string "Number of statements processed : 1"
 
-        When Modal button "View Bank Statement" is clicked
-        And Column "Reference" of the "1st" row is clicked
+        When Modal button "View CODA Bank Statement" is clicked

@@ -255,4 +255,12 @@ public class DateExpressionsUtil {
             EssentDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat());
     return fmt.parseDateTime(end).toString(EssentDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
   }
+
+    public static String checkAndConvertToOdooDate(String input) {
+        if (matchesDwpDateFormat(input)) {
+            return buildContractStartEndDate(input);
+        } else {
+            return expandFrom(input).toString(EssentDateTimeFormat.ODOO_DATE_FORMAT.getFormat());
+        }
+    }
 }

@@ -3,10 +3,14 @@
 @DWP
 @B2C
 @REGRESSION
+@Unstable
+
 Feature: NSTA-339 Passive renewal of contract TK1 - with communication through letter
 
     Background:
         Given I login as API user "soapui_b2c"
+        And the batchjob "UPDATE URD" is set to "Inactive"
+        And the batchjob "UPDATE URD" is not running
 
     @NSTA-339
     Scenario: Sign in to default electricity product
@@ -34,7 +38,7 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
         Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
         When Left menu is "contracting-switching"
         And Top menu item is "Klanten"
-        And Top action is Filter from "contracting-switching" menu retrying 5 times
+        And Top action is "Filters"
         And "Klantnummer" input is "parameter:accountNumber"
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
 
@@ -58,7 +62,7 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
         And "Renewal date to" date is "parameter:Start & Einddatum - end"
         And "EAN-code" input is "parameter:EAN-code"
         Then Changes are confirmed
-        And Table "TK1 - Hernieuwingsbatches" contains value "parameter:suitecrm-customer-name" at column "Batchnaam" waiting for 25 seconds
+        And Table "TK1 - Hernieuwingsbatches" has matching value "parameter:suitecrm-customer-name" at column "Batchnaam"
 
         #Checks
         #3. Validate renewal batch
@@ -77,28 +81,21 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
 
         When Click on "parameter:Contractnummer" link
         And  Dashboard menu is "Sales"
-        And Table "Offertes" has matching value "Passieve hernieuwing Geprijsd - Geaccepteerd" at column "Type & status" polling 10 seconds
-        And Table "Offertes" has matching value "parameter:Contract Start & Einddatum" at column "Start & Einddatum" polling 10 seconds
-        And Table "Offertes" has matching value "parameter:Id Billing customer" at column "Billing klant & Tariefdatum" polling 10 seconds
+        And Table "Offertes" has matching value "Passieve hernieuwing" at column "Type & status"
+        And Table "Offertes" has matching value "Geprijsd - Geaccepteerd" at column "Type & status"
+        And Table "Offertes" has matching value "parameter:Id Billing customer" at column "Billing klant & Tariefdatum"
 
         #4 Validate the definition of renewal product (date valid within the period: "Start & einddatum hernieuwing")
         When Top arrow button is "Up"
-        And  Plus menu is "Contracting -> TK1 Hernieuwingen -> Bepaal het hernieuwingsproduct"
-        And Sleep for 20 seconds
+        And Plus menu is "Contracting -> TK1 Hernieuwingen -> Bepaal het hernieuwingsproduct"
         And Top action is "Filters"
-        And  Selection with search is "Van pakket"
-        And  Modal dialog is "Select"
-        And  Search option is "parameter:PackageName"
-        And  Search button with label "Search" is clicked
-        And  First search result matching "parameter:PackageName" is checked
-        And  Submit search results button "Verzenden" is clicked
-        And  Modal dialog "Select" is not shown
-        And  All date values at column "Geldig tot" from table "Bepaal het hernieuwingsproduct" are within the period "parameter:Start & einddatum hernieuwing"
+        And Search for "parameter:PackageName" in the SelectWithSearch "Van pakket" and select option "parameter:PackageName" and Submit
+        And Check if our "parameter:Start & einddatum hernieuwing" is covered by a valid tariffsheetperiod from table "Bepaal het hernieuwingsproduct"
 
-        #5 Communicate the renewal to the customer through the invoice
+        #5 Communicate the renewal to the customer through a letter
         When Plus menu is "Contracting -> TK1 Hernieuwingen -> Hernieuwingsbatches"
         When Click on "parameter:suitecrm-customer-name" link
-        And  Click on "VERSTUUR PASSIEVE HERNIEUWINGSBRIEVEN" link
+        And Click on "VERSTUUR PASSIEVE HERNIEUWINGSBRIEVEN" link
         And Modal dialog is "Send passive renewal letter"
         And Changes are confirmed
         Then "Status batch" field value is switched to "LETTERS_SENT" within 360 seconds
@@ -108,4 +105,4 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
         #6 Check communication
         When Click on "parameter:Contractnummer" link
         And Dashboard menu is "Service"
-        Then Table "Interacties" has matching value "Outbound document: Passive renewal communication" at column "Type & Onderwerp" polling 10 seconds
+        Then Table "Interacties" has matching value "Outbound document: Passive renewal communication" at column "Type & Onderwerp"

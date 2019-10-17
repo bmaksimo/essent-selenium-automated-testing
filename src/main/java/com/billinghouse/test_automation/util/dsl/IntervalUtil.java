@@ -9,7 +9,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 public class IntervalUtil {
 
-  private static final DateTimeFormatter INTERVAL_DATE_FORMATTER =
+  public static final DateTimeFormatter INTERVAL_DATE_FORMATTER =
       DateTimeFormat.forPattern(EssentDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat());
 
   private IntervalUtil() {}

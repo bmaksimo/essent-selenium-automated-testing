@@ -2,6 +2,7 @@ package stepdefinitions.quote.api;
 
 import com.billinghouse.test_automation.util.dsl.DateTimeRegex;
 import com.billinghouse.test_automation.util.dsl.EssentDateTimeFormat;
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.restassured.B2CCreateContractScenario;
@@ -12,7 +13,10 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.restassured.http.Cookies;
+import io.restassured.response.Response;
+import org.junit.Assert;
 import stepdefinitions.quote.api.helper.AsyncExecutor;
+import stepdefinitions.quote.api.helper.RequestHelper;
 import stepdefinitions.quote.api.model.ContractDetails;
 import stepdefinitions.quote.api.model.QuoteDetails;
 
@@ -24,7 +28,7 @@ import static org.awaitility.Awaitility.await;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-
+import static stepdefinitions.quote.api.AbstractAPI.*;
 
 
 /**
@@ -73,15 +77,23 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     }
 
     @When("^Data is prepared for Create quote request for \"([^\"]*)\" and meter open is \"([^\"]*)\" and sign date is \"([^\"]*)\"$")
-    public void dataIsPreparedForCreateQuoteWithDateRequestFor(String flowType, String meterOpen, String signInDate) throws IOException {
+    public void dataIsPreparedForCreateQuoteWithDateRequestAndPostPreference(String flowType, String meterOpen, String signInDate) throws IOException {
+        createQuoteAndSaveResult(flowType, meterOpen, signInDate, "POST");
+    }
+
+    @When("^Data is prepared for Create quote request for \"([^\"]*)\" and meter open is \"([^\"]*)\" and sign date is \"([^\"]*)\" with communication by email$")
+    public void dataIsPreparedForCreateQuoteWithDateRequestAndEmailPreference(String flowType, String meterOpen, String signInDate) throws IOException {
+        createQuoteAndSaveResult(flowType, meterOpen, signInDate, "EMAIL");
+    }
+
+    public void createQuoteAndSaveResult(String flowType, String meterOpen, String signInDate, String contactPreference) throws IOException {
         this.flow = flowType;
         String signInDateApiDate = toDwpAPIDate(parameterProvider.getValueOrParameterAsString(signInDate));
-	    this.quoteDetails = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow, meterOpen, signInDateApiDate);
+        this.quoteDetails = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow, meterOpen, signInDateApiDate, contactPreference);
         String retrievedAccountNumber = quoteDetails.getAccountNumber();
         parameterProvider.put("accountNumber", retrievedAccountNumber);
-	    parameterProvider.put("EAN-code", quoteDetails.getEan());
-	    parameterProvider.put("suitecrm-customer-name", quoteDetails.getAccountName());
-
+        parameterProvider.put("EAN-code", quoteDetails.getEan());
+        parameterProvider.put("suitecrm-customer-name", quoteDetails.getAccountName());
     }
 
     @When("^New tc1_quote is created$")
@@ -167,5 +179,46 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     public void checkOrderInJbilling() {
         await().pollInterval(5, TimeUnit.SECONDS).atMost(600, TimeUnit.SECONDS)
             .until(AsyncExecutor.isOrderCreated(cookie, quoteDetails, contractDetails));
+    }
+
+    @And("the batchjob {string} is set to {string}")
+    public void setBatchJobStatus(String batchJobName, String targetStatus) {
+        RequestHelper helper = new RequestHelper();
+        String path =
+                String.format(
+                    ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_BATCHJOBSETTING_URL),
+                    batchJobName,
+                    targetStatus
+                );
+
+        helper.simplePutRequest(STATUS_OK, cookie, path);
+    }
+
+    @And("the batchjob {string} is not running")
+    public void theBatchjobIsNotRunning(String batchJobName) throws InterruptedException {
+        RequestHelper helper = new RequestHelper();
+        Response response;
+        final int waitSecondsInLoop = 15;
+        int currentAttempt = 0;
+
+        // 20 Minutes
+        final int maxAttempts = (20 * 60) / waitSecondsInLoop;
+        String path =
+                String.format(
+                        ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_BATCHJOBSTATE_URL),
+                        batchJobName
+                );
+
+        do {
+            response = helper.simpleGetRequest(STATUS_OK, cookie, path);
+            if (currentAttempt > 0) {
+                Sleeper.sleepTightInSeconds(waitSecondsInLoop);
+            }
+            currentAttempt++;
+            if (currentAttempt > maxAttempts) {
+                Assert.fail(String.format("Unable to stop batchjob %s - Aborting test", batchJobName));
+            }
+        } while (response.getBody().toString().contains("done"));
+
     }
 }

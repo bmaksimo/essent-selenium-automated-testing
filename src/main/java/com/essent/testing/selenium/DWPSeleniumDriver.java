@@ -96,18 +96,27 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
         }
     }
 
+    /*
+   This checks for the presence of the loading-bar element (the blue fake progress bar on top), and if
+   that one is NOT present, all is done
+    */
     public void waitForRequestsToFinish() {
+        FluentWait<WebDriver> waiter = new FluentWait<>(this.driver)
+                .withTimeout(Duration.ofSeconds(999))
+                .pollingEvery(Duration.ofMillis(25));
+
+        waiter.until(driver -> {
+                    try {
+                        driver.findElement(By.xpath("//div[@id = 'loading-bar']"));
+                    } catch (Exception e) {
+                        return true;
+                    }
+                    return false;
+                }
+        );
+
+        // Just to be sure, we add this here too (should never hit)
         awaitJqueryNotActive(200);
-        logger.debug("STEP:");
-        logger.debug(" - WAIT: waiting for all angular requests to finish on page at url: " + getDriver().getCurrentUrl());
-        int secondsTimeout = 240;
-        FluentWait<NgWebDriver> waiter = createWaiter(ngWebDriver, secondsTimeout);
-        waiter.until((NgWebDriver ngWebDriver) -> {
-            waiter.withMessage(String.format("DWP working too slowly. Unable to complete the request within %s seconds.", secondsTimeout));
-            ngWebDriver.waitForAngularRequestsToFinish();
-            return true;
-        });
-        logger.debug(" - RESULT: all angular requests are finished on page at url: " + getDriver().getCurrentUrl());
     }
 
     private void injectJavaScriptInline(File functionFile) {
@@ -219,14 +228,12 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
     }
 
     public WebElement findElementWhenClickable(By selector) {
-        ngWebDriver.waitForAngularRequestsToFinish();
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)
             .withTimeout(Duration.ofSeconds(30))
             .pollingEvery(Duration.ofMillis(500))
             .ignoring(ElementNotVisibleException.class)
             .ignoring(NoSuchElementException.class);
         WebElement element = waiter.until(ExpectedConditions.elementToBeClickable(selector));
-        ngWebDriver.waitForAngularRequestsToFinish();
         return element;
     }
 
@@ -260,7 +267,7 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
     public void waitAndClick(final WebElement element) {
         waitForElement(element);
         element.click();
-        ngWebDriver.waitForAngularRequestsToFinish();
+        waitForRequestsToFinish();
     }
 
     public void clickNow(final WebElement element) {
@@ -273,7 +280,7 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
         element.clear();
         waitForElement(element);
         element.sendKeys(keysToSend);
-        ngWebDriver.waitForAngularRequestsToFinish();
+        waitForRequestsToFinish();
     }
 
     public void sendKeysNow(final WebElement element, final String keysToSend) {

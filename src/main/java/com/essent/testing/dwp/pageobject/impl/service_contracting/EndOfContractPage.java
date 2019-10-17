@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
-import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.JS_TR_EAN_CHECK_BOX;
 import static org.hamcrest.Matchers.is;
 
 public class EndOfContractPage extends Component {
@@ -41,18 +40,5 @@ public class EndOfContractPage extends Component {
             boolean success = executeJavascriptTest(s, options);
             return success;
         }
-    }
-
-    public class EanCheckBox implements Predicate<String> {
-
-    @Override
-    public boolean test(String s) {
-      boolean success = executeJavascriptTest(JS_TR_EAN_CHECK_BOX, "");
-      return success;
-    }
-  }
-
-    public boolean checkEanCheckBox() {
-        return new EanCheckBox().test("");
     }
 }

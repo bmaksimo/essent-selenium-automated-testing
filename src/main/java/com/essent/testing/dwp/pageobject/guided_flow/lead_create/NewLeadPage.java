@@ -29,11 +29,8 @@ public class NewLeadPage extends BaseObjectPage {
     }
 
     private void fillInCompanyName(String companyNumber) {
-        seleniumDriver.waitForRequestsToFinish();
-        Optional<WebElement> companyNameField = seleniumDriver.findElementOptional(By.id(COMPANY_NAME));
-        companyNameField.ifPresent(WebElement::click);
-        seleniumDriver.waitForRequestsToFinish();
-        companyNameField.ifPresent(cnField -> seleniumDriver.waitAndSendKeys(cnField, companyNumber));
+        WebElement companyNameField = seleniumDriver.findElement(By.id(COMPANY_NAME));
+        companyNameField.sendKeys(companyNumber);
         seleniumDriver.waitForRequestsToFinish();
     }
 

@@ -154,4 +154,10 @@ public class MarketBerichtenSteps extends DwpScenario {
         MarketMessagesPage mp = new MarketMessagesPage();
         Assert.assertEquals("Actual label differs from expected", mp.getMarketMessageLabel(), label);
     }
+
+    @And("^Extern bericht is \"([^\"]*)\"$")
+    public void externBerichtIs(String label){
+        MarketMessagesPage mp = new MarketMessagesPage();
+        mp.selectExternBericht(label);
+    }
 }

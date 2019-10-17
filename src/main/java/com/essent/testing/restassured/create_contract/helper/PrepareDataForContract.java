@@ -179,11 +179,11 @@ public final class PrepareDataForContract {
         return "1" + (long) (Math.random() * (99999 - 10000) + 10000);
     }
 
-    public static String generateStringFromResource(String path) throws IOException {
+    private static String generateStringFromResource(String path) throws IOException {
         return new String(Files.readAllBytes(Paths.get(path)));
     }
 
-    public static void updatePayloadJson(String pathTemplate, String pathJson, String replaceString, String originalValue) throws IOException {
+    private static void updatePayloadJson(String pathTemplate, String pathJson, String replaceString, String originalValue) throws IOException {
         File pathTemplateFile = new File(pathTemplate);
         File pathJsonFile = new File(pathJson);
         String fileContext = FileUtils.readFileToString(pathTemplateFile, Charset.forName("utf-8"));
@@ -191,7 +191,7 @@ public final class PrepareDataForContract {
         FileUtils.write(pathJsonFile, fileContext, Charset.forName("utf-8"));
     }
 
-    public static void updatePayloadJson(String pathTemplate, String pathJson, HashMap<String, String> mapValues) throws IOException {
+    private static void updatePayloadJson(String pathTemplate, String pathJson, HashMap<String, String> mapValues) throws IOException {
         File pathTemplateFile = new File(pathTemplate);
         File pathJsonFile = new File(pathJson);
         String fileContext = FileUtils.readFileToString(pathTemplateFile, Charset.forName("utf-8"));

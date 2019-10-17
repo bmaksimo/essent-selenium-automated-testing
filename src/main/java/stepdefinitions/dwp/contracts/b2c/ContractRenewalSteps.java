@@ -14,6 +14,9 @@ import cucumber.api.java.en.And;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.Matchers;
+import org.joda.time.Interval;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.support.ui.FluentWait;
 import stepdefinitions.dwp.navigation.NavigationElements;
 import stepdefinitions.dwp.tables.DwpArrows;
@@ -21,13 +24,51 @@ import stepdefinitions.dwp.view_list.ViewListChecks;
 
 import java.util.List;
 
+import static com.billinghouse.test_automation.util.dsl.IntervalUtil.productTnterval;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.fail;
 
 public class ContractRenewalSteps extends NavigationElements {
+
+  private static final DateTimeFormatter INTERVAL_DATE_FORMATTER =
+          DateTimeFormat.forPattern(EssentDateTimeFormat.DWP_PRODUCT_VALIDNESS_DATE_FORMAT.getFormat());
 
   @Before("@DWP or @B2C or @E2E or @REGRESSION")
   public void setupTest(Scenario scenario){
     registerActiveScenario(scenario);
+  }
+
+  @And("Check if our {string} is covered by a valid tariffsheetperiod from table {string}")
+  public void checkIfOurIsCoveredByAValidTariffsheetperiodFromTable(String intervalParameter, String table) {
+    seleniumDriver.waitForRequestsToFinish();
+    ViewList viewList = new ViewListTestObject();
+    String periodOfRenewal = parameterProvider.getValueOrParameterAsString(intervalParameter);
+    List<String> dateValuesUntil = viewList.fetchColumnData(table, "Geldig tot");
+    List<String> dateValuesFrom = viewList.fetchColumnData(table ,"Geldig van");
+
+    if (dateValuesFrom.size() == 0 || dateValuesUntil.size() == 0) {
+      fail("Could not fetch validy period of tariffsheets from table");
+
+    }
+    Interval renewalPeriod = productTnterval(periodOfRenewal);
+
+    for (int i = 0; i < dateValuesFrom.size(); i++) {
+      //The endDate might be empty, this means the line is valid for eternity
+      String endDate = dateValuesUntil.get(i);
+      if (endDate.isEmpty()) {
+        endDate = "2999-12-31";
+      }
+              Interval myInterval = new Interval(
+              INTERVAL_DATE_FORMATTER.parseDateTime(dateValuesFrom.get(i)),
+              INTERVAL_DATE_FORMATTER.parseDateTime(endDate)
+      );
+      if (myInterval.contains(renewalPeriod)) {
+        return;
+      }
+    }
+    fail(
+            String.format("Renewal period %s is not covered by a tariffsheet", intervalParameter)
+    );
   }
 
   @And(
@@ -86,4 +127,5 @@ public class ContractRenewalSteps extends NavigationElements {
   public void tearDown() {
     super.tearDown();
   }
+
 }

@@ -39,7 +39,7 @@ public abstract class SeleniumDriver {
 
     public void setUp() {
         baseUrl = ConfigProvider.getProperty(ConfigKey.TESTING_BASE_URL);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
         browserName = caps.getBrowserName();
         browserVersion = caps.getVersion();
@@ -53,6 +53,18 @@ public abstract class SeleniumDriver {
         options.addArguments("--incognito");
         options.addArguments("--disable-dev-shm-usage"); // overcome limited resource problems
         options.addArguments("--no-sandbox"); // Bypass OS security model
+
+        if (ConfigProvider.getProperty(ConfigKey.PROXY_ENABLE).equals("yes")) {
+            Proxy proxy = new Proxy();
+            proxy.setSslProxy(
+                    String.format("%s:%s",
+                            ConfigProvider.getProperty(ConfigKey.PROXY_HOST),
+                            ConfigProvider.getProperty(ConfigKey.PROXY_PORT)
+                    )
+            );
+            proxy.setHttpProxy(proxy.getSslProxy());
+            options.setCapability("proxy", proxy);
+        }
         logger.debug(" - OPTIONS: " + options.toString());
         setChromeDriverBinary(options);
         ChromeDriver chromeDriver;
@@ -113,7 +125,7 @@ public abstract class SeleniumDriver {
     }
 
     public WebElement findElementWhenPresent(By selector) {
-        return findElementWhenPresent(selector, Duration.ofMinutes(5), Duration.ofSeconds(20));
+        return findElementWhenPresent(selector, Duration.ofMinutes(5), Duration.ofSeconds(1));
     }
 
   public Optional<WebElement> findElementOptional(By selector) {
@@ -125,7 +137,7 @@ public abstract class SeleniumDriver {
     List<WebElement> element =
         waiter.until(
             driver -> {
-              logger.debug(" - WAIT: polling findElementWhenPresent()");
+              logger.debug(" - WAIT: polling findElementOptional()");
               return driver.findElements(selector);
             });
     if (element.isEmpty()) {
@@ -176,7 +188,7 @@ public abstract class SeleniumDriver {
     public WebElement findElement(By selector) {
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)
             .withTimeout(Duration.ofSeconds(30))
-            .pollingEvery(Duration.ofSeconds(5))
+            .pollingEvery(Duration.ofMillis(250))
             .ignoring(NoSuchElementException.class);
         WebElement element = waiter.until(driver -> driver.findElement(selector));
         return element;
@@ -185,7 +197,7 @@ public abstract class SeleniumDriver {
     public WebElement findElementWhenVisible(By selector) {
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)
             .withTimeout(Duration.ofSeconds(180))
-            .pollingEvery(Duration.ofSeconds(20))
+            .pollingEvery(Duration.ofSeconds(1))
             .ignoring(ElementNotVisibleException.class)
             .ignoring(NoSuchElementException.class);
         return waiter.until(ExpectedConditions.visibilityOfElementLocated(selector));

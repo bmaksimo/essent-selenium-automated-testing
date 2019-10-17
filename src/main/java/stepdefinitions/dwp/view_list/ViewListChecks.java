@@ -37,6 +37,7 @@ import static com.billinghouse.test_automation.util.dsl.NumericUtil.amountAsInt;
 import static com.billinghouse.test_automation.util.dsl.NumericUtil.checkAmount;
 import static com.billinghouse.test_automation.util.dsl.NumericUtil.sumOfAmounts;
 import static com.essent.testing.dwp.constant.DwpConstants.FLEMISCH_LOCALE;
+import static junit.framework.TestCase.fail;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -59,17 +60,6 @@ public class ViewListChecks extends NavigationElements {
             seleniumDriver.waitForRequestsToFinish();
             WebElement link = seleniumDriver.findElement(By.linkText(linkText));
             link.click();
-        }
-    }
-
-    private class CheckViewListHeader implements Predicate<String> {
-        @Override
-        public boolean test(String header) {
-            int sec = 2;
-            Map<String, Object> options = new HashMap<>();
-            options.put("schedule_seconds", sec);
-            options.put("header", header);
-            return executeJavascriptTest(JS_TR_CHECK_VIEW_LIST_HEADER, options);
         }
     }
 
@@ -114,13 +104,6 @@ public class ViewListChecks extends NavigationElements {
         }
     }
 
-    private class ClickTableRowAction implements Predicate<Map> {
-        @Override
-        public boolean test(Map options) {
-            return executeJavascriptTest(JS_TR_CLICK_TABLE_ROW_ACTION, options);
-        }
-    }
-
     private Map<String, String> getColumnIndexListOptions(String column, String viewListName, String ordinal) {
         String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
         Map<String, String> columnIndexListOptions = new HashMap<>();
@@ -159,18 +142,19 @@ public class ViewListChecks extends NavigationElements {
     }
 
     @Then("^Table \"([^\"]*)\" has matching value \"([^\"]*)\" at column \"([^\"]*)\"$")
-    public void isMatchingValueAtColumn(String tableName, String match, String columnName){
-        List<String> columnData = new ViewListTestObject().fetchColumnData(tableName, columnName);
+    public void isMatchingValueAtColumn(String tableName, String match, String columnName) {
+        seleniumDriver.waitForRequestsToFinish();
         String inputValue = parameterProvider.getValueOrParameterAsString(match);
+        String queryTemplate = "//h2[contains(text(), \"%s\")]/parent::div/parent::div/parent::*/parent::div //table[@class=\"list__content\"]/tbody/tr/td[count(//table/thead/tr/th[.=\"%s\"]/preceding-sibling::th)+1]/*[@line-1=\"%s\" or @line-2=\"%s\"]";
+        String query = String.format(queryTemplate, tableName, columnName, inputValue, inputValue);
 
-        Optional<String> first =
-            columnData.stream().filter(element -> element.contains(inputValue)).findAny();
-        assertThat(
-            String.format(
+        try {
+            WebElement e = seleniumDriver.findElementWhenPresent(By.xpath(query));
+        } catch (Exception e) {
+            fail(String.format(
                 "Table \"%s\" didn't contain value matching \"%s\" at column \"%s\"",
-                tableName, match, columnName),
-            first.isPresent(),
-            is(true));
+                tableName, inputValue, columnName));
+        }
     }
 
     @Then("^Table \"([^\"]*)\" has matching value \"([^\"]*)\" at column \"([^\"]*)\" polling (\\d+) seconds$")
@@ -180,7 +164,7 @@ public class ViewListChecks extends NavigationElements {
         String arrow = parameterProvider.getValueOrParameterAsString("parameter:navigation");
         String dashboardMenu = parameterProvider.getValueOrParameterAsString("parameter:dashboard-menu");
 
-        FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), waitingTime, 60);
+        FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), waitingTime, 1);
         waiter.withMessage(String.format(
             "Table does not contain cell value \"%s\" at column \"%s\" within \"%s\" seconds.",
             match, columnName, waitingTime));
@@ -254,16 +238,6 @@ public class ViewListChecks extends NavigationElements {
             String.format("- STEP: Click on link in view list \"%s\" at \"%s\" row and \"%s\" column - PASSED.",
                 viewListName, ordinal, column));
 
-    }
-
-    @Then("^Row actions \"([^\"]*)\" is clicked$")
-    public void clickOnRowAction(String rowAction) {
-        Map<String, String> options = new HashMap<>();
-        options.put("rowAction", rowAction);
-        FluentWait<ClickTableRowAction> waiter = waiter(new ClickTableRowAction(), 30, 5);
-        waiter.withMessage(String.format("Row actions \"%s\" was not clicked", rowAction));
-        waiter.until((ClickTableRowAction callback) -> callback.test(options));
-        logger().debug(String.format("- STEP: Row actions \"%s\" is clicked - PASSED.", rowAction));
     }
 
     @And("^\"([^\"]*)\" list element has cell value \"([^\"]*)\" at column \"([^\"]*)\"$")
@@ -353,24 +327,6 @@ public class ViewListChecks extends NavigationElements {
         waiter.until((ViewListTestObject callback) -> {
             seleniumDriver.waitAndClick(seleniumDriver.findElement(By.linkText(linkText)));
             return callback.containsDataAt(row, expectedValue, columnName);
-        });
-    }
-
-
-    @When("^First list element with value \"([^\"]*)\" at column \"([^\"]*)\" has status \"([^\"]*)\" at column \"([^\"]*)\" within (\\d+) seconds refreshing \"([^\"]*)\"$")
-    public void hasStatusWithinTimeout(String value, String columnName, String status, String secondColumnName, int seconds, String linkText){
-        String expectedValue = parameterProvider.getValueOrParameterAsString(value);
-        FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), seconds / 2, 5);
-        waiter.withMessage(String.format("Status did not switch to \"%s\" within \"%s\" seconds", status, seconds));
-        waiter.until((ViewListTestObject callback) -> {
-            seleniumDriver.waitAndClick(seleniumDriver.findElement(By.linkText(linkText)));
-            return CollectionUtils.isNotEmpty(callback.fetchListRowsIndices(expectedValue, columnName));
-        });
-        waiter = waiter(new ViewListTestObject(), seconds / 2, 5);
-        waiter.until((ViewListTestObject callback) -> {
-            seleniumDriver.waitAndClick(seleniumDriver.findElement(By.linkText(linkText)));
-            int row = callback.fetchListRowsIndices(value, columnName).get(0);
-            return callback.containsDataAt(row, status, secondColumnName);
         });
     }
 
@@ -518,45 +474,6 @@ public class ViewListChecks extends NavigationElements {
                     tableName, columnName));
     }
 
-    @And("^Select \"([^\"]*)\" List row having cell value \"([^\"]*)\" at column \"([^\"]*)\"$")
-    public void selectListRows(String ordinal, String value, String columnName){
-        int row = extractNumericValue(ordinal);
-        ViewListTestObject viewListModel = new ViewListTestObject();
-        boolean success = viewListModel.selectListRow(row, value, columnName);
-        String message = String.format("\"%s\" list row didn't contain value \"%s\" at column \"%s\"", ordinal, value,
-            columnName);
-        assertThat(message, success, is(true));
-        logger().debug(String.format("- STEP: \"%s\" list row having cell value \"%s\" at column \"%s\" - PASSED.",
-            ordinal, value, columnName));
-
-    }
-
-    @And("^Plus actions at \"([^\"]*)\" list row having cell value \"([^\"]*)\" at column \"([^\"]*)\" are open$")
-    public void openPlusActions(String ordinal, String value, String columnName){
-        int row = extractNumericValue(ordinal);
-        String expectedValue = parameterProvider.getValueOrParameterAsString(value);
-        ViewListTestObject viewListModel = new ViewListTestObject();
-        boolean success = viewListModel.openListPlusActions(row);
-        String message = String.format("\"%s\" row list didn't have cell value \"%s\" at column \"%s\"", ordinal,
-            expectedValue, columnName);
-        assertThat(message, success, is(true));
-        logger().debug(String.format(
-            "- STEP: Plus actions at \"%s\" list row having cell value \"%s\" at column \"%s\" are opened - PASSED.",
-            ordinal, value, columnName));
-    }
-
-    @And("^\"([^\"]*)\" List rows? having cell value \"([^\"]*)\" at column \"([^\"]*)\" (?:is|are) selected$")
-    public void selectListRowHavingCellValueAtColumn(int row, String value, String columnName){
-        ViewListTestObject viewListModel = new ViewListTestObject();
-        boolean success = viewListModel.selectListRows(row, value, columnName);
-        String message = String.format("\"%s\" list row(s) didn't have cell value \"%s\" at column \"%s\"", row, value,
-            columnName);
-        assertThat(message, success, is(true));
-        logger().debug(String.format(
-            "- STEP: \"%s\" list row(s) having cell value \"%s\" at column \"%s\" is/are selected - PASSED.", row,
-            value, columnName));
-    }
-
     @Then("^Selected List rows have cell value \"([^\"]*)\" at column \"([^\"]*)\"$")
     public void checkSelectionData(String value, String columnName){
         ViewListTestObject viewListModel = new ViewListTestObject();
@@ -696,11 +613,11 @@ public class ViewListChecks extends NavigationElements {
         List<String> columnData = viewListModel.fetchColumnData(table, column);
         List<String> found = columnData.stream().filter(element -> element.contains(inputValue))
             .collect(Collectors.toList());
-        String message = String.format("Table \"%s\" didn't contain value \"%s\" at column \"%s\"", table, value,
+        String message = String.format("Table \"%s\" didn't contain value \"%s\" at column \"%s\"", table, inputValue,
             column);
         assertThat(message, found, not(empty()));
         logger().debug(String.format("- STEP: Table \"%s\" contains value \"%s\" at column \"%s\" - PASSED.", table,
-            value, column));
+            inputValue, column));
     }
 
     @And("^Table \"([^\"]*)\" contains check mark at column \"([^\"]*)\"$")
@@ -748,6 +665,21 @@ public class ViewListChecks extends NavigationElements {
         assertThat(message, found, empty());
     }
 
+    @And("^Table \"([^\"]*)\" does not contain any value at column \"([^\"]*)\" within (\\d+) seconds?$")
+    public void viewListDoesNotContainAnyValueAtColumn(String table, String column, int seconds){
+        ViewListTestObject viewListModel = new ViewListTestObject();
+        String arrow = parameterProvider.getValueOrParameterAsString("parameter:navigation");
+        String dashboardMenu = parameterProvider.getValueOrParameterAsString("parameter:dashboard-menu");
+
+        FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), seconds, 10);
+        waiter.withMessage(String.format("List element contains some value at column \"%s\"", column));
+        List<String> found =  waiter.until((ViewListTestObject callback) -> {
+            loopBack(arrow, dashboardMenu);
+            return callback.fetchColumnData(table, column).stream().filter(String::isEmpty).collect(Collectors.toList());
+        });
+        String message = String.format("Table \"%s\" should not contain value any value at column \"%s\"", table, column);
+        assertThat(message, found, empty());
+    }
 
     //TODO Create a special test harness class for invoice checks,
     //and move the methods, related to invoice checks, there.
@@ -866,8 +798,8 @@ public class ViewListChecks extends NavigationElements {
         float sumLowRatesSignatureToFloat = Float.parseFloat(parameterProvider.getValueOrParameterAsString(sumRatesLowSignature));
         cp.sumRates(sumRatesHighSignature);
         cp.sumRates(sumRatesLowSignature);
-        assertThat("Sum of signature and rejected quote for High prices is not equal", sumHighRatesSignatureToFloat, equalTo(cp.sumRates(sumRatesHighSignature)));
-        assertThat("Sum of signature and rejected quote for Low prices is not equal", sumLowRatesSignatureToFloat, equalTo(cp.sumRates(sumRatesLowSignature)));
+        assertThat("Sum of signature and rejected quote for High prices are not equal", sumHighRatesSignatureToFloat, equalTo(cp.sumRates(sumRatesHighSignature)));
+        assertThat("Sum of signature and rejected quote for Low prices are not equal", sumLowRatesSignatureToFloat, equalTo(cp.sumRates(sumRatesLowSignature)));
     }
 
 

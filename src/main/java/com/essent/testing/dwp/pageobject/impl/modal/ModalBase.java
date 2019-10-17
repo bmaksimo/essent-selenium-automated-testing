@@ -9,19 +9,24 @@ import java.util.Optional;
 
 public class ModalBase extends Component {
 
-    private static final By CONFIRM_BUTTON_SELECTOR = By.id("confirm-button");
+    private static final By CONFIRM_BUTTON_SELECTOR = By.xpath("//a[text() !=\"YES\" and text() != \"NO\" and @id=\"confirm-button\"]");
 
     public boolean confirm(String scenarioInfo) {
         seleniumDriver.waitForRequestsToFinish();
-        Sleeper.sleepTightInSeconds(2);
-        Optional<WebElement> confirm = seleniumDriver.findElementOptional(CONFIRM_BUTTON_SELECTOR);
-        confirm.ifPresent(WebElement::click);
-        seleniumDriver.waitForRequestsToFinish();
-        Sleeper.sleepTightInSeconds(5);
-        validateForm(scenarioInfo);
+        int loopCounter = 0;
+        // Is there a normal 'Confirm' button
+        do {
+            try {
+                seleniumDriver.waitAndClick(seleniumDriver.findElement(CONFIRM_BUTTON_SELECTOR));
+                // If the button exist, and we clicked it, the button should not be present anymore
+                loopCounter++;
+            } catch (Exception e) {
+                validateForm(scenarioInfo);
+                break;
+            }
+        }
+        while (loopCounter < 20 && !seleniumDriver.findElements(CONFIRM_BUTTON_SELECTOR).isEmpty());
         handleAlert();
-        seleniumDriver.waitForRequestsToFinish();
-
         return true;
     }
 
@@ -35,5 +40,9 @@ public class ModalBase extends Component {
         Sleeper.sleepTightInSeconds(waitingTime);
 
         return true;
+    }
+
+    public boolean modalContainsHeader(String expectedModalHeader) {
+        return null != seleniumDriver.findElementWhenVisible(By.xpath("//h5[text()[contains(.,'" + expectedModalHeader + "')]]"));
     }
 }

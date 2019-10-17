@@ -105,53 +105,6 @@ public class ViewListTestObject extends Component implements ViewList {
     return cell.isPresent() && cell.get().contains(value);
   }
 
-  public boolean selectListRow(int row) {
-    Map<String, Object> options = new HashMap<>();
-    options.put("index", row);
-    return executeJavascriptTest(JS_TR_SELECT_LIST_ROW, options);
-  }
-
-  public boolean openListPlusActions(int row) {
-    Map<String, Object> options = new HashMap<>();
-    options.put("index", row);
-    return executeJavascriptTest(JS_TR_OPEN_LIST_PLUS_ACTIONS, options);
-  }
-
-  public List<Integer> fetchListRowsIndices(String value, String columnName) {
-    Map viewTable = executeJavascriptMethod(JS_TR_GET_TABLE_MODEL, new HashMap<>());
-    int index = getColumnNameIndex(columnName, viewTable);
-    if (index < 0) {
-      return Collections.emptyList();
-    }
-    List<List> rows = getData(viewTable);
-    AtomicInteger idx = new AtomicInteger(1);
-    List<Integer> collect =
-        IntStream.range(1, rows.size() + 1)
-            .filter(
-                i ->
-                    idx.compareAndSet(i, i + 1)
-                        & ((ArrayList<String>) rows.get(i - 1)).get(index).contains(value))
-            .boxed()
-            .collect(Collectors.toList());
-    return collect;
-  }
-
-  public boolean selectListRow(int row, String value, String columnName) {
-    List<Integer> indices = fetchListRowsIndices(value, columnName);
-    return CollectionUtils.isNotEmpty(indices) && row <= indices.size();
-  }
-
-  public boolean selectListRows(int numRows, String value, String columnName) {
-    List<Integer> rows = fetchListRowsIndices(value, columnName);
-    if (CollectionUtils.isEmpty(rows) || numRows > rows.size()) {
-      return false;
-    }
-    List<Integer> indices = IntStream.range(1, numRows + 1).boxed().collect(Collectors.toList());
-    Map<String, Object> options = new HashMap<>();
-    options.put("indices", indices);
-    return executeJavascriptTest(JS_TR_SELECT_LIST_ROWS, options, true);
-  }
-
   public List<String> fetchDataSelection(String columnName) {
     Map<String, Object> options = new HashMap<>();
     options.put("include_selection", true);
@@ -165,7 +118,14 @@ public class ViewListTestObject extends Component implements ViewList {
   }
 
   public List<String> fetchColumnData(String table, String columnName) {
-    return fetchColumnDataNow(table, columnName, false);
+    List<String> dateValuesUntil;
+
+    int loopCounter = 0;
+    do {
+      dateValuesUntil = fetchColumnDataNow(table, columnName, false);
+      loopCounter++;
+    } while (dateValuesUntil.size() == 0 && loopCounter < 50);
+    return dateValuesUntil;
   }
 
   public List<String> fetchColumnDataNow(String table, String columnName, boolean immediate) {

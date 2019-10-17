@@ -1,5 +1,6 @@
 package com.essent.testing.odoo.scenario;
 
+import com.billinghouse.test_automation.util.dsl.DateExpressionsUtil;
 import com.essent.automation.core.WebDriverWait;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.config.ConfigKey;
@@ -60,5 +61,9 @@ public abstract class OdooScenario extends RegisteredScenario {
         if (seleniumDriver != null) {
             tidyUp(seleniumDriver);
         }
+    }
+
+    protected String toOdooDate(String parameter) {
+        return DateExpressionsUtil.checkAndConvertToOdooDate(parameter);
     }
 }

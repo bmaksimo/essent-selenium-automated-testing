@@ -1,12 +1,10 @@
 package stepdefinitions.quote.api.helper;
 
 import com.essent.testing.util.resource.ResourceUtil;
-import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookies;
 import io.restassured.http.Header;
 import io.restassured.response.Response;
-import io.restassured.specification.ProxySpecification;
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -54,6 +52,36 @@ public class RequestHelper {
         }
 
         assertThat(responseStatusCode, is(equalTo(expectedStatusCode)));
+        return response;
+    }
+
+    public void simplePutRequest(Integer expectedStatusCode, Cookies cookie, String path) {
+
+        Response response = expect().given().header(trackingHeader).cookies(cookie).when()
+                .put(path);
+
+        Integer responseStatusCode = getResponseStatusCode(response, path, expectedStatusCode);
+
+        if (!responseStatusCode.equals(expectedStatusCode)) {
+            LOGGER.error("RESPONSE IS: " + response.body().asString());
+        }
+
+        assertThat(responseStatusCode, is(equalTo(expectedStatusCode)));
+    }
+
+    public Response simpleGetRequest(Integer expectedStatusCode, Cookies cookie, String path) {
+
+        Response response = expect().given().header(trackingHeader).cookies(cookie).when()
+                .get(path);
+
+        Integer responseStatusCode = getResponseStatusCode(response, path, expectedStatusCode);
+
+        if (!responseStatusCode.equals(expectedStatusCode)) {
+            LOGGER.error("RESPONSE IS: " + response.body().asString());
+        }
+
+        assertThat(responseStatusCode, is(equalTo(expectedStatusCode)));
+
         return response;
     }
 
