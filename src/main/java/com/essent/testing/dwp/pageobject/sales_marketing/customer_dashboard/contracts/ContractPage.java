@@ -334,6 +334,8 @@ public class ContractPage extends Component {
     }
 
     public int getNumberOfElectricityContracts() {
+        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(5);
         return seleniumDriver.findElements(By.xpath(NUMBER_ELECTRICITY_CONTRACT)).size();
 
     }

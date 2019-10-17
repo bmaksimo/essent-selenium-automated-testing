@@ -36,6 +36,7 @@ public class DetailsPage extends Component {
 
     public int getNumberOfBillingCustomers(){
         seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(5);
         return seleniumDriver.findElements(By.xpath(NUMBER_BILLING_CUSTOMER)).size();
     }
 
