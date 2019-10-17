@@ -34,7 +34,6 @@ public enum B2CQuoteElements {
     }
 
     public Model.Element element() {
-        Model.Element element = new Model.Element().search(searchBy).query(this.query).key(this.name());
-        return element;
+        return new Model.Element().search(searchBy).query(this.query).key(this.name());
     }
 }

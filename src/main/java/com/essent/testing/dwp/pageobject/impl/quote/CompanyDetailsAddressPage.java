@@ -2,6 +2,7 @@ package com.essent.testing.dwp.pageobject.impl.quote;
 
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.datagenerator.address.StreetGenerator;
 import org.apache.commons.lang3.StringUtils;
 import stepdefinitions.dwp.tables.CustomerAddress;
@@ -27,7 +28,7 @@ public class CompanyDetailsAddressPage extends QuoteCreationGuidedStep {
         return setAddress();
     }
 
-    public boolean setAddress() {
+    private boolean setAddress() {
         String street = address.getStreet();
         if(street.equals("Random")) { street = StreetGenerator.getRandomStreetInKontich(); }
         String houseNr = Integer.toString(address.getHouseNr());
@@ -62,42 +63,39 @@ public class CompanyDetailsAddressPage extends QuoteCreationGuidedStep {
         return execute(initializeAddress);
     }
 
-    public boolean setAddressNewDatatable(List<Map<String,String>> addresses) {
-        address = getCustomerAddressFromDataTable(addresses.get(0));
+    public void setAddressNewDatatable(List<Map<String,String>> add) {
+        String street = null;
+        String houseNr = null;
+        String houseNrAdd = null;
+        String bus = null;
+        String postcode = null;
+        String city = null;
+        String country = null;
 
-        Model.Execution initializeAddress = createExecution();
-        initializeAddress.
-            element(DELIVERY_ADDR_STREET.element()).
-            element(DELIVERY_ADDR_HOUSE_NR.element()).
-            element(DELIVERY_ADDR_HOUSE_ADD.element()).
-            element(DELIVERY_ADDR_BUS.element()).
-            element(DELIVERY_ADDR_ZIPCODE.element()).
-            element(DELIVERY_ADDR_CITY.element()).
-            element(DELIVERY_ADDR_COUNTRY.element());
-
-        initializeAddress.step(createStep(TYPING).timeoutInSeconds(3).element(DELIVERY_ADDR_STREET.name()).value(address.getStreet()), INPUT.getSleepInMillis());
-        seleniumDriver.waitForRequestsToFinish();
-        initializeAddress.step(createStep(TYPING).timeoutInSeconds(3).element(DELIVERY_ADDR_HOUSE_NR.name()).value(Integer.toString(address.getHouseNr())), INPUT.getSleepInMillis());
-        seleniumDriver.waitForRequestsToFinish();
-        initializeAddress.step(createStep(TYPING).timeoutInSeconds(3).element(DELIVERY_ADDR_HOUSE_ADD.name()).value(address.getHouseNrAdd()), INPUT.getSleepInMillis());
-        seleniumDriver.waitForRequestsToFinish();
-
-        if (StringUtils.isNotEmpty(address.getBus())) {
-            initializeAddress.step(createStep(TYPING).timeoutInSeconds(3).element(DELIVERY_ADDR_BUS.name()).value(address.getBus()), INPUT.getSleepInMillis());
-            seleniumDriver.waitForRequestsToFinish();
+        for (Map<String, String> stringStringMap : add) {
+            street = stringStringMap.get("street");
+            if (street.equals("Random")) {
+                street = StreetGenerator.getRandomStreetInKontich();
+            }
+            houseNr = stringStringMap.get("houseNr");
+            houseNrAdd = stringStringMap.get("houseNrAdd");
+            bus = stringStringMap.get("bus");
+            postcode = stringStringMap.get("postalCode");
+            city = stringStringMap.get("city");
+            country = stringStringMap.get("country");
         }
 
-        initializeAddress.step(createStep(TYPING).timeoutInSeconds(3).element(DELIVERY_ADDR_ZIPCODE.name()).value(address.getPostalCode()), INPUT.getSleepInMillis());
+        // There is no need to wait inbetween, we don't care what happens, just wait at the end
+        this.fillFieldByXPath(DELIVERY_ADDR_STREET.getQuery(), street);
+        this.fillFieldByXPath(DELIVERY_ADDR_HOUSE_NR.getQuery(), houseNr);
+        this.fillFieldByXPath(DELIVERY_ADDR_HOUSE_ADD.getQuery(), houseNrAdd);
+        this.fillFieldByXPath(DELIVERY_ADDR_ZIPCODE.getQuery(), postcode);
+        this.fillFieldByXPath(DELIVERY_ADDR_CITY.getQuery(), city);
+        this.fillFieldByXPath(DELIVERY_ADDR_BUS.getQuery(), bus);
+        this.fillFieldByXPath(DELIVERY_ADDR_COUNTRY.getQuery(), country);
         seleniumDriver.waitForRequestsToFinish();
-        initializeAddress.step(createStep(TYPING).timeoutInSeconds(3).element(DELIVERY_ADDR_CITY.name()).value(address.getCity()), INPUT.getSleepInMillis());
-        seleniumDriver.waitForRequestsToFinish();
-
-        if (StringUtils.isNotEmpty(address.getCountry())) {
-            initializeAddress.step(createStep(Action.SELECT).timeoutInSeconds(3).element(DELIVERY_ADDR_COUNTRY.name()).value(address.getCountry()));
-            seleniumDriver.waitForRequestsToFinish();
-        }
-
-        return execute(initializeAddress);
+        Sleeper.sleepTightInSeconds(5);
+        handleAlert();
     }
 
     private CustomerAddress getCustomerAddressFromDataTable(Map<String,String> address) {
