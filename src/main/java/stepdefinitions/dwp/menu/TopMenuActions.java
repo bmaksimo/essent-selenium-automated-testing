@@ -16,6 +16,7 @@ public class TopMenuActions  extends Component {
         clickWithRetries(element, TOP_MENU_RETRIES);
     }
 
+    //TODO improve this to receive the path to be clicked
     public void clickPlusButton() {
         seleniumDriver.waitForRequestsToFinish();
         WebElement element = seleniumDriver.findElementWhenClickable(By.className(ICON_PLUS_CLASS_NAME));
