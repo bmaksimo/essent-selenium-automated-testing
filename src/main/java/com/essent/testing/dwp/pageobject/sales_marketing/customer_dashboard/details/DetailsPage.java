@@ -124,7 +124,10 @@ public class DetailsPage extends Component {
             currentAttempt++;
             isDisplayed = plusMenu.isDisplayed();
             Sleeper.sleepTightInSeconds(2);
-            if (isDisplayed) plusMenu.click();
+            if (isDisplayed) {
+                plusMenu.findElement(By.tagName("a")).click();
+                currentAttempt++;
+            }
         }
     }
 }
