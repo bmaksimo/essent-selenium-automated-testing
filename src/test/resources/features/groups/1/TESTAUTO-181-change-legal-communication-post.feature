@@ -4,12 +4,12 @@
 @ALL
 @DUNNING
 
-Feature: Create new customer with general communication preference: By email and update "Mandate"
+Feature: TESTAUTO-181 - Create new customer with general communication preference: By email and update "Mandate"
 
     Background:
         Given I login as API user "soapui_b2c"
     @TESTAUTO-181
-    Scenario: TESTAUTO-181 - Change LEGAL communication preference from EMAIL on POST
+    Scenario: Change LEGAL communication preference from EMAIL on POST
         And "Create_Quote" flow is started
         When Data is prepared for Create quote request for "prospect" and meter open is "On" and sign date is "35 days before now" with communication by email
         And New tc1_quote is created
