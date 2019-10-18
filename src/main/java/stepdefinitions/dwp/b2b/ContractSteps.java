@@ -14,6 +14,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.tables.SalesChannel;
 
@@ -26,12 +27,12 @@ import static org.junit.Assert.assertTrue;
 
 public class ContractSteps extends DwpScenario {
     @Before("@REGRESSION or @E2E or @API")
-    public void setupTest(Scenario scenario){
+    public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
     }
 
     @And("^Contract startdatum is today$")
-    public void contractStartdatumIsToday(){
+    public void contractStartdatumIsToday() {
         new ContractPage().startDateIsToday();
     }
 
@@ -47,10 +48,10 @@ public class ContractSteps extends DwpScenario {
     }
 
     @When("^Plus action of \"([^\"]*)\" element from \"([^\"]*)\" and click on Mark As Done/Markeren Als Verwerkt$")
-    public void plusActionOfElementFromAndClickOnMarkAsDone(String row, String table){
+    public void plusActionOfElementFromAndClickOnMarkAsDone(String row, String table) {
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(5);
-        new ContractPage().clickOnPlusMenuInTable(row,table);
+        new ContractPage().clickOnPlusMenuInTable(row, table);
         new BaseObjectPage().clickOnMarkAsDonePlusMenuSubAction();
     }
 
@@ -69,7 +70,7 @@ public class ContractSteps extends DwpScenario {
         Sleeper.sleepTightInSeconds(5);
         DetailsPage detailsPage = new DetailsPage();
         List<WebElement> row = detailsPage.selectRowOnTable(tableName, columnName, columnValue);
-        int plusMenuColumn = row.size()-1;
+        int plusMenuColumn = row.size() - 1;
         WebElement plusActionElement = row.get(plusMenuColumn);
         detailsPage.clickOnPlusMenuInRow(plusActionElement);
         Sleeper.sleepTightInSeconds(2);
@@ -77,7 +78,7 @@ public class ContractSteps extends DwpScenario {
     }
 
     @And("^\"([^\"]*)\" preference at column \"([^\"]*)\" is \"([^\"]*)\" on table \"([^\"]*)\"$")
-    public void checkPreferenceColumnData(String communicationType, String columnName, String expectedPreference, String tableName) throws Exception{
+    public void checkPreferenceColumnData(String communicationType, String columnName, String expectedPreference, String tableName) throws Exception {
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(5);
         List<WebElement> row = new DetailsPage().selectRowOnTable(tableName, columnName, communicationType);
@@ -88,7 +89,7 @@ public class ContractSteps extends DwpScenario {
 
     @And("^Save EAN from active contract$")
     public void saveEANFromActiveContract() {
-        parameterProvider.put("EAN-active-contract",new ContractPage().getActiveContractEAN());
+        parameterProvider.put("EAN-active-contract", new ContractPage().getActiveContractEAN());
     }
 
     @Then("^Contract is in \"([^\"]*)\" state$")
@@ -104,7 +105,7 @@ public class ContractSteps extends DwpScenario {
 
 
     @When("^B2B sales channel is ([^\"]*)$")
-    public void initSalesChannelB2B(SalesChannel salesChannel){
+    public void initSalesChannelB2B(SalesChannel salesChannel) {
         QuoteDetailsPage quoteDetailsPage = new QuoteDetailsPage();
         quoteDetailsPage.setSalesChannel(salesChannel);
         boolean formInitialized = quoteDetailsPage.fillInFormData();
@@ -140,12 +141,12 @@ public class ContractSteps extends DwpScenario {
         int currentAttempt = 0;
         boolean displayed = false;
         NewQuotePage nq = new NewQuotePage();
-        while (!displayed && currentAttempt<2){
+        while (!displayed && currentAttempt < 2) {
             new ContractPage().searchByClientNumber(naceCode);
             nq.clickOnSearch();
             nq.checkNaceCodeCheckBox();
             nq.saveSelectedItem();
-            displayed=nq.isNaceCodeElementDisplayed();
+            displayed = nq.isNaceCodeElementDisplayed();
             currentAttempt++;
         }
     }
@@ -190,6 +191,7 @@ public class ContractSteps extends DwpScenario {
         parameterProvider.put("EndDate-active-contract", new ContractPage().getActiveContractEndDate());
 
     }
+
     @After("@REGRESSION")
     public void tearDown() {
         super.tearDown();

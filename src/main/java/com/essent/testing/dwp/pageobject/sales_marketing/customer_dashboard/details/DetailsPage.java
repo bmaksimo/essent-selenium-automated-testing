@@ -34,43 +34,43 @@ public class DetailsPage extends Component {
         seleniumDriver.findElementWhenVisible(By.xpath(xpathFindIban)).isDisplayed();
     }
 
-    public int getNumberOfBillingCustomers(){
+    public int getNumberOfBillingCustomers() {
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(5);
         return seleniumDriver.findElements(By.xpath(NUMBER_BILLING_CUSTOMER)).size();
     }
 
-    public String getAddress(){
+    public String getAddress() {
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath(ADDRESS)).getText();
     }
 
-    public String getPhone(){
+    public String getPhone() {
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath(PHONE)).getText();
     }
 
-    public String getEmail(){
+    public String getEmail() {
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath(EMAIL)).getText();
     }
 
-    public String getCustomerName(){
+    public String getCustomerName() {
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath(CUSTOMER_NAME)).getText();
     }
 
-    public String getCustomerType(){
+    public String getCustomerType() {
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.id(TYPE)).getText();
     }
 
-    public String getIban(){
+    public String getIban() {
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath(BANK_ACCOUNT)).getText();
     }
 
-    public String getPaymentMethod(){
+    public String getPaymentMethod() {
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath(PAYMENT_METHOD)).getText();
     }
@@ -124,7 +124,8 @@ public class DetailsPage extends Component {
             currentAttempt++;
             isDisplayed = plusMenu.isDisplayed();
             Sleeper.sleepTightInSeconds(2);
-            if (isDisplayed) plusMenu.click();
+            if (isDisplayed)
+                plusMenu.findElement(By.tagName("a")).click();
         }
     }
 }
