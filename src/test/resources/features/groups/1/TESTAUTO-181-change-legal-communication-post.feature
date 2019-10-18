@@ -4,7 +4,7 @@
 @ALL
 @DUNNING
 
-Feature: Create new customer with general communication preference: By email and update "Mandate"
+Feature: TESTAUTO-181 - Create new customer with general communication preference: By email and update "Mandate"
 
     Background:
         Given I login as API user "soapui_b2c"
