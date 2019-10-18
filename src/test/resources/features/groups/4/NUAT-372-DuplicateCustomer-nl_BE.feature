@@ -18,7 +18,7 @@ Feature: NUAT-372: Duplicate Customer - nl_BE
         And Plus menu is "Service -> Dupliceer klant"
         When "Bedrijfsnaam" input is "Test Nuat 372"
         Then Changes are confirmed
-        And Top arrow button is "Up"
+        And Click on top menu button UP
         And Left menu is "sales-marketing"
         And Search field input is "parameter:inputValue"
-        Then Customer "parameter:inputValue" is found
+        Then Table "Zoek in klanten en leads" contains value "parameter:inputValue" at column "Klantnaam & nummer"

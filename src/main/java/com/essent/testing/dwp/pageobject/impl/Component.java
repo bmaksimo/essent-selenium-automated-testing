@@ -3,6 +3,7 @@ package com.essent.testing.dwp.pageobject.impl;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.context.ContextService;
 import com.essent.testing.selenium.DWPSeleniumDriver;
 import com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter;
@@ -189,5 +190,16 @@ public abstract class Component {
         seleniumDriver.waitForRequestsToFinish();
         WebElement xElement = seleniumDriver.findElementWhenVisible(By.xpath(CLOSE_MODAL_BUTTON));
         seleniumDriver.waitAndClick(xElement);
+    }
+
+    protected void clickWithRetries(WebElement element, int attempts) {
+        int currentAttempt = 0;
+        boolean isDisplayed = false;
+        while (!isDisplayed && currentAttempt <= attempts) {
+            currentAttempt++;
+            isDisplayed = element.isDisplayed();
+            Sleeper.sleepTightInSeconds(2);
+            if (isDisplayed) element.click();
+        }
     }
 }

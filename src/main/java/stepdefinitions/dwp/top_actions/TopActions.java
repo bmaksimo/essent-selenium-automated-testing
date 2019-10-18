@@ -10,6 +10,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.By;
+import stepdefinitions.dwp.menu.TopMenuActions;
 import stepdefinitions.dwp.navigation.NavigationElements;
 
 import java.util.HashMap;
@@ -73,6 +74,21 @@ public class TopActions extends NavigationElements {
     @And("^Top arrow button is \"([^\"]*)\"$")
     public void clickTopArrowButton(String arrow){
         super.clickTopArrow(arrow);
+    }
+
+    @And("Click on top menu button UP")
+    public void clickTopMenuUp() {
+        new TopMenuActions().clickUpButton();
+    }
+
+    @And("Click on top menu button PLUS")
+    public void clickPlusButton() {
+        new TopMenuActions().clickPlusButton();
+    }
+
+    @And("Click on top menu button PREVIOUS")
+    public void clickPreviousButton() {
+        new TopMenuActions().clickPreviousButton();
     }
 
     @And("^Top arrow button is \"([^\"]*)\" waiting for (\\d+) seconds$")
