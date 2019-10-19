@@ -78,9 +78,9 @@ public class TopActionsSteps extends NavigationElements {
         new TopMenuActions().clickUpButton();
     }
 
-    @And("Click on top menu button PLUS")
-    public void clickPlusButton() {
-        new TopMenuActions().clickPlusButton();
+    @And("^Click on top menu button PLUS and navigate to \"([^\"]*)\"$")
+    public void clickPlusButton(String path) {
+        new TopMenuActions().clickPlusButton(path);
     }
 
     @And("Click on top menu button PREVIOUS")
