@@ -31,11 +31,11 @@ public class TopMenuActions  extends Component {
         seleniumDriver.waitForRequestsToFinish();
         WebElement element = seleniumDriver.findElementWhenClickable(By.className(ICON_PLUS_CLASS_NAME));
         clickWithRetries(element, TOP_MENU_RETRIES);
-        navigateThruMenus(path);
+        String[] navigationMenus = path.split(PLUS_MENU_PATH_SEPARATOR);
+        navigateThruMenus(navigationMenus);
     }
 
-    private void navigateThruMenus(String path) {
-        String[] navigationMenus = path.split(PLUS_MENU_PATH_SEPARATOR);
+    private void navigateThruMenus(String[] navigationMenus) {
         for (String menu : navigationMenus) {
             Sleeper.sleepTightInSeconds(2);
             WebElement menuElement = seleniumDriver.findElementWhenClickable(By.xpath(buildXPath(menu)));
