@@ -5,8 +5,10 @@
 @Unstable
 
 Feature: NSTA-337: Move old address - Electricity
+
     Background:
         Given I login as API user "soapui_b2c"
+
     @NSTA-337
     Scenario: NSTA-337: Move old address - Electricity
         And "Create_Quote" flow is started
@@ -82,8 +84,8 @@ Feature: NSTA-337: Move old address - Electricity
         And  Go to prospect
         And Sleep for 30 seconds
         Then Check customer information
-            |              address            |      phone       |         email         |
-            | Mechelsesteenweg 2 2550 Kontich | +32 483 08 06 44 | petar.perovic@test.com|
+            | address                         | phone            | email                  |
+            | Mechelsesteenweg 2 2550 Kontich | +32 483 08 06 44 | petar.perovic@test.com |
 
         When Top arrow button is "up"
         And Left menu is "sales-marketing"
@@ -97,14 +99,17 @@ Feature: NSTA-337: Move old address - Electricity
         And Go to GLN account
         Then Check if customer name contains "GLN"
         And Check customer information
-            |              address            | phone | email |
+            | address                         | phone | email |
             | Mechelsesteenweg 2 2550 Kontich |       |       |
 
         When Dashboard menu is "Marktberichten"
-        Then Table "Marktberichten" contains value "Customer Switch" at column "Module & Label" retrying 10 times
-        And Check marktbericht
-            | ean                | modul        | end date |
-            | parameter:EAN-code | START ACCESS | now      |
+#        Then Table "Marktberichten" contains value "Customer Switch" at column "Module & Label" retrying 10 times
+        And Market message contains:
+            | EAN-code & Producttype | Module & Label | Module & Label  | Status & ED |
+            | parameter:EAN-code     | START ACCESS   | Customer Switch | now         |
+#        And Check marktbericht
+#            | ean                | modul        | end date |
+#            | parameter:EAN-code | START ACCESS | now      |
 
         When Dashboard menu is "Contracten"
         Then Check contract

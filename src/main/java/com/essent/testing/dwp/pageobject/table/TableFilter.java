@@ -1,9 +1,12 @@
 package com.essent.testing.dwp.pageobject.table;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
+import org.apache.commons.collections4.CollectionUtils;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,9 +51,12 @@ public class TableFilter extends Component {
 
     private boolean isExpectedColumnValue(List<Filter> filters, List<WebElement> cells) {
         try {
-            Filter filter = filters.get(0);
-            int columnIndex = headers.indexOf(filter.getColumnName());
-            return cells.get(columnIndex).getText().equals(filter.getColumnValue());
+            for (Filter filter : filters) {
+                int columnIndex = headers.indexOf(filter.getColumnName());
+                if (!cells.get(columnIndex).getText().contains(filter.getColumnValue()))
+                    return false;
+            }
+            return true;
         } catch (Exception e) {
             return false;
         }
@@ -61,6 +67,7 @@ public class TableFilter extends Component {
             .findElements(By.xpath("//list[@list-key='" + table + "']//thead/tr/th"))
             .stream()
             .map(WebElement::getText)
+            .map(String::toUpperCase)
             .collect(Collectors.toList());
     }
 }

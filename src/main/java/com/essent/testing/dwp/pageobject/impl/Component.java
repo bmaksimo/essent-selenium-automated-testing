@@ -4,6 +4,8 @@ import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
 import com.essent.testing.context.ContextService;
+import com.essent.testing.dwp.pageobject.table.Filter;
+import com.essent.testing.dwp.pageobject.table.TableFilter;
 import com.essent.testing.selenium.DWPSeleniumDriver;
 import com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter;
 import cucumber.runtime.CucumberException;
@@ -13,10 +15,7 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
 
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public abstract class Component {
 
@@ -189,5 +188,12 @@ public abstract class Component {
         seleniumDriver.waitForRequestsToFinish();
         WebElement xElement = seleniumDriver.findElementWhenVisible(By.xpath(CLOSE_MODAL_BUTTON));
         seleniumDriver.waitAndClick(xElement);
+    }
+
+    public List<WebElement> selectRowOnTable(String tableName, List<Filter> filters) throws Exception {
+        return new TableFilter()
+            .getTable(tableName)
+            .findBy(filters)
+            .get();
     }
 }

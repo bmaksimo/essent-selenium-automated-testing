@@ -77,8 +77,8 @@ Feature: TESTAUTO - 4 Move old address  - Gas ean
         And Click on link in View List at "1st" row and "Nummer & Aanmaakdatum" column polling 60 seconds
         And  Go to prospect
         Then Check customer information
-            |              address            |      phone       |         email         |
-            | Mechelsesteenweg 2 2550 Kontich | +32 483 08 06 44 | petar.perovic@test.com|
+            | address                         | phone            | email                  |
+            | Mechelsesteenweg 2 2550 Kontich | +32 483 08 06 44 | petar.perovic@test.com |
 
         When Dashboard menu is "Service"
         Then Interaction is created with Type "Document" and Onderwerp "Outbound document: Move - New Inhabitants"
@@ -95,16 +95,15 @@ Feature: TESTAUTO - 4 Move old address  - Gas ean
         And Go to GLN account
         Then Check if customer name contains "GLN"
         And Check customer information
-            |              address            | phone | email |
+            | address                         | phone | email |
             | Mechelsesteenweg 2 2550 Kontich |       |       |
 
         When Dashboard menu is "Marktberichten"
-        Then Table "Marktberichten" contains value "Customer Switch" at column "Module & Label" retrying 10 times
-        And Check marktbericht
-            |         ean        |     modul    |  end date |
-            | parameter:EAN-code | START ACCESS |    now    |
+        Then Market message contains:
+            | EAN-code & Producttype | Module & Label | Module & Label  | Status & ED |
+            | parameter:EAN-code     | START ACCESS   | Customer Switch | now         |
 
         When Dashboard menu is "Contracten"
         Then Check contract
-            | type |         status          | start date |         EAN        |
-            | GLN  |  Verwerkt (Geaccepteerd)|     now    | parameter:EAN-code |
+            | type | status                  | start date | EAN                |
+            | GLN  | Verwerkt (Geaccepteerd) | now        | parameter:EAN-code |
