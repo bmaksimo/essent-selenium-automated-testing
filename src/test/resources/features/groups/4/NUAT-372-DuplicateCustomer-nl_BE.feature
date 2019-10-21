@@ -15,10 +15,10 @@ Feature: NUAT-372: Duplicate Customer - nl_BE
         And Top action is Filter from "sales-marketing" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
         And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
-        And Plus menu is "Service -> Dupliceer klant"
+        And Click on top menu button PLUS and navigate to "Service -> Dupliceer klant"
         When "Bedrijfsnaam" input is "Test Nuat 372"
         Then Changes are confirmed
-        And Top arrow button is "Up"
+        And Click on top menu button UP
         And Left menu is "sales-marketing"
         And Search field input is "parameter:inputValue"
-        Then Customer "parameter:inputValue" is found
+        Then Table "Zoek in klanten en leads" contains value "parameter:inputValue" at column "Klantnaam & nummer"
