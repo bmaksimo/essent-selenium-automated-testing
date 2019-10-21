@@ -62,7 +62,7 @@ Feature: TESTAUTO-204 Dunning-create-invoice-block
         And Odoo left menu is "Customers"
         And Odoo filter is "parameter:accountNumber"
         When Column "Account Number" with value "parameter:accountNumber" is clicked
-        Then Button Invoice Blocks is clicked
+        Then Right box button "Invoice Blocks" is clicked
         And Reason is "Payment mismatch" on Invoice Blocks page
         And Start date is today on Invoice Blocks page
         And End date is "31" days from today on Invoice Blocks page
