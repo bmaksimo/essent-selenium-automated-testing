@@ -3,6 +3,7 @@ package com.essent.testing.dwp.pageobject.impl;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.context.ContextService;
 import com.essent.testing.dwp.pageobject.table.Filter;
 import com.essent.testing.dwp.pageobject.table.TableFilter;
@@ -195,5 +196,16 @@ public abstract class Component {
             .getTable(tableName)
             .findBy(filters)
             .get();
+    }
+
+    protected void clickWithRetries(WebElement element, int attempts) {
+        int currentAttempt = 0;
+        boolean isDisplayed = false;
+        while (!isDisplayed && currentAttempt <= attempts) {
+            currentAttempt++;
+            isDisplayed = element.isDisplayed();
+            Sleeper.sleepTightInSeconds(2);
+            if (isDisplayed) element.click();
+        }
     }
 }
