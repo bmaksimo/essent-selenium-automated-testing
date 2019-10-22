@@ -37,7 +37,7 @@ Feature: TESTAUTO-194 Dunning-create-account-block-service
         And Odoo left menu is "Customers"
         And Odoo filter is "parameter:accountNumber"
         When Column "Account Number" with value "parameter:accountNumber" is clicked
-        Then Button Account Blocks is clicked
+        Then Right box button "Account Blocks" is clicked
         And Reason is "Official complaint" on Account Blocks page
         And Start date is today on Account Blocks page
         Then End date is empty on Account Blocks page

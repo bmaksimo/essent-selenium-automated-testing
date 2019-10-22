@@ -128,4 +128,8 @@ public class DetailsPage extends Component {
                 plusMenu.findElement(By.tagName("a")).click();
         }
     }
+
+    public WebElement getModalName(String modal){
+        return seleniumDriver.findElementWhenVisible(By.xpath("//h5[normalize-space()= '"+modal+"']"));
+    }
 }
