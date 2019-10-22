@@ -10,7 +10,7 @@ Feature: TESTAUTO - 25 Active contract with DOM
 
     @TESTAUTO-25
     Scenario: Active contract with DOM
-        When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
+        When Click on top menu button PLUS and navigate to "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
         When "Tariefdatum" date is "1 month before now"
