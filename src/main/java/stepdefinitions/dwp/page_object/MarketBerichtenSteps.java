@@ -3,7 +3,6 @@ package stepdefinitions.dwp.page_object;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
-import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.details.DetailsPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.workflows.MarketMessagesPage;
 import com.essent.testing.dwp.pageobject.table.Filter;
 import com.essent.testing.dwp.scenario.DwpScenario;
@@ -16,15 +15,11 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.collections4.CollectionUtils;
 import org.junit.Assert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
 
-import javax.xml.soap.Detail;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 
 public class MarketBerichtenSteps extends DwpScenario {
