@@ -26,7 +26,7 @@ public class TaskSteps extends DwpScenario {
         Sleeper.sleepTightInSeconds(30);
         baseObject.clickOnPlus();
         seleniumDriver.waitForRequestsToFinish();
-        baseObject.plusSubaction(action);
+        baseObject.plusSubAction(action);
     }
 
     @When("^Plus action and \"([^\"]*)\" of first customer from list waiting for (\\d+) seconds$")

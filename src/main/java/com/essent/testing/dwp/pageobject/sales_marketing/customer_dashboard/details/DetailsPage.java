@@ -108,14 +108,6 @@ public class DetailsPage extends Component {
         return seleniumDriver.findElementWhenPresent(By.xpath(COMMUNICATION_PREFERENCES_UPDATED_SUCCESS_MESSAGE)).getText();
     }
 
-    public List<WebElement> selectRowOnTable(String tableName, String columnName, String columnValue) throws Exception {
-        List<Filter> filters = Arrays.asList(new Filter(columnName, columnValue));
-        return new TableFilter()
-            .getTable(tableName)
-            .findBy(filters)
-            .get();
-    }
-
     public void clickOnPlusMenuInRow(WebElement plusMenu) {
         int attempts = 20;
         int currentAttempt = 0;
@@ -124,8 +116,7 @@ public class DetailsPage extends Component {
             currentAttempt++;
             isDisplayed = plusMenu.isDisplayed();
             Sleeper.sleepTightInSeconds(2);
-            if (isDisplayed)
-                plusMenu.findElement(By.tagName("a")).click();
+            if (isDisplayed) plusMenu.findElement(By.tagName("a")).click();
         }
     }
 

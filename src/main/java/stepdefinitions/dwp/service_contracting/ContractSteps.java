@@ -43,7 +43,7 @@ public class ContractSteps extends DwpScenario {
         ContractPage cp = new ContractPage();
         cp.contractPlus();
         BaseObjectPage baseObject = new BaseObjectPage();
-        baseObject.plusSubaction(subaction);
+        baseObject.plusSubAction(subaction);
     }
 
     @And("^Amount values is \"([^\"]*)\"$")

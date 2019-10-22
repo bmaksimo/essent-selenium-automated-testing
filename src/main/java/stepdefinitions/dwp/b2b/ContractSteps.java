@@ -6,6 +6,7 @@ import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import com.essent.testing.dwp.pageobject.impl.quote.QuoteDetailsPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.details.DetailsPage;
+import com.essent.testing.dwp.pageobject.table.Filter;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -18,6 +19,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.tables.SalesChannel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
@@ -61,7 +63,7 @@ public class ContractSteps extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
         new ContractPage().clickOnPlusMenuInTable(row, table);
         seleniumDriver.waitForRequestsToFinish();
-        new BaseObjectPage().plusSubaction(action);
+        new BaseObjectPage().plusSubAction(action);
     }
 
     @When("^Click on Plus action of table \"([^\"]*)\" at row where \"([^\"]*)\" is \"([^\"]*)\" and click on \"([^\"]*)\"$")
@@ -69,19 +71,23 @@ public class ContractSteps extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(5);
         DetailsPage detailsPage = new DetailsPage();
-        List<WebElement> row = detailsPage.selectRowOnTable(tableName, columnName, columnValue);
+        List<Filter> filters = new ArrayList<>();
+        filters.add(new Filter(columnName, columnValue));
+        List<WebElement> row = detailsPage.selectRowOnTable(tableName, filters, parameterProvider.getCurrentContextParameters());
         int plusMenuColumn = row.size() - 1;
         WebElement plusActionElement = row.get(plusMenuColumn);
         detailsPage.clickOnPlusMenuInRow(plusActionElement);
         Sleeper.sleepTightInSeconds(2);
-        new BaseObjectPage().plusSubaction(action);
+        new BaseObjectPage().plusSubAction(action);
     }
 
     @And("^\"([^\"]*)\" preference at column \"([^\"]*)\" is \"([^\"]*)\" on table \"([^\"]*)\"$")
     public void checkPreferenceColumnData(String communicationType, String columnName, String expectedPreference, String tableName) throws Exception {
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(5);
-        List<WebElement> row = new DetailsPage().selectRowOnTable(tableName, columnName, communicationType);
+        List<Filter> filters = new ArrayList<>();
+        filters.add(new Filter(columnName, communicationType));
+        List<WebElement> row = new DetailsPage().selectRowOnTable(tableName, filters, parameterProvider.getCurrentContextParameters());
         int preferenceColumn = 3;
         String communicationPreference = row.get(preferenceColumn).getText();
         Assert.assertTrue("Preference is not " + expectedPreference, communicationPreference.equals(expectedPreference));
