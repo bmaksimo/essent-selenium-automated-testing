@@ -142,10 +142,10 @@ public class MarketBerichtenSteps extends DwpScenario {
 
         try {
             Sleeper.sleepTightInSeconds(30);
-            List<WebElement> results = new MarketMessagesPage().selectRowOnTable("MarketTransactionsOnAccount", filters);
+            List<WebElement> results = new MarketMessagesPage().selectRowOnTable("Marktberichten", filters, parameterProvider.getCurrentContextParameters());
             Assert.assertTrue(CollectionUtils.isNotEmpty(results));
         } catch (Exception e) {
-            Assert.fail("Market message with provided value(s) was not found.");
+            Assert.fail("Market message with provided filters(s) was not found.");
         }
     }
 

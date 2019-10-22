@@ -120,8 +120,7 @@ public abstract class Component {
     protected String createQuery(String template, String key, String value) {
         Map<String, String> valuesMap = new HashMap<>();
         valuesMap.put(key, value);
-        StrSubstitutor sub = new StrSubstitutor(valuesMap);
-        return sub.replace(template);
+        return new StrSubstitutor(valuesMap).replace(template);
     }
 
     protected String createQuery(String template, Map<String, String> valuesMapper) {
@@ -191,8 +190,8 @@ public abstract class Component {
         seleniumDriver.waitAndClick(xElement);
     }
 
-    public List<WebElement> selectRowOnTable(String tableName, List<Filter> filters) throws Exception {
-        return new TableFilter()
+    public List<WebElement> selectRowOnTable(String tableName, List<Filter> filters, String contextParameters) throws Exception {
+        return new TableFilter(contextParameters)
             .getTable(tableName)
             .findBy(filters)
             .get();

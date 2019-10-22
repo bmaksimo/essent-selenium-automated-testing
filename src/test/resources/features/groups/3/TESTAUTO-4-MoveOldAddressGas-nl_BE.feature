@@ -101,7 +101,7 @@ Feature: TESTAUTO - 4 Move old address  - Gas ean
         When Dashboard menu is "Marktberichten"
         Then Market message contains:
             | EAN-code & Producttype | Module & Label | Module & Label  | Status & ED |
-            | parameter:EAN-code     | START ACCESS   | Customer Switch | now         |
+            | parameter:EAN-code     | START ACCESS   | CUSTOMER SWITCH | now         |
 
         When Dashboard menu is "Contracten"
         Then Check contract

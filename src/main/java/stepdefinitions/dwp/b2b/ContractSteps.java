@@ -73,7 +73,7 @@ public class ContractSteps extends DwpScenario {
         DetailsPage detailsPage = new DetailsPage();
         List<Filter> filters = new ArrayList<>();
         filters.add(new Filter(columnName, columnValue));
-        List<WebElement> row = detailsPage.selectRowOnTable(tableName, filters);
+        List<WebElement> row = detailsPage.selectRowOnTable(tableName, filters, parameterProvider.getCurrentContextParameters());
         int plusMenuColumn = row.size() - 1;
         WebElement plusActionElement = row.get(plusMenuColumn);
         detailsPage.clickOnPlusMenuInRow(plusActionElement);
@@ -87,7 +87,7 @@ public class ContractSteps extends DwpScenario {
         Sleeper.sleepTightInSeconds(5);
         List<Filter> filters = new ArrayList<>();
         filters.add(new Filter(columnName, communicationType));
-        List<WebElement> row = new DetailsPage().selectRowOnTable(tableName, filters);
+        List<WebElement> row = new DetailsPage().selectRowOnTable(tableName, filters, parameterProvider.getCurrentContextParameters());
         int preferenceColumn = 3;
         String communicationPreference = row.get(preferenceColumn).getText();
         Assert.assertTrue("Preference is not " + expectedPreference, communicationPreference.equals(expectedPreference));
