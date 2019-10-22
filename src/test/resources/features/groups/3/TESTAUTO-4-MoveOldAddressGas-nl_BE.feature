@@ -75,7 +75,7 @@ Feature: TESTAUTO - 4 Move old address  - Gas ean
         And Interaction is created with Type "Interaction" and Onderwerp "Move OA"
 
         And Click on link in View List at "1st" row and "Nummer & Aanmaakdatum" column polling 60 seconds
-        And  Go to prospect
+        And Go to prospect
         Then Check customer information
             | address                         | phone            | email                  |
             | Mechelsesteenweg 2 2550 Kontich | +32 483 08 06 44 | petar.perovic@test.com |
@@ -83,7 +83,7 @@ Feature: TESTAUTO - 4 Move old address  - Gas ean
         When Dashboard menu is "Service"
         Then Interaction is created with Type "Document" and Onderwerp "Outbound document: Move - New Inhabitants"
 
-        When Top arrow button is "up"
+        When Click on top menu button UP
         And Left menu is "sales-marketing"
         And Top menu item is "Klanten"
         And Top action is Filter from "sales-marketing" menu retrying 5 times
