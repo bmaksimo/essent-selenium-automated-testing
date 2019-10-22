@@ -136,7 +136,6 @@ public class MarketBerichtenSteps extends DwpScenario {
         }
 
         try {
-            Sleeper.sleepTightInSeconds(30);
             List<WebElement> results = new MarketMessagesPage().selectRowOnTable("Marktberichten", filters, parameterProvider.getCurrentContextParameters());
             Assert.assertTrue(CollectionUtils.isNotEmpty(results));
         } catch (Exception e) {
