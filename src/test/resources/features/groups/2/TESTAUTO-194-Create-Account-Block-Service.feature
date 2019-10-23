@@ -24,7 +24,7 @@ Feature: TESTAUTO-194 Dunning-create-account-block-service
         When Plus menu is "Service -> Dunning stop on customer-NEW"
         And "Block reason" selection is "Official complaint"
         And "Startdatum" date is "now"
-        And Changes are confirmed
+        And Changes are confirmed waiting for 5 seconds
         When Dashboard menu is "Details"
 
         And Table "Lijst blokkeringen" contains value "Official complaint" at column "Reden" retrying 30 times
