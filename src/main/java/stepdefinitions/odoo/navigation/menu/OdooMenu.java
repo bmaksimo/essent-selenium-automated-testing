@@ -51,7 +51,12 @@ public class OdooMenu extends OdooScenario {
         awaitOdooRequestToFinish(120);
     }
 
-
+    @When("^Odoo left menu is Customers$")
+    public void leftMenuIsCustomers() {
+        awaitOdooRequestToFinish(60);
+        new CustomerPage().chooseLeftMenuCustomets();
+        awaitOdooRequestToFinish(120);
+    }
 
     @Then("^Generate CODA in the \"([^\"]*)\" row is clicked$")
     public void clickCodaUrl(String ordinal) {

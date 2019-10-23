@@ -36,7 +36,7 @@ Feature: TESTAUTO-193 Dunning-create-account-block
 
         Given I logged in to Odoo as "role_essent_ccm_user"
         When Odoo top menu is "Accounting"
-        And Odoo left menu is "Customers"
+        And Odoo left menu is Customers
         And Odoo filter is "parameter:accountNumber"
         When Column "Account Number" with value "parameter:accountNumber" is clicked
         Then Right box button "Account Blocks" is clicked

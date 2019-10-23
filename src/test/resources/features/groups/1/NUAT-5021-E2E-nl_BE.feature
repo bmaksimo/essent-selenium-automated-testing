@@ -118,7 +118,7 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         Given I renew login to Odoo as "role_essent_ccm_user"
         When Cleanup Odoo CODA files
         And Odoo top menu is "Accounting"
-        And Odoo left menu is "Customers"
+        And Odoo left menu is Customers
         And Odoo filter is "parameter:Klantnummer & Naam"
         When Column "Account Number" with value "parameter:Klantnummer & Naam" is clicked
         And Button "Journal Items" is clicked

@@ -59,7 +59,7 @@ Feature: TESTAUTO-204 Dunning-create-invoice-block
 
         Given I renew login to Odoo as "role_essent_ccm_user"
         And Odoo top menu is "Accounting"
-        And Odoo left menu is "Customers"
+        And Odoo left menu is Customers
         And Odoo filter is "parameter:accountNumber"
         When Column "Account Number" with value "parameter:accountNumber" is clicked
         Then Right box button "Invoice Blocks" is clicked
