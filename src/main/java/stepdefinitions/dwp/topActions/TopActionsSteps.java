@@ -107,11 +107,6 @@ public class TopActionsSteps extends NavigationElements {
         assertThat(String.format("Button %s was not available.", ""), success, is(true));
     }
 
-    @And("Intermittent Alert window is confirmed")
-    public void handleAlert() {
-        if (isAlertPresent()) seleniumDriver.getDriver().switchTo().alert().accept();
-    }
-
     @Override
     @After("@DWP or @CORE or @E2E or @REGRESSION")
     public void tearDown() {
