@@ -79,7 +79,7 @@ public class TopActionsSteps extends NavigationElements {
     }
 
     @And("^Click on top menu button PLUS and navigate to \"([^\"]*)\"$")
-    public void clickPlusButton(String path) {
+    public void clickPlusButton(String path) throws Exception {
         new TopMenuActions().clickPlusButton(path);
     }
 
@@ -109,11 +109,7 @@ public class TopActionsSteps extends NavigationElements {
 
     @And("Intermittent Alert window is confirmed")
     public void handleAlert() {
-        boolean actualAlert = isAlertPresent();
-        if (actualAlert)
-        {
-            seleniumDriver.getDriver().switchTo().alert().accept();
-        }
+        if (isAlertPresent()) seleniumDriver.getDriver().switchTo().alert().accept();
     }
 
     @Override
