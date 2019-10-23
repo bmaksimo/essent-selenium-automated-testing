@@ -3,6 +3,7 @@ package stepdefinitions.dwp.page_object;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
+import com.essent.testing.dwp.pageobject.list_view.ViewListTestObject;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.workflows.MarketMessagesPage;
 import com.essent.testing.dwp.pageobject.table.Filter;
 import com.essent.testing.dwp.scenario.DwpScenario;
@@ -17,12 +18,14 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
+import stepdefinitions.dwp.navigation.NavigationElements;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
-public class MarketBerichtenSteps extends DwpScenario {
+public class MarketBerichtenSteps extends NavigationElements {
     private static String eanCode = null;
 
     @Before("@DWP or @REGRESSION")
@@ -135,12 +138,28 @@ public class MarketBerichtenSteps extends DwpScenario {
             filters.add(filter);
         }
 
-        try {
-            List<WebElement> results = new MarketMessagesPage().selectRowOnTable("Marktberichten", filters, parameterProvider.getCurrentContextParameters());
-            Assert.assertTrue(CollectionUtils.isNotEmpty(results));
-        } catch (Exception e) {
-            Assert.fail("Market message with provided filters(s) was not found.");
+        int attempt = 1;
+        boolean found = false;
+        int maxRetries = 10;
+        String arrow = parameterProvider.getValueOrParameterAsString("parameter:navigation");
+        String dashboardMenu = parameterProvider.getValueOrParameterAsString("parameter:dashboard-menu");
+
+        while (attempt < maxRetries && !found) {
+            try {
+                List<WebElement> results = new MarketMessagesPage().selectRowOnTable("Marktberichten", filters, parameterProvider.getCurrentContextParameters());
+                found = CollectionUtils.isNotEmpty(results);
+            } catch (Exception e) {
+                logger().debug(parameterProvider.getCurrentContextParameters() + " - Market message was not found.");
+            } finally {
+                attempt++;
+                if (!found) {
+                    Sleeper.sleepTightInSeconds(10);
+                    loopBack(arrow, dashboardMenu);
+                }
+            }
         }
+
+        Assert.assertTrue(found);
     }
 
     @Then("^Check marktbericht$")
