@@ -798,8 +798,8 @@ public class ViewListChecks extends NavigationElements {
         float sumLowRatesSignatureToFloat = Float.parseFloat(parameterProvider.getValueOrParameterAsString(sumRatesLowSignature));
         cp.sumRates(sumRatesHighSignature);
         cp.sumRates(sumRatesLowSignature);
-        assertThat("Sum of signature and rejected quote for High prices is not equal", sumHighRatesSignatureToFloat, equalTo(cp.sumRates(sumRatesHighSignature)));
-        assertThat("Sum of signature and rejected quote for Low prices is not equal", sumLowRatesSignatureToFloat, equalTo(cp.sumRates(sumRatesLowSignature)));
+        assertThat("Sum of signature and rejected quote for High prices are not equal", sumHighRatesSignatureToFloat, equalTo(cp.sumRates(sumRatesHighSignature)));
+        assertThat("Sum of signature and rejected quote for Low prices are not equal", sumLowRatesSignatureToFloat, equalTo(cp.sumRates(sumRatesLowSignature)));
     }
 
 

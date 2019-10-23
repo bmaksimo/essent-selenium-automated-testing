@@ -52,8 +52,8 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         And  Dashboard menu is "Details"
         And  Cell value at "1st" row at column "Id Billing customer" from table "Billing customer" is checked
 
-        When Top arrow button is "Up"
-        And Plus menu is "Contracting -> TK1 Hernieuwingen -> Hernieuwingsbatches"
+        When Click on top menu button UP
+        And Click on top menu button PLUS and navigate to "Contracting -> TK1 Hernieuwingen -> Hernieuwingsbatches"
 
         When Click on "START NIEUWE HERNIEUWINGSBATCH" link
         Then Modal dialog is "Start passive renewal batch"
@@ -88,8 +88,8 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         And Table "Offertes" has matching value "parameter:Id Billing customer" at column "Billing klant & Tariefdatum"
 
         #4 Validate the definition of renewal product (date valid within the period: "Start & einddatum hernieuwing")
-        When Top arrow button is "Up"
-        And  Plus menu is "Contracting -> TK1 Hernieuwingen -> Bepaal het hernieuwingsproduct"
+        When Click on top menu button UP
+        And Click on top menu button PLUS and navigate to "Contracting -> TK1 Hernieuwingen -> Bepaal het hernieuwingsproduct"
         And Top action is "Filters"
         And Search for "parameter:PackageName" in the SelectWithSearch "Van pakket" and select option "parameter:PackageName" and Submit
         And Check if our "parameter:Start & einddatum hernieuwing" is covered by a valid tariffsheetperiod from table "Bepaal het hernieuwingsproduct"
@@ -97,7 +97,7 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         #5 Communicate the renewal to the customer through the invoice
         Given I renew login to DWP as "billing.testautomation@essent.be"
 
-        When Plus menu is "Billing -> Start facturatierun"
+        When Click on top menu button PLUS and navigate to "Billing -> Start facturatierun"
         When Modal dialog is "Start invoicerun"
         And "Factuurdatum" date is "now"
         And "Procesdatum" date is "now"

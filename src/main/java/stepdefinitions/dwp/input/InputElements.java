@@ -39,7 +39,7 @@ public class InputElements extends DwpScenario {
         registerActiveScenario(scenario);
     }
 
-    @And("Search for {string} in the SelectWithSearch {string} and select option {string} and Submit")
+    @And("Search for \"([^\"]*)\" in the SelectWithSearch \"([^\"]*)\" and select option \"([^\"]*)\" and Submit")
     public void searchForInTheSelectWithSearchAndSelectOptionAndSubmit(String searchText, String selectWithSearchLink, String optionToSelect) {
         // Grab and click the base element
         seleniumDriver.findElementWhenClickable(

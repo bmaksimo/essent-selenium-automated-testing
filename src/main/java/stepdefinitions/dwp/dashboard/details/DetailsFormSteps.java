@@ -5,6 +5,7 @@ import com.billinghouse.test_automation.util.dsl.EssentDateTimeFormat;
 import com.essent.testing.dwp.pageobject.dashboard.AccountDetails;
 import com.essent.testing.dwp.pageobject.impl.dashboard.AccountDetailsImpl;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.details.DetailsPage;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.workflows.MarketMessagesPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -101,5 +102,13 @@ public class DetailsFormSteps extends DwpScenario {
         DetailsPage dp = new DetailsPage();
         parameterProvider.put("startDate", dp.getAccountBlockStartDate());
         Assert.assertThat("Dunning account block star and end dates are different", dp.getAccountBlockStartDate().equalsIgnoreCase(dp.getAccountBlockEndDate()), is(true));
+    }
+
+    @And("^Check if \"([^\"]*)\" modal is open$")
+    public void checkIfModalIsOpen(String modal){
+        if (!new DetailsPage().getModalName(modal).isDisplayed()){
+            new MarketMessagesPage().createNewMarktBericht("CREEREN BLOKKERING");
+        }
+
     }
 }

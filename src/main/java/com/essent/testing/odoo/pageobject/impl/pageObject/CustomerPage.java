@@ -19,8 +19,6 @@ public class CustomerPage extends Component {
     private static final String SENT_DATE = "//td[@data-field='date_sent']";
     private static final String BUTTON_LABEL = "//div[@class='modal in']//span[contains(text(),'${"+NAME_TAB+"}')]";
     private static final String JOURNAL_BUTTON_LABEL = "//button//span[contains(., '" + NAME_TAB + "')]";
-    private static final String ACCOUNT_BLOCKS_BUTTON_LABEL=  "//div[@class='oe_right oe_button_box']/button[2]";
-    private static final String INVOICE_BLOCKS_BUTTON_LABEL = "//div[@class='oe_right oe_button_box']/button[1]";
 
 
     public boolean clickOnTabMenu(String tab){
@@ -62,21 +60,6 @@ public class CustomerPage extends Component {
         awaitOdooRequestToFinish(120);
     }
 
-    public void buttonAccountBlocksClicked() {
-        awaitOdooRequestToFinish(120);
-        WebElement webElement = seleniumDriver.findElementWhenVisible(By.xpath(ACCOUNT_BLOCKS_BUTTON_LABEL));
-        if (null == webElement) throw new CucumberException("Button was not found");
-        new ButtonImpl(webElement).click();
-        awaitOdooRequestToFinish(120);
-    }
-
-    public void buttonInvoiceBlocksClicked() {
-        awaitOdooRequestToFinish(120);
-        WebElement webElement = seleniumDriver.findElementWhenVisible(By.xpath(INVOICE_BLOCKS_BUTTON_LABEL));
-        new ButtonImpl(webElement).click();
-        awaitOdooRequestToFinish(120);
-    }
-
     public void modalReverseClickButton(String buttonLabel) {
         awaitOdooRequestToFinish(60);
         String xpath = createQuery(BUTTON_LABEL, NAME_TAB, buttonLabel);
@@ -104,6 +87,16 @@ public class CustomerPage extends Component {
 
     public String getDirectDebitSentDate(){
         return seleniumDriver.findElementWhenVisible(By.xpath(SENT_DATE)).getText();
+    }
+
+    public void rightBoxButtonClicked(String button) {
+        awaitOdooRequestToFinish(120);
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//div[@class='oe_right oe_button_box']//div[contains(.,'"+button+"')]")));
+    }
+
+    public void chooseLeftMenuCustomets(){
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("(//a[@class='oe_menu_leaf']/span[normalize-space()= 'Customers'])[2]")));
+
     }
 
 }

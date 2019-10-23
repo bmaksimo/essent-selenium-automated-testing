@@ -20,7 +20,7 @@ public class BaseObjectPage extends Component {
     private static final String PLUS_BUTTON_XPATH = "(//list-plus-cell//a)[1]";
     private static final String REPLACEMENT_KEY = "replacement_key";
 
-    private static final String PLUS_MENU_XPATH = "//list-row-action[normalize-space(@label)='${" + REPLACEMENT_KEY + "}']/a";
+    private static final String PLUS_MENU_XPATH = "//list-row-action[normalize-space(@label)='${" + REPLACEMENT_KEY + "}']//a";
     private static final String PLUS_MARK_DONE_XPATH = "//list-row-action/a/span[@class='icon-checkmark']";
 
     private static final String DATE_SELECTOR_XPATH = "//validation-wrapper[@label='${" + REPLACEMENT_KEY + "}']//input";
@@ -42,7 +42,7 @@ public class BaseObjectPage extends Component {
         seleniumDriver.clickNow(seleniumDriver.findElementWhenVisible(By.xpath(PLUS_BUTTON_XPATH)));
     }
 
-    public void plusSubaction(String actionValue) {
+    public void plusSubAction(String actionValue) {
         seleniumDriver.waitForRequestsToFinish();
 	    String xpathSubaction = createQuery(PLUS_MENU_XPATH, REPLACEMENT_KEY, actionValue);
 	    try {

@@ -13,7 +13,7 @@ Feature: NSTA-330. Check the generation of prepaid advance invoice.
     @NSTA-330
     Scenario: Sign-in on Vooraf (prepaid)
         #1. Sign-in a new customer with TC1 quote with electricity and gas prepaid products.
-        When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
+        When Click on top menu button PLUS and navigate to "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
         When "Tariefdatum" date is "now"

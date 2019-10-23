@@ -181,7 +181,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
             .until(AsyncExecutor.isOrderCreated(cookie, quoteDetails, contractDetails));
     }
 
-    @And("the batchjob {string} is set to {string}")
+    @And("the batchjob \"([^\"]*)\" is set to \"([^\"]*)\"$")
     public void setBatchJobStatus(String batchJobName, String targetStatus) {
         RequestHelper helper = new RequestHelper();
         String path =
@@ -194,7 +194,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
         helper.simplePutRequest(STATUS_OK, cookie, path);
     }
 
-    @And("the batchjob {string} is not running")
+    @And("the batchjob \"([^\"]*)\" is not running")
     public void theBatchjobIsNotRunning(String batchJobName) throws InterruptedException {
         RequestHelper helper = new RequestHelper();
         Response response;

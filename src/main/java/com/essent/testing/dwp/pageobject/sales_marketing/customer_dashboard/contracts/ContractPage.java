@@ -337,6 +337,8 @@ public class ContractPage extends Component {
     }
 
     public int getNumberOfElectricityContracts() {
+        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(5);
         return seleniumDriver.findElements(By.xpath(NUMBER_ELECTRICITY_CONTRACT)).size();
 
     }
@@ -466,19 +468,20 @@ public class ContractPage extends Component {
 
     public float sumRates(String typeRate) {
         seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(5);
         String typeQuoteRate = "";
 
         if (typeRate.contains("High")) {
             typeQuoteRate = HIGH_RATES_QUOTE;
-
         }
         else if (typeRate.contains("Low")) {
             typeQuoteRate = LOW_RATES_QUOTE;
         }
 
         List<WebElement> rates = seleniumDriver.findElements(By.xpath(typeQuoteRate));
-        float sumRate=0.000f;
+        float sumRate=0.000F;
         for (WebElement matchValue : rates ) {
+            Sleeper.sleepTightInSeconds(2);
             String [] str = matchValue.getText().split(",");
             String finalStr = str[0] + "." + str[1];
             sumRate += Float.parseFloat(finalStr);
@@ -521,6 +524,7 @@ public class ContractPage extends Component {
     }
 
     public void populateAddressData(List<Map<String,String>> field) {
+        seleniumDriver.waitForRequestsToFinish();
         String street = field.get(0).get("street");
         if (street.equals("Random")) {
             street = StreetGenerator.getRandomStreetInKontich();
