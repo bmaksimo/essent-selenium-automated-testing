@@ -23,7 +23,7 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
         And "Extern" turn on
         And "Externe startdatum" date is "now"
         And Input in "Externe partij" is "Contentia"
-        And Changes are confirmed
+        And Changes are confirmed waiting for 5 seconds
         Then Verify status is "External @ Contentia" and "CSR"
 
     @NUAT-368-SPLIT-02
@@ -42,7 +42,7 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
         And "Extern" turn on
         And "Externe startdatum" date is "now"
         And Input in "Externe partij" is "Hilde Derde"
-        And Changes are confirmed
+        And Changes are confirmed waiting for 5 seconds
         Then Verify status is "External @ Hilde Derde" and "Failliet"
         When Dashboard menu is "Documenten"
         Then Find document
