@@ -10,7 +10,7 @@ Feature: TESTAUTO-57:Electricity-TC2-Electricity-fix-TC2-YMR
 
     @TESTAUTO-57
     Scenario: Checking prices "Electricity-TC2-Electricity-fix-TC2-YMR"
-        When Plus menu is "Sales -> UP/TK2 -> Pricing tool"
+        When Click on top menu button PLUS and navigate to "Sales -> UP/TK2 -> Pricing tool"
         Then Form header is "Calculate price"
 
         When "Producttype" selection is "Elektriciteit"
