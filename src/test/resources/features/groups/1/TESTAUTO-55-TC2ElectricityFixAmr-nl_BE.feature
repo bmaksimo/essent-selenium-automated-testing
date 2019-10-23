@@ -10,7 +10,7 @@ Feature: TESTAUTO-55 TC2 Electricity fix – AMR
 
     @TESTAUTO-55
     Scenario: Checking prices "Electricity – TC2 - Electricity fix TC2 – AMR"
-        When Plus menu is "Sales -> UP/TK2 -> Pricing tool"
+        When Click on top menu button PLUS and navigate to "Sales -> UP/TK2 -> Pricing tool"
         Then Form header is "Calculate price"
 
         When "Producttype" selection is "Elektriciteit"
@@ -18,7 +18,6 @@ Feature: TESTAUTO-55 TC2 Electricity fix – AMR
         And "Product" selection is "Elektriciteit Vast TK2"
         And "Startdatum" date is "14 days from now"
         And "Duurtijd" selection is "24 Months"
-
 
         When "Tariefdatum" date is "now"
         And "Type aansluiting" selection is "AMR"
