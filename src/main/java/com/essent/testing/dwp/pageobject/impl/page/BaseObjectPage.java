@@ -46,10 +46,9 @@ public class BaseObjectPage extends Component {
         seleniumDriver.waitForRequestsToFinish();
 	    String xpathSubaction = createQuery(PLUS_MENU_XPATH, REPLACEMENT_KEY, actionValue);
 	    try {
-	        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(xpathSubaction)));
-
+	        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenClickable(By.xpath(xpathSubaction)));
         } catch (org.openqa.selenium.StaleElementReferenceException ex) {
-            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(xpathSubaction)));
+            seleniumDriver.waitAndClick(seleniumDriver.findElementWhenClickable(By.xpath(xpathSubaction)));
         }
     }
 

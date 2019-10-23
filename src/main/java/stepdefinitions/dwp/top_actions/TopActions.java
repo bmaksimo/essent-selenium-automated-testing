@@ -31,7 +31,7 @@ public class TopActions extends NavigationElements {
     }
 
     @When("^Top action is Filter from \"([^\"]*)\" menu retrying ([^\"]*) times")
-    public void checkTopActionFilterWithWaiting(String sideMenu, int maxAttempts) throws Throwable {
+    public void checkTopActionFilterWithWaiting(String sideMenu, int maxAttempts) {
         seleniumDriver.waitForRequestsToFinish();
         boolean elementVisible = false;
         int currentAttempt = 0;
@@ -82,8 +82,8 @@ public class TopActions extends NavigationElements {
 
     @And("Changes are confirmed")
     public void confirmChange() {
-        seleniumDriver.waitForRequestsToFinish();
         boolean success = new ModalBase().confirm(parameterProvider.getScenarioInfo());
+        seleniumDriver.waitForRequestsToFinish();
         assertThat(String.format("Button %s was not available.", ""), success, is(true));
     }
 
@@ -108,4 +108,5 @@ public class TopActions extends NavigationElements {
     public void tearDown() {
         super.tearDown();
     }
+
 }

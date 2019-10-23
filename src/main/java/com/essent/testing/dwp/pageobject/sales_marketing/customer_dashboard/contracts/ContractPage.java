@@ -108,8 +108,11 @@ public class ContractPage extends Component {
     }
 
     public void clickOnPlusMenuInTable(String row, String table) {
-        seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("(//list[@list-key='" + table + "']//tbody[@id='rows']//list-plus-cell//a[@class='show-actions icon-plus'])[" + row + "]")));
+        seleniumDriver.waitAndClick(
+                seleniumDriver.findElementWhenVisible(
+                        By.xpath("(//list[@list-key='" + table + "']//tbody[@id='rows']//list-plus-cell//a[@class='show-actions icon-plus'])[" + row + "]")
+                )
+        );
     }
 
     public String getActiveContractEAN() {
