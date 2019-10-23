@@ -149,7 +149,7 @@ public class MarketBerichtenSteps extends NavigationElements {
                 List<WebElement> results = new MarketMessagesPage().selectRowOnTable("Marktberichten", filters, parameterProvider.getCurrentContextParameters());
                 found = CollectionUtils.isNotEmpty(results);
             } catch (Exception e) {
-                logger().debug(parameterProvider.getCurrentContextParameters() + " - Market message was not found.");
+                logger().warn(parameterProvider.getCurrentContextParameters() + " - Market message was not found.");
             } finally {
                 attempt++;
                 if (!found) {
