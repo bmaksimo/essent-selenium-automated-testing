@@ -24,7 +24,7 @@ public class TaskSteps extends DwpScenario {
     public void plusActionAndOfFirstCustomerFromList(String action){
         BaseObjectPage baseObject = new BaseObjectPage();
         baseObject.clickOnPlus();
-        baseObject.plusSubaction(action);
+        baseObject.plusSubAction(action);
     }
 
     @When("^Plus action and \"([^\"]*)\" of first customer from list waiting for (\\d+) seconds$")

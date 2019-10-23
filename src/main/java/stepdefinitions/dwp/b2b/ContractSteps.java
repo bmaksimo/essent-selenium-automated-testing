@@ -61,7 +61,7 @@ public class ContractSteps extends DwpScenario {
     public void plusActionOfElementFromAndClickOn(String row, String table, String action) {
         seleniumDriver.waitForRequestsToFinish();
         new ContractPage().clickOnPlusMenuInTable(row, table);
-        new BaseObjectPage().plusSubaction(action);
+        new BaseObjectPage().plusSubAction(action);
     }
 
     @When("^Click on Plus action of table \"([^\"]*)\" at row where \"([^\"]*)\" is \"([^\"]*)\" and click on \"([^\"]*)\"$")
