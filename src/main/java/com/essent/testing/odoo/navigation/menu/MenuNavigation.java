@@ -21,7 +21,7 @@ import static com.billinghouse.test_automation.util.gherkin.DateTimeFormatUtil.p
 public class MenuNavigation extends Component {
 
     private static String MAIN_NEMU_ITEM_SELECTOR_TEMPLATE = "//div[@id='oe_main_menu_placeholder']//a[normalize-space()='${text}']";
-    private static String MENU_LEAF_SELECTOR_TEMPLATE      = "(//a[@class='oe_menu_leaf']/span[normalize-space()= 'Customers'])[2]";
+    private static String MENU_LEAF_SELECTOR_TEMPLATE      = "//a[span[normalize-space() = '${text}'] and starts-with(@class,'oe_menu_leaf')]";
     private static String MENU_TOGGLER_SELECTOR_TEMPLATE   = "//a[span[normalize-space() = '${text}'] and starts-with(@class,'oe_menu_toggler')]";
     private String status = "UNDEFINED";
     private String reason = "Not executed";
