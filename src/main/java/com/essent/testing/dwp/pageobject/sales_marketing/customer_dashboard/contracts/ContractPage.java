@@ -521,6 +521,7 @@ public class ContractPage extends Component {
     }
 
     public void populateAddressData(List<Map<String,String>> field) {
+        seleniumDriver.waitForRequestsToFinish();
         String street = field.get(0).get("street");
         if (street.equals("Random")) {
             street = StreetGenerator.getRandomStreetInKontich();
