@@ -25,7 +25,7 @@ Feature: NUAT-447: Check validity prices
         When Reset filter
         And "Offertenummer" input is "parameter:offertenummer"
         And Click on link in View List at "1st" row and "Nummer & Getekend contractnummer" column polling 600 seconds
-        And Plus menu is "Offertes -> Check geldigheid tarieven"
+        And Click on top menu button PLUS and navigate to "Offertes -> Check geldigheid tarieven"
         And Form header is "Updated Prices"
         And "Ja, ik wil de offerte met de nieuwe tarieven goedkeuren" turn on with dot
         Then Bevestigen
@@ -35,7 +35,7 @@ Feature: NUAT-447: Check validity prices
         And Oplossing text is "ja"
         Then Changes are confirmed
 
-        When Plus menu is "Offertes -> Status - getekend"
+        When Click on top menu button PLUS and navigate to "Offertes -> Status - getekend"
         And Sign quote file is uploaded
         And Changes are confirmed
         And Sleep for 10 seconds
