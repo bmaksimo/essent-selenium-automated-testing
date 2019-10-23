@@ -25,7 +25,8 @@ Feature: TESTAUTO-195 Dunning-update-account-block
         And Click on "CREEREN BLOKKERING"
         And "Block reason" selection is "E-plus"
         And "Einddatum" date is "7 days from now"
-        And Changes are confirmed
+        And Changes are confirmed waiting for 5 seconds
+        And Dashboard menu is "Details"
 
         Then Table "Lijst blokkeringen" contains value "E-plus" at column "Reden" retrying 60 times
         And Table "Lijst blokkeringen" contains value "true" at column "Actief" retrying 60 times
