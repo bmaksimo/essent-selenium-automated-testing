@@ -8,7 +8,7 @@ Feature: TESTAUTO-43 Up Electricity fix UP AMR
 
     @TESTAUTO-43
     Scenario: Checking prices "Electricity – UP – Electricity fix UP -AMR"
-        When Plus menu is "Sales -> UP/TK2 -> Pricing tool"
+        When Click on top menu button PLUS and navigate to "Sales -> UP/TK2 -> Pricing tool"
         Then Form header is "Calculate price"
 
         When "Producttype" selection is "Elektriciteit"

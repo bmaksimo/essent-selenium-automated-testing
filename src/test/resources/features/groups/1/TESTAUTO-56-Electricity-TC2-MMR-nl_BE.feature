@@ -10,7 +10,7 @@ Feature: TESTAUTO-56:Electricity-UP-Electricity-fix-TK2-MMR
 
     @TESTAUTO-56
     Scenario: Checking prices Electricity-UP-Electricity-fix-TK2-MMR
-        When Plus menu is "Sales -> UP/TK2 -> Pricing tool"
+        When Click on top menu button PLUS and navigate to "Sales -> UP/TK2 -> Pricing tool"
         Then Form header is "Calculate price"
 
         When "Producttype" selection is "Elektriciteit"
