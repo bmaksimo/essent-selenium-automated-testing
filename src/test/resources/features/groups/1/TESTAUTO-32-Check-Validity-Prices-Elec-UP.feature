@@ -29,7 +29,7 @@ Feature: TESTAUTO-32: Price validity check on an Elec UP quote
         And Check table value "Check quote" is found for created quote
         Then Check table value "quotation - quote_price_validity" is found for created quote
 
-        When Plus menu is "Offertes -> Check geldigheid tarieven"
+        When Click on top menu button PLUS and navigate to "Offertes -> Check geldigheid tarieven"
         And Form header is "Updated Prices"
         And "Nieuwe tariefdatum" date is "now"
         And Option "Ja, ik wil de offerte met de nieuwe tarieven goedkeuren." "is" "On"
