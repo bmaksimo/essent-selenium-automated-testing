@@ -94,4 +94,9 @@ public class CustomerPage extends Component {
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//div[@class='oe_right oe_button_box']//div[contains(.,'"+button+"')]")));
     }
 
+    public void chooseLeftMenuCustomets(){
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("(//a[@class='oe_menu_leaf']/span[normalize-space()= 'Customers'])[2]")));
+
+    }
+
 }

@@ -63,7 +63,7 @@ Feature: TESTAUTO - 25 Active contract with DOM
 
         Given I renew login to Odoo as "role_essent_ccm_user"
         When Odoo top menu is "Accounting"
-        And Odoo left menu is "Customers"
+        And Odoo left menu is Customers
         And Advanced search is
             |     field      |   operator  |          value          |
             | Account Number | is equal to | parameter:accountNumber |
