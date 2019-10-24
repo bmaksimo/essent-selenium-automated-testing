@@ -12,7 +12,7 @@ Feature: NSTA - 338 Move new address
 
     @NSTA-338
     Scenario: Move new address
-        When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
+        When Click on top menu button PLUS and navigate to "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
         When "Tariefdatum" date is "1 month before now"
@@ -43,8 +43,8 @@ Feature: NSTA - 338 Move new address
         Then Form header is "Billing details"
 
         When "Betalingswijze" selection is "Overschrijving"
-        And  Billing details are confirmed
-        Then  Form header is "Quote overview"
+        And Billing details are confirmed
+        Then Form header is "Quote overview"
 
         When Option "Heeft de klant al getekend?" "is" "On"
         And "Kanaal ondertekening" selection is "Papier"
@@ -53,8 +53,8 @@ Feature: NSTA - 338 Move new address
         And Quote is confirmed
 
         When Dashboard menu is "Contracten"
-        And  "1st" List element with value at column "EAN-code" is checked
-        And  "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
+        And "1st" List element with value at column "EAN-code" is checked
+        And "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
 
         When Dashboard menu is "Contracten"
         And Old contract data is copied
