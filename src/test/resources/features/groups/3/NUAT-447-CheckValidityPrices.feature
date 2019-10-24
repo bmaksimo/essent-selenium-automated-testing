@@ -19,17 +19,16 @@ Feature: NUAT-447: Check validity prices
         And Plus action and "Handtekening ontvangen" of first customer from list
         And "Datum handtekening ontvangen" date is "now"
         And "Taak aanmaken voor de manager" turn on
-        Then Changes are confirmed
+        Then Changes are confirmed waiting for 5 seconds
 
-        And Sleep for 30 seconds
         When Reset filter
         And "Offertenummer" input is "parameter:offertenummer"
         And Click on link in View List at "1st" row and "Nummer & Getekend contractnummer" column polling 600 seconds
         And Click on top menu button PLUS and navigate to "Offertes -> Check geldigheid tarieven"
         And Form header is "Updated Prices"
         And "Ja, ik wil de offerte met de nieuwe tarieven goedkeuren" turn on with dot
+        And Changes are confirmed waiting for 5 seconds
         Then Bevestigen
-        And Sleep for 30 seconds
 
         When Plus action of "1" element from "TasksOnQuotes" and click on Mark As Done/Markeren Als Verwerkt
         And Oplossing text is "ja"
@@ -37,6 +36,5 @@ Feature: NUAT-447: Check validity prices
 
         When Click on top menu button PLUS and navigate to "Offertes -> Status - getekend"
         And Sign quote file is uploaded
-        And Changes are confirmed
-        And Sleep for 10 seconds
+        And Changes are confirmed waiting for 5 seconds
         Then Offerte status is "Getekend"
