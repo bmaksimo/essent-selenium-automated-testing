@@ -87,7 +87,7 @@ Feature: NSTA-337: Move old address - Electricity
             | address                         | phone            | email                  |
             | Mechelsesteenweg 2 2550 Kontich | +32 483 08 06 44 | petar.perovic@test.com |
 
-        When Top arrow button is "up"
+        When Click on top menu button UP
         And Left menu is "sales-marketing"
         And Top menu item is "Klanten"
         And Top action is Filter from "sales-marketing" menu retrying 5 times

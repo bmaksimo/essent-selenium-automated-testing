@@ -12,7 +12,7 @@ Feature: NSTA-329 Deduplication activated customer
     @NSTA-329
     Scenario: From de-duplication of client
 
-        When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
+        When Click on top menu button PLUS and navigate to "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
         When "Tariefdatum" date is "1 month before now"
@@ -60,7 +60,7 @@ Feature: NSTA-329 Deduplication activated customer
         Then Left menu is "sales-marketing"
 
         #Step 2: should deduplicate customer
-        When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
+        When Click on top menu button PLUS and navigate to "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
         When "Sales kanaal" selection is "Inbound"
         And Quote details are confirmed
