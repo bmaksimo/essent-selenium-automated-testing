@@ -45,7 +45,7 @@ Feature: TESTAUTO-285 Dunning-invoice-block-from-Odoo
 
         Given I renew login to Odoo as "role_essent_ccm_user"
         When Odoo top menu is "Accounting"
-        And  Odoo left menu is "Customers"
+        And  Odoo left menu is Customers
         And Odoo filter is "parameter:accountNumber"
         Then Column "Account Number" with value "parameter:accountNumber" is clicked
 
