@@ -57,6 +57,7 @@ public class ConfirmationSteps extends NavigationElements {
     @When("^Modal \"([^\"]*)\" is displayed$")
     public void checkModalDialogOpen(String headerText) {
         seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(5);
         boolean success = new ModalBase().modalContainsHeader(headerText);
         assertThat(String.format("Action row %s was not found", headerText), success, is(true));
     }
