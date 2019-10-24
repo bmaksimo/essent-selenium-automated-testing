@@ -140,7 +140,7 @@ public class MarketBerichtenSteps extends NavigationElements {
 
         int attempt = 1;
         boolean found = false;
-        int maxRetries = 10;
+        int maxRetries = 50;
         String arrow = parameterProvider.getValueOrParameterAsString("parameter:navigation");
         String dashboardMenu = parameterProvider.getValueOrParameterAsString("parameter:dashboard-menu");
 
