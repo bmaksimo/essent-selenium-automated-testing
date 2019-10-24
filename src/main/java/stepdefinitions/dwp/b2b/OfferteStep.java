@@ -1,5 +1,6 @@
 package stepdefinitions.dwp.b2b;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.contracting_switching.QuotesListPage;
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import com.essent.testing.dwp.pageobject.impl.filter.DwpFilterPage;
@@ -59,7 +60,21 @@ public class OfferteStep extends DwpScenario {
 
     @Then("^Offerte status is \"([^\"]*)\"$")
     public void statusIs(String status) {
-        Assert.assertTrue(status.equalsIgnoreCase(new QuotesListPage().getOfferteStatus()));
+        QuotesListPage quotesList = new QuotesListPage();
+        int refreshCount = 15;
+        boolean expectedValue = false;
+        for (int i = 0; i < refreshCount; i++) {
+            if (quotesList.getOfferteStatus().equals(status)) {
+                expectedValue = true;
+                break;
+            } else {
+                seleniumDriver.getDriver().navigate().back();
+                Sleeper.sleepTightInSeconds(2);
+                seleniumDriver.getDriver().navigate().forward();
+                Sleeper.sleepTightInSeconds(2);
+            }
+        }
+        Assert.assertTrue(String.format("Quote status is not changed to %s after %s number of retrying.",status, refreshCount),expectedValue);
     }
 
     @And("^\"([^\"]*)\" turn on with dot$")
