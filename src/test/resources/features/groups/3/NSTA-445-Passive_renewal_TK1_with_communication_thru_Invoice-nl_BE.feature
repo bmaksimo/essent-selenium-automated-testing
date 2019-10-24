@@ -81,7 +81,7 @@ Feature: NSTA-445 Passive renewal of contract TK1 - with communication through I
         Then "Status batch" field value is switched to "VALIDATED" within 180 seconds
         And Table "Geselecteerde contractlijn voor hernieuwingsbatch" has matching value "Gevalideerd" at column "Status hernieuwing"
 
-        When Click on "parameter:Contractnummer" link
+        When Click on "parameter:contractNumber" link
         And  Dashboard menu is "Sales"
         And Table "Offertes" has matching value "Passieve hernieuwing" at column "Type & status"
         And Table "Offertes" has matching value "Geprijsd - Geaccepteerd" at column "Type & status"

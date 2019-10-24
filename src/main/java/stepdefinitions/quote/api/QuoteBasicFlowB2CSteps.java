@@ -156,6 +156,8 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
         String dayContractDate = str[2];
         builder.append(dayContractDate).append("-").append(monthContractDate).append("-").append(yearContractDate);
         parameterProvider.put("contractDate", builder);
+        String retrievedContractNumber = new ContractDetailsAPI().getContractDetails(cookie, quoteDetails).getContractNumber();
+        parameterProvider.put("contractNumber", retrievedContractNumber);
     }
 
     @Then("^Contracted EAN exists on account$")
