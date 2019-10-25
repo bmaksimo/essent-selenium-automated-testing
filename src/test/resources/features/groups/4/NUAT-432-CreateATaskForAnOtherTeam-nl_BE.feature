@@ -11,7 +11,7 @@ Feature: NUAT-432: Create A Task For An Other Team - nl_BE
     Scenario: Create a task for an other team
         When Left menu is "sales-marketing"
         And Top menu item is "Klanten"
-        And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
+        And B2C TC1 Contract uses "FAKE" address and switch type is "MOVE IN"
         And Top action is Filter from "sales-marketing" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
         Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
@@ -24,4 +24,4 @@ Feature: NUAT-432: Create A Task For An Other Team - nl_BE
         Then Changes are confirmed
         
         When Dashboard menu is "Service"
-        Then "Test" is created
+        Then Table "Taken" has matching value "Test" at column "Naam & Type & Subtype"
