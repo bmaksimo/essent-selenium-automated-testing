@@ -49,7 +49,7 @@ Feature: TESTAUTO-204 Dunning-create-invoice-block
         And "Reden factuurblok" selection is "Payment mismatch"
         And "Startdatum" date is "now"
         And "Einddatum" date is "31 days from now"
-        And Changes are confirmed
+        And Changes are confirmed waiting for 5 seconds
         Then Table "Transacties" contains check mark at column "Geblokkeerd?"
 
         When Click on link in View List at "1st" row and "ID & Type" column polling 60 seconds
