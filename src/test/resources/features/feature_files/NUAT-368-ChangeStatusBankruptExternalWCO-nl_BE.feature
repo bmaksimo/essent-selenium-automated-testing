@@ -11,7 +11,7 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
         And Top action is "Filters"
         And "Klantnummer" input is "parameter:accountNumber"
         Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
-        And Plus menu is "Service -> Wijzigingen klant -> Accountstatus wijzigen"
+        And Click on top menu button PLUS and navigate to "Service -> Wijzigingen klant -> Accountstatus wijzigen"
 
     @NUAT-368-01
     Scenario: I Change status CSR and Externe partij is Contentia

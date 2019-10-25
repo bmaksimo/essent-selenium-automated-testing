@@ -17,7 +17,7 @@ Feature: NUAT-370: Create Case With Complaint - nl_BE
 
     @NUAT-370-01
     Scenario: Create case for an account
-        When Plus menu is "Service -> Case aanmaken voor de klant"
+        When Click on top menu button PLUS and navigate to "Service -> Case aanmaken voor de klant"
         And New case for account is created
         And Click on link in View List at "1st" row and "Nummer & Aanmaakdatum" column polling 20 seconds
         Then Case details are visible
