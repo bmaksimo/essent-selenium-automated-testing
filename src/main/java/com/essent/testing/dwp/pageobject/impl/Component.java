@@ -202,7 +202,7 @@ public abstract class Component {
         boolean isDisplayed = false;
         while (!isDisplayed && currentAttempt <= attempts) {
             currentAttempt++;
-            isDisplayed = element.isDisplayed();
+            isDisplayed = element.isDisplayed() && element.isEnabled();
             Sleeper.sleepTightInSeconds(2);
             if (isDisplayed) element.click();
         }

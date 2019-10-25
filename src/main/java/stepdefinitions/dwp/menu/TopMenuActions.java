@@ -15,7 +15,6 @@ public class TopMenuActions extends Component {
 
     private static final String PLUS_MENU_PATH_SEPARATOR = "\\s*->\\s*";
     private static final int TOP_MENU_RETRIES = 20;
-    private static final int LEAF_POSITION = 2;
 
     public void clickUpButton() {
         seleniumDriver.waitForRequestsToFinish();
@@ -38,30 +37,24 @@ public class TopMenuActions extends Component {
     }
 
     private void navigateThruMenus(String[] navigationMenus) throws Exception {
-        int pathPosition = 0;
         for (String menu : navigationMenus) {
             Sleeper.sleepTightInSeconds(2);
-            clickOnMenu(menu, pathPosition);
-            pathPosition++;
+            clickOnMenu(menu);
         }
     }
 
-    private void clickOnMenu(String menu, int pathPosition) throws Exception {
-        By by = By.xpath(buildXPath(menu));
-        Optional<WebElement> menuOptional = isLeaf(pathPosition) ? getLeafMenu(seleniumDriver.findElements(by)) : seleniumDriver.findElementOptional(by);
-        if (!menuOptional.isPresent()) throw new Exception("Error navigatin on plus menu, " + menu + " not found");
+    private void clickOnMenu(String menu) throws Exception {
+        Optional<WebElement> menuOptional = getMenu(buildXPath(menu));
+        if (!menuOptional.isPresent()) throw new Exception("Plus menu " + menu + " not found");
         clickWithRetries(menuOptional.get(), TOP_MENU_RETRIES);
     }
 
-    private Optional<WebElement> getLeafMenu(List<WebElement> menus){
+    private Optional<WebElement> getMenu(String xpath){
+        List<WebElement> menus = seleniumDriver.findElements(By.xpath(xpath));
         for (WebElement menuElement : menus) {
             if (menuElement.isDisplayed()) return Optional.of(menuElement);
         }
         return Optional.empty();
-    }
-
-    private boolean isLeaf(int pathPosition) {
-        return pathPosition == LEAF_POSITION;
     }
 
     private String buildXPath(String label) {
