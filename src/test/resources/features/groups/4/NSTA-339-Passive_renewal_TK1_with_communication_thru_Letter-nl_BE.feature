@@ -69,6 +69,7 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
         When Click on "parameter:suitecrm-customer-name" link
         And  All cell values at "1st" row from table "Geselecteerde contractlijn voor hernieuwingsbatch" are checked
         And  PackageName is extracted as "1st" word from "parameter:Nieuw pakket/product"
+        When "Status batch" field value is switched to "QUOTES_CREATED" within 180 seconds
         And  Click on "VALIDEER PASSIEVE HERNIEUWINGSBATCH" link
         And  Modal dialog is "Valideer contractlijnen hernieuwing"
         And  Modal dialog contains "parameter:suitecrm-customer-name" in action list
