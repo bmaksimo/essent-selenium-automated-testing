@@ -63,7 +63,6 @@ Feature: NSTA-345:Credit Invoice
         # 4 - Check if CNM has been sent to customer
         When Dashboard menu is "Service"
         And Click on "Nummer & Communicatiekanaal" matching value "CNM" at column "Type & Onderwerp"
-        Then Check product change has succeeded
 
         # 5 - Check Balance of new invoice credit -- currently not being tested as balance update can take too long to occur and this is momentarily an accepted behavior
         # when balance update is timeboxed this check needs to be uncommented
