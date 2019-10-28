@@ -186,14 +186,12 @@ public class ContractSteps extends DwpScenario {
 
     @And("^Two contracts are displayed$")
     public void twoContractsAreDisplayed() {
-        ContractPage cp = new ContractPage();
-        Assert.assertEquals("The number of electricity contracts is not 2", 2, cp.getNumberOfElectricityContracts());
+        Assert.assertEquals("The number of contracts is not 2", 2, new ContractPage().getNumberOfElectricityContracts());
     }
 
     @And("^There is one billing customer$")
     public void thereIsOneBillingCustomer() {
-        DetailsPage dp = new DetailsPage();
-        Assert.assertEquals("The number of billing customers is not 1", 1, dp.getNumberOfBillingCustomers());
+        Assert.assertEquals("The number of billing customers is not 1", 1, new DetailsPage().getNumberOfBillingCustomers());
     }
 
     @Then("^Check customer information$")

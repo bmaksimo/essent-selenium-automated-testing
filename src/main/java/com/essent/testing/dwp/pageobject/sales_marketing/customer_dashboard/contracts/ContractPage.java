@@ -11,6 +11,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -22,7 +23,7 @@ public class ContractPage extends Component {
 
     private final static Logger log = Logger.getLogger(ContractPage.class);
 
-    private static final String NUMBER_ELECTRICITY_CONTRACT = "//list-icon-text-cell/div";
+    private static final String NUMBER_ELECTRICITY_CONTRACT = "//div[contains(@class, 'customer__status icon-elektriciteit')]";
     private static final String REPLACEMENT_KEY = "replacement_key";
     private static final String SEND_EMAIL = "//list-row-action[@label='${" + REPLACEMENT_KEY + "}']/a";
     private static final String START_DATA_ID = "contract-start-date-field";
@@ -334,8 +335,9 @@ public class ContractPage extends Component {
     }
 
     public int getNumberOfElectricityContracts() {
+        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(30);
         return seleniumDriver.findElements(By.xpath(NUMBER_ELECTRICITY_CONTRACT)).size();
-
     }
 
     public boolean checkPaymentTableNotEmpty() {
