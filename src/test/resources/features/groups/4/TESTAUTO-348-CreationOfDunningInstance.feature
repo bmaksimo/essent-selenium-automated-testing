@@ -52,4 +52,4 @@ Feature: TESTAUTO-348 Dunning instance
         And Advanced search is
             |     field      |   operator  |          value          |
             | Account Number | is equal to | parameter:accountNumber |
-
+        
