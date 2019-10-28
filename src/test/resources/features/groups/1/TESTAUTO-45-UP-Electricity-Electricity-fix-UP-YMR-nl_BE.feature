@@ -10,7 +10,7 @@ Feature: TESTAUTO-45:Electricity-UP-Electricity-fix-UP-YMR
 
     @TESTAUTO-45
     Scenario: Checking prices "Electricity – UP – Electricity fix UP -YMR"
-        When Plus menu is "Sales -> UP/TK2 -> Pricing tool"
+        When Click on top menu button PLUS and navigate to "Sales -> UP/TK2 -> Pricing tool"
         Then Form header is "Calculate price"
 
         When "Producttype" selection is "Elektriciteit"
@@ -18,7 +18,6 @@ Feature: TESTAUTO-45:Electricity-UP-Electricity-fix-UP-YMR
         And "Product" selection is "Elektriciteit Vast"
         And "Startdatum" date is first day of next month
         And "Einddatum" date is last day of current month next year
-
 
         When "Tariefdatum" date is "now"
         And "Type aansluiting" selection is "YMR"

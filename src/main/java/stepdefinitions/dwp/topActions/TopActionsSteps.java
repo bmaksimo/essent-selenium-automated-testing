@@ -1,4 +1,4 @@
-package stepdefinitions.dwp.top_actions;
+package stepdefinitions.dwp.topActions;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.modal.ModalBase;
@@ -10,16 +10,14 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.By;
+import stepdefinitions.dwp.menu.TopMenuActions;
 import stepdefinitions.dwp.navigation.NavigationElements;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 
-public class TopActions extends NavigationElements {
+public class TopActionsSteps extends NavigationElements {
 
     private static final String TOP_FILTER_BUTTON = "Filters";
     private static final String TOP_MENU_KLANTEN = "Klanten";
@@ -75,6 +73,21 @@ public class TopActions extends NavigationElements {
         super.clickTopArrow(arrow);
     }
 
+    @And("Click on top menu button UP")
+    public void clickTopMenuUp() {
+        new TopMenuActions().clickUpButton();
+    }
+
+    @And("^Click on top menu button PLUS and navigate to \"([^\"]*)\"$")
+    public void clickPlusButton(String path) throws Exception {
+        new TopMenuActions().clickPlusButton(path);
+    }
+
+    @And("Click on top menu button PREVIOUS")
+    public void clickPreviousButton() {
+        new TopMenuActions().clickPreviousButton();
+    }
+
     @And("^Top arrow button is \"([^\"]*)\" waiting for (\\d+) seconds$")
     public void clickTopArrowButton(String arrow, int waitingTime){
         super.clickTopArrow(arrow.toLowerCase(), waitingTime);
@@ -92,15 +105,6 @@ public class TopActions extends NavigationElements {
         Sleeper.sleepTightInSeconds(waitingTime);
         boolean success = new ModalBase().confirmNow(parameterProvider.getScenarioInfo(), waitingTime);
         assertThat(String.format("Button %s was not available.", ""), success, is(true));
-    }
-
-    @And("Intermittent Alert window is confirmed")
-    public void handleAlert() {
-        boolean actualAlert = isAlertPresent();
-        if (actualAlert)
-        {
-            seleniumDriver.getDriver().switchTo().alert().accept();
-        }
     }
 
     @Override

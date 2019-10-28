@@ -3,7 +3,10 @@ package com.essent.testing.dwp.pageobject.impl;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.context.ContextService;
+import com.essent.testing.dwp.pageobject.table.Filter;
+import com.essent.testing.dwp.pageobject.table.TableFilter;
 import com.essent.testing.selenium.DWPSeleniumDriver;
 import com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter;
 import cucumber.runtime.CucumberException;
@@ -13,10 +16,7 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
 
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public abstract class Component {
 
@@ -120,8 +120,7 @@ public abstract class Component {
     protected String createQuery(String template, String key, String value) {
         Map<String, String> valuesMap = new HashMap<>();
         valuesMap.put(key, value);
-        StrSubstitutor sub = new StrSubstitutor(valuesMap);
-        return sub.replace(template);
+        return new StrSubstitutor(valuesMap).replace(template);
     }
 
     protected String createQuery(String template, Map<String, String> valuesMapper) {
@@ -189,5 +188,23 @@ public abstract class Component {
         seleniumDriver.waitForRequestsToFinish();
         WebElement xElement = seleniumDriver.findElementWhenVisible(By.xpath(CLOSE_MODAL_BUTTON));
         seleniumDriver.waitAndClick(xElement);
+    }
+
+    public List<WebElement> selectRowOnTable(String tableName, List<Filter> filters, String contextParameters) throws Exception {
+        return new TableFilter(contextParameters)
+            .getTable(tableName)
+            .findBy(filters)
+            .get();
+    }
+
+    protected void clickWithRetries(WebElement element, int attempts) {
+        int currentAttempt = 0;
+        boolean isDisplayed = false;
+        while (!isDisplayed && currentAttempt <= attempts) {
+            currentAttempt++;
+            isDisplayed = element.isDisplayed();
+            Sleeper.sleepTightInSeconds(2);
+            if (isDisplayed) element.click();
+        }
     }
 }

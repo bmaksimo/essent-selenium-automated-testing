@@ -57,6 +57,7 @@ public class ConfirmationSteps extends NavigationElements {
     @When("^Modal \"([^\"]*)\" is displayed$")
     public void checkModalDialogOpen(String headerText) {
         seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(5);
         boolean success = new ModalBase().modalContainsHeader(headerText);
         assertThat(String.format("Action row %s was not found", headerText), success, is(true));
     }
@@ -64,6 +65,7 @@ public class ConfirmationSteps extends NavigationElements {
     @When("^Modal dialog contains \"([^\"]*)\" in action list$")
     public void hasActionInActionList(String match) {
         seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(5);
         String textToLookup = parameterProvider.getValueOrParameterAsString(match);
         assertThat(
             String.format("Dialogue doesn't contain given text \"%s\"", textToLookup),

@@ -2,8 +2,6 @@ package stepdefinitions.dwp;
 
 import com.essent.roles.UserRoles;
 import com.essent.testing.dwp.pageobject.Window;
-import com.essent.testing.dwp.pageobject.elements.Button;
-import com.essent.testing.dwp.pageobject.impl.elements.ButtonImpl;
 import com.essent.testing.dwp.pageobject.impl.modal.login.LoginAction;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;

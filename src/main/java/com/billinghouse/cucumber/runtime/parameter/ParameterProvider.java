@@ -86,6 +86,10 @@ public class ParameterProvider {
         return currentParameters;
     }
 
+    public String getCurrentContextParameters() {
+        return this.currentScenario.getName() + this.currentScenario.getSourceTagNames().toString();
+    }
+
     public Object remove(Object key) {
         return parameters.remove(key);
     }

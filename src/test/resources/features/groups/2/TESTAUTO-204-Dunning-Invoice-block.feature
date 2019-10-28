@@ -49,7 +49,7 @@ Feature: TESTAUTO-204 Dunning-create-invoice-block
         And "Reden factuurblok" selection is "Payment mismatch"
         And "Startdatum" date is "now"
         And "Einddatum" date is "31 days from now"
-        And Changes are confirmed
+        And Changes are confirmed waiting for 5 seconds
         Then Table "Transacties" contains check mark at column "Geblokkeerd?"
 
         When Click on link in View List at "1st" row and "ID & Type" column polling 60 seconds
@@ -59,10 +59,10 @@ Feature: TESTAUTO-204 Dunning-create-invoice-block
 
         Given I renew login to Odoo as "role_essent_ccm_user"
         And Odoo top menu is "Accounting"
-        And Odoo left menu is "Customers"
+        And Odoo left menu is Customers
         And Odoo filter is "parameter:accountNumber"
         When Column "Account Number" with value "parameter:accountNumber" is clicked
-        Then Button Invoice Blocks is clicked
+        Then Right box button "Invoice Blocks" is clicked
         And Reason is "Payment mismatch" on Invoice Blocks page
         And Start date is today on Invoice Blocks page
         And End date is "31" days from today on Invoice Blocks page

@@ -12,7 +12,7 @@ Feature: NSTA 332 Soctar confirmation --> Manual
     @NSTA-332
     Scenario: Soctar confirmation --> Manual
 
-        When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
+        When Click on top menu button PLUS and navigate to "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
         When "Tariefdatum" date is "now"

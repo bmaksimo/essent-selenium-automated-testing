@@ -6,15 +6,15 @@ import com.essent.testing.dwp.pageobject.impl.navigation.DwpPlusMenu;
 import com.essent.testing.dwp.pageobject.impl.navigation.TopActionsPageImpl;
 import com.essent.testing.dwp.pageobject.navigation.TopActionsPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
-import org.openqa.selenium.NoAlertPresentException;
+import cucumber.runtime.CucumberException;
 import org.openqa.selenium.support.ui.FluentWait;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
-import static org.hamcrest.MatcherAssert.assertThat;
 import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 
@@ -129,12 +129,15 @@ public abstract class NavigationElements extends DwpScenario {
         new ClickDashboardMenu().testNow(menu);
     }
 
-    protected boolean isAlertPresent() {
+    protected void loopBack(String arrow, String dashboardMenu) {
         try {
-            seleniumDriver.getDriver().switchTo().alert();
-            return true;
-        } catch (NoAlertPresentException ex) {
-            return false;
+            seleniumDriver.waitForRequestsToFinish();
+            clickTopArrow(arrow);
+            seleniumDriver.waitForRequestsToFinish();
+            clickDashboardMenu(dashboardMenu);
+            seleniumDriver.waitForRequestsToFinish();
+        } catch (Throwable t) {
+            throw new CucumberException(t);
         }
     }
 }

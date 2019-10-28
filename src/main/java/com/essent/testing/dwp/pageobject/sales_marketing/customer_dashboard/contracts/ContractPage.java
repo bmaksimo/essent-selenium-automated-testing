@@ -336,7 +336,7 @@ public class ContractPage extends Component {
 
     public int getNumberOfElectricityContracts() {
         seleniumDriver.waitForRequestsToFinish();
-        Sleeper.sleepTightInSeconds(30);
+        Sleeper.sleepTightInSeconds(5);
         return seleniumDriver.findElements(By.xpath(NUMBER_ELECTRICITY_CONTRACT)).size();
     }
 
@@ -521,6 +521,7 @@ public class ContractPage extends Component {
     }
 
     public void populateAddressData(List<Map<String,String>> field) {
+        seleniumDriver.waitForRequestsToFinish();
         String street = field.get(0).get("street");
         if (street.equals("Random")) {
             street = StreetGenerator.getRandomStreetInKontich();

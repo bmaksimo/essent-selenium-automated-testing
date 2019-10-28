@@ -33,31 +33,26 @@ public class ContractSteps extends DwpScenario {
 
     @And("^Change amount for a customer$")
     public void changeAmountForACustomer(){
-        ContractPage cp = new ContractPage();
-        cp.openFirstContractFromList();
+        new ContractPage().openFirstContractFromList();
     }
 
     @And("^Contract plus and \"([^\"]*)\"$")
     public void contractPlusAnd(String subaction) {
         seleniumDriver.waitForRequestsToFinish();
-        ContractPage cp = new ContractPage();
-        cp.contractPlus();
-        BaseObjectPage baseObject = new BaseObjectPage();
-        baseObject.plusSubaction(subaction);
+        new ContractPage().contractPlus();
+        new BaseObjectPage().plusSubAction(subaction);
     }
 
     @And("^Amount values is \"([^\"]*)\"$")
     public void amountValuesIs(String value) {
         seleniumDriver.waitForRequestsToFinish();
-        ContractPage cp = new ContractPage();
-        cp.changeAmount(value);
+        new ContractPage().changeAmount(value);
         amount = value;
     }
 
     @Then("^Amount of a customer value$")
     public void amountOfACustomerValue() {
-        ContractPage cp = new ContractPage();
-        Assert.assertTrue("Amount is not correct.", cp.getAmountOfACustomer(amount));
+        Assert.assertTrue("Amount is not correct.", new ContractPage().getAmountOfACustomer(amount));
     }
 
     @Override
@@ -99,44 +94,44 @@ public class ContractSteps extends DwpScenario {
     public void checkIfStartDateOfNewEanIsTheSameDateAsFilledInAsMoveDate(String date) {
         ContractPage cp = new ContractPage();
         String moveDate= toDwpEndDate(parameterProvider.getValueOrParameterAsString(date));
-        Assert.assertTrue("Actual Contract Start Date differs from expected",cp.getActiveContractStartDate().equalsIgnoreCase(moveDate));
+        Assert.assertTrue("Actual Contract Start Date differs from expected", cp.getActiveContractStartDate().equalsIgnoreCase(moveDate));
     }
 
     @And("^Check if the end date of new ean is the same date as the end date of the old one$")
     public void checkIfTheEndDateOfNewEanIsTheSameDateAsTheEndDateOfTheOldOne() {
         ContractPage cp = new ContractPage();
-        Assert.assertTrue("Actual Contract End Date differs from expected",cp.getActiveContractEndDate().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString("parameter:endDate")));
+        Assert.assertTrue("Actual Contract End Date differs from expected", cp.getActiveContractEndDate().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString("parameter:endDate")));
     }
 
     @And("^Check if products of both contracts are the same$")
     public void checkIfProductsOfBothContractsAreTheSame() {
         ContractPage cp = new ContractPage();
         cp.clickOnContractenNummer();
-        Assert.assertTrue("Actual Product Name differs from expected",cp.getProductName().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString("parameter:productName")));
+        Assert.assertTrue("Actual Product Name differs from expected", cp.getProductName().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString("parameter:productName")));
     }
 
     @And("^Check if discounts of both contracts are the same$")
     public void checkIfDiscountsOfBothContractsAreTheSame() {
         ContractPage cp = new ContractPage();
-        Assert.assertTrue("Actual Kortingen Op Contract Kortings code differs from expected",cp.getKortingenOpContractKortingscode().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString("parameter:kortingsCode")));
-        Assert.assertTrue("Actual Kortingen Op Contract Product type differs from expected",cp.getKortingenOpContractProducttype().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString("parameter:productType")));
+        Assert.assertTrue("Actual Kortingen Op Contract Kortings code differs from expected", cp.getKortingenOpContractKortingscode().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString("parameter:kortingsCode")));
+        Assert.assertTrue("Actual Kortingen Op Contract Product type differs from expected", cp.getKortingenOpContractProducttype().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString("parameter:productType")));
     }
 
     @And("^Check if prices of both contracts are the same$")
     public void checkIfPricesOfBothContractsAreTheSame() {
         ContractPricesPage cpp = new ContractPricesPage();
         cpp.clickOnBekijkPrijzenTariefkaatFromPlus();
-        Assert.assertTrue("Actual Type Product differs from expected",cpp.getTypeProduct().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString("parameter:typeProduct")));
-        Assert.assertTrue("Actual Energieprijs Enkelvoudig Incl Btw differs from expected",cpp.getEnergieprijsEnkelvoudigInclBtw().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString("parameter:energieprijsEnkelvoudigInclBtw")));
-        Assert.assertTrue("Actual Energieprijs Dag Incl Btw Incl Btw differs from expected",cpp.getEnergieprijsDagInclBtw().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString("parameter:energieprijsDagInclBtw")));
-        Assert.assertTrue("Actual Energieprijs Nacht Incl Btw differs from expected",cpp.getEnergieprijsNachtInclBtw().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString("parameter:energieprijsNachtInclBtw")));
-        Assert.assertTrue("Actual Energieprijs Exclusief Nacht Incl Btw differs from expected",cpp.getEnergieprijsExclusiefNachtInclBtw().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString("parameter:energieprijsExclusiefNachtInclBtw")));
-        Assert.assertTrue("Actual Vaste Vergoeding Incl Btw differs from expected",cpp.getVasteVergoedingInclBtw().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString("parameter:vasteVergoedingInclBtw")));
-        Assert.assertTrue("Actual Energieprijs Enkelvoudig Excl Btw differs from expected",cpp.getEnergieprijsEnkelvoudigExclBtw().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString("parameter:energieprijsEnkelvoudigExclBtw")));
-        Assert.assertTrue("Actual Energieprijs Dag Excl Btw from expected",cpp.getEnergieprijsDagExclBtw().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString("parameter:energieprijsDagExclBtw")));
-        Assert.assertTrue("Actual Energieprijs Nach Excl Btw differs from expected",cpp.getEnergieprijsNachExclBtw().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString("parameter:energieprijsNachExclBtw")));
-        Assert.assertTrue("Actual Energieprijs Exclusief Nacht Excl Btw differs from expected",cpp.getEnergieprijsExclusiefNachtExclBtw().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString("parameter:energieprijsExclusiefNachtExclBtw")));
-        Assert.assertTrue("Actual Vaste Vergoeding Excl Btw differs from expected",cpp.getVasteVergoedingExclBtw().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString("parameter:vasteVergoedingExclBtw")));
+        Assert.assertTrue("Actual Type Product differs from expected", cpp.getTypeProduct().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString("parameter:typeProduct")));
+        Assert.assertTrue("Actual Energieprijs Enkelvoudig Incl Btw differs from expected", cpp.getEnergieprijsEnkelvoudigInclBtw().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString("parameter:energieprijsEnkelvoudigInclBtw")));
+        Assert.assertTrue("Actual Energieprijs Dag Incl Btw Incl Btw differs from expected", cpp.getEnergieprijsDagInclBtw().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString("parameter:energieprijsDagInclBtw")));
+        Assert.assertTrue("Actual Energieprijs Nacht Incl Btw differs from expected", cpp.getEnergieprijsNachtInclBtw().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString("parameter:energieprijsNachtInclBtw")));
+        Assert.assertTrue("Actual Energieprijs Exclusief Nacht Incl Btw differs from expected", cpp.getEnergieprijsExclusiefNachtInclBtw().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString("parameter:energieprijsExclusiefNachtInclBtw")));
+        Assert.assertTrue("Actual Vaste Vergoeding Incl Btw differs from expected", cpp.getVasteVergoedingInclBtw().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString("parameter:vasteVergoedingInclBtw")));
+        Assert.assertTrue("Actual Energieprijs Enkelvoudig Excl Btw differs from expected", cpp.getEnergieprijsEnkelvoudigExclBtw().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString("parameter:energieprijsEnkelvoudigExclBtw")));
+        Assert.assertTrue("Actual Energieprijs Dag Excl Btw from expected", cpp.getEnergieprijsDagExclBtw().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString("parameter:energieprijsDagExclBtw")));
+        Assert.assertTrue("Actual Energieprijs Nach Excl Btw differs from expected", cpp.getEnergieprijsNachExclBtw().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString("parameter:energieprijsNachExclBtw")));
+        Assert.assertTrue("Actual Energieprijs Exclusief Nacht Excl Btw differs from expected", cpp.getEnergieprijsExclusiefNachtExclBtw().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString("parameter:energieprijsExclusiefNachtExclBtw")));
+        Assert.assertTrue("Actual Vaste Vergoeding Excl Btw differs from expected", cpp.getVasteVergoedingExclBtw().equalsIgnoreCase(parameterProvider.getValueOrParameterAsString("parameter:vasteVergoedingExclBtw")));
         cpp.closeBekijkPrijsDetailsTK1();
     }
 
@@ -151,7 +146,7 @@ public class ContractSteps extends DwpScenario {
     public void thereIsACaseWhereOnderwerpIs(String onderwerp) {
         ServicePage sp = new ServicePage();
         Assert.assertTrue(onderwerp.equalsIgnoreCase(sp.getCaseOnderwerp()));
-        parameterProvider.put("caseNumber",sp.getCaseNumber());
+        parameterProvider.put("caseNumber", sp.getCaseNumber());
     }
 
     @And("^Interaction is created with Type \"([^\"]*)\" and Onderwerp \"([^\"]*)\" and verwante case is \"([^\"]*)\"$")
@@ -222,10 +217,10 @@ public class ContractSteps extends DwpScenario {
         String date = toDwpEndDate(parameterProvider.getValueOrParameterAsString(info.get(1).get(2)));
         String ean = parameterProvider.getValueOrParameterAsString(info.get(1).get(3));
 
-        Assert.assertTrue("Actual type differs from expected",cp.getContractType().equalsIgnoreCase(type));
+        Assert.assertTrue("Actual type differs from expected", cp.getContractType().equalsIgnoreCase(type));
         Assert.assertTrue("Actual status differs from expected", cp.getStatusFromContracten().equalsIgnoreCase(status));
         Assert.assertTrue("Actual start date differs from expected", cp.getStartDate().equalsIgnoreCase(date));
-        Assert.assertTrue("Actual EAN differs from expected",cp.getEanFromContract().equalsIgnoreCase(ean));
+        Assert.assertTrue("Actual EAN differs from expected", cp.getEanFromContract().equalsIgnoreCase(ean));
     }
 
     @And("^Copy product name$")

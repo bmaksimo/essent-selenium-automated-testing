@@ -23,10 +23,11 @@ Feature: TESTAUTO-193 Dunning-create-account-block
         And "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
         And Dashboard menu is "Details"
         And Click on "CREEREN BLOKKERING"
+        And Check if "Account block" modal is open
         And "Block reason" selection is "E-plus"
         And "Einddatum" date is "7 days from now"
-        And Changes are confirmed
-        And Sleep for 60 seconds
+        And Changes are confirmed waiting for 5 seconds
+        And Dashboard menu is "Details"
 
         Then Table "Lijst blokkeringen" contains value "E-plus" at column "Reden" retrying 60 times
         And Table "Lijst blokkeringen" contains value "true" at column "Actief" retrying 60 times
@@ -35,10 +36,10 @@ Feature: TESTAUTO-193 Dunning-create-account-block
 
         Given I logged in to Odoo as "role_essent_ccm_user"
         When Odoo top menu is "Accounting"
-        And Odoo left menu is "Customers"
+        And Odoo left menu is Customers
         And Odoo filter is "parameter:accountNumber"
         When Column "Account Number" with value "parameter:accountNumber" is clicked
-        Then Button Account Blocks is clicked
+        Then Right box button "Account Blocks" is clicked
         And Reason is "E-plus" on Account Blocks page
         And Start date is today on Account Blocks page
         And End date is "7" days from today on Account Blocks page

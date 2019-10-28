@@ -25,7 +25,8 @@ Feature: TESTAUTO-195 Dunning-update-account-block
         And Click on "CREEREN BLOKKERING"
         And "Block reason" selection is "E-plus"
         And "Einddatum" date is "7 days from now"
-        And Changes are confirmed
+        And Changes are confirmed waiting for 5 seconds
+        And Dashboard menu is "Details"
 
         Then Table "Lijst blokkeringen" contains value "E-plus" at column "Reden" retrying 60 times
         And Table "Lijst blokkeringen" contains value "true" at column "Actief" retrying 60 times
@@ -41,10 +42,10 @@ Feature: TESTAUTO-195 Dunning-update-account-block
         
         Given I renew login to Odoo as "role_essent_ccm_user"
         When Odoo top menu is "Accounting"
-        And  Odoo left menu is "Customers"
+        And  Odoo left menu is Customers
         And Odoo filter is "parameter:accountNumber"
         When Column "Account Number" with value "parameter:accountNumber" is clicked
-        Then Button Account Blocks is clicked
+        Then Right box button "Account Blocks" is clicked
         And Reason is "E-plus" on Account Blocks page
         And Start date is today on Account Blocks page
         And End date is "0" days from today on Account Blocks page

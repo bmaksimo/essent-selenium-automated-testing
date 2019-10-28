@@ -16,12 +16,6 @@ public class ServiceStep extends DwpScenario {
         registerActiveScenario(scenario);
     }
 
-    @Then("^\"([^\"]*)\" is created$")
-    public void isCreated(String input){
-        ServicePage servicePage = new ServicePage();
-        servicePage.validateCreatedTask(input);
-    }
-
     @Override
     @After("@DWP or @REGRESSION")
     public void tearDown() {

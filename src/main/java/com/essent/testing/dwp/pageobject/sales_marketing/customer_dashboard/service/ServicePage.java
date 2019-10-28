@@ -16,12 +16,7 @@ public class ServicePage extends Component {
     private static final String CASE_NUMBER = "//list[@list-key=\"InteractionsOnAccount\"]//td[7]//div//h5[1]";
     private static final String INTERACTION_VERWANTE_CASE = "//*[@id='rows']/tr[1]/td[7]/list-link-bold-top-two-liner-cell/div/a";
 
-    public void validateCreatedTask(String input) {
-        seleniumDriver.waitForRequestsToFinish();
-        Assert.assertTrue(findElementWhenVisible(By.xpath("(//span[.='" + input + "'])[1]")).isDisplayed());
-    }
-
-    public WebElement newCase() {
+    private WebElement newCase() {
         //TODO Remove locale-specific hard code.
         // The project must support official Belgian languages.
         // Locale-specific elements of web element locators must be parameterized.

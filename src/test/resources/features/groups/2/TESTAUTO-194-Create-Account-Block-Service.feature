@@ -24,7 +24,7 @@ Feature: TESTAUTO-194 Dunning-create-account-block-service
         When Plus menu is "Service -> Dunning stop on customer-NEW"
         And "Block reason" selection is "Official complaint"
         And "Startdatum" date is "now"
-        And Changes are confirmed
+        And Changes are confirmed waiting for 5 seconds
         When Dashboard menu is "Details"
 
         And Table "Lijst blokkeringen" contains value "Official complaint" at column "Reden" retrying 30 times
@@ -34,10 +34,10 @@ Feature: TESTAUTO-194 Dunning-create-account-block-service
 
         Given I renew login to Odoo as "role_essent_ccm_user"
         And Odoo top menu is "Accounting"
-        And Odoo left menu is "Customers"
+        And Odoo left menu is Customers
         And Odoo filter is "parameter:accountNumber"
         When Column "Account Number" with value "parameter:accountNumber" is clicked
-        Then Button Account Blocks is clicked
+        Then Right box button "Account Blocks" is clicked
         And Reason is "Official complaint" on Account Blocks page
         And Start date is today on Account Blocks page
         Then End date is empty on Account Blocks page

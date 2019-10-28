@@ -16,4 +16,9 @@ public class Filter {
     public String getColumnValue() {
         return columnValue;
     }
+
+    @Override
+    public String toString() {
+        return "columnName='" + columnName + "\'" + ", columnValue='" + columnValue + "\' |";
+    }
 }

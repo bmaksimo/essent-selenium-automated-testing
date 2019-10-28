@@ -43,10 +43,6 @@ import static org.hamcrest.Matchers.*;
 
 public class ViewListChecks extends NavigationElements {
 
-    //TODO Remove locale-specific hard code.
-    // The project must support official Belgian languages.
-    // Locale-specific elements of web element locators must be parameterized.
-    // This is basic rule!
     private static final String MARKET_MESSAGES = "Marktberichten";
     private static final String MARKET_MESSAGES_VIEW_LIST = "MarketTransactionsOnAccount";
     private static final String BILLING_CUSTOMER = "Billing customer";
@@ -304,18 +300,6 @@ public class ViewListChecks extends NavigationElements {
         logger().debug(String.format(
             "\"- STEP: \"%s\" list element did not have cell value \"%s\" at column \"%s\" within \"%s\" seconds - PASSED.",
             ordinal, expectedValue, columnName, seconds));
-    }
-
-    private void loopBack(String arrow, String dashboardMenu) {
-        try {
-            seleniumDriver.waitForRequestsToFinish();
-            clickTopArrow(arrow);
-            seleniumDriver.waitForRequestsToFinish();
-            clickDashboardMenu(dashboardMenu);
-            seleniumDriver.waitForRequestsToFinish();
-        } catch (Throwable t) {
-            throw new CucumberException(t);
-        }
     }
 
     @And("^\"([^\"]*)\" list element has status \"([^\"]*)\" at column \"([^\"]*)\" within (\\d+) seconds? refreshing \"([^\"]*)\"$")

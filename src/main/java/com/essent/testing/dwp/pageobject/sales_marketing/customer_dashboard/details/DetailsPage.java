@@ -37,7 +37,7 @@ public class DetailsPage extends Component {
 
     public int getNumberOfBillingCustomers() {
         seleniumDriver.waitForRequestsToFinish();
-        Sleeper.sleepTightInSeconds(30);
+        Sleeper.sleepTightInSeconds(5);
         return seleniumDriver.findElements(By.xpath(NUMBER_BILLING_CUSTOMER)).size();
     }
 
@@ -109,15 +109,19 @@ public class DetailsPage extends Component {
         return seleniumDriver.findElementWhenPresent(By.xpath(COMMUNICATION_PREFERENCES_UPDATED_SUCCESS_MESSAGE)).getText();
     }
 
-    public List<WebElement> selectRowOnTable(String tableName, String columnName, String columnValue) throws Exception {
-        List<Filter> filters = Arrays.asList(new Filter(columnName, columnValue));
-        return new TableFilter()
-            .getTable(tableName)
-            .findBy(filters)
-            .get();
+    public void clickOnPlusMenuInRow(WebElement plusMenu) {
+        int attempts = 20;
+        int currentAttempt = 0;
+        boolean isDisplayed = false;
+        while (!isDisplayed && currentAttempt <= attempts) {
+            currentAttempt++;
+            isDisplayed = plusMenu.isDisplayed();
+            Sleeper.sleepTightInSeconds(2);
+            if (isDisplayed) plusMenu.findElement(By.tagName("a")).click();
+        }
     }
 
-    public void clickOnPlusMenuInRow(WebElement plusMenu) {
-        plusMenu.click();
+    public WebElement getModalName(String modal){
+        return seleniumDriver.findElementWhenVisible(By.xpath("//h5[normalize-space()= '"+modal+"']"));
     }
 }

@@ -21,7 +21,7 @@ Feature: NUAT-413: Manual reconcile en unreconcile
             | new1 | parameter:accountNumber | 0     | 10     |
             | new2 | parameter:accountNumber | 10    | 0      |
         Then Save journal entry
-        When Odoo left menu is "Customers"
+        When Odoo left menu is Customers
         And Odoo filter is "parameter:accountNumber"
         And Column "Account Number" with value "parameter:accountNumber" is clicked
         Then Button "Journal Items" is clicked

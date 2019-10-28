@@ -3,7 +3,9 @@ package stepdefinitions.dwp.page_object;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
+import com.essent.testing.dwp.pageobject.list_view.ViewListTestObject;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.workflows.MarketMessagesPage;
+import com.essent.testing.dwp.pageobject.table.Filter;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import io.cucumber.datatable.DataTable;
 import cucumber.api.Scenario;
@@ -12,17 +14,22 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.apache.commons.collections4.CollectionUtils;
 import org.junit.Assert;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
+import stepdefinitions.dwp.navigation.NavigationElements;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
-public class MarketBerichtenSteps extends DwpScenario {
+public class MarketBerichtenSteps extends NavigationElements {
     private static String eanCode = null;
 
     @Before("@DWP or @REGRESSION")
-    public void setupTest(Scenario scenario){
+    public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
     }
 
@@ -115,6 +122,46 @@ public class MarketBerichtenSteps extends DwpScenario {
 
     }
 
+    @Then("Market message contains:")
+    public void checkMarketMessage(final DataTable dbTable) {
+        List<List<String>> dataTableFilters = dbTable.asLists();
+        List<Filter> filters = new ArrayList<>();
+        String currentColumnName;
+        String currentColumnValue;
+
+        for (int i = 0; i <= dataTableFilters.size(); i++) {
+            currentColumnName = dataTableFilters.get(0).get(i);
+            currentColumnValue = currentColumnName.toUpperCase().contains("& ED") ?
+                toDwpEndDate(dataTableFilters.get(1).get(i))
+                : parameterProvider.getValueOrParameterAsString(dataTableFilters.get(1).get(i));
+            Filter filter = new Filter(currentColumnName.toUpperCase(), currentColumnValue);
+            filters.add(filter);
+        }
+
+        int attempt = 1;
+        boolean found = false;
+        int maxRetries = 50;
+        String arrow = parameterProvider.getValueOrParameterAsString("parameter:navigation");
+        String dashboardMenu = parameterProvider.getValueOrParameterAsString("parameter:dashboard-menu");
+
+        while (attempt < maxRetries && !found) {
+            try {
+                List<WebElement> results = new MarketMessagesPage().selectRowOnTable("Marktberichten", filters, parameterProvider.getCurrentContextParameters());
+                found = CollectionUtils.isNotEmpty(results);
+            } catch (Exception e) {
+                logger().warn(parameterProvider.getCurrentContextParameters() + " - Market message was not found.");
+            } finally {
+                attempt++;
+                if (!found) {
+                    Sleeper.sleepTightInSeconds(10);
+                    loopBack(arrow, dashboardMenu);
+                }
+            }
+        }
+
+        Assert.assertTrue(found);
+    }
+
     @Then("^Check marktbericht$")
     public void checkMarktbericht(final DataTable dbTable) {
         List<List<String>> info = dbTable.asLists();
@@ -132,22 +179,23 @@ public class MarketBerichtenSteps extends DwpScenario {
         String marketberichtEndDateElementRow2 = "5";
         String marketberichtEndDateElementRow3 = "9";
 
-        if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht(eanFromMarketberichtRow1)) && (mp.getModulFromMarketbericht(modulFromMarketberichtRow1).equals(modul)) ) {
+        if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht(eanFromMarketberichtRow1)) && (mp.getModulFromMarketbericht(modulFromMarketberichtRow1).equals(modul))) {
             Assert.assertEquals(modul, mp.getModulFromMarketbericht(modulFromMarketberichtRow1));
             Assert.assertEquals(mp.getMarketberichtEndDateElement(marketberichtEndDateElementRow1), toDwpEndDate(parameterProvider.getValueOrParameterAsString(date)));
         } else {
-            if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht(eanFromMarketberichtRow2)) && (mp.getModulFromMarketbericht(modulFromMarketberichtRow2).equals(modul)) ) {
+            if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht(eanFromMarketberichtRow2)) && (mp.getModulFromMarketbericht(modulFromMarketberichtRow2).equals(modul))) {
                 Assert.assertEquals(modul, mp.getModulFromMarketbericht(modulFromMarketberichtRow2));
                 Assert.assertEquals(mp.getMarketberichtEndDateElement(marketberichtEndDateElementRow2), toDwpEndDate(parameterProvider.getValueOrParameterAsString(date)));
             } else {
-                if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht(eanFromMarketberichtRow3)) && (mp.getModulFromMarketbericht(modulFromMarketberichtRow3).equals(modul)) ) {
+                if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht(eanFromMarketberichtRow3)) && (mp.getModulFromMarketbericht(modulFromMarketberichtRow3).equals(modul))) {
                     Assert.assertEquals(modul, mp.getModulFromMarketbericht(modulFromMarketberichtRow3));
                     Assert.assertEquals(mp.getMarketberichtEndDateElement(marketberichtEndDateElementRow3), toDwpEndDate(parameterProvider.getValueOrParameterAsString(date)));
                 }
             }
         }
     }
-//TODO delete if not needed
+
+    //TODO delete if not needed
     @And("^Marktbericht has label \"([^\"]*)\"$")
     public void marketMessageHasLabel(String label) {
         seleniumDriver.waitForRequestsToFinish();
@@ -156,7 +204,7 @@ public class MarketBerichtenSteps extends DwpScenario {
     }
 
     @And("^Extern bericht is \"([^\"]*)\"$")
-    public void externBerichtIs(String label){
+    public void externBerichtIs(String label) {
         MarketMessagesPage mp = new MarketMessagesPage();
         mp.selectExternBericht(label);
     }

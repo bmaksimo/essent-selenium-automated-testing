@@ -13,7 +13,6 @@ import cucumber.api.java.en.When;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.lang3.StringUtils;
 import org.awaitility.Duration;
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -52,7 +51,12 @@ public class OdooMenu extends OdooScenario {
         awaitOdooRequestToFinish(120);
     }
 
-
+    @When("^Odoo left menu is Customers$")
+    public void leftMenuIsCustomers() {
+        awaitOdooRequestToFinish(60);
+        new CustomerPage().chooseLeftMenuCustomets();
+        awaitOdooRequestToFinish(120);
+    }
 
     @Then("^Generate CODA in the \"([^\"]*)\" row is clicked$")
     public void clickCodaUrl(String ordinal) {
@@ -112,15 +116,6 @@ public class OdooMenu extends OdooScenario {
         new CustomerPage().buttonJournalItemsClicked(label);
     }
 
-    @Then("Button Account Blocks is clicked")
-    public void clickButtonAccountBlocks() {
-        new CustomerPage().buttonAccountBlocksClicked();
-    }
-
-    @Then("Button Invoice Blocks is clicked")
-    public void clickButtonInvoiceBlocks() {
-        new CustomerPage().buttonInvoiceBlocksClicked();
-    }
 
     @Then("^Modal title contains \"([^\"]*)\"$")
     public void odooContainsModalTitle(String modalTitle) {
@@ -208,10 +203,14 @@ public class OdooMenu extends OdooScenario {
         });
     }
 
-
     @Override
     @After("@ODOO or @E2E or @REGRESSION")
     public void tearDown() {
         super.tearDown();
+    }
+
+    @Then("^Right box button \"([^\"]*)\" is clicked$")
+    public void rightBoxButtonIsClicked(String button) {
+        new CustomerPage().rightBoxButtonClicked(button);
     }
 }

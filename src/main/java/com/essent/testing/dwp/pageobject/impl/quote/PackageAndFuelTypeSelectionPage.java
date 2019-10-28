@@ -2,6 +2,7 @@ package com.essent.testing.dwp.pageobject.impl.quote;
 
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
+import com.essent.automation.util.Sleeper;
 import org.apache.commons.lang3.StringUtils;
 import stepdefinitions.dwp.tables.SalesChannel;
 import stepdefinitions.dwp.tables.TariffTable;
@@ -37,6 +38,8 @@ public class PackageAndFuelTypeSelectionPage extends QuoteCreationGuidedStep {
 
     @Override
     public boolean fillInFormData() {
+        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(3);
         String essentTariff = tariffData.getTariffSheet();
         Model.Execution execution = createExecution();
         execution.
