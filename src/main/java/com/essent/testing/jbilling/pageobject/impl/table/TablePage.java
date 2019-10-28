@@ -1,7 +1,5 @@
 package com.essent.testing.jbilling.pageobject.impl.table;
 
-import com.essent.automation.util.Sleeper;
-import com.essent.testing.dwp.pageobject.table.TableFilter;
 import com.essent.testing.jbilling.pageobject.impl.Component;
 import org.apache.commons.collections4.CollectionUtils;
 import org.openqa.selenium.By;

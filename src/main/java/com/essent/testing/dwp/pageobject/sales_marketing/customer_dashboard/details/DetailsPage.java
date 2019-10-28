@@ -7,7 +7,6 @@ import com.essent.testing.dwp.pageobject.table.TableFilter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 

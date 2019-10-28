@@ -75,7 +75,6 @@ public class ContractDetailsAPI extends AbstractAPI {
         boolean eanExists = false;
 
         LOGGER.debug("Quotelines retrieved");
-        LOGGER.info(statusResponse.body().print());
         eanExists = statusResponse.jsonPath().getString("data.rows[0].rowData.ean_c").contains(quoteDetails.getEan());
         LOGGER.debug("EAN: " + quoteDetails.getEan() + " exists in Quotelines: " + eanExists);
 
