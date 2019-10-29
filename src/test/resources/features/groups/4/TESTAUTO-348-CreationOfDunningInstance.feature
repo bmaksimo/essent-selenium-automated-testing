@@ -44,6 +44,7 @@ Feature: TESTAUTO-348 Dunning instance
         And  "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
         When Dashboard menu is "Billing"
         And Table "Transacties" contains value "Invoice (ADVANCE)" at column "ID & Type" retrying 10 times
+        And Save invoice number
 
         #Check in ODOO
         Given I renew login to Odoo as "role_essent_ccm_user"
@@ -52,3 +53,5 @@ Feature: TESTAUTO-348 Dunning instance
         And Advanced search is
             |     field      |   operator  |          value          |
             | Account Number | is equal to | parameter:accountNumber |
+        And Dunning Instance Status is ""
+        Then Dunning invoice number is same as contract invoice number
