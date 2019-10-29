@@ -36,15 +36,12 @@ public abstract class QuoteCreationGuidedStep extends Component implements Form 
 
   public void next(String scenarioInfo) {
     seleniumDriver.waitForRequestsToFinish();
-    Sleeper.sleepTightInSeconds(30);
     logger().debug("Guided step to be confirmed");
     validateForm(scenarioInfo);
     closeGuidanceModalIfPresent();
     WebElement nextButton = findElementWhenClickable(NEXT_BUTTON_CSS_SELECTOR);
     logger().debug("Found  element: " + nextButton.getTagName());
     logger().debug("- RESULT: Confirm guidance step, confirmation button attribute value: Next[disabled] = " + nextButton.getAttribute("disabled"));
-    seleniumDriver.waitForRequestsToFinish();
-    Sleeper.sleepTightInSeconds(10);
     nextButton.click();
     seleniumDriver.waitForRequestsToFinish();
   }
