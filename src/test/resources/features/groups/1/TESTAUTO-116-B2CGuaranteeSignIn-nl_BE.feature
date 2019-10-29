@@ -10,7 +10,7 @@ Feature: TESTAUTO-116-B2C guarantee sign in
     @TESTAUTO-116
     Scenario: B2C guarantee sign in
         #Create an active contract
-        When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
+        When Click on top menu button PLUS and navigate to "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         And "Tariefdatum" date is "now"
         And "Sales kanaal" selection is "Inbound"
         And Quote details are confirmed
