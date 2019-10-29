@@ -16,7 +16,7 @@ Feature: NUAT-433: Log Questions Of Customers - en_BE
         And Top action is Filter from "sales-marketing" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
         And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
-        And Plus menu is "Service -> Case aanmaken voor de klant"
+        And Click on top menu button PLUS and navigate to "Service -> Case aanmaken voor de klant"
         And New case for account is created
         And Click on link in View List at "1st" row and "Nummer & Aanmaakdatum" column polling 60 seconds
         And Case details are visible
