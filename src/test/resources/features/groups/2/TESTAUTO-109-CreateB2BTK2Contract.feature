@@ -9,7 +9,7 @@ Feature: TESTAUTO-109: Create B2B TK2 Contract with Online Signing
 
     @TESTAUTO-109
     Scenario: TESTAUTO-109: Create B2B TK2 Contract with Online Signing
-        When Plus menu is "Sales -> UP/TK2 -> Creëer nieuwe offerte (B2B)"
+        When Click on top menu button PLUS and navigate to "Sales -> UP/TK2 -> Creëer nieuwe offerte (B2B)"
         Then Form header is "Perform customer acceptance check"
 
         Given Company VAT number is random
