@@ -15,7 +15,7 @@ Feature: NUAT-428: Pay Delay - nl_BE
         And Top action is "Filters"
         And "Klantnummer" input is "parameter:accountNumber"
         And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
-        And Plus menu is "Billing -> Vrije tekstfactuur aanmaken"
+        And Click on top menu button PLUS and navigate to "Billing -> Vrije tekstfactuur aanmaken"
         And Click select product code
         And Select "Value_Samsung" product code
         And Send

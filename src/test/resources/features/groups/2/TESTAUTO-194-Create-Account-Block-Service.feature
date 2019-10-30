@@ -21,7 +21,7 @@ Feature: TESTAUTO-194 Dunning-create-account-block-service
 
         When Dashboard menu is "Contracten"
         And  "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
-        When Plus menu is "Service -> Dunning stop on customer-NEW"
+        When Click on top menu button PLUS and navigate to "Service -> Dunning stop on customer-NEW"
         And "Block reason" selection is "Official complaint"
         And "Startdatum" date is "now"
         And Changes are confirmed waiting for 5 seconds
