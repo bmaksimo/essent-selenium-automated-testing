@@ -49,9 +49,9 @@ Feature: TESTAUTO-348 Dunning instance
         #Check in ODOO
         Given I renew login to Odoo as "role_essent_ccm_user"
         And Odoo top menu is "Accounting"
-        And Odoo left menu is Customers
+        And Odoo left menu is "Customers"
         And Advanced search is
             |     field      |   operator  |          value          |
             | Account Number | is equal to | parameter:accountNumber |
-        And Dunning Instance Status is ""
-        Then Dunning invoice number is same as contract invoice number
+        And Dunning Instance Status is "Not in Dunning"
+        Then Dunning invoice number is same as "parameter:invoiceNumber"
