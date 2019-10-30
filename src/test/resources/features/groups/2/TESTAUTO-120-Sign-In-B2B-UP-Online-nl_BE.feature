@@ -11,7 +11,7 @@ Feature: TESTAUTO-120 UP B2B create quote flow online sign in
 
     @TESTAUTO-120
     Scenario: UP B2B create quote flow online sign in
-        When Plus menu is "Sales -> UP/TK2 -> Creëer nieuwe offerte (B2B)"
+        When Click on top menu button PLUS and navigate to "Sales -> UP/TK2 -> Creëer nieuwe offerte (B2B)"
         And Company VAT number is random
         And "Ondernemingsnummer" input is "parameter:VAT"
         And Company name is random

@@ -23,9 +23,7 @@ public class TaskSteps extends DwpScenario {
     @When("^Plus action and \"([^\"]*)\" of first customer from list$")
     public void plusActionAndOfFirstCustomerFromList(String action){
         BaseObjectPage baseObject = new BaseObjectPage();
-        Sleeper.sleepTightInSeconds(30);
         baseObject.clickOnPlus();
-        seleniumDriver.waitForRequestsToFinish();
         baseObject.plusSubAction(action);
     }
 

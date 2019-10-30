@@ -10,7 +10,7 @@ Feature: TESTAUTO-116-B2C guarantee sign in
     @TESTAUTO-116
     Scenario: B2C guarantee sign in
         #Create an active contract
-        When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
+        When Click on top menu button PLUS and navigate to "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         And "Tariefdatum" date is "now"
         And "Sales kanaal" selection is "Inbound"
         And Quote details are confirmed
@@ -31,7 +31,7 @@ Feature: TESTAUTO-116-B2C guarantee sign in
         And Electricity EAN code is "random"
         And "Type aansluiting" selection is "YMR"
         And "Meternummer" input is "1000"
-        And Option "test" "is" "On"
+        And Option "test" is "On"
         And Connection details are confirmed
         Then Save changes
 
@@ -53,11 +53,13 @@ Feature: TESTAUTO-116-B2C guarantee sign in
         When Plus action of "1" element from "QuotesOnAccount" and click on "Handtekening ontvangen"
         And "Datum ondertekening" date is "now"
         And Changes are confirmed
-        Then "1st" list element has cell value "Sales Handtekening ontvangen - Waarborg" at column "Type & status"
+        Then Table "Offertes" has matching value "Sales" at column "Type & status"
+        And Table "Offertes" has matching value "Handtekening ontvangen - Waarborg" at column "Type & status"
 
         When Plus action of "1" element from "QuotesOnAccount" and click on "Bevestig"
         And Changes are confirmed
-        Then "1st" list element has cell value "Sales Getekend - Waarborg" at column "Type & status"
+        Then Table "Offertes" has matching value "Sales" at column "Type & status"
+        And Table "Offertes" has matching value "Getekend - Waarborg" at column "Type & status"
 
         When Dashboard menu is "Contracten"
         Then  "1st" list element has cell value "Te activeren" at column "Contractnummer" polling 550 seconds

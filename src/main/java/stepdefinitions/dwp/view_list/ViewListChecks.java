@@ -593,7 +593,8 @@ public class ViewListChecks extends NavigationElements {
     }
 
     @And("^Table \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\"$")
-    public void viewListContainsValueAtColumn(String table, String value, String column){
+    public void viewListContainsValueAtColumn(String table, String value, String column) {
+        seleniumDriver.waitForRequestsToFinish();
         ViewListTestObject viewListModel = new ViewListTestObject();
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
         List<String> columnData = viewListModel.fetchColumnData(table, column);

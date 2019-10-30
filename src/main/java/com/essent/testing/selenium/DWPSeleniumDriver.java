@@ -102,17 +102,17 @@ public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecu
     */
     public void waitForRequestsToFinish() {
         FluentWait<WebDriver> waiter = new FluentWait<>(this.driver)
-                .withTimeout(Duration.ofSeconds(999))
-                .pollingEvery(Duration.ofMillis(25));
+            .withTimeout(Duration.ofSeconds(999))
+            .pollingEvery(Duration.ofMillis(25));
 
         waiter.until(driver -> {
-                    try {
-                        driver.findElement(By.xpath("//div[@id = 'loading-bar']"));
-                    } catch (Exception e) {
-                        return true;
-                    }
-                    return false;
+                try {
+                    driver.findElement(By.xpath("//div[@id = 'loading-bar']"));
+                } catch (Exception e) {
+                    return true;
                 }
+                return false;
+            }
         );
 
         // Just to be sure, we add this here too (should never hit)

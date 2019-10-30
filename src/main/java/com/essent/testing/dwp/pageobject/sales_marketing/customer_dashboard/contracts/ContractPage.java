@@ -22,7 +22,7 @@ public class ContractPage extends Component {
 
     private final static Logger log = Logger.getLogger(ContractPage.class);
 
-    private static final String NUMBER_ELECTRICITY_CONTRACT = "//list-icon-text-cell/div";
+    private static final String NUMBER_ELECTRICITY_CONTRACT = "//div[contains(@class, 'customer__status icon-elektriciteit')]";
     private static final String REPLACEMENT_KEY = "replacement_key";
     private static final String SEND_EMAIL = "//list-row-action[@label='${" + REPLACEMENT_KEY + "}']/a";
     private static final String START_DATA_ID = "contract-start-date-field";
@@ -109,8 +109,11 @@ public class ContractPage extends Component {
     }
 
     public void clickOnPlusMenuInTable(String row, String table) {
-        seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("(//list[@list-key='" + table + "']//tbody[@id='rows']//list-plus-cell//a[@class='show-actions icon-plus'])[" + row + "]")));
+        seleniumDriver.waitAndClick(
+                seleniumDriver.findElementWhenVisible(
+                        By.xpath("(//list[@list-key='" + table + "']//tbody[@id='rows']//list-plus-cell//a[@class='show-actions icon-plus'])[" + row + "]")
+                )
+        );
     }
 
     public String getActiveContractEAN() {
@@ -338,7 +341,6 @@ public class ContractPage extends Component {
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(5);
         return seleniumDriver.findElements(By.xpath(NUMBER_ELECTRICITY_CONTRACT)).size();
-
     }
 
     public boolean checkPaymentTableNotEmpty() {

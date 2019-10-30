@@ -7,7 +7,7 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
 
     Background:
         Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
-        
+
     @NUAT-368-SPLIT-01
     Scenario: I Change status CSR and Externe partij is Contentia
         When Left menu is "sales-marketing"
@@ -16,7 +16,7 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
         And Top action is "Filters"
         And "Klantnummer" input is "parameter:accountNumber"
         Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
-        And Plus menu is "Service -> Wijzigingen klant -> Accountstatus wijzigen"
+        And Click on top menu button PLUS and navigate to "Service -> Wijzigingen klant -> Accountstatus wijzigen"
 
         When Update account status on "csr"
         And "Startdatum" date is "now"
@@ -34,7 +34,7 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
         And Top action is "Filters"
         And "Klantnummer" input is "parameter:accountNumber"
         Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
-        And Plus menu is "Service -> Wijzigingen klant -> Accountstatus wijzigen"
+        And Click on top menu button PLUS and navigate to "Service -> Wijzigingen klant -> Accountstatus wijzigen"
 
         When Update account status on "Faillissement met fiscaal attest"
         And Client signature file is uploaded

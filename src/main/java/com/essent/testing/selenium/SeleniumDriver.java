@@ -58,10 +58,10 @@ public abstract class SeleniumDriver {
         if (ConfigProvider.getProperty(ConfigKey.PROXY_ENABLE).equals("yes")) {
             Proxy proxy = new Proxy();
             proxy.setSslProxy(
-                    String.format("%s:%s",
-                            ConfigProvider.getProperty(ConfigKey.PROXY_HOST),
-                            ConfigProvider.getProperty(ConfigKey.PROXY_PORT)
-                    )
+                String.format("%s:%s",
+                    ConfigProvider.getProperty(ConfigKey.PROXY_HOST),
+                    ConfigProvider.getProperty(ConfigKey.PROXY_PORT)
+                )
             );
             proxy.setHttpProxy(proxy.getSslProxy());
             options.setCapability("proxy", proxy);
@@ -90,7 +90,7 @@ public abstract class SeleniumDriver {
 
     private void setChromeDriverBinary(ChromeOptions options) {
         String binary = ConfigProvider.getProperty(ConfigKey.GOOGLE_CHROME_BINARY);
-        if(StringUtils.isNotEmpty(binary)) {
+        if (StringUtils.isNotEmpty(binary)) {
             options.setBinary(binary);
         }
     }
@@ -105,18 +105,23 @@ public abstract class SeleniumDriver {
     public void goToHomePage() {
         driver.get(baseUrl);
     }
+
     public String getBaseUrl() {
         return baseUrl;
     }
+
     public void setBaseUrl(String baseUrl) {
         this.baseUrl = baseUrl;
     }
+
     public String getBrowserName() {
         return browserName;
     }
+
     public String getBrowserVersion() {
         return browserVersion;
     }
+
     public WebDriver getDriver() {
         return driver;
     }
@@ -129,23 +134,23 @@ public abstract class SeleniumDriver {
         return findElementWhenPresent(selector, Duration.ofMinutes(5), Duration.ofSeconds(1));
     }
 
-  public Optional<WebElement> findElementOptional(By selector) {
-    FluentWait<WebDriver> waiter =
-        new FluentWait<>(driver)
-            .withTimeout(Duration.ofSeconds(60))
-            .pollingEvery(Duration.ofSeconds(10))
-            .ignoring(NoSuchElementException.class);
-    List<WebElement> element =
-        waiter.until(
-            driver -> {
-              logger.debug(" - WAIT: polling findElementOptional()");
-              return driver.findElements(selector);
-            });
-    if (element.isEmpty()) {
-      return Optional.empty();
+    public Optional<WebElement> findElementOptional(By selector) {
+        FluentWait<WebDriver> waiter =
+            new FluentWait<>(driver)
+                .withTimeout(Duration.ofSeconds(60))
+                .pollingEvery(Duration.ofSeconds(10))
+                .ignoring(NoSuchElementException.class);
+        List<WebElement> element =
+            waiter.until(
+                driver -> {
+                    logger.debug(" - WAIT: polling findElementOptional()");
+                    return driver.findElements(selector);
+                });
+        if (element.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(element.get(0));
     }
-    return Optional.of(element.get(0));
-  }
 
     public WebElement findElementWhenPresent(By selector, Duration timeout, Duration pollingEvery) {
         logger.debug("STEP:");
@@ -154,7 +159,7 @@ public abstract class SeleniumDriver {
             .withTimeout(timeout)
             .pollingEvery(pollingEvery)
             .ignoring(NoSuchElementException.class);
-        WebElement element  = waiter.until(driver -> {
+        WebElement element = waiter.until(driver -> {
             logger.debug(" - WAIT: polling findElementWhenPresent()");
             return ExpectedConditions.presenceOfElementLocated(selector).apply(driver);
         });
@@ -172,19 +177,19 @@ public abstract class SeleniumDriver {
             .withTimeout(timeout)
             .pollingEvery(pollingEvery)
             .ignoring(NoSuchElementException.class);
-    List<WebElement> elements =
-        waiter.until(
-            driver -> {
-              logger.debug(" - WAIT: polling findElementWhenPresent()");
-              return driver.findElements(selector);
-            });
-    Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
-    logger.debug(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
-    if (elements.isEmpty()) {
-      logger.warn(" - RESULT: empty");
+        List<WebElement> elements =
+            waiter.until(
+                driver -> {
+                    logger.debug(" - WAIT: polling findElementWhenPresent()");
+                    return driver.findElements(selector);
+                });
+        Period periodOfMeasurement = new Period(startOfMeasurement, DateTime.now());
+        logger.debug(" - MEASURED_TIME: " + printPeriod(periodOfMeasurement));
+        if (elements.isEmpty()) {
+            logger.warn(" - RESULT: empty");
+        }
+        return elements;
     }
-    return elements;
-  }
 
     public WebElement findElement(By selector) {
         FluentWait<WebDriver> waiter = new FluentWait<>(driver)

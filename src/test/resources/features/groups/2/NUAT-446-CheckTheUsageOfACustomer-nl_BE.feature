@@ -11,7 +11,7 @@ Feature: NUAT-446: Check The Usage Of A Customer - nl_BE
 
     @NUAT-446
     Scenario: Checking usage of a customer
-        When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
+        When Click on top menu button PLUS and navigate to "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
         When "Tariefdatum" date is "1 month before now"
@@ -66,5 +66,5 @@ Feature: NUAT-446: Check The Usage Of A Customer - nl_BE
         And "Klantnummer" input is "parameter:accountNumber"
         Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
 
-        When Plus menu is "Billing -> Verbruiken voor klant"
+        When Click on top menu button PLUS and navigate to "Billing -> Verbruiken voor klant"
         And "Verbruiken" list is_not empty

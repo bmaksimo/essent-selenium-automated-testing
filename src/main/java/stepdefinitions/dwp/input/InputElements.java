@@ -86,7 +86,7 @@ public class InputElements extends DwpScenario {
             return executeJavascriptTest(JS_BASE_FORM_INPUT, options);
         }
 
-        public boolean testNow(Map options) {
+        private boolean testNow(Map options) {
             return executeJavascriptTestImmediately(JS_BASE_FORM_INPUT, options, true);
         }
     }
@@ -100,7 +100,7 @@ public class InputElements extends DwpScenario {
             return executeJavascriptTest(JS_TR_FORM_SELECTION, options);
         }
 
-        public boolean testNow(Map options) {
+        private boolean testNow(Map options) {
             return executeJavascriptTestImmediately(JS_TR_FORM_SELECTION, options, true);
         }
     }
@@ -114,7 +114,7 @@ public class InputElements extends DwpScenario {
             return executeJavascriptTest(JS_TR_DATE_PICKER_INPUT, options);
         }
 
-        public boolean testNow(Map options) {
+        private boolean testNow(Map options) {
             return executeJavascriptTestImmediately(JS_TR_DATE_PICKER_INPUT, options, true);
         }
     }
@@ -303,7 +303,7 @@ public class InputElements extends DwpScenario {
             Map<String, String> options = new HashMap<>();
             options.put("label", label);
             options.put("value", value);
-            FluentWait<ApplySelection> waiter = waiter(new ApplySelection(), 60, 5);
+            FluentWait<ApplySelection> waiter = waiter(new ApplySelection(), 60, 1);
             waiter.withMessage(String.format("Selection %s is undefined.", label));
             waiter.until((ApplySelection callback) -> callback.test(options));
             seleniumDriver.waitForRequestsToFinish();
