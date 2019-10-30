@@ -485,7 +485,7 @@ public class QuoteCreatorB2CBase {
             addressPostalCode = prop.getProperty("address_postal_code");
             addressCity = prop.getProperty("address_city");
             ean_c = prop.getProperty("ean_c");
-            parameterProvider.put("deliverypointid", ean_c);
+            parameterProvider.put("EAN-code", ean_c);
             moveIn = prop.getProperty("move_in_c");
             switchType = prop.getProperty("switchtype_c");
             migLabel = prop.getProperty("mig_label_c");
@@ -525,7 +525,7 @@ public class QuoteCreatorB2CBase {
         addressNumber = PrepareDataForContract.getRandomAddressNumber();
 
         ean_c = PrepareDataForContract.generateEAN();
-        parameterProvider.put("deliverypointid", ean_c);
+        parameterProvider.put("EAN-code", ean_c);
 
         SwitchTypes switchTypeStatus = SwitchTypes.fromString(typeSwitch);
 

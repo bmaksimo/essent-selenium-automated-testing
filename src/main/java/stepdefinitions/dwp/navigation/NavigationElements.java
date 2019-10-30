@@ -7,7 +7,9 @@ import com.essent.testing.dwp.pageobject.impl.navigation.TopActionsPageImpl;
 import com.essent.testing.dwp.pageobject.navigation.TopActionsPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.runtime.CucumberException;
+import org.junit.Assert;
 import org.openqa.selenium.support.ui.FluentWait;
+import stepdefinitions.dwp.menu.TopMenuActions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -91,9 +93,11 @@ public abstract class NavigationElements extends DwpScenario {
 
     protected void clickTopArrow(String arrow) {
         seleniumDriver.waitForRequestsToFinish();
-        boolean success = new ClickTopArrowButton().test(arrow);
-        assertThat(String.format("Top Arrow %s is undefined.", arrow),
-            success, is(true));
+        if ("up".equalsIgnoreCase(arrow))
+            new TopMenuActions().clickUpButton();
+        else if ("back".equalsIgnoreCase(arrow))
+            new TopMenuActions().clickPreviousButton();
+        else Assert.fail(String.format("Top Arrow %s is unknown. Currently possible top arrows are: 'up' and 'back'", arrow));
     }
 
     protected void clickTopArrow(String arrow, int waitingTime) {
