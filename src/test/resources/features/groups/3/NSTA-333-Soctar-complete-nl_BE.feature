@@ -44,7 +44,7 @@ Feature: NSTA-333: Social tariff (SOCTAR) contract creation
         Then Soctar file is uploaded to "/home/ESSENT/sa_sftpcrm_smx/data/soctar" remote directory
 
         #Step 3 Check the status of "Soctar file upload"
-        When Plus menu is "Contracting -> Soctar -> Sociale tariefbatches"
+        When Click on top menu button PLUS and navigate to "Contracting -> Soctar -> Sociale tariefbatches"
         And Table "Sociaal Tarief batches" contains value "parameter:soctar-file-name" at column "Batchnaam" within 60 seconds
 
         #Step 4 Check the status of "Soctar file import"
@@ -68,14 +68,14 @@ Feature: NSTA-333: Social tariff (SOCTAR) contract creation
 
         #Step 8 Sent out the confirmation letter
         When Top arrow button is "UP"
-        And Plus menu is "Contracting -> Soctar -> Sociaal tarief contractlijnen"
+        And Click on top menu button PLUS and navigate to "Contracting -> Soctar -> Sociaal tarief contractlijnen"
         And "EAN-code" input is "parameter:EAN-code"
         Then "1st" List element with value at column "Status & Product" is checked
         And Click on "BEVESTIG CONTRACTLIJNEN" link
         Then Changes are confirmed
 
         #Step 9 Check batch SOCTAR confirmation letter
-        When Plus menu is "Contracting -> Soctar -> Sociale tariefbatches"
+        When Click on top menu button PLUS and navigate to "Contracting -> Soctar -> Sociale tariefbatches"
         And Click on link in "Soctar Confirmation Letters" View List at "1st" row and "Batchnaam" column
         Then Soctar confirmation letters type is changed to "Confirmation" within 60 seconds
         Then Soctar confirmation letters status is changed to "DONE" within 60 seconds
