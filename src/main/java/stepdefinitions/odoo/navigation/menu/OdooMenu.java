@@ -54,7 +54,7 @@ public class OdooMenu extends OdooScenario {
     @When("^Odoo left menu is Customers$")
     public void leftMenuIsCustomers() {
         awaitOdooRequestToFinish(60);
-        new CustomerPage().chooseLeftMenuCustomets();
+        new CustomerPage().chooseLeftMenuCustomers();
         awaitOdooRequestToFinish(120);
     }
 
