@@ -11,7 +11,7 @@ Feature: TESTAUTO-348 Dunning instance
         Given I login as API user "soapui_b2c"
 
     @TESTAUTO-348
-    Scenario: Create-invooice-block
+    Scenario: Create dunning instance
         And "Create_Quote" flow is started
         When Data is prepared for Create quote request for "prospect" and meter open is "Off" and sign date is "35 days before now"
         And New tc1_quote is created
@@ -46,7 +46,6 @@ Feature: TESTAUTO-348 Dunning instance
         And Table "Transacties" contains value "Invoice (ADVANCE)" at column "ID & Type" retrying 10 times
         And Save invoice number
 
-        #Check in ODOO
         Given I renew login to Odoo as "role_essent_ccm_user"
         And Odoo top menu is "Accounting"
         And Odoo left menu is "Customers"
