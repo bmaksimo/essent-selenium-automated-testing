@@ -178,7 +178,7 @@ public abstract class Component {
                 logger().error(scenarioInfo + " - WARNING: Mandatory input failure in: " + location);
             }
         } catch (UnhandledAlertException uae) {
-            seleniumDriver.getDriver().switchTo().alert().accept();
+            handleAlert();
         }
     }
 
