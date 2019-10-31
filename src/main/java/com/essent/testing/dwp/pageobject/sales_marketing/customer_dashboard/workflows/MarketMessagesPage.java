@@ -33,6 +33,7 @@ public class MarketMessagesPage extends Component {
     }
 
     public String marketberichtStatus(){
+        seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[1])[1]")).getText();
     }
     public String marketberichtCancelStatus(){
