@@ -46,22 +46,6 @@ public abstract class NavigationElements extends DwpScenario {
         }
     }
 
-    private class ClickTopArrowButton implements Predicate<String> {
-        @Override
-        public boolean test(String arrow) {
-            seleniumDriver.waitForRequestsToFinish();
-            Map<String, String> options = new HashMap<>();
-            options.put("arrow", arrow.toLowerCase());
-            return executeJavascriptTest(JS_TR_ARROW_ACTION, options);
-        }
-
-        public boolean testNow(String arrow) {
-            Map<String, String> options = new HashMap<>();
-            options.put("arrow", arrow);
-            return executeJavascriptTestImmediately(JS_TR_ARROW_ACTION, options, true);
-        }
-    }
-
     private class ClickDashboardMenu implements Predicate<String> {
         @Override
         public boolean test(String menu) {
@@ -98,13 +82,6 @@ public abstract class NavigationElements extends DwpScenario {
         else if ("back".equalsIgnoreCase(arrow))
             new TopMenuActions().clickPreviousButton();
         else Assert.fail(String.format("Top Arrow %s is unknown. Currently possible top arrows are: 'up' and 'back'", arrow));
-    }
-
-    protected void clickTopArrow(String arrow, int waitingTime) {
-        Sleeper.sleepTightInSeconds(waitingTime);
-        boolean success = new ClickTopArrowButton().testNow(arrow);
-        assertThat(String.format("Top Arrow %s is undefined.", arrow),
-            success, is(true));
     }
 
     protected void clickPlusAction(String path) {

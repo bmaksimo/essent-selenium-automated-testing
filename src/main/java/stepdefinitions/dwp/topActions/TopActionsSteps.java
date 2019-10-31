@@ -68,11 +68,6 @@ public class TopActionsSteps extends NavigationElements {
         clickTopAction(action, waitingTime);
     }
 
-    @And("^Top arrow button is \"([^\"]*)\"$")
-    public void clickTopArrowButton(String arrow){
-        super.clickTopArrow(arrow);
-    }
-
     @And("Click on top menu button UP")
     public void clickTopMenuUp() {
         new TopMenuActions().clickUpButton();
@@ -86,11 +81,6 @@ public class TopActionsSteps extends NavigationElements {
     @And("Click on top menu button PREVIOUS")
     public void clickPreviousButton() {
         new TopMenuActions().clickPreviousButton();
-    }
-
-    @And("^Top arrow button is \"([^\"]*)\" waiting for (\\d+) seconds$")
-    public void clickTopArrowButton(String arrow, int waitingTime){
-        super.clickTopArrow(arrow.toLowerCase(), waitingTime);
     }
 
     @And("Changes are confirmed")

@@ -18,8 +18,8 @@ Feature: NUAT-489: Handle Task For Rejection - nl_BE
         And Click on link in View List at "1st" row and "Klant & EAN-code" column waiting for 120 seconds
         When Dashboard menu is "Details" waiting for 60 seconds
         And Get Contract Number
-        And Top arrow button is "Back" waiting for 5 seconds
-        And Top arrow button is "Back" waiting for 5 seconds
+        And Click on top menu button PREVIOUS
+        And Click on top menu button PREVIOUS
         And Plus action and Mark As Done/Markeren Als Verwerkt of first customer from list waiting for 40 seconds
         And Resolution input is "Mark as rejected for testing" waiting for 20 seconds
         Then Changes are confirmed waiting for 20 seconds
