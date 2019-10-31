@@ -19,7 +19,6 @@ public class JsTestRegistry {
     public static final String JS_TR_CLICK_TOGGLE_INPUT = "TrClickToggleInput";
     public static final String JS_TR_CHECK_TABLE_CELL_VALUE = "TrCheckTableCellValue";
     public static final String JS_TR_LIST_PLUS_MENU_ACTION = "TrListPlusMenuAction";
-    public static final String JS_TR_ARROW_ACTION = "TrArrowAction";
     public static final String JS_TR_CLICK_DASHBOARD_MENU_BUTTON = "TrClickDashboardMenuButton";
     public static final String JS_TR_SELECT_CONTRACTLINE = "TrSelectContractline";
 
