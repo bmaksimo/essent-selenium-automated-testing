@@ -34,15 +34,16 @@ Feature: NSTA-337: Move old address - Electricity
         And "Klantnummer" input is "parameter:accountNumber"
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
         When Dashboard menu is "Contracten"
+        And "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
         And Plus action of "1" element from "ContractsOnAccount" and click on "Verhuis OA"
-
-        And Options "Testing?" "is" "On"
-        And Options "Market mock?" "is" "On"
+        
+        And Option "Testing?" is "On"
+        And Option "Market mock?" is "On"
         And Communication channel is "E-mail"
         And Reason of move "Normal move"
         And Move date is "now"
 
-        And Options "Is de nieuwe bewoner de eigenaar?" "is" "On"
+        And Option "Is de nieuwe bewoner de eigenaar?" is "On"
         And "De nieuwe bewoner is" selection is "Particulier"
         And "Aanspreking" selection is "Meneer"
         And "Voornaam" input is "Petar"
@@ -60,7 +61,7 @@ Feature: NSTA-337: Move old address - Electricity
         And Low meter reading input is "parameter:meterstand"
         And Low date meter reading date is "now"
 
-        And Options "Push through incomplete move?" "is" "On"
+        And Option "Push through incomplete move?" is "On"
         And Sleep for 20 seconds
         Then Bevestigen
 

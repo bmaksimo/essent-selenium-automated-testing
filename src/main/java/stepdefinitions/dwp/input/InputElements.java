@@ -381,9 +381,12 @@ public class InputElements extends DwpScenario {
         @And("Option \"([^\"]*)\" is \"([^\"]*)\"")
         public void setOption (String label, SwitchState state){
             seleniumDriver.waitForRequestsToFinish();
+            Sleeper.sleepTightInSeconds(4);
             List<WebElement> inputList = seleniumDriver.findElements(By.xpath("//div[label=\"" + label + "\"]//input"));
             // There should be only one to guarantee a consistent behaviour
-            if (inputList.size() != 1) {
+            if (inputList.isEmpty()) {
+                Assert.fail(String.format("The label %s does not exist", label));
+            }else if (inputList.size() > 1) {
                 Assert.fail(String.format("The label %s is not unique", label));
             }
             WebElement inputField = inputList.get(0);
