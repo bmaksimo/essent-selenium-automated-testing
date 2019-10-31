@@ -10,4 +10,4 @@ Feature: DWP left-, top- and Plus- menu navigation
         When Left menu is "sales-marketing"
         And  Top menu item is "Klanten"
         And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
-        And Plus menu is "Service -> Wijzigingen klant -> Bijwerken details klant"
+        And Click on top menu button PLUS and navigate to "Service -> Wijzigingen klant -> Bijwerken details klant"

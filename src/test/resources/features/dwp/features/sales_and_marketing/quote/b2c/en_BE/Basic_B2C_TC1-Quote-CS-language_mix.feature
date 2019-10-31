@@ -7,7 +7,7 @@ Feature: NUAT-5019-1: Creating a B2C Quote TC1 with move in, Dutch language vers
     @DEV-ONBOARDING
     Scenario: Create a B2C Quote with customer switch https://emagine-reality.atlassian.net/browse/NUAT-5019
 
-        When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
+        When Click on top menu button PLUS and navigate to "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
         When "Tariefdatum" date is "now"

@@ -11,7 +11,7 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         # Step 1: create customer with guarantee
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
-        When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
+        When Click on top menu button PLUS and navigate to "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
         When "Tariefdatum" date is "now"
@@ -45,7 +45,7 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         When Quote is confirmed
         And "1st" list element has cell value "Sales Verstuurd naar de klant - Geaccepteerd" at column "Type & status"
 
-        When Top arrow button is "Up"
+        When Click on top menu button UP
         And Left menu is "sales-marketing"
         And Top menu item is "Klanten"
         And Top action is Filter from "sales-marketing" menu retrying 5 times
@@ -55,7 +55,7 @@ Feature: NUAT-5021 Complete scenario from de-duplication of client with guarante
         Then  External status is "On" for SuiteCRM Customer Number "parameter:Klantnummer & Naam"
 
         #Step 2: should deduplicate customer
-        When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
+        When Click on top menu button PLUS and navigate to "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
         When B2C sales channel is "Inbound"

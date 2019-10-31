@@ -8,7 +8,7 @@ Feature: NSTA-390. Sign-in a new customer with TC1 quote with electricity and ga
     @NSTA-390
     @VOORAF-SIGNIN
     Scenario: NSTA-330 Voraaf Step 1. Sign-in on vooraf (prepaid)
-        When Plus menu is "Sales -> TK1 -> Creëer nieuwe offerte B2C"
+        When Click on top menu button PLUS and navigate to "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 
         When "Tariefdatum" date is "now"
