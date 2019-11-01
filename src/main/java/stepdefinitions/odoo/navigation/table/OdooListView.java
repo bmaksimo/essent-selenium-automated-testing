@@ -47,6 +47,7 @@ public class OdooListView extends OdooScenario  {
 
     @When("^Advanced search is$")
     public void setAdvancedSearchFilter(DataTable dbTable) {
+        Sleeper.sleepTightInSeconds(5);
         List<List<String>> list = dbTable.asLists();
         String searchParameter = parameterProvider.getValueOrParameterAsString(list.get(1).get(2));
         AdvancedSearch advancedSearch = new AdvancedSearch(list.get(1).get(0), list.get(1).get(1), searchParameter);

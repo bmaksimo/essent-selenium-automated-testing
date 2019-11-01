@@ -43,6 +43,7 @@ public class ContractPage extends Component {
     private static final String PRODUCT_CONTRACT = "(//list[@list-key='ContractsOnAccount']//list-link-bold-top-two-liner-cell/div/a/h5)[3]";
     private static final String EAN_NEW_INVOICE_AMOUNT = "dwp-ean-${" + REPLACEMENT_KEY + "}-field";
     private static final String INVOICE_SUM = "total-amount-field";
+    private static final String INVOICE_NUMBER = "//list[@list-key='TransactionsOnAccount']//tbody//h5";
     private static final String INSTALLMENTS_SUM = "balance-field";
     private static final String INSTALLMENTS_NUMBER = "//list[@list-key='InstallmentsOnPaymentPlan']//h5";
     private static final String BILLING_NUMBER = "//list[@list-key='BillingCustomerOnaccount']//td[1]//span[1]";
@@ -447,6 +448,11 @@ public class ContractPage extends Component {
         seleniumDriver.waitForRequestsToFinish();
         String invoiceSum = seleniumDriver.findElementWhenPresent(By.id(INVOICE_SUM)).getText();
         return invoiceSum.replace(" €", "");
+    }
+
+    public String getInvoiceNumber() {
+        seleniumDriver.waitForRequestsToFinish();
+        return seleniumDriver.findElementWhenPresent(By.xpath(INVOICE_NUMBER)).getText();
     }
 
     public int installmentsNumber(String amount) {

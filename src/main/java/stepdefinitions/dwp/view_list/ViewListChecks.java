@@ -37,6 +37,8 @@ import static com.billinghouse.test_automation.util.dsl.NumericUtil.amountAsInt;
 import static com.billinghouse.test_automation.util.dsl.NumericUtil.checkAmount;
 import static com.billinghouse.test_automation.util.dsl.NumericUtil.sumOfAmounts;
 import static com.essent.testing.dwp.constant.DwpConstants.FLEMISCH_LOCALE;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertTrue;
 import static junit.framework.TestCase.fail;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -787,6 +789,12 @@ public class ViewListChecks extends NavigationElements {
         assertThat("Sum of signature and rejected quote for Low prices are not equal", sumLowRatesSignatureToFloat, equalTo(cp.sumRates(sumRatesLowSignature)));
     }
 
+    @Then("^Save invoice number")
+    public void getInvoiceNumber() {
+        String invoiceNumber = new ContractPage().getInvoiceNumber();
+        parameterProvider.put("invoiceNumber", invoiceNumber);
+        assertNotNull(invoiceNumber);
+    }
 
     //TODO Create a special test harness class for wait methods,
     //and move the methods, related to test execution timing, there.logger().info(column);
