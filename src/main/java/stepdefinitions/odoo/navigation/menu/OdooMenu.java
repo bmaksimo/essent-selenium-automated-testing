@@ -1,5 +1,6 @@
 package stepdefinitions.odoo.navigation.menu;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.odoo.navigation.menu.MenuNavigation;
 import com.essent.testing.odoo.pageobject.impl.elements.ButtonImpl;
 import com.essent.testing.odoo.pageobject.impl.pageObject.CustomerPage;
@@ -45,7 +46,7 @@ public class OdooMenu extends OdooScenario {
 
     @When("^Odoo left menu is \"([^\"]*)\"$")
     public void executeLeftMenuAction(String menuPath) {
-        awaitOdooRequestToFinish(60);
+        Sleeper.sleepTightInSeconds(3);
         MenuNavigation odooMenuNavigation = new MenuNavigation();
         odooMenuNavigation.executeAction(menuPath);
         awaitOdooRequestToFinish(120);

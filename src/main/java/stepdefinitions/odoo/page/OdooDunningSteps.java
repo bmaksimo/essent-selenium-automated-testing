@@ -34,7 +34,7 @@ public class OdooDunningSteps extends OdooScenario {
         String message = String.format("Dunning invoice number is not \"%s\"", dunningDWPInvoiceNumber);
         String dunningOdooInvoiceNumber = new OdooDunningPages().getDunningInvoiceNumber().getText();
 
-        Assert.assertThat(message, dunningOdooInvoiceNumber.substring(0, dunningOdooInvoiceNumber.indexOf("(")), equalTo(dunningDWPInvoiceNumber));
+        Assert.assertThat(message, dunningOdooInvoiceNumber.substring(0, dunningOdooInvoiceNumber.indexOf(" (")), equalTo(dunningDWPInvoiceNumber));
     }
 
     @Override
