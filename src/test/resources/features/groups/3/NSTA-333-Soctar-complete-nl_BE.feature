@@ -67,7 +67,7 @@ Feature: NSTA-333: Social tariff (SOCTAR) contract creation
         And "1st" list element has cell value "parameter:start-en-einddatum" at column "Contractnummer & start- en einddatum"
 
         #Step 8 Sent out the confirmation letter
-        When Top arrow button is "UP"
+        When Click on top menu button UP
         And Click on top menu button PLUS and navigate to "Contracting -> Soctar -> Sociaal tarief contractlijnen"
         And "EAN-code" input is "parameter:EAN-code"
         Then "1st" List element with value at column "Status & Product" is checked
@@ -79,7 +79,7 @@ Feature: NSTA-333: Social tariff (SOCTAR) contract creation
         And Click on link in "Soctar Confirmation Letters" View List at "1st" row and "Batchnaam" column
         Then Soctar confirmation letters type is changed to "Confirmation" within 60 seconds
         Then Soctar confirmation letters status is changed to "DONE" within 60 seconds
-        When Top arrow button is "UP"
+        When Click on top menu button UP
 
         #Step 10 Check if all changes are correct on the customer
         When Left menu is "contracting-switching"

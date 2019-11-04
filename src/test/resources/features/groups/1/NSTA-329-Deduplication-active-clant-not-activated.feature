@@ -56,7 +56,7 @@ Feature: NSTA-329 Deduplication activated customer
         And  "1st" List element with value at column "EAN-code" is checked
         Then "1st" list element has cell value "Actief" at column "Contractnummer" polling 450 seconds
 
-        When Top arrow button is "Up"
+        When Click on top menu button UP
         Then Left menu is "sales-marketing"
 
         #Step 2: should deduplicate customer

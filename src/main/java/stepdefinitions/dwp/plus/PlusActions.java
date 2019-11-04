@@ -1,10 +1,8 @@
 package stepdefinitions.dwp.plus;
 
-import com.essent.automation.util.Sleeper;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
-import cucumber.api.java.en.And;
 import cucumber.runtime.CucumberException;
 import stepdefinitions.dwp.navigation.NavigationElements;
 
