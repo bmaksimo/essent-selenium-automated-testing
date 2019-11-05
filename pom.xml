@@ -7,7 +7,8 @@
   <parent>
     <groupId>com.essent.be</groupId>
     <artifactId>com.essent.be.uaas-maven.parent-pom</artifactId>
-    <version>3.9.0-SNAPSHOT</version>
+    <version>3.12.0-SNAPSHOT</version>
+    <relativePath>../uaas-maven/parent-pom/</relativePath>
   </parent>
 
   <groupId>com.essent.testing</groupId>
@@ -21,21 +22,16 @@
   </scm>
 
   <properties>
-    <iban4j.version>3.2.0</iban4j.version>
     <enforcer.skip>true</enforcer.skip>
-    <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
-    <surefire-junit47.version>2.19.1</surefire-junit47.version>
-    <awaitility.version>3.1.1</awaitility.version>
-    <spring.version>4.2.2.RELEASE</spring.version>
-    <rest-assured.version>3.0.7</rest-assured.version>
-    <selenium.version>3.12.0</selenium.version>
-    <jackson.version>2.7.5</jackson.version>
-    <fluent-selenium.version>1.19</fluent-selenium.version>
     <nova-autocrat.version>1.0.5</nova-autocrat.version>
-    <apache-commons.version>4.0</apache-commons.version>
-    <guava.version>23.0</guava.version>
+
+    <!-- version overrides -->
+    <spring.version>4.2.2.RELEASE</spring.version>
+    <selenium.version>3.12.0</selenium.version>
+    <fluent-selenium.version>1.19</fluent-selenium.version>
+    <commons-csv.version>1.5</commons-csv.version>
+    <google-guava.version>23.0</google-guava.version>
     <gson.version>2.8.2</gson.version>
-    <javax-mail.version>1.5.2</javax-mail.version>
   </properties>
 
   <dependencies>
@@ -46,22 +42,19 @@
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-collections4</artifactId>
-      <version>${apache-commons.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-csv</artifactId>
-      <version>1.5</version>
     </dependency>
     <dependency>
       <groupId>org.awaitility</groupId>
       <artifactId>awaitility</artifactId>
-      <version>${awaitility.version}</version>
     </dependency>
     <dependency>
       <groupId>io.cucumber</groupId>
       <artifactId>cucumber-core</artifactId>
-      <version>${cucumber.version}</version>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>io.cucumber</groupId>
@@ -96,7 +89,6 @@
     <dependency>
       <groupId>io.rest-assured</groupId>
       <artifactId>rest-assured</artifactId>
-      <version>${rest-assured.version}</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
@@ -113,37 +105,30 @@
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-firefox-driver</artifactId>
-      <version>${selenium.version}</version>
     </dependency>
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-server</artifactId>
-      <version>${selenium.version}</version>
     </dependency>
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
-      <version>${selenium.version}</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>${jackson.version}</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-annotations</artifactId>
-      <version>${jackson.version}</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.module</groupId>
       <artifactId>jackson-module-jaxb-annotations</artifactId>
-      <version>${jackson.version}</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.jaxrs</groupId>
       <artifactId>jackson-jaxrs-json-provider</artifactId>
-      <version>${jackson.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.camel</groupId>
@@ -152,7 +137,6 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-web</artifactId>
-      <version>${spring.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.camel</groupId>
@@ -169,7 +153,6 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-aop</artifactId>
-      <version>${spring.version}</version>
     </dependency>
     <dependency>
       <groupId>org.aspectj</groupId>
@@ -202,17 +185,14 @@
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>${guava.version}</version>
     </dependency>
     <dependency>
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
-      <version>${gson.version}</version>
     </dependency>
     <dependency>
       <groupId>org.seleniumhq.selenium.fluent</groupId>
       <artifactId>fluent-selenium</artifactId>
-      <version>${fluent-selenium.version}</version>
     </dependency>
     <dependency>
       <groupId>org.postgresql</groupId>
@@ -237,22 +217,18 @@
     <dependency>
       <groupId>org.iban4j</groupId>
       <artifactId>iban4j</artifactId>
-      <version>${iban4j.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context-support</artifactId>
-      <version>${spring.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.sun.mail</groupId>
-      <artifactId>javax.mail</artifactId>
-      <version>${javax-mail.version}</version>
+      <groupId>javax.mail</groupId>
+      <artifactId>mail</artifactId>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.dataformat</groupId>
       <artifactId>jackson-dataformat-xml</artifactId>
-      <version>${jackson.version}</version>
     </dependency>
   </dependencies>
 
@@ -273,12 +249,11 @@
           <forkCount>5</forkCount>
           <reuseForks>false</reuseForks>
         </configuration>
-        <version>${maven-surefire-plugin.version}</version>
         <dependencies>
           <dependency>
             <groupId>org.apache.maven.surefire</groupId>
             <artifactId>surefire-junit47</artifactId>
-            <version>${surefire-junit47.version}</version>
+            <version>${maven-surefire-plugin.version}</version>
             <exclusions>
               <exclusion>
                 <!-- exclude testNG, otherwise Maven doesn't run TestFeatures -->
@@ -292,7 +267,6 @@
       <plugin>
         <groupId>com.trivago.rta</groupId>
         <artifactId>cluecumber-report-plugin</artifactId>
-        <version>1.11.0</version>
         <executions>
           <execution>
             <id>report</id>
@@ -303,6 +277,7 @@
           </execution>
         </executions>
         <configuration>
+          <skip>${skipTests}</skip>
           <sourceJsonReportDirectory>${project.build.directory}/cucumber-reports</sourceJsonReportDirectory>
           <generatedHtmlReportDirectory>${project.build.directory}/cucumber-html-reports2/cucumber-html-reports</generatedHtmlReportDirectory>
         </configuration>
@@ -333,7 +308,6 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
-            <version>${maven-surefire-plugin.version}</version>
             <configuration>
               <skip>true</skip>
             </configuration>
@@ -341,7 +315,7 @@
               <dependency>
                 <groupId>org.apache.maven.surefire</groupId>
                 <artifactId>surefire-junit47</artifactId>
-                <version>${surefire-junit47.version}</version>
+                <version>${maven-surefire-plugin.version}</version>
                 <exclusions>
                   <exclusion>
                     <!-- exclude testNG, otherwise Maven doesn't run TestFeatures -->
