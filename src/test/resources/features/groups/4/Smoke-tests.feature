@@ -18,6 +18,16 @@ Feature: Initial set of tests
     Scenario: Login with user "contracting.testautomation.b2c@essent.be"
         Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
 
+    Scenario: Login with user "billing_testautomation"
+        Given I logged in to JBilling as "billing_testautomation"
+
+    Scenario: Login with user "role_essent_ccm_user"
+        Given  I logged in to Odoo as "role_essent_ccm_user"
+
+    Scenario: Login with user "soapui_b2c"
+        Given I login as API user "soapui_b2c"
+
+
     #Check is tariff sheet available
 
     #Check is contract created through API (B2C TK1)
