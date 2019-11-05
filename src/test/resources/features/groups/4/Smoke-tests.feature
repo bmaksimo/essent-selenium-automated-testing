@@ -20,7 +20,7 @@ Feature: Initial set of tests
 
     #Check is tariff sheet available
 
-    #Check is contract created through API (B2C TK1)
+    #Check is contract created through API (B2C TK1) + Invoice creation
     Scenario: Contract creation B2C TK1 API
         Given I login as API user "soapui_b2c"
         And "Create_Quote" flow is started
@@ -42,6 +42,18 @@ Feature: Initial set of tests
         When Payment details are received
         Then Wait until contract instance starts
         And Check order in jbilling
+
+        Given I renew login to DWP as "salesmarketing.testautomation.b2c@essent.be"
+        When Left menu is "sales-marketing"
+        And Top menu item is "Klanten"
+        And Top action is Filter from "sales-marketing" menu retrying 5 times
+        And "Klantnummer" input is "parameter:accountNumber"
+        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
+        When Dashboard menu is "Contracten"
+        Then "1st" list element has cell value "Actief" at column "Contractnummer" polling 450 seconds
+
+        When Dashboard menu is "Billing"
+        And Table "Transacties" contains value "Invoice (ADVANCE)" at column "ID & Type" retrying 10 times
 
     #Check is contract created through API (B2B UP/TK2)
 
@@ -93,6 +105,7 @@ Feature: Initial set of tests
         When Dashboard menu is "Contracten"
         And  "1st" List element with value at column "EAN-code" is checked
         Then "1st" list element has cell value "Actief" at column "Contractnummer" polling 450 seconds
+
     #Check is contract created through UI (B2B UP/TK2)
 
     #Check is contract created through UI (B2B TK1)
