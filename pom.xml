@@ -26,6 +26,7 @@
     <nova-autocrat.version>1.0.5</nova-autocrat.version>
 
     <!-- version overrides -->
+    <spring.version>4.2.2.RELEASE</spring.version>
     <selenium.version>3.12.0</selenium.version>
     <fluent-selenium.version>1.19</fluent-selenium.version>
     <commons-csv.version>1.5</commons-csv.version>
