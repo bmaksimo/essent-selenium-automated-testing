@@ -62,14 +62,14 @@ Feature: TESTAUTO - 25 Active contract with DOM
         Then  "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
 
         When Dashboard menu is "Details"
-        Then Customer bank number is "parameter:iban" and payment method is "Domiciliëring (Signature received)"
+        Then Customer bank number is "parameter:iban" and payment method is "Domiciliëring (Actief)"
 
         Given I renew login to Odoo as "role_essent_ccm_user"
         When Odoo top menu is "Accounting"
         And Odoo left menu is Customers
         And Advanced search is
             |     field      |   operator  |          value          |
-            |    Customer    |   contains  | parameter:accountNumber |
+            | Account Number | is equal to | parameter:accountNumber |
         And Column "Account Number" with value "parameter:accountNumber" is clicked
         And Odoo click on tab "Accounting"
         And Odoo validate bank account was changed on "parameter:iban"
