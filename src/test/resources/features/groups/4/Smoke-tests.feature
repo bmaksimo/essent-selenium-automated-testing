@@ -6,17 +6,27 @@
 Feature: Initial set of tests
 
     #Check is Login working with all iWelcome users for automation purposes
-    Scenario: Login with user "salesmarketing.testautomation.b2c@essent.be"
+    Scenario: Login with user "salesmarketing.testautomation.b2c@essent.be" in DWP
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
-    Scenario: Login with user "businessdesk.testautomation.b2b@essent.be"
+    Scenario: Login with user "businessdesk.testautomation.b2b@essent.be" in DWP
         Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
 
-    Scenario: Login with user "billing.testautomation@essent.be"
+    Scenario: Login with user "billing.testautomation@essent.be" in DWP
         Given I logged in to DWP as "billing.testautomation@essent.be"
 
-    Scenario: Login with user "contracting.testautomation.b2c@essent.be"
+    Scenario: Login with user "contracting.testautomation.b2c@essent.be" in DWP
         Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
+
+    Scenario: Login with user "billing_testautomation" in JBilling
+        Given I logged in to JBilling as "billing_testautomation"
+
+    Scenario: Login with user "role_essent_ccm_user" in Odoo
+        Given  I logged in to Odoo as "role_essent_ccm_user"
+
+    Scenario: Login with api b2b user "soapui_b2b"
+        Given I login as API user "soapui_b2b"
+
 
     #Check is tariff sheet available
 
