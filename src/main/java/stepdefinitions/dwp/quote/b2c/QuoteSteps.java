@@ -4,6 +4,7 @@ import com.billinghouse.test_automation.util.random.CustomerRandomDataGenerator;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.automation.util.Sleeper;
+import com.essent.testing.dwp.pageobject.guided_flow.cupq.NewQuotePage;
 import com.essent.testing.dwp.pageobject.impl.modal.quote.SimilarAccountDialogImpl;
 import com.essent.testing.dwp.pageobject.impl.quote.*;
 import com.essent.testing.dwp.pageobject.impl.quote_for_account.OnlineQuoteSignatureModalPage;
@@ -67,8 +68,14 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^Deduplication dialogue link \"([^\"]*)\" is clicked$")
-    public void deduplicationDialogueLinkIsClicked(String linkText) throws Throwable {
+    public void deduplicationDialogueLinkIsClicked(String linkText){
         new SimilarAccountDialogImpl().clickOnLink(linkText);
+    }
+
+    @And("^Sepa signature location is \"([^\"]*)\"$")
+    public void sepaSignatureLocationIs(String city){
+        NewQuotePage nqp = new NewQuotePage();
+        nqp.setSepaSignatureLocation(city);
     }
 
     private class VerifyTariffSheetPriceAlert implements FlowAwarePredicate<QuoteSteps> {
