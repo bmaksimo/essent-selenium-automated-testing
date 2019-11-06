@@ -56,9 +56,11 @@ Feature: Initial set of tests
         And Table "Transacties" contains value "Invoice (ADVANCE)" at column "ID & Type" retrying 10 times
 
     #Check is contract created through API (B2B UP/TK2)
+    Scenario: Contract creation B2B UP API
     And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
 
     #Check is contract created through UI (B2B TK1)
+    Scenario: Contract creation B2B TK1 UI
         Given  I logged in to DWP as "contracting.testautomation.b2c@essent.be"
         When Click on top menu button PLUS and navigate to "Sales -> TK1 -> Nieuwe TK1 offerte (B2B) aanmaken"
         And Company name is random
