@@ -63,7 +63,7 @@ Feature: Initial set of tests
         Then "1st" list element has cell value "Actief" at column "Contractnummer" polling 450 seconds
 
         When Dashboard menu is "Billing"
-        And Table "Transacties" contains value "Invoice (ADVANCE)" at column "ID & Type" retrying 5 times
+        Then Table "Transacties" contains value "Invoice (ADVANCE)" at column "ID & Type" retrying 5 times
 
     #Check is contract created through API (B2B UP/TK2)
     Scenario: Contract creation B2B UP API
@@ -126,7 +126,7 @@ Feature: Initial set of tests
         Then "1st" list element has cell value "Sales Getekend - Geaccepteerd" at column "Type & status"
 
         When Dashboard menu is "Contracten"
-        And "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
+        Then "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
 
     #Check is contract created through UI (B2C TK1)
     Scenario: Contract creation B2C TK1 UI
@@ -169,7 +169,7 @@ Feature: Initial set of tests
         And "Datum ondertekening" date is "now"
         And Quote is signed
         And Quote is signed in "Kontich"
-        When Quote is confirmed
+        Then Quote is confirmed
 
 
 
