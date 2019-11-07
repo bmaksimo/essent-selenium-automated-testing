@@ -16,15 +16,14 @@ import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.CARD_TE
 
 public class NonEditableImpl extends Component implements NonEditable {
 
-  private static final String XPATH_INPUT_TEPMPLATE =
-      "//div[label/text()='${label}']//div[@class='non-editable-input']";
+  private static final String XPATH_INPUT_TEMPLATE = "//div[label/text()='${label}']//div[@class='non-editable-input']";
 
   @Override
   public String getValue(String label) {
     seleniumDriver.waitForRequestsToFinish();
     Map<String, String> valuesMapper = new HashMap<>();
     valuesMapper.put("label", label);
-    By xpathSelector = By.xpath(createQuery(XPATH_INPUT_TEPMPLATE, valuesMapper));
+    By xpathSelector = By.xpath(createQuery(XPATH_INPUT_TEMPLATE, valuesMapper));
     WebElement webElement = findElementWhenVisible(xpathSelector);
     return webElement.getAttribute("innerText");
   }
@@ -35,11 +34,11 @@ public class NonEditableImpl extends Component implements NonEditable {
     Map<String, String> valuesMapper = new HashMap<>();
     valuesMapper.put("title", title);
     valuesMapper.put("label", label);
-    By xpathSelector =
-        By.xpath(createQuery(CARD_TEMPLATE.getQuery() + XPATH_INPUT_TEPMPLATE, valuesMapper));
+    By xpathSelector = By.xpath(createQuery(CARD_TEMPLATE.getQuery() + XPATH_INPUT_TEMPLATE, valuesMapper));
     WebElement webElement = findElementWhenVisible(xpathSelector);
     String innerText = webElement.getAttribute("innerText");
     logger().debug("--NonEditable, element value is: " + innerText);
+
     return innerText;
   }
 

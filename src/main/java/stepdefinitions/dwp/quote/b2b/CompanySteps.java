@@ -46,7 +46,6 @@ public class CompanySteps extends DwpScenario {
         String currentVAT = "";
         String vatNumberLabel = "Ondernemingsnummer";
 
-
         while (!accepted && currentAttempt < maxAttempts) {
             currentVAT = CustomerRandomDataGenerator.generateVat("generator:vat:BEL");
 
@@ -55,11 +54,11 @@ public class CompanySteps extends DwpScenario {
             Map<String, String> options = new HashMap<>();
             options.put("label", vatNumberLabel);
             options.put("value", currentVAT);
-
             executeJavascriptTest(JS_BASE_FORM_INPUT, options);
+
             seleniumDriver.waitForRequestsToFinish();
             accepted = isCompanyAccepted();
-            logger().debug("Accepted? " + accepted);
+            logger().debug("Is company VAT credit status accepted? " + accepted);
             currentAttempt++;
         }
     }
@@ -67,7 +66,7 @@ public class CompanySteps extends DwpScenario {
     private boolean isCompanyAccepted() {
         String accepted = "Geaccepteerd";
         String currentStatus = new NonEditableImpl().getValue("Perform customer acceptance check", "Klantacceptatie");
-        logger().debug("Company VAT status found: " + currentStatus);
+        logger().debug("Company VAT credit status found: " + currentStatus);
         return StringUtils.equalsIgnoreCase(currentStatus, accepted);
     }
 
