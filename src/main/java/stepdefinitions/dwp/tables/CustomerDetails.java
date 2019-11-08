@@ -3,8 +3,6 @@ package stepdefinitions.dwp.tables;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.lang.reflect.Field;
-
 public class CustomerDetails {
     private String firstName;
     private String lastName;
