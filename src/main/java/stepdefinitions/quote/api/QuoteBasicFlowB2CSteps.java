@@ -223,4 +223,10 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
         } while (response.getBody().toString().contains("done"));
 
     }
+
+    @Then("^Tariffsheet is available$")
+    public void tariffsheetIsAvailable() throws IOException {
+        flowIsStarted("");
+        Assert.assertFalse("Tariffsheet does not exist",tariffSheetID.isEmpty());
+    }
 }
