@@ -23,11 +23,13 @@ public class NewQuotePage extends QuoteCreationGuidedStep {
 
     public void clickNaceCodeButton() {
         seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(10);
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"nace-code-c-field\"]")));
     }
 
     public void clickOnSearch() {
         seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(10);
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//div[@class = 'input__with-button']/input")));
     }
 

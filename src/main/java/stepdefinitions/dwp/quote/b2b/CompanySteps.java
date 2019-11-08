@@ -1,6 +1,8 @@
 package stepdefinitions.dwp.quote.b2b;
 
 import com.billinghouse.test_automation.util.random.CustomerRandomDataGenerator;
+import com.essent.testing.dwp.pageobject.elements.NonEditable;
+import com.essent.testing.dwp.pageobject.impl.elements.NonEditableImpl;
 import com.essent.testing.dwp.pageobject.impl.quote.CompanyDetailsAddressPage;
 import com.essent.testing.dwp.pageobject.impl.quote.ContactDetailsPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
@@ -9,11 +11,15 @@ import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
+import org.apache.commons.lang3.StringUtils;
 import stepdefinitions.dwp.page_object.CustomerAcceptance;
 import stepdefinitions.dwp.tables.CustomerDetails;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.JS_BASE_FORM_INPUT;
 
 public class CompanySteps extends DwpScenario {
 
@@ -30,6 +36,38 @@ public class CompanySteps extends DwpScenario {
     @And("^Company VAT number is random$")
     public void generateRandomUser(){
         parameterProvider.put("VAT", CustomerRandomDataGenerator.generateVat("generator:vat:BEL"));
+    }
+
+    @And("Generated company VAT number has ACCEPTED status")
+    public void createValidVAT() {
+        int maxAttempts = 10;
+        int currentAttempt = 0;
+        boolean accepted = false;
+        String currentVAT = "";
+        String vatNumberLabel = "Ondernemingsnummer";
+
+        while (!accepted && currentAttempt < maxAttempts) {
+            currentVAT = CustomerRandomDataGenerator.generateVat("generator:vat:BEL");
+
+            seleniumDriver.waitForRequestsToFinish();
+            parameterProvider.put("inputValue", currentVAT);
+            Map<String, String> options = new HashMap<>();
+            options.put("label", vatNumberLabel);
+            options.put("value", currentVAT);
+            executeJavascriptTest(JS_BASE_FORM_INPUT, options);
+
+            seleniumDriver.waitForRequestsToFinish();
+            accepted = isCompanyAccepted();
+            logger().debug("Is company VAT credit status accepted? " + accepted);
+            currentAttempt++;
+        }
+    }
+
+    private boolean isCompanyAccepted() {
+        String accepted = "Geaccepteerd";
+        String currentStatus = new NonEditableImpl().getValue("Perform customer acceptance check", "Klantacceptatie");
+        logger().debug("Company VAT credit status found: " + currentStatus);
+        return StringUtils.equalsIgnoreCase(currentStatus, accepted);
     }
 
     @And("^Company name is random$")

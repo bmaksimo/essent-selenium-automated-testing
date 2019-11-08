@@ -145,13 +145,14 @@ public class ContractSteps extends DwpScenario {
         int currentAttempt = 0;
         boolean displayed = false;
         NewQuotePage nq = new NewQuotePage();
-        while (!displayed && currentAttempt < 2) {
+        while (!displayed && currentAttempt < 5) {
             new ContractPage().searchByClientNumber(naceCode);
             nq.clickOnSearch();
             nq.checkNaceCodeCheckBox();
             nq.saveSelectedItem();
             displayed = nq.isNaceCodeElementDisplayed();
             currentAttempt++;
+            if (!displayed) Sleeper.sleepTightInSeconds(10);
         }
     }
 
