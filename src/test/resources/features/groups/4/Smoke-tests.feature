@@ -56,6 +56,7 @@ Feature: Initial set of tests
         Given I renew login to DWP as "salesmarketing.testautomation.b2c@essent.be"
         When Left menu is "sales-marketing"
         And Top menu item is "Klanten"
+        And Billing run "RECURRING" is triggered with process date "1 month from now"
         And Top action is Filter from "sales-marketing" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
