@@ -31,7 +31,7 @@ Feature: Initial set of tests
     #Check is tariff sheet available
 
     #Check is contract created through API (B2C TK1) + Invoice creation
-    Scenario: Contract creation B2C TK1 API
+    Scenario: Contract creation B2C TK1 API and invoice creation
         Given I login as API user "soapui_b2c"
         And "Create_Quote" flow is started
         When Data is prepared for Create quote request for "prospect" and meter open is "On" and sign date is "35 days before now"
@@ -56,6 +56,7 @@ Feature: Initial set of tests
         Given I renew login to DWP as "salesmarketing.testautomation.b2c@essent.be"
         When Left menu is "sales-marketing"
         And Top menu item is "Klanten"
+        And Billing run "RECURRING" is triggered with process date "1 month from now"
         And Top action is Filter from "sales-marketing" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
