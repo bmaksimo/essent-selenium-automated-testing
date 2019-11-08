@@ -1,6 +1,8 @@
 package stepdefinitions.dwp.tables;
+
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.lang.reflect.Field;
 
@@ -88,6 +90,6 @@ public class CustomerDetails {
     }
 
     public String toString() {
-        return new ReflectionToStringBuilder(this).toString();
+        return new ReflectionToStringBuilder(this, ToStringStyle.NO_CLASS_NAME_STYLE).toString();
     }
 }
