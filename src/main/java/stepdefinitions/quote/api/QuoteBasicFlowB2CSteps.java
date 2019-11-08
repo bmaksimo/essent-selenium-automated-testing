@@ -15,6 +15,7 @@ import cucumber.api.java.en.When;
 import io.restassured.http.Cookies;
 import io.restassured.response.Response;
 import org.junit.Assert;
+import stepdefinitions.dwp.tables.CustomerDetails;
 import stepdefinitions.quote.api.helper.AsyncExecutor;
 import stepdefinitions.quote.api.helper.RequestHelper;
 import stepdefinitions.quote.api.model.ContractDetails;
@@ -90,10 +91,19 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
         this.flow = flowType;
         String signInDateApiDate = toDwpAPIDate(parameterProvider.getValueOrParameterAsString(signInDate));
         this.quoteDetails = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow, meterOpen, signInDateApiDate, contactPreference);
-        String retrievedAccountNumber = quoteDetails.getAccountNumber();
-        parameterProvider.put("accountNumber", retrievedAccountNumber);
+        parameterProvider.put("suitecrm-customer", fillInCustomerDetailsContext(this.quoteDetails));
+        parameterProvider.put("accountNumber", quoteDetails.getAccountNumber());
         parameterProvider.put("EAN-code", quoteDetails.getEan());
         parameterProvider.put("suitecrm-customer-name", quoteDetails.getAccountName());
+    }
+
+    private CustomerDetails fillInCustomerDetailsContext(QuoteDetails quoteDetails) {
+        CustomerDetails customer = new CustomerDetails();
+        customer.setFirstName(quoteDetails.getFirstName());
+        customer.setLastName(quoteDetails.getLastName());
+        customer.setBirthDate(quoteDetails.getDateOfBirth());
+
+        return customer;
     }
 
     @When("^New tc1_quote is created$")

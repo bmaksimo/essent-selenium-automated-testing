@@ -11,6 +11,7 @@ import io.restassured.http.Cookies;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.apache.log4j.Logger;
+import stepdefinitions.dwp.tables.CustomerDetails;
 import stepdefinitions.quote.api.builders.QuoteDetailsBuilder;
 import stepdefinitions.quote.api.builders.QuoteDetailsDTOBuilder;
 import stepdefinitions.quote.api.helper.PayloadMapper;
