@@ -31,7 +31,7 @@ Feature: Initial set of tests
     #Check is tariff sheet available
 
     #Check is contract created through API (B2C TK1) + Invoice creation
-    Scenario: Contract creation B2C TK1 API
+    Scenario: Contract creation B2C TK1 API and invoice creation
         Given I login as API user "soapui_b2c"
         And "Create_Quote" flow is started
         When Data is prepared for Create quote request for "prospect" and meter open is "On" and sign date is "35 days before now"
