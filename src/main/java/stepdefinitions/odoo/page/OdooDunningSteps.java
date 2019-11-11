@@ -28,6 +28,12 @@ public class OdooDunningSteps extends OdooScenario {
         Assert.assertThat(message, new OdooDunningPages().getDunningInstanceState().getText(), equalTo(state));
     }
 
+    @Then("^Dunning Instance Description is \"([^\"]*)\"$$")
+    public void dunningInstanceDescription(String state){
+        String message = String.format("Dunning instance description is not \"%s\"", state);
+        Assert.assertThat(message, new OdooDunningPages().getDunningInstanceState().getText(), equalTo(state));
+    }
+
     @Then("^Dunning invoice number is same as \"([^\"]*)\"$")
     public void dunningInvoiceNumber(String invoiceNumber){
         String dunningDWPInvoiceNumber = parameterProvider.getValueOrParameterAsString(invoiceNumber);

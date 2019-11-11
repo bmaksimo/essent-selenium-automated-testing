@@ -17,6 +17,12 @@ public class OdooDunningPages extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath("//div[@class='oe_list oe_view oe_cannot_create']//td[@data-field='state']"));
     }
 
+    public WebElement getDunningDescriptionState() {
+        awaitOdooRequestToFinish(60);
+        Sleeper.sleepTightInSeconds(4);
+        return seleniumDriver.findElementWhenVisible(By.xpath("//div[@class='oe_list oe_view oe_cannot_create']//td[@data-field='description']"));
+    }
+
     public WebElement getDunningInvoiceNumber() {
         awaitOdooRequestToFinish(60);
         return seleniumDriver.findElementWhenVisible(By.xpath("//div[@class='oe_list oe_view oe_cannot_create']//td[@data-field='move_line_id'] "));
