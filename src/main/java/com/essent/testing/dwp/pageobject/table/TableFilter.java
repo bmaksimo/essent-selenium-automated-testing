@@ -37,19 +37,20 @@ public class TableFilter extends Component {
     }
 
     public TableFilter getTable(String tableName) {
-        seleniumDriver.waitForRequestsToFinish();
         this.tableName = tableName;
         this.tablePath = createQuery(TABLE_PATH_BASE, REPLACEMENT_KEY, this.tableName);
         this.headers = getHeaders();
-        this.rows = seleniumDriver.findElements(By.xpath(this.tablePath + "//tbody[@id='rows']/tr"));
+        this.rows = seleniumDriver.findElementsWithDefaultWaiting(By.xpath(this.tablePath + "//tbody[@id='rows']/tr"));
         return this;
     }
 
     public TableFilter findBy(List<Filter> filters) throws Exception {
+        List<WebElement> currentRowCells = new ArrayList<>();
+        logger().info(this.contextParameters + " rows: " + this.rows.size());
         for (WebElement row : this.rows) {
-            List<WebElement> cells = row.findElements(By.tagName("td"));
-            if (isExpectedColumnValue(filters, cells)) {
-                selectedRow = cells;
+            currentRowCells = row.findElements(By.tagName("td"));
+            if (isExpectedColumnValue(filters, currentRowCells)) {
+                this.selectedRow = currentRowCells;
                 return this;
             }
         }
@@ -101,7 +102,7 @@ public class TableFilter extends Component {
 
     private List<String> getHeaders() {
         return seleniumDriver
-            .findElements(By.xpath(this.tablePath + "//thead/tr/th"))
+            .findElementsWithDefaultWaiting(By.xpath(this.tablePath + "//thead/tr/th"))
             .stream()
             .map(WebElement::getText)
             .map(String::toUpperCase)
