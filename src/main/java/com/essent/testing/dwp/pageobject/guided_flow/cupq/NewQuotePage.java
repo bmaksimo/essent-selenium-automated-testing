@@ -82,6 +82,10 @@ public class NewQuotePage extends QuoteCreationGuidedStep {
         return  seleniumDriver.findElementWhenVisible(By.xpath(NACE_CODE)).isDisplayed();
     }
 
+    public void setSepaSignatureLocation(String city){
+        seleniumDriver.sendKeysNow(seleniumDriver.findElementWhenClickable(By.id("accounts-aos-quotes-payment-details-payment-methods-signature-location-field")),city);
+    }
+
     @Override
     public boolean fillInFormData() {
         return false;

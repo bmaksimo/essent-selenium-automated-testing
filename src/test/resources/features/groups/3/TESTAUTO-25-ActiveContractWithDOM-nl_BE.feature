@@ -50,6 +50,9 @@ Feature: TESTAUTO - 25 Active contract with DOM
         And "Datum ondertekening" date is "now"
         And Quote is signed
         And Quote is signed in "Kontich"
+        And Option "Client has signed Sepa domiciliation" is "On"
+        And "Signature date" date is "now"
+        And Sepa signature location is "Kontich"
         When Quote is confirmed
 
         When Dashboard menu is "Contracten"
@@ -59,7 +62,7 @@ Feature: TESTAUTO - 25 Active contract with DOM
         Then  "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
 
         When Dashboard menu is "Details"
-        Then Customer bank number is "parameter:iban" and payment method is "Domiciliëring (Aangevraagd)"
+        Then Customer bank number is "parameter:iban" and payment method is "Domiciliëring (Actief)"
 
         Given I renew login to Odoo as "role_essent_ccm_user"
         When Odoo top menu is "Accounting"
