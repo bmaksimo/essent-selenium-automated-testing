@@ -168,6 +168,11 @@ public abstract class SeleniumDriver {
         return element;
     }
 
+    public List<WebElement> findElementsWithDefaultWaiting(By selector) {
+        Sleeper.sleepTightInSeconds(10);
+        return findElements(selector, Duration.ofSeconds(30), Duration.ofSeconds(5));
+    }
+
     public List<WebElement> findElements(By selector, Duration timeout, Duration pollingEvery) {
         logger.debug("STEP:");
         logger.debug(" - ELEMENT QUERY: " + selector.toString());
