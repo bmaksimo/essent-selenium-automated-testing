@@ -20,6 +20,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
 import stepdefinitions.dwp.b2b.Marketberichten;
 import stepdefinitions.dwp.navigation.NavigationElements;
+import stepdefinitions.dwp.overview.DashboardMenu;
 import stepdefinitions.dwp.plus.PlusActions;
 
 import javax.swing.table.DefaultTableModel;
@@ -540,7 +541,7 @@ public class ViewListChecks extends NavigationElements {
         FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), seconds, 30);
         waiter.withMessage(String.format("List element didn't contain any value at column \"%s\"", column));
         waiter.until((ViewListTestObject callback) -> {
-            clickDashboardMenu(dashboardMenu);
+            new DashboardMenu().goToDashboardMenuItem(dashboardMenu);
             new Marketberichten().clickOn(buttonName);
             return !callback.fetchColumnData(table, column)
                 .stream().filter(element -> element.contains(inputValue)).collect(Collectors.toList()).isEmpty();
