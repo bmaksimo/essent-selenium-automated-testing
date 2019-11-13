@@ -5,7 +5,7 @@
 Feature: NUAT-448: Change The Advance Amount For A Customer - nl_BE
 
     Background:
-        Given   I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
+        Given   I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
     @NUAT-448
     Scenario: Change amount for a customer
