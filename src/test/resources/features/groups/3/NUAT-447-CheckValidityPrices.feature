@@ -16,7 +16,7 @@ Feature: NUAT-447: Check validity prices
         And Label "Type offerte" is "Sales"
         And Label "Status" is "Verstuurd naar klant"
         And Take Offertenummer from first offerte
-        And Plus action and "Handtekening ontvangen" of first customer from list
+        And Plus action and "Handtekening ontvangen" of first customer from list waiting for 30 seconds
         And "Datum handtekening ontvangen" date is "now"
         And "Taak aanmaken voor de manager" turn on
         Then Changes are confirmed waiting for 5 seconds
