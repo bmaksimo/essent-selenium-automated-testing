@@ -1,6 +1,7 @@
 package stepdefinitions.dwp.navigation;
 
 
+import com.essent.testing.dwp.pageobject.impl.navigation.DashboardMenuPage;
 import com.essent.testing.dwp.pageobject.impl.navigation.DwpPlusMenu;
 import com.essent.testing.dwp.pageobject.impl.navigation.TopActionsPageImpl;
 import com.essent.testing.dwp.pageobject.navigation.TopActionsPage;
@@ -8,7 +9,6 @@ import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.runtime.CucumberException;
 import org.junit.Assert;
 import stepdefinitions.dwp.menu.TopMenuActions;
-import stepdefinitions.dwp.overview.DashboardMenu;
 
 import java.util.function.Predicate;
 
@@ -68,7 +68,7 @@ public abstract class NavigationElements extends DwpScenario {
             seleniumDriver.waitForRequestsToFinish();
             clickTopArrow(arrow);
             seleniumDriver.waitForRequestsToFinish();
-            new DashboardMenu().goToDashboardMenuItem(dashboardMenu);
+            new DashboardMenuPage().clickOnDashboardElement(dashboardMenu);
             seleniumDriver.waitForRequestsToFinish();
         } catch (Throwable t) {
             throw new CucumberException(t);

@@ -7,7 +7,7 @@ import org.openqa.selenium.WebElement;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DwpDashboardMenuPage extends Component {
+public class DashboardMenuPage extends Component {
     private static Map<String, String> menuMap = new HashMap<>();
     static {
         menuMap.put("Details", "icon-bedrijf");
@@ -21,11 +21,15 @@ public class DwpDashboardMenuPage extends Component {
     }
 
     private WebElement getDashboardElement(String name)  {
-       return seleniumDriver.findElementWhenVisible(By.xpath("//span[@class='"+menuMap.get(name)+"']"));
+       return seleniumDriver.findElementWhenVisible(By.xpath("//span[@class='" + menuMap.get(name) + "']"));
 
     }
 
     public void clickOnDashboardElement(String element) {
         seleniumDriver.waitAndClick(getDashboardElement(element));
+    }
+
+    public void clickOnDashboardElementNow(String element) {
+        seleniumDriver.clickNow(getDashboardElement(element));
     }
 }

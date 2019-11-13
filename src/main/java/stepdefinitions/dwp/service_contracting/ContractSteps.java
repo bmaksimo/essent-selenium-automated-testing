@@ -2,7 +2,7 @@ package stepdefinitions.dwp.service_contracting;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.guided_flow.move_in.MoveInPage;
-import com.essent.testing.dwp.pageobject.impl.navigation.DwpDashboardMenuPage;
+import com.essent.testing.dwp.pageobject.impl.navigation.DashboardMenuPage;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPricesPage;
@@ -167,7 +167,7 @@ public class ContractSteps extends DwpScenario {
 
     @And("^Wait for the first contract to be activated$")
     public void waitForTheFirstContractToBeActivated() {
-        DwpDashboardMenuPage ddmp = new  DwpDashboardMenuPage();
+        DashboardMenuPage ddmp = new DashboardMenuPage();
         ContractPage cp = new ContractPage();
 
         while (!cp.getStatusFromContract().equalsIgnoreCase("Actief")) {
