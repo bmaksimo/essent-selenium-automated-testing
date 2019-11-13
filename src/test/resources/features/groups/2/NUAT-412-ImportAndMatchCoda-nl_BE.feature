@@ -61,4 +61,4 @@ Feature: NUAT-412: Import coda file
         And Odoo file upload confirm button is "Import"
         And Odoo file import report contains success string "Number of statements processed : 1"
 
-        When Modal button "View CODA Bank Statement" is clicked
+        When Modal button "View Bank Statement(s)" is clicked
