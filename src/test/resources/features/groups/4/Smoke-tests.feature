@@ -27,8 +27,10 @@ Feature: Initial set of tests
     Scenario: Login with api b2b user "soapui_b2b"
         Given I login as API user "soapui_b2b"
 
-
-    #Check is tariff sheet available
+    #Check is tariffsheet available
+    Scenario: Check is tariff sheet available
+        Given I login as API user "soapui_b2c"
+        Then Tariffsheet is available
 
     #Check is contract created through API (B2C TK1) + Invoice creation
     Scenario: Contract creation B2C TK1 API and invoice creation
