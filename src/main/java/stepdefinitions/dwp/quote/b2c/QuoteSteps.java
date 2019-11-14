@@ -4,7 +4,7 @@ import com.billinghouse.testautomation.util.random.CustomerRandomDataGenerator;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.automation.util.Sleeper;
-import com.essent.testing.dwp.pageobject.guided_flow.cupq.NewQuotePage;
+import com.essent.testing.dwp.pageobject.guidedflow.cupq.NewQuotePage;
 import com.essent.testing.dwp.pageobject.impl.modal.quote.SimilarAccountDialogImpl;
 import com.essent.testing.dwp.pageobject.impl.quote.*;
 import com.essent.testing.dwp.pageobject.impl.quote_for_account.OnlineQuoteSignatureModalPage;
