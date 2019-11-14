@@ -9,8 +9,8 @@ import org.openqa.selenium.WebElement;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.billinghouse.test_automation.util.dsl.NumericUtil.amountAsInt;
-import static com.billinghouse.test_automation.util.dsl.NumericUtil.checkAmount;
+import static com.billinghouse.testautomation.util.dsl.NumericUtil.amountAsInt;
+import static com.billinghouse.testautomation.util.dsl.NumericUtil.checkAmount;
 import static com.essent.testing.dwp.constant.DwpConstants.FLEMISCH_LOCALE;
 import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.CARD_TEMPLATE;
 

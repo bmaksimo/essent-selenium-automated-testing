@@ -13,8 +13,8 @@ import stepdefinitions.dwp.tables.plus.SwitchState;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.JS_TR_APPLY_FORM_INPUT;
-import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.JS_TR_TOGGLE_INPUT_STATE;
+import static com.billinghouse.testautomation.javascript.testrunner.JsTestRegistry.JS_TR_APPLY_FORM_INPUT;
+import static com.billinghouse.testautomation.javascript.testrunner.JsTestRegistry.JS_TR_TOGGLE_INPUT_STATE;
 import static com.essent.testing.dwp.autocrat.element.quote.B2CQuoteElements.ELECTRICITY_EAN_CODE;
 import static com.essent.testing.dwp.autocrat.element.quote.ConnectionElements.*;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.INPUT;

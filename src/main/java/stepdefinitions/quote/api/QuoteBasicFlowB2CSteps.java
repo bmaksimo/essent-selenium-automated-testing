@@ -1,7 +1,7 @@
 package stepdefinitions.quote.api;
 
-import com.billinghouse.test_automation.util.dsl.DateTimeRegex;
-import com.billinghouse.test_automation.util.dsl.EssentDateTimeFormat;
+import com.billinghouse.testautomation.util.dsl.DateTimeRegex;
+import com.billinghouse.testautomation.util.dsl.EssentDateTimeFormat;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
@@ -24,7 +24,7 @@ import stepdefinitions.quote.api.model.QuoteDetails;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.expandFrom;
+import static com.billinghouse.testautomation.util.dsl.DateExpressionsUtil.expandFrom;
 import static org.awaitility.Awaitility.await;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;

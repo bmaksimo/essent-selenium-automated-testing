@@ -1,7 +1,7 @@
 package stepdefinitions.dwp.b2b;
 
 import com.essent.automation.util.Sleeper;
-import com.essent.testing.dwp.pageobject.guided_flow.cupq.NewQuotePage;
+import com.essent.testing.dwp.pageobject.guidedflow.cupq.NewQuotePage;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import com.essent.testing.dwp.pageobject.impl.quote.QuoteDetailsPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
@@ -15,7 +15,6 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.tables.SalesChannel;
 

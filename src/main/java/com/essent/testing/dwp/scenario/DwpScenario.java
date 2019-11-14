@@ -1,6 +1,6 @@
 package com.essent.testing.dwp.scenario;
 
-import com.billinghouse.test_automation.util.dsl.DateExpressionsUtil;
+import com.billinghouse.testautomation.util.dsl.DateExpressionsUtil;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model.Execution;
 import com.essent.automation.autocrat.Model.Step;
@@ -16,9 +16,9 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpApiDate;
-import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpDate;
-import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.convertToDwpTime;
+import static com.billinghouse.testautomation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpApiDate;
+import static com.billinghouse.testautomation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpDate;
+import static com.billinghouse.testautomation.util.dsl.DateExpressionsUtil.convertToDwpTime;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 

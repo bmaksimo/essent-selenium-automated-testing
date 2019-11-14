@@ -1,6 +1,6 @@
 package com.essent.testing.dwp.pageobject.impl.quote;
 
-import com.billinghouse.test_automation.util.random.CustomerRandomDataGenerator;
+import com.billinghouse.testautomation.util.random.CustomerRandomDataGenerator;
 import com.essent.automation.autocrat.Model;
 import stepdefinitions.dwp.tables.CustomerDetails;
 

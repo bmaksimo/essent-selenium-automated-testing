@@ -1,7 +1,7 @@
 package stepdefinitions.billing.test;
 
-import com.billinghouse.test_automation.util.dsl.DateExpressionsUtil;
-import com.billinghouse.test_automation.util.file.FileUtil;
+import com.billinghouse.testautomation.util.dsl.DateExpressionsUtil;
+import com.billinghouse.testautomation.util.file.FileUtil;
 import com.essent.be.api.config.BillingServiceFactory;
 import com.essent.be.jbilling.api.rest.RestResponse;
 import com.essent.belgium.energycomm.ws_to_bo.BasePayload;
@@ -35,7 +35,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.function.Predicate;
 
-import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.JS_TR_CHECK_TABLE_CELL_VALUE;
+import static com.billinghouse.testautomation.javascript.testrunner.JsTestRegistry.JS_TR_CHECK_TABLE_CELL_VALUE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 

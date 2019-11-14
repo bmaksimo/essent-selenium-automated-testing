@@ -1,7 +1,7 @@
 package stepdefinitions.dwp.b2b;
 
 import com.essent.automation.util.Sleeper;
-import com.essent.testing.dwp.pageobject.contracting_switching.QuotesListPage;
+import com.essent.testing.dwp.pageobject.contractingswitching.QuotesListPage;
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import com.essent.testing.dwp.pageobject.impl.filter.DwpFilterPage;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;

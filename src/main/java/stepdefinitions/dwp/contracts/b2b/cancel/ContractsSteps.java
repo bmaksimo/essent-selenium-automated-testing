@@ -1,7 +1,7 @@
 package stepdefinitions.dwp.contracts.b2b.cancel;
 
 import com.essent.automation.util.Sleeper;
-import com.essent.testing.dwp.pageobject.guided_flow.cupq.NewQuotePage;
+import com.essent.testing.dwp.pageobject.guidedflow.cupq.NewQuotePage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.Invoice_list.InvoiceListPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.details.DetailsPage;
@@ -17,12 +17,10 @@ import cucumber.api.java.en.When;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import stepdefinitions.dwp.page_object.CustomerAcceptance;
+import stepdefinitions.dwp.pageobject.CustomerAcceptance;
 import stepdefinitions.dwp.tables.CustomerStatus;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
