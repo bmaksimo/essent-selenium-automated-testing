@@ -1,6 +1,6 @@
 package stepdefinitions.dwp.pageobject;
 
-import com.essent.testing.dwp.pageobject.guidedflow.lead_create.NewLeadPage;
+import com.essent.testing.dwp.pageobject.guidedflow.leadcreation.NewLeadPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.leads.LeadsPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import io.cucumber.datatable.DataTable;

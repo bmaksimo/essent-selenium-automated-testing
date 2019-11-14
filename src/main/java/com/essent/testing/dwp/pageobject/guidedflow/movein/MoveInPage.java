@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.guidedflow.move_in;
+package com.essent.testing.dwp.pageobject.guidedflow.movein;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
 import org.openqa.selenium.By;

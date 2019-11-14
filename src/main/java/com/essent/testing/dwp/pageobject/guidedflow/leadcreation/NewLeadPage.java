@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.guidedflow.lead_create;
+package com.essent.testing.dwp.pageobject.guidedflow.leadcreation;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;

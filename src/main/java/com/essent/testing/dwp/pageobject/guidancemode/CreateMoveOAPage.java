@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.guidance_mode;
+package com.essent.testing.dwp.pageobject.guidancemode;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;

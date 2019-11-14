@@ -1,7 +1,7 @@
 package stepdefinitions.dwp.servicecontracting;
 
 import com.essent.automation.util.Sleeper;
-import com.essent.testing.dwp.pageobject.guidedflow.move_in.MoveInPage;
+import com.essent.testing.dwp.pageobject.guidedflow.movein.MoveInPage;
 import com.essent.testing.dwp.pageobject.impl.navigation.DashboardMenuPage;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
