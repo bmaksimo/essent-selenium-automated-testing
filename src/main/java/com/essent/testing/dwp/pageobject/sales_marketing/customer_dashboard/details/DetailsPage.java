@@ -2,13 +2,8 @@ package com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.det
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
-import com.essent.testing.dwp.pageobject.table.Filter;
-import com.essent.testing.dwp.pageobject.table.TableFilter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class DetailsPage extends Component {
 

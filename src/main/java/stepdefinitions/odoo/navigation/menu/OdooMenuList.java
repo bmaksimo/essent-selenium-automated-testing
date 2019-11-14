@@ -19,6 +19,7 @@ public class OdooMenuList {
         menuMap.put("customer_ref", "Account Number");
         menuMap.put("generate_coda", "generate_coda");
         menuMap.put("reason_id", "Reason");
+        menuMap.put("partner_id", "Customer");
     }
 
     public static <V> String getKey(V value) {

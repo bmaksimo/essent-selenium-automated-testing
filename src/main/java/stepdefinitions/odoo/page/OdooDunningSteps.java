@@ -9,6 +9,7 @@ import cucumber.api.java.en.Then;
 import org.junit.Assert;
 
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 
 public class OdooDunningSteps extends OdooScenario {
     @Before("@ODOO or @E2E or @REGRESSION")
@@ -22,16 +23,28 @@ public class OdooDunningSteps extends OdooScenario {
         Assert.assertTrue("Dunning bundle is not pressent", odp.getBundleIdElement().isDisplayed());
     }
 
-    @Then("^Dunning Instance State is \"([^\"]*)\"$$")
+    @Then("^Dunning Instance State is \"([^\"]*)\"$")
     public void dunningInstanceStatus(String state){
         String message = String.format("Dunning instance state is not \"%s\"", state);
         Assert.assertThat(message, new OdooDunningPages().getDunningInstanceState().getText(), equalTo(state));
     }
 
-    @Then("^Dunning Instance Description is \"([^\"]*)\"$$")
+    @Then("^Dunning Instance Description is \"([^\"]*)\"$")
     public void dunningInstanceDescription(String state){
         String message = String.format("Dunning instance description is not \"%s\"", state);
-        Assert.assertThat(message, new OdooDunningPages().getDunningInstanceState().getText(), equalTo(state));
+        Assert.assertThat(message, new OdooDunningPages().getDunningInstanceDescription().getText(), equalTo(state));
+    }
+
+    @Then("Dunning Instance Cost Entry is filled in")
+    public void dunningInstanceCostEntry(String costEntry){
+        String message = String.format("Dunning instance cost entry is not filled in", costEntry);
+        Assert.assertThat(message, new OdooDunningPages().getDunningInstanceCostEntry().getText(), notNullValue());
+    }
+
+    @Then("^Dunning Instance Letter State is \"([^\"]*)\"$")
+    public void dunningInstanceLetterState(String letterState){
+        String message = String.format("Dunning instance letter state is not \"%s\"", letterState);
+        Assert.assertThat(message, new OdooDunningPages().getDunningInstanceLetterState().getText(), equalTo(letterState));
     }
 
     @Then("^Dunning invoice number is same as \"([^\"]*)\"$")

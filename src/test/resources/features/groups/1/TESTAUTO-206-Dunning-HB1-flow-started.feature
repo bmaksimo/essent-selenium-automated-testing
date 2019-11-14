@@ -49,7 +49,10 @@ Feature: TESTAUTO-206 Dunning-HB1-flow-started
        And Odoo top menu is "Accounting"
        And Odoo left menu is "Dunning Instances"
        And Advanced search is
-           |     field      |   operator  |          value          |
-           | Customer       |   contains  | parameter:accountNumber |
+          |     field      |   operator  |          value          |
+          | Customer       |   contains  | 1000000810 |
+       And Column "Customer" of the "1st" row is clicked
        And Dunning Instance Description is "HB1"
-       Then Dunning invoice number is same as "parameter:invoiceNumber"
+       And Dunning Instance State is "Done"
+       And Dunning Instance Cost Entry is filled in
+       And Dunning Instance Letter State is "Success"

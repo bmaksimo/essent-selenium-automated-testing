@@ -17,10 +17,22 @@ public class OdooDunningPages extends Component {
         return seleniumDriver.findElementWhenVisible(By.xpath("//div[@class='oe_list oe_view oe_cannot_create']//td[@data-field='state']"));
     }
 
-    public WebElement getDunningDescriptionState() {
+    public WebElement getDunningInstanceDescription() {
         awaitOdooRequestToFinish(60);
         Sleeper.sleepTightInSeconds(4);
         return seleniumDriver.findElementWhenVisible(By.xpath("//div[@class='oe_list oe_view oe_cannot_create']//td[@data-field='description']"));
+    }
+
+    public WebElement getDunningInstanceCostEntry() {
+        awaitOdooRequestToFinish(60);
+        Sleeper.sleepTightInSeconds(4);
+        return seleniumDriver.findElementWhenVisible(By.xpath("//div[@class='oe_list oe_view oe_cannot_create']//td[@data-field='cost_move_line_id']"));
+    }
+
+    public WebElement getDunningInstanceLetterState() {
+        awaitOdooRequestToFinish(60);
+        Sleeper.sleepTightInSeconds(4);
+        return seleniumDriver.findElementWhenVisible(By.xpath("//div[@class='oe_list oe_view oe_cannot_create']//td[@data-field='correspondence_id']"));
     }
 
     public WebElement getDunningInvoiceNumber() {
