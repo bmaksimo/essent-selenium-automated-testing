@@ -7,7 +7,7 @@
   <parent>
     <groupId>com.essent.be</groupId>
     <artifactId>com.essent.be.uaas-maven.parent-pom</artifactId>
-    <version>3.12.0-SNAPSHOT</version>
+    <version>3.13.0-SNAPSHOT</version>
     <relativePath>../uaas-maven/parent-pom/</relativePath>
   </parent>
 
