@@ -1,12 +1,12 @@
 package stepdefinitions.dwp.contracts.b2c;
 
-import com.billinghouse.test_automation.util.dsl.EssentDateTimeFormat;
-import com.billinghouse.test_automation.util.dsl.IntervalUtil;
+import com.billinghouse.testautomation.util.dsl.EssentDateTimeFormat;
+import com.billinghouse.testautomation.util.dsl.IntervalUtil;
 import com.essent.testing.dwp.constant.ParameterKeys;
 import com.essent.testing.dwp.pageobject.ViewList;
 import com.essent.testing.dwp.pageobject.elements.NonEditable;
 import com.essent.testing.dwp.pageobject.impl.elements.NonEditableImpl;
-import com.essent.testing.dwp.pageobject.list_view.ViewListTestObject;
+import com.essent.testing.dwp.pageobject.listview.ViewListTestObject;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -20,11 +20,11 @@ import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.support.ui.FluentWait;
 import stepdefinitions.dwp.navigation.NavigationElements;
 import stepdefinitions.dwp.tables.DwpArrows;
-import stepdefinitions.dwp.view_list.ViewListChecks;
+import stepdefinitions.dwp.viewlist.ViewListChecks;
 
 import java.util.List;
 
-import static com.billinghouse.test_automation.util.dsl.IntervalUtil.productTnterval;
+import static com.billinghouse.testautomation.util.dsl.IntervalUtil.productTnterval;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.fail;
 

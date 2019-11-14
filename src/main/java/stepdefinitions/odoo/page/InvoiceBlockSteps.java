@@ -1,7 +1,7 @@
 package stepdefinitions.odoo.page;
 
-import com.billinghouse.test_automation.util.dsl.DateExpressionsUtil;
-import com.billinghouse.test_automation.util.dsl.EssentDateTimeFormat;
+import com.billinghouse.testautomation.util.dsl.DateExpressionsUtil;
+import com.billinghouse.testautomation.util.dsl.EssentDateTimeFormat;
 import com.essent.testing.odoo.pageobject.impl.page.InvoiceBlockPage;
 import com.essent.testing.odoo.scenario.OdooScenario;
 import cucumber.api.java.en.And;

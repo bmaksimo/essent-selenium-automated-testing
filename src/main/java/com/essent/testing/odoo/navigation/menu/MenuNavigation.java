@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static com.billinghouse.test_automation.util.gherkin.DateTimeFormatUtil.printPeriod;
+import static com.billinghouse.testautomation.util.gherkin.DateTimeFormatUtil.printPeriod;
 
 /**
  * Migrated version of TrPlusMenuSelectAction

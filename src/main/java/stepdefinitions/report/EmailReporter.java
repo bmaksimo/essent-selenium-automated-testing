@@ -1,6 +1,6 @@
 package stepdefinitions.report;
 
-import com.billinghouse.test_automation.util.msg.EmailService;
+import com.billinghouse.testautomation.util.msg.EmailService;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.scenario.RegisteredScenario;

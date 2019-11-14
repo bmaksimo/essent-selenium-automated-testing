@@ -1,7 +1,7 @@
 package stepdefinitions.dwp.dashboard.details;
 
-import com.billinghouse.test_automation.util.dsl.DateExpressionsUtil;
-import com.billinghouse.test_automation.util.dsl.EssentDateTimeFormat;
+import com.billinghouse.testautomation.util.dsl.DateExpressionsUtil;
+import com.billinghouse.testautomation.util.dsl.EssentDateTimeFormat;
 import com.essent.testing.dwp.pageobject.dashboard.AccountDetails;
 import com.essent.testing.dwp.pageobject.impl.dashboard.AccountDetailsImpl;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.details.DetailsPage;

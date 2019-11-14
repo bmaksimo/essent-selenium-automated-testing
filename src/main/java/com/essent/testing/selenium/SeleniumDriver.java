@@ -25,7 +25,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
-import static com.billinghouse.test_automation.util.gherkin.DateTimeFormatUtil.printPeriod;
+import static com.billinghouse.testautomation.util.gherkin.DateTimeFormatUtil.printPeriod;
 
 public abstract class SeleniumDriver {
     private static final Logger logger = Logger.getLogger(SeleniumDriver.class);

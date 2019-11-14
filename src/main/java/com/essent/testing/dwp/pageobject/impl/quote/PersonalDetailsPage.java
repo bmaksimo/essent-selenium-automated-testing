@@ -1,6 +1,6 @@
 package com.essent.testing.dwp.pageobject.impl.quote;
 
-import com.billinghouse.test_automation.util.gherkin.DateTimeFormatUtil;
+import com.billinghouse.testautomation.util.gherkin.DateTimeFormatUtil;
 import com.essent.automation.autocrat.Model;
 import org.apache.commons.lang3.StringUtils;
 import stepdefinitions.dwp.tables.CustomerDetails;

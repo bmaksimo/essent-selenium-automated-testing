@@ -10,7 +10,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static com.billinghouse.test_automation.util.dsl.NumericUtil.ordinalAsInt;
+import static com.billinghouse.testautomation.util.dsl.NumericUtil.ordinalAsInt;
 import static com.essent.testing.selenium.helper.fluent_wait.FluentWaitUtil.createPollingWaiter;
 
 public abstract class RegisteredScenario {

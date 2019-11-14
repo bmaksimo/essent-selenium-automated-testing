@@ -1,6 +1,6 @@
 package stepdefinitions.dwp.quote.b2c;
 
-import com.billinghouse.test_automation.util.random.CustomerRandomDataGenerator;
+import com.billinghouse.testautomation.util.random.CustomerRandomDataGenerator;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.automation.util.Sleeper;

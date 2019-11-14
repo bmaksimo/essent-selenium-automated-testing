@@ -9,7 +9,7 @@ import stepdefinitions.dwp.tables.FieldDescriptor;
 
 import java.util.Locale;
 
-import static com.billinghouse.test_automation.util.dsl.NumericUtil.amountAsInt;
+import static com.billinghouse.testautomation.util.dsl.NumericUtil.amountAsInt;
 import static com.essent.testing.dwp.autocrat.element.quote.BillingElements.*;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.INPUT;
 public class BillingDetailsPage extends QuoteCreationGuidedStep {

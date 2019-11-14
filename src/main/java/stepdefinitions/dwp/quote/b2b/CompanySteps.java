@@ -1,7 +1,6 @@
 package stepdefinitions.dwp.quote.b2b;
 
-import com.billinghouse.test_automation.util.random.CustomerRandomDataGenerator;
-import com.essent.testing.dwp.pageobject.elements.NonEditable;
+import com.billinghouse.testautomation.util.random.CustomerRandomDataGenerator;
 import com.essent.testing.dwp.pageobject.impl.elements.NonEditableImpl;
 import com.essent.testing.dwp.pageobject.impl.quote.CompanyDetailsAddressPage;
 import com.essent.testing.dwp.pageobject.impl.quote.ContactDetailsPage;
@@ -12,14 +11,14 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import org.apache.commons.lang3.StringUtils;
-import stepdefinitions.dwp.page_object.CustomerAcceptance;
+import stepdefinitions.dwp.pageobject.CustomerAcceptance;
 import stepdefinitions.dwp.tables.CustomerDetails;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.JS_BASE_FORM_INPUT;
+import static com.billinghouse.testautomation.javascript.testrunner.JsTestRegistry.JS_BASE_FORM_INPUT;
 
 public class CompanySteps extends DwpScenario {
 

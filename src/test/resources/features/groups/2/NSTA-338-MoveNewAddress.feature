@@ -54,44 +54,44 @@ Feature: NSTA - 338 Move new address
 
         When Dashboard menu is "Contracten"
         And "1st" List element with value at column "EAN-code" is checked
-#        And "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
-#
-#        When Dashboard menu is "Contracten"
-#        And Old contract data is copied
-#        And Dashboard menu is "Contracten"
-#        And Plus action of "1" element from "ContractsOnAccount" and click on "Verhuis NA"
-#
-#        And New move customer address is
-#            | street    | houseNr | houseNrAdd | bus | postalCode | city | country |
-#            | Heistraat | 83      |            |     | 2440       | GEEL |         |
-#
-#        And "Startdatum verhuis" date is "1 day before now"
-#
-#        And "Is de meter geopend" turn on
-#        And "EAN-code" input is "parameter:randomEAN"
-#        And "Datum meteropname" date is "1 day before now"
-#        And "Meterstand enkelvoudig" input is "1000"
-#        And Option "test" "is" "On"
-#        And "MM should respond" turn on
-#        Then Bevestigen
-#
-#        When Dashboard menu is "Billing"
-#        And Dashboard menu is "Contracten"
-#        And "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
-#        And "2nd" list element has cell value "Actief" at column "Contractnummer" polling 100 seconds
-#        Then Table "Contracten" contains cell value "Sales Getekend (Geaccepteerd)" at column "Type & status" on "2nd" row
-#        And Check if start date of new ean is the same date as filled in as “Move date”-"1 day before now"
-#        And Check if the end date of new ean is the same date as the end date of the old one
-#        And Check if products of both contracts are the same
-#        And Check if discounts of both contracts are the same
-#        And Check if prices of both contracts are the same
-#
-#        When Dashboard menu is "Marktberichten"
-#        Then Market message contains:
-#            | EAN-code & Producttype | Module & Label | Status & ED       |
-#            | parameter:EAN-code     | START ACCESS   | 5 days before now |
-#
-#        When Dashboard menu is "Service"
-#        Then There is a case where onderwerp is "Verhuis"
-#        And Table "Interacties" contains value "Outbound document: Old inhabitant remains customer" at column "Type & Onderwerp"
-#        And Table "Interacties" contains value "parameter:caseNumber" at column "Verwante case"
+        And "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
+
+        When Dashboard menu is "Contracten"
+        And Old contract data is copied
+        And Dashboard menu is "Contracten"
+        And Plus action of "1" element from "ContractsOnAccount" and click on "Verhuis NA"
+
+        And New move customer address is
+            | street    | houseNr | houseNrAdd | bus | postalCode | city | country |
+            | Heistraat | 83      |            |     | 2440       | GEEL |         |
+
+        And "Startdatum verhuis" date is "1 day before now"
+
+        And "Is de meter geopend" turn on
+        And "EAN-code" input is "parameter:randomEAN"
+        And "Datum meteropname" date is "1 day before now"
+        And "Meterstand enkelvoudig" input is "1000"
+        And Option "test" "is" "On"
+        And "MM should respond" turn on
+        Then Bevestigen
+
+        When Dashboard menu is "Billing"
+        And Dashboard menu is "Contracten"
+        And "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
+        And "2nd" list element has cell value "Actief" at column "Contractnummer" polling 100 seconds
+        Then Table "Contracten" contains cell value "Sales Getekend (Geaccepteerd)" at column "Type & status" on "2nd" row
+        And Check if start date of new ean is the same date as filled in as “Move date”-"1 day before now"
+        And Check if the end date of new ean is the same date as the end date of the old one
+        And Check if products of both contracts are the same
+        And Check if discounts of both contracts are the same
+        And Check if prices of both contracts are the same
+
+        When Dashboard menu is "Marktberichten"
+        Then Market message contains:
+            | EAN-code & Producttype | Module & Label | Status & ED       |
+            | parameter:EAN-code     | START ACCESS   | 5 days before now |
+
+        When Dashboard menu is "Service"
+        Then There is a case where onderwerp is "Verhuis"
+        And Table "Interacties" contains value "Outbound document: Old inhabitant remains customer" at column "Type & Onderwerp"
+        And Table "Interacties" contains value "parameter:caseNumber" at column "Verwante case"
