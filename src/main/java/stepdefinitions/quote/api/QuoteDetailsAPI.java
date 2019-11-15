@@ -4,7 +4,6 @@ import com.billinghouse.test_automation.util.random.CustomerRandomDataGenerator;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
-import com.essent.testing.util.resource.ResourceUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.http.Cookies;
@@ -12,27 +11,21 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.apache.log4j.Logger;
 import stepdefinitions.quote.api.builders.QuoteDetailsBuilder;
+import stepdefinitions.quote.api.builders.QuoteDetailsCustomerDTOBuilder;
 import stepdefinitions.quote.api.builders.QuoteDetailsDTOBuilder;
 import stepdefinitions.quote.api.helper.PayloadMapper;
 import stepdefinitions.quote.api.helper.RequestHelper;
 import stepdefinitions.quote.api.model.QuoteDetails;
 import stepdefinitions.quote.api.model.QuoteLines;
 import stepdefinitions.quote.api.model.QuotesOnAccount;
-import stepdefinitions.quote.api.model.dto.PayloadDTO;
 import stepdefinitions.quote.api.model.dto.QuoteDetailsDTO;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Map;
 
 public class QuoteDetailsAPI extends AbstractAPI {
 
     private final static Logger LOGGER = Logger.getLogger(QuoteDetailsAPI.class);
-
-    private static String PATH_TO_QUOTE = ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_QUOTE);
-    private static String PATH_TO_PAYLOAD = ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_PAYLOAD);
-    private static String PATH_TO_PAYLOAD_SUPPLIER_SWITCH = ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_PAYLOAD_SUPPLIER_SWITCH);
 
     public String getTariffSheetID(Cookies cookie, String startedFlowName) throws IOException {
         String payload = "";
@@ -60,6 +53,22 @@ public class QuoteDetailsAPI extends AbstractAPI {
         return quoteDetails;
     }
 
+    public QuoteDetails getQuoteDetailsCustomer(Cookies cookie, String tariffSheetId, String startedFlowName, String area, String signInDate, String contactPreference) throws IOException {
+        String ean = PrepareDataForContract.generateEAN();
+        String birthDate = PrepareDataForContract.generateDOBForAnAdult();
+        String ibanBE = PrepareDataForContract.getValidIbanBE();
+        String companyNumber = PrepareDataForContract.generateValidBECompanyNumber();
+        Map<String, String> accountNames = CustomerRandomDataGenerator.createAccountName(startedFlowName);
+
+        QuoteDetailsDTO dto = buildQuoteDetailsCustomerDTO(tariffSheetId, area, signInDate, ean, birthDate, ibanBE, accountNames, contactPreference);
+        String payload = new ObjectMapper().writeValueAsString(dto);
+        Response quoteResponse = new RequestHelper().postRequest(STATUS_CREATED, cookie, payload, buildCreateQuotePath());
+
+        QuoteDetails quoteDetails = buildQuoteDetails(ean, birthDate, ibanBE, companyNumber, accountNames, quoteResponse);
+        LOGGER.debug("Quote details: " + quoteDetails.toString());
+        return quoteDetails;
+    }
+
     private QuoteDetailsDTO buildQuoteDetailsDTO(String tariffSheetId, String meterOpen, String signInDate, String ean, String birthDate, String ibanBE, Map<String, String> generatedNames4account, String contactPreference) throws IOException {
         return new QuoteDetailsDTOBuilder()
                 .withBirthdate(birthDate)
@@ -70,6 +79,18 @@ public class QuoteDetailsAPI extends AbstractAPI {
                 .withSignInDate(signInDate)
                 .withPayload(meterOpen, tariffSheetId, ean)
                 .build();
+    }
+
+    private QuoteDetailsDTO buildQuoteDetailsCustomerDTO(String tariffSheetId, String area, String signInDate, String ean, String birthDate, String ibanBE, Map<String, String> generatedNames4account, String contactPreference) throws IOException {
+        return new QuoteDetailsCustomerDTOBuilder()
+            .withBirthdate(birthDate)
+            .withFirstName(generatedNames4account.get("firstName"))
+            .withLastName(generatedNames4account.get("lastName"))
+            .withGeneralChannel(contactPreference)
+            .withIban(ibanBE)
+            .withSignInDate(signInDate)
+            .withPayloadCustomer(area, tariffSheetId, ean)
+            .build();
     }
 
     private QuoteDetails buildQuoteDetails(String ean, String dateOfBirth, String ibanBE, String companyNumber, Map<String, String> generatedNames4account, Response quoteResponse) {
