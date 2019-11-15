@@ -50,11 +50,11 @@ Feature: TESTAUTO-285 Dunning-invoice-block-from-Odoo
         Then Column "Account Number" with value "parameter:accountNumber" is clicked
 
         When Button "Outstanding" is clicked
-        And "Verkoop manueel" is open
+        And "VERKOOP AMR MMR MANUEEL (EUR) (1)" is open
         And Manage invoice block is clicked
         And Create new invoice block button is clicked
         And Invoice block reason is "WCO"
-        And End date is "1 month from now"
+        And End date is "31 days from now"
         Then Save invoice block button is clicked
 
         Given I renew login to DWP as "salesmarketing.testautomation.b2c@essent.be"

@@ -5,7 +5,7 @@
 Feature: NUAT-481: Rejection - nl_BE
 
     Background:
-        Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
+        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
     @NUAT-481
     Scenario: Rejecting contract

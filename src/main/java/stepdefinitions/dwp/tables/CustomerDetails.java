@@ -1,5 +1,8 @@
 package stepdefinitions.dwp.tables;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class CustomerDetails {
     private String firstName;
     private String lastName;
@@ -84,9 +87,6 @@ public class CustomerDetails {
     }
 
     public String toString() {
-        return "Customer {" +
-            "name='" + firstName + " " + lastName + "\'" +
-            ", email='" + email + '\'' +
-            '}';
+        return new ReflectionToStringBuilder(this, ToStringStyle.NO_CLASS_NAME_STYLE).toString();
     }
 }

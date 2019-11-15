@@ -1,7 +1,7 @@
 package stepdefinitions.quote.api;
 
-import com.billinghouse.test_automation.util.dsl.DateTimeRegex;
-import com.billinghouse.test_automation.util.dsl.EssentDateTimeFormat;
+import com.billinghouse.testautomation.util.dsl.DateTimeRegex;
+import com.billinghouse.testautomation.util.dsl.EssentDateTimeFormat;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
@@ -15,6 +15,7 @@ import cucumber.api.java.en.When;
 import io.restassured.http.Cookies;
 import io.restassured.response.Response;
 import org.junit.Assert;
+import stepdefinitions.dwp.tables.CustomerDetails;
 import stepdefinitions.quote.api.helper.AsyncExecutor;
 import stepdefinitions.quote.api.helper.RequestHelper;
 import stepdefinitions.quote.api.model.ContractDetails;
@@ -23,7 +24,7 @@ import stepdefinitions.quote.api.model.QuoteDetails;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.expandFrom;
+import static com.billinghouse.testautomation.util.dsl.DateExpressionsUtil.expandFrom;
 import static org.awaitility.Awaitility.await;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -90,10 +91,19 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
         this.flow = flowType;
         String signInDateApiDate = toDwpAPIDate(parameterProvider.getValueOrParameterAsString(signInDate));
         this.quoteDetails = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow, meterOpen, signInDateApiDate, contactPreference);
-        String retrievedAccountNumber = quoteDetails.getAccountNumber();
-        parameterProvider.put("accountNumber", retrievedAccountNumber);
+        parameterProvider.put("suitecrm-customer", fillInCustomerDetailsContext(this.quoteDetails));
+        parameterProvider.put("accountNumber", quoteDetails.getAccountNumber());
         parameterProvider.put("EAN-code", quoteDetails.getEan());
         parameterProvider.put("suitecrm-customer-name", quoteDetails.getAccountName());
+    }
+
+    private CustomerDetails fillInCustomerDetailsContext(QuoteDetails quoteDetails) {
+        CustomerDetails customer = new CustomerDetails();
+        customer.setFirstName(quoteDetails.getFirstName());
+        customer.setLastName(quoteDetails.getLastName());
+        customer.setBirthDate(quoteDetails.getDateOfBirth());
+
+        return customer;
     }
 
     @When("^New tc1_quote is created$")
@@ -222,5 +232,11 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
             }
         } while (response.getBody().toString().contains("done"));
 
+    }
+
+    @Then("^Tariffsheet is available$")
+    public void tariffsheetIsAvailable() throws IOException {
+        flowIsStarted("");
+        Assert.assertFalse("Tariffsheet does not exist",tariffSheetID.isEmpty());
     }
 }

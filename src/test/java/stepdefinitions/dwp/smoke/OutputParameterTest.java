@@ -9,7 +9,7 @@ import cucumber.api.java.en.When;
 import org.joda.time.DateTime;
 import org.junit.Assert;
 
-import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.expandFrom;
+import static com.billinghouse.testautomation.util.dsl.DateExpressionsUtil.expandFrom;
 
 
 public class OutputParameterTest extends RegisteredScenario {

@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 /*
@@ -44,24 +45,18 @@ public class TableFilterBase {
         Sleeper.sleepTightInSeconds(5);
         this.tableName = tableName;
         this.tablePath = buildTablePath(tablePathBase, this.tableName);
-        logger.info("this.tablePath");
-        logger.info(this.tablePath);
         this.headers = getHeaders();
-        logger.info("this.headers");
-        logger.info(this.headers);
         this.rows = this.seleniumDriver.findElements(By.xpath(this.tablePath + this.tableRowsBase));
-        logger.info("this.rows");
-        logger.info(this.rows);
         return this;
     }
 
     public TableFilterBase findBy(List<Filter> filters) throws Exception {
+        List<WebElement> currentRowCells = new ArrayList<WebElement>();
+        logger.info(this.contextParameters + " rows: " + this.rows.size());
         for (WebElement row : this.rows) {
-            List<WebElement> cells = row.findElements(By.tagName("td"));
-            logger.info("cells");
-            logger.info(cells);
-            if (isExpectedColumnValue(filters, cells)) {
-                selectedRow = cells;
+            currentRowCells = row.findElements(By.tagName("td"));
+            if (isExpectedColumnValue(filters, currentRowCells)) {
+                this.selectedRow = currentRowCells;
                 return this;
             }
         }
@@ -112,7 +107,7 @@ public class TableFilterBase {
 
     private List<String> getHeaders() {
         return seleniumDriver
-            .findElements(By.xpath(this.tablePath + "//thead/tr/th"))
+            .findElementsWithDefaultWaiting(By.xpath(this.tablePath + "//thead/tr/th"))
             .stream()
             .map(WebElement::getText)
             .map(String::toUpperCase)

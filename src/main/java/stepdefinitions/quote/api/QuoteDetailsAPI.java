@@ -1,10 +1,9 @@
 package stepdefinitions.quote.api;
 
-import com.billinghouse.test_automation.util.random.CustomerRandomDataGenerator;
+import com.billinghouse.testautomation.util.random.CustomerRandomDataGenerator;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
-import com.essent.testing.util.resource.ResourceUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.http.Cookies;
@@ -18,12 +17,9 @@ import stepdefinitions.quote.api.helper.RequestHelper;
 import stepdefinitions.quote.api.model.QuoteDetails;
 import stepdefinitions.quote.api.model.QuoteLines;
 import stepdefinitions.quote.api.model.QuotesOnAccount;
-import stepdefinitions.quote.api.model.dto.PayloadDTO;
 import stepdefinitions.quote.api.model.dto.QuoteDetailsDTO;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Map;
 
 public class QuoteDetailsAPI extends AbstractAPI {

@@ -1,21 +1,17 @@
 package stepdefinitions.dwp.navigation;
 
 
-import com.essent.automation.util.Sleeper;
+import com.essent.testing.dwp.pageobject.impl.navigation.DashboardMenuPage;
 import com.essent.testing.dwp.pageobject.impl.navigation.DwpPlusMenu;
 import com.essent.testing.dwp.pageobject.impl.navigation.TopActionsPageImpl;
 import com.essent.testing.dwp.pageobject.navigation.TopActionsPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.runtime.CucumberException;
 import org.junit.Assert;
-import org.openqa.selenium.support.ui.FluentWait;
 import stepdefinitions.dwp.menu.TopMenuActions;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Predicate;
 
-import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -33,31 +29,6 @@ public abstract class NavigationElements extends DwpScenario {
         private boolean testWithFixedTime(String action, int waitingTime) {
             TopActionsPage topActions = new TopActionsPageImpl();
             return topActions.executeTopActionWithFixedWait(action, waitingTime);
-        }
-    }
-
-    private class ClickListPlusAction implements Predicate<String> {
-        @Override
-        public boolean test(String item) {
-            seleniumDriver.waitForRequestsToFinish();
-            Map<String, String> options = new HashMap<>();
-            options.put("item", item);
-            return executeJavascriptTest(JS_TR_LIST_PLUS_MENU_ACTION, options);
-        }
-    }
-
-    private class ClickDashboardMenu implements Predicate<String> {
-        @Override
-        public boolean test(String menu) {
-            Map<String, Object> options = new HashMap<>();
-            options.put("menu", menu);
-            return executeJavascriptTest(JS_TR_CLICK_DASHBOARD_MENU_BUTTON, options);
-        }
-
-        public boolean testNow(String menu) {
-            Map<String, Object> options = new HashMap<>();
-            options.put("menu", menu);
-            return executeJavascriptTestImmediately(JS_TR_CLICK_DASHBOARD_MENU_BUTTON, options, true);
         }
     }
 
@@ -92,30 +63,12 @@ public abstract class NavigationElements extends DwpScenario {
             success, is(true));
     }
 
-    protected void clickListPlusAction(String item) {
-        FluentWait<ClickListPlusAction> waiter = waiter(new ClickListPlusAction(), 20, 1);
-        waiter.withMessage(String.format("List Plus Action \"%s\" is undefined or disabled.", item));
-        waiter.until((ClickListPlusAction action) -> action.test(item));
-    }
-
-    protected void clickDashboardMenu(String menu) {
-        seleniumDriver.waitForRequestsToFinish();
-        FluentWait<ClickDashboardMenu> waiter = waiter(new ClickDashboardMenu(), 120, 1);
-        waiter.withMessage(String.format("Dashboard Menu  \"%s\" is undefined.", menu));
-        waiter.until((ClickDashboardMenu dashboardMenu) -> dashboardMenu.test(menu));
-    }
-
-    protected void clickDashboardMenu(String menu, int waitingTime) {
-        Sleeper.sleepTightInSeconds(waitingTime);
-        new ClickDashboardMenu().testNow(menu);
-    }
-
     protected void loopBack(String arrow, String dashboardMenu) {
         try {
             seleniumDriver.waitForRequestsToFinish();
             clickTopArrow(arrow);
             seleniumDriver.waitForRequestsToFinish();
-            clickDashboardMenu(dashboardMenu);
+            new DashboardMenuPage().clickOnDashboardElement(dashboardMenu);
             seleniumDriver.waitForRequestsToFinish();
         } catch (Throwable t) {
             throw new CucumberException(t);

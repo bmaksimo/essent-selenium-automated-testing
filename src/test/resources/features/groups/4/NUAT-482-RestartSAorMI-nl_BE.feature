@@ -5,7 +5,7 @@
 Feature: NUAT-482: Restart SA or MI - nl_BE
 
     Background:
-        Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
+        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
     @NUAT-482
     Scenario: Restart for SA Or MI

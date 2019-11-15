@@ -1,9 +1,10 @@
 package stepdefinitions.dwp.quote.b2c;
 
-import com.billinghouse.test_automation.util.random.CustomerRandomDataGenerator;
+import com.billinghouse.testautomation.util.random.CustomerRandomDataGenerator;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.automation.util.Sleeper;
+import com.essent.testing.dwp.pageobject.guidedflow.cupq.NewQuotePage;
 import com.essent.testing.dwp.pageobject.impl.modal.quote.SimilarAccountDialogImpl;
 import com.essent.testing.dwp.pageobject.impl.quote.*;
 import com.essent.testing.dwp.pageobject.impl.quote_for_account.OnlineQuoteSignatureModalPage;
@@ -67,8 +68,14 @@ public class QuoteSteps extends DwpScenario {
     }
 
     @And("^Deduplication dialogue link \"([^\"]*)\" is clicked$")
-    public void deduplicationDialogueLinkIsClicked(String linkText) throws Throwable {
+    public void deduplicationDialogueLinkIsClicked(String linkText){
         new SimilarAccountDialogImpl().clickOnLink(linkText);
+    }
+
+    @And("^Sepa signature location is \"([^\"]*)\"$")
+    public void sepaSignatureLocationIs(String city){
+        NewQuotePage nqp = new NewQuotePage();
+        nqp.setSepaSignatureLocation(city);
     }
 
     private class VerifyTariffSheetPriceAlert implements FlowAwarePredicate<QuoteSteps> {
@@ -317,13 +324,6 @@ public class QuoteSteps extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
     }
 
-    @And("^Electricity EAN code is selected$")
-    public void selectEanCode() {
-        Map<String, String> options = new HashMap<>();
-        boolean success = executeJavascriptTest("TrSelectEanCode", options);
-        assertThat(success, is(true));
-    }
-
     @And("^EAN code is generated$")
     public void generateEan() {
         String eanCode = PrepareDataForContract.generateEAN();
@@ -334,18 +334,13 @@ public class QuoteSteps extends DwpScenario {
     @And("^Electricity EAN code is \"([^\"]*)\"$")
     public void electricityEANCodeIs(String ean) {
         ConnectionDetails electricityConnectionDetails = new ConnectionDetails();
-        switch (ean) {
-            case "selected":
-                selectEanCode();
-                return;
-            case "random":
-                String generatedEan = PrepareDataForContract.generateEAN();
-                electricityConnectionDetails.setEan(generatedEan);
-                parameterProvider.put("EAN-code-generated", generatedEan);
-                break;
-            default:
-                electricityConnectionDetails.setEan(ean);
-        }
+
+        if ("random".equalsIgnoreCase(ean)) {
+            String generatedEan = PrepareDataForContract.generateEAN();
+            electricityConnectionDetails.setEan(generatedEan);
+            parameterProvider.put("EAN-code-generated", generatedEan);
+        } else electricityConnectionDetails.setEan(ean);
+
         ConnectionDetailsPage page = new ConnectionDetailsPage();
         Sleeper.sleepTightInSeconds(5);
         page.setElectricityConnectionDetails(electricityConnectionDetails);

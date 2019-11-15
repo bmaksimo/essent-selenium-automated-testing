@@ -1,7 +1,7 @@
 package stepdefinitions.dwp.input;
 
-import com.billinghouse.test_automation.util.dsl.DateExpressionsUtil;
-import com.billinghouse.test_automation.util.dsl.EssentDateTimeFormat;
+import com.billinghouse.testautomation.util.dsl.DateExpressionsUtil;
+import com.billinghouse.testautomation.util.dsl.EssentDateTimeFormat;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.elements.SelectWithSearch;
 import com.essent.testing.dwp.pageobject.impl.elements.SelectWithSearchImpl;
@@ -22,7 +22,7 @@ import stepdefinitions.dwp.tables.plus.SwitchState;
 import java.util.*;
 import java.util.function.Predicate;
 
-import static com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry.*;
+import static com.billinghouse.testautomation.javascript.testrunner.JsTestRegistry.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 

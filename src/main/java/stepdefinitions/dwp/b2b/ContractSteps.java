@@ -1,7 +1,7 @@
 package stepdefinitions.dwp.b2b;
 
 import com.essent.automation.util.Sleeper;
-import com.essent.testing.dwp.pageobject.guided_flow.cupq.NewQuotePage;
+import com.essent.testing.dwp.pageobject.guidedflow.cupq.NewQuotePage;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import com.essent.testing.dwp.pageobject.impl.quote.QuoteDetailsPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
@@ -144,13 +144,14 @@ public class ContractSteps extends DwpScenario {
         int currentAttempt = 0;
         boolean displayed = false;
         NewQuotePage nq = new NewQuotePage();
-        while (!displayed && currentAttempt < 2) {
+        while (!displayed && currentAttempt < 5) {
             new ContractPage().searchByClientNumber(naceCode);
             nq.clickOnSearch();
             nq.checkNaceCodeCheckBox();
             nq.saveSelectedItem();
             displayed = nq.isNaceCodeElementDisplayed();
             currentAttempt++;
+            if (!displayed) Sleeper.sleepTightInSeconds(10);
         }
     }
 

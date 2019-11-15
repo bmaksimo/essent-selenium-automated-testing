@@ -1,5 +1,7 @@
 package stepdefinitions.dwp.overview;
 
+import com.essent.automation.util.Sleeper;
+import com.essent.testing.dwp.pageobject.impl.navigation.DashboardMenuPage;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -14,15 +16,20 @@ public class DashboardMenu extends NavigationElements {
     }
 
     @When("^Dashboard menu is \"([^\"]*)\"$")
-    public void checkDashboardMenuItem(String menuItem){
-        clickDashboardMenu(menuItem);
-        parameterProvider.put("navigation", "back");
-        parameterProvider.put("dashboard-menu", menuItem);
+    public void goToDashboardMenuItem(String menuItem) {
+        seleniumDriver.waitForRequestsToFinish();
+        new DashboardMenuPage().clickOnDashboardElement(menuItem);
+        addParametersToContext(menuItem);
     }
 
     @When("^Dashboard menu is \"([^\"]*)\" waiting for (\\d+) seconds$")
-    public void checkDashboardMenuItem(String menuItem, int waitingTime){
-        clickDashboardMenu(menuItem, waitingTime);
+    public void goToDashboardMenuItem(String menuItem, int waitingTime){
+        Sleeper.sleepTightInSeconds(waitingTime);
+        new DashboardMenuPage().clickOnDashboardElementNow(menuItem);
+        addParametersToContext(menuItem);
+    }
+
+    private void addParametersToContext(String menuItem) {
         parameterProvider.put("navigation", "back");
         parameterProvider.put("dashboard-menu", menuItem);
     }

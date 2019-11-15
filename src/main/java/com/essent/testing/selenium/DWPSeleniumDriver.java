@@ -1,8 +1,8 @@
 package com.essent.testing.selenium;
 
-import com.billinghouse.test_automation.javascript.testrunner.JavascriptTestRunner;
-import com.billinghouse.test_automation.javascript.testrunner.JsTestRegistry;
-import com.billinghouse.test_automation.javascript.testrunner.impl.SeleniumJsTestExpanderService;
+import com.billinghouse.testautomation.javascript.testrunner.JavascriptTestRunner;
+import com.billinghouse.testautomation.javascript.testrunner.JsTestRegistry;
+import com.billinghouse.testautomation.javascript.testrunner.impl.SeleniumJsTestExpanderService;
 import com.essent.testing.util.resource.ResourceUtil;
 import com.paulhammant.ngwebdriver.NgWebDriver;
 import cucumber.runtime.CucumberException;
@@ -28,8 +28,7 @@ import java.nio.charset.Charset;
 import java.time.Duration;
 import java.util.*;
 
-import static com.billinghouse.test_automation.util.gherkin.DateTimeFormatUtil.printPeriod;
-import static com.essent.testing.selenium.helper.fluent_wait.FluentWaitUtil.createWaiter;
+import static com.billinghouse.testautomation.util.gherkin.DateTimeFormatUtil.printPeriod;
 import static org.junit.Assert.fail;
 
 public class DWPSeleniumDriver extends SeleniumDriver implements JavascriptExecutor, JavascriptTestRunner {

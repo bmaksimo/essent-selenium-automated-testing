@@ -1,8 +1,8 @@
 package stepdefinitions.dwp.soctar;
 
-import com.billinghouse.test_automation.util.dsl.DateExpressionsUtil;
-import com.billinghouse.test_automation.util.file.FileUtil;
-import com.billinghouse.test_automation.util.ssh.JSchUtil;
+import com.billinghouse.testautomation.util.dsl.DateExpressionsUtil;
+import com.billinghouse.testautomation.util.file.FileUtil;
+import com.billinghouse.testautomation.util.ssh.JSchUtil;
 import com.essent.testing.config.ConfigKey;
 import com.essent.testing.config.ConfigProvider;
 import com.essent.testing.dwp.scenario.DwpScenario;
@@ -13,8 +13,8 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.commons.io.FilenameUtils;
 
-import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpContractStartEndDate;
-import static com.billinghouse.test_automation.util.dsl.DateExpressionsUtil.checkAndConvertToSoctarFileDate;
+import static com.billinghouse.testautomation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpContractStartEndDate;
+import static com.billinghouse.testautomation.util.dsl.DateExpressionsUtil.checkAndConvertToSoctarFileDate;
 
 public class SoctarSteps extends DwpScenario {
 

@@ -4,7 +4,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.junit.Test;
 
-import static com.billinghouse.test_automation.util.gherkin.DateTimeFormatUtil.printPeriod;
+import static com.billinghouse.testautomation.util.gherkin.DateTimeFormatUtil.printPeriod;
 
 public class DateTimeTest {
 
