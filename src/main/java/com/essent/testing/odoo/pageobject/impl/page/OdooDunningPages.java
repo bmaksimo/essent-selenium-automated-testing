@@ -14,29 +14,34 @@ public class OdooDunningPages extends Component {
     public WebElement getDunningInstanceState() {
         awaitOdooRequestToFinish(60);
         Sleeper.sleepTightInSeconds(4);
-        return seleniumDriver.findElementWhenVisible(By.xpath("//div[@class='oe_list oe_view oe_cannot_create']//td[@data-field='state']"));
+        return seleniumDriver.findElementWhenVisible(buildQueryByXPath("state"));
     }
 
     public WebElement getDunningInstanceDescription() {
         awaitOdooRequestToFinish(60);
         Sleeper.sleepTightInSeconds(4);
-        return seleniumDriver.findElementWhenVisible(By.xpath("//div[@class='oe_list oe_view oe_cannot_create']//td[@data-field='description']"));
+        return seleniumDriver.findElementWhenVisible(buildQueryByXPath("description"));
     }
 
     public WebElement getDunningInstanceCostEntry() {
         awaitOdooRequestToFinish(60);
         Sleeper.sleepTightInSeconds(4);
-        return seleniumDriver.findElementWhenVisible(By.xpath("//div[@class='oe_list oe_view oe_cannot_create']//td[@data-field='cost_move_line_id']"));
+        return seleniumDriver.findElementWhenVisible(buildQueryByXPath("cost_move_line_id"));
     }
 
     public WebElement getDunningInstanceLetterState() {
         awaitOdooRequestToFinish(60);
         Sleeper.sleepTightInSeconds(4);
-        return seleniumDriver.findElementWhenVisible(By.xpath("//div[@class='oe_list oe_view oe_cannot_create']//td[@data-field='correspondence_id']"));
+        return seleniumDriver.findElementWhenVisible(buildQueryByXPath("correspondence_id"));
     }
 
     public WebElement getDunningInvoiceNumber() {
         awaitOdooRequestToFinish(60);
-        return seleniumDriver.findElementWhenVisible(By.xpath("//div[@class='oe_list oe_view oe_cannot_create']//td[@data-field='move_line_id'] "));
+        return seleniumDriver.findElementWhenVisible(buildQueryByXPath("move_line_id"));
+    }
+
+    private By buildQueryByXPath(String dataField) {
+        String dunningFieldBase = "//div[@class='oe_list oe_view oe_cannot_create']//td[@data-field='${dataField}']";
+        return By.xpath(dunningFieldBase.replace("${dataField}", dataField));
     }
 }
