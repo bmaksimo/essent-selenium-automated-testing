@@ -3,10 +3,8 @@ package stepdefinitions.dwp.page_object;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
-import com.essent.testing.dwp.pageobject.list_view.ViewListTestObject;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.workflows.MarketMessagesPage;
-import com.essent.testing.dwp.pageobject.table.Filter;
-import com.essent.testing.dwp.scenario.DwpScenario;
+import com.essent.testing.table.Filter;
 import io.cucumber.datatable.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -22,7 +20,6 @@ import stepdefinitions.dwp.navigation.NavigationElements;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 public class MarketBerichtenSteps extends NavigationElements {

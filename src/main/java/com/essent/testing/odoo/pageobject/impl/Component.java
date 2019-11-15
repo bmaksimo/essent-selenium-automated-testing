@@ -5,8 +5,11 @@ import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
 import com.essent.automation.core.WebDriverWait;
 import com.essent.testing.context.ContextService;
+import com.essent.testing.dwp.pageobject.table.DWPTableFilter;
+import com.essent.testing.odoo.table.OdooTableFilter;
 import com.essent.testing.selenium.OdooSeleniumDriver;
 import com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter;
+import com.essent.testing.table.Filter;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.lang3.text.StrSubstitutor;
 import org.apache.log4j.Logger;
@@ -16,6 +19,7 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -114,5 +118,13 @@ public abstract class Component {
     public void awaitOdooRequestToFinish(int seconds) {
             new WebDriverWait(seleniumDriver.getDriver(), seconds).withoutException()
                 .until(webDriver -> webDriver.findElements(By.cssSelector(".oe_wait")).isEmpty());
+    }
+
+
+    public List<WebElement> selectRowOnTable(String tableName, List<Filter> filters, String contextParameters) throws Exception {
+        return new OdooTableFilter(contextParameters, seleniumDriver)
+            .getTable(tableName)
+            .findBy(filters)
+            .get();
     }
 }
