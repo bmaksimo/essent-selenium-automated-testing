@@ -3,6 +3,7 @@ package stepdefinitions.dwp.viewlist;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.listview.ViewListTestObject;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
+import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.workflows.MarketMessagesPage;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -61,16 +62,6 @@ public class ViewListChecks extends NavigationElements {
             link.click();
         }
     }
-
-    private class GetListAction implements Predicate<String> {
-        @Override
-        public boolean test(String name) {
-            Map<String, Object> options = new HashMap<>();
-            options.put("name", name);
-            return executeJavascriptTest(JS_TR_GET_LIST_ACTION, options);
-        }
-    }
-
 
     private class ClickTableCellUrl implements Predicate<Map> {
         @Override
@@ -475,9 +466,7 @@ public class ViewListChecks extends NavigationElements {
 
     @And("^List View action is \"([^\"]*)\"$")
     public void getListAction(String name){
-        boolean success = new GetListAction().test(name);
-        assertThat(String.format("List action \"%s\" is undefined.", name), success, is(true));
-        logger().debug(String.format("- STEP: List view action is \"%s\" - PASSED.", name));
+        new MarketMessagesPage().chooseMarketMessageButton(name);
     }
 
     @And("^View List element \"([^\"]*)\" is collected as parameter at \"([^\"]*)\" list row$")

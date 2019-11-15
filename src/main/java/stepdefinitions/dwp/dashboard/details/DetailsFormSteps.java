@@ -107,7 +107,7 @@ public class DetailsFormSteps extends DwpScenario {
     @And("^Check if \"([^\"]*)\" modal is open$")
     public void checkIfModalIsOpen(String modal){
         if (!new DetailsPage().getModalName(modal).isDisplayed()){
-            new MarketMessagesPage().createNewMarktBericht("CREEREN BLOKKERING");
+            new MarketMessagesPage().chooseMarketMessageButton("CREEREN BLOKKERING");
         }
 
     }

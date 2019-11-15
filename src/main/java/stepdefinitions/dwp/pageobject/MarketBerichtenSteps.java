@@ -85,14 +85,14 @@ public class MarketBerichtenSteps extends NavigationElements {
         waiter.withMessage(String.format("Message status did not switch to \"%s\" within \"%s\" seconds", status, atMostSeconds));
         waiter.until((MarketMessagesPage page) -> {
             mp.refreshByName(name);
-            return mp.marketberichtStatus().equalsIgnoreCase(status);
+            return mp.getMarketMessageStatus().equalsIgnoreCase(status);
         });
     }
 
     @Then("^Confirm status is \"([^\"]*)\"$")
     public void confirmStatusIs(String status) {
         MarketMessagesPage mp = new MarketMessagesPage();
-        Assert.assertTrue(mp.marketberichtStatus().equalsIgnoreCase(status));
+        Assert.assertTrue(mp.getMarketMessageStatus().equalsIgnoreCase(status));
     }
 
     @And("^\"([^\"]*)\" is now$")
@@ -106,16 +106,16 @@ public class MarketBerichtenSteps extends NavigationElements {
         String ean = parameterProvider.getValueOrParameterAsString(enaP);
         MarketMessagesPage mp = new MarketMessagesPage();
         Assert.assertEquals(ean, mp.getEanFromTheFirstTransaction());
-        Assert.assertEquals(modul, mp.getModulFromTheFirstTransaction());
-        Assert.assertEquals(status, mp.marketberichtStatus());
+        Assert.assertEquals(modul, mp.getModuleFromTheFirstTransaction());
+        Assert.assertEquals(status, mp.getMarketMessageStatus());
 
     }
 
     @Then("^Marketbericht with module \"([^\"]*)\" changed to status \"([^\"]*)\"$")
     public void marketBerichtWithEANAndModuleSecondTransactionIsInStatus(String modul, String status) {
         MarketMessagesPage mp = new MarketMessagesPage();
-        Assert.assertEquals(modul, mp.getModulFromCancelTransaction());
-        Assert.assertEquals(status, mp.marketberichtCancelStatus());
+        Assert.assertEquals(modul, mp.getModuleFromCancelTransaction());
+        Assert.assertEquals(status, mp.getMarketMessageCancelStatus());
 
     }
 
@@ -176,17 +176,17 @@ public class MarketBerichtenSteps extends NavigationElements {
         String marketberichtEndDateElementRow2 = "5";
         String marketberichtEndDateElementRow3 = "9";
 
-        if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht(eanFromMarketberichtRow1)) && (mp.getModulFromMarketbericht(modulFromMarketberichtRow1).equals(modul))) {
-            Assert.assertEquals(modul, mp.getModulFromMarketbericht(modulFromMarketberichtRow1));
-            Assert.assertEquals(mp.getMarketberichtEndDateElement(marketberichtEndDateElementRow1), toDwpEndDate(parameterProvider.getValueOrParameterAsString(date)));
+        if (ean.equalsIgnoreCase(mp.getEan(eanFromMarketberichtRow1)) && (mp.getModule(modulFromMarketberichtRow1).equals(modul))) {
+            Assert.assertEquals(modul, mp.getModule(modulFromMarketberichtRow1));
+            Assert.assertEquals(mp.getEndDate(marketberichtEndDateElementRow1), toDwpEndDate(parameterProvider.getValueOrParameterAsString(date)));
         } else {
-            if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht(eanFromMarketberichtRow2)) && (mp.getModulFromMarketbericht(modulFromMarketberichtRow2).equals(modul))) {
-                Assert.assertEquals(modul, mp.getModulFromMarketbericht(modulFromMarketberichtRow2));
-                Assert.assertEquals(mp.getMarketberichtEndDateElement(marketberichtEndDateElementRow2), toDwpEndDate(parameterProvider.getValueOrParameterAsString(date)));
+            if (ean.equalsIgnoreCase(mp.getEan(eanFromMarketberichtRow2)) && (mp.getModule(modulFromMarketberichtRow2).equals(modul))) {
+                Assert.assertEquals(modul, mp.getModule(modulFromMarketberichtRow2));
+                Assert.assertEquals(mp.getEndDate(marketberichtEndDateElementRow2), toDwpEndDate(parameterProvider.getValueOrParameterAsString(date)));
             } else {
-                if (ean.equalsIgnoreCase(mp.getEanFromMarketbericht(eanFromMarketberichtRow3)) && (mp.getModulFromMarketbericht(modulFromMarketberichtRow3).equals(modul))) {
-                    Assert.assertEquals(modul, mp.getModulFromMarketbericht(modulFromMarketberichtRow3));
-                    Assert.assertEquals(mp.getMarketberichtEndDateElement(marketberichtEndDateElementRow3), toDwpEndDate(parameterProvider.getValueOrParameterAsString(date)));
+                if (ean.equalsIgnoreCase(mp.getEan(eanFromMarketberichtRow3)) && (mp.getModule(modulFromMarketberichtRow3).equals(modul))) {
+                    Assert.assertEquals(modul, mp.getModule(modulFromMarketberichtRow3));
+                    Assert.assertEquals(mp.getEndDate(marketberichtEndDateElementRow3), toDwpEndDate(parameterProvider.getValueOrParameterAsString(date)));
                 }
             }
         }
@@ -203,6 +203,6 @@ public class MarketBerichtenSteps extends NavigationElements {
     @And("^Extern bericht is \"([^\"]*)\"$")
     public void externBerichtIs(String label) {
         MarketMessagesPage mp = new MarketMessagesPage();
-        mp.selectExternBericht(label);
+        mp.selectExternalMessage(label);
     }
 }

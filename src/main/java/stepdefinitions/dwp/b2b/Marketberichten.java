@@ -31,7 +31,7 @@ public class Marketberichten extends DwpScenario {
     @And("^Click on \"([^\"]*)\"$")
     public void clickOn(String newMarktbericht) {
         MarketMessagesPage mp = new MarketMessagesPage();
-        mp.createNewMarktBericht(newMarktbericht);
+        mp.chooseMarketMessageButton(newMarktbericht);
     }
 
     @And("^Search by \"([^\"]*)\"$")
