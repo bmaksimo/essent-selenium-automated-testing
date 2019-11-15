@@ -324,13 +324,6 @@ public class QuoteSteps extends DwpScenario {
         seleniumDriver.waitForRequestsToFinish();
     }
 
-    @And("^Electricity EAN code is selected$")
-    public void selectEanCode() {
-        Map<String, String> options = new HashMap<>();
-        boolean success = executeJavascriptTest("TrSelectEanCode", options);
-        assertThat(success, is(true));
-    }
-
     @And("^EAN code is generated$")
     public void generateEan() {
         String eanCode = PrepareDataForContract.generateEAN();
@@ -341,18 +334,13 @@ public class QuoteSteps extends DwpScenario {
     @And("^Electricity EAN code is \"([^\"]*)\"$")
     public void electricityEANCodeIs(String ean) {
         ConnectionDetails electricityConnectionDetails = new ConnectionDetails();
-        switch (ean) {
-            case "selected":
-                selectEanCode();
-                return;
-            case "random":
-                String generatedEan = PrepareDataForContract.generateEAN();
-                electricityConnectionDetails.setEan(generatedEan);
-                parameterProvider.put("EAN-code-generated", generatedEan);
-                break;
-            default:
-                electricityConnectionDetails.setEan(ean);
-        }
+
+        if ("random".equalsIgnoreCase(ean)) {
+            String generatedEan = PrepareDataForContract.generateEAN();
+            electricityConnectionDetails.setEan(generatedEan);
+            parameterProvider.put("EAN-code-generated", generatedEan);
+        } else electricityConnectionDetails.setEan(ean);
+
         ConnectionDetailsPage page = new ConnectionDetailsPage();
         Sleeper.sleepTightInSeconds(5);
         page.setElectricityConnectionDetails(electricityConnectionDetails);
