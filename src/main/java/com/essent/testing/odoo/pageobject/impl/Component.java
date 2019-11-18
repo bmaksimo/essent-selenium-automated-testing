@@ -122,7 +122,7 @@ public abstract class Component {
 
 
     public List<WebElement> selectRowOnTable(String tableName, List<Filter> filters, String contextParameters) throws Exception {
-        return new OdooTableFilter(contextParameters, seleniumDriver)
+        return new OdooTableFilter(contextParameters)
             .getTable(tableName)
             .findBy(filters)
             .get();

@@ -196,7 +196,7 @@ public abstract class Component {
 
     public List<WebElement> selectRowOnTable(String tableName, List<Filter> filters, String contextParameters) throws Exception {
         seleniumDriver.waitForRequestsToFinish();
-        return new DWPTableFilter(contextParameters, seleniumDriver)
+        return new DWPTableFilter(contextParameters)
             .getTable(tableName)
             .findBy(filters)
             .get();
