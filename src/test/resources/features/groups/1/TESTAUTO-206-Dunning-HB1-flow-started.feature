@@ -4,6 +4,7 @@
 @B2C
 @ALL
 @DUNNING
+@Ignore
 
 Feature: TESTAUTO-206 Dunning-HB1-flow-started
 
