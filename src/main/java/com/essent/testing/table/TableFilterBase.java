@@ -1,14 +1,15 @@
-package com.essent.testing.dwp.pageobject.table;
+package com.essent.testing.table;
 
-import com.essent.testing.dwp.pageobject.impl.Component;
+import com.essent.automation.util.Sleeper;
+import com.essent.testing.selenium.SeleniumDriver;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 /*
     Usage example:
        List<Filter> filters = Arrays.asList(new Filter("COMMUNICATIETYPE", "Legal"));
@@ -20,33 +21,38 @@ import java.util.stream.Collectors;
     The returning value is the row, which is a List<WebElement>, each item on the list is a cell of the row.
     Initially we'll support ONE filter, next step is to support more than one, that's why the method signature has a list of filters
  */
-public class TableFilter extends Component {
+public class TableFilterBase {
 
-    private static final String REPLACEMENT_KEY = "replacement_key";
-    private static final String TABLE_PATH_BASE = "//list//div//h2[text()='${" + REPLACEMENT_KEY + "}']/parent::div/parent::div";
-
+    private final Logger logger = Logger.getLogger(TableFilterBase.class);
+    private SeleniumDriver seleniumDriver;
     private List<String> headers;
     private List<WebElement> rows;
     private List<WebElement> selectedRow;
     private String tableName;
     private String tablePath;
     private String contextParameters;
+    private String tablePathBase;
+    private String tableRowsBase;
 
-    public TableFilter(String contextParameters) {
+    public TableFilterBase(String contextParameters, SeleniumDriver seleniumDriver, String tablePathBase, String tableRowsBase) {
+        this.seleniumDriver = seleniumDriver;
         this.contextParameters = contextParameters;
+        this.tablePathBase = tablePathBase;
+        this.tableRowsBase = tableRowsBase;
     }
 
-    public TableFilter getTable(String tableName) {
+    public TableFilterBase getTable(String tableName) {
+        Sleeper.sleepTightInSeconds(5);
         this.tableName = tableName;
-        this.tablePath = createQuery(TABLE_PATH_BASE, REPLACEMENT_KEY, this.tableName);
+        this.tablePath = buildTablePath(tablePathBase, this.tableName);
         this.headers = getHeaders();
-        this.rows = seleniumDriver.findElementsWithDefaultWaiting(By.xpath(this.tablePath + "//tbody[@id='rows']/tr"));
+        this.rows = this.seleniumDriver.findElements(By.xpath(this.tablePath + this.tableRowsBase));
         return this;
     }
 
-    public TableFilter findBy(List<Filter> filters) throws Exception {
-        List<WebElement> currentRowCells = new ArrayList<>();
-        logger().info(this.contextParameters + " rows: " + this.rows.size());
+    public TableFilterBase findBy(List<Filter> filters) throws Exception {
+        List<WebElement> currentRowCells = new ArrayList<WebElement>();
+        logger.info(this.contextParameters + " rows: " + this.rows.size());
         for (WebElement row : this.rows) {
             currentRowCells = row.findElements(By.tagName("td"));
             if (isExpectedColumnValue(filters, currentRowCells)) {
@@ -65,8 +71,8 @@ public class TableFilter extends Component {
 
     private void logErrors(List<Filter> filters) {
         String currentContextParameters = StringUtils.isBlank(this.contextParameters) ? "" : this.contextParameters;
-        logger().error(currentContextParameters + " - Table \"" + this.tableName + "\" did not contain row(s) with provided filter: " + getProvidedFilters(filters));
-        logger().error(currentContextParameters + " - Table \"" + this.tableName + "\" contains the following rows: \n" + getActualRows());
+        logger.error(currentContextParameters + " - Table \"" + this.tableName + "\" did not contain row(s) with provided filter: " + getProvidedFilters(filters));
+        logger.error(currentContextParameters + " - Table \"" + this.tableName + "\" contains the following rows: \n" + getActualRows());
     }
 
 
@@ -99,7 +105,6 @@ public class TableFilter extends Component {
         }
     }
 
-
     private List<String> getHeaders() {
         return seleniumDriver
             .findElementsWithDefaultWaiting(By.xpath(this.tablePath + "//thead/tr/th"))
@@ -107,5 +112,9 @@ public class TableFilter extends Component {
             .map(WebElement::getText)
             .map(String::toUpperCase)
             .collect(Collectors.toList());
+    }
+
+    private String buildTablePath(String basePath, String tableName) {
+        return basePath.replace("${tableName}", tableName);
     }
 }

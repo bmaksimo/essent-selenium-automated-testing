@@ -87,10 +87,25 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
         createQuoteAndSaveResult(flowType, meterOpen, signInDate, "EMAIL");
     }
 
+    @When("^Data is prepared for Customer \"([^\"]*)\" and \"([^\"]*)\" and sign date is \"([^\"]*)\"$")
+    public void dataIsPreparedForCreateQuotCustomerWallonia(String flowType, String area, String signInDate) throws IOException {
+        createQuoteCustomerAndSaveResult(flowType, area, signInDate, "POST");
+    }
+
     public void createQuoteAndSaveResult(String flowType, String meterOpen, String signInDate, String contactPreference) throws IOException {
         this.flow = flowType;
         String signInDateApiDate = toDwpAPIDate(parameterProvider.getValueOrParameterAsString(signInDate));
         this.quoteDetails = new QuoteDetailsAPI().getQuoteDetails(cookie, tariffSheetID, this.flow, meterOpen, signInDateApiDate, contactPreference);
+        parameterProvider.put("suitecrm-customer", fillInCustomerDetailsContext(this.quoteDetails));
+        parameterProvider.put("accountNumber", quoteDetails.getAccountNumber());
+        parameterProvider.put("EAN-code", quoteDetails.getEan());
+        parameterProvider.put("suitecrm-customer-name", quoteDetails.getAccountName());
+    }
+
+    public void createQuoteCustomerAndSaveResult(String flowType, String area, String signInDate, String contactPreference) throws IOException {
+        this.flow = flowType;
+        String signInDateApiDate = toDwpAPIDate(parameterProvider.getValueOrParameterAsString(signInDate));
+        this.quoteDetails = new QuoteDetailsAPI().getQuoteDetailsCustomer(cookie, tariffSheetID, this.flow, area, signInDateApiDate, contactPreference);
         parameterProvider.put("suitecrm-customer", fillInCustomerDetailsContext(this.quoteDetails));
         parameterProvider.put("accountNumber", quoteDetails.getAccountNumber());
         parameterProvider.put("EAN-code", quoteDetails.getEan());

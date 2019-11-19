@@ -4,14 +4,14 @@ import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.workflows.MarketMessagesPage;
-import com.essent.testing.dwp.pageobject.table.Filter;
-import io.cucumber.datatable.DataTable;
+import com.essent.testing.table.Filter;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import io.cucumber.datatable.DataTable;
 import org.apache.commons.collections4.CollectionUtils;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
@@ -122,7 +122,7 @@ public class MarketBerichtenSteps extends NavigationElements {
     @Then("Market message contains:")
     public void checkMarketMessage(final DataTable dbTable) {
         List<List<String>> dataTableFilters = dbTable.asLists();
-        List<Filter> filters = new ArrayList<>();
+        List<Filter> filters = new ArrayList<Filter>();
         String currentColumnName;
         String currentColumnValue;
 

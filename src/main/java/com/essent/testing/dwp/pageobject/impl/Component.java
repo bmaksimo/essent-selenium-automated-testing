@@ -5,8 +5,8 @@ import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.context.ContextService;
-import com.essent.testing.dwp.pageobject.table.Filter;
-import com.essent.testing.dwp.pageobject.table.TableFilter;
+import com.essent.testing.table.Filter;
+import com.essent.testing.dwp.pageobject.table.DWPTableFilter;
 import com.essent.testing.selenium.DWPSeleniumDriver;
 import com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter;
 import cucumber.runtime.CucumberException;
@@ -196,7 +196,7 @@ public abstract class Component {
 
     public List<WebElement> selectRowOnTable(String tableName, List<Filter> filters, String contextParameters) throws Exception {
         seleniumDriver.waitForRequestsToFinish();
-        return new TableFilter(contextParameters)
+        return new DWPTableFilter(contextParameters)
             .getTable(tableName)
             .findBy(filters)
             .get();
