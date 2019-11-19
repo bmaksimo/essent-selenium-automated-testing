@@ -25,14 +25,14 @@ import java.util.Map;
 
 public class QuoteDetailsAPI extends AbstractAPI {
 
-    private final static Logger LOGGER = Logger.getLogger(QuoteDetailsAPI.class);
+    private final static Logger logger = Logger.getLogger(QuoteDetailsAPI.class);
 
     public String getTariffSheetID(Cookies cookie, String startedFlowName) throws IOException {
         String payload = "";
         Response response = new RequestHelper().postRequest(STATUS_OK, cookie, payload, buildCreateQuotePath());
 
         String tariffSheetID = getTarrifIDFromResponse(response);
-        LOGGER.debug("TariffSheetID is: " + tariffSheetID);
+        logger.debug("TariffSheetID is: " + tariffSheetID);
 
         return tariffSheetID;
     }
@@ -49,7 +49,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
         Response quoteResponse = new RequestHelper().postRequest(STATUS_CREATED, cookie, payload, buildCreateQuotePath());
 
         QuoteDetails quoteDetails = buildQuoteDetails(ean, birthDate, ibanBE, companyNumber, accountNames, quoteResponse);
-        LOGGER.debug("Quote details: " + quoteDetails.toString());
+        logger.debug("Quote details: " + quoteDetails.toString());
         return quoteDetails;
     }
 
@@ -65,7 +65,7 @@ public class QuoteDetailsAPI extends AbstractAPI {
         Response quoteResponse = new RequestHelper().postRequest(STATUS_CREATED, cookie, payload, buildCreateQuotePath());
 
         QuoteDetails quoteDetails = buildQuoteDetails(ean, birthDate, ibanBE, companyNumber, accountNames, quoteResponse);
-        LOGGER.debug("Quote details: " + quoteDetails.toString());
+        logger.debug("Quote details: " + quoteDetails.toString());
         return quoteDetails;
     }
 
@@ -117,9 +117,9 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
         Response listQuoteResponse = new RequestHelper().postRequest(STATUS_OK, cookie, payload, path);
 
-        LOGGER.debug("Quote list retrieved");
+        logger.debug("Quote list retrieved");
         String quoteId = listQuoteResponse.jsonPath().getString("data.rows[0].rowData.number");
-        LOGGER.debug("Quote ID: " + quoteId);
+        logger.debug("Quote ID: " + quoteId);
 
         return quoteId;
     }
@@ -134,9 +134,9 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
     public String checkStatus(Cookies cookie, String quoteNumber) throws IOException {
         Response response = quoteStatus(cookie, quoteNumber);
-        LOGGER.debug("Quote status retrieved");
+        logger.debug("Quote status retrieved");
         String status = response.jsonPath().getString("data.model.ca_status_c");
-        LOGGER.debug("Quote Status: " + status);
+        logger.debug("Quote Status: " + status);
         return status;
     }
 
@@ -146,17 +146,17 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
         Response statusResponse = new RequestHelper().postRequest(STATUS_OK, cookie, payload, path);
 
-        LOGGER.debug("Quotelines retrieved");
+        logger.debug("Quotelines retrieved");
         String status = statusResponse.jsonPath().getString("data.rows[0].cells[1].options.line1");
-        LOGGER.debug("Quotelinestatus is : " + status);
+        logger.debug("Quotelinestatus is : " + status);
         return status;
     }
 
     public String checkStageStatus(Cookies cookie, String quoteNumber) throws IOException {
         Response response = quoteStatus(cookie, quoteNumber);
-        LOGGER.debug("Quote stage status retrieved");
+        logger.debug("Quote stage status retrieved");
         String status = response.jsonPath().getString("data.model.stage");
-        LOGGER.debug("Stage Status: " + status);
+        logger.debug("Stage Status: " + status);
 
         return status;
     }
@@ -170,9 +170,9 @@ public class QuoteDetailsAPI extends AbstractAPI {
 
         boolean eanExists = false;
 
-        LOGGER.debug("Quotelines retrieved");
+        logger.debug("Quotelines retrieved");
         eanExists = statusResponse.jsonPath().getString("data.rows[0].rowData.ean_c").contains(quoteDetails.getEan());
-        LOGGER.debug("EAN: " + quoteDetails.getEan() + " exists in Quotelines: " + eanExists);
+        logger.debug("EAN: " + quoteDetails.getEan() + " exists in Quotelines: " + eanExists);
 
         return eanExists;
     }
