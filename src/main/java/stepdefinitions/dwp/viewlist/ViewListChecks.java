@@ -19,7 +19,7 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
-import stepdefinitions.dwp.b2b.Marketberichten;
+import stepdefinitions.dwp.marketmessages.MarketMessagesSteps;
 import stepdefinitions.dwp.navigation.NavigationElements;
 import stepdefinitions.dwp.overview.DashboardMenu;
 import stepdefinitions.dwp.plus.PlusActions;
@@ -464,11 +464,6 @@ public class ViewListChecks extends NavigationElements {
             value, columnName));
     }
 
-    @And("^List View action is \"([^\"]*)\"$")
-    public void getListAction(String name){
-        new MarketMessagesPage().chooseMarketMessageButton(name);
-    }
-
     @And("^View List element \"([^\"]*)\" is collected as parameter at \"([^\"]*)\" list row$")
     public void collectViewListElementAsParameter(String viewListElement, String ordinal) {
         String parameter = getViewListElementAtRow(viewListElement, ordinal);
@@ -531,7 +526,7 @@ public class ViewListChecks extends NavigationElements {
         waiter.withMessage(String.format("List element didn't contain any value at column \"%s\"", column));
         waiter.until((ViewListTestObject callback) -> {
             new DashboardMenu().goToDashboardMenuItem(dashboardMenu);
-            new Marketberichten().clickOn(buttonName);
+            new MarketMessagesSteps().clickOn(buttonName);
             return !callback.fetchColumnData(table, column)
                 .stream().filter(element -> element.contains(inputValue)).collect(Collectors.toList()).isEmpty();
         });

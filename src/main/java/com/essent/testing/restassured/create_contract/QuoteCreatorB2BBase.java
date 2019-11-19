@@ -74,7 +74,7 @@ public class QuoteCreatorB2BBase {
     protected String addressCity = "";
 
     // This ean should be any from adress_b2B.XLSX which correspond appropriate address
-    protected String ean_c = "";
+    private String ean_c = "";
 
     protected String paymentMethod = ""; // DOM or OV
     protected String legalCommunicationBy = ""; //POST or EMAIL
@@ -660,6 +660,10 @@ public class QuoteCreatorB2BBase {
 
     public String getBillingId() {
         return this.billingId;
+    }
+
+    public String getEan() {
+        return ean_c;
     }
 }
 

@@ -25,6 +25,7 @@ public class ContractB2BScenario extends RegisteredScenario {
     private String accountNumber;
 	private String companyNumber;
 	private String billingId;
+	private String ean;
 
 	 /**
 	   * This method is used to create B2B contract without checking is contract ACTIVE or not.
@@ -118,6 +119,7 @@ public class ContractB2BScenario extends RegisteredScenario {
 	public String createContractB2BAndCheckContractStatus(String productType, String isFakeAddress, String switchType) {
 		accountNumber = StringUtils.EMPTY;
         companyNumber = StringUtils.EMPTY;
+        ean = StringUtils.EMPTY;
 		ProductTypes productTypes = ProductTypes.valueOf(productType);
 
 		try {
@@ -126,18 +128,21 @@ public class ContractB2BScenario extends RegisteredScenario {
 					QuoteCreator quoteB2BUP = new ContractUPB2BCreator(isFakeAddress, switchType);
 					accountNumber = quoteB2BUP.createContractAndCheckContractStatus();
 					companyNumber = ((ContractUPB2BCreator) quoteB2BUP).getCompanyNumber();
+					ean = ((ContractUPB2BCreator) quoteB2BUP).getEan();
 					break;
 				}
 				case TC1: {
 					QuoteCreator quoteB2BTC1 = new ContractTC1B2BCreator(isFakeAddress, switchType);
 					accountNumber = quoteB2BTC1.createContractAndCheckContractStatus();
 					companyNumber = ((ContractTC1B2BCreator) quoteB2BTC1).getCompanyNumber();
+                    ean = ((ContractTC1B2BCreator) quoteB2BTC1).getEan();
 					break;
 				}
 				case TC2: {
 					QuoteCreator quoteB2BTC2 = new ContractTC2B2BCreator(isFakeAddress, switchType);
 					accountNumber = quoteB2BTC2.createContractAndCheckContractStatus();
 					companyNumber = ((ContractTC2B2BCreator) quoteB2BTC2).getCompanyNumber();
+                    ean = ((ContractTC2B2BCreator) quoteB2BTC2).getEan();
 					break;
 				}
 				default:
@@ -158,9 +163,16 @@ public class ContractB2BScenario extends RegisteredScenario {
 			logger().error("Something went wrong with creation of ACTIVE B2B contract");
 		}
 
+		if(StringUtils.isEmpty(ean)) {
+			Assert.fail("Failed to obtain EAN code");
+			logger().error("Something went wrong with creation of ACTIVE B2B contract");
+		}
+
 		logger().debug("ACCOUNT NUMBER: " + accountNumber);
 		logger().debug("COMPANY NUMBER: " + companyNumber);
+		logger().debug("EAN CODE: " + ean);
 		parameterProvider.put("accountNumber", accountNumber);
+		parameterProvider.put("EAN-code", ean);
 		parameterProvider.put("companyNumber", companyNumber);
 
 		return accountNumber;
