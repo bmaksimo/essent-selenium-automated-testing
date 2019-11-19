@@ -21,7 +21,7 @@ public class DefaultListView extends Component implements ListView {
     @Override
     public void checkCellAt(String columnName, String rowIndex, String value) {
         logger().debug("STEP: checkValueAt");
-        Map<String, String> valuesMapper = new HashMap<>();
+        Map<String, String> valuesMapper = new HashMap<String, String>();
         valuesMapper.put("rowIndex", rowIndex);
         valuesMapper.put("key", getKey(columnName));
         String query = createQuery(TABLE_CELL_SELECTOR_TEMPLATE, valuesMapper);
@@ -42,7 +42,7 @@ public class DefaultListView extends Component implements ListView {
     @Override
     public void clickCellAt(String columnName, String rowIndex) {
         logger().debug("STEP: clickCellAt");
-        Map<String, String> valuesMapper = new HashMap<>();
+        Map<String, String> valuesMapper = new HashMap<String, String>();
         valuesMapper.put("rowIndex", rowIndex);
         valuesMapper.put("key", getKey(columnName));
         String query = createQuery(TABLE_CELL_SELECTOR_TEMPLATE, valuesMapper);

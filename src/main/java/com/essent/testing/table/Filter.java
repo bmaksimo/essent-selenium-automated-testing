@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.table;
+package com.essent.testing.table;
 
 public class Filter {
     private String columnName;
