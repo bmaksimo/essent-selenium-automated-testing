@@ -18,7 +18,7 @@ Feature: NUAT-549 Send manual drop
         And Dashboard menu is "Marktberichten"
         And "1st" List element with value at column "EAN-code & Producttype" is checked
 
-        When List View action is "START NIEUW MARKTBERICHT"
+        When Click on "START NIEUW MARKTBERICHT"
         And Click Select Contractline
         And Dialog search input is current "parameter:EAN-code & Producttype"
         And Changes are confirmed

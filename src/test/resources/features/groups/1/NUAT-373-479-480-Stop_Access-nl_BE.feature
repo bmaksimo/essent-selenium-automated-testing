@@ -18,7 +18,7 @@ Feature: NUAT-373: End Of Contract For Bankruptcy - nl_BE, NUAT-479: DROP For A 
         And Dashboard menu is "Marktberichten"
         Then "1st" List element with value at column "EAN-code & Producttype" is checked
 
-        When List View action is "START NIEUW MARKTBERICHT"
+        When Click on "START NIEUW MARKTBERICHT"
         And Click Select Contractline
         And Dialog search input is current "parameter:EAN-code & Producttype"
         Then Changes are confirmed

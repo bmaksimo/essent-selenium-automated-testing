@@ -39,4 +39,21 @@ public class MarketMessagesSteps extends DwpScenario {
         String taskNumber = mmp.getTaskNumber(modul, list);
         parameterProvider.put("taskNumber", taskNumber.substring(0,taskNumber.indexOf(' ')));
     }
+
+    @And("^Click on \"([^\"]*)\"$")
+    public void clickOn(String marketMessage) {
+        new MarketMessagesPage().chooseMarketMessageButton(marketMessage);
+    }
+
+    @And("^Search by \"([^\"]*)\"$")
+    public void searchBy(String str) {
+        String ean = parameterProvider.getValueOrParameterAsString(str);
+        MarketMessagesPage mb = new MarketMessagesPage();
+        mb.enterContractNumber(ean);
+        seleniumDriver.waitForRequestsToFinish();
+        mb.clickOnSearchButton();
+        seleniumDriver.waitForRequestsToFinish();
+        mb.clickOnTheFirstContract();
+        mb.clickOnSubmitButton();
+    }
 }

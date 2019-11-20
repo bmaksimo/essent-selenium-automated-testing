@@ -6,7 +6,6 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +13,6 @@ public class MarketMessagesPage extends Component {
 
     private static final String REPLACEMENT_KEY = "replacement_key";
     private static final String EAN_FROM_MARKET = "(//h5)[${" + REPLACEMENT_KEY + "}]";
-    private static final String STATUS_FROM_MARKET_MSG = "(//list-simple-two-liner-cell//span[1])[${" + REPLACEMENT_KEY + "}]";
     private static final String END_DATE_ELEMENT = "(//list-simple-two-liner-cell//span[2])[${" + REPLACEMENT_KEY + "}]";
     private static final String EAN_CODE = "aos-products-quotes-ean-c-field";
     private static final String TASK_STATUS = "(//h6)[.='${" + REPLACEMENT_KEY + "}']";
@@ -32,11 +30,11 @@ public class MarketMessagesPage extends Component {
         Assert.assertEquals(signed, line2);
     }
 
-    public String marketberichtStatus(){
+    public String getMarketMessageStatus(){
         seleniumDriver.waitForRequestsToFinish();
         return seleniumDriver.findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[1])[1]")).getText();
     }
-    public String marketberichtCancelStatus(){
+    public String getMarketMessageCancelStatus(){
         return seleniumDriver.findElementWhenVisible(By.xpath("(//list-simple-two-liner-cell//span[1])[5]")).getText();
     }
 
@@ -49,9 +47,9 @@ public class MarketMessagesPage extends Component {
         return true;
     }
 
-    public void createNewMarktBericht(String newMarktbericht){
+    public void chooseMarketMessageButton(String marketMessageButtonName){
         seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.name(newMarktbericht)));
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.name(marketMessageButtonName)));
     }
 
     public void clickOnListActionsElemet(String element) {
@@ -86,12 +84,12 @@ public class MarketMessagesPage extends Component {
         seleniumDriver.waitAndClick(searchButton());
     }
 
-    public WebElement FirstContractInTheList() {
+    public WebElement getFirstContract() {
         return seleniumDriver.findElementWhenVisible(By.xpath("(//label[@class='input__checkbox'])[2]"));
     }
 
     public void clickOnTheFirstContract() {
-        seleniumDriver.waitAndClick(FirstContractInTheList());
+        seleniumDriver.waitAndClick(getFirstContract());
     }
 
     public WebElement submitButton() {
@@ -102,33 +100,28 @@ public class MarketMessagesPage extends Component {
         seleniumDriver.waitAndClick(submitButton());
     }
 
-    public String getModulFromTheFirstTransaction() {
+    public String getModuleFromTheFirstTransaction() {
         return seleniumDriver.findElementWhenVisible(By.xpath("(//h5)[2]")).getText();
     }
 
-    public String getModulFromCancelTransaction()  {
+    public String getModuleFromCancelTransaction()  {
         return seleniumDriver.findElementWhenVisible(By.xpath("//list-link-bold-top-two-liner-cell[@line-1='INITIATE STOP ACCESS']/div/a/h5")).getText();
     }
 
-    public WebElement getMarktBerichtH5Element(String num) {
+    public WebElement getMarketMessageH5Element(String num) {
         String eanMarket = createQuery(EAN_FROM_MARKET, REPLACEMENT_KEY, num);
         return seleniumDriver.findElementWhenVisible(By.xpath(eanMarket));
     }
 
-    public String getEanFromMarketbericht(String num)  {
-        return getMarktBerichtH5Element(num).getText();
+    public String getEan(String num)  {
+        return getMarketMessageH5Element(num).getText();
     }
 
-    public String getModulFromMarketbericht(String num) {
-        return getMarktBerichtH5Element(num).getText();
+    public String getModule(String num) {
+        return getMarketMessageH5Element(num).getText();
     }
 
-    public String marketberichtStatusMarketbericht(String num){
-        String eanMarketStatus = createQuery(STATUS_FROM_MARKET_MSG, REPLACEMENT_KEY, num);
-        return seleniumDriver.findElementWhenVisible(By.xpath(eanMarketStatus)).getText();
-    }
-
-    public String getMarketberichtEndDateElement(String num){
+    public String getEndDate(String num){
         String endDateElement = createQuery(END_DATE_ELEMENT, REPLACEMENT_KEY, num);
         return seleniumDriver.findElementWhenVisible(By.xpath(endDateElement)).getText();
     }
@@ -191,7 +184,7 @@ public class MarketMessagesPage extends Component {
         return taskNumber;
     }
 
-    public void selectExternBericht(String label){
+    public void selectExternalMessage(String label){
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id='dwp-external-message-id-field']/option[@label='"+label+"']")));
     }
 

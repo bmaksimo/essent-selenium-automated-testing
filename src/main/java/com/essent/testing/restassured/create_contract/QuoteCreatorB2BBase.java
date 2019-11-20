@@ -74,7 +74,7 @@ public class QuoteCreatorB2BBase {
     protected String addressCity = "";
 
     // This ean should be any from adress_b2B.XLSX which correspond appropriate address
-    protected String ean_c = "";
+    private String eanCode = "";
 
     protected String paymentMethod = ""; // DOM or OV
     protected String legalCommunicationBy = ""; //POST or EMAIL
@@ -110,8 +110,8 @@ public class QuoteCreatorB2BBase {
             this.upStartDate = PrepareDataForContract.setStartContractDate(path, contractStartDate, contractEndDate, currentContractStartDateInDWP);
 
             if (this.upStartDate.equals("NOT_VALID")) {
-                logger.warn("ALL START CONTRACT DATES ARE USED FOR ADDRESS STREET: " + addressStreet + " EAN: " + ean_c + "; PLEASE USE ANOTHER ADDRESS AND EAN");
-                throw new CucumberException("ALL START CONTRACT DATES ARE USED FOR ADDRESS STREET: " + addressStreet + " EAN: " + ean_c + "; PLEASE USE ANOTHER ADDRESS AND EAN");
+                logger.warn("ALL START CONTRACT DATES ARE USED FOR ADDRESS STREET: " + addressStreet + " EAN: " + eanCode + "; PLEASE USE ANOTHER ADDRESS AND EAN");
+                throw new CucumberException("ALL START CONTRACT DATES ARE USED FOR ADDRESS STREET: " + addressStreet + " EAN: " + eanCode + "; PLEASE USE ANOTHER ADDRESS AND EAN");
             }
         }
     }
@@ -348,7 +348,7 @@ public class QuoteCreatorB2BBase {
         testMap.put("${legalCommunicationBy}", legalCommunicationBy);
         testMap.put("${paymentMethod}", paymentMethod);
         testMap.put("${generatedIban}", generatedIban);
-        testMap.put("${ean_c}", ean_c);
+        testMap.put("${eanCode}", eanCode);
         testMap.put("${upStartDate}", upStartDate);
         testMap.put("${upEndDate}", upEndDate);
         testMap.put("${moveIn}", moveIn);
@@ -514,7 +514,7 @@ public class QuoteCreatorB2BBase {
             addressPostalCode = prop.getProperty("address_postal_code");
             addressCity = prop.getProperty("address_city");
 
-            ean_c = prop.getProperty("ean_c");
+            eanCode = prop.getProperty("ean_c");
 
             moveIn = prop.getProperty("move_in_c");
             switchType = prop.getProperty("switchtype_c");
@@ -567,7 +567,7 @@ public class QuoteCreatorB2BBase {
             addressPostalCode = prop.getProperty("address_postal_code");
             addressCity = prop.getProperty("address_city");
 
-            ean_c = prop.getProperty("ean_c");
+            eanCode = prop.getProperty("ean_c");
 
             moveIn = prop.getProperty("move_in_c");
             switchType = prop.getProperty("switchtype_c");
@@ -588,7 +588,7 @@ public class QuoteCreatorB2BBase {
         String originalpayloadFilterByEan = path
             + "filter_quotes_by_ean.json";
 
-        String jsonBody = PrepareDataForContract.createRequestJsonPayload(payloadFilterByEan, originalpayloadFilterByEan, "${ean_c}", ean_c);
+        String jsonBody = PrepareDataForContract.createRequestJsonPayload(payloadFilterByEan, originalpayloadFilterByEan, "${eanCode}", eanCode);
 
         Response response = RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
             .body(jsonBody).when().post(ApiPathsContract.API_LIST_QUOTES).then().statusCode(200)
@@ -610,7 +610,7 @@ public class QuoteCreatorB2BBase {
         addressCity = prop.getProperty("fake_address_city");
         addressNumber = PrepareDataForContract.getRandomAddressNumber();
 
-        ean_c = PrepareDataForContract.generateEAN();
+        eanCode = PrepareDataForContract.generateEAN();
 
         SwitchTypes switchTypeStatus = SwitchTypes.fromString(typeSwitch);
 
@@ -660,6 +660,10 @@ public class QuoteCreatorB2BBase {
 
     public String getBillingId() {
         return this.billingId;
+    }
+
+    public String getEan() {
+        return this.eanCode;
     }
 }
 
