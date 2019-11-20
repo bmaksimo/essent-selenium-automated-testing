@@ -66,17 +66,18 @@ public class ViewListChecks extends NavigationElements {
     private class ClickTableCellUrl implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
-            String viewList = (String) options.get("view_list_name");
+//            String viewList = (String) options.get("view_list_name");
             seleniumDriver.waitForRequestsToFinish();
-            if (null == viewList) return executeJavascriptTest(JS_TR_CLICK_TABLE_CELL_URL, options);
-            return testKnownColumns(viewList, options, (String) options.get("column"));
+//            if (null == viewList) return executeJavascriptTest(JS_TR_CLICK_TABLE_CELL_URL, options);
+            return executeJavascriptTest(JS_TR_CLICK_TABLE_CELL_URL, options);
+//            return testKnownColumns(viewList, options, (String) options.get("column"));
         }
 
         boolean testNow(Map options) {
-            String viewList = (String) options.get("view_list_name");
-            if (null == viewList)
+//            String viewList = (String) options.get("view_list_name");
+//            if (null == viewList)
                 return executeJavascriptTestImmediately(JS_TR_CLICK_TABLE_CELL_URL, options, true);
-            return testKnownColumns(viewList, options, (String) options.get("column"));
+//            return testKnownColumns(viewList, options, (String) options.get("column"));
         }
 
         private boolean testKnownColumns(String viewList, Map options, String column) {
@@ -100,12 +101,12 @@ public class ViewListChecks extends NavigationElements {
         columnIndexListOptions.put("column", column);
         columnIndexListOptions.put("index", rowIndex);
 
-        if (PLUS_ACTION.equalsIgnoreCase(column)) {
-            if (MARKET_MESSAGES.equalsIgnoreCase(viewListName))
-                columnIndexListOptions.put("view_list_name", MARKET_MESSAGES_VIEW_LIST);
-            else if (BILLING_CUSTOMER.equalsIgnoreCase(viewListName))
-                columnIndexListOptions.put("view_list_name", BILLING_CUSTOMER_VIEW_LIST);
-        }
+//        if (PLUS_ACTION.equalsIgnoreCase(column)) {
+//            if (MARKET_MESSAGES.equalsIgnoreCase(viewListName))
+//                columnIndexListOptions.put("view_list_name", MARKET_MESSAGES_VIEW_LIST);
+//            else if (BILLING_CUSTOMER.equalsIgnoreCase(viewListName))
+//                columnIndexListOptions.put("view_list_name", BILLING_CUSTOMER_VIEW_LIST);
+//        }
         return columnIndexListOptions;
     }
 
