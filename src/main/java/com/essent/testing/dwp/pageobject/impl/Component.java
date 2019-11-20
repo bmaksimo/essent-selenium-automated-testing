@@ -212,4 +212,18 @@ public abstract class Component {
             if (isDisplayed) element.click();
         }
     }
+
+    protected WebElement findElementWithRetries(By by, int attempts) throws Exception {
+        int currentAttempt = 0;
+        boolean isDisplayed = false;
+        WebElement element = seleniumDriver.findElement(by);
+        while (!isDisplayed && currentAttempt <= attempts) {
+            currentAttempt++;
+            isDisplayed = element.isDisplayed() && element.isEnabled();
+            if (isDisplayed) return element;
+            Sleeper.sleepTightInSeconds(2);
+            element = seleniumDriver.findElement(by);
+        }
+        throw new Exception("Element not found");
+    }
 }
