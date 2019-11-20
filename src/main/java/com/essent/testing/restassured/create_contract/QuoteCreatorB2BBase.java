@@ -348,7 +348,7 @@ public class QuoteCreatorB2BBase {
         testMap.put("${legalCommunicationBy}", legalCommunicationBy);
         testMap.put("${paymentMethod}", paymentMethod);
         testMap.put("${generatedIban}", generatedIban);
-        testMap.put("${eanCode}", eanCode);
+        testMap.put("${ean_c}", eanCode);
         testMap.put("${upStartDate}", upStartDate);
         testMap.put("${upEndDate}", upEndDate);
         testMap.put("${moveIn}", moveIn);
@@ -363,9 +363,9 @@ public class QuoteCreatorB2BBase {
 
         if (ConfigProvider.getProperty(ConfigKey.PROXY_ENABLE).equals("yes")) {
             RestAssured.proxy =
-                    ProxySpecification
-                            .host(ConfigProvider.getProperty(ConfigKey.PROXY_HOST))
-                            .withPort(Integer.parseInt(ConfigProvider.getProperty(ConfigKey.PROXY_PORT)));
+                ProxySpecification
+                    .host(ConfigProvider.getProperty(ConfigKey.PROXY_HOST))
+                    .withPort(Integer.parseInt(ConfigProvider.getProperty(ConfigKey.PROXY_PORT)));
             RestAssured.useRelaxedHTTPSValidation();
         }
         Response response = RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
@@ -588,7 +588,7 @@ public class QuoteCreatorB2BBase {
         String originalpayloadFilterByEan = path
             + "filter_quotes_by_ean.json";
 
-        String jsonBody = PrepareDataForContract.createRequestJsonPayload(payloadFilterByEan, originalpayloadFilterByEan, "${eanCode}", eanCode);
+        String jsonBody = PrepareDataForContract.createRequestJsonPayload(payloadFilterByEan, originalpayloadFilterByEan, "${ean_c}", eanCode);
 
         Response response = RestAssured.given().cookies(cookie).contentType(ContentType.JSON).accept(ContentType.JSON)
             .body(jsonBody).when().post(ApiPathsContract.API_LIST_QUOTES).then().statusCode(200)
