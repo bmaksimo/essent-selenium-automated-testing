@@ -47,11 +47,6 @@ import static org.hamcrest.Matchers.*;
 
 public class ViewListChecks extends NavigationElements {
 
-    private static final String MARKET_MESSAGES = "Marktberichten";
-    private static final String MARKET_MESSAGES_VIEW_LIST = "MarketTransactionsOnAccount";
-    private static final String BILLING_CUSTOMER = "Billing customer";
-    private static final String BILLING_CUSTOMER_VIEW_LIST = "BillingCustomerOnaccount";
-    private static final String PLUS_ACTION = "Plus ActionDTO";
     private static final String REPLACEMENT_KEY1 = "REPLACEMENT_KEY1";
     private static final String TRANSACTIONS_BLOCKED_CHECKMARK = "//list[@list-key='TransactionsOnAccount']//td[@class='list__cell cell__text'][${" + REPLACEMENT_KEY1 + "}]//div[@class='customer__status icon-checkmark']";
 
@@ -66,47 +61,21 @@ public class ViewListChecks extends NavigationElements {
     private class ClickTableCellUrl implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
-//            String viewList = (String) options.get("view_list_name");
             seleniumDriver.waitForRequestsToFinish();
-//            if (null == viewList) return executeJavascriptTest(JS_TR_CLICK_TABLE_CELL_URL, options);
             return executeJavascriptTest(JS_TR_CLICK_TABLE_CELL_URL, options);
-//            return testKnownColumns(viewList, options, (String) options.get("column"));
         }
 
         boolean testNow(Map options) {
-//            String viewList = (String) options.get("view_list_name");
-//            if (null == viewList)
-                return executeJavascriptTestImmediately(JS_TR_CLICK_TABLE_CELL_URL, options, true);
-//            return testKnownColumns(viewList, options, (String) options.get("column"));
-        }
-
-        private boolean testKnownColumns(String viewList, Map options, String column) {
-            if (PLUS_ACTION.equalsIgnoreCase(column)) {
-                if (MARKET_MESSAGES_VIEW_LIST.equalsIgnoreCase(viewList))
-                    return executeJavascriptTest(JS_TR_PLUS_ACTION_IN_MARKET_MESSAGE_TABLE, options);
-                else if (BILLING_CUSTOMER_VIEW_LIST.equalsIgnoreCase(viewList))
-                    return executeJavascriptTest(JS_TR_PLUS_ACTION_IN_BILLING_CUSTOMER_TABLE, options);
-                else
-                    throw new IllegalArgumentException(String.format(
-                        "Table \"%s\" has no implementation. Please use an implemented table or implement a new one.",
-                        viewList));
-            }
-            return false;
+            return executeJavascriptTestImmediately(JS_TR_CLICK_TABLE_CELL_URL, options, true);
         }
     }
 
-    private Map<String, String> getColumnIndexListOptions(String column, String viewListName, String ordinal) {
+    private Map<String, String> getColumnIndexListOptions(String column, String ordinal) {
         String rowIndex = ordinal.replaceAll("(?<=\\d)(rd|st|nd|th)\\b", "");
         Map<String, String> columnIndexListOptions = new HashMap<>();
         columnIndexListOptions.put("column", column);
         columnIndexListOptions.put("index", rowIndex);
 
-//        if (PLUS_ACTION.equalsIgnoreCase(column)) {
-//            if (MARKET_MESSAGES.equalsIgnoreCase(viewListName))
-//                columnIndexListOptions.put("view_list_name", MARKET_MESSAGES_VIEW_LIST);
-//            else if (BILLING_CUSTOMER.equalsIgnoreCase(viewListName))
-//                columnIndexListOptions.put("view_list_name", BILLING_CUSTOMER_VIEW_LIST);
-//        }
         return columnIndexListOptions;
     }
 
@@ -120,12 +89,12 @@ public class ViewListChecks extends NavigationElements {
     }
 
     @Before("@DWP or @CORE or @E2E or @REGRESSION or @API")
-    public void setupTest(Scenario scenario){
+    public void setupTest(Scenario scenario) {
         registerActiveScenario(scenario);
     }
 
     @When("^View List is empty$")
-    public void checkTableModel(){
+    public void checkTableModel() {
         DefaultTableModel viewTableModel = new ViewListTestObject().getViewTableModel();
         boolean success = viewTableModel.getRowCount() == 0;
         assertThat("View Table list is not empty", success, is(true));
@@ -149,7 +118,7 @@ public class ViewListChecks extends NavigationElements {
     }
 
     @Then("^Table \"([^\"]*)\" has matching value \"([^\"]*)\" at column \"([^\"]*)\" polling (\\d+) seconds$")
-    public void isMatchingValueAtColumnWithPolling(String tableName, String match, String columnName, int waitingTime){
+    public void isMatchingValueAtColumnWithPolling(String tableName, String match, String columnName, int waitingTime) {
         List<String> columnData = new ViewListTestObject().fetchColumnData(tableName, columnName);
         String inputValue = parameterProvider.getValueOrParameterAsString(match);
         String arrow = parameterProvider.getValueOrParameterAsString("parameter:navigation");
@@ -168,7 +137,7 @@ public class ViewListChecks extends NavigationElements {
     @And(
         "^Table \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\" waiting for (\\d+) seconds$")
     public void viewListContainsValueAtColumnWithFixedTime(
-        String table, String value, String column, int waitingTime){
+        String table, String value, String column, int waitingTime) {
         Sleeper.sleepTightInSeconds(waitingTime);
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
         ViewListTestObject viewListModel = new ViewListTestObject();
@@ -187,40 +156,40 @@ public class ViewListChecks extends NavigationElements {
     }
 
     @When("^Click on \"([^\"]*)\" link$")
-    public void clickOnLink(String input){
+    public void clickOnLink(String input) {
         String linkText = parameterProvider.getValueOrParameterAsString(input);
         new ViewListNavigation().goToLink(linkText);
         seleniumDriver.waitForRequestsToFinish();
     }
 
     @When("^Click on link in View List at \"([^\"]*)\" row and \"([^\"]*)\" column$")
-    public void clickOnViewListAtRowAndColumn(String ordinal, String column){
+    public void clickOnViewListAtRowAndColumn(String ordinal, String column) {
         FluentWait<ClickTableCellUrl> waiter = waiter(new ClickTableCellUrl(), 30, 5).withMessage(
             String.format("Failed click on link in view list at \"%s\" row and \"%s\" column", ordinal, column));
-        waiter.until((ClickTableCellUrl callback) -> callback.test(getColumnIndexListOptions(column, null, ordinal)));
+        waiter.until((ClickTableCellUrl callback) -> callback.test(getColumnIndexListOptions(column, ordinal)));
         logger().debug(String.format("- STEP: Click on link in view list at \"%s\" row and \"%s\" column - PASSED.",
             ordinal, column));
     }
 
     @When("^Click on link in View List at \"([^\"]*)\" row and \"([^\"]*)\" column polling (\\d+) seconds?$")
-    public void clickOnViewListAtRowAndColumn(String ordinal, String column, int seconds){
+    public void clickOnViewListAtRowAndColumn(String ordinal, String column, int seconds) {
         seleniumDriver.waitForRequestsToFinish();
         FluentWait<ClickTableCellUrl> waiter = waiter(new ClickTableCellUrl(), seconds, 5)
             .withMessage(String.format("Failed click on link in view list at \"%s\" row and \"%s\" column within \"%s\" seconds", ordinal, column, seconds));
-        waiter.until((ClickTableCellUrl callback) -> callback.test(getColumnIndexListOptions(column, null, ordinal)));
+        waiter.until((ClickTableCellUrl callback) -> callback.test(getColumnIndexListOptions(column, ordinal)));
         logger().debug(String.format("- STEP: Click on link in view list at \"%s\" row and \"%s\" column within \"%s\" seconds - PASSED.", ordinal, column, seconds));
         seleniumDriver.waitForRequestsToFinish();
     }
 
     @When("^Click on link in View List at \"([^\"]*)\" row and \"([^\"]*)\" column waiting for (\\d+) seconds$")
-    public void clickOnViewListAtRowAndColumnFixedWait(String ordinal, String column, int seconds){
+    public void clickOnViewListAtRowAndColumnFixedWait(String ordinal, String column, int seconds) {
         Sleeper.sleepTightInSeconds(seconds);
-        new ClickTableCellUrl().testNow(getColumnIndexListOptions(column, null, ordinal));
+        new ClickTableCellUrl().testNow(getColumnIndexListOptions(column, ordinal));
     }
 
     @When("^Click on link in \"([^\"]*)\" View List at \"([^\"]*)\" row and \"([^\"]*)\" column$")
-    public void clickOnSuppliedViewListAtRowAndColumn(String viewListName, String ordinal, String column){
-        Map<String, String> columnIndexListOptions = getColumnIndexListOptions(column, viewListName, ordinal);
+    public void clickOnSuppliedViewListAtRowAndColumn(String viewListName, String ordinal, String column) {
+        Map<String, String> columnIndexListOptions = getColumnIndexListOptions(column, ordinal);
         FluentWait<ClickTableCellUrl> waiter = waiter(new ClickTableCellUrl(), 60, 5)
             .withMessage(String.format("Failed click on link in view list \"%s\" at \"%s\" row and \"%s\" column",
                 viewListName, ordinal, column));
@@ -232,7 +201,7 @@ public class ViewListChecks extends NavigationElements {
     }
 
     @And("^\"([^\"]*)\" list element has cell value \"([^\"]*)\" at column \"([^\"]*)\"$")
-    public void listElementWith(String ordinal, String value, String columnName){
+    public void listElementWith(String ordinal, String value, String columnName) {
         int row = extractNumericValue(ordinal);
         String expectedValue = parameterProvider.getValueOrParameterAsString(value);
         FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), 120, 5);
@@ -244,7 +213,7 @@ public class ViewListChecks extends NavigationElements {
     }
 
     @And("^Table \"([^\"]*)\" contains cell value \"([^\"]*)\" at column \"([^\"]*)\" on \"([^\"]*)\" row$")
-    public void listElementWithFromTable(String tableName, String value, String columnName, String ordinal){
+    public void listElementWithFromTable(String tableName, String value, String columnName, String ordinal) {
         int row = extractNumericValue(ordinal);
         String expectedValue = parameterProvider.getValueOrParameterAsString(value);
         FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), 30, 1);
@@ -258,7 +227,7 @@ public class ViewListChecks extends NavigationElements {
     }
 
     @And("^\"([^\"]*)\" list element has cell value \"([^\"]*)\" at column \"([^\"]*)\" within (\\d+) seconds?$")
-    public void containsElementWithin(String ordinal, String value, String columnName, int seconds){
+    public void containsElementWithin(String ordinal, String value, String columnName, int seconds) {
         String expectedValue = parameterProvider.getValueOrParameterAsString(value);
         PlusActions scenario = (PlusActions) getScenarioInstance(PlusActions.class);
         int row = extractNumericValue(ordinal);
@@ -278,7 +247,7 @@ public class ViewListChecks extends NavigationElements {
     }
 
     @And("^\"([^\"]*)\" list element has cell value \"([^\"]*)\" at column \"([^\"]*)\" polling (\\d+) seconds?$")
-    public void containsElementAt(String ordinal, String value, String columnName, int seconds){
+    public void containsElementAt(String ordinal, String value, String columnName, int seconds) {
         seleniumDriver.waitForRequestsToFinish();
         int row = extractNumericValue(ordinal);
         String expectedValue = parameterProvider.getValueOrParameterAsString(value);
@@ -298,7 +267,7 @@ public class ViewListChecks extends NavigationElements {
     }
 
     @And("^\"([^\"]*)\" list element has status \"([^\"]*)\" at column \"([^\"]*)\" within (\\d+) seconds? refreshing \"([^\"]*)\"$")
-    public void refreshTillVisible(String ordinal, String status, String columnName, int seconds, String linkText){
+    public void refreshTillVisible(String ordinal, String status, String columnName, int seconds, String linkText) {
         int row = extractNumericValue(ordinal);
         String expectedValue = parameterProvider.getValueOrParameterAsString(status);
         FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), seconds, 5);
@@ -310,7 +279,7 @@ public class ViewListChecks extends NavigationElements {
     }
 
     @And("^Cell values? from selected rows? and column \"([^\"]*)\" (?:are|is) checked$")
-    public void checkDataSelection(String columnName){
+    public void checkDataSelection(String columnName) {
         ViewListTestObject viewListModel = new ViewListTestObject();
         List<String> cellSelection = viewListModel.fetchDataSelection(columnName);
         assertThat(String.format("Data selection at column \"%s\" is empty", columnName), cellSelection,
@@ -321,7 +290,7 @@ public class ViewListChecks extends NavigationElements {
     }
 
     @Then("^\"([^\"]*)\" List element with value at column \"([^\"]*)\" is checked$")
-    public void storeColumnValueInSharedProperties(String ordinal, String columnName){
+    public void storeColumnValueInSharedProperties(String ordinal, String columnName) {
         seleniumDriver.waitForRequestsToFinish();
         int row = extractNumericValue(ordinal);
         Optional<String> optionalValue = new ViewListTestObject().getCellValueAt(row, columnName);
@@ -335,7 +304,7 @@ public class ViewListChecks extends NavigationElements {
     }
 
     @Then("^\"([^\"]*)\" list element with date interval at column \"([^\"]*)\" from table \"([^\"]*)\" is \"([^\"]*)\"$")
-    public void checkDateIntervalTableCell(String ordinal, String columnName, String tableName, String interval){
+    public void checkDateIntervalTableCell(String ordinal, String columnName, String tableName, String interval) {
         int row = extractNumericValue(ordinal);
         Optional<String> result = new ViewListTestObject().getValueAt(row, columnName, tableName);
         boolean success = result.isPresent() && StringUtils.isNotBlank(result.get());
@@ -355,7 +324,7 @@ public class ViewListChecks extends NavigationElements {
     @When(
         "^End of interval from \"([^\"]*)\" row of table \"([^\"]*)\" at column \"([^\"]*)\" is checked$")
     public void endOfIntervalFromRowOfTableAtColumnIsChecked(
-        String ordinal, String tableName, String column){
+        String ordinal, String tableName, String column) {
         int row = extractNumericValue(ordinal);
         Optional<String> intervalOfContract =
             new ViewListTestObject().getValueAt(row, column, tableName);
@@ -371,7 +340,7 @@ public class ViewListChecks extends NavigationElements {
     }
 
     @Then("^List element matching value \"([^\"]*)\" at column \"([^\"]*)\" from table \"([^\"]*)\" is checked$")
-    public void storeColumnValueInParameterProvider(String match, String columnName, String tableName){
+    public void storeColumnValueInParameterProvider(String match, String columnName, String tableName) {
         seleniumDriver.waitForRequestsToFinish();
         List<String> columnData = new ViewListTestObject().fetchColumnData(tableName, columnName);
         Optional<String> first = columnData.stream().filter(element -> element.contains(match)).findAny();
@@ -384,12 +353,12 @@ public class ViewListChecks extends NavigationElements {
     }
 
     @When("^Click on \"([^\"]*)\" matching value \"([^\"]*)\" at column \"([^\"]*)\"$")
-    public void clickOnElementWithMatchingValue(String columnToBeClicked, String match, String filterColumn){
+    public void clickOnElementWithMatchingValue(String columnToBeClicked, String match, String filterColumn) {
         new ClickTableCellUrl().test(getColumnIndexListOptionsFromRow(columnToBeClicked, null, filterColumn, match));
     }
 
     @And("^All cell values at \"([^\"]*)\" row from table \"([^\"]*)\" are checked$")
-    public void cellValuesAtRowFromTableAreChecked(String ordinal, String tableName){
+    public void cellValuesAtRowFromTableAreChecked(String ordinal, String tableName) {
         seleniumDriver.waitForRequestsToFinish();
         ViewListTestObject viewListTestObject = new ViewListTestObject(tableName);
         int row = extractNumericValue(ordinal);
@@ -418,7 +387,7 @@ public class ViewListChecks extends NavigationElements {
     }
 
     @Then("^List element with value at column \"([^\"]*)\" from table \"([^\"]*)\" is checked$")
-    public void storeColumnValueInParameterProvider(String columnName, String tableName){
+    public void storeColumnValueInParameterProvider(String columnName, String tableName) {
         seleniumDriver.waitForRequestsToFinish();
         FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), 300, 10);
         waiter.withMessage(
@@ -436,7 +405,7 @@ public class ViewListChecks extends NavigationElements {
 
     @Then(
         "^Cell value at \"([^\"]*)\" row at column \"([^\"]*)\" from table \"([^\"]*)\" is checked$")
-    public void lookupCellValue(String ordinal, String columnName, String tableName){
+    public void lookupCellValue(String ordinal, String columnName, String tableName) {
         int row = extractNumericValue(ordinal);
         Optional<String> cellValue = new ViewListTestObject().getValueAt(row, columnName, tableName);
         assertThat(
@@ -454,7 +423,7 @@ public class ViewListChecks extends NavigationElements {
     }
 
     @Then("^Selected List rows have cell value \"([^\"]*)\" at column \"([^\"]*)\"$")
-    public void checkSelectionData(String value, String columnName){
+    public void checkSelectionData(String value, String columnName) {
         ViewListTestObject viewListModel = new ViewListTestObject();
         FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), 10, 2).withMessage("Selected table is empty");
         waiter.until((ViewListTestObject callback) -> CollectionUtils.isNotEmpty(callback.fetchDataSelection(columnName)));
@@ -519,7 +488,7 @@ public class ViewListChecks extends NavigationElements {
     }
 
     @And("^Table \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\" within (\\d+) seconds? after clicking on \"([^\"]*)\"$")
-    public void viewListContainsValueAtColumn(String table, String value, String column, int seconds, String buttonName){
+    public void viewListContainsValueAtColumn(String table, String value, String column, int seconds, String buttonName) {
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
         String dashboardMenu = parameterProvider.getValueOrParameterAsString("parameter:dashboard-menu");
 
@@ -537,7 +506,7 @@ public class ViewListChecks extends NavigationElements {
     }
 
     @And("^Table \"([^\"]*)\" contains value \"([^\"]*)\" at column \"([^\"]*)\" within (\\d+) seconds?$")
-    public void viewListContainsValueAtColumn(String table, String value, String column, int seconds){
+    public void viewListContainsValueAtColumn(String table, String value, String column, int seconds) {
         String inputValue = parameterProvider.getValueOrParameterAsString(value);
         String arrow = parameterProvider.getValueOrParameterAsString("parameter:navigation");
         String dashboardMenu = parameterProvider.getValueOrParameterAsString("parameter:dashboard-menu");
@@ -594,7 +563,7 @@ public class ViewListChecks extends NavigationElements {
     }
 
     @And("^Table \"([^\"]*)\" contains check mark at column \"([^\"]*)\"$")
-    public void viewListContainsCheckmarkAtColumn(String table, String column){
+    public void viewListContainsCheckmarkAtColumn(String table, String column) {
         seleniumDriver.waitForRequestsToFinish();
         Optional<Integer> transactionsColumnIndex =
             new ViewListTestObject().getTransactionsColumnIndex(column);
@@ -620,7 +589,7 @@ public class ViewListChecks extends NavigationElements {
     }
 
     @And("^Table \"([^\"]*)\" does not contain value \"([^\"]*)\" at column \"([^\"]*)\" within (\\d+) seconds?$")
-    public void viewListDoesNotContainsValueAtColumn(String table, String value, String column, int seconds){
+    public void viewListDoesNotContainsValueAtColumn(String table, String value, String column, int seconds) {
         ViewListTestObject viewListModel = new ViewListTestObject();
         String arrow = parameterProvider.getValueOrParameterAsString("parameter:navigation");
         String dashboardMenu = parameterProvider.getValueOrParameterAsString("parameter:dashboard-menu");
@@ -628,7 +597,7 @@ public class ViewListChecks extends NavigationElements {
 
         FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), seconds, 10);
         waiter.withMessage(String.format("List element didn't contain any value at column \"%s\"", column));
-        List<String> found =  waiter.until((ViewListTestObject callback) -> {
+        List<String> found = waiter.until((ViewListTestObject callback) -> {
             loopBack(arrow, dashboardMenu);
             return callback.fetchColumnData(table, column).stream().
                 filter(element -> element.contains(inputValue)).collect(Collectors.toList());
@@ -639,14 +608,14 @@ public class ViewListChecks extends NavigationElements {
     }
 
     @And("^Table \"([^\"]*)\" does not contain any value at column \"([^\"]*)\" within (\\d+) seconds?$")
-    public void viewListDoesNotContainAnyValueAtColumn(String table, String column, int seconds){
+    public void viewListDoesNotContainAnyValueAtColumn(String table, String column, int seconds) {
         ViewListTestObject viewListModel = new ViewListTestObject();
         String arrow = parameterProvider.getValueOrParameterAsString("parameter:navigation");
         String dashboardMenu = parameterProvider.getValueOrParameterAsString("parameter:dashboard-menu");
 
         FluentWait<ViewListTestObject> waiter = waiter(new ViewListTestObject(), seconds, 10);
         waiter.withMessage(String.format("List element contains some value at column \"%s\"", column));
-        List<String> found =  waiter.until((ViewListTestObject callback) -> {
+        List<String> found = waiter.until((ViewListTestObject callback) -> {
             loopBack(arrow, dashboardMenu);
             return callback.fetchColumnData(table, column).stream().filter(String::isEmpty).collect(Collectors.toList());
         });
@@ -658,7 +627,7 @@ public class ViewListChecks extends NavigationElements {
     //and move the methods, related to invoice checks, there.
 
     @And("^\"([^\"]*)\" element of table \"([^\"]*)\" at currency column \"([^\"]*)\" is sum of$")
-    public void checkCurrencyAmountDableDataAsSum(String ordinal, String table, String columnName, final DataTable subAmounts){
+    public void checkCurrencyAmountDableDataAsSum(String ordinal, String table, String columnName, final DataTable subAmounts) {
         seleniumDriver.waitForRequestsToFinish();
         int row = extractNumericValue(ordinal);
         Optional<String> currencyValue = new ViewListTestObject().getCurrencyValueAt(row, columnName, table);
