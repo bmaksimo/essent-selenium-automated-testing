@@ -7,8 +7,6 @@ public class JsTestRegistry {
     public static final String JS_TR_FETCH_DATA_SELECTION = "TrFetchDataSelection";
     public static final String JS_TR_GET_TABLE_MODEL = "TrGetTableModel";
     public static final String JS_TR_CLICK_TABLE_CELL_URL = "TrClickTableCellUrl";
-    public static final String JS_TR_PLUS_ACTION_IN_MARKET_MESSAGE_TABLE = "TrPlusActionInMarketMessageTable";
-    public static final String JS_TR_PLUS_ACTION_IN_BILLING_CUSTOMER_TABLE = "TrPlusActionInBillingCustomerTable";
     public static final String JS_BASE_FORM_INPUT = "BaseFormInput";
     public static final String JS_TR_FORM_SELECTION = "TrFormSelection";
     public static final String JS_TR_DATE_PICKER_INPUT = "TrDatePickerInput";
