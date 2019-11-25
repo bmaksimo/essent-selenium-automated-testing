@@ -473,7 +473,6 @@ public class ContractPage extends Component {
     public int installmentsNumber(String amount) {
         seleniumDriver.waitForRequestsToFinish();
         amount = "€" + " " + amount;
-        System.out.print("--------"+amount);
         List<WebElement> installments = seleniumDriver.findElements(By.xpath(INSTALLMENTS_NUMBER));
 
         int numInstallThanHaveGivenAmount= 0;
