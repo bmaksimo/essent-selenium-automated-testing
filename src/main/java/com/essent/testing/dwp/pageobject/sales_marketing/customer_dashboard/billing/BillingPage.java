@@ -16,4 +16,7 @@ public class BillingPage extends Component {
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(SEND)));
     }
 
+    public String getInvoiceAmount(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("(//list[@list-key='TransactionsOnAccount']//list-simple-two-liner-cell//span[@ng-bind-html='listSimpleTwoLinerCellController.line1'])[1]")).getText();
+    }
 }
