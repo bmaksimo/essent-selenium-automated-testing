@@ -62,7 +62,6 @@ Feature: NSTA-344:Payment Plan
 
         #payment plan checks
         When Dashboard menu is "Billing"
-        And Table "Afbetalingsplannen" contains value "overdue" at column "Status" retrying 3 times
         Then Click on link in View List at "1st" row and "Nummer & referentie" column polling 60 seconds
         And Save Installments Sum
         When Check is Number of Installments at least "2" for given amount "parameter:amountPerInstallment"
