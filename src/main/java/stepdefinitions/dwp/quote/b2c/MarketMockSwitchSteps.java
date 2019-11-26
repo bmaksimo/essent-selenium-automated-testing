@@ -22,13 +22,6 @@ public class MarketMockSwitchSteps extends DwpScenario {
     connectionDetailsPage.isElectricityMarketMockOn(card);
   }
 
-//  @When("^Gas market mock mode is switched ([^\"]*) on \"([^\"]*)\" card$")
-//  public void marketMockModeIsSwitchedOnOnCard(SwitchState switchState, String card){
-//    ConnectionDetailsPage connectionDetailsPage = new ConnectionDetailsPage();
-//    connectionDetailsPage.toggleGasMarketMockTest(switchState, card);
-//    connectionDetailsPage.isGasMarketMockOn(card);
-//  }
-
   @Override
   @After("@DWP or @E2E or @REGRESSION")
   public void tearDown() {
