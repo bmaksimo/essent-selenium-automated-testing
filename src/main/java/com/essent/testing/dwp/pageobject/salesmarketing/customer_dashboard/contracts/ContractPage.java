@@ -16,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
+import static java.lang.StrictMath.ceil;
 import static org.junit.Assert.fail;
 
 public class ContractPage extends Component {
@@ -439,6 +440,20 @@ public class ContractPage extends Component {
 
     }
 
+    public int getAmountPerInstallment(int invoice, int firstInstallment) {
+        int numberOfInstallments = 9;
+        int amountPerInstallment = (int)ceil(ceil((invoice - firstInstallment)) / numberOfInstallments);
+        int minNumberOfInstallments = 2;
+        while (numberOfInstallments >= minNumberOfInstallments) {
+            if (amountPerInstallment >= 50)
+                break;
+            else { numberOfInstallments--;
+                amountPerInstallment = (invoice - firstInstallment) / numberOfInstallments;
+             }
+        }
+        return amountPerInstallment;
+    }
+
     public String getInstallmentSum() {
         seleniumDriver.waitForRequestsToFinish();
         String installSum = seleniumDriver.findElementWhenPresent(By.id(INSTALLMENTS_SUM)).getText();
@@ -457,6 +472,7 @@ public class ContractPage extends Component {
 
     public int installmentsNumber(String amount) {
         seleniumDriver.waitForRequestsToFinish();
+        amount = "€" + " " + amount;
         List<WebElement> installments = seleniumDriver.findElements(By.xpath(INSTALLMENTS_NUMBER));
 
         int numInstallThanHaveGivenAmount= 0;

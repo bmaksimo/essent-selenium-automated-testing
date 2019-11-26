@@ -87,6 +87,7 @@ public class TopActionsSteps extends NavigationElements {
     public void confirmChange() {
         boolean success = new ModalBase().confirm(parameterProvider.getScenarioInfo());
         seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(3);
         assertThat(String.format("Button %s was not available.", ""), success, is(true));
     }
 
