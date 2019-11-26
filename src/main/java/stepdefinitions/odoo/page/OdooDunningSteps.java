@@ -2,7 +2,6 @@ package stepdefinitions.odoo.page;
 
 import com.essent.testing.odoo.pageobject.impl.page.OdooDunningPages;
 import com.essent.testing.odoo.scenario.OdooScenario;
-import com.essent.testing.odoo.table.OdooTableFilter;
 import com.essent.testing.table.Filter;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -11,7 +10,6 @@ import cucumber.api.java.en.Then;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 

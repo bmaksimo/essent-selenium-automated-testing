@@ -10,17 +10,12 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import org.apache.commons.lang3.StringUtils;
-import org.awaitility.Duration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
 
 import java.util.Optional;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.awaitility.Awaitility.given;
-import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
-import static org.awaitility.Duration.ONE_SECOND;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;

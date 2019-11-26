@@ -8,8 +8,10 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import org.junit.Assert;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
 import static org.hamcrest.Matchers.is;
 
 public class CustomerPageSteps extends OdooScenario {

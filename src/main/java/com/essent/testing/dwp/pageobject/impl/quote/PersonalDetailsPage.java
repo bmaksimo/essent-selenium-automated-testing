@@ -5,7 +5,8 @@ import com.essent.automation.autocrat.Model;
 import org.apache.commons.lang3.StringUtils;
 import stepdefinitions.dwp.tables.CustomerDetails;
 
-import static com.essent.automation.autocrat.Action.*;
+import static com.essent.automation.autocrat.Action.SELECT;
+import static com.essent.automation.autocrat.Action.TYPING;
 import static com.essent.testing.dwp.autocrat.element.quote.B2CQuoteElements.*;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.INPUT;
 

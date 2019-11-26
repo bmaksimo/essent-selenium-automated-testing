@@ -4,7 +4,6 @@ import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
 import com.essent.testing.scenario.RegisteredScenario;
 import cucumber.runtime.CucumberException;
-import groovy.util.logging.Slf4j;
 import org.apache.log4j.Logger;
 
 import java.lang.annotation.Annotation;

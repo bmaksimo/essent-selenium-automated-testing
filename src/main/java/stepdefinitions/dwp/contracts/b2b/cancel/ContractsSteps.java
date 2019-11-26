@@ -22,7 +22,7 @@ import stepdefinitions.dwp.tables.CustomerStatus;
 
 import java.util.Arrays;
 
-import static java.lang.Math.*;
+import static java.lang.Math.round;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;

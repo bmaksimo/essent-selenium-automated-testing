@@ -9,7 +9,8 @@ import javax.swing.table.DefaultTableModel;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.billinghouse.testautomation.javascript.testrunner.JsTestRegistry.*;
+import static com.billinghouse.testautomation.javascript.testrunner.JsTestRegistry.JS_TR_FETCH_DATA_SELECTION;
+import static com.billinghouse.testautomation.javascript.testrunner.JsTestRegistry.JS_TR_GET_TABLE_MODEL;
 
 /**
  * The class has been created as a placeholder for the future migration of technical stack from

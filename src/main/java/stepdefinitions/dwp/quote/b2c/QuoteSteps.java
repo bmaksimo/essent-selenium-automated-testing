@@ -13,32 +13,25 @@ import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.cont
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
 import com.essent.testing.util.resource.ResourceUtil;
-import io.cucumber.datatable.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
+import io.cucumber.datatable.DataTable;
 import org.apache.commons.lang3.StringUtils;
-import org.awaitility.Duration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.autocrat.flow.FlowAwarePredicate;
 import stepdefinitions.dwp.quote.DwpDateFormats;
 import stepdefinitions.dwp.tables.*;
-import stepdefinitions.dwp.tables.plus.SwitchState;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static com.essent.testing.dwp.autocrat.element.quote.TariffElements.NO_PRICESHEET_ALERT;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.NEXT_STEP;
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.awaitility.Awaitility.given;
-import static org.awaitility.Duration.FIVE_HUNDRED_MILLISECONDS;
-import static org.awaitility.Duration.ONE_HUNDRED_MILLISECONDS;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -189,37 +182,28 @@ public class QuoteSteps extends DwpScenario {
         ConnectionDetails electricityConnectionDetails = list.get(0);
         ConnectionDetails gasConnectionDetails = list.get(1);
 
-        ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
-        connectionDetailsView.setElectricityConnectionDetails(electricityConnectionDetails);
-        connectionDetailsView.setGasConnectionDetails(gasConnectionDetails);
-        connectionDetailsView.fillInFormData();
+        ConnectionDetailsPage connectionDetailsPage = new ConnectionDetailsPage();
+        connectionDetailsPage.setElectricityConnectionDetails(electricityConnectionDetails);
+        connectionDetailsPage.setGasConnectionDetails(gasConnectionDetails);
+        connectionDetailsPage.fillInFormData();
     }
 
-    @And("^([^\"]*) market mock test is ([^\"]*)$")
-    public void setMarketMockTest(final ProductType productType, final SwitchState state) {
-        seleniumDriver.waitForRequestsToFinish();
-        ConnectionDetailsPage connectionDetailsView = new ConnectionDetailsPage();
-        given().await()
-            .ignoreExceptions()
-            .pollInterval(FIVE_HUNDRED_MILLISECONDS)
-            .pollDelay(ONE_HUNDRED_MILLISECONDS)
-            .atMost(new Duration(60, SECONDS)).until(connectionDetailsView::isNextButtonEnabled);
-        connectionDetailsView.toggleMarketMockTest(productType, state);
-        seleniumDriver.waitForRequestsToFinish();
+    @And("^([^\"]*) market mock test is enabled")
+    public void setMarketMockTest(final ProductType productType) {
+        new ConnectionDetailsPage().toggleMarketMockTest(productType);
     }
 
     @And("^Connection details are confirmed$")
     public void confirmConnection() {
-        seleniumDriver.waitForRequestsToFinish();
         new ConnectionDetailsPage().next(parameterProvider.getScenarioInfo());
     }
 
     @And("^Payment details are: method \"([^\"]*)\", IBAN \"([^\"]*)\", bic \"([^\"]*)\"$")
     public void selectPaymentMethod(String paymetnMethod, String iban, String bic) {
         BillingInformation billingInfo = new BillingInformation(paymetnMethod, iban, bic);
-        BillingDetailsPage billingDetailsView = new BillingDetailsPage();
-        billingDetailsView.setBillingInformation(billingInfo);
-        billingDetailsView.fillInFormData();
+        BillingDetailsPage billingDetailsPage = new BillingDetailsPage();
+        billingDetailsPage.setBillingInformation(billingInfo);
+        billingDetailsPage.fillInFormData();
     }
 
     @And("^Payment details are: method \"([^\"]*)\", random IBAN, bic \"([^\"]*)\"$")

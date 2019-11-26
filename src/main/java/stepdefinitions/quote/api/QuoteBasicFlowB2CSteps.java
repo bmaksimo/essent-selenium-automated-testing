@@ -29,7 +29,7 @@ import static org.awaitility.Awaitility.await;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static stepdefinitions.quote.api.AbstractAPI.*;
+import static stepdefinitions.quote.api.AbstractAPI.STATUS_OK;
 
 
 /**
