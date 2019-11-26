@@ -2,8 +2,8 @@ package stepdefinitions.dwp.pageobject;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
-import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
-import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.service.ServicePage;
+import com.essent.testing.dwp.pageobject.salesmarketing.customer_dashboard.contracts.ContractPage;
+import com.essent.testing.dwp.pageobject.salesmarketing.customer_dashboard.service.ServicePage;
 import com.essent.testing.dwp.pageobject.werkbakken.TasksPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;

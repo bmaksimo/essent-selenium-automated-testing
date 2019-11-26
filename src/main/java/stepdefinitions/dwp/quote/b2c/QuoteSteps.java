@@ -7,9 +7,9 @@ import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.guidedflow.cupq.NewQuotePage;
 import com.essent.testing.dwp.pageobject.impl.modal.quote.SimilarAccountDialogImpl;
 import com.essent.testing.dwp.pageobject.impl.quote.*;
-import com.essent.testing.dwp.pageobject.impl.quote_for_account.OnlineQuoteSignatureModalPage;
-import com.essent.testing.dwp.pageobject.impl.quote_for_account.QuoteForAccountOverviewPage;
-import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
+import com.essent.testing.dwp.pageobject.impl.quoteforaccount.OnlineQuoteSignatureModalPage;
+import com.essent.testing.dwp.pageobject.impl.quoteforaccount.QuoteForAccountOverviewPage;
+import com.essent.testing.dwp.pageobject.salesmarketing.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
 import com.essent.testing.util.resource.ResourceUtil;
@@ -29,7 +29,6 @@ import stepdefinitions.dwp.tables.*;
 import stepdefinitions.dwp.tables.plus.SwitchState;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

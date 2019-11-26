@@ -1,7 +1,7 @@
 package stepdefinitions.dwp.productchange;
 
-import com.essent.testing.dwp.pageobject.impl.product_change.ProductChangePageObjectImpl;
-import com.essent.testing.dwp.pageobject.product_change.ProductChangePageObject;
+import com.essent.testing.dwp.pageobject.impl.productchange.ProductChangePageObjectImpl;
+import com.essent.testing.dwp.pageobject.productchange.ProductChangePageObject;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;

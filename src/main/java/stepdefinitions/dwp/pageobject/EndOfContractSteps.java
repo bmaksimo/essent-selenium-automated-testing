@@ -1,6 +1,6 @@
 package stepdefinitions.dwp.pageobject;
 
-import com.essent.testing.dwp.pageobject.impl.service_contracting.EndOfContractPage;
+import com.essent.testing.dwp.pageobject.impl.servicecontracting.EndOfContractPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -8,8 +8,6 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import org.junit.Assert;
 import org.openqa.selenium.By;
-
-//import static com.billinghouse.testautomation.javascript.testrunner.JsTestRegistry.JS_TR_SELECT_CONTRACTLINE;
 
 public class EndOfContractSteps extends DwpScenario {
 

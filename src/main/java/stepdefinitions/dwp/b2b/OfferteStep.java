@@ -5,7 +5,7 @@ import com.essent.testing.dwp.pageobject.contractingswitching.QuotesListPage;
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import com.essent.testing.dwp.pageobject.impl.filter.DwpFilterPage;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
-import com.essent.testing.dwp.pageobject.impl.service_contracting.ChangeAccountStatusPage;
+import com.essent.testing.dwp.pageobject.impl.servicecontracting.ChangeAccountStatusPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.util.resource.ResourceUtil;
 import cucumber.api.Scenario;

@@ -5,7 +5,7 @@ import com.billinghouse.testautomation.util.dsl.EssentDateTimeFormat;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.elements.SelectWithSearch;
 import com.essent.testing.dwp.pageobject.impl.elements.SelectWithSearchImpl;
-import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
+import com.essent.testing.dwp.pageobject.salesmarketing.customer_dashboard.contracts.ContractPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;

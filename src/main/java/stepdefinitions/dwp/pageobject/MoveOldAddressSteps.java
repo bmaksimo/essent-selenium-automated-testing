@@ -2,7 +2,7 @@ package stepdefinitions.dwp.pageobject;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.guidancemode.CreateMoveOAPage;
-import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.details.UpdateBillingCustomerPage;
+import com.essent.testing.dwp.pageobject.salesmarketing.customer_dashboard.details.UpdateBillingCustomerPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;

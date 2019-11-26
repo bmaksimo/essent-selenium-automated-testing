@@ -3,7 +3,7 @@ package stepdefinitions.dwp.pageobject;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
-import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.workflows.MarketMessagesPage;
+import com.essent.testing.dwp.pageobject.salesmarketing.customer_dashboard.workflows.MarketMessagesPage;
 import com.essent.testing.table.Filter;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
