@@ -15,7 +15,6 @@ public class JsTestRegistry {
     public static final String JS_TR_TOGGLE_INPUT_STATE = "TrToggleInputState";
     public static final String JS_TR_CLICK_TOGGLE_INPUT = "TrClickToggleInput";
     public static final String JS_TR_CHECK_TABLE_CELL_VALUE = "TrCheckTableCellValue";
-    public static final String JS_TR_SELECT_CONTRACTLINE = "TrSelectContractline";
 
     private static final JsTestRegistry instance = new JsTestRegistry();
 
