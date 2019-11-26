@@ -25,6 +25,7 @@ public abstract class Component {
 
     private static final By MANDATORY_INPUT_EXCLAMATION_CSS = By.cssSelector(".is-error");
     private static final String CLOSE_MODAL_BUTTON = "//guidance-modal//div[@class = 'modal__header']/a";
+    private static final String PLACEHOLDER_BUTTON = "//button[@class='button-placeholder']";
 
     protected WebElement element;
     protected DWPSeleniumDriver seleniumDriver;
@@ -214,6 +215,10 @@ public abstract class Component {
             Sleeper.sleepTightInSeconds(2);
             if (isDisplayed) element.click();
         }
+    }
+
+    public void clickOnSelectButtonPlaceholder() {
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(PLACEHOLDER_BUTTON)));
     }
 
     protected WebElement findElementWithRetries(By by, int attempts) throws Exception {
