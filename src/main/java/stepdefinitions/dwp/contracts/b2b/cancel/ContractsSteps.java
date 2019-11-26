@@ -22,6 +22,7 @@ import stepdefinitions.dwp.tables.CustomerStatus;
 
 import java.util.Arrays;
 
+import static java.lang.Math.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -266,11 +267,22 @@ public class ContractsSteps extends DwpScenario{
         parameterProvider.put("invoiceAmount", cp.getInvoiceSum());
     }
 
+    @And("^Check Payment Plan with invoice \"([^\"]*)\"$")
+        public void calculateAmountInstallment(String invoiceAmount) {
+        int invoice = Integer.parseInt(parameterProvider.getValueOrParameterAsString(invoiceAmount));
+        int firstInstallment = (int) round((0.20) * invoice);
+        int formedAmountPerInstallment = new ContractPage().getAmountPerInstallment(invoice, firstInstallment);
+
+        assertTrue(String.format("Amount per installment \"%s\" is not at least 50", formedAmountPerInstallment), formedAmountPerInstallment>=50);
+
+        parameterProvider.put("firstInstallment", firstInstallment);
+        parameterProvider.put("amountPerInstallment",formedAmountPerInstallment);
+    }
 
     @Then("^Check is Number of Installments at least \"([^\"]*)\" for given amount \"([^\"]*)\"$")
     public void checkInstallmentsNumber(int expectedNumberOfInstallments, String amount) {
-        ContractPage cp = new ContractPage();
-        int actualNumberOfInstallments = cp.installmentsNumber(amount);
+        String amountPerInstallment = parameterProvider.getValueOrParameterAsString(amount);
+        int actualNumberOfInstallments = new ContractPage().installmentsNumber(amountPerInstallment);
         assertTrue("Insufficient Number of installments with given amount.",expectedNumberOfInstallments<=actualNumberOfInstallments);
     }
 
