@@ -5,14 +5,8 @@ import org.openqa.selenium.By;
 
 public class CreateFreeTextInvoicePage extends Component {
 
-    private static final String SELECT_PRODUCT_CODE_BUTTON= "//button[@class='button-placeholder']";
     private static final String REPLACEMENT_KEY = "replacement_key";
     private static final String PRODUCT_CODE ="//div/label[text()[contains(.,'${" + REPLACEMENT_KEY + "}')]]/span";
-
-
-    public void clickOnSelectProductCodeButton() {
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(SELECT_PRODUCT_CODE_BUTTON)));
-    }
 
     public void selectProductCode(String productCode) {
         seleniumDriver.waitForRequestsToFinish();

@@ -24,25 +24,21 @@ public class BillingSteps extends DwpScenario {
 
     @And("^Click select product code$")
     public void clickSelectProductCode() {
-        CreateFreeTextInvoicePage cftip = new CreateFreeTextInvoicePage();
-        cftip.clickOnSelectProductCodeButton();
+        new CreateFreeTextInvoicePage().clickOnSelectButtonPlaceholder();
     }
 
     @And("^Select \"([^\"]*)\" product code$")
     public void selectProductCode(String productCode) {
-        CreateFreeTextInvoicePage cftip = new CreateFreeTextInvoicePage();
-        cftip.selectProductCode(productCode);
+        new CreateFreeTextInvoicePage().selectProductCode(productCode);
     }
 
     @Then("^Transaction is created with TYPE \"([^\"]*)\"$")
-    public void transactiesIsCreatedWithTYPE(String type){
-        BillingPage bp = new BillingPage();
-        Assert.assertTrue("Type does not mach", bp.selectProductCode().equalsIgnoreCase(type));
+    public void transactiesIsCreatedWithTYPE(String type) {
+        Assert.assertTrue("Type does not mach", new BillingPage().selectProductCode().equalsIgnoreCase(type));
     }
 
     @And("^Send$")
     public void send() {
-        BillingPage bp = new BillingPage();
-        bp.clickOnSendButton();
+        new BillingPage().clickOnSendButton();
     }
 }

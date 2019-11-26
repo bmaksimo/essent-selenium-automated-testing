@@ -9,7 +9,7 @@ import cucumber.api.java.en.And;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 
-import static com.billinghouse.testautomation.javascript.testrunner.JsTestRegistry.JS_TR_SELECT_CONTRACTLINE;
+//import static com.billinghouse.testautomation.javascript.testrunner.JsTestRegistry.JS_TR_SELECT_CONTRACTLINE;
 
 public class EndOfContractSteps extends DwpScenario {
 
@@ -42,7 +42,7 @@ public class EndOfContractSteps extends DwpScenario {
 
     @And("^Click Select Contractline$")
     public void clickSelectContractline() {
-        new EndOfContractPage().simpleExecuteJavaScript(JS_TR_SELECT_CONTRACTLINE);
+        new EndOfContractPage().clickOnSelectButtonPlaceholder();
     }
 
     @Override
