@@ -5,7 +5,7 @@ import com.essent.automation.autocrat.Model;
 import com.essent.testing.dwp.pageobject.impl.quote.QuoteCreationGuidedStep;
 import stepdefinitions.dwp.tables.SignatureData;
 
-import static com.essent.testing.dwp.autocrat.element.quote_for_account.QuoteForAccountSignatureElements.SIGN_UPLOAD_DOC;
+import static com.essent.testing.dwp.autocrat.element.quoteforaccount.QuoteForAccountSignatureElements.SIGN_UPLOAD_DOC;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.UPLOAD_FILE;
 
 public class QuoteForAccountOverviewPage extends QuoteCreationGuidedStep {

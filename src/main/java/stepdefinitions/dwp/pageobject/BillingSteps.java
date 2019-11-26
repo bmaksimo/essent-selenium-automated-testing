@@ -1,7 +1,7 @@
 package stepdefinitions.dwp.pageobject;
 
-import com.essent.testing.dwp.pageobject.salesmarketing.customer_dashboard.billing.BillingPage;
-import com.essent.testing.dwp.pageobject.salesmarketing.customer_dashboard.billing.CreateFreeTextInvoicePage;
+import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.billing.BillingPage;
+import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.billing.CreateFreeTextInvoicePage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;

@@ -1,7 +1,7 @@
 package stepdefinitions.dwp.marketmessages;
 
 import com.essent.testing.dwp.pageobject.impl.modal.market_messages.SearchContractLinesDialog;
-import com.essent.testing.dwp.pageobject.salesmarketing.customer_dashboard.workflows.MarketMessagesPage;
+import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.workflows.MarketMessagesPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;

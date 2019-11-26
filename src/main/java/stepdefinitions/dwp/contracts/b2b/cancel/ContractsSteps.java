@@ -2,11 +2,11 @@ package stepdefinitions.dwp.contracts.b2b.cancel;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.guidedflow.cupq.NewQuotePage;
-import com.essent.testing.dwp.pageobject.salesmarketing.customer_dashboard.Invoice_list.InvoiceListPage;
-import com.essent.testing.dwp.pageobject.salesmarketing.customer_dashboard.contracts.ContractPage;
-import com.essent.testing.dwp.pageobject.salesmarketing.customer_dashboard.details.DetailsPage;
-import com.essent.testing.dwp.pageobject.salesmarketing.customer_dashboard.sales.SalesPage;
-import com.essent.testing.dwp.pageobject.salesmarketing.customer_dashboard.workflows.MarketMessagesPage;
+import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.invoicelist.InvoiceListPage;
+import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.contracts.ContractPage;
+import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.details.DetailsPage;
+import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.sales.SalesPage;
+import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.workflows.MarketMessagesPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;

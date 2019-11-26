@@ -9,7 +9,7 @@ import com.essent.testing.dwp.pageobject.impl.modal.quote.SimilarAccountDialogIm
 import com.essent.testing.dwp.pageobject.impl.quote.*;
 import com.essent.testing.dwp.pageobject.impl.quoteforaccount.OnlineQuoteSignatureModalPage;
 import com.essent.testing.dwp.pageobject.impl.quoteforaccount.QuoteForAccountOverviewPage;
-import com.essent.testing.dwp.pageobject.salesmarketing.customer_dashboard.contracts.ContractPage;
+import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.contracts.ContractPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
 import com.essent.testing.util.resource.ResourceUtil;

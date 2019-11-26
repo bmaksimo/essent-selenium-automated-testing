@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.salesmarketing.customer_dashboard.contracts;
+package com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.contracts;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.datagenerator.address.StreetGenerator;

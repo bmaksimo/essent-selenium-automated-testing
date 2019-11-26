@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.salesmarketing.customer_dashboard.workflows;
+package com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.workflows;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;

@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.autocrat.element.quote_for_account;
+package com.essent.testing.dwp.autocrat.element.quoteforaccount;
 
 import com.essent.automation.autocrat.Model;
 

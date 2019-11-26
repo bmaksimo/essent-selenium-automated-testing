@@ -1,4 +1,4 @@
-package com.essent.testing.dwp.pageobject.salesmarketing.customer_dashboard.documents;
+package com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.documents;
 
 import com.essent.testing.dwp.pageobject.impl.Component;
 import org.junit.Assert;
