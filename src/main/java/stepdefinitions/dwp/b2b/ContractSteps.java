@@ -8,6 +8,7 @@ import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.contra
 import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.details.DetailsPage;
 import com.essent.testing.table.Filter;
 import com.essent.testing.dwp.scenario.DwpScenario;
+import com.essent.testing.table.Filter;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;

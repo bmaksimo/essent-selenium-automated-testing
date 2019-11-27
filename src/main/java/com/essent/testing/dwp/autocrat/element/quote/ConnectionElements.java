@@ -39,10 +39,10 @@ public enum ConnectionElements {
       "#meter-no-c-accounts-aos-quotes-aos-products-quotes-a-6565-bd-4-e-0-ec-dee-9-64-fd-58-aca-11-b-3994-field"),
   ELEC_MARKET_MOCK(
       "SELECTOR",
-      "#test-accounts-aos-quotes-aos-products-quotes-c-0-f-94-c-2-f-72-e-0-51-b-9-ce-93-58930799-ecf-1-field"),
+      "test-accounts-aos-quotes-aos-products-quotes-c-0-f-94-c-2-f-72-e-0-51-b-9-ce-93-58930799-ecf-1-field"),
   GAS_MARKET_MOCK(
       "SELECTOR",
-      "#test-accounts-aos-quotes-aos-products-quotes-a-6565-bd-4-e-0-ec-dee-9-64-fd-58-aca-11-b-3994-field");
+      "test-accounts-aos-quotes-aos-products-quotes-a-6565-bd-4-e-0-ec-dee-9-64-fd-58-aca-11-b-3994-field");
 
     private String searchBy;
 

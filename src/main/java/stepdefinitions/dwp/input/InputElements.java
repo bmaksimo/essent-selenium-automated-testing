@@ -19,7 +19,10 @@ import org.openqa.selenium.support.ui.FluentWait;
 import stepdefinitions.dwp.tables.IsAre;
 import stepdefinitions.dwp.tables.plus.SwitchState;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import static com.billinghouse.testautomation.javascript.testrunner.JsTestRegistry.*;

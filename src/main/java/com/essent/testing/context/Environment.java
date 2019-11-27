@@ -1,6 +1,5 @@
 package com.essent.testing.context;
 
-import cucumber.runtime.CucumberException;
 import org.apache.commons.lang3.StringUtils;
 
 public enum Environment {

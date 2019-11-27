@@ -10,13 +10,13 @@ import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.detail
 import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.service.ServicePage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.restassured.create_contract.helper.PrepareDataForContract;
-import io.cucumber.datatable.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import io.cucumber.datatable.DataTable;
 import org.junit.Assert;
 
 import java.util.List;

@@ -5,7 +5,6 @@ import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
 import com.essent.automation.core.WebDriverWait;
 import com.essent.testing.context.ContextService;
-import com.essent.testing.dwp.pageobject.table.DWPTableFilter;
 import com.essent.testing.odoo.table.OdooTableFilter;
 import com.essent.testing.selenium.OdooSeleniumDriver;
 import com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter;

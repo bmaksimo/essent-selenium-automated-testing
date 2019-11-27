@@ -5,10 +5,10 @@ import com.essent.testing.restassured.create_contract.impl.b2b.ContractTC1B2BCre
 import com.essent.testing.restassured.create_contract.impl.b2b.ContractTC2B2BCreator;
 import com.essent.testing.restassured.create_contract.impl.b2b.ContractUPB2BCreator;
 import com.essent.testing.scenario.RegisteredScenario;
-import io.cucumber.datatable.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
+import io.cucumber.datatable.DataTable;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import stepdefinitions.dwp.contracts.producttypes.ProductTypes;

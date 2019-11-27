@@ -2,8 +2,6 @@ package stepdefinitions.quote.api.builders;
 
 import stepdefinitions.quote.api.model.QuoteDetails;
 
-import java.io.IOException;
-
 public class QuoteDetailsBuilder {
     private QuoteDetails quoteDetails;
 
