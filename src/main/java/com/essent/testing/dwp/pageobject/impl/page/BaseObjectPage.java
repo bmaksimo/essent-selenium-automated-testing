@@ -5,6 +5,7 @@ import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.contracts.ContractPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import stepdefinitions.dwp.tables.plus.SwitchState;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,6 +32,7 @@ public class BaseObjectPage extends Component {
 	    + "}']//option[@label = '${" + REPLACEMENT_KEY1 + "}']";
 
     private static final String CARD_TEXT_XPATH = "//h2[normalize-space(text())='${"+REPLACEMENT_KEY+"}']/parent::div/parent::div/div[@class='form__group']//label[normalize-space(text())='${"+REPLACEMENT_KEY1+"}']/parent::div//strong";
+    private static final String CHECKBOX_XPATH = "//label[text()[contains(.,'${" + REPLACEMENT_KEY + "}')]]//input[@type='checkbox']";
 
     public void clickOnPlus() {
         seleniumDriver.waitForRequestsToFinish();
@@ -99,11 +101,11 @@ public class BaseObjectPage extends Component {
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(xpathLabel)));
     }
 
-    public WebElement cardTextXPathValue(String cardName, String label) {
-        Map<String, String> valuesMap = new HashMap<>();
-        valuesMap.put(REPLACEMENT_KEY, cardName);
-        valuesMap.put(REPLACEMENT_KEY1, label);
-        String cardTextXPath = createQuery(CARD_TEXT_XPATH, valuesMap);
-        return seleniumDriver.findElementWhenVisible(By.xpath(cardTextXPath));
+    public void toggleCheckbox(String label, SwitchState state) {
+        seleniumDriver.waitForRequestsToFinish();
+        String checked = "checked".equalsIgnoreCase(state.name()) ? "true" : "false";
+        String checkboxLocation = createQuery(CHECKBOX_XPATH, REPLACEMENT_KEY, label);
+        WebElement checkBoxElement = seleniumDriver.findElement(By.xpath(checkboxLocation));
+        if (!checked.equalsIgnoreCase(checkBoxElement.getAttribute("checked"))) checkBoxElement.click();
     }
 }
