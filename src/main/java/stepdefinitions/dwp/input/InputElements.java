@@ -11,6 +11,7 @@ import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
+import cucumber.runtime.CucumberException;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -26,8 +27,6 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import static com.billinghouse.testautomation.javascript.testrunner.JsTestRegistry.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
 
 public class InputElements extends DwpScenario {
     private static final String CALENDAR_VALIDTO_TIME_ID = "validto-c-time-field";
@@ -420,16 +419,29 @@ public class InputElements extends DwpScenario {
         }
 
         @And("^Field \"([^\"]*)\" input is \"([^\"]*)\"$")
-        public void setInputByPlaceholder (String placeholder, String value){
+        public void setInputByPlaceholder (String placeholder, String value) throws CucumberException {
             seleniumDriver.waitForRequestsToFinish();
             Sleeper.sleepTightInSeconds(30);
             String inputValue = parameterProvider.getValueOrParameterAsString(value);
-            Optional<WebElement> placeHolderInputElement = seleniumDriver.findElementOptional(By.xpath("//input[@placeholder='" + placeholder + "']"));
-            boolean placeHolderWasFound = placeHolderInputElement.isPresent();
-            assertThat(String.format("Placeholder element '%s' was not found.", placeholder), placeHolderWasFound, is(true));
-            placeHolderInputElement.ifPresent(e -> e.sendKeys(inputValue));
+            WebElement inputElement = getFieldUntilPresent(placeholder);
+            inputElement.sendKeys(inputValue);
             seleniumDriver.waitForRequestsToFinish();
             Sleeper.sleepTightInSeconds(30);
+        }
+
+        public WebElement getFieldUntilPresent(String placeholder) {
+            boolean elementFound = false;
+            int currentAttempt = 0;
+            int maxAttempts = 20;
+
+            while (!elementFound && currentAttempt <= maxAttempts) {
+                currentAttempt++;
+                Optional<WebElement> placeholderElementOptional = seleniumDriver.findElementOptional(By.xpath("//input[@placeholder='" + placeholder + "']"));
+                elementFound = placeholderElementOptional.isPresent();
+                if (elementFound) return placeholderElementOptional.get();
+                Sleeper.sleepTightInSeconds(5);
+            }
+            throw new CucumberException(String.format("Placeholder element '%s' was not found", placeholder));
         }
 
         @And("^Selection with search is \"([^\"]*)\"$")
