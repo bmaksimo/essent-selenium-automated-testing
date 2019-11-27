@@ -41,4 +41,19 @@ public class BillingSteps extends DwpScenario {
     public void send() {
         new BillingPage().clickOnSendButton();
     }
+
+    @And("^Copy invoice amount from the first invoice$")
+    public void copyInvoiceAmountFromTheFirstInvoice(){
+        BillingPage bp = new BillingPage();
+        parameterProvider.put("invoiceAmount",bp.getInvoiceAmount());
+
+
+    }
+
+    @And("^CNW and VKW invoice have same invoice amount$")
+    public void cnwAndVKWInvoiceHaveSameInvoiceAmount() {
+        String amountCNW = new BillingPage().getInvoiceAmount().replace("-", "");
+        String amountVKW = parameterProvider.getValueOrParameterAsString("parameter:invoiceAmount");
+        Assert.assertTrue(String.format("cnw \"%s\" and vkw \"%s\" does not have the same invice amount", amountCNW, amountVKW), amountCNW.equalsIgnoreCase(amountVKW));
+    }
 }
