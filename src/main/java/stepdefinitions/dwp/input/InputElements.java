@@ -441,7 +441,7 @@ public class InputElements extends DwpScenario {
                 if (elementFound) return placeholderElementOptional.get();
                 Sleeper.sleepTightInSeconds(5);
             }
-            throw new CucumberException(String.format("Placeholder element '%s' was not found", placeholder));
+            throw new CucumberException("Placeholder element " + placeholder + " was not found");
         }
 
         @And("^Selection with search is \"([^\"]*)\"$")
