@@ -1,7 +1,6 @@
 @REGRESSION
 @DWP
 @B2C
-@PERFORMANCE
 @ALL
 Feature: NSTA-344:Payment Plan
 
