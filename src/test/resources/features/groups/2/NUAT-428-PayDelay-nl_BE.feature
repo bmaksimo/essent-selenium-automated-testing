@@ -11,7 +11,7 @@ Feature: NUAT-428: Pay Delay - nl_BE
         When Left menu is "billing"
         And Top menu item is "Klanten"
         And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
-        And Top action is Filter from "sales marketing" menu retrying 5 times
+        And Top action is Filter from "sales-marketing" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
         And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
         And Click on top menu button PLUS and navigate to "Billing -> Vrije tekstfactuur aanmaken"
