@@ -105,6 +105,7 @@ public class BaseObjectPage extends Component {
         seleniumDriver.waitForRequestsToFinish();
         String checked = "checked".equalsIgnoreCase(state.name()) ? "true" : "false";
         String checkboxLocation = createQuery(CHECKBOX_XPATH, REPLACEMENT_KEY, label);
+
         WebElement checkBoxElement = seleniumDriver.findElement(By.xpath(checkboxLocation));
         if (!checked.equalsIgnoreCase(checkBoxElement.getAttribute("checked"))) checkBoxElement.click();
     }
