@@ -22,7 +22,7 @@ Feature: NUAT-417: Payment Plan creation/reversal
         And "Klantnummer" input is "parameter:accountNumber"
         And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
         And Dashboard menu is "Billing"
-        Then Table "Transacties" contains value "Issued" at column "Extra info" within 1800 seconds
+        Then Table "Transacties" contains value "Issued" at column "Extra info" retrying 5 times
 
         #Payment plan creation
         And List option is "ENKEL FACTUREN"

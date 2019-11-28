@@ -64,7 +64,6 @@ public class CustomerPage extends Component {
         awaitOdooRequestToFinish(60);
         String xpath = createQuery(BUTTON_LABEL, NAME_TAB, buttonLabel);
         WebElement button = seleniumDriver.findElementWhenVisible(By.xpath(xpath));
-        if (null == button) throw new CucumberException("Button " + buttonLabel + " was not found.");
         button.click();
         awaitOdooRequestToFinish(60);
     }
