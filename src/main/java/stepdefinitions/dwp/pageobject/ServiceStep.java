@@ -1,6 +1,6 @@
 package stepdefinitions.dwp.pageobject;
 
-import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.service.ServicePage;
+import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.service.ServicePage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;

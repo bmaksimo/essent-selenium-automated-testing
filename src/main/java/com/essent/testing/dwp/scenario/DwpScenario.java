@@ -16,9 +16,7 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.billinghouse.testautomation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpApiDate;
-import static com.billinghouse.testautomation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpDate;
-import static com.billinghouse.testautomation.util.dsl.DateExpressionsUtil.convertToDwpTime;
+import static com.billinghouse.testautomation.util.dsl.DateExpressionsUtil.*;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 

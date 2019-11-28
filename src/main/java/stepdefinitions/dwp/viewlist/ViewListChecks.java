@@ -2,8 +2,7 @@ package stepdefinitions.dwp.viewlist;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.listview.ViewListTestObject;
-import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.contracts.ContractPage;
-import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.workflows.MarketMessagesPage;
+import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.contracts.ContractPage;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -32,18 +31,16 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import static com.billinghouse.testautomation.javascript.testrunner.JsTestRegistry.*;
+import static com.billinghouse.testautomation.javascript.testrunner.JsTestRegistry.JS_TR_CLICK_TABLE_CELL_URL;
 import static com.billinghouse.testautomation.util.dsl.DateExpressionsUtil.checkTimeBetween;
 import static com.billinghouse.testautomation.util.dsl.DateExpressionsUtil.getFormattedEnd;
-import static com.billinghouse.testautomation.util.dsl.NumericUtil.amountAsInt;
-import static com.billinghouse.testautomation.util.dsl.NumericUtil.checkAmount;
-import static com.billinghouse.testautomation.util.dsl.NumericUtil.sumOfAmounts;
+import static com.billinghouse.testautomation.util.dsl.NumericUtil.*;
 import static com.essent.testing.dwp.constant.DwpConstants.FLEMISCH_LOCALE;
 import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertTrue;
 import static junit.framework.TestCase.fail;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
 
 public class ViewListChecks extends NavigationElements {
 

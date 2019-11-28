@@ -1,7 +1,7 @@
 package stepdefinitions.dwp.pageobject;
 
-import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.billing.BillingPage;
-import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.billing.CreateFreeTextInvoicePage;
+import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.billing.BillingPage;
+import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.billing.CreateFreeTextInvoicePage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -24,25 +24,36 @@ public class BillingSteps extends DwpScenario {
 
     @And("^Click select product code$")
     public void clickSelectProductCode() {
-        CreateFreeTextInvoicePage cftip = new CreateFreeTextInvoicePage();
-        cftip.clickOnSelectProductCodeButton();
+        new CreateFreeTextInvoicePage().clickOnSelectButtonPlaceholder();
     }
 
     @And("^Select \"([^\"]*)\" product code$")
     public void selectProductCode(String productCode) {
-        CreateFreeTextInvoicePage cftip = new CreateFreeTextInvoicePage();
-        cftip.selectProductCode(productCode);
+        new CreateFreeTextInvoicePage().selectProductCode(productCode);
     }
 
     @Then("^Transaction is created with TYPE \"([^\"]*)\"$")
-    public void transactiesIsCreatedWithTYPE(String type){
-        BillingPage bp = new BillingPage();
-        Assert.assertTrue("Type does not mach", bp.selectProductCode().equalsIgnoreCase(type));
+    public void transactiesIsCreatedWithTYPE(String type) {
+        Assert.assertTrue("Type does not mach", new BillingPage().selectProductCode().equalsIgnoreCase(type));
     }
 
     @And("^Send$")
     public void send() {
+        new BillingPage().clickOnSendButton();
+    }
+
+    @And("^Copy invoice amount from the first invoice$")
+    public void copyInvoiceAmountFromTheFirstInvoice(){
         BillingPage bp = new BillingPage();
-        bp.clickOnSendButton();
+        parameterProvider.put("invoiceAmount",bp.getInvoiceAmount());
+
+
+    }
+
+    @And("^CNW and VKW invoice have same invoice amount$")
+    public void cnwAndVKWInvoiceHaveSameInvoiceAmount() {
+        String amountCNW = new BillingPage().getInvoiceAmount().replace("-", "");
+        String amountVKW = parameterProvider.getValueOrParameterAsString("parameter:invoiceAmount");
+        Assert.assertTrue(String.format("cnw \"%s\" and vkw \"%s\" does not have the same invice amount", amountCNW, amountVKW), amountCNW.equalsIgnoreCase(amountVKW));
     }
 }

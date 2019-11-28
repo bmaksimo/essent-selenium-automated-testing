@@ -4,8 +4,8 @@ import com.billinghouse.testautomation.util.dsl.DateExpressionsUtil;
 import com.billinghouse.testautomation.util.dsl.EssentDateTimeFormat;
 import com.essent.testing.dwp.pageobject.dashboard.AccountDetails;
 import com.essent.testing.dwp.pageobject.impl.dashboard.AccountDetailsImpl;
-import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.details.DetailsPage;
-import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.workflows.MarketMessagesPage;
+import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.details.DetailsPage;
+import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.workflows.MarketMessagesPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -14,6 +14,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 

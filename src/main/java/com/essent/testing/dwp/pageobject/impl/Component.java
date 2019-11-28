@@ -5,10 +5,10 @@ import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.context.ContextService;
-import com.essent.testing.table.Filter;
 import com.essent.testing.dwp.pageobject.table.DWPTableFilter;
 import com.essent.testing.selenium.DWPSeleniumDriver;
 import com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter;
+import com.essent.testing.table.Filter;
 import cucumber.runtime.CucumberException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.StrSubstitutor;
@@ -16,12 +16,16 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
 
 import java.time.Duration;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public abstract class Component {
 
     private static final By MANDATORY_INPUT_EXCLAMATION_CSS = By.cssSelector(".is-error");
     private static final String CLOSE_MODAL_BUTTON = "//guidance-modal//div[@class = 'modal__header']/a";
+    private static final String PLACEHOLDER_BUTTON = "//button[@class='button-placeholder']";
 
     protected WebElement element;
     protected DWPSeleniumDriver seleniumDriver;
@@ -211,6 +215,10 @@ public abstract class Component {
             Sleeper.sleepTightInSeconds(2);
             if (isDisplayed) element.click();
         }
+    }
+
+    public void clickOnSelectButtonPlaceholder() {
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(PLACEHOLDER_BUTTON)));
     }
 
     protected WebElement findElementWithRetries(By by, int attempts) throws Exception {

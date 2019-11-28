@@ -1,7 +1,7 @@
 package stepdefinitions.dwp.pageobject;
 
-import com.essent.testing.dwp.pageobject.impl.service_contracting.ChangeAccountStatusPage;
-import com.essent.testing.dwp.pageobject.sales_marketing.customer_dashboard.documents.DocumentsPage;
+import com.essent.testing.dwp.pageobject.impl.servicecontracting.ChangeAccountStatusPage;
+import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.documents.DocumentsPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.util.resource.ResourceUtil;
 import cucumber.api.Scenario;

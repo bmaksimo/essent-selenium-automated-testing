@@ -4,6 +4,8 @@ import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.testing.dwp.pageobject.elements.ToggleSwitch;
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleSwitchImpl;
+import org.apache.commons.collections4.CollectionUtils;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.tables.ConnectionDetails;
@@ -11,10 +13,10 @@ import stepdefinitions.dwp.tables.ProductType;
 import stepdefinitions.dwp.tables.plus.SwitchState;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.billinghouse.testautomation.javascript.testrunner.JsTestRegistry.JS_TR_APPLY_FORM_INPUT;
-import static com.billinghouse.testautomation.javascript.testrunner.JsTestRegistry.JS_TR_TOGGLE_INPUT_STATE;
 import static com.essent.testing.dwp.autocrat.element.quote.B2CQuoteElements.ELECTRICITY_EAN_CODE;
 import static com.essent.testing.dwp.autocrat.element.quote.ConnectionElements.*;
 import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.INPUT;
@@ -85,40 +87,15 @@ public class ConnectionDetailsPage extends QuoteCreationGuidedStep {
         this.gasConnectionDetails = gasConnectionDetails;
     }
 
-    public boolean toggleMeter(ProductType productType, SwitchState state) {
-        String query = ELEC_METER_OPEN_CHECKBOX.getQuery();
-        switch (productType) {
-            case Gas:
-                query = GAS_METER_OPEN_CHECKBOX.getQuery();
-                break;
-            default:
-                break;
-        }
-        Map<String, String> options = new HashMap<>();
-        options.put("id", query);
-        boolean result = executeJavascriptTest(JS_TR_TOGGLE_INPUT_STATE, options);
-        return result;
-    }
-
-    public boolean toggleMarketMockTest(ProductType productType, SwitchState state) {
-        seleniumDriver.waitForRequestsToFinish();
-        String query = ELEC_MARKET_MOCK.getQuery();
-        switch (productType) {
-            case Gas:
-                query = GAS_MARKET_MOCK.getQuery();
-                break;
-            default:
-                break;
-        }
-        Map<String, String> options = new HashMap<>();
-        options.put("id", query);
-        boolean result = executeJavascriptTest(JS_TR_TOGGLE_INPUT_STATE, options);
-        return result;
+    public void toggleMarketMockTest(ProductType productType) {
+        String productTypeToggleId = productType == ProductType.Gas ? GAS_MARKET_MOCK.getQuery() : ELEC_MARKET_MOCK.getQuery();
+        List<WebElement> productTypeToggles = seleniumDriver.findElements(By.id(productTypeToggleId));
+        if (CollectionUtils.isNotEmpty(productTypeToggles)) productTypeToggles.get(0).click();
+        else Assert.fail("Product type toggle with id " + productTypeToggleId + " was not found.");
     }
 
     public String getEan() {
-        WebElement element =
-            seleniumDriver.findElement(By.cssSelector(ELECTRICITY_EAN_CODE.element().query));
+        WebElement element = seleniumDriver.findElement(By.cssSelector(ELECTRICITY_EAN_CODE.element().query));
         return element.getAttribute("value");
     }
 

@@ -4,6 +4,7 @@ import com.essent.testing.dwp.pageobject.impl.modal.ModalBase;
 import com.essent.testing.dwp.pageobject.modal.confirm.ConfirmSignatureDialog;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
+
 import java.time.Duration;
 
 public class ConfirmSignatureDialogImpl extends ModalBase implements ConfirmSignatureDialog {

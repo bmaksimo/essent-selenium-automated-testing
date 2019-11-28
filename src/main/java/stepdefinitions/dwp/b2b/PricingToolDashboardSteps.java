@@ -1,8 +1,7 @@
 package stepdefinitions.dwp.b2b;
 
-import com.essent.testing.dwp.pageobject.sales_marketing.focuse_mode.PricingToolDashboardPage;
+import com.essent.testing.dwp.pageobject.salesmarketing.focusedmode.PricingToolDashboardPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
-
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;

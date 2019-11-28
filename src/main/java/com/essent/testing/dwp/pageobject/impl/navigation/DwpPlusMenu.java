@@ -1,6 +1,5 @@
 package com.essent.testing.dwp.pageobject.impl.navigation;
 
-import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;

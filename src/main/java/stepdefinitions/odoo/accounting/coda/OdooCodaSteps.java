@@ -1,6 +1,7 @@
 package stepdefinitions.odoo.accounting.coda;
 
 import com.essent.testing.odoo.pageobject.impl.modal.coda.CodaImportDialogImpl;
+import com.essent.testing.odoo.pageobject.impl.page.CodaPage;
 import com.essent.testing.odoo.pageobject.modal.CodaImportDialog;
 import com.essent.testing.odoo.scenario.OdooScenario;
 import com.essent.testing.util.resource.ResourceUtil;
@@ -128,4 +129,9 @@ public class OdooCodaSteps extends OdooScenario {
         super.tearDown();
     }
 
+    @And("^Close the pop-up$")
+    public void closeThePopUp(){
+        CodaPage cp = new CodaPage();
+        cp.clickOnClose();
+    }
 }
