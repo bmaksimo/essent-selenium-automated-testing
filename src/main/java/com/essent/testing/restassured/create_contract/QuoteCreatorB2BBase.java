@@ -540,7 +540,7 @@ public class QuoteCreatorB2BBase {
     private String getUPEndDate() {
         DateTimeFormatter dwpDateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate oneYearFromNow = LocalDate.now().plusYears(1);
-        LocalDate upEndDate = oneYearFromNow.withDayOfMonth(oneYearFromNow.lengthOfMonth()).minusMonths(1);
+        LocalDate upEndDate = oneYearFromNow.minusMonths(1).withDayOfMonth(oneYearFromNow.minusMonths(1).lengthOfMonth());
         return upEndDate.format(dwpDateTimeFormatter);
     }
 
