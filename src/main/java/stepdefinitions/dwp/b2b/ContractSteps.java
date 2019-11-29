@@ -6,7 +6,6 @@ import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import com.essent.testing.dwp.pageobject.impl.quote.QuoteDetailsPage;
 import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.contracts.ContractPage;
 import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.details.DetailsPage;
-import com.essent.testing.table.Filter;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.table.Filter;
 import cucumber.api.Scenario;
