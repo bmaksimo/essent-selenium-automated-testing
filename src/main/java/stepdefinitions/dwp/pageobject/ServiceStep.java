@@ -42,10 +42,10 @@ public class ServiceStep extends DwpScenario {
         servicePage.gotoGLNAccount();
     }
 
-    @Then("^Interaction is created with Type Document and Onderwerp \"([^\"]*)\"$")
-    public void interactionIsCreatedWithTypeDocumentAndOnderwerp(String document){
+    @Then("^Interaction is created with type Document and topic \"([^\"]*)\"$")
+    public void interactionIsCreatedWithTypeDocumentAndTopic(String document){
         ServicePage servicePage = new ServicePage();
-        String onderwerp = servicePage.getSecondInteractionOnderwerp();
-        Assert.assertTrue("Actual Interaction Onderwerp:"+onderwerp+" differs from expected:"+document,onderwerp.equalsIgnoreCase(document));
+        String topic = servicePage.getSecondInteractionOnderwerp();
+        Assert.assertTrue("Actual Interaction Onderwerp:"+topic+" differs from expected:"+document,topic.equalsIgnoreCase(document));
     }
 }

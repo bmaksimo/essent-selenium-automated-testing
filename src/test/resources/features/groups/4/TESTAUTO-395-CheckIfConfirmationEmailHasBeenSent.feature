@@ -43,7 +43,7 @@ Feature: TESTAUTO-395: Check if confirmation email has been sent
         Then  "1st" list element has cell value "Actief" at column "Contractnummer" polling 600 seconds
         
         When Dashboard menu is "Service"
-        Then Interaction is created with Type Document and Onderwerp "Outbound document: CONF_CONTRACT_SALES_TC1_B2C"
+        Then Interaction is created with type Document and topic "Outbound document: CONF_CONTRACT_SALES_TC1_B2C"
 
         When Click on link in View List at "2nd" row and "Nummer & Communicatiekanaal" column polling 60 seconds
         Then EMC ID is present
