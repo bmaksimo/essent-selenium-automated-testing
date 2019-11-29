@@ -6,6 +6,7 @@ import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
+import cucumber.api.java.en.Then;
 import org.junit.Assert;
 
 public class ServiceStep extends DwpScenario {
@@ -25,7 +26,7 @@ public class ServiceStep extends DwpScenario {
     public void interactionIsCreatedWithTypeAndOnderwerpAndVerwanteCaseIs(String type, String onderwerp) {
         ServicePage sp = new ServicePage();
         Assert.assertTrue("Actual Interaction Type differs from expected",sp.getInteractionType(type).equalsIgnoreCase(type));
-        Assert.assertTrue("Actual Interaction Onderwerp differs from expected",sp.getInteractionOnderwerp(type).equalsIgnoreCase(onderwerp));
+        Assert.assertTrue("Actual Interaction Onderwerp:"+sp.getInteractionOnderwerp(type)+" differs from expected:"+onderwerp,sp.getInteractionOnderwerp(type).equalsIgnoreCase(onderwerp));
     }
 
     @And("^Go to prospect$")
@@ -39,5 +40,12 @@ public class ServiceStep extends DwpScenario {
     public void goToGLNAccount() {
         ServicePage servicePage = new ServicePage();
         servicePage.gotoGLNAccount();
+    }
+
+    @Then("^Interaction is created with Type Document and Onderwerp \"([^\"]*)\"$")
+    public void interactionIsCreatedWithTypeDocumentAndOnderwerp(String document){
+        ServicePage servicePage = new ServicePage();
+        String onderwerp = servicePage.getSecondInteractionOnderwerp();
+        Assert.assertTrue("Actual Interaction Onderwerp:"+onderwerp+" differs from expected:"+document,onderwerp.equalsIgnoreCase(document));
     }
 }

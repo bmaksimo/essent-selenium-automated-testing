@@ -118,4 +118,8 @@ public class DetailsPage extends Component {
     public WebElement getModalName(String modal){
         return seleniumDriver.findElementWhenVisible(By.xpath("//h5[normalize-space()= '"+modal+"']"));
     }
+
+    public WebElement getEmcIdElemet(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("//list[@list-key='CommunicationonInteraction']//td[4]//list-simple-two-liner-cell//span[1]"));
+    }
 }
