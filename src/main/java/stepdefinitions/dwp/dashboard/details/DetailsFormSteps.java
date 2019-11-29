@@ -109,12 +109,11 @@ public class DetailsFormSteps extends DwpScenario {
         if (!new DetailsPage().getModalName(modal).isDisplayed()){
             new MarketMessagesPage().chooseMarketMessageButton("CREEREN BLOKKERING");
         }
-
     }
 
     @Then("^EMC ID is present$")
     public void emcIdIsPresent(){
         DetailsPage dp = new DetailsPage();
-        Assert.assertTrue("EMC ID is not present", dp.getEmcIdElemet().isDisplayed());
+        Assert.assertTrue("EMC ID is not present", dp.getEmcIdElement().isDisplayed());
     }
 }
