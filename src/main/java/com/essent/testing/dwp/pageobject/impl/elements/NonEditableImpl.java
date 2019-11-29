@@ -31,11 +31,17 @@ public class NonEditableImpl extends Component implements NonEditable {
   @Override
   public String getValue(String title, String label) {
     seleniumDriver.waitForRequestsToFinish();
+    logger().info("entering hell...");
     Map<String, String> valuesMapper = new HashMap<>();
     valuesMapper.put("title", title);
     valuesMapper.put("label", label);
-    By xpathSelector = By.xpath(createQuery(CARD_TEMPLATE.getQuery() + XPATH_INPUT_TEMPLATE, valuesMapper));
-    WebElement webElement = findElementWhenVisible(xpathSelector);
+
+//    By xpathSelector = By.xpath(createQuery(CARD_TEMPLATE.getQuery() + XPATH_INPUT_TEMPLATE, valuesMapper));
+    By xpathSelectorMenu = By.xpath(createQuery(CARD_TEMPLATE.getQuery(), "title", title));
+    By xpathSelectorValue = By.xpath(createQuery(XPATH_INPUT_TEMPLATE, "label", label));
+//    WebElement webElement = findElementWhenVisible(xpathSelectorMenu);
+    WebElement webElement = findElementWhenVisible(xpathSelectorValue);
+//    WebElement value = webElement.findElement(xpathSelectorValue);
     String innerText = webElement.getAttribute("innerText");
     logger().debug("--NonEditable, element value is: " + innerText);
 

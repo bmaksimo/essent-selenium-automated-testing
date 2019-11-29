@@ -20,6 +20,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 import io.cucumber.datatable.DataTable;
 import org.apache.commons.lang3.StringUtils;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.autocrat.flow.FlowAwarePredicate;
@@ -240,6 +241,11 @@ public class QuoteSteps extends DwpScenario {
         parameterProvider.put(gasAdvDescriptor.getParameterName(), billingDetailsPage.getGasAdvancedPaymentAmount(gasAdvDescriptor));
     }
 
+    @And("^All values at \"([^\"]*)\" are greater than zero$")
+    public void checkValuesGreaterThanZero(String label) {
+        Assert.assertTrue("Not all values are greater than zero", new NewQuotePage().areAllAmountsGreaterThanZero(label));
+
+    }
 
     @And("^Billing details are confirmed$")
     public void confirmBillingDetails() {

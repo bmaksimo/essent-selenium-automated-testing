@@ -47,21 +47,23 @@ Feature: NSTA-330. Check the generation of prepaid advance invoice.
         Then Form header is "Billing details"
 
         When "Betalingswijze" selection is "Overschrijving"
-        And Numeric value at "Bedrag Vooraf (incl. btw)" in the card "Elektriciteit Vooraf" is "greater than 0"
-        And Numeric value at "Bedrag Vooraf (incl. btw)" in the card "Aardgas Vooraf" is "greater than 0"
+        And All values at "Bedrag Vooraf (incl. btw)" are greater than zero
+#        And Numeric value at "Bedrag Vooraf (incl. btw)" in the card "Elektriciteit Vooraf" is "greater than 0"
+#        And Numeric value at "Bedrag Vooraf (incl. btw)" in the card "Aardgas Vooraf" is "greater than 0"
         And Prepaid advance amounts are collected as numbers
             | cardName             | fieldName                 | parameterName    |
             | Elektriciteit Vooraf | Bedrag Vooraf (incl. btw) | bedrag-vooraf-el |
             | Aardgas Vooraf       | Bedrag Vooraf (incl. btw) | bedrag-vooraf-gas|
-
+#
         And Billing details are confirmed
         Then Form header is "Quote overview"
 
         When Option "Heeft de klant al getekend?" "is" "On"
-        And Quote is signed
         And "Datum ondertekening" date is "35 days before now"
+        And Quote is signed
         And Quote is signed in "Kontich"
         And Quote is confirmed
+
         And Dashboard menu is "Contracten"
         And Dashboard menu is "Sales"
         Then Table "Offertes" contains value "Sales Getekend - Geaccepteerd" at column "Type & status" retrying 30 times
