@@ -2,7 +2,6 @@
 @DWP
 @B2C
 @ALL
-@DUNNING
 
 Feature: TESTAUTO-179 - Create new customer with general communication preference: By email and update "General"
 

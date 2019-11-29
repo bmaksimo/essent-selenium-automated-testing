@@ -69,4 +69,8 @@ public class ServicePage extends Component {
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.linkText("Go to GLN Account")));
         Sleeper.sleepTightInSeconds(10);
     }
+
+    public String getSecondInteractionOnderwerp(){
+        return seleniumDriver.findElementWhenVisible(By.xpath("//list[@list-key='InteractionsOnAccount']//tr[3]//td[3]//list-simple-two-liner-cell//span[2]")).getText();
+    }
 }
