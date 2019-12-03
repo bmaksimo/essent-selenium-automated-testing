@@ -8,15 +8,23 @@ Feature: Initial set of tests
     #Check is Login working with all iWelcome users for automation purposes
     Scenario: Login with user "salesmarketing.testautomation.b2c@essent.be" in DWP
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
+        #check is user admin
+        Then Left menu is "test"
 
     Scenario: Login with user "businessdesk.testautomation.b2b@essent.be" in DWP
         Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
+        #check is user admin
+        Then Left menu is "test"
 
     Scenario: Login with user "billing.testautomation@essent.be" in DWP
         Given I logged in to DWP as "billing.testautomation@essent.be"
+        #check is user admin
+        Then Left menu is "test"
 
     Scenario: Login with user "contracting.testautomation.b2c@essent.be" in DWP
         Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
+        #check is user admin
+        Then Left menu is "test"
 
     Scenario: Login with user "billing_testautomation" in JBilling
         Given I logged in to JBilling as "billing_testautomation"
@@ -70,7 +78,7 @@ Feature: Initial set of tests
 
     #Check is contract created through API (B2B UP/TK2)
     Scenario: Contract creation B2B UP API
-    And B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
+        When B2B Active Contract is "UP" product type and use "FAKE" address and switch type is "MOVE IN"
 
     #Check is contract created through UI (B2B TK1)
     Scenario: Contract creation B2B TK1 UI
@@ -109,7 +117,7 @@ Feature: Initial set of tests
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        When Option "test" "is" "On"
+        When Option "test" is "On"
         And EAN code is generated
         And "Startdatum" date on "Elektriciteit Vast" card is "now"
         And "EAN-code" input on "Elektriciteit Vast" card is "parameter:EAN-code-generated"
@@ -121,7 +129,7 @@ Feature: Initial set of tests
         And Billing details are confirmed
         Then Form header is "Quote overview"
 
-        When Option "Heeft de klant al getekend?" "is" "On"
+        When Option "Heeft de klant al getekend?" is "On"
         And "Kanaal ondertekening" selection is "Papier"
         And Quote is signed in "Kontich"
         And "Datum ondertekening" date is "now"
@@ -158,7 +166,7 @@ Feature: Initial set of tests
         And "Startdatum" date is "1 months before now"
         And "Type aansluiting" selection is "YMR"
         And "Meternummer" input is "1000"
-        And Option "test" "is" "On"
+        And Option "test" is "On"
         And Connection details are confirmed
         And Save changes
         Then Form header is "Billing details"
@@ -167,7 +175,7 @@ Feature: Initial set of tests
         And  Billing details are confirmed
         Then  Form header is "Quote overview"
 
-        When Option "Heeft de klant al getekend?" "is" "On"
+        When Option "Heeft de klant al getekend?" is "On"
         And "Kanaal ondertekening" selection is "Papier"
         And "Datum ondertekening" date is "now"
         And Quote is signed
