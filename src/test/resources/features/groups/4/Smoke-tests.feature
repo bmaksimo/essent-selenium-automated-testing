@@ -8,18 +8,22 @@ Feature: Initial set of tests
     #Check is Login working with all iWelcome users for automation purposes
     Scenario: Login with user "salesmarketing.testautomation.b2c@essent.be" in DWP
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
+        #check is user admin
         Then Left menu is "test"
 
     Scenario: Login with user "businessdesk.testautomation.b2b@essent.be" in DWP
         Given I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
+        #check is user admin
         Then Left menu is "test"
 
     Scenario: Login with user "billing.testautomation@essent.be" in DWP
         Given I logged in to DWP as "billing.testautomation@essent.be"
+        #check is user admin
         Then Left menu is "test"
 
     Scenario: Login with user "contracting.testautomation.b2c@essent.be" in DWP
         Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
+        #check is user admin
         Then Left menu is "test"
 
     Scenario: Login with user "billing_testautomation" in JBilling
