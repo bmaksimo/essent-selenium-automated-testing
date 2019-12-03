@@ -15,9 +15,7 @@ public class DocumentSteps extends DwpScenario {
     }
 
     @Then("^Check if document \"([^\"]*)\" is present$")
-    public void checkIfDocumentIsPresent(String txt){
-        DocumentsPage dp = new DocumentsPage();
-        String documentName = dp.getDocumentName();
-        Assert.assertTrue(documentName.equalsIgnoreCase(txt));
+    public void checkIfDocumentIsPresent(String documentName){
+        Assert.assertTrue(new DocumentsPage().getDocumentName(documentName));
     }
 }

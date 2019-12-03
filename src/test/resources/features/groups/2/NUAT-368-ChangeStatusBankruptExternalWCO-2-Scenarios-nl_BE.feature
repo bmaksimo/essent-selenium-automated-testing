@@ -45,4 +45,4 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
         And Changes are confirmed waiting for 5 seconds
         Then Verify status is "External @ Hilde Derde" and "Failliet"
         When Dashboard menu is "Documenten"
-        Then Find document
+        Then Check if document "customer-signature.pdf" is present

@@ -1,21 +1,45 @@
 package com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.documents;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
-import org.junit.Assert;
+import com.essent.testing.dwp.pageobject.impl.navigation.DashboardMenuPage;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 public class DocumentsPage extends Component {
 
-    private static final String labelDocument = "//span[contains(text(), 'customer-signature')]";
-    private static final String findDocument = "(//span[.='customer-signature.pdf'])[1]";
+    private static final String DETAILS_DASHBOARD_MENU = "Details";
+    private static final String DOCUMENTS_DASHBOARD_MENU = "Documenten";
+    private static final String DOCUMENT_LABEL_TEMPLATE = "//span[contains(text(), '${documentLabel}')]";
 
-    public String getDocumentName(){
+    public boolean getDocumentName(String document) {
         seleniumDriver.waitForRequestsToFinish();
-        return findElementWhenVisible(By.xpath(labelDocument)).getText();
+        String documentLabel = createQuery(DOCUMENT_LABEL_TEMPLATE, "documentLabel", document);
+
+        boolean found = false;
+        int currentAttempt = 0;
+        int maxAttempts = 20;
+
+        while (!found && currentAttempt < maxAttempts) {
+            currentAttempt++;
+            try {
+                WebElement documentElement = findElementWhenVisible(By.xpath(documentLabel));
+                return true;
+            } catch (Exception e) {
+                logger().debug("Element " + documentLabel + " not found");
+                loopback();
+            }
+        }
+        return false;
 
     }
-    public void findDocument() {
+
+    private void loopback() {
+        Sleeper.sleepTightInSeconds(30);
+        DashboardMenuPage dashboardMenuPage = new DashboardMenuPage();
+        dashboardMenuPage.clickOnDashboardElement(DETAILS_DASHBOARD_MENU);
         seleniumDriver.waitForRequestsToFinish();
-        Assert.assertTrue(findElementWhenVisible(By.xpath(findDocument)).isDisplayed());
+        dashboardMenuPage.clickOnDashboardElement(DOCUMENTS_DASHBOARD_MENU);
+        seleniumDriver.waitForRequestsToFinish();
     }
 }
