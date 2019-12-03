@@ -12,7 +12,7 @@ public class DocumentsPage extends Component {
     private static final String DOCUMENTS_DASHBOARD_MENU = "Documenten";
     private static final String DOCUMENT_LABEL_TEMPLATE = "//span[contains(text(), '${documentLabel}')]";
 
-    public boolean getDocumentName(String document) {
+    public boolean isDocumentNamePresent(String document) {
         seleniumDriver.waitForRequestsToFinish();
         String documentLabel = createQuery(DOCUMENT_LABEL_TEMPLATE, "documentLabel", document);
 
