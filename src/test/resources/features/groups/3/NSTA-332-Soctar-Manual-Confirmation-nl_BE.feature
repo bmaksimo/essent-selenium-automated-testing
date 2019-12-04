@@ -69,7 +69,7 @@ Feature: NSTA 332 Soctar confirmation --> Manual
      #Step 3: Check SOCTAR product change
 
         When Dashboard menu is "Contracten"
-        And  "1st" list element has cell value "Actief" at column "Contractnummer" polling 450 seconds
+        And  "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
         And Table "Contracten" contains value "Geannuleerd (Geaccepteerd)" at column "Type & status"
         And Table "Contracten" contains value "Verwerkt (Geaccepteerd)" at column "Type & status"
         And Table "Actieve en toekomstige connecties" contains value "sociaal tarief (SOCTAR)" at column "EAN-code"
