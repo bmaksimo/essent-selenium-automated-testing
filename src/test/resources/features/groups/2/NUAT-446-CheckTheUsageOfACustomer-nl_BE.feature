@@ -36,7 +36,7 @@ Feature: NUAT-446: Check The Usage Of A Customer - nl_BE
         And "Startdatum" date is "5 day before now"
         And "EAN-code" input is "parameter:EAN-code-generated"
         And "Meternummer" input is "1000"
-        And Option "test" "is" "On"
+        And Option "test" is "On"
         And Connection details are confirmed
         Then Form header is "Billing details"
 
@@ -44,7 +44,7 @@ Feature: NUAT-446: Check The Usage Of A Customer - nl_BE
         And  Billing details are confirmed
         Then  Form header is "Quote overview"
 
-        When Option "Heeft de klant al getekend?" "is" "On"
+        When Option "Heeft de klant al getekend?" is "On"
         And "Kanaal ondertekening" selection is "Papier"
         And Quote is signed in "Kontich"
         And "Datum ondertekening" date is "now"
@@ -58,13 +58,6 @@ Feature: NUAT-446: Check The Usage Of A Customer - nl_BE
         When Dashboard menu is "Contracten"
         And "1st" List element with value at column "EAN-code" is checked
         Then Consumption at deliverypointid "parameter:EAN-code" is generated until "now"
-
-        When I renew login to DWP as "billing.testautomation@essent.be"
-        And Left menu is "contracting-switching"
-        And Top menu item is "Klanten"
-        And Top action is Filter from "contracting-switching" menu retrying 5 times
-        And "Klantnummer" input is "parameter:accountNumber"
-        Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
 
         When Click on top menu button PLUS and navigate to "Billing -> Verbruiken voor klant"
         And "Verbruiken" list is_not empty
