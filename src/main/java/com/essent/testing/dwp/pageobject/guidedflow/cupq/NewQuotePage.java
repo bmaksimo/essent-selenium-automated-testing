@@ -2,12 +2,18 @@ package com.essent.testing.dwp.pageobject.guidedflow.cupq;
 
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.quote.QuoteCreationGuidedStep;
+import org.apache.commons.collections4.CollectionUtils;
+import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 public class NewQuotePage extends QuoteCreationGuidedStep {
 
     private static final String CONFIRM_SIGNIN_PLACE = "//*[@id=\"accounts|aos_quotes|sign_location_c\"]/div[1]/input";
     private static final String NACE_CODE = "//*[@id='nace-code-c-field']//div[@class='action-list']/ul/li";
+    private static final String XPATH_INPUT_TEMPLATE = "//div[label/text()='${label}']//div[@class='non-editable-input']";
 
     public void selectItemLegalForm() {
         seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//*[@id=\"legal-form-c-field\"]/option[2]")));
@@ -84,6 +90,25 @@ public class NewQuotePage extends QuoteCreationGuidedStep {
 
     public void setSepaSignatureLocation(String city){
         seleniumDriver.sendKeysNow(seleniumDriver.findElementWhenClickable(By.id("accounts-aos-quotes-payment-details-payment-methods-signature-location-field")),city);
+    }
+
+    public boolean areAllAmountsGreaterThanZero(String label) {
+        By xpathSelectorValue = By.xpath(createQuery(XPATH_INPUT_TEMPLATE, "label", label));
+        List<WebElement> amountElements = seleniumDriver.findElements(xpathSelectorValue);
+
+        if (CollectionUtils.isEmpty(amountElements)) Assert.fail("No amounts found.");
+
+        int totalSum = 0;
+
+        for (WebElement amountElement : amountElements) {
+            String stringAmount = amountElement.getText();
+            Integer amount = Integer.parseInt(stringAmount.replaceAll("[^\\d-]", ""));
+            totalSum += amount;
+            if (amount <= 0) return false;
+        }
+
+        parameterProvider.put("sum-of-contracts", totalSum);
+        return true;
     }
 
     @Override
