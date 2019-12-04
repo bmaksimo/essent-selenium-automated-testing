@@ -19,6 +19,7 @@ public class QuoteOverviewPage extends QuoteCreationGuidedStep {
 
     @Override
     public boolean fillInFormData() {
+        seleniumDriver.waitForRequestsToFinish();
         String place = signatureData.getPlace();
         String filePath = signatureData.getFilePath();
         Model.Execution execution = createExecution();

@@ -68,13 +68,6 @@ Feature: NSTA 332 Soctar confirmation --> Manual
 
      #Step 3: Check SOCTAR product change
 
-        Given I renew login to DWP as "contracting.testautomation.b2c@essent.be"
-        When Left menu is "sales-marketing"
-        And Top menu item is "Klanten"
-        And Top action is "Filters"
-        And "Naam" input is "parameter:suitecrm-customer-name"
-        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 30 seconds
-
         When Dashboard menu is "Contracten"
         And  "1st" list element has cell value "Actief" at column "Contractnummer" polling 450 seconds
         And Table "Contracten" contains value "Geannuleerd (Geaccepteerd)" at column "Type & status"
