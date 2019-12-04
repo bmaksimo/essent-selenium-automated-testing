@@ -623,17 +623,18 @@ public class ViewListChecks extends NavigationElements {
     //TODO Create a special test harness class for invoice checks,
     //and move the methods, related to invoice checks, there.
 
-    @And("^\"([^\"]*)\" element of table \"([^\"]*)\" at currency column \"([^\"]*)\" is sum of$")
-    public void checkCurrencyAmountDableDataAsSum(String ordinal, String table, String columnName, final DataTable subAmounts) {
+    @And("^\"([^\"]*)\" element of table \"([^\"]*)\" at currency column \"([^\"]*)\" is the sum of contracts amounts$")
+    public void checkCurrencyAmountDableDataAsSum(String ordinal, String table, String columnName) {
         seleniumDriver.waitForRequestsToFinish();
+        String stringSumOfContracts = parameterProvider.getValueOrParameterAsString("parameter:sum-of-contracts");
+        int sumOfContracts = Integer.parseInt(stringSumOfContracts);
+
         int row = extractNumericValue(ordinal);
         Optional<String> currencyValue = new ViewListTestObject().getCurrencyValueAt(row, columnName, table);
         assertThat(String.format("\"%s\" list element didn't contain any value at column \"%s\"", ordinal, columnName),
             currencyValue.isPresent(), is(true));
         int actualAmount = amountInCurrencyAsInt(currencyValue.get());
-        List<String> amounts = subAmounts.asList(String.class);
-        int sum = sumOf(amounts);
-        assertThat("Total advance prepaid amount %s is not equal to sum of sub amounts %s", actualAmount, equalTo(sum));
+        assertThat("Total advance prepaid amount %s is not equal to sum of sub amounts %s", actualAmount, equalTo(sumOfContracts));
     }
 
     @And("^\"([^\"]*)\" in the first \"([^\"]*)\" row of \"([^\"]*)\" table is \"([^\"]*)\"$")
@@ -652,10 +653,6 @@ public class ViewListChecks extends NavigationElements {
 
     private int amountInCurrencyAsInt(String amountInCurrency) {
         return amountAsInt(amountInCurrency, FLEMISCH_LOCALE);
-    }
-
-    private int sumOf(List<String> amounts) {
-        return sumOfAmounts(amounts);
     }
 
     @Then("^Transactions table has outstanding amount of \"([^\"]*)\"")

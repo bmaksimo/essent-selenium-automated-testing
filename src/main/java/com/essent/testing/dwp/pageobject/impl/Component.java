@@ -1,5 +1,6 @@
 package com.essent.testing.dwp.pageobject.impl;
 
+import com.billinghouse.cucumber.runtime.parameter.ParameterProvider;
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
@@ -29,6 +30,7 @@ public abstract class Component {
 
     protected WebElement element;
     protected DWPSeleniumDriver seleniumDriver;
+    protected ParameterProvider parameterProvider;
     private final Logger logger = Logger.getLogger(Component.class);
 
     protected Logger logger() {
@@ -37,6 +39,7 @@ public abstract class Component {
 
     public Component() {
         this.seleniumDriver = (DWPSeleniumDriver) ContextService.getContext().getBean("dwpSeleniumDriver");
+        this.parameterProvider = (ParameterProvider) ContextService.getContext().getBean("parameterProvider");
     }
 
     public Component(By selector) {

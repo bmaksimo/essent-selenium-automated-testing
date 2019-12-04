@@ -98,12 +98,16 @@ public class NewQuotePage extends QuoteCreationGuidedStep {
 
         if (CollectionUtils.isEmpty(amountElements)) Assert.fail("No amounts found.");
 
+        int totalSum = 0;
+
         for (WebElement amountElement : amountElements) {
             String stringAmount = amountElement.getText();
             Integer amount = Integer.parseInt(stringAmount.replaceAll("[^\\d-]", ""));
+            totalSum += amount;
             if (amount <= 0) return false;
         }
 
+        parameterProvider.put("sum-of-contracts", totalSum);
         return true;
     }
 
