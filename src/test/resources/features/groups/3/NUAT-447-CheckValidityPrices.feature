@@ -5,7 +5,7 @@
 Feature: NUAT-447: Check validity prices
 
     Background:
-        Given   I logged in to DWP as "businessdesk.testautomation.b2b@essent.be"
+        Given   I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
     @NUAT-447
     Scenario: Check validity prices
@@ -17,8 +17,8 @@ Feature: NUAT-447: Check validity prices
         And Label "Status" is "Verstuurd naar klant"
         And Take Offertenummer from first offerte
         And Plus action and "Handtekening ontvangen" of first customer from list waiting for 30 seconds
-        And "Datum handtekening ontvangen" date is "now"
-        And "Taak aanmaken voor de manager" turn on
+        And "Datum ondertekening" date is "now"
+
         Then Changes are confirmed waiting for 5 seconds
 
         When Reset filter

@@ -51,7 +51,7 @@ public class ConsumptionService {
         }
     }
 
-    private Optional<String>  getConsumptionRequest(ConsumptionRecord consumptionRecord) {
+    private Optional<String> getConsumptionRequest(ConsumptionRecord consumptionRecord) {
         UUID uuid = UUID.randomUUID();
         String fromDate = StringUtils.isBlank(consumptionRecord.getStartDate()) ? DateTime.now().toString("yyyy-MM-dd") : consumptionRecord.getStartDate();
 

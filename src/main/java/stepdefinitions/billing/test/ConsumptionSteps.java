@@ -110,8 +110,7 @@ public class ConsumptionSteps extends DwpScenario {
         DateTime frenchFormatDate = formatter.parseDateTime(inputValue);
         dateTo = frenchFormatDate.toString("yyyy-MM-dd");
 
-        RestResponse resp = postConsumption(deliveryPointId, null, dateTo);
-        Assert.isTrue(resp.getResult(), resp.getMsg());
+        postConsumptionTypeElectricityMeterTypeTotalHour(deliveryPointId, null, dateTo);
     }
 
     @When("^Consumption at deliverypointid \"([^\"]*)\" is generated from \"([^\"]*)\" until \"([^\"]*)\" months after$")
@@ -157,6 +156,11 @@ public class ConsumptionSteps extends DwpScenario {
         BasePayload msg = generatePayloadFromString(consumptionData);
 
         return billingServiceFactory.createEnergyCommService().doRequest(msg);
+    }
+
+    private void postConsumptionTypeElectricityMeterTypeTotalHour(String deliveryPointId, String dateFrom, String dateTo) throws Exception {
+        ConsumptionRecord consumptionRecord = new ConsumptionRecord(deliveryPointId, "Electricity", "TOTAL_HOUR", dateFrom, dateTo);
+        consumptionService.postConsumption(consumptionRecord);
     }
 
     private String getConsumptionRequest(String deliveryPoint, String dateFrom, String dateTo) {

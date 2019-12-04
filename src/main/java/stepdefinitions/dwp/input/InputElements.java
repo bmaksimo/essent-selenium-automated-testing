@@ -5,6 +5,7 @@ import com.billinghouse.testautomation.util.dsl.EssentDateTimeFormat;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.elements.SelectWithSearch;
 import com.essent.testing.dwp.pageobject.impl.elements.SelectWithSearchImpl;
+import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.contracts.ContractPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
@@ -120,17 +121,6 @@ public class InputElements extends DwpScenario {
             return executeJavascriptTestImmediately(JS_TR_DATE_PICKER_INPUT, options, true);
         }
     }
-
-    /**
-     * Class, delegating checkbox state toggling to <code>TrToggleCheckBox.js</code>
-     */
-    private class ToggleCheckBox implements Predicate<Map<String, String>> {
-        @Override
-        public boolean test(Map<String, String> options) {
-            return executeJavascriptTest(JS_TR_TOGGLE_CHECK_BOX, options);
-        }
-    }
-
 
     /**
      * Sets and asynchronously checks text input on any DWP form
@@ -399,23 +389,9 @@ public class InputElements extends DwpScenario {
             seleniumDriver.waitForRequestsToFinish();
         }
 
-        /**
-         * Sets and asynchronously checks a checkbox on any DWP form
-         *
-         * @param label Text label
-         * @param state Checkbox state, one of values: {@link SwitchState}
-         * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion fails
-         */
         @And("^Checkbox \"([^\"]*)\" is ([^\"]*)$")
         public void toggleCheckbox (String label, SwitchState state){
-            seleniumDriver.waitForRequestsToFinish();
-            Map<String, String> options = new HashMap<>();
-            options.put("label", label);
-            options.put("state", state.name().toLowerCase());
-            FluentWait<ToggleCheckBox> waiter = waiter(new ToggleCheckBox(), 30, 2);
-            waiter.withMessage(String.format("Failure toggling checkbox %s to  target state %s.", label, state.name()));
-            waiter.until((ToggleCheckBox callback) -> callback.test(options));
-            seleniumDriver.waitForRequestsToFinish();
+            new BaseObjectPage().toggleCheckbox(label, state);
         }
 
         @And("^Field \"([^\"]*)\" input is \"([^\"]*)\"$")

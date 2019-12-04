@@ -44,7 +44,7 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
         And Changes are confirmed
         Then Verify status is "External @ Contentia" and "Failliet"
         When Dashboard menu is "Documenten"
-        Then Find document
+        Then Check if document "customer-signature.pdf" is present
 
     @NUAT-368-04
     Scenario: IV Change status Faillissement met fiscaal attest and Externe partij is Hilde Derde
@@ -57,7 +57,7 @@ Feature: NUAT-368: Change Status Bankrupt External WCO - nl_BE
         And Changes are confirmed
         Then Verify status is "External @ Hilde Derde" and "Failliet"
         When Dashboard menu is "Documenten"
-        Then Find document
+        Then Check if document "customer-signature.pdf" is present
 
     @NUAT-368-05
     Scenario: V Change status Faillissement zonder fiscaal attest and Externe partij is Contentia
