@@ -3,6 +3,7 @@
 @B2C
 @API
 @ALL
+@NEWFEATURE
 
 Feature: TESTAUTO-395: Check if confirmation email has been sent
 
