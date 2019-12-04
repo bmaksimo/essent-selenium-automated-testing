@@ -14,11 +14,13 @@ public class QuoteOverviewPage extends QuoteCreationGuidedStep {
     private SignatureData signatureData;
 
     public void setSignatureData(SignatureData signatureData) {
+        seleniumDriver.waitForRequestsToFinish();
         this.signatureData = signatureData;
     }
 
     @Override
     public boolean fillInFormData() {
+        seleniumDriver.waitForRequestsToFinish();
         String place = signatureData.getPlace();
         String filePath = signatureData.getFilePath();
         Model.Execution execution = createExecution();

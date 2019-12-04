@@ -17,4 +17,4 @@ Feature: TESTAUTO-6 Create new B2B active contract through api
         Then Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 20 seconds
 
         When Dashboard menu is "Contracten"
-        Then Find "Actief" contract
+        And  "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
