@@ -7,20 +7,21 @@
 Feature: NUAT-510 Triggering advance invoice run. Check is invoice created in DWP and jbilling
 
     Background:
-        And I logged in to DWP as "billing.testautomation@essent.be"
+        And I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
     @NUAT-510
     Scenario: NUAT-510: Trigger Invoice run process for B2B TK1
         Given B2B Active Contract is
             | productType    | isFakeAddress | switchType       | meterType       | kwMax |
             | TC1            | FAKE          |  SUPPLIER SWITCH | YMR             | 50000 |
-        And Left menu is "contracting-switching"
+        And Left menu is "sales-marketing"
         And Top menu item is "Klanten"
-        And Top action is Filter from "contracting-switching" menu retrying 5 times
-        And "Klantnummer" input is "parameter:accountNumber"
-        
+
         #run invoice
         When Billing run "RECURRING" is triggered with process date "1 month from now"
+
+        And Top action is Filter from "sales-marketing" menu retrying 5 times
+        And "Klantnummer" input is "parameter:accountNumber"
         And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 90 seconds
         And Dashboard menu is "Billing"
 
