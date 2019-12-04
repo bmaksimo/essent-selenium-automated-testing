@@ -4,6 +4,7 @@
 @B2C
 @ALL
 @API
+@NEWFEATURE
 
 Feature: TESTAUTO-394 Release a Guarantee
 

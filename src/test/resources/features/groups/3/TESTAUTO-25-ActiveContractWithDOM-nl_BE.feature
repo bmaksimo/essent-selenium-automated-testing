@@ -2,6 +2,8 @@
 @DWP
 @B2C
 @ALL
+@NEWFEATURE
+
 Feature: TESTAUTO - 25 Active contract with DOM
 
     Background:
