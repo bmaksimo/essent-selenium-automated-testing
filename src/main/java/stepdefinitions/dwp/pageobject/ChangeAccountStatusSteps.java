@@ -1,7 +1,6 @@
 package stepdefinitions.dwp.pageobject;
 
 import com.essent.testing.dwp.pageobject.impl.servicecontracting.ChangeAccountStatusPage;
-import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.documents.DocumentsPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import com.essent.testing.util.resource.ResourceUtil;
 import cucumber.api.Scenario;
@@ -12,6 +11,7 @@ import cucumber.api.java.en.Then;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+
 public class ChangeAccountStatusSteps extends DwpScenario {
     @Before("@SMOKE or @QUOTE or @QUOTE_CS or @QUOTE_MI or @QUOTE_SS or @BILLING or @B2B_REGRESSION or @REGRESSION or @E2E or @B2C")
     public void setupTest(Scenario scenario){
@@ -43,11 +43,5 @@ public class ChangeAccountStatusSteps extends DwpScenario {
         ChangeAccountStatusPage changeAccountStatusPage = new ChangeAccountStatusPage();
         boolean success = changeAccountStatusPage.uploadFileForSign(filePath);
         assertThat(String.format("Signature file %s upload failed.", filePath), success, is(true));
-    }
-
-    @Then("^Find document$")
-    public void findDocument(){
-        DocumentsPage dp = new DocumentsPage();
-        dp.findDocument();
     }
 }
