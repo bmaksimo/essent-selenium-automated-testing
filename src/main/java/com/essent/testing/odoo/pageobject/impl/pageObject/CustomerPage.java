@@ -3,8 +3,6 @@ package com.essent.testing.odoo.pageobject.impl.pageObject;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.odoo.pageobject.impl.Component;
 import com.essent.testing.odoo.pageobject.impl.elements.ButtonImpl;
-import cucumber.runtime.CucumberException;
-import org.apache.tools.ant.taskdefs.Sleep;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
