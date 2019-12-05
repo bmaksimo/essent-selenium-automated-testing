@@ -36,7 +36,7 @@ Feature: NUAT-417: Payment Plan creation/reversal
 
         #Payment plan check payment and status
         When Dashboard menu is "Billing"
-        And Table "Transacties" contains value "Payment" at column "ID & Type" within 120 seconds
+        And Table "Transacties" contains value "Payment" at column "ID & Type" retrying 5 times
 
         #Reverse payment plan
         Given I logged in to Odoo as "role_essent_ccm_user"
@@ -59,4 +59,4 @@ Feature: NUAT-417: Payment Plan creation/reversal
         And "Klantnummer" input is "parameter:accountNumber"
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
         When Dashboard menu is "Billing"
-        And Table "Afbetalingsplannen" contains value "reversed" at column "Status" within 120 seconds
+        And Table "Afbetalingsplannen" contains value "reversed" at column "Status" retrying 5 times
