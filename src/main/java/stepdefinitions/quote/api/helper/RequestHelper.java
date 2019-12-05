@@ -143,7 +143,7 @@ public class RequestHelper {
 
         Integer responseStatusCode = new Integer(response.statusCode());
         LOGGER.debug("POST " + path + " status : " + responseStatusCode + " (expected: " + exectedStatusCode + ")");
-        LOGGER.info("X-LOG-ID tracking header: " + trackingHeader.getValue());
+        LOGGER.debug("X-LOG-ID tracking header: " + trackingHeader.getValue());
         logResponseTimeDuration(response, "for "+ path +" ");
         return responseStatusCode;
     }
