@@ -234,7 +234,6 @@ public abstract class Component {
             if (isDisplayed) return element;
             Sleeper.sleepTightInSeconds(2);
             element = seleniumDriver.findElement(by);
-            Sleeper.sleepTightInSeconds(1);
         }
         throw new Exception("Element not found");
     }
