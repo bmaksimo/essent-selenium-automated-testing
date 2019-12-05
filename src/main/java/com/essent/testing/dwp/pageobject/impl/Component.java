@@ -230,10 +230,11 @@ public abstract class Component {
         WebElement element = seleniumDriver.findElement(by);
         while (!isDisplayed && currentAttempt <= attempts) {
             currentAttempt++;
-            isDisplayed = element.isDisplayed() && element.isEnabled();
+            isDisplayed = element.isEnabled();
             if (isDisplayed) return element;
             Sleeper.sleepTightInSeconds(2);
             element = seleniumDriver.findElement(by);
+            Sleeper.sleepTightInSeconds(1);
         }
         throw new Exception("Element not found");
     }
