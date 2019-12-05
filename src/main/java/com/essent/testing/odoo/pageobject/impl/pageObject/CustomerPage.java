@@ -1,8 +1,8 @@
 package com.essent.testing.odoo.pageobject.impl.pageObject;
 
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.odoo.pageobject.impl.Component;
 import com.essent.testing.odoo.pageobject.impl.elements.ButtonImpl;
-import cucumber.runtime.CucumberException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -18,7 +18,6 @@ public class CustomerPage extends Component {
     private static final String FORMAT = "//td[@data-field='format']";
     private static final String SENT_DATE = "//td[@data-field='date_sent']";
     private static final String BUTTON_LABEL = "//div[@class='modal in']//span[contains(text(),'${"+NAME_TAB+"}')]";
-    private static final String JOURNAL_BUTTON_LABEL = "//button//span[contains(., '" + NAME_TAB + "')]";
 
 
     public boolean clickOnTabMenu(String tab){
@@ -47,15 +46,14 @@ public class CustomerPage extends Component {
 
     public void openJournalEntry() {
         awaitOdooRequestToFinish(45);
+        Sleeper.sleepTightInSeconds(5);
         WebElement journal = seleniumDriver.findElementWhenVisible(By.xpath(JOURNAL_ENTRY_ROW));
         journal.click();
     }
 
     public void buttonJournalItemsClicked(String label) {
         awaitOdooRequestToFinish(120);
-        String xpath = createQuery(JOURNAL_BUTTON_LABEL, NAME_TAB, label);
-        WebElement webElement = seleniumDriver.findElementWhenVisible(By.xpath(xpath));
-        if (null == webElement) throw new CucumberException("Button was not found");
+        WebElement webElement = seleniumDriver.findElementWhenVisible(By.xpath("//button//span[contains(., '" + label + "')]"));
         new ButtonImpl(webElement).click();
         awaitOdooRequestToFinish(120);
     }
@@ -64,7 +62,6 @@ public class CustomerPage extends Component {
         awaitOdooRequestToFinish(60);
         String xpath = createQuery(BUTTON_LABEL, NAME_TAB, buttonLabel);
         WebElement button = seleniumDriver.findElementWhenVisible(By.xpath(xpath));
-        if (null == button) throw new CucumberException("Button " + buttonLabel + " was not found.");
         button.click();
         awaitOdooRequestToFinish(60);
     }

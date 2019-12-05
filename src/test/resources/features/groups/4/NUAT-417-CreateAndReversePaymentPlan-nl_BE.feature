@@ -1,13 +1,12 @@
 @DWP
 @B2B
 @REGRESSION
-@PERFORMANCE
 @ALL
 
 Feature: NUAT-417: Payment Plan creation/reversal
 
     @NUAT-417
-    Scenario: Create active UP contract, run advance invoice
+    Scenario: Create active UP contract, run advance invoice, create and reverse payment plan
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
         And B2B Active Contract is
             | productType | isFakeAddress | switchType      | meterType | kwMax |
@@ -23,7 +22,7 @@ Feature: NUAT-417: Payment Plan creation/reversal
         And "Klantnummer" input is "parameter:accountNumber"
         And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
         And Dashboard menu is "Billing"
-        Then Table "Transacties" contains value "Issued" at column "Extra info" within 1800 seconds
+        Then Table "Transacties" contains value "Issued" at column "Extra info" retrying 5 times
 
         #Payment plan creation
         And List option is "ENKEL FACTUREN"
@@ -33,20 +32,20 @@ Feature: NUAT-417: Payment Plan creation/reversal
         And Input in "Periode schijven" is "Maandelijks"
         And "Startdatum" date is "now"
         And "Aantal schijven" input is "5"
-        Then Changes are confirmed
+        Then Changes are confirmed waiting for 5 seconds
 
         #Payment plan check payment and status
         When Dashboard menu is "Billing"
-        And Table "Transacties" contains value "Payment" at column "ID & Type" within 120 seconds
-        Then Table "Afbetalingsplannen" contains value "open" at column "Status" within 120 seconds
+        And Table "Transacties" contains value "Payment" at column "ID & Type" retrying 5 times
 
         #Reverse payment plan
         Given I logged in to Odoo as "role_essent_ccm_user"
         When Odoo top menu is "Accounting"
         And  Odoo left menu is Customers
-        And Odoo filter is "parameter:accountNumber"
+        And Advanced search is
+            |      field     |   operator  |          value          |
+            | Account Number | is equal to | parameter:accountNumber |
         When Column "Account Number" with value "parameter:accountNumber" is clicked
-
         And Button "Journal Items" is clicked
         And Journal entry is open
         And Button "Reverse" on Journal Items is clicked
@@ -56,10 +55,8 @@ Feature: NUAT-417: Payment Plan creation/reversal
         Given I renew login to DWP as "salesmarketing.testautomation.b2c@essent.be"
         When Left menu is "sales-marketing"
         And Top menu item is "Klanten"
-        And Top action is "Filter" waiting for 60 seconds
-        And "B2C/B2B" selection is "B2B"
-        And "Type klant" selection is "Klant"
+        And Top action is Filter from "sales-marketing" menu retrying 5 times
         And "Klantnummer" input is "parameter:accountNumber"
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
         When Dashboard menu is "Billing"
-        And Table "Afbetalingsplannen" contains value "reversed" at column "Status" within 120 seconds
+        And Table "Afbetalingsplannen" contains value "reversed" at column "Status" retrying 5 times
