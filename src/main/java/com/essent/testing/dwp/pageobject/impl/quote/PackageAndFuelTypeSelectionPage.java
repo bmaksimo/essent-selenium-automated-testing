@@ -2,7 +2,6 @@ package com.essent.testing.dwp.pageobject.impl.quote;
 
 import com.essent.automation.util.Sleeper;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.tables.SalesChannel;

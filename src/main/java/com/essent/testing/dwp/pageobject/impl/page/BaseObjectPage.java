@@ -3,6 +3,7 @@ package com.essent.testing.dwp.pageobject.impl.page;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.contracts.ContractPage;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.tables.plus.SwitchState;
@@ -106,7 +107,11 @@ public class BaseObjectPage extends Component {
         String checked = "checked".equalsIgnoreCase(state.name()) ? "true" : "false";
         String checkboxLocation = createQuery(CHECKBOX_XPATH, REPLACEMENT_KEY, label);
 
-        WebElement checkBoxElement = seleniumDriver.findElement(By.xpath(checkboxLocation));
-        if (!checked.equalsIgnoreCase(checkBoxElement.getAttribute("checked"))) checkBoxElement.click();
+        try {
+            WebElement checkBoxElement = findElementWithRetries(By.xpath(checkboxLocation), 50);
+            if (!checked.equalsIgnoreCase(checkBoxElement.getAttribute("checked"))) checkBoxElement.click();
+        } catch (Exception e) {
+            Assert.fail("Checkbox with locator " + checkboxLocation + " was not found.");
+        }
     }
 }

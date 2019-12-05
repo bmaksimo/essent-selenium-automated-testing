@@ -10,7 +10,6 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.runtime.CucumberException;
-import io.cucumber.datatable.DataTable;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.Matchers;
@@ -34,13 +33,13 @@ import java.util.stream.Collectors;
 import static com.billinghouse.testautomation.javascript.testrunner.JsTestRegistry.JS_TR_CLICK_TABLE_CELL_URL;
 import static com.billinghouse.testautomation.util.dsl.DateExpressionsUtil.checkTimeBetween;
 import static com.billinghouse.testautomation.util.dsl.DateExpressionsUtil.getFormattedEnd;
-import static com.billinghouse.testautomation.util.dsl.NumericUtil.*;
+import static com.billinghouse.testautomation.util.dsl.NumericUtil.amountAsInt;
+import static com.billinghouse.testautomation.util.dsl.NumericUtil.checkAmount;
 import static com.essent.testing.dwp.constant.DwpConstants.FLEMISCH_LOCALE;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.TestCase.fail;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.hamcrest.Matchers.equalTo;
 
 public class ViewListChecks extends NavigationElements {
 

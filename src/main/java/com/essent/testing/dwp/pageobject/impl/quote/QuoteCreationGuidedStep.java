@@ -37,7 +37,7 @@ public abstract class QuoteCreationGuidedStep extends Component implements Form 
         logger().debug("Guided step to be confirmed");
         validateForm(scenarioInfo);
         closeGuidanceModalIfPresent();
-        WebElement nextButton = findElementWhenClickable(NEXT_BUTTON_CSS_SELECTOR);
+        WebElement nextButton = seleniumDriver.findElement(NEXT_BUTTON_CSS_SELECTOR);
         logger().debug("Found  element: " + nextButton.getTagName());
         logger().debug("- RESULT: Confirm guidance step, confirmation button attribute value: Next[disabled] = " + nextButton.getAttribute("disabled"));
         given().await()
