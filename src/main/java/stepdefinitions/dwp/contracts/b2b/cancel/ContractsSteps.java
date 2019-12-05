@@ -292,11 +292,11 @@ public class ContractsSteps extends DwpScenario{
         String installAmount = parameterProvider.getValueOrParameterAsString(installmentsAmount);
         String invAmount = parameterProvider.getValueOrParameterAsString(invoiceAmount);
 
-        StringUtils.substringBefore(invAmount, ".");
-        StringUtils.substringBefore(invAmount, ",");
+        invAmount = StringUtils.substringBefore(invAmount, ".");
+        invAmount = StringUtils.substringBefore(invAmount, ",");
 
-        StringUtils.substringBefore(installAmount, ".");
-        StringUtils.substringBefore(installAmount, ",");
+        installAmount = StringUtils.substringBefore(installAmount, ",");
+        installAmount = StringUtils.substringBefore(installAmount, ".");
 
         int result1 = Integer.parseInt(invAmount);
         int result2 = Integer.parseInt(installAmount);
