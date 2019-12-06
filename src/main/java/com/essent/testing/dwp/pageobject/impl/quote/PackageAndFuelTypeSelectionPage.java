@@ -2,6 +2,7 @@ package com.essent.testing.dwp.pageobject.impl.quote;
 
 import com.essent.automation.util.Sleeper;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.tables.SalesChannel;
@@ -44,13 +45,18 @@ public class PackageAndFuelTypeSelectionPage extends QuoteCreationGuidedStep {
             if (null != tariffData.getTariffSheet()) {
                 WebElement tariffSheetDropDown = seleniumDriver.findElementWhenClickable(By.id(TARIFFSHEET_ID));
                 seleniumDriver.waitAndClick(tariffSheetDropDown);
+
                 tariffSheetDropDown.sendKeys(tariffData.getTariffSheet());
+                tariffSheetDropDown.sendKeys(Keys.ESCAPE);
             }
+            Sleeper.sleepTightInSeconds(2);
 
             if (null != tariffData.getPackageName()) {
                 WebElement packageDropDown = seleniumDriver.findElementWhenClickable(By.id(PACKAGE_ID));
                 seleniumDriver.waitAndClick(packageDropDown);
+
                 packageDropDown.sendKeys(tariffData.getPackageName());
+                packageDropDown.sendKeys(Keys.ESCAPE);
             }
 
             seleniumDriver.waitForRequestsToFinish();
