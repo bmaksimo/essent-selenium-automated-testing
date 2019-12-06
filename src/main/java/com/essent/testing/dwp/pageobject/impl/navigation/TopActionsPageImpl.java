@@ -4,6 +4,7 @@ import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.navigation.TopActionsPage;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 
 public class TopActionsPageImpl extends Component implements TopActionsPage {
 
@@ -15,7 +16,7 @@ public class TopActionsPageImpl extends Component implements TopActionsPage {
         int loopCounter = 0;
         try {
             do {
-                findElementWithRetries(By.xpath(query), 10).click();
+                seleniumDriver.findElementWhenClickable(By.xpath(query)).click();
                 seleniumDriver.waitForRequestsToFinish();
                 loopCounter++;
                 if (loopCounter > 20) {
@@ -23,7 +24,7 @@ public class TopActionsPageImpl extends Component implements TopActionsPage {
                 }
             } while (!seleniumDriver.findElement(By.xpath(query)).getAttribute("class").contains("is-active"));
             return true;
-        } catch (Exception e) {
+        } catch (TimeoutException e) {
             return false;
         }
     }
