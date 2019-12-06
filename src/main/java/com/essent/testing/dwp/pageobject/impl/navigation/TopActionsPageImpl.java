@@ -22,7 +22,6 @@ public class TopActionsPageImpl extends Component implements TopActionsPage {
                 if (loopCounter > 20) {
                     return false;
                 }
-                // Check if the click worked
             } while (!seleniumDriver.findElement(By.xpath(query)).getAttribute("class").contains("is-active"));
             return true;
         } catch (TimeoutException e) {
