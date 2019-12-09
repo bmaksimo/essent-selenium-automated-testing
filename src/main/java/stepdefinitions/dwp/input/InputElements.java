@@ -4,6 +4,7 @@ import com.billinghouse.testautomation.util.dsl.DateExpressionsUtil;
 import com.billinghouse.testautomation.util.dsl.EssentDateTimeFormat;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.elements.SelectWithSearch;
+import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.elements.SelectWithSearchImpl;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.contracts.ContractPage;
@@ -83,10 +84,12 @@ public class InputElements extends DwpScenario {
     /**
      * Class, delegating form input to <code>BaseFormInput.js</code>
      */
-    private class ApplyInput implements Predicate<Map> {
+    private class ApplyInput extends Component implements Predicate<Map> {
         @Override
         public boolean test(Map options) {
-            return executeJavascriptTest(JS_BASE_FORM_INPUT, options);
+            boolean result = executeJavascriptTest(JS_BASE_FORM_INPUT, options);
+            handleAlert();
+            return result;
         }
 
         private boolean testNow(Map options) {
