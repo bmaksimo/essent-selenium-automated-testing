@@ -29,6 +29,7 @@ public class FormElements extends DwpScenario {
 
     @Then("^Form header is \"([^\"]*)\"$")
     public void checkFormHeader(String expectedFormHeader) {
+        seleniumDriver.waitForRequestsToFinish();
         WebElement actualFormHeader = seleniumDriver.findElementWhenVisible(By.xpath("//div[contains(@class, 'form__header')]/*[normalize-space()='" + expectedFormHeader + "']"));
         assertThat("Form header " + expectedFormHeader + " was not displayed within given time.", actualFormHeader.isDisplayed());
     }
