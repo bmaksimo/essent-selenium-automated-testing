@@ -45,17 +45,17 @@ public class PersonalDetailsPage extends QuoteCreationGuidedStep {
             element(MOBILE_NR.element());
 
         seleniumDriver.waitForRequestsToFinish();
-        initializeFields.step(createStep(SELECT).element(SALUTATION.name()).value(SALUTATION_FEMALE).timeoutInSeconds(4), INPUT.getSleepInMillis());
+        initializeFields.step(createStep(SELECT).element(SALUTATION.name()).value(SALUTATION_FEMALE).timeoutInSeconds(10), INPUT.getSleepInMillis());
         seleniumDriver.waitForRequestsToFinish();
-        initializeFields.step(createStep(TYPING).element(FIRST_NAME.name()).value(firstName).timeoutInSeconds(4), INPUT.getSleepInMillis());
+        initializeFields.step(createStep(TYPING).element(FIRST_NAME.name()).value(firstName).timeoutInSeconds(10), INPUT.getSleepInMillis());
         seleniumDriver.waitForRequestsToFinish();
         initializeFields.step(createStep(TYPING).element(LAST_NAME.name()).value(lastName).timeoutInSeconds(15), INPUT.getSleepInMillis());
         seleniumDriver.waitForRequestsToFinish();
-        initializeFields.step(createStep(TYPING).element(EMAIL.name()).value(customer.getEmail()).timeoutInSeconds(4), INPUT.getSleepInMillis());
+        initializeFields.step(createStep(TYPING).element(EMAIL.name()).value(customer.getEmail()).timeoutInSeconds(10), INPUT.getSleepInMillis());
         seleniumDriver.waitForRequestsToFinish();
-        initializeFields.step(createStep(TYPING).element(MOBILE_NR.name()).value(mobilePhone).timeoutInSeconds(4), INPUT.getSleepInMillis());
+        initializeFields.step(createStep(TYPING).element(MOBILE_NR.name()).value(mobilePhone).timeoutInSeconds(10), INPUT.getSleepInMillis());
         seleniumDriver.waitForRequestsToFinish();
-        initializeFields.step(createStep(TYPING).element(BIRTHDAY.name()).value(birthDate).timeoutInSeconds(4), INPUT.getSleepInMillis());
+        initializeFields.step(createStep(TYPING).element(BIRTHDAY.name()).value(birthDate).timeoutInSeconds(10), INPUT.getSleepInMillis());
         seleniumDriver.waitForRequestsToFinish();
 
         return execute(initializeFields);
