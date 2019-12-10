@@ -15,19 +15,20 @@ Feature: Testauto-398 asserts
         And "Klantnummer" input is "1001337558"
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
         When Dashboard menu is "Contracten"
+        And Get Start Date
         Then Click on link in View List at "1st" row and "Contractnummer" column polling 60 seconds
 
         #Asserts
         And Table "Contractlijnen" contains value "E+ service" at column "Producttype" retrying 5 times
         And Table contains matching data on given columns:
-           | Table name     | Status & Product                   | Producttype   |
+           | Table name     | Status & Product      | Producttype   |
            | Contractlijnen | Actief - Wait to send | E Plus Product|
         And Number of contract lines is "4"
-        Then Dates are same for all contract lines
+        Then Start dates are same for all contract lines as contract start date "parameter:startDate"
 
         When Dashboard menu is "Service"
         Then Table "Interacties" contains value "Document Outbound document: CONF_CONTRACT_SALES_TC1_B2C" at column "Type & Onderwerp" retrying 5 times
         And Table "Interacties" contains value "Document Outbound document: Activation Letter" at column "Type & Onderwerp" retrying 5 times
 
         When Click on link in View List at "1st" row and "Nummer & Communicatiekanaal" column polling 60 seconds
-        And 
+        Then EMC ID is present

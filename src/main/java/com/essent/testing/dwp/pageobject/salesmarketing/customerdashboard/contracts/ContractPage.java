@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.lang.StrictMath.ceil;
 import static org.junit.Assert.fail;
@@ -73,7 +74,7 @@ public class ContractPage extends Component {
     private static final String DELIVERY_ADDRESS_POSTAL_CODE = "//input[@id='address-postalcode-field']";
     private static final String DELIVERY_ADDRESS_CITY = "//input[@id='address-city-field']";
     private static final String CONTRACT_LINES_COUNT = "//list[@list-key='ContractlinesOnContract']//td[@class='list__cell cell__checkbox']";
-    private static final String CONTRACT_LINES_DATES = "//list[@list-key='ContractlinesOnContract']//td[@class='list__cell cell__text'][4]";
+    private static final String CONTRACT_LINES_DATES = "//list[@list-key='ContractlinesOnContract']//td[@class='list__cell cell__text'][4]//span[1]";
 
     private WebElement startData() {
         return seleniumDriver.findElementWhenVisible(By.id(START_DATA_ID));
@@ -577,10 +578,10 @@ public class ContractPage extends Component {
         return contractLines.size();
     }
 
-    public boolean checkAllDatesEqual() {
+    public boolean checkAllStartDatesEqual(String contractStartDate) {
         List<WebElement> contractLines = seleniumDriver.findElements(By.xpath(CONTRACT_LINES_DATES));
-        return contractLines.stream()
-            .distinct()
-            .count() <= 1;
+
+        return contractLines.stream().map(WebElement::getText).collect(Collectors.toList()).stream()
+            .allMatch(contractStartDate::equals);
     }
 }
