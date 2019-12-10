@@ -26,7 +26,8 @@ public class DashboardMenuPage extends Component {
     }
 
     public void clickOnDashboardElement(String element) {
-        seleniumDriver.waitAndClick(getDashboardElement(element));
+        seleniumDriver.waitForRequestsToFinish();
+        clickWithRetries(getDashboardElement(element), 10);
     }
 
     public void clickOnDashboardElementNow(String element) {
