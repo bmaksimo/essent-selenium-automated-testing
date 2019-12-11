@@ -111,8 +111,28 @@ public class NewQuotePage extends QuoteCreationGuidedStep {
         return true;
     }
 
+    public void clickOnSelectOneDealer(){
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//div[@id='accounts-aos-quotes-primary-group-id-field']//button")));
+    }
+
+    public void savePopUpChanges(){
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("(//select-with-search-modal//a)[1]")));
+    }
+
+    public void fillEanGassField(String ean){
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("(//input-form-element[@id='ean_c']/div/input)[2]")),ean);
+    }
+
     @Override
     public boolean fillInFormData() {
         return false;
+    }
+
+    public void setMeterNumberForGas(String number) {
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("(//input-form-element[@id='meter_no_c']/div/input)[2]")),number);
+    }
+
+    public void setStartDateForGas(String datum) {
+        seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("(//datepicker-form-element[@id='up_start_date_c']//input)[2]")),datum);
     }
 }

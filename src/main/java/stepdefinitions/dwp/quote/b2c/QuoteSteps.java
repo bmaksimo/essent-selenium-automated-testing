@@ -72,6 +72,49 @@ public class QuoteSteps extends DwpScenario {
         nqp.setSepaSignatureLocation(city);
     }
 
+    @And("^Select one dealer$")
+    public void selectOneDealer(){
+        NewQuotePage nqp = new NewQuotePage();
+        nqp.clickOnSelectOneDealer();
+    }
+
+    @And("^Search dialog is confirmed$")
+    public void searchDialogIsConfirmed(){
+        NewQuotePage nqp = new NewQuotePage();
+        nqp.savePopUpChanges();
+    }
+
+    @And("^EAN code for gas is generated$")
+    public void eanCodeForGasIsGenerated(){
+        String eanCode = PrepareDataForContract.generateEAN();
+        parameterProvider.put("EAN-code-gas", eanCode);
+        logger().debug(" - Generated EAN code: " + eanCode);
+    }
+
+    @And("^EAN-code input is \"([^\"]*)\"$")
+    public void eanCodeInputIs(String ean){
+        String eanGas=parameterProvider.getValueOrParameterAsString(ean);
+        NewQuotePage nqp = new NewQuotePage();
+        Sleeper.sleepTightInSeconds(2);
+        nqp.fillEanGassField(eanGas);
+    }
+
+    @And("^Meternummer input is \"([^\"]*)\"$")
+    public void meternummerInputIs(String number){
+        NewQuotePage nqp = new NewQuotePage();
+        Sleeper.sleepTightInSeconds(2);
+        nqp.setMeterNumberForGas(number);
+    }
+
+    @And("^Start datum is \"([^\"]*)\"$")
+    public void startDatumIs(String parameter) {
+        String datum = toDwpDate(parameterProvider.getValueOrParameterAsString(parameter));
+        NewQuotePage nqp = new NewQuotePage();
+        Sleeper.sleepTightInSeconds(2);
+        nqp.setStartDateForGas(datum);
+
+    }
+
     private class VerifyTariffSheetPriceAlert implements FlowAwarePredicate<QuoteSteps> {
 
         @Override
