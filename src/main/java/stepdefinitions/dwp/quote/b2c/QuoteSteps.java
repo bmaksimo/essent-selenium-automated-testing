@@ -115,7 +115,7 @@ public class QuoteSteps extends DwpScenario {
 
     }
 
-    @And("^Click on \"([^\"]*)\" on ceate quote page$")
+    @And("^Click on \"([^\"]*)\" on create quote page$")
     public void clickOnAndGoBackTo(String tab){
         NewQuotePage nqp = new NewQuotePage();
         String number=null;

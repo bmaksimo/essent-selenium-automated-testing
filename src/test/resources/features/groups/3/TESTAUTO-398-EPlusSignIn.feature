@@ -52,8 +52,8 @@ Feature: TESTAUTO-398 E plus sign in
         And "Kanaal ondertekening" selection is "Papier"
         And Quote is signed in "Kontich"
         And "Datum ondertekening" date is "now"
-        And Click on "Selecteer pakket en producten" on ceate quote page
-        And Click on "Overzicht en ondertekenopties" on ceate quote page
+        And Click on "Selecteer pakket en producten" on create quote page
+        And Click on "Overzicht en ondertekenopties" on create quote page
         And Quote is confirmed
 
         When Dashboard menu is "Contracten"
