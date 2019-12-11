@@ -72,6 +72,76 @@ public class QuoteSteps extends DwpScenario {
         nqp.setSepaSignatureLocation(city);
     }
 
+    @And("^Select one dealer$")
+    public void selectOneDealer(){
+        NewQuotePage nqp = new NewQuotePage();
+        nqp.clickOnSelectOneDealer();
+    }
+
+    @And("^Search dialog is confirmed$")
+    public void searchDialogIsConfirmed(){
+        NewQuotePage nqp = new NewQuotePage();
+        nqp.savePopUpChanges();
+    }
+
+    @And("^EAN code for gas is generated$")
+    public void eanCodeForGasIsGenerated(){
+        String eanCode = PrepareDataForContract.generateEAN();
+        parameterProvider.put("EAN-code-gas", eanCode);
+        logger().debug(" - Generated EAN code: " + eanCode);
+    }
+
+    @And("^EAN-code input is \"([^\"]*)\"$")
+    public void eanCodeInputIs(String ean){
+        String eanGas=parameterProvider.getValueOrParameterAsString(ean);
+        NewQuotePage nqp = new NewQuotePage();
+        Sleeper.sleepTightInSeconds(2);
+        nqp.fillEanGassField(eanGas);
+    }
+
+    @And("^Meternummer input is \"([^\"]*)\"$")
+    public void meternummerInputIs(String number){
+        NewQuotePage nqp = new NewQuotePage();
+        Sleeper.sleepTightInSeconds(2);
+        nqp.setMeterNumberForGas(number);
+    }
+
+    @And("^Start datum is \"([^\"]*)\"$")
+    public void startDatumIs(String parameter) {
+        String datum = toDwpDate(parameterProvider.getValueOrParameterAsString(parameter));
+        NewQuotePage nqp = new NewQuotePage();
+        Sleeper.sleepTightInSeconds(2);
+        nqp.setStartDateForGas(datum);
+
+    }
+
+    @And("^Click on \"([^\"]*)\" on ceate quote page$")
+    public void clickOnAndGoBackTo(String tab){
+        NewQuotePage nqp = new NewQuotePage();
+        String number=null;
+        switch (tab){
+            case "Selecteer type offerte":
+               number="1";
+               break;
+            case "Details klant":
+                number="2";
+                break;
+            case "Selecteer pakket en producten":
+                number="3";
+                break;
+            case "Connectiedetails":
+                number="4";
+                break;
+            case "Facturatiedetails":
+                number="5";
+                break;
+            case "Overzicht en ondertekenopties":
+                number="6";
+                break;
+        }
+        nqp.clickOnTab(number);
+    }
+
     private class VerifyTariffSheetPriceAlert implements FlowAwarePredicate<QuoteSteps> {
 
         @Override
