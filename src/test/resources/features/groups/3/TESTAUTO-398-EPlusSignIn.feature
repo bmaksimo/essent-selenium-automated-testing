@@ -16,10 +16,10 @@ Feature: TESTAUTO-398 E plus sign in
         Then Form header is "Quote details"
 
         When "Tariefdatum" date is "1 month before now"
-        And Select one dealer
-        And Search dialog is confirmed
-        And Select one dealer
-        And Dialog search input is current "Essent"
+#        And Select one dealer
+#        And Search dialog is confirmed
+#        And Select one dealer
+#        And Dialog search input is current "Essent"
         And "Sales kanaal" selection is "Inbound"
         And Quote details are confirmed
         Then Form header is "Personal details"
@@ -57,6 +57,8 @@ Feature: TESTAUTO-398 E plus sign in
         And "Kanaal ondertekening" selection is "Papier"
         And Quote is signed in "Kontich"
         And "Datum ondertekening" date is "now"
+        And Click on "Selecteer pakket en producten" on ceate quote page
+        And Click on "Overzicht en ondertekenopties" on ceate quote page
         And Quote is confirmed
 
         When Dashboard menu is "Contracten"

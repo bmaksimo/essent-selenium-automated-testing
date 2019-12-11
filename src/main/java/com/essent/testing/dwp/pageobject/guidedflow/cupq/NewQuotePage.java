@@ -135,4 +135,8 @@ public class NewQuotePage extends QuoteCreationGuidedStep {
     public void setStartDateForGas(String datum) {
         seleniumDriver.waitAndSendKeys(seleniumDriver.findElementWhenVisible(By.xpath("(//datepicker-form-element[@id='up_start_date_c']//input)[2]")),datum);
     }
+
+    public void clickOnTab(String number) {
+        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//progress-bar//li["+number+"]")));
+    }
 }

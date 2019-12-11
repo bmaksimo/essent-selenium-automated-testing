@@ -115,6 +115,33 @@ public class QuoteSteps extends DwpScenario {
 
     }
 
+    @And("^Click on \"([^\"]*)\" on ceate quote page$")
+    public void clickOnAndGoBackTo(String tab){
+        NewQuotePage nqp = new NewQuotePage();
+        String number=null;
+        switch (tab){
+            case "Selecteer type offerte":
+               number="1";
+               break;
+            case "Details klant":
+                number="2";
+                break;
+            case "Selecteer pakket en producten":
+                number="3";
+                break;
+            case "Connectiedetails":
+                number="4";
+                break;
+            case "Facturatiedetails":
+                number="5";
+                break;
+            case "Overzicht en ondertekenopties":
+                number="6";
+                break;
+        }
+        nqp.clickOnTab(number);
+    }
+
     private class VerifyTariffSheetPriceAlert implements FlowAwarePredicate<QuoteSteps> {
 
         @Override
