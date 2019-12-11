@@ -3,8 +3,7 @@
 @B2C
 @REGRESSION
 @ALL
-
-
+    
 Feature: TESTAUTO-398 E plus sign in
 
     Background:
@@ -16,10 +15,6 @@ Feature: TESTAUTO-398 E plus sign in
         Then Form header is "Quote details"
 
         When "Tariefdatum" date is "1 month before now"
-#        And Select one dealer
-#        And Search dialog is confirmed
-#        And Select one dealer
-#        And Dialog search input is current "Essent"
         And "Sales kanaal" selection is "Inbound"
         And Quote details are confirmed
         Then Form header is "Personal details"
@@ -64,3 +59,23 @@ Feature: TESTAUTO-398 E plus sign in
         When Dashboard menu is "Contracten"
         Then "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
         Then "2nd" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
+        And Get Start Date
+        Then Click on link in View List at "1st" row and "Contractnummer" column polling 60 seconds
+
+        And Table "Contractlijnen" contains value "E+ service" at column "Producttype" retrying 5 times
+        And Table contains matching data on given columns:
+            | Table name     | Status & Product      | Producttype   |
+            | Contractlijnen | Actief - Wait to send | E Plus Product|
+        And Number of contract lines is "4"
+        Then Start dates are same for all contract lines as contract start date "parameter:startDate"
+
+        When Dashboard menu is "Service"
+        Then Table "Interacties" contains value "Document Outbound document: CONF_CONTRACT_SALES_TC1_B2C" at column "Type & Onderwerp" retrying 5 times
+        And Table "Interacties" contains value "Document Outbound document: Activation Letter" at column "Type & Onderwerp" retrying 5 times
+
+        When Click on link in View List at "1st" row and "Nummer & Communicatiekanaal" column polling 60 seconds
+        Then EMC ID is present
+
+        When Dashboard menu is "Service"
+        When Click on link in View List at "2nd" row and "Nummer & Communicatiekanaal" column polling 60 seconds
+        Then EMC ID is present
