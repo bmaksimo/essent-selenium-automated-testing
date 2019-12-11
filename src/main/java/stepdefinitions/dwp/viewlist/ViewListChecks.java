@@ -37,11 +37,9 @@ import static com.billinghouse.testautomation.util.dsl.NumericUtil.amountAsInt;
 import static com.billinghouse.testautomation.util.dsl.NumericUtil.checkAmount;
 import static com.essent.testing.dwp.constant.DwpConstants.FLEMISCH_LOCALE;
 import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertTrue;
 import static junit.framework.TestCase.fail;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertEquals;
 
 public class ViewListChecks extends NavigationElements {
 
