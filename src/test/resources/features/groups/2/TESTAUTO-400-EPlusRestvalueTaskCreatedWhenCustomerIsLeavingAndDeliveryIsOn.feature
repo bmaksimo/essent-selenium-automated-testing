@@ -27,7 +27,8 @@ Feature: TESTAUTO-400 E plus restvalue task created when customer is leaving and
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
 
-        When "Pakket" selection is "flixmood"
+#        When "Pakket" selection is "flixmood"
+        When "Pakket" selection is "Vast"
         And Checkbox "Gas Fix B2C (TC1)" is Unchecked
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
@@ -54,4 +55,23 @@ Feature: TESTAUTO-400 E plus restvalue task created when customer is leaving and
 
         When Dashboard menu is "Contracten"
         Then "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
-        Then "2nd" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
+
+        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
+        When Left menu is "sales-marketing"
+        And Top menu item is "Klanten"
+        And Top action is Filter from "sales-marketing" menu retrying 5 times
+        And "Klantnummer" input is "1001337682"
+        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
+
+        When Dashboard menu is "Contracten"
+        When Click on link in View List at "1st" row and "Contractnummer" column waiting for 1 seconds
+        And Plus action of "1" element from "ContractlinesOnContract" and click on "Bekijk alle fulfilment records"
+        And Plus action of "1" element from "fulfilment" and click on "Bewerken"
+        And "Status" selection is "Delivered"
+        And "Leveringsdatum" date is "5 day before now"
+        And Changes are confirmed
+#        And Table contains matching data on given columns:
+#            | Table name     | Status & Product      | Producttype   |
+#            | Contractlijnen | Actief - Delivered | E Plus Product|
+    
+
