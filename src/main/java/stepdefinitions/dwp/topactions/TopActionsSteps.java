@@ -79,7 +79,7 @@ public class TopActionsSteps extends NavigationElements {
     }
 
     @And("Click on top menu button PREVIOUS")
-    public void clickPreviousButton() {
+    public void clickPreviousButton() throws Exception {
         new TopMenuActions().clickPreviousButton();
     }
 

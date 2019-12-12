@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.StrSubstitutor;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -206,17 +207,27 @@ public abstract class Component {
         return new DWPTableFilter(contextParameters)
             .getTable(tableName)
             .findBy(filters)
-            .get();
+            .getRow();
+    }
+
+    public String getCellValueOnColumnFromTable(String tableName, String columnName, List<Filter> filters, String contextParameters) throws Exception {
+        seleniumDriver.waitForRequestsToFinish();
+        Sleeper.sleepTightInSeconds(5);
+        return new DWPTableFilter(contextParameters)
+            .getTable(tableName)
+            .findBy(filters)
+            .getTextValueFromColumn(columnName);
     }
 
     protected void clickWithRetries(WebElement element, int attempts) {
         int currentAttempt = 0;
-        boolean isDisplayed = false;
-        while (!isDisplayed && currentAttempt <= attempts) {
+        boolean clickable = false;
+        while (!clickable && currentAttempt <= attempts) {
             currentAttempt++;
-            isDisplayed = element.isDisplayed() && element.isEnabled();
-            Sleeper.sleepTightInSeconds(2);
-            if (isDisplayed) element.click();
+            clickable = ExpectedConditions.elementToBeClickable(element) != null;
+            if (clickable) element.click();
+
+            Sleeper.sleepTightInSeconds(5);
         }
     }
 
@@ -227,13 +238,13 @@ public abstract class Component {
     protected WebElement findElementWithRetries(By by, int attempts) throws Exception {
         int currentAttempt = 0;
         boolean isDisplayed = false;
-        WebElement element = seleniumDriver.findElement(by);
+        Optional<WebElement> element = seleniumDriver.findElementOptional(by);
         while (!isDisplayed && currentAttempt <= attempts) {
             currentAttempt++;
-            isDisplayed = element.isEnabled();
-            if (isDisplayed) return element;
-            Sleeper.sleepTightInSeconds(2);
-            element = seleniumDriver.findElement(by);
+            isDisplayed = element.isPresent();
+            if (isDisplayed) return element.get();
+            element = seleniumDriver.findElementOptional(by);
+            Sleeper.sleepTightInSeconds(5);
         }
         throw new Exception("Element not found");
     }
