@@ -44,6 +44,9 @@ public class DashboardMenuPage extends Component {
 
     public void clickOnDashboardElement(String element) {
         seleniumDriver.waitForRequestsToFinish();
+
+        if (isDashboardElementClicked(element)) return;
+
         Optional<WebElement> dashboardMenuElementOptional;
         WebElement dashboardElement;
         boolean dashboardMenuSelected = false;
