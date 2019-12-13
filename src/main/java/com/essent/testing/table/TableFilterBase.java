@@ -102,7 +102,6 @@ public class TableFilterBase {
         try {
             for (Filter filter : filters) {
                 int columnIndex = headers.indexOf(filter.getColumnName().toUpperCase());
-                logger.info("[COLUMN INDEX: " + columnIndex + "]");
                 if (!cells.get(columnIndex).getText().toUpperCase().contains(filter.getColumnValue().toUpperCase()))
                     return false;
             }

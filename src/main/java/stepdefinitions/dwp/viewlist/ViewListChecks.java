@@ -228,7 +228,7 @@ public class ViewListChecks extends NavigationElements {
             + expectedValue + " at column " + columnName + " within " + seconds + " seconds  - PASSED.");
     }
     @Then("^Invoice contains \"([^\"]*)\" at \"([^\"]*)\" column$")
-    public void checkMarketMessage(String value, String column) {
+    public void checkInvoice(String value, String column) {
         List<Filter> filters = new ArrayList<Filter>();
         filters.add(new Filter(column, value));
 
