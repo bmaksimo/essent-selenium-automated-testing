@@ -12,7 +12,7 @@ Feature: NSTA-327: Creating a B2C Quote TC1 with "Supplier Switch" without using
         When Left menu is "sales-marketing"
         And Top menu item is "Klanten"
         And Top action is Filter from "sales-marketing" menu retrying 5 times
-        And "Klantnummer" input is "1001337681"
+        And "Klantnummer" input is "1000299834"
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
 
         When Dashboard menu is "Marktberichten"
@@ -26,6 +26,8 @@ Feature: NSTA-327: Creating a B2C Quote TC1 with "Supplier Switch" without using
         And Changes are confirmed
         Then Table "Marktberichten" contains value "Geaccepteerd" at column "Status" retrying 10 times
 
-
-
+        When Dashboard menu is "Service"
+        And Table "Taken" contains value "check rest value" at column "Naam & Type & Subtype" retrying 5 times
+        And Click on link in View List at "4th" row and "Number & Start date" column polling 60 seconds
+        Then Positive amount is verified
 
