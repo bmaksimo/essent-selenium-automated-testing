@@ -28,7 +28,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.testng.AssertJUnit.assertTrue;
 
-public class ContractsSteps extends DwpScenario{
+public class ContractsSteps extends DwpScenario {
 
     @Before("@DWP or @REGRESSION or @API")
     public void setupTest(Scenario scenario) {
@@ -91,7 +91,7 @@ public class ContractsSteps extends DwpScenario{
     }
 
     @And("^List option is \"([^\"]*)\"$")
-    public void openInvoiceOnly(String option)  {
+    public void openInvoiceOnly(String option) {
         InvoiceListPage ilp = new InvoiceListPage();
         ilp.openListOption(option);
     }
@@ -242,7 +242,7 @@ public class ContractsSteps extends DwpScenario{
     }
 
     @When("^Payment table is not empty$")
-    public void checkPaymentTableNotEmpty(){
+    public void checkPaymentTableNotEmpty() {
         seleniumDriver.waitForRequestsToFinish();
         ContractPage contractenPage = new ContractPage();
         boolean success = contractenPage.checkPaymentTableNotEmpty();
@@ -268,22 +268,22 @@ public class ContractsSteps extends DwpScenario{
     }
 
     @And("^Check Payment Plan with invoice \"([^\"]*)\"$")
-        public void calculateAmountInstallment(String invoiceAmount) {
+    public void calculateAmountInstallment(String invoiceAmount) {
         int invoice = Integer.parseInt(parameterProvider.getValueOrParameterAsString(invoiceAmount));
         int firstInstallment = (int) round((0.20) * invoice);
         int formedAmountPerInstallment = new ContractPage().getAmountPerInstallment(invoice, firstInstallment);
 
-        assertTrue(String.format("Amount per installment \"%s\" is not at least 50", formedAmountPerInstallment), formedAmountPerInstallment>=50);
+        assertTrue(String.format("Amount per installment \"%s\" is not at least 50", formedAmountPerInstallment), formedAmountPerInstallment >= 50);
 
         parameterProvider.put("firstInstallment", firstInstallment);
-        parameterProvider.put("amountPerInstallment",formedAmountPerInstallment);
+        parameterProvider.put("amountPerInstallment", formedAmountPerInstallment);
     }
 
     @Then("^Check is Number of Installments at least \"([^\"]*)\" for given amount \"([^\"]*)\"$")
     public void checkInstallmentsNumber(int expectedNumberOfInstallments, String amount) {
         String amountPerInstallment = parameterProvider.getValueOrParameterAsString(amount);
         int actualNumberOfInstallments = new ContractPage().installmentsNumber(amountPerInstallment);
-        assertTrue("Insufficient Number of installments with given amount.",expectedNumberOfInstallments<=actualNumberOfInstallments);
+        assertTrue("Insufficient Number of installments with given amount.", expectedNumberOfInstallments <= actualNumberOfInstallments);
     }
 
     @Then("^Installments Amount of \"([^\"]*)\" is bigger than Invoice Amount of \"([^\"]*)\"$")
@@ -300,6 +300,6 @@ public class ContractsSteps extends DwpScenario{
 
         int result1 = Integer.parseInt(invAmount);
         int result2 = Integer.parseInt(installAmount);
-        assertThat("Installments amount is not bigger than invoice amount", result2>result1);
+        assertThat("Installments amount is not bigger than invoice amount", result2 > result1);
     }
 }
