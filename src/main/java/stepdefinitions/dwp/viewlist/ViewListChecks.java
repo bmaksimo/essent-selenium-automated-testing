@@ -528,7 +528,7 @@ public class ViewListChecks extends NavigationElements {
 
             if (!found) {
                 loopBack(arrow, dashboardMenu);
-//                Sleeper.sleepTightInSeconds(10);
+                Sleeper.sleepTightInSeconds(10);
             }
         }
 
