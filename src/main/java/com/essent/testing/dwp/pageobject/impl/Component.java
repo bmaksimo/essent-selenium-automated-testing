@@ -183,7 +183,7 @@ public abstract class Component {
                 java.time.Duration.ofMillis(200));
             String location = elements.stream().map(WebElement::getText).reduce("", (partialString, element) -> partialString + (" " + element + System.lineSeparator()));
             if (StringUtils.isNotEmpty(location)) {
-                logger().error(scenarioInfo + " - WARNING: Mandatory input failure in: " + location);
+                logger().warn(scenarioInfo + " - WARNING: Mandatory input failure in: " + location);
             }
         } catch (UnhandledAlertException uae) {
             handleAlert();
