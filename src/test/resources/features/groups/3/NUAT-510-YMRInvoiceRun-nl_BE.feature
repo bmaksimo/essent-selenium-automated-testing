@@ -25,8 +25,7 @@ Feature: NUAT-510 Triggering advance invoice run. Check is invoice created in DW
         And Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 90 seconds
         And Dashboard menu is "Billing"
 
-        Then "1st" list element has cell value "Invoice (ADVANCE)" at column "ID & Type" polling 450 seconds
-        And "1st" List element with value at column "ID & Type" is checked
+        Then Invoice contains "Invoice (ADVANCE)" at "ID & Type" column
 
         Given I logged in to JBilling as "billing_testautomation"
         And JBilling top menu item is "Customers"

@@ -5,6 +5,8 @@ import com.essent.testing.dwp.pageobject.listview.ViewListTestObject;
 import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.contracts.ContractPage;
 import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.workflows.MarketMessagesPage;
 import com.essent.testing.table.Filter;
+import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.invoicelist.InvoiceListPage;
+import com.essent.testing.table.Filter;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -231,6 +233,36 @@ public class ViewListChecks extends NavigationElements {
         });
         logger().debug("STEP: " + ordinal + " list element has cell value "
             + expectedValue + " at column " + columnName + " within " + seconds + " seconds  - PASSED.");
+    }
+    @Then("^Invoice contains \"([^\"]*)\" at \"([^\"]*)\" column$")
+    public void checkInvoice(String value, String column) {
+        List<Filter> filters = new ArrayList<Filter>();
+        filters.add(new Filter(column, value));
+
+        int attempt = 0;
+        boolean found = false;
+        int maxRetries = 10;
+        String arrow = parameterProvider.getValueOrParameterAsString("parameter:navigation");
+        String dashboardMenu = parameterProvider.getValueOrParameterAsString("parameter:dashboard-menu");
+
+        while (attempt < maxRetries && !found) {
+            try {
+                String invoiceIdCellResult = new InvoiceListPage().getCellValueOnColumnFromTable("Transacties", column, filters, parameterProvider.getCurrentContextParameters());
+                found = StringUtils.isNotBlank(invoiceIdCellResult);
+                String invoiceId = invoiceIdCellResult.split("\n")[0];
+                parameterProvider.put(column, invoiceId);
+            } catch (Exception e) {
+                logger().warn(parameterProvider.getCurrentContextParameters() + " - Invoice was not found.");
+            } finally {
+                attempt++;
+                if (!found) {
+                    loopBack(arrow, dashboardMenu);
+                    Sleeper.sleepTightInSeconds(10);
+                }
+            }
+        }
+
+        Assert.assertTrue(found);
     }
 
     @And("^\"([^\"]*)\" list element has cell value \"([^\"]*)\" at column \"([^\"]*)\" polling (\\d+) seconds?$")
@@ -502,8 +534,8 @@ public class ViewListChecks extends NavigationElements {
                 filter(element -> element.contains(inputValue)).collect(Collectors.toList()));
 
             if (!found) {
-                Sleeper.sleepTightInSeconds(10);
                 loopBack(arrow, dashboardMenu);
+                Sleeper.sleepTightInSeconds(10);
             }
         }
 

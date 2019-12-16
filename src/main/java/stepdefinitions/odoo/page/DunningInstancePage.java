@@ -12,6 +12,6 @@ public class DunningInstancePage extends Component {
         return new OdooTableFilter(contextParameters)
             .getTable(tableName)
             .findBy(filters)
-            .get();
+            .getRow();
     }
 }
