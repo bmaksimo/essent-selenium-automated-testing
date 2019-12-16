@@ -48,7 +48,7 @@ Feature: TESTAUTO-398 E plus sign in
         And Billing details are confirmed
         Then Form header is "Quote overview"
 
-        When Option "Heeft de klant al getekend?" "is" "On"
+        When Option "Heeft de klant al getekend?" is "On"
         And "Kanaal ondertekening" selection is "Papier"
         And Quote is signed in "Kontich"
         And "Datum ondertekening" date is "now"
