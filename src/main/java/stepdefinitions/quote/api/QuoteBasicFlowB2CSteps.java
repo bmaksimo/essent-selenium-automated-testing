@@ -72,6 +72,26 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
         this.cookie = new IWelcomeLoginAPI().getCookie(username, password);
     }
 
+    @Given("^Create active B2C contract with metering \"([^\"]*)\" and sign date \"([^\"]*)\"$")
+    public void createActiveB2CContract(String meterOpen, String signInDate) throws IOException {
+        flowIsStarted("Create_Quote");
+        dataIsPreparedForCreateQuoteWithDateRequestAndPostPreference("prospect", meterOpen, signInDate);
+        newTcQuoteIsCreated();
+        quoteStatusIs("ACCEPTED");
+        quotelineExists();
+        quotelineStatusIs("Sent to customer");
+        simulationThatCustomerSignatureIsReceived();
+        quoteStageStatusIs("SIGNATURE RECEIVED");
+        quotelineStatusIs("Signature received");
+        fileIsUploadedAsScannedSignature();
+        signinIsConfirmed();
+        contractIsCreated();
+        contractedEanExistsOnAccount();
+        paymentDetailsAreReceived();
+        waitUntilContractInstanceStarts();
+        checkOrderInJbilling();
+    }
+
     @Given("^\"([^\"]*)\" flow is started$")
     public void flowIsStarted(String arg1) throws IOException {
 	    this.tariffSheetID = new QuoteDetailsAPI().getTariffSheetID(cookie, arg1);
@@ -125,7 +145,6 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     public void newTcQuoteIsCreated() throws IOException {
         String retrievedQuoteNumber = new QuoteDetailsAPI().getQuoteNumber(cookie, quoteDetails.getRecordId());
         assertThat(retrievedQuoteNumber, is(equalTo(quoteDetails.getQuoteNumber())));
-
     }
 
     @Then("^Quote status is \"([^\"]*)\"$")
@@ -186,7 +205,7 @@ public class QuoteBasicFlowB2CSteps extends B2CCreateContractScenario {
     }
 
     @Then("^Contracted EAN exists on account$")
-    public void contracted_EAN_exists_on_account() throws IOException {
+    public void contractedEanExistsOnAccount() throws IOException {
 	    assertThat(new ContractDetailsAPI().checkIfEanExists(cookie, quoteDetails), is(true));
     }
 

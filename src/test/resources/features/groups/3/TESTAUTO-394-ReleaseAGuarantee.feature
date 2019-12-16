@@ -13,12 +13,7 @@ Feature: TESTAUTO-394 Release a Guarantee
 
     @TESTAUTO-394
     Scenario: Release a Guarantee
-        When "Create_Quote" flow is started
-        And Data is prepared for Create quote request for "prospect" and meter open is "Off" and sign date is "35 days before now"
-        And New tc1_quote is created
-        Then Quote status is "ACCEPTED"
-        And Quoteline exists
-
+        And Create active B2C contract with metering "Off" and sign date "35 days before now"
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
         When Left menu is "sales-marketing"
         And Top menu item is "Klanten"
