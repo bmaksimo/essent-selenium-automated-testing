@@ -6,7 +6,6 @@ import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.contra
 import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.workflows.MarketMessagesPage;
 import com.essent.testing.table.Filter;
 import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.invoicelist.InvoiceListPage;
-import com.essent.testing.table.Filter;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
