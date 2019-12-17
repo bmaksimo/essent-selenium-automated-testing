@@ -757,17 +757,6 @@ public class ViewListChecks extends NavigationElements {
         Assert.assertTrue(found);
     }
 
-    @And("Number of contract lines is \"([^\"]*)\"$")
-    public void numberContractLines(int expectedNumber) {
-        int actualNumber = new ContractPage().getContractLinesNumber();
-        assertThat("Number of given contract lines " + expectedNumber + " is not equal to actual number of contract lines " + actualNumber + "", actualNumber, equalTo(expectedNumber));
-    }
-
-    @Then("Start dates are same for all contract lines as contract start date \"([^\"]*)\"$")
-    public void checkAllDates(String contractStartDate) {
-        Assert.assertTrue("Start dates are not same for all contract lines", new ContractPage().checkAllStartDatesEqual(parameterProvider.getValueOrParameterAsString(contractStartDate)));
-    }
-
     @Then("^Save invoice number")
     public void getInvoiceNumber() {
         String invoiceNumber = new ContractPage().getInvoiceNumber();
