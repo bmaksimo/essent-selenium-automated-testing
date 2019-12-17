@@ -3,8 +3,9 @@ package stepdefinitions.dwp.viewlist;
 import com.essent.automation.util.Sleeper;
 import com.essent.testing.dwp.pageobject.listview.ViewListTestObject;
 import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.contracts.ContractPage;
-import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.invoicelist.InvoiceListPage;
+import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.workflows.MarketMessagesPage;
 import com.essent.testing.table.Filter;
+import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.invoicelist.InvoiceListPage;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -12,6 +13,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.runtime.CucumberException;
+import io.cucumber.datatable.DataTable;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.Matchers;
@@ -25,7 +27,11 @@ import stepdefinitions.dwp.overview.DashboardMenu;
 import stepdefinitions.dwp.plus.PlusActions;
 
 import javax.swing.table.DefaultTableModel;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -712,6 +718,43 @@ public class ViewListChecks extends NavigationElements {
         cp.sumRates(sumRatesLowSignature);
         assertThat("Sum of signature and rejected quote for High prices are not equal", sumHighRatesSignatureToFloat, equalTo(cp.sumRates(sumRatesHighSignature)));
         assertThat("Sum of signature and rejected quote for Low prices are not equal", sumLowRatesSignatureToFloat, equalTo(cp.sumRates(sumRatesLowSignature)));
+    }
+
+    @Then("Table contains matching data on given columns:")
+    public void checkDataInTable(final DataTable dbTable) {
+        List<List<String>> dataTableFilters = dbTable.asLists();
+        List<Filter> filters = new ArrayList<>();
+        String currentColumnName;
+        String currentColumnValue;
+
+        for (int i = 1; i <= dataTableFilters.size(); i++) {
+            currentColumnName = dataTableFilters.get(0).get(i);
+            currentColumnValue = dataTableFilters.get(1).get(i);
+            Filter filter = new Filter(currentColumnName.toUpperCase(), currentColumnValue);
+            filters.add(filter);
+        }
+
+        int attempt = 1;
+        boolean found = false;
+        int maxRetries = 10;
+        String arrow = parameterProvider.getValueOrParameterAsString("parameter:navigation");
+        String dashboardMenu = parameterProvider.getValueOrParameterAsString("parameter:dashboard-menu");
+
+        while (attempt < maxRetries && !found) {
+            try {
+                List<WebElement> results = new MarketMessagesPage().selectRowOnTable(dataTableFilters.get(1).get(0), filters, parameterProvider.getCurrentContextParameters());
+                found = CollectionUtils.isNotEmpty(results);            } catch (Exception e) {
+                logger().warn(parameterProvider.getCurrentContextParameters() + " - Data was not found.");
+            } finally {
+                attempt++;
+                if (!found) {
+                    Sleeper.sleepTightInSeconds(10);
+                    loopBack(arrow, dashboardMenu);
+                }
+            }
+        }
+
+        Assert.assertTrue(found);
     }
 
     @Then("^Save invoice number")
