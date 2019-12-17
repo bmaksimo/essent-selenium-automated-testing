@@ -72,13 +72,6 @@ public class QuoteSteps extends DwpScenario {
         nqp.setSepaSignatureLocation(city);
     }
 
-    @And("^EAN code for gas is generated$")
-    public void eanCodeForGasIsGenerated(){
-        String eanCode = PrepareDataForContract.generateEAN();
-        parameterProvider.put("EAN-code-gas", eanCode);
-        logger().debug(" - Generated EAN code: " + eanCode);
-    }
-
     private class VerifyTariffSheetPriceAlert implements FlowAwarePredicate<QuoteSteps> {
 
         @Override
