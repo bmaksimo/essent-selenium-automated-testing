@@ -9,25 +9,7 @@ Feature: TESTAUTO-180 - Change MANDATE communication preference from EMAIL to PO
         Given I login as API user "soapui_b2c"
     @TESTAUTO-180
     Scenario: Change MANDATE communication preference from EMAIL to POST
-        And "Create_Quote" flow is started
-        When Data is prepared for Create quote request for "prospect" and meter open is "On" and sign date is "35 days before now" with communication by email
-        And New tc1_quote is created
-        Then Quote status is "ACCEPTED"
-        And Quoteline exists
-        And Quoteline status is "Sent to customer"
-
-        When Simulation that customer signature is received
-        Then Quote stage status is "SIGNATURE RECEIVED"
-        And Quoteline status is "Signature received"
-
-        When File is uploaded as scanned signature
-        Then Signin is confirmed
-        And Contract is created
-        And Contracted EAN exists on account
-
-        When Payment details are received
-        Then Wait until contract instance starts
-        And Check order in jbilling
+        And Create active B2C contract with metering "On" and sign date "35 days before now"
 
         Given I renew login to DWP as "contracting.testautomation.b2c@essent.be"
         When Left menu is "sales-marketing"

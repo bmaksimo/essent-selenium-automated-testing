@@ -11,21 +11,7 @@ Feature: NSTA-337: Move old address - Electricity
 
     @NSTA-337
     Scenario: NSTA-337: Move old address - Electricity
-        And "Create_Quote" flow is started
-        When Data is prepared for Create quote request for "prospect" and meter open is "Off" and sign date is "35 days before now"
-        And New tc1_quote is created
-        Then Quote status is "ACCEPTED"
-        And Quoteline exists
-        And Quoteline status is "Sent to customer"
-        When Simulation that customer signature is received
-        Then Quote stage status is "SIGNATURE RECEIVED"
-        And Quoteline status is "Signature received"
-        When File is uploaded as scanned signature
-        Then Signin is confirmed
-        And Contract is created
-        When Payment details are received
-        Then Wait until contract instance starts
-        And Check order in jbilling
+        And Create active B2C contract with metering "Off" and sign date "35 days before now"
 
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
         When Left menu is "sales-marketing"
@@ -36,7 +22,7 @@ Feature: NSTA-337: Move old address - Electricity
         When Dashboard menu is "Contracten"
         And "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
         And Plus action of "1" element from "ContractsOnAccount" and click on "Verhuis OA"
-        
+
         And Option "Testing?" is "On"
         And Option "Market mock?" is "On"
         And Communication channel is "E-mail"
