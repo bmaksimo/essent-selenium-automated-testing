@@ -9,26 +9,10 @@ Feature: NSTA-329 Deduplication activated customer
         Given I login as API user "soapui_b2c"
     @NSTA-329
     Scenario: From de-duplication of client
-        And "Create_Quote" flow is started
-        And Data is prepared for Create quote request for "prospect" and meter open is "On" and sign date is "35 days before now"
-        And New tc1_quote is created
-        And Quote status is "ACCEPTED"
-        And Quoteline exists
-        And Quoteline status is "Sent to customer"
-        And Simulation that customer signature is received
-        And Quote stage status is "SIGNATURE RECEIVED"
-        And Quoteline status is "Signature received"
-        And File is uploaded as scanned signature
-        And Signin is confirmed
-        And Contract is created
-        And Contracted EAN exists on account
-        And Payment details are received
-        And Wait until contract instance starts
-        And Check order in jbilling
+        And Create active B2C contract with metering "On" and sign date "35 days before now"
+
         And I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
         And Left menu is "sales-marketing"
-
-
         When Click on top menu button PLUS and navigate to "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         And Form header is "Quote details"
         And "Sales kanaal" selection is "Inbound"

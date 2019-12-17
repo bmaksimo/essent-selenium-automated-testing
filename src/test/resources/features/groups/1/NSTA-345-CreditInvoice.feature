@@ -13,25 +13,7 @@ Feature: NSTA-345:Credit Invoice
     @NSTA-345
     Scenario: Credit Invoice
         # 1 - Create an active contract via API
-        And "Create_Quote" flow is started
-        When Data is prepared for Create quote request for "prospect" and meter open is "Off" and sign date is "35 days before now"
-        And New tc1_quote is created
-        Then Quote status is "ACCEPTED"
-        And Quoteline exists
-        And Quoteline status is "Sent to customer"
-
-        When Simulation that customer signature is received
-        Then Quote stage status is "SIGNATURE RECEIVED"
-        And Quoteline status is "Signature received"
-
-        When File is uploaded as scanned signature
-        Then Signin is confirmed
-        And Contract is created
-        And Contracted EAN exists on account
-
-        When Payment details are received
-        Then Wait until contract instance starts
-        And Check order in jbilling
+        And Create active B2C contract with metering "Off" and sign date "35 days before now"
 
         # 2 - invoice run advance
         Given I renew login to DWP as "billing.testautomation@essent.be"

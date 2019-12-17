@@ -22,10 +22,11 @@ public class TopMenuActions extends Component {
         clickWithRetries(element, TOP_MENU_RETRIES);
     }
 
-    public void clickPreviousButton() {
+    public void clickPreviousButton() throws Exception {
         seleniumDriver.waitForRequestsToFinish();
-        WebElement element = seleniumDriver.findElementWhenClickable(By.className(ICON_PREVIOUS_CLASS_NAME));
+        WebElement element = findElementWithRetries(By.className(ICON_PREVIOUS_CLASS_NAME), 10);
         clickWithRetries(element, TOP_MENU_RETRIES);
+        seleniumDriver.waitForRequestsToFinish();
     }
 
     public void clickPlusButton(String path) throws Exception {
@@ -49,7 +50,7 @@ public class TopMenuActions extends Component {
         clickWithRetries(menuOptional.get(), TOP_MENU_RETRIES);
     }
 
-    private Optional<WebElement> getMenu(String xpath){
+    private Optional<WebElement> getMenu(String xpath) {
         List<WebElement> menus = seleniumDriver.findElements(By.xpath(xpath));
         for (WebElement menuElement : menus) {
             if (menuElement.isDisplayed()) return Optional.of(menuElement);
@@ -58,6 +59,6 @@ public class TopMenuActions extends Component {
     }
 
     private String buildXPath(String label) {
-        return "//span[contains(text(),'"+label+"')]/parent::a";
+        return "//span[contains(text(),'" + label + "')]/parent::a";
     }
 }

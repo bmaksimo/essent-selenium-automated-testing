@@ -9,24 +9,7 @@ Feature: NUAT-5019: Complete E2E scenario "Active customer to drop, through one 
     @NUAT-5019
     Scenario: Create active contract that after dunning the contract becomes inactive
 
-        And "Create_Quote" flow is started
-        When Data is prepared for Create quote request for "prospect" and meter open is "On" and sign date is "35 days before now"
-        And New tc1_quote is created
-        Then Quote status is "ACCEPTED"
-        And Quoteline exists
-        And Quoteline status is "Sent to customer"
-
-        When Simulation that customer signature is received
-        Then Quote stage status is "SIGNATURE RECEIVED"
-        And Quoteline status is "Signature received"
-
-        When File is uploaded as scanned signature
-        Then Signin is confirmed
-        And Contract is created
-
-        When Payment details are received
-        Then Wait until contract instance starts
-        And Check order in jbilling
+        And Create active B2C contract with metering "On" and sign date "35 days before now"
 
         # 2 - invoice run advance
         When Billing run "RECURRING" is triggered with process date "1 month from now"

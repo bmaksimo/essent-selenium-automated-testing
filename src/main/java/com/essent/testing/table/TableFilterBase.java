@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
        List<WebElement> row = new TableFilter()
             .getTable("CommunicationPreferencesOnAccount")
             .findBy(filters)
-            .get();
+            .getRow();
 
     The returning value is the row, which is a List<WebElement>, each item on the list is a cell of the row.
     Initially we'll support ONE filter, next step is to support more than one, that's why the method signature has a list of filters
@@ -46,7 +46,7 @@ public class TableFilterBase {
         this.tableName = tableName;
         this.tablePath = buildTablePath(tablePathBase, this.tableName);
         this.headers = getHeaders();
-        this.rows = this.seleniumDriver.findElements(By.xpath(this.tablePath + this.tableRowsBase));
+        this.rows = seleniumDriver.findElements(By.xpath(this.tablePath + this.tableRowsBase));
         return this;
     }
 
@@ -65,8 +65,14 @@ public class TableFilterBase {
         throw new Exception("Filter didn't match any rows on the table");
     }
 
-    public List<WebElement> get() {
+    public List<WebElement> getRow() {
         return this.selectedRow;
+    }
+
+    public String getTextValueFromColumn(String column) {
+        int columnIndex = headers.indexOf(column.toUpperCase());
+        return StringUtils.isNotBlank(this.getRow().get(columnIndex).getText()) ?
+            this.getRow().get(columnIndex).getText() : StringUtils.EMPTY;
     }
 
     private void logErrors(List<Filter> filters) {
@@ -95,8 +101,8 @@ public class TableFilterBase {
     private boolean isExpectedColumnValue(List<Filter> filters, List<WebElement> cells) {
         try {
             for (Filter filter : filters) {
-                int columnIndex = headers.indexOf(filter.getColumnName());
-                if (!cells.get(columnIndex).getText().contains(filter.getColumnValue()))
+                int columnIndex = headers.indexOf(filter.getColumnName().toUpperCase());
+                if (!cells.get(columnIndex).getText().toUpperCase().contains(filter.getColumnValue().toUpperCase()))
                     return false;
             }
             return true;
@@ -105,7 +111,7 @@ public class TableFilterBase {
         }
     }
 
-    private List<String> getHeaders() {
+    protected List<String> getHeaders() {
         return seleniumDriver
             .findElementsWithDefaultWaiting(By.xpath(this.tablePath + "//thead/tr/th"))
             .stream()

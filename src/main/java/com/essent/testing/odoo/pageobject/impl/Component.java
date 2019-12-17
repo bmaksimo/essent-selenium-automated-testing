@@ -124,6 +124,6 @@ public abstract class Component {
         return new OdooTableFilter(contextParameters)
             .getTable(tableName)
             .findBy(filters)
-            .get();
+            .getRow();
     }
 }

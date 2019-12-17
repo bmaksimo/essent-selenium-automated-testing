@@ -115,4 +115,5 @@ public class NewQuotePage extends QuoteCreationGuidedStep {
     public boolean fillInFormData() {
         return false;
     }
+
 }

@@ -46,7 +46,7 @@ public abstract class NavigationElements extends DwpScenario {
             success, is(true));
     }
 
-    protected void clickTopArrow(String arrow) {
+    protected void clickTopArrow(String arrow) throws Exception{
         seleniumDriver.waitForRequestsToFinish();
         if ("up".equalsIgnoreCase(arrow))
             new TopMenuActions().clickUpButton();
