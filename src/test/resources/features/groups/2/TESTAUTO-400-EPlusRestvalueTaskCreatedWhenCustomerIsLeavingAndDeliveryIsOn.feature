@@ -27,8 +27,7 @@ Feature: TESTAUTO-400 E plus restvalue task created when customer is leaving and
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
 
-#        When "Pakket" selection is "flixmood"
-        When "Pakket" selection is "Vast"
+        When "Pakket" selection is "flixmood"
         And Checkbox "Gas Fix B2C (TC1)" is Unchecked
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
@@ -70,8 +69,8 @@ Feature: TESTAUTO-400 E plus restvalue task created when customer is leaving and
         And "Status" selection is "Delivered"
         And "Leveringsdatum" date is "5 day before now"
         And Changes are confirmed
-#        And Table contains matching data on given columns:
-#            | Table name     | Status & Product      | Producttype   |
-#            | Contractlijnen | Actief - Delivered | E Plus Product|
+        And Table contains matching data on given columns:
+            | Table name     | Status & Product   | Producttype   |
+            | Contractlijnen | Actief - Delivered | E Plus Product|
     
 
