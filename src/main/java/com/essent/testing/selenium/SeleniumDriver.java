@@ -201,8 +201,7 @@ public abstract class SeleniumDriver {
             .withTimeout(Duration.ofSeconds(30))
             .pollingEvery(Duration.ofMillis(250))
             .ignoring(NoSuchElementException.class);
-        WebElement element = waiter.until(driver -> driver.findElement(selector));
-        return element;
+        return  waiter.until(element -> driver.findElement(selector));
     }
 
     public WebElement findElementWhenVisible(By selector) {
