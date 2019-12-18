@@ -3,6 +3,7 @@
 @B2C
 @API
 @ALL
+@NOREG04
 @Unstable
 
 Feature: NSTA-345:Credit Invoice
