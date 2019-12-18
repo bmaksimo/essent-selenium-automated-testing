@@ -42,6 +42,7 @@ import static com.billinghouse.testautomation.util.dsl.NumericUtil.amountAsInt;
 import static com.billinghouse.testautomation.util.dsl.NumericUtil.checkAmount;
 import static com.essent.testing.dwp.constant.DwpConstants.FLEMISCH_LOCALE;
 import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertTrue;
 import static junit.framework.TestCase.fail;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -709,6 +710,12 @@ public class ViewListChecks extends NavigationElements {
         }
     }
 
+    @Then("Positive amount is verified")
+    public void getAmountOfTask() {
+        boolean taskAmountIsItNumber = new ContractPage().getAmountOfTask();
+        assertTrue("Amount of task is not positive number", taskAmountIsItNumber);
+    }
+
     @Then("\"([^\"]*)\" and \"([^\"]*)\" equals Sum of High&Low rates for rejected rates$")
     public void compareSumOfRatesForSignatureQuoteAndRejectedQuote(String sumRatesHighSignature, String sumRatesLowSignature) {
         ContractPage cp = new ContractPage();
@@ -763,6 +770,7 @@ public class ViewListChecks extends NavigationElements {
         parameterProvider.put("invoiceNumber", invoiceNumber);
         assertNotNull(invoiceNumber);
     }
+
 
     //TODO Create a special test harness class for wait methods,
     //and move the methods, related to test execution timing, there.logger().info(column);
