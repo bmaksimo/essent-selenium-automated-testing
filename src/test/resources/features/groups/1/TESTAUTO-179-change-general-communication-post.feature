@@ -19,6 +19,7 @@ Feature: TESTAUTO-179 - Create new customer with general communication preferenc
         Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
         When Dashboard menu is "Details"
         And Click on Plus action of table "Communicatievoorkeuren" at row where "COMMUNICATIETYPE" is "Algemeen" and click on "Update"
+        And "Kanaal" selection is "Via e-mail"
         And "Algemeen" E-mailadres input is cleared
         And "Kanaal" selection is "Per post"
         And Wait for 5 seconds

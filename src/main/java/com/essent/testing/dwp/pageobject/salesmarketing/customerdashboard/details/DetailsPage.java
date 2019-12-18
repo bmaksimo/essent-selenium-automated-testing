@@ -94,7 +94,6 @@ public class DetailsPage extends Component {
         seleniumDriver.waitForRequestsToFinish();
         Sleeper.sleepTightInSeconds(5);
         String id = preference.equalsIgnoreCase("Algemeen") ? PREFERENCES_EMAIL_ADDRESS_GENERAL : PREFERENCES_EMAIL_ADDRESS_LEGAL;
-
         seleniumDriver.findElement(By.id(id)).clear();
     }
 
