@@ -55,7 +55,7 @@ Feature: TESTAUTO-400 E plus restvalue task created when customer is leaving and
         Then "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
 
         When Click on link in View List at "1st" row and "Contractnummer" column waiting for 1 seconds
-        And Plus action of "1" element from "ContractlinesOnContract" and click on "Bekijk alle fulfilment records"
+        And Click on Plus action of table "Contractlijnen" at row where "PRODUCTTYPE" is "E Plus Product" and click on "Bekijk alle fulfilment records"
         And Plus action of "1" element from "fulfilment" and click on "Bewerken"
         And "Status" selection is "Delivered"
         And "Leveringsdatum" date is "5 day before now"
