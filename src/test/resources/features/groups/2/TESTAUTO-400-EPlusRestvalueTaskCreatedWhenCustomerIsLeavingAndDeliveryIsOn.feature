@@ -37,6 +37,7 @@ Feature: TESTAUTO-400 E plus restvalue task created when customer is leaving and
         And "EAN-code" input is "parameter:EAN-code-generated"
         And "Meternummer" input is "1000"
         And Options "test" "are" "On"
+
         And Connection details are confirmed
         And Save changes
         Then Form header is "Billing details"
@@ -49,18 +50,27 @@ Feature: TESTAUTO-400 E plus restvalue task created when customer is leaving and
         And "Kanaal ondertekening" selection is "Papier"
         And Quote is signed in "Kontich"
         And "Datum ondertekening" date is "now"
-        Then Quote is confirmed
+        And Quote is confirmed
 
         When Dashboard menu is "Contracten"
         Then "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
 
+#        Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
+#        When Left menu is "sales-marketing"
+#        And Top menu item is "Klanten"
+#        And Top action is Filter from "sales-marketing" menu retrying 5 times
+#        And "Klantnummer" input is "1001337682"
+#        Given Click on link in View List at "1st" row and "Klantnummer & Naam" column polling 60 seconds
+
+        When Dashboard menu is "Contracten"
         When Click on link in View List at "1st" row and "Contractnummer" column waiting for 1 seconds
-        And Plus action of "1" element from "ContractlinesOnContract" and click on "Bekijk alle fulfilment records"
+        And Click on Plus action of table "Contractlijnen" at row where "PRODUCTTYPE" is "E Plus Product" and click on "Bekijk alle fulfilment records"
+#        And Plus action of "1" element from "ContractlinesOnContract" and click on "Bekijk alle fulfilment records"
         And Plus action of "1" element from "fulfilment" and click on "Bewerken"
         And "Status" selection is "Delivered"
         And "Leveringsdatum" date is "5 day before now"
         And Changes are confirmed
-        Then Table contains matching data on given columns:
+        And Table contains matching data on given columns:
             | Table name     | Status & Product   | Producttype   |
             | Contractlijnen | Actief - Delivered | E Plus Product|
     

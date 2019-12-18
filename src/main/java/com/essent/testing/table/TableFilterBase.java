@@ -102,8 +102,9 @@ public class TableFilterBase {
         try {
             for (Filter filter : filters) {
                 int columnIndex = headers.indexOf(filter.getColumnName().toUpperCase());
-                if (!cells.get(columnIndex).getText().toUpperCase().contains(filter.getColumnValue().toUpperCase()))
-                    return false;
+                if (cells.get(columnIndex).getText().toUpperCase().contains(filter.getColumnValue().toUpperCase())){
+                    return true;
+                } else return false;
             }
             return true;
         } catch (Exception e) {
