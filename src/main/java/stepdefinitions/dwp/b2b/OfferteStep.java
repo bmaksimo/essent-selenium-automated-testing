@@ -26,7 +26,7 @@ public class OfferteStep extends DwpScenario {
 
 
     @And("^Take Offertenummer from first offerte$")
-    public void takeOffertenummerFromFirstOfferte() {
+    public void takeOffertenummerFromFirstOfferte() throws Exception {
         String offerteNummer = new QuotesListPage().getOfferteNumberAsString();
         parameterProvider.put("offertenummer", offerteNummer);
     }
