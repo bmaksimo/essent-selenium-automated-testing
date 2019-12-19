@@ -6,9 +6,9 @@ import org.openqa.selenium.WebElement;
 
 public class QuotesListPage extends Component {
 
-    public String getOfferteNumberAsString() {
+    public String getOfferteNumberAsString() throws Exception {
         seleniumDriver.waitForRequestsToFinish();
-        return seleniumDriver.findElementWhenVisible(By.xpath("//list-link-bold-top-two-liner-cell//a/h5")).getText();
+        return findElementWithRetries(By.xpath("//list-link-bold-top-two-liner-cell//a/h5"), 10).getText();
     }
 
     public void offerteNumberFieldSendKeys(String input) {
