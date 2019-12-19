@@ -3,59 +3,25 @@
 @REGRESSION
 @SOCTAR-CONFIRMATION
 @ALL
-Feature: NSTA 332 Soctar confirmation --> Manual
-    Background:
-        Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
+Feature: NSTA-332: Manual Soctar confirmation
 
-    #Step 1: Create active contract
+    Background:
+        Given I login as API user "soapui_b2c"
+
     @ONBOARDING
     @NSTA-332
-    Scenario: Soctar confirmation --> Manual
+    Scenario: NSTA-332: Manual Soctar confirmation
+        #Step 1: Create active contract
+        And Create active B2C contract with metering "On" and sign date "35 days before now"
 
-        When Click on top menu button PLUS and navigate to "Sales -> TK1 -> Creëer nieuwe offerte B2C"
-        Then Form header is "Quote details"
+        #Step 2: Change contract to SOCTAR
+        Given I logged in to DWP as "contracting.testautomation.b2c@essent.be"
+        When Left menu is "contracting-switching"
+        And Top menu item is "Klanten"
+        And Top action is Filter from "contracting-switching" menu retrying 5 times
+        And "Klantnummer" input is "parameter:accountNumber"
 
-        When "Tariefdatum" date is "now"
-        And "Sales kanaal" selection is "Inbound"
-        And Quote details are confirmed
-        Then Form header is "Personal details"
-
-        When Customer is random
-        And Customer address is
-            | street          | houseNr | houseNrAdd |  bus | postalCode | city     | country |
-            | Mechelsesteenweg| 2       |            |      | 2550       | Kontich  |         |
-        And Customer details are confirmed
-        Then Form header is "Select package & fuel type"
-
-        When Package is "Vast"
-        And Checkbox "Gas Fix B2C (TC1)" is Unchecked
-        And Package and Fuel Type is confirmed
-        Then Form header is "Connection details"
-
-        When EAN code is generated
-        And Option "test" "is" "On"
-        And "Startdatum" date is "2 weeks before now"
-        And "EAN-code" input is "parameter:EAN-code-generated"
-        And Connection details are confirmed
-        And Save changes
-        Then Form header is "Billing details"
-
-        When "Betalingswijze" selection is "Overschrijving"
-        And Billing details are confirmed
-        Then Form header is "Quote overview"
-
-        When Option "Heeft de klant al getekend?" "is" "On"
-        And "Kanaal ondertekening" selection is "Papier"
-        And "Datum ondertekening" date is "now"
-        And Quote is signed
-        And Quote is signed in "Kontich"
-        When Quote is confirmed
-
-        When Dashboard menu is "Contracten"
-        And  "1st" List element with value at column "EAN-code" is checked
-        And  "1st" list element has cell value "Actief" at column "Contractnummer" polling 450 seconds
-
-     #Step 2: Change contract to SOCTAR
+        When Click on "parameter:accountNumber" link
         When Dashboard menu is "Contracten"
         Then Get Start Date
         When Plus action of "1" element from "ContractsOnAccount" and click on "TK1 Soctar Productwijziging"
@@ -66,8 +32,7 @@ Feature: NSTA 332 Soctar confirmation --> Manual
         Then Changes are confirmed
         Then Bevestigen
 
-     #Step 3: Check SOCTAR product change
-
+        #Step 3: Check SOCTAR product change
         When Dashboard menu is "Contracten"
         And  "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
         And Table "Contracten" contains value "Geannuleerd (Geaccepteerd)" at column "Type & status"
