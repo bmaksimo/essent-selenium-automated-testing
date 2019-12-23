@@ -115,6 +115,11 @@ public class DetailsPage extends Component {
         }
     }
 
+    public void clickOnListItemInRow(WebElement rowListElement) {
+        seleniumDriver.waitForRequestsToFinish();
+        rowListElement.findElement(By.tagName("a")).click();
+    }
+
     public WebElement getModalName(String modal){
         return seleniumDriver.findElementWhenVisible(By.xpath("//h5[normalize-space()= '"+modal+"']"));
     }

@@ -112,7 +112,7 @@ public class ViewListTestObject extends Component implements ViewList {
       return Collections.emptyList();
     }
     List<List> rows = getData(viewTable);
-    return rows.stream().map((e) -> e.get(index).toString()).collect(Collectors.toList());
+    return rows.stream().map(e -> e.get(index).toString()).collect(Collectors.toList());
   }
 
   public List<String> fetchColumnData(String table, String columnName) {
@@ -140,7 +140,7 @@ public class ViewListTestObject extends Component implements ViewList {
       return Collections.emptyList();
     }
     List<List> rows = getData(viewTable);
-    return rows.stream().map((e) -> e.get(index).toString()).collect(Collectors.toList());
+    return rows.stream().map(e -> e.get(index).toString()).collect(Collectors.toList());
   }
 
   public int fetchRowIndexFromData(String table, String columnName, String data) {
