@@ -65,7 +65,6 @@ public class ContractSteps extends DwpScenario {
 
     @When("^Click on list Item on table \"([^\"]*)\" where Status is \"([^\"]*)\"$")
     public void clickNumberOnTableFilteringRows(String table, String value) {
-        seleniumDriver.waitForRequestsToFinish();
         new DetailsPage().clickOnListItemInRow(table, value);
     }
 
