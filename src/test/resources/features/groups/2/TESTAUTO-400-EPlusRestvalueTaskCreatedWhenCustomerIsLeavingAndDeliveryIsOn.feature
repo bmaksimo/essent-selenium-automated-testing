@@ -4,7 +4,6 @@
 @REGRESSION
 @ALL
 
-
 Feature: TESTAUTO-400 E plus restvalue task created when customer is leaving and delivery is on
 
     Background:
@@ -52,16 +51,33 @@ Feature: TESTAUTO-400 E plus restvalue task created when customer is leaving and
         Then Quote is confirmed
 
         When Dashboard menu is "Contracten"
-        Then "1st" list element has cell value "Actief" at column "Contractnummer" polling 550 seconds
+        Then "1st" list element has cell value "Actief" at column "Contractnummer" polling 600 seconds
 
-        When Click on link in View List at "1st" row and "Contractnummer" column waiting for 1 seconds
+        When Click on link in View List at "1st" row and "Contractnummer" column waiting for 60 seconds
         And Click on Plus action of table "Contractlijnen" at row where "PRODUCTTYPE" is "E Plus Product" and click on "Bekijk alle fulfilment records"
         And Plus action of "1" element from "fulfilment" and click on "Bewerken"
         And "Status" selection is "Delivered"
         And "Leveringsdatum" date is "5 day before now"
-        And Changes are confirmed
+        And Changes are confirmed waiting for 5 seconds
         Then Table contains matching data on given columns:
             | Table name     | Status & Product   | Producttype   |
             | Contractlijnen | Actief - Delivered | E Plus Product|
+
+        When Dashboard menu is "Marktberichten"
+        And Click on "START NIEUW MARKTBERICHT"
+        And Click Select Contractline
+        And Search by "parameter:EAN-code-generated"
+        And Changes are confirmed
+        And "Module" selection is "INITIATE LEAVING CUSTOMER"
+        And "Label" selection is "Without Handover Document "
+        And Option "Testing?" is "On"
+        And Changes are confirmed waiting for 5 seconds
+        And "1st" list element has cell value "INITIATE LEAVING CUSTOMER" at column "Module & Label" polling 120 seconds
+        Then "1st" list element has cell value "Geaccepteerd" at column "Status & ED" polling 240 seconds
+
+        When Dashboard menu is "Service"
+        And Table "Taken" contains value "check rest value" at column "Naam & Type & Subtype" retrying 5 times
+        And Click on list Item on table "TasksOnAccount" where Status is "Open"
+        Then Positive amount is verified
     
 

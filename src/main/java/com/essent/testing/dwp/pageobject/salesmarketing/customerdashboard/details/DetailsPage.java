@@ -22,6 +22,7 @@ public class DetailsPage extends Component {
     private static final String PREFERENCES_EMAIL_ADDRESS_GENERAL = "contacts-contacts-contact-details-contact-details-type-email-contact-details-value-field";
     private static final String COMMUNICATION_PREFERENCES_UPDATED_SUCCESS_MESSAGE = "//div/focus-mode/focus-mode-content/div/div/div[2]/flash-message-renderer/flash-message";
     private static final String INVOICE_BLOCK_END_DATE = "//list[@list-key='invoiceBlockReasonsForInvoice']//tr[1]/td[3]/list-simple-two-liner-cell/p";
+    private static final String TABLE_IDENTIFIER = "//list[@list-key";
 
     public void findIban(String iban) {
         seleniumDriver.waitForRequestsToFinish();
@@ -115,9 +116,18 @@ public class DetailsPage extends Component {
         }
     }
 
-    public void clickOnListItemInRow(WebElement rowListElement) {
+    public void clickOnListItemInRow(String table, String value) {
         seleniumDriver.waitForRequestsToFinish();
-        rowListElement.findElement(By.tagName("a")).click();
+        int rowTotal = seleniumDriver.findElements(By.xpath("" + TABLE_IDENTIFIER + " = '" + table + "']//tr[@class='list__row']")).size();
+        boolean isDisplayed;
+
+        for (int i = 1; i <= rowTotal; i++) {
+             isDisplayed = seleniumDriver.findElements(By.xpath("" + TABLE_IDENTIFIER + " = '" + table + "']//tr[@class='list__row'][" + i + "]//td[@class='list__cell cell__text'][4]//span[contains(., '" + value + "')]")).size()>0;
+             if (isDisplayed) {
+                 seleniumDriver.findElement(By.xpath("" + TABLE_IDENTIFIER + " = '" + table + "']//tr[@class='list__row'][" + i + "]//td[2]//h5")).click();
+                 break;
+             }
+        }
     }
 
     public WebElement getModalName(String modal){
