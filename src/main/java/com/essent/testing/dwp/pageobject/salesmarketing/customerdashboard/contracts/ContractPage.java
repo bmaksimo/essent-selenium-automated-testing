@@ -72,6 +72,7 @@ public class ContractPage extends Component {
     private static final String DELIVERY_ADDRESS_NUMBER = "//input[@id='address-number-field']";
     private static final String DELIVERY_ADDRESS_POSTAL_CODE = "//input[@id='address-postalcode-field']";
     private static final String DELIVERY_ADDRESS_CITY = "//input[@id='address-city-field']";
+    private static final String AMOUNT_OF_TASK = "//wysiwyg-editor-form-element[@id='description']//div[@class='non-editable-editor']";
 
     private WebElement startData() {
         return seleniumDriver.findElementWhenVisible(By.id(START_DATA_ID));
@@ -485,6 +486,12 @@ public class ContractPage extends Component {
         }
 
         return numInstallThanHaveGivenAmount;
+    }
+
+    public boolean getAmountOfTask() {
+        seleniumDriver.waitForRequestsToFinish();
+        String text = seleniumDriver.findElementWhenPresent(By.xpath(AMOUNT_OF_TASK)).getText();
+        return !(text.contains("N/A") || text.contains("0.00"));
     }
 
     public float sumRates(String typeRate) {

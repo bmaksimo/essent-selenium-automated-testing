@@ -122,7 +122,7 @@ public class MarketBerichtenSteps extends NavigationElements {
     @Then("Market message contains:")
     public void checkMarketMessage(final DataTable dbTable) {
         List<List<String>> dataTableFilters = dbTable.asLists();
-        List<Filter> filters = new ArrayList<Filter>();
+        List<Filter> filters = new ArrayList<>();
         String currentColumnName;
         String currentColumnValue;
 

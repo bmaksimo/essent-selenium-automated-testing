@@ -63,6 +63,11 @@ public class ContractSteps extends DwpScenario {
         new BaseObjectPage().plusSubAction(action);
     }
 
+    @When("^Click on list Item on table \"([^\"]*)\" where Status is \"([^\"]*)\"$")
+    public void clickNumberOnTableFilteringRows(String table, String value) {
+        new DetailsPage().clickOnListItemInRow(table, value);
+    }
+
     @When("^Click on Plus action of table \"([^\"]*)\" at row where \"([^\"]*)\" is \"([^\"]*)\" and click on \"([^\"]*)\"$")
     public void clickPlusActionOnTableFilteringRows(String tableName, String columnName, String columnValue, String action) throws Exception {
         seleniumDriver.waitForRequestsToFinish();
