@@ -2,7 +2,7 @@
 @DWP
 @B2C
 @REGRESSION
-@ALL
+@NOREG04
 
 Feature: TESTAUTO-400 E plus restvalue task created when customer is leaving and delivery is on
 
