@@ -2,10 +2,10 @@ package stepdefinitions.dwp.tables;
 
 import java.util.Arrays;
 
-//TODO
-//This enum should be removed.
-//It distracts the developers from basic rule: DWP supports at least 2 languages.
-//Any workaround, circumventing this basic rule, is prohibited
+// TODO
+// This enum should be removed.
+// It distracts the developers from basic rule: DWP supports at least 2 languages.
+// Any workaround, circumventing this basic rule, is prohibited
 public enum CustomerStatus {
   ACCEPTED("Geaccepteerd"),
   GUARANTEE("Waarborg"),

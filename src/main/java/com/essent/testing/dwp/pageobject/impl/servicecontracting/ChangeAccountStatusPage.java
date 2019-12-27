@@ -1,5 +1,7 @@
 package com.essent.testing.dwp.pageobject.impl.servicecontracting;
 
+import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.UPLOAD_FILE;
+
 import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Model;
 import com.essent.automation.util.Sleeper;
@@ -7,52 +9,55 @@ import com.essent.testing.dwp.pageobject.impl.Component;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.UPLOAD_FILE;
-
 public class ChangeAccountStatusPage extends Component {
-    public ChangeAccountStatusPage() {}
-    public ChangeAccountStatusPage(By selector) {
-        super(selector);
-    }
+  public ChangeAccountStatusPage() {}
 
-    public ChangeAccountStatusPage(WebElement element) {
-        super(element);
-    }
+  public ChangeAccountStatusPage(By selector) {
+    super(selector);
+  }
 
-    public void chooseAccountStatus(String status) {
-        seleniumDriver.waitForRequestsToFinish();
-        Sleeper.sleepTightInSeconds(5);
-        seleniumDriver.findElementWhenVisible(By.id("status-field")).sendKeys(status);
-        seleniumDriver.waitForRequestsToFinish();
-    }
+  public ChangeAccountStatusPage(WebElement element) {
+    super(element);
+  }
 
-    public boolean uploadFile(String path) {
-        String elementName = "dwp.attachment.field";
-        String query = "#dwp-attachment-field";
-        Model.Execution execution = createExecution();
-        execution.element(elementName, createElement("SELECTOR", query));
-        seleniumDriver.waitForRequestsToFinish();
-        execution.step(createStep(Action.UPLOAD).element(elementName).value(path).requireDisplayed(false), UPLOAD_FILE.getSleepInMillis());
-        seleniumDriver.waitForRequestsToFinish();
+  public void chooseAccountStatus(String status) {
+    seleniumDriver.waitForRequestsToFinish();
+    Sleeper.sleepTightInSeconds(5);
+    seleniumDriver.findElementWhenVisible(By.id("status-field")).sendKeys(status);
+    seleniumDriver.waitForRequestsToFinish();
+  }
 
-        return execute(execution);
-    }
-    public boolean uploadFileForSign(String path) {
-        String elementName = "dwp.attachment.field";
-        String query = "#signed-contract-docguid-c-field:not([disabled])";
+  public boolean uploadFile(String path) {
+    String elementName = "dwp.attachment.field";
+    String query = "#dwp-attachment-field";
+    Model.Execution execution = createExecution();
+    execution.element(elementName, createElement("SELECTOR", query));
+    seleniumDriver.waitForRequestsToFinish();
+    execution.step(
+        createStep(Action.UPLOAD).element(elementName).value(path).requireDisplayed(false),
+        UPLOAD_FILE.getSleepInMillis());
+    seleniumDriver.waitForRequestsToFinish();
 
-        Sleeper.sleepTightInSeconds(15);
+    return execute(execution);
+  }
 
-        Model.Execution execution = createExecution();
-        execution.element(elementName, createElement("SELECTOR", query));
-        seleniumDriver.waitForRequestsToFinish();
-        execution.step(createStep(Action.REQUIRE).element(elementName).value(path).requireDisplayed(false));
-        seleniumDriver.waitForRequestsToFinish();
-        execution.step(createStep(Action.UPLOAD).element(elementName).value(path).requireDisplayed(false), UPLOAD_FILE.getSleepInMillis());
-        seleniumDriver.waitForRequestsToFinish();
+  public boolean uploadFileForSign(String path) {
+    String elementName = "dwp.attachment.field";
+    String query = "#signed-contract-docguid-c-field:not([disabled])";
 
-        return execute(execution);
-    }
+    Sleeper.sleepTightInSeconds(15);
 
+    Model.Execution execution = createExecution();
+    execution.element(elementName, createElement("SELECTOR", query));
+    seleniumDriver.waitForRequestsToFinish();
+    execution.step(
+        createStep(Action.REQUIRE).element(elementName).value(path).requireDisplayed(false));
+    seleniumDriver.waitForRequestsToFinish();
+    execution.step(
+        createStep(Action.UPLOAD).element(elementName).value(path).requireDisplayed(false),
+        UPLOAD_FILE.getSleepInMillis());
+    seleniumDriver.waitForRequestsToFinish();
 
+    return execute(execution);
+  }
 }

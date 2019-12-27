@@ -11,12 +11,12 @@ import stepdefinitions.dwp.tables.plus.SwitchState;
 public class MarketMockSwitchSteps extends DwpScenario {
 
   @Before("@DWP or @E2E or @REGRESSION")
-  public void setupTest(Scenario scenario){
+  public void setupTest(Scenario scenario) {
     registerActiveScenario(scenario);
   }
 
   @When("^Electricity market mock mode is switched ([^\"]*) on \"([^\"]*)\" card$")
-  public void switchMarketMockOnOnCard(SwitchState switchState, String card){
+  public void switchMarketMockOnOnCard(SwitchState switchState, String card) {
     ConnectionDetailsPage connectionDetailsPage = new ConnectionDetailsPage();
     connectionDetailsPage.toggleElectricityMarketMockTest(switchState, card);
     connectionDetailsPage.isElectricityMarketMockOn(card);

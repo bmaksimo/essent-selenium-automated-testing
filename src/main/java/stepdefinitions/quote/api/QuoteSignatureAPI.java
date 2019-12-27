@@ -6,12 +6,6 @@ import com.essent.testing.util.resource.ResourceUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.http.Cookies;
 import io.restassured.response.Response;
-import org.apache.log4j.Logger;
-import stepdefinitions.quote.api.helper.RequestHelper;
-import stepdefinitions.quote.api.model.QuoteDetails;
-import stepdefinitions.quote.api.model.dto.QuoteSignatureDTO;
-import stepdefinitions.quote.api.model.dto.SignContractDTO;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -20,129 +14,138 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.log4j.Logger;
+import stepdefinitions.quote.api.helper.RequestHelper;
+import stepdefinitions.quote.api.model.QuoteDetails;
+import stepdefinitions.quote.api.model.dto.QuoteSignatureDTO;
+import stepdefinitions.quote.api.model.dto.SignContractDTO;
 
-/**
- * @author n.grkavac
- *
- */
+/** @author n.grkavac */
 public class QuoteSignatureAPI extends AbstractAPI {
 
-    private final static Logger LOGGER = Logger.getLogger(QuoteSignatureAPI.class);
+  private static final Logger LOGGER = Logger.getLogger(QuoteSignatureAPI.class);
 
-    private static String PATH_TO_QUOTE_SIGNATURE = ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_QUOTE_SIGNATURE);
-    private static String PATH_TO_SIGN_QUOTE_MODAL = ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_SIGN_QUOTE_MODAL);
+  private static String PATH_TO_QUOTE_SIGNATURE =
+      ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_QUOTE_SIGNATURE);
+  private static String PATH_TO_SIGN_QUOTE_MODAL =
+      ConfigProvider.getProperty(ConfigKey.CRM_PATH_TO_SIGN_QUOTE_MODAL);
 
-    public void setSignatureReceived(Cookies cookie, QuoteDetails quoteDetails) throws IOException {
-        RequestHelper helper = new RequestHelper();
-        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
+  public void setSignatureReceived(Cookies cookie, QuoteDetails quoteDetails) throws IOException {
+    RequestHelper helper = new RequestHelper();
+    String path =
+        ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
             + ConfigProvider.getProperty(ConfigKey.CRM_SIGNATURE_RECEIVED_URL);
-        String payload = createSignaturePayload(quoteDetails);
+    String payload = createSignaturePayload(quoteDetails);
 
-        helper.postRequest(STATUS_CREATED, cookie, payload, path);
-        LOGGER.debug("Quote signature retrieved request is sent");
-    }
+    helper.postRequest(STATUS_CREATED, cookie, payload, path);
+    LOGGER.debug("Quote signature retrieved request is sent");
+  }
 
-    public String uploadSignature(Cookies cookie, QuoteDetails quoteDetails) {
-        RequestHelper helper = new RequestHelper();
-        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
+  public String uploadSignature(Cookies cookie, QuoteDetails quoteDetails) {
+    RequestHelper helper = new RequestHelper();
+    String path =
+        ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
             + ConfigProvider.getProperty(ConfigKey.CRM_SIGNATURE_UPLOAD_URL);
-        Map<String, String> payload = createUploadPayload(quoteDetails);
+    Map<String, String> payload = createUploadPayload(quoteDetails);
 
-        Response signatureResponse = helper.postMultipartRequest(STATUS_OK, cookie, payload, path);
-        String docId = null;
+    Response signatureResponse = helper.postMultipartRequest(STATUS_OK, cookie, payload, path);
+    String docId = null;
 
-        LOGGER.debug("Signature response retrieved");
-        docId = signatureResponse.jsonPath().get("data.id");
-        LOGGER.debug("Document ID: " + docId);
+    LOGGER.debug("Signature response retrieved");
+    docId = signatureResponse.jsonPath().get("data.id");
+    LOGGER.debug("Document ID: " + docId);
 
-        return docId;
+    return docId;
+  }
+
+  public String confirmSigning(Cookies cookie, String rowId, String docId) throws IOException {
+    RequestHelper helper = new RequestHelper();
+    String path =
+        ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
+            + ConfigProvider.getProperty(ConfigKey.CRM_SIGN_QUOTE_MODAL);
+    String payload = signQuoteModalPayload(rowId, docId);
+
+    Response signQuoteResponse = helper.postRequest(STATUS_CREATED, cookie, payload, path);
+    String confirmSigning = null;
+
+    if (signQuoteResponse.getStatusCode() == STATUS_CREATED) {
+      LOGGER.debug("Quote signed");
+      confirmSigning = signQuoteResponse.getBody().toString();
+    } else {
+      LOGGER.error("Cannot retrieve quote list");
     }
 
-    public String confirmSigning(Cookies cookie, String rowId, String docId) throws IOException {
-        RequestHelper helper = new RequestHelper();
-        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI) + ConfigProvider.getProperty(ConfigKey.CRM_SIGN_QUOTE_MODAL);
-        String payload = signQuoteModalPayload(rowId, docId);
+    return confirmSigning;
+  }
 
-        Response signQuoteResponse = helper.postRequest(STATUS_CREATED, cookie, payload, path);
-        String confirmSigning = null;
+  private String createSignaturePayload(QuoteDetails quoteDetails) throws IOException {
+    ObjectMapper mapper = new ObjectMapper();
 
-        if (signQuoteResponse.getStatusCode() == STATUS_CREATED) {
-            LOGGER.debug("Quote signed");
-            confirmSigning = signQuoteResponse.getBody().toString();
-        } else {
-            LOGGER.error("Cannot retrieve quote list");
-        }
+    String pathToSignPayload = ResourceUtil.toPath(PATH_TO_QUOTE_SIGNATURE);
+    String jsonSignPayload = new String(Files.readAllBytes(Paths.get(pathToSignPayload)));
+    QuoteSignatureDTO signature = mapper.readValue(jsonSignPayload, QuoteSignatureDTO.class);
 
-        return confirmSigning;
-    }
+    signature.getModel().setAccountsId(quoteDetails.getRecordId());
+    signature.getModel().setId(quoteDetails.getQuoteId());
 
-    private String createSignaturePayload(QuoteDetails quoteDetails) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
+    LocalDate currentDate = LocalDate.now();
+    LocalDate validUntilDate = currentDate.plusDays(15);
+    signature.getModel().setSignatureReceivedDate(currentDate.toString());
+    signature.getModel().setValidUntil(validUntilDate.toString());
 
-        String pathToSignPayload = ResourceUtil.toPath(PATH_TO_QUOTE_SIGNATURE);
-        String jsonSignPayload = new String(Files.readAllBytes(Paths.get(pathToSignPayload)));
-        QuoteSignatureDTO signature = mapper.readValue(jsonSignPayload, QuoteSignatureDTO.class);
+    return mapper.writeValueAsString(signature);
+  }
 
-        signature.getModel().setAccountsId(quoteDetails.getRecordId());
-        signature.getModel().setId(quoteDetails.getQuoteId());
+  private Map<String, String> createUploadPayload(QuoteDetails quoteDetails) {
+    Map<String, String> uploadMap = new HashMap<>();
+    uploadMap.put("model[id]", quoteDetails.getQuoteId());
+    uploadMap.put("model[dwp|id]", quoteDetails.getQuoteId());
+    // hardcoded firstName + lastName from model
+    uploadMap.put(
+        "model[accounts|name]",
+        "vvz Electricity_Fix_TC1_YMR_CUPQ_B2 LC_Power2B_MoveIn 0204 110343");
+    uploadMap.put("model[dwp|recordType]", "AOS_Quotes");
+    uploadMap.put("model[accounts|company_number_c]", "BE0177446949");
+    uploadMap.put("model[stage]", "SIGNED");
+    uploadMap.put("model[accounts|id]", quoteDetails.getRecordId());
+    uploadMap.put("model[sign_date_c]", getYesterdaysDate().toString());
+    uploadMap.put("model[recordTypeOfRecordId]", "AOS_Quotes");
+    uploadMap.put("model[baseModule]", "AOS_Quotes");
+    uploadMap.put("model[assigned_user_id][0][key]", "1");
+    uploadMap.put("model[assigned_user_id][0][label]", "Administrator");
+    uploadMap.put("model[primary_group_id][0][key]", "abeba670-1428-dbca-6a0b-57d11cbdb3bd");
+    uploadMap.put("model[primary_group_id][0][label]", "TDS");
+    uploadMap.put("model[accounts|record_type]", "B2C");
+    // hardcoded product_id from payload
+    uploadMap.put("model[aos_products_quotes|id]", "c0f94c2f-72e0-51b9-ce93-58930799ecf1");
+    uploadMap.put("fieldGuid", "4d16155e-cbf1-e650-35b2-57a30ce14302");
 
-        LocalDate currentDate = LocalDate.now();
-        LocalDate validUntilDate = currentDate.plusDays(15);
-        signature.getModel().setSignatureReceivedDate(currentDate.toString());
-        signature.getModel().setValidUntil(validUntilDate.toString());
+    return uploadMap;
+  }
 
-        return mapper.writeValueAsString(signature);
-    }
+  private String signQuoteModalPayload(String rowId, String docId) throws IOException {
+    ObjectMapper mapper = new ObjectMapper();
 
-    private Map<String, String> createUploadPayload(QuoteDetails quoteDetails) {
-        Map<String, String> uploadMap = new HashMap<>();
-        uploadMap.put("model[id]", quoteDetails.getQuoteId());
-        uploadMap.put("model[dwp|id]", quoteDetails.getQuoteId());
-        // hardcoded firstName + lastName from model
-        uploadMap.put("model[accounts|name]", "vvz Electricity_Fix_TC1_YMR_CUPQ_B2 LC_Power2B_MoveIn 0204 110343");
-        uploadMap.put("model[dwp|recordType]", "AOS_Quotes");
-        uploadMap.put("model[accounts|company_number_c]", "BE0177446949");
-        uploadMap.put("model[stage]", "SIGNED");
-        uploadMap.put("model[accounts|id]", quoteDetails.getRecordId());
-        uploadMap.put("model[sign_date_c]", getYesterdaysDate().toString());
-        uploadMap.put("model[recordTypeOfRecordId]", "AOS_Quotes");
-        uploadMap.put("model[baseModule]", "AOS_Quotes");
-        uploadMap.put("model[assigned_user_id][0][key]", "1");
-        uploadMap.put("model[assigned_user_id][0][label]", "Administrator");
-        uploadMap.put("model[primary_group_id][0][key]", "abeba670-1428-dbca-6a0b-57d11cbdb3bd");
-        uploadMap.put("model[primary_group_id][0][label]", "TDS");
-        uploadMap.put("model[accounts|record_type]", "B2C");
-        // hardcoded product_id from payload
-        uploadMap.put("model[aos_products_quotes|id]", "c0f94c2f-72e0-51b9-ce93-58930799ecf1");
-        uploadMap.put("fieldGuid", "4d16155e-cbf1-e650-35b2-57a30ce14302");
+    String pathToPayload = ResourceUtil.toPath(PATH_TO_SIGN_QUOTE_MODAL);
+    String jsonPayload = new String(Files.readAllBytes(Paths.get(pathToPayload)));
+    SignContractDTO signContract = mapper.readValue(jsonPayload, SignContractDTO.class);
+    signContract.getContractModeDTO().setRecordId(rowId);
+    signContract.getContractModeDTO().setDwpId(rowId);
+    signContract.getContractModeDTO().setId(rowId);
+    signContract.getContractModeDTO().setSignDate(getTodaysDate().toString());
+    signContract.getContractModeDTO().setSignedcContractDocguid(docId);
+    List<String> signedContractDocId = new ArrayList<>();
 
-        return uploadMap;
-    }
+    signContract.getContractModeDTO().setSignedContractDocguidC(signedContractDocId);
 
-    private String signQuoteModalPayload(String rowId, String docId) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
+    return mapper.writeValueAsString(signContract);
+  }
 
-        String pathToPayload = ResourceUtil.toPath(PATH_TO_SIGN_QUOTE_MODAL);
-        String jsonPayload = new String(Files.readAllBytes(Paths.get(pathToPayload)));
-        SignContractDTO signContract = mapper.readValue(jsonPayload, SignContractDTO.class);
-        signContract.getContractModeDTO().setRecordId(rowId);
-        signContract.getContractModeDTO().setDwpId(rowId);
-        signContract.getContractModeDTO().setId(rowId);
-        signContract.getContractModeDTO().setSignDate(getTodaysDate().toString());
-        signContract.getContractModeDTO().setSignedcContractDocguid(docId);
-        List<String> signedContractDocId = new ArrayList<>();
-
-        signContract.getContractModeDTO().setSignedContractDocguidC(signedContractDocId);
-
-        return mapper.writeValueAsString(signContract);
-    }
-
-    private LocalDate getTodaysDate() {
+  private LocalDate getTodaysDate() {
     return LocalDate.now();
-    }
+  }
 
-    private LocalDate getYesterdaysDate() {
+  private LocalDate getYesterdaysDate() {
     return LocalDate.now().minusDays(1);
-    }
-
+  }
 }

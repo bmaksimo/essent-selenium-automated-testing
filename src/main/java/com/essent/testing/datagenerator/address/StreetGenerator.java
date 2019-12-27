@@ -189,12 +189,12 @@ public class StreetGenerator {
     "Zilverbergstraat",
   };
 
-    public static String getRandomStreetInKontich() {
+  public static String getRandomStreetInKontich() {
 
-        Random rnd = new Random();
+    Random rnd = new Random();
 
-        int index = (int) (rnd.nextFloat() * STREETS_IN_KONTICH.length);
+    int index = (int) (rnd.nextFloat() * STREETS_IN_KONTICH.length);
 
-        return STREETS_IN_KONTICH[index];
-    }
+    return STREETS_IN_KONTICH[index];
+  }
 }

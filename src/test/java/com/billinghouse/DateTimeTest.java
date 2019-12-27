@@ -1,10 +1,10 @@
 package com.billinghouse;
 
+import static com.billinghouse.testautomation.util.gherkin.DateTimeFormatUtil.printPeriod;
+
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.junit.Test;
-
-import static com.billinghouse.testautomation.util.gherkin.DateTimeFormatUtil.printPeriod;
 
 public class DateTimeTest {
 

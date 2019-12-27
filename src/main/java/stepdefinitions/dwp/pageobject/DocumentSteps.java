@@ -9,13 +9,13 @@ import org.junit.Assert;
 
 public class DocumentSteps extends DwpScenario {
 
-    @Before("@DWP or @E2E or @REGRESSION")
-    public void setupTest(Scenario scenario) {
-        registerActiveScenario(scenario);
-    }
+  @Before("@DWP or @E2E or @REGRESSION")
+  public void setupTest(Scenario scenario) {
+    registerActiveScenario(scenario);
+  }
 
-    @Then("^Check if document \"([^\"]*)\" is present$")
-    public void checkIfDocumentIsPresent(String documentName){
-        Assert.assertTrue(new DocumentsPage().isDocumentNamePresent(documentName));
-    }
+  @Then("^Check if document \"([^\"]*)\" is present$")
+  public void checkIfDocumentIsPresent(String documentName) {
+    Assert.assertTrue(new DocumentsPage().isDocumentNamePresent(documentName));
+  }
 }

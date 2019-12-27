@@ -2,11 +2,10 @@ package com.essent.testing.dwp.pageobject.impl.elements;
 
 import com.essent.testing.dwp.pageobject.elements.SelectWithSearch;
 import com.essent.testing.dwp.pageobject.impl.Component;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-
 import java.util.HashMap;
 import java.util.Map;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 public class SelectWithSearchImpl extends Component implements SelectWithSearch {
 

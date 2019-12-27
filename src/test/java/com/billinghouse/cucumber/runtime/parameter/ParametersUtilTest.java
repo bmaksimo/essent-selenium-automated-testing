@@ -1,46 +1,44 @@
 package com.billinghouse.cucumber.runtime.parameter;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.billinghouse.cucumber.runtime.annotations.InputParameter;
 import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
 import com.essent.testing.scenario.RegisteredScenario;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
 
-import java.util.function.BiConsumer;
-import java.util.function.Function;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-
-
 @Test
 public class ParametersUtilTest extends RegisteredScenario {
-    private final static Logger log = Logger.getLogger(ParametersUtilTest.class);
-    @OutputParameter(name = "developer")
-    public String customerName;
+  private static final Logger log = Logger.getLogger(ParametersUtilTest.class);
 
-    @OutputParameter(name = "cto")
-    public static final String MANAGER = "Jim van Dam";
+  @OutputParameter(name = "developer")
+  public String customerName;
 
-    @InputParameter(name = "cto")
-    public String developer;
+  @OutputParameter(name = "cto")
+  public static final String MANAGER = "Jim van Dam";
 
-    @InputParameter(name = "cto")
-    public String cto;
+  @InputParameter(name = "cto")
+  public String developer;
 
-    @Test
-    public void testOutputParameter(){
-        customerName = "Sjaak van Vliet";
+  @InputParameter(name = "cto")
+  public String cto;
 
-        ParametersUtil.collectScenarioOutputParameters(this, (BiConsumer<String, Object>) (n, v) -> {
+  @Test
+  public void testOutputParameter() {
+    customerName = "Sjaak van Vliet";
 
-        });
-        ParametersUtil.assignOutValuesToInputParameters(
-            (Function<String, Object>)(name) -> {
-                return MANAGER;
+    ParametersUtil.collectScenarioOutputParameters(this, (BiConsumer<String, Object>) (n, v) -> {});
+
+    ParametersUtil.assignOutValuesToInputParameters(
+        (Function<String, Object>)
+            (name) -> {
+              return MANAGER;
             },
-            this);
-        assertThat("Input Parameter is assigned a value", developer.equals(MANAGER));
-        assertThat("Input Parameter is assigned a value", cto.equals(MANAGER));
-    }
-
+        this);
+    assertThat("Input Parameter is assigned a value", developer.equals(MANAGER));
+    assertThat("Input Parameter is assigned a value", cto.equals(MANAGER));
+  }
 }

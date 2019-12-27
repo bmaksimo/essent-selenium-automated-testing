@@ -1,5 +1,9 @@
 package stepdefinitions.dwp.parameters;
 
+import static com.billinghouse.testautomation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpDate;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
 import com.essent.testing.scenario.RegisteredScenario;
 import com.essent.testing.vocabulary.DwpEntity;
 import cucumber.api.Scenario;
@@ -7,12 +11,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.runtime.CucumberException;
-
 import java.util.Optional;
-
-import static com.billinghouse.testautomation.util.dsl.DateExpressionsUtil.checkAndConvertToDwpDate;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
 
 public class ParametersSupport extends RegisteredScenario {
 
@@ -22,7 +21,7 @@ public class ParametersSupport extends RegisteredScenario {
   }
 
   @Given("^Parameter \"([^\"]*)\" is \"([^\"]*)\"$")
-  public void putParameter(String key, String value){
+  public void putParameter(String key, String value) {
     String inputValue = value;
     try {
       inputValue = checkAndConvertToDwpDate(value);
@@ -33,7 +32,7 @@ public class ParametersSupport extends RegisteredScenario {
   }
 
   @And("^([^\"]*) is extracted as \"([^\"]*)\" word from \"([^\"]*)\"$")
-  public void extractPackageName(DwpEntity dwpEntity, String ordinal, String packageAndProduct){
+  public void extractPackageName(DwpEntity dwpEntity, String ordinal, String packageAndProduct) {
     int index = asArrayIndex(ordinal);
     Optional<String> value = parameterProvider.getParameterAsString(packageAndProduct);
     assertThat(

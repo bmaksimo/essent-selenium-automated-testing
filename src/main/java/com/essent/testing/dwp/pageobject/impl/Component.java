@@ -11,241 +11,257 @@ import com.essent.testing.selenium.DWPSeleniumDriver;
 import com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter;
 import com.essent.testing.table.Filter;
 import cucumber.runtime.CucumberException;
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.StrSubstitutor;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import java.time.Duration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
 public abstract class Component {
 
-    private static final By MANDATORY_INPUT_EXCLAMATION_CSS = By.cssSelector(".is-error");
-    private static final String CLOSE_MODAL_BUTTON = "//guidance-modal//div[@class = 'modal__header']/a";
-    private static final String PLACEHOLDER_BUTTON = "//button[@class='button-placeholder']";
+  private static final By MANDATORY_INPUT_EXCLAMATION_CSS = By.cssSelector(".is-error");
+  private static final String CLOSE_MODAL_BUTTON =
+      "//guidance-modal//div[@class = 'modal__header']/a";
+  private static final String PLACEHOLDER_BUTTON = "//button[@class='button-placeholder']";
 
-    protected WebElement element;
-    protected DWPSeleniumDriver seleniumDriver;
-    protected ParameterProvider parameterProvider;
-    private final Logger logger = Logger.getLogger(Component.class);
+  protected WebElement element;
+  protected DWPSeleniumDriver seleniumDriver;
+  protected ParameterProvider parameterProvider;
+  private final Logger logger = Logger.getLogger(Component.class);
 
-    protected Logger logger() {
-        return logger;
+  protected Logger logger() {
+    return logger;
+  }
+
+  public Component() {
+    this.seleniumDriver =
+        (DWPSeleniumDriver) ContextService.getContext().getBean("dwpSeleniumDriver");
+    this.parameterProvider =
+        (ParameterProvider) ContextService.getContext().getBean("parameterProvider");
+  }
+
+  public Component(By selector) {
+    this();
+    logger.debug("STEP:");
+    logger.debug(" - ACTION: LOAD_PAGE_OBJECT");
+    try {
+      element = seleniumDriver.findElementWhenPresent(selector);
+    } catch (TimeoutException te) {
+      logger.error(" - RESULT: FAILED");
+      logger.error(" - REASON: " + getClass() + "{null}: Web element was not found. ");
+      throw new CucumberException(getClass() + ": Web element was not found.");
+    }
+    logger.debug(String.format(" - TARGET: %s -> %s", selector, element.getAttribute("innerHTML")));
+  }
+
+  public Component(WebElement element) {
+    this();
+    logger.debug("STEP:");
+    logger.debug(" - ACTION: LOAD_PAGE_OBJECT");
+    if (element == null) {
+      logger.error(" - RESULT: FAILED");
+      logger.error(" - REASON: " + getClass() + "{null}: Web element was not found. ");
+      throw new CucumberException(getClass() + ": Web element was not found.");
     }
 
-    public Component() {
-        this.seleniumDriver = (DWPSeleniumDriver) ContextService.getContext().getBean("dwpSeleniumDriver");
-        this.parameterProvider = (ParameterProvider) ContextService.getContext().getBean("parameterProvider");
+    logger.debug(" - RESULT: " + element);
+    this.element = element;
+  }
+
+  public boolean executeJavascriptTest(String registeredJsClass, Object options) {
+    return seleniumDriver.executeJavascriptTest(registeredJsClass, options);
+  }
+
+  protected Map executeJavascriptMethod(String registeredJsClass, Object options) {
+    return seleniumDriver.executeJavascriptMethod(registeredJsClass, options);
+  }
+
+  public boolean executeJavascriptTest(
+      String registeredJsClass, Object options, boolean withException) {
+    return seleniumDriver.executeJavascriptTest(registeredJsClass, options, withException);
+  }
+
+  protected Map executeJavascriptMethodImmediately(String registeredJsClass, Object options) {
+    return seleniumDriver.executeJavascriptMethodWithImmediateFlag(
+        registeredJsClass, options, true);
+  }
+
+  protected WebElement findElementWhenVisible(By selector) {
+    seleniumDriver.waitForRequestsToFinish();
+    return seleniumDriver.findElementWhenVisible(selector);
+  }
+
+  protected WebElement findElementWhenClickable(By selector) {
+    return seleniumDriver.findElementWhenClickable(selector);
+  }
+
+  public WebElement findElementWhenPresent(By selector, Duration timeout, Duration pollingEvery) {
+    return seleniumDriver.findElementWhenPresent(selector, timeout, pollingEvery);
+  }
+
+  protected Model.Execution createExecution() {
+    return AutocratExecutionAdapter.newExecution();
+  }
+
+  protected Model.Step createStep(Action action) {
+    return new Model.Step().action(action);
+  }
+
+  protected Model.Element createElement(String searchType, String query) {
+    return new Model.Element().search(searchType).query(query);
+  }
+
+  protected boolean execute(final Model.Execution execution) {
+    seleniumDriver.waitForRequestsToFinish();
+    boolean result = AutocratExecutionAdapter.execute(seleniumDriver.getDriver(), execution);
+    seleniumDriver.waitForRequestsToFinish();
+    handleAlert();
+    seleniumDriver.waitForRequestsToFinish();
+    return result;
+  }
+
+  protected boolean executeNow(final Model.Execution execution) {
+    return AutocratExecutionAdapter.execute(seleniumDriver.getDriver(), execution);
+  }
+
+  protected String createQuery(String template, String key, String value) {
+    Map<String, String> valuesMap = new HashMap<>();
+    valuesMap.put(key, value);
+    return new StrSubstitutor(valuesMap).replace(template);
+  }
+
+  protected String createQuery(String template, Map<String, String> valuesMapper) {
+    StrSubstitutor sub = new StrSubstitutor(valuesMapper);
+    return sub.replace(template);
+  }
+
+  protected Model.Callback scrollToView() {
+    return new Model.Callback() {
+      @Override
+      public void onAccess(Autocrat.ExecutionContext context, Model.Step step, WebElement element) {
+        JavascriptExecutor jsExec = (JavascriptExecutor) context.driver;
+        jsExec.executeScript("arguments[0].scrollIntoView()", element);
+      }
+    };
+  }
+
+  protected Model.Callback hideIconOverlays() {
+    return new Model.Callback() {
+      @Override
+      public void onAccess(Autocrat.ExecutionContext context, Model.Step step, WebElement element) {
+        JavascriptExecutor jsExec = (JavascriptExecutor) context.driver;
+        List<WebElement> elements =
+            element.findElements(By.xpath("../span[contains(@class, 'icon')]"));
+        elements.forEach(
+            siblingIcon -> {
+              String setProperty = "style = 'display:none'";
+              logger.debug("Executing javascript " + setProperty + " on target element");
+              jsExec.executeScript("arguments[0]." + setProperty, siblingIcon);
+            });
+      }
+    };
+  }
+
+  protected void handleAlert() {
+    if (isAlertPresent()) {
+      seleniumDriver.getDriver().switchTo().alert().accept();
     }
+  }
 
-    public Component(By selector) {
-        this();
-        logger.debug("STEP:");
-        logger.debug(" - ACTION: LOAD_PAGE_OBJECT");
-        try {
-            element = seleniumDriver.findElementWhenPresent(selector);
-        } catch (TimeoutException te) {
-            logger.error(" - RESULT: FAILED");
-            logger.error(" - REASON: " + getClass() + "{null}: Web element was not found. ");
-            throw new CucumberException(getClass() + ": Web element was not found.");
-        }
-        logger.debug(String.format(" - TARGET: %s -> %s", selector, element.getAttribute("innerHTML")));
+  private boolean isAlertPresent() {
+    try {
+      seleniumDriver.getDriver().switchTo().alert();
+      return true;
+    } catch (NoAlertPresentException ex) {
+      return false;
     }
+  }
 
-    public Component(WebElement element) {
-        this();
-        logger.debug("STEP:");
-        logger.debug(" - ACTION: LOAD_PAGE_OBJECT");
-        if (element == null) {
-            logger.error(" - RESULT: FAILED");
-            logger.error(" - REASON: " + getClass() + "{null}: Web element was not found. ");
-            throw new CucumberException(getClass() + ": Web element was not found.");
-        }
-
-        logger.debug(" - RESULT: " + element);
-        this.element = element;
+  protected void validateForm(String scenarioInfo) {
+    try {
+      List<WebElement> elements =
+          seleniumDriver.findElements(
+              MANDATORY_INPUT_EXCLAMATION_CSS,
+              java.time.Duration.ofSeconds(1),
+              java.time.Duration.ofMillis(200));
+      String location =
+          elements.stream()
+              .map(WebElement::getText)
+              .reduce(
+                  "",
+                  (partialString, element) ->
+                      partialString + (" " + element + System.lineSeparator()));
+      if (StringUtils.isNotEmpty(location)) {
+        logger().warn(scenarioInfo + " - WARNING: Mandatory input failure in: " + location);
+      }
+    } catch (UnhandledAlertException uae) {
+      handleAlert();
     }
+  }
 
-    public boolean executeJavascriptTest(String registeredJsClass, Object options) {
-        return seleniumDriver.executeJavascriptTest(registeredJsClass, options);
+  protected void closeGuidanceModalIfPresent() {
+    Optional<WebElement> guidanceModal =
+        seleniumDriver.findElementOptional(By.xpath(CLOSE_MODAL_BUTTON));
+    guidanceModal.ifPresent(m -> closeModal());
+    seleniumDriver.waitForRequestsToFinish();
+  }
+
+  public void closeModal() {
+    seleniumDriver.waitForRequestsToFinish();
+    WebElement xElement = seleniumDriver.findElementWhenVisible(By.xpath(CLOSE_MODAL_BUTTON));
+    seleniumDriver.waitAndClick(xElement);
+  }
+
+  public List<WebElement> selectRowOnTable(
+      String tableName, List<Filter> filters, String contextParameters) throws Exception {
+    seleniumDriver.waitForRequestsToFinish();
+    return new DWPTableFilter(contextParameters).getTable(tableName).findBy(filters).getRow();
+  }
+
+  public String getCellValueOnColumnFromTable(
+      String tableName, String columnName, List<Filter> filters, String contextParameters)
+      throws Exception {
+    seleniumDriver.waitForRequestsToFinish();
+    Sleeper.sleepTightInSeconds(5);
+    return new DWPTableFilter(contextParameters)
+        .getTable(tableName)
+        .findBy(filters)
+        .getTextValueFromColumn(columnName);
+  }
+
+  protected void clickWithRetries(WebElement element, int attempts) {
+    int currentAttempt = 0;
+    boolean clickable = false;
+    while (!clickable && currentAttempt <= attempts) {
+      currentAttempt++;
+      clickable = ExpectedConditions.elementToBeClickable(element) != null;
+      if (clickable) element.click();
+
+      Sleeper.sleepTightInSeconds(5);
     }
+  }
 
-    protected Map executeJavascriptMethod(String registeredJsClass, Object options) {
-        return seleniumDriver.executeJavascriptMethod(registeredJsClass, options);
+  public void clickOnSelectButtonPlaceholder() {
+    seleniumDriver.waitAndClick(
+        seleniumDriver.findElementWhenVisible(By.xpath(PLACEHOLDER_BUTTON)));
+  }
+
+  protected WebElement findElementWithRetries(By by, int attempts) throws Exception {
+    int currentAttempt = 0;
+    boolean isDisplayed = false;
+    Optional<WebElement> element = seleniumDriver.findElementOptional(by);
+    while (!isDisplayed && currentAttempt <= attempts) {
+      currentAttempt++;
+      isDisplayed = element.isPresent();
+      if (isDisplayed) return element.get();
+      element = seleniumDriver.findElementOptional(by);
+      Sleeper.sleepTightInSeconds(5);
     }
-
-    public boolean executeJavascriptTest(String registeredJsClass, Object options, boolean withException) {
-        return seleniumDriver.executeJavascriptTest(registeredJsClass, options, withException);
-    }
-
-    protected Map executeJavascriptMethodImmediately(String registeredJsClass, Object options) {
-        return seleniumDriver.executeJavascriptMethodWithImmediateFlag(registeredJsClass, options, true);
-    }
-
-    protected WebElement findElementWhenVisible(By selector) {
-        seleniumDriver.waitForRequestsToFinish();
-        return seleniumDriver.findElementWhenVisible(selector);
-    }
-
-    protected WebElement findElementWhenClickable(By selector) {
-        return seleniumDriver.findElementWhenClickable(selector);
-    }
-
-    public WebElement findElementWhenPresent(By selector, Duration timeout, Duration pollingEvery) {
-        return seleniumDriver.findElementWhenPresent(selector, timeout, pollingEvery);
-    }
-
-    protected Model.Execution createExecution() {
-        return AutocratExecutionAdapter.newExecution();
-    }
-
-    protected Model.Step createStep(Action action) {
-        return new Model.Step().action(action);
-    }
-
-    protected Model.Element createElement(String searchType, String query) {
-        return new Model.Element().search(searchType).query(query);
-    }
-
-    protected boolean execute(final Model.Execution execution) {
-        seleniumDriver.waitForRequestsToFinish();
-        boolean result = AutocratExecutionAdapter.execute(seleniumDriver.getDriver(), execution);
-        seleniumDriver.waitForRequestsToFinish();
-        handleAlert();
-        seleniumDriver.waitForRequestsToFinish();
-        return result;
-    }
-
-    protected boolean executeNow(final Model.Execution execution) {
-        return AutocratExecutionAdapter.execute(seleniumDriver.getDriver(), execution);
-    }
-
-    protected String createQuery(String template, String key, String value) {
-        Map<String, String> valuesMap = new HashMap<>();
-        valuesMap.put(key, value);
-        return new StrSubstitutor(valuesMap).replace(template);
-    }
-
-    protected String createQuery(String template, Map<String, String> valuesMapper) {
-        StrSubstitutor sub = new StrSubstitutor(valuesMapper);
-        return sub.replace(template);
-    }
-
-    protected Model.Callback scrollToView() {
-        return new Model.Callback() {
-            @Override
-            public void onAccess(Autocrat.ExecutionContext context, Model.Step step, WebElement element) {
-                JavascriptExecutor jsExec = (JavascriptExecutor) context.driver;
-                jsExec.executeScript("arguments[0].scrollIntoView()", element);
-            }
-        };
-    }
-
-    protected Model.Callback hideIconOverlays() {
-        return new Model.Callback() {
-            @Override
-            public void onAccess(Autocrat.ExecutionContext context, Model.Step step, WebElement element) {
-                JavascriptExecutor jsExec = (JavascriptExecutor) context.driver;
-                List<WebElement> elements = element.findElements(By.xpath("../span[contains(@class, 'icon')]"));
-                elements.forEach(siblingIcon -> {
-                    String setProperty = "style = 'display:none'";
-                    logger.debug("Executing javascript " + setProperty + " on target element");
-                    jsExec.executeScript("arguments[0]." + setProperty, siblingIcon);
-                });
-            }
-        };
-    }
-
-    protected void handleAlert() {
-        if (isAlertPresent()) {
-            seleniumDriver.getDriver().switchTo().alert().accept();
-        }
-    }
-
-    private boolean isAlertPresent() {
-        try {
-            seleniumDriver.getDriver().switchTo().alert();
-            return true;
-        } catch (NoAlertPresentException ex) {
-            return false;
-        }
-    }
-
-    protected void validateForm(String scenarioInfo) {
-        try {
-            List<WebElement> elements = seleniumDriver.findElements(MANDATORY_INPUT_EXCLAMATION_CSS,
-                java.time.Duration.ofSeconds(1),
-                java.time.Duration.ofMillis(200));
-            String location = elements.stream().map(WebElement::getText).reduce("", (partialString, element) -> partialString + (" " + element + System.lineSeparator()));
-            if (StringUtils.isNotEmpty(location)) {
-                logger().warn(scenarioInfo + " - WARNING: Mandatory input failure in: " + location);
-            }
-        } catch (UnhandledAlertException uae) {
-            handleAlert();
-        }
-    }
-
-    protected void closeGuidanceModalIfPresent() {
-        Optional<WebElement> guidanceModal = seleniumDriver.findElementOptional(By.xpath(CLOSE_MODAL_BUTTON));
-        guidanceModal.ifPresent(m -> closeModal());
-        seleniumDriver.waitForRequestsToFinish();
-    }
-
-    public void closeModal() {
-        seleniumDriver.waitForRequestsToFinish();
-        WebElement xElement = seleniumDriver.findElementWhenVisible(By.xpath(CLOSE_MODAL_BUTTON));
-        seleniumDriver.waitAndClick(xElement);
-    }
-
-    public List<WebElement> selectRowOnTable(String tableName, List<Filter> filters, String contextParameters) throws Exception {
-        seleniumDriver.waitForRequestsToFinish();
-        return new DWPTableFilter(contextParameters)
-            .getTable(tableName)
-            .findBy(filters)
-            .getRow();
-    }
-
-    public String getCellValueOnColumnFromTable(String tableName, String columnName, List<Filter> filters, String contextParameters) throws Exception {
-        seleniumDriver.waitForRequestsToFinish();
-        Sleeper.sleepTightInSeconds(5);
-        return new DWPTableFilter(contextParameters)
-            .getTable(tableName)
-            .findBy(filters)
-            .getTextValueFromColumn(columnName);
-    }
-
-    protected void clickWithRetries(WebElement element, int attempts) {
-        int currentAttempt = 0;
-        boolean clickable = false;
-        while (!clickable && currentAttempt <= attempts) {
-            currentAttempt++;
-            clickable = ExpectedConditions.elementToBeClickable(element) != null;
-            if (clickable) element.click();
-
-            Sleeper.sleepTightInSeconds(5);
-        }
-    }
-
-    public void clickOnSelectButtonPlaceholder() {
-        seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(PLACEHOLDER_BUTTON)));
-    }
-
-    protected WebElement findElementWithRetries(By by, int attempts) throws Exception {
-        int currentAttempt = 0;
-        boolean isDisplayed = false;
-        Optional<WebElement> element = seleniumDriver.findElementOptional(by);
-        while (!isDisplayed && currentAttempt <= attempts) {
-            currentAttempt++;
-            isDisplayed = element.isPresent();
-            if (isDisplayed) return element.get();
-            element = seleniumDriver.findElementOptional(by);
-            Sleeper.sleepTightInSeconds(5);
-        }
-        throw new Exception("Element not found");
-    }
+    throw new Exception("Element not found");
+  }
 }

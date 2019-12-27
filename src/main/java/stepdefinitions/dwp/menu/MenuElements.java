@@ -12,47 +12,47 @@ import stepdefinitions.dwp.navigation.NavigationElements;
 
 public class MenuElements extends NavigationElements {
 
-    @Before("@DWP or @CORE or @E2E or @REGRESSION or @API")
-    public void setupTest(Scenario scenario){
-        registerActiveScenario(scenario);
-    }
+  @Before("@DWP or @CORE or @E2E or @REGRESSION or @API")
+  public void setupTest(Scenario scenario) {
+    registerActiveScenario(scenario);
+  }
 
-    @When("^Left menu is \"([^\"]*)\"$")
-    public void clickLeftMenuItem(String tabName){
-        seleniumDriver.waitForRequestsToFinish();
-        new DwpLeftMenu().clickOnLeftElement(tabName);
-    }
+  @When("^Left menu is \"([^\"]*)\"$")
+  public void clickLeftMenuItem(String tabName) {
+    seleniumDriver.waitForRequestsToFinish();
+    new DwpLeftMenu().clickOnLeftElement(tabName);
+  }
 
-    @When("^Left menu is \"([^\"]*)\" waiting for (\\d+) seconds$")
-    public void clickLeftMenuItemFixedWait(String tabName, int waitingTime){
-        new DwpLeftMenu().clickOnLeftElement(tabName, waitingTime);
-    }
+  @When("^Left menu is \"([^\"]*)\" waiting for (\\d+) seconds$")
+  public void clickLeftMenuItemFixedWait(String tabName, int waitingTime) {
+    new DwpLeftMenu().clickOnLeftElement(tabName, waitingTime);
+  }
 
-    @When("^Left Tab is \"([^\"]*)\"$")
-    public void clickLeftTab(String itemName){
-        clickLeftMenuItem(itemName);
-    }
+  @When("^Left Tab is \"([^\"]*)\"$")
+  public void clickLeftTab(String itemName) {
+    clickLeftMenuItem(itemName);
+  }
 
-    @When("^Top menu item is \"([^\"]*)\"$")
-    public void clickTopMenuItem(String tabName){
-        seleniumDriver.waitForRequestsToFinish();
-        new DwpTopMenu().findAndClickTopMenu(tabName);
-    }
+  @When("^Top menu item is \"([^\"]*)\"$")
+  public void clickTopMenuItem(String tabName) {
+    seleniumDriver.waitForRequestsToFinish();
+    new DwpTopMenu().findAndClickTopMenu(tabName);
+  }
 
-    @When("^Top menu item is \"([^\"]*)\" waiting for (\\d+) seconds$")
-    public void clickTopMenuItemFixedWait(String tabName, int waitingTime){
-        Sleeper.sleepTightInSeconds(waitingTime);
-        new DwpTopMenu().findAndClickTopMenuNow(tabName);
-    }
+  @When("^Top menu item is \"([^\"]*)\" waiting for (\\d+) seconds$")
+  public void clickTopMenuItemFixedWait(String tabName, int waitingTime) {
+    Sleeper.sleepTightInSeconds(waitingTime);
+    new DwpTopMenu().findAndClickTopMenuNow(tabName);
+  }
 
-    @Then("^Sleep for (\\d+) seconds$")
-    public void sleepForSeconds(int seconds) {
-        Sleeper.sleepTightInSeconds(seconds);
-    }
+  @Then("^Sleep for (\\d+) seconds$")
+  public void sleepForSeconds(int seconds) {
+    Sleeper.sleepTightInSeconds(seconds);
+  }
 
-    @Override
-    @After("@DWP or @CORE or @E2E or @REGRESSION")
-    public void tearDown() {
-        super.tearDown();
-    }
+  @Override
+  @After("@DWP or @CORE or @E2E or @REGRESSION")
+  public void tearDown() {
+    super.tearDown();
+  }
 }

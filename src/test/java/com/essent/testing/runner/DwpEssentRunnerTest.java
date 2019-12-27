@@ -6,12 +6,13 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-    features = { "src/test/resources" },
-    glue = { "stepdefinitions"},
+    features = {"src/test/resources"},
+    glue = {"stepdefinitions"},
     junit = "--step-notifications",
-    plugin = { "pretty",
-        "html:target/cucumber-html-report",
-        "junit:target/cucumber-junit-report/allcukes.xml",
-        "json:target/cucumber.json"}
-)
+    plugin = {
+      "pretty",
+      "html:target/cucumber-html-report",
+      "junit:target/cucumber-junit-report/allcukes.xml",
+      "json:target/cucumber.json"
+    })
 public class DwpEssentRunnerTest {}

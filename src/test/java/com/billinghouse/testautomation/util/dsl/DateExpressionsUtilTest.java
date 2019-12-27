@@ -1,12 +1,12 @@
 package com.billinghouse.testautomation.util.dsl;
 
-import org.hamcrest.Matchers;
-import org.junit.Test;
-
 import static com.billinghouse.testautomation.util.dsl.DateExpressionsUtil.*;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 public class DateExpressionsUtilTest {
 

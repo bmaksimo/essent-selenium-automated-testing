@@ -4,89 +4,89 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class CustomerDetails {
-    private String firstName;
-    private String lastName;
-    private String gender;
-    private String birthDate;
-    private String phoneNumber;
-    private String mobile;
-    private String email;
-    private String language;
-    private String street;
+  private String firstName;
+  private String lastName;
+  private String gender;
+  private String birthDate;
+  private String phoneNumber;
+  private String mobile;
+  private String email;
+  private String language;
+  private String street;
 
-    public String getFirstName() {
-        return firstName;
-    }
+  public String getFirstName() {
+    return firstName;
+  }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
 
-    public String getLastName() {
-        return lastName;
-    }
+  public String getLastName() {
+    return lastName;
+  }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
 
-    public String getGender() {
-        return gender;
-    }
+  public String getGender() {
+    return gender;
+  }
 
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
+  public void setGender(String gender) {
+    this.gender = gender;
+  }
 
-    public String getBirthDate() {
-        return birthDate;
-    }
+  public String getBirthDate() {
+    return birthDate;
+  }
 
-    public void setBirthDate(String birthDate) {
-        this.birthDate = birthDate;
-    }
+  public void setBirthDate(String birthDate) {
+    this.birthDate = birthDate;
+  }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
+  public void setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
+  }
 
-    public String getMobile() {
-        return mobile;
-    }
+  public String getMobile() {
+    return mobile;
+  }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
+  public void setMobile(String mobile) {
+    this.mobile = mobile;
+  }
 
-    public String getEmail() {
-        return email;
-    }
+  public String getEmail() {
+    return email;
+  }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+  public void setEmail(String email) {
+    this.email = email;
+  }
 
-    public String getLanguage() {
-        return language;
-    }
+  public String getLanguage() {
+    return language;
+  }
 
-    public void setLanguage(String language) {
-        this.language = language;
-    }
+  public void setLanguage(String language) {
+    this.language = language;
+  }
 
-    public String getStreet() {
-        return street;
-    }
+  public String getStreet() {
+    return street;
+  }
 
-    public void setStreet(String street) {
-        this.street = street;
-    }
+  public void setStreet(String street) {
+    this.street = street;
+  }
 
-    public String toString() {
-        return new ReflectionToStringBuilder(this, ToStringStyle.NO_CLASS_NAME_STYLE).toString();
-    }
+  public String toString() {
+    return new ReflectionToStringBuilder(this, ToStringStyle.NO_CLASS_NAME_STYLE).toString();
+  }
 }

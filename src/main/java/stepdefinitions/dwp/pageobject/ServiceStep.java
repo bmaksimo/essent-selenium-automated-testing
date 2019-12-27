@@ -11,41 +11,51 @@ import org.junit.Assert;
 
 public class ServiceStep extends DwpScenario {
 
-    @Before("@DWP or @REGRESSION")
-    public void setupTest(Scenario scenario) {
-        registerActiveScenario(scenario);
-    }
+  @Before("@DWP or @REGRESSION")
+  public void setupTest(Scenario scenario) {
+    registerActiveScenario(scenario);
+  }
 
-    @Override
-    @After("@DWP or @REGRESSION")
-    public void tearDown() {
-        super.tearDown();
-    }
+  @Override
+  @After("@DWP or @REGRESSION")
+  public void tearDown() {
+    super.tearDown();
+  }
 
-    @And("^Interaction is created with Type \"([^\"]*)\" and Onderwerp \"([^\"]*)\"$")
-    public void interactionIsCreatedWithTypeAndOnderwerpAndVerwanteCaseIs(String type, String onderwerp) {
-        ServicePage sp = new ServicePage();
-        Assert.assertTrue("Actual Interaction Type differs from expected",sp.getInteractionType(type).equalsIgnoreCase(type));
-        Assert.assertTrue("Actual Interaction Onderwerp:"+sp.getInteractionOnderwerp(type)+" differs from expected:"+onderwerp,sp.getInteractionOnderwerp(type).equalsIgnoreCase(onderwerp));
-    }
+  @And("^Interaction is created with Type \"([^\"]*)\" and Onderwerp \"([^\"]*)\"$")
+  public void interactionIsCreatedWithTypeAndOnderwerpAndVerwanteCaseIs(
+      String type, String onderwerp) {
+    ServicePage sp = new ServicePage();
+    Assert.assertTrue(
+        "Actual Interaction Type differs from expected",
+        sp.getInteractionType(type).equalsIgnoreCase(type));
+    Assert.assertTrue(
+        "Actual Interaction Onderwerp:"
+            + sp.getInteractionOnderwerp(type)
+            + " differs from expected:"
+            + onderwerp,
+        sp.getInteractionOnderwerp(type).equalsIgnoreCase(onderwerp));
+  }
 
-    @And("^Go to prospect$")
-    public void goToProspect() {
-        seleniumDriver.waitForRequestsToFinish();
-        ServicePage servicePage = new ServicePage();
-        servicePage.goToProspect();
-    }
+  @And("^Go to prospect$")
+  public void goToProspect() {
+    seleniumDriver.waitForRequestsToFinish();
+    ServicePage servicePage = new ServicePage();
+    servicePage.goToProspect();
+  }
 
-    @And("^Go to GLN account$")
-    public void goToGLNAccount() {
-        ServicePage servicePage = new ServicePage();
-        servicePage.gotoGLNAccount();
-    }
+  @And("^Go to GLN account$")
+  public void goToGLNAccount() {
+    ServicePage servicePage = new ServicePage();
+    servicePage.gotoGLNAccount();
+  }
 
-    @Then("^Interaction is created with type Document and topic \"([^\"]*)\"$")
-    public void interactionIsCreatedWithTypeDocumentAndTopic(String document){
-        ServicePage servicePage = new ServicePage();
-        String topic = servicePage.getSecondInteractionOnderwerp();
-        Assert.assertTrue("Actual Interaction Onderwerp:"+topic+" differs from expected:"+document,topic.equalsIgnoreCase(document));
-    }
+  @Then("^Interaction is created with type Document and topic \"([^\"]*)\"$")
+  public void interactionIsCreatedWithTypeDocumentAndTopic(String document) {
+    ServicePage servicePage = new ServicePage();
+    String topic = servicePage.getSecondInteractionOnderwerp();
+    Assert.assertTrue(
+        "Actual Interaction Onderwerp:" + topic + " differs from expected:" + document,
+        topic.equalsIgnoreCase(document));
+  }
 }

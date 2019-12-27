@@ -1,5 +1,7 @@
 package stepdefinitions.dwp.smoke;
 
+import static com.billinghouse.testautomation.util.dsl.DateExpressionsUtil.expandFrom;
+
 import com.billinghouse.cucumber.runtime.annotations.OutputParameter;
 import com.essent.testing.scenario.RegisteredScenario;
 import cucumber.api.Scenario;
@@ -9,57 +11,51 @@ import cucumber.api.java.en.When;
 import org.joda.time.DateTime;
 import org.junit.Assert;
 
-import static com.billinghouse.testautomation.util.dsl.DateExpressionsUtil.expandFrom;
-
-
 public class OutputParameterTest extends RegisteredScenario {
 
-    @Before
-    public void setUp(Scenario scenario) {
-        registerActiveScenario(scenario);
-    }
+  @Before
+  public void setUp(Scenario scenario) {
+    registerActiveScenario(scenario);
+  }
 
-    @OutputParameter(name="contractor")
-    private String contractor;
+  @OutputParameter(name = "contractor")
+  private String contractor;
 
-    @OutputParameter(name="startOfTenure")
-    private DateTime startOfTenure;
+  @OutputParameter(name = "startOfTenure")
+  private DateTime startOfTenure;
 
+  @When("^Contractor is ([^\"]*)$")
+  public void setContractor(String contractor) {
+    logger().debug("STEP:");
+    logger().debug(" - ACTION: SET_OUTPUT_PARAM");
+    logger().debug(" - NAME: contractor");
+    logger().debug(" - VALUE: " + contractor);
+    this.contractor = contractor;
+  }
 
-    @When("^Contractor is ([^\"]*)$")
-    public void setContractor(String contractor){
-        logger().debug("STEP:");
-        logger().debug(" - ACTION: SET_OUTPUT_PARAM");
-        logger().debug(" - NAME: contractor");
-        logger().debug(" - VALUE: " + contractor);
-        this.contractor = contractor;
-    }
+  @When("^Contractor \"?([^\"]*)\"? is put as \"?([^\"]*)\"?$")
+  public void putContractor(String contractor, String parameterName) {
+    setContractor(contractor);
+    parameterProvider.put(parameterName, contractor);
+  }
 
-    @When("^Contractor \"?([^\"]*)\"? is put as \"?([^\"]*)\"?$")
-    public void putContractor(String contractor, String parameterName){
-        setContractor(contractor);
-        parameterProvider.put(parameterName, contractor);
-    }
+  @And("^Start of tenure is \"?([^\"]*)\"?$")
+  public void startOfTenureIs(String startOfTenure) {
+    logger().debug("STEP:");
+    logger().debug(" - ACTION: SET_OUTPUT_PARAM");
+    logger().debug(" - NAME: startOfTenure");
+    this.startOfTenure = expandFrom(startOfTenure);
+    logger().debug(" - VALUE: " + this.startOfTenure.toString());
+  }
 
-    @And("^Start of tenure is \"?([^\"]*)\"?$")
-    public void startOfTenureIs(String startOfTenure){
-        logger().debug("STEP:");
-        logger().debug(" - ACTION: SET_OUTPUT_PARAM");
-        logger().debug(" - NAME: startOfTenure");
-        this.startOfTenure = expandFrom(startOfTenure);
-        logger().debug(" - VALUE: " + this.startOfTenure.toString());
-    }
+  @And("^Start of tenure \"?([^\"]*)\"? is put as \"?([^\"]*)\"?$")
+  public void putStartOfTenure(String value, String parameterName) {
+    startOfTenureIs(value);
+    parameterProvider.put(parameterName, startOfTenure);
+  }
 
-
-    @And("^Start of tenure \"?([^\"]*)\"? is put as \"?([^\"]*)\"?$")
-    public void putStartOfTenure(String value, String parameterName){
-        startOfTenureIs(value);
-        parameterProvider.put(parameterName, startOfTenure);
-    }
-
-
-    @And("^Fail$")
-    public void fail(){
-        Assert.fail("Checkpoint failure.");
-    }
+  @And("^Fail$")
+  public void fail() {
+    Assert.fail("Checkpoint failure.");
+  }
 }

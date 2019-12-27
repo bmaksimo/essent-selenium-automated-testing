@@ -7,15 +7,15 @@ import org.openqa.selenium.By;
 
 public class ProductChangePageObjectImpl extends Component implements ProductChangePageObject {
 
-    private static final String TARIFF_ID = "aos-products-quotes-tariffsheet-id-field";
-    private static final String TARIFF_FIRST_LIST_ITEM = "//select[@id='aos-products-quotes-tariffsheet-id-field']/option[1]";
+  private static final String TARIFF_ID = "aos-products-quotes-tariffsheet-id-field";
+  private static final String TARIFF_FIRST_LIST_ITEM =
+      "//select[@id='aos-products-quotes-tariffsheet-id-field']/option[1]";
 
-
-    @Override
-    public void selectFirstItemFromList() {
-        seleniumDriver.waitForRequestsToFinish();
-        seleniumDriver.waitAndClick(seleniumDriver.findElement(By.id(TARIFF_ID)));
-        Sleeper.sleepTightInSeconds(5);
-        seleniumDriver.waitAndClick(seleniumDriver.findElement(By.xpath(TARIFF_FIRST_LIST_ITEM)));
-     }
+  @Override
+  public void selectFirstItemFromList() {
+    seleniumDriver.waitForRequestsToFinish();
+    seleniumDriver.waitAndClick(seleniumDriver.findElement(By.id(TARIFF_ID)));
+    Sleeper.sleepTightInSeconds(5);
+    seleniumDriver.waitAndClick(seleniumDriver.findElement(By.xpath(TARIFF_FIRST_LIST_ITEM)));
+  }
 }
