@@ -1,5 +1,7 @@
 package stepdefinitions.dwp;
 
+import static org.junit.Assert.assertNotNull;
+
 import com.essent.roles.UserRoles;
 import com.essent.testing.dwp.pageobject.Window;
 import com.essent.testing.dwp.pageobject.impl.modal.login.LoginAction;
@@ -8,56 +10,52 @@ import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
+import java.time.Duration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.springframework.test.context.ContextConfiguration;
 
-import java.time.Duration;
-
-import static org.junit.Assert.assertNotNull;
-
 @ContextConfiguration("classpath:stepdefinitions/cucumber.xml")
 public class GenericSteps extends DwpScenario {
 
+  @Before("@DWP or @CORE or @E2E or @REGRESSION or @API")
+  public void setupTest(Scenario scenario) {
+    registerActiveScenario(scenario);
+  }
 
-    @Before("@DWP or @CORE or @E2E or @REGRESSION or @API")
-    public void setupTest(Scenario scenario){
-        registerActiveScenario(scenario);
+  @Given("^I logged in to DWP as \"([^\"]*)\"$")
+  public void loginAs(String username) throws Throwable {
+    logger().info("Logging into DWP as " + username);
+    setUpWebDriver();
+    isDwpRunning();
+    UserRoles dwpUser = UserRoles.get(username);
+    Window application = new LoginAction().doLogin(dwpUser.getUsername(), dwpUser.getPassword());
+    assertNotNull("DWP application did not appear after a login", application);
+    injectJavaScriptTestRunner();
+    discardPreviousFlow();
+  }
+
+  @Given("^I renew login to DWP as \"([^\"]*)\"$")
+  public void renewLoginAs(String username) throws Throwable {
+    tearDown();
+    loginAs(username);
+  }
+
+  private void discardPreviousFlow() {
+    seleniumDriver.waitForRequestsToFinish();
+    try {
+      WebElement cancelButton =
+          seleniumDriver.findElementWhenPresent(
+              By.id("cancel-button"), Duration.ofSeconds(6), Duration.ofMillis(100));
+      if (cancelButton.isDisplayed()) cancelButton.click();
+    } catch (TimeoutException te) {
+      logger().debug("there is no flow to discard");
     }
+  }
 
-    @Given("^I logged in to DWP as \"([^\"]*)\"$")
-    public void loginAs(String username) throws Throwable {
-        logger().info("Logging into DWP as " + username);
-        setUpWebDriver();
-        isDwpRunning();
-        UserRoles dwpUser = UserRoles.get(username);
-        Window application = new LoginAction().doLogin(dwpUser.getUsername(), dwpUser.getPassword());
-        assertNotNull("DWP application did not appear after a login", application);
-        injectJavaScriptTestRunner();
-        discardPreviousFlow();
-    }
-
-    @Given("^I renew login to DWP as \"([^\"]*)\"$")
-    public void renewLoginAs(String username) throws Throwable {
-        tearDown();
-        loginAs(username);
-    }
-
-    private void discardPreviousFlow(){
-        seleniumDriver.waitForRequestsToFinish();
-        try {
-            WebElement cancelButton = seleniumDriver.findElementWhenPresent(By.id("cancel-button"), Duration.ofSeconds(6), Duration.ofMillis(100));
-            if (cancelButton.isDisplayed())
-                cancelButton.click();
-        } catch(TimeoutException te) {
-            logger().debug("there is no flow to discard");
-        }
-    }
-
-    @After("@DWP or @CORE or @E2E or @REGRESSION")
-    public void tearDown() {
-        tidyUp(seleniumDriver);
-    }
-
+  @After("@DWP or @CORE or @E2E or @REGRESSION")
+  public void tearDown() {
+    tidyUp(seleniumDriver);
+  }
 }

@@ -44,21 +44,21 @@ public enum ConnectionElements {
       "SELECTOR",
       "test-accounts-aos-quotes-aos-products-quotes-a-6565-bd-4-e-0-ec-dee-9-64-fd-58-aca-11-b-3994-field");
 
-    private String searchBy;
+  private String searchBy;
 
-    public String getQuery() {
-        return query;
-    }
+  public String getQuery() {
+    return query;
+  }
 
-    private String query;
+  private String query;
 
-    ConnectionElements(String searchBy, String query) {
-        this.searchBy = searchBy;
-        this.query = query;
-    }
+  ConnectionElements(String searchBy, String query) {
+    this.searchBy = searchBy;
+    this.query = query;
+  }
 
-    public Model.Element element() {
-        Model.Element element = new Model.Element().search(searchBy).query(this.query).key(this.name());
-        return element;
-    }
+  public Model.Element element() {
+    Model.Element element = new Model.Element().search(searchBy).query(this.query).key(this.name());
+    return element;
+  }
 }

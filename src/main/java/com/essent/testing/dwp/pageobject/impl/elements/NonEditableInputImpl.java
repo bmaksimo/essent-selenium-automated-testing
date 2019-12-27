@@ -6,20 +6,19 @@ import org.openqa.selenium.WebElement;
 
 public class NonEditableInputImpl implements NonEditableInput {
 
-    public NonEditableInputImpl(WebElement element) {
-        this.element = element;
-    }
+  public NonEditableInputImpl(WebElement element) {
+    this.element = element;
+  }
 
-    private static final Logger logger = Logger.getLogger(NonEditableInputImpl.class);
+  private static final Logger logger = Logger.getLogger(NonEditableInputImpl.class);
 
-    protected WebElement element;
+  protected WebElement element;
 
-
-    @Override
-    public String getValue() {
-        logger.debug("STEP:");
-        String innerText = element.getAttribute("innerText");
-        logger.debug(" - NON_EDITABLE: " + innerText);
-        return innerText;
-    }
+  @Override
+  public String getValue() {
+    logger.debug("STEP:");
+    String innerText = element.getAttribute("innerText");
+    logger.debug(" - NON_EDITABLE: " + innerText);
+    return innerText;
+  }
 }

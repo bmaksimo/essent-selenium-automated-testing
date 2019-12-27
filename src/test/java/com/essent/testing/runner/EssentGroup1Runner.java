@@ -6,14 +6,13 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-    features = { "src/test/resources/features/groups/1" },
-    glue = { "stepdefinitions"},
+    features = {"src/test/resources/features/groups/1"},
+    glue = {"stepdefinitions"},
     junit = "--step-notifications",
-    plugin = { "pretty",
-        "html:target/cucumber-html-report",
-        "junit:target/cucumber-junit-report/allcukes.xml",
-        "json:target/cucumber-reports/1.json"
-    }
-)
+    plugin = {
+      "pretty",
+      "html:target/cucumber-html-report",
+      "junit:target/cucumber-junit-report/allcukes.xml",
+      "json:target/cucumber-reports/1.json"
+    })
 public class EssentGroup1Runner {}
-

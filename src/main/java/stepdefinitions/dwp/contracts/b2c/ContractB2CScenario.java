@@ -11,66 +11,66 @@ import org.junit.Assert;
 
 public class ContractB2CScenario extends RegisteredScenario {
 
-	private static final Logger logger = Logger.getLogger(ContractB2CScenario.class);
-	private static final String EMPTY_STRING = "";
+  private static final Logger logger = Logger.getLogger(ContractB2CScenario.class);
+  private static final String EMPTY_STRING = "";
 
-	private String accountNumber;
+  private String accountNumber;
 
-    @Before("@DWP or @E2E or @REGRESSION or @B2C")
-	public void setupTest(Scenario scenario){
-		registerActiveScenario(scenario);
-	}
+  @Before("@DWP or @E2E or @REGRESSION or @B2C")
+  public void setupTest(Scenario scenario) {
+    registerActiveScenario(scenario);
+  }
 
-    @Given("^B2C TC1 Contract uses \"([^\"]*)\" address and switch type is \"([^\"]*)\"$")
-	public String createB2CContract(String isFakeAddress, String switchType) {
-        this.setAccountNumber(EMPTY_STRING);
+  @Given("^B2C TC1 Contract uses \"([^\"]*)\" address and switch type is \"([^\"]*)\"$")
+  public String createB2CContract(String isFakeAddress, String switchType) {
+    this.setAccountNumber(EMPTY_STRING);
 
-		try {
-		    QuoteCreator quoteB2CTC1 = new ContractTC1B2CCreator(isFakeAddress, switchType);
-            this.setAccountNumber(quoteB2CTC1.createContract());
-		} catch (Exception e) {
-			logger.error("Creation of B2C contract failed", e);
-			Assert.fail("Creation of B2C contract failed: " + e.getMessage());
-		}
-
-		if(EMPTY_STRING.equals(this.getAccountNumber())) {
-			Assert.fail("Creation of B2C contract failed");
-			logger.error("Something went wrong with creation of B2C contract");
-		}
-
-        String accountNumber = this.getAccountNumber();
-        parameterProvider.put("accountNumber", accountNumber);
-		return accountNumber;
-	}
-
-    @Given("^B2C TC1 Active Contract uses \"([^\"]*)\" address and switch type is \"([^\"]*)\"$")
-	public String createContractB2CAndCheckContractStatus(String isFakeAddress, String switchType) {
-
-		this.setAccountNumber(EMPTY_STRING);
-
-		try {
-		    QuoteCreator quoteB2CTC1 = new ContractTC1B2CCreator(isFakeAddress, switchType);
-			this.setAccountNumber(quoteB2CTC1.createContractAndCheckContractStatus());
-		} catch (Exception e) {
-			logger.error("B2C contract is not ACTIVE", e);
-			Assert.fail("B2C contract is not ACTIVE: " + e.getMessage());
-		}
-
-		if(EMPTY_STRING.equals(this.getAccountNumber())) {
-			Assert.fail("B2C contract is not ACTIVE");
-			logger.error("Something went wrong with creation of ACTIVE B2C contract");
-		}
-
-		parameterProvider.put("accountNumber", this.getAccountNumber());
-
-		return this.getAccountNumber();
-	}
-
-	private String getAccountNumber() {
-		return accountNumber;
-	}
-
-    private void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
+    try {
+      QuoteCreator quoteB2CTC1 = new ContractTC1B2CCreator(isFakeAddress, switchType);
+      this.setAccountNumber(quoteB2CTC1.createContract());
+    } catch (Exception e) {
+      logger.error("Creation of B2C contract failed", e);
+      Assert.fail("Creation of B2C contract failed: " + e.getMessage());
     }
+
+    if (EMPTY_STRING.equals(this.getAccountNumber())) {
+      Assert.fail("Creation of B2C contract failed");
+      logger.error("Something went wrong with creation of B2C contract");
+    }
+
+    String accountNumber = this.getAccountNumber();
+    parameterProvider.put("accountNumber", accountNumber);
+    return accountNumber;
+  }
+
+  @Given("^B2C TC1 Active Contract uses \"([^\"]*)\" address and switch type is \"([^\"]*)\"$")
+  public String createContractB2CAndCheckContractStatus(String isFakeAddress, String switchType) {
+
+    this.setAccountNumber(EMPTY_STRING);
+
+    try {
+      QuoteCreator quoteB2CTC1 = new ContractTC1B2CCreator(isFakeAddress, switchType);
+      this.setAccountNumber(quoteB2CTC1.createContractAndCheckContractStatus());
+    } catch (Exception e) {
+      logger.error("B2C contract is not ACTIVE", e);
+      Assert.fail("B2C contract is not ACTIVE: " + e.getMessage());
+    }
+
+    if (EMPTY_STRING.equals(this.getAccountNumber())) {
+      Assert.fail("B2C contract is not ACTIVE");
+      logger.error("Something went wrong with creation of ACTIVE B2C contract");
+    }
+
+    parameterProvider.put("accountNumber", this.getAccountNumber());
+
+    return this.getAccountNumber();
+  }
+
+  private String getAccountNumber() {
+    return accountNumber;
+  }
+
+  private void setAccountNumber(String accountNumber) {
+    this.accountNumber = accountNumber;
+  }
 }

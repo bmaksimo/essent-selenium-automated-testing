@@ -1,10 +1,10 @@
 package com.billinghouse.testautomation.util.dsl;
 
-import cucumber.runtime.CucumberException;
-import org.joda.time.*;
-import org.joda.time.base.BaseSingleFieldPeriod;
-import org.joda.time.format.DateTimeFormatter;
+import static java.lang.Integer.parseInt;
+import static java.lang.String.format;
+import static java.util.regex.Pattern.compile;
 
+import cucumber.runtime.CucumberException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,10 +12,9 @@ import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.regex.Matcher;
-
-import static java.lang.Integer.parseInt;
-import static java.lang.String.format;
-import static java.util.regex.Pattern.compile;
+import org.joda.time.*;
+import org.joda.time.base.BaseSingleFieldPeriod;
+import org.joda.time.format.DateTimeFormatter;
 
 public class DateExpressionsUtil {
 
@@ -38,7 +37,9 @@ public class DateExpressionsUtil {
     operations.put("month", Months::monthsBetween);
     operations.put("year", Years::yearsBetween);
   }
+
   private static final Map<String, DurationFieldType> duration = new HashMap<>();
+
   static {
     duration.put("day", DurationFieldType.days());
     duration.put("week", DurationFieldType.weeks());
@@ -66,19 +67,19 @@ public class DateExpressionsUtil {
   }
 
   public static LocalDate getFirstDateOfNextMonth() {
-      return new LocalDate().plusMonths(1).withDayOfMonth(1);
+    return new LocalDate().plusMonths(1).withDayOfMonth(1);
   }
 
   public static LocalDate getLastDayOfCurrentMonthNextYear() {
-      return new LocalDate().plusYears(1).dayOfMonth().withMaximumValue();
+    return new LocalDate().plusYears(1).dayOfMonth().withMaximumValue();
   }
 
   public static LocalDate getToday() {
-      return new LocalDate();
+    return new LocalDate();
   }
 
   public static LocalDate getNDaysFromToday(int amountOfDays) {
-      return new LocalDate().plusDays(amountOfDays);
+    return new LocalDate().plusDays(amountOfDays);
   }
 
   public static DateTime expandFrom(String expression) {
@@ -96,8 +97,7 @@ public class DateExpressionsUtil {
     DateTime dateTime = new DateTime();
 
     if (matcher.find()) {
-            if(matcher.group(0).equals("now"))
-                return dateTime;
+      if (matcher.group(0).equals("now")) return dateTime;
       operations.put("month from", dateTime::plusMonths);
       operations.put("month before", dateTime::minusMonths);
       operations.put("day from", dateTime::plusDays);
@@ -170,7 +170,8 @@ public class DateExpressionsUtil {
       return fmt.parseDateTime(input)
           .toString(EssentDateTimeFormat.DWP_SOCTAR_STARTDAT_ENDDATE.getFormat());
     } else {
-      return expandFrom(input).toString(EssentDateTimeFormat.DWP_SOCTAR_STARTDAT_ENDDATE.getFormat());
+      return expandFrom(input)
+          .toString(EssentDateTimeFormat.DWP_SOCTAR_STARTDAT_ENDDATE.getFormat());
     }
   }
 
@@ -178,7 +179,8 @@ public class DateExpressionsUtil {
     List<String> dates = new ArrayList<>();
     String startDate =
         expandFrom(input).toString(EssentDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat());
-    String endDate = expandFrom(input).toString(EssentDateTimeFormat.DWP_SOCTAR_ENDDATE.getFormat());
+    String endDate =
+        expandFrom(input).toString(EssentDateTimeFormat.DWP_SOCTAR_ENDDATE.getFormat());
     dates.add(startDate);
     dates.add(endDate);
 
@@ -214,7 +216,8 @@ public class DateExpressionsUtil {
         org.joda.time.format.DateTimeFormat.forPattern(
             EssentDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
     dateBuilder.append(
-        fmt.parseDateTime(input).toString(EssentDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat()));
+        fmt.parseDateTime(input)
+            .toString(EssentDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat()));
     dateBuilder.append(DATE_SEPARATOR);
     dateBuilder.append(
         LAST_DATE_OF_YEAR.toString(EssentDateTimeFormat.DWP_BILLING_DATE_FORMAT.getFormat()));
@@ -256,11 +259,11 @@ public class DateExpressionsUtil {
     return fmt.parseDateTime(end).toString(EssentDateTimeFormat.DWP_FRENCH_DATE_FORMAT.getFormat());
   }
 
-    public static String checkAndConvertToOdooDate(String input) {
-        if (matchesDwpDateFormat(input)) {
-            return buildContractStartEndDate(input);
-        } else {
-            return expandFrom(input).toString(EssentDateTimeFormat.ODOO_DATE_FORMAT.getFormat());
-        }
+  public static String checkAndConvertToOdooDate(String input) {
+    if (matchesDwpDateFormat(input)) {
+      return buildContractStartEndDate(input);
+    } else {
+      return expandFrom(input).toString(EssentDateTimeFormat.ODOO_DATE_FORMAT.getFormat());
     }
+  }
 }

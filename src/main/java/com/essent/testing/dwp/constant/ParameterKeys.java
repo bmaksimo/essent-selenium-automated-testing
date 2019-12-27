@@ -1,15 +1,15 @@
 package com.essent.testing.dwp.constant;
 
 public enum ParameterKeys {
-    SuiteCrmCustomer("parameter:suitecrm-customer-name");
+  SuiteCrmCustomer("parameter:suitecrm-customer-name");
 
-    private String key;
+  private String key;
 
-    ParameterKeys(String key) {
-        this.key = key;
-    }
+  ParameterKeys(String key) {
+    this.key = key;
+  }
 
-    public String getKey() {
-        return key;
-    }
+  public String getKey() {
+    return key;
+  }
 }

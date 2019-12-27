@@ -13,30 +13,29 @@ import io.cucumber.datatable.DataTable;
 
 public class LeadSteps extends DwpScenario {
 
-    @Before("@DWP or @REGRESSION")
-    public void setupTest(Scenario scenario) {
-        registerActiveScenario(scenario);
-    }
+  @Before("@DWP or @REGRESSION")
+  public void setupTest(Scenario scenario) {
+    registerActiveScenario(scenario);
+  }
 
+  @When("Add lead")
+  public void addLead() {
+    new LeadsPage().plusAddLead();
+  }
 
-    @When("Add lead")
-    public void addLead() {
-        new LeadsPage().plusAddLead();
-    }
+  @And("^New lead is$")
+  public void insertCompanyNameForCreatingLead(DataTable leadDataTable) {
+    new NewLeadPage().createLead(leadDataTable.asMaps(String.class, String.class));
+  }
 
-    @And("^New lead is$")
-    public void insertCompanyNameForCreatingLead(DataTable leadDataTable) {
-        new NewLeadPage().createLead(leadDataTable.asMaps(String.class, String.class));
-    }
+  @Then("^\"([^\"]*)\" lead was created$")
+  public void leadWasCreated(String name) {
+    new LeadsPage().validateCreatingLead(name);
+  }
 
-    @Then("^\"([^\"]*)\" lead was created$")
-    public void leadWasCreated(String name) {
-        new LeadsPage().validateCreatingLead(name);
-    }
-
-    @Override
-    @After("@DWP or @REGRESSION")
-    public void tearDown() {
-        super.tearDown();
-    }
+  @Override
+  @After("@DWP or @REGRESSION")
+  public void tearDown() {
+    super.tearDown();
+  }
 }

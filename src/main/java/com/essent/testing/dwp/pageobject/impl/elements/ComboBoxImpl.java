@@ -1,15 +1,14 @@
 package com.essent.testing.dwp.pageobject.impl.elements;
 
+import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.CARD_TEMPLATE;
+
 import com.essent.testing.dwp.pageobject.elements.ComboBox;
 import com.essent.testing.dwp.pageobject.impl.Component;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-
-import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.CARD_TEMPLATE;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 public class ComboBoxImpl extends Component implements ComboBox {
 

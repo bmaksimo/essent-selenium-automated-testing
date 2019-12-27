@@ -1,5 +1,7 @@
 package stepdefinitions.dwp.b2b;
 
+import static org.junit.Assert.assertTrue;
+
 import com.essent.testing.dwp.pageobject.impl.elements.ToggleImpl;
 import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.contracts.UpdateCustomerDetailsPage;
 import com.essent.testing.dwp.scenario.DwpScenario;
@@ -9,33 +11,29 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 
-import static org.junit.Assert.assertTrue;
-
-
 public class Account extends DwpScenario {
-    @Before("@DWP or @REGRESSION")
-    public void setupTest(Scenario scenario) {
-        registerActiveScenario(scenario);
-    }
+  @Before("@DWP or @REGRESSION")
+  public void setupTest(Scenario scenario) {
+    registerActiveScenario(scenario);
+  }
 
-    @Then("^Change is immediately visible in Finance & Legal section that \"([^\"]*)\" is active$")
-    public void changeIsImmediatelyVisibleInFinanceLegalSectionThatIsActive(String box) {
-        ToggleImpl tg= new ToggleImpl();
-        assertTrue(tg.isOn(box));
-    }
+  @Then("^Change is immediately visible in Finance & Legal section that \"([^\"]*)\" is active$")
+  public void changeIsImmediatelyVisibleInFinanceLegalSectionThatIsActive(String box) {
+    ToggleImpl tg = new ToggleImpl();
+    assertTrue(tg.isOn(box));
+  }
 
-    @And("^Activate \"([^\"]*)\"$")
-    public void activate(String box) {
-        UpdateCustomerDetailsPage ucdp = new UpdateCustomerDetailsPage();
-        ToggleImpl tg= new ToggleImpl();
-        seleniumDriver.waitForRequestsToFinish();
-        tg.switchOn(box);
-        ucdp.clickOnSaveButtonForFinanceAndLegalSection();
-    }
+  @And("^Activate \"([^\"]*)\"$")
+  public void activate(String box) {
+    UpdateCustomerDetailsPage ucdp = new UpdateCustomerDetailsPage();
+    ToggleImpl tg = new ToggleImpl();
+    seleniumDriver.waitForRequestsToFinish();
+    tg.switchOn(box);
+    ucdp.clickOnSaveButtonForFinanceAndLegalSection();
+  }
 
-    @After("@DWP or @REGRESSION")
-    public void tearDown() {
-        super.tearDown();
-    }
-
+  @After("@DWP or @REGRESSION")
+  public void tearDown() {
+    super.tearDown();
+  }
 }

@@ -1,16 +1,15 @@
 package com.essent.testing.dwp.pageobject.listview;
 
-import com.essent.testing.dwp.pageobject.ViewList;
-import com.essent.testing.dwp.pageobject.impl.Component;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-
-import javax.swing.table.DefaultTableModel;
-import java.util.*;
-import java.util.stream.Collectors;
-
 import static com.billinghouse.testautomation.javascript.testrunner.JsTestRegistry.JS_TR_FETCH_DATA_SELECTION;
 import static com.billinghouse.testautomation.javascript.testrunner.JsTestRegistry.JS_TR_GET_TABLE_MODEL;
+
+import com.essent.testing.dwp.pageobject.ViewList;
+import com.essent.testing.dwp.pageobject.impl.Component;
+import java.util.*;
+import java.util.stream.Collectors;
+import javax.swing.table.DefaultTableModel;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 /**
  * The class has been created as a placeholder for the future migration of technical stack from
@@ -19,7 +18,8 @@ import static com.billinghouse.testautomation.javascript.testrunner.JsTestRegist
  */
 public class ViewListTestObject extends Component implements ViewList {
 
-  private static final String TRANSACTIONS_TABLE_HEADERS = "//list[@list-key='TransactionsOnAccount']//th[@class='list__cell']";
+  private static final String TRANSACTIONS_TABLE_HEADERS =
+      "//list[@list-key='TransactionsOnAccount']//th[@class='list__cell']";
 
   private Optional<DefaultTableModel> tableModel;
 
@@ -33,18 +33,18 @@ public class ViewListTestObject extends Component implements ViewList {
 
   public Optional<Integer> getColumnCount() {
     if (tableModel.isPresent()) {
-        int count = tableModel.get().getColumnCount();
-        return count > 0 ? Optional.of(count) : Optional.empty();
+      int count = tableModel.get().getColumnCount();
+      return count > 0 ? Optional.of(count) : Optional.empty();
     }
     return Optional.empty();
   }
 
   public Optional<String> getColumnName(int column) {
-      return tableModel.map(defaultTableModel -> defaultTableModel.getColumnName(column - 1));
+    return tableModel.map(defaultTableModel -> defaultTableModel.getColumnName(column - 1));
   }
 
   public Optional<Object> getValueAt(int row, int column) {
-      return tableModel.map(defaultTableModel -> defaultTableModel.getValueAt(row - 1, column - 1));
+    return tableModel.map(defaultTableModel -> defaultTableModel.getValueAt(row - 1, column - 1));
   }
 
   public DefaultTableModel getViewTableModel() {
@@ -59,7 +59,8 @@ public class ViewListTestObject extends Component implements ViewList {
     return getDefaultTableModel(tableModel, options);
   }
 
-  private DefaultTableModel getDefaultTableModel(DefaultTableModel tableModel, HashMap<Object, Object> options) {
+  private DefaultTableModel getDefaultTableModel(
+      DefaultTableModel tableModel, HashMap<Object, Object> options) {
     Map<String, Object> viewTable = executeJavascriptMethod(JS_TR_GET_TABLE_MODEL, options);
     List columnNames = (List) viewTable.get("column_names");
     List rows = getData(viewTable);
@@ -144,7 +145,7 @@ public class ViewListTestObject extends Component implements ViewList {
   }
 
   public int fetchRowIndexFromData(String table, String columnName, String data) {
-      return fetchRowFromDataNow(table, columnName, data, false);
+    return fetchRowFromDataNow(table, columnName, data, false);
   }
 
   private int fetchRowFromDataNow(String table, String columnName, String data, boolean immediate) {
@@ -161,12 +162,12 @@ public class ViewListTestObject extends Component implements ViewList {
     int currentIndex = -1;
     Optional row;
     for (int i = 0; i < rows.size(); i++) {
-        List currentRow = rows.get(i);
-        row = currentRow.stream().filter(r -> r.toString().contains(data)).findFirst();
-        if (row.isPresent()) {
-            currentIndex = i;
-            break;
-        }
+      List currentRow = rows.get(i);
+      row = currentRow.stream().filter(r -> r.toString().contains(data)).findFirst();
+      if (row.isPresent()) {
+        currentIndex = i;
+        break;
+      }
     }
 
     return currentIndex;
@@ -186,8 +187,11 @@ public class ViewListTestObject extends Component implements ViewList {
       return Optional.empty();
     }
     if (row > rows.size()) {
-      logger().error(String.format(
-              "--  Row number \"%s\" was greater than actual table size \"%s\"", row, rows.size()));
+      logger()
+          .error(
+              String.format(
+                  "--  Row number \"%s\" was greater than actual table size \"%s\"",
+                  row, rows.size()));
       return Optional.empty();
     }
     List currentRow = rows.get(row - 1);

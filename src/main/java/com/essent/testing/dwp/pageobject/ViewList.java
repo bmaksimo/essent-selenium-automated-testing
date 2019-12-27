@@ -1,8 +1,8 @@
 package com.essent.testing.dwp.pageobject;
 
-import javax.swing.table.DefaultTableModel;
 import java.util.List;
 import java.util.Optional;
+import javax.swing.table.DefaultTableModel;
 
 public interface ViewList {
 

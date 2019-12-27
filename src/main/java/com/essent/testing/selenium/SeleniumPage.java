@@ -1,29 +1,23 @@
 package com.essent.testing.selenium;
 
+import java.time.Duration;
+import java.util.List;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.*;
 
-import java.time.Duration;
-import java.util.List;
-
-
-public class SeleniumPage
-{
+public class SeleniumPage {
   protected WebDriver driver;
 
-  public SeleniumPage(WebDriver driver)
-  {
+  public SeleniumPage(WebDriver driver) {
     super();
     this.driver = driver;
   }
 
-  public WebDriver getDriver()
-  {
+  public WebDriver getDriver() {
     return driver;
   }
 
-  public void setDriver(WebDriver driver)
-  {
+  public void setDriver(WebDriver driver) {
     this.driver = driver;
   }
 
@@ -32,31 +26,26 @@ public class SeleniumPage
   }
 
   /**
-   * For some steps we must use a hardcoded delay.
-   * It should be avoided and should be the last resort.
-   * This method will allow you to provide user
-   *  defined wait time.
+   * For some steps we must use a hardcoded delay. It should be avoided and should be the last
+   * resort. This method will allow you to provide user defined wait time.
    */
-  private void waitForReady(long milliseconds)
-  {
+  private void waitForReady(long milliseconds) {
     try {
       Thread.sleep(milliseconds);
-    }
-    catch (final InterruptedException e) {
+    } catch (final InterruptedException e) {
       e.printStackTrace();
     }
-    new WebDriverWait(driver, 180).until(new ExpectedCondition<Boolean>()
-    {
+    new WebDriverWait(driver, 180)
+        .until(
+            new ExpectedCondition<Boolean>() {
               @Override
-      public Boolean apply(WebDriver driver)
-      {
+              public Boolean apply(WebDriver driver) {
                 final JavascriptExecutor js = (JavascriptExecutor) driver;
-        return (Boolean) js
-                .executeScript("return window.jQuery != undefined && jQuery.active === 0");
+                return (Boolean)
+                    js.executeScript("return window.jQuery != undefined && jQuery.active === 0");
               }
             });
   }
-
 
   protected void dealWithElement(String id, String value) {
 
@@ -64,7 +53,9 @@ public class SeleniumPage
     if (value.compareToIgnoreCase("click") == 0) {
       try {
         element.click();
-      }catch(WebDriverException e){element.sendKeys(Keys.ENTER);}
+      } catch (WebDriverException e) {
+        element.sendKeys(Keys.ENTER);
+      }
     } else {
       // Checking if text field
       try {
@@ -86,10 +77,15 @@ public class SeleniumPage
     }
   }
 
-  private WebElement waitAndPollUntilElementIsFound(String id, int totalTimeoutInSeconds, int pollTimeoutInSeconds){
+  private WebElement waitAndPollUntilElementIsFound(
+      String id, int totalTimeoutInSeconds, int pollTimeoutInSeconds) {
     waitForReady();
-    WebElement element = createStubbornWait(totalTimeoutInSeconds,pollTimeoutInSeconds).until(driver1 -> {
-      List <WebElement> elements = driver1.findElements(By.xpath("//*[contains(@id, '" + id + "')]"));
+    WebElement element =
+        createStubbornWait(totalTimeoutInSeconds, pollTimeoutInSeconds)
+            .until(
+                driver1 -> {
+                  List<WebElement> elements =
+                      driver1.findElements(By.xpath("//*[contains(@id, '" + id + "')]"));
                   return elements.get(elements.size() - 1);
                 });
     return element;
@@ -102,5 +98,4 @@ public class SeleniumPage
         .ignoring(org.openqa.selenium.NoSuchElementException.class)
         .ignoring(StaleElementReferenceException.class);
   }
-
 }

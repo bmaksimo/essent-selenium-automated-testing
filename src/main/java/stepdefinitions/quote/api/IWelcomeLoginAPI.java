@@ -10,36 +10,35 @@ import org.apache.log4j.Logger;
 import stepdefinitions.quote.api.helper.RequestHelper;
 import stepdefinitions.quote.api.model.IWelcomeLogin;
 
-/**
- * @author n.grkavac
- *
- */
+/** @author n.grkavac */
 public class IWelcomeLoginAPI extends AbstractAPI {
 
-    private final static Logger LOGGER = Logger.getLogger(IWelcomeLoginAPI.class);
+  private static final Logger LOGGER = Logger.getLogger(IWelcomeLoginAPI.class);
 
-    public String createPayload(String username, String password) throws JsonProcessingException {
-        return serializePayloadForiWelcome(username, password);
-    }
+  public String createPayload(String username, String password) throws JsonProcessingException {
+    return serializePayloadForiWelcome(username, password);
+  }
 
-    private String serializePayloadForiWelcome(String username, String password) throws JsonProcessingException {
-        IWelcomeLogin iWelcomeLogin = new IWelcomeLogin(username, password);
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(iWelcomeLogin);
-    }
+  private String serializePayloadForiWelcome(String username, String password)
+      throws JsonProcessingException {
+    IWelcomeLogin iWelcomeLogin = new IWelcomeLogin(username, password);
+    ObjectMapper mapper = new ObjectMapper();
+    return mapper.writeValueAsString(iWelcomeLogin);
+  }
 
-    public Cookies getCookie(String username, String password) throws JsonProcessingException {
-        Cookies cookie;
-        Integer expectedResponseCode = STATUS_OK;
-        String payload = createPayload(username, password);
-        RequestHelper helper = new RequestHelper();
-        String path = ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
+  public Cookies getCookie(String username, String password) throws JsonProcessingException {
+    Cookies cookie;
+    Integer expectedResponseCode = STATUS_OK;
+    String payload = createPayload(username, password);
+    RequestHelper helper = new RequestHelper();
+    String path =
+        ConfigProvider.getProperty(ConfigKey.CRM_BASE_URI)
             + ConfigProvider.getProperty(ConfigKey.CRM_LOGIN_URL);
-        Response iWelcomeResponse = helper.simplePostRequest(expectedResponseCode, payload, path);
+    Response iWelcomeResponse = helper.simplePostRequest(expectedResponseCode, payload, path);
 
-        cookie = iWelcomeResponse.getDetailedCookies();
-        LOGGER.debug("Cookie is: " + cookie);
+    cookie = iWelcomeResponse.getDetailedCookies();
+    LOGGER.debug("Cookie is: " + cookie);
 
-        return cookie;
-    }
+    return cookie;
+  }
 }

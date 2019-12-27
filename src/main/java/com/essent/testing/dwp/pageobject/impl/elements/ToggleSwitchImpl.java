@@ -1,18 +1,17 @@
 package com.essent.testing.dwp.pageobject.impl.elements;
 
+import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.CARD_TEMPLATE;
+
 import com.essent.testing.dwp.pageobject.elements.ToggleSwitch;
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import stepdefinitions.dwp.tables.plus.SwitchState;
-
-import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-
-import static com.essent.testing.dwp.pageobject.selector.CommonSelectors.CARD_TEMPLATE;
 
 public class ToggleSwitchImpl extends ButtonImpl implements ToggleSwitch {
 
@@ -48,7 +47,8 @@ public class ToggleSwitchImpl extends ButtonImpl implements ToggleSwitch {
     valuesMapper.put("title", card);
     valuesMapper.put("label", label);
     By xpathSelector =
-        By.xpath(createQuery(CARD_TEMPLATE.getQuery() + XPATH_TOGGLE_SWITCH_TEPMPLATE, valuesMapper));
+        By.xpath(
+            createQuery(CARD_TEMPLATE.getQuery() + XPATH_TOGGLE_SWITCH_TEPMPLATE, valuesMapper));
     WebElement webElement =
         findElementWhenPresent(xpathSelector, Duration.ofSeconds(20), Duration.ofMillis(1));
     this.element = Optional.ofNullable(webElement);
@@ -71,7 +71,7 @@ public class ToggleSwitchImpl extends ButtonImpl implements ToggleSwitch {
   @Override
   public void switchOn(String label) {
     if (!isOn(label)) {
-        element.ifPresent(WebElement::click);
+      element.ifPresent(WebElement::click);
     }
   }
 
@@ -124,7 +124,8 @@ public class ToggleSwitchImpl extends ButtonImpl implements ToggleSwitch {
     valuesMapper.put("title", card);
     valuesMapper.put("label", label);
     By xpathSelector =
-        By.xpath(createQuery(CARD_TEMPLATE.getQuery() + XPATH_TOGGLE_SWITCH_TEPMPLATE, valuesMapper));
+        By.xpath(
+            createQuery(CARD_TEMPLATE.getQuery() + XPATH_TOGGLE_SWITCH_TEPMPLATE, valuesMapper));
     findElementWhenPresent(xpathSelector, Duration.ofSeconds(20), Duration.ofSeconds(1));
     return true;
   }

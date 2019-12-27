@@ -11,60 +11,63 @@ import org.junit.Assert;
 
 public class JBillingProcessSteps extends JBillingScenario {
 
-    private String invoiceDate;
+  private String invoiceDate;
 
-    @Before("@JBILLING or @B2B or @REGRESSION")
-    public void setupTest(Scenario scenario){
-        registerActiveScenario(scenario);
-    }
+  @Before("@JBILLING or @B2B or @REGRESSION")
+  public void setupTest(Scenario scenario) {
+    registerActiveScenario(scenario);
+  }
 
-    @Override
-    @After("@JBILLING or @B2B or @REGRESSION")
-    public void tearDown() {
-        super.tearDown();
-    }
-    @And("^Choose on time billing process$")
-    public void chooseOnTimeBillingProcess() {
-        BillingProcessPage bp = new BillingProcessPage();
-        bp.onTimeBillingProcess();
-    }
+  @Override
+  @After("@JBILLING or @B2B or @REGRESSION")
+  public void tearDown() {
+    super.tearDown();
+  }
 
-    @And("^Select edit billing proces$")
-    public void selectOnConfigurationPage() {
-        BillingProcessPage bp = new BillingProcessPage();
-        bp.editButton();
-    }
+  @And("^Choose on time billing process$")
+  public void chooseOnTimeBillingProcess() {
+    BillingProcessPage bp = new BillingProcessPage();
+    bp.onTimeBillingProcess();
+  }
 
-    @And("^Invoice date is \"([^\"]*)\" days ago$")
-    public void invoiceDateIsDaysAgo(String day) {
-        BillingProcessPage bp = new BillingProcessPage();
-        invoiceDate= bp.getInvoiceDate();
-        bp.invoiceDateInPast(Integer.parseInt(day));
-        bp.invoiceDateDatapicker();
-    }
+  @And("^Select edit billing proces$")
+  public void selectOnConfigurationPage() {
+    BillingProcessPage bp = new BillingProcessPage();
+    bp.editButton();
+  }
 
-    @And("^Save billing proces$")
-    public void saveBillingProces() {
-        BillingProcessPage bp = new BillingProcessPage();
-        bp.saveProccessBilling();
-    }
-    @And("^Cancel billing proces$")
-    public void cancelBillingProces() {
-        BillingProcessPage bp = new BillingProcessPage();
-        bp.cancelProccessBilling();
-    }
+  @And("^Invoice date is \"([^\"]*)\" days ago$")
+  public void invoiceDateIsDaysAgo(String day) {
+    BillingProcessPage bp = new BillingProcessPage();
+    invoiceDate = bp.getInvoiceDate();
+    bp.invoiceDateInPast(Integer.parseInt(day));
+    bp.invoiceDateDatapicker();
+  }
 
-    @Then("^Error message is displayed$")
-    public void errorMessageIsDisplayed() {
-        BillingProcessPage bp = new BillingProcessPage();
-        String msg = "The Billing Configuration has an error in the invoice Date field: The date entered is not valid.";
-        Assert.assertTrue(bp.errorMsg().equalsIgnoreCase(msg));
-    }
+  @And("^Save billing proces$")
+  public void saveBillingProces() {
+    BillingProcessPage bp = new BillingProcessPage();
+    bp.saveProccessBilling();
+  }
 
-    @And("^Date in not changed$")
-    public void dateInNotChanged() {
-        BillingProcessPage bp = new BillingProcessPage();
-        String date = bp.getInvoiceDate();
-        Assert.assertTrue(date.equalsIgnoreCase(invoiceDate));
-    }
+  @And("^Cancel billing proces$")
+  public void cancelBillingProces() {
+    BillingProcessPage bp = new BillingProcessPage();
+    bp.cancelProccessBilling();
+  }
+
+  @Then("^Error message is displayed$")
+  public void errorMessageIsDisplayed() {
+    BillingProcessPage bp = new BillingProcessPage();
+    String msg =
+        "The Billing Configuration has an error in the invoice Date field: The date entered is not valid.";
+    Assert.assertTrue(bp.errorMsg().equalsIgnoreCase(msg));
+  }
+
+  @And("^Date in not changed$")
+  public void dateInNotChanged() {
+    BillingProcessPage bp = new BillingProcessPage();
+    String date = bp.getInvoiceDate();
+    Assert.assertTrue(date.equalsIgnoreCase(invoiceDate));
+  }
 }

@@ -11,26 +11,26 @@ import cucumber.api.java.en.When;
 
 public class JBillingMenu extends JBillingScenario {
 
-    @Before("@JBILLING or @B2B or @REGRESSION")
-    public void setupTest(Scenario scenario) throws Throwable {
-        registerActiveScenario(scenario);
-    }
+  @Before("@JBILLING or @B2B or @REGRESSION")
+  public void setupTest(Scenario scenario) throws Throwable {
+    registerActiveScenario(scenario);
+  }
 
-    @When("^JBilling top menu item is \"([^\"]*)\"$")
-    public void jbillingTopMenuItemIs(String item){
-        TopMenuPage menu = new TopMenuPage();
-        menu.topMenu(item);
-    }
+  @When("^JBilling top menu item is \"([^\"]*)\"$")
+  public void jbillingTopMenuItemIs(String item) {
+    TopMenuPage menu = new TopMenuPage();
+    menu.topMenu(item);
+  }
 
-    @Override
-    @After("@JBILLING or @B2B or @REGRESSION")
-    public void tearDown() {
-        super.tearDown();
-    }
+  @Override
+  @After("@JBILLING or @B2B or @REGRESSION")
+  public void tearDown() {
+    super.tearDown();
+  }
 
-    @And("^Configuration left menu item is \"([^\"]*)\"$")
-    public void configurationLeftMenuItemIs(String left){
-        ConfigurationManuPage confManu = new ConfigurationManuPage();
-        confManu.configurationLeftMenu(left);
-    }
+  @And("^Configuration left menu item is \"([^\"]*)\"$")
+  public void configurationLeftMenuItemIs(String left) {
+    ConfigurationManuPage confManu = new ConfigurationManuPage();
+    confManu.configurationLeftMenu(left);
+  }
 }
