@@ -93,18 +93,6 @@ public class InputElements extends DwpScenario {
     }
   }
 
-  /** Class, delegating value selection to <code>TrFormSelection.js</code> */
-  private class ApplySelection implements Predicate<Map> {
-    @Override
-    public boolean test(Map options) {
-      return executeJavascriptTest(JS_TR_FORM_SELECTION, options);
-    }
-
-    private boolean testNow(Map options) {
-      return executeJavascriptTestImmediately(JS_TR_FORM_SELECTION, options, true);
-    }
-  }
-
   /** Class, delegating Date picker selection to <code>TrDatePickerInput.js</code> */
   private class ApplyDateInput implements Predicate<Map> {
     @Override
@@ -286,49 +274,10 @@ public class InputElements extends DwpScenario {
     new SelectElement().selectByText(label, value);
   }
 
-  /**
-   * Sets and asynchronously checks dropdown selection on any DWP form
-   *
-   * @param label Text label
-   * @param value Input value
-   * @param card Card title, for example "Gas Vooraf"
-   * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion
-   *     fails
-   */
-  @And("^\"([^\"]*)\" selection on card \"([^\"]*)\" is \"([^\"]*)\"$")
-  public void setSelection(String label, String card, String value) {
-    seleniumDriver.waitForRequestsToFinish();
-    Map<String, String> options = new HashMap<>();
-    options.put("label", label);
-    options.put("value", value);
-    options.put("card", card);
-    FluentWait<ApplySelection> waiter = waiter(new ApplySelection(), 10, 1);
-    waiter.withMessage(String.format("Selection %s is undefined.", label));
-    waiter.until((ApplySelection callback) -> callback.test(options));
-    seleniumDriver.waitForRequestsToFinish();
-  }
-
   @And("^\"([^\"]*)\" selection is \"([^\"]*)\" waiting for (\\d+) seconds$")
-  public void setSelection(String label, String value, int waitingTime) {
+  public void setSelection(String label, String value, int waitingTime) throws Exception {
     Sleeper.sleepTightInSeconds(waitingTime);
-    Map<String, String> options = new HashMap<>();
-    options.put("label", label);
-    options.put("value", value);
-    FluentWait<ApplySelection> waiter = waiter(new ApplySelection(), 10, 1);
-    waiter.withMessage(String.format("Selection %s is undefined.", label));
-    waiter.until((ApplySelection callback) -> callback.testNow(options));
-  }
-
-  @And("^\"([^\"]*)\" selection on card \"([^\"]*)\" is \"([^\"]*)\" waiting for (\\d+) seconds$")
-  public void setSelection(String label, String card, String value, int waitingTime) {
-    Sleeper.sleepTightInSeconds(waitingTime);
-    Map<String, String> options = new HashMap<>();
-    options.put("label", label);
-    options.put("value", value);
-    options.put("card", card);
-    FluentWait<ApplySelection> waiter = waiter(new ApplySelection(), 10, 1);
-    waiter.withMessage(String.format("Selection %s is undefined.", label));
-    waiter.until((ApplySelection callback) -> callback.testNow(options));
+    new SelectElement().selectByText(label, value);
   }
 
   /**
