@@ -144,25 +144,24 @@ Feature: Initial set of tests
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-        When Electricity EAN code is "random"
-        And "Startdatum" date is "1 months before now"
-        And "Type aansluiting" selection is "YMR"
-        And "Meternummer" input is "1000"
-        And Option "test" is "On"
-        And Connection details are confirmed
-        And Save changes
-        Then Form header is "Billing details"
+      When Electricity EAN code is "random"
+      And "Startdatum" date is "1 months before now"
+      And "Type aansluiting" selection is "YMR"
+      And "Meternummer" input is "1000"
+      And Option "test" is "On"
+      And Connection details are confirmed
+      And Save changes
+      Then Form header is "Billing details"
 
-        When "Betalingswijze" selection is "Overschrijving"
-        And  Billing details are confirmed
-        Then  Form header is "Quote overview"
+      When "Betalingswijze" selection is "Overschrijving"
+      And  Billing details are confirmed
+      Then  Form header is "Quote overview"
 
-        When Option "Heeft de klant al getekend?" is "On"
-        And "Kanaal ondertekening" selection is "Papier"
-        And "Datum ondertekening" date is "now"
-        And Quote is signed
-        And Quote is signed in "Kontich"
-        Then Quote is confirmed
+      When Option "Heeft de klant al getekend?" is "On"
+      And "Kanaal ondertekening" selection is "Papier"
+      And "Datum ondertekening" date is "now"
+      And Quote is signed in "Kontich"
+      Then Quote is confirmed
 
 
 
