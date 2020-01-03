@@ -10,6 +10,7 @@ import com.essent.testing.dwp.pageobject.impl.Component;
 import com.essent.testing.dwp.pageobject.impl.elements.SelectWithSearchImpl;
 import com.essent.testing.dwp.pageobject.impl.page.BaseObjectPage;
 import com.essent.testing.dwp.pageobject.salesmarketing.customerdashboard.contracts.ContractPage;
+import com.essent.testing.dwp.pageobject.select.SelectElement;
 import com.essent.testing.dwp.scenario.DwpScenario;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -280,24 +281,9 @@ public class InputElements extends DwpScenario {
     seleniumDriver.waitForRequestsToFinish();
   }
 
-  /**
-   * Sets and asynchronously checks dropdown selection on any DWP form
-   *
-   * @param label Text label
-   * @param value Input value
-   * @throws Throwable Can throw {@link cucumber.runtime.CucumberException} when test step assertion
-   *     fails
-   */
   @And("^\"([^\"]*)\" selection is \"([^\"]*)\"$")
-  public void setSelection(String label, String value) {
-    seleniumDriver.waitForRequestsToFinish();
-    Map<String, String> options = new HashMap<>();
-    options.put("label", label);
-    options.put("value", value);
-    FluentWait<ApplySelection> waiter = waiter(new ApplySelection(), 60, 1);
-    waiter.withMessage(String.format("Selection %s is undefined.", label));
-    waiter.until((ApplySelection callback) -> callback.test(options));
-    seleniumDriver.waitForRequestsToFinish();
+  public void setSelection(String label, String value) throws Exception {
+    new SelectElement().selectByText(label, value);
   }
 
   /**
