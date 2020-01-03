@@ -122,7 +122,6 @@ Feature: Initial set of tests
         Then "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
 
     #Check is contract created through UI (B2C TK1)
-  @LALA
     Scenario: Contract creation B2C TK1 UI
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
         When Click on top menu button PLUS and navigate to "Sales -> TK1 -> Creëer nieuwe offerte B2C"
