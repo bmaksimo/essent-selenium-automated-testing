@@ -29,7 +29,12 @@ public class SelectElement extends Component {
     selectElement.selectByVisibleText(text);
     seleniumDriver.waitForRequestsToFinish();
     Sleeper.sleepTightInSeconds(2);
-    String currentlySelectedElement = selectElement.getFirstSelectedOption().getText();
+    assertSelectedElement(selectPath, text);
+  }
+
+  private void assertSelectedElement(String selectPath, String text) throws Exception {
+    Select currentSelect = new Select(findElementWithRetries(By.xpath(selectPath), 10));
+    String currentlySelectedElement = currentSelect.getFirstSelectedOption().getText();
     Assert.assertTrue(
         "Currently selected element is not " + text + " but " + currentlySelectedElement,
         text.equalsIgnoreCase(currentlySelectedElement));
