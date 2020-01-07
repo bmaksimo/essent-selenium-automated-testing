@@ -14,7 +14,7 @@ Feature: NSTA-339 Passive renewal of contract TK1 - with communication through l
         And the batchjob "UPDATE URD" is not running
 
     @NSTA-339
-    Scenario: Sign in to default electricity product
+    Scenario:  NSTA-339: Passive renewal of contract TK1 - with communication through letter
         #Create contract via API
         And Create active B2C contract with metering "Off" and sign date "35 days before now"
 

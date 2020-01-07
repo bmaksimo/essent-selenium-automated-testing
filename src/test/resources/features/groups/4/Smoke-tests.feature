@@ -121,6 +121,7 @@ Feature: Initial set of tests
         When Dashboard menu is "Contracten"
         Then "1st" list element has cell value "Actief" at column "Contractnummer" polling 500 seconds
 
+      @TEST
     #Check is contract created through UI (B2C TK1)
     Scenario: Contract creation B2C TK1 UI
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
@@ -134,8 +135,8 @@ Feature: Initial set of tests
 
         When Customer is random
         And Customer address is
-            | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
-            | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
+          | street           | houseNr | houseNrAdd | bus | postalCode | city    | country |
+          | Mechelsesteenweg | 2       |            |     | 2550       | Kontich |         |
         And Customer details are confirmed
         Then Form header is "Select package & fuel type"
 
@@ -144,24 +145,24 @@ Feature: Initial set of tests
         And Package and Fuel Type is confirmed
         Then Form header is "Connection details"
 
-      When Electricity EAN code is "random"
-      And "Startdatum" date is "1 months before now"
-      And "Type aansluiting" selection is "YMR"
-      And "Meternummer" input is "1000"
-      And Option "test" is "On"
-      And Connection details are confirmed
-      And Save changes
-      Then Form header is "Billing details"
+        When Electricity EAN code is "random"
+        And "Startdatum" date is "1 months before now"
+        And "Type aansluiting" selection is "YMR"
+        And "Meternummer" input is "1000"
+        And Option "test" is "On"
+        And Connection details are confirmed
+        And Save changes
+        Then Form header is "Billing details"
 
-      When "Betalingswijze" selection is "Overschrijving"
-      And  Billing details are confirmed
-      Then  Form header is "Quote overview"
+        When "Betalingswijze" selection is "Overschrijving"
+        And  Billing details are confirmed
+        Then  Form header is "Quote overview"
 
-      When Option "Heeft de klant al getekend?" is "On"
-      And "Kanaal ondertekening" selection is "Papier"
-      And "Datum ondertekening" date is "now"
-      And Quote is signed in "Kontich"
-      Then Quote is confirmed
+        When Option "Heeft de klant al getekend?" is "On"
+        And "Kanaal ondertekening" selection is "Papier"
+        And "Datum ondertekening" date is "now"
+        And Quote is signed in "Kontich"
+        Then Quote is confirmed
 
 
 
