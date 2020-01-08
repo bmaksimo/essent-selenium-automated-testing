@@ -1,6 +1,7 @@
 package com.essent.testing.dwp.pageobject.impl.servicecontracting;
 
 import static com.essent.automation.autocrat.Action.*;
+import static com.essent.testing.dwp.autocrat.timing.quote.TimeoutValues.INPUT;
 import static com.essent.testing.selenium.helper.autocrat.AutocratExecutionAdapter.newExecution;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.given;
@@ -41,30 +42,38 @@ public class LogCasePageImpl extends Component implements Form, LogCasePage {
         .element(specificationsSubjectElement, createElement("SELECTOR", "#cases-name-field"))
         .element(specificationsPriorityElement, createElement("SELECTOR", "#cases-priority-field"))
         .element(questionQuestionElement, createElement("SELECTOR", "#cases-description-field"))
-        .element(solutionSolutionElement, createElement("SELECTOR", "#cases-resolution-field"))
-        .flow()
-        .step(
-            createStep(SELECT)
-                .element(specificationsSubjectElement)
-                .value(subject)
-                .timeoutInSeconds(4))
-        .step(
-            createStep(SELECT)
-                .element(specificationsPriorityElement)
-                .value(priority)
-                .timeoutInSeconds(4))
-        .step(createStep(CLICK).element(questionQuestionElement).timeoutInSeconds(4))
-        .step(
-            createStep(TYPING)
-                .element(questionQuestionElement)
-                .value(description)
-                .timeoutInSeconds(4))
-        .step(
-            createStep(ACCESS)
-                .element(solutionSolutionElement)
-                .callback(scrollToView())
-                .timeoutInSeconds(4))
-        .step(createStep(TYPING).element(solutionSolutionElement).value(solution));
+        .element(solutionSolutionElement, createElement("SELECTOR", "#cases-resolution-field"));
+
+    execution.step(
+        createStep(SELECT).element(specificationsSubjectElement).value(subject).timeoutInSeconds(4),
+        INPUT.getSleepInMillis());
+
+    execution.step(
+        createStep(SELECT)
+            .element(specificationsPriorityElement)
+            .value(priority)
+            .timeoutInSeconds(4),
+        INPUT.getSleepInMillis());
+
+    execution.step(
+        createStep(CLICK).element(questionQuestionElement).timeoutInSeconds(4),
+        INPUT.getSleepInMillis());
+
+    execution.step(
+        createStep(TYPING).element(questionQuestionElement).value(description).timeoutInSeconds(4),
+        INPUT.getSleepInMillis());
+
+    execution.step(
+        createStep(ACCESS)
+            .element(solutionSolutionElement)
+            .callback(scrollToView())
+            .timeoutInSeconds(4),
+        INPUT.getSleepInMillis());
+
+    execution.step(
+        createStep(TYPING).element(solutionSolutionElement).value(solution),
+        INPUT.getSleepInMillis());
+
     return execute(execution);
   }
 
