@@ -146,6 +146,14 @@ public class NewQuotePage extends QuoteCreationGuidedStep {
     return true;
   }
 
+  public void clickOnSelectOneDealer(){
+    seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("//div[@id='accounts-aos-quotes-primary-group-id-field']//button")));
+  }
+
+  public void savePopUpChanges(){
+    seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath("(//select-with-search-modal//a)[1]")));
+  }
+
   @Override
   public boolean fillInFormData() {
     return false;
