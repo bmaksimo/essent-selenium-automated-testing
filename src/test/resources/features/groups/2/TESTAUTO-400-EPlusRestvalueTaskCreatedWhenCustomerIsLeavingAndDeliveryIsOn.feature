@@ -74,7 +74,7 @@ Feature: TESTAUTO-400 E plus restvalue task created when customer is leaving and
         And Search by "parameter:EAN-code-generated"
         And Changes are confirmed
         And "Module" selection is "INITIATE LEAVING CUSTOMER"
-        And "Label" selection is "Without Handover Document "
+        And "Label" selection is "Without Handover Document"
         And Option "Testing?" is "On"
         And Changes are confirmed waiting for 5 seconds
         And "1st" list element has cell value "INITIATE LEAVING CUSTOMER" at column "Module & Label" polling 120 seconds
