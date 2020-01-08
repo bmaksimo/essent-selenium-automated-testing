@@ -27,7 +27,7 @@ Feature: TESTAUTO-271-Create task after rejection
         And Dialog search input is current "parameter:EAN-code"
         And Select Contractline dialog is confirmed
         And "Module" selection is "INITIATE LEAVING CUSTOMER"
-        And "Label" selection is "Without Handover Document "
+        And "Label" selection is "Without Handover Document"
         And Option "Testing?" is "On"
         And Extern bericht is "ILC - zonder energieovernamedocument - Afgewezen"
         And Select Contractline dialog is confirmed
