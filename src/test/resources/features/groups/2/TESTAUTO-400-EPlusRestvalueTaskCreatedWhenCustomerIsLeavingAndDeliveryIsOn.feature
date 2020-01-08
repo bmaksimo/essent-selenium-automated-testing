@@ -19,7 +19,6 @@ Feature: TESTAUTO-400 E plus restvalue task created when customer is leaving and
         And Search dialog is confirmed
         And Select one dealer
         And Dialog search input is current "Essent"
-
         And "Sales kanaal" selection is "Inbound"
         And Quote details are confirmed
         Then Form header is "Personal details"
