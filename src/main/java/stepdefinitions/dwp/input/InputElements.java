@@ -271,6 +271,7 @@ public class InputElements extends DwpScenario {
 
   @And("^\"([^\"]*)\" selection is \"([^\"]*)\"$")
   public void setSelection(String label, String value) throws Exception {
+    Sleeper.sleepTightInSeconds(3);
     new SelectElement().selectByText(label, value);
   }
 
