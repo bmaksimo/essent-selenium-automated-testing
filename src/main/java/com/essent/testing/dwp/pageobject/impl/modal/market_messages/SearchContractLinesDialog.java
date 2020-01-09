@@ -22,7 +22,7 @@ public class SearchContractLinesDialog extends ModalBase implements ConfirmDialo
         seleniumDriver.findElementWhenVisible(By.xpath("//input[@id='search-input']"));
     searchField.sendKeys(searchInput);
 
-    Sleeper.sleepTightInSeconds(1);
+    Sleeper.sleepTightInSeconds(5);
 
     WebElement searchButton =
         seleniumDriver.findElementWhenVisible(By.xpath("//input[@type='submit']"));
