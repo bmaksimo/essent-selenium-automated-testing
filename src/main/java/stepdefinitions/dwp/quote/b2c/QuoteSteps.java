@@ -381,6 +381,18 @@ public class QuoteSteps extends DwpScenario {
     parameterProvider.put("EAN-code", ean);
   }
 
+  @And("^Select one dealer$")
+  public void selectOneDealer() {
+    NewQuotePage nqp = new NewQuotePage();
+    nqp.clickOnSelectOneDealer();
+  }
+
+  @And("^Search dialog is confirmed$")
+  public void searchDialogIsConfirmed() {
+    NewQuotePage nqp = new NewQuotePage();
+    nqp.savePopUpChanges();
+  }
+
   @Override
   @After("@DWP or @E2E or @REGRESSION")
   public void tearDown() {

@@ -15,6 +15,10 @@ Feature: TESTAUTO-400 E plus restvalue task created when customer is leaving and
         Then Form header is "Quote details"
 
         When "Tariefdatum" date is "1 month before now"
+        And Select one dealer
+        And Search dialog is confirmed
+        And Select one dealer
+        And Dialog search input is current "Essent"
         And "Sales kanaal" selection is "Inbound"
         And Quote details are confirmed
         Then Form header is "Personal details"
@@ -69,7 +73,7 @@ Feature: TESTAUTO-400 E plus restvalue task created when customer is leaving and
         And Search by "parameter:EAN-code-generated"
         And Changes are confirmed
         And "Module" selection is "INITIATE LEAVING CUSTOMER"
-        And "Label" selection is "Without Handover Document "
+        And "Label" selection is "Without Handover Document"
         And Option "Testing?" is "On"
         And Changes are confirmed waiting for 5 seconds
         And "1st" list element has cell value "INITIATE LEAVING CUSTOMER" at column "Module & Label" polling 120 seconds
