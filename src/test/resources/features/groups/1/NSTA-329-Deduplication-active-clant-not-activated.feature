@@ -11,7 +11,7 @@ Feature: NSTA-329 Deduplication activated customer
 
   @NSTA-329
   Scenario: NSTA-329: From de-duplication of client
-    And Create active B2C contract with metering "On" and sign date "35 days before now"
+    When Create active B2C contract with metering "On" and sign date "35 days before now"
 
     And I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
     And Left menu is "sales-marketing"
