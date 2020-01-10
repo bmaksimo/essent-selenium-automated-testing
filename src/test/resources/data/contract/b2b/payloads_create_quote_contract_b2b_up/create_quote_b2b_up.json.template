@@ -155,7 +155,7 @@
         ],
         "dwp|indexationParam": null,
         "dwp|floatingBasePrice": 0,
-        "accounts|aos_quotes|aos_products_quotes|quotecomponentline_aos_products_quotes_1quoteComponents": [
+        "dwp|calculated_tariffs": [
             [
                 [
                     {
