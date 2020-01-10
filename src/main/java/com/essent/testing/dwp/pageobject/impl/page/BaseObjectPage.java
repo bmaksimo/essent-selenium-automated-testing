@@ -49,7 +49,7 @@ public class BaseObjectPage extends Component {
 
   public void clickOnPlus() {
     seleniumDriver.waitForRequestsToFinish();
-    seleniumDriver.waitAndClick(seleniumDriver.findElementWhenVisible(By.xpath(PLUS_BUTTON_XPATH)));
+    clickWithRetries(seleniumDriver.findElementWhenVisible(By.xpath(PLUS_BUTTON_XPATH)), 10);
   }
 
   public void clickOnPlusNow() {

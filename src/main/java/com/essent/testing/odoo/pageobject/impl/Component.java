@@ -4,6 +4,7 @@ import com.essent.automation.autocrat.Action;
 import com.essent.automation.autocrat.Autocrat;
 import com.essent.automation.autocrat.Model;
 import com.essent.automation.core.WebDriverWait;
+import com.essent.automation.util.Sleeper;
 import com.essent.testing.context.ContextService;
 import com.essent.testing.odoo.table.OdooTableFilter;
 import com.essent.testing.selenium.OdooSeleniumDriver;
@@ -19,6 +20,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public abstract class Component {
 
@@ -119,5 +121,17 @@ public abstract class Component {
   public List<WebElement> selectRowOnTable(
       String tableName, List<Filter> filters, String contextParameters) throws Exception {
     return new OdooTableFilter(contextParameters).getTable(tableName).findBy(filters).getRow();
+  }
+
+  protected void clickWithRetries(WebElement element, int attempts) {
+    int currentAttempt = 0;
+    boolean clickable = false;
+    while (!clickable && currentAttempt <= attempts) {
+      currentAttempt++;
+      clickable = ExpectedConditions.elementToBeClickable(element) != null;
+      if (clickable) element.click();
+
+      Sleeper.sleepTightInSeconds(5);
+    }
   }
 }
