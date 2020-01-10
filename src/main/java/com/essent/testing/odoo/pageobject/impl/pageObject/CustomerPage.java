@@ -23,6 +23,8 @@ public class CustomerPage extends Component {
   private static final String SENT_DATE = "//td[@data-field='date_sent']";
   private static final String BUTTON_LABEL =
       "//div[@class='modal in']//span[contains(text(),'${" + NAME_TAB + "}')]";
+  private static final String LEFT_MENU_CUSTOMERS =
+      "//a[@class='oe_menu_leaf']/span[normalize-space()='Customers']";
 
   public boolean clickOnTabMenu(String tab) {
     awaitOdooRequestToFinish(20);
@@ -100,8 +102,6 @@ public class CustomerPage extends Component {
   }
 
   public void chooseLeftMenuCustomers() {
-    seleniumDriver.waitAndClick(
-        seleniumDriver.findElementWhenVisible(
-            By.xpath("//a[@class='oe_menu_leaf']/span[normalize-space()='Customers']")));
+    clickWithRetries(seleniumDriver.findElementWhenVisible(By.xpath(LEFT_MENU_CUSTOMERS)), 10);
   }
 }
