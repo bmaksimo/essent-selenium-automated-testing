@@ -39,7 +39,6 @@ Feature: TESTAUTO-109: Create B2B TK2 Contract with Online Signing
         And "EAN-code" input is "parameter:EAN-code-generated"
         And "Meternummer" input is "30301267ISK"
         When Connection details are confirmed
-        And Save changes
         Then Form header is "Pricing details"
 
         Given "Tariefgroep" selection is "TK2"
