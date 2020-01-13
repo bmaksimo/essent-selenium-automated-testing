@@ -8,7 +8,7 @@ Feature: TESTAUTO-116-B2C guarantee sign in
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
     @TESTAUTO-116
-    Scenario: B2C guarantee sign in
+    Scenario: TESTAUTO-116: B2C guarantee sign in
         #Create an active contract
         When Click on top menu button PLUS and navigate to "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         And "Tariefdatum" date is "now"

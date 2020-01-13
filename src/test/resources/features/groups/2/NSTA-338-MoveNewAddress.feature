@@ -11,7 +11,7 @@ Feature: NSTA - 338 Move new address
         Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
     @NSTA-338
-    Scenario: Move new address
+    Scenario: NSTA-338: Move new address
         When Click on top menu button PLUS and navigate to "Sales -> TK1 -> Creëer nieuwe offerte B2C"
         Then Form header is "Quote details"
 

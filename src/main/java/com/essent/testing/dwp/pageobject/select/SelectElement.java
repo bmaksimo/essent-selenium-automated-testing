@@ -23,7 +23,7 @@ public class SelectElement extends Component {
 
   private void validateSelection(String label, String text) throws Exception {
     String selectPath = createQuery(SELECT_ELEMENT, REPLACEMENT_KEY, label);
-    Select selectElement = new Select(findElementWithRetries(By.xpath(selectPath), 10));
+    Select selectElement = getSelectUntilOptionsPopulated(By.xpath(selectPath), 10);
     seleniumDriver.waitForRequestsToFinish();
     Sleeper.sleepTightInSeconds(2);
     selectElement.selectByVisibleText(text);
@@ -33,8 +33,9 @@ public class SelectElement extends Component {
   }
 
   private void assertSelectedElement(String selectPath, String text) throws Exception {
-    Select currentSelect = new Select(findElementWithRetries(By.xpath(selectPath), 10));
-    String currentlySelectedElement = currentSelect.getFirstSelectedOption().getText();
+    String currentlySelectedElement =
+        getSelectUntilOptionsPopulated(By.xpath(selectPath), 10).getFirstSelectedOption().getText();
+
     Assert.assertTrue(
         "Currently selected element is not " + text + " but " + currentlySelectedElement,
         text.equalsIgnoreCase(currentlySelectedElement));

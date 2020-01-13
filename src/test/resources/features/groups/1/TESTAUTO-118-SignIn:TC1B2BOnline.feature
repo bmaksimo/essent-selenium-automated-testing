@@ -2,13 +2,15 @@
 @REGRESSION
 @CREDIT-AND-CONTROL
 @ALL
+  @Unstable
+
 Feature: TESTAUTO-118: Sign in: TC1 B2B Online
 
     Background:
         Given  I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
 
     @TESTAUTO-118
-    Scenario: Sign in: TC1 B2B Online
+    Scenario: TESTAUTO-118: Sign in: TC1 B2B Online
         When Click on top menu button PLUS and navigate to "Sales -> TK1 -> Nieuwe TK1 offerte (B2B) aanmaken"
         And Company name is random
         And "Bedrijfsnaam" input is "parameter:company-name"

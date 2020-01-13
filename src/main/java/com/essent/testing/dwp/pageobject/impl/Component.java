@@ -21,6 +21,7 @@ import org.apache.commons.lang3.text.StrSubstitutor;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 
 public abstract class Component {
 
@@ -263,5 +264,20 @@ public abstract class Component {
       Sleeper.sleepTightInSeconds(5);
     }
     throw new Exception("Element not found");
+  }
+
+  protected Select getSelectUntilOptionsPopulated(By by, int attempts) throws Exception {
+    Sleeper.sleepTightInSeconds(2);
+    int optionsCount = 0;
+    int currentAttempt = 0;
+    while (optionsCount == 0 && currentAttempt <= attempts) {
+      currentAttempt++;
+      Select select = new Select(findElementWithRetries(by, attempts));
+      optionsCount = select.getOptions().size();
+      if (optionsCount > 0) return select;
+
+      Sleeper.sleepTightInSeconds(5);
+    }
+    throw new Exception("Select was not populated");
   }
 }
