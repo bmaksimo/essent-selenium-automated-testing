@@ -11,7 +11,7 @@ Feature: NUAT-553: Create Lead And Convert Lead - nl_BE
 
   @NUAT-553
   Scenario: NUAT-553: Create Lead And Convert Lead
-    And Left menu is "sales-marketing"
+    Given Left menu is "sales-marketing"
     And Top menu item is "Leads"
     And Add lead
     And New lead is

@@ -13,9 +13,8 @@ Feature: TESTAUTO - 4 Move old address  - Gas ean
   @TESTAUTO-4
   Scenario: TESTAUTO-4: Move old address - Gas
         #Contract creation via API
-    And Create active B2C contract with metering "Off" and sign date "35 days before now"
-
-    Given I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
+    Given Create active B2C contract with metering "Off" and sign date "35 days before now"
+    And I logged in to DWP as "salesmarketing.testautomation.b2c@essent.be"
     When Left menu is "sales-marketing"
     And Top menu item is "Klanten"
     And Top action is Filter from "sales-marketing" menu retrying 5 times
