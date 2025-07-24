@@ -1,6 +1,6 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+This is Cucumber Selenium test automation project for testing billing features on Essent platform.
 
 ### What is this repository for? ###
 
